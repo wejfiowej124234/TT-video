@@ -1,0 +1,124 @@
+# Production GO · Remaining Work Snapshot · Machine SSOT
+#
+# Human summary: docs/runbook/PRODUCTION-GO-FOUR-GATE-FRAMEWORK.md §Remaining Work
+# Updated with owner-aligned assessment 2026-07-08
+
+schema: traveltrust.production_go_remaining_work.v1
+version: 1
+recorded_utc: "2026-07-08"
+production_scope: PRODUCTION_SCOPE_SEPOLIA
+framework: registry/production-go-four-gate-framework.v1.yaml
+
+overall:
+  estimated_complete_pct: 72
+  tt_production_go: NO_GO
+  critical_path: GATE-2_WEB3_THEN_GATE-3_THEN_GATE-4
+
+completed_approx_90pct:
+  label: 已完成（约 90%+ · Business 层为主）
+  items:
+    - id: DONE-01
+      title: 产品功能 · Enterprise Complete
+      gate: GATE-1
+      status: PASS
+    - id: DONE-02
+      title: 六角色验证 · HAT · Manual · BFM
+      gate: GATE-1
+      status: PASS
+    - id: DONE-03
+      title: OCS Bootstrap + Parity
+      gate: GATE-1
+      machine_keys: [OCS_PRODUCTION_BOOTSTRAP, OCS_PRODUCTION_PARITY_AUDIT]
+      status: PASS
+    - id: DONE-04
+      title: CMS 基础能力 · publish loop
+      gate: GATE-1
+      partial_for: GATE-4
+      status: PASS
+    - id: DONE-05
+      title: RBAC · ADM-U01
+      gate: GATE-1
+      status: PASS
+    - id: DONE-06
+      title: Production Entry · RC Freeze
+      gate: GATE-1
+      machine_keys: [TT_PRODUCTION_ENTRY_READY]
+      status: PASS
+    - id: DONE-07
+      title: API 一致性 · 冷启动框架
+      gate: GATE-1
+      status: PASS
+    - id: DONE-08
+      title: G1 + G2 Gates
+      legacy: true
+      status: PASS
+
+remaining_pre_launch:
+  label: 发布前必须完成
+  p0:
+    - id: REM-P0-01
+      title: Web3 Payment Rail 验证（PAY-W01～W16 · 子集）
+      gate: GATE-2
+      machine_key: TT_WEB3_PAYMENT_PRODUCTION_READY
+      status: PASS
+      owner_action: Sepolia USDC/Escrow smoke · evidence/G3-02/ · CLOSED 2026-07-08
+      script: scripts/check-web3-payment-production-readiness.sh
+      blocks_production_go: false
+      note: Payment PASS alone does not close TT_PRODUCTION_WEB3_READY
+    - id: REM-P0-01b
+      title: Entire Web3 System 生产验证（M01-M24）
+      gate: GATE-2
+      machine_key: TT_WEB3_SYSTEM_PRODUCTION_READY
+      status: IN_PROGRESS
+      owner_action: Prod meta 10/10 wiring · G24 · TTG Cert · RBAC D3 · WEB3-SYSTEM-CLOSURE
+      script: scripts/dev/run-web3-system-deep-audit.cjs
+      runbook: docs/runbook/WEB3-SYSTEM-PRODUCTION-RUNTIME-WIRING.md
+      blocks_production_go: true
+    - id: REM-P0-01c
+      title: Four-Gate L2 Web3 聚合
+      gate: GATE-2
+      machine_key: TT_PRODUCTION_WEB3_READY
+      status: IN_PROGRESS
+      derivation: TT_WEB3_PAYMENT_PRODUCTION_READY=PASS AND TT_WEB3_SYSTEM_PRODUCTION_READY=PASS
+      blocks_production_go: true
+    - id: REM-P0-02
+      title: 运营后台全量 UAT
+      gate: GATE-4
+      machine_key: TT_PRODUCTION_OPERATIONS_READY
+      status: IN_PROGRESS
+      owner_action: 内容/用户/市场/增长/系统运营全 CRUD · 发布 · 审核 · 配置 · consumer sync
+      note: 不只是 CMS — 是整个运营体系
+      blocks_production_go: true
+    - id: REM-P0-03
+      title: 基础设施 G3 验证
+      gate: GATE-3
+      machine_key: TT_PRODUCTION_INFRASTRUCTURE_READY
+      status: IN_PROGRESS
+      includes: [CDN, Domain/TLS/CORS, Monitoring, Backup/Rollback, Logging]
+      g3_domains: [G3-01, G3-03, G3-04, G3-05]
+      blocks_production_go: true
+    - id: REM-P0-04
+      title: Owner Final Sign-off
+      gate: GATE-5
+      machine_key: TT_OWNER_FINAL_SIGNOFF
+      status: PENDING
+      requires: [REM-P0-01, REM-P0-02, REM-P0-03]
+      blocks_production_go: true
+
+  p1_optional:
+    - id: REM-P1-01
+      title: Optional Fiat Onboarding (Stripe PI3-003)
+      classification: P1_FUTURE_FIAT_ONRAMP
+      blocks_production_go: false
+      note: 不在 Four-Gate 主链 · 默认 USDC onboarding
+
+critical_path_sequence:
+  - GATE-2 Web3 Ready (PAY-W01..W16)
+  - GATE-4 Operations Ready (full ops UAT) — 可与 GATE-3 部分并行
+  - GATE-3 Infrastructure Ready (G3 domains)
+  - GATE-5 Owner Sign-off
+  - TT_PRODUCTION_GO = GO
+
+not_blocking:
+  - stripe_live_onboarding
+  - mainnet_cutover

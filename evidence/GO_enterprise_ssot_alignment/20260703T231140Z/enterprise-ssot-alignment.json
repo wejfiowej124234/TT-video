@@ -1,0 +1,93 @@
+{
+  "schema": "traveltrust.enterprise_ssot_alignment_audit.v1",
+  "stamp": "20260703T231140Z",
+  "recorded_at": "2026-07-03T23:12:23.812Z",
+  "alignment_dimensions": {
+    "configuration_alignment": {
+      "validates": "Registry · Runbook · config · governance consistency",
+      "does_not_validate": "Local API running"
+    },
+    "runtime_validation": {
+      "phase1_local": "Local API started and behavior matches SSOT",
+      "phase2_staging": "Staging API runtime probes"
+    },
+    "rule": "CONFIGURATION_ALIGNMENT PASS ≠ Local Runtime Running"
+  },
+  "boundary": {
+    "allowed": [
+      "governance",
+      "config",
+      "docs",
+      "scripts",
+      "non_prod_metadata"
+    ],
+    "forbidden": [
+      "new_business_features",
+      "reopen_RC_DDG_OCS",
+      "modify_frozen_ocs_baseline",
+      "production_data_mutation"
+    ],
+    "policy": "CLOSED_UNLESS_TOUCHED"
+  },
+  "scope": {
+    "product": "registry/executive-dashboard.v1.yaml",
+    "operations": "registry/traveltrust-operations-platform.v1.yaml",
+    "data_governance": [
+      "DDG",
+      "OCS",
+      "SOPCP",
+      "OCIP"
+    ],
+    "pi3_media_infrastructure": "registry/pi3-media-infrastructure.v1.yaml",
+    "pi3_catalog_assets": "registry/catalog-asset-migration.v1.yaml",
+    "test_accounts": "registry/test-accounts-business-immutable.v1.yaml",
+    "rbac": "registry/admin-rbac-route-matrix.v1.yaml",
+    "workflow": "registry/traveltrust-operations-workflow.v1.yaml",
+    "open_issues": "registry/open-issues.v1.yaml"
+  },
+  "governance_model": {
+    "pi3_tracks": [
+      "PI3-MEDIA-INFRASTRUCTURE",
+      "PI3-CATALOG-ASSET-MIGRATION"
+    ],
+    "acceptance_decoupling": true,
+    "closed_unless_touched": [
+      "OCS",
+      "DDG",
+      "SOPCP",
+      "market_default_filter"
+    ]
+  },
+  "live_probes": {
+    "staging": {
+      "health_ready": 200,
+      "meta_ok": false,
+      "public_video_publish_ready": true
+    },
+    "local": {
+      "unavailable": true
+    },
+    "local_runtime": "SKIPPED",
+    "staging_runtime": "PASS"
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "category": "runtime_validation",
+      "id": "phase1_local_runtime.skipped",
+      "note": "Local API not running — PHASE1_LOCAL_RUNTIME_VALIDATION=SKIPPED (CONFIGURATION_ALIGNMENT unaffected)",
+      "fix": null
+    }
+  ],
+  "verdict": {
+    "blocking_count": 0,
+    "major_count": 0,
+    "CONFIGURATION_ALIGNMENT": "PASS",
+    "PHASE1_LOCAL_RUNTIME_VALIDATION": "SKIPPED",
+    "PHASE2_STAGING_RUNTIME_VALIDATION": "PASS",
+    "ENTERPRISE_SSOT_ALIGNMENT": "PASS",
+    "PHASE1_LOCAL_ALIGNMENT": "PASS",
+    "PHASE2_STAGING_ALIGNMENT": "PASS",
+    "note": "PHASE1_LOCAL_ALIGNMENT = CONFIGURATION_ALIGNMENT (not runtime). See PHASE1_LOCAL_RUNTIME_VALIDATION."
+  }
+}

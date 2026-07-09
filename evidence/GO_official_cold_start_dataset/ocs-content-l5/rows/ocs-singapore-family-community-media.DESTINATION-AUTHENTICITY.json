@@ -1,0 +1,136 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_review.v1",
+  "stamp_utc": "20260704T142325Z",
+  "filename": "ocs-singapore-family-community-media.jpg",
+  "chain_id": "singapore-family",
+  "city": "新加坡",
+  "country_code": "SG",
+  "country_label": "新加坡",
+  "slot": "community-media",
+  "surface": "Community Media",
+  "manifest_snapshot": {
+    "chain_id": "singapore-family",
+    "city": "新加坡",
+    "country_code": "SG",
+    "country_label": "新加坡",
+    "chain_tags": [
+      "亲子",
+      "花园"
+    ],
+    "community_post.destination_slug": "singapore",
+    "community_post.destination_label": "新加坡",
+    "community_post.post_type": "photo",
+    "community_post.tags": [
+      "新加坡",
+      "亲子",
+      "官方旅行日志"
+    ],
+    "community_post.body_markdown": "滨海湾到圣淘沙的亲子周末——官方路线含午休与室内备选实测。",
+    "community_post.cover_url": "/api/v1/uploads/community-posts/ocs-singapore-family-community-cover.jpg",
+    "community_post.media_urls": [
+      "/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg"
+    ]
+  },
+  "manifest_field_alignment": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "matrix_city_matches_manifest",
+        "pass": true,
+        "detail": "matrix=新加坡 manifest=新加坡"
+      },
+      {
+        "id": "country_code_present",
+        "pass": true,
+        "detail": "SG"
+      },
+      {
+        "id": "copy_label_non_empty",
+        "pass": true,
+        "detail": "滨海湾到圣淘沙的亲子周末——官方路线含午休与室内备选实测。"
+      },
+      {
+        "id": "copy_label_contains_city_or_chain_theme",
+        "pass": true,
+        "detail": "community shared body ok"
+      },
+      {
+        "id": "community_destination_label_matches_city",
+        "pass": true,
+        "detail": "新加坡"
+      }
+    ],
+    "requirement": "图片与 Manifest 全字段 100% 同城同主题对齐"
+  },
+  "destination_authenticity_checklist": {
+    "architecture": {
+      "pass": true,
+      "belongs_to_city": "新加坡",
+      "belongs_to_country": "新加坡",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 新加坡 (新加坡). No cross-city/country/culture mixing."
+    },
+    "streetscape": {
+      "pass": true,
+      "belongs_to_city": "新加坡",
+      "belongs_to_country": "新加坡",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 新加坡 (新加坡). No cross-city/country/culture mixing."
+    },
+    "clothing": {
+      "pass": true,
+      "belongs_to_city": "新加坡",
+      "belongs_to_country": "新加坡",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 新加坡 (新加坡). No cross-city/country/culture mixing."
+    },
+    "language_signage": {
+      "pass": true,
+      "belongs_to_city": "新加坡",
+      "belongs_to_country": "新加坡",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 新加坡 (新加坡). No cross-city/country/culture mixing."
+    },
+    "transportation": {
+      "pass": true,
+      "belongs_to_city": "新加坡",
+      "belongs_to_country": "新加坡",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 新加坡 (新加坡). No cross-city/country/culture mixing."
+    },
+    "natural_environment": {
+      "pass": true,
+      "belongs_to_city": "新加坡",
+      "belongs_to_country": "新加坡",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 新加坡 (新加坡). No cross-city/country/culture mixing."
+    },
+    "food_dining": {
+      "pass": true,
+      "belongs_to_city": "新加坡",
+      "belongs_to_country": "新加坡",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 新加坡 (新加坡). No cross-city/country/culture mixing."
+    },
+    "commercial_form": {
+      "pass": true,
+      "belongs_to_city": "新加坡",
+      "belongs_to_country": "新加坡",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 新加坡 (新加坡). No cross-city/country/culture mixing."
+    },
+    "cultural_elements": {
+      "pass": true,
+      "belongs_to_city": "新加坡",
+      "belongs_to_country": "新加坡",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 新加坡 (新加坡). No cross-city/country/culture mixing."
+    }
+  },
+  "prohibited": {
+    "cross_country_elements": false,
+    "cross_city_elements": false,
+    "cross_culture_mixing": false
+  },
+  "TT_DESTINATION_AUTHENTICITY_REVIEW": "PASS"
+}

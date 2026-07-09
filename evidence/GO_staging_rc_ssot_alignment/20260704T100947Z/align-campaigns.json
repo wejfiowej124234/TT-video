@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust.ocs_staging_campaigns_align.v1",
+  "recorded_at": "2026-07-04T10:10:29.787Z",
+  "ocs_campaign_count": 10,
+  "deployed_before": 10,
+  "rollback": [],
+  "archive": [],
+  "deploy": [],
+  "errors": [],
+  "dry_run": false,
+  "deployed_after": 10,
+  "extras_after": [],
+  "ok": true
+}

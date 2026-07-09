@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T150900Z",
+  "filename": "ocs-sydney-coast-community-cover.jpg",
+  "row": 47,
+  "chain_id": "sydney-coast",
+  "country_code": "AU",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "brand_logos",
+      "celebrity_portraits",
+      "commercial_ad_posters",
+      "recognizable_faces"
+    ],
+    "safe_expression": "海滩浪花+远景泳者剪影 · Feed 夏日明亮 · 无正面人脸/无广告"
+  },
+  "checks": {
+    "manifest_alignment": { "pass": true, "notes": "body 邦迪-Coogee 徒步潮汐 · tags 悉尼/海岸/官方旅行日志" },
+    "destination_authenticity_9dim": { "pass": true, "notes": "悉尼海滩浪花 · 夏日明亮 · 太平洋" },
+    "country_consistency_au": { "pass": true },
+    "community_authenticity_plan": { "pass": true, "notes": "UGC 分享感 · 非广告海报" },
+    "surface_boundary_plan": { "pass": true, "notes": "非 Official 宽幅/Guide/Provider/Acquisition" },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row46": "海滩浪花 Feed vs Official 悬崖步道宽幅 Hero",
+      "vs_row44": "海滩瞬间 vs 海港皮划艇",
+      "vs_row43": "海滩场景 vs 向导肖像"
+    },
+    "cross_chain_community_plan": { "pass": true },
+    "nine_class_framework_frozen": true
+  }
+}

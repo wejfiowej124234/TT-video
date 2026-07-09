@@ -1,0 +1,137 @@
+{
+  "acceptance_id": "TT_GOVERNANCE_CERT_05_FINANCE_WALKTHROUGH",
+  "signoff_kind": "OPS-SIGNOFF",
+  "cert": 5,
+  "stamp_utc": "20260616T100918Z",
+  "signer": "Sebastian Ward",
+  "signed_at_utc": "2026-06-16T15:05:13Z",
+  "baseline_ssot": "docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md",
+  "four_ledger_evidence": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z",
+  "cutover_evidence": "evidence/GO_tt_country_pool_revenue_enterprise_hat/cutover-drill/20260616T082259Z",
+  "gorp_ssot": "docs/runbook/TTG-GOVERNANCE-OPERATIONAL-READINESS-PROGRAM.md",
+  "mtm_ssot": "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+  "mtm_ids": [
+    "CHK-CORE-15",
+    "CHK-OPS-02",
+    "CHK-ID-09",
+    "CHK-FN-11"
+  ],
+  "target_tier": "OPS_DONE",
+  "roles_walked": [
+    "Finance Operator",
+    "Treasury Operator",
+    "Auditor"
+  ],
+  "verifications": {
+    "permission_boundaries": "Finance fundingSource · Treasury split batch · Auditor read-only",
+    "fund_flows": "FeeRouter escrow · CP 45/55 · Distribution accruals · Treasury=V2 TL",
+    "accounting_trace": "openEpoch→split→four-ledger PASS · FINANCE-OPS-FLOW-MAP",
+    "audit_traceability": "four-ledger-reconcile.json · cp-revenue-hat · cutover exec logs",
+    "recovery_paths": "GORP §3.3 CP · §3.6 four-ledger FAIL triage",
+    "fee_router_orthogonal": "FeeRouter 65/20/15 ≠ Country Pool 45/55 (FCC SSOT)"
+  },
+  "recordings": [
+    "C-FIN-01-finance-operator-four-ledger.mp4",
+    "C-FIN-02-treasury-split-treasury-accounting.mp4",
+    "C-FIN-03-auditor-traceability-recovery.mp4"
+  ],
+  "screenshots": [
+    "role-auditor-traceability.png",
+    "role-distribution-ledger.png",
+    "role-fee-router-4555.png",
+    "role-finance-four-ledger.png",
+    "role-recovery-paths.png",
+    "role-treasury-split-accounting.png"
+  ],
+  "machine_checks_verdict": "PASS",
+  "machine_checks": {
+    "four_ledger_pass": {
+      "ok": true,
+      "verdict": "PASS",
+      "split_observed": true,
+      "page_bps_ok": true,
+      "global_treasury_timelock_match": true,
+      "path": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z/four-ledger-reconcile.json"
+    },
+    "evidence_anchors": {
+      "ok": true,
+      "dirs": [
+        {
+          "anchor": "four_ledger_dir",
+          "path": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z",
+          "exists": true
+        },
+        {
+          "anchor": "cutover_drill",
+          "path": "evidence/GO_tt_country_pool_revenue_enterprise_hat/cutover-drill/20260616T082259Z",
+          "exists": true
+        },
+        {
+          "anchor": "hat_r1",
+          "path": "evidence/GO_hat_r1_sepolia/20260616T063612Z",
+          "exists": true
+        }
+      ],
+      "cp_revenue_hat_report": true,
+      "split_4555_chain_read": true,
+      "cutover_split_log": true
+    },
+    "gorp_finance_walkthrough": {
+      "ok": true,
+      "w_f": {
+        "W-F1": true,
+        "W-F2": true,
+        "W-F3": true,
+        "W-F4": true,
+        "W-F5": true
+      },
+      "sections": {
+        "gorp_05": true,
+        "country_pool_2_5": true,
+        "treasury_2_4": true,
+        "finance_op_2_6": true,
+        "four_ledger_3_6": true,
+        "split_net_profit": true,
+        "funding_source": true,
+        "fee_router_orthogonal": true,
+        "distribution_accrual": true,
+        "forbid_admin_spend": true
+      },
+      "fee_router_ssot": {
+        "ok": true,
+        "ssot": "docs/spec/governance-token/TTG-GOVERNANCE-FULL-COVERAGE-CERTIFICATION-REPORT.md"
+      }
+    },
+    "three_role_boundaries": {
+      "ok": true,
+      "roles": [
+        {
+          "role": "Finance Operator",
+          "allow": "fundingSource approve/pull · accrual · four-ledger · distribution register read",
+          "deny": "Timelock key · Admin POST treasury · solo 45% to EOA",
+          "ok": true
+        },
+        {
+          "role": "Treasury Operator",
+          "allow": "Safe/Legacy TL batch · split execute coord · calldata archive",
+          "deny": "fundingSource custody · bypass Finance fund step",
+          "ok": true
+        },
+        {
+          "role": "Auditor",
+          "allow": "four-ledger read · distribution/accrual read · audit trail",
+          "deny": "fundingSource write · TL schedule · split batch",
+          "ok": true
+        }
+      ]
+    }
+  },
+  "four_ledger_verdict": "PASS",
+  "verdict": "PASS",
+  "honest_boundary": "② Cert#5 finance walkthrough ≠ 34/34 Ops ≠ Enterprise 100 ≠ ③ Production GO",
+  "forbidden": [
+    "new features",
+    "govfreeze re-audit",
+    "docs/spec expansion"
+  ]
+}

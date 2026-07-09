@@ -1,0 +1,8 @@
+TT_OCS_SURFACE_EXPANSION: READY_FOR_STAGING_VERIFICATION
+environment: staging
+at=20260704T073025Z
+api=https://tt-api-staging.fly.dev
+validate_rc=1
+ddg_rc=1
+evidence=evidence/GO_official_cold_start_dataset/ocs-surface-expansion-staging/20260704T073025Z
+note=Fix failures and re-run — VERIFIED requires 10/10 acceptance PASS

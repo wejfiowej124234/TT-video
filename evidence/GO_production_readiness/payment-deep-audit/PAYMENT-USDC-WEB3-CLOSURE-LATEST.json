@@ -1,0 +1,103 @@
+{
+  "schema": "traveltrust.payment_usdc_web3_closure.v1",
+  "recorded_utc": "2026-07-08T07:57:59.987Z",
+  "run_dir": "evidence/GO_production_readiness/payment-deep-audit/closure-2026-07-08T07-57-59",
+  "verdict": "PAYMENT_USDC_WEB3_CLOSURE_PASS",
+  "ssot": "registry/payment-architecture-classification.v1.yaml",
+  "architecture_truth": {
+    "core": "Web3 USDC Escrow (approve → deposit → release → FeeRouter → settlement)",
+    "optional": "Stripe onboarding P1 only",
+    "sandbox": "mock-pay chain_off only — forbidden prod"
+  },
+  "closure_items": [
+    {
+      "id": "CLOSE-P0-DOCS",
+      "title": "Docs demote Stripe from Production BLOCKER / 必达",
+      "paths": [
+        "docs/runbook/PRODUCTION-READINESS-REPORT.md",
+        "docs/runbook/PRODUCTION-READINESS-MASTER-GAP-REPORT.md",
+        "docs/handbook/engineering/148-PI3-005-Production-Scope-Decision-Report.md",
+        "docs/runbook/TT-RELEASE-PIPELINE.md"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "id": "CLOSE-P0-REGISTRY",
+      "title": "Registry sync — PRM-WEB3 CLOSED · PRM-STR g3_domain · machine keys",
+      "paths": [
+        "registry/production-readiness-master-matrix.v1.yaml",
+        "registry/production-go-four-gate-framework.v1.yaml",
+        "registry/production-go-remaining-work.v1.yaml",
+        "registry/hat-six-role-matrix.v1.yaml"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "id": "CLOSE-P1-UX",
+      "title": "USDC default currency + pay/chain copy + pay_mockPay_disabledNotice",
+      "paths": [
+        "frontend/locales/en.ts",
+        "frontend/locales/zh.ts"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "id": "CLOSE-P1-TESTS",
+      "title": "HAT / E2E / IT payment rail annotations (mock-pay = sandbox only)",
+      "paths": [
+        "registry/hat-six-role-matrix.v1.yaml",
+        "frontend/e2e/f024-f025-f026-request.spec.ts",
+        "crates/api/src/routes/market_subsite_catalog_db_api_tests/acquisition_pd009_full_flow.rs"
+      ],
+      "status": "CLOSED"
+    }
+  ],
+  "post_audit": {
+    "blockers_p0": 0,
+    "blockers_p1": 0,
+    "blockers_p2": 0,
+    "total_findings": 2,
+    "prod_mock_pay_ok": true,
+    "g3_02_evidence_pass": true
+  },
+  "post_audit_verdict": "PAYMENT_RAIL_AUDIT_ACCEPTABLE_DRIFT",
+  "g3_02": {
+    "kind": "traveltrust.web3_payment_production_readiness.v1",
+    "recorded_utc": "20260708T074537Z",
+    "stamp": "20260708T074537Z",
+    "verdict": "WEB3_PAYMENT_PRODUCTION_PASS",
+    "machine_key": "TT_WEB3_PAYMENT_PRODUCTION_READINESS",
+    "g3_domain": "G3-02",
+    "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+    "chain_id": 11155111,
+    "prod_api": "https://tt-api-prod.fly.dev",
+    "prod_web": "https://tt-web-prod.fly.dev",
+    "ssot": {
+      "checklist": "registry/production-payment-readiness-checklist.v1.yaml",
+      "gate": "registry/web3-payment-production-gate.v1.yaml",
+      "runbook": "docs/runbook/PRODUCTION-PAYMENT-READINESS-WEB3-USDC.md"
+    },
+    "runtime_probes": {
+      "meta_reachable": true,
+      "mock_pay_forbidden": "absent",
+      "contract_parity_ok": true
+    },
+    "checklist_evidence": {
+      "total": 16,
+      "with_artifacts": 16
+    },
+    "stripe_onboarding_extension": {
+      "classification": "P1_FUTURE_FIAT_ONRAMP",
+      "pi3_verdict": "PI3-003_WAITING_OWNER_STRIPE",
+      "blocks_core_payment_gate": false,
+      "blocks_production_go": false
+    },
+    "failures": 0,
+    "warnings": 1,
+    "evidence_dir": "evidence/GO_production_readiness/G3-02/web3-payment-readiness-20260708T074537Z"
+  },
+  "discipline": {
+    "business_logic_changed": false,
+    "docs_registry_i18n_test_annotations_only": true
+  }
+}

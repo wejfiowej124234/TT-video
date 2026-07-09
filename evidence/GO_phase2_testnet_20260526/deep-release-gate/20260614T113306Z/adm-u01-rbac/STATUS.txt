@@ -1,0 +1,6 @@
+status: PASS
+phase: ②
+artifact: ADM-U01
+release_gate: GO
+api_base: https://tt-api-staging.fly.dev
+at: 20260614T113718Z

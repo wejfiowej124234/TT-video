@@ -1,0 +1,68 @@
+# tt-soak-watcher-staging · 72h 只读 Soak 探针（② · 独立 Fly 服务 · 不触 staging redeploy）
+#
+# 部署（仓库根 · Owner · 须 fly auth）:
+#   bash scripts/ops/p2fc-migrate-soak-to-cloud-watcher.sh --preflight
+#   bash scripts/ops/p2fc-migrate-soak-to-cloud-watcher.sh --execute
+#
+# 证据回传:
+#   bash scripts/ops/p2fc-sync-cloud-soak-evidence.sh
+#
+# 诚实边界: Soak PASS ≠ Production GO
+
+app = 'tt-soak-watcher-staging'
+primary_region = 'sin'
+kill_signal = 'SIGTERM'
+kill_timeout = '30s'
+
+[build]
+  dockerfile = 'Dockerfile'
+  build-target = ''
+  # fly deploy -c 从仓库根调用时，显式限定 build context 为本目录
+  [build.args]
+    BUILDKIT_CONTEXT_KEEP_GIT_DIR = '1'
+
+[env]
+  STAGING_API_BASE = 'https://tt-api-staging.fly.dev'
+  STAGING_WEB_BASE = 'https://tt-web-staging.fly.dev'
+  P2FC_SOAK_POLL_SEC = '60'
+  P2FC_SOAK_REQUIRED_SEC = '259200'
+  P2FC_SOAK_MAX_CONSEC_FAIL = '10'
+  P2FC_STAGING_CHAIN_ID = '11155111'
+  SOAK_DATA_DIR = '/data/soak'
+  P2FC_SOAK_EXECUTOR = 'cloud'
+
+[mounts]
+  source = 'tt_soak_watcher_staging_data'
+  destination = '/data/soak'
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '256mb'
+  cpus = 1
+
+[processes]
+  worker = './entrypoint.sh'
+
+[[services]]
+  protocol = 'tcp'
+  internal_port = 8080
+  processes = ['worker']
+
+  [[services.ports]]
+    port = 8080
+    handlers = ['http']
+
+  [services.concurrency]
+    type = 'connections'
+    hard_limit = 25
+    soft_limit = 20
+
+  [[services.http_checks]]
+    interval = '30s'
+    timeout = '5s'
+    grace_period = '20s'
+    method = 'GET'
+    path = '/health'
+
+[deploy]
+  strategy = 'immediate'

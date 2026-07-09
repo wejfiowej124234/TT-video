@@ -12,6 +12,21 @@ Work is ordered in **three phases**. **Finish what the current phase means befor
 
 **Do not** present **① or ②** results as **③** unless the user explicitly asks to verify **③** in this session.
 
+## Production Preparation phase (current · dual mainline)
+
+**SSOT (ops north star, not a new runbook):** [data/catalog/cms-asset-matrix.v1.yaml](data/catalog/cms-asset-matrix.v1.yaml) `production_preparation`.
+
+| Mainline | Status | Agent default |
+|----------|--------|---------------|
+| **PER** | **FROZEN** — five items signed | Do **not** add PER checks unless user reports **new production-grade** issue (prod config, PSP live, prod domain/TLS, prod incident). |
+| **CMS Operation** | **ACTIVE** — only ongoing progress | Daily: **Today's Tasks → Upload → Publish → Verify → Evidence → Live → `run-cms-ops-refresh`**. Entry: `run-cms-daily-ops-board.cjs`. |
+
+**Asset wave (one pipeline):** Destination Ambient JP→…→CN → POI → Hotel → Transport → Video. **After each country Live:** confirm Live +1, Source Alignment up, homepage reads **catalog not fallback** — then next country.
+
+**Do not expand CMS infra** (Registry, Runbook, Matrix, Policy, KPI layers, Daily Board UI) unless user explicitly scopes it. **Long-term:** non-business visuals → CMS; OCS official entities → OCS; business data → API; campaign scheduling → Public Ops.
+
+**New asset gate (three questions):** Owner clear? Reuses Upload→Live loop? Improves ops? All yes → proceed; else defer.
+
 **Release governance SSOT (single chain):** [docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md](docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md) — L0→L6→S5→S6→H1→Phase② CLOSED→③ Production Entry Review→Production GO. Runbooks, scripts, gates, and evidence dirs map to this chain only; no parallel release flows.
 
 **`TT_CONFIGURATION_ZERO_DRIFT` (STATUS: FROZEN · 2026-06-30):** Configuration chapter **graduated** — **CFG-001～CFG-028** capped; **Configuration Sprint permanently closed** unless **new configuration surface** is introduced (unlock: `TRAVELTRUST_CFG_REGISTRY_UNLOCK=1`). **Config drift = PER Regression** (`DEFECT` + `REG`), not CFG sprint. **Active mainline (验产品):** Manual UAT → Business Defect → Regression → Production Entry Review → Testnet Sign-off → Mainnet Preparation. SSOT: [TT-CONFIGURATION-ZERO-DRIFT-FROZEN.md](docs/runbook/TT-CONFIGURATION-ZERO-DRIFT-FROZEN.md) · [TT-PROJECT-MAINLINE-PRODUCT-VERIFICATION.md](docs/runbook/TT-PROJECT-MAINLINE-PRODUCT-VERIFICATION.md) · [evidence/manual-uat/README.md](evidence/manual-uat/README.md).
@@ -28,6 +43,8 @@ When the **Owner explicitly authorizes** this session (**`TRAVELTRUST_PHASE2_SEP
 If you are the **only** maintainer, treat **Owner** in checklists as **yourself**; **four-gate `pd-*` alignment** means **you** keep **08 §3.1c**, **98 §2.1**, **SPEC-MIGRATION-STATUS**, and **96-Index** **mutually consistent** before a spec-deletion PR. Same **SSOT** rules apply (handbook does **not** replace **04/93/14/07** in `docs/spec/`). See **[docs/solo-dev-rhythm.md](docs/solo-dev-rhythm.md)** (especially **§7**). **Independent dev default:** daily delivery is **local checks + self-kept `exit 0` evidence**, not **PR merge + CI green** as the sole bar — see **[docs/spec/缺口与待补-官方总表.md · §独立开发期口径](docs/spec/缺口与待补-官方总表.md)**; **[CONTRIBUTING · GitHub Actions unavailable](CONTRIBUTING.md#github-actions-unavailable)** with **[solo-dev-rhythm §6.5](docs/solo-dev-rhythm.md)**; script subset at **[pre-push local](CONTRIBUTING.md#pre-push-local)**.
 
 **Maintainer signature (this repo · ①):** **Sebastian Ward（塞巴斯蒂安·沃德）** — unified index **[frontend/evidence/GO_local_phase1/SOLO-MAINTAINER-SIGNATURE-INDEX.md](frontend/evidence/GO_local_phase1/SOLO-MAINTAINER-SIGNATURE-INDEX.md)** (Product / Engineering / Compliance / Owner self-attestation; **not** licensed legal counsel for **③**).
+
+**Production Preparation 双主线（当前 · 与英文段同源）**：**PER 冻结** · **CMS Operation 唯一持续推进** — Daily Board → 闭环 → Ambient 10 国 → POI/Hotel/Transport/Video；真源 **`data/catalog/cms-asset-matrix.v1.yaml`** **`production_preparation`**。
 
 **Pre-release development (not publicly shipped):** Treat heavy **PR / full enterprise-audit matrices / release-grade production gates** as **tighten before repo freeze or public release**, not daily mandatory bars. Readable SSOT for that carve-out: **[docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md §0](docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md)** (with **[CONTRIBUTING](CONTRIBUTING.md)** and **[solo-dev-rhythm §6.5](docs/solo-dev-rhythm.md)**). The **spec-deletion program chain** (98 / STATUS / 08 / 96-Index) is **not** waived.
 

@@ -1,0 +1,32 @@
+{
+  "probes": {
+    "C5": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "D:/TravelTrust-V1.1/evidence/l5_operations_deep_audit/p0_closure_probes/C5-20260608T023615Z.log",
+      "log_path": "20260608T023615Z",
+      "gate_script": "scripts/dev/l5-p0-c5-growth-freeze-cross-smoke.sh"
+    },
+    "E2": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "20260624T102235Z",
+      "log_path": "D:/TravelTrust-V1.1/evidence/l5_operations_deep_audit/p0_closure_probes/E2-20260624T102235Z.log",
+      "gate_script": "scripts/dev/l5-p0-e2-approval-chain-smoke.sh"
+    },
+    "E4": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "20260610T110243Z",
+      "log_path": "D:/TravelTrust-V1.1/evidence/l5_operations_deep_audit/p0_closure_probes/E4-20260610T110243Z.log",
+      "gate_script": "scripts/dev/l5-p0-e4-rbac-escalation-smoke.sh"
+    },
+    "E3": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "20260610T110247Z",
+      "log_path": "D:/TravelTrust-V1.1/evidence/l5_operations_deep_audit/p0_closure_probes/E3-20260610T110247Z.log",
+      "gate_script": "scripts/dev/l5-p0-e3-2fa-coverage-smoke.sh"
+    }
+  }
+}

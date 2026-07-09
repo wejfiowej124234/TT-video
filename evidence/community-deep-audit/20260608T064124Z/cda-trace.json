@@ -1,0 +1,17 @@
+{
+  "author_token": "tts_9f41dba8-a488-4e32-a1ea-d103003c01b3",
+  "author_user_id": "30d2d008-4ba1-4d1a-a29f-face720b80ff",
+  "engager_token": "tts_0ea99551-9850-4c26-993c-1e9cd730b3c9",
+  "reporter_token": "tts_21519fad-29a7-4b1f-a877-36ece353519b",
+  "admin_token": "tts_d1985513-ba35-4ae4-a119-1ba8b726726f",
+  "api_base": "http://127.0.0.1:8080",
+  "stamp": "1780900884",
+  "run_id": "e424a931",
+  "ccp_post_id": "c92680db-080b-4460-9e95-6cbb163ec910",
+  "comment_id": "e7d851e9-0dd6-41a0-b701-15998e6c64ab",
+  "reply_id": "ef7322e9-6baa-43eb-b0bf-4e54a4453632",
+  "report_id": "2a7829d6-9f17-43aa-b439-f87cbf274fe2",
+  "mod_post_id": "1f1b7f97-5fcd-4e4e-8c22-46d7d5f9deba",
+  "penalty_id": "",
+  "delete_post_id": "30948aa1-583d-4a95-9960-eef4e7fe2d0a"
+}

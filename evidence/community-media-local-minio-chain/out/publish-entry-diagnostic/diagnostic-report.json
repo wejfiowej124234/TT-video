@@ -1,0 +1,42 @@
+{
+  "pageUrl": "http://localhost:3012/community",
+  "pageOrigin": "http://localhost:3012",
+  "nextOrigin": "http://localhost:3012",
+  "apiOrigin": "http://127.0.0.1:8080",
+  "hitsNextOrigin": true,
+  "originLooksLikeApi": false,
+  "storage": {
+    "tokenLen": 40,
+    "userId": "918b1ecf-1032-4067-a031-18c27c95ea60",
+    "skipMeFetch": ""
+  },
+  "counts": {
+    "feedPage": 1,
+    "loginForPublish": 0,
+    "publishEntryScoped": 1,
+    "publishEntryGlobal": 1,
+    "publishFab": 0
+  },
+  "layout": {
+    "lang": "zh-CN",
+    "viewport": {
+      "w": 1280,
+      "h": 720
+    },
+    "entry": {
+      "present": true,
+      "display": "flex",
+      "visibility": "visible",
+      "opacity": "1",
+      "rect": {
+        "w": 76,
+        "h": 36,
+        "top": 321,
+        "left": 82
+      }
+    },
+    "fab": {
+      "present": false
+    }
+  }
+}

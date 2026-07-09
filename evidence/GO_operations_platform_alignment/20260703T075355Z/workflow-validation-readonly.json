@@ -1,0 +1,116 @@
+{
+  "schema": "traveltrust.operations_workflow_validation.v1",
+  "stamp": "20260703T075355Z",
+  "recorded_at": "2026-07-03T07:57:00.367Z",
+  "api": "http://127.0.0.1:8080",
+  "workflow_ssot": "registry/traveltrust-operations-workflow.v1.yaml",
+  "skip_mutations": true,
+  "domains": {
+    "content_operations": {
+      "steps": [
+        {
+          "id": "read_only",
+          "transition": "list_countries",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "ui_route": "/admin/content/countries",
+          "rbac": "admin.content.read"
+        }
+      ],
+      "verdict": "PASS"
+    },
+    "catalog_operations": {
+      "steps": [
+        {
+          "id": "read_only",
+          "verdict": "PASS",
+          "state": {
+            "display_status": "published",
+            "featured": false,
+            "surfaces": [
+              "market_feed",
+              "market_provider"
+            ],
+            "updated_at": "2026-07-03T07:41:19.608446Z"
+          },
+          "ui_route": "/admin/official/public-operations"
+        }
+      ],
+      "verdict": "PASS"
+    },
+    "campaign_operations": {
+      "steps": [
+        {
+          "id": "read_only_running",
+          "verdict": "PASS",
+          "deployed_count": 10,
+          "ui_route": "/admin/official/cold-start"
+        }
+      ],
+      "verdict": "PASS"
+    },
+    "moderation_operations": {
+      "steps": [
+        {
+          "id": "submitted_triage_list",
+          "transition": "submitted → triage (queue ingest)",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "rbac": "admin.community.read",
+          "ui_route": "/admin/community/reports"
+        },
+        {
+          "id": "read_only_cases",
+          "verdict": "PASS",
+          "case_count": 8
+        }
+      ],
+      "verdict": "PASS"
+    },
+    "business_operations": {
+      "steps": [
+        {
+          "id": "onboarding_active_read",
+          "transition": "onboarding → active (corridor read)",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "rbac": "admin.disputes.read",
+          "ui_route": "/admin/disputes"
+        },
+        {
+          "id": "active_orders_read",
+          "transition": "active corridor",
+          "verdict": "PASS",
+          "order_count": 20,
+          "ui_route": "/admin/orders"
+        },
+        {
+          "id": "dispute_open_state",
+          "transition": "active → dispute_open",
+          "verdict": "PASS",
+          "note": "no open dispute on staging; state catalog only"
+        },
+        {
+          "id": "dispute_resolved_state",
+          "transition": "dispute_open → dispute_resolved",
+          "verdict": "PASS",
+          "note": "no resolved dispute sample on staging; corridor read APIs verified",
+          "statuses_observed": []
+        }
+      ],
+      "verdict": "PASS"
+    }
+  },
+  "summary": {
+    "pass": 9,
+    "fail": 0,
+    "warn": 0
+  },
+  "verdict": "PASS"
+}

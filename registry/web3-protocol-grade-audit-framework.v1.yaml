@@ -1,0 +1,878 @@
+# Web3 Protocol-Grade Audit Framework · Machine SSOT
+#
+# 16 dimensions · cross-validation only · no business logic mutation
+#   node scripts/dev/run-web3-protocol-grade-audit.cjs
+#   node scripts/dev/run-escrow-settlement-authorization-audit.cjs
+#
+# Principle: never assume design correct — ambiguity = Blocker until evidenced.
+
+schema: traveltrust.web3_protocol_grade_audit_framework.v1
+version: 1
+effective_utc: "2026-07-08"
+machine_key: TT_WEB3_PROTOCOL_GRADE_AUDIT
+human_doc: docs/runbook/WEB3-PROTOCOL-GRADE-AUDIT-FRAMEWORK-V1.md
+audit_script: scripts/dev/run-web3-protocol-grade-audit.cjs
+evidence_root: evidence/GO_production_readiness/web3-protocol-grade-audit
+
+audit_principle: >
+  Never assume design correct. Every conclusion requires cross-validation of
+  contract source, on-chain state (when scope permits), registry, master map,
+  runtime config, deploy scripts, and evidence chain. Ambiguity = Blocker.
+
+verdict_enum:
+  - WEB3_PROTOCOL_GRADE_NOT_STARTED
+  - WEB3_PROTOCOL_GRADE_BLOCKED
+  - WEB3_PROTOCOL_GRADE_IN_PROGRESS
+  - WEB3_PROTOCOL_GRADE_PASS
+
+# ── 15 Dimensions ─────────────────────────────────────────────────────────────
+dimensions:
+  D01_contract_security:
+    title: Contract Security
+    sources: [contracts/src/, contracts/test/, scripts/dev/gen-p2fc-web3-system-security-audit.py]
+  D02_upgradeability:
+    title: Upgradeability
+    sources: [registry/g24-p-upgrade-01-contract-posture.v1.yaml, contracts/src/upgrade/]
+  D03_storage_layout:
+    title: Storage Layout
+    sources: [contracts/test/TtgGovFreezeV1ProxyArchitecture.t.sol, contracts/test/RegionStewardStakePoolProxyBootstrap.t.sol]
+  D04_governance:
+    title: Governance
+    sources: [contracts/src/TravelTrustGovernor.sol, contracts/src/GovernanceTimelock.sol, registry/ttg-governance-cert-gates.v1.yaml]
+  D05_treasury:
+    title: Treasury
+    sources: [contracts/src/GovernanceTreasury.sol, contracts/src/GovernanceTreasuryP4Cap.sol, evidence/GO_ttg_cert/]
+  D06_fund_lifecycle:
+    title: Fund Lifecycle
+    sources: [docs/spec/governance-token/fund-flow-ssot.v1.md, contracts/src/Escrow.sol, contracts/src/FeeRouter.sol]
+  D07_business_logic:
+    title: Business Logic
+    sources: [docs/spec/governance-token/fund-flow-ssot.v1.md, docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md]
+  D08_economic_model:
+    title: Economic Model
+    sources: [docs/spec/governance-token/protocol-ssot.v1.yaml, contracts/src/TtgGovFreezeConstants.sol, contracts/src/GovernanceVotesToken.sol]
+  D09_role_state_machine:
+    title: Role State Machine
+    sources: [docs/spec/governance-token/state-machine.v1.md, crates/api/src/routes/governance/]
+  D10_permission_matrix:
+    title: Permission Matrix
+    sources: [registry/web3-system-master-map.v1.yaml, registry/admin-rbac-permissions.v1.yaml, contracts/src/]
+  D11_attack_surface:
+    title: Attack Surface
+    sources: [scripts/dev/gen-p2fc-web3-system-security-audit.py, contracts/test/]
+  D12_deployment_drill:
+    title: Deployment Drill
+    sources: [docs/runbook/TT-MAINNET-LAUNCH-PRECHECK-AFTER-B435-001.md, contracts/script/, evidence/mainnet_shadow_launch/]
+  D13_operations_monitoring:
+    title: Operations / Monitoring
+    sources: [crates/api/src/chain/indexer.rs, frontend/app/admin/, deploy/fly/]
+  D14_incident_dr:
+    title: Incident & Disaster Recovery
+    sources: [docs/runbook/TTG-GOVERNANCE-OPERATIONAL-READINESS-PROGRAM.md, registry/ttg-governance-cert-gates.v1.yaml]
+  D15_responsibility_matrix:
+    title: Responsibility Matrix
+    sources: [registry/web3-system-master-map.v1.yaml, docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md]
+  D16_protocol_intent_verification:
+    title: Protocol Intent Verification
+    sources: [registry/web3-protocol-grade-audit-framework.v1.yaml#design_intent, evidence/GO_production_readiness/escrow-settlement-authorization/]
+    rule: >
+      Missing documented WHY for surprising patterns = Blocker until Design Intent PASS.
+      Documented intentional design with evidence = PASS (not vulnerability).
+
+# ── Design Intent (Why · not just what) ───────────────────────────────────────
+design_intent:
+  Escrow:
+    module: M10
+    functions:
+      release:
+        current_behavior: permissionless external call when status==Funded
+        v1_legacy_behavior: V1 Escrow.sol — permissionless @ Funded (Sepolia legacy only)
+        v2_mainnet_behavior: EscrowV2 — permissionless AFTER travelerServiceConfirmed && guideServiceConfirmed
+        design_target: Bilateral Confirmation Settlement Model
+        why_target: >
+          release() executes fund split only; business authorization = bilateral service
+          complete. Permissionless caller AFTER attestation enables Keeper automation
+          without Backend custody. Immutable destinations prevent caller profit.
+        why_not_onlyTraveler: >
+          Traveler-only would block decentralized settlement bots; authorization belongs
+          in completion layer not release layer.
+        status: V2_DESIGN_PASS_V1_LEGACY_FORBIDDEN
+        v1_mainnet: FORBIDDEN
+        evidence_required:
+          - ESCROW-SETTLEMENT-AUTHORIZATION-AUDIT-LATEST.json
+          - ESCROW-BILATERAL-LAYER-A-EVIDENCE-LATEST.json
+          - ESCROW-BILATERAL-LAYER-B-EVIDENCE-LATEST.json
+          - registry/escrow-bilateral-mainnet-policy.v1.yaml
+          - Owner signoff on ODR
+        verdict_until_mainnet_deploy: BLOCKED
+      deposit:
+        current_behavior: onlyTraveler
+        why: payer authorization — only traveler funds order
+        status: PASS
+      refund:
+        current_behavior: onlyTraveler
+        why: unilateral exit before service settlement
+        status: PASS
+  FeeRouter:
+    module: M09
+    functions:
+      distribute:
+        current_behavior: onlyOwner
+        why: routing params governance-controlled; pause for emergency
+        status: PASS
+  CountryPoolNetProfitLedger:
+    module: M11
+    functions:
+      executeSplit:
+        current_behavior: onlyOwner Timelock
+        why: D-4555-B net profit split is governance/finance controlled
+        status: PASS
+
+escrow_settlement_audit:
+  script: scripts/dev/run-escrow-settlement-authorization-audit.cjs
+  evidence: evidence/GO_production_readiness/escrow-settlement-authorization/
+  target_model: Bilateral Confirmation Settlement Model
+
+# ── CountryPool Audit (D-4555-B deep track) ───────────────────────────────────
+country_pool_audit:
+  track: D4555_B_net_profit_split
+  flows:
+    - id: CP-01
+      step: Gross revenue accrual
+      contract: CountryPoolNetProfitLedger
+      function: accrueBatch
+      math: sum(R100+R110+R120 lines)
+      verified: partial
+    - id: CP-02
+      step: Expense deduction → net profit
+      function: closeEpoch
+      math: netProfit = gross - allowableExpense - carriedLoss
+      verified: partial
+    - id: CP-03
+      step: 45/55 split (net profit prime)
+      function: executeSplit
+      math: stewardAmount + globalAmount + unallocated = netProfitPrime
+      verified: partial
+    - id: CP-04
+      step: Snapshot qualification
+      function: qualificationSnapshotBlock
+      math: steward eligibility boolean
+      verified: target
+    - id: CP-05
+      step: StewardPathVault deposit
+      contract: StewardPathVault
+      verified: partial
+    - id: CP-06
+      step: Claim → Wallet
+      contract: RegionDistributionClaim
+      status: TARGET
+      verified: false
+  gaps_ref: docs/spec/governance-token/PHASE2-COUNTRY-POOL-ONCHAIN-ALIGNMENT-AUDIT-20260615.md
+  mainnet_blocker: GAP-99-03
+
+# ── Primary Market Economic Audit (UI DEFER · econ pre-audit) ─────────────────
+primary_market_economic_audit:
+  ui_status: DEFER
+  ui_defer_doc: docs/runbook/WEB3-PRIMARY-MARKET-DEFER-V1.md
+  flow_graph:
+    - TTG mint cap → Treasury allocation
+    - Primary Market sale → TTG to buyer wallet
+    - Treasury P4 cap → spend governance
+    - Seat concentration registry → jurisdiction
+    - Governance vote → Timelock
+  invariants:
+    - id: PM-ECO-01
+      check: total_supply_cap
+      source: TtgGovFreezeConstants
+    - id: PM-ECO-02
+      check: primary_market_not_infinite_mint
+      source: TtgPrimaryMarketV1.sol
+    - id: PM-ECO-03
+      check: seat_registry_concentration_limits
+      source: TtgSeatConcentrationRegistry.sol
+  status: PRE_AUDIT_ECON_ONLY
+
+# ── Mainnet Full Deployment Drill (extended) ──────────────────────────────────
+mainnet_full_deployment_drill:
+  - id: DRILL-F01
+    phase: Deploy
+    action: GovernanceStack + FundStack broadcast chain_id=1
+    status: NOT_RUN
+  - id: DRILL-F02
+    phase: Verify
+    action: G1 bytecode manifest all wave1 contracts
+    status: NOT_RUN
+  - id: DRILL-F03
+    phase: Initialize
+    action: Timelock owner on FeeRouter/Treasury/Ledger
+    status: NOT_RUN
+  - id: DRILL-F04
+    phase: Registry
+    action: protocol-convergence-deployments mainnet block
+    status: NOT_RUN
+  - id: DRILL-F05
+    phase: RPC
+    action: prod/staging RPC + chain_id=1 health
+    status: NOT_RUN
+  - id: DRILL-F06
+    phase: Indexer
+    action: G2 full-path replay deposit→release→fee
+    status: NOT_RUN
+  - id: DRILL-F07
+    phase: Wallet
+    action: USDC mainnet + WalletConnect smoke
+    status: NOT_RUN
+  - id: DRILL-F08
+    phase: Governance
+    action: propose→queue→timelock→execute noop
+    status: NOT_RUN
+  - id: DRILL-F09
+    phase: Emergency Pause
+    action: FeeRouter distributePaused drill
+    status: NOT_RUN
+  - id: DRILL-F10
+    phase: Resume
+    action: unpause + distribute smoke
+    status: NOT_RUN
+  - id: DRILL-F11
+    phase: Rollback
+    action: impl downgrade proposal testnet only
+    status: NOT_RUN
+  - id: DRILL-F12
+    phase: Escrow Settlement
+    action: bilateral confirm → release eligibility E2E
+    status: NOT_RUN
+    blocked_by: escrow_settlement_audit GAP
+
+fund_lifecycle_flows:
+  - id: FL-01
+    track: R3_escrow
+    step: Traveler USDC → Escrow lock
+    from: traveler_wallet
+    to: Escrow
+    contract: Escrow
+    function: deposit
+    caller_allowed: [traveler]
+    caller_denied: [guide, admin, backend, governor, timelock]
+    responsible: [Product, Backend relayer optional]
+    rollback: refund while Funded (traveler only)
+    recovery: none on-chain post-Completed
+    pause: none (immutable instance)
+    deadlock_risk: Created without deposit — order stuck until timeout/off-chain cancel
+    source_ref: contracts/src/Escrow.sol#deposit
+    ssot_ref: fund-flow-ssot.v1.md §5
+
+  - id: FL-02
+    track: R3_escrow
+    step: Escrow Funded → Release split (after bilateral service complete)
+    from: Escrow
+    to: [guide_wallet, platformFeeRecipient]
+    contract: Escrow
+    function: release
+    caller_allowed: [permissionless Keeper AFTER service bilateral complete — Design Intent]
+    caller_denied: [release before service complete]
+    responsible: [Automation Keeper, Product policy]
+    rollback: none after Completed
+    recovery: dispute path only while Funded→Disputed
+    pause: none
+    deadlock_risk: release before bilateral confirm if attestation missing
+    source_ref: contracts/src/Escrow.sol#release
+    ssot_ref: escrow-settlement-authorization audit · Bilateral Confirmation Settlement Model
+    cross_validation_required: true
+    business_confirm_prerequisite: [guide_service_confirmed, traveler_service_confirmed]
+
+  - id: FL-03
+    track: R4_platform_fee
+    step: platformFeeRecipient → FeeRouter distribute
+    from: FeeRouter balance
+    to: [countryBucket, globalStakers, globalReserve, globalOps]
+    contract: FeeRouter
+    function: distribute
+    caller_allowed: [owner]
+    caller_denied: [traveler, guide, backend without owner key]
+    responsible: [Finance, Ops Timelock executor]
+    rollback: none (tokens already split)
+    recovery: owner setRoutingConfig via Timelock for future fees
+    pause: distributePaused blocks new distribute
+    deadlock_risk: fees stuck in FeeRouter if paused and no recovery path
+    source_ref: contracts/src/FeeRouter.sol
+    ssot_ref: fund-flow-ssot.v1.md §6 · D-4555-A
+
+  - id: FL-04
+    track: D4555_A
+    step: FeeRouter countryBucket → RegionVault
+    from: FeeRouter.countryBucket
+    to: RegionVault
+    contract: RegionVault
+    function: receive / accounting
+    caller_allowed: [FeeRouter owner distribute path]
+    caller_denied: [steward direct withdraw]
+    responsible: [Finance, Protocol]
+    rollback: none
+    recovery: governance re-route FeeRouter
+    pause: FeeRouter pause
+    deadlock_risk: misconfigured countryBucket address
+    source_ref: contracts/src/RegionVault.sol
+    ssot_ref: WEB3-SYSTEM-MASTER-MAP-V1.md M25
+
+  - id: FL-05
+    track: D4555_B
+    step: Net profit accrual → CountryPoolNetProfitLedger
+    from: off-chain finance accrual
+    to: CountryPoolNetProfitLedger
+    contract: CountryPoolNetProfitLedger
+    function: accrueBatch / fundEpoch
+    caller_allowed: [owner Timelock]
+    caller_denied: [admin API, steward, traveler]
+    responsible: [Finance, Ops]
+    rollback: epoch OPEN only — close rules apply
+    recovery: Timelock governance parameter fix
+    pause: owner-controlled ops
+    deadlock_risk: epoch stuck OPEN without close
+    source_ref: contracts/src/CountryPoolNetProfitLedger.sol
+    ssot_ref: fund-flow-ssot.v1.md · PHASE2 alignment
+
+  - id: FL-06
+    track: D4555_B
+    step: Ledger split → StewardPathVault / Treasury path
+    from: CountryPoolNetProfitLedger
+    to: [StewardPathVault, UnallocatedStewardPathVault, global treasury path]
+    contract: CountryPoolNetProfitLedger
+    function: executeSplit
+    caller_allowed: [owner Timelock]
+    caller_denied: [steward self-claim without qualification snapshot]
+    responsible: [Finance, Steward Ops]
+    rollback: none post SPLIT_COMPLETED
+    recovery: governance corrective proposal
+    pause: Timelock schedule delay
+    deadlock_risk: SPLIT_PENDING without executeSplit
+    source_ref: contracts/src/CountryPoolNetProfitLedger.sol
+
+  - id: FL-07
+    track: R1_ttg
+    step: Steward TTG stake lock
+    from: steward_wallet
+    to: RegionStewardStakePool
+    contract: RegionStewardStakePool
+    function: stake
+    caller_allowed: [steward EOA]
+    caller_denied: [admin mint into pool]
+    responsible: [Product, Steward program]
+    rollback: unstake release path after delay
+    recovery: slash via SlashRouter (Wave 3)
+    pause: pool parameter freeze
+    deadlock_risk: releaseRequestedAt without claimReleased
+    source_ref: contracts/src/RegionStewardStakePool.sol
+    ssot_ref: state-machine.v1.md §1
+
+  - id: FL-08
+    track: R1_ttg
+    step: Treasury spend (governance)
+    from: GovernanceTreasuryP4Cap
+    to: spend recipient
+    contract: GovernanceTreasuryP4Cap
+    function: spendP4Reserve
+    caller_allowed: [spender role — Timelock execute]
+    caller_denied: [governor without timelock, admin API]
+    responsible: [Governance, Finance]
+    rollback: none
+    recovery: governance top-up only
+    pause: Timelock delay 48h
+    deadlock_risk: queued proposal expires
+    source_ref: contracts/src/GovernanceTreasuryP4Cap.sol
+    ssot_ref: ttg-governance-cert-gates Cert #8
+
+  - id: FL-09
+    track: R2_country_pool
+    step: Claim → Wallet
+    from: RegionDistributionClaim / Redemption
+    to: holder_wallet
+    contract: RegionDistributionClaim
+    function: claim
+    caller_allowed: [holder EOA]
+    caller_denied: [admin pull]
+    responsible: [Finance, Product]
+    rollback: none
+    recovery: re-snapshot if merkle wrong — governance
+    pause: epoch not open
+    deadlock_risk: TARGET — mainnet not deployed
+    source_ref: contracts/src/RegionDistributionClaim.sol
+    ssot_ref: state-machine.v1.md §4
+
+# ── Role State Machines ───────────────────────────────────────────────────────
+role_state_machines:
+  traveler:
+    ssot: docs/spec/350-阶段状态机可视化与状态校验系统.md
+    machine_code: order_traveler
+    states:
+      - id: browse
+        allowed: [create_order, connect_wallet]
+        forbidden: [release_escrow, claim_ttg]
+        anomaly: off-chain KYC block → support ticket
+      - id: order_created
+        allowed: [deposit_escrow, cancel_pre_fund]
+        forbidden: [guide_release]
+        anomaly: deposit fail → retry / refund off-chain
+      - id: escrow_funded
+        allowed: [refund, open_dispute]
+        forbidden: [direct_fee_router]
+        anomaly: service dispute → dispute FSM
+      - id: completed
+        allowed: [review]
+        forbidden: [on-chain refund]
+        anomaly: indexer lag → wait G2 replay
+
+  guide:
+    ssot: docs/spec/350-阶段状态机可视化与状态校验系统.md
+    machine_code: order_guide
+    states:
+      - id: identity_staked
+        allowed: [accept_order, deposit_identity]
+        forbidden: [withdraw_stake_while_active_orders]
+        anomaly: slash → IdentityStakingPool
+      - id: service_active
+        allowed: [request_release via backend]
+        forbidden: [pull_escrow_direct]
+        anomaly: no-show → slashed path
+      - id: payout_received
+        allowed: [withdraw_wallet]
+        forbidden: [double_release]
+        anomaly: wrong amount → dispute
+
+  merchant:
+    ssot: fund-flow-ssot.v1.md §2
+    machine_code: country_pool_subscriber
+    states:
+      - id: subscription_open
+        allowed: [subscribe_usdc]
+        forbidden: [steward_stake_same_pool]
+        anomaly: lock period → redemption queue
+      - id: locked
+        allowed: [request_redemption]
+        forbidden: [instant_principal_guarantee]
+        anomaly: window closed → queue next epoch
+
+  steward:
+    ssot: docs/spec/governance-token/state-machine.v1.md §1 §2
+    machine_code: steward_application
+    states:
+      - id: draft
+        allowed: [submit_application]
+        forbidden: [vote, receive_profit]
+        anomaly: withdrawn terminal
+      - id: stake_pending
+        allowed: [stake_ttg_on_chain]
+        forbidden: [transfer_staked_ttg]
+        anomaly: tx fail → retry
+      - id: under_review
+        allowed: [admin_review]
+        forbidden: [self_approve]
+        anomaly: rejected → stake_release_pending
+      - id: approved
+        allowed: [role_confirm, seat_activate]
+        forbidden: [unstake_instant]
+        anomaly: KPI watch → seat FSM
+      - id: active
+        allowed: [vote, receive_profit, request_exit]
+        forbidden: [direct_treasury_spend]
+        anomaly: probation → 0% bonus
+      - id: exit_requested
+        allowed: [wait_cooling_180d]
+        forbidden: [usdc_exit]
+        anomaly: KPI review fail → extended delay
+      - id: released
+        allowed: [claimReleased]
+        forbidden: [re_stake_same_epoch]
+        anomaly: claim fail → on-chain retry
+
+  ttg_holder:
+    ssot: ttg-allocation-permissions-flows-ssot-v1.md
+    machine_code: ttg_governance_participant
+    states:
+      - id: wallet_balance
+        allowed: [transfer, delegate, primary_market_if_enabled]
+        forbidden: [mint_self]
+        anomaly: lost key → no recovery
+      - id: delegated
+        allowed: [vote, propose if threshold]
+        forbidden: [double_delegate_same_block]
+        anomaly: flash vote mitigated by getPastVotes
+      - id: staked_steward
+        allowed: [governance_vote_per_rules]
+        forbidden: [transfer_while_locked]
+        anomaly: see steward FSM
+
+  admin:
+    ssot: registry/admin-rbac-permissions.v1.yaml
+    machine_code: admin_console
+    states:
+      - id: authenticated
+        allowed: [rbac_scoped_reads, approval_workflows]
+        forbidden: [direct_timelock_execute, spend_treasury]
+        anomaly: 403 → permission matrix audit
+      - id: approval_pending
+        allowed: [second_signer_approve]
+        forbidden: [solo_p0_mutations]
+        anomaly: timeout → escalate Ops
+
+# ── Pool Lifecycles ───────────────────────────────────────────────────────────
+pool_lifecycles:
+  - id: POOL-TREASURY
+    contract: GovernanceTreasuryP4Cap
+    funds_in: [governance_allocation, primary_market proceeds TARGET]
+    funds_out: [spendP4Reserve, governance grants]
+    movers_allowed: [Timelock executor via spender role]
+    movers_denied: [Admin API, Backend hot wallet, Owner EOA direct]
+    pause: via governance only
+    evidence: evidence/GO_ttg_cert/
+
+  - id: POOL-FEEROUTER
+    contract: FeeRouter
+    funds_in: [Escrow platformFeeRecipient leg]
+    funds_out: [distribute 45/55 split]
+    movers_allowed: [owner distribute]
+    movers_denied: [traveler, guide, steward]
+    pause: distributePaused
+    evidence: evidence/GO_production_readiness/G3-02/
+
+  - id: POOL-REGION-VAULT
+    contract: RegionVault
+    funds_in: [FeeRouter country bucket D-4555-A]
+    funds_out: [governance directed allocations TARGET]
+    movers_allowed: [Timelock governed]
+    movers_denied: [steward direct]
+    pause: none immutable params
+    evidence: registry/protocol-convergence-deployments.v1.yaml
+
+  - id: POOL-NET-PROFIT-LEDGER
+    contract: CountryPoolNetProfitLedger
+    funds_in: [finance accrual fundEpoch]
+    funds_out: [executeSplit steward/global/unallocated]
+    movers_allowed: [Timelock owner]
+    movers_denied: [Admin, Backend]
+    pause: operational hold via governance
+    evidence: PHASE2 audit docs
+
+  - id: POOL-ESCROW-INSTANCE
+    contract: Escrow
+    funds_in: [traveler deposit]
+    funds_out: [release, refund, dispute resolution]
+    movers_allowed: [see FL-01 FL-02 — release caller UNVERIFIED]
+    movers_denied: [governor]
+    pause: none
+    evidence: contracts/test/Escrow.t.sol
+
+  - id: POOL-STEWARD-STAKE
+    contract: RegionStewardStakePool
+    funds_in: [stake TTG]
+    funds_out: [claimReleased, slash TARGET]
+    movers_allowed: [steward stake/unstake paths]
+    movers_denied: [treasury pull]
+    pause: parameter via Timelock
+    evidence: evidence/GO_ttg_cert/
+
+# ── Attack Surface Matrix ─────────────────────────────────────────────────────
+attack_surface_matrix:
+  - contract: Escrow
+    attacks:
+      - id: ASM-ESC-01
+        vector: Reentrancy
+        proof_required: forge test or CEI pattern in source
+        mitigation_design: checks-effects-interactions + no external call before state
+      - id: ASM-ESC-02
+        vector: Double Release
+        proof_required: status gate Funded→Completed once
+        mitigation_design: InvalidState on non-Funded
+      - id: ASM-ESC-03
+        vector: Unauthorized Release
+        proof_required: caller restriction or documented relayer model
+        mitigation_design: UNVERIFIED — release() public
+      - id: ASM-ESC-04
+        vector: Wrong Recipient
+        proof_required: init immutability of guide/traveler/token
+        mitigation_design: onlyFactory init once
+
+  - contract: TravelTrustGovernor
+    attacks:
+      - id: ASM-GOV-01
+        vector: Flash Vote
+        proof_required: ERC20Votes getPastVotes
+        mitigation_design: GovernanceVotesToken snapshots
+      - id: ASM-GOV-02
+        vector: Queue Spam
+        proof_required: proposal threshold + timelock
+        mitigation_design: proposalThreshold parameter
+      - id: ASM-GOV-03
+        vector: Execute Replay
+        proof_required: timelock idempotency
+        mitigation_design: OpenZeppelin GovernorTimelockCompound pattern
+
+  - contract: FeeRouter
+    attacks:
+      - id: ASM-FR-01
+        vector: Routing config hijack
+        proof_required: onlyOwner + Timelock as owner
+        mitigation_design: owner=Timelock at deploy
+      - id: ASM-FR-02
+        vector: Dust accumulation
+        proof_required: distribute pulls full balance
+        mitigation_design: distribute(amount) semantics
+
+  - contract: RegionStewardStakePool
+    attacks:
+      - id: ASM-STK-01
+        vector: Double stake same jurisdiction
+        proof_required: hasJurisdictionStake guard
+        mitigation_design: stake() revert if active
+      - id: ASM-STK-02
+        vector: Early unstake
+        proof_required: release delay timestamps
+        mitigation_design: releaseRequestedAt + claimReleased
+
+  - contract: GovernanceTreasuryP4Cap
+    attacks:
+      - id: ASM-TR-01
+        vector: Spender bypass cap
+        proof_required: P4 cap enforcement test
+        mitigation_design: spendP4Reserve cap check
+      - id: ASM-TR-02
+        vector: Non-spender drain
+        proof_required: onlySpender modifier
+        mitigation_design: role gated spend
+
+  - contract: TimelockUpgradeableProxy
+    attacks:
+      - id: ASM-PRX-01
+        vector: EOA upgradeTo
+        proof_required: admin slot = Timelock only
+        mitigation_design: G24 gate + proxy tests
+
+# ── Web3 Permission Tree (on-chain + off-chain) ───────────────────────────────
+permission_tree:
+  - id: PERM-ROOT-OWNER
+    role: Protocol Owner / Safe
+    scope: deploy-time + Timelock proposer
+    children:
+      - id: PERM-PROXY-ADMIN
+        role: Timelock (via ERC1967 admin slot)
+        scope: upgradeTo / upgradeToAndCall
+        denies: [EOA direct upgrade]
+      - id: PERM-TIMELOCK-EXEC
+        role: Timelock Executor
+        scope: execute queued ops
+        children:
+          - id: PERM-GOVERNOR
+            role: TravelTrustGovernor
+            scope: propose · vote · queue · execute via timelock
+          - id: PERM-TREASURY-SPEND
+            role: Treasury spender (Timelock)
+            scope: spendP4Reserve · spend ETH
+          - id: PERM-FEEROUTER-OWNER
+            role: FeeRouter.owner
+            scope: distribute · setRoutingConfig · pause
+          - id: PERM-LEDGER-OWNER
+            role: CountryPoolNetProfitLedger.owner
+            scope: accrue · fund · close · split
+      - id: PERM-REGISTRY
+        role: On-chain registry (TARGET)
+        scope: address book updates via governance
+      - id: PERM-ESCROW-FACTORY
+        role: EscrowFactory
+        scope: createEscrow instances
+        denies: [upgrade existing Escrow]
+      - id: PERM-API-RBAC
+        role: Admin Console RBAC
+        scope: off-chain reads/approvals only
+        denies: [direct_timelock · spend · upgrade]
+
+# ── Upgrade Matrix ────────────────────────────────────────────────────────────
+upgrade_matrix:
+  - contract: TimelockUpgradeableProxy shells
+    path: [Proposal, Vote, Queue, TimelockDelay, Execute, upgradeTo, VerifyBytecode, EvidenceG24]
+    rollback: previous impl only via new governance proposal
+    verify: [G1 bytecode manifest, storage layout test]
+    evidence: registry/g24-p-upgrade-01-contract-posture.v1.yaml
+  - contract: TravelTrustGovernor
+    path: [non_upgradeable — redeploy requires migration proposal]
+    rollback: none in-place
+    verify: [bytecode hash G1]
+  - contract: GovernanceTimelock
+    path: [non_upgradeable delay constant]
+    rollback: none
+    verify: [G3 delay >= 86400s]
+  - contract: Escrow instances
+    path: [immutable — new orders via EscrowFactory only]
+    rollback: N/A
+    verify: [factory routing config]
+  - contract: FeeRouter
+    path: [setRoutingConfig via Timelock if owner=Timelock]
+    rollback: prior config via governance
+    verify: [event RoutingConfigSet]
+
+# ── Economic Model Flows ──────────────────────────────────────────────────────
+economic_model:
+  supply_invariants:
+    - id: ECO-01
+      check: TTG total supply cap
+      source: TtgGovFreezeConstants.TTG_TOTAL_SUPPLY_UNITS
+      expected: 10_000_000 ether
+      infinite_mint_risk: GovernanceVotesToken mint restricted to Minter role
+    - id: ECO-02
+      check: USDC Escrow conservation
+      source: Escrow.executeResolution sum check
+      expected: guide+traveler+platform == totalAmount
+    - id: ECO-03
+      check: FeeRouter BPS sum
+      source: FeeRouter constructor defaults
+      expected: country 4500 + global splits = 10000
+  flow_graph:
+    - from: TTG Treasury mint
+      to: Primary Market TARGET
+      cycle_risk: LOW if mint cap enforced
+    - from: Primary Market
+      to: TTG Holder wallets
+      cycle_risk: MEDIUM — market price vs NAV disclosure
+    - from: Escrow fees
+      to: FeeRouter
+      to2: CountryPool D-4555-A
+      cycle_risk: LOW — orthogonal to D-4555-B
+    - from: Net profit
+      to: CountryPoolNetProfitLedger
+      to2: Steward + Global
+      cycle_risk: MEDIUM — double-count if mixed with D-4555-A
+  arbitrage_checks:
+    - id: ECO-ARB-01
+      scenario: stake vote then unstake same block
+      mitigation: getPastVotes + release delay
+      status: REQUIRES_CERT_EVIDENCE
+    - id: ECO-ARB-02
+      scenario: fee route vs net profit double dip
+      mitigation: orthogonal accounting tracks
+      status: REQUIRES_OPS_TRAINING
+
+# ── Mainnet Deployment Drill (dry run steps) ────────────────────────────────
+deployment_drill:
+  - id: DRILL-01
+    phase: Deploy
+    action: Broadcast GovernanceStack chain_id=1
+    evidence_required: registry mainnet addresses
+    status: NOT_RUN
+  - id: DRILL-02
+    phase: Verify
+    action: G1 bytecode identity manifest
+    evidence_required: evidence/mainnet_launch_gate/G1_*
+    status: NOT_RUN
+  - id: DRILL-03
+    phase: Initialize
+    action: Wire Timelock as owner on FeeRouter/Treasury
+    evidence_required: on-chain owner() read
+    status: NOT_RUN
+  - id: DRILL-04
+    phase: Proxy
+    action: GovFreeze V2 overlay deploy + admin slot check
+    evidence_required: G24 post-deploy probe
+    status: NOT_RUN
+  - id: DRILL-05
+    phase: Registry
+    action: protocol-convergence-deployments mainnet block
+    evidence_required: GAP-99-07 closed
+    status: NOT_RUN
+  - id: DRILL-06
+    phase: Pause
+    action: FeeRouter distributePaused=true via Timelock drill
+    evidence_required: tx hash + event
+    status: NOT_RUN
+  - id: DRILL-07
+    phase: Resume
+    action: distributePaused=false
+    evidence_required: tx hash + G3-02 replay
+    status: NOT_RUN
+  - id: DRILL-08
+    phase: Rollback
+    action: impl downgrade proposal (testnet only)
+    evidence_required: UP drill evidence
+    status: NOT_RUN
+
+# ── Responsibility Matrix (per module) ──────────────────────────────────────
+responsibility_matrix:
+  - module: M10 Escrow
+    product: Order lifecycle · traveler/guide UX
+    security: Escrow.t.sol · R-01 findings
+    contract: Escrow.sol · EscrowFactory.sol
+    backend: order state machine · relayer policy
+    finance: fee bps · platformFeeRecipient wiring
+    ops: dispute escalation · indexer reconciliation
+  - module: M09 FeeRouter
+    product: fee disclosure
+    security: routing hijack · pause drill
+    contract: FeeRouter.sol
+    backend: none direct
+    finance: D-4555-A allocation
+    ops: Timelock execute distribute
+  - module: M08 Treasury
+    product: governance budget narrative
+    security: spender cap · Cert #8
+    contract: GovernanceTreasuryP4Cap.sol
+    backend: none direct
+    finance: P4 reserve accounting
+    ops: GORP · Cert #8-12
+  - module: M06 Governance
+    product: proposal UX
+    security: ASM-GOV-* · Cert lifecycle
+    contract: TravelTrustGovernor.sol
+    backend: governance API read models
+    finance: treasury linkage
+    ops: Timelock queue/execute runbook
+  - module: M11 Settlement
+    product: steward profit UX
+    security: split integrity
+    contract: CountryPoolNetProfitLedger.sol
+    backend: epoch accrual jobs
+    finance: D-4555-B SSOT
+    ops: epoch close checklist
+  - module: M12 Staking
+    product: steward program
+    security: stake/unstake delays
+    contract: RegionStewardStakePool.sol
+    backend: application FSM
+    finance: TTG not USDC
+    ops: Cert #9 unstake evidence
+  - module: M15 RBAC
+    product: admin console
+    security: D3 closure · P0 bypass isolation
+    contract: none
+    backend: admin_rbac.rs
+    finance: read-only finance panels
+    ops: ADM-U01/U02
+
+# ── Protocol Lifecycle (per module phase gates) ───────────────────────────────
+protocol_lifecycle_phases: [Design, Implement, Deploy, Verify, Operate, Upgrade, Emergency, Archive]
+
+protocol_lifecycle:
+  - module: M10 Escrow
+    Design: PASS · 01 §4 · fund-flow-ssot §5
+    Implement: PASS · contracts/src/Escrow.sol
+    Deploy: PASS · Sepolia factory wired
+    Verify: PASS · G3-02 · Escrow.t.sol
+    Operate: IN_PROGRESS · indexer + admin lifecycle
+    Upgrade: N/A immutable instance
+    Emergency: dispute + arbitrator path
+    Archive: factory deprecation via governance
+  - module: M06 Governance
+    Design: PASS
+    Implement: PASS
+    Deploy: PASS · Sepolia
+    Verify: IN_PROGRESS · Cert 7/12
+    Operate: TARGET · mainnet replay
+    Upgrade: non-upgradeable
+    Emergency: pause via Timelock cancel
+    Archive: none
+  - module: M11 Settlement
+    Design: PASS · D-4555-B
+    Implement: PASS
+    Deploy: PARTIAL · DE pilot
+    Verify: TARGET · GAP-99-03
+    Operate: TARGET
+    Upgrade: ledger params via Timelock
+    Emergency: epoch freeze governance
+    Archive: jurisdiction wind_down

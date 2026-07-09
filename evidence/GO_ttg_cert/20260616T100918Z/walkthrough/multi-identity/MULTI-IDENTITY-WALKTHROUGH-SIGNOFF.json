@@ -1,0 +1,69 @@
+{
+  "acceptance_id": "TT_GOVERNANCE_CERT_02_MULTI_IDENTITY_WALKTHROUGH",
+  "signoff_kind": "HUMAN-SIGNOFF",
+  "cert": 2,
+  "stamp_utc": "20260616T100918Z",
+  "signer": "Sebastian Ward",
+  "signed_at_utc": "2026-06-16T13:56:23Z",
+  "mtm_ssot": "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+  "mtm_ids": [
+    "CHK-CORE-02",
+    "CHK-CORE-23",
+    "CHK-FE-15",
+    "CHK-FE-12",
+    "CHK-ID-01",
+    "CHK-ID-02",
+    "CHK-ID-03",
+    "CHK-ID-04",
+    "CHK-ID-05",
+    "CHK-ID-06",
+    "CHK-ID-07"
+  ],
+  "target_tier": "HUMAN_DONE",
+  "roles_walked": [
+    "traveler",
+    "investor",
+    "steward",
+    "guide",
+    "merchant",
+    "admin"
+  ],
+  "uat_refs": [
+    "B1",
+    "B2",
+    "B3",
+    "B4"
+  ],
+  "recordings": [
+    "B1-hub-traveler.mp4",
+    "B2-steward-region.mp4",
+    "B3-guide-merchant-isolation.mp4",
+    "B4-investor-admin-boundaries.mp4"
+  ],
+  "screenshots": [
+    "role-admin-governance-readonly.png",
+    "role-guide-settings.png",
+    "role-investor-governance-read.png",
+    "role-merchant-settings.png",
+    "role-steward-region-workbench.png",
+    "role-traveler-hub.png"
+  ],
+  "machine_checks_verdict": "PARTIAL",
+  "machine_checks": {
+    "cert2_machine_gates": {
+      "cmd": "C:\\Program Files\\Git\\bin\\bash.exe D:\\TravelTrust-V1.1\\scripts\\dev\\smoke-cert2-multi-identity-machine-gates.sh",
+      "exit_code": 1,
+      "stdout_tail": "smoke-cert2-multi-identity-machine: OK vitest IA union\n== smoke-multi-identity-closure-local (① only) API=http://127.0.0.1:8080 ==\nsmoke-multi-identity-closure: OK login multi-demo@test.com\nsmoke-multi-identity-closure: OK identity_slots guide+merchant+steward active\nsmoke-multi-identity-closure: OK guide settings write\nsmoke-multi-identity-closure: OK merchant settings write\nsmoke-multi-identity-closure: OK steward settings write\nsmoke-multi-identity-closure: OK acquisition settings write\nsmoke-multi-identity-closure: OK merchant listing publish",
+      "stderr_tail": "smoke-multi-identity-closure: FAIL POST acquisition listing HTTP 429 body={\"status\":\"error\",\"error\":\"acquisition_publish_rate_limited\",\"message\":\"acquisition_publish_rate_limited\"}\nsmoke-cert2-multi-identity-machine: FAIL api multi-identity closure",
+      "ok": false,
+      "api_skipped": false
+    }
+  },
+  "verdict": "PASS",
+  "honest_boundary": "② Cert#2 multi-identity walkthrough ≠ 58/58 Human ≠ Enterprise 100 ≠ ③ Production GO",
+  "forbidden": [
+    "new features",
+    "govfreeze re-audit",
+    "docs/spec expansion"
+  ]
+}

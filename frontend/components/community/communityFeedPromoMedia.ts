@@ -1,6 +1,7 @@
 import type { CommunityPost } from "@/lib/communityMockData";
 import { communityPostGridThumbRaw } from "@/components/community/communityFeedMappersRoleAndMedia";
-import { isShowcasePostId } from "@/lib/communityShowcase";
+import { isShowcasePostId, shouldUseCommunityShowcaseOnEmpty } from "@/lib/communityShowcase";
+import { isCommunityContentProductionProfile } from "@/lib/communityContentProfile";
 import {
   communityFeedPromoHotCheckins,
   communityFeedPromoHotScore,
@@ -53,11 +54,19 @@ export function communityFeedPromoDestinationHref(destination: string): string {
   return `/community?destination=${encodeURIComponent(destination)}`;
 }
 
-/** 活动卡 preview：仅用 curated showcase，避免把用户刚发的 UGC 从瀑布流里抽走 */
+/** 活动卡 preview：Production 用 governed Feed 帖；本地 showcase 模式可优先 demo 帖 */
 export function pickCommunityFeedPromoPreviewPost(
   posts: readonly CommunityPost[],
 ): CommunityPost | undefined {
-  return posts.find((p) => isShowcasePostId(p.id) && communityFeedPromoStillThumbSrc(p));
+  const withThumb = posts.filter((p) => communityFeedPromoStillThumbSrc(p));
+  if (isCommunityContentProductionProfile()) {
+    return withThumb.find((p) => !isShowcasePostId(p.id));
+  }
+  if (shouldUseCommunityShowcaseOnEmpty()) {
+    const showcase = withThumb.find((p) => isShowcasePostId(p.id));
+    if (showcase) return showcase;
+  }
+  return withThumb.find((p) => !isShowcasePostId(p.id));
 }
 
 /** 瀑布网格 · 去掉已在活动卡展示的 preview 帖，避免重复 */

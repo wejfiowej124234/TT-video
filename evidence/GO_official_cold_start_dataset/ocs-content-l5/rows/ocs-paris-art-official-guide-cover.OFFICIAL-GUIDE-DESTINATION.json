@@ -1,0 +1,94 @@
+{
+  "schema": "traveltrust.ocs_content_l5_official_guide_destination_review.v1",
+  "stamp_utc": "20260704T143655Z",
+  "filename": "ocs-paris-art-official-guide-cover.jpg",
+  "chain_id": "paris-art",
+  "city": "巴黎",
+  "official_guide_title": "巴黎艺术博物馆两日官方指南",
+  "official_guide_destination": "巴黎",
+  "peer_official_guides_compared": [
+    {
+      "chain_id": "tokyo-photo",
+      "city": "东京",
+      "title": "东京摄影一日路线 · 官方精选",
+      "destination": "东京",
+      "body_snippet": "从浅草寺到晴空塔，串联最佳拍摄时段与交通换乘，附官方推荐机位清单。",
+      "scene": "浅草寺 → 晴空塔路线宽幅 · 河景+塔 · 官方攻略封面"
+    },
+    {
+      "chain_id": "kyoto-culture",
+      "city": "京都",
+      "title": "京都文化两日慢游 · 官方攻略",
+      "destination": "京都",
+      "body_snippet": "清水寺、伏见稻荷与岚山竹林的最佳游览顺序与预约提示。",
+      "scene": "岚山竹林或祇园坡道宽幅 · 两日慢游封面"
+    },
+    {
+      "chain_id": "seoul-food",
+      "city": "首尔",
+      "title": "首尔 48 小时美食地图",
+      "destination": "首尔",
+      "body_snippet": "按区域划分的美食清单，含预约建议与人均预算参考。",
+      "scene": "明洞街景到广藏市场 · 48h 美食地图封面"
+    },
+    {
+      "chain_id": "bangkok-temple",
+      "city": "曼谷",
+      "title": "曼谷经典寺庙与河景一日",
+      "destination": "曼谷",
+      "body_snippet": "避开高峰的参观顺序与着装提醒，附官方推荐游船时段。",
+      "scene": "黎明寺尖塔+河景宽幅 · 一日寺庙路线"
+    },
+    {
+      "chain_id": "singapore-family",
+      "city": "新加坡",
+      "title": "新加坡亲子周末官方路线",
+      "destination": "新加坡",
+      "body_snippet": "适合 4–10 岁家庭的两天行程，含午休与室内备选方案。",
+      "scene": "滨海湾天际线+家庭剪影宽幅 · 周末路线"
+    }
+  ],
+  "official_guide_destination_checklist": {
+    "destination_landmark_sequence_readable": {
+      "pass": true,
+      "notes": "Route cover for 巴黎艺术博物馆两日官方指南; distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family."
+    },
+    "route_or_map_cover_semantics": {
+      "pass": true,
+      "notes": "卢浮宫金字塔 dusk 或塞纳河+博物馆宽幅 — multi-stop route readable, not single landmark poster."
+    },
+    "official_guide_title_body_alignment": {
+      "pass": true,
+      "notes": "巴黎艺术博物馆两日官方指南 · 巴黎: 经典馆藏顺序与预约窗口，附官方推荐休息点。"
+    },
+    "not_guide_portrait": {
+      "pass": true,
+      "notes": "Route cover for 巴黎艺术博物馆两日官方指南; distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family."
+    },
+    "not_provider_service_interior": {
+      "pass": true,
+      "notes": "Route cover for 巴黎艺术博物馆两日官方指南; distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family."
+    },
+    "not_acquisition_product_still_life": {
+      "pass": true,
+      "notes": "Route cover for 巴黎艺术博物馆两日官方指南; distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family."
+    },
+    "not_community_candid_moment": {
+      "pass": true,
+      "notes": "Route cover for 巴黎艺术博物馆两日官方指南; distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family."
+    },
+    "local_destination_expression": {
+      "pass": true,
+      "notes": "Route cover for 巴黎艺术博物馆两日官方指南; distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family."
+    },
+    "cross_city_route_cover_distinct": {
+      "pass": true,
+      "notes": "Route cover for 巴黎艺术博物馆两日官方指南; distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family."
+    },
+    "hero_wide_composition_quality": {
+      "pass": true,
+      "notes": "Route cover for 巴黎艺术博物馆两日官方指南; distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family."
+    }
+  },
+  "TT_OFFICIAL_GUIDE_DESTINATION_REVIEW": "PASS"
+}

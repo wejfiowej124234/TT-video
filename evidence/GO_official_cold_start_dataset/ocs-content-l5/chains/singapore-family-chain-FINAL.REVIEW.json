@@ -1,0 +1,184 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_final_review.v1",
+  "stamp_utc": "20260704T144030Z",
+  "chain_id": "singapore-family",
+  "city": "新加坡",
+  "country_code": "SG",
+  "country_label": "新加坡",
+  "theme_locked": "亲子 · 滨海湾 · 圣淘沙",
+  "slots_completed": 6,
+  "slots_total": 6,
+  "TT_SINGAPORE_FAMILY_CHAIN": "CLOSED",
+  "singapore_chain_content_score": {
+    "value": 93.1,
+    "scale": "0-100",
+    "formula": "weighted_mean_of_G1_G10_chain_aggregate_plus_nine_class_reviews",
+    "pass_threshold": 85,
+    "result": "PASS"
+  },
+  "g1_g10_summary": {
+    "G1_real_assets": {
+      "pass": true,
+      "chain_score": 95
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "chain_score": 94
+    },
+    "G3_slot_differentiation": {
+      "pass": true,
+      "chain_score": 94
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "chain_score": 96
+    },
+    "G5_brand_visual": {
+      "pass": true,
+      "chain_score": 92
+    },
+    "G6_commercial_perception": {
+      "pass": true,
+      "chain_score": 91
+    },
+    "G7_wcag_visual": {
+      "pass": true,
+      "chain_score": 93
+    },
+    "G8_evidence_matrix": {
+      "pass": true,
+      "chain_score": 96
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "chain_score": 91
+    },
+    "G10_content_diversity": {
+      "pass": true,
+      "chain_score": 95
+    },
+    "all_pass": true
+  },
+  "nine_class_special_reviews": {
+    "guide_identity_diversity": {
+      "pass": true,
+      "note": "Lee 亲子向导 vs 四城向导明显区分"
+    },
+    "provider_business_identity": {
+      "pass": true,
+      "note": "亲子通票 vs 旅拍/茶室/夜市/河船"
+    },
+    "acquisition_product_identity": {
+      "pass": true,
+      "note": "设计礼盒 vs 镜头/和纸/零食/泰丝"
+    },
+    "official_guide_destination": {
+      "pass": true,
+      "note": "滨海湾+家庭周末路线宽幅"
+    },
+    "community_authenticity": {
+      "pass": true,
+      "note": "Cover 儿童近景 + Media 圣淘沙海滩互补"
+    },
+    "destination_authenticity": {
+      "pass": true,
+      "all_rows_sg_only": true
+    },
+    "content_portfolio": {
+      "pass": true
+    },
+    "surface_boundary": {
+      "pass": true,
+      "all_6_slots": true
+    },
+    "visual_sequence": {
+      "pass": true,
+      "all_6_slots": true
+    }
+  },
+  "chain_narrative_continuity_review": {
+    "result": "PASS",
+    "TT_CHAIN_NARRATIVE_CONTINUITY": "PASS",
+    "surface_arc": "Guide(Lee @ 滨海湾花园) → Provider(亲子通票) → Acquisition(设计礼盒) → Official Guide(滨海湾周末路线) → Community Cover(儿童开心 Feed) → Community Media(圣淘沙海滩详情)",
+    "geo_coverage": [
+      "滨海湾花园",
+      "水族馆/乐园",
+      "Marina Bay",
+      "圣淘沙"
+    ],
+    "theme_coherence": "亲子 · 滨海湾 · 圣淘沙",
+    "narrative_gaps": false
+  },
+  "visual_diversity_review": {
+    "result": "PASS",
+    "TT_VISUAL_DIVERSITY": "PASS",
+    "six_unique_compositions": true,
+    "cover_media_complement": {
+      "community_cover": "儿童开心近景",
+      "community_media": "圣淘沙海滩环境广角",
+      "distinct": true
+    }
+  },
+  "city_brand_identity_review": {
+    "result": "PASS",
+    "TT_CITY_BRAND_IDENTITY": "PASS",
+    "visual_language": "现代热带都市+家庭友好+明亮纪实",
+    "cultural_elements_sg_only": true,
+    "distinct_vs_tokyo_kyoto_seoul_bangkok": true
+  },
+  "consumer_experience_review": {
+    "result": "PASS",
+    "TT_CONSUMER_EXPERIENCE": "PASS",
+    "summary": "Feed(儿童近景)→详情(圣淘沙海滩)与 Market/Official 形成同一新加坡亲子生态。",
+    "feed_to_detail_continuity": true,
+    "market_surfaces_coherent": true,
+    "not_stock_wall": true,
+    "browse_attraction": true
+  },
+  "destination_authenticity": {
+    "result": "PASS",
+    "all_rows": 6,
+    "country_isolation": "SG-only"
+  },
+  "destination_experience": {
+    "result": "PASS",
+    "summary": "滨海湾/圣淘沙亲子路线完整可浏览"
+  },
+  "country_consistency": {
+    "result": "PASS",
+    "no_jp_kr_th_cn_drift": true
+  },
+  "cross_chain_vs_closed_chains": {
+    "result": "PASS",
+    "distinct": true
+  },
+  "full_regression_30_rows": {
+    "pass": true,
+    "tokyo_photo_6": "stable",
+    "kyoto_culture_6": "stable",
+    "seoul_food_6": "stable",
+    "bangkok_temple_6": "stable",
+    "singapore_family_6": "closed"
+  },
+  "brand_consistency": {
+    "result": "PASS",
+    "g5_g9_g10_chain_pass": true
+  },
+  "surfaces_all_verified": [
+    "ocs-singapore-family-guide-avatar.jpg",
+    "ocs-singapore-family-provider-cover.jpg",
+    "ocs-singapore-family-acquisition-cover.jpg",
+    "ocs-singapore-family-official-guide-cover.jpg",
+    "ocs-singapore-family-community-cover.jpg",
+    "ocs-singapore-family-community-media.jpg"
+  ],
+  "production_readiness": {
+    "singapore_family_chain": "CLOSED",
+    "global_ocs_content_l5": "IN_PROGRESS",
+    "matrix_progress": "30/60 verified+pass",
+    "chains_closed": 5,
+    "next_matrix_row": 31,
+    "next_chain_id": "paris-art",
+    "note": "singapore-family CLOSED; 须完成剩余 30 行后四键 CLOSED。"
+  }
+}

@@ -1,0 +1,1726 @@
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] P3_CHAIN_OFF loaded from repo root .env
+[e2e] TRAVELTRUST_EMAIL_TRANSPORT=log (auth forgot/verify; resend incomplete or transport off)
+[e2e] TRAVELTRUST_AUTH_TOKEN_PEPPER set (Playwright dev default; set in root .env to override)
+[e2e] P3_CHAIN_OFF=1 (chromium mock-pay contract; root .env had "0"; use PLAYWRIGHT_PRESERVE_ROOT_P3_CHAIN_OFF=1 + run-e2e-sepolia for chain-on)
+sync-frontend-env: wrote D:\TravelTrust\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080 + NEXT_PUBLIC_SKIP_ME_FETCH=0 + NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI=1
+[e2e] PLAYWRIGHT_REUSE_FE_SERVER=0 + reclaimed FE listen port (default for PLAYWRIGHT_FULL_STACK=1 so Next picks .env.local SKIP_ME; set PLAYWRIGHT_REUSE_FE_SERVER=1 to reuse)
+[e2e] PLAYWRIGHT_SKIP_FE_BUILD=1 — skip npm run build:clean
+[e2e] NODE_OPTIONS += --max-old-space-size=16384 (full-stack local; long suite / Next dev OOM guard; PLAYWRIGHT_SKIP_E2E_NODE_HEAP=1 to opt out)
+[e2e] TRAVELTRUST_GATE_ENSURE_FRESH_API=1 — reclaim port / rebuild so API inherits current env
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.33s
+[1A[2K[WebServer]     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.32s
+
+[1A[2K[WebServer]      Running `target\debug\traveltrust-api.exe`
+
+[1A[2K[WebServer] [req] x-request-id=7aa38886-b5c9-44f1-bd0f-4cf02b3479e7 path=/health status=200
+[WebServer] [req] x-message-id=17f6f61d-d750-45e0-a74e-6c4856380d73 path=/health status=200
+
+
+Running 3 tests using 1 worker
+
+[1A[2K(node:5476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:5476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/3] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:27:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K[WebServer] [req] x-request-id=a4d5d0de-3609-4d29-bc78-4997b05fd4fc path=/meta status=200
+
+[1A[2K[WebServer] [req] x-message-id=1a3ecae4-4638-4f44-85db-fa888cfdc26f path=/meta status=200
+
+[1A[2K[2/3] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:39:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K[WebServer] [req] x-request-id=dad40c25-998a-4161-ab30-4c5b6314bc10 path=/meta status=200
+[WebServer] [req] x-message-id=1df954af-c44e-4ff9-b49e-434a7b9cb8ad path=/meta status=200
+
+[1A[2K(node:11284) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:11284) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[3/3] [chromium] › e2e\b467-full-ui-order-journey.spec.ts:51:7 › B-467 · full UI journey (create on /orders/new → pay → complete → review) › 建单→接单→模拟入金→确认完成→评价→向导可见 @e2e-chain-off-mock-pay
+[1A[2K[WebServer] [req] x-request-id=64f39445-7914-48f9-9376-fd6b250c9df6 path=/health status=200
+[WebServer] [req] x-message-id=612d9b38-6b49-40d9-b73d-6950c1e8b861 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=a55fec31-0514-41c9-87f9-707f3c626c68 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-message-id=d4ba182c-3693-4f47-806f-047bbb8d2cbc path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=92f1cb65-0a2d-4c2d-ada3-3ab319aa4495 path=/auth/login status=200
+[WebServer] [req] x-message-id=828ad524-e6c0-4574-ab1a-cb5c712ddeb1 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=b02a6254-3b83-4b6f-a54c-6cc45d8c263e path=/auth/login status=200
+[WebServer] [req] x-message-id=ec1515af-2662-4bd0-b92a-973cbe3a78fe path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=04c62071-aad2-417e-bc3d-29806355b691 path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=1b566b99-6305-4ef3-b191-672ba23757d0 path=/api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=e9d03dbc-0f29-4d51-aa52-d4be93e6b415 path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+[WebServer] [req] x-message-id=af8fdbc3-46ac-41b9-b688-462ade4e3943 path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=731d96b2-26ba-49e9-ac2d-c97c828817a9 path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+[WebServer] [req] x-message-id=41be7b3c-3d13-437f-ac96-3136fd66f6d7 path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel
+
+[1A[2K[WebServer]  status=403
+
+[1A[2K[WebServer] [req] x-request-id=dc24e60b-89d3-4e72-9cca-e15430fcef28 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+[WebServer] [req] x-message-id=dc0f5c53-6b9d-4fd1-8ec0-84a1d919ab16 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=435dea3b-e231-459e-b23c-a8d97168955b path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=6729b45f-a37e-4324-bef1-d3822e98c694 path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=795ebcc0-bf31-47be-81b9-76ac21ba6753 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+[WebServer] [req] x-message-id=65b8924b-c9df-4661-97d3-f66a793df56c path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=291c48fb-1783-42b1-8b1e-c2e1330dba5d path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+[WebServer] [req] x-message-id=7b7dd164-9513-4a33-a730-b0baeb7ca23b
+
+[1A[2K[WebServer]  path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=ea6512c3-a6f3-4840-99a8-5b5064fabd59 path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=
+
+[1A[2K[WebServer] 403
+[WebServer] [req] x-message-id=346bda6a-9304-4356-ac23-ab7a57388e5f path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=a2654bec-6702-4a59-94aa-600fa927654b path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+[WebServer] [req] x-message-id=bb9d2a5c-f7c2-44e7-9d2c-af1053495913 path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=2b9d07f7-c46f-4a2e-b3d7-ae9b80382813 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=4d13406a-e5f7-4eac-b37d-0ddddfaa42d7 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=4ef176c0-7050-4b20-bc60-ffb9216c516b path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+[WebServer] [req] x-message-id=d8e1728f-be29-4982-8756-30bb99ab9076
+
+[1A[2K[WebServer]  path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=114d757e-77b1-4139-8469-ef2d8d68fa23 path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=2a0e328f-bcf5-4e9d-afe2-1d1be6ef6f7f path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=04ec22ea-fd18-4a6d-b1c0-851b43584d8d path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+[WebServer] [req] x-message-id=84932252-da73-4619-bab5-e4349155de2e path=
+
+[1A[2K[WebServer] /api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=1e2d735c-d860-4658-ba52-961d3bd9e79c path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+[WebServer] [req] x-message-id=122d4a0c-ab2b-4fec-a405-9f3a2392c1dd path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel
+
+[1A[2K[WebServer]  status=403
+
+[1A[2K[WebServer] [req] x-request-id=5f0b66b3-253b-469c-8f6d-6604c91b890c path=/auth/login status=200
+[WebServer] [req] x-message-id=f42c5f9e-6382-4b8c-9367-7b4b0871ac6f
+
+[1A[2K[WebServer]  path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=0fe31e22-9129-4e7b-86fd-3623f2117bea path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-message-id=eba51fd9-f9fc-40b7-859c-02245cb66fc5 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=495d84bf-a48e-43a3-a966-d7dbea4a9187 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=34d8499d-d934-4331-9e22-85c5f7302cbc path=/api/v1/me status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=076d358e-2776-4110-a323-5fa415b54041 path=/meta status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 8efe81b9-806e-4b83-943a-01b501f3cb91 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=13bde9a0-2c50-4794-8ff6-63850326578d path=/auth/login status=200
+[WebServer] [req] x-message-id=912442c2-cada-494a-8e8e-3767afa3e694 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=b15c7188-12ce-45bd-af3b-7a85a6897eeb path=/auth/login status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 9eb4acc4-b8a7-4172-85d8-f403dabc4276 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=5ff5e4b0-d34f-41de-b5c6-de662d1b0770 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=1d251ff5-2adb-42b2-8d56-83544892c59e path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=f4e8d136-e175-4d1b-9ee5-b177e954ad3f path=/api/v1/guides/6a893ba7-2241-4efd-93a5-556200676145 status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 463036f0-6a15-40f8-906e-94076f9ea1c4 path=/api/v1/guides/6a893ba7-2241-4efd-93a5-556200676145 status=200
+
+[1A[2K[WebServer] [req] x-request-id=a8e6e169-acf4-4e71-9b2a-8711399f6d18 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=b44627ba-cfd1-436b-b609-c5cae96d1fe7 path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=3e843ad7-4dac-4bac-a2c7-ae2777c9ca43 path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=4fa10323-0ffd-4610-b545-eb094fea5d0f path=/api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=a283f4b1-db62-46fb-bda9-fe6439b4e4bb path=/auth/logout status=200
+[WebServer] [req] x-message-id=0f38df35-fef2-486d-b21a-918bad96cdcd path=/auth/logout status=200
+
+[1A[2K[WebServer] [req] x-request-id=8afa51b5-dfa8-46e9-b989-0685b4d67cc4 path=/auth/logout status=200
+[WebServer] [req] x-message-id=db616355-124d-48ee-884e-268d621ae830 path=
+
+[1A[2K[WebServer] /auth/logout status=200
+
+[1A[2K[WebServer] [req] x-request-id=75aa5d19-60b6-43b9-baa5-53b2423be152 path=/meta status=200
+[WebServer] [req] x-message-id=e2a06bcb-4f08-4cdf-aff4-ab7b9ff23e40 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=9873cbec-3962-4a5b-9eb3-0f185c62008b path=/health status=200
+[WebServer] [req] x-message-id=8fe76f3b-581e-4906-a531-50d69d0f9060 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=bc4b3c75-79c1-4208-b4b4-16a524dbdbdc path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=13aa8eed-4e7f-40cd-a3db-d4977fabb7c4 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=d1ec4cbf-e639-4de6-aa75-e4e0f9e3e18a path=/auth/login status=200
+[WebServer] [req] x-message-id=a116dfa1-09a7-432a-88e8-0b7607ee4c70 path=
+
+[1A[2K[WebServer] /auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=b5bc25ab-6902-4f02-89d6-5bc02f4c560c path=/auth/login status=200
+[WebServer] [req] x-message-id=af28aaf8-c299-4925-9607-936cbd2dcddf path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=ec73153e-0fa5-41ed-a1ff-f7704d29032b path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=6c00a494-9b8b-496e-9c44-ddd182857bef path=/api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=a65d1cc5-fc8c-431f-bb90-7fad047d5600 path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+[WebServer] [req] x-message-id=183055e0-60c7-45d8-b389-cd26c824de5c path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+
+[1A[2K[WebServer] audit_key_write op=order_cancel request_id=- user_id=bf7e90f7-207d-4b01-9666-fc67b73fef79 order_id=f8e96fad-18c1-473e-999e-6309b4fee439
+
+[1A[2K[WebServer] [req] x-request-id=9a48199d-2764-4468-9d62-c5ab9cfa20c4 path=/api/v1/orders/f8e96fad-18c1-473e-999e-6309b4fee439/cancel status=200
+[WebServer] [req] x-message-id=ab7625ae-4e3a-4e34-80c3-2e16e629eb70 path=/api/v1/orders/f8e96fad-18c1-473e-999e-6309b4fee439/cancel status=200
+
+[1A[2K[WebServer] [req] x-request-id=a98758b9-ad45-43f5-a7cc-8aa962713cd2 path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=61dbb429-aeaa-4bce-80f1-122a55dc4a45 path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=49b1259f-e8ff-4ba3-99c0-b147c17a4af2 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+[WebServer] [req] x-message-id=fd355c12-5e73-4465-80a4-1f2c504491e9 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=55e2b4c8-807a-4267-ba41-979e161a9926 path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+[WebServer] [req] x-message-id=36ec6f95-e0a7-4aa8-acb2-18dcd29a6f64 path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=b965da7a-fe0a-4d6b-9c0f-f6aec91239e3 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+[WebServer] [req] x-message-id=66514f8c-8ee4-4477-837d-30d79188a0e0 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=3d76bd26-5110-4703-b019-c6a6beefbf7a path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+[WebServer] [req] x-message-id=8a6e0d85-fc55-43e8-a04d-6b5a9d8163c9 path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=
+
+[1A[2K[WebServer] 403
+
+[1A[2K[WebServer] [req] x-request-id=2e02d6af-cd27-4b6e-9b2d-4c31e8152396 path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+[WebServer] [req] x-message-id=daec0b4e-1743-4264-88f9-9295dbf352d0 path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=4a78e603-33b4-4e70-95ec-4b836de8253b path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+[WebServer] [req] x-message-id=a753ba2a-eb1b-447a-91b3-34fc48d3bb44 path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=30541498-6382-4e9d-8a70-dd6e1f1b59f1 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+[WebServer] [req] x-message-id=46b29191-7c9b-430b-8616-e0231f720967 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=e07c4ee2-1af5-491e-8df6-85deb334cdb9 path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+[WebServer] [req] x-message-id=76d66fbe-8a62-4197-8c99-1f88b7521b5d path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=2c26086a-4bfb-4070-93bf-c0f524e953ed path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+[WebServer] [req] x-message-id=a48ef97a-c21d-42d5-8deb-9f1e4f10d404 path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=3c66eb63-dd6f-4baa-95a5-8500ee4cbcca path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+[WebServer] [req] x-message-id=104d7c81-83d3-4ce7-b6d4-ea404583a587 path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=2a595f01-980c-4547-81b1-ff3a8d66ebf3 path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=f0eba424-ef58-4d4f-9304-02092fc198b7 path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=a3e060ff-4029-49a4-9661-e672d445825b path=/auth/login status=200
+[WebServer] [req] x-message-id=caed6b24-bbd0-4863-8e64-d3fe666f9532 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=2ae3d46b-6b3b-4a76-b3b3-1dd837d722ba path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=f4f84dba-8101-4aca-ad61-4601cdd61442 path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=acc497cc-e5a9-48f8-bee0-025cb4ab532c path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=153b181d-dc08-447a-aa27-97f5d196bb5b path=/api/v1/community/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=9824c69e-84c7-4c3d-ae2b-0f02e989e4c9 path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b/comments status=200
+[WebServer] [req] x-message-id=046838d4-5551-4dea-8cf6-a8f275c61fac path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b/comments status=200
+
+[1A[2K[WebServer] [req] x-request-id=e7381b82-5c48-4c36-801d-cc9fe136ade4 path=/meta status=200
+[WebServer] [req] x-message-id=c4f37099-8de4-499c-9869-f591885f28f5 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=038c53e3-e439-4a69-a641-0a8761c80a61 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=d8f21271-cfe7-4c4e-86af-8564f71aadd4 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=2a32afd0-43ef-4a19-8eb3-9f7581e80833 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=026fa746-f905-432b-95d9-4d37f97f4fbb path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=78308d50-d8ee-4f70-86c0-0172c2afb66f path=/api/v1/me status=200
+[WebServer] [req] x-message-id=7346a82c-fbfa-4c18-911a-237ed2fa4388 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=2c36b39f-035e-44c4-a2f7-ed85d2fb0a97 path=/api/v1/community/me/collects status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 2c71deb4-2752-4f08-93d6-44b3b8e74cbd path=/api/v1/community/me/collects status=200
+
+[1A[2K[WebServer] [req] x-request-id=f287d0ec-3729-4225-b34a-c20e2d8027e5 path=/api/v1/community/me/following status=200
+[WebServer] [req] x-message-id=d7ec69c9-51b4-4c1d-b789-e237a55c98dd path=/api/v1/community/me/following status=200
+
+[1A[2K[WebServer] [req] x-request-id=d1d050f7-8ed5-4e1c-a4a3-7ad00e6fde8f path=/api/v1/community/conversations status=200
+
+[1A[2K[WebServer] [req] x-message-id=b938869c-80e0-4f3b-a7f4-d07ffae34301 path=/api/v1/community/conversations status=200
+
+[1A[2K[WebServer] [req] x-request-id=f74fe625-450e-44be-809a-0168ee77b0a4 path=/api/v1/me status=
+
+[1A[2K[WebServer] 200
+[WebServer] [req] x-message-id=a5bdac0f-d257-44f8-baa2-b38e47342317 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=1fd93766-afa9-4e8b-87d4-6eaa6af0ee87 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=b92ac090-193b-4e7e-b95e-5768277f3682 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=575f366f-b243-442d-85cf-500742e7bab9 path=/meta status=200
+[WebServer] [req] x-message-id=517390b8-0b46-4856-8f01-3076b96e2822 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=7c1b87c3-f3e4-4309-99d8-0e1627b919da path=/api/v1/me status=200
+[WebServer] [req] x-message-id=ac3abff4-a628-4cbe-b989-05d2629ccf78 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=56178efa-822c-4d00-97ba-dfa93a3346d7 path=/api/v1/community/me/collects status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 6e52c109-561c-4c19-a121-e38664476816 path=/api/v1/community/me/collects status=200
+
+[1A[2K[WebServer] [req] x-request-id=ce780c42-9cef-4447-ad04-c2e64bd9cb5f path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=17ea8fed-31d7-4a18-ac7e-facc0f4062ad path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=23de059b-682d-437c-b66c-d0524cfa3762 path=/api/v1/community/me/following status=200
+[WebServer] [req] x-message-id=1a874130-3256-4411-aeab-fa1d6373a7e4 path=/api/v1/community/me/following status=200
+
+[1A[2K[WebServer] [req] x-request-id=ea2b787b-ee3d-40b4-933d-41f81af3ac1e path=/api/v1/community/conversations status=200
+[WebServer] [req] x-message-id=fb006d7f-a729-4ad5-a6d8-5eac52706a3c
+
+[1A[2K[WebServer]  path=/api/v1/community/conversations status=200
+
+[1A[2K[WebServer] [req] x-request-id=8a9b4f7c-f54f-4cd0-8f07-f7bd1e97e376 path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b status=200
+
+[1A[2K[WebServer] [req] x-message-id=1833b856-78ce-4d0a-8606-288910f001fe path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b status=200
+
+[1A[2K[WebServer] [req] x-request-id=c245bb07-2ba9-4126-9c5d-7af31eee5c48 path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b/comments status=200
+[WebServer] [req] x-message-id=01a581ec-6834-45ec-858d-8e198439b755 path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b/comments status=200
+
+[1A[2K[WebServer] [req] x-request-id=f6913415-9459-45f2-b678-299259e45157 path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b status=200
+[WebServer] [req] x-message-id=788a3e7c-ce08-49d2-9ce1-3aa3b4572590 path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b status=200
+
+[1A[2K[WebServer] [req] x-request-id=0c3e89cc-b8a7-432e-aed1-3b50c8022061 path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b status=200
+[WebServer] [req] x-message-id=4433f7f9-ff53-465a-8f04-8e3fc84a65e5 path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b status=200
+
+[1A[2K[WebServer] [req] x-request-id=e17b6f79-463a-4b99-aba2-b3e3fc401d81 path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b/comments status=200
+[WebServer] [req] x-message-id=e8fcd59f-b636-4644-a360-455501469f3b path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b/comments status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=23378bc8-25c4-4823-9ca7-fff0481b96ce path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b/comments status=200
+[WebServer] [req] x-message-id=cbb8f3c5-1759-4118-b38e-b8854753250a path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b/comments status=200
+
+[1A[2K[WebServer] [req] x-request-id=26b832d3-3237-41ab-8428-1f2ac7c174e6 path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b/comments status=200
+[WebServer] [req] x-message-id=8cbf369f-50c8-4053-823d-5ad5c6ac24d6
+
+[1A[2K[WebServer]  path=/api/v1/community/posts/76421888-7d06-4bcc-af59-895bb5c1538b/comments status=200
+
+[1A[2K[WebServer] [req] x-request-id=4d86fd7e-d0b1-4eab-b1cb-9ed59067fe85 path=/health status=200
+[WebServer] [req] x-message-id=d49b6a3a-db86-4411-88be-6847c16b42a5 path=/health
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=62de7b36-1020-46eb-9332-dffb3eb72432 path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=27b43784-6dff-4d02-ba2f-9ad44aaa2397 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=ad5e366e-2dfe-4f60-9302-836e93b96cdb path=/auth/login status=200
+[WebServer] [req] x-message-id=1a493961-63f2-4898-859f-e813f42fa581 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=c2a506cb-5f44-45c5-93b0-4376c8992f8b path=/auth/login status=200
+[WebServer] [req] x-message-id=07cf6e9a-c513-4d07-a429-e805aab7ff87
+
+[1A[2K[WebServer]  path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=0ec472b9-a153-4a93-a843-3693d97e74ad path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=85e40441-e59f-465c-9373-a7af957ec9cc path=/api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=b27002da-24f5-4ac5-90bc-3955328c229a path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+[WebServer] [req] x-message-id=22fe719f-f0f1-4b2f-9d5e-529b4ff4123a path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=df2835db-1adf-4941-a987-b8c5e36868cf path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=6ccad640-2bb8-44ea-b559-f219380d9a2d path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=b259272f-4ce0-4540-a647-28f5dc7b19c0 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+[WebServer] [req] x-message-id=56066e61-c756-4e40-82ac-466c19bba61b path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=92761e84-af50-4077-9024-5950f301c95d path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+[WebServer] [req] x-message-id=e1570483-c150-49a9-a62c-04af549cb6f4 path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=06038443-797b-477a-9cef-94beb308c84b path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+[WebServer] [req] x-message-id=6bd48bf9-f4ca-4e06-9603-aabffb629277 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=d028af57-b5d7-449e-a9d4-d7a0a0f49b03 path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+[WebServer] [req] x-message-id=f4f12e3e-3d58-43be-a6df-937131796189 path=
+
+[1A[2K[WebServer] /api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=79c9f96f-e7cc-4b13-b412-41f8f87a90db path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=c2abd8e9-ce13-4da8-948a-dc0d95ccdadc path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=6e414f15-32d6-4044-9d82-f9f9e1d05e30 path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+[WebServer] [req] x-message-id=7a2cdfef-3cd3-4306-8547-bcec7a7e23bb path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=285d493e-f94a-45b9-b7b8-54ee29d51061 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+[WebServer] [req] x-message-id=89e0d9f4-5067-402a-ab42-56c5c7e26513 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=c071a0af-add3-4a39-b06f-35c82945a5ba path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+[WebServer] [req] x-message-id=32dbf011-a2df-4b96-9958-4572a5e30d22 path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=6c8abfee-9739-48a0-8cf5-a76577fa014c path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+[WebServer] [req] x-message-id=bb5fe9ba-dd68-432d-a34b-5e00041b9fed path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=af8723cd-2b41-4213-b028-ca037dcae04e path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+[WebServer] [req] x-message-id=6197c73f-5adb-4ee4-b1dc-4810f542da6b path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=7392cd31-4e46-40eb-8df8-0ab3e835c26d path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+[WebServer] [req] x-message-id=edfd738a-3848-4a12-b413-65973400dd1c path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=8b75ec23-1239-49db-b6d5-78f34b28979b path=/auth/login status=200
+[WebServer] [req] x-message-id=efd7476e-52b8-4053-87ae-042d5505811c path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=a1614604-7bb5-46e5-a384-b679fedd7369 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=02dc703c-1d03-4fa0-a9a9-99f8f5708cf6 path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=e7a82b64-221f-4764-8299-3c881421b71f path=/api/v1/community/posts status=429
+[WebServer] [req] x-message-id=094e5058-82f9-4773-bffd-ffdf5dd7b734 path=/api/v1/community/posts status=429
+
+[1A[2K[WebServer] [req] x-request-id=1e0daff4-0419-4398-a367-a2d81aca5e5f path=/health status=200
+[WebServer] [req] x-message-id=dee69a97-5efc-4dad-abf3-442696cddd52 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=246799f2-fe51-4fcd-b095-34eefc2a8c47 path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=d4608061-dfc6-4230-8ae2-9e08adf0b185 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=734f19ea-98fa-4b41-9360-3ae95bb2432d path=/auth/login status=200
+[WebServer] [req] x-message-id=d4f7f4ba-c985-4454-9900-a87dc4c5ad64 path=/auth/login
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=7eb1dc87-b556-4df2-8da9-0c5ecfc042f4 path=/auth/login status=200
+[WebServer] [req] x-message-id=d950f478-f174-4bb0-8edf-55d0832adcea path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=34c9ffd6-5d15-4a5a-b8de-ad3052262920 path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=307c581d-0dea-46aa-b435-36e2135462a9 path=/api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=e3ce4051-463b-4390-8de1-29b8919b3663 path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+[WebServer] [req] x-message-id=d65f0d04-6f17-4bb4-aeb5-f9ae048f9c87
+
+[1A[2K[WebServer]  path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=eecb9680-d448-4825-9ee6-0135fd19ad5a path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+[WebServer] [req] x-message-id=112c6492-b660-4490-8a2e-d5a89ce44101 path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=ce9f8df3-f3f8-43d3-9ea9-80726469a683 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+[WebServer] [req] x-message-id=cbed6dd5-8c4f-4c0d-89b9-ddbb0814f684 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=2e1c7b28-b00c-45ad-85af-c1156e67b22b path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+[WebServer] [req] x-message-id=d020498c-0e7b-43d9-9b11-0b032549b6fc path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=752ea209-fd8d-422e-bfd2-bfe17260b760 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+[WebServer] [req] x-message-id=338da5b9-bc77-4905-bdaa-2f0c527f6153 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=243fe2d6-acb7-4b3b-a3f4-f4ae8075d02f path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+[WebServer] [req] x-message-id=98ab2913-e939-444a-958c-80b32fa7ea89 path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=ed175727-00eb-4864-bc6a-0fca28b12db3 path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+[WebServer] [req] x-message-id=f2bd5254-3147-4b17-af3d-7ad902c1f081 path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=0e540fab-bfbf-42fa-ae08-45d349f69336 path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=6f5a8e6b-8ed5-4895-a9fe-3c99b73e6d62 path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=11c472dd-4741-44e7-af62-e8db6dcf4a3d path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+[WebServer] [req] x-message-id=f983c413-2f86-4b8e-b793-7fda3fabab2a path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=7d265783-6738-4aac-8b34-64f9abe2266a path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+[WebServer] [req] x-message-id=f0e3c83a-9ac2-4663-af91-28c368cde189 path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=36bbe409-9702-451c-88f6-efb5573762d1 path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+[WebServer] [req] x-message-id=49db8ade-7c2a-4dcb-9188-2b7eccc346c2 path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=1c1195ed-5db2-42fb-bb14-7aac08a2fb48 path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+[WebServer] [req] x-message-id=de58b4bf-bbcf-424d-a34b-45bee06b4e19 path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=1618a110-1d8c-4a1c-b64b-4175db496779 path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+[WebServer] [req] x-message-id=b65b2ad6-5cce-41c8-a1fc-4bbaa45da3c0 path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=2441e340-d569-45ac-b5b8-504e7fea43ad path=/auth/login status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] a03f9c87-7586-4b48-aec4-102f1598686c path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=4896fd0b-fe36-4e63-9a14-ff9194c71726 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=66892479-15ec-49a3-a555-b553a5593119 path=
+
+[1A[2K[WebServer] /api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=92790810-19b4-44bb-9c6c-34238b719ef5 path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=0ac835f2-5225-4bfb-bea4-932825888486 path=/api/v1/community/posts
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=e4c28a8e-adaf-4818-837e-d9618f6d92df path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e status=200
+[WebServer] [req] x-message-id=49813612-4a7e-47ff-a991-c5690730a388 path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=d44c7211-da4d-4ed5-8e30-e4634d328aed path=/meta status=200
+[WebServer] [req] x-message-id=d08e2ec7-3463-4eee-82db-27bb5a3676e7 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=cbb1db19-4e5d-448d-8e7a-2eb152827c1a path=/api/v1/me status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] fed9a40a-c510-4923-8c07-6bec233b5bf3 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=c84ab254-198f-41f3-8fb1-0a1ba3c1aa1f path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=f6a0d9a8-d592-4517-8f50-ebcf6a756f63 path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=501be48b-b42c-4ebe-931e-00eec52c4a45 path=/meta status=200
+[WebServer] [req] x-message-id=48c306e4-a4b3-4729-88c7-e11fd18ce405 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=61c2196a-28b9-4509-b893-450bc22feed5 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=473613fc-5d72-45ff-885f-dcec7eefe93f path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=25386169-9894-4537-82ff-9ae6b5b86dc9 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=f5acb9ea-5ad7-4b18-b182-0951d52ebb69 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=891d9234-be27-4b83-a0db-87ad3bf47d00 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=d89a3d31-7ee5-4776-879b-c2672fd2b771 path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=11074425-a656-48c3-990f-bb2e1171930a path=/api/v1/me status=200
+[WebServer] [req] x-message-id=3aff5e61-ccca-436a-870b-4ffc3f70e03c path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=f68f8eb8-6801-4b97-94e8-c570b5d33994 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=15f5107b-6bd0-4465-be17-2c7613219903 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=e1d34957-16bd-43dd-ad33-6c35c9987071 path=/meta status=200
+[WebServer] [req] x-message-id=da201ff6-de80-4412-acb2-a0f734f704be path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=54c6e4a8-4692-4c4d-acca-35c14addbd58 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=f6afafb0-6704-4ba9-b9a4-fc2ce3ff1598 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=a4e8b419-9852-4445-91ac-70086de9f0f1 path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e status=200
+[WebServer] [req] x-message-id=424b2aee-b823-49a0-8014-b61f3847499c path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e status=200
+
+[1A[2K[WebServer] [req] x-request-id=8138da7d-4e26-4afe-a782-fbb32c9b201e path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e status=200
+[WebServer] [req] x-message-id=b72c8a79-f9a1-4683-bb92-c59f58d79e70 path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e status=200
+
+[1A[2K[WebServer] [req] x-request-id=1fa03174-a295-4957-b472-858f232a1e7e path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=1b029440-ff0d-4f7a-91a6-7a0701bce073 path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=f44f5cc2-1317-4fa2-a866-761b3fc6c415 path=/api/v1/community/me/collects status=200
+[WebServer] [req] x-message-id=ea29bf43-ce04-4052-9089-d137a1b39ce7 path=/api/v1/community/me/collects status=200
+
+[1A[2K[WebServer] [req] x-request-id=e5c0490e-84f4-45a6-87ff-23d95d08b71e path=/api/v1/community/me/following status=200
+[WebServer] [req] x-message-id=40dc6862-d658-4280-8389-7087210ce2df path=/api/v1/community/me/following status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=65b816ca-9e28-4215-838d-6d3599211028 path=/api/v1/community/conversations status=200
+[WebServer] [req] x-message-id=fe72c5af-c610-4882-b70b-c1d325ea5e8c path=/api/v1/community/conversations status=200
+
+[1A[2K[WebServer] [req] x-request-id=e807f9ec-1f59-499a-a101-24a9eb5c5d44 path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e/comments status=200
+[WebServer] [req] x-message-id=e76603ab-d2ce-45ea-994a-142fb1223159 path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e/comments status=200
+
+[1A[2K[WebServer] [req] x-request-id=3ba546b5-ca0b-453e-97ff-dc3baab67123 path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e/like status=200
+[WebServer] [req] x-message-id=2348efb4-9adf-4b1a-a57d-429ebe723667 path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e/like status=200
+
+[1A[2K[WebServer] [req] x-request-id=4d9317b4-4a31-41ed-9526-e38d8151f437 path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e status=200
+[WebServer] [req] x-message-id=8ef9d615-ffb8-4e9b-83a6-784e3627c3e8 path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=3e92084a-45f8-409c-b002-a77019c0ca8e path=/meta status=200
+[WebServer] [req] x-message-id=cf2aef89-c977-4c8c-8f6a-f3b79e3a5eb7 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=5dcad9d9-c7e0-4290-b2c0-fef52a29a716 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=4aec9114-89d1-4ead-a12e-83cc1a158d95 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=a1b1a0d8-36fe-4655-a962-725bbc2b5cdc path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=383c186e-935a-42ea-824c-26fd0441be2e path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=c510c893-fb90-4ce4-87ca-8e19c55f1dc9 path=/meta status=200
+[WebServer] [req] x-message-id=9cf3e1b2-a261-4a80-8157-0f3cbdf5f61c path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=7fc878ee-cc91-4c79-b105-ca6d418e21ca path=/api/v1/me status=200
+[WebServer] [req] x-message-id=ffd08e09-4a97-4d20-bced-7762fdec80e6 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=cd678873-fb88-41fc-9f1d-e1f1441245dd path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=c17cae8b-9347-486c-9376-ea457a603ac9 path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=a8405335-4e80-43f3-88de-97955e8b5cdd path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e status=200
+[WebServer] [req] x-message-id=250f8978-7a6a-467d-bf1b-e8d6235feea0 path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e status=200
+
+[1A[2K[WebServer] [req] x-request-id=2770dbc4-2ef0-4c2d-bb21-25a4b4c3e891 path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e status=200
+[WebServer] [req] x-message-id=2200e3f1-b320-4b96-8843-3bfff960c666 path=
+
+[1A[2K[WebServer] /api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e status=200
+
+[1A[2K[WebServer] [req] x-request-id=50a26cd0-1835-4a27-9598-fa7153df04d7 path=/api/v1/community/me/collects status=200
+[WebServer] [req] x-message-id=d4f696cf-e9d4-40f1-8280-871b96537a26 path=/api/v1/community/me/collects status=200
+
+[1A[2K[WebServer] [req] x-request-id=5e52a5fc-9075-4ce6-b9dd-3a0098c28e99 path=/api/v1/community/me/following status=200
+[WebServer] [req] x-message-id=f70776b5-5ca1-494b-a3e4-f85452952268 path=/api/v1/community/me/following status=200
+
+[1A[2K[WebServer] [req] x-request-id=0eb41733-4f7f-4799-a106-fd368a6b7820 path=/api/v1/community/conversations status=200
+[WebServer] [req] x-message-id=b5d2ef88-2307-4f27-906f-3df5f9224828 path=/api/v1/community/conversations status=200
+
+[1A[2K[WebServer] [req] x-request-id=325cfb83-a542-46cf-bc0a-338b5ff3ea61 path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e/comments status=200
+[WebServer] [req] x-message-id=002839dd-b76d-41ad-bfc5-e752660cc293 path=/api/v1/community/posts/423ac67e-aab9-4ae6-9adb-7395ac69012e/comments status=200
+
+[1A[2K[WebServer] [req] x-request-id=ce1b6a9a-94a6-40b0-b9d5-b21421e15a6b path=/api/v1/community/media/capabilities status=200
+[WebServer] [req] x-message-id=99611ff6-89e3-45d0-9eac-ccf5838f0fc2 path=/api/v1/community/media/capabilities status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=bb621d54-61ef-4b8b-abae-d3441fdfa6de path=/meta status=200
+[WebServer] [req] x-message-id=d8d93100-0c6a-429a-9608-dea5bd3ec6d5 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=f04c3cd0-71cc-40d8-9cc9-f7e98ce84d18 path=/meta status=200
+[WebServer] [req] x-message-id=0c6c2810-f2ea-4464-947f-af83518f25d7 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=8b4d7c1c-1e98-4f67-a87e-67f92b95aaeb path=/meta status=200
+[WebServer] [req] x-message-id=6c99f2f9-7d1a-47b0-862c-819148bb9dab path=/meta status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=d8b89e20-6f64-4422-985a-f3f9c04ba287 path=/api/v1/discover/orders status=200
+[WebServer] [req] x-message-id=6f15e354-5e85-42eb-9710-9aef98405fab path=/api/v1/discover/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=94603643-aeaf-488f-9b09-7633484f2235 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=a4e17523-2f3a-411c-9c90-673879a6c1ab path=/api/v1/guides status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=087c5750-99a9-4438-ba91-f7f535bef99a path=/meta status=200
+[WebServer] [req] x-message-id=a307417c-6db7-467e-aa76-b7608ebe70ac path=
+
+[1A[2K[WebServer] /meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=bc0de3ed-2a48-4505-bca0-b36b1b244446 path=/meta status=200
+[WebServer] [req] x-message-id=8b7dab4d-41c1-4c9b-b11a-3bc95cd02ccf path=
+
+[1A[2K[WebServer] /meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=36b31fee-4930-411a-946e-33bffe1a3af5 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=5bb078e0-f6c0-4bee-8213-a08c7ba14b9c path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=7ebfee82-d885-4d1d-8721-1895072439eb path=/meta status=200
+[WebServer] [req] x-message-id=65bc7561-9df4-4e89-b9dc-fc0ce102ded3 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=45afd448-ac06-4a59-b4cd-9d6578433425 path=/api/v1/discover/orders status=200
+[WebServer] [req] x-message-id=4f5664b2-139a-401a-967d-92970192b7be path=/api/v1/discover/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=4463f081-6631-44ce-bb2a-884d68fe1d05 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=f9a9c08f-37ea-4145-a734-90983267a164 path=/api/v1/guides status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=53503f40-464f-41a9-be82-48fb87f96774 path=/meta status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 45781f1e-6007-4911-b5ca-5548ad9995b5 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=8724ea85-a5b8-4584-b11f-efc409f13e26 path=/api/v1/discover/orders status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] ea113d0e-6d51-481c-8ab2-b1ba0ea31c6a path=/api/v1/discover/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=3cab828c-9266-4840-b4da-746f28500b42 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=dc309721-b163-4e1d-bedd-c6c018f5c72c path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=34606834-16c6-4432-8a4a-1dc9531091a1 path=/meta status=200
+[WebServer] [req] x-message-id=a7f96ffe-29f3-4a9d-ab50-248b5c6520b7 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=13b17fd6-056e-4fac-933a-da74919173fc path=/meta status=200
+[WebServer] [req] x-message-id=f7646ae5-38cd-48bb-9548-efea2d86edf9 path=/meta
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=b7e15cda-de20-48c9-9ce4-95c0be08fd74 path=/health status=200
+[WebServer] [req] x-message-id=643222da-4476-46c2-ad40-80e8268c637d path=/health
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=87f6e0be-4201-4ed3-abf1-4b9f8f8018bb path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=2e94a089-1c09-4e2a-afd2-2087f77e1ac5 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=cbb0b089-f1b9-4d6d-9f0f-49c002ae8ea0 path=/auth/login status=200
+[WebServer] [req] x-message-id=36e766da-8d0b-46d9-8097-dd5704351473 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=1f34bfa3-161a-4b44-9b71-20d2b2fcecb3 path=/auth/login status=200
+
+[1A[2K[WebServer] 
+[WebServer] [req] x-message-id=80d00483-de9e-4186-9b77-6a93a2127877 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=f819f32d-d821-4826-9389-1989937b2d2a path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=09010cd8-64e8-40bb-bf63-63aeb143a7d6 path=/api/v1/orders
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=2d2adf22-a726-4062-8484-a4caee86188b path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+[WebServer] [req] x-message-id=12e4a605-a99e-47b0-a48c-27c5b96e9d3e path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=6ff342d4-1367-435f-bd2b-c354b00a10c5 path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+[WebServer] [req] x-message-id=1f63afc1-9a8d-4399-862f-83d16161c9d4 path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=3e8c5d53-1d79-438d-9c36-2e7c89baf01f path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+[WebServer] [req] x-message-id=2b284019-7f3f-4893-afc3-567774c29eb1 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=
+
+[1A[2K[WebServer] 403
+
+[1A[2K[WebServer] [req] x-request-id=274d12b8-b29f-40b3-a9b3-5f10668e3964 path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=
+
+[1A[2K[WebServer] 403
+[WebServer] [req] x-message-id=04c065e9-bc6d-4b9d-85e8-662b3d7b8c19 path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=738a88d0-00be-4769-872e-9b768293d2d1 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+[WebServer] [req] x-message-id=8623fdd2-445d-4048-856b-59fb3cdb8793 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=
+
+[1A[2K[WebServer] 403
+
+[1A[2K[WebServer] [req] x-request-id=6adc5aca-b3af-4b37-9e06-e2e22b8a7dc5 path=/auth/login status=200
+[WebServer] [req] x-message-id=bc4a7711-0da9-40e0-bdfb-6a61da00b0fb path=/auth/login
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=3294da79-92a4-43f6-9fa4-833078052d68 path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+[WebServer] [req] x-message-id=a4d87be7-024d-4329-adc9-fe04149cf8fd path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=51e5659d-de73-467b-8916-f2439d3d8419 path=/auth/login status=200
+[WebServer] [req] x-message-id=5e5a841c-c6cf-40b0-9309-2b797b7ded4b path=/auth/login
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=b235baae-fa76-42b4-bd35-0670395be744 path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 24cd0f1a-a949-43e4-bca0-baeaaf3b6fcc path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=0561e915-adbc-4010-a6d0-7d6cfd1dee5f path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=ccba996e-74dc-432a-b533-9cbbad2446b7 path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=456f98a0-08a7-4b4b-be38-49a3264eddc4 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=6270a154-9817-4ac1-b23a-bd0436d500cd path=
+
+[1A[2K[WebServer] /api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=70a43b90-42d1-40ba-9bff-0e88278f2575 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 2ac3538b-13b1-49a1-885f-5a8e691612e6 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=7b7e949d-acf7-43ca-8766-f46fe3d55a97 path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+[WebServer] [req] x-message-id=3218a3cb-7146-463c-b18d-4026d2367578 path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=15d7d16a-50ba-417b-aa9d-b96f7ead3861 path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+[WebServer] [req] x-message-id=aa4029ec-b0c6-4d1e-9047-e7f54138f88c path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=acf1a00e-1a48-4218-bf84-e4d11366faeb path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+[WebServer] [req] x-message-id=a7935704-949b-4ca0-8225-1b73f8581964 path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=0d1865a4-1fd2-4033-b504-8655df0afe7b
+
+[1A[2K[WebServer]  path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+[WebServer] [req] x-message-id=97f2527e-28c1-448b-b6ad-4e88fcd9faad path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=da577bb6-d205-4190-974e-82c57696c21a path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=e176e5d1-f805-4c48-8bf5-2686eb55c618 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=4d7f8edd-f44b-43a9-93b9-7ef9d27568e1 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-message-id=df5f3fc4-bea1-487e-8244-67d146ad4aa4 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=fc09030d-42ce-48b3-83eb-a9447a93237b path=/api/v1/orders/f8e96fad-18c1-473e-999e-6309b4fee439/chain-sync-status status=200
+
+[1A[2K[WebServer] [req] x-message-id=66ab0e3e-eb19-4bd8-af40-ddc159c9d931 path=/api/v1/orders/f8e96fad-18c1-473e-999e-6309b4fee439/chain-sync-status status=200
+
+[1A[2K[WebServer] [req] x-request-id=4cbd9318-0bbb-4a91-95e9-df2cf923db3d path=/api/v1/orders/f8e96fad-18c1-473e-999e-6309b4fee439 status=200
+[WebServer] [req] x-message-id=70a0732d-e9ec-41a1-ab4a-6c61309d3110 path=/api/v1/orders/f8e96fad-18c1-473e-999e-6309b4fee439 status=200
+
+[1A[2K[WebServer] [req] x-request-id=0b1e6441-b3e0-4aeb-92a5-e26300a271df path=/api/v1/trust-growth/config status=200
+[WebServer] [req] x-message-id=de77c718-a2cd-4b85-8e8a-872c8b8def34 path=/api/v1/trust-growth/config status=200
+
+[1A[2K[WebServer] [req] x-request-id=4ca8186f-014b-43b1-8a34-884afa9c80ab path=/meta status=200
+[WebServer] [req] x-message-id=f64e757d-e5dd-4f13-81ff-90cd65c7a8d7 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=70995d18-e495-4760-be74-3bdfa0615740 path=/api/v1/guides/6a893ba7-2241-4efd-93a5-556200676145 status=200
+[WebServer] [req] x-message-id=8f9ab459-6658-4c06-bd2d-35f9b8cf0896 path=/api/v1/guides/6a893ba7-2241-4efd-93a5-556200676145 status=200
+
+[1A[2K[WebServer] [req] x-request-id=61719b39-dcf9-402d-9570-23f72e4f96f6 path=/api/v1/orders/f8e96fad-18c1-473e-999e-6309b4fee439/evidence status=200
+[WebServer] [req] x-message-id=310cd33f-9e37-45eb-a392-6e9d68d76eee path=/api/v1/orders/f8e96fad-18c1-473e-999e-6309b4fee439/evidence status=200
+
+[1A[2K[WebServer] [req] x-request-id=8f46b612-533c-41f6-ba31-1a3732954e33 path=/api/v1/trust-growth/ingest status=200
+[WebServer] [req] x-message-id=558ab3b3-d4ec-4cec-8cd6-57b686895e95 path=
+
+[1A[2K[WebServer] /api/v1/trust-growth/ingest status=200
+
+[1A[2K[WebServer] [req] x-request-id=b001f503-4b74-4c8d-adc3-a7ef49fd6f99 path=/meta status=200
+[WebServer] [req] x-message-id=cad38d67-7c63-4bcc-bbe9-b12bc8a059d2 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=cb7f5e04-7db5-42a6-bbd4-92ab7d214d18 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=e7269a76-d65d-41ea-b222-5e7fd6c94eb9 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=e4a044f0-21cb-4e2f-b0e7-aa061719f529 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=7a5ad24b-d1dd-499a-a419-20b713b32b07 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=9f2a23ea-aac2-426e-8dce-92d1fffecbcc path=/api/v1/me status=200
+[WebServer] [req] x-message-id=ce302a99-6fe1-4ec4-880d-38788dec2175 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=3ba32090-b771-4ff3-872a-c930fe21dc9c path=/api/v1/me status=200
+[WebServer] [req] x-message-id=ca2bb2cc-790e-44d9-b1ea-059fd9731ed0 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=d62dffc8-d7f1-4799-bd33-c3ca4b6be786 path=/meta status=200
+[WebServer] [req] x-message-id=f9b6a310-1808-4dbd-89c3-c67ddd89893f path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=6615aa6b-4676-44cf-965e-4e60d19750ee path=/health status=200
+[WebServer] [req] x-message-id=9b4b576a-c4b3-467b-8d8c-f9ec9056b7a1 path=
+
+[1A[2K[WebServer] /health status=200
+
+[1A[2K[WebServer] [req] x-request-id=69ae93d7-bebc-4fe5-a030-099fa1387f60 path=/meta status=200
+[WebServer] [req] x-message-id=f3f502ca-4717-4e58-b44c-028abe999008 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=9714cabe-f5e7-4316-a215-b36027de880f path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=a6f7a4af-ea2c-445b-950e-33fe86272de5 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=565d86e3-fb83-49cf-83ec-a2dbd04efb4e path=/auth/login status=200
+[WebServer] [req] x-message-id=02176cf3-5212-42ba-8f1e-390d990751be path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=9b779811-9e25-417d-82f0-37dae93c1865 path=/auth/login status=200
+[WebServer] [req] x-message-id=16ad4f5b-87a3-4ff0-92b7-4676f4886aa1 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=826cfa88-fe80-4197-8503-5f6e75daf888 path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=7e72c5e6-515d-482a-97b9-8f3893200c3d path=/api/v1/orders
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=3ff1460c-2095-4942-83b6-6522c74ab9b2 path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+[WebServer] [req] x-message-id=4bcff1e7-bcfd-46d0-b2b6-de1c76142c07 path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=1b5f709d-0d1a-499e-a2c5-8d4cdc4295c1 path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+[WebServer] [req] x-message-id=8024673f-e592-4f12-a0db-5c5bd1ced52e path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=
+
+[1A[2K[WebServer] 403
+
+[1A[2K[WebServer] [req] x-request-id=6b1f1b05-71f8-4eee-a973-662be821b425 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+[WebServer] [req] x-message-id=950f95c2-562c-4390-b4da-06b7c0037604 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=7165cc87-b5c6-45d2-a2c3-3c5abcaacdc3 path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+[WebServer] [req] x-message-id=e646898b-e346-4a7b-8324-f251c74c40fb path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=3fd67d11-591f-4e32-a441-e13a133a3d49 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+[WebServer] [req] x-message-id=eca99f97-357c-43e1-b00c-3bc7e1e2de23 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=f6a2060f-804f-458f-89a5-79ed87c48929 path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+[WebServer] [req] x-message-id=3aa9932f-a430-49b7-92eb-7a26906c102f path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=a5425985-0483-4a79-87d5-4ab5e6f6e9b8 path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+[WebServer] [req] x-message-id=532b2c63-3174-4344-a920-aeadfd432ecc
+
+[1A[2K[WebServer]  path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=8eb13a5d-78aa-4227-9b90-edb2e70cccef path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+[WebServer] [req] x-message-id=902cb616-b863-4b8b-843a-5dfdf5370286 path=
+
+[1A[2K[WebServer] /api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=3a055bed-9760-4f91-8eb2-4df29c02817b path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+[WebServer] [req] x-message-id=994ba877-d576-4326-b6d9-30f4faf782d5 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=89407c42-f12e-44d2-ac8e-edc60a703d87 path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+[WebServer] [req] x-message-id=65ad518f-fda6-4dfd-8b53-8bc734e1665e
+
+[1A[2K[WebServer]  path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=421b49f0-1719-4705-90c6-dbd1adfd08dd path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+[WebServer] [req] x-message-id=cdf54bd4-b7f6-4bac-a015-9bf3a6b23e8b
+
+[1A[2K[WebServer]  path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=6602bab5-fb9c-4d5e-859f-4cb6a067164f path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+[WebServer] [req] x-message-id=d5ee8516-5306-4e40-816c-0be9eb965e90 path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=c63848d9-d889-4a7c-bb1a-8d330c5f0a5a path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+[WebServer] [req] x-message-id=38c87e5b-e7d1-452d-860c-ab1396646c79 path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=ba607792-6369-4a47-911a-35df1e34b368 path=/auth/login status=200
+[WebServer] [req] x-message-id=133ba9fb-b125-4f54-8222-3fbf324781fa path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=c1b130b3-2fbb-4d2f-8218-673063cbdbce path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-message-id=96e9dcc8-7793-4dd6-b1bc-1772f46f8f01 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=dec6eeee-3406-427a-89c2-0ddb6bf39e96 path=/auth/login status=200
+[WebServer] [req] x-message-id=d6e627ac-ec29-4ca3-a45b-d712c4a40212 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=1e0846e5-1648-4af2-a170-84c15477cacf path=/api/v1/me status=200
+[WebServer] [req] x-message-id=b519eb4a-3539-4a85-8680-531ecb887503 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=e4ca68f5-3be0-4c2a-bda3-78a51b59d197 path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=95d7c1c6-cb9f-4367-a752-88b8d56b16b0 path=/api/v1/orders status=200
+
+[1A[2K[WebServer] audit_key_write op=order_accept request_id=- user_id=ead53f61-ab53-4d58-a976-1831ca1641ce order_id=f9266420-0d7b-4223-98b0-51a5335b0a5c
+
+[1A[2K[WebServer] [req] x-request-id=5323c936-5b5f-4571-a8cb-9aa34969cb5f path=/api/v1/orders/f9266420-0d7b-4223-98b0-51a5335b0a5c/accept status=200
+[WebServer] [req] x-message-id=230c17dd-ae89-4081-bcd1-cccc8d83a439 path=
+
+[1A[2K[WebServer] /api/v1/orders/f9266420-0d7b-4223-98b0-51a5335b0a5c/accept status=200
+
+[1A[2K[WebServer] [req] x-request-id=8c1da34f-db4b-4cd6-bba1-63c610e8f8f3 path=/api/v1/orders/f9266420-0d7b-4223-98b0-51a5335b0a5c/mock-pay status=200
+[WebServer] [req] x-message-id=5ad7a664-e5d5-4242-b480-80a80b19653e path=/api/v1/orders/f9266420-0d7b-4223-98b0-51a5335b0a5c/mock-pay status=200
+
+[1A[2K[WebServer] [req] x-request-id=d4f251db-4eff-492a-adaf-98712d603311 path=/api/v1/orders/f9266420-0d7b-4223-98b0-51a5335b0a5c/confirm-completion status=200
+[WebServer] [req] x-message-id=8772e633-ee11-403e-a6b8-13bce0bfdf1e path=/api/v1/orders/f9266420-0d7b-4223-98b0-51a5335b0a5c/confirm-completion status=200
+
+[1A[2K[WebServer] [req] x-request-id=9bbdeb34-aa58-4c77-8f18-f8dabeb7f0d4 path=/api/v1/orders/f9266420-0d7b-4223-98b0-51a5335b0a5c status=200
+[WebServer] [req] x-message-id=9dfb9e9d-c785-436c-b8f1-65e1de153b8e path=/api/v1/orders/f9266420-0d7b-4223-98b0-51a5335b0a5c status=200
+
+[1A[2K[WebServer] [req] x-request-id=58c5070f-7e6a-4854-a8de-71e81cf4c80f path=/health status=200
+[WebServer] [req] x-message-id=3dca558d-3bce-41a4-a9b4-91674b0889a7 path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f007-1778975730314-2x4pmwei@traveltrust.test","subject":"TravelTrust email verification","url"
+
+[1A[2K[WebServer] :"http://localhost:3000/auth/verify-email?token=d8d07f44a7c14a9ba710fd97e6af40a22fdc6e6a3d1d4495ab93a9ed58bb1a5a"}
+[WebServer] [req] x-request-id=b140f8d3-289b-4304-84e2-5c712bd7966b path=/auth/register status=200
+
+[1A[2K[WebServer] 
+[WebServer] [req] x-message-id=0676a301-7a9a-4009-a87f-2c25880a6160 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=1c1121e2-f3b3-482a-a52f-ee1cb0890503 path=/api/v1/me/profile-avatar status=200
+[WebServer] [req] x-message-id=69a9afa6-8b5e-4375-bf77-f7d1cb5361c9 path=/api/v1/me/profile-avatar status=200
+
+[1A[2K[WebServer] [req] x-request-id=6fcda6a2-9cb0-4fc1-a4e6-4e9ec4ab0a07 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=fd659468-9205-4d27-9b31-9e98564a5e3a path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=436550c0-a32b-48ca-b5c7-9c0c138b3632 path=/health status=200
+[WebServer] [req] x-message-id=7b029674-be85-48ac-94fb-953fb4120fa4 path=/health status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f010-t-1778975730824-84zzmm9h@traveltrust.test","subject
+
+[1A[2K[WebServer] ":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=96f6e5c2bde64c688e6f94e4d3ba4eaaddd11308484448e78be1f469be995bad"}
+[WebServer] [req] x-request-id=883bbce1-3245-41b7-98a0-5d24817578bf path=/auth/register status=200
+[WebServer] [req] x-message-id=8437d25c-b44a-4273-be9a-1621761222a5 path=/auth/register status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f010-g-1778975730824-84zzmm9h@traveltrust.test",
+
+[1A[2K[WebServer] "subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=ba737ef46de94ac6b420ab07d2ae2684aacf41f8b33442b6955fda298dc8ec50"}
+[WebServer] [req] x-request-id=00895b13-0c00-4db3-ba57-b144e97f5282 path=/auth/register status=200
+[WebServer] [req] x-message-id=a82c2767-b4b7-4f1a-a97f-19c2b5b34652 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=c09ad76d-b0e2-42fa-840b-5eda27767ce3 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=e730c3e0-49cf-4064-8da0-aadc72ed30a3 path=/api/v1/guides status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=07341d6d-43a7-4f31-90e4-fdc332e4ceaf path=/api/v1/guides/fc5c6427-f28c-44a1-aa6f-bc41a532a092/stake status=200
+[WebServer] [req] x-message-id=51bb94c2-2147-427d-a10c-1c5966ceebc4
+
+[1A[2K[WebServer]  path=/api/v1/guides/fc5c6427-f28c-44a1-aa6f-bc41a532a092/stake status=200
+
+[1A[2K[WebServer] [req] x-request-id=01f080b5-3dc5-4fb1-88ef-8c102db6d325 path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=5875719b-bb11-47ac-b4bc-2e2b85114438 path=/api/v1/orders status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] audit_key_write op=order_accept request_id=- user_id=6f59c55f-fd9d-44fd-b711-d87d56915230 order_id=d59a3405-4866-47de-baf0-b6d1293ad058
+
+[1A[2K[WebServer] [req] x-request-id=1fdfcebd-3832-4095-9a46-e6627c51f291 path=/api/v1/orders/d59a3405-4866-47de-baf0-b6d1293ad058/accept status=200
+[WebServer] [req] x-message-id=a7eab06b-45b7-4894-bf51-91a736a5e861 path=/api/v1/orders/d59a3405-4866-47de-baf0-b6d1293ad058/accept status=200
+
+[1A[2K[WebServer] [req] x-request-id=655bbb6a-4bda-4a4a-8160-c069e881fa10 path=/api/v1/orders/d59a3405-4866-47de-baf0-b6d1293ad058/mock-pay status=200
+[WebServer] [req] x-message-id=eba3758b-3f7c-4c30-a605-4b93238e8a74 path=/api/v1/orders/d59a3405-4866-47de-baf0-b6d1293ad058/mock-pay status=200
+
+[1A[2K[WebServer] [req] x-request-id=4d5bd464-8b44-4a5f-b4d4-3b0e9bb405d1 path=/api/v1/orders/d59a3405-4866-47de-baf0-b6d1293ad058 status=200
+[WebServer] [req] x-message-id=c08c5fe0-e9a8-4b3c-9677-99605dbf8b92 path=
+
+[1A[2K[WebServer] /api/v1/orders/d59a3405-4866-47de-baf0-b6d1293ad058 status=200
+
+[1A[2K[WebServer] [req] x-request-id=855cc5cd-55cc-41da-94fe-62a69ebc4c44 path=/health status=200
+[WebServer] [req] x-message-id=3c898f1d-5ef9-404a-946e-8c489b3ab9a1 path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f010cc-t-1778975731896-jk5h0bg8@traveltrust.test",
+
+[1A[2K[WebServer] "subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=57972863224b47e68309d715a4778b0b755efb63f6bd48c88c41732b9ed9869b"}
+[WebServer] [req] x-request-id=059c85a0-9b3b-49ed-8bc5-55b1b45242c0 path=
+
+[1A[2K[WebServer] /auth/register status=200
+[WebServer] [req] x-message-id=7c483075-05de-48b5-a91f-b0e6f560571b path=/auth/register status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f010cc-g-1778975731896-jk5h0bg8@traveltrust.test"
+
+[1A[2K[WebServer] ,"subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=36fd161af3f44ea99e18b08b04f7e42012b60ad93bc74adebac94ce13180cd56"}
+
+[1A[2K[WebServer] [req] x-request-id=5457148c-4db6-41ea-bc30-149733007167 path=/auth/register status=200
+[WebServer] [req] x-message-id=7e0f69a3-119d-45c7-aa19-d0db859c7f9b path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=13062ba6-5ae7-4212-aaa9-9a93068f6d69 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=e2613a8f-240c-4055-b928-6eaccae9fd8c path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=0c12859c-8da2-4f1f-bc1b-885366b74173 path=/api/v1/guides/0758fe81-148a-480f-83f1-a3b6d613d50a/stake status=200
+[WebServer] [req] x-message-id=e7d0fbbb-97c5-4dd1-91d2-5e8d4ff923f8 path=
+
+[1A[2K[WebServer] /api/v1/guides/0758fe81-148a-480f-83f1-a3b6d613d50a/stake status=200
+
+[1A[2K[WebServer] [req] x-request-id=a557e31a-da1f-48e5-88ca-c062d44ba38b path=/api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-message-id=a9d17ac5-a43f-4d11-92b7-879e20b443ea path=/api/v1/orders status=200
+
+[1A[2K[WebServer] audit_key_write op=order_accept request_id=- user_id=97e2bc07-6a7b-4c0d-a936-205011eb5491 order_id=f3581c8e-2b23-4c2a-a982-a0414bf4f1d6
+
+[1A[2K[WebServer] [req] x-request-id=d06c679d-5950-40e1-9c6e-ae1fdf323ea6 path=/api/v1/orders/f3581c8e-2b23-4c2a-a982-a0414bf4f1d6/accept status=200
+[WebServer] [req] x-message-id=873d4015-60fe-4565-8210-50d00b2f2025 path=/api/v1/orders/f3581c8e-2b23-4c2a-a982-a0414bf4f1d6/accept status=200
+
+[1A[2K[WebServer] [req] x-request-id=2e441fc5-78b7-43a2-9758-c141e344bc94 path=/api/v1/orders/f3581c8e-2b23-4c2a-a982-a0414bf4f1d6/mock-pay status=200
+[WebServer] [req] x-message-id=9bc23393-6171-4046-8fdb-ed44b6fd3b70 path=/api/v1/orders/f3581c8e-2b23-4c2a-a982-a0414bf4f1d6/mock-pay status=200
+
+[1A[2K[WebServer] [req] x-request-id=6b69881e-01f7-413a-a15b-b58aeda0e747 path=/api/v1/orders/f3581c8e-2b23-4c2a-a982-a0414bf4f1d6/confirm-completion status=200
+[WebServer] [req] x-message-id=20d584ed-6c9f-445b-89a7-5b5d1573e39e path=/api/v1/orders/f3581c8e-2b23-4c2a-a982-a0414bf4f1d6/confirm-completion status=200
+
+[1A[2K[WebServer] [req] x-request-id=15aae2ba-82ec-4f60-8d46-768f595bd095 path=/api/v1/orders/f3581c8e-2b23-4c2a-a982-a0414bf4f1d6 status=200
+[WebServer] [req] x-message-id=905a71b5-30d3-4332-9a94-6971b9e6e641 path=/api/v1/orders/f3581c8e-2b23-4c2a-a982-a0414bf4f1d6 status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=5a4e803b-27f1-41a6-bc0e-1791a9f38f22 path=/health status=200
+[WebServer] [req] x-message-id=33816ec2-94f6-4e30-a34b-ce75b0e5713a path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=ccd2d441-668d-4538-ac7d-628dcd4e6dc7 path=/api/v1/trust-growth/config status=200
+[WebServer] [req] x-message-id=a1a3aba5-14f1-46a3-96c6-2594ea798b2e path=/api/v1/trust-growth/config status=200
+
+[1A[2K[WebServer] [req] x-request-id=1ce721b8-caac-40aa-9c79-b767928ab478 path=/health status=200
+[WebServer] [req] x-message-id=006148ca-e69f-4a81-a334-94f0a4c8e06f path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f012-f013-1778975733084-48zmc3rf@traveltrust.test","
+
+[1A[2K[WebServer] subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=c0908d0aad2046b3b7869e5436032bc118f50c51eeb44fb1bc3f095278483bf7"}
+[WebServer] [req] x-request-id=517d7999-c989-4609-a8ac-d07e30f3870f path=/auth/register status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] c2d8418f-f851-4338-a6c9-4c82298dc3ab path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=5c06f8f5-52ba-4046-ac60-e6e163edf6e0 path=/api/v1/itineraries status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 2eb2406f-1dae-4b91-99b7-27c26fb6fa48 path=/api/v1/itineraries status=200
+
+[1A[2K[WebServer] [req] x-request-id=88bceeb5-a0e6-46fc-b527-ffc7979f7d88 path=/health status=200
+[WebServer] [req] x-message-id=fabcfa83-0091-4605-a383-665e03cbde2d path=/health status=200
+
+[1A[2K[WebServer] audit_key_write op=confirm_final_plan request_id=- user_id=1038c5e9-29c7-4f1f-836c-c7d9d660bd63 order_id=e30bdf60-db70-4158-b505-84b0e78c841a
+
+[1A[2K[WebServer] [req] x-request-id=85ce4543-a73a-41e2-be8e-c5e080ef976f path=/api/v1/orders/e30bdf60-db70-4158-b505-84b0e78c841a/confirm-final-plan status=200
+[WebServer] [req] x-message-id=498fee1d-90b8-4b50-ba5d-03f06209cd56 path=/api/v1/orders/e30bdf60-db70-4158-b505-84b0e78c841a/confirm-final-plan status=200
+
+[1A[2K[WebServer] [req] x-request-id=8ff264eb-c4b5-4638-b2ca-8d7195715012 path=/health status=200
+[WebServer] [req] x-message-id=f51db6e1-1666-42f7-a411-688a0ec0d2c0 path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound"
+
+[1A[2K[WebServer] :true,"kind":"email_verify","to":"e2e-f014-1778975733623-imvv2zcs@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=21b75fb2b37044af88cd2cc3dd3f07852f924ceec9044085b53db0d748fcf387"}
+[WebServer] [req] x-request-id=43bb37bd-226c-49df-bd8a-ab8d7dfadcc6 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-message-id=9177c6ba-0ca7-4a73-82f1-c7dc5cc74274 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=dab42cb4-37a1-4b8f-909b-04afeddfeab2 path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=8dbf6712-740c-49d1-b928-ff6cff094e5f path=/api/v1/community/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=61e7c1fe-4493-4e5a-8359-1d08c5dbd503 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=f97b151d-161b-4bfe-a70f-c554e62c42cb path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=d5a18365-4022-4b1a-b6bd-b08cf8be7679 path=/health status=200
+[WebServer] [req] x-message-id=004f81ad-b4a6-408f-93fc-a69527b1c059 path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"
+
+[1A[2K[WebServer] email_verify","to":"e2e-f014tag-1778975734176-yv5qzkgb@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=4c52619ce8a1453eb186fffc8f3d085cec0e63b12de54021a4cae5510f114119"}
+
+[1A[2K[WebServer] [req] x-request-id=72421575-53e0-44be-8f23-97e07c048a85 path=/auth/register status=200
+[WebServer] [req] x-message-id=a445d22c-3cc1-4a77-bd00-9b7550d78272 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=b6c2772e-ed9e-43a5-9137-259d3c3bf786 path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=50508e48-1771-46da-9987-161672e5050b path=/api/v1/community/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=02b12675-54df-4086-bbe7-8536447ce365 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=3a6e51c2-32aa-4c8b-9009-d9fde0ba3406 path=
+
+[1A[2K[WebServer] /api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=ec3fa92b-af98-4da5-8cbc-945d20a5382a path=/health status=200
+[WebServer] [req] x-message-id=bc8d6983-2be0-44d0-9188-ed4829688703
+
+[1A[2K[WebServer]  path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to
+
+[1A[2K[WebServer] ":"e2e-f014-a-1778975734710-69qs91v0@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=8ce5d65ea1e74286b19414bf494f15b3228d99e960ab469c9ca53a0e1cf6ac56"}
+
+[1A[2K[WebServer] [req] x-request-id=e2bb2170-9ad1-40ba-a3e8-0d00c423f763 path=/auth/register status=200
+[WebServer] [req] x-message-id=eecece20-0adc-45a2-b4f0-64852b10d05a path=/auth/register status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f014-b-1778975734710-69qs91v0@traveltrust.test","subject":"TravelTrust email verification
+
+[1A[2K[WebServer] ","url":"http://localhost:3000/auth/verify-email?token=d237e13d7ecd4cfc882de796e11a77289ed20de02994461ca55f29ae24fa69b8"}
+[WebServer] [req] x-request-id=539cff52-24f4-4efd-aae1-3a1b335a1353 path=/auth/register status=200
+[WebServer] [req] x-message-id=1f8c69d2-a641-4e70-9b8a-82f1e45ee2bf path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=3d891ea9-6050-4646-a21f-64829470ed4b path=/api/v1/me status=200
+[WebServer] [req] x-message-id=5d6fbf5f-c602-436d-8a24-7edf3fc4b50d path=
+
+[1A[2K[WebServer] /api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=d8dafdf6-d509-4942-99f8-8319ed21e04c path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=73fd3fe4-ce1b-4c8b-bbda-b1e1ee72ac7b path=/api/v1/community/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=a9b714fb-3739-423d-b517-3800ca68660c path=/api/v1/community/users/f91f14c9-a1f5-45a0-8af4-c7b19217480c/follow status=200
+
+[1A[2K[WebServer] [req] x-message-id=5326fbe7-71a3-4f12-bd89-57ab74fd9d07 path=/api/v1/community/users/f91f14c9-a1f5-45a0-8af4-c7b19217480c/follow status=200
+
+[1A[2K[WebServer] [req] x-request-id=790a0532-125f-4d73-9b65-5925e1cdca72 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=691f5b4e-d681-4c4e-90b7-f26c27f2ecae path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=718b6b70-ce5a-43f4-af8b-0d075dc346b9 path=/health status=200
+[WebServer] [req] x-message-id=529e914c-29fd-4dc9-b021-27692309fa7a path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f015-1778975735791-aqnz8h5g@traveltrust.test","subject"
+
+[1A[2K[WebServer] :"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=cff796d9bd8f4e97b15db6df8d1d2f543dd3a2196a8d4b40b175721381581401"}
+[WebServer] [req] x-request-id=bdb310dd-7f35-437b-8d02-f4527a3b2ff7 path=/auth/register status=200
+[WebServer] [req] x-message-id=c25669f6-832c-4ae3-b642-d734a025f02b path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=58003003-9d8d-483f-8d21-d67703b144cf path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=03639fd9-65d3-48b2-90c7-9e9960acc288 path=/api/v1/community/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=89e27b51-0cd8-4e8f-9480-392f10006516 path=/api/v1/community/posts/cc72ee3b-0daa-4711-9b45-4dedb31dd53e status=200
+[WebServer] [req] x-message-id=dca14b4d-f991-4734-bf97-7c4761431c54 path=/api/v1/community/posts/cc72ee3b-0daa-4711-9b45-4dedb31dd53e
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=c53c2585-c466-4fd1-ab51-ece2afb28eb5 path=/health status=200
+[WebServer] [req] x-message-id=2e2971d1-0c96-4ad5-9f63-3d4c99bb5378 path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f015b-1778975736340-ozbm2bme@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=a8fe9c7c1c9c481b9eb2140428f2b04cb558c7e2373746a095e7b99138fa36f3"
+
+[1A[2K[WebServer] }
+
+[1A[2K[WebServer] [req] x-request-id=5cd81cba-7094-4569-aa2a-f67da1281dcc path=/auth/register
+
+[1A[2K[WebServer]  status=200
+[WebServer] [req] x-message-id=cabd0d43-702a-4dc5-b7ed-f2397761fd0d path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=5e1c011f-690c-47b2-827b-324e6c47d94c path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=3e569866-73f7-49e7-8a67-40bc844ae519 path=/api/v1/community/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=fb164ed9-19b3-4ca9-8885-860ce37945ab path=/api/v1/community/posts/40564e6a-f7c3-4393-bb51-272934d39951 status=200
+[WebServer] [req] x-message-id=dd2b91e6-9cad-4b5a-924e-a9b88fce24fc path=/api/v1/community/posts/40564e6a-f7c3-4393-bb51-272934d39951 status=200
+
+[1A[2K[WebServer] [req] x-request-id=9103990b-451e-4c1c-bcb5-003f934b9c70 path=/health
+
+[1A[2K[WebServer]  status=200
+[WebServer] [req] x-message-id=b4e0a21e-0f45-4e6b-bf8f-aeeaf5abcabf path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify
+
+[1A[2K[WebServer] ","to":"e2e-f016-1778975736868-0erhs2rf@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=4bc5b5b4346c4116b0300eb8d4c340e93cfd5f7838e54f08ac274439cb043f46"}
+
+[1A[2K[WebServer] [req] x-request-id=00c62688-16db-4961-a672-5c6cf8a011d5 path=/auth/register status=200
+[WebServer] [req] x-message-id=2584ecb5-9715-4ff1-b450-73dd4775708c path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=744ae475-6852-431f-9bbe-4328ff7fc4f1 path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=5c19a080-16eb-415b-82a9-a81574974ebf path=/api/v1/community/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=02f9bb18-ba5e-44f8-b759-70f836fa9595 path=/api/v1/community/posts/9ae3898f-d240-47a4-95b0-c1fecf575210/like status=200
+[WebServer] [req] x-message-id=8f912fd5-3eee-4b79-925e-f1bdd82233f7
+
+[1A[2K[WebServer]  path=/api/v1/community/posts/9ae3898f-d240-47a4-95b0-c1fecf575210/like status=200
+
+[1A[2K[WebServer] [req] x-request-id=012fd627-329e-4e62-9cec-5f331272b244 path=/health status=200
+[WebServer] [req] x-message-id=ba4e23cb-dec5-41e0-af22-991f7248e5bc path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to
+
+[1A[2K[WebServer] ":"e2e-f016b-1778975737416-kp3lcx2g@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=122641b3d2704359814914332f8357b39b2fd3a7c00741f389fede91ee594ec1"}
+[WebServer] [req] x-request-id=c60dce18-9a0b-446d-baef-220e51ea52eb path=/auth/register status=200
+[WebServer] [req] x-message-id=814e2dd9-38fa-4235-9817-2d1bd84a6e88 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=4be0e9c9-e3d0-4ac2-957f-eaff7b4c14b0 path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=4716abdd-1bb9-44e0-a0f7-b3e892cf9594 path=
+
+[1A[2K[WebServer] /api/v1/community/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=fd2fa679-90be-4d1c-ad1c-545db963f60f path=/api/v1/community/posts/46c3e48a-c418-4fff-ab00-99459f85eb93/like status=200
+[WebServer] [req] x-message-id=64d1be2a-2689-4f5b-9692-142a78777da8 path=/api/v1/community/posts/46c3e48a-c418-4fff-ab00-99459f85eb93/like status=200
+
+[1A[2K[WebServer] [req] x-request-id=4084c100-2e6d-4b11-b639-196ae8e0e1ba path=/api/v1/community/posts/46c3e48a-c418-4fff-ab00-99459f85eb93 status=200
+[WebServer] [req] x-message-id=11f47082-60c2-4cd4-b26e-5713e37c540c
+
+[1A[2K[WebServer]  path=/api/v1/community/posts/46c3e48a-c418-4fff-ab00-99459f85eb93 status=200
+
+[1A[2K[WebServer] [req] x-request-id=7f9cf6ac-e8fe-4b94-8767-3601b5cd3b9c path=/api/v1/community/posts/46c3e48a-c418-4fff-ab00-99459f85eb93/like status=200
+[WebServer] [req] x-message-id=8893b562-55a3-4e36-982e-87103f0b60a0 path=/api/v1/community/posts/46c3e48a-c418-4fff-ab00-99459f85eb93/like
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=1b190b21-687d-45b8-8e37-47ae1c2a5136 path=/api/v1/community/posts/46c3e48a-c418-4fff-ab00-99459f85eb93 status=200
+[WebServer] [req] x-message-id=fee20ee7-4cb2-455d-8dba-7c02855051b5 path=/api/v1/community/posts/46c3e48a-c418-4fff-ab00-99459f85eb93 status=200
+
+[1A[2K[WebServer] [req] x-request-id=2b3b5701-ad35-47d9-b08a-8a3f6d9c24df path=/api/v1/community/posts/46c3e48a-c418-4fff-ab00-99459f85eb93/like status=200
+[WebServer] [req] x-message-id=6634e0ef-f4f7-494b-81fb-c21b3031a730
+
+[1A[2K[WebServer]  path=/api/v1/community/posts/46c3e48a-c418-4fff-ab00-99459f85eb93/like status=200
+
+[1A[2K[WebServer] [req] x-request-id=7c040617-a06a-4121-82c1-59fa7c996b0a path=/health status=200
+[WebServer] [req] x-message-id=7db95f3f-2164-4b10-b2b4-128a9f18bb39 path=
+
+[1A[2K[WebServer] /health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f017-1778975737982-pd4mrx25@traveltrust.test",
+
+[1A[2K[WebServer] "subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=6d05f8eed67641458f6acc1fd9c0ba4ee52b87cdab194a77bc0ba067baf31ee9"}
+[WebServer] [req] x-request-id=b476fa05-3c8c-4665-b572-7e7e66a8caa9 path=/auth/register status=200
+[WebServer] [req] x-message-id=356df0c6-ed9d-4042-879c-7fc9a4459042 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=4f141163-d166-4719-a675-15fd4d4d43ff path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=1e186ade-128f-4a0c-966f-a22d35f73bbb path=/api/v1/community/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=53173018-9cf0-451d-a432-148e5589caa4 path=/api/v1/community/posts/4523b922-6393-477d-b02f-904980cf74b0/collect status=200
+[WebServer] [req] x-message-id=31a4beb4-6a6f-43ba-8fea-bfc477f14459 path=/api/v1/community/posts/4523b922-6393-477d-b02f-904980cf74b0/collect status=200
+
+[1A[2K[WebServer] [req] x-request-id=92dd1165-32c6-4ec3-bc2c-df09d87d65e9 path=/health status=200
+[WebServer] [req] x-message-id=357d34d0-5f11-4bbd-bddb-9bbc59874d4e path=/health
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f017b-1778975738522-s4l747ir@traveltrust.test","subject":"TravelTrust email verification","url":
+
+[1A[2K[WebServer] "http://localhost:3000/auth/verify-email?token=9931ad1c78274063b531581186dfb04c3ab48352e15e4ff6a4467244b36cd092"}
+[WebServer] [req] x-request-id=5e31ca2c-0ea9-44db-9325-7e8370553bec path=/auth/register status=200
+[WebServer] [req] x-message-id=2a1a5af6-5594-4ef8-a3e3-940c0046fc97 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=3ca5474b-5c8f-4cb3-af70-dc61544495fd path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=91aa5868-dad9-4591-8e55-17b78f5f044b path=/api/v1/community/posts status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=b063e1ab-f91e-42d4-800f-deaba4567075 path=/api/v1/community/posts/0d6b17ae-be12-4a1e-b5d8-2405cd41d0d2/collect status=200
+[WebServer] [req] x-message-id=8612381e-34b8-4c51-b4b2-6c31fc695f3a path=/api/v1/community/posts/0d6b17ae-be12-4a1e-b5d8-2405cd41d0d2/collect status=200
+
+[1A[2K[WebServer] [req] x-request-id=9ffb4e17-089b-4ed3-b126-2f90b0cdeb1a path=/api/v1/community/posts/0d6b17ae-be12-4a1e-b5d8-2405cd41d0d2 status=200
+[WebServer] [req] x-message-id=022c8486-61c5-44f2-b853-c7067e33d59a path=/api/v1/community/posts/0d6b17ae-be12-4a1e-b5d8-2405cd41d0d2 status=200
+
+[1A[2K[WebServer] [req] x-request-id=ea24c2aa-39d9-4258-826a-39fff6d470ae path=/api/v1/community/posts/0d6b17ae-be12-4a1e-b5d8-2405cd41d0d2/collect status=200
+[WebServer] [req] x-message-id=4be37820-bc3d-49e5-9911-91119669d5e0 path=/api/v1/community/posts/0d6b17ae-be12-4a1e-b5d8-2405cd41d0d2/collect status=200
+
+[1A[2K[WebServer] [req] x-request-id=3a14d0a5-0d46-4735-aeac-55cf9cc9e9da path=/api/v1/community/posts/0d6b17ae-be12-4a1e-b5d8-2405cd41d0d2 status=200
+[WebServer] [req] x-message-id=99602ef8-d69c-4a32-8b39-8f1ef50fc7a7 path=/api/v1/community/posts/0d6b17ae-be12-4a1e-b5d8-2405cd41d0d2 status=200
+
+[1A[2K[WebServer] [req] x-request-id=3ba5718e-c994-4178-8ac2-d0a98fab3344 path=/api/v1/community/posts/0d6b17ae-be12-4a1e-b5d8-2405cd41d0d2/collect status=200
+[WebServer] [req] x-message-id=88571519-3732-4029-b557-5191a7b69118 path=/api/v1/community/posts/0d6b17ae-be12-4a1e-b5d8-2405cd41d0d2/collect status=200
+
+[1A[2K[WebServer] [req] x-request-id=c50697ab-e186-4887-99e3-2bd93da83b69 path=/health status=200
+[WebServer] [req] x-message-id=34fcca8a-bb40-4dc1-bfcc-4dcba7bc2797 path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","
+
+[1A[2K[WebServer] to":"e2e-f018-a-1778975739123-jqelqnf2@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=f0e77927ecd54230a9dc2851c46faf23fa006bcafa834ed4b74f00467ff7d76e"}
+[WebServer] [req] x-request-id=c378de82-d1d9-40bd-afc1-be7289a9fd1d path=/auth/register status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] b3a2f983-c98b-452b-9c7f-e66c95c091c5 path=/auth/register status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f018-r-1778975739123-jqelqnf2@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=83fd632e47c04e4da2cff98285fceddea3e2028ba4db4596895ce9f980decb04"}
+
+[1A[2K[WebServer] [req] x-request-id=156ab8c2-7c05-4de6-aede-ccde0bdf9288 path=/auth/register status=200
+[WebServer] [req] x-message-id=e61a7638-14d9-4b11-b65d-54705bb9dd94 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=b5a0fc0c-aec6-4c13-b9d2-95585a3fb749 path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=d1d104b0-40e9-4c8b-89fc-afa3127f8365 path=/api/v1/community/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=92d8ae7f-a1c7-44d2-906a-36dcce31dc07 path=/api/v1/community/reports status=200
+
+[1A[2K[WebServer] [req] x-message-id=b2c9da21-c511-4c0b-922f-802957e5672f path=/api/v1/community/reports status=200
+
+[1A[2K[WebServer] [req] x-request-id=2f0c0822-aaab-4fa9-85ee-8fbecb2c97c8 path=/health status=200
+[WebServer] [req] x-message-id=ef64f352-25f4-4a3e-a7ae-dcc14bc78912 path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f018b-a-1778975740140-3ulcsord@traveltrust.test","subject
+
+[1A[2K[WebServer] ":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=f20311bd096548adaad85c6aa4aa81bd90e1114b4ad849e4b36c6da2ce828898"}
+
+[1A[2K[WebServer] [req] x-request-id=54fc0207-489d-469f-bc68-83507f6daf21 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-message-id=1581e2f9-f1a8-42ee-8e5c-42bb90c3babf path=/auth/register status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f018b-r-1778975740140-3ulcsord@traveltrust.test","subject":"TravelTrust email verification"
+
+[1A[2K[WebServer] ,"url":"http://localhost:3000/auth/verify-email?token=c918640f41844e9286774524170061204f75b567fe3c4c5bba047648950265cc"}
+[WebServer] [req] x-request-id=cb05a477-4f5d-406e-9286-cf4f72a0ba0d path=/auth/register
+
+[1A[2K[WebServer]  status=200
+[WebServer] [req] x-message-id=30749e54-0491-492d-a881-ae0b62473603 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=b3c4f30d-8a48-4852-b8f4-2eef47985044 path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=06598f91-1c0b-4e89-ab35-d6dbb7c5c9cc path=/api/v1/community/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=9fed086f-6d1c-423d-9e1d-6c3943c2cda3 path=/api/v1/community/reports status=200
+[WebServer] [req] x-message-id=bb9793d1-6f61-4896-832a-0d67a18e5987 path=/api/v1/community/reports status=200
+
+[1A[2K[WebServer] [req] x-request-id=9f1d169c-ae82-4c9a-b6fe-5eaf8f99026a path=/api/v1/community/posts/ac718b85-6cae-4ca9-8fc7-be88c57b3712 status=200
+[WebServer] [req] x-message-id=ec6086e0-7794-439d-8318-90fdfb8d259d path=/api/v1/community/posts/ac718b85-6cae-4ca9-8fc7-be88c57b3712 status=200
+
+[1A[2K[WebServer] [req] x-request-id=864bb240-e1f5-45dc-8f19-48f51128a5b8 path=/health status=200
+[WebServer] [req] x-message-id=7e000749-88e3-427a-8109-be0a3f1314d8 path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"
+
+[1A[2K[WebServer] kind":"email_verify","to":"e2e-f019-1778975741167-p6q1t88j@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=c6092475245548a38eaaa14f7e0fafc8da468b094fc1480f992ff8dd2dd0df75"}
+
+[1A[2K[WebServer] [req] x-request-id=e2773959-c797-4912-8b3f-b163da9665a6 path=/auth/register status=200
+[WebServer] [req] x-message-id=e809caab-7746-4270-a2d6-9256ea0ab7e0 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=8e2b9f58-bdc5-419e-8d33-e3096dd0d93b path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=a39793ab-e9e0-459e-a38b-795d1616642f path=/api/v1/community/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=c75c4b5c-7d5a-461e-9f89-06d8fcec59dc path=/api/v1/community/me/posts status=200
+[WebServer] [req] x-message-id=76562640-5ac4-49e2-a769-8fbb92c6cbec path=/api/v1/community/me/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=2c88b3dc-f629-4c33-bf92-771b1da6bd72 path=/health status=200
+[WebServer] [req] x-message-id=cfe17355-fed3-4faf-ab29-3cbe3c119fd4 path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f019b-1778975741708-ryux1gjn@traveltrust.test
+
+[1A[2K[WebServer] ","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=74e2176f19d54655b4a65e1e33b23d6fec2767cb72014216a09f1126932d7aea"}
+[WebServer] [req] x-request-id=4d6af4e4-8681-4c28-a1ab-276ffd61d82c path=/auth/register status=200
+[WebServer] [req] x-message-id=cc7a77e8-a4c2-4a35-bafd-312cc15f7b9f path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=efdbb6e5-b344-4304-9378-3fb0d0dd71d6 path=/api/v1/community/posts status=200
+[WebServer] [req] x-message-id=3f91e5cf-c3e5-4fc7-b326-fc34859cd2c3 path=/api/v1/community/posts status=200
+
+[1A[2K[WebServer] [req] x-request-id=f38776e6-8e20-465e-824d-28f493a5f705 path=/api/v1/community/posts/801fe69c-c642-46a5-8a21-ed68064bed2d/like status=200
+
+[1A[2K[WebServer] [req] x-message-id=22bd36ec-ca97-4e0f-a0b9-38ad24a94b6a path=/api/v1/community/posts/801fe69c-c642-46a5-8a21-ed68064bed2d/like status=200
+
+[1A[2K[WebServer] [req] x-request-id=db194960-fa2c-428b-839a-361d04686d44 path=/api/v1/community/me/likes status=200
+[WebServer] [req] x-message-id=cf6c499f-a343-4835-902e-23bb5385a957 path=/api/v1/community/me/likes status=200
+
+[1A[2K[WebServer] [req] x-request-id=ddaa3a52-e694-49f1-b4c3-da7dcef428a5 path=/api/v1/community/posts/801fe69c-c642-46a5-8a21-ed68064bed2d/like status=200
+[WebServer] [req] x-message-id=f048d99d-2356-4f91-b28f-a15fd95f9153 path=/api/v1/community/posts/801fe69c-c642-46a5-8a21-ed68064bed2d/like
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=6eb1c482-daee-484a-91c9-a58c3a5aaecf path=/api/v1/community/me/likes status=200
+[WebServer] [req] x-message-id=360d4f8e-9d55-4cb9-a4a5-7dc71792b436 path=/api/v1/community/me/likes status=200
+
+[1A[2K[WebServer] [req] x-request-id=33768b1c-1365-4658-bc8e-83e05da57abb path=/api/v1/community/posts/801fe69c-c642-46a5-8a21-ed68064bed2d/collect status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] f797bbf1-3090-403b-b09a-df113a6d7a9e path=/api/v1/community/posts/801fe69c-c642-46a5-8a21-ed68064bed2d/collect status=200
+
+[1A[2K[WebServer] [req] x-request-id=31e24d5a-e4fc-4bee-b9f7-3a428b6aa730 path=/api/v1/community/me/collects status=200
+[WebServer] [req] x-message-id=50c98026-4c6d-4a66-903e-d0aa599897e3 path=/api/v1/community/me/collects
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=1ab4c872-7c46-40c9-8c9c-69af511c81fc path=/api/v1/community/posts/801fe69c-c642-46a5-8a21-ed68064bed2d/collect status=200
+[WebServer] [req] x-message-id=f42b25e5-b439-4509-894e-469ae6bd9153 path=/api/v1/community/posts/801fe69c-c642-46a5-8a21-ed68064bed2d/collect status=200
+
+[1A[2K[WebServer] [req] x-request-id=149f6cb4-1920-4f7d-b7d4-ab533cf92686 path=/api/v1/community/me/collects status=200
+[WebServer] [req] x-message-id=3c6908cf-da56-4fb8-94b3-6a7aaa066625 path=/api/v1/community/me/collects status=200
+
+[1A[2K[WebServer] [req] x-request-id=6a31d8e4-04ad-4fdd-a4a2-f2fdb7868d45 path=/health status=200
+[WebServer] [req] x-message-id=91e416a2-b5a6-4ce9-83f2-016487edb6be path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify",
+
+[1A[2K[WebServer] "to":"e2e-f020-t-1778975742263-nfkh8etk@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=2768feed5d074943b97796d40151a15f2f52d519a7ab4f2487fa43cdd1d076a5"}
+
+[1A[2K[WebServer] [req] x-request-id=b8442cc3-5a07-4e15-9094-c2a0b4e313e1 path=/auth/register
+
+[1A[2K[WebServer]  status=200
+[WebServer] [req] x-message-id=6be03f4e-5ad5-491c-9ff1-7ed8bcb33dee path=/auth/register status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f020-g-1778975742263-nfkh8etk@traveltrust.test","subject":"TravelTrust email verification","url"
+
+[1A[2K[WebServer] :"http://localhost:3000/auth/verify-email?token=c6a206fb66f34fd49cf7f8ffb677873e768fccd349804055a4a4e8cd2e9aea81"}
+[WebServer] [req] x-request-id=b968ad6c-d779-4620-8ed0-743c8450a168 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-message-id=0e75d50e-e7aa-4e7d-b69d-34df77b01957 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=8e382b87-4601-4644-9c33-fa3c8e06a95c path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=01b1599c-9c1d-4575-9369-3b837bd7d0be path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=841a17a7-09e1-4240-88a5-a810cbfa77a2 path=/api/v1/guides/23513e45-7772-4ebf-b7ac-988dc287cc3a/stake status=200
+[WebServer] [req] x-message-id=6ab4c90b-ca86-4fe5-884e-d625b4a0bf8c path=/api/v1/guides/23513e45-7772-4ebf-b7ac-988dc287cc3a/stake status=200
+
+[1A[2K[WebServer] [req] x-request-id=8b084aec-54b9-4b09-893e-53b2442f8c5d path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=3fd7d2f7-1936-481d-afea-63b3c71466d4 path=/api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=1033b6f4-4899-4b79-8748-9e283299db47 path=/api/v1/me/market-bookmarks status=200
+[WebServer] [req] x-message-id=d0cd0b62-79c4-4995-9b94-91565cad85c9 path=/api/v1/me/market-bookmarks status=200
+
+[1A[2K[WebServer] [req] x-request-id=7d546fb2-afe4-45ab-a501-5db10600557c path=/api/v1/me/market-bookmarks status=200
+[WebServer] [req] x-message-id=d7da8a6d-416f-4b96-a62a-b973fbbd69f8 path=
+
+[1A[2K[WebServer] /api/v1/me/market-bookmarks status=200
+
+[1A[2K[WebServer] [req] x-request-id=3463d52b-fdd4-4622-b0a4-4b582eef45d9 path=/health status=200
+[WebServer] [req] x-message-id=8369db4f-7a66-4d99-98f7-2aba5e62f6c4 path=/health
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to"
+
+[1A[2K[WebServer] :"e2e-f020c-t-1778975743425-0rbqf72z@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=314f825e8fc84c7ca87c5728577ba41542351ef7cfe14d39b59cf631f0b23f4d"}
+
+[1A[2K[WebServer] [req] x-request-id=2a4e80ee-6000-4325-abfc-89bc5bf4249f path=/auth/register status=200
+
+[1A[2K[WebServer] 
+[WebServer] [req] x-message-id=d5494f57-2071-45f3-a48e-241756302d1c path=/auth/register status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":
+
+[1A[2K[WebServer] "e2e-f020c-g-1778975743425-0rbqf72z@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=a767e70ebc6b4cbe880e2f2f6b92f3c0d8c0b5a6cca64f85a34b820f2bf31d71"}
+
+[1A[2K[WebServer] [req] x-request-id=e476119c-f24a-4615-9086-c03c22bd9081 path=/auth/register status=200
+[WebServer] [req] x-message-id=a988227d-a28b-48b0-9edf-dd283ae3437c path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=2b305dce-e1bf-4922-8e97-2d6cd776d025 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=e7093e24-9e1c-4c2b-acdb-26ce2fba62e7 path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=a10609c7-99c0-4887-a164-97dcc56dadb3 path=/api/v1/guides/b86fe48a-11f2-4c2d-b45c-9fc4301ca201/stake status=200
+[WebServer] [req] x-message-id=8fcaa37b-0b2a-4820-a648-7945b25947be path=/api/v1/guides/b86fe48a-11f2-4c2d-b45c-9fc4301ca201/stake status=200
+
+[1A[2K[WebServer] [req] x-request-id=0c15c641-552c-4a06-abb2-ddcdaececf11 path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=827959f1-daea-4de2-9423-38bcc90dd83a path=/api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=6d70204f-e3b3-4a95-bd41-6d122af5cbfd path=/api/v1/me/market-bookmarks status=200
+[WebServer] [req] x-message-id=b32bc45e-f64c-49b9-93e4-2f51a5131eb1 path=/api/v1/me/market-bookmarks status=200
+
+[1A[2K[WebServer] [req] x-request-id=2a9bba56-acb3-45d0-821c-479b10d1918e path=/api/v1/me/market-bookmarks status=200
+[WebServer] [req] x-message-id=8f8b690c-050e-41a7-8276-493af2b71121 path=/api/v1/me/market-bookmarks status=200
+
+[1A[2K[WebServer] [req] x-request-id=d8169a35-a189-49f8-90d9-db55851537cb path=/api/v1/me/market-bookmarks/order/414c70c5-7f6b-4528-88a4-3e3b3a5583a6 status=200
+[WebServer] [req] x-message-id=b191eea7-04fc-494e-8c84-56f598af0e1f path=/api/v1/me/market-bookmarks/order/414c70c5-7f6b-4528-88a4-3e3b3a5583a6 status=200
+
+[1A[2K[WebServer] [req] x-request-id=06a31f03-7da4-44df-9d61-0fb9834b1107 path=/api/v1/me/market-bookmarks status=200
+[WebServer] [req] x-message-id=2bd83115-3043-4685-bd0d-5ac109eed794 path=/api/v1/me/market-bookmarks status=200
+
+[1A[2K[WebServer] [req] x-request-id=01e33f94-5885-4f46-ace5-6ca7b05338ea path=/health status=200
+[WebServer] [req] x-message-id=48ffaf68-8335-4f8b-8a78-ce8a287567b7 path=/health status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":
+
+[1A[2K[WebServer] "email_verify","to":"e2e-f020b-t-1778975744523-8xll7oos@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=9d4a920462e0430cbc4daa8dd861a79a4dbcb7e18aee4d6cad7365e5a1b7d724"}
+
+[1A[2K[WebServer] [req] x-request-id=48d63e80-19b0-4cdf-acb2-e97e0effdf61 path=/auth/register status=200
+[WebServer] [req] x-message-id=6a1cd87f-c58b-4e64-b948-f5457e84414c path=/auth/register status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":
+
+[1A[2K[WebServer] "e2e-f020b-g-1778975744523-8xll7oos@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=0f63b8675a6e4f779e35ebeb4219a3971231d771f63749c193b330aa9a56d029"}
+
+[1A[2K[WebServer] [req] x-request-id=8a35744a-43a7-4f52-8428-27b7654a1a84 path=/auth/register status=
+
+[1A[2K[WebServer] 200
+[WebServer] [req] x-message-id=043ed5a0-331d-4ef3-9a5b-0d0b0b852170 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=5f231d54-bda3-4b9a-9aa4-2dada1126ce2 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=e8e0c2ee-c68d-48a8-863c-2975cab1965d path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=3c6e56cb-30ec-4cf1-a0ad-1d6290ae1151 path=/api/v1/guides/6944b51c-5a7d-491b-aed4-7c418f3bb770/stake status=200
+[WebServer] [req] x-message-id=42ef32d0-7092-477f-afa5-0dec0acc859c path=/api/v1/guides/6944b51c-5a7d-491b-aed4-7c418f3bb770/stake status=200
+
+[1A[2K[WebServer] [req] x-request-id=1ad47aae-34f8-400a-a5f0-71e6f37c813f path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=14dbd4a7-e39f-42f2-9038-562c6df97954 path=
+
+[1A[2K[WebServer] /api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=3586553d-21cf-43c1-ab1f-f632be38ee06 path=/api/v1/me/market-bookmarks status=200
+[WebServer] [req] x-message-id=075aa022-197e-4ad6-9861-cb2dafdf35b5 path=/api/v1/me/market-bookmarks status=200
+
+[1A[2K[WebServer] [req] x-request-id=0af5f487-7995-440e-a92e-1c28d6830ad9 path=/api/v1/me/market-bookmarks status=200
+[WebServer] [req] x-message-id=1f050ca0-4231-4601-abc1-8be96df03afb path=/api/v1/me/market-bookmarks status=200
+
+[1A[2K[WebServer] [req] x-request-id=6d2453ed-0d28-4d4d-97a1-24ca74f16aa6 path=/api/v1/me/market-bookmarks status=400
+[WebServer] [req] x-message-id=c40ccbb3-9587-4578-9bd1-4681a47173a1 path=/api/v1/me/market-bookmarks status=400
+
+[1A[2K[WebServer] [req] x-request-id=772158a8-2c09-4375-8158-678c24810a08 path=/api/v1/me/market-bookmarks status=200
+
+[1A[2K[WebServer] [req] x-message-id=65e69bdd-df1b-4997-96e6-0d5d9c530bfa path=/api/v1/me/market-bookmarks status=200
+
+[1A[2K[WebServer] [req] x-request-id=7507c58a-ceeb-472f-9de5-e18c67d8ccbb path=/health status=200
+[WebServer] [req] x-message-id=710ef328-034d-4706-be7e-ad4e864a41fa path=
+
+[1A[2K[WebServer] /health status=200
+
+[1A[2K[WebServer] [req] x-request-id=1d263d2d-12bc-4b98-8924-4a4a1bd71e89 path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=2e7ea06d-6a93-4f39-bb3a-e1f97a86c9c6 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=83c0f098-99a9-4e20-b490-8474ddc68a9e path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-message-id=32a4caf4-309d-41b7-8248-32a6c104db99 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=9074b784-c853-4ffd-97ab-7c64fee00d5d path=/api/v1/market/provider/listings status=200
+[WebServer] [req] x-message-id=3862bb7e-23ad-4d63-8286-53cd51b4de7b path=/api/v1/market/provider/listings status=200
+
+[1A[2K[WebServer] [req] x-request-id=d7b8be54-50eb-4c21-b17f-37605be894e8 path=/api/v1/market/provider/listings status=200
+[WebServer] [req] x-message-id=0469fa8e-f01d-4420-88e4-96de1c8c7aba path=/api/v1/market/provider/listings status=200
+
+[1A[2K[WebServer] [req] x-request-id=542a1f9b-a7e3-4ca8-ba64-c66f698e9204 path=/health status=200
+[WebServer] [req] x-message-id=e67952b0-6d9e-41fd-86a8-432d9d824d92 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=50740ab1-bc9c-4299-9dff-85bea6afb076 path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=88d85060-ceef-486b-a17b-65c4cdc1d2b6 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=45d2cc40-f93e-4e2d-a6ad-0da0ebe2adef path=/auth/login status=200
+[WebServer] [req] x-message-id=7fc26474-8bd5-4a7b-98aa-bd1467652d0d path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=db876c34-c092-4bed-af56-07477c35bc96 path=/api/v1/market/provider/listings status=200
+[WebServer] [req] x-message-id=b5261a02-ef9e-468a-8cae-d6500db79bf6 path=/api/v1/market/provider/listings status=200
+
+[1A[2K[WebServer] [req] x-request-id=1c552ee7-bbc5-4deb-a932-1b86384aa79f path=/api/v1/market/provider/listings/b78f804e-1b6e-40ff-94bc-f91f9f07324c status=200
+
+[1A[2K[WebServer] [req] x-message-id=6b5115c0-810f-4c7b-b5cb-0903f45b7b63 path=/api/v1/market/provider/listings/b78f804e-1b6e-40ff-94bc-f91f9f07324c status=200
+
+[1A[2K[WebServer] [req] x-request-id=b739d610-f71b-45e5-a670-4dc42cbfd5d3 path=/health status=200
+[WebServer] [req] x-message-id=a1f3a0d8-030f-4ac3-8b3f-494c5dd065f1 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=585434c1-600d-4fff-be8b-107bd9becd0e path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=da766898-bf44-4d67-a46a-7b1740c96a84 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=39e6421b-e97e-4ccd-b848-e7edd899e4ed path=/auth/login status=200
+[WebServer] [req] x-message-id=c9a6a2e2-cbdc-40d9-be24-b33e49ac2492 path=/auth/login status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=59e75cfa-1d32-4294-8115-5821958de0b3 path=/api/v1/market/acquisition/listings status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 45bb2c10-bbc6-40f0-b8ea-d1044088a302 path=/api/v1/market/acquisition/listings status=200
+
+[1A[2K[WebServer] [req] x-request-id=0a46d39e-30cf-423f-8c0c-d76561c50cb7 path=/api/v1/market/acquisition/listings status=200
+[WebServer] [req] x-message-id=546210b6-7b3d-42c3-bce0-e853b11f5d12 path=/api/v1/market/acquisition/listings status=200
+
+[1A[2K[WebServer] [req] x-request-id=5bf0bc0d-5e36-4802-8487-c4951e73980b path=/health status=200
+[WebServer] [req] x-message-id=988983a9-eda7-4de9-adf9-5f3888378392 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=fa737ab0-d9b6-4bef-9ae2-c9d2cb80e898 path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=91649f27-943c-4893-9500-2fe0fed65fd5 path=
+
+[1A[2K[WebServer] /auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=396a66ea-1c7c-455d-b876-5defd1f9adc9 path=/auth/login status=200
+[WebServer] [req] x-message-id=e52ea88b-5d1b-48a4-9cfe-09187c1b2032 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=8f60994a-fa02-4704-aac7-e9378fea9cbb path=/api/v1/market/acquisition/listings status=200
+
+[1A[2K[WebServer] [req] x-message-id=7e155f82-039f-47b7-a29a-82ffc04c6d97 path=/api/v1/market/acquisition/listings status=200
+
+[1A[2K[WebServer] [req] x-request-id=d29826e1-8352-4ec0-9bfc-1a1b57cb5caa path=/api/v1/market/acquisition/listings/3244c54a-e2a1-4c55-ae2a-3735f0e268ad status=200
+[WebServer] [req] x-message-id=038481f5-dfe2-4b40-b528-1d6945d54e09 path=/api/v1/market/acquisition/listings/3244c54a-e2a1-4c55-ae2a-3735f0e268ad status=200
+
+[1A[2K[WebServer] [req] x-request-id=df426118-5ad7-441e-8d78-760397ef1a42 path=/health status=200
+[WebServer] [req] x-message-id=8e683b1e-c71f-495c-95e0-ae6ce8d4c21c
+
+[1A[2K[WebServer]  path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f023-1778975747755-xdb1ahg9@traveltrust.test","subject":"TravelTrust email verification",
+
+[1A[2K[WebServer] "url":"http://localhost:3000/auth/verify-email?token=9143e82ba3124c20b5e8e79e47271d3fc9a537e1d2ea406c978e7e7c5c7d0932"}
+[WebServer] [req] x-request-id=2e0798f6-f7fb-4e6b-91a7-04c9f1bf8210 path=/auth/register status=200
+[WebServer] [req] x-message-id=75743deb-2a63-4be0-ab9b-45e06c35e0b1 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=6edba6ec-4863-415f-bf68-21df237aa490 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=7bf7700a-f4c2-4dcb-8644-864c2f302823 path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=23e312b7-4a40-44f2-b982-db098ead051d path=/api/v1/guides/827b3a0d-2a53-4fe7-b56e-aaad079be1ff status=200
+[WebServer] [req] x-message-id=d6592ea4-6d23-4895-9128-c4d3f1e31840 path=/api/v1/guides/827b3a0d-2a53-4fe7-b56e-aaad079be1ff status=200
+
+[1A[2K[WebServer] [req] x-request-id=847935b2-9852-4aff-a05f-5439edc1e4fa path=/api/v1/guides/827b3a0d-2a53-4fe7-b56e-aaad079be1ff/availability status=200
+[WebServer] [req] x-message-id=216c4487-2465-41c9-831b-d56857ff5e6f path=/api/v1/guides/827b3a0d-2a53-4fe7-b56e-aaad079be1ff/availability status=200
+
+[1A[2K[WebServer] [req] x-request-id=1ac2e2b6-bc8a-4dee-9051-d92ffa31a661 path=/health status=200
+[WebServer] [req] x-message-id=04e0d7cd-7643-41d3-83e8-b96058d24afc path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"
+
+[1A[2K[WebServer] e2e-f024-g-1778975748313-14npl8u2@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=73e49d31d37d4cfbbd8e4268a40823e62da700bf2ed74008858ee2f0ef9bf912"}
+[WebServer] [req] x-request-id=90512c8e-902c-40f5-ad62-03f5383913db path=/auth/register status=
+
+[1A[2K[WebServer] 200
+[WebServer] [req] x-message-id=a422a238-e4e2-4589-b669-bc027ce90ff0 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=935ea12c-ce5e-441c-ac7a-6e60c6ba3ce2 path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-message-id=6bf671f6-116e-4094-8789-760431d6eca2 path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=7a54a072-09ae-4d31-b704-abb1394ae6b8 path=/api/v1/guides/248ba2d3-2e9b-4edd-a675-c371d192def6/stake status=200
+[WebServer] [req] x-message-id=7ba4269e-dc6b-4bdf-9057-2f6c95f08415 path=/api/v1/guides/248ba2d3-2e9b-4edd-a675-c371d192def6/stake status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=d485cb3c-3db9-4c59-902f-e9ed550164d8 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=af79d4c2-4bde-4aab-b5bd-e89126f064f8 path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=3930a99a-6484-4a78-8eeb-9af8c39ccdb3 path=/health status=200
+[WebServer] [req] x-message-id=9b8e6f87-0ece-4189-be90-845c4cc09958 path=/health status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":
+
+[1A[2K[WebServer] "email_verify","to":"e2e-f025-t-1778975748930-nu2dvh10@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=8af92970d1cb4589867a27c191544ff379e51e2723f146eb90056b85662c8e3e"}
+
+[1A[2K[WebServer] [req] x-request-id=08817e68-701d-4508-85f2-d19699be8e8e path=/auth/register status=
+
+[1A[2K[WebServer] 200
+[WebServer] [req] x-message-id=2af651cc-ad02-460a-b8f1-8af10f1b041e path=/auth/register status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-f025-g-1778975748930-nu2dvh10@traveltrust.test","subject
+
+[1A[2K[WebServer] ":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=9b0422b40d074e1a98bf8aaf5eef505fd3f97a6d3b3d433d91c9372abb759636"}
+
+[1A[2K[WebServer] [req] x-request-id=3f04d918-587b-4a93-a004-6786287847a2 path=/auth/register status=200
+[WebServer] [req] x-message-id=c0f9afd6-7e8e-4643-a2b3-a1fa8d502041 path=/auth/register status=200
+
+[1A[2K[WebServer] [req] x-request-id=cd9be17b-2a88-4eb8-bd62-83e952cb44e9 path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-message-id=c740810e-5a2a-45c1-b053-0b7ae6d6205f path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=44942fe4-141e-4207-990d-fb690e73bae8 path=/api/v1/guides/a4b28712-792a-49e4-b451-4e73d6255318/stake status=200
+[WebServer] [req] x-message-id=d1161b5b-84e6-403d-898a-562e90c34c3b path=/api/v1/guides/a4b28712-792a-49e4-b451-4e73d6255318/stake status=200
+
+[1A[2K[WebServer] [req] x-request-id=acededa3-3242-4194-a23a-af0d5f96bf16 path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=c0bf6a9a-a15f-44a6-9ddc-02413521bec3 path=/api/v1/orders status=200
+
+[1A[2K[WebServer] audit_key_write op=order_accept request_id=- user_id=c24a12d0-d393-4ee6-9464-63da2159d2b0 order_id=334994b0-e419-4723-97d1-5e62825c8960
+
+[1A[2K[WebServer] [req] x-request-id=72af2c0b-1f5a-4092-95f8-278d07ae4af6 path=/api/v1/orders/334994b0-e419-4723-97d1-5e62825c8960/accept status=200
+[WebServer] [req] x-message-id=a90cba9e-2294-4d95-9432-18ca57f0a1c4 path=/api/v1/orders/334994b0-e419-4723-97d1-5e62825c8960/accept status=200
+
+[1A[2K[WebServer] [req] x-request-id=fb9a9c80-a333-4bcd-9b24-7e89f2567348 path=/api/v1/orders/334994b0-e419-4723-97d1-5e62825c8960/mock-pay status=200
+[WebServer] [req] x-message-id=f8f72712-7e5b-4d53-b460-175708c6f55a path=/api/v1/orders/334994b0-e419-4723-97d1-5e62825c8960/mock-pay status=200
+
+[1A[2K[WebServer] [req] x-request-id=ebca3dff-410a-4dd9-8aac-4d7ac1aab580 path=/api/v1/orders/334994b0-e419-4723-97d1-5e62825c8960/dispute status=200
+[WebServer] [req] x-message-id=7e2c0362-461a-447b-a6fb-28c170bb6920 path=
+
+[1A[2K[WebServer] /api/v1/orders/334994b0-e419-4723-97d1-5e62825c8960/dispute status=200
+
+[1A[2K[WebServer] [req] x-request-id=247e5380-0053-4073-8242-728d6e0251cb path=/api/v1/disputes status=200
+
+[1A[2K[WebServer] [req] x-message-id=65531924-91fa-4077-9457-ea9d157841ba path=/api/v1/disputes status=200
+
+[1A[2K[WebServer] [req] x-request-id=d434984d-2ba3-48c2-b3ce-3592bb3b42f8 path=/api/v1/disputes/c73f2eee-bf70-421f-96c7-167b72bee8bf status=200
+[WebServer] [req] x-message-id=93192da3-ff4d-4014-b79a-366285191d26 path=/api/v1/disputes/c73f2eee-bf70-421f-96c7-167b72bee8bf status=200
+
+[1A[2K[WebServer] [req] x-request-id=5fc2401a-bb02-495d-bddb-d8ae24e4cf0f path=/api/v1/orders/334994b0-e419-4723-97d1-5e62825c8960 status=200
+
+[1A[2K[WebServer] [req] x-message-id=ee1eed79-87d3-477e-998d-06a6f9b7f588 path=/api/v1/orders/334994b0-e419-4723-97d1-5e62825c8960 status=200
+
+[1A[2K[WebServer] [req] x-request-id=4cfe1a18-e469-4099-b4b7-af9adf76b723 path=/health status=200
+[WebServer] [req] x-message-id=0929362c-5dde-4653-8778-49d8c06f1619 path=/health status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":"email_verify","to":"e2e-bdsp003-t-1778975750123-wz5eckuz@traveltrust.test","subject":"TravelTrust email verification",
+
+[1A[2K[WebServer] "url":"http://localhost:3000/auth/verify-email?token=f34ac69f8eaa4f799424a63e756e6b5ea760e941b6fe4ba38ae91f2bcdf8d7d3"}
+[WebServer] [req] x-request-id=61891ca0-f3d3-4949-9175-1a7e55800755 path=/auth/register status=200
+[WebServer] [req] x-message-id=73a12aaf-a6ec-476f-a322-fbe6c80011a4 path=/auth/register status=200
+
+[1A[2K[WebServer] {"traveltrust_email_outbound":true,"kind":
+
+[1A[2K[WebServer] "email_verify","to":"e2e-bdsp003-g-1778975750123-wz5eckuz@traveltrust.test","subject":"TravelTrust email verification","url":"http://localhost:3000/auth/verify-email?token=d80b75ca681b44f7a5862b7e69db85b43a4b95aacf1f4552b8299214e2003345"}
+
+[1A[2K[WebServer] [req] x-request-id=461c0ffb-13d4-4a9a-8f67-e9624ec362db path=/auth/register status=200
+[WebServer] [req] x-message-id=485f9833-375c-481c-808c-d371e3731771 path=/auth/register
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=6875ebf1-6ca0-48ea-b4b9-e3c8c73e6304 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=eb977f8d-ab57-477f-a2e0-fb034d9c193a path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=7dfe2a8b-a2e1-4088-8b25-a8cc620b640f path=/api/v1/guides/f4d13e51-bc68-4d75-9261-9df16af73898/stake status=200
+[WebServer] [req] x-message-id=0d566a6d-acff-4e2f-b012-1c2e4936208c path=/api/v1/guides/f4d13e51-bc68-4d75-9261-9df16af73898/stake status=200
+
+[1A[2K[WebServer] [req] x-request-id=5c9e2a9e-8788-4045-adf1-6553faac6451 path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=34407600-35cd-4dcb-a136-9c719501c050 path=/api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=db3a59cf-5527-48f6-9c8f-3f87f1d88df7 path=/meta status=200
+[WebServer] [req] x-message-id=774761e3-aed4-4d20-8bcd-46ec3943be6b path=/meta status=200
+
+[1A[2K  1) [chromium] › e2e\b467-full-ui-order-journey.spec.ts:51:7 › B-467 · full UI journey (create on /orders/new → pay → complete → review) › 建单→接单→模拟入金→确认完成→评价→向导可见 @e2e-chain-off-mock-pay 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('[data-tt-escrow-detail-page="1"]:not([aria-busy="true"])').locator('[data-tt-escrow-order-actions="1"]')
+    Expected: visible
+    Timeout: 90000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 90000ms[22m
+    [2m  - waiting for locator('[data-tt-escrow-detail-page="1"]:not([aria-busy="true"])').locator('[data-tt-escrow-order-actions="1"]')[22m
+
+
+       at helpers\bilateralEscrowE2e.ts:167
+
+      165 |   /** 骨架屏无 `data-tt-escrow-order-actions`；仅 `OrderActionsBlock` 挂载后出现（与 **B.3** 观测一致）。 */
+      166 |   const actions = shell.locator('[data-tt-escrow-order-actions="1"]');
+    > 167 |   await expect(actions).toBeVisible({ timeout: 90_000 });
+          |                         ^
+      168 |   const btn = actions.getByRole("button", { name: /接单|Accept/i });
+      169 |   await expect(btn).toBeVisible({ timeout: 90_000 });
+      170 |   await btn.evaluate((el) => {
+        at clickEscrowAcceptOrderButton (D:\TravelTrust\frontend\e2e\helpers\bilateralEscrowE2e.ts:167:25)
+        at D:\TravelTrust\frontend\e2e\b467-full-ui-order-journey.spec.ts:123:5
+
+    Error Context: test-results\b467-full-ui-order-journey-0ecfe-iew-建单→接单→模拟入金→确认完成→评价→向导可见-chromium\error-context.md
+
+
+[1A[2K  1 failed
+    [chromium] › e2e\b467-full-ui-order-journey.spec.ts:51:7 › B-467 · full UI journey (create on /orders/new → pay → complete → review) › 建单→接单→模拟入金→确认完成→评价→向导可见 @e2e-chain-off-mock-pay 
+  2 passed (4.7m)
+
+[e2e] Playwright exited non-zero with PLAYWRIGHT_FULL_STACK=1.
+  If many failures are `net::ERR_CONNECTION_REFUSED` to :3012, Next dev likely died mid-suite (OOM or crash); later tests cascade red.
+  If failures mention :8080 / ECONNREFUSED, API is not listening — ensure `traveltrust-api` is up (Playwright webServer starts it by default) or match PLAYWRIGHT_API_PORT / PLAYWRIGHT_API_HEALTH_URL.
+  If webServer logs `pool timed out while waiting for an open connection`, Postgres is unreachable or exhausted — fix DATABASE_URL (see scripts/dev/export-database-url-from-root-env.sh), run migrations, and ensure PG is listening before full-stack E2E.
+  Try: smaller slices `npm run e2e:chromium:smoke-surface`, `e2e:chromium:smoke-admin-all`, `e2e:chromium:core-release`, `e2e:chromium:p0-spine`, `e2e:chromium:trust-gate`, `e2e:chromium:93-admin-matrix`; full matrix: `bash scripts/gates/local-e2e-chromium-full-matrix.sh` (sets PLAYWRIGHT_FE_USE_PRODUCTION_START=1 → next start); or `npm run e2e:full-chromium:list` to see where green stops; optional `PLAYWRIGHT_SKIP_E2E_NODE_HEAP=1` to test without extra heap (not a fix for OOM).
+  Solo / independent dev: keep local exit-0 evidence per docs/solo-dev-rhythm.md and CONTRIBUTING.md (GitHub Actions green is not the sole bar).
+

@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T09:17:19Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "西安",
+    "city_en": "Xi'an",
+    "matrix_ids": [
+      "PH-CN-321-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-321-ATR",
+      "legacy_value": "兵马俑",
+      "poi_id": "c94f2a68-ea15-4443-966d-fa847aba5ece",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-321-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

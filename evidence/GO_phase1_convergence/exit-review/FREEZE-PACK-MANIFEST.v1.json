@@ -1,0 +1,26 @@
+{
+  "schema": "traveltrust.phase1_freeze_pack_manifest.v1",
+  "archived_at": "2026-06-13T09:31:18.093941+00:00",
+  "phase": "1_local",
+  "readiness_score": 95,
+  "band": "PHASE1_EXIT_READY",
+  "master_ready": true,
+  "open_p0": 0,
+  "source_dir": "evidence/GO_phase1_convergence/sprint-b/FREEZE-SIGNOFF-PACK",
+  "files": [
+    "CLOSURE-ROADMAP.md",
+    "EXECUTION-DASHBOARD.md",
+    "EXECUTIVE-FREEZE-DASHBOARD.md",
+    "MASTER-READY.marker",
+    "PHASE1-EXIT-RECOMMENDATION-REPORT.md",
+    "README.md",
+    "baseline-compare.log",
+    "full-master-pass.log",
+    "phase1-readiness-score.v1.json",
+    "phase12-pass-4.log",
+    "top10-root-causes.v1.json",
+    "top20-blockers.v1.json"
+  ],
+  "peb_snapshot": "evidence/phase1-executive-board/20260613T092430Z",
+  "exit_review_dir": "evidence/GO_phase1_convergence/exit-review"
+}

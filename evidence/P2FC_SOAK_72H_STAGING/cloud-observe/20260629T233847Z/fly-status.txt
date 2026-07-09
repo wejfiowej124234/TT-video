@@ -1,0 +1,11 @@
+[1mApp[0m
+  Name     = tt-soak-watcher-staging                                        
+  Owner    = personal                                                       
+  Hostname = tt-soak-watcher-staging.fly.dev                                
+  Image    = tt-soak-watcher-staging:deployment-01KW0NM36FM4VFF0W9674QYSD4  
+
+[1mMachines[0m
+PROCESS	ID            	VERSION	REGION	STATE  	ROLE	CHECKS            	LAST UPDATED         
+worker 	78465d9ae2e948	4      	sin   	stopped	    	1 total, 1 warning	2026-06-29T23:30:05Z	
+
+Warning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type billable limitedAccessTokens { nodes { id name expiresAt revokedAt user { email } } } } }: context canceled

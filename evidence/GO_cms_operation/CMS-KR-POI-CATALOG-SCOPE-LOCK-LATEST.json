@@ -1,0 +1,525 @@
+{
+  "schema": "traveltrust.cms_kr_poi_catalog_scope_lock.v1",
+  "recorded_at_utc": "2026-07-05T16:11:09.175Z",
+  "phase": "② staging",
+  "layer": "CMS_OPERATION",
+  "template_country": {
+    "country_iso": "JP",
+    "TT_CMS_JP_COUNTRY": "CLOSED",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "jp_lock_guard": {
+    "required_locked": 41,
+    "verified": true,
+    "registry": "CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json"
+  },
+  "country": {
+    "country_iso": "KR",
+    "country_zh": "韩国"
+  },
+  "kr_denominator": {
+    "cities": [
+      "仁川",
+      "济州",
+      "釜山",
+      "首尔"
+    ],
+    "city_breakdown": {
+      "釜山": {
+        "attraction": 4,
+        "food": 4,
+        "total": 8,
+        "matrix_ids": [
+          "PH-KR-042-ATR",
+          "PH-KR-043-ATR",
+          "PH-KR-044-ATR",
+          "PH-KR-045-ATR",
+          "PH-KR-046-FOOD",
+          "PH-KR-047-FOOD",
+          "PH-KR-048-FOOD",
+          "PH-KR-049-FOOD"
+        ]
+      },
+      "济州": {
+        "attraction": 4,
+        "food": 4,
+        "total": 8,
+        "matrix_ids": [
+          "PH-KR-050-ATR",
+          "PH-KR-051-ATR",
+          "PH-KR-052-ATR",
+          "PH-KR-053-ATR",
+          "PH-KR-054-FOOD",
+          "PH-KR-055-FOOD",
+          "PH-KR-056-FOOD",
+          "PH-KR-057-FOOD"
+        ]
+      },
+      "仁川": {
+        "attraction": 3,
+        "food": 3,
+        "total": 6,
+        "matrix_ids": [
+          "PH-KR-058-ATR",
+          "PH-KR-059-ATR",
+          "PH-KR-060-ATR",
+          "PH-KR-061-FOOD",
+          "PH-KR-062-FOOD",
+          "PH-KR-063-FOOD"
+        ]
+      },
+      "首尔": {
+        "attraction": 5,
+        "food": 4,
+        "total": 9,
+        "matrix_ids": [
+          "PH-KR-064-ATR",
+          "PH-KR-065-ATR",
+          "PH-KR-066-ATR",
+          "PH-KR-067-ATR",
+          "PH-KR-068-ATR",
+          "PH-KR-069-FOOD",
+          "PH-KR-070-FOOD",
+          "PH-KR-071-FOOD",
+          "PH-KR-072-FOOD"
+        ]
+      }
+    },
+    "poi_total": 31,
+    "attraction": 16,
+    "food": 15
+  },
+  "pilot_wave": {
+    "advancement_rule": "Scope → Country → City → POI · acceptance = City CLOSED",
+    "ops_hierarchy": [
+      "asset_family",
+      "country",
+      "city",
+      "asset"
+    ],
+    "acceptance_unit": "city",
+    "template_country": "JP",
+    "jp_country_closed_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+    "active_wave": "POI-WAVE-2-KR-PILOT",
+    "active_catalog_build": {
+      "wave_id": "POI-WAVE-2-KR-PILOT",
+      "label": "Pilot · KR · 首尔",
+      "country_iso": "KR",
+      "country_zh": "韩国",
+      "cities": [
+        "首尔"
+      ],
+      "acceptance_unit": "city",
+      "acceptance_target": "首尔 CLOSED",
+      "purpose": "Catalog Build → per-POI Review → Live · 日本 Golden Template 复制 · pilot done when 首尔 CLOSED",
+      "forbidden": [
+        "bulk_ingest_kr_all",
+        "skip_pilot_before_next_city",
+        "accept_by_poi_count"
+      ],
+      "template_country": "JP",
+      "template_closure": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+      "status": "ACTIVE",
+      "catalog_build": true,
+      "matrix_ids": [
+        "PH-KR-064-ATR",
+        "PH-KR-065-ATR",
+        "PH-KR-066-ATR",
+        "PH-KR-067-ATR",
+        "PH-KR-068-ATR",
+        "PH-KR-069-FOOD",
+        "PH-KR-070-FOOD",
+        "PH-KR-071-FOOD",
+        "PH-KR-072-FOOD"
+      ],
+      "poi_count": 9,
+      "by_city": [
+        {
+          "city_zh": "首尔",
+          "acceptance_unit": "city",
+          "acceptance_target": "首尔 CLOSED",
+          "poi_count": 9,
+          "matrix_ids": [
+            "PH-KR-064-ATR",
+            "PH-KR-065-ATR",
+            "PH-KR-066-ATR",
+            "PH-KR-067-ATR",
+            "PH-KR-068-ATR",
+            "PH-KR-069-FOOD",
+            "PH-KR-070-FOOD",
+            "PH-KR-071-FOOD",
+            "PH-KR-072-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "景福宫",
+              "poi_type": "attraction",
+              "matrix_id": "PH-KR-064-ATR"
+            },
+            {
+              "legacy_value": "北村韩屋村",
+              "poi_type": "attraction",
+              "matrix_id": "PH-KR-065-ATR"
+            },
+            {
+              "legacy_value": "明洞",
+              "poi_type": "attraction",
+              "matrix_id": "PH-KR-066-ATR"
+            },
+            {
+              "legacy_value": "N首尔塔",
+              "poi_type": "attraction",
+              "matrix_id": "PH-KR-067-ATR"
+            },
+            {
+              "legacy_value": "汉江公园",
+              "poi_type": "attraction",
+              "matrix_id": "PH-KR-068-ATR"
+            },
+            {
+              "legacy_value": "韩式烤肉",
+              "poi_type": "food",
+              "matrix_id": "PH-KR-069-FOOD"
+            },
+            {
+              "legacy_value": "拌饭",
+              "poi_type": "food",
+              "matrix_id": "PH-KR-070-FOOD"
+            },
+            {
+              "legacy_value": "炸鸡",
+              "poi_type": "food",
+              "matrix_id": "PH-KR-071-FOOD"
+            },
+            {
+              "legacy_value": "参鸡汤",
+              "poi_type": "food",
+              "matrix_id": "PH-KR-072-FOOD"
+            }
+          ]
+        }
+      ],
+      "first_matrix_id": "PH-KR-064-ATR",
+      "first_poi": {
+        "city_zh": "首尔",
+        "legacy_value": "景福宫",
+        "matrix_id": "PH-KR-064-ATR"
+      },
+      "kr_country_total": 31,
+      "kr_cities": [
+        "釜山",
+        "济州",
+        "仁川",
+        "首尔"
+      ]
+    },
+    "waves": [
+      {
+        "wave_id": "POI-WAVE-2-KR-PILOT",
+        "label": "Pilot · KR · 首尔",
+        "country_iso": "KR",
+        "country_zh": "韩国",
+        "cities": [
+          "首尔"
+        ],
+        "acceptance_unit": "city",
+        "acceptance_target": "首尔 CLOSED",
+        "purpose": "Catalog Build → per-POI Review → Live · 日本 Golden Template 复制 · pilot done when 首尔 CLOSED",
+        "forbidden": [
+          "bulk_ingest_kr_all",
+          "skip_pilot_before_next_city",
+          "accept_by_poi_count"
+        ],
+        "template_country": "JP",
+        "template_closure": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+        "status": "ACTIVE",
+        "catalog_build": true,
+        "matrix_ids": [
+          "PH-KR-064-ATR",
+          "PH-KR-065-ATR",
+          "PH-KR-066-ATR",
+          "PH-KR-067-ATR",
+          "PH-KR-068-ATR",
+          "PH-KR-069-FOOD",
+          "PH-KR-070-FOOD",
+          "PH-KR-071-FOOD",
+          "PH-KR-072-FOOD"
+        ],
+        "poi_count": 9,
+        "by_city": [
+          {
+            "city_zh": "首尔",
+            "acceptance_unit": "city",
+            "acceptance_target": "首尔 CLOSED",
+            "poi_count": 9,
+            "matrix_ids": [
+              "PH-KR-064-ATR",
+              "PH-KR-065-ATR",
+              "PH-KR-066-ATR",
+              "PH-KR-067-ATR",
+              "PH-KR-068-ATR",
+              "PH-KR-069-FOOD",
+              "PH-KR-070-FOOD",
+              "PH-KR-071-FOOD",
+              "PH-KR-072-FOOD"
+            ],
+            "pois": [
+              {
+                "legacy_value": "景福宫",
+                "poi_type": "attraction",
+                "matrix_id": "PH-KR-064-ATR"
+              },
+              {
+                "legacy_value": "北村韩屋村",
+                "poi_type": "attraction",
+                "matrix_id": "PH-KR-065-ATR"
+              },
+              {
+                "legacy_value": "明洞",
+                "poi_type": "attraction",
+                "matrix_id": "PH-KR-066-ATR"
+              },
+              {
+                "legacy_value": "N首尔塔",
+                "poi_type": "attraction",
+                "matrix_id": "PH-KR-067-ATR"
+              },
+              {
+                "legacy_value": "汉江公园",
+                "poi_type": "attraction",
+                "matrix_id": "PH-KR-068-ATR"
+              },
+              {
+                "legacy_value": "韩式烤肉",
+                "poi_type": "food",
+                "matrix_id": "PH-KR-069-FOOD"
+              },
+              {
+                "legacy_value": "拌饭",
+                "poi_type": "food",
+                "matrix_id": "PH-KR-070-FOOD"
+              },
+              {
+                "legacy_value": "炸鸡",
+                "poi_type": "food",
+                "matrix_id": "PH-KR-071-FOOD"
+              },
+              {
+                "legacy_value": "参鸡汤",
+                "poi_type": "food",
+                "matrix_id": "PH-KR-072-FOOD"
+              }
+            ]
+          }
+        ],
+        "first_matrix_id": "PH-KR-064-ATR",
+        "first_poi": {
+          "city_zh": "首尔",
+          "legacy_value": "景福宫",
+          "matrix_id": "PH-KR-064-ATR"
+        },
+        "kr_country_total": 31,
+        "kr_cities": [
+          "釜山",
+          "济州",
+          "仁川",
+          "首尔"
+        ]
+      }
+    ],
+    "kr_denominator": {
+      "country_iso": "KR",
+      "cities": [
+        "釜山",
+        "济州",
+        "仁川",
+        "首尔"
+      ],
+      "poi_total": 31,
+      "seoul_pilot": 9
+    },
+    "roadmap": [
+      {
+        "stage": "jp_country",
+        "status": "CLOSED",
+        "ssot": "CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+      },
+      {
+        "stage": "kr_scope",
+        "status": "LOCKED"
+      },
+      {
+        "stage": "catalog_build",
+        "status": "ACTIVE",
+        "city": "首尔",
+        "acceptance": "首尔 CLOSED"
+      },
+      {
+        "stage": "kr_seoul_execution",
+        "status": "ACTIVE"
+      },
+      {
+        "stage": "kr_seoul_content_qa",
+        "status": "NOT_STARTED"
+      },
+      {
+        "stage": "kr_country_runtime",
+        "status": "NOT_STARTED",
+        "when": "TT_CMS_KR_COUNTRY: CLOSED"
+      }
+    ]
+  },
+  "active_catalog_build": {
+    "wave_id": "POI-WAVE-2-KR-PILOT",
+    "label": "Pilot · KR · 首尔",
+    "country_iso": "KR",
+    "country_zh": "韩国",
+    "cities": [
+      "首尔"
+    ],
+    "acceptance_unit": "city",
+    "acceptance_target": "首尔 CLOSED",
+    "purpose": "Catalog Build → per-POI Review → Live · 日本 Golden Template 复制 · pilot done when 首尔 CLOSED",
+    "forbidden": [
+      "bulk_ingest_kr_all",
+      "skip_pilot_before_next_city",
+      "accept_by_poi_count"
+    ],
+    "template_country": "JP",
+    "template_closure": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+    "status": "ACTIVE",
+    "catalog_build": true,
+    "matrix_ids": [
+      "PH-KR-064-ATR",
+      "PH-KR-065-ATR",
+      "PH-KR-066-ATR",
+      "PH-KR-067-ATR",
+      "PH-KR-068-ATR",
+      "PH-KR-069-FOOD",
+      "PH-KR-070-FOOD",
+      "PH-KR-071-FOOD",
+      "PH-KR-072-FOOD"
+    ],
+    "poi_count": 9,
+    "by_city": [
+      {
+        "city_zh": "首尔",
+        "acceptance_unit": "city",
+        "acceptance_target": "首尔 CLOSED",
+        "poi_count": 9,
+        "matrix_ids": [
+          "PH-KR-064-ATR",
+          "PH-KR-065-ATR",
+          "PH-KR-066-ATR",
+          "PH-KR-067-ATR",
+          "PH-KR-068-ATR",
+          "PH-KR-069-FOOD",
+          "PH-KR-070-FOOD",
+          "PH-KR-071-FOOD",
+          "PH-KR-072-FOOD"
+        ],
+        "pois": [
+          {
+            "legacy_value": "景福宫",
+            "poi_type": "attraction",
+            "matrix_id": "PH-KR-064-ATR"
+          },
+          {
+            "legacy_value": "北村韩屋村",
+            "poi_type": "attraction",
+            "matrix_id": "PH-KR-065-ATR"
+          },
+          {
+            "legacy_value": "明洞",
+            "poi_type": "attraction",
+            "matrix_id": "PH-KR-066-ATR"
+          },
+          {
+            "legacy_value": "N首尔塔",
+            "poi_type": "attraction",
+            "matrix_id": "PH-KR-067-ATR"
+          },
+          {
+            "legacy_value": "汉江公园",
+            "poi_type": "attraction",
+            "matrix_id": "PH-KR-068-ATR"
+          },
+          {
+            "legacy_value": "韩式烤肉",
+            "poi_type": "food",
+            "matrix_id": "PH-KR-069-FOOD"
+          },
+          {
+            "legacy_value": "拌饭",
+            "poi_type": "food",
+            "matrix_id": "PH-KR-070-FOOD"
+          },
+          {
+            "legacy_value": "炸鸡",
+            "poi_type": "food",
+            "matrix_id": "PH-KR-071-FOOD"
+          },
+          {
+            "legacy_value": "参鸡汤",
+            "poi_type": "food",
+            "matrix_id": "PH-KR-072-FOOD"
+          }
+        ]
+      }
+    ],
+    "first_matrix_id": "PH-KR-064-ATR",
+    "first_poi": {
+      "city_zh": "首尔",
+      "legacy_value": "景福宫",
+      "matrix_id": "PH-KR-064-ATR"
+    },
+    "kr_country_total": 31,
+    "kr_cities": [
+      "釜山",
+      "济州",
+      "仁川",
+      "首尔"
+    ]
+  },
+  "seoul_pilot": {
+    "city_zh": "首尔",
+    "poi_count": 9,
+    "matrix_ids": [
+      "PH-KR-064-ATR",
+      "PH-KR-065-ATR",
+      "PH-KR-066-ATR",
+      "PH-KR-067-ATR",
+      "PH-KR-068-ATR",
+      "PH-KR-069-FOOD",
+      "PH-KR-070-FOOD",
+      "PH-KR-071-FOOD",
+      "PH-KR-072-FOOD"
+    ],
+    "acceptance": "首尔 CLOSED"
+  },
+  "catalog_probe": {
+    "http": 200,
+    "count": 0,
+    "catalog_empty": true
+  },
+  "workflow": [
+    "KR Scope Lock",
+    "Seoul Catalog Build",
+    "Execution per POI",
+    "Content QA per POI",
+    "City Runtime Exit Check",
+    "TT_CMS_POI_CITY_SEOUL_CONTENT_QA: CLOSED"
+  ],
+  "forbidden": [
+    "modify_jp_41_lock",
+    "adjust_content_qa_standard",
+    "production_go"
+  ],
+  "TT_CMS_KR_POI_CATALOG_SCOPE_LOCK": "FROZEN",
+  "TT_CMS_KR_POI_DENOMINATOR_TOTAL": 31,
+  "TT_CMS_KR_POI_PILOT_CATALOG_BUILD": "Pilot · KR · 首尔",
+  "TT_CMS_KR_POI_PILOT_ACCEPTANCE": "首尔 CLOSED",
+  "TT_CMS_KR_POI_PILOT_POI_COUNT": 9,
+  "TT_CMS_KR_POI_NEXT_STAGE": "CATALOG_BUILD",
+  "korea_status": "ACTIVE"
+}

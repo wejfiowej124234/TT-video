@@ -1,0 +1,1393 @@
+{
+  "schema": "traveltrust.cms_japan_content_qa.v2",
+  "stamp_utc": "2026-07-05T16:05:05.650Z",
+  "phase": "③_content_qa",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "not_audit": true,
+  "terminology": "L5 Content QA · 内容验收 · 非程序 Audit",
+  "standard_ssot": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_ssot": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "phases": {
+    "phase_1_system": {
+      "id": "cms_system",
+      "label": "CMS 系统",
+      "status": "FROZEN",
+      "scope": [
+        "Catalog",
+        "Runtime Wiring",
+        "Ownership",
+        "Matrix",
+        "Daily Board",
+        "Pipeline"
+      ],
+      "agent_rule": "禁止再投入架构"
+    },
+    "phase_2_execution": {
+      "id": "execution",
+      "label": "Execution",
+      "status": "SUBSTANTIALLY_COMPLETE",
+      "proven": [
+        "Destination Ambient",
+        "JP 东京",
+        "JP 大阪",
+        "JP 京都",
+        "JP 札幌"
+      ],
+      "pipeline": [
+        "Review",
+        "Publish",
+        "Verify",
+        "Evidence",
+        "Live"
+      ],
+      "agent_rule": "禁止因 Execution 重复劳动"
+    },
+    "phase_3_content_qa": {
+      "id": "content_qa",
+      "label": "Content QA",
+      "status": "ACTIVE",
+      "proves": "用户看到的是否 L5 · 内容准确性 · 图文/城市/国家一致",
+      "agent_rule": "当前真正工作轨 · 不叫 Audit"
+    }
+  },
+  "country_workflow": {
+    "order": [
+      "execution",
+      "content_qa",
+      "country_closed"
+    ],
+    "forbidden": "execution → next_country（跳过 Content QA）",
+    "template": "Execution → Content QA → Country CLOSED → 下一国家",
+    "japan_ssot": "evidence/GO_cms_operation/CMS-JAPAN-CONTENT-QA-LATEST.json",
+    "korea_starts_when": "TT_CMS_JP_COUNTRY: CLOSED"
+  },
+  "content_qa_dimensions": [
+    {
+      "id": "execution",
+      "label": "Execution",
+      "phase": 2,
+      "note": "已基本完成 · 仅作上下文 · 不重复劳动"
+    },
+    {
+      "id": "cms_ownership",
+      "label": "CMS Ownership",
+      "phase": 3
+    },
+    {
+      "id": "runtime_consumer",
+      "label": "Runtime Consumer",
+      "phase": 3
+    },
+    {
+      "id": "geo_matching",
+      "label": "Geo Matching",
+      "phase": 3
+    },
+    {
+      "id": "content_accuracy",
+      "label": "Content Accuracy",
+      "phase": 3
+    },
+    {
+      "id": "l5_quality",
+      "label": "L5 Quality",
+      "phase": 3
+    }
+  ],
+  "content_accuracy_checks": [
+    {
+      "id": "geo",
+      "label": "Geo",
+      "example": "东京是不是东京"
+    },
+    {
+      "id": "culture",
+      "label": "Culture",
+      "example": "是否符合当地文化"
+    },
+    {
+      "id": "landmark",
+      "label": "Landmark",
+      "example": "地标是否正确",
+      "applies": "attraction"
+    },
+    {
+      "id": "food",
+      "label": "Food",
+      "example": "美食是否属于当地",
+      "applies": "food"
+    },
+    {
+      "id": "hotel",
+      "label": "Hotel",
+      "example": "酒店风格是否正确",
+      "applies": "hotel"
+    },
+    {
+      "id": "transport",
+      "label": "Transport",
+      "example": "是否是当地交通",
+      "applies": "transport"
+    },
+    {
+      "id": "season",
+      "label": "Season",
+      "example": "是否符合当地场景",
+      "optional": true
+    }
+  ],
+  "frozen_standard": {
+    "schema": "traveltrust.cms_content_qa_standard.v1",
+    "status": "FROZEN",
+    "frozen_at_utc": "2026-07-05T11:52:36.073Z",
+    "phase_model": {
+      "phase_1_cms_system": {
+        "label": "CMS 系统",
+        "status": "FROZEN",
+        "scope": [
+          "Catalog",
+          "Runtime Wiring",
+          "Ownership",
+          "Matrix",
+          "Daily Board",
+          "Pipeline"
+        ],
+        "rule": "不再投入架构"
+      },
+      "phase_2_execution": {
+        "label": "Execution",
+        "status": "SUBSTANTIALLY_COMPLETE",
+        "proves": "CMS 能把内容发布出去",
+        "rule": "禁止因 Execution 重复劳动"
+      },
+      "phase_3_content_qa": {
+        "label": "Content QA",
+        "status": "ACTIVE",
+        "proves": "用户看到的是否 L5 · 内容准确性",
+        "rule": "不叫 Audit · 检查内容非程序"
+      }
+    },
+    "country_workflow": {
+      "order": [
+        "execution",
+        "content_qa",
+        "country_closed",
+        "next_country"
+      ],
+      "forbidden": "execution → next_country",
+      "template": "Execution → Content QA → Country CLOSED"
+    },
+    "asset_states": [
+      "OPEN",
+      "LOCKED"
+    ],
+    "one_replace_rule": {
+      "summary": "任何一张图片，只允许更换一次",
+      "pipeline": [
+        "Review",
+        "Replace",
+        "Publish",
+        "Verify",
+        "Execution PASS",
+        "Content QA 六维",
+        "PASS",
+        "LOCK"
+      ],
+      "after_lock": {
+        "forbidden": [
+          "找到更漂亮的图而重新替换",
+          "AI 推荐更好的图而重新进入流程"
+        ],
+        "allowed_unlock": [
+          "国家错",
+          "城市错",
+          "版权",
+          "其他真实错误"
+        ],
+        "unlock_requires": "--unlock-real-error + 书面原因"
+      }
+    },
+    "content_qa_dimensions": [
+      "execution",
+      "cms_ownership",
+      "runtime_consumer",
+      "geo_matching",
+      "content_accuracy",
+      "l5_quality"
+    ],
+    "content_accuracy_checks": [
+      {
+        "id": "geo",
+        "example": "东京是不是东京"
+      },
+      {
+        "id": "culture",
+        "example": "是否符合当地文化"
+      },
+      {
+        "id": "landmark",
+        "example": "地标是否正确"
+      },
+      {
+        "id": "food",
+        "example": "美食是否属于当地"
+      },
+      {
+        "id": "hotel",
+        "example": "酒店风格是否正确"
+      },
+      {
+        "id": "transport",
+        "example": "是否是当地交通"
+      },
+      {
+        "id": "season",
+        "example": "是否符合当地场景",
+        "optional": true
+      }
+    ],
+    "city_closure": {
+      "label": "City Content QA CLOSED",
+      "not": "City Execution CLOSED",
+      "when": "该城全部 POI LOCKED + 六维城市级 PASS"
+    },
+    "country_closure": {
+      "key": "TT_CMS_JP_COUNTRY",
+      "when": "全部 City Content QA CLOSED + Golden Template 城市集 + national_runtime PASS"
+    },
+    "remediation_unit": "single_poi",
+    "forbidden_bulk": "禁止一次替换整城所有 POI",
+    "runtime_tiers": {
+      "city": {
+        "id": "city_consumer_runtime",
+        "label": "City Runtime",
+        "scope": [
+          "该城 Consumer 页面",
+          "该城 Catalog",
+          "该城 POI preview"
+        ],
+        "consumer_surface": "/market → Custom Itinerary → country → city → POI preview",
+        "gate_2_equals_gate_4": true,
+        "exit_check_evidence": "CMS-POI-CITY-{CITY_EN}-CONTENT-QA-EXIT-CHECK-LATEST.json",
+        "keys": [
+          "TT_CMS_POI_CITY_{CITY}_CONTENT_QA: CLOSED",
+          "TT_CMS_POI_CITY_{CITY}_GOLDEN_TEMPLATE: YES"
+        ],
+        "not_vetoed_by": "national_poi_family_board"
+      },
+      "country": {
+        "id": "national_runtime",
+        "label": "Country Runtime",
+        "scope": [
+          "全站 Consumer",
+          "POI 族",
+          "首页/市场/推荐/搜索/Listing 等"
+        ],
+        "when": "TT_CMS_{ISO}_COUNTRY: CLOSED",
+        "ssot": "CMS-L5-VISUAL-GAP-REPORT-LATEST.json",
+        "not_veto_city_golden_template": true
+      },
+      "rule": "城市不依赖全国 Runtime · 全国 Runtime 才依赖所有城市 Content QA CLOSED",
+      "workflow": [
+        "City Execution CLOSED",
+        "City Content QA CLOSED",
+        "Golden Template (City)",
+        "复制到本国其它城市",
+        "Country Runtime 全站验收",
+        "Country CLOSED"
+      ]
+    },
+    "golden_template": {
+      "label": "Golden Template (City)",
+      "when": "Exit Check 5/5 PASS · city_consumer_runtime",
+      "after": "冻结该城 LOCK · 原样复制流程 · 不新增标准",
+      "not_blocked_by": "national_runtime OPEN"
+    }
+  },
+  "country": {
+    "verdict": "CLOSED",
+    "TT_CMS_JP_COUNTRY": "CLOSED",
+    "workflow": {
+      "order": [
+        "execution",
+        "content_qa",
+        "country_closed"
+      ],
+      "forbidden": "execution → next_country（跳过 Content QA）",
+      "template": "Execution → Content QA → Country CLOSED → 下一国家",
+      "japan_ssot": "evidence/GO_cms_operation/CMS-JAPAN-CONTENT-QA-LATEST.json",
+      "korea_starts_when": "TT_CMS_JP_COUNTRY: CLOSED"
+    },
+    "runtime_tiers": {
+      "city": {
+        "tier": "city_consumer_runtime",
+        "consumer_surface": "/market → Custom Itinerary → country → city → POI preview",
+        "gate_2_equals_gate_4": true,
+        "not_vetoed_by": "national_poi_family_board",
+        "country_tier": "national_runtime · TT_CMS_JP_COUNTRY only"
+      },
+      "country": {
+        "tier": "national_runtime",
+        "ssot": "CMS-L5-VISUAL-GAP-REPORT-LATEST.json"
+      },
+      "rule": "City Golden Template 不依赖 national_runtime · Country CLOSED 才验 national_runtime"
+    },
+    "country_runtime_consumer": {
+      "verdict": "PASS",
+      "reason": "Japan Country Runtime audit PASS · 五城 Consumer + Catalog + Ambient",
+      "tier": "national_runtime",
+      "ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-RUNTIME-AUDIT-LATEST.json",
+      "poi_runtime": "41/41"
+    },
+    "criteria": [
+      {
+        "id": "all_city_execution_closed",
+        "label": "所有 City Execution CLOSED",
+        "key": "all_city_execution_closed",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "content_accuracy_100",
+        "label": "Content Accuracy = 100%",
+        "key": "content_accuracy_100",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "runtime_consumer_cms",
+        "label": "Runtime Consumer = CMS",
+        "key": "runtime_consumer_cms",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "geo_matching_100",
+        "label": "Geo Matching = 100%",
+        "key": "geo_matching_100",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "l5_visual_pass",
+        "label": "L5 Visual = PASS",
+        "key": "l5_visual_pass",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "cross_region_images_0",
+        "label": "Cross-region Images = 0",
+        "key": "cross_region_images_0",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "unsplash_0",
+        "label": "Unsplash = 0（CMS 管辖 POI 范围）",
+        "key": "unsplash_0",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "ocs_runtime_0",
+        "label": "OCS Runtime = 0（CMS 管辖 POI 范围）",
+        "key": "ocs_runtime_0",
+        "pass": true,
+        "verdict": "PASS"
+      }
+    ],
+    "cross_region_total": 0,
+    "content_accuracy_issues": 0,
+    "cities_execution_closed": 5,
+    "cities_content_qa_closed": 5,
+    "enter_korea_when": "TT_CMS_JP_COUNTRY: CLOSED"
+  },
+  "cities": [
+    {
+      "city_zh": "东京",
+      "city_en": "Tokyo",
+      "country_iso": "JP",
+      "poi_count": 9,
+      "execution": {
+        "verdict": "PASS",
+        "closed_at_utc": "2026-07-05T10:51:30Z",
+        "poi_count": 9,
+        "note": "Phase② 已完成 · 禁止重复 Execution"
+      },
+      "cms_ownership": {
+        "verdict": "PASS",
+        "live": 9,
+        "total": 9,
+        "missing_matrix_ids": []
+      },
+      "runtime_consumer": {
+        "verdict": "PASS",
+        "reason": "City Consumer Runtime · Exit Check Gate 4 同源",
+        "tier": "city_consumer_runtime",
+        "consumer_surface": "/market → Custom Itinerary → country → city → POI preview",
+        "gate_2_equals_gate_4": true,
+        "not_vetoed_by": "national_poi_family_board",
+        "country_tier": "national_runtime · TT_CMS_JP_COUNTRY only",
+        "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json",
+        "catalog_api_requests": 4,
+        "poi_verified": 9
+      },
+      "geo_matching": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 9,
+        "issues": []
+      },
+      "content_accuracy": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 9,
+        "items": [],
+        "checks_schema": [
+          "geo",
+          "culture",
+          "landmark",
+          "food",
+          "hotel",
+          "transport",
+          "season"
+        ]
+      },
+      "l5_quality": {
+        "verdict": "PASS",
+        "reason": "Content Accuracy PASS · 无 placeholder/unsplash"
+      },
+      "backlog_items": [],
+      "locked_items": [
+        {
+          "matrix_id": "PH-JP-009-ATR",
+          "poi": "浅草寺",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-tokyo-photo-official-guide-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-010-ATR",
+          "poi": "东京塔",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-tokyo-photo-community-media.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-011-ATR",
+          "poi": "新宿",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-tokyo-photo-community-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-012-ATR",
+          "poi": "涩谷",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-tokyo-photo-provider-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-013-ATR",
+          "poi": "上野公园",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-tokyo-photo-acquisition-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-014-FOOD",
+          "poi": "寿司",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-tokyo-sushi-community-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-015-FOOD",
+          "poi": "拉面",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-tokyo-ramen-guide-avatar.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-016-FOOD",
+          "poi": "天妇罗",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-tokyo-tempura-provider-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-017-FOOD",
+          "poi": "居酒屋",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-tokyo-photo-guide-avatar.jpg"
+        }
+      ],
+      "backlog_issue_count": 0,
+      "locked_count": 9,
+      "content_qa_closed": true
+    },
+    {
+      "city_zh": "大阪",
+      "city_en": "Osaka",
+      "country_iso": "JP",
+      "poi_count": 8,
+      "execution": {
+        "verdict": "PASS",
+        "closed_at_utc": "2026-07-05T10:57:15Z",
+        "poi_count": 8,
+        "note": "Phase② 已完成 · 禁止重复 Execution"
+      },
+      "cms_ownership": {
+        "verdict": "PASS",
+        "live": 8,
+        "total": 8,
+        "missing_matrix_ids": []
+      },
+      "runtime_consumer": {
+        "verdict": "PASS",
+        "reason": "City Consumer Runtime · Exit Check Gate 4 同源",
+        "tier": "city_consumer_runtime",
+        "consumer_surface": "/market → Custom Itinerary → country → city → POI preview",
+        "gate_2_equals_gate_4": true,
+        "not_vetoed_by": "national_poi_family_board",
+        "country_tier": "national_runtime · TT_CMS_JP_COUNTRY only",
+        "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json",
+        "catalog_api_requests": 4,
+        "poi_verified": 8
+      },
+      "geo_matching": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 8,
+        "issues": []
+      },
+      "content_accuracy": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 8,
+        "items": [],
+        "checks_schema": [
+          "geo",
+          "culture",
+          "landmark",
+          "food",
+          "hotel",
+          "transport",
+          "season"
+        ]
+      },
+      "l5_quality": {
+        "verdict": "PASS",
+        "reason": "Content Accuracy PASS · 无 placeholder/unsplash"
+      },
+      "backlog_items": [],
+      "locked_items": [
+        {
+          "matrix_id": "PH-JP-001-ATR",
+          "poi": "大阪城",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-osaka-castle-official-guide-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-002-ATR",
+          "poi": "道顿堀",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-osaka-dotonbori-official-guide-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-003-ATR",
+          "poi": "环球影城",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-osaka-usj-official-guide-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-004-ATR",
+          "poi": "心斋桥",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-osaka-shinsaibashi-official-guide-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-005-FOOD",
+          "poi": "章鱼烧",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-osaka-takoyaki-community-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-006-FOOD",
+          "poi": "大阪烧",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-osaka-okonomiyaki-guide-avatar.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-007-FOOD",
+          "poi": "河豚",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-osaka-fugu-acquisition-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-008-FOOD",
+          "poi": "串炸",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-osaka-kushikatsu-provider-cover.jpg"
+        }
+      ],
+      "backlog_issue_count": 0,
+      "locked_count": 8,
+      "content_qa_closed": true
+    },
+    {
+      "city_zh": "京都",
+      "city_en": "Kyoto",
+      "country_iso": "JP",
+      "poi_count": 7,
+      "execution": {
+        "verdict": "PASS",
+        "closed_at_utc": "2026-07-05T11:01:02Z",
+        "poi_count": 7,
+        "note": "Phase② 已完成 · 禁止重复 Execution"
+      },
+      "cms_ownership": {
+        "verdict": "PASS",
+        "live": 7,
+        "total": 7,
+        "missing_matrix_ids": []
+      },
+      "runtime_consumer": {
+        "verdict": "PASS",
+        "reason": "City Consumer Runtime · Exit Check Gate 4 同源",
+        "tier": "city_consumer_runtime",
+        "consumer_surface": "/market → Custom Itinerary → country → city → POI preview",
+        "gate_2_equals_gate_4": true,
+        "not_vetoed_by": "national_poi_family_board",
+        "country_tier": "national_runtime · TT_CMS_JP_COUNTRY only",
+        "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json",
+        "catalog_api_requests": 4,
+        "poi_verified": 7
+      },
+      "geo_matching": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 7,
+        "issues": []
+      },
+      "content_accuracy": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 7,
+        "items": [],
+        "checks_schema": [
+          "geo",
+          "culture",
+          "landmark",
+          "food",
+          "hotel",
+          "transport",
+          "season"
+        ]
+      },
+      "l5_quality": {
+        "verdict": "PASS",
+        "reason": "Content Accuracy PASS · 无 placeholder/unsplash"
+      },
+      "backlog_items": [],
+      "locked_items": [
+        {
+          "matrix_id": "PH-JP-026-ATR",
+          "poi": "伏见稻荷",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-kyoto-culture-official-guide-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-027-ATR",
+          "poi": "清水寺",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-kyoto-culture-community-media.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-028-ATR",
+          "poi": "金阁寺",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-kyoto-culture-community-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-029-ATR",
+          "poi": "祇园",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-kyoto-culture-provider-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-030-FOOD",
+          "poi": "怀石料理",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-kyoto-culture-acquisition-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-031-FOOD",
+          "poi": "抹茶甜品",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-kyoto-culture-guide-avatar.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-032-FOOD",
+          "poi": "汤豆腐",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-kyoto-yudofu-community-cover.jpg"
+        }
+      ],
+      "backlog_issue_count": 0,
+      "locked_count": 7,
+      "content_qa_closed": true
+    },
+    {
+      "city_zh": "札幌",
+      "city_en": "Sapporo",
+      "country_iso": "JP",
+      "poi_count": 9,
+      "execution": {
+        "verdict": "PASS",
+        "closed_at_utc": "2026-07-05T11:05:59Z",
+        "poi_count": 9,
+        "note": "Phase② 已完成 · 禁止重复 Execution"
+      },
+      "cms_ownership": {
+        "verdict": "PASS",
+        "live": 9,
+        "total": 9,
+        "missing_matrix_ids": []
+      },
+      "runtime_consumer": {
+        "verdict": "PASS",
+        "reason": "City Consumer Runtime · Exit Check Gate 4 同源",
+        "tier": "city_consumer_runtime",
+        "consumer_surface": "/market → Custom Itinerary → country → city → POI preview",
+        "gate_2_equals_gate_4": true,
+        "not_vetoed_by": "national_poi_family_board",
+        "country_tier": "national_runtime · TT_CMS_JP_COUNTRY only",
+        "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json",
+        "catalog_api_requests": 4,
+        "poi_verified": 9
+      },
+      "geo_matching": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 9,
+        "issues": []
+      },
+      "content_accuracy": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 9,
+        "items": [],
+        "checks_schema": [
+          "geo",
+          "culture",
+          "landmark",
+          "food",
+          "hotel",
+          "transport",
+          "season"
+        ]
+      },
+      "l5_quality": {
+        "verdict": "PASS",
+        "reason": "Content Accuracy PASS · 无 placeholder/unsplash"
+      },
+      "backlog_items": [],
+      "locked_items": [
+        {
+          "matrix_id": "PH-JP-033-ATR",
+          "poi": "大通公园",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-sapporo-odori-park-official-guide-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-034-ATR",
+          "poi": "时计台",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-sapporo-clock-tower-community-media.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-035-ATR",
+          "poi": "羊之丘",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-sapporo-hitachi-hill-community-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-036-ATR",
+          "poi": "白色恋人工厂",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-sapporo-shiroi-koibito-provider-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-037-ATR",
+          "poi": "藻岩山",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-sapporo-moiwa-acquisition-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-038-FOOD",
+          "poi": "味噌拉面",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-sapporo-miso-ramen-guide-avatar.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-039-FOOD",
+          "poi": "成吉思汗",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-sapporo-jingisukan-official-guide-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-040-FOOD",
+          "poi": "汤咖喱",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-sapporo-soup-curry-community-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-041-FOOD",
+          "poi": "海鲜",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-sapporo-seafood-provider-cover.jpg"
+        }
+      ],
+      "backlog_issue_count": 0,
+      "locked_count": 9,
+      "content_qa_closed": true
+    },
+    {
+      "city_zh": "福冈",
+      "city_en": "Fukuoka",
+      "country_iso": "JP",
+      "poi_count": 8,
+      "execution": {
+        "verdict": "PASS",
+        "closed_at_utc": "2026-07-05T15:37:00Z",
+        "poi_count": 8,
+        "note": "Phase② 已完成 · 禁止重复 Execution"
+      },
+      "cms_ownership": {
+        "verdict": "PASS",
+        "live": 8,
+        "total": 8,
+        "missing_matrix_ids": []
+      },
+      "runtime_consumer": {
+        "verdict": "PASS",
+        "reason": "City Consumer Runtime · Exit Check Gate 4 同源",
+        "tier": "city_consumer_runtime",
+        "consumer_surface": "/market → Custom Itinerary → country → city → POI preview",
+        "gate_2_equals_gate_4": true,
+        "not_vetoed_by": "national_poi_family_board",
+        "country_tier": "national_runtime · TT_CMS_JP_COUNTRY only",
+        "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json",
+        "catalog_api_requests": 4,
+        "poi_verified": 8
+      },
+      "geo_matching": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 8,
+        "issues": []
+      },
+      "content_accuracy": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 8,
+        "items": [],
+        "checks_schema": [
+          "geo",
+          "culture",
+          "landmark",
+          "food",
+          "hotel",
+          "transport",
+          "season"
+        ]
+      },
+      "l5_quality": {
+        "verdict": "PASS",
+        "reason": "Content Accuracy PASS · 无 placeholder/unsplash"
+      },
+      "backlog_items": [],
+      "locked_items": [
+        {
+          "matrix_id": "PH-JP-018-ATR",
+          "poi": "博多",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-fukuoka-hakata-official-guide-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-019-ATR",
+          "poi": "太宰府",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-fukuoka-dazaifu-community-media.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-020-ATR",
+          "poi": "能古岛",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-fukuoka-nokonoshima-community-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-021-ATR",
+          "poi": "屋台",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-fukuoka-yatai-atr-provider-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-022-FOOD",
+          "poi": "豚骨拉面",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-fukuoka-tonkotsu-ramen-guide-avatar.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-023-FOOD",
+          "poi": "明太子",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-fukuoka-mentaiko-acquisition-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-024-FOOD",
+          "poi": "水炊锅",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-fukuoka-mizutaki-official-guide-cover.jpg"
+        },
+        {
+          "matrix_id": "PH-JP-025-FOOD",
+          "poi": "屋台",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-fukuoka-yatai-food-community-media.jpg"
+        }
+      ],
+      "backlog_issue_count": 0,
+      "locked_count": 8,
+      "content_qa_closed": true
+    }
+  ],
+  "backlog": {
+    "tree": {
+      "东京": {
+        "city_en": "Tokyo",
+        "execution": "PASS",
+        "content_qa_closed": true,
+        "issue_count": 0,
+        "locked_count": 9,
+        "poi_total": 9,
+        "status": "content_qa_closed",
+        "items": [],
+        "locked_items": [
+          {
+            "matrix_id": "PH-JP-009-ATR",
+            "poi": "浅草寺",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-tokyo-photo-official-guide-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-010-ATR",
+            "poi": "东京塔",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-tokyo-photo-community-media.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-011-ATR",
+            "poi": "新宿",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-tokyo-photo-community-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-012-ATR",
+            "poi": "涩谷",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-tokyo-photo-provider-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-013-ATR",
+            "poi": "上野公园",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-tokyo-photo-acquisition-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-014-FOOD",
+            "poi": "寿司",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-tokyo-sushi-community-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-015-FOOD",
+            "poi": "拉面",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-tokyo-ramen-guide-avatar.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-016-FOOD",
+            "poi": "天妇罗",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-tokyo-tempura-provider-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-017-FOOD",
+            "poi": "居酒屋",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-tokyo-photo-guide-avatar.jpg"
+          }
+        ]
+      },
+      "大阪": {
+        "city_en": "Osaka",
+        "execution": "PASS",
+        "content_qa_closed": true,
+        "issue_count": 0,
+        "locked_count": 8,
+        "poi_total": 8,
+        "status": "content_qa_closed",
+        "items": [],
+        "locked_items": [
+          {
+            "matrix_id": "PH-JP-001-ATR",
+            "poi": "大阪城",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-osaka-castle-official-guide-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-002-ATR",
+            "poi": "道顿堀",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-osaka-dotonbori-official-guide-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-003-ATR",
+            "poi": "环球影城",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-osaka-usj-official-guide-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-004-ATR",
+            "poi": "心斋桥",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-osaka-shinsaibashi-official-guide-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-005-FOOD",
+            "poi": "章鱼烧",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-osaka-takoyaki-community-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-006-FOOD",
+            "poi": "大阪烧",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-osaka-okonomiyaki-guide-avatar.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-007-FOOD",
+            "poi": "河豚",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-osaka-fugu-acquisition-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-008-FOOD",
+            "poi": "串炸",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-osaka-kushikatsu-provider-cover.jpg"
+          }
+        ]
+      },
+      "京都": {
+        "city_en": "Kyoto",
+        "execution": "PASS",
+        "content_qa_closed": true,
+        "issue_count": 0,
+        "locked_count": 7,
+        "poi_total": 7,
+        "status": "content_qa_closed",
+        "items": [],
+        "locked_items": [
+          {
+            "matrix_id": "PH-JP-026-ATR",
+            "poi": "伏见稻荷",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-kyoto-culture-official-guide-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-027-ATR",
+            "poi": "清水寺",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-kyoto-culture-community-media.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-028-ATR",
+            "poi": "金阁寺",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-kyoto-culture-community-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-029-ATR",
+            "poi": "祇园",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-kyoto-culture-provider-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-030-FOOD",
+            "poi": "怀石料理",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-kyoto-culture-acquisition-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-031-FOOD",
+            "poi": "抹茶甜品",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-kyoto-culture-guide-avatar.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-032-FOOD",
+            "poi": "汤豆腐",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-kyoto-yudofu-community-cover.jpg"
+          }
+        ]
+      },
+      "札幌": {
+        "city_en": "Sapporo",
+        "execution": "PASS",
+        "content_qa_closed": true,
+        "issue_count": 0,
+        "locked_count": 9,
+        "poi_total": 9,
+        "status": "content_qa_closed",
+        "items": [],
+        "locked_items": [
+          {
+            "matrix_id": "PH-JP-033-ATR",
+            "poi": "大通公园",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-sapporo-odori-park-official-guide-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-034-ATR",
+            "poi": "时计台",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-sapporo-clock-tower-community-media.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-035-ATR",
+            "poi": "羊之丘",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-sapporo-hitachi-hill-community-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-036-ATR",
+            "poi": "白色恋人工厂",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-sapporo-shiroi-koibito-provider-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-037-ATR",
+            "poi": "藻岩山",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-sapporo-moiwa-acquisition-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-038-FOOD",
+            "poi": "味噌拉面",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-sapporo-miso-ramen-guide-avatar.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-039-FOOD",
+            "poi": "成吉思汗",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-sapporo-jingisukan-official-guide-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-040-FOOD",
+            "poi": "汤咖喱",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-sapporo-soup-curry-community-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-041-FOOD",
+            "poi": "海鲜",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-sapporo-seafood-provider-cover.jpg"
+          }
+        ]
+      },
+      "福冈": {
+        "city_en": "Fukuoka",
+        "execution": "PASS",
+        "content_qa_closed": true,
+        "issue_count": 0,
+        "locked_count": 8,
+        "poi_total": 8,
+        "status": "content_qa_closed",
+        "items": [],
+        "locked_items": [
+          {
+            "matrix_id": "PH-JP-018-ATR",
+            "poi": "博多",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-fukuoka-hakata-official-guide-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-019-ATR",
+            "poi": "太宰府",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-fukuoka-dazaifu-community-media.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-020-ATR",
+            "poi": "能古岛",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-fukuoka-nokonoshima-community-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-021-ATR",
+            "poi": "屋台",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-fukuoka-yatai-atr-provider-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-022-FOOD",
+            "poi": "豚骨拉面",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-fukuoka-tonkotsu-ramen-guide-avatar.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-023-FOOD",
+            "poi": "明太子",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-fukuoka-mentaiko-acquisition-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-024-FOOD",
+            "poi": "水炊锅",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-fukuoka-mizutaki-official-guide-cover.jpg"
+          },
+          {
+            "matrix_id": "PH-JP-025-FOOD",
+            "poi": "屋台",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-fukuoka-yatai-food-community-media.jpg"
+          }
+        ]
+      }
+    },
+    "total_issues": 0,
+    "remediation_priority": [
+      {
+        "rank": 1,
+        "city_zh": "大阪",
+        "reason": "逐项替换跨区图 → Content Accuracy PASS → Geo/L5 PASS"
+      },
+      {
+        "rank": 2,
+        "city_zh": "札幌",
+        "reason": "逐项替换跨区图 → Content Accuracy PASS → Geo/L5 PASS"
+      },
+      {
+        "rank": 3,
+        "city_zh": "东京",
+        "reason": "3 项跨区/错城图"
+      },
+      {
+        "rank": 4,
+        "city_zh": "京都",
+        "reason": "1 项跨区图"
+      },
+      {
+        "rank": 5,
+        "city_zh": "福冈",
+        "reason": "Execution 完成后进入 Content QA"
+      },
+      {
+        "rank": 6,
+        "city_zh": null,
+        "reason": "重跑 Runtime QA → JP Country CLOSED"
+      }
+    ]
+  },
+  "summary": {
+    "cities_execution_pass": 5,
+    "cities_content_qa_closed": 5,
+    "total_content_accuracy_issues": 0,
+    "next_remediation_city": null
+  },
+  "TT_CMS_JP_CONTENT_QA": "CLOSED",
+  "TT_CMS_JP_COUNTRY": "CLOSED"
+}

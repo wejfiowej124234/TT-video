@@ -66,6 +66,10 @@ pub async fn auth_placeholder_layer(req: Request<Body>, next: axum::middleware::
         || (read && path.starts_with("/api/v1/catalog/"))
         // E2E-A-01：Official OPS Cold Start deployed campaign 公众只读
         || (read && path.starts_with("/api/v1/official/cold-start/surfaces/"))
+        // CMS S0 · public announcements (governed view · no auth)
+        || (read && path.starts_with("/api/v1/public/announcements"))
+        // CMS · product roadmap (independent public read · no auth)
+        || (read && path.starts_with("/api/v1/public/roadmap"))
         || path.starts_with("/api/v1/internal/")
         || community_read;
     if public {

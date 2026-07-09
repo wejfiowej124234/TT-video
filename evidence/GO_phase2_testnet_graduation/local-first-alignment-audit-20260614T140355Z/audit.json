@@ -1,0 +1,78 @@
+{
+  "schema": "traveltrust.local_first_alignment_audit.v1",
+  "at": "2026-06-14T14:03:55Z",
+  "baseline_sha": "0df6665d5d5f2db2b8d086bcf80229e5fed86c98",
+  "head": "0df6665d5d5f2db2b8d086bcf80229e5fed86c98",
+  "staging_api_sha": "0df6665d5d5f2db2b8d086bcf80229e5fed86c98",
+  "staging_web_sha": "0df6665d5d5f2db2b8d086bcf80229e5fed86c98",
+  "verdict": "NOT_100_PERCENT_ALIGNED",
+  "tt_marker": "TT_LOCAL_FIRST_ALIGNMENT: NOT_100_PERCENT_ALIGNED",
+  "gaps": [
+    {
+      "id": "GAP-WT-SCRIPT",
+      "sev": "P0",
+      "note": "scripts/dev/run-phase2-final-single-ssot-reconciliation.sh: M  scripts/dev/run-phase2-final-single-ssot-reconciliation.s"
+    },
+    {
+      "id": "GAP-WT-SCRIPT",
+      "sev": "P0",
+      "note": "scripts/dev/emit-freeze-lift-execution-report.mjs: MM scripts/dev/emit-freeze-lift-execution-report.mjs"
+    },
+    {
+      "id": "GAP-WT-SCRIPT",
+      "sev": "P0",
+      "note": "scripts/dev/lib/staging-adm-u01-env.sh: M scripts/dev/lib/staging-adm-u01-env.sh"
+    },
+    {
+      "id": "GAP-WT-SCRIPT",
+      "sev": "P0",
+      "note": "scripts/gates/run-admin-rbac-staging-matrix.py: M scripts/gates/run-admin-rbac-staging-matrix.py"
+    },
+    {
+      "id": "GAP-WT-SCRIPT",
+      "sev": "P0",
+      "note": "frontend/e2e/helpers/adminCapabilitiesSession.ts: M  frontend/e2e/helpers/adminCapabilitiesSession.ts"
+    },
+    {
+      "id": "GAP-E2E-HELPER",
+      "sev": "P1",
+      "note": "E2E helper delta not in HEAD (D6 evidence used WT fix)",
+      "items": [
+        "frontend/e2e/helpers/adminCapabilitiesSession.ts"
+      ]
+    },
+    {
+      "id": "GAP-WT-NONEXEMPT",
+      "sev": "P1",
+      "note": "812 non-exempt WT files (docs/evidence exempt)",
+      "count": 812
+    },
+    {
+      "id": "GAP-DEEP-GATE-G04",
+      "sev": "P1",
+      "note": "Latest Deep Gate PASS used --skip-rbac; inline ADM-U01 not in report"
+    },
+    {
+      "id": "GAP-ADM-U01-MANIFEST",
+      "sev": "P1",
+      "note": "Session PASS in closure log only; not archived to GO_staging_admin_rbac_matrix @ HEAD"
+    },
+    {
+      "id": "GAP-SOAK-PRE-ALIGN",
+      "sev": "P2",
+      "note": "72h soak started before LOCAL_FIRST 100% gate; treat as provisional until realigned"
+    }
+  ],
+  "checks": {
+    "head_equals_baseline": true,
+    "staging_api_equals_head": true,
+    "staging_web_equals_head": true,
+    "wt_strict_clean": false,
+    "wt_porcelain_count": 1196,
+    "deploy_ssot_non_e2e_clean": true,
+    "migrations_untracked": true,
+    "registry_escrow_match": true,
+    "soak_inflight": true,
+    "ssot_reconciled_100": true
+  }
+}

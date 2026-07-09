@@ -1,0 +1,24 @@
+{
+  "stamp": "20260701T165036Z",
+  "verdict": "PASS_MACHINE",
+  "complete_40_40": true,
+  "gates": {
+    "mapping": "PASS",
+    "G_L5": "PASS",
+    "G_L5_PUB": "PASS",
+    "G_L5_RBAC": "SKIP_NO_ENV",
+    "G_L5_U02": "SKIP_NO_ENV",
+    "ADM_U01": "SKIP_NO_ENV",
+    "ADM_U02": "SKIP_NO_ENV"
+  },
+  "local_smoke": "SKIP_NO_API",
+  "staging": "WARN_P0_CLEAR",
+  "manual_next": [
+    "Local Admin walkthrough: /admin/official/public-operations (all tabs incl. Campaign)",
+    "Staging Admin walkthrough: same routes + deploy/rollback L5 confirm",
+    "TT-MARKET-DISPLAY-DATA-MANUAL-UAT.md public surface spot-check"
+  ],
+  "evidence_dir": "D:/TravelTrust-V1.1/evidence/GO_admin_platform_40_complete/20260701T165036Z",
+  "staging_detail": "run-admin-l5-staging-audit verdict=WARN p0=0 (steward_apps 404 non-P0)",
+  "staging_evidence": "evidence/GO_staging_admin_l5_audit/20260701T165135Z/report.json"
+}

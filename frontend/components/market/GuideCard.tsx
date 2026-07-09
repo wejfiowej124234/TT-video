@@ -9,11 +9,14 @@ import {
   filterGuidePublicServiceTypes,
   formatGuideLanguages,
   formatGuidePublicBio,
+  formatGuideHourlyRateLabel,
   formatGuideServiceTypeLabel,
 } from "@/lib/marketDisplayCopy";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 import { GuideIdentityStakeTrustBadge } from "@/components/guide/GuideIdentityStakeTrustBadge";
 import { TT_MARKETING_BTN_MARKET_PRIMARY, TT_MARKETING_MARKET_DARK_PATH, TT_MARKETING_MARKET_L5_LIST_CARD_FRAME, TT_MARKETING_MARKET_L5_LIST_CARD_INNER } from "@/lib/marketingUi";
+import { MarketDisplayTestBadge } from "@/components/market/MarketDisplayTestBadge";
+import { shouldShowMarketGuideDisplayTestLabel } from "@/lib/marketDisplayTestLabel";
 
 /** P29 向导卡片：向导照片 + 收藏 + 预约向导/查看向导；28 玻璃态 + DID/时薪 */
 export type { GuideCardItem, GuidePriceRange } from "@/lib/marketTypes";
@@ -48,16 +51,7 @@ function GuideCard({
   const tags = filterGuidePublicServiceTypes(guide.service_types);
   const avatarAlt = t("guide_card_avatarAlt").replace("{{name}}", name);
   const cityLabel = guide.city ?? dash;
-  const hourlyCurrencyLabel =
-    typeof guide.hourly_currency === "string" && guide.hourly_currency.trim()
-      ? guide.hourly_currency.trim()
-      : t("market_guide_hourly_currency_unspecified");
-  const hourlyLabel =
-    guide.hourly_rate != null && guide.hourly_rate !== ""
-      ? t("guide_card_perHour")
-          .replace("{{amount}}", String(guide.hourly_rate))
-          .replace("{{currency}}", hourlyCurrencyLabel)
-      : null;
+  const hourlyLabel = formatGuideHourlyRateLabel(guide, t);
   const hourlyDisplayGlass = hourlyLabel ?? (glass ? t("market_guide_hourly_on_request") : null);
   const stakeDisplay = guide.stake_amount?.trim() ? guide.stake_amount.trim() : null;
   const openDetail = () => {
@@ -86,6 +80,7 @@ function GuideCard({
     : `inline-flex min-h-[44px] min-w-[44px] h-11 w-11 items-center justify-center rounded-full bg-bg-console shadow-soft hover:bg-bg-soft transition-colors border border-ink-200 ${travelFocusRingCoreOffset2Classes} focus-visible:ring-offset-bg-console`;
 
   const bioTeaser = formatGuidePublicBio(guide.bio);
+  const showTestLabel = shouldShowMarketGuideDisplayTestLabel(guide);
   const stopCardBubble = (e: MouseEvent) => e.stopPropagation();
 
   const cardBody = (
@@ -126,8 +121,9 @@ function GuideCard({
 
       <div className={contentClass} onClick={stopCardBubble}>
         <div>
-          <h3 id={`guide-title-${guide.id}`} className={titleClass}>
+          <h3 id={`guide-title-${guide.id}`} className={`${titleClass} flex flex-wrap items-center gap-2`}>
             {name}
+            {showTestLabel ? <MarketDisplayTestBadge glass={glass} /> : null}
           </h3>
           <p className={subClass}>{cityLabel}</p>
           {glass && bioTeaser ? <p className={`${subClass} mt-1 line-clamp-2`}>{bioTeaser}</p> : null}

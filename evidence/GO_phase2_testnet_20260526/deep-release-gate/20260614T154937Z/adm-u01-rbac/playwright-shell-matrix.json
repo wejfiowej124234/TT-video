@@ -1,0 +1,392 @@
+{
+  "artifact": "adm-u01-playwright-shell",
+  "phase": "②",
+  "staging_fe_probe": "https://tt-web-staging.fly.dev",
+  "playwright_fe_base": "https://tt-web-staging.fly.dev",
+  "generated_at": "2026-06-14T15:09:31.803Z",
+  "summary": {
+    "total": 54,
+    "pass": 54,
+    "fail": 0
+  },
+  "rows": [
+    {
+      "role": "SuperAdmin",
+      "group_id": "onboarding",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "group_id": "operations",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "group_id": "content",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "group_id": "official_ops",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "group_id": "growth",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "group_id": "community",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "group_id": "finance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "group_id": "governance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "SuperAdmin",
+      "group_id": "more",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "onboarding",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "operations",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "content",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "official_ops",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "growth",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "community",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "finance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "governance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Ops",
+      "group_id": "more",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "onboarding",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "operations",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "content",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "official_ops",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "growth",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "community",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "finance",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "governance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "CS",
+      "group_id": "more",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "onboarding",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "operations",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "content",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "official_ops",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "growth",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "community",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "finance",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "governance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Risk",
+      "group_id": "more",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "onboarding",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "operations",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "content",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "official_ops",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "growth",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "community",
+      "expected_visible": false,
+      "actual_visible": false,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "finance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "governance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Finance",
+      "group_id": "more",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "onboarding",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "operations",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "content",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "official_ops",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "growth",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "community",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "finance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "governance",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    },
+    {
+      "role": "Auditor",
+      "group_id": "more",
+      "expected_visible": true,
+      "actual_visible": true,
+      "status": "PASS"
+    }
+  ]
+}

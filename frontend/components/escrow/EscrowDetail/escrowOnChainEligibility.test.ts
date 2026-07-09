@@ -4,6 +4,7 @@ import {
   canOpenDisputeOnChain,
   canRefundEscrow,
   canReleaseAfterRating,
+  canReleaseAfterServiceCompletion,
   escrowDisputeOnChainUnavailableReasonKey,
   orderLikeMayOnchainDeposit,
 } from "./escrowOnChainEligibility";
@@ -56,19 +57,47 @@ describe("canDepositToEscrow", () => {
   });
 });
 
-describe("canReleaseAfterRating", () => {
-  it("requires completed + both rating confirmations (or sub_status)", () => {
+describe("canReleaseAfterServiceCompletion", () => {
+  it("requires completed + both service confirmations (or sub_status)", () => {
+    expect(
+      canReleaseAfterServiceCompletion(
+        {
+          state: "completed",
+          service_tourist_confirmed: true,
+          service_guide_confirmed: true,
+        } as OrderRow,
+        true
+      )
+    ).toBe(true);
+    expect(
+      canReleaseAfterServiceCompletion(
+        { state: "completed", sub_status: "service_completion_confirmed" } as OrderRow,
+        true
+      )
+    ).toBe(true);
+    expect(canReleaseAfterServiceCompletion({ state: "completed" } as OrderRow, true)).toBe(false);
+    expect(canReleaseAfterServiceCompletion({ state: "escrowed" } as OrderRow, true)).toBe(false);
+  });
+});
+
+describe("canReleaseAfterRating (alias)", () => {
+  it("delegates to service completion gate", () => {
     expect(
       canReleaseAfterRating(
         { state: "completed", rating_tourist_confirmed: true, rating_guide_confirmed: true } as OrderRow,
         true
       )
-    ).toBe(true);
+    ).toBe(false);
     expect(
-      canReleaseAfterRating({ state: "completed", sub_status: "rating_confirmed" } as OrderRow, true)
+      canReleaseAfterRating(
+        {
+          state: "completed",
+          service_tourist_confirmed: true,
+          service_guide_confirmed: true,
+        } as OrderRow,
+        true
+      )
     ).toBe(true);
-    expect(canReleaseAfterRating({ state: "completed" } as OrderRow, true)).toBe(false);
-    expect(canReleaseAfterRating({ state: "escrowed" } as OrderRow, true)).toBe(false);
   });
 });
 
@@ -79,13 +108,13 @@ describe("canRefundEscrow", () => {
     expect(canRefundEscrow({ state: "completed" } as OrderRow, true)).toBe(true);
   });
 
-  it("blocks when both sides confirmed rating (release path)", () => {
+  it("blocks when both sides confirmed service completion (release path)", () => {
     expect(
       canRefundEscrow(
         {
           state: "completed",
-          rating_tourist_confirmed: true,
-          rating_guide_confirmed: true,
+          service_tourist_confirmed: true,
+          service_guide_confirmed: true,
         } as OrderRow,
         true
       )

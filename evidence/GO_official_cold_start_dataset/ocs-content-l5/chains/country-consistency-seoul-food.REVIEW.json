@@ -1,0 +1,24 @@
+{
+  "schema": "traveltrust.ocs_content_l5_country_consistency_review.v1",
+  "stamp_utc": "20260704T130430Z",
+  "chain_id": "seoul-food",
+  "city": "首尔",
+  "country_code": "KR",
+  "country_label": "韩国",
+  "theme_locked": "深夜美食 · 明洞 · 广藏市场",
+  "TT_COUNTRY_CONSISTENCY_REVIEW": "PASS",
+  "isolation_rules": {
+    "no_japan_elements": true,
+    "no_china_elements": true,
+    "no_other_country_landmarks": true,
+    "hangul_signage_ok": true,
+    "korean_food_visual_language": true
+  },
+  "future_slots_require": [
+    "provider: 韩式小吃/美食团",
+    "acquisition: 韩国限定零食礼包",
+    "official_guide: 明洞-广藏 48h 美食地图",
+    "community: 韩餐特写/市场纪实"
+  ],
+  "gate_seoul_chain_completion": "6/6 must maintain KR-only visual language"
+}

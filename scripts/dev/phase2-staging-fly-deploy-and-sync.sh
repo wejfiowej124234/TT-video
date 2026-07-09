@@ -39,6 +39,12 @@ else
   deploy_governance_phase3_assert_s5_allowed "$ROOT"
 fi
 
+# shellcheck source=lib/staging-rc-baseline-gate.sh
+source "$ROOT/scripts/dev/lib/staging-rc-baseline-gate.sh"
+if [[ "$SECRETS_ONLY" -ne 1 ]]; then
+  staging_rc_baseline_gate_pre_deploy pre-deploy || fail "TT_STAGING_RC_BASELINE gate"
+fi
+
 command -v fly >/dev/null 2>&1 || fail "fly CLI not found"
 [[ -f "$FLY_CONFIG" ]] || fail "missing $FLY_CONFIG"
 
@@ -77,6 +83,7 @@ add_secret TRAVELTRUST_ONBOARDING_STRIPE_ENABLED "${TRAVELTRUST_ONBOARDING_STRIP
 add_secret TRAVELTRUST_STRIPE_SECRET_KEY "${TRAVELTRUST_STRIPE_SECRET_KEY:-}"
 add_secret TRAVELTRUST_STRIPE_WEBHOOK_SECRET "${TRAVELTRUST_STRIPE_WEBHOOK_SECRET:-}"
 add_secret SEED_TEST_ACCOUNTS "${SEED_TEST_ACCOUNTS:-1}"
+add_secret TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET "${TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET:-0}"
 WEB_ORIGIN="${STAGING_WEB_BASE:-https://tt-web-staging.fly.dev}"
 add_secret CORS_ORIGINS "${CORS_ORIGINS:-${WEB_ORIGIN},http://localhost:3012,http://127.0.0.1:3012}"
 
@@ -138,3 +145,7 @@ else
 fi
 
 ok "$APP deployed · ${CANONICAL_BASE}/health=200 · API_BASE patched in onboarding.local"
+
+if [[ "$SECRETS_ONLY" != "1" ]]; then
+  staging_rc_baseline_gate_post_deploy || fail "post-deploy TT_STAGING_RC_BASELINE — run run-staging-rc-baseline-final-alignment.sh"
+fi

@@ -159,9 +159,20 @@ pub(crate) fn guide_row_from_db_guides_table(g: &crate::db::GuideRow) -> GuideRo
         status: g.status.clone(),
         rejection_codes: g.rejection_codes.clone(),
         rejection_message: g.rejection_message.clone(),
+        data_origin: g.data_origin.clone(),
+        display_status: if g.data_origin == "production" {
+            "published".into()
+        } else {
+            "draft".into()
+        },
+        display_origin: "REAL".into(),
+        featured: false,
+        display_priority: 0,
+        display_surfaces: vec![],
+        display_start_at: None,
+        display_end_at: None,
         created_at: g.created_at,
         updated_at: g.updated_at,
-        data_origin: "production".into(),
     }
 }
 
@@ -188,10 +199,23 @@ pub(crate) fn order_from_db(o: &crate::db::DbOrderRow) -> OrderRow {
         guide_confirmed: o.guide_confirmed,
         rating_tourist_confirmed: o.rating_tourist_confirmed,
         rating_guide_confirmed: o.rating_guide_confirmed,
+        service_tourist_confirmed: o.service_tourist_confirmed,
+        service_guide_confirmed: o.service_guide_confirmed,
         chain_id: o.chain_id,
         order_kind: o.order_kind.clone(),
         market_listing_id: o.market_listing_id,
-        data_origin: "production".into(),
+        data_origin: o.data_origin.clone(),
+        display_status: if o.data_origin == "production" {
+            "published".into()
+        } else {
+            "draft".into()
+        },
+        display_origin: "REAL".into(),
+        featured: false,
+        display_priority: 0,
+        display_surfaces: vec![],
+        display_start_at: None,
+        display_end_at: None,
     }
 }
 

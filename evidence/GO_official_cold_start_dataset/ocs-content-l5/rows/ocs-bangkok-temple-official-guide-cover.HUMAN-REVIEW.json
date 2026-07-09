@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T135230Z",
+  "filename": "ocs-bangkok-temple-official-guide-cover.jpg",
+  "chain_id": "bangkok-temple",
+  "city": "曼谷",
+  "country_code": "TH",
+  "slot": "official-guide-cover",
+  "surface": "Official Guide",
+  "copy_label": "曼谷经典寺庙与河景一日",
+  "manifest_copy": {
+    "official_guide.title": "曼谷经典寺庙与河景一日",
+    "official_guide.destination": "曼谷",
+    "official_guide.body": "避开高峰的参观顺序与着装提醒，附官方推荐游船时段。",
+    "official_guide.tags": ["曼谷", "寺庙", "官方攻略"]
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 122079 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "郑王庙尖塔+湄南河+游船路线宽幅，与 title/body/tags 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "史诗路线封面；非 Row19-21 slot。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "曼谷 TH-only。" },
+    "G5_brand_visual": { "pass": true, "notes": "金庙+河景官方攻略感。" },
+    "G6_commercial_platform": { "pass": true, "notes": "Official Guide / Hero 封面。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光自然。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "Surface Boundary + Portfolio + Regression。" },
+    "G9_content_authenticity": { "pass": true, "notes": "黎明寺/湄南河语义正确。" },
+    "G10_content_diversity": { "pass": true, "notes": "vs Tokyo/Kyoto/Seoul Official Guide 明显不同。" }
+  },
+  "official_guide_destination_review": { "pass": true },
+  "surface_boundary_review": { "pass": true, "first_execution_row22": true },
+  "destination_experience_review": { "pass": true },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.admin_rbac_staging_matrix_report.v1",
+  "artifact": "adm-u01-playwright-shell",
+  "phase": "②",
+  "source": "frontend/evidence/GO_staging_admin_rbac_matrix/run_20260701T092450Z/playwright-shell-matrix.json",
+  "generated_at": "2026-07-01T09:59:23.242Z",
+  "recorded_utc": "2026-07-08T13:24:00Z",
+  "staging_fe_probe": "https://tt-web-staging.fly.dev",
+  "release_gate": "GO",
+  "release_gate_reason": "54/54 Playwright shell matrix PASS — committed staging evidence; live re-run optional when STAGING_API_BASE configured",
+  "summary": {
+    "total": 54,
+    "pass": 54,
+    "fail": 0
+  },
+  "verdict": "PHASE2_ADMIN_RBAC_MATRIX_EVIDENCE_GO"
+}

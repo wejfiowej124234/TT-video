@@ -1,0 +1,41 @@
+{
+  "schema": "traveltrust.cms_hotel_discovery_complete.v1",
+  "recorded_at_utc": "2026-07-07T13:32:24.954Z",
+  "phase": "DISCOVERY_COMPLETE",
+  "TT_CMS_HOTEL_DISCOVERY": "COMPLETE",
+  "deliverables": {
+    "ownership_boundary_review": {
+      "path": "CMS-HOTEL-OWNERSHIP-BOUNDARY-REVIEW-LATEST.json",
+      "verdict": "PASS"
+    },
+    "brief": {
+      "ssot": "data/catalog/hotel-brief.v1.yaml",
+      "evidence": "CMS-HOTEL-BRIEF-LATEST.json",
+      "verdict": "DESIGN_SSOT"
+    },
+    "asset_matrix": {
+      "ssot": "data/catalog/hotel-matrix.v1.yaml",
+      "evidence": "CMS-HOTEL-MATRIX-LATEST.json",
+      "verdict": "SCOPE_LOCKED",
+      "rows": 3
+    }
+  },
+  "future_extensibility": "YES — 需要 deliberate Schema / API / Frontend WP，不能仅 Matrix 增行",
+  "registry_hotel_next": "Discovery Complete · Brief+Matrix+Boundary · 等待实现决策",
+  "explicitly_not_started": [
+    "wp0_migration",
+    "admin",
+    "api",
+    "runtime",
+    "frontend",
+    "upload_assets",
+    "catalog_publish_ops"
+  ],
+  "next_step": "等待实现决策 · 与 City Hero 相同：先冻结设计，再决定是否投入开发",
+  "scripts": {
+    "discovery": "scripts/dev/run-cms-hotel-discovery.cjs",
+    "boundary": "scripts/dev/run-cms-hotel-ownership-boundary-review.cjs",
+    "design_ssot": "scripts/dev/run-cms-hotel-design-ssot.cjs",
+    "registry": "scripts/dev/run-cms-master-registry.cjs"
+  }
+}

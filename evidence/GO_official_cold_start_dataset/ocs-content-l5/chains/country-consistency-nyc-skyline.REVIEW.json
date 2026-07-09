@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust.ocs_content_l5_country_consistency_review.v1",
+  "stamp_utc": "20260704T152000Z",
+  "chain_id": "nyc-skyline",
+  "city": "纽约",
+  "country_code": "US",
+  "country_label": "美国",
+  "theme_locked": "天际线 · 布鲁克林大桥 · 帝国大厦",
+  "TT_COUNTRY_CONSISTENCY_REVIEW": "PASS",
+  "isolation_rules": {
+    "us_nyc_skyline_visual_language": true,
+    "no_other_country_landmarks": true
+  }
+}

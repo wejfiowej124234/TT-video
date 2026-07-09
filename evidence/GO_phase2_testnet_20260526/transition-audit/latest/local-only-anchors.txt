@@ -1,0 +1,45 @@
+D:/TravelTrust-V1.1/crates/api/src/routes/onboarding/local_dev.rs:1://! ① 本地开发：模拟准入费 **paid**（须 **`TRAVELTRUST_ONBOARDING_LOCAL_DEV=1`** + **PG**）。
+D:/TravelTrust-V1.1/crates/api/src/routes/onboarding/local_dev.rs:67:    };    let pool = match state.chain_off.as_ref().and_then(|c| c.db_pool.as_ref()) {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:10:use crate::chain_off;
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:19:    Json(body): Json<chain_off::AuthRegisterBody>,
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:21:    if let Some(ref co) = state.chain_off {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:22:        return match chain_off::auth_register(co.clone(), Some(&headers), Json(body)).await {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:32:    Json(body): Json<chain_off::AuthRegisterSendVerificationCodeBody>,
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:34:    if let Some(ref co) = state.chain_off {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:35:        return match chain_off::auth_register_send_verification_code(co.clone(), Json(body)).await
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:50:/// POST /auth/seed-test-accounts：仅当 SEED_TEST_ACCOUNTS=1 时补建测试账号
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:55:    if std::env::var("SEED_TEST_ACCOUNTS").as_deref() != Ok("1") {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:62:    if let Some(ref co) = state.chain_off {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:63:        chain_off::seed_test_accounts_if_empty(co).await;
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:64:        chain_off::seed_me_settings_security_notification_fixture(co).await;
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:71:            match chain_off::seed_promote_user_to_admin_if_enabled(co, email).await {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:100:        Json(serde_json::json!({"error": "chain_off_unavailable", "message": "chain_off_unavailable"})),
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:105:/// POST /auth/seed-governance-e2e：与 **`seed-test-accounts`** 同源 **`SEED_TEST_ACCOUNTS=1`**；Governor+PG 时 upsert 投影 sentinel，否则重置链下 MVP 治理提案内存（**C-GOV-004** E2E）。
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:113:/// POST /auth/seed-trust-gate-e2e：Playwright trust-gate 夹具（**`SEED_TEST_ACCOUNTS=1`**）；内存 + PG best-effort 双写。
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:115:    if std::env::var("SEED_TEST_ACCOUNTS").as_deref() != Ok("1") {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:121:                "hint": "set SEED_TEST_ACCOUNTS=1 to enable POST /auth/seed-trust-gate-e2e"
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:126:    let Some(ref co) = state.chain_off else {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:129:            Json(serde_json::json!({"error": "chain_off_unavailable", "message": "chain_off_unavailable"})),
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:133:    let j = chain_off::seed_trust_gate_e2e_fixtures(co).await;
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:142:    Json(body): Json<chain_off::AuthLoginBody>,
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:144:    if let Some(ref co) = state.chain_off {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:145:        return match chain_off::auth_login(co.clone(), Json(body)).await {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:158:    if let Some(ref co) = state.chain_off {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:159:        return match chain_off::auth_logout(co.clone(), headers).await {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:184:    if let Some(ref co) = state.chain_off {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:185:        return match chain_off::auth_refresh(co.clone(), token).await {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:197:    if let Some(ref co) = state.chain_off {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:198:        return match chain_off::auth_verify_email_stub(co.clone(), Json(body)).await {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:210:    if let Some(ref co) = state.chain_off {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:211:        return match chain_off::auth_resend_verification_email(co.clone(), headers).await {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:223:    if let Some(ref co) = state.chain_off {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:224:        return match chain_off::auth_forgot_password_stub(co.clone(), Json(body)).await {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:236:    if let Some(ref co) = state.chain_off {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:237:        return match chain_off::auth_reset_password_stub(co.clone(), Json(body)).await {
+D:/TravelTrust-V1.1/crates/api/src/routes/auth.rs:252:        .route("/auth/seed-test-accounts", post(auth_seed_test_accounts))
+D:/TravelTrust-V1.1/crates/api/src/main.rs:5://! 路由：核心业务路由已在 routes/* + chain_off/* 落地；少量降级分支在业务层不可用时返回 not_implemented，需按 04 §三 与 01 §10 持续校准。
+D:/TravelTrust-V1.1/crates/api/src/main.rs:17:mod chain_off;
+D:/TravelTrust-V1.1/crates/api/src/main.rs:46:    // 加载 .env：先当前目录，再项目根（crates/api 的上级两级 = 仓库根），使 SEED_TEST_ACCOUNTS、DATABASE_URL 等生效
+D:/TravelTrust-V1.1/crates/api/src/main.rs:59:        && std::env::var("SEED_TEST_ACCOUNTS").as_deref() != Ok("1")
+D:/TravelTrust-V1.1/crates/api/src/main.rs:61:        std::env::set_var("SEED_TEST_ACCOUNTS", "1");
+D:/TravelTrust-V1.1/crates/api/src/main.rs:64:    if std::env::var("SEED_TEST_ACCOUNTS").as_deref() == Ok("1") {

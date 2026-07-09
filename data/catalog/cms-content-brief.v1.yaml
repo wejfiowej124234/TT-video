@@ -1,0 +1,139 @@
+# CMS Content L5 · Content Brief（Priority B · 运营内容 SSOT）
+# 与 OCS content-brief 同等级 · 不同职责
+# Runbook: docs/runbook/TT-CMS-CONTENT-L5.md
+
+schema: traveltrust.cms_content_brief.v1
+version: 1
+effective_utc: "2026-07-05"
+machine_key: TT_CMS_CONTENT_L5_CONTENT_BRIEF
+status: ACTIVE
+phase: BASELINE_ESTABLISHED
+
+replacement_policy: >-
+  变更须 Manifest-First 等价纪律：先更新本 Brief 与对应 Asset Matrix 行 →
+  Admin Publish（catalog_content_revisions 必填）→ Verify → Evidence；
+  禁止绕过 Matrix 直接改生产读面。变更类型见 TT-CMS-CHANGE-POLICY（Fix / Refresh / Structural Change）。
+
+global_rules:
+  parity_with_ocs_l5: >-
+    图片质量、品牌一致性、国家真实性、多样性、WCAG 与 OCS Content L5 同级；
+    不共用 OCS Manifest 或 ocs-*.jpg 文件名。
+  no_production_external_urls: >-
+    Production Runtime 禁止长期依赖 Unsplash/Pexels 等第三方 URL；
+    Dev/Demo 允许 ts_fallback（Expected Difference）。
+  revision_required: true
+  publish_path: CMS_ADMIN_PUBLISH
+  media_binary_owner: MEDIA_PLATFORM_PRIORITY_D
+  brand_visual:
+    palette: 暖色旅行纪实 · TravelTrust L5 深壳协调
+    avoid: [纯色素块, stock watermark, oversaturated HDR, 灰雾低对比]
+    prefer: [natural light, recognizable subject, crop-safe center]
+  technical_defaults:
+    min_width_px: 640
+    min_height_px: 480
+    min_bytes: 16384
+    formats: [JPEG, WebP]
+  wcag_visual:
+    contrast_subject: 主体与背景可区分
+    no_text_in_image: 禁止图片内大段文字或水印
+
+asset_families:
+  destination_ambient:
+    product_name: Destination Ambient
+    catalog_asset_kind_legacy: landing_ambient
+    admin_route_legacy: /admin/content/landing-ambient
+    matrix_ssot: data/catalog/destination-ambient-matrix.v1.yaml
+    hero_matrix_ssot: data/catalog/destination-ambient-hero-matrix.v1.yaml
+    description: >-
+      按国家/地区的氛围背景图；首 consumer 为 Home Ken Burns；
+      未来复用于 Discover / Travel / Market / Escrow / Guide Detail。
+    closure_dimensions:
+      pipeline:
+        status: CLOSED
+        phase: "② Staging"
+        meaning: CMS→Catalog→Publish→Runtime→Browser→Evidence 接线已完成
+      visual_l5:
+        status: OPEN
+        phase: "② Hero Upgrade"
+        meaning: 全屏 Hero 像素/构图/Decode · 须 da-hero-* 3840×2160 · 禁止 OCS 640 upscale
+    ocs_card_vs_hero:
+      ocs_card: "640×480 · OCS/Listing/Feed/Guide · 不得作 Landing Ken Burns"
+      destination_ambient_hero: "3840×2160 推荐 · 1920×1080 最低 · 独立文件名 da-hero-{iso}-home-vN.jpg"
+    technical:
+      min_width_px: 1920
+      min_height_px: 1080
+      hero_recommended: 3840x2160
+      aspect_ratio: "16:9"
+      min_bytes: 16384
+      decode_verify_required: true
+    hero_verify_tiers:
+      PASS: { min_width_px: 3840, min_height_px: 2160 }
+      WARN: { min_width_px: 1920, min_height_px: 1080 }
+      FAIL: { note: "<1920 宽或 <1080 高或未 Decode · 含 OCS 640 卡片" }
+    surfaces_planned: [home, discover, travel, market, escrow, guide_detail]
+    matrix_phase: ACTIVE
+    hero_upgrade_phase: ACTIVE
+
+  poi_hero:
+    product_name: POI Hero
+    catalog_asset_kind_legacy: poi_hero
+    matrix_ssot: data/catalog/poi-hero-matrix.v1.yaml
+    matrix_phase: SCOPE_LOCKED
+    ops_hierarchy: [asset_family, country, city, asset]
+
+  hotel_stock:
+    product_name: Hotel Stock
+    catalog_asset_kind_legacy: hotel_tier_stock
+    matrix_phase: PLANNED
+
+  transport_stock:
+    product_name: Transport Stock
+    catalog_asset_kind_legacy: transport_stock
+    matrix_phase: PLANNED
+
+  marketing_image:
+    product_name: Marketing Image
+    matrix_phase: PLANNED
+
+asset_lifecycle:
+  description: 每张 CMS Asset 的完整生命周期（运营/设计/开发统一口径）
+  enum: [draft, review, approved, published, live, archived]
+  transitions:
+    draft: Designer Upload 完成 · Matrix 登记
+    review: CMS Review 队列
+    approved: 人工/Design L5 通过 · 待 Publish
+    published: Catalog Publish · catalog_content_revisions 写入
+    live: Verify PASS · 消费者 catalog_api / CDN
+    archived: 被新版本取代或下线 · rollback 保留历史 revision
+  machine_key_field: asset_lifecycle
+
+asset_version:
+  description: Catalog Revision 天然版本 · 禁止仅文件名 JP_HOME.jpg
+  fields:
+    revision_number: catalog_countries.version · catalog_content_revisions.version
+    revision_label: "v{N} 人类可读标签 · 例 v1 v2 v3"
+    published_by: actor_id · Admin 用户
+    published_at_utc: ISO8601
+    rollback_target_revision: "上一 live revision_number · 一键回滚目标"
+  rollback_policy: >-
+    运营换图后若需回退：Admin 或 runbook 步骤将 payload.landing_ambient 恢复为
+    rollback_target_revision 对应 before_json · 须在 1 分钟内可执行（Staging 演练）
+  catalog_table: catalog_content_revisions
+  catalog_actions: [update_landing_ambient, publish, archive]
+
+matrix_row_status_enum: [pending, pass, fail]
+
+consumer_source_enum: [ts_fallback, catalog_api, media_platform_cdn]
+
+phase_1_fixed_workflow:
+  - destination_ambient_brief
+  - asset_matrix
+  - designer_upload
+  - cms_review
+  - catalog_publish
+  - verify
+  - evidence
+  - matrix_pass
+  forbidden: upload_direct_to_live
+
+phase_1_country_order: [JP, KR, TH, SG, FR, US, AU, ES, AE, CN]

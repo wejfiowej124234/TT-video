@@ -16,10 +16,10 @@ function readGovernanceParamsModuleSources(): string {
     readFileSync(join(__dir, "GovernanceParamsGlobalTreasuryUsageSection.tsx"), "utf8"),
     readFileSync(join(__dir, "GovernanceParamsTreasuryPolicySection.tsx"), "utf8"),
     readFileSync(join(__dir, "GovernanceParamsGovFreezeRulesSection.tsx"), "utf8"),
-    readFileSync(join(__dir, "GovernanceParamsTtgSupplyStructureSection.tsx"), "utf8"),
-    readFileSync(join(__dir, "GovernanceParamsProfitFlowVisual.tsx"), "utf8"),
+    readFileSync(join(__dir, "GovernanceParamsTtgAllocationUnifiedSection.tsx"), "utf8"),
+    readFileSync(join(__dir, "GovernanceParamsPhaseContrastSection.tsx"), "utf8"),
+    readFileSync(join(__dir, "GovernanceParamsTreasuryUsdcCallout.tsx"), "utf8"),
     readFileSync(join(__dir, "GovernanceParamsTechnicalAppendixSection.tsx"), "utf8"),
-    readFileSync(join(__dir, "GovernanceParamsTtgBeyondCountriesSection.tsx"), "utf8"),
     readFileSync(join(__dir, "GovernanceParamsStewardContextPanel.tsx"), "utf8"),
     readFileSync(join(__dir, "GovernanceParamsCountriesTableLegend.tsx"), "utf8"),
     readFileSync(join(__dir, "GovernanceParamsPhase1CountriesTables.tsx"), "utf8"),
@@ -27,6 +27,9 @@ function readGovernanceParamsModuleSources(): string {
     readFileSync(join(__dir, "GovernanceParamsParticipatePanel.tsx"), "utf8"),
     readFileSync(join(__dir, "GovernanceParamsQueryProvider.tsx"), "utf8"),
     readFileSync(join(__dir, "GovernanceParamsStewardBackLink.tsx"), "utf8"),
+    readFileSync(join(__dir, "GovernanceParamsFundRailsSummary.tsx"), "utf8"),
+    readFileSync(join(__dir, "GovernanceParamsSectionBlock.tsx"), "utf8"),
+    readFileSync(join(__dir, "GovernanceParamsL5ReadonlyTable.tsx"), "utf8"),
     readFileSync(join(__dir, "useGovernanceParamsPage.ts"), "utf8"),
     readFileSync(join(__dir, "governanceParamsPageModel.ts"), "utf8"),
     readFileSync(join(__dir, "GovernanceParamsPageFooterNav.tsx"), "utf8"),
@@ -55,6 +58,13 @@ describe("governance params page (C-GOV-011 · 84 doc mirror read-only L5)", () 
     expect(src).toContain("fetchJsonWithApiStatusLog");
     expect(src).toContain("protocolReferenceHasSubstance");
     expect(src).toContain("buildFeeMetricDiffRows");
+    expect(src).toContain("resolveGovernanceParamsProtocolData");
+    expect(readFileSync(join(__dir, "useGovernanceParamsPage.ts"), "utf8")).not.toContain(
+      "throw new Error(String(cur.res.status))",
+    );
+    expect(readFileSync(join(__dir, "useGovernanceParamsPage.ts"), "utf8")).not.toContain(
+      "throw new Error(String(pen.res.status))",
+    );
   });
 
   it("uses homepage-aligned warm cinematic shell (同源 / + /orders)", () => {
@@ -94,7 +104,7 @@ describe("governance params page (C-GOV-011 · 84 doc mirror read-only L5)", () 
     const split = readFileSync(join(__dir, "GovernanceParamsPhase1CountriesTables.tsx"), "utf8");
     expect(split).toContain("resolvePhase1CountryProtocolStake");
     expect(split).not.toContain("governance_params_col_cap_wan");
-    expect(split).not.toContain("national_pool_cap_fee_points");
+    expect(split).toContain("national_pool_cap_fee_points");
     expect(split).toContain("data-tt-governance-params-phase1-split-tables");
     expect(readFileSync(join(__dir, "GovernanceParamsPageMain.tsx"), "utf8")).toContain(
       "GovernanceParamsPhase1CountriesTables",
@@ -108,15 +118,16 @@ describe("governance params page (C-GOV-011 · 84 doc mirror read-only L5)", () 
     expect(src).toContain('id="gov-params-global-treasury"');
     expect(src).toContain("GovernanceParamsTreasuryPolicySection");
     expect(src).toContain('id="gov-params-treasury-policy"');
-    expect(src).toContain("governance_params_treasury_policy_lead");
+    expect(src).toContain("governance_params_treasury_policy_lead_short_v2");
     expect(src).toContain("GovernanceParamsGovFreezeRulesSection");
     expect(src).toContain('id="gov-params-tokenomics-freeze"');
-    expect(src).toContain("governance_params_tokenomics_freeze_section_title");
-    expect(src).toContain("GovernanceParamsTtgSupplyStructureSection");
+    expect(src).toContain("governance_params_governance_rules_title");
+    expect(src).toContain("GovernanceParamsTtgAllocationUnifiedSection");
     expect(src).toContain('id="gov-params-ttg-supply"');
-    expect(src).toContain("GovernanceParamsTtgBeyondCountriesSection");
-    expect(src).toContain('id="gov-params-ttg-global-usage"');
-    expect(src).toContain("governance_params_ttg_global_usage_section_title");
+    expect(src).toContain("governance_params_ttg_supply_unified_title");
+    expect(src).toContain("GovernanceParamsPhaseContrastSection");
+    expect(src).toContain("governance_params_treasury_usdc_callout_title");
+    expect(src).not.toContain("GovernanceParamsTtgBeyondCountriesSection");
     expect(src).toContain("GovernanceParamsTechnicalAppendixSection");
     expect(readFileSync(join(__dir, "GovernanceParamsOverviewSection.tsx"), "utf8")).not.toContain(
       "GovernanceParamsProfitFlowVisual",
@@ -146,6 +157,8 @@ describe("governance params page (C-GOV-011 · 84 doc mirror read-only L5)", () 
     expect(src).not.toContain("governance_params_fee_split_kicker");
     expect(src).toContain('data-tt-governance-params-fee-split-track="d4555-a"');
     expect(src).toContain("applyGovernanceFundraiseTargetToRows");
+    expect(src).toContain("governanceParamsProtocolReferenceMirror");
+    expect(src).toContain("data-tt-governance-params-mirror-fallback");
     expect(readFileSync(join(__dir, "GovernanceParamsPhase1IndependentParamsDetails.tsx"), "utf8")).not.toContain(
       "data-tt-governance-params-phase1-formulas",
     );

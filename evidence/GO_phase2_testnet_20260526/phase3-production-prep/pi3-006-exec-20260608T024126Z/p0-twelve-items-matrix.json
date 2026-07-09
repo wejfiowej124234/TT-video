@@ -1,0 +1,93 @@
+{
+  "kind": "traveltrust.pi3_006_p0_twelve_items_matrix.v1",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "items_total": 12,
+  "items_closed": 0,
+  "items": [
+    {
+      "p0_number": 1,
+      "go_live_anchor": "11.1",
+      "summary": "08-4 \u7b7e\u5b57/\u5b9a\u7a3f\u65e5\u671f",
+      "status": "OPEN",
+      "evidence_path_hint": "go-live \u00a711.1 \u00b7 \u5b98\u65b9\u603b\u8868 P0 #1"
+    },
+    {
+      "p0_number": 2,
+      "go_live_anchor": "11.2",
+      "summary": "08-2 Owner + backup",
+      "status": "OPEN",
+      "evidence_path_hint": "go-live \u00a711.2 \u00b7 \u5b98\u65b9\u603b\u8868 P0 #2"
+    },
+    {
+      "p0_number": 3,
+      "go_live_anchor": "11.3",
+      "summary": "08-2 \u5ba1\u67e5\u4e00",
+      "status": "OPEN",
+      "evidence_path_hint": "go-live \u00a711.3 \u00b7 \u5b98\u65b9\u603b\u8868 P0 #3"
+    },
+    {
+      "p0_number": 4,
+      "go_live_anchor": "11.4",
+      "summary": "08-2 \u5ba1\u67e5\u4e8c / Gate \u77e9\u9635",
+      "status": "OPEN",
+      "evidence_path_hint": "go-live \u00a711.4 \u00b7 \u5b98\u65b9\u603b\u8868 P0 #4"
+    },
+    {
+      "p0_number": 5,
+      "go_live_anchor": "11.5",
+      "summary": "08-4 \u5b9a\u7a3f\u68c0\u67e5\u52fe\u9009",
+      "status": "OPEN",
+      "evidence_path_hint": "go-live \u00a711.5 \u00b7 \u5b98\u65b9\u603b\u8868 P0 #5"
+    },
+    {
+      "p0_number": 6,
+      "go_live_anchor": "11.6",
+      "summary": "Runbook P0 \u4e5d\u9879\u3001\u503c\u73ed\u94fe",
+      "status": "OPEN",
+      "evidence_path_hint": "go-live \u00a711.6 \u00b7 \u5b98\u65b9\u603b\u8868 P0 #6"
+    },
+    {
+      "p0_number": 7,
+      "go_live_anchor": "11.7",
+      "summary": "evidence / 08-2 Evidence",
+      "status": "OPEN",
+      "evidence_path_hint": "go-live \u00a711.7 \u00b7 \u5b98\u65b9\u603b\u8868 P0 #7"
+    },
+    {
+      "p0_number": 8,
+      "go_live_anchor": "11.8",
+      "summary": "00 \u5feb\u901f\u6838\u5bf9 7 \u9879",
+      "status": "OPEN",
+      "evidence_path_hint": "go-live \u00a711.8 \u00b7 \u5b98\u65b9\u603b\u8868 P0 #8"
+    },
+    {
+      "p0_number": 9,
+      "go_live_anchor": "11.9",
+      "summary": "P26 \u53ef\u8c03\u901a",
+      "status": "OPEN",
+      "evidence_path_hint": "go-live \u00a711.9 \u00b7 \u5b98\u65b9\u603b\u8868 P0 #9"
+    },
+    {
+      "p0_number": 10,
+      "go_live_anchor": "11.10",
+      "summary": "E2E \u4e09\u9879\u7559\u75d5",
+      "status": "OPEN",
+      "evidence_path_hint": "go-live \u00a711.10 \u00b7 \u5b98\u65b9\u603b\u8868 P0 #10"
+    },
+    {
+      "p0_number": 11,
+      "go_live_anchor": "11.11",
+      "summary": "\u8d44\u635f runbook \u6f14\u7ec3",
+      "status": "OPEN",
+      "evidence_path_hint": "go-live \u00a711.11 \u00b7 \u5b98\u65b9\u603b\u8868 P0 #11"
+    },
+    {
+      "p0_number": 12,
+      "go_live_anchor": "11.12",
+      "summary": "02 \u00a7\u5341\u4e09 \u53d1\u7248\u524d\u52fe\u9009",
+      "status": "OPEN",
+      "evidence_path_hint": "go-live \u00a711.12 \u00b7 \u5b98\u65b9\u603b\u8868 P0 #12"
+    }
+  ],
+  "closure_verdict": "HOLD"
+}

@@ -1,0 +1,23 @@
+{
+  "program_id": "ROV-01",
+  "wave": 0,
+  "phase": "②",
+  "started_at": "2026-06-08T00:00:00Z",
+  "tracks": {
+    "ROV-T1": { "status": "NOT_STARTED", "evidence_dir": "tracks/ROV-T1" },
+    "ROV-T2": { "status": "NOT_STARTED", "evidence_dir": "tracks/ROV-T2" },
+    "ROV-T3": { "status": "NOT_STARTED", "evidence_dir": "tracks/ROV-T3" },
+    "ROV-T4": { "status": "NOT_STARTED", "evidence_dir": "tracks/ROV-T4" },
+    "ROV-T5": { "status": "NOT_STARTED", "evidence_dir": "tracks/ROV-T5" },
+    "ROV-T6": { "status": "NOT_STARTED", "evidence_dir": "tracks/ROV-T6" },
+    "ROV-T7": { "status": "NOT_STARTED", "evidence_dir": "tracks/ROV-T7" }
+  },
+  "metrics_snapshot": {
+    "registrations_non_seed": null,
+    "wau": null,
+    "referral_click_to_register_pct": null,
+    "d7_retention_pct": null,
+    "ops_cost_usd": null
+  },
+  "report_ssot": "docs/handbook/engineering/174-Real-Operations-Validation-Report.md"
+}

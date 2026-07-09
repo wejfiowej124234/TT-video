@@ -1,0 +1,194 @@
+{
+  "response": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "items": [
+        {
+          "id": "a0c548d5-63d2-4cfa-a865-651d200f4861",
+          "order_id": "a0c548d5-63d2-4cfa-a865-651d200f4861",
+          "tourist_id": "288fc7ef-a4e4-4888-916b-d14eec70e13d",
+          "traveler_id": "288fc7ef-a4e4-4888-916b-d14eec70e13d",
+          "guide_id": "00000000-0000-0000-0000-000000000000",
+          "amount": "1830.00",
+          "currency": "USD",
+          "status": "draft",
+          "state": "draft",
+          "sub_status": null,
+          "destination": "中国",
+          "city": "杭州",
+          "country": "中国",
+          "days": 5,
+          "travel_date": "",
+          "version": 1,
+          "image": "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=400&q=80",
+          "escrow_address": null,
+          "breakdown": {
+            "guideFee": 750.0,
+            "carFee": 700.0,
+            "hotel": 133.0,
+            "food": 95.0,
+            "tickets": 57.0,
+            "misc": 19.0
+          },
+          "itinerary": {
+            "version": 1,
+            "snapshot_hash": null,
+            "daily_itinerary": [
+              {
+                "day_index": 1,
+                "content_text": "第1天：杭州；景区：西湖；美食：；酒店：西湖国宾馆",
+                "content_images": [],
+                "date": null,
+                "city": "杭州",
+                "description": null,
+                "images": null,
+                "attractions": [
+                  {
+                    "name": "西湖",
+                    "image": "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=400&q=80"
+                  }
+                ],
+                "dining": null,
+                "city_transport": null,
+                "inter_city_transport": null,
+                "hotel": {
+                  "name": "西湖国宾馆",
+                  "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400&q=80"
+                },
+                "price_note": null,
+                "notes": null
+              },
+              {
+                "day_index": 2,
+                "content_text": "第2天：杭州；景区：灵隐寺；美食：西湖醋鱼；酒店：西湖国宾馆",
+                "content_images": [],
+                "date": null,
+                "city": "杭州",
+                "description": null,
+                "images": null,
+                "attractions": [
+                  {
+                    "name": "灵隐寺",
+                    "image": "https://images.unsplash.com/photo-1548013146-72479768bada?w=400&q=80"
+                  }
+                ],
+                "dining": [
+                  {
+                    "name": "西湖醋鱼",
+                    "image": "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&q=80"
+                  }
+                ],
+                "city_transport": null,
+                "inter_city_transport": null,
+                "hotel": {
+                  "name": "西湖国宾馆",
+                  "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400&q=80"
+                },
+                "price_note": null,
+                "notes": null
+              },
+              {
+                "day_index": 3,
+                "content_text": "第3天：上海；景区：外滩；美食：生煎；酒店：外滩景观酒店",
+                "content_images": [],
+                "date": null,
+                "city": "上海",
+                "description": null,
+                "images": null,
+                "attractions": [
+                  {
+                    "name": "外滩",
+                    "image": "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=400&q=80"
+                  }
+                ],
+                "dining": [
+                  {
+                    "name": "生煎",
+                    "image": "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&q=80"
+                  }
+                ],
+                "city_transport": null,
+                "inter_city_transport": null,
+                "hotel": {
+                  "name": "外滩景观酒店",
+                  "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400&q=80"
+                },
+                "price_note": null,
+                "notes": null
+              },
+              {
+                "day_index": 4,
+                "content_text": "第4天：上海；景区：东方明珠；美食：生煎；酒店：外滩景观酒店",
+                "content_images": [],
+                "date": null,
+                "city": "上海",
+                "description": null,
+                "images": null,
+                "attractions": [
+                  {
+                    "name": "东方明珠",
+                    "image": "https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=400&q=80"
+                  }
+                ],
+                "dining": [
+                  {
+                    "name": "生煎",
+                    "image": "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&q=80"
+                  }
+                ],
+                "city_transport": null,
+                "inter_city_transport": null,
+                "hotel": {
+                  "name": "外滩景观酒店",
+                  "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400&q=80"
+                },
+                "price_note": null,
+                "notes": null
+              },
+              {
+                "day_index": 5,
+                "content_text": "第5天：西安；景区：兵马俑；美食：肉夹馍；酒店：钟楼附近酒店",
+                "content_images": [],
+                "date": null,
+                "city": "西安",
+                "description": null,
+                "images": null,
+                "attractions": [
+                  {
+                    "name": "兵马俑",
+                    "image": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400&q=80"
+                  }
+                ],
+                "dining": [
+                  {
+                    "name": "肉夹馍",
+                    "image": "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&q=80"
+                  }
+                ],
+                "city_transport": null,
+                "inter_city_transport": null,
+                "hotel": {
+                  "name": "钟楼附近酒店",
+                  "image": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=400&q=80"
+                },
+                "price_note": null,
+                "notes": null
+              }
+            ],
+            "amount_breakdown": {
+              "hotel": 133.0,
+              "catering": 95.0,
+              "tickets": 57.0,
+              "guide_fee": 750.0,
+              "vehicle": 700.0,
+              "platform_fee": 19.0,
+              "total_budget": 1830.0
+            }
+          },
+          "chain_id": 11155111
+        }
+      ]
+    }
+  }
+}

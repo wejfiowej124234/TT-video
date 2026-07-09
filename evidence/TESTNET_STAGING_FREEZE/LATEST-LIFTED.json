@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust.testnet_staging_freeze.v1",
+  "frozen_at": "2026-06-08T10:05:11Z",
+  "stamp": "20260608T100511Z",
+  "git_sha": "bc5a939cd89c624be7c128b551306da177bf6016",
+  "reason": "P2FC-S01 staging-soak 72h",
+  "policy": "no_redeploy_no_restart_no_migrations_no_config_changes",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "override_env": "TESTNET_FREEZE_OVERRIDE=1",
+  "lifted_at_utc": "2026-06-17T01:13:57Z",
+  "lifted_for": "phase2_sha_hard_match_deploy",
+  "lifted_git_sha": "6c22eb56d34fdf68336afbaf55994daba0d84d5a"
+}

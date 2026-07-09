@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.enterprise_phase12_evidence_audit.v1",
+  "stamp_utc": "20260630T102500Z",
+  "verdict": {
+    "phase1_local": "COMPLETE",
+    "phase2_testnet": "CLOSED",
+    "runtime_baseline_frozen": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+    "runtime_consistency": "ARCHIVED",
+    "live_staging_matches_baseline": true,
+    "p0_evidence_gaps": 0,
+    "production_go": "NO"
+  },
+  "machine_keys": {
+    "TT_ENTERPRISE_PHASE12_EVIDENCE_AUDIT": "COMPLETE",
+    "TT_PHASE1_LOCAL": "COMPLETE",
+    "TT_PHASE2_CLOSED": "YES"
+  }
+}

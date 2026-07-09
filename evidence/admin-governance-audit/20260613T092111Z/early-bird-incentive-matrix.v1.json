@@ -1,0 +1,11 @@
+{
+  "schema": "traveltrust.early_bird_incentive_matrix.v1",
+  "routes": [
+    "/admin/growth/airdrop-campaigns",
+    "/admin/growth/early-bird",
+    "/admin/growth/kol-center",
+    "/admin/growth/referral-codes",
+    "/admin/growth/reward-ledger"
+  ],
+  "api": "/api/v1/admin/growth/early-bird/stages"
+}

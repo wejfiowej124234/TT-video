@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T13:14:41Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "东京",
+    "city_en": "Tokyo",
+    "matrix_ids": [
+      "PH-JP-010-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-JP-010-ATR",
+      "legacy_value": "东京塔",
+      "poi_id": "0799bb32-7f2d-4f27-b936-ef8d7ec06621",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-community-media.jpg",
+      "hero_file": "ocs-tokyo-photo-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-010-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

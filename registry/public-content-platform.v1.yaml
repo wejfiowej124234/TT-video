@@ -1,0 +1,997 @@
+# TravelTrust · Public Content Platform (PCP) · North Star SSOT
+# Human: docs/runbook/TT-PUBLIC-CONTENT-PLATFORM.md
+# Status: LONG_TERM_OPTIMAL · Phase 0 documentation + incremental wiring
+# Does NOT replace DDG/OCS/SOPCP — subsumes them under one platform governance model.
+
+schema: traveltrust.public_content_platform.v1
+version: 2
+effective_utc: "2026-07-04"
+updated_utc: "2026-07-04T07:31:00Z"
+established_utc: "2026-07-04"
+establishment_scope: architecture_abstraction_and_ssot_alignment_only
+
+machine_keys:
+  TT_PUBLIC_CONTENT_PLATFORM: ESTABLISHED
+  TT_PCP_RUNBOOK: docs/runbook/TT-PUBLIC-CONTENT-PLATFORM.md
+  TT_PCP_GOVERNANCE_CORE: ENFORCED
+  TT_PCP_CANONICAL_DOMAIN_GOVERNANCE_PHRASING: ENFORCED
+  TT_PCP_STANDARD_PIPELINE: ENFORCED
+  TT_PCP_PRINCIPLE_DATABASE_NOT_PUBLIC: FROZEN
+  TT_PCP_PRINCIPLE_MODERATION_NOT_OPS: FROZEN
+  TT_PCP_PRINCIPLE_GOVERNED_VIEWS_ONLY: FROZEN
+  TT_PCP_ARCHITECTURE_PRINCIPLE: OWN_CAPABILITY_NOT_DUPLICATE
+  TT_PCP_CLOSED_GATES_POLICY: CLOSED_UNLESS_TOUCHED_NO_REOPEN
+  TT_PCP_ARCHITECTURE_FREEZE: ENFORCED
+  TT_PCP_PHASE_0_5: COMPLETE
+  TT_PCP_PHASE_1: COMPLETE
+  TT_PCP_PHASE_1_BATCH_1: COMPLETE
+  TT_PCP_PHASE_1_BATCH_2: COMPLETE
+  TT_PCP_PHASE_1_FINAL_SIGNOFF: COMPLETE
+  TT_PCP_PHASE_1_FREEZE: COMPLETE
+  TT_PCP_PHASE_2: NOT_STARTED
+  TT_PCP_ARCHITECTURE: FROZEN
+  TT_PCP_ARCHITECTURE_CLOSURE: COMPLETE
+  TT_PCP_PLATFORM: CLOSED
+  TT_PCP_PLATFORM_STATUS: docs/runbook/PCP-PLATFORM-STATUS.md
+  TT_PCP_IMPLEMENTATION: COMPLETE
+  TT_PCP_ALIGNMENT: VERIFIED
+  TT_PCP_RUNTIME_STAGING: VERIFIED
+  TT_PCP_RUNTIME_LOCAL: SKIPPED
+  TT_PCP_AUTHENTICITY_PHASE12: VERIFIED
+  TT_PCP_ACTIVE_DEVELOPMENT: false
+  TT_PCP_CHANGE_GATE: docs/runbook/PCP-ARCHITECTURE-REVIEW-GATE.md
+  TT_CURRENT_PROGRAM_MAINLINE: PRODUCTION_READINESS
+  TT_PRODUCTION_READINESS_PROGRAM: ACTIVE
+
+# ── Architecture Constitution (FROZEN · Architecture Freeze) ───────────────
+
+architecture_constitution:
+  P1:
+    id: DATABASE_NEVER_PUBLIC
+    rule: Database is never Public. Storage ≠ display.
+  P2:
+    id: GOVERNED_VIEWS_ONLY
+    rule: All Public APIs consume Governed Views only. Bypassing Governance violates P2.
+  P3:
+    id: MODERATION_GOVERNANCE_INDEPENDENT
+    rule: Moderation (legal/safety) and Governance (editorial/ops) are independent gates.
+  P4:
+    id: GOVERNANCE_OWNS_CAPABILITY
+    rule: Governance owns capability; business modules consume capability — no private forks.
+  P5:
+    id: BUILDER_REQUIRED
+    rule: Every public surface must be built by a Builder plugin on Public Engine.
+
+# ── Capability Matrix (who owns what) ────────────────────────────────────
+
+capability_matrix:
+  columns: [Governance, Engine, Builder, API, Frontend]
+  rows:
+    - capability: DDG
+      governance: owns
+      engine: "—"
+      builder: "—"
+      api: consumes
+      frontend: consumes
+    - capability: OCS
+      governance: owns
+      engine: "—"
+      builder: "—"
+      api: consumes
+      frontend: consumes
+    - capability: SOPCP
+      governance: owns
+      engine: "—"
+      builder: "—"
+      api: consumes
+      frontend: consumes
+    - capability: OCIP
+      governance: owns
+      engine: "—"
+      builder: "—"
+      api: consumes
+      frontend: consumes
+    - capability: Lifecycle
+      governance: owns
+      engine: reads
+      builder: implements
+      api: outputs
+      frontend: displays
+    - capability: Surface
+      governance: owns
+      engine: reads
+      builder: implements
+      api: outputs
+      frontend: displays
+    - capability: Priority
+      governance: owns
+      engine: sorting
+      builder: implements
+      api: outputs
+      frontend: displays
+    - capability: Schedule
+      governance: owns
+      engine: reads
+      builder: implements
+      api: outputs
+      frontend: displays
+    - capability: Content_Tier
+      governance: owns
+      engine: reads
+      builder: implements
+      api: outputs
+      frontend: displays
+    - capability: Recommendation
+      governance: "—"
+      engine: owns
+      builder: implements
+      api: outputs
+      frontend: displays
+    - capability: Moderation
+      governance: adjacent_gate
+      engine: "—"
+      builder: "—"
+      api: precondition
+      frontend: "—"
+
+# ── Builder Contract (interface · ENFORCED) ──────────────────────────────
+
+builder_contract:
+  pattern: Input → Builder → Output
+  input: Governed Public View
+  output: Public DTO
+  engine_rule: Engine framework unchanged when adding Builder plugins
+  implementations:
+    - builder_id: feed_builder
+      domain: community
+      governed_view: governed_community_posts_v1
+      migration: crates/api/migrations/20260704100000_governed_community_posts_v1.sql
+      rust_module: crates/api/src/db/governed_community_posts.rs
+      pcp_module: crates/api/src/pcp/feed_builder.rs
+      public_apis: [GET /api/v1/community/feed]
+      status: phase_0_wired
+    - builder_id: market_builder
+      domain: market
+      reference_implementation: true
+      status: unchanged_phase_0
+    - builder_id: campaign_builder
+      domain: campaign
+      status: partial
+  future: [SearchBuilder, RecommendationBuilder, VideoBuilder, LiveBuilder, AIBuilder]
+
+# ── Layer responsibility boundaries (ENFORCED) ───────────────────────────
+
+layer_responsibilities:
+  database:
+    layer: PostgreSQL
+    owns: [business_entities, multiple_lifecycles, raw_storage]
+    does_not: [public_display_decisions, feed_ranking, surface_assignment]
+  pcp_governance:
+    layer: PCP Governance
+    owns:
+      - display_lifecycle_and_publish_workflow
+      - surface_assignment_and_schedule
+      - priority_and_featured_ops
+      - content_tier_and_data_origin_policy
+      - ddg_leakage_audit_capability
+      - ocs_official_tier_bootstrap
+      - sopcp_surface_catalog_policy
+      - ocip_canonical_identity
+      - audit_log_and_approval_workflow
+      - public_operations_editorial_gate
+    does_not:
+      - feed_ranking_algorithm_implementation
+      - http_route_handlers
+      - frontend_rendering
+      - moderation_legal_verdicts
+    subsumed_modules: [DDG, OCS, SOPCP, OCIP, Public_Operations, Lifecycle, Surface, Priority, Schedule, Tier, Audit]
+  public_engine:
+    layer: Public Engine
+    owns:
+      - governed_view_access
+      - builder_plugin_registry
+      - ranking_hooks_and_cache
+      - cross_builder_shared_framework
+    does_not:
+      - publish_unpublish_policy_decisions
+      - moderation_takedown
+      - direct_unfiltered_business_table_reads
+    pattern: one_framework_many_builders
+  builder:
+    layer: Public Engine Builder
+    owns:
+      - domain_specific_query_composition
+      - surface_payload_shape_for_domain
+      - domain_ranking_mix_in_engine_framework
+    does_not:
+      - duplicate_governance_rules_per_domain
+      - bypass_governed_views
+    plugins: [FeedBuilder, MarketBuilder, CampaignBuilder, SearchBuilder, RecommendationBuilder]
+  public_api:
+    layer: Public API
+    owns:
+      - sole_public_http_exit
+      - auth_rate_limit_pagination
+      - stable_consumer_contracts
+    does_not:
+      - raw_sql_on_business_tables_for_display
+      - governance_write_side_effects
+    rule: reads_only_from_governed_views_or_builder_output
+  frontend:
+    layer: Frontend
+    owns: [ui_rendering, client_state, routing]
+    does_not: [public_catalog_truth, governance_mutations]
+    rule: consumes_public_apis_only
+
+# ── Closed gates — this establishment does NOT reopen ────────────────────
+
+closed_gates_policy:
+  policy: CLOSED_UNLESS_TOUCHED
+  this_establishment_reopens: none
+  this_establishment_mutates: [architecture_docs, ssot_cross_references, repositioning_metadata]
+  gates:
+    - id: DDG
+      machine_key: TT_STAGING_FULL_SITE_DISPLAY_GOVERNANCE
+      status: CLOSED
+      registry: registry/display-data-governance.v1.yaml
+      pcp_relation: governance_sub_capability
+    - id: OCS
+      machine_key: TT_OFFICIAL_COLD_START_DATASET
+      status: CLOSED
+      registry: registry/official-cold-start-dataset.v1.yaml
+      pcp_relation: official_tier_bootstrap
+    - id: SOPCP
+      machine_key: TT_SINGLE_OFFICIAL_PUBLIC_CATALOG_POLICY
+      status: ENFORCED
+      registry: registry/single-official-public-catalog-policy.v1.yaml
+      pcp_relation: surface_catalog_policy
+    - id: OCIP
+      machine_key: TT_OFFICIAL_CATALOG_IDENTITY_POLICY
+      status: ENFORCED
+      registry: registry/official-catalog-identity-policy.v1.yaml
+      pcp_relation: canonical_identity
+    - id: Market_Runtime
+      status: CLOSED
+      evidence: evidence/GO_market_subsite_frontend_race_fix/
+      pcp_relation: market_builder_runtime_not_governance
+    - id: Market_Default_Filter
+      status: CLOSED
+      pcp_relation: market_builder_runtime_not_governance
+    - id: Enterprise_SSOT_Alignment
+      machine_key: TT_ENTERPRISE_SSOT_ALIGNMENT
+      status: PASS
+      registry: registry/enterprise-ssot-alignment.v1.yaml
+      pcp_relation: cross_platform_ssot_audit
+    - id: Public_Operations_MVP
+      machine_key: TT_PUBLIC_DISPLAY_MVP
+      status: MVP_COMPLETE
+      registry: registry/public-operations-mvp.v1.yaml
+      pcp_relation: public_content_center_v0
+
+# ── Legacy module → PCP layer mapping (full) ─────────────────────────────
+
+module_to_pcp_mapping:
+  - module: DDG
+    pcp_layer: PCP Governance
+    pcp_role: Evidence / Leakage Audit capability
+    registry: registry/display-data-governance.v1.yaml
+    runbook: docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md
+    gate_status: CLOSED
+    replaced_by_pcp: false
+    subsumed_under_pcp: true
+  - module: OCS
+    pcp_layer: PCP Governance
+    pcp_role: Official Tier Bootstrap
+    registry: registry/official-cold-start-dataset.v1.yaml
+    runbook: docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md
+    gate_status: CLOSED
+    replaced_by_pcp: false
+    subsumed_under_pcp: true
+  - module: SOPCP
+    pcp_layer: PCP Governance
+    pcp_role: Surface Catalog Policy
+    registry: registry/single-official-public-catalog-policy.v1.yaml
+    gate_status: ENFORCED
+    replaced_by_pcp: false
+    subsumed_under_pcp: true
+  - module: OCIP
+    pcp_layer: PCP Governance
+    pcp_role: Canonical Identity Policy
+    registry: registry/official-catalog-identity-policy.v1.yaml
+    gate_status: ENFORCED
+    replaced_by_pcp: false
+    subsumed_under_pcp: true
+  - module: Public_Operations
+    pcp_layer: PCP Governance
+    pcp_role: Operations Gate · Public Content Center v0
+    registry: registry/public-operations-mvp.v1.yaml
+    runbook: docs/runbook/TT-OFFICIAL-OPS-PUBLIC-OPERATIONS-SSOT.md
+    gate_status: MVP_COMPLETE
+    replaced_by_pcp: false
+    subsumed_under_pcp: true
+  - module: Community_Moderation
+    pcp_layer: Moderation Gate
+    pcp_role: Legal/safety · outside PCP Governance editorial
+    gate_status: operational
+    subsumed_under_pcp: false
+    adjacent_to_pcp: true
+  - module: Market_Runtime
+    pcp_layer: Public Engine · MarketBuilder
+    pcp_role: Frontend/runtime filters · subsite
+    gate_status: CLOSED
+    subsumed_under_pcp: false
+    consumes_pcp_governance: true
+
+# ── Canonical phrasing (use consistently in all docs, reports, and chat) ──
+
+canonical_phrasing:
+  domain_governance: >
+    Market / Community / Campaign 都有数据治理，但不各自维护一套治理实现；
+    它们统一使用 PCP 提供的 Governance 能力。
+  english: >
+    Market, Community, and Campaign all require data governance, but do not each
+    maintain a separate governance implementation; they uniformly consume Governance
+    capabilities provided by PCP.
+
+standard_pipeline: |
+  Database
+    ↓
+  PCP Governance
+    ↓
+  Public Engine Builder
+    ↓
+  Public API
+    ↓
+  Frontend
+
+pcp_governance_composition: >
+  PCP Governance = DDG + OCS + SOPCP + OCIP + Lifecycle + Surface + Priority
+  + Schedule + Tier + Audit (+ Public Operations · Approval Workflow)
+
+public_engine_composition: >
+  Public Engine = one unified framework + multiple Builder plugins.
+  Builders: FeedBuilder · MarketBuilder · CampaignBuilder · SearchBuilder · RecommendationBuilder
+
+long_term_operations_outcome: >
+  One governance rule set · one admin console · one audit trail · one publish/unpublish/
+  rank/schedule mechanism — reused across all business domains. Enterprise long-term optimum.
+
+architecture_principle: >
+  Own the capability, not duplicate the implementation.
+  Use canonical_phrasing.domain_governance in all PCP-related communication.
+
+unified_public_pipeline: |
+  Database → PCP Governance → Public Engine Builder → Public API → Frontend
+
+verdict: >
+  PCP is the optimal long-term enterprise architecture for all TravelTrust public display.
+  Phase ② Market work becomes shared PCP Governance and reference MarketBuilder — not discarded.
+
+one_liner: >
+  Database → PCP Governance → Public Engine Builder → Public API → Frontend.
+  One rule set · one ops console · one audit · one publish/rank/schedule — multi-domain reuse.
+
+# ── Three frozen enterprise principles ───────────────────────────────────
+
+frozen_principles:
+  - id: DATABASE_NOT_PUBLIC_SURFACE
+    rule: PostgreSQL rows are storage, not display. A row with visibility=public does not imply Feed visibility.
+  - id: MODERATION_NOT_PUBLIC_OPERATIONS
+    rule: >
+      Moderation answers legal/safety (Allow?). Public Operations answers editorial/merchandising
+      (Recommend? Surface? Schedule? Rank?). Never conflate visibility_status with display governance.
+  - id: GOVERNED_VIEWS_ONLY
+    rule: >
+      All Public APIs must read Governed Public Views (SQL view, Rust module, or Engine query layer).
+      Direct business-table SELECT in consumer routes is forbidden for new work and phased out for legacy.
+
+# ── Platform stack ───────────────────────────────────────────────────────
+
+stack:
+  storage:
+    layer: PostgreSQL
+    entities:
+      - users
+      - community_posts
+      - guides
+      - market_listings
+      - official_guides
+      - cold_start_campaigns
+      - orders
+    note: Business data · multiple lifecycles may coexist in DB
+
+  governance:
+    layer: Public Content Governance
+    alias: [Governance Core, TravelTrust Governance Core]
+    nature: platform_capabilities
+    capabilities:
+      - id: DDG
+        type: platform_capability
+        registry: registry/display-data-governance.v1.yaml
+        consumed_by: [market, community, campaign, guide, provider, acquisition]
+        rule: >
+          Domains do not maintain private DDG implementations.
+          Market no longer maintains its own DDG — it uses PCP-provided DDG capability.
+      - id: OCS
+        type: platform_capability
+        role: official_tier_bootstrap
+      - id: SOPCP
+        type: platform_capability
+        role: surface_catalog_policy
+      - id: OCIP
+        type: platform_capability
+        role: canonical_identity_policy
+      - id: lifecycle
+      - id: surface
+      - id: priority
+      - id: schedule
+      - id: content_tier
+      - id: public_operations
+      - id: audit
+      - id: approval_workflow
+    fields:
+      - lifecycle
+      - publish_workflow
+      - display_status
+      - display_surfaces
+      - display_priority
+      - featured
+      - schedule
+      - content_tier
+      - data_origin
+      - region
+      - language
+      - feature_flag
+      - audit_log
+      - approval_workflow
+    gates:
+      moderation_gate:
+        domain: legal_safety
+        outputs: [visibility_status, penalties, appeals]
+        admin: Moderation Center
+        registry_refs:
+          - registry/admin-rbac-route-matrix.v1.yaml
+        does_not_set: [display_status, display_surfaces, display_priority]
+      operations_gate:
+        domain: editorial_merchandising
+        outputs: [lifecycle, display_status, surfaces, priority, schedule, featured]
+        admin: Public Content Center
+        registry_refs:
+          - registry/public-operations-mvp.v1.yaml
+          - registry/traveltrust-operations-workflow.v1.yaml
+        does_not_set: [visibility_status]
+
+  engine:
+    layer: Public Content Engine
+    alias: [PCE, Public Engine]
+    pattern: one_engine_many_builders
+    rule: >
+      Engine is the unified framework (ranking, cache, governed view access, plugin registry).
+      Builders are business plugins. New modules (Video, Live, AI) add Builders — Governance unchanged.
+    framework_responsibilities: [governed_view_access, ranking_hooks, cache, builder_registry]
+    builders:
+      - id: feed_builder
+        plugin: true
+        domain: community
+        output: community_feed_api
+        consumer_routes: [/api/v1/community/feed]
+        frontend: [/community]
+        status: wiring_in_progress
+        pipeline: Database → PCP Governance → FeedBuilder → Public API
+      - id: market_builder
+        plugin: true
+        domain: market
+        output: market_public_apis
+        includes: [guides, discover_orders, provider_listings, acquisition_listings]
+        consumer_routes: [/api/v1/discover/orders, /api/v1/guides, /market/provider/listings, /market/acquisition/listings]
+        frontend: [/market, /market/provider, /market/acquisition]
+        status: reference_implementation
+        pipeline: Database → PCP Governance → MarketBuilder → Public API
+        note: Market Runtime (filters, subsite) is MarketBuilder frontend/runtime — not separate governance
+      - id: campaign_builder
+        plugin: true
+        domain: campaign
+        consumer_routes: [/api/v1/official/cold-start/surfaces/:surface]
+        status: partial
+        pipeline: Database → PCP Governance → CampaignBuilder → Public API
+      - id: search_builder
+        plugin: true
+        status: deferred_post_go
+      - id: recommendation_builder
+        plugin: true
+        status: deferred_post_go
+    future_builders:
+      - video_builder
+      - live_builder
+      - ai_builder
+      note: Add Builder plugins only — do not fork Governance per module
+
+  public_apis:
+    layer: Public APIs
+    rule: sole_public_exit
+    examples:
+      - /api/v1/community/feed
+      - /api/v1/guides
+      - /market/provider/listings
+      - /market/acquisition/listings
+      - /api/v1/official/cold-start/surfaces/:surface
+
+  frontend:
+    layer: Frontend
+    rule: consumes_public_apis_only
+
+# ── Moderation → Governance → Engine pipeline (frozen) ───────────────────
+
+pipeline:
+  - step: create_or_update
+    actor: [user, admin, orchestrator]
+  - step: moderation_gate
+    question: Is content legally allowed and safe?
+    output: visibility_status
+    values: [public, restricted, removed, ...]
+  - step: operations_gate
+    question: Should ops publish, surface, schedule, and rank this content?
+    output: [lifecycle, display_status, display_surfaces, priority, schedule]
+    precondition: moderation_allows_visible
+  - step: public_engine
+    action: builder_plugin_builds_surface_payload
+    pattern: Governance → Builder → API
+  - step: public_api
+    action: return_governed_payload_only
+  - step: frontend
+
+pipeline_diagram: |
+  Database → PCP Governance → Public Engine Builder → Public API → Frontend
+  Moderation → VISIBLE → Operations → Published → Surface → Builder → API
+
+# ── Legacy module repositioning (subsumed, not replaced) ─────────────────
+
+legacy_repositioning:
+  DDG:
+    pcp_role: Platform Capability — Evidence / Leakage Audit
+    registry: registry/display-data-governance.v1.yaml
+    runbook: docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md
+    provides: [test_data_leakage_scan, public_surface_classification, fe_api_strict]
+    consumed_by: [market, community, campaign, guide, provider, acquisition]
+    discipline: >
+      Market still has data governance requirements; it no longer maintains its own DDG implementation.
+      All domains use PCP-provided DDG capability. Own the capability, not duplicate the implementation.
+    deprecated_wording: Market no longer owns DDG
+    correct_wording: Market uses PCP-provided DDG capability
+  OCS:
+    pcp_role: Official Tier Bootstrap
+    registry: registry/official-cold-start-dataset.v1.yaml
+    runbook: docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md
+    note: >
+      OCS seeds Official Tier cold-start chains for Guide, Provider, Acquisition,
+      Official Guide, Campaign — not a fixed "100 community posts" product model.
+  SOPCP:
+    pcp_role: Surface Catalog Policy
+    registry: registry/single-official-public-catalog-policy.v1.yaml
+    note: Which tiers/origins may appear on which public surfaces
+  OCIP:
+    pcp_role: Canonical Identity Policy
+    registry: registry/official-catalog-identity-policy.v1.yaml
+  Public_Operations:
+    pcp_role: Public Content Center v0
+    registry: registry/public-operations-mvp.v1.yaml
+    runbook: docs/runbook/TT-OFFICIAL-OPS-PUBLIC-OPERATIONS-SSOT.md
+    admin_route_current: /admin/official/public-operations
+    admin_route_target: Public Content Center
+  Community_Moderation:
+    pcp_role: Moderation Gate
+    admin_routes: [/admin/community/reports, /admin/community/moderation]
+  Market_Runtime:
+    pcp_role: MarketBuilder frontend/runtime plugin concern
+    note: Default filter, subsite race — not a separate governance domain or DDG fork
+  Enterprise_SSOT_Alignment:
+    pcp_role: Cross-platform configuration + runtime alignment audit
+    registry: registry/enterprise-ssot-alignment.v1.yaml
+
+# ── Content domains under PCP (not separate governance silos) ────────────
+
+content_domains:
+  - id: community
+    entities: [community_posts, community_comments]
+    builder: feed_builder
+    ddg: uses_pcp_ddg_capability
+    surfaces: [community_feed, community_featured]
+  - id: market
+    entities: [guides, discover_orders]
+    builder: market_builder
+    ddg: uses_pcp_ddg_capability
+    surfaces: [market_hub, market_guides, market_orders]
+  - id: provider
+    entities: [market_listings.provider]
+    builder: market_builder
+    ddg: uses_pcp_ddg_capability
+    surfaces: [market_provider, market_feed]
+  - id: acquisition
+    entities: [market_listings.acquisition]
+    builder: market_builder
+    ddg: uses_pcp_ddg_capability
+    surfaces: [market_acquisition, market_feed]
+  - id: official_guide
+    entities: [official_guides, community_posts_from_official]
+    builder: market_builder
+    ddg: uses_pcp_ddg_capability
+  - id: campaign
+    entities: [cold_start_campaigns, campaign_items]
+    builder: campaign_builder
+    ddg: uses_pcp_ddg_capability
+    surfaces: [homepage, market_feed, community_feed, campaign_banner]
+
+anti_patterns:
+  forbidden:
+    - domain_private_ddg_implementation
+    - database_to_feed_without_governance
+    - duplicate_governance_per_module
+  example_wrong: |
+    Community: Database → Feed (no Governance)
+    Market: Database → DDG → API (Market-owned DDG)
+  example_correct: |
+    All domains: Database → PCP Governance → Public Engine Builder → Public API → Frontend
+
+# ── Content Tier (long-term; replaces "OCS-only community feed" thinking) ─
+
+content_tier:
+  enum: [official, partner, creator, user, test, demo, archived]
+  official_source: OCS_bootstrap
+  feed_policy_example:
+    community_feed:
+      allowed_tiers: [official, partner, creator, user]
+      forbidden_on_staging_prod: [test, demo]
+      test_registry: registry/display-data-governance.v1.yaml
+
+# ── Lifecycle (target; phased post-GO) ───────────────────────────────────
+
+lifecycle_target:
+  states: [draft, review, approved, scheduled, published, featured, expired, archived]
+  current_mvp: display_status_published_hidden
+  workflow_registry: registry/traveltrust-operations-workflow.v1.yaml
+
+# ── Surface registry (extensible) ────────────────────────────────────────
+
+surfaces:
+  - community_feed
+  - community_featured
+  - homepage
+  - home_hero
+  - market_feed
+  - market_provider
+  - market_acquisition
+  - campaign_banner
+  - official_guides
+  - recommendation
+  - search
+
+surface_rule: >
+  published display_status alone does NOT imply all surfaces. Each entity×surface
+  must be explicitly assigned via Governance.
+
+# ── Code evolution (abstract, not rewrite) ───────────────────────────────
+
+code_evolution:
+  today:
+    market: crates/api/src/chain_off/market_public_surface.rs
+    community: crates/api/src/chain_off/community_public_surface.rs
+    public_ops: crates/api/src/db/public_operations_display_admin.rs
+  target:
+    governance_module: governance/public_surface.rs
+    engine_module: engine/public_engine.rs
+    pattern: One Public Engine framework; FeedBuilder / MarketBuilder / CampaignBuilder as plugins calling shared governance
+  discipline: no_copy_paste_governance_per_domain · no_domain_owned_ddg
+
+# ── Landing phases (user ratified) ───────────────────────────────────────
+
+landing_phases:
+  - id: phase_0_establishment
+    label: PCP establishment — architecture + SSOT alignment
+    status: COMPLETE
+    stamp: "2026-07-04"
+    actions:
+      - registry/public-content-platform.v1.yaml v2
+      - docs/runbook/TT-PUBLIC-CONTENT-PLATFORM.md
+      - enterprise-ssot-alignment cross-reference
+      - legacy registry pcp pointers
+    reopen_closed_gates: false
+  - id: phase_0_engineering
+    label: Community FeedBuilder — Governance read path
+    status: COMPLETE
+    stamp: "2026-07-04"
+    actions:
+      - governed_community_posts_v1 SQL view
+      - db/governed_community_posts.rs
+      - pcp/feed_builder.rs
+      - community feed/detail wired to governed view
+      - market_builder unchanged reference
+    reopen_closed_gates: false
+    gates_untouched: [DDG, OCS, SOPCP, OCIP, Market_Runtime]
+  - id: phase_0_5_architecture_validation
+    label: Architecture Validation — governance coverage + builder purity + compliance audit
+    status: COMPLETE
+    stamp: "2026-07-03T17:06:44Z"
+    staging_deploy:
+      app: tt-api-staging
+      image: tt-api-staging:deployment-01KWMEFYZZQKPB641ZSM4X0KNP
+      git_sha: fea685b08156
+      migration: crates/api/migrations/20260704100000_governed_community_posts_v1.sql
+    evidence:
+      validation: evidence/GO_public_content_platform/20260703T170629Z/phase0.5-validation-chain.json
+      full_pipeline_alignment: evidence/GO_public_content_platform/20260703T170644Z/pcp-full-pipeline-alignment.json
+    sign_off:
+      key: TT_PCP_PHASE_0_5
+      value: COMPLETE
+      signed_utc: "2026-07-03T17:06:44Z"
+    priority: highest_before_phase_1
+    validation_sequence:
+      - step: local_architecture_validation
+        script: scripts/dev/audit-pcp-architecture-compliance.cjs
+        gate: TT_PCP_ARCHITECTURE_COMPLIANCE
+      - step: staging_runtime_validation
+        script: scripts/dev/validate-pcp-phase0-5-staging.cjs
+        gate: PCP_PHASE_0_5_RUNTIME
+      - step: evidence
+        path: evidence/GO_public_content_platform/*/phase0.5-validation-chain.json
+      - step: sign_off
+        key: TT_PCP_PHASE_0_5
+        value: COMPLETE
+        only_when: all_checks_pass
+    validates:
+      - publish_unpublish_admin_ops_feed_detail_loop
+      - surface_community_feed_off_on_loop
+      - builder_purity_feed_builder
+      - architecture_compliance_all_public_apis
+    defer_until_pass:
+      - SearchBuilder
+      - RecommendationBuilder
+      - trait PublicBuilder
+    reopen_closed_gates: false
+  - id: phase_1_batch_1_market
+    label: Phase 1 Batch 1 — MarketBuilder + governed_market_* (Market · Provider · Acquisition · Official Guide)
+    status: COMPLETE
+    stamp: "2026-07-03T17:36:27Z"
+    staging_deploy:
+      app: tt-api-staging
+      image: tt-api-staging:deployment-01KWMGEA4MFCH99A7ARTW8FF6B
+      git_sha: fea685b08156
+      migration: crates/api/migrations/20260704110000_governed_market_catalog_v1.sql
+    evidence:
+      market_batch_validation: evidence/GO_public_content_platform/20260703T173627Z/phase1-market-batch-validation-chain.json
+      phase0_5_regression: evidence/GO_public_content_platform/20260703T173630Z/phase0.5-validation-chain.json
+      phase1_full_alignment: evidence/GO_public_content_platform/20260703T174738Z/pcp-phase1-full-alignment.json
+      full_pipeline_alignment: evidence/GO_public_content_platform/20260703T174824Z/pcp-full-pipeline-alignment.json
+    sign_off:
+      key: TT_PCP_PHASE_1_BATCH_1
+      value: COMPLETE
+      signed_utc: "2026-07-03T17:36:27Z"
+    actions:
+      - governed_market_guides_v1_governed_market_listings_v1_governed_discover_orders_v1
+      - db/market_catalog.rs governed read path
+      - pcp/market_builder.rs
+      - guides provider acquisition listings wired to governed views
+      - DDG/OCIP/SOPCP/OCS behavior unchanged in chain_off/market_public_surface.rs
+    validation_sequence:
+      - step: local_architecture_validation
+        script: scripts/dev/audit-pcp-architecture-compliance.cjs
+      - step: market_batch_static_and_staging
+        script: scripts/dev/validate-pcp-phase1-market-batch-staging.cjs
+      - step: community_regression
+        script: scripts/dev/validate-pcp-phase0-5-staging.cjs
+      - step: phase1_alignment_audit
+        script: scripts/dev/audit-pcp-phase1-full-alignment.cjs
+    defer_until_pass: []
+    reopen_closed_gates: false
+  - id: phase_1_batch_2_campaign
+    label: Phase 1 Batch 2 — CampaignBuilder + governed_campaign_* (Campaign)
+    status: COMPLETE
+    stamp: "2026-07-03T23:09:10Z"
+    staging_deploy:
+      app: tt-api-staging
+      image: tt-api-staging:deployment-01KWN3GE35Z29KP6XK8ANCHJ25
+      git_sha: fea685b08156
+      migration: crates/api/migrations/20260704120000_governed_campaign_surfaces_v1.sql
+    evidence:
+      campaign_batch_validation: evidence/GO_public_content_platform/20260703T230939Z/phase1-campaign-batch-validation-chain.json
+    sign_off:
+      key: TT_PCP_PHASE_1_BATCH_2
+      value: COMPLETE
+      signed_utc: "2026-07-03T23:09:10Z"
+    actions:
+      - governed_campaign_surfaces_v1_governed_campaign_items_v1
+      - db/campaign_catalog.rs governed read path
+      - pcp/campaign_builder.rs
+      - ops_cold_start_campaigns_consumer delegates to governed catalog
+      - OCS entity ref resolution unchanged
+    validation_sequence:
+      - step: campaign_batch_static_and_staging
+        script: scripts/dev/validate-pcp-phase1-campaign-batch-staging.cjs
+    reopen_closed_gates: false
+  - id: phase_1_post_go_6_12m
+    label: PCP v1 — Full Platform Architecture Alignment (Public Engine extension)
+    status: COMPLETE
+    started_utc: "2026-07-03T17:14:17Z"
+    completed_utc: "2026-07-03T23:11:40Z"
+    blocked_by: null
+    audit_script: scripts/dev/audit-pcp-phase1-full-alignment.cjs
+    evidence:
+      phase1_final_signoff: evidence/GO_public_content_platform/20260703T231140Z/phase1-final-signoff.json
+      phase1_full_alignment: evidence/GO_public_content_platform/20260703T231140Z/pcp-phase1-full-alignment.json
+      phase1_report: evidence/GO_public_content_platform/20260703T231140Z/PCP-PHASE1-FULL-ALIGNMENT-REPORT.md
+      batch_1_market: evidence/GO_public_content_platform/20260703T231140Z/phase1-market-batch-validation-chain.json
+      batch_2_campaign: evidence/GO_public_content_platform/20260703T231140Z/phase1-campaign-batch-validation-chain.json
+      phase0_5_regression: evidence/GO_public_content_platform/20260703T231140Z/phase0.5-validation-chain.json
+    baseline:
+      community: ALIGNED
+      domains_fully_aligned: 7
+      domain_count: 7
+      phase1_gaps: 0
+    sign_off:
+      key: TT_PCP_PHASE_1
+      value: COMPLETE
+      signed_utc: "2026-07-03T23:11:40Z"
+    actions:
+      - search_builder
+      - recommendation_builder
+      - public_apis_governed_views_only_enforcement_ci
+      - audit_log_v1
+    note: Phase 1 COMPLETE — all 7 domains on standard PCP pipeline
+    reopen_closed_gates: false_unless_trigger_paths
+  - id: phase_1_freeze_regression
+    label: Phase 1 Freeze / Regression Window — 7/7 stable before Phase 2
+    status: COMPLETE
+    stamp: "2026-07-03T23:15:01Z"
+    evidence:
+      freeze_regression_signoff: evidence/GO_public_content_platform/20260703T231501Z/phase1-freeze-regression-signoff.json
+      ci_enforcement_precheck: evidence/GO_public_content_platform/20260703T231501Z/pcp-governed-view-ci-enforcement-precheck.json
+      phase1_final_signoff: evidence/GO_public_content_platform/20260703T231501Z/phase1-final-signoff.json
+    sign_off:
+      key: TT_PCP_PHASE_1_FREEZE
+      value: COMPLETE
+      signed_utc: "2026-07-03T23:15:01Z"
+    frozen_scope:
+      - no_new_public_builder_plugins
+      - no_search_builder
+      - no_recommendation_builder
+      - no_new_governed_view_migrations_without_phase2_gate
+    validation_sequence:
+      - step: freeze_gates_and_regression
+        script: scripts/dev/validate-pcp-phase1-freeze-regression.cjs
+      - step: ci_governed_view_precheck
+        script: scripts/dev/audit-pcp-governed-view-ci-enforcement-precheck.cjs
+    phase_2_gate:
+      key: TT_PCP_PHASE_2
+      value: NOT_STARTED
+      unlock_requires: [TT_PCP_PHASE_1_FREEZE COMPLETE, owner_phase2_scope_signoff]
+    reopen_closed_gates: false
+  - id: architecture_closure
+    label: Architecture Closure — PCP final docs + TT_PCP_ARCHITECTURE FROZEN
+    status: COMPLETE
+    stamp: "2026-07-03T23:20:00Z"
+    documents:
+      - docs/runbook/PCP-ARCHITECTURE-FINAL.md
+      - docs/runbook/PCP-MIGRATION-HISTORY.md
+      - docs/runbook/PCP-PLATFORM-CAPABILITY-MATRIX.md
+      - docs/runbook/PCP-DEVELOPER-GUIDE.md
+    evidence:
+      architecture_closure_signoff: evidence/GO_public_content_platform/*/pcp-architecture-closure-signoff.json
+    sign_off:
+      key: TT_PCP_ARCHITECTURE
+      value: FROZEN
+      companion_key: TT_PCP_ARCHITECTURE_CLOSURE
+      companion_value: COMPLETE
+    validation_script: scripts/dev/validate-pcp-architecture-closure.cjs
+    next_gate: production_readiness
+    phase_2_gate: owner_written_scope_signoff
+    change_policy: architecture_review_required_for_builder_governance_capability
+    active_program: docs/runbook/TT-PRODUCTION-READINESS-PROGRAM.md
+    pcp_direct_development: forbidden
+    reopen_closed_gates: false
+  - id: production_readiness_program
+    label: Production Readiness Program — current project mainline
+    status: ACTIVE
+    stamp: "2026-07-04T07:21:00Z"
+    registry: registry/production-readiness-program.v1.yaml
+    runbook: docs/runbook/TT-PRODUCTION-READINESS-PROGRAM.md
+    supersedes_as_daily_mainline: [pcp_phase_2, pcp_feature_development]
+    chain:
+      - architecture_closure_complete
+      - production_readiness_active
+      - production_go_pending
+      - public_launch_not_started
+    reopen_closed_gates: false
+  - id: phase_2_post_go_12_24m
+    label: PCP v2 — Lifecycle, Tier mix, Search/Recommend
+    actions:
+      - full_lifecycle_state_machine
+      - approval_workflow_rbac
+      - content_tier_feed_policies
+      - analytics_rank_signals
+
+  - id: phase_3_post_go_24_60m
+    label: PCP v3 — Enterprise Public Content Platform
+    actions:
+      - public_content_center_standard_ui
+      - multi_region_language
+      - unified_analytics_feedback_loop
+
+# ── Immediate next engineering (Phase 0) ─────────────────────────────────
+
+phase_0_next:
+  status: COMPLETE
+  items:
+    - id: community_governance_read_path
+      completed: true
+      files:
+        - crates/api/migrations/20260704100000_governed_community_posts_v1.sql
+        - crates/api/src/db/governed_community_posts.rs
+        - crates/api/src/pcp/feed_builder.rs
+        - crates/api/src/db/community.rs
+        - crates/api/src/routes/community/posts.rs
+    - id: governed_community_posts
+      completed: true
+      view: governed_community_posts_v1
+
+# ── Evidence & audit under PCP ───────────────────────────────────────────
+
+evidence:
+  ddg: evidence/GO_staging_full_site_display_governance/
+  ocs: evidence/GO_official_cold_start_dataset/
+  sob: evidence/GO_official_cold_start_dataset/*/single-official-baseline-audit.json
+  enterprise: evidence/GO_enterprise_ssot_alignment/
+  pcp_future: evidence/GO_public_content_platform/
+  establishment: evidence/GO_public_content_platform/20260704T010000Z/
+
+audits:
+  ddg: scripts/dev/staging-full-site-display-governance-audit.cjs
+  enterprise: scripts/dev/audit-enterprise-ssot-alignment.cjs
+  pcp_architecture_compliance: scripts/dev/audit-pcp-architecture-compliance.cjs
+  pcp_phase_0_5_staging: scripts/dev/validate-pcp-phase0-5-staging.cjs
+  pcp_full_pipeline_alignment: scripts/dev/audit-pcp-full-pipeline-alignment.cjs
+  pcp_phase1_full_alignment: scripts/dev/audit-pcp-phase1-full-alignment.cjs
+  pcp_authenticity_phase12_final: scripts/dev/audit-pcp-authenticity-phase12-final.cjs
+  pcp_platform_status: scripts/dev/validate-pcp-platform-status.cjs
+  pcp_community_alignment_future: scripts/dev/audit-community-public-ops-feed-alignment.cjs
+
+# ── PCP Platform Status (CLOSED · 2026-07-04) ─────────────────────────────
+
+pcp_platform_status:
+  doc: docs/runbook/PCP-PLATFORM-STATUS.md
+  architecture: FROZEN
+  implementation: COMPLETE
+  alignment: VERIFIED
+  runtime:
+    staging: VERIFIED
+    local: SKIPPED
+    local_note: Do not claim 100% local runtime PASS when LOCAL_API not running
+  platform: CLOSED
+  active_development: false
+  phase_2: NOT_STARTED
+  domains_unified:
+    - community
+    - market
+    - provider
+    - acquisition
+    - official_guide
+    - campaign
+    - admin_public_content_center
+  latest_authenticity_evidence:
+    stamp: "20260703T232924Z"
+    verdict: ALIGNED
+    report: evidence/GO_public_content_platform/20260703T232924Z/PCP-PHASE12-ALIGNMENT-FINAL-REPORT.md
+  unified_answer: "PCP · FROZEN · VERIFIED · ALIGNED · CLOSED"
+
+# ── Relations ────────────────────────────────────────────────────────────
+
+relations:
+  enterprise_alignment: registry/enterprise-ssot-alignment.v1.yaml
+  operations_platform: registry/traveltrust-operations-platform.v1.yaml
+  operations_workflow: registry/traveltrust-operations-workflow.v1.yaml
+  evidence_reuse: registry/evidence-reuse-policy.v1.yaml
+  executive_dashboard: registry/executive-dashboard.v1.yaml
+
+maintenance:
+  rule: >
+    Update PCP registry when repositioning governance ownership or adding builders.
+    Do not reopen CLOSED gates from Phase ② without evidence-reuse trigger match.
+    Market reference implementation remains authoritative until Engine abstraction lands post-GO.

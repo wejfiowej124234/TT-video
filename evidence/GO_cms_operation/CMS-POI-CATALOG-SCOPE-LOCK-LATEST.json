@@ -1,0 +1,367 @@
+{
+  "schema": "traveltrust.cms_poi_catalog_scope_lock.v1",
+  "stamp_utc": "20260705T034122Z",
+  "layer": "CMS_OPERATION",
+  "role": "poi_catalog_scope_lock_frozen",
+  "not_governance": true,
+  "phase": "② staging",
+  "probe_api": "https://tt-api-staging.fly.dev",
+  "ssot": {
+    "city_to_region": "frontend/lib/cityDetails/constants.ts",
+    "attractions": [
+      "frontend/lib/cityDetails/attractions.ts",
+      "frontend/lib/cityDetails/productCountryPoi.ts"
+    ],
+    "food": [
+      "frontend/lib/cityDetails/food.ts",
+      "frontend/lib/cityDetails/productCountryPoi.ts"
+    ],
+    "product_countries": "frontend/lib/productCountries.ts"
+  },
+  "product_countries": [
+    {
+      "iso": "JP",
+      "country_zh": "日本"
+    },
+    {
+      "iso": "KR",
+      "country_zh": "韩国"
+    },
+    {
+      "iso": "TH",
+      "country_zh": "泰国"
+    },
+    {
+      "iso": "SG",
+      "country_zh": "新加坡"
+    },
+    {
+      "iso": "FR",
+      "country_zh": "法国"
+    },
+    {
+      "iso": "US",
+      "country_zh": "美国"
+    },
+    {
+      "iso": "AU",
+      "country_zh": "澳大利亚"
+    },
+    {
+      "iso": "ES",
+      "country_zh": "西班牙"
+    },
+    {
+      "iso": "AE",
+      "country_zh": "阿联酋"
+    },
+    {
+      "iso": "CN",
+      "country_zh": "中国"
+    }
+  ],
+  "denominator": {
+    "description": "Each catalog_pois row (city × poi_type × legacy_value) in ten product countries · not IMG-FAM-POI-* family slots",
+    "cities": 38,
+    "attraction": 169,
+    "food": 161,
+    "total": 330,
+    "cms_lock_categories": {
+      "poi": 169,
+      "food": 161,
+      "note": "After catalog ingest · run-cms-denominator-lock re-probes /api/v1/catalog/poi-images"
+    }
+  },
+  "by_country": [
+    {
+      "country_iso": "JP",
+      "country_zh": "日本",
+      "cities": 5,
+      "city_names": [
+        "大阪",
+        "东京",
+        "福冈",
+        "京都",
+        "札幌"
+      ],
+      "attraction": 22,
+      "food": 19,
+      "total": 41
+    },
+    {
+      "country_iso": "KR",
+      "country_zh": "韩国",
+      "cities": 4,
+      "city_names": [
+        "釜山",
+        "济州",
+        "仁川",
+        "首尔"
+      ],
+      "attraction": 16,
+      "food": 15,
+      "total": 31
+    },
+    {
+      "country_iso": "TH",
+      "country_zh": "泰国",
+      "cities": 3,
+      "city_names": [
+        "曼谷",
+        "普吉",
+        "清迈"
+      ],
+      "attraction": 15,
+      "food": 13,
+      "total": 28
+    },
+    {
+      "country_iso": "SG",
+      "country_zh": "新加坡",
+      "cities": 1,
+      "city_names": [
+        "新加坡"
+      ],
+      "attraction": 5,
+      "food": 5,
+      "total": 10
+    },
+    {
+      "country_iso": "FR",
+      "country_zh": "法国",
+      "cities": 3,
+      "city_names": [
+        "巴黎",
+        "里昂",
+        "尼斯"
+      ],
+      "attraction": 12,
+      "food": 12,
+      "total": 24
+    },
+    {
+      "country_iso": "US",
+      "country_zh": "美国",
+      "cities": 4,
+      "city_names": [
+        "旧金山",
+        "拉斯维加斯",
+        "洛杉矶",
+        "纽约"
+      ],
+      "attraction": 17,
+      "food": 16,
+      "total": 33
+    },
+    {
+      "country_iso": "AU",
+      "country_zh": "澳大利亚",
+      "cities": 3,
+      "city_names": [
+        "黄金海岸",
+        "墨尔本",
+        "悉尼"
+      ],
+      "attraction": 12,
+      "food": 12,
+      "total": 24
+    },
+    {
+      "country_iso": "ES",
+      "country_zh": "西班牙",
+      "cities": 3,
+      "city_names": [
+        "巴塞罗那",
+        "马德里",
+        "塞维利亚"
+      ],
+      "attraction": 12,
+      "food": 12,
+      "total": 24
+    },
+    {
+      "country_iso": "AE",
+      "country_zh": "阿联酋",
+      "cities": 3,
+      "city_names": [
+        "阿布扎比",
+        "迪拜",
+        "沙迦"
+      ],
+      "attraction": 12,
+      "food": 12,
+      "total": 24
+    },
+    {
+      "country_iso": "CN",
+      "country_zh": "中国",
+      "cities": 9,
+      "city_names": [
+        "北京",
+        "成都",
+        "大理",
+        "广州",
+        "杭州",
+        "青岛",
+        "厦门",
+        "上海",
+        "西安"
+      ],
+      "attraction": 46,
+      "food": 45,
+      "total": 91
+    }
+  ],
+  "excluded_outside_product": {
+    "rule": "GB/IT cities in frontend TS · excluded from Phase 1 product denominator",
+    "count": 7
+  },
+  "catalog_probe": {
+    "probe_api": "https://tt-api-staging.fly.dev",
+    "catalog_cities": {
+      "http": 200,
+      "count": 0
+    },
+    "catalog_poi_attraction": {
+      "http": 200,
+      "count": 0
+    },
+    "catalog_poi_food": {
+      "http": 200,
+      "count": 0
+    },
+    "catalog_empty": true,
+    "upload_allowed": false,
+    "upload_gate": "POI Upload forbidden until pilot catalog build creates rows · Scope → Country → City → POI · not bulk 330"
+  },
+  "matrix_ssot": "data/catalog/poi-hero-matrix.v1.yaml",
+  "matrix_rows": 330,
+  "pilot_waves": {
+    "advancement_rule": "Scope → Country → City → POI · acceptance = City CLOSED",
+    "active_wave": "POI-WAVE-1-PILOT",
+    "active_catalog_build": {
+      "wave_id": "POI-WAVE-1-PILOT",
+      "label": "Pilot · JP · 东京",
+      "country_iso": "JP",
+      "cities": [
+        "东京"
+      ],
+      "poi_count": 9,
+      "matrix_ids": [
+        "PH-JP-009-ATR",
+        "PH-JP-010-ATR",
+        "PH-JP-011-ATR",
+        "PH-JP-012-ATR",
+        "PH-JP-013-ATR",
+        "PH-JP-014-FOOD",
+        "PH-JP-015-FOOD",
+        "PH-JP-016-FOOD",
+        "PH-JP-017-FOOD"
+      ]
+    },
+    "forbidden_bulk": [
+      "ingest_all_330_on_day_one",
+      "poi_upload_before_pilot_catalog_build"
+    ]
+  },
+  "roadmap": [
+    {
+      "stage": "destination_ambient",
+      "status": "CLOSED"
+    },
+    {
+      "stage": "poi_scope",
+      "status": "LOCKED",
+      "denominator": 330
+    },
+    {
+      "stage": "catalog_build",
+      "status": "ACTIVE",
+      "city": "东京",
+      "acceptance": "东京 CLOSED"
+    },
+    {
+      "stage": "poi_wave_1",
+      "status": "ACTIVE",
+      "note": "Pilot · per-POI loop · city CLOSED = wave milestone"
+    },
+    {
+      "stage": "poi_wave_2",
+      "status": "NOT_STARTED",
+      "country_iso": "KR"
+    },
+    {
+      "stage": "poi_wave_3_plus",
+      "status": "NOT_STARTED"
+    },
+    {
+      "stage": "poi_closed",
+      "status": "NOT_STARTED",
+      "target": "330/330"
+    },
+    {
+      "stage": "hotel",
+      "status": "NOT_STARTED"
+    },
+    {
+      "stage": "transport",
+      "status": "NOT_STARTED"
+    },
+    {
+      "stage": "listing",
+      "status": "NOT_STARTED"
+    }
+  ],
+  "wave_1_pilot": {
+    "city_zh": "东京",
+    "legacy_value": "浅草寺",
+    "matrix_id": "PH-JP-009-ATR"
+  },
+  "execution_sequence": [
+    "1_poi_catalog_scope_lock_frozen",
+    "2_pilot_catalog_build_jp_tokyo_only",
+    "3_re_run_denominator_lock",
+    "4_per_poi_review_replace_publish_verify_evidence_live",
+    "5_refresh_after_each_item",
+    "6_poi_wave_2_kr_then_wave_3_plus",
+    "7_all_330_live_poi_closure"
+  ],
+  "forbidden": [
+    "poi_upload_while_catalog_empty",
+    "ingest_all_330_on_day_one",
+    "skip_pilot_before_wave_2"
+  ],
+  "ambient_contrast": {
+    "ambient": "Country slot existed · Upload replaced landing_ambient content",
+    "poi": "catalog_pois = 0 · pilot catalog build (JP·东京·9) first · then Review → Replace per POI"
+  },
+  "cms_denominator_lock_snapshot": {
+    "stamp_utc": "20260705T033854Z",
+    "poi": {
+      "label": "POI",
+      "total": 0,
+      "live": 0,
+      "pending": 0,
+      "completion": "0/0 (catalog_empty)",
+      "catalog_empty": true,
+      "target": "re_lock_after_catalog_ingest"
+    },
+    "food": {
+      "label": "Food",
+      "total": 0,
+      "live": 0,
+      "pending": 0,
+      "completion": "0/0 (catalog_empty)",
+      "catalog_empty": true,
+      "target": "re_lock_after_catalog_ingest"
+    }
+  },
+  "TT_CMS_POI_CATALOG_SCOPE_LOCK": "FROZEN",
+  "TT_CMS_POI_DENOMINATOR_TOTAL": 330,
+  "TT_CMS_POI_DENOMINATOR_CITIES": 38,
+  "TT_CMS_POI_UPLOAD_ALLOWED": false,
+  "TT_CMS_POI_NEXT_STAGE": "CATALOG_BUILD",
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "Pilot · JP · 东京",
+  "TT_CMS_POI_PILOT_ACCEPTANCE": "东京 CLOSED",
+  "TT_CMS_POI_PILOT_POI_COUNT": 9
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-06T10:20:35Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "US",
+    "city_zh": "拉斯维加斯",
+    "matrix_ids": [
+      "PH-US-143-ATR",
+      "PH-US-144-ATR",
+      "PH-US-145-ATR",
+      "PH-US-146-ATR",
+      "PH-US-147-FOOD",
+      "PH-US-148-FOOD",
+      "PH-US-149-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-US-143-ATR",
+      "poi_id": "24a006dc-c32d-4278-9d51-4021e498968e"
+    },
+    {
+      "matrix_id": "PH-US-144-ATR",
+      "poi_id": "a67aa34e-128b-46a5-b71a-ad2dd9ad5fc3"
+    },
+    {
+      "matrix_id": "PH-US-145-ATR",
+      "poi_id": "3a3c5638-cbbd-409c-a38f-28c385e94386"
+    },
+    {
+      "matrix_id": "PH-US-146-ATR",
+      "poi_id": "9b02c60a-3113-46f5-ab5d-6df82788ad03"
+    },
+    {
+      "matrix_id": "PH-US-147-FOOD",
+      "poi_id": "1bd63d9f-38f6-48fd-b032-737dd0510c6a"
+    },
+    {
+      "matrix_id": "PH-US-148-FOOD",
+      "poi_id": "82daf3b9-3fde-4606-9599-a0642068b066"
+    },
+    {
+      "matrix_id": "PH-US-149-FOOD",
+      "poi_id": "aa3d7f03-1a70-4a4f-9829-34d032dc42f2"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 7,
+    "expected": 7
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

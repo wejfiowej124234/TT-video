@@ -1,0 +1,11 @@
+{
+  "program_id": "ROV-01",
+  "wave": 2,
+  "phase": "②",
+  "completed_at": "2026-06-08T05:37:25.470Z",
+  "tracks": {
+    "ROV-T4": "MISSING",
+    "ROV-T5": "MISSING"
+  },
+  "evidence_dir": "D:/TravelTrust-V1.1/evidence/PRODUCTION_READINESS_AUDIT/unified-20260608T053139Z/rov/wave2"
+}

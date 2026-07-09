@@ -95,12 +95,12 @@ pub async fn governance_mvp_reset_demo_state(pool: &PgPool) -> Result<(), sqlx::
     sqlx::query(
         r#"INSERT INTO governance_mvp_proposals (id, title, body, status) VALUES
             ('00000000-0000-4000-8000-000000000001'::uuid,
-             'TT MVP: FeeRouter parameter calibration',
-             'Chain-off governance demo proposal. Vote to signal support for aligning protocol-reference snapshots with runtime GET /meta (B-072 MVP).',
+             'Protocol params review: FeeRouter layer-1 allocation',
+             'Community review of FeeRouter layer-1 allocation coefficients against the published protocol-reference snapshot. On-chain execution requires Governor vote, Timelock queue, and Production GO.',
              'active'),
             ('00000000-0000-4000-8000-000000000002'::uuid,
-             'Treasury rotation (MVP demo)',
-             'Second demo entry for list/detail navigation and vote isolation tests.',
+             'Treasury rotation: Global Treasury asset allocation',
+             'Review of Global Treasury asset allocation and rotation policy. Opens for community signal before on-chain Governor approval and Timelock execution.',
              'active')
            ON CONFLICT (id) DO UPDATE SET
              title = EXCLUDED.title,

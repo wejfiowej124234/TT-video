@@ -1,0 +1,4 @@
+status: PASS
+phase: ②
+artifact: ADM-U01
+at: 20260614T150347Z

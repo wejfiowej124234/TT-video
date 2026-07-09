@@ -10,6 +10,7 @@ import {
   filterGuidePublicServiceTypes,
   formatGuideLanguages,
   formatGuidePublicBio,
+  formatGuideHourlyRateLabel,
   formatGuideServiceTypeLabel,
 } from "@/lib/marketDisplayCopy";
 import { TT_MARKETING_BTN_MARKET_PRIMARY, TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
@@ -295,14 +296,7 @@ export default function GuideDetailDrawer({
                 <div>
                   <p className={`${marketDetailDrawerMeta} mb-0.5`}>{t("guide_detail_price")}</p>
                   <p className="text-body font-semibold text-ref-sun">
-                    {t("guide_detail_perHour")
-                      .replace("{{amount}}", String(shellGuide.hourly_rate))
-                      .replace(
-                        "{{currency}}",
-                        typeof shellGuide.hourly_currency === "string" && shellGuide.hourly_currency.trim()
-                          ? shellGuide.hourly_currency.trim()
-                          : t("market_guide_hourly_currency_unspecified"),
-                      )}
+                    {formatGuideHourlyRateLabel(shellGuide, t)}
                   </p>
                   {(shellGuide.priceRange?.guideFeePerDay != null || shellGuide.priceRange?.carFeePerDay != null) && (
                     <p className={`${marketDetailDrawerMeta} mt-1`}>

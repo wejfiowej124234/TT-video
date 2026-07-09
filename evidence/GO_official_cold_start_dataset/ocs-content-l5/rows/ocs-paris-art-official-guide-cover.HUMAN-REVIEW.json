@@ -1,0 +1,90 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T150530Z",
+  "filename": "ocs-paris-art-official-guide-cover.jpg",
+  "chain_id": "paris-art",
+  "city": "巴黎",
+  "country_code": "FR",
+  "slot": "official-guide-cover",
+  "surface": "Official Guide",
+  "copy_label": "巴黎艺术博物馆两日官方指南",
+  "manifest_copy": {
+    "official_guide.title": "巴黎艺术博物馆两日官方指南",
+    "official_guide.destination": "巴黎",
+    "official_guide.body": "经典馆藏顺序与预约窗口，附官方推荐休息点。",
+    "official_guide.tags": [
+      "巴黎",
+      "艺术",
+      "官方攻略"
+    ]
+  },
+  "content_safety_pre_check": {
+    "pass": true
+  },
+  "post_generation_quality_check": {
+    "pass": true,
+    "bytes": 155546,
+    "jpeg_magic": true,
+    "dimensions": "640x480"
+  },
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG 155546 bytes。"
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "卢浮宫金字塔 dusk 宽幅与 title/body/tags 100% 对齐。"
+    },
+    "G3_slot_differentiation": {
+      "pass": true,
+      "notes": "史诗路线封面；非 Row31-33。"
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "巴黎 FR-only。"
+    },
+    "G5_brand_visual": {
+      "pass": true,
+      "notes": "经典灰+金 dusk；paris-art 统一。"
+    },
+    "G6_commercial_platform": {
+      "pass": true,
+      "notes": "Official Guide Hero。"
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true,
+      "notes": "清晰、曝光自然。"
+    },
+    "G8_evidence_matrix": {
+      "pass": true,
+      "notes": "Global Regression 34/60。"
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "notes": "建筑外观无馆藏名画复刻。"
+    },
+    "G10_content_diversity": {
+      "pass": true,
+      "notes": "vs 五城 Official Guide 明显不同。"
+    }
+  },
+  "official_guide_destination_review": {
+    "pass": true,
+    "wide_route_narrative": true
+  },
+  "destination_experience_review": {
+    "pass": true
+  },
+  "surface_boundary_review": {
+    "pass": true
+  },
+  "visual_sequence_review": {
+    "pass": true,
+    "vs_row33": "宽幅建筑 vs 静物"
+  },
+  "regression_prior_33_rows": {
+    "pass": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

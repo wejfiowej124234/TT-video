@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust_sprint169_region_share_reconcile_matrix.v1",
+  "sprint": 169,
+  "scope": ["BE-RS-01"],
+  "chain_id_target": 11155111,
+  "full_chain": [
+    { "leg": 1, "name": "RegionVault", "on_chain": "RegionVault.sol · RegionVaultForwarded · RegionShareSnapshotLine", "status": "IMPLEMENTED" },
+    { "leg": 2, "name": "Indexer", "module": "chain/indexer.rs · internal/indexer-tick", "status": "IMPLEMENTED" },
+    { "leg": 3, "name": "Projection", "tables": ["fee_router_routed_events", "region_vault_forwarded_events", "region_share_snapshot_lines"], "status": "IMPLEMENTED" },
+    { "leg": 4, "name": "CountryLedger", "table": "p5_country_ledger_lines", "note": "P5-1 DE pilot · orthogonal to FeeRouter countryBucket", "status": "PARTIAL_PILOT" },
+    { "leg": 5, "name": "RegionShareLedger", "table": "region_share_snapshot_lines", "note": "no RegionShareLedger table name · snapshot lines SSOT", "status": "IMPLEMENTED" }
+  ],
+  "reconcile_checks": [
+    { "id": "RS-R01", "legs": ["FeeRouter", "Projection"], "rule": "B383 log-count chain vs DB fee_router_routed_events", "automation": "SCRIPT", "marker_target": "aligned", "current": "PARTIAL", "enterprise": "PASS leg-only" },
+    { "id": "RS-R02", "legs": ["RegionVault", "Projection"], "rule": "B384 log-count chain vs DB region_vault_forwarded_events", "automation": "SCRIPT", "marker_target": "aligned", "current": "PARTIAL", "enterprise": "PASS leg-only" },
+    { "id": "RS-R03", "legs": ["CountryLedger", "Projection"], "rule": "B385 P5 credited log-count (orthogonal)", "automation": "SCRIPT", "marker_target": "aligned", "current": "PARTIAL", "enterprise": "PASS leg-only" },
+    { "id": "RS-R04", "legs": ["FeeRouter", "RegionVault", "Projection"], "rule": "Σ(to_country_u256) vs vault balance vs forwarded outflows", "automation": "NONE", "marker_target": "aligned", "current": "NOT_IMPLEMENTED", "enterprise": "FAIL" },
+    { "id": "RS-R05", "legs": ["RegionShareSnapshotLine", "region_share_snapshot_lines"], "rule": "snapshot epoch presence vs chain emit window", "automation": "OBSERVABILITY", "marker_target": "aligned", "current": "PARTIAL", "enterprise": "FAIL" },
+    { "id": "RS-R06", "legs": ["All projections", "event_log"], "rule": "B398 revenue_pipeline spread / block coherence", "automation": "OBSERVABILITY", "marker_target": "spread<=threshold", "current": "PARTIAL", "enterprise": "FAIL amount" },
+    { "id": "RS-R07", "legs": ["Cross-leg"], "rule": "region-share-reconcile.sh cron + drift alert + report row", "automation": "NONE", "marker_target": "GO", "current": "NOT_IMPLEMENTED", "enterprise": "FAIL" }
+  ],
+  "automation_pct": 42,
+  "enterprise_verdict": "BE_RS_01_HOLD",
+  "blocking_gaps": ["RS-R04", "RS-R05", "RS-R07"]
+}

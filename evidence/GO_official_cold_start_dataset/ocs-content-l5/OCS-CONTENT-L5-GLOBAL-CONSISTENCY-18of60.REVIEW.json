@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_consistency_review.v1",
+  "stamp_utc": "20260704T133430Z",
+  "matrix_rows_reviewed": 18,
+  "TT_GLOBAL_CONSISTENCY_REVIEW": "PASS",
+  "seoul_food_chain_closing": true,
+  "regression_all_18_rows": { "pass": true }
+}

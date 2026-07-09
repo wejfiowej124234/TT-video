@@ -1,0 +1,62 @@
+{
+  "schema": "traveltrust.phase2_production_validation_report.v1",
+  "recorded_utc": "2026-07-08T12:03:09.508Z",
+  "stamp": "2026-07-08T12-03-09",
+  "phase": 2,
+  "display_name": "Staging / Sepolia Production Validation",
+  "note": "Web3 Lifecycle Validation (②-D) is one sub-track — NOT the Phase ② total name",
+  "verdict": "PHASE2_STAGING_SEPOLIA_PRODUCTION_VALIDATION_IN_PROGRESS",
+  "sub_tracks": [
+    {
+      "id": "2A",
+      "name": "Website & Product UAT",
+      "pass": true,
+      "status": "IN_PROGRESS",
+      "detail": "Surface coverage registry + multi-identity UAT — human signoff pending"
+    },
+    {
+      "id": "2B",
+      "name": "Admin / Operations UAT",
+      "pass": false,
+      "status": "IN_PROGRESS",
+      "detail": "Admin console · moderation · provider apps · official ops UAT pending"
+    },
+    {
+      "id": "2C",
+      "name": "Data Governance / CMS / COS Validation",
+      "pass": false,
+      "status": "TARGET",
+      "detail": "CMS/COS/data governance validation not yet recorded"
+    },
+    {
+      "id": "2D",
+      "name": "Web3 Lifecycle Validation",
+      "pass": false,
+      "status": "IN_PROGRESS",
+      "detail": "SEPOLIA_FULL_WEB3_LIFECYCLE_IN_PROGRESS",
+      "orchestrator": "scripts/dev/run-sepolia-full-web3-lifecycle-validation.cjs"
+    },
+    {
+      "id": "2E",
+      "name": "Security / RBAC / Monitoring",
+      "pass": false,
+      "status": "IN_PROGRESS",
+      "detail": "Protocol-Grade P0=0 · RBAC=RBAC_D3_PRODUCTION_BOUNDARY_CLOSED"
+    },
+    {
+      "id": "2F",
+      "name": "Exit Review",
+      "pass": false,
+      "status": "PHASE2_EXIT_REVIEW_IN_PROGRESS",
+      "detail": "PHASE2_EXIT_REVIEW_IN_PROGRESS",
+      "orchestrator": "scripts/dev/run-phase2-exit-review.cjs"
+    }
+  ],
+  "summary": {
+    "pass": 1,
+    "total": 6,
+    "core_ready_for_exit_review": false
+  },
+  "registry": "registry/phase2-staging-sepolia-production-validation.v1.yaml",
+  "next_on_pass": "run-phase2-exit-review.cjs → run-web3-freeze.cjs → generate-mainnet-deployment-package.cjs"
+}

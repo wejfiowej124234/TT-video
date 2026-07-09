@@ -1,0 +1,455 @@
+{
+  "schema": "traveltrust.operations_platform_alignment_audit.v1",
+  "stamp": "20260703T065000Z",
+  "recorded_at": "2026-07-03T06:48:29.756Z",
+  "scope": "operations_platform_local_staging_alignment",
+  "not_in_scope": [
+    "RC_reopen",
+    "DDG_reopen",
+    "OCS_rerun"
+  ],
+  "apis": {
+    "local": "http://127.0.0.1:8080",
+    "staging": "https://tt-api-staging.fly.dev"
+  },
+  "registry_ssot": {
+    "shared_repo_ssot": true,
+    "files": {
+      "registry/traveltrust-operations-platform.v1.yaml": {
+        "exists": true,
+        "bytes": 9596
+      },
+      "registry/traveltrust-operations-workflow.v1.yaml": {
+        "exists": true,
+        "bytes": 12777
+      },
+      "registry/single-official-public-catalog-policy.v1.yaml": {
+        "exists": true,
+        "bytes": 7694
+      },
+      "registry/official-catalog-identity-policy.v1.yaml": {
+        "exists": true,
+        "bytes": 5634
+      },
+      "registry/official-cold-start-dataset.v1.yaml": {
+        "exists": true,
+        "bytes": 10550
+      },
+      "registry/display-data-governance.v1.yaml": {
+        "exists": true,
+        "bytes": 7351
+      }
+    }
+  },
+  "runbooks_present": [
+    {
+      "path": "docs/runbook/TT-TRAVELTRUST-OPERATIONS-PLATFORM.md",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TRAVELTRUST-OPERATIONS-WORKFLOW.md",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md",
+      "exists": true
+    }
+  ],
+  "evidence": {
+    "workflow_validation": "PASS",
+    "ocs_state": "present",
+    "workflow_validation_stamp": "20260703T064100Z",
+    "ocs_state_stamp": "20260703T044855Z"
+  },
+  "environments": {
+    "local": {
+      "label": "local",
+      "api": "http://127.0.0.1:8080",
+      "ok": true,
+      "errors": [],
+      "admin_login": true,
+      "meta": {
+        "status": 401
+      },
+      "public_catalog": {
+        "guides_count": 7,
+        "cities": [
+          "上海",
+          "京都",
+          "北京",
+          "杭州"
+        ],
+        "ocs_guides": 0,
+        "canonical_showcase": 5,
+        "smoke_demo": 2,
+        "duplicate_cities": [
+          {
+            "city": "杭州",
+            "count": 4
+          }
+        ],
+        "provider_count": 2,
+        "acquisition_count": 1
+      },
+      "public_ops_policy": {
+        "show_test_data": false,
+        "blocked_origins": [
+          "SMOKE"
+        ],
+        "updated_at": "2026-07-01T16:55:43.069394Z",
+        "updated_by": null
+      },
+      "campaigns": {
+        "total": 1,
+        "deployed": 0
+      },
+      "six_domains": {
+        "content_operations": {
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/content/countries?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "catalog_operations": {
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/official/public-operations/publish-queue?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "campaign_operations": {
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/official/public-operations/campaigns?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "moderation_operations": {
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/community/reports?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "business_operations": {
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/disputes?limit=1",
+              "status": 200,
+              "ok": true
+            },
+            {
+              "route": "/api/v1/admin/orders?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "analytics_growth": {
+          "verdict": "FAIL",
+          "routes": [
+            {
+              "route": "/api/v1/admin/conversion-analytics/summary",
+              "status": 404,
+              "ok": false
+            }
+          ]
+        }
+      },
+      "sopcp": {
+        "ocs_expected": 10,
+        "ocs_on_public": 0,
+        "ocs_missing": [
+          "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+          "2f51212f-6ac0-445e-bf94-8338738b2de3",
+          "519d9067-f2b2-49aa-9f76-8665cb24e85b",
+          "da75b617-64bf-4338-a5b2-daf32921d695",
+          "ea732e91-f0f3-42da-b4ae-1a1f5f0f592c",
+          "692a940e-1d25-452d-83f8-5b37f9141f60",
+          "c5d963f9-e679-43a6-9b84-5f7073a51109",
+          "e551bed7-f455-4102-9fa3-b791a68e06d5",
+          "dddf81f0-28b7-4aba-b744-70026d9fb148",
+          "cd69b54b-6407-4a34-90c6-f36c0c658dd7"
+        ],
+        "non_ocs_on_public": [
+          {
+            "id": "274ab21a-eb69-4b2c-8821-cbddd7ac63d4",
+            "city": "杭州"
+          },
+          {
+            "id": "d45162a0-f9f2-4030-93a1-82003a9753ac",
+            "city": "杭州"
+          },
+          {
+            "id": "f0e0b101-0001-4001-8001-000000000002",
+            "city": "杭州"
+          },
+          {
+            "id": "f0e0b101-0001-4001-8001-000000000001",
+            "city": "杭州"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000313",
+            "city": "京都"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000312",
+            "city": "上海"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000311",
+            "city": "北京"
+          }
+        ]
+      },
+      "workflow_fsm": {
+        "content_draft_publish_blocked": false,
+        "catalog_hidden_featured_blocked": true
+      }
+    },
+    "staging": {
+      "label": "staging",
+      "api": "https://tt-api-staging.fly.dev",
+      "ok": true,
+      "errors": [],
+      "admin_login": true,
+      "meta": {
+        "status": 401
+      },
+      "public_catalog": {
+        "guides_count": 10,
+        "cities": [
+          "东京",
+          "京都",
+          "巴塞罗那",
+          "巴黎",
+          "悉尼",
+          "新加坡",
+          "曼谷",
+          "纽约",
+          "迪拜",
+          "首尔"
+        ],
+        "ocs_guides": 10,
+        "canonical_showcase": 0,
+        "smoke_demo": 0,
+        "duplicate_cities": [],
+        "provider_count": 10,
+        "acquisition_count": 10
+      },
+      "public_ops_policy": {
+        "show_test_data": false,
+        "blocked_origins": [
+          "SMOKE"
+        ],
+        "updated_at": "2026-07-02T00:35:29.850727Z",
+        "updated_by": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+      },
+      "campaigns": {
+        "total": 16,
+        "deployed": 10
+      },
+      "six_domains": {
+        "content_operations": {
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/content/countries?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "catalog_operations": {
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/official/public-operations/publish-queue?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "campaign_operations": {
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/official/public-operations/campaigns?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "moderation_operations": {
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/community/reports?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "business_operations": {
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/disputes?limit=1",
+              "status": 200,
+              "ok": true
+            },
+            {
+              "route": "/api/v1/admin/orders?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "analytics_growth": {
+          "verdict": "FAIL",
+          "routes": [
+            {
+              "route": "/api/v1/admin/conversion-analytics/summary",
+              "status": 404,
+              "ok": false
+            }
+          ]
+        }
+      },
+      "sopcp": {
+        "ocs_expected": 10,
+        "ocs_on_public": 10,
+        "ocs_missing": [],
+        "non_ocs_on_public": []
+      },
+      "workflow_fsm": {
+        "content_draft_publish_blocked": true,
+        "catalog_hidden_featured_blocked": true
+      }
+    }
+  },
+  "differences": [
+    {
+      "dimension": "workflow_fsm",
+      "field": "content_draft_publish_blocked",
+      "local": false,
+      "staging": true,
+      "severity": "critical",
+      "note": "Must both enforce in_review gate"
+    },
+    {
+      "dimension": "public_catalog",
+      "field": "guides_count",
+      "local": 7,
+      "staging": 10,
+      "severity": "medium",
+      "note": "Data may differ; SOPCP set should match"
+    },
+    {
+      "dimension": "public_catalog",
+      "field": "cities",
+      "local": [
+        "上海",
+        "京都",
+        "北京",
+        "杭州"
+      ],
+      "staging": [
+        "东京",
+        "京都",
+        "巴塞罗那",
+        "巴黎",
+        "悉尼",
+        "新加坡",
+        "曼谷",
+        "纽约",
+        "迪拜",
+        "首尔"
+      ],
+      "severity": "medium",
+      "note": ""
+    },
+    {
+      "dimension": "sopcp",
+      "field": "ocs_on_public",
+      "local": 0,
+      "staging": 10,
+      "severity": "high",
+      "note": ""
+    },
+    {
+      "dimension": "sopcp",
+      "field": "non_ocs_leak_count",
+      "local": 7,
+      "staging": 0,
+      "severity": "high",
+      "note": ""
+    },
+    {
+      "dimension": "campaigns",
+      "field": "deployed",
+      "local": 0,
+      "staging": 10,
+      "severity": "low",
+      "note": ""
+    }
+  ],
+  "risks": [
+    {
+      "level": "P0",
+      "id": "content_draft_publish_blocked",
+      "msg": "workflow_fsm: local=false staging=true",
+      "fix": "Deploy same API build to both; verify FSM guards"
+    },
+    {
+      "level": "P2",
+      "id": "guides_count",
+      "msg": "Public catalog data drift: Data may differ; SOPCP set should match",
+      "fix": "Align local DB to OCS or document intentional dev divergence"
+    },
+    {
+      "level": "P1",
+      "id": "ocs_on_public",
+      "msg": "sopcp mismatch between local and staging",
+      "fix": "Run align-single-official-baseline on lagging env"
+    },
+    {
+      "level": "P1",
+      "id": "non_ocs_leak_count",
+      "msg": "sopcp mismatch between local and staging",
+      "fix": "Run align-single-official-baseline on lagging env"
+    },
+    {
+      "level": "P2",
+      "id": "local_ocs_gap",
+      "msg": "Local only 0/10 OCS guides on public catalog",
+      "fix": "Run OCS align on local or accept dev partial seed"
+    }
+  ],
+  "phase2_operations_platform_baseline": {
+    "met": false,
+    "blockers": [
+      "staging_analytics_growth_routes_fail"
+    ],
+    "warnings": [
+      "local_analytics_growth_routes_fail",
+      "local_staging_ocs_public_count_mismatch",
+      "local_staging_public_guide_count_mismatch"
+    ]
+  },
+  "verdict": "FAIL"
+}

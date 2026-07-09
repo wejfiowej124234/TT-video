@@ -1,0 +1,26 @@
+# tt-api-staging · Fly.io（阶段二 ②）
+# 部署（仓库根）:
+#   fly deploy -c deploy/fly/tt-api-staging/fly.toml --build-arg TRAVELTRUST_BUILD_GIT_SHA=$(git rev-parse HEAD)
+# secrets 见 evidence/GO_*/fly-secrets.md（B-12）
+
+app = 'tt-api-staging'
+primary_region = 'sin'
+
+[build]
+  dockerfile = 'Dockerfile'
+  context = '../../..'
+
+[env]
+  PORT = '8080'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '1gb'

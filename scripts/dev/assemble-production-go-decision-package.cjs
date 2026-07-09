@@ -163,11 +163,48 @@ async function main() {
   const g3 = readYamlKey('registry/production-readiness-master-matrix.v1.yaml', 'TT_PRODUCTION_READINESS_G3_GATE');
   const prodGoLive = readYamlKey('registry/production-readiness-master-matrix.v1.yaml', 'TT_PRODUCTION_GO');
 
+  const fourGateFramework = [
+    { gate: 'GATE-1', layer: 'Business', machine_key: 'TT_PRODUCTION_BUSINESS_READY', current: 'PASS' },
+    { gate: 'GATE-2', layer: 'Web3', machine_key: 'TT_PRODUCTION_WEB3_READY', current: 'NOT_STARTED', p0: true },
+    { gate: 'GATE-3', layer: 'Infrastructure', machine_key: 'TT_PRODUCTION_INFRASTRUCTURE_READY', current: 'IN_PROGRESS', p0: true },
+    { gate: 'GATE-4', layer: 'Operations', machine_key: 'TT_PRODUCTION_OPERATIONS_READY', current: 'IN_PROGRESS', p0: true },
+  ];
+
   const remainingBlockers = [
-    { id: 'G3_GATE', severity: 'P0', note: `TT_PRODUCTION_READINESS_G3_GATE=${g3} — G3-01..G3-06 production VERIFIED required` },
-    { id: 'STRIPE_LIVE', severity: 'P0', note: 'PI3-003 Stripe Live + prod webhook smoke' },
-    { id: 'CDN_HLS', severity: 'P1', note: 'G3-01 production CDN/HLS edge probes' },
-    { id: 'OWNER_SIGNOFF', severity: 'P0', note: 'Owner attestation GO + signed_utc on this package' },
+    {
+      id: 'WEB3_READY',
+      gate: 'GATE-2',
+      severity: 'P0',
+      note: 'TT_PRODUCTION_WEB3_READY — PAY-W01..W16 USDC Escrow prod verification',
+    },
+    {
+      id: 'OPERATIONS_READY',
+      gate: 'GATE-4',
+      severity: 'P0',
+      note: 'TT_PRODUCTION_OPERATIONS_READY — full ops backend UAT (not CMS-only)',
+    },
+    {
+      id: 'INFRASTRUCTURE_READY',
+      gate: 'GATE-3',
+      severity: 'P0',
+      note: 'TT_PRODUCTION_INFRASTRUCTURE_READY — G3 CDN/domain/monitoring/backup/rollback',
+    },
+    {
+      id: 'STRIPE_ONBOARDING_OPTIONAL',
+      gate: null,
+      severity: 'P1',
+      note: 'Optional Fiat Onboarding (Stripe) — NOT in Four-Gate chain · does not block GO',
+    },
+    { id: 'OWNER_SIGNOFF', gate: 'GATE-5', severity: 'P0', note: 'Owner attestation after four gates PASS' },
+  ];
+
+  const closureSequence = [
+    'Business Ready (L1)',
+    'Web3 Ready (L2 · USDC · PAY-W01..W16)',
+    'Infrastructure Ready (L3)',
+    'Operations Ready (L4)',
+    'Owner Final Sign-off',
+    'TT_PRODUCTION_GO = GO',
   ];
 
   const operationsReady =
@@ -207,6 +244,16 @@ async function main() {
       summary:
         'RC Freeze + PI3 deploy + prod smoke + ADM-U01 RBAC + CMS publish loop + consumer sync — evidence attached. No business code changes in enablement lane.',
     },
+    four_gate_framework: fourGateFramework,
+    four_gate_ssot: 'registry/production-go-four-gate-framework.v1.yaml',
+    remaining_work_ssot: 'registry/production-go-remaining-work.v1.yaml',
+    payment_architecture: {
+      core: 'Web3 Escrow (USDC)',
+      optional_extension: 'Optional Fiat Onboarding (Stripe · P1)',
+      ssot: 'registry/payment-architecture-classification.v1.yaml',
+    },
+    production_go_closure_sequence: closureSequence,
+    closure_sequence_ssot: 'registry/production-go-closure-sequence.v1.yaml',
     remaining_blockers: remainingBlockers,
     artifacts: {
       go_decision_package_json: `evidence/GO_production_readiness/G3-06/${STAMP}/formal/production-go-decision-package.json`,

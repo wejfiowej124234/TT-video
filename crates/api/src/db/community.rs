@@ -26,7 +26,7 @@ pub struct PostRow {
     pub created_at: DateTime<Utc>,
 }
 
-type PostSqlRow = (
+pub(crate) type PostSqlRow = (
     Uuid,
     Uuid,
     String,
@@ -40,7 +40,7 @@ type PostSqlRow = (
     DateTime<Utc>,
 );
 
-fn post_row_from_sql(row: &PostSqlRow) -> PostRow {
+pub(crate) fn post_row_from_sql(row: &PostSqlRow) -> PostRow {
     PostRow {
         id: row.0,
         user_id: row.1,

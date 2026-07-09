@@ -1,0 +1,75 @@
+{
+  "schema": "traveltrust.live_closure_chain_verdict.v3",
+  "generated_at_utc": "2026-06-30T02:50:54Z",
+  "ssot_hierarchy": {
+    "child": {
+      "line": "TT_ADMIN_STAGING_GO_CLAIM",
+      "scope": "admin_go_only",
+      "values": [
+        "ALLOWED",
+        "DENIED"
+      ],
+      "artifact": "post-soak-staging-live-closure/admin-go-claim-gate.latest.json",
+      "gate_script": "scripts/ops/p2fc-gate-admin-staging-go-claim.sh"
+    },
+    "parent": {
+      "line": "TT_LIVE_CLOSURE_CHAIN_VERDICT",
+      "scope": "admin_go_phase2_closure_production_go_summary",
+      "artifact": "post-soak-staging-live-closure/live-closure-verdict.latest.json",
+      "derives": {
+        "admin_go_yes_from": "TT_ADMIN_STAGING_GO_CLAIM=ALLOWED",
+        "phase2_closure_yes_from": "staging-live-closure.latest.json verdict=PASS",
+        "production_go": "never_from_this_chain"
+      }
+    }
+  },
+  "ssot_registry": "registry/live-closure-chain-ssot.v1.yaml",
+  "child_claim": {
+    "line": "TT_ADMIN_STAGING_GO_CLAIM",
+    "value": "ALLOWED",
+    "allowed": true,
+    "reason": null
+  },
+  "verdicts": {
+    "admin_go": "YES",
+    "phase2_closure": "YES",
+    "production_go": "NO"
+  },
+  "verdict_dependencies": {
+    "admin_go": {
+      "depends_on": "TT_ADMIN_STAGING_GO_CLAIM=ALLOWED",
+      "satisfied": true
+    },
+    "phase2_closure": {
+      "depends_on": "staging-live-closure.latest.json verdict=PASS",
+      "satisfied": true,
+      "artifact_verdict": "PASS"
+    },
+    "production_go": {
+      "depends_on": null,
+      "value": "NO",
+      "never_from_chain": true
+    }
+  },
+  "adjudication_basis_only": [
+    "release_gate",
+    "runtime_evidence",
+    "closure_ssot"
+  ],
+  "forbidden_go_substitutes": [
+    "prep",
+    "static",
+    "tunnel",
+    "local",
+    "smoke",
+    "watcher",
+    "health",
+    "audit",
+    "audit_warn",
+    "prep_only",
+    "soak_inflight",
+    "mr12_prep_only"
+  ],
+  "post_completed_entrypoint": "scripts/ops/p2fc-post-soak-staging-live-closure-chain.sh --watch",
+  "honest_boundary": "Prep/Static/Tunnel/Local/Smoke/Watcher/Health/Audit/Prep-Only/Soak Inflight 均不得作为 GO 依据"
+}

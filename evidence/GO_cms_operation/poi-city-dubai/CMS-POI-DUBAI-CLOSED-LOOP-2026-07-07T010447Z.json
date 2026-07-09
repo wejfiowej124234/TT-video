@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T01:04:47Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AE",
+    "city_zh": "迪拜",
+    "city_en": "Dubai",
+    "matrix_ids": [
+      "PH-AE-229-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AE-229-FOOD",
+      "legacy_value": "阿拉伯烤肉",
+      "poi_id": "c5f1a21a-af7a-4d36-92a2-438cec5df439",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-229-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

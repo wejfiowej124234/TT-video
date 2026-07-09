@@ -1,0 +1,118 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-05T23:43:06.683Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "釜山",
+    "city_en": "Busan",
+    "poi_count": 8
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "JP Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "cross_region_remediated": "all_8_execution_plus_geo",
+  "checks": {
+    "assets_locked_8_8": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-KR-042-ATR",
+      "poi": "海云台",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-busan-coast-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T23:12:42.904Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-043-ATR",
+      "poi": "甘川文化村",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-busan-coast-community-media.jpg",
+      "locked_at_utc": "2026-07-05T23:17:44.213Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-044-ATR",
+      "poi": "札嘎其市场",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-busan-coast-community-cover.jpg",
+      "locked_at_utc": "2026-07-05T23:22:45.822Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-045-ATR",
+      "poi": "广安里大桥",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-busan-coast-provider-cover.jpg",
+      "locked_at_utc": "2026-07-05T23:27:46.921Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-046-FOOD",
+      "poi": "猪肉汤饭",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-busan-coast-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-05T23:32:19.650Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-047-FOOD",
+      "poi": "生鱼片",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-busan-coast-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T23:32:47.286Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-048-FOOD",
+      "poi": "鱼饼",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-busan-coast-community-media.jpg",
+      "locked_at_utc": "2026-07-05T23:37:21.059Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-049-FOOD",
+      "poi": "小麦面",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-busan-coast-community-cover.jpg",
+      "locked_at_utc": "2026-07-05T23:37:48.022Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 8
+  },
+  "TT_CMS_POI_CITY_BUSAN_CONTENT_QA": "CLOSED"
+}

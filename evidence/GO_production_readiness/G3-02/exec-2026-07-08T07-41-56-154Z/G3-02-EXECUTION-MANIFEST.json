@@ -1,0 +1,43 @@
+{
+  "schema": "traveltrust.g3_02_web3_payment_production_execution.v1",
+  "recorded_utc": "2026-07-08T07:41:56.155Z",
+  "run_id": "2026-07-08T07-41-56-154Z",
+  "run_dir": "evidence/GO_production_readiness/G3-02/exec-2026-07-08T07-41-56-154Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "chain_id": 11155111,
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "prod_web": "https://tt-web-prod.fly.dev",
+  "overall_verdict": "WEB3_PAYMENT_PRODUCTION_FAIL",
+  "machine_key": "TT_WEB3_PAYMENT_PRODUCTION_READINESS",
+  "pay_items": {
+    "PAY-W15": "PASS",
+    "PAY-W01": "PASS",
+    "PAY-W04": "PASS",
+    "PAY-W02": "PASS",
+    "PAY-W03": "PASS",
+    "PAY-W05": "PARTIAL",
+    "PAY-W11": "PASS",
+    "PAY-W06": "PARTIAL",
+    "PAY-W07": "FAIL",
+    "PAY-W08": "PARTIAL",
+    "PAY-W09": "PASS",
+    "PAY-W10": "PASS",
+    "PAY-W12": "PARTIAL",
+    "PAY-W13": "PARTIAL",
+    "PAY-W14": "PARTIAL",
+    "PAY-W16": "PASS"
+  },
+  "flow": {
+    "traveler_address": "0xFA62bb5F7B21C160eFe115297dc5338982E24649",
+    "guide_address": "0x96A7C3DB87a738ec3bDb1B0C1147A5c1dE8FE4E5",
+    "factory_deployer_address": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+    "order_id": "fe6b7dda-6668-4734-9937-8dd961ec4f93",
+    "guide_id": "f26abd6c-b225-4010-8c65-23ce4ef81de8",
+    "escrow_address": "0x04f7A01Dd16D159F0855b9d8BcfAd2E41eB2F8D1"
+  },
+  "discipline": {
+    "business_code_modified": false,
+    "stripe_used": false,
+    "mock_pay_used": false
+  }
+}

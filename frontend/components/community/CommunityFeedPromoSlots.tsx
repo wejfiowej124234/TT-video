@@ -96,6 +96,8 @@ function PromoHotThumb({
 
         sizes="40px"
 
+        fallbackSeed={String(rank)}
+
         fallback={
 
           !thumbSrc ? (
@@ -151,6 +153,8 @@ export function CommunityFeedPromoActivitySlot({
             src={vm.thumbSrc}
 
             sizes="72px"
+
+            fallbackSeed={previewPost?.id ?? "activity"}
 
             fallback={
 

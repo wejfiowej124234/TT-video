@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust.ttg-governance-full-coverage-certification.v1",
+  "report_id": "TTG-GOV-FULL-COVERAGE-CERT",
+  "version": "v1-20260616",
+  "phase": "②",
+  "mode": "CERTIFICATION_ONLY",
+  "baseline": "GovFreeze V2 Clean Baseline",
+  "master_list_ssot": "TTG-GOVERNANCE-FINAL-CLOSURE-CHECKLIST.md",
+  "statistics": {
+    "total_gfc": 146,
+    "dev_done": 58,
+    "testnet_done": 40,
+    "human_done": 48,
+    "ops_done": 18,
+    "dr_done": 0,
+    "enterprise_ent_checked": 0,
+    "human_applicable": 58,
+    "ops_applicable": 34,
+    "dr_applicable": 20
+  },
+  "machine_key": "TTG_GOV_FCC: GFC=146 DEV=58 TN=40 HUMAN=48 OPS=18 DR=0 ENT=100 CERT=7/12",
+  "cert_queue": "7/12"
+}

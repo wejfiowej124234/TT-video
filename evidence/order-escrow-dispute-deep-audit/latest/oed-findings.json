@@ -1,0 +1,22 @@
+{
+  "verdict": "FAIL",
+  "probes": [],
+  "summary": {
+    "total": 0,
+    "pass": 0,
+    "fail": 0,
+    "warn": 0
+  },
+  "git_sha": "57df30576c70e67251131bb357dd48f4ccf3019e",
+  "pg_consistency": {
+    "verdict": "PASS",
+    "probes": []
+  },
+  "ui_corridor": {
+    "verdict": "PASS",
+    "ui_probes": []
+  },
+  "p0": 0,
+  "p1": 0,
+  "p2": 0
+}

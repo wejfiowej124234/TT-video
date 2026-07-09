@@ -1,0 +1,57 @@
+{
+  "schema": "traveltrust.pi3_production_infrastructure_prep_ledger.v1",
+  "stamp": "20260702T152629Z",
+  "generated_at_utc": "2026-07-02T15:27:16.805Z",
+  "scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "dependency_order": [
+    "PI3-002",
+    "PI3-001",
+    "PI3-003",
+    "PI3-004"
+  ],
+  "deferred": [
+    "PI3-005",
+    "PI3-006"
+  ],
+  "machine_keys": {
+    "TT_PI3_PRODUCTION_INFRA_PREP": "ACTIVE",
+    "TT_PRODUCTION_CAPABILITY": "IN_PROGRESS",
+    "TT_RELEASE_DECISION": "NO_GO"
+  },
+  "summary": {
+    "execution_prep_complete": false,
+    "owner_live_open": 4,
+    "items": [
+      {
+        "id": "PI3-002",
+        "sprint": "151",
+        "verdict": "PI3-002_HOLD",
+        "execution_prep": "HOLD",
+        "owner_live_closure": "OPEN"
+      },
+      {
+        "id": "PI3-001",
+        "sprint": "152",
+        "verdict": "NOT_RUN",
+        "execution_prep": "HOLD",
+        "owner_live_closure": "OPEN"
+      },
+      {
+        "id": "PI3-003",
+        "sprint": "153",
+        "verdict": "NOT_RUN",
+        "execution_prep": "HOLD",
+        "owner_live_closure": "OPEN"
+      },
+      {
+        "id": "PI3-004",
+        "sprint": "154",
+        "verdict": "NOT_RUN",
+        "execution_prep": "HOLD",
+        "owner_live_closure": "OPEN"
+      }
+    ]
+  },
+  "owner_checklist": "docs/runbook/PI3-OWNER-MINIMAL-CONFIG-CHECKLIST.md",
+  "runbook": "docs/runbook/TT-PI3-PRODUCTION-INFRASTRUCTURE-PREP.md"
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_review.v1",
+  "stamp_utc": "20260704T124730Z",
+  "chain_id": "kyoto-culture",
+  "city": "京都",
+  "slots_completed": 3,
+  "slots_total": 6,
+  "TT_KYOTO_CULTURE_CHAIN_REVIEW": "PASS",
+  "regression_check": { "pass": true, "notes": "Row9 未导致 Row7–8 回归。" },
+  "surfaces": [
+    { "row": 7, "surface": "Guide", "scene": "Yuki 祇园肖像", "verified": true },
+    { "row": 8, "surface": "Provider", "scene": "私享茶室", "verified": true },
+    { "row": 9, "surface": "Acquisition", "scene": "和纸漆器静物", "verified": true }
+  ],
+  "gate_to_row10": "PASS"
+}

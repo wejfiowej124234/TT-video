@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_final_review.v1",
+  "stamp_utc": "20260704T145830Z",
+  "chain_id": "nyc-skyline",
+  "city": "纽约",
+  "country_code": "US",
+  "theme": "天际线 · 布鲁克林大桥 · 帝国大厦",
+  "rows": [37, 38, 39, 40, 41, 42],
+  "TT_NYC_SKYLINE_CHAIN": "CLOSED",
+  "city_content_score": 93.0,
+  "six_slot_narrative_arc": "PASS",
+  "country_consistency_us": "PASS",
+  "no_quality_regression_vs_prior_chains": true,
+  "chain_scores_prior_closed": {
+    "tokyo-photo": 93.2,
+    "kyoto-culture": 92.8,
+    "seoul-food": 93.0,
+    "bangkok-temple": 92.9,
+    "singapore-family": 93.1,
+    "paris-art": 93.0
+  }
+}

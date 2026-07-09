@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.ocs_content_l5_surface_boundary_review.v1",
+  "stamp_utc": "20260704T143655Z",
+  "filename": "ocs-paris-art-official-guide-cover.jpg",
+  "chain_id": "paris-art",
+  "slot": "official-guide-cover",
+  "surface": "Official Guide",
+  "surface_boundary_checklist": {
+    "official_route_only_no_guide_portrait": {
+      "pass": true,
+      "policy": "Surface Boundary：每行素材仅表达所属 Surface 业务语义；禁止 Guide/Provider/Acquisition/Official Guide/Community 职责混用。",
+      "notes": "Official Guide boundary OK for ocs-paris-art-official-guide-cover.jpg"
+    },
+    "official_route_only_no_provider_service": {
+      "pass": true,
+      "policy": "Surface Boundary：每行素材仅表达所属 Surface 业务语义；禁止 Guide/Provider/Acquisition/Official Guide/Community 职责混用。",
+      "notes": "Official Guide boundary OK for ocs-paris-art-official-guide-cover.jpg"
+    },
+    "official_route_only_no_acquisition_product": {
+      "pass": true,
+      "policy": "Surface Boundary：每行素材仅表达所属 Surface 业务语义；禁止 Guide/Provider/Acquisition/Official Guide/Community 职责混用。",
+      "notes": "Official Guide boundary OK for ocs-paris-art-official-guide-cover.jpg"
+    },
+    "official_route_only_no_community_ugc": {
+      "pass": true,
+      "policy": "Surface Boundary：每行素材仅表达所属 Surface 业务语义；禁止 Guide/Provider/Acquisition/Official Guide/Community 职责混用。",
+      "notes": "Official Guide boundary OK for ocs-paris-art-official-guide-cover.jpg"
+    },
+    "route_destination_guide_semantics_clear": {
+      "pass": true,
+      "policy": "Surface Boundary：每行素材仅表达所属 Surface 业务语义；禁止 Guide/Provider/Acquisition/Official Guide/Community 职责混用。",
+      "notes": "Official Guide boundary OK for ocs-paris-art-official-guide-cover.jpg"
+    }
+  },
+  "TT_SURFACE_BOUNDARY_REVIEW": "PASS"
+}

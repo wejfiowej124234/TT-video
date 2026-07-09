@@ -1,0 +1,555 @@
+# OCS Content Production Matrix · 设计/运营/开发唯一进度表
+# 与 content-brief.v1.yaml 同步 · Manifest First 纪律
+# Generate: node scripts/dev/generate-ocs-content-production-matrix.cjs
+
+schema: traveltrust.ocs_content_production_matrix.v1
+version: 1
+effective_utc: "2026-07-04"
+machine_key: TT_CONTENT_PRODUCTION_MATRIX
+status: PASS
+
+row_status_enum:
+  asset_status: [pending, replaced, verified]
+  review_status: [pending, pass, fail]
+
+rows:
+  - filename: ocs-tokyo-photo-guide-avatar.jpg
+    chain_id: tokyo-photo
+    city: 东京
+    slot: guide-avatar
+    surface: Guide
+    scene: "持相机向导 · 浅草寺红门或隅田川畔 · 清晨侧光"
+    copy_label: "东京摄影向导·Ken"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-tokyo-photo-provider-cover.jpg
+    chain_id: tokyo-photo
+    city: 东京
+    slot: provider-cover
+    surface: Provider
+    scene: "情侣/家庭旅拍现场 · 涩谷或台场 · 半日写真服务感"
+    copy_label: "东京旅拍写真 · 半日套餐"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-tokyo-photo-acquisition-cover.jpg
+    chain_id: tokyo-photo
+    city: 东京
+    slot: acquisition-cover
+    surface: Acquisition
+    scene: "相机镜头/限定器材 · 店内陈列或包装 · 非天际线"
+    copy_label: "东京限定镜头代购 · 悬赏"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-tokyo-photo-official-guide-cover.jpg
+    chain_id: tokyo-photo
+    city: 东京
+    slot: official-guide-cover
+    surface: Official Guide
+    scene: "浅草寺 → 晴空塔路线宽幅 · 河景+塔 · 官方攻略封面"
+    copy_label: "东京摄影一日路线 · 官方精选"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-tokyo-photo-community-cover.jpg
+    chain_id: tokyo-photo
+    city: 东京
+    slot: community-cover
+    surface: Community Cover
+    scene: "街景摄影瞬间 · 交叉路口或神社鸟居 · Feed 缩略"
+    copy_label: "清晨从浅草寺出发，沿隅田川步行至晴空塔——官方摄影路线一日实录，附机位与时间窗口建议。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-tokyo-photo-community-media.jpg
+    chain_id: tokyo-photo
+    city: 东京
+    slot: community-media
+    surface: Community Media
+    scene: "晴空塔日落或隅田川步行道 · 与 cover 不同机位"
+    copy_label: "清晨从浅草寺出发，沿隅田川步行至晴空塔——官方摄影路线一日实录，附机位与时间窗口建议。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-kyoto-culture-guide-avatar.jpg
+    chain_id: kyoto-culture
+    city: 京都
+    slot: guide-avatar
+    surface: Guide
+    scene: "和服或正装向导 · 祇园石阶 · 柔和晨雾"
+    copy_label: "京都茶道向导·Yuki"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-kyoto-culture-provider-cover.jpg
+    chain_id: kyoto-culture
+    city: 京都
+    slot: provider-cover
+    surface: Provider
+    scene: "私享茶室内部 · 茶道具特写+空间 · 包场体验"
+    copy_label: "京都茶道体验 · 私享包场"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-kyoto-culture-acquisition-cover.jpg
+    chain_id: kyoto-culture
+    city: 京都
+    slot: acquisition-cover
+    surface: Acquisition
+    scene: "和纸/手工纸品 · 工艺细节 · 非寺庙全景"
+    copy_label: "京都手工和纸 · 收购"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-kyoto-culture-official-guide-cover.jpg
+    chain_id: kyoto-culture
+    city: 京都
+    slot: official-guide-cover
+    surface: Official Guide
+    scene: "岚山竹林或祇园坡道宽幅 · 两日慢游封面"
+    copy_label: "京都文化两日慢游 · 官方攻略"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-kyoto-culture-community-cover.jpg
+    chain_id: kyoto-culture
+    city: 京都
+    slot: community-cover
+    surface: Community Cover
+    scene: "茶道体验瞬间 · 奉茶手势 · Feed 缩略"
+    copy_label: "祇园晨雾中的茶道体验与岚山竹林午后——官方文化路线两日记录。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-kyoto-culture-community-media.jpg
+    chain_id: kyoto-culture
+    city: 京都
+    slot: community-media
+    surface: Community Media
+    scene: "岚山竹林小径行人 · 与 cover 不同场景"
+    copy_label: "祇园晨雾中的茶道体验与岚山竹林午后——官方文化路线两日记录。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-seoul-food-guide-avatar.jpg
+    chain_id: seoul-food
+    city: 首尔
+    slot: guide-avatar
+    surface: Guide
+    scene: "美食向导 · 市场摊位前 · 夜间霓虹反射"
+    copy_label: "首尔美食向导·Min"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-seoul-food-provider-cover.jpg
+    chain_id: seoul-food
+    city: 首尔
+    slot: provider-cover
+    surface: Provider
+    scene: "4 小时美食团 · 长桌分享或摊位排队场景"
+    copy_label: "首尔深夜美食团 · 4 小时"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-seoul-food-acquisition-cover.jpg
+    chain_id: seoul-food
+    city: 首尔
+    slot: acquisition-cover
+    surface: Acquisition
+    scene: "韩国限定零食礼包平铺 · 包装色彩 · 非街景"
+    copy_label: "韩国限定零食礼包 · 悬赏"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-seoul-food-official-guide-cover.jpg
+    chain_id: seoul-food
+    city: 首尔
+    slot: official-guide-cover
+    surface: Official Guide
+    scene: "明洞街景到广藏市场 · 48h 美食地图封面"
+    copy_label: "首尔 48 小时美食地图"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-seoul-food-community-cover.jpg
+    chain_id: seoul-food
+    city: 首尔
+    slot: community-cover
+    surface: Community Cover
+    scene: "单道代表菜特写+筷子 · Feed 缩略"
+    copy_label: "明洞到广藏市场的 48 小时美食巡礼——官方实测排队时间与人均预算。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-seoul-food-community-media.jpg
+    chain_id: seoul-food
+    city: 首尔
+    slot: community-media
+    surface: Community Media
+    scene: "市场过道人群与摊位 · 与 cover 不同尺度"
+    copy_label: "明洞到广藏市场的 48 小时美食巡礼——官方实测排队时间与人均预算。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-bangkok-temple-guide-avatar.jpg
+    chain_id: bangkok-temple
+    city: 曼谷
+    slot: guide-avatar
+    surface: Guide
+    scene: "向导于黎明寺台阶 · 晨光 · 得体着装"
+    copy_label: "曼谷文化向导·Arun"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-bangkok-temple-provider-cover.jpg
+    chain_id: bangkok-temple
+    city: 曼谷
+    slot: provider-cover
+    surface: Provider
+    scene: "湄南河 sunset 游船晚餐 · 甲板餐桌"
+    copy_label: "湄南河 sunset 游船 · 含晚餐"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-bangkok-temple-acquisition-cover.jpg
+    chain_id: bangkok-temple
+    city: 曼谷
+    slot: acquisition-cover
+    surface: Acquisition
+    scene: "泰丝/手工织物细节 · 非河景"
+    copy_label: "泰国手工丝绸 · 收购"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-bangkok-temple-official-guide-cover.jpg
+    chain_id: bangkok-temple
+    city: 曼谷
+    slot: official-guide-cover
+    surface: Official Guide
+    scene: "黎明寺尖塔+河景宽幅 · 一日寺庙路线"
+    copy_label: "曼谷经典寺庙与河景一日"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-bangkok-temple-community-cover.jpg
+    chain_id: bangkok-temple
+    city: 曼谷
+    slot: community-cover
+    surface: Community Cover
+    scene: "寺庙晨光细节 · 尖塔剪影 · Feed"
+    copy_label: "黎明寺晨光与湄南河游船——官方寺庙一日路线实录与着装提醒。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-bangkok-temple-community-media.jpg
+    chain_id: bangkok-temple
+    city: 曼谷
+    slot: community-media
+    surface: Community Media
+    scene: "湄南河游船视角 · 与 cover 不同"
+    copy_label: "黎明寺晨光与湄南河游船——官方寺庙一日路线实录与着装提醒。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-singapore-family-guide-avatar.jpg
+    chain_id: singapore-family
+    city: 新加坡
+    slot: guide-avatar
+    surface: Guide
+    scene: "亲子向导与儿童互动 · 滨海湾花园背景"
+    copy_label: "新加坡亲子向导·Lee"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-singapore-family-provider-cover.jpg
+    chain_id: singapore-family
+    city: 新加坡
+    slot: provider-cover
+    surface: Provider
+    scene: "亲子通票场景 · 水族馆/乐园入口家庭合影"
+    copy_label: "新加坡亲子通票 · 官方合作"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-singapore-family-acquisition-cover.jpg
+    chain_id: singapore-family
+    city: 新加坡
+    slot: acquisition-cover
+    surface: Acquisition
+    scene: "新加坡设计周边/礼品包装 · 非全景"
+    copy_label: "新加坡设计周边 · 悬赏"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-singapore-family-official-guide-cover.jpg
+    chain_id: singapore-family
+    city: 新加坡
+    slot: official-guide-cover
+    surface: Official Guide
+    scene: "滨海湾天际线+家庭剪影宽幅 · 周末路线"
+    copy_label: "新加坡亲子周末官方路线"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-singapore-family-community-cover.jpg
+    chain_id: singapore-family
+    city: 新加坡
+    slot: community-cover
+    surface: Community Cover
+    scene: "儿童在景点开心瞬间 · Feed"
+    copy_label: "滨海湾到圣淘沙的亲子周末——官方路线含午休与室内备选实测。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-singapore-family-community-media.jpg
+    chain_id: singapore-family
+    city: 新加坡
+    slot: community-media
+    surface: Community Media
+    scene: "圣淘沙海滩或花园超级树 · 与 cover 不同"
+    copy_label: "滨海湾到圣淘沙的亲子周末——官方路线含午休与室内备选实测。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-paris-art-guide-avatar.jpg
+    chain_id: paris-art
+    city: 巴黎
+    slot: guide-avatar
+    surface: Guide
+    scene: "艺术向导 · 博物馆外立面或雕塑前"
+    copy_label: "巴黎艺术向导·Claire"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-paris-art-provider-cover.jpg
+    chain_id: paris-art
+    city: 巴黎
+    slot: provider-cover
+    surface: Provider
+    scene: "小团免排队入馆 · 馆内名画前讲解"
+    copy_label: "巴黎博物馆免排队 · 小团"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-paris-art-acquisition-cover.jpg
+    chain_id: paris-art
+    city: 巴黎
+    slot: acquisition-cover
+    surface: Acquisition
+    scene: "中古海报/艺术印刷品平铺 · 非埃菲尔"
+    copy_label: "巴黎中古海报 · 收购"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-paris-art-official-guide-cover.jpg
+    chain_id: paris-art
+    city: 巴黎
+    slot: official-guide-cover
+    surface: Official Guide
+    scene: "卢浮宫金字塔 dusk 或塞纳河+博物馆宽幅"
+    copy_label: "巴黎艺术博物馆两日官方指南"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-paris-art-community-cover.jpg
+    chain_id: paris-art
+    city: 巴黎
+    slot: community-cover
+    surface: Community Cover
+    scene: "名画细节或展厅透视 · Feed"
+    copy_label: "卢浮宫到奥赛的两日艺术之旅——官方预约窗口与休息点记录。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-paris-art-community-media.jpg
+    chain_id: paris-art
+    city: 巴黎
+    slot: community-media
+    surface: Community Media
+    scene: "奥赛钟面或雕塑厅 · 与 cover 不同馆/角度"
+    copy_label: "卢浮宫到奥赛的两日艺术之旅——官方预约窗口与休息点记录。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-nyc-skyline-guide-avatar.jpg
+    chain_id: nyc-skyline
+    city: 纽约
+    slot: guide-avatar
+    surface: Guide
+    scene: "摄影向导 · 布鲁克林大桥视角 · 都市风"
+    copy_label: "纽约天际线向导·Alex"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-nyc-skyline-provider-cover.jpg
+    chain_id: nyc-skyline
+    city: 纽约
+    slot: provider-cover
+    surface: Provider
+    scene: "观景台联票 · Top of the Rock 或类似 · 游客剪影"
+    copy_label: "纽约观景台联票 · 官方合作"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-nyc-skyline-acquisition-cover.jpg
+    chain_id: nyc-skyline
+    city: 纽约
+    slot: acquisition-cover
+    surface: Acquisition
+    scene: "黑胶唱片/独立音乐周边 · 非天际线"
+    copy_label: "纽约独立黑胶 · 悬赏"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-nyc-skyline-official-guide-cover.jpg
+    chain_id: nyc-skyline
+    city: 纽约
+    slot: official-guide-cover
+    surface: Official Guide
+    scene: "曼哈顿天际线全景 · 大桥+塔 · 摄影路线封面"
+    copy_label: "纽约天际线摄影官方路线"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-nyc-skyline-community-cover.jpg
+    chain_id: nyc-skyline
+    city: 纽约
+    slot: community-cover
+    surface: Community Cover
+    scene: "大桥钢索细节或街头仰拍 · Feed"
+    copy_label: "布鲁克林大桥到帝国大厦——官方天际线摄影一日路线与光线时段记录。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-nyc-skyline-community-media.jpg
+    chain_id: nyc-skyline
+    city: 纽约
+    slot: community-media
+    surface: Community Media
+    scene: "帝国大厦夜景或哈德逊河视角 · 与 cover 不同"
+    copy_label: "布鲁克林大桥到帝国大厦——官方天际线摄影一日路线与光线时段记录。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-sydney-coast-guide-avatar.jpg
+    chain_id: sydney-coast
+    city: 悉尼
+    slot: guide-avatar
+    surface: Guide
+    scene: "户外向导 · 海岸步道 · 防晒装备"
+    copy_label: "悉尼海岸向导·Mia"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-sydney-coast-provider-cover.jpg
+    chain_id: sydney-coast
+    city: 悉尼
+    slot: provider-cover
+    surface: Provider
+    scene: "海港皮划艇 · 半日体验 · 装备+海面"
+    copy_label: "悉尼海港皮划艇 · 半日"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-sydney-coast-acquisition-cover.jpg
+    chain_id: sydney-coast
+    city: 悉尼
+    slot: acquisition-cover
+    surface: Acquisition
+    scene: "手工冲浪板/海岸 craft · 非歌剧院全景"
+    copy_label: "澳洲手工冲浪板 · 收购"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-sydney-coast-official-guide-cover.jpg
+    chain_id: sydney-coast
+    city: 悉尼
+    slot: official-guide-cover
+    surface: Official Guide
+    scene: "邦迪到 Coogee 海岸步道宽幅 · 悬崖+海"
+    copy_label: "悉尼海岸一日官方徒步"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-sydney-coast-community-cover.jpg
+    chain_id: sydney-coast
+    city: 悉尼
+    slot: community-cover
+    surface: Community Cover
+    scene: "海滩浪花或泳者剪影 · Feed"
+    copy_label: "邦迪到 Coogee 海岸步道——官方一日徒步与潮汐窗口记录。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-sydney-coast-community-media.jpg
+    chain_id: sydney-coast
+    city: 悉尼
+    slot: community-media
+    surface: Community Media
+    scene: "步道俯瞰海湾 · 与 cover 不同机位"
+    copy_label: "邦迪到 Coogee 海岸步道——官方一日徒步与潮汐窗口记录。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-barcelona-arch-guide-avatar.jpg
+    chain_id: barcelona-arch
+    city: 巴塞罗那
+    slot: guide-avatar
+    surface: Guide
+    scene: "建筑向导 · 圣家堂外 · 专业讲解姿态"
+    copy_label: "巴塞罗那建筑向导·Carlos"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-barcelona-arch-provider-cover.jpg
+    chain_id: barcelona-arch
+    city: 巴塞罗那
+    slot: provider-cover
+    surface: Provider
+    scene: "高迪三件套小团 · 桂尔公园马赛克前"
+    copy_label: "高迪三件套联票 · 含导览"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-barcelona-arch-acquisition-cover.jpg
+    chain_id: barcelona-arch
+    city: 巴塞罗那
+    slot: acquisition-cover
+    surface: Acquisition
+    scene: "马赛克瓷砖/建筑纪念品 · 非全景"
+    copy_label: "巴塞罗那马赛克瓷砖 · 收购"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-barcelona-arch-official-guide-cover.jpg
+    chain_id: barcelona-arch
+    city: 巴塞罗那
+    slot: official-guide-cover
+    surface: Official Guide
+    scene: "圣家堂立面宽幅 · 官方一日封面"
+    copy_label: "巴塞罗那高迪建筑官方一日"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-barcelona-arch-community-cover.jpg
+    chain_id: barcelona-arch
+    city: 巴塞罗那
+    slot: community-cover
+    surface: Community Cover
+    scene: "马赛克细节或公园蜥蜴雕塑 · Feed"
+    copy_label: "圣家堂到桂尔公园——官方高迪建筑一日路线与预约策略实录。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-barcelona-arch-community-media.jpg
+    chain_id: barcelona-arch
+    city: 巴塞罗那
+    slot: community-media
+    surface: Community Media
+    scene: "桂尔公园全景台 · 与 cover 不同构图"
+    copy_label: "圣家堂到桂尔公园——官方高迪建筑一日路线与预约策略实录。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-dubai-luxury-guide-avatar.jpg
+    chain_id: dubai-luxury
+    city: 迪拜
+    slot: guide-avatar
+    surface: Guide
+    scene: "luxury 向导 · 沙漠 camp 或塔前 · 得体长袍/商务休闲"
+    copy_label: "迪拜沙漠向导·Omar"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-dubai-luxury-provider-cover.jpg
+    chain_id: dubai-luxury
+    city: 迪拜
+    slot: provider-cover
+    surface: Provider
+    scene: "沙漠豪华 Safari 晚宴 · 沙丘 sunset 餐桌"
+    copy_label: "迪拜沙漠豪华 Safari · 含晚宴"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-dubai-luxury-acquisition-cover.jpg
+    chain_id: dubai-luxury
+    city: 迪拜
+    slot: acquisition-cover
+    surface: Acquisition
+    scene: "定制香氛/ luxury 小物 · 非塔全景"
+    copy_label: "迪拜定制香氛 · 悬赏"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-dubai-luxury-official-guide-cover.jpg
+    chain_id: dubai-luxury
+    city: 迪拜
+    slot: official-guide-cover
+    surface: Official Guide
+    scene: "哈利法塔+沙漠双主题拼感宽幅 · 两日封面"
+    copy_label: "迪拜沙漠与都市官方两日"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-dubai-luxury-community-cover.jpg
+    chain_id: dubai-luxury
+    city: 迪拜
+    slot: community-cover
+    surface: Community Cover
+    scene: "冲沙 SUV 或沙丘曲线 · Feed"
+    copy_label: "沙漠冲沙与哈利法塔夜景——官方两日路线与安全着装建议实录。"
+    asset_status: verified
+    review_status: pass
+  - filename: ocs-dubai-luxury-community-media.jpg
+    chain_id: dubai-luxury
+    city: 迪拜
+    slot: community-media
+    surface: Community Media
+    scene: "哈利法塔夜景 · 与 cover 不同场景"
+    copy_label: "沙漠冲沙与哈利法塔夜景——官方两日路线与安全着装建议实录。"
+    asset_status: verified
+    review_status: pass

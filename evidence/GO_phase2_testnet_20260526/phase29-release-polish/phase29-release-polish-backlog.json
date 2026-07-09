@@ -1,0 +1,675 @@
+{
+  "schema_version": "1",
+  "kind": "traveltrust.phase29_release_polish_backlog.v1",
+  "updated_at": "2026-06-07T01:09:33.366611Z",
+  "phase3_entry_gate": "HOLD",
+  "phase29_dev_gate": "OPEN",
+  "phase29_status": "W2_DONE",
+  "summary": {
+    "total": 36,
+    "phase29_in_scope": 8,
+    "post_beta": 19,
+    "phase3": 5,
+    "forbidden": 4,
+    "in_scope_done": 8,
+    "in_scope_pending": 0,
+    "phase29_release_polish": "W3_DONE"
+  },
+  "category_legend": {
+    "ui": "UI优化",
+    "biz": "业务功能",
+    "db": "数据库变更",
+    "rbac": "权限变更",
+    "funds": "资金流程变更"
+  },
+  "risk_legend": {
+    "L": "low",
+    "M": "medium",
+    "H": "high"
+  },
+  "regression_legend": {
+    "L0": "ci-local-delivery-minimum",
+    "L1": "run-admin-l5-green",
+    "L2": "phase2-local-staging-parity --local-test",
+    "S5": "deploy staging",
+    "DG": "deep-release-gate",
+    "S6": "staging-retest + UAT",
+    "HAT": "phase28-human-acceptance"
+  },
+  "items": [
+    {
+      "id": "RP-001",
+      "title": "/market search visibility",
+      "bucket": "phase29",
+      "priority": "P2",
+      "risk": "L",
+      "categories": {
+        "ui": true
+      },
+      "regression": [
+        "L0",
+        "MKT",
+        "HAT"
+      ],
+      "source": "HAT-B-001",
+      "status": "DONE",
+      "completed_at": "2026-06-07T00:28:54.000Z",
+      "batch": "W1"
+    },
+    {
+      "id": "RP-003",
+      "title": "Guide role badge UI only",
+      "bucket": "phase29",
+      "priority": "P2",
+      "risk": "L",
+      "categories": {
+        "ui": true
+      },
+      "regression": [
+        "L0",
+        "L2",
+        "HAT"
+      ],
+      "source": "deep-gate-G03",
+      "status": "DONE",
+      "wave": "W3"
+    },
+    {
+      "id": "RP-006",
+      "title": "Admin disputes/reports empty copy",
+      "bucket": "phase29",
+      "priority": "P2",
+      "risk": "L",
+      "categories": {
+        "ui": true
+      },
+      "regression": [
+        "L0",
+        "L1",
+        "HAT"
+      ],
+      "source": "HAT-matrix",
+      "status": "DONE",
+      "completed_at": "2026-06-07T00:59:09.000Z",
+      "batch": "W2"
+    },
+    {
+      "id": "RP-010",
+      "title": "Admin capabilities loading copy",
+      "bucket": "phase29",
+      "priority": "P2",
+      "risk": "L",
+      "categories": {
+        "ui": true
+      },
+      "regression": [
+        "L0",
+        "L1",
+        "ADM",
+        "HAT"
+      ],
+      "source": "admin-l5",
+      "status": "DONE",
+      "completed_at": "2026-06-07T00:59:09.000Z",
+      "batch": "W2"
+    },
+    {
+      "id": "RP-011",
+      "title": "Admin git_sha unknown disclosure",
+      "bucket": "phase29",
+      "priority": "P2",
+      "risk": "L",
+      "categories": {
+        "ui": true
+      },
+      "regression": [
+        "L0",
+        "L1"
+      ],
+      "source": "admin-freeze",
+      "status": "DONE",
+      "completed_at": "2026-06-07T00:59:09.000Z",
+      "batch": "W2"
+    },
+    {
+      "id": "RP-012",
+      "title": "Auth error i18n + aria-live",
+      "bucket": "phase29",
+      "priority": "P2",
+      "risk": "L",
+      "categories": {
+        "ui": true
+      },
+      "regression": [
+        "L0",
+        "AUTH",
+        "HAT"
+      ],
+      "source": "auth-freeze",
+      "status": "DONE",
+      "completed_at": "2026-06-07T00:28:54.000Z",
+      "batch": "W1"
+    },
+    {
+      "id": "RP-013",
+      "title": "Community feed empty/loading copy",
+      "bucket": "phase29",
+      "priority": "P2",
+      "risk": "L",
+      "categories": {
+        "ui": true
+      },
+      "regression": [
+        "L0",
+        "COM",
+        "HAT"
+      ],
+      "source": "community",
+      "status": "DONE",
+      "completed_at": "2026-06-07T00:59:09.000Z",
+      "batch": "W2"
+    },
+    {
+      "id": "RP-015",
+      "title": "/me hub redirect tooltip",
+      "bucket": "phase29",
+      "priority": "P2",
+      "risk": "L",
+      "categories": {
+        "ui": true
+      },
+      "regression": [
+        "L0",
+        "L2",
+        "HAT"
+      ],
+      "source": "product-design",
+      "status": "DONE",
+      "wave": "W3"
+    },
+    {
+      "id": "RP-002",
+      "title": "Staging merchant seed account",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "M",
+      "categories": {
+        "biz": true,
+        "db": true,
+        "rbac": true
+      },
+      "regression": [
+        "L0",
+        "L2",
+        "DG",
+        "HAT",
+        "ADM"
+      ],
+      "source": "HAT-P2-001",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-004",
+      "title": "meta.seed_test_accounts.enabled",
+      "bucket": "post-beta",
+      "priority": "P1",
+      "risk": "M",
+      "categories": {
+        "biz": true
+      },
+      "regression": [
+        "L0",
+        "DG"
+      ],
+      "source": "deep-gate-G06",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-005",
+      "title": "Merchant full closure chain",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "H",
+      "categories": {
+        "biz": true,
+        "db": true,
+        "rbac": true
+      },
+      "regression": [
+        "L2",
+        "S6",
+        "HAT",
+        "ADM"
+      ],
+      "source": "HAT-matrix",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-007",
+      "title": "Traveler pay/order/dispute chain",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "H",
+      "categories": {
+        "biz": true,
+        "funds": true
+      },
+      "regression": [
+        "L2",
+        "S6",
+        "HAT"
+      ],
+      "source": "HAT-matrix",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-014",
+      "title": "Community feed server search",
+      "bucket": "post-beta",
+      "priority": "P1",
+      "risk": "M",
+      "categories": {
+        "biz": true,
+        "db": true
+      },
+      "regression": [
+        "L0",
+        "COM",
+        "S6"
+      ],
+      "source": "AF-04",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-020",
+      "title": "Market subsite staging filter verify",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "M",
+      "categories": {
+        "biz": true
+      },
+      "regression": [
+        "L2",
+        "S6",
+        "MKT"
+      ],
+      "source": "MKT-FILT-P2-001",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-021",
+      "title": "nil-guide one-step accept",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "H",
+      "categories": {
+        "biz": true,
+        "funds": true
+      },
+      "regression": [
+        "L0",
+        "L2",
+        "MKT",
+        "S6"
+      ],
+      "source": "MKT-FILT-P2-011",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-022",
+      "title": "Server-side facet filtering",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "M",
+      "categories": {
+        "biz": true
+      },
+      "regression": [
+        "L0",
+        "MKT"
+      ],
+      "source": "MKT-FILT-P2-012",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-023",
+      "title": "Cross-device favorites sync",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "M",
+      "categories": {
+        "biz": true,
+        "db": true
+      },
+      "regression": [
+        "L0",
+        "L2",
+        "MKT"
+      ],
+      "source": "MKT-FILT-P2-009",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-024",
+      "title": "Market list perf staging",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "M",
+      "categories": {
+        "ui": true,
+        "biz": true
+      },
+      "regression": [
+        "L2",
+        "S6",
+        "MKT"
+      ],
+      "source": "MKT-FILT-P2-014",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-027",
+      "title": "Market write chain staging",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "H",
+      "categories": {
+        "biz": true,
+        "funds": true
+      },
+      "regression": [
+        "L2",
+        "MKT",
+        "S6",
+        "HAT"
+      ],
+      "source": "MKT-FILT-P2-013",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-028",
+      "title": "Catalog cursor pagination",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "M",
+      "categories": {
+        "biz": true,
+        "db": true
+      },
+      "regression": [
+        "L0",
+        "L2"
+      ],
+      "source": "MKT-FILT-P2-006",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-029",
+      "title": "Provider studio entitlement staging",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "M",
+      "categories": {
+        "biz": true,
+        "funds": true
+      },
+      "regression": [
+        "L2",
+        "S6"
+      ],
+      "source": "MKT-FILT-P2-010",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-030",
+      "title": "Onboarding Stripe new scenarios",
+      "bucket": "post-beta",
+      "priority": "P1",
+      "risk": "H",
+      "categories": {
+        "biz": true,
+        "funds": true
+      },
+      "regression": [
+        "L0",
+        "L2",
+        "S6",
+        "DG"
+      ],
+      "source": "ONB-P2",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-031",
+      "title": "Provider register new steps/fields",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "H",
+      "categories": {
+        "ui": true,
+        "biz": true,
+        "db": true,
+        "rbac": true
+      },
+      "regression": [
+        "L0",
+        "AUTH",
+        "ADM"
+      ],
+      "source": "provider",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-032",
+      "title": "Governance wallet vote/claim flow",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "H",
+      "categories": {
+        "ui": true,
+        "biz": true,
+        "funds": true
+      },
+      "regression": [
+        "L2",
+        "S6",
+        "HAT"
+      ],
+      "source": "governance",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-034",
+      "title": "New admin RBAC roles/routes",
+      "bucket": "post-beta",
+      "priority": "P1",
+      "risk": "H",
+      "categories": {
+        "biz": true,
+        "db": true,
+        "rbac": true
+      },
+      "regression": [
+        "L0",
+        "L1",
+        "ADM",
+        "DG"
+      ],
+      "source": "enterprise-gap",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-036",
+      "title": "Community COM-2-4~8 backlog",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "H",
+      "categories": {
+        "ui": true,
+        "biz": true,
+        "db": true
+      },
+      "regression": [
+        "COM",
+        "S6"
+      ],
+      "source": "COMMUNITY-ROADMAP",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-037",
+      "title": "/guide schedule accept write path",
+      "bucket": "post-beta",
+      "priority": "P2",
+      "risk": "H",
+      "categories": {
+        "ui": true,
+        "biz": true,
+        "funds": true
+      },
+      "regression": [
+        "L0",
+        "L2",
+        "S6",
+        "HAT"
+      ],
+      "source": "TT-93",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-033",
+      "title": "Production CDN/HLS",
+      "bucket": "phase3",
+      "priority": "P2",
+      "risk": "H",
+      "categories": {
+        "biz": true
+      },
+      "regression": [
+        "S6"
+      ],
+      "source": "G7",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-035",
+      "title": "Mainnet/live PSP",
+      "bucket": "phase3",
+      "priority": "P0",
+      "risk": "H",
+      "categories": {
+        "biz": true,
+        "db": true,
+        "rbac": true,
+        "funds": true
+      },
+      "regression": [
+        "production-gate"
+      ],
+      "source": "phase3",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-038",
+      "title": "Prod domain WAF SSO admin",
+      "bucket": "phase3",
+      "priority": "P1",
+      "risk": "H",
+      "categories": {
+        "ui": true,
+        "biz": true,
+        "db": true,
+        "rbac": true
+      },
+      "regression": [
+        "phase3"
+      ],
+      "source": "UAT-P8",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-039",
+      "title": "CI full TS/ESLint green",
+      "bucket": "phase3",
+      "priority": "P2",
+      "risk": "M",
+      "categories": {
+        "biz": true
+      },
+      "regression": [
+        "L0",
+        "CI"
+      ],
+      "source": "UAT-P6",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-040",
+      "title": "Dedicated prod domain CDN",
+      "bucket": "phase3",
+      "priority": "P1",
+      "risk": "H",
+      "categories": {
+        "biz": true
+      },
+      "regression": [
+        "phase3"
+      ],
+      "source": "UAT-P1",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-025",
+      "title": "Five main routes layout change",
+      "bucket": "forbidden",
+      "priority": "P2",
+      "risk": "H",
+      "categories": {
+        "ui": true
+      },
+      "regression": [],
+      "source": "FIVE-MAIN-FREEZE",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-026",
+      "title": "Escrow draft visual change",
+      "bucket": "forbidden",
+      "priority": "P2",
+      "risk": "H",
+      "categories": {
+        "ui": true
+      },
+      "regression": [],
+      "source": "ESCROW-FREEZE",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-041",
+      "title": "Auth L5 structure regression",
+      "bucket": "forbidden",
+      "priority": "P2",
+      "risk": "H",
+      "categories": {
+        "ui": true
+      },
+      "regression": [],
+      "source": "AUTH-FREEZE",
+      "status": "PLANNED"
+    },
+    {
+      "id": "RP-042",
+      "title": "Provider register L5 structure",
+      "bucket": "forbidden",
+      "priority": "P2",
+      "risk": "H",
+      "categories": {
+        "ui": true
+      },
+      "regression": [],
+      "source": "PROVIDER-FREEZE",
+      "status": "PLANNED"
+    }
+  ]
+}

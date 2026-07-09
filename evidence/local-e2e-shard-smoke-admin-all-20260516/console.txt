@@ -1,0 +1,105 @@
+
+> traveltrust-frontend@0.1.0 e2e:chromium:smoke-admin-all
+> node ./scripts/run-e2e-default.mjs --project=chromium e2e/smoke-admin.spec.ts e2e/smoke-admin-extended.spec.ts
+
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] P3_CHAIN_OFF loaded from repo root .env
+[e2e] TRAVELTRUST_EMAIL_TRANSPORT=log (auth forgot/verify; resend incomplete or transport off)
+[e2e] TRAVELTRUST_AUTH_TOKEN_PEPPER set (Playwright dev default; set in root .env to override)
+[e2e] P3_CHAIN_OFF=1 (chromium mock-pay contract; root .env had "0"; use PLAYWRIGHT_PRESERVE_ROOT_P3_CHAIN_OFF=1 + run-e2e-sepolia for chain-on)
+sync-frontend-env: wrote D:\TravelTrust\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080 + NEXT_PUBLIC_SKIP_ME_FETCH=0
+[e2e] PLAYWRIGHT_REUSE_FE_SERVER=0 + reclaimed FE listen port (default for PLAYWRIGHT_FULL_STACK=1 so Next picks .env.local SKIP_ME; set PLAYWRIGHT_REUSE_FE_SERVER=1 to reuse)
+[e2e] NODE_OPTIONS += --max-old-space-size=16384 (full-stack local; long suite / Next dev OOM guard; PLAYWRIGHT_SKIP_E2E_NODE_HEAP=1 to opt out)
+[e2e] TRAVELTRUST_GATE_ENSURE_FRESH_API=1 — reclaim port / rebuild so API inherits current env
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
+[1A[2K[WebServer]     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.29s
+
+[1A[2K[WebServer]      Running `target\debug\traveltrust-api.exe`
+
+[1A[2K[WebServer] [req] x-request-id=2b89e3d5-550d-40a3-b293-77b244c607d1 path=/health status=200
+[WebServer] [req] x-message-id=1e1a4e5e-41e1-49f2-be5b-e3a58c528db9 path=/health status=200
+
+[1A[2K[WebServer] [traveltrust] dev: Webpack on Windows (avoid Turbopack HMR manifest races). Use `npm run dev:turbopack` or TRAVELTRUST_DEV_TURBO=1 for Turbopack.
+
+
+Running 54 tests using 1 worker
+
+[1A[2K(node:29264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:29264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/54] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:27:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K[WebServer] [req] x-request-id=364c5e49-0ccc-4c97-abcf-686d6a5c7df2 path=/meta status=200
+[WebServer] [req] x-message-id=e00c2d63-b5b6-44b3-a875-518e4fec6a1b path=/meta status=200
+
+[1A[2K[2/54] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:39:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K[WebServer] [req] x-request-id=9f20b539-0d28-4bfa-96da-96b582f0dbf6 path=/meta status=200
+[WebServer] [req] x-message-id=d546bc3e-5a54-4809-8827-bd576f964c40 path=/meta status=200
+
+[1A[2K(node:30384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:30384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[3/54] [chromium] › e2e\smoke-admin-extended.spec.ts:17:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 配置中心页可访问
+[1A[2K[4/54] [chromium] › e2e\smoke-admin-extended.spec.ts:26:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 功能开关页可访问
+[1A[2K[5/54] [chromium] › e2e\smoke-admin-extended.spec.ts:35:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 异步任务队列页可访问
+[1A[2K[6/54] [chromium] › e2e\smoke-admin-extended.spec.ts:44:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 配置发布登记页可访问
+[1A[2K[7/54] [chromium] › e2e\smoke-admin-extended.spec.ts:53:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 调度运行记录页可访问
+[1A[2K[8/54] [chromium] › e2e\smoke-admin-extended.spec.ts:62:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin Secret 元数据页可访问
+[1A[2K[9/54] [chromium] › e2e\smoke-admin-extended.spec.ts:71:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 租户与区域作用域页可访问
+[1A[2K[10/54] [chromium] › e2e\smoke-admin-extended.spec.ts:80:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 社区申诉台账页可访问
+[1A[2K[11/54] [chromium] › e2e\smoke-admin-extended.spec.ts:89:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 社区审核审计行页可访问
+[1A[2K[12/54] [chromium] › e2e\smoke-admin-extended.spec.ts:101:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 社区风险信号页可访问
+[1A[2K[13/54] [chromium] › e2e\smoke-admin-extended.spec.ts:110:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin API 版本页可访问
+[1A[2K[14/54] [chromium] › e2e\smoke-admin-extended.spec.ts:121:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 社区策略变更审计页可访问
+[1A[2K[15/54] [chromium] › e2e\smoke-admin-extended.spec.ts:133:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin Feed 排序快照页可访问
+[1A[2K[16/54] [chromium] › e2e\smoke-admin-extended.spec.ts:142:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 社区处罚台账页可访问
+[1A[2K[17/54] [chromium] › e2e\smoke-admin-extended.spec.ts:151:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 评论可见性页可访问
+[1A[2K[18/54] [chromium] › e2e\smoke-admin-extended.spec.ts:160:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 社区滥用策略页可访问
+[1A[2K[19/54] [chromium] › e2e\smoke-admin-extended.spec.ts:169:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 生命周期状态机页可访问
+[1A[2K[20/54] [chromium] › e2e\smoke-admin-extended.spec.ts:178:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 数据权限策略页可访问
+[1A[2K[21/54] [chromium] › e2e\smoke-admin-extended.spec.ts:187:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 内部工具审计页可访问
+[1A[2K[22/54] [chromium] › e2e\smoke-admin-extended.spec.ts:196:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 媒体访问审计页可访问
+[1A[2K[23/54] [chromium] › e2e\smoke-admin-extended.spec.ts:205:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 签名 URL 令牌台账页可访问
+[1A[2K[24/54] [chromium] › e2e\smoke-admin-extended.spec.ts:217:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 社区申诉复核页可访问
+[1A[2K[25/54] [chromium] › e2e\smoke-admin-extended.spec.ts:228:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 订单详情页可访问（占位 id）
+[1A[2K[26/54] [chromium] › e2e\smoke-admin-extended.spec.ts:237:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 争议详情页可访问（占位 id）
+[1A[2K[27/54] [chromium] › e2e\smoke-admin-extended.spec.ts:246:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 用户详情页可访问（占位 id）
+[1A[2K[28/54] [chromium] › e2e\smoke-admin-extended.spec.ts:255:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 向导详情页可访问（占位 id）
+[1A[2K[29/54] [chromium] › e2e\smoke-admin-extended.spec.ts:264:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 评价详情页可访问（占位 id）
+[1A[2K[30/54] [chromium] › e2e\smoke-admin-extended.spec.ts:273:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 审批单详情页可访问（占位 id）
+[1A[2K[31/54] [chromium] › e2e\smoke-admin-extended.spec.ts:282:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 审计日志详情页可访问（占位 id）
+[1A[2K[32/54] [chromium] › e2e\smoke-admin-extended.spec.ts:291:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 索引器对账报告详情页可访问（占位 report id）
+[1A[2K[33/54] [chromium] › e2e\smoke-admin-extended.spec.ts:300:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 配置发布详情页可访问（占位 id）
+[1A[2K[34/54] [chromium] › e2e\smoke-admin-extended.spec.ts:309:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 告警 incident 详情页可访问（占位 id）
+[1A[2K[35/54] [chromium] › e2e\smoke-admin-extended.spec.ts:320:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台 DSAR 合规子页（500 / 70 / 07 §5.6C 可达性） › Admin DSAR 事件轴页可访问（占位 requestId）
+[1A[2K[36/54] [chromium] › e2e\smoke-admin-extended.spec.ts:330:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台 DSAR 合规子页（500 / 70 / 07 §5.6C 可达性） › Admin DSAR 登记更新页可访问（占位 requestId）
+[1A[2K[37/54] [chromium] › e2e\smoke-admin.spec.ts:17:7 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台首页可访问（middleware 占位 Cookie）
+[1A[2K[38/54] [chromium] › e2e\smoke-admin.spec.ts:26:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台 FeeRouter、索引器、对账与财务（5.2A / 110 / 200 / 07 §5.7 可达性） › Admin FeeRouter 事件页可访问
+[1A[2K[39/54] [chromium] › e2e\smoke-admin.spec.ts:35:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台 FeeRouter、索引器、对账与财务（5.2A / 110 / 200 / 07 §5.7 可达性） › Admin 财务摘要页可访问
+[1A[2K[40/54] [chromium] › e2e\smoke-admin.spec.ts:44:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台 FeeRouter、索引器、对账与财务（5.2A / 110 / 200 / 07 §5.7 可达性） › Admin 索引器健康页可访问
+[1A[2K[41/54] [chromium] › e2e\smoke-admin.spec.ts:53:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台 FeeRouter、索引器、对账与财务（5.2A / 110 / 200 / 07 §5.7 可达性） › Admin 对账报告列表页可访问
+[1A[2K[42/54] [chromium] › e2e\smoke-admin.spec.ts:64:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 订单列表页可访问
+[1A[2K[43/54] [chromium] › e2e\smoke-admin.spec.ts:73:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 争议列表页可访问
+[1A[2K[44/54] [chromium] › e2e\smoke-admin.spec.ts:82:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 评价列表页可访问
+[1A[2K[45/54] [chromium] › e2e\smoke-admin.spec.ts:91:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 用户列表页可访问
+[1A[2K[46/54] [chromium] › e2e\smoke-admin.spec.ts:100:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 向导入驻台账页可访问
+[1A[2K[47/54] [chromium] › e2e\smoke-admin.spec.ts:109:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 审批列表页可访问
+[1A[2K[48/54] [chromium] › e2e\smoke-admin.spec.ts:118:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 可观测性页可访问
+[1A[2K[49/54] [chromium] › e2e\smoke-admin.spec.ts:129:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台审计、告警、社区风控与合规台账（70 / 100 / 120 / 160 / 07 §5.3B·§5.6C 可达性） › Admin 审计日志列表页可访问
+[1A[2K[50/54] [chromium] › e2e\smoke-admin.spec.ts:138:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台审计、告警、社区风控与合规台账（70 / 100 / 120 / 160 / 07 §5.3B·§5.6C 可达性） › Admin 运维审计动作页可访问
+[1A[2K[51/54] [chromium] › e2e\smoke-admin.spec.ts:147:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台审计、告警、社区风控与合规台账（70 / 100 / 120 / 160 / 07 §5.3B·§5.6C 可达性） › Admin 告警 incident 入口页可访问
+[1A[2K[52/54] [chromium] › e2e\smoke-admin.spec.ts:156:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台审计、告警、社区风控与合规台账（70 / 100 / 120 / 160 / 07 §5.3B·§5.6C 可达性） › Admin 社区举报工单页可访问
+[1A[2K[53/54] [chromium] › e2e\smoke-admin.spec.ts:165:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台审计、告警、社区风控与合规台账（70 / 100 / 120 / 160 / 07 §5.3B·§5.6C 可达性） › Admin Schema 与迁移页可访问
+[1A[2K[54/54] [chromium] › e2e\smoke-admin.spec.ts:174:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台审计、告警、社区风控与合规台账（70 / 100 / 120 / 160 / 07 §5.3B·§5.6C 可达性） › Admin DSAR 请求台账页可访问
+[1A[2K  54 passed (5.1m)

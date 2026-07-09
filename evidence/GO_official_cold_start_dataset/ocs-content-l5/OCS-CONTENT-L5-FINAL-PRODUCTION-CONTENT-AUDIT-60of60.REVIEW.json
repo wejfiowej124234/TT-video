@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.ocs_content_l5_final_production_content_audit.v1",
+  "stamp_utc": "20260704T154830Z",
+  "audit": "60of60_final_production_content",
+  "rows_total": 60,
+  "rows_verified_pass": 60,
+  "chains_closed": 10,
+  "TT_OCS_CONTENT_L5_FINAL_PRODUCTION_CONTENT_AUDIT": "PASS",
+  "weighted_l5_score": 93,
+  "pass_threshold": 85,
+  "g1_g10_all_pass": true,
+  "nine_class_all_pass": true,
+  "no_quality_regression": true,
+  "global_regression_60_rows": {
+    "pass": true
+  },
+  "content_portfolio_60of60": {
+    "pass": true,
+    "evidence": "OCS-CONTENT-L5-CONTENT-PORTFOLIO-60of60.REVIEW.json"
+  },
+  "visual_sequence_60of60": {
+    "pass": true,
+    "evidence": "OCS-CONTENT-L5-VISUAL-SEQUENCE-60of60.REVIEW.json"
+  },
+  "milestone_60of60": {
+    "pass": true,
+    "evidence": "OCS-CONTENT-L5-OFFICIAL-CONTENT-LIBRARY-MILESTONE-60of60.REVIEW.json"
+  },
+  "four_key_readiness": {
+    "TT_OCS_CONTENT_L5": "CLOSED",
+    "TT_OCS_CONTENT_L5_READY": "YES",
+    "TT_CONTENT_PRODUCTION_MATRIX": "PASS",
+    "TT_CONTENT_BRAND_CONSISTENCY": "PASS",
+    "closure_evidence": "evidence/GO_official_cold_start_dataset/ocs-content-l5/20260704T155000Z/"
+  },
+  "honest_boundary": "① local Content L5 内容库 60/60 ≠ staging UAT G6 盲测 ≠ Production GO",
+  "closure_stamp_utc": "20260704T155000Z"
+}

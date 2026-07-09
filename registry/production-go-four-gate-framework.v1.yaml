@@ -1,0 +1,181 @@
+# Production GO · Four-Layer · Four-Gate Framework · Machine SSOT
+#
+# Sole Production GO authority (2026-07-08):
+#   Business Ready → Web3 Ready → Infrastructure Ready → Operations Ready → Owner Sign-off → TT_PRODUCTION_GO
+#
+# Payment architecture (NEVER mix):
+#   Layer 2 Web3 = USDC + Escrow (core) · Stripe = Optional Fiat Onboarding (NOT Layer 2 · NOT a Gate)
+#
+# Human: docs/runbook/PRODUCTION-GO-FOUR-GATE-FRAMEWORK.md
+# Gate runner: scripts/check-production-go-four-gates.sh
+# Remaining work: registry/production-go-remaining-work.v1.yaml
+
+schema: traveltrust.production_go_four_gate_framework.v1
+version: 1
+effective_utc: "2026-07-08"
+machine_key: TT_PRODUCTION_GO_FOUR_GATE_FRAMEWORK
+governance_root: registry/production-governance-principles.v1.yaml
+governance_version: production_release_governance_v1
+
+payment_architecture_ssot: registry/payment-architecture-classification.v1.yaml
+
+forbidden_misclassification:
+  - stripe_in_layer_2_web3
+  - stripe_as_production_go_gate
+  - usdc_payment_in_layer_4_operations_only
+  - scattered_pi3_gates_without_four_gate_mapping
+
+gate_chain:
+  - id: GATE-1
+    machine_key: TT_PRODUCTION_BUSINESS_READY
+    label: Business Ready
+    layer: L1_BUSINESS
+    verdict_enum: [NOT_STARTED, IN_PROGRESS, PASS, FAIL]
+    current: PASS
+  - id: GATE-2
+    machine_key: TT_PRODUCTION_WEB3_READY
+    label: Web3 Ready
+    layer: L2_WEB3
+    verdict_enum: [NOT_STARTED, IN_PROGRESS, PASS, FAIL]
+    current: IN_PROGRESS
+    blocks_production_go: true
+    note: >
+      L2 aggregate — PASS only when TT_WEB3_PAYMENT_PRODUCTION_READY AND
+      TT_WEB3_SYSTEM_PRODUCTION_READY both PASS. Payment alone → IN_PROGRESS.
+    sub_gates:
+      payment_rail:
+        machine_key: TT_WEB3_PAYMENT_PRODUCTION_READY
+        status: PASS
+        scope: G3-02 PAY-W01..W16
+      entire_system:
+        machine_key: TT_WEB3_SYSTEM_PRODUCTION_READY
+        status: IN_PROGRESS
+        scope: M01-M24 full Web3 System
+    layering_ssot: registry/web3-gate-layering.v1.yaml
+  - id: GATE-3
+    machine_key: TT_PRODUCTION_INFRASTRUCTURE_READY
+    label: Infrastructure Ready
+    layer: L3_INFRASTRUCTURE
+    verdict_enum: [NOT_STARTED, IN_PROGRESS, PASS, FAIL]
+    current: IN_PROGRESS
+  - id: GATE-4
+    machine_key: TT_PRODUCTION_OPERATIONS_READY
+    label: Operations Ready
+    layer: L4_OPERATIONS
+    verdict_enum: [NOT_STARTED, IN_PROGRESS, PASS, FAIL]
+    current: IN_PROGRESS
+  - id: GATE-5
+    machine_key: TT_OWNER_FINAL_SIGNOFF
+    label: Owner Final Sign-off
+    requires: [GATE-1, GATE-2, GATE-3, GATE-4]
+    current: PENDING
+  - id: GATE-FINAL
+    machine_key: TT_PRODUCTION_GO
+    label: Production GO
+    requires: [GATE-5]
+    current: NO_GO
+
+layers:
+  L1_BUSINESS:
+    title: Business（业务）
+    gate: GATE-1
+    scope: 六角色 · 订单生命周期 · Escrow/Settlement/FeeRouter 业务语义 · CMS/OCS · 冷启动 · RBAC · API · 数据一致性
+    status: PASS
+    completion_estimate: "90%+"
+    checklist_ref: registry/production-go-four-gate-framework.v1.yaml#layer_L1_checks
+    legacy_mapping: [TT_PRODUCTION_READINESS_G1_GATE, TT_PRODUCTION_ENTRY_READY, OCS_PRODUCTION_PARITY_AUDIT]
+    not_includes: [on_chain_usdc_smoke, fly_cdn_cutover, full_ops_crud_uat]
+
+  L2_WEB3:
+    title: Web3（链）
+    gate: GATE-2
+    scope: Wallet · DID · Sign · Approve · Deposit · Escrow · Release · Settlement · Treasury · FeeRouter · Event · Indexer · Ledger · Explorer · RPC · Recovery
+    status: IN_PROGRESS
+    completion_estimate: "Payment 16/16 · System IN_PROGRESS"
+    payment_checklist_ref: registry/production-payment-readiness-checklist.v1.yaml
+    system_gate_ref: registry/web3-system-production-gate.v1.yaml
+    layering_ssot: registry/web3-gate-layering.v1.yaml
+    runbook_ref: docs/runbook/PRODUCTION-USDC-GO-LIVE-MASTER-CHECKLIST.md
+    system_runbook_ref: docs/runbook/WEB3-SYSTEM-PRODUCTION-RUNTIME-WIRING.md
+    gate_script_payment: scripts/check-web3-payment-production-readiness.sh
+    gate_script_system: scripts/dev/run-web3-system-deep-audit.cjs
+    asset: USDC
+    forbidden: [stripe_as_core_payment, mock_pay_on_prod, payment_pass_as_full_web3_pass]
+    optional_extension:
+      stripe_fiat_onboarding: P1_FUTURE_FIAT_ONRAMP
+      not_in_gate_2: true
+
+  L3_INFRASTRUCTURE:
+    title: Infrastructure（基础设施）
+    gate: GATE-3
+    scope: Fly · PostgreSQL · Redis · RPC · Object Storage · CDN · DNS · TLS · CORS · Backup · Rollback · Monitoring · Alert · Logging
+    status: IN_PROGRESS
+    g3_domains: [G3-01, G3-03, G3-04, G3-05]
+    legacy_mapping: [TT_PRODUCTION_READINESS_G3_GATE, PI3-001, PI3-002]
+    not_only: [CDN]
+
+  L4_OPERATIONS:
+    title: Operations（运营）
+    gate: GATE-4
+    scope: 全运营后台 — 内容/用户/市场/增长/系统运营 CRUD · 发布 · 审核 · 配置 · 同步
+    status: IN_PROGRESS
+    note: CMS publish loop GO ≠ full Operations Ready — 须全链路 UAT
+    partial_evidence: TT_PRODUCTION_OPERATIONS_GO
+
+layer_L1_checks:
+  six_role_business_flow: PASS
+  order_lifecycle: PASS
+  escrow_settlement_feerouter_business_semantics: PASS
+  cms_foundation: PASS
+  ocs_bootstrap: PASS
+  ocs_parity: PASS
+  cold_start_framework: PASS
+  rbac: PASS
+  api_consistency: PASS
+  data_consistency: PASS
+  hat_manual_bfm: PASS
+  rc_freeze: PASS
+  production_entry_ready: PASS
+
+layer_L2_checks:
+  ref: production-payment-readiness-checklist.v1.yaml
+  items: PAY-W01..PAY-W16
+  stripe: excluded_from_layer
+
+layer_L3_checks:
+  fly_apps: [tt-api-prod, tt-web-prod]
+  postgresql: [backup, pitr, restore_drill]
+  redis: configured_or_n_a
+  rpc: [primary, backup, failover_runbook]
+  object_storage: [community_media, r2_or_s3]
+  cdn: [media, hls]
+  dns_tls_cors: PI3-002
+  backup_rollback: [G3-03, go-live §8]
+  monitoring_alert_logging: G3-04
+
+layer_L4_checks:
+  content_ops: [homepage_hero, announcement, banner, video, landing_ambient, countries, cities, poi]
+  user_ops: [user_mgmt, multi_identity, did, trust, blacklist, report, moderation]
+  market_ops: [guide, provider, acquisition, listings, official_content]
+  growth_ops: [invite, growth, airdrop, campaign, ranking]
+  system_ops: [config, feature_flag, audit, rbac, logs]
+  consumer_sync: public_api_parity_after_publish
+
+legacy_gate_supersession:
+  rule: Four-Gate Framework is sole Production GO authority from 2026-07-08
+  retained_for_history: [G1, G2, G3, PI3-001..006]
+  mapping:
+    G1_PASS: contributes_to GATE-1
+    G2_PASS: contributes_to GATE-1_and_GATE-3_partial
+    G3_VERIFIED: contributes_to GATE-3
+    G3-02_VERIFIED: contributes_to GATE-2
+    PI3-003: optional_extension_only_not_gate
+
+optional_extensions_outside_gates:
+  - id: STRIPE_FIAT_ONBOARDING
+    classification: P1_FUTURE_FIAT_ONRAMP
+    layer: none
+    blocks_production_go: false
+
+evidence_root: evidence/GO_production_readiness/four-gate
+evidence_manifest: evidence/GO_production_readiness/four-gate/PRODUCTION-GO-FOUR-GATE-LATEST.json

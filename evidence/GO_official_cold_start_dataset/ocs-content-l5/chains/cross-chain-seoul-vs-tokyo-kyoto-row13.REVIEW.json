@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T130430Z",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "guide_avatar_comparison": {
+    "tokyo-photo": "Ken 持相机 浅草",
+    "kyoto-culture": "Yuki 和服 祇园",
+    "seoul-food": "Min 夜市 韩文霓虹 炒年糕",
+    "distinct": true
+  },
+  "homogenization_risk": false
+}

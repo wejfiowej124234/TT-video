@@ -1,0 +1,792 @@
+ M AGENTS.md
+ M crates/api/src/chain_off/guides.rs
+ M crates/api/src/db/mod.rs
+ M crates/api/src/db/users_sessions.rs
+ M crates/api/src/main.rs
+ M crates/api/src/middleware/auth_pause_metrics/mod.rs
+ M crates/api/src/middleware/mod.rs
+ M crates/api/src/router.rs
+ M crates/api/src/routes/admin/mod.rs
+ M crates/api/src/routes/governance/mod.rs
+ M crates/api/src/routes/health_meta/handlers.rs
+ M crates/api/src/routes/itineraries.rs
+ M crates/api/src/routes/market_merchant_gate.rs
+ M crates/api/src/routes/me_security.rs
+ M data/indexer_audit.jsonl
+ D data/indexer_state.json.runtime
+ M deploy/fly/tt-api-staging/fly.toml
+ M docs/handbook/engineering/README.md
+ M docs/runbook/PHASE2-REPOSITORY-STATUS.md
+ M docs/runbook/PHASE2-STAGING-UAT-PRODUCTION-READINESS-MATRIX.md
+ M "docs/\346\265\213\350\257\225\350\264\246\345\217\267\344\270\216\346\234\254\345\234\260\350\201\224\350\260\203.md"
+ D evidence/TESTNET_STAGING_FREEZE/ACTIVE.json
+ M evidence/TESTNET_STAGING_FREEZE/LATEST.json
+ M frontend/.i18n-coverage.json
+ M frontend/app/admin/growth/airdrop-campaigns/AdminAirdropCampaignsPageMain.tsx
+ M frontend/app/admin/growth/analytics/AdminGrowthAnalyticsPageMain.tsx
+ M frontend/app/admin/growth/anti-fraud/AdminAntiFraudPageMain.tsx
+ M frontend/app/admin/growth/early-bird/AdminEarlyBirdPageMain.tsx
+ M frontend/app/admin/growth/kol-center/AdminKolCenterPageMain.tsx
+ M frontend/app/admin/growth/referral-codes/AdminReferralCodesPageMain.tsx
+ M frontend/app/admin/growth/reward-ledger/AdminRewardLedgerPageMain.tsx
+ M frontend/app/admin/official/accounts/AdminOfficialAccountsPageMain.tsx
+ M frontend/app/admin/official/cold-start/AdminOfficialColdStartPageMain.tsx
+ M frontend/app/admin/official/guides/AdminOfficialGuidesPageMain.tsx
+ M frontend/app/admin/official/itinerary-templates/AdminOfficialItineraryTemplatesPageMain.tsx
+ M frontend/app/community/me/page.tsx
+ M frontend/app/governance/delegate/GovernanceDelegatePageMain.tsx
+ M frontend/app/governance/layout.tsx
+ M frontend/app/guide/GuideDashboardPageMain.tsx
+ M frontend/app/guides/page.tsx
+ M frontend/app/itinerary/new/loading.tsx
+ M frontend/app/itinerary/new/page.tsx
+ M frontend/app/me/identities/page.tsx
+ M frontend/app/me/onboarding/MeOnboardingPageMain.tsx
+ M frontend/app/me/settings/MeSettingsPageInner.tsx
+ M frontend/app/meta/route.ts
+ M frontend/app/orders/OrdersListPageMain.tsx
+ M frontend/app/orders/new/OrdersNewPageMain.tsx
+ M frontend/app/traveltrust/traveltrustNetworkPage.contract.test.ts
+ M frontend/components/admin/AdminHomeClient.tsx
+ M frontend/components/admin/AdminShellSidebar.tsx
+ M frontend/components/admin/ops/OpsPlaneFetchStates.tsx
+ M frontend/components/escrow/EscrowDetail/index.tsx
+ M frontend/components/governance/GovernanceTargetNotice.tsx
+ M frontend/components/guide/GuideWorkbenchAvailabilityCard.tsx
+ M frontend/components/itinerary/ItineraryNewRouteSuspense.tsx
+ M frontend/components/me/CommunityMeDedicatedPageAuthGate.tsx
+ M frontend/components/me/MeSettingsL5ConfirmDialog.tsx
+ M frontend/components/me/onboarding/MeOnboardingUsdcFeePayment.tsx
+ M frontend/components/traveltrust/cinematic/TravelTrustCinematicHero.tsx
+ M frontend/components/traveltrust/cinematic/TravelTrustIdentityTheater.tsx
+ M frontend/components/traveltrust/cinematic/TravelTrustLandingNav.tsx
+ M frontend/components/traveltrust/cinematic/TravelTrustPulseTicker.tsx
+ M frontend/components/traveltrust/cinematic/TravelTrustStablecoinGateway.tsx
+ M frontend/e2e/93-matrix-admin-domain-batch.spec.ts
+ M frontend/e2e/93-matrix-enterprise-p1-batch.spec.ts
+ M frontend/e2e/93-matrix-path-p1-remediation.spec.ts
+ M frontend/e2e/account-nav-header-ia.spec.ts
+ M frontend/e2e/community-subroutes-l5-markers.spec.ts
+ M frontend/e2e/f012-f013-f014-request.spec.ts
+ M frontend/e2e/f021-f022-f023-request.spec.ts
+ M frontend/e2e/f024-f025-f026-request.spec.ts
+ M frontend/e2e/f027-f028-f033-request.spec.ts
+ M frontend/e2e/f029-f030-f031-request.spec.ts
+ M frontend/e2e/g-s1-referral-minimum-loop.spec.ts
+ M frontend/e2e/g-s2-growth-ledger-observer.spec.ts
+ M frontend/e2e/g-s3-early-bird-multiplier.spec.ts
+ M frontend/e2e/g-s4-user-referral-center.spec.ts
+ M frontend/e2e/g-s5-admin-growth-fraud-reward-ops.spec.ts
+ M frontend/e2e/g-s6-airdrop-snapshot-reward-calc.spec.ts
+ M frontend/e2e/g-s7-growth-analytics-kol-readonly.spec.ts
+ M frontend/e2e/helpers/accountNavSession.ts
+ M frontend/e2e/helpers/apiSession.ts
+ M frontend/e2e/helpers/headerUserMenu.ts
+ M frontend/e2e/helpers/meSettingsE2e.ts
+ M frontend/e2e/helpers/metaFetchRetry.ts
+ M frontend/e2e/helpers/p0RealApiWaits.ts
+ M frontend/e2e/helpers/seedPaidMarketEntitlements.ts
+ M frontend/e2e/helpers/smoke-nav.ts
+ M frontend/e2e/helpers/traveltrustV6Ready.ts
+ M frontend/e2e/itinerary-52.spec.ts
+ M frontend/e2e/me-settings-l5-hub.spec.ts
+ M frontend/e2e/p0-spine-real-api-public.spec.ts
+ M frontend/e2e/p0-spine-real-api-session.spec.ts
+ M frontend/e2e/pi1-traveltrust-v6-browser-acceptance.spec.ts
+ M frontend/e2e/release-flow.spec.ts
+ M frontend/e2e/setup/meta-chain-contracts.spec.ts
+ M frontend/e2e/smoke-admin-extended.spec.ts
+ M frontend/e2e/smoke-admin.spec.ts
+ M frontend/e2e/smoke-community.spec.ts
+ M frontend/e2e/trust-gate-escrow.spec.ts
+ M frontend/fly.staging.toml
+ M frontend/hooks/useTraveltrustHashScroll.ts
+ M frontend/lib/admin/adminShellSidebarL5.contract.test.ts
+ M frontend/lib/apiClient/index.ts
+ M frontend/lib/catalogApi/client.ts
+ M frontend/lib/guide/guideOrderCorridorModel.ts
+ M frontend/lib/me/meIdentitiesIaClosure.contract.test.ts
+ M frontend/lib/me/useMeSettingsHubPathnameReload.ts
+ M frontend/lib/me/useMeSettingsSummary.ts
+ M frontend/lib/orders/ordersListFetchParams.ts
+ M frontend/lib/orders/ordersListL5.contract.test.ts
+ M frontend/lib/orders/ordersListL5.ts
+ M frontend/lib/orders/ordersNewL5.contract.test.ts
+ M frontend/lib/orders/ordersNewL5.ts
+ M frontend/lib/provider/merchantOrderCorridorModel.ts
+ M frontend/locales/en.ts
+ M frontend/modules/traveltrust-home/hooks/useTraveltrustComposerPage.ts
+ M frontend/modules/traveltrust-home/presentation/TravelTrustHomeLandingNavSlot.tsx
+ M frontend/modules/traveltrust-home/presentation/TravelTrustHomeMainColumn.tsx
+ M frontend/modules/traveltrust-home/presentation/TravelTrustNetworkPageComposer.tsx
+ M frontend/playwright.config.ts
+ M frontend/scripts/run-e2e-default.mjs
+ M frontend/test-utils/dataTtSelectors.ts
+ M scripts/dev/gen-phase2-baseline-consistency-audit.py
+ M scripts/dev/l5-p0-closure-lib.sh
+ M scripts/dev/lib/release-seed-guide-slot.sh
+ M scripts/dev/lib/staging-adm-u01-env.sh
+ M scripts/dev/lib/tt-patch-order-assignable-guide.sh
+ M scripts/dev/phase2-deep-release-gate.py
+ M scripts/dev/run-admin-l5-green.sh
+ M scripts/dev/run-community-deep-audit.sh
+ M scripts/dev/run-enterprise-local-10.sh
+ M scripts/dev/run-enterprise-site-10-local.sh
+ M scripts/dev/run-order-escrow-dispute-deep-audit.sh
+ M scripts/dev/run-orders-corridor-local.sh
+ M scripts/dev/run-phase2-deep-release-gate.sh
+ M scripts/dev/run-phase2-testnet-closure-governance-audit.sh
+ M scripts/dev/run-phase2-testnet-post-soak-graduation-closure.sh
+ M scripts/dev/run-post-start-l3-multi-identity-smoke.ps1
+ M scripts/dev/run-post-start-provider-workbench-l5-smoke.ps1
+ M scripts/dev/run-post-start-steward-workbench-l5-smoke.ps1
+ M scripts/dev/seed-guide-public-market-probe.ps1
+ M scripts/dev/smoke-ab-core-chain.sh
+ M scripts/dev/smoke-acquisition-pd009-local.sh
+ M scripts/dev/smoke-admin-rbac-matrix-local.sh
+ M scripts/dev/smoke-growth-referral-p0-local.sh
+ M scripts/dev/smoke-guide-detail-booking-local.sh
+ M scripts/dev/smoke-multi-identity-closure-local.sh
+ M scripts/dev/smoke-seed-tourist-guide-transaction-local.sh
+ M scripts/dev/start-api-for-playwright.sh
+ M scripts/dev/start-api-with-seed-README.md
+ M scripts/dev/start-api-with-seed.bat
+ M scripts/dev/verify-seed-test-accounts-login.ps1
+ M scripts/gates/local-e2e-chromium-full-matrix.sh
+ M scripts/ops/p2fc-launch-staging-soak-72h.sh
+ M scripts/ops/p2fc-rerun-after-soak.sh
+ M scripts/ops/p2fc-soak-attest.sh
+?? .cursor/rules/traveltrust-page-closure-audit-reply.mdc
+?? .cursor/rules/traveltrust-phase1-convergence-execution.mdc
+?? config/jurisdiction_country_pool_net_profit.sepolia.json
+?? config/jurisdiction_country_pool_net_profit.template.json
+?? contracts/script/BootstrapStakePoolJurisdictionsViaTimelock.s.sol
+?? contracts/script/CpNetProfitSepoliaCutoverAndDrill.s.sol
+?? contracts/script/DeployGovFreezeV1Stack.s.sol
+?? contracts/script/DeployGovFreezeV2CleanBaseline.s.sol
+?? contracts/script/DeployTtgGovFreezeEnforcement.s.sol
+?? contracts/script/ProxyDeployLib.sol
+?? contracts/script/SepoliaCastVote.s.sol
+?? contracts/src/GovernanceTreasuryP4Cap.sol
+?? contracts/src/TtgGovFreezeConstants.sol
+?? contracts/src/TtgPrimaryMarketV1.sol
+?? contracts/src/TtgSeatConcentrationRegistry.sol
+?? contracts/src/upgrade/
+?? contracts/test/RegionStewardStakePoolProxyBootstrap.t.sol
+?? contracts/test/TtgGovFreezeV1Enforcement.t.sol
+?? contracts/test/TtgGovFreezeV1ProxyArchitecture.t.sol
+?? crates/api/src/complexity_convergence.rs
+?? data/guide_uploads/
+?? data/profile_avatars/918b1ecf-1032-4067-a031-18c27c95ea60.png
+?? docs/adr/ADR-20260613-active-workspace-context-switcher.md
+?? "docs/handbook/engineering/101-CMS\344\270\216\345\206\205\345\256\271\350\277\220\350\220\245\344\270\255\345\277\203\345\256\236\346\226\275\350\223\235\345\233\276.md"
+?? "docs/handbook/engineering/102-Referral\344\270\216\346\227\251\351\270\237\345\242\236\351\225\277\347\263\273\347\273\237v1.0\345\256\236\346\226\275\350\223\235\345\233\276.md"
+?? "docs/handbook/engineering/103-CMS-OPS-Growth\347\273\237\344\270\200\346\236\266\346\236\204\350\241\245\345\205\205.md"
+?? docs/handbook/engineering/104-Admin-Coverage-Gap-Report.md
+?? "docs/handbook/engineering/105-S2-Catalog-CMS\346\267\261\345\272\246\350\256\276\350\256\241\350\257\204\345\256\241.md"
+?? docs/handbook/engineering/106-Catalog-CMS-Implementation-Readiness-Report.md
+?? docs/handbook/engineering/107-Catalog-Schema-v1.0.md
+?? docs/handbook/engineering/108-S2-004-Migration-Audit-Report.md
+?? docs/handbook/engineering/109-Catalog-Import-v1.0.md
+?? docs/handbook/engineering/110-Catalog-Import-Readiness-Report.md
+?? docs/handbook/engineering/111-Catalog-Reimport-Rollback-Audit-Report.md
+?? docs/handbook/engineering/112-S2-API-RO-Audit-Report.md
+?? docs/handbook/engineering/113-S2b-Catalog-Consumer-Audit-Report.md
+?? docs/handbook/engineering/114-S2b-Catalog-Consumer-Closure-Report.md
+?? docs/handbook/engineering/115-S2c-Catalog-Live-Gate-Report.md
+?? docs/handbook/engineering/116-S3-W5-POI-Media-Catalog-Report.md
+?? docs/handbook/engineering/117-S4-Catalog-Server-Validation-Alignment-Report.md
+?? docs/handbook/engineering/118-S4b-Meta-Product-Countries-Catalog-Alignment-Report.md
+?? docs/handbook/engineering/119-S4c-Catalog-Geo-Server-Final-Revalidation-Report.md
+?? docs/handbook/engineering/120-S5-Catalog-Release-Freeze-Report.md
+?? docs/handbook/engineering/121-PI3-002-Production-Domain-CDN-CORS-Readiness-Report.md
+?? docs/handbook/engineering/122-PI3-001-Production-Database-Backup-Readiness-Report.md
+?? docs/handbook/engineering/123-101-CMS-Audit-Report.md
+?? docs/handbook/engineering/124-102-Referral-Audit-Report.md
+?? docs/handbook/engineering/125-Production-Feature-Gap-Matrix.md
+?? docs/handbook/engineering/126-G-S1-Referral-Minimum-Loop-Report.md
+?? docs/handbook/engineering/127-G-S2-Growth-Ledger-Observer-Report.md
+?? docs/handbook/engineering/128-G-S3-EarlyBird-Multiplier-Report.md
+?? docs/handbook/engineering/129-G-S4-User-Referral-Center-Report.md
+?? docs/handbook/engineering/130-G-S5-Admin-Growth-AntiFraud-RewardOps-Report.md
+?? docs/handbook/engineering/131-G-S6-Airdrop-Snapshot-Reward-Calculation-Report.md
+?? docs/handbook/engineering/132-G-S7-Growth-Analytics-KOL-ReadOnly-Report.md
+?? docs/handbook/engineering/133-G-S8-Growth-Release-Freeze-Report.md
+?? docs/handbook/engineering/134-101-CMS-Official-OPS-Post-Growth-Recheck-Report.md
+?? docs/handbook/engineering/135-DOC-101-RW-CMS-Official-OPS-Blueprint-Rewrite-Report.md
+?? docs/handbook/engineering/136-C-S1-Admin-Content-CRUD-PublishQueue-Report.md
+?? docs/handbook/engineering/137-C-S2-POI-Media-Review-Workflow-Report.md
+?? docs/handbook/engineering/138-C-S3-Catalog-Operations-Admin-Report.md
+?? docs/handbook/engineering/139-C-S4-Catalog-Revision-Import-Operations-Report.md
+?? docs/handbook/engineering/140-C-S5-Catalog-Server-Geo-Validation-Operations-Report.md
+?? docs/handbook/engineering/141-O-S1-Official-Accounts-Management-Report.md
+?? docs/handbook/engineering/142-O-S2-Official-Guides-Community-Publishing-Report.md
+?? docs/handbook/engineering/143-O-S3-Official-Itinerary-Templates-Report.md
+?? docs/handbook/engineering/144-O-S4-Cold-Start-Campaigns-Deployment-Operations-Report.md
+?? docs/handbook/engineering/145-Operations-Platform-Release-Freeze-Report.md
+?? docs/handbook/engineering/146-C-S6-Catalog-Consumer-OptIn-Cutover-Report.md
+?? docs/handbook/engineering/147-PI3-Closure-Program-Audit-Report.md
+?? docs/handbook/engineering/148-PI3-005-Production-Scope-Decision-Report.md
+?? docs/handbook/engineering/149-Operations-E2E-Acceptance-Report.md
+?? docs/handbook/engineering/150-E2E-A-01-ColdStart-Campaign-Consumer-Report.md
+?? docs/handbook/engineering/151-PI3-002-Production-Domain-TLS-CDN-CORS-Execution-Report.md
+?? docs/handbook/engineering/152-PI3-001-FlyPG-Backup-Disaster-Recovery-Report.md
+?? docs/handbook/engineering/153-PI3-003-Stripe-Live-Production-Webhook-Report.md
+?? docs/handbook/engineering/154-PI3-004-Production-Readiness-Verification-Report.md
+?? docs/handbook/engineering/155-PI3-006-GoLive-Checklist-Production-Cutover-Report.md
+?? docs/handbook/engineering/156-L5-Operations-Deep-Audit-Report.md
+?? docs/handbook/engineering/157-L5-P0-Closure-Report.md
+?? docs/handbook/engineering/158-Production-Readiness-Deep-Audit-Report.md
+?? docs/handbook/engineering/159-L5-UI-UX-Enterprise-Acceptance-Report.md
+?? docs/handbook/engineering/160-UX-P0-Closure-Report.md
+?? docs/handbook/engineering/161-L5-Enterprise-Acceptance-Report.md
+?? docs/handbook/engineering/162-L5-Product-Excellence-Report.md
+?? docs/handbook/engineering/163-L5-Enterprise-Reliability-Report.md
+?? docs/handbook/engineering/164-L5-Enterprise-Live-Evidence-Report.md
+?? docs/handbook/engineering/165-L5-Enterprise-Business-Governance-Report.md
+?? docs/handbook/engineering/166-Business-Expansion-Audit-Report.md
+?? docs/handbook/engineering/167-Business-Expansion-Enterprise-Gap-Audit-Report.md
+?? docs/handbook/engineering/168-Business-Expansion-Sprint168-BE-FRD01-BE-GCM01-Blueprint.md
+?? docs/handbook/engineering/169-Sprint168B-Business-Expansion-Implementation-Report.md
+?? docs/handbook/engineering/170-Business-Expansion-Sprint169-RS-DAO-Enterprise-Audit-Report.md
+?? docs/handbook/engineering/171-BE-RS-01-RegionShare-Reconcile-Implementation-Report.md
+?? docs/handbook/engineering/172-BE-DAO-01-Governance-UAT-Implementation-Report.md
+?? docs/handbook/engineering/173-ROV-01-Real-Operations-Validation-Program-Blueprint.md
+?? docs/handbook/engineering/174-Real-Operations-Validation-Report.md
+?? docs/handbook/engineering/175-Production-Readiness-Audit-Program-Blueprint.md
+?? docs/handbook/engineering/176-Production-Readiness-Audit-Report.md
+?? docs/handbook/engineering/177-Production-Governance-Gap-Closure-Report.md
+?? docs/handbook/engineering/181-Complexity-Audit-Final-Candidate-Before-Soak.md
+?? docs/handbook/engineering/artifacts/
+?? docs/runbook/ADM-U01-FULL-ROLE-WRITE-MATRIX-AUDIT-REPORT.md
+?? docs/runbook/ADM-U01-SHELL-BROWSER-AUDIT-REPORT.md
+?? docs/runbook/ADM-U01-staging-rbac-matrix.md
+?? docs/runbook/ADM-U02-admin-permissions-2fa-approval.md
+?? docs/runbook/ADMIN-FRONTEND-DEEP-AUDIT-REPORT.md
+?? docs/runbook/ADMIN-MUTATING-ACTIONS-AUDIT-REPORT.md
+?? docs/runbook/ADMIN-SECURITY-CLOSURE-REPORT.md
+?? docs/runbook/COMMUNITY-DEEP-AUDIT-REPORT.md
+?? docs/runbook/COMMUNITY-MEDIA-OBJECT-STORAGE.md
+?? docs/runbook/COMMUNITY-STAGING-OPS-RUNBOOK.md
+?? docs/runbook/COUNTRY-MARKET-GO-LIVE-PLAYBOOK.v1.md
+?? docs/runbook/CROSS-DOMAIN-INTEGRATION-AUDIT-REPORT.md
+?? docs/runbook/ENTERPRISE-L5-MACHINE-CLOSURE-20260617.md
+?? docs/runbook/ENTERPRISE-SITE-10-L5-MATRIX.md
+?? docs/runbook/FINAL-SYSTEM-AUDIT-REPORT.md
+?? docs/runbook/FIVE-ROLE-FULL-CHAIN-AUDIT-REPORT.md
+?? docs/runbook/FOUNDER-REVIEW-REPORT.md
+?? docs/runbook/IDENTITY-TRUST-GOVERNANCE-DEEP-AUDIT-REPORT.md
+?? docs/runbook/LOCAL-SIX-ACCOUNT-UI-L5-AUDIT-REPORT.md
+?? docs/runbook/ORDER-ESCROW-DISPUTE-DEEP-AUDIT-REPORT.md
+?? docs/runbook/PES-CONVERSION-ANALYTICS-WAVE3.md
+?? docs/runbook/PES-CONVERSION-FUNNEL-AUDIT-WAVE2.md
+?? docs/runbook/PES-REAL-USER-JOURNEY-REVIEW.md
+?? docs/runbook/PES-WAVE4-CONVERSION-CLOSURE-AUDIT.md
+?? docs/runbook/PES-WAVE4-VALIDATION-AUDIT.md
+?? docs/runbook/PES-WAVE5-DECISION-PACKAGE.md
+?? docs/runbook/PHASE1-ENTERPRISE-CLOSURE-AUDIT.md
+?? docs/runbook/PHASE1-TO-PHASE2-TRANSITION-AUDIT.md
+?? docs/runbook/PHASE1_5-DATA-LINK-MODEL-GATE.md
+?? docs/runbook/PHASE2-HUMAN-ACCEPTANCE-SPRINT-REPORT.md
+?? docs/runbook/PHASE2-TESTNET-IMPLEMENTATION-PLAN-AND-RISKS.md
+?? docs/runbook/PHASE2-WIDE-TABLE-REVIEW-APPLICATION.md
+?? docs/runbook/PHASE2.5-COVERAGE-HARDENING.md
+?? docs/runbook/PHASE3-ENTRY-PRODUCTION-READINESS-MATRIX.md
+?? docs/runbook/PHASE3-ENTRY-RECHECK-REPORT.md
+?? docs/runbook/PHASE3-PRODUCTION-PREPARATION.md
+?? docs/runbook/POI-IMAGE-VERIFICATION-SPRINT.md
+?? docs/runbook/PRODUCT-ENHANCEMENT-SPRINT.md
+?? docs/runbook/PRODUCTION-CUTOVER-RUNBOOK-SEPOLIA-SCOPE.md
+?? docs/runbook/PRODUCTION-DB-BACKUP-RPO-RTO-MATRIX-SEPOLIA-SCOPE.md
+?? docs/runbook/PRODUCTION-ENV-MATRIX-SEPOLIA-SCOPE.md
+?? docs/runbook/PRODUCTION-GO-DECISION-PACKAGE.md
+?? docs/runbook/PRODUCTION-INCIDENT-RESPONSE.md
+?? docs/runbook/PRODUCTION-INFRASTRUCTURE-AUDIT-REPORT.md
+?? docs/runbook/PRODUCTION-OPS-RUNBOOK.md
+?? docs/runbook/PRODUCTION-READINESS-REPORT.md
+?? docs/runbook/PRODUCTION-REGRESSION-MATRIX-SEPOLIA-SCOPE.md
+?? docs/runbook/PRODUCTION-STRIPE-ENV-MATRIX-SEPOLIA-SCOPE.md
+?? docs/runbook/TESTNET-REALITY-UAT-SPRINT-REPORT.md
+?? docs/runbook/TT-31-STRUCTURED-GAP-CATALOG-001.md
+?? docs/runbook/TT-96-16-D3-hand-checklist-001.md
+?? docs/runbook/TT-96-20-E2E-COVERAGE-GAP-MAP-001.md
+?? docs/runbook/TT-96-20-P0-E2E-LADDER-001.md
+?? docs/runbook/TT-96-20-UI-UX-TEN-ROUND-DEEP-CHECKLIST-001.md
+?? docs/runbook/TT-9629-protocol-convergence-steward-stake-testnet.md
+?? docs/runbook/TT-9630-protocol-convergence-testnet-pregate.md
+?? docs/runbook/TT-CHAIN-ARCHITECTURE-AUDITABLE-SPEC.md
+?? docs/runbook/TT-COUNTRY-POOL-REVENUE-ENTERPRISE-HAT.md
+?? docs/runbook/TT-ENTERPRISE-AUDIT-GAP-BATCH-CLOSURE-001.md
+?? docs/runbook/TT-FULL-SYSTEM-ALIGNMENT-STABILITY-PROGRAM.md
+?? docs/runbook/TT-FULL-SYSTEM-MULTI-DIMENSION-AUDIT-CHECKLIST.md
+?? docs/runbook/TT-GATE-COVERAGE-vs-96-15-GAP-REGISTRY-001.md
+?? docs/runbook/TT-GOVERNANCE-ENTERPRISE-HAT-REVIEW.md
+?? docs/runbook/TT-GOVFREEZE-V2-ECONOMIC-BASELINE-ACCEPTANCE-ONLY.md
+?? docs/runbook/TT-LOCAL-AI-AGENT-BRIEF-001.md
+?? docs/runbook/TT-LOCAL-CONVERGENCE-PHASE-AD-001.md
+?? docs/runbook/TT-LOCAL-FULL-E2E-MATRIX-001.md
+?? docs/runbook/TT-LOCAL-P0-MANUAL-UAT-CHECKLIST.md
+?? docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md
+?? docs/runbook/TT-MASTER-PUBLISH-GO-CHECKLIST-001.md
+?? docs/runbook/TT-NEXT-BATCH-BACKLOG-001.md
+?? docs/runbook/TT-PH1-CINEMATIC-ANIMATION-L5-001.md
+?? docs/runbook/TT-PH1-SITE-THEME-V1-CONTROL-MATRIX.md
+?? docs/runbook/TT-PH1-SITE-THEME-V1-UPGRADE-001.md
+?? docs/runbook/TT-PH1-TRAVELTRUST-V6-HOMEPAGE-AUDIT-001.md
+?? docs/runbook/TT-PHASE1-CONVERGENCE-EXECUTION-DISCIPLINE.md
+?? docs/runbook/TT-PHASE1-EXIT-REVIEW.md
+?? docs/runbook/TT-PHASE1-FINAL-CONVERGENCE-FREEZE.md
+?? docs/runbook/TT-PHASE1-SPRINT-A-ROOT-CAUSE-BURN-DOWN.md
+?? docs/runbook/TT-PHASE1-SPRINT-B-MASTER-GREEN-CAMPAIGN.md
+?? docs/runbook/TT-PHASE2-C1-STAGING-EVIDENCE.md
+?? docs/runbook/TT-PHASE2-C10-STAGING-EVIDENCE.md
+?? docs/runbook/TT-PHASE2-C11-STAGING-EVIDENCE.md
+?? docs/runbook/TT-PHASE2-C12-STAGING-EVIDENCE.md
+?? docs/runbook/TT-PHASE2-C2-STAGING-EVIDENCE.md
+?? docs/runbook/TT-PHASE2-C3-STAGING-EVIDENCE.md
+?? docs/runbook/TT-PHASE2-C4-STAGING-EVIDENCE.md
+?? docs/runbook/TT-PHASE2-C5-STAGING-EVIDENCE.md
+?? docs/runbook/TT-PHASE2-C6-STAGING-EVIDENCE.md
+?? docs/runbook/TT-PHASE2-C7-STAGING-EVIDENCE.md
+?? docs/runbook/TT-PHASE2-C8-STAGING-EVIDENCE.md
+?? docs/runbook/TT-PHASE2-C9-STAGING-EVIDENCE.md
+?? docs/runbook/TT-PHASE2-CHAIN-DEPLOYMENT-GATE.md
+?? docs/runbook/TT-PHASE2-COMMUNITY-MATRIX-FINAL-ATTESTATION.md
+?? docs/runbook/TT-PHASE2-CONTRACT-DEPLOYMENT-READINESS.md
+?? docs/runbook/TT-PHASE2-FUND-STACK-SEPOLIA-BROADCAST-CHECKLIST.md
+?? docs/runbook/TT-PHASE2-GOVERNANCE-SAFE-EXECUTION-PLAN.md
+?? docs/runbook/TT-PHASE2-GOVERNANCE-STACK-SEPOLIA-BROADCAST-CHECKLIST.md
+?? docs/runbook/TT-PHASE2-P51-COUNTRY-LEDGER-SEPOLIA-BROADCAST-CHECKLIST.md
+?? docs/runbook/TT-PHASE2-REDEMPTION-EPOCH-SEPOLIA-BROADCAST-CHECKLIST.md
+?? docs/runbook/TT-PHASE2-SEPOLIA-DEPLOYED-SPINE-SUMMARY.md
+?? docs/runbook/TT-PHASE2-SEPOLIA-DRY-RUN-PRECHECK.md
+?? docs/runbook/TT-PHASE2-SEPOLIA-SPINE-FINAL-ATTESTATION.md
+?? docs/runbook/TT-PHASE2-SEPOLIA-SYSTEM-ACCEPTANCE-REPORT.md
+?? docs/runbook/TT-PHASE2-STAGING-P0-CLEARANCE-PLAN.md
+?? docs/runbook/TT-PHASE2-STAGING-READINESS-REPORT.md
+?? docs/runbook/TT-PHASE2-STEWARD-POOL-SEPOLIA-BROADCAST-CHECKLIST.md
+?? docs/runbook/TT-PHASED-DELIVERY-CHECKLIST-001.md
+?? docs/runbook/TT-REPOSITORY-ALIGNMENT-CLEANUP-PROGRAM.md
+?? docs/runbook/TT-UI-V2-SOLO-WALKTHROUGH-001.md
+?? docs/runbook/TTG-CERT-EXECUTION-SESSION-RUNBOOK.md
+?? docs/runbook/TTG-GOVERNANCE-ENTERPRISE-CLOSURE-PROGRAM.md
+?? docs/runbook/TTG-GOVERNANCE-OPERATIONAL-READINESS-PROGRAM.md
+?? docs/runbook/community-publishdrawer-staging-evidence.md
+?? docs/runbook/evidence-templates/
+?? docs/runbook/issues-phase1-local-traveltrust-v6.md
+?? docs/runbook/issues-phase1-ui-ux-traveltrust-v6.md
+?? docs/runbook/local-release-ready-vs-testnet.md
+?? "docs/spec/46-\346\250\241\345\235\227\345\214\226\345\256\241\350\256\241\344\270\216\346\213\206\345\210\206\347\231\273\350\256\260\350\241\250.md"
+?? "docs/spec/99-\351\223\276\344\270\212\345\220\210\347\272\246\344\270\216\346\261\240\345\255\220\346\200\273\350\247\210.md"
+?? docs/spec/artifacts/
+?? docs/spec/governance-token/84-valuation-anchor-P1-memo.md
+?? docs/spec/governance-token/G24-CLEAN-BASELINE-01-ROOT-CAUSE-AUDIT-REPORT.md
+?? docs/spec/governance-token/G24-P-UPGRADE-01-proxy-architecture-gate.md
+?? docs/spec/governance-token/GOV-04-SEAT-STAKE-ADMISSION-AUDIT.md
+?? docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md
+?? docs/spec/governance-token/GOVERNANCE-TO-BUSINESS-CONSISTENCY-AUDIT-20260615.md
+?? docs/spec/governance-token/PHASE2-COUNTRY-POOL-ONCHAIN-ALIGNMENT-AUDIT-20260615.md
+?? docs/spec/governance-token/THREE-TRACK-INDEPENDENT-PARAMS-CONSISTENCY-AUDIT-20260615.md
+?? docs/spec/governance-token/TTG-GOVERNANCE-360-FINAL-CLOSURE-AUDIT.md
+?? docs/spec/governance-token/TTG-GOVERNANCE-ATTACK-SURFACE-OPERATIONAL-COVERAGE-AUDIT.md
+?? docs/spec/governance-token/TTG-GOVERNANCE-ENTERPRISE-100-FINAL-GAP-AUDIT.md
+?? docs/spec/governance-token/TTG-GOVERNANCE-FINAL-CLOSURE-CHECKLIST.md
+?? docs/spec/governance-token/TTG-GOVERNANCE-FULL-COVERAGE-CERTIFICATION-REPORT.md
+?? docs/spec/governance-token/TTG-GOVERNANCE-FULL-COVERAGE-MATRIX.md
+?? docs/spec/governance-token/TTG-GOVERNANCE-HUMAN-CERTIFICATION-COVERAGE-REPORT.md
+?? docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md
+?? docs/spec/governance-token/TTG-GOVERNANCE-OPS-DISASTER-RECOVERY-AUDIT.md
+?? docs/spec/governance-token/TTG-GOVERNANCE-PRODUCTION-READINESS-CLOSURE-AUDIT.md
+?? docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.md
+?? docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md
+?? docs/spec/governance-token/TTG-TOKENOMICS-FULL-SYSTEM-AUDIT-REPORT.md
+?? docs/spec/governance-token/TTG-TOKENOMICS-UI-ALIGNMENT-AUDIT-REPORT.md
+?? docs/spec/governance-token/archive/
+?? docs/spec/governance-token/artifacts/
+?? docs/spec/governance-token/country-pool-fundraise-governance-v1.md
+?? docs/spec/governance-token/country-pool-legal-freeze-matrix-v1.md
+?? docs/spec/governance-token/country-pool-net-profit-accounting-spec-v1.md
+?? docs/spec/governance-token/country-revenue-model-v1-draft.md
+?? docs/spec/governance-token/fund-flow-ssot.v1.md
+?? docs/spec/governance-token/protocol-convergence-P1-memo.md
+?? docs/spec/governance-token/protocol-ssot.v1.md
+?? docs/spec/governance-token/protocol-ssot.v1.yaml
+?? docs/spec/governance-token/state-machine.v1.md
+?? docs/spec/governance-token/ttg-allocation-permissions-flows-ssot-v1.md
+?? docs/spec/governance-token/ttg-primary-market-and-exit-policy-v1-draft.md
+?? docs/spec/governance-token/ttg-reference-price-v1-draft.md
+?? evidence/.tmp-align-api-meta.json
+?? evidence/.tmp-align-meta.json
+?? evidence/.tmp-align-web-meta.json
+?? evidence/.tmp-audit-api-meta.json
+?? evidence/.tmp-audit-web-meta.json
+?? evidence/.tmp-diff/
+?? evidence/.tmp-recon-meta.json
+?? evidence/.tmp-ssot-meta.json
+?? evidence/.tmp-ssot-web-meta.json
+?? evidence/93-batch-agent-full-verify-20260513/
+?? evidence/96-16-d3-hand-checklist-POINTER.md
+?? evidence/COMPLEXITY_CONVERGENCE/
+?? evidence/GO_20260501/
+?? evidence/GO_20260501_TT9627_local_segment123/
+?? evidence/GO_20260501_agent_local_convergence/
+?? evidence/GO_20260501_local_delivery_closure/
+?? evidence/GO_20260501_tt9627_local_chain_001/
+?? evidence/GO_20260501_tt9627_strict_r002/
+?? evidence/GO_20260507/
+?? evidence/GO_20260512-playwright-triage/
+?? evidence/GO_20260512/
+?? evidence/GO_20260513_full_verify/
+?? evidence/GO_20260517/
+?? evidence/GO_20260518/
+?? evidence/GO_20260518_r002_iss007_prereport/
+?? evidence/GO_BE_RS_01/
+?? evidence/GO_admin_rbac_alignment/
+?? evidence/GO_ai_pre_human_uat/
+?? evidence/GO_full_system_alignment_stability/
+?? evidence/GO_g24_clean_baseline_01/
+?? evidence/GO_gov_freeze_v2_browser_acceptance/
+?? evidence/GO_governance_concentration_audit_sepolia/
+?? evidence/GO_governance_doc_drift_cleanup/
+?? evidence/GO_govfreeze_v2_human_screen_acceptance/
+?? evidence/GO_hat_r1_sepolia/
+?? evidence/GO_local_country_pool_net_profit_gate2.3/D-4555-B-HAT-LOCAL-REPORT.md
+?? evidence/GO_local_gov_freeze_v1_onchain/
+?? evidence/GO_local_traveltrust_ph1/
+?? evidence/GO_mtm_146_ai_functional_sweep/
+?? evidence/GO_phase1_convergence/
+?? evidence/GO_phase1_local_blind_test_20260615/
+?? evidence/GO_phase2_admin_staging_closure/
+?? evidence/GO_phase2_baseline_consistency_audit/
+?? evidence/GO_phase2_chain_sepolia/
+?? evidence/GO_phase2_deploy_backlog/
+?? evidence/GO_phase2_gov_freeze_v1_sepolia/
+?? evidence/GO_phase2_gov_freeze_v2_clean_baseline/
+?? evidence/GO_phase2_gov_freeze_v2_ttg_erc20/
+?? evidence/GO_phase2_graduation_closure_program/
+?? evidence/GO_phase2_staging_ui_real_user_sprint/
+?? evidence/GO_phase2_steward_stake_anvil/
+?? evidence/GO_phase2_steward_stake_sepolia/
+?? evidence/GO_phase2_testnet_20260526/A-LOG-001/
+?? evidence/GO_phase2_testnet_20260526/A-LOG-002/
+?? evidence/GO_phase2_testnet_20260526/A-LOG-003/
+?? evidence/GO_phase2_testnet_20260526/A-ME-001/
+?? evidence/GO_phase2_testnet_20260526/A-NEG-001/
+?? evidence/GO_phase2_testnet_20260526/A-NEG-002/
+?? evidence/GO_phase2_testnet_20260526/B-GDE-001/
+?? evidence/GO_phase2_testnet_20260526/B-MKT-001/
+?? evidence/GO_phase2_testnet_20260526/B-MSG-002/
+?? evidence/GO_phase2_testnet_20260526/B-ORD-001/
+?? evidence/GO_phase2_testnet_20260526/B-ORD-003/
+?? evidence/GO_phase2_testnet_20260526/ENV-DB-PROOF/
+?? evidence/GO_phase2_testnet_20260526/FAILURES.md
+?? evidence/GO_phase2_testnet_20260526/GATE_A_TO_B.md
+?? "evidence/GO_phase2_testnet_20260526/PREP-local-smoke-\342\221\240-only.md"
+?? evidence/GO_phase2_testnet_20260526/README.md
+?? evidence/GO_phase2_testnet_20260526/closing-gap/
+?? evidence/GO_phase2_testnet_20260526/community/
+?? evidence/GO_phase2_testnet_20260526/deep-release-gate/
+?? evidence/GO_phase2_testnet_20260526/g2-staging-migrate/
+?? evidence/GO_phase2_testnet_20260526/git-staging-baseline-sync/
+?? evidence/GO_phase2_testnet_20260526/governance-manual-p1/
+?? evidence/GO_phase2_testnet_20260526/local-staging-parity/20260606T122306Z/
+?? evidence/GO_phase2_testnet_20260526/local-staging-parity/20260606T122919Z/
+?? evidence/GO_phase2_testnet_20260526/local-staging-parity/20260607T000100Z-S5-DEPLOY-SUMMARY.md
+?? evidence/GO_phase2_testnet_20260526/local-staging-parity/20260607T024132Z/
+?? evidence/GO_phase2_testnet_20260526/local-staging-parity/20260607T031803Z/
+?? evidence/GO_phase2_testnet_20260526/local-staging-parity/20260623T160429Z/
+?? evidence/GO_phase2_testnet_20260526/local-staging-parity/20260623T162000Z/
+?? evidence/GO_phase2_testnet_20260526/local-staging-parity/PHASE2-DUAL-LOOP-COMPLETION-REPORT.md
+?? evidence/GO_phase2_testnet_20260526/onboarding-smoke/
+?? evidence/GO_phase2_testnet_20260526/phase0/
+?? evidence/GO_phase2_testnet_20260526/phase2/
+?? evidence/GO_phase2_testnet_20260526/phase25-coverage-hardening/
+?? evidence/GO_phase2_testnet_20260526/phase29-release-polish/
+?? evidence/GO_phase2_testnet_20260526/phase3-production-prep/
+?? evidence/GO_phase2_testnet_20260526/r002_section4_backfill.md
+?? evidence/GO_phase2_testnet_20260526/report.json
+?? evidence/GO_phase2_testnet_20260526/summary.md
+?? evidence/GO_phase2_testnet_20260526/transition-audit/
+?? evidence/GO_phase2_testnet_execution_sprint/
+?? evidence/GO_phase2_testnet_full_sync/
+?? evidence/GO_phase2_testnet_graduation/
+?? evidence/GO_phase2_testnet_perfect_validation/
+?? evidence/GO_phase2_tl1_wave1_prep/
+?? evidence/GO_production/
+?? evidence/GO_repository_alignment_cleanup/
+?? evidence/GO_staging_admin_adm_u02/
+?? evidence/GO_staging_admin_l5_audit/
+?? evidence/GO_staging_admin_rbac_matrix/
+?? evidence/GO_stake_pool_jurisdiction_bootstrap/
+?? evidence/GO_tt_country_pool_revenue_enterprise_hat/
+?? evidence/GO_tt_governance_enterprise_hat/
+?? evidence/GO_ttg_cert/
+?? evidence/GO_ttg_stats_triple_sync_freeze/
+?? evidence/GO_ttg_tokenomics_full_system_audit/
+?? evidence/GO_ttg_tokenomics_ui_alignment/
+?? evidence/P2FC_SOAK_72H/
+?? evidence/P2FC_SOAK_72H_STAGING/
+?? evidence/PARALLEL_UAT_SOAK_WINDOW/
+?? evidence/PHASE2_FULL_COVERAGE/
+?? evidence/PRODUCTION_GOVERNANCE_GAP_CLOSURE/
+?? evidence/PRODUCTION_READINESS_AUDIT/
+?? evidence/ROV_01/
+?? evidence/TESTNET_STAGING_FREEZE/ARCHIVED-20260624T010744Z-metadata-sync.json
+?? evidence/TESTNET_STAGING_FREEZE/ARCHIVED-20260624T060236Z-lifted.json
+?? evidence/TESTNET_STAGING_FREEZE/LATEST-LIFTED.json
+?? evidence/TESTNET_STAGING_FREEZE/LIFTED-20260617T011356Z-sha-sync.json
+?? evidence/TESTNET_STAGING_FREEZE/LIFTED-20260624T060236Z.json
+?? evidence/TESTNET_STAGING_FREEZE/LIFTED.latest.json
+?? evidence/_audit_meta_live.json
+?? evidence/_merge-a.csv
+?? evidence/_merge-b.csv
+?? evidence/_merge-out.csv
+?? evidence/_merge-out2.csv
+?? evidence/_tmp-validate-test.csv
+?? evidence/adm-u01-full-write-matrix-audit/
+?? evidence/adm-u01-shell-browser-audit/
+?? evidence/admin-frontend-deep-audit/
+?? evidence/admin-governance-audit/
+?? evidence/admin-mutating-actions-audit/
+?? evidence/admin-security-closure/
+?? evidence/archive-evidence/
+?? evidence/archive/
+?? evidence/audit-quality/
+?? evidence/b417_governance_execution_runs/owner_sign_off.json.template
+?? evidence/b417_governance_execution_runs/run_20260608T043036Z_gate_stub/
+?? evidence/b417_governance_execution_runs/run_20260608T043223Z_gate_stub/
+?? evidence/b417_governance_execution_runs/run_20260608T043452Z_gate_stub/
+?? evidence/b417_governance_execution_runs/run_20260608T064044Z_gate_stub/
+?? evidence/b417_governance_execution_runs/run_20260608T071159Z_gate_stub/
+?? evidence/b417_governance_execution_runs/run_20260608T072749Z_gate_stub/
+?? evidence/b417_governance_execution_runs/run_20260608T091332Z_gate_stub/
+?? evidence/b417_governance_execution_runs/run_20260608T093347Z_gate_stub/
+?? evidence/b477_pg_pool_stress_recovery/run_20260608T050537Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260608T051017Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260608T051743Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260608T053218Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260608T061104Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260608T063347Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260608T071637Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260608T092608Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260610T045947Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260610T050325Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260610T053524Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260610T054548Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260610T064405Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260610T073009Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260610T074721Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260610T101712Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260610T104709Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260610T105002Z/
+?? evidence/b477_pg_pool_stress_recovery/run_20260610T105628Z/
+?? evidence/business_expansion/
+?? evidence/community-deep-audit/
+?? evidence/community-media-local-minio-chain/
+?? evidence/country_market/
+?? evidence/cross-domain-integration-audit/
+?? evidence/doa-audit/
+?? evidence/execution-audit/
+?? evidence/five-role-full-chain-audit/
+?? evidence/founder-review-20260531/
+?? evidence/freeze-governance/
+?? evidence/identity-trust-governance-deep-audit/
+?? evidence/investor-zip-pre-send-audit-extract-sample.txt
+?? evidence/l5_enterprise_acceptance/
+?? evidence/l5_enterprise_business_governance/
+?? evidence/l5_enterprise_live_evidence/
+?? evidence/l5_enterprise_reliability/
+?? evidence/l5_operations_deep_audit/
+?? evidence/l5_product_excellence/
+?? evidence/l5_ui_ux_enterprise_acceptance/
+?? evidence/lifecycle-forensic-audit/
+?? evidence/local-core-release-20260516/
+?? evidence/local-e2e-chain-off-mock-pay-20260517/
+?? evidence/local-e2e-matrix-failures-rerun-20260517/
+?? evidence/local-e2e-shard-93-admin-matrix-20260516/
+?? evidence/local-e2e-shard-core-release-20260516/
+?? evidence/local-e2e-shard-smoke-admin-all-20260516/
+?? evidence/local-e2e-shard-smoke-surface-20260516/
+?? evidence/local-e2e-shard-trust-gate-20260516/
+?? evidence/local-full-chromium-matrix-20260515/
+?? evidence/local-full-chromium-matrix-20260516/
+?? evidence/local-full-chromium-matrix-20260517-cw/
+?? evidence/local-full-chromium-matrix-20260517-cx/
+?? evidence/local-full-chromium-matrix-20260517/
+?? evidence/local-shard-runs-20260517/
+?? evidence/local-six-account-ui-l5-audit/
+?? evidence/manual-transaction-review/
+?? evidence/meta-audit/
+?? evidence/order-escrow-dispute-deep-audit/
+?? evidence/phase1-executive-board/
+?? evidence/phase2-human-acceptance-sprint/
+?? evidence/phase2-human-acceptance-staging-sprint/
+?? evidence/phase28-human-acceptance/
+?? evidence/phase3-entry-recheck/
+?? evidence/pi3_003_stripe_live_production_webhook/
+?? evidence/pi3_004_production_readiness_verification/
+?? evidence/pi3_006_go_live_production_cutover/
+?? evidence/platform-governance-audit/
+?? evidence/product-forensic-audit/
+?? evidence/production_readiness_deep_audit/
+?? evidence/reliability-closure/
+?? evidence/repo-scan-debug.txt
+?? evidence/site10-failures-pre-crash.txt
+?? evidence/staging-uat-six-domains/
+?? evidence/testnet-reality-uat-sprint/
+?? evidence/tmp-indexer-probe/
+?? evidence/tmp-rca-reconcile.json
+?? evidence/tmp-rca-summary.json
+?? evidence/tmp-recon-after-deploy.json
+?? evidence/tmp-recon-only.json
+?? evidence/tmp-recon.json
+?? evidence/tmp-recon2.json
+?? evidence/tmp-reconcile-after-rpc.json
+?? evidence/trust-gate-chain-audit/
+?? frontend/app/governance/params/GovernanceParamsCountriesTableLegend.tsx
+?? frontend/app/governance/params/GovernanceParamsFeeRouterTechnicalSection.tsx
+?? frontend/app/governance/params/GovernanceParamsGlobalTreasuryUsageSection.tsx
+?? frontend/app/governance/params/GovernanceParamsGovFreezeRulesSection.tsx
+?? frontend/app/governance/params/GovernanceParamsOverviewSection.tsx
+?? frontend/app/governance/params/GovernanceParamsPhase1CountriesTables.tsx
+?? frontend/app/governance/params/GovernanceParamsPhase1IndependentParamsDetails.tsx
+?? frontend/app/governance/params/GovernanceParamsRulesAtAGlance.tsx
+?? frontend/app/governance/params/GovernanceParamsStewardContextPanel.tsx
+?? frontend/app/governance/params/GovernanceParamsTechnicalAppendixSection.tsx
+?? frontend/app/governance/params/GovernanceParamsTreasuryPolicySection.tsx
+?? frontend/app/governance/params/GovernanceParamsTtgBeyondCountriesSection.tsx
+?? frontend/app/governance/params/GovernanceParamsTtgSupplyStructureSection.tsx
+?? frontend/app/governance/params/useGovernanceParamsActiveSection.ts
+?? frontend/components/auth/AuthLoginGovernanceRemediationProgress.tsx
+?? frontend/components/governance/GovernanceConvergencePathGate.tsx
+?? frontend/e2e/helpers/adminSmokeContracts.ts
+?? frontend/e2e/helpers/boundedApiRequest.ts
+?? frontend/e2e/helpers/dataReadyGate.ts
+?? frontend/e2e/helpers/itinerary52E2e.ts
+?? frontend/e2e/helpers/p0SpineApiContract.ts
+?? frontend/e2e/helpers/traveltrustV6HydrationContract.ts
+?? frontend/e2e/helpers/uiContractLayer.ts
+?? frontend/evidence/GO_local_phase1/site10-alignment-audit.latest.txt
+?? frontend/lib/auth/authLoginGovernanceRemediationModel.ts
+?? frontend/lib/complexityConvergenceSurface.test.ts
+?? frontend/lib/complexityConvergenceSurface.ts
+?? frontend/lib/governance/countryPoolFundraiseGovernanceV1.ts
+?? frontend/lib/governance/governanceParamsPhase1IndependentParamsModel.ts
+?? frontend/lib/governance/ttgReferencePriceV1.ts
+?? frontend/lib/traveltrust/home/v6HydrationStateMachine.test.ts
+?? frontend/lib/traveltrust/home/v6HydrationStateMachine.ts
+?? frontend/modules/traveltrust-home/context/TravelTrustV6HydrationContext.tsx
+?? registry/admin-staging-go-claim-ssot.v1.yaml
+?? registry/complexity-convergence-fix-ledger.v1.yaml
+?? registry/live-closure-chain-ssot.v1.yaml
+?? scripts/dev/_site10-bucket-narrow-recheck-common.sh
+?? scripts/dev/archive-local-deploy-backlog.sh
+?? scripts/dev/assert-fee-schedule-v1-alignment.mjs
+?? scripts/dev/classify-site10-r21-r22b-failures.py
+?? scripts/dev/close-complexity-convergence-item.sh
+?? scripts/dev/community-deep-audit.py
+?? scripts/dev/community-merge-phase2-findings.py
+?? scripts/dev/community-phase2-pg-consistency-audit.py
+?? scripts/dev/community-write-playwright-result.py
+?? scripts/dev/compare-site10-r21-r22b-failures.py
+?? scripts/dev/emit-phase1-phase2-alignment-gap-report.mjs
+?? scripts/dev/freeze-clean-local-deploy-backlog.sh
+?? scripts/dev/gen-complexity-convergence-ledger-status.py
+?? scripts/dev/gen-p2fc-adm-u01-staging-live-prep.py
+?? scripts/dev/gen-p2fc-admin-go-closure-discipline-audit.py
+?? scripts/dev/gen-p2fc-backlog-dependency-impact-graph.py
+?? scripts/dev/gen-p2fc-deploy-backlog-layer-review.py
+?? scripts/dev/gen-p2fc-deploy-wave-rollback-plan.py
+?? scripts/dev/gen-p2fc-final-candidate-gap-inventory.py
+?? scripts/dev/gen-p2fc-freeze-candidate-manifest.py
+?? scripts/dev/gen-p2fc-graduation-review-pack.py
+?? scripts/dev/gen-p2fc-live-closure-chain-verdict.py
+?? scripts/dev/gen-p2fc-meta-503-rca.py
+?? scripts/dev/gen-p2fc-post-soak-fault-exposure-model.py
+?? scripts/dev/gen-p2fc-post-soak-preblock-full-l5-audit.py
+?? scripts/dev/gen-p2fc-post-soak-staging-live-closure-evidence.py
+?? scripts/dev/gen-p2fc-priority-closure-tracker.py
+?? scripts/dev/gen-p2fc-soak-l5-stability-audit.py
+?? scripts/dev/gen-p2fc-web3-live-risk-convergence.py
+?? scripts/dev/gen-p2fc-web3-system-security-audit.py
+?? scripts/dev/gen-staging-local-full-diff.py
+?? scripts/dev/generate-community-deep-audit-report.py
+?? scripts/dev/generate-local-six-account-ui-l5-report.py
+?? scripts/dev/generate-oed-deep-audit-report.py
+?? scripts/dev/lib/deep_audit_probe_lib.py
+?? scripts/dev/lib/local-smoke-preflight.sh
+?? scripts/dev/lib/site10-stack-lifecycle.sh
+?? scripts/dev/lib/tt-psql-exec.mjs
+?? scripts/dev/lib/tt-run-psql.sh
+?? scripts/dev/lift-testnet-staging-freeze.sh
+?? scripts/dev/oed-merge-phase2-findings.py
+?? scripts/dev/oed-phase2-pg-consistency-audit.py
+?? scripts/dev/oed-write-playwright-result.py
+?? scripts/dev/order-escrow-dispute-deep-audit.py
+?? scripts/dev/parse-site10-denoised-regression.py
+?? scripts/dev/parse-site10-failures.py
+?? scripts/dev/phase2-deep-release-gate-g02-only.py
+?? scripts/dev/push-smoke-onboarding-stripe-settlement.sh
+?? scripts/dev/run-g02-meta-contract-gate-local.sh
+?? scripts/dev/run-gate-p1-01-convergence.sh
+?? scripts/dev/run-local-six-account-ui-l5-audit.sh
+?? scripts/dev/run-site10-acquisition-bucket-narrow-recheck.sh
+?? scripts/dev/run-site10-admin-bucket-narrow-recheck.sh
+?? scripts/dev/run-site10-alignment-audit.sh
+?? scripts/dev/run-site10-bucket-expansion-gate.sh
+?? scripts/dev/run-site10-chain-health-check.sh
+?? scripts/dev/run-site10-community-bucket-narrow-recheck.sh
+?? scripts/dev/run-site10-g3-guest-gate-fe-restart-stability.sh
+?? scripts/dev/run-site10-market-bucket-narrow-recheck.sh
+?? scripts/dev/run-site10-matrix-convergence.sh
+?? scripts/dev/run-site10-p1-slices-recheck-sequential.sh
+?? scripts/dev/run-site10-r22b-denoised-regression-matrix.sh
+?? scripts/dev/run-site10-r22b-governance-smoke-denoised-g2g3.sh
+?? scripts/dev/run-site10-r22b-regression-bucket-recheck.sh
+?? scripts/dev/run-site10-r22b-top3-narrow-recheck.sh
+?? scripts/dev/run-site10-rerun11-full-matrix.sh
+?? scripts/dev/run-site10-rerun12-full-matrix.sh
+?? scripts/dev/run-site10-rerun13-full-matrix.sh
+?? scripts/dev/run-site10-rerun14-full-matrix.sh
+?? scripts/dev/run-site10-rerun15-full-matrix.sh
+?? scripts/dev/run-site10-rerun16-full-matrix.sh
+?? scripts/dev/run-site10-rerun17-full-matrix.sh
+?? scripts/dev/run-site10-rerun18-full-matrix.sh
+?? scripts/dev/run-site10-rerun19-full-matrix.sh
+?? scripts/dev/run-site10-rerun20-full-matrix.sh
+?? scripts/dev/run-site10-rerun21-full-matrix.sh
+?? scripts/dev/sign-eip191-message.mjs
+?? scripts/dev/smoke-order-escrow-dispute-p0-local.sh
+?? scripts/dev/sync-testnet-staging-freeze-metadata.sh
+?? scripts/dev/validate-complexity-convergence-ledger-sync.sh
+?? scripts/dev/wait-rerun11-complete.sh
+?? scripts/dev/wait-rerun12-complete.sh
+?? scripts/dev/wait-rerun13-complete.sh
+?? scripts/dev/wait-rerun9-then-rerun10.sh
+?? scripts/dev/wait-smoke-onboarding-settlement-then-soak.sh
+?? scripts/ops/lib/
+?? scripts/ops/p2fc-audit-admin-go-closure-discipline-readonly.sh
+?? scripts/ops/p2fc-audit-watcher-standby.sh
+?? scripts/ops/p2fc-build-freeze-candidate-from-p1-baseline.sh
+?? scripts/ops/p2fc-gate-admin-staging-go-claim.sh
+?? scripts/ops/p2fc-post-soak-deploy-backlog-and-graduate.sh
+?? scripts/ops/p2fc-post-soak-one-shot-execute.sh
+?? scripts/ops/p2fc-post-soak-priority-closure-sequential.sh
+?? scripts/ops/p2fc-post-soak-staging-live-closure-chain.sh
+?? scripts/ops/p2fc-pre-accept-g02-graduation-convergence.sh
+?? scripts/ops/p2fc-query-admin-staging-go-claim.sh
+?? scripts/ops/p2fc-query-live-closure-verdict.sh
+?? scripts/ops/p2fc-query-runtime-adjudication.sh
+?? scripts/ops/p2fc-record-meta-observability.sh
+?? scripts/ops/p2fc-run-adm-u01-staging-live-prep-readonly.sh
+?? scripts/ops/p2fc-run-post-soak-admin-staging-live-chain.sh
+?? scripts/ops/p2fc-run-post-soak-fault-exposure-readonly.sh
+?? scripts/ops/p2fc-run-post-soak-preblock-full-l5-audit.sh
+?? scripts/ops/p2fc-run-soak-l5-stability-audit.sh
+?? scripts/ops/p2fc-run-tn-p1-010-independent.sh
+?? scripts/ops/p2fc-run-web3-system-security-audit-readonly.sh
+?? scripts/ops/p2fc-sync-soak-metadata-baseline.sh
+?? scripts/ops/p2fc-verify-mr12-execution-lock.sh
+?? scripts/ops/p2fc-verify-p0-rbac-bypass-runtime.sh
+?? scripts/ops/p2fc-verify-staging-meta-availability.sh
+?? scripts/ops/p2fc-watch-post-soak-blockers-readonly.sh

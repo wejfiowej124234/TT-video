@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.pf_product_weight_report.v1",
+  "counts": {
+    "routes_inferred_from_page_tsx": 194,
+    "page_tsx_files": 194,
+    "error_tsx_files": 129,
+    "loading_tsx_files": 132,
+    "button_like_tsx": 0,
+    "button_like_components": 0,
+    "form_tags_app": 0,
+    "admin_page_tsx": 107,
+    "me_settings_pages": 7
+  },
+  "pf": "PF-20"
+}

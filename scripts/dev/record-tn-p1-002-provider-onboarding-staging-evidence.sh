@@ -37,6 +37,20 @@ merge_env() {
 merge_env "$ROOT/.env"
 merge_env "$ROOT/scripts/dev/.env.staging-onboarding.local"
 
+# Staging internal secret must win over parent shell / root .env (CFG-001 isolation)
+_staging_onboarding="$ROOT/scripts/dev/.env.staging-onboarding.local"
+if [[ -f "$_staging_onboarding" ]]; then
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line%%#*}"
+    line="$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+    [[ "$line" == INTERNAL_API_SECRET=* ]] || continue
+    val="${line#INTERNAL_API_SECRET=}"
+    val="${val%\"}"; val="${val#\"}"; val="${val%\'}"; val="${val#\'}"
+    [[ -n "$val" ]] && export INTERNAL_API_SECRET="$val"
+  done < "$_staging_onboarding"
+fi
+unset _staging_onboarding
+
 export STAGING_API_BASE="$STAGING_API"
 export API_BASE="$STAGING_API"
 export SMOKE_MERCHANT_EMAIL="${SMOKE_MERCHANT_EMAIL:-merchant@test.com}"

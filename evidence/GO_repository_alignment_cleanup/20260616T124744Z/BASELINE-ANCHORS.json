@@ -1,0 +1,12 @@
+{
+  "baseline_id": "GOV-FREEZE-V2-CLEAN-BASELINE",
+  "ssot_doc": "docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md",
+  "execution_ssot": "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+  "phase_a": "evidence/GO_hat_r1_sepolia/20260616T063612Z",
+  "four_ledger": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z",
+  "govfreeze_v2_baseline_freeze": "evidence/GO_phase2_gov_freeze_v2_clean_baseline/freeze/latest-stamp.txt",
+  "ai_pre_human_uat_pass": "evidence/GO_ai_pre_human_uat/20260616T105001Z",
+  "cert_session": "evidence/GO_ttg_cert/20260616T100918Z",
+  "archive_evidence_index": "evidence/archive-evidence/ARCHIVE-EVIDENCE-INDEX.v1.json",
+  "forbidden": ["governance logic re-audit", "new coverage matrix", "tokenomics redesign", "delete final evidence"]
+}

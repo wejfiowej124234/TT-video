@@ -1,0 +1,66 @@
+{
+  "schema": "traveltrust.open_findings_age.v1",
+  "buckets": {
+    "0-7d": 0,
+    "8-30d": 7,
+    "31-60d": 4,
+    "60d+": 0
+  },
+  "findings": [
+    {
+      "id": "AG-SEED-001",
+      "age_days": 18,
+      "severity": "P0"
+    },
+    {
+      "id": "DOA-SEED-004",
+      "age_days": 14,
+      "severity": "P0"
+    },
+    {
+      "id": "PF-SEED-001",
+      "age_days": 45,
+      "severity": "P0"
+    },
+    {
+      "id": "PF-SEED-002",
+      "age_days": 38,
+      "severity": "P0"
+    },
+    {
+      "id": "PF-SEED-003",
+      "age_days": 30,
+      "severity": "P0"
+    },
+    {
+      "id": "AG-SEED-003",
+      "age_days": 22,
+      "severity": "P1"
+    },
+    {
+      "id": "DOA-SEED-001",
+      "age_days": 21,
+      "severity": "P1"
+    },
+    {
+      "id": "LFC-CA-001",
+      "age_days": 28,
+      "severity": "P1"
+    },
+    {
+      "id": "LFC-UXA-001",
+      "age_days": 40,
+      "severity": "P1"
+    },
+    {
+      "id": "PF-SEED-004",
+      "age_days": 60,
+      "severity": "P1"
+    },
+    {
+      "id": "PGX-CX-002",
+      "age_days": 12,
+      "severity": "P1"
+    }
+  ]
+}

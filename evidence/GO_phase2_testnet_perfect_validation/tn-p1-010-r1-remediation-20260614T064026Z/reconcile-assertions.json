@@ -1,0 +1,11 @@
+{
+  "missing_projection": 0,
+  "reconcile_compound_pass": false,
+  "projection_reconcile_clean": true,
+  "rpc_escrow_samples": {
+    "participates": true,
+    "pass": false,
+    "state": "rpc_samples_evaluated",
+    "samples_count": 4
+  }
+}

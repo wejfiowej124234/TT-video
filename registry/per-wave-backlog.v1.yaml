@@ -1,0 +1,468 @@
+# schema: traveltrust.per_wave_backlog.v1
+version: 1
+frozen_utc: "2026-07-09T14:31:00Z"
+status: FROZEN
+machine_key: TT_PER_WAVE_BACKLOG
+source_audit:
+  round: 1
+  findings_md: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-ROUND1-FINDINGS-LATEST.md
+  matrix_json: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-ROUND1-MATRIX-LATEST.json
+  alignment: docs/spec/governance-token/evidence/phase3-production-entry-baseline/LOCAL-STAGING-FULL-ALIGNMENT-AUDIT-LATEST.json
+human_runbook: docs/runbook/PER-WAVE-REMEDIATION-PLAN-v1.md
+
+execution_policy:
+  mode: batch_only
+  active_batch: per_round1_exit
+  rule: >-
+    Waves LOCKED after Final Spot Check PASS. No drive-by fixes. Staging deploy is one-shot after
+    Commit SSOT; Environment Diff uses Public Surface Parity matrix from Final Spot Check.
+  fix_authorization: Owner
+  staging_deploy: one_shot_after_commit
+
+phase_ladder:
+  current: per_round1_exit
+  completed:
+    - local_ssot
+    - local_staging_alignment
+    - per_round1_record_only
+    - wave_abc_fix_batch
+    - local_gate
+    - per_final_spot_check
+  next:
+    - commit_ssot
+    - staging_deploy
+    - env_diff_verify
+    - per_round2_recheck
+
+summary:
+  confirmed_issues: 15
+  verification_pending: 9
+  estimated_blockers: "3-5"
+  estimated_brand_ux: "5-7"
+  estimated_evidence_gaps: remainder
+
+waves:
+  A:
+    id: wave_a
+    title: Hygiene · Production Contamination Risk
+    goal: Remove all dev/test environment traces from public brand surfaces
+    priority_order: [P0, P1]
+  B:
+    id: wave_b
+    title: Copy · IA · SEO consumer language
+    goal: Consumer-facing copy and information architecture; hide operator/engineering routes
+    priority_order: [P0, P1, P2]
+  C:
+    id: wave_c
+    title: Business evidence · catalog governance · depth walks
+    goal: Prove core transaction surfaces and public catalog single-source projection
+    priority_order: [P1, P2]
+
+items:
+  # ── Wave A · Hygiene ─────────────────────────────────────────
+  - id: PER-R1-CI-01
+    wave: A
+    priority: P1
+    class: confirmed_issue
+    risk: production_contamination
+    title: Next.js Dev Tools affordance on public DOM
+    routes: [/, /traveltrust, /market, /community, "/escrow/*", /traveltrust/announcements]
+    owner_files:
+      - frontend/app/layout.tsx
+      - frontend/next.config.ts
+    verification:
+      - "next build && next start — grep public HTML: no Open Next.js Dev Tools"
+      - PER-R1-VP-09 production-build walk
+    gate: scripts/gates/check-production-ui-hygiene-gate.sh
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-A1-CLOSEOUT.md
+
+  - id: PER-R1-CI-03
+    wave: A
+    priority: P0
+    class: confirmed_issue
+    risk: production_contamination
+    carry_from: CI-04
+    title: Seed/test personas visible on public chrome when session active
+    routes: [global_chrome]
+    owner_files:
+      - frontend/components/header/HeaderUserMenu.tsx
+      - frontend/components/header/HeaderUserMenuNavLinks.tsx
+      - crates/api/src/chain_off/trust_gate_e2e_seed/memory_users_guides.rs
+      - registry/test-accounts-business-immutable.v1.yaml
+    verification:
+      - Login C1/C2 — chrome shows production-safe display name
+      - bash scripts/gates/check-production-ui-hygiene-gate.sh
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-A1-CLOSEOUT.md
+    notes: ③ identity bootstrap policy; chrome sanitized unless ALLOW_TEST_PERSONA_CHROME=1
+
+  - id: PER-R1-CI-04
+    wave: A
+    priority: P0
+    class: confirmed_issue
+    risk: production_contamination
+    carry_from: CI-05
+    title: Mock TTG swap / mock-swap surface without production-build proof
+    routes: [/traveltrust]
+    owner_files:
+      - frontend/components/traveltrust/cinematic/TravelTrustStablecoinGateway.tsx
+      - frontend/lib/travelTrustUiGuards.ts
+      - frontend/components/escrow/EscrowDetail/EscrowDraftPayStepCard.tsx
+      - Dockerfile
+    verification:
+      - "NODE_ENV=production next build — /traveltrust: no mock-swap in rendered UI"
+      - scripts/gates/check-production-ui-hygiene-gate.sh
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-A1-CLOSEOUT.md
+
+  - id: PER-R1-CI-09
+    wave: A
+    priority: P0
+    class: confirmed_issue
+    risk: production_contamination
+    title: 间距调试 toggle visible on public /traveltrust
+    routes: [/traveltrust]
+    owner_files:
+      - frontend/components/traveltrust/cinematic/TravelTrustSectionSpacingDebug.tsx
+      - frontend/lib/traveltrustSpacingDebug.ts
+    verification:
+      - "/traveltrust without ?tt_spacing=1 — no 间距调试 button"
+      - traveltrustNetworkPage.contract.test.ts
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-A2-CLOSEOUT.md
+    notes: >-
+      Opt-in only: ?tt_spacing=1 or NEXT_PUBLIC_TRAVELTRUST_ALLOW_TRAVELTRUST_SPACING_DEBUG=1;
+      NODE_ENV=development alone no longer mounts toggle.
+
+  # ── Wave B · Copy / IA ───────────────────────────────────────
+  - id: PER-R1-CI-02
+    wave: B
+    priority: P0
+    class: confirmed_issue
+    risk: ia_trust
+    title: Consumer footer exposes operator FeeRouter / self-check links
+    routes: [/, /market, shared_footer]
+    owner_files:
+      - frontend/components/landing/LandingFooter.tsx
+      - frontend/lib/marketingSiteFooter.ts
+      - frontend/locales/zh.ts
+      - frontend/locales/en.ts
+    verification:
+      - Public footer crawl — no 费路由自检 on consumer pages
+      - LandingFooter.test.ts updated expectations
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-A1-CLOSEOUT.md
+    owner_decision: >-
+      Public footer keep About · Trust · Help · Community · Governance;
+      hide internal diagnostics / operator routes.
+
+  - id: PER-R1-CI-05
+    wave: B
+    priority: P1
+    class: confirmed_issue
+    risk: copy_phase_jargon
+    title: Phase/engineering jargon in user-visible copy
+    routes: [/traveltrust, /governance, /market, /traveltrust/announcements]
+    owner_files:
+      - frontend/locales/zh.ts
+      - frontend/locales/en.ts
+      - frontend/app/governance/GovernanceHubPageMain.tsx
+    verification:
+      - Copy review — no ①②③ lifecycle language on consumer surfaces
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-B2-CLOSEOUT.md
+    owner_classify: >-
+      ② honest Sepolia disclosure on governance/announcements protocol zone may remain;
+      consumer brand pages must use user language.
+
+  - id: PER-R1-CI-06
+    wave: B
+    priority: P1
+    class: confirmed_issue
+    risk: seo
+    title: Home og:url leaks localhost in meta
+    routes: [/]
+    owner_files:
+      - frontend/app/(home)/page.tsx
+      - frontend/lib/traveltrust/l5/landing-chrome.ts
+    verification:
+      - curl / — og:url matches NEXT_PUBLIC_SITE_URL
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-B2-CLOSEOUT.md
+
+  - id: PER-R1-CI-07
+    wave: B
+    priority: P1
+    class: confirmed_issue
+    risk: copy_phase_jargon
+    title: TravelTrust SR-only text exposes ① local Mock vocabulary
+    routes: [/traveltrust]
+    owner_files:
+      - frontend/locales/zh.ts
+      - frontend/locales/en.ts
+      - frontend/components/traveltrust/cinematic/*
+    verification:
+      - a11y tree / SR list — no ① 本地 Mock on public page
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-B2-CLOSEOUT.md
+
+  - id: PER-R1-CI-08
+    wave: B
+    priority: P1
+    class: confirmed_issue
+    risk: seo
+    title: TravelTrust meta/og description embeds Sepolia ② runtime jargon
+    routes: [/traveltrust]
+    owner_files:
+      - frontend/locales/zh.ts
+      - frontend/locales/en.ts
+      - frontend/app/traveltrust/page.tsx
+    verification:
+      - curl /traveltrust — meta description consumer-safe for target phase
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-B2-CLOSEOUT.md
+    owner_classify: ② may keep testnet honesty in description until ③; reword for production SEO at GO.
+
+  - id: PER-R1-CI-11
+    wave: B
+    priority: P1
+    class: confirmed_issue
+    risk: copy_demo_labels
+    title: Market guide cards show demo labels (多重身份演示 · Playmate · 币种未提供)
+    routes: [/market]
+    owner_files:
+      - frontend/components/market/*
+      - crates/api/src/db/guides.rs
+      - registry/display-data-governance.v1.yaml
+    verification:
+      - /market guide cards — no 演示/Playmate on public catalog
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-B2-CLOSEOUT.md
+
+  - id: PER-R1-CI-12
+    wave: B
+    priority: P0
+    class: confirmed_issue
+    risk: copy_phase_jargon
+    title: Market footnote exposes ① 本地已过滤 engineering lifecycle language
+    routes: [/market]
+    owner_files:
+      - frontend/locales/zh.ts
+      - frontend/locales/en.ts
+      - frontend/components/market/EmptyState.tsx
+    verification:
+      - /market empty/guides footnote — user language only (e.g. verified providers)
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-B1-CLOSEOUT.md
+
+  - id: PER-R1-CI-13
+    wave: B
+    priority: P1
+    class: confirmed_issue
+    risk: ia_trust
+    title: Governance hub lists admin console deep links on public hub
+    routes: [/governance]
+    owner_files:
+      - frontend/app/governance/GovernanceHubPageMain.tsx
+      - frontend/locales/zh.ts
+      - frontend/locales/en.ts
+    verification:
+      - /governance — admin links gated or moved to operator doc
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-B2-CLOSEOUT.md
+
+  - id: PER-R1-CI-14
+    wave: B
+    priority: P2
+    class: confirmed_issue
+    risk: copy_internal_refs
+    title: Trust page cites D-4555-A/B spec identifiers in user copy
+    routes: [/trust]
+    owner_files:
+      - frontend/locales/zh.ts
+      - frontend/locales/en.ts
+      - frontend/app/trust/*
+    verification:
+      - /trust — plain language; spec ids in governance-only surfaces
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-B2-CLOSEOUT.md
+    owner_classify: Governance transparency pages may retain; tourist trust page should reduce density.
+
+  - id: PER-R1-CI-15
+    wave: B
+    priority: P1
+    class: confirmed_issue
+    risk: i18n
+    title: Announcements document title English while UI locale zh
+    routes: [/traveltrust/announcements]
+    owner_files:
+      - frontend/locales/zh.ts
+      - frontend/locales/en.ts
+      - frontend/app/traveltrust/announcements/page.tsx
+    verification:
+      - zh locale — title matches 项目动态与公告
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-B1-CLOSEOUT.md
+
+  - id: PER-R1-CI-16
+    wave: B
+    priority: P1
+    class: confirmed_issue
+    risk: copy_internal_refs
+    carry_from: CI-help-08-4
+    title: Help page exposes 08-4 · GET /meta · Runbook §7.1 · env var names
+    routes: [/help]
+    owner_files:
+      - frontend/app/help/page.tsx
+      - frontend/locales/zh.ts
+      - frontend/locales/en.ts
+    verification:
+      - /help — FAQ uses user language; technical wiring in operator doc
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-B1-CLOSEOUT.md
+
+  # ── Wave C · Business evidence / catalog ─────────────────────
+  - id: PER-R1-CI-10
+    wave: C
+    priority: P1
+    class: confirmed_issue
+    risk: catalog_data_governance
+    title: Market shows duplicate Hangzhou guide cards (13×)
+    routes: [/market]
+    owner_files:
+      - crates/api/src/db/guides.rs
+      - crates/api/src/routes/market_subsite_catalog_db_api_tests/*
+      - frontend/components/market/useMarketPage.ts
+      - registry/display-data-governance.v1.yaml
+      - registry/single-official-public-catalog-policy.v1.yaml
+    verification:
+      - GET /api/v1/guides — dedupe projection vs public UI count
+      - DB → catalog projection → /market parity script
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-C-CLOSEOUT.md
+    notes: >-
+      API list projection excludes trust-gate f0e0b101-* + dev bios + test emails;
+      parity evidence PER-WAVE-C-MARKET-GUIDE-PARITY-LATEST.json (Hangzhou api=1, dupes=0).
+
+  - id: PER-R1-VP-06
+    wave: C
+    priority: P1
+    class: verification_pending
+    risk: core_transaction_surface
+    title: Escrow happy path not evidenced (invalid UUID + loading only)
+    routes: ["/escrow/{uuid}"]
+    owner_files:
+      - frontend/app/escrow/[id]/*
+      - frontend/components/escrow/EscrowDetail/*
+      - scripts/dev/smoke-web3-itinerary-full-chain-local.sh
+    verification:
+      - Seeded order — buyer + provider perspectives
+      - State transitions draft → accept → pay → complete
+      - Mock Pay hidden in production build
+    status: CLOSED
+    closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-C-CLOSEOUT.md
+    notes: >-
+      PER-WAVE-C-ESCROW-EVIDENCE-LATEST.json · bilateral confirm-completion · ① mock-pay only.
+
+  - id: PER-R1-VP-05
+    wave: C
+    priority: P2
+    class: verification_pending
+    title: /me logged-in hub not walked
+    routes: [/me, /me/*]
+    owner_files:
+      - frontend/app/me/*
+    verification:
+      - C1 login — /me body · publish hub · identity chrome
+    status: OPEN
+
+  - id: PER-R1-VP-01
+    wave: C
+    priority: P2
+    class: verification_pending
+    title: Mobile 375px layout not walked
+    routes: [public_corridor_10]
+    owner_files:
+      - frontend/app/*
+    verification:
+      - 375px screenshot matrix per route
+    status: OPEN
+
+  - id: PER-R1-VP-02
+    wave: C
+    priority: P2
+    class: verification_pending
+    title: Full en locale parity not swept
+    owner_files:
+      - frontend/locales/en.ts
+    verification:
+      - en toggle walk public corridor
+    status: OPEN
+
+  - id: PER-R1-VP-03
+    wave: C
+    priority: P2
+    class: verification_pending
+    title: axe / keyboard sweep not run
+    verification:
+      - axe public corridor · keyboard tab order
+    status: OPEN
+
+  - id: PER-R1-VP-04
+    wave: C
+    priority: P2
+    class: verification_pending
+    title: hreflang / canonical consistency
+    owner_files:
+      - frontend/app/*/page.tsx
+    verification:
+      - og:url / canonical same origin policy per env
+    status: OPEN
+
+  - id: PER-R1-VP-07
+    wave: C
+    priority: P2
+    class: verification_pending
+    title: Community feed populated state not captured
+    routes: [/community]
+    verification:
+      - /community — feed cards loaded · no TODO in HTML
+    status: OPEN
+
+  - id: PER-R1-VP-08
+    wave: C
+    priority: P2
+    class: verification_pending
+    title: Forced error states not triggered
+    verification:
+      - API offline / 5xx — degrade banners on /market /trust
+    status: OPEN
+
+  - id: PER-R1-VP-09
+    wave: C
+    priority: P1
+    class: verification_pending
+    title: Production build hygiene proof (closes Wave A DevTools/mock)
+    verification:
+      - next build && next start — PER-R1 recheck on prod server
+    status: OPEN
+
+exit_gates:
+  wave_a:
+    - scripts/gates/check-production-ui-hygiene-gate.sh
+  wave_b:
+    - scripts/gates/check-public-surface-audit-gate.sh
+  wave_c:
+    - scripts/dev/smoke-web3-itinerary-full-chain-local.sh
+    - catalog parity probe TBD
+  per_round2:
+    - docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-ROUND1-FINDINGS-LATEST.md
+    - bash scripts/dev/run-local-staging-full-alignment-audit.sh
+  staging:
+    - one_shot deploy API + Web
+    - env_diff_only_no_dev
+
+honest_boundary: >-
+  Wave backlog frozen ≠ PER exit ≠ Production GO.
+  ① local fix batch → commit → one-shot ② deploy → env-diff verify → PER Round 2.

@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T17:02:17Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "ES",
+    "city_zh": "塞维利亚",
+    "city_en": "Seville",
+    "matrix_ids": [
+      "PH-ES-209-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-ES-209-ATR",
+      "legacy_value": "大教堂",
+      "poi_id": "754c437d-f9d6-41d0-bec8-4f2e56203292",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-209-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

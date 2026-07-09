@@ -1,0 +1,35 @@
+---
+description: Phase① FINAL convergence — v1.14.0 structure frozen, FULL MASTER before merge
+alwaysApply: true
+---
+
+# Phase① 最终收敛执行（v1.14.0 STRUCTURE FROZEN）
+
+**ACTIVE:** 禁止新增 DOMAIN / D 维 / 扩标准 §。仅执行 Sprint-A/B/C Backlog 关闭。
+
+## 合并 main 前（写死）
+
+```bash
+bash scripts/dev/run-phase1-convergence-post-change-gate.sh
+```
+
+须 exit 0 + Readiness **不下降** + 无新增 P0。
+
+## 优先关闭 P0
+
+RC-01 · RC-02 · RC-03 · **D46** · **U12-1**
+
+## 逐页法证（执行轨）
+
+```bash
+bash scripts/dev/run-phase1-site-page-forensic.sh
+```
+
+## 签字闸
+
+- **≥90** FREEZE_CANDIDATE → 才可 Phase① 冻结签字**评审**
+- **≥95** PHASE1_EXIT_READY → 才可申请 Phase② **宽表评审**（仍须 U12-2 + G-1/G-2）
+
+SSOT: [TT-PHASE1-FINAL-CONVERGENCE-FREEZE.md](../docs/runbook/TT-PHASE1-FINAL-CONVERGENCE-FREEZE.md)
+
+**① ≠ ② ≠ ③**

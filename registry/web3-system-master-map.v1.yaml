@@ -1,0 +1,926 @@
+# TravelTrust Web3 System Master Map · Machine SSOT
+#
+# Human companion: docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md
+# Parity probe:   node scripts/dev/check-web3-system-master-map-parity.cjs
+#
+# Chain: Master Map → Registry addresses → contract sources → prod /meta → Evidence
+
+schema: traveltrust.web3_system_master_map.v1
+version: 1
+effective_utc: "2026-07-08"
+production_scope: PRODUCTION_SCOPE_SEPOLIA
+chain_id: "11155111"
+
+human_doc: docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md
+deploy_registry: registry/protocol-convergence-deployments.v1.yaml
+deploy_baseline: gov_freeze_v2_clean_baseline
+fundstack_env: sepolia
+g24_registry: registry/g24-p-upgrade-01-contract-posture.v1.yaml
+ttg_cert_registry: registry/ttg-governance-cert-gates.v1.yaml
+prod_meta_probe: scripts/dev/check-web3-system-production-meta-contracts.cjs
+
+status_enum:
+  - PASS
+  - IN_PROGRESS
+  - PARTIAL
+  - TARGET
+  - DEFER
+  - BLOCKED
+
+deployment_wave_enum:
+  - wave1
+  - wave2
+  - wave3
+
+deploy_phase_enum:
+  - local
+  - sepolia
+  - prod_runtime
+  - mainnet
+
+upgrade_type_enum:
+  - proxy
+  - controller
+  - immutable_instance
+  - parameter
+  - target
+
+accounting_track_enum:
+  - orthogonal
+  - R1_ttg
+  - R2_country_pool
+  - R3_escrow
+  - R4_platform_fee
+  - D4555_A_platform_fee_country_bucket
+  - D4555_B_net_profit_split
+
+# Wave definitions (③ Production ops · ② contracts already broadcast)
+deployment_waves:
+  wave1:
+    title: Core business — Escrow · USDC · FeeRouter · Governance runtime · Indexer
+    exit_gate: TT_WEB3_PAYMENT_PRODUCTION_READY
+  wave2:
+    title: Governance extension · Steward · CountryPool distribution · Cert · RBAC
+    exit_gate: TT_WEB3_SYSTEM_PRODUCTION_READY
+  wave3:
+    title: Advanced — SlashRouter · DR · External audit · Mainnet
+    exit_gate: TT_PRODUCTION_GO
+
+modules:
+  - id: M01
+    name: Smart Contracts
+    roles: [Protocol]
+    contracts: []
+    contract_sources:
+      - contracts/src/
+    funds:
+      accounting_track: orthogonal
+    permissions: []
+    upgrade:
+      type: parameter
+    deployment_wave: [wave1]
+    deploy_phase: [local, sepolia]
+    registry_keys: []
+    prod_meta_keys: []
+    readiness:
+      status: PASS
+    evidence:
+      - id: forge-test
+        path: contracts/test/
+        required_for_pass: false
+
+  - id: M02
+    name: Upgradeability
+    roles: [Timelock Executor, Protocol]
+    contracts:
+      - name: TimelockUpgradeableProxy
+        source: contracts/src/upgrade/TimelockUpgradeableProxy.sol
+    contract_sources:
+      - contracts/src/upgrade/
+      - contracts/script/DeployGovFreezeV2CleanBaseline.s.sol
+    funds:
+      accounting_track: orthogonal
+    permissions:
+      - contract: TimelockUpgradeableProxy
+        role: admin
+        holder: GovernanceTimelock
+        ops: [upgradeTo]
+    upgrade:
+      type: proxy
+    deployment_wave: [wave1]
+    deploy_phase: [sepolia]
+    registry_keys: []
+    prod_meta_keys: []
+    readiness:
+      status: PASS
+    evidence:
+      - id: G24
+        path: registry/g24-p-upgrade-01-contract-posture.v1.yaml
+        required_for_pass: true
+
+  - id: M03
+    name: Storage Layout
+    roles: [Protocol]
+    contracts:
+      - name: TtgPrimaryMarketV1
+        source: contracts/src/TtgPrimaryMarketV1.sol
+      - name: TtgSeatConcentrationRegistry
+        source: contracts/src/TtgSeatConcentrationRegistry.sol
+      - name: GovernanceTreasuryP4Cap
+        source: contracts/src/GovernanceTreasuryP4Cap.sol
+      - name: RegionStewardStakePool
+        source: contracts/src/RegionStewardStakePool.sol
+    funds:
+      accounting_track: orthogonal
+    permissions: []
+    upgrade:
+      type: proxy
+    deployment_wave: [wave2]
+    deploy_phase: [sepolia]
+    registry_keys: []
+    prod_meta_keys: []
+    readiness:
+      status: PASS
+    evidence:
+      - id: proxy-arch-test
+        path: contracts/test/TtgGovFreezeV1ProxyArchitecture.t.sol
+        required_for_pass: true
+
+  - id: M04
+    name: TTG Token
+    roles: [TTG Holder, Region Steward, Protocol]
+    contracts:
+      - name: GovernanceVotesToken
+        source: contracts/src/GovernanceVotesToken.sol
+        registry_key: governance_token_address
+        ssot_block: gov_freeze_v2_clean_baseline
+        prod_meta_key: governance_token_address
+    funds:
+      input: []
+      output: []
+      pools: [GovernanceTreasury]
+      accounting_track: R1_ttg
+    permissions:
+      - contract: GovernanceVotesToken
+        role: holder
+        holder: EOA
+        ops: [transfer, delegate]
+    upgrade:
+      type: parameter
+    deployment_wave: [wave2]
+    deploy_phase: [sepolia, prod_runtime]
+    registry_keys:
+      - governance_token_address
+    prod_meta_keys:
+      - governance_token_address
+    readiness:
+      status: PASS
+    evidence:
+      - id: tokenomics-freeze
+        path: docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md
+        required_for_pass: true
+
+  - id: M05
+    name: Primary Market
+    roles: [TTG Holder]
+    contracts:
+      - name: TtgPrimaryMarketV1
+        source: contracts/src/TtgPrimaryMarketV1.sol
+        registry_key: primary_market_address
+        ssot_block: gov_freeze_v2_clean_baseline
+    funds:
+      input: [USDC]
+      output: [TTG]
+      pools: [GovernanceTreasury]
+      accounting_track: R1_ttg
+    permissions:
+      - contract: TtgPrimaryMarketV1
+        role: owner
+        holder: GovernanceTimelock
+        ops: [configure, pause]
+    upgrade:
+      type: proxy
+    deployment_wave: [wave2]
+    deploy_phase: [sepolia]
+    registry_keys:
+      - primary_market_address
+    prod_meta_keys: []
+    readiness:
+      status: DEFER
+      note: Contract deployed · /primary-market UI deferred — docs/runbook/WEB3-PRIMARY-MARKET-DEFER-V1.md
+    evidence:
+      - id: primary-market-defer
+        path: docs/runbook/WEB3-PRIMARY-MARKET-DEFER-V1.md
+        required_for_pass: false
+      - id: gov-freeze-v2
+        path: docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md
+        required_for_pass: false
+
+  - id: M06
+    name: Governance
+    roles: [TTG Holder, Timelock Executor]
+    contracts:
+      - name: TravelTrustGovernor
+        source: contracts/src/TravelTrustGovernor.sol
+        registry_key: governor_address
+        ssot_block: gov_freeze_v2_clean_baseline
+        prod_meta_key: governor_address
+    funds:
+      accounting_track: orthogonal
+    permissions:
+      - contract: TravelTrustGovernor
+        role: voter
+        holder: TTG Holder
+        ops: [propose, castVote, queue]
+    upgrade:
+      type: proxy
+    deployment_wave: [wave1]
+    deploy_phase: [sepolia, prod_runtime]
+    registry_keys:
+      - governor_address
+    prod_meta_keys:
+      - governor_address
+    readiness:
+      status: PASS
+    evidence:
+      - id: cert-7-execute
+        path: evidence/GO_ttg_cert/
+        glob: "**/PHASE-B-EXECUTE-SIGNOFF.json"
+        required_for_pass: true
+
+  - id: M07
+    name: Timelock
+    roles: [Timelock Executor, Safe Admin]
+    contracts:
+      - name: GovernanceTimelock
+        source: contracts/src/GovernanceTimelock.sol
+        registry_key: timelock_address
+        ssot_block: gov_freeze_v2_clean_baseline
+        prod_meta_key: timelock_address
+    funds:
+      accounting_track: orthogonal
+    permissions:
+      - contract: GovernanceTimelock
+        role: admin
+        holder: Safe
+        ops: [schedule, setAllowedExecutionTarget]
+      - contract: GovernanceTimelock
+        role: governor
+        holder: TravelTrustGovernor
+        ops: [scheduleByGovernor]
+      - contract: GovernanceTimelock
+        role: public
+        holder: any
+        ops: [execute]
+    upgrade:
+      type: controller
+      note: delay immutable · fresh deploy only
+    deployment_wave: [wave1]
+    deploy_phase: [sepolia, prod_runtime]
+    registry_keys:
+      - timelock_address
+    prod_meta_keys:
+      - timelock_address
+    readiness:
+      status: PASS
+    evidence:
+      - id: cert-7-execute
+        path: evidence/GO_ttg_cert/
+        glob: "**/PHASE-B-EXECUTE-SIGNOFF.json"
+        required_for_pass: true
+
+  - id: M08
+    name: Treasury
+    roles: [Finance, Timelock Executor]
+    contracts:
+      - name: GovernanceTreasuryP4Cap
+        source: contracts/src/GovernanceTreasuryP4Cap.sol
+        registry_key: treasury_p4_cap_address
+        ssot_block: gov_freeze_v2_clean_baseline
+        prod_meta_key: treasury_address
+    funds:
+      input: [TTG, USDC, ERC20]
+      output: [spend via Timelock]
+      pools: [GovernanceTreasury]
+      accounting_track: R1_ttg
+    permissions:
+      - contract: GovernanceTreasuryP4Cap
+        role: spender
+        holder: GovernanceTimelock
+        ops: [spend, spendETH]
+    upgrade:
+      type: proxy
+    deployment_wave: [wave1]
+    deploy_phase: [sepolia, prod_runtime]
+    registry_keys:
+      - treasury_p4_cap_address
+    prod_meta_keys:
+      - treasury_address
+    readiness:
+      status: IN_PROGRESS
+      note: Cert #8 Queued · awaiting Timelock spend execute
+    evidence:
+      - id: cert-8-treasury
+        path: evidence/GO_ttg_cert/
+        glob: "**/PHASE-B-TREASURY-SPEND-SIGNOFF.json"
+        required_for_pass: true
+
+  - id: M09
+    name: FeeRouter
+    roles: [Protocol, Traveler, Guide]
+    contracts:
+      - name: FeeRouter
+        source: contracts/src/FeeRouter.sol
+        registry_key: fee_router_address
+        ssot_block: sepolia
+        prod_meta_key: fee_router_address
+    funds:
+      input: [USDC]
+      output: [RegionVault, GuideIdentityStakingPool, ReserveVault, GovernanceTreasury]
+      accounting_track: R4_platform_fee
+    permissions:
+      - contract: FeeRouter
+        role: owner
+        holder: GovernanceTimelock
+        ops: [distribute, setRoutingConfig, setDistributePaused]
+    upgrade:
+      type: parameter
+    deployment_wave: [wave1]
+    deploy_phase: [sepolia, prod_runtime]
+    registry_keys:
+      - fee_router_address
+    prod_meta_keys:
+      - fee_router_address
+    readiness:
+      status: PASS
+    evidence:
+      - id: G3-02
+        path: evidence/GO_production_readiness/G3-02/G3-02-EXECUTION-LATEST.json
+        required_for_pass: true
+        expect_json_verdict: WEB3_PAYMENT_PRODUCTION_PASS
+
+  - id: M10
+    name: Escrow
+    roles: [Traveler, Guide]
+    contracts:
+      - name: EscrowFactory
+        source: contracts/src/EscrowFactory.sol
+        registry_key: escrow_factory_address
+        ssot_block: sepolia
+        prod_meta_key: escrow_factory_address
+        mainnet_deploy: FORBIDDEN
+      - name: EscrowFactoryV2
+        source: contracts/src/EscrowFactoryV2.sol
+        registry_key: escrow_factory_v2_address
+        deploy_script: contracts/script/DeployEscrowFactoryV2.s.sol
+        mainnet_path: REQUIRED
+        parity_registry: pending_sepolia_broadcast
+        note: >
+          Script + tests ready. Sepolia prod runtime still V1 factory (escrow_factory_address).
+          Populate registry + /meta after phase2-sepolia-broadcast-escrow-factory-v2.sh Owner merge.
+      - name: Escrow
+        source: contracts/src/Escrow.sol
+        note: V1 legacy instance — Sepolia only
+      - name: EscrowV2
+        source: contracts/src/EscrowV2.sol
+        note: Mainnet bilateral settlement path
+    funds:
+      input: [USDC]
+      output: [FeeRouter]
+      pools: [Escrow per order]
+      accounting_track: R3_escrow
+    permissions:
+      - contract: Escrow
+        role: none
+        holder: none
+        ops: [deposit, release, refund]
+        note: no admin · immutable per instance
+    upgrade:
+      type: immutable_instance
+    deployment_wave: [wave1]
+    deploy_phase: [sepolia, prod_runtime]
+    registry_keys:
+      - escrow_factory_address
+    prod_meta_keys:
+      - escrow_factory_address
+    readiness:
+      status: PASS
+      note: V1 factory active on Sepolia prod · V2 address pending broadcast (see EscrowFactoryV2 parity_registry)
+    evidence:
+      - id: G3-02
+        path: evidence/GO_production_readiness/G3-02/G3-02-EXECUTION-LATEST.json
+        required_for_pass: true
+        expect_json_verdict: WEB3_PAYMENT_PRODUCTION_PASS
+
+  - id: M11
+    name: Settlement
+    roles: [Region Steward, Finance, Protocol]
+    contracts:
+      - name: CountryPoolNetProfitLedger
+        source: contracts/src/CountryPoolNetProfitLedger.sol
+        registry_key: country_pool_net_profit_ledger_address
+        ssot_block: gov_freeze_v2_clean_baseline
+      - name: StewardPathVault
+        source: contracts/src/StewardPathVault.sol
+      - name: UnallocatedStewardPathVault
+        source: contracts/src/vacancy/UnallocatedStewardPathVault.sol
+    funds:
+      input: [USDC net profit]
+      output: [45% StewardPath, 55% globalTreasury]
+      accounting_track: D4555_B_net_profit_split
+    permissions:
+      - contract: CountryPoolNetProfitLedger
+        role: controller
+        holder: Timelock
+        ops: [credit, split]
+        note: immutable exempt · G23-04
+    upgrade:
+      type: target
+      note: ledger immutable · vaults immutable exempt
+    deployment_wave: [wave2]
+    deploy_phase: [sepolia]
+    registry_keys:
+      - country_pool_net_profit_ledger_address
+    prod_meta_keys: []
+    readiness:
+      status: PARTIAL
+      note: DE pilot · Snapshot/Claim/Payout not Production-wide
+    evidence:
+      - id: four-ledger
+        path: evidence/GO_tt_country_pool_revenue_enterprise_hat/
+        required_for_pass: false
+
+  - id: M12
+    name: Staking
+    roles: [Guide, Provider, Region Steward]
+    contracts:
+      - name: GuideIdentityStakingPool
+        source: contracts/src/GuideIdentityStakingPool.sol
+        registry_key: guide_staking_pool
+        ssot_block: external
+        prod_meta_key: guide_staking_address
+        external_address_env: GUIDE_STAKING_ADDRESS
+        external_address: "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f"
+      - name: ProviderIdentityStakingPool
+        source: contracts/src/ProviderIdentityStakingPool.sol
+        registry_key: provider_staking_pool
+        ssot_block: external
+        prod_meta_key: staking_provider_address
+        external_address_env: STAKING_PROVIDER_ADDRESS
+        external_address: "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075"
+      - name: RegionStewardStakePool
+        source: contracts/src/RegionStewardStakePool.sol
+        registry_key: region_steward_stake_pool_proxy_address
+        ssot_block: gov_freeze_v2_clean_baseline
+        prod_meta_key: region_steward_stake_pool_address
+    funds:
+      input: [USDC, TTG]
+      pools: [GuideIdentityStakingPool, ProviderIdentityStakingPool, RegionStewardStakePool]
+      accounting_track: orthogonal
+    permissions:
+      - contract: GuideIdentityStakingPool
+        role: slasher
+        holder: GovernanceTimelock
+        ops: [slash]
+      - contract: RegionStewardStakePool
+        role: owner
+        holder: GovernanceTimelock
+        ops: [configureJurisdiction]
+    upgrade:
+      type: proxy
+      note: RegionStewardStakePool proxy · identity pools parameter/immutable token
+    deployment_wave: [wave2]
+    deploy_phase: [sepolia, prod_runtime]
+    registry_keys:
+      - region_steward_stake_pool_proxy_address
+    prod_meta_keys:
+      - guide_staking_address
+      - staking_provider_address
+      - region_steward_stake_pool_address
+    readiness:
+      status: IN_PROGRESS
+      note: Guide/Provider PASS · Steward Cert #9 Unstake pending
+    evidence:
+      - id: cert-2-walkthrough
+        path: evidence/GO_ttg_cert/
+        glob: "**/MULTI-IDENTITY-WALKTHROUGH-SIGNOFF.json"
+        required_for_pass: true
+      - id: cert-9-unstake
+        path: evidence/GO_ttg_cert/
+        glob: "**/PHASE-B-UNSTAKE-SIGNOFF.json"
+        required_for_pass: true
+
+  - id: M13
+    name: Seat
+    roles: [Region Steward, TTG Holder]
+    contracts:
+      - name: TtgSeatConcentrationRegistry
+        source: contracts/src/TtgSeatConcentrationRegistry.sol
+        registry_key: seat_registry_address
+        ssot_block: gov_freeze_v2_clean_baseline
+    funds:
+      accounting_track: R1_ttg
+    permissions:
+      - contract: TtgSeatConcentrationRegistry
+        role: owner
+        holder: GovernanceTimelock
+        ops: [registerSeat, configure]
+    upgrade:
+      type: proxy
+    deployment_wave: [wave2]
+    deploy_phase: [sepolia]
+    registry_keys:
+      - seat_registry_address
+    prod_meta_keys: []
+    readiness:
+      status: PASS
+    evidence:
+      - id: gov-freeze-v2
+        path: evidence/GO_phase2_gov_freeze_v2_clean_baseline/latest/
+        required_for_pass: false
+
+  - id: M14
+    name: Jurisdiction
+    roles: [Region Steward, Admin]
+    contracts:
+      - name: RegionStewardStakePool
+        source: contracts/src/RegionStewardStakePool.sol
+    contract_sources:
+      - docs/spec/governance-token/protocol-ssot.v1.yaml
+    funds:
+      accounting_track: orthogonal
+    permissions: []
+    upgrade:
+      type: parameter
+    deployment_wave: [wave2]
+    deploy_phase: [sepolia, prod_runtime]
+    registry_keys: []
+    prod_meta_keys:
+      - region_steward_stake_pool_address
+    readiness:
+      status: PASS
+    evidence:
+      - id: stake-quote
+        path: scripts/dev/check-web3-system-production-meta-contracts.cjs
+        required_for_pass: false
+
+  - id: M15
+    name: RBAC
+    roles: [Admin, Moderator]
+    contracts: []
+    contract_sources:
+      - registry/admin-rbac-permissions.v1.yaml
+      - crates/api/src/routes/admin/admin_rbac.rs
+    funds:
+      accounting_track: orthogonal
+    permissions:
+      - contract: API RBAC
+        role: admin
+        holder: JWT + registry permissions
+        ops: [approve, gate, deny]
+    upgrade:
+      type: parameter
+    deployment_wave: [wave2]
+    deploy_phase: [prod_runtime]
+    registry_keys: []
+    prod_meta_keys: []
+    readiness:
+      status: PASS
+      note: D3-F01 SSOT sync closed · staging_admin_matrix GO registered · RBAC-D3-CLOSURE-LATEST
+    evidence:
+      - id: rbac-d3
+        path: evidence/GO_production_readiness/web3-system-audit/RBAC-D3-CLOSURE-LATEST.json
+        required_for_pass: true
+
+  - id: M16
+    name: Wallet
+    roles: [Traveler, Guide, Provider, Region Steward, TTG Holder]
+    contracts: []
+    contract_sources:
+      - frontend/components/Providers.tsx
+    funds:
+      accounting_track: orthogonal
+    permissions: []
+    upgrade:
+      type: parameter
+    deployment_wave: [wave1]
+    deploy_phase: [prod_runtime]
+    registry_keys: []
+    prod_meta_keys: []
+    readiness:
+      status: PASS
+    evidence:
+      - id: cert-2-walkthrough
+        path: evidence/GO_ttg_cert/
+        glob: "**/MULTI-IDENTITY-WALKTHROUGH-SIGNOFF.json"
+        required_for_pass: false
+
+  - id: M17
+    name: Indexer
+    roles: [Admin, Protocol]
+    contracts: []
+    contract_sources:
+      - crates/api/src/chain/indexer.rs
+    funds:
+      accounting_track: orthogonal
+    permissions: []
+    upgrade:
+      type: parameter
+    deployment_wave: [wave1]
+    deploy_phase: [prod_runtime]
+    registry_keys: []
+    prod_meta_keys: []
+    readiness:
+      status: PARTIAL
+      note: Escrow/FeeRouter ingest OK · RPC rate limits on archive eth_getLogs
+    evidence:
+      - id: G3-02
+        path: evidence/GO_production_readiness/G3-02/G3-02-EXECUTION-LATEST.json
+        required_for_pass: true
+
+  - id: M18
+    name: Ledger
+    roles: [Region Steward, Finance]
+    contracts:
+      - name: CountryPoolLedgerV0
+        source: contracts/src/CountryPoolLedgerV0.sol
+        registry_key: country_pool_ledger_pilot_address
+        ssot_block: sepolia
+      - name: RegionDistributionClaim
+        source: contracts/src/RegionDistributionClaim.sol
+    funds:
+      accounting_track: R2_country_pool
+    permissions: []
+    upgrade:
+      type: target
+    deployment_wave: [wave2]
+    deploy_phase: [sepolia]
+    registry_keys:
+      - country_pool_ledger_pilot_address
+    prod_meta_keys: []
+    readiness:
+      status: TARGET
+      note: GAP-99-03 Snapshot/Claim · pilot ledger only
+    evidence: []
+
+  - id: M19
+    name: Tokenomics
+    roles: [Protocol, Finance]
+    contracts:
+      - name: TtgGovFreezeConstants
+        source: contracts/src/TtgGovFreezeConstants.sol
+    contract_sources:
+      - docs/spec/governance-token/protocol-ssot.v1.yaml
+    funds:
+      accounting_track: orthogonal
+    permissions: []
+    upgrade:
+      type: parameter
+      note: frozen under GovFreeze V2
+    deployment_wave: [wave1]
+    deploy_phase: [sepolia, prod_runtime]
+    registry_keys: []
+    prod_meta_keys: []
+    readiness:
+      status: PASS
+    evidence:
+      - id: tokenomics-freeze
+        path: docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md
+        required_for_pass: true
+
+  - id: M20
+    name: Frontend Web3 UX
+    roles: [Traveler, Guide, Region Steward, TTG Holder]
+    contracts: []
+    contract_sources:
+      - frontend/app/governance/
+      - frontend/app/staking/
+      - frontend/app/escrow/
+      - frontend/app/pay/
+    funds:
+      accounting_track: orthogonal
+    permissions: []
+    upgrade:
+      type: parameter
+    deployment_wave: [wave1]
+    deploy_phase: [prod_runtime]
+    registry_keys: []
+    prod_meta_keys: []
+    readiness:
+      status: PARTIAL
+      note: Primary Market route absent by design (DEFER)
+    evidence:
+      - id: cert-1-human-uat
+        path: evidence/GO_ttg_cert/
+        glob: "**/HUMAN-SCREEN-ACCEPTANCE-SIGNOFF.json"
+        required_for_pass: false
+
+  - id: M21
+    name: Admin Web3
+    roles: [Admin, Finance]
+    contracts: []
+    contract_sources:
+      - frontend/app/admin/governance/
+    funds:
+      accounting_track: orthogonal
+    permissions: []
+    upgrade:
+      type: parameter
+    deployment_wave: [wave2]
+    deploy_phase: [prod_runtime]
+    registry_keys: []
+    prod_meta_keys: []
+    readiness:
+      status: PARTIAL
+    evidence:
+      - id: cert-3-admin
+        path: evidence/GO_ttg_cert/
+        glob: "**/ADMIN-WALKTHROUGH-SIGNOFF.json"
+        required_for_pass: false
+
+  - id: M22
+    name: Registry
+    roles: [Protocol, Ops]
+    contracts: []
+    contract_sources:
+      - registry/protocol-convergence-deployments.v1.yaml
+      - registry/web3-system-master-map.v1.yaml
+    funds:
+      accounting_track: orthogonal
+    permissions: []
+    upgrade:
+      type: parameter
+    deployment_wave: [wave1]
+    deploy_phase: [sepolia, prod_runtime]
+    registry_keys: []
+    prod_meta_keys: []
+    readiness:
+      status: PASS
+    evidence:
+      - id: master-map
+        path: registry/web3-system-master-map.v1.yaml
+        required_for_pass: true
+
+  - id: M23
+    name: Evidence
+    roles: [Ops, Audit]
+    contracts: []
+    contract_sources:
+      - evidence/GO_production_readiness/
+      - evidence/GO_ttg_cert/
+    funds:
+      accounting_track: orthogonal
+    permissions: []
+    upgrade:
+      type: parameter
+    deployment_wave: [wave2]
+    deploy_phase: [sepolia, prod_runtime]
+    registry_keys: []
+    prod_meta_keys: []
+    readiness:
+      status: IN_PROGRESS
+      note: TTG Cert 7/12 · WEB3_SYSTEM_CLOSURE blocked on P1
+    evidence:
+      - id: ttg-cert-index
+        path: evidence/GO_production_readiness/web3-system-audit/TTG-CERT-EVIDENCE-INDEX-LATEST.json
+        required_for_pass: true
+      - id: web3-system-audit
+        path: evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-DEEP-AUDIT-LATEST.json
+        required_for_pass: true
+
+  - id: M24
+    name: Security
+    roles: [Protocol, Admin]
+    contracts:
+      - name: TimelockUpgradeableProxy
+        source: contracts/src/upgrade/TimelockUpgradeableProxy.sol
+    contract_sources:
+      - contracts/src/Escrow.sol
+      - contracts/src/FeeRouter.sol
+    funds:
+      accounting_track: orthogonal
+    permissions: []
+    upgrade:
+      type: proxy
+    deployment_wave: [wave1]
+    deploy_phase: [sepolia, prod_runtime]
+    registry_keys: []
+    prod_meta_keys: []
+    readiness:
+      status: PASS
+    evidence:
+      - id: G24
+        path: registry/g24-p-upgrade-01-contract-posture.v1.yaml
+        required_for_pass: true
+
+  - id: M25
+    name: Payment Rail
+    roles: [Traveler, Guide]
+    contracts:
+      - name: RegionVault
+        source: contracts/src/RegionVault.sol
+        registry_key: region_vault_address
+        ssot_block: external
+        external_address_env: REGION_VAULT_ADDRESS
+        external_address: "0x2Ea061d50393c09af2f607Ee9f89679642A3a65B"
+      - name: ReserveVault
+        source: contracts/src/ReserveVault.sol
+        registry_key: reserve_vault_address
+        ssot_block: external
+        external_address_env: RESERVE_VAULT_ADDRESS
+        external_address: "0xbC541FAf26e139eF1f0AC22b52c4b4F85FFF7855"
+    funds:
+      input: [USDC platform fee]
+      output: [RegionVault countryBucket 45%]
+      accounting_track: D4555_A_platform_fee_country_bucket
+    permissions:
+      - contract: RegionVault
+        role: owner
+        holder: GovernanceTimelock
+        ops: [forward]
+    upgrade:
+      type: parameter
+    deployment_wave: [wave1]
+    deploy_phase: [sepolia, prod_runtime]
+    registry_keys: []
+    prod_meta_keys: []
+    readiness:
+      status: PASS
+    evidence:
+      - id: G3-02
+        path: evidence/GO_production_readiness/G3-02/WEB3-PAYMENT-PRODUCTION-READINESS-LATEST.json
+        required_for_pass: true
+        expect_json_verdict: WEB3_PAYMENT_PRODUCTION_PASS
+      - id: payment-audit
+        path: evidence/GO_production_readiness/payment-deep-audit/PAYMENT-USDC-WEB3-DEEP-AUDIT-LATEST.json
+        required_for_pass: true
+
+# Supplementary pool registry (cross-module · ops vocabulary)
+pools:
+  - id: POOL-TREASURY
+    name: GovernanceTreasury
+    contract: GovernanceTreasuryP4Cap
+    asset: [TTG, ERC20]
+    module_ref: M08
+  - id: POOL-RESERVE
+    name: ReserveVault
+    contract: ReserveVault
+    asset: [USDC]
+    module_ref: M25
+  - id: POOL-REGION
+    name: RegionVault
+    contract: RegionVault
+    asset: [USDC]
+    module_ref: M25
+    accounting_track: D4555_A_platform_fee_country_bucket
+  - id: POOL-FEE-ROUTER
+    name: FeeRouter staging
+    contract: FeeRouter
+    asset: [USDC]
+    module_ref: M09
+  - id: POOL-GUIDE-ID
+    name: Guide Identity Pool
+    contract: GuideIdentityStakingPool
+    asset: [USDC]
+    module_ref: M12
+  - id: POOL-PROVIDER-ID
+    name: Provider Identity Pool
+    contract: ProviderIdentityStakingPool
+    asset: [USDC]
+    module_ref: M12
+  - id: POOL-STEWARD-TTG
+    name: Region Steward TTG Pool
+    contract: RegionStewardStakePool
+    asset: [TTG]
+    module_ref: M12
+  - id: POOL-ESCROW
+    name: Escrow instances
+    contract: Escrow
+    asset: [USDC]
+    module_ref: M10
+  - id: POOL-NETPROFIT-LEDGER
+    name: CountryPool NetProfit Ledger
+    contract: CountryPoolNetProfitLedger
+    asset: [USDC accounting]
+    module_ref: M11
+    accounting_track: D4555_B_net_profit_split
+
+parity_rules:
+  skip_readiness_for_checks: [TARGET, DEFER]
+  require_contract_source_when_pass: true
+  require_registry_address_when_pass: true
+  require_prod_meta_when_pass_and_key_set: true
+  require_evidence_when_pass: true
+  evidence_glob_root: .
+  pending_registry_keys:
+    - escrow_factory_v2_address
+  pending_registry_note: >
+    EscrowFactoryV2 not on Sepolia prod registry or GET /meta yet — V1 factory is active runtime.
+    Unblocks after Sepolia V2 broadcast + registry merge + API /meta wiring.
+
+closure_path:
+  - Master Map modules
+  - deploy_registry addresses
+  - contract source files
+  - prod /meta keys
+  - evidence paths / signoffs

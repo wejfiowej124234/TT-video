@@ -1,0 +1,32 @@
+[
+  {
+    "name": "API health + auth",
+    "result": "PASS",
+    "notes": "PHASE28_HUMAN_ACCEPTANCE PASS"
+  },
+  {
+    "name": "Admin key pages",
+    "result": "PASS",
+    "notes": ""
+  },
+  {
+    "name": "Community media gate",
+    "result": "PASS",
+    "notes": ""
+  },
+  {
+    "name": "Six-domain UAT",
+    "result": "PASS",
+    "notes": ""
+  },
+  {
+    "name": "HAT (P0/P1 blockers)",
+    "result": "PASS",
+    "notes": ""
+  },
+  {
+    "name": "Catalog S5 release freeze gate",
+    "result": "PASS",
+    "notes": ""
+  }
+]

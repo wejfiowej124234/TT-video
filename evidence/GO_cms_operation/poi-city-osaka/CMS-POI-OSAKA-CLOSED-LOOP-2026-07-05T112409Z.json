@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T11:24:09Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "大阪",
+    "city_en": "Osaka",
+    "matrix_ids": [
+      "PH-JP-002-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-JP-002-ATR",
+      "legacy_value": "道顿堀",
+      "poi_id": "a9f85d46-4a91-47ec-b3a7-021c37c087f9",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-osaka-dotonbori-official-guide-cover.jpg",
+      "hero_file": "ocs-osaka-dotonbori-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-002-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

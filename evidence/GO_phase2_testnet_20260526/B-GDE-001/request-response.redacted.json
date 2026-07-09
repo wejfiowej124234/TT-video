@@ -1,0 +1,170 @@
+{
+  "list": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "items": [
+        {
+          "id": "7e7ebbd3-01fa-404c-8921-c23cf1cff125",
+          "user_id": "cf1e4c30-34b8-40b6-b747-474cf24517c3",
+          "city": "杭州",
+          "country_code": "CN",
+          "languages": [
+            "zh",
+            "en"
+          ],
+          "service_types": [
+            "walking",
+            "culture"
+          ],
+          "bio": "多重身份演示 · 向导轨",
+          "stake_amount": "100",
+          "hourly_rate": "45",
+          "avatar_url": null,
+          "public_title": null,
+          "status": "active",
+          "created_at": "2026-06-30T04:11:00.752820324+00:00",
+          "completed_count": 0,
+          "completedCount": 0,
+          "rating": null,
+          "response_sla": null,
+          "responseSLA": null
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000314",
+          "user_id": "00000000-0000-4000-8000-000000000304",
+          "city": "杭州",
+          "country_code": "CN",
+          "languages": [
+            "zh",
+            "en"
+          ],
+          "service_types": [
+            "walking"
+          ],
+          "bio": "西湖、灵隐与龙井茶乡深度讲解，持证双语向导。",
+          "stake_amount": "800",
+          "hourly_rate": null,
+          "avatar_url": null,
+          "public_title": null,
+          "status": "active",
+          "created_at": "2026-06-06T02:51:25.528917+00:00",
+          "completed_count": 0,
+          "completedCount": 0,
+          "rating": null,
+          "response_sla": null,
+          "responseSLA": null
+        },
+        {
+          "id": "ad18ad78-46fe-43ec-a14c-c8859bec0830",
+          "user_id": "382b71b3-5862-45a6-869e-51af497f0437",
+          "city": "杭州",
+          "country_code": "CN",
+          "languages": [
+            "zh",
+            "en"
+          ],
+          "service_types": [
+            "walking"
+          ],
+          "bio": "R003 staging Hangzhou licensed guide for wide-matrix closure.",
+          "stake_amount": "100",
+          "hourly_rate": null,
+          "avatar_url": null,
+          "public_title": null,
+          "status": "active",
+          "created_at": "2026-06-06T02:49:17.529655+00:00",
+          "completed_count": 0,
+          "completedCount": 0,
+          "rating": null,
+          "response_sla": null,
+          "responseSLA": null
+        },
+        {
+          "id": "8c408ada-5c34-4fa1-a25e-5b564d0853d8",
+          "user_id": "bd768646-715f-460f-920d-4adc1826d4a3",
+          "city": "杭州",
+          "country_code": "CN",
+          "languages": [
+            "zh",
+            "en"
+          ],
+          "service_types": [
+            "walking"
+          ],
+          "bio": "R003 staging Hangzhou licensed guide for wide-matrix closure.",
+          "stake_amount": "100",
+          "hourly_rate": null,
+          "avatar_url": null,
+          "public_title": null,
+          "status": "active",
+          "created_at": "2026-06-06T02:47:42.700694+00:00",
+          "completed_count": 0,
+          "completedCount": 0,
+          "rating": null,
+          "response_sla": null,
+          "responseSLA": null
+        },
+        {
+          "id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+          "user_id": "4b389c45-bfca-4f3a-a897-42cf95c91a6e",
+          "city": "Hangzhou",
+          "country_code": "CN",
+          "languages": [
+            "zh",
+            "en"
+          ],
+          "service_types": [
+            "walking"
+          ],
+          "bio": "Staging P2 smoke",
+          "stake_amount": "100",
+          "hourly_rate": "55",
+          "avatar_url": null,
+          "public_title": null,
+          "status": "active",
+          "created_at": "2026-06-05T12:21:40.891847+00:00",
+          "completed_count": 4,
+          "completedCount": 4,
+          "rating": null,
+          "response_sla": "24h",
+          "responseSLA": "24h"
+        }
+      ]
+    }
+  },
+  "detail": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "guide": {
+        "id": "7e7ebbd3-01fa-404c-8921-c23cf1cff125",
+        "user_id": "cf1e4c30-34b8-40b6-b747-474cf24517c3",
+        "city": "杭州",
+        "country_code": "CN",
+        "languages": [
+          "zh",
+          "en"
+        ],
+        "service_types": [
+          "walking",
+          "culture"
+        ],
+        "bio": "多重身份演示 · 向导轨",
+        "wallet_address": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+        "real_name": null,
+        "id_photo_url": null,
+        "language_cert_url": null,
+        "guide_license_url": null,
+        "stake_amount": "100",
+        "status": "active",
+        "created_at": "2026-06-30T04:11:00.752820324+00:00",
+        "completed_count": 0,
+        "completedCount": 0,
+        "rating": null,
+        "response_sla": null,
+        "responseSLA": null
+      }
+    }
+  }
+}

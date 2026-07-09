@@ -1,0 +1,46 @@
+{
+  "schema": "traveltrust.admin_staging_go_claim_gate.v2",
+  "admin_go_ssot": "TT_ADMIN_STAGING_GO_CLAIM",
+  "admin_go_ssot_registry": "D:/TravelTrust-V1.1/registry/admin-staging-go-claim-ssot.v1.yaml",
+  "checked_at_utc": "2026-06-30T02:50:53Z",
+  "allowed": true,
+  "reason": null,
+  "unique_closure_loop": [
+    "COMPLETED.json",
+    "MR12 one-shot PASS",
+    "ADM-U01 live release_gate=GO (persistent_host)",
+    "P0 Runtime CONFIRMED",
+    "TT_ADMIN_STAGING_GO_CLAIM=ALLOWED"
+  ],
+  "sequence_verified": {
+    "soak_completed": true,
+    "mr12_one_shot_pass": true,
+    "adm_u01_live_go": true,
+    "adm_u01_persistent_host": true,
+    "p0_runtime_confirmed": true
+  },
+  "forbidden_as_admin_go": [
+    "prep_ready",
+    "prep_only",
+    "soak_inflight",
+    "static_p0_confirmed",
+    "tunnel_ephemeral",
+    "local_smoke",
+    "watcher_alive",
+    "health_200_only",
+    "meta_unreachable",
+    "mr12_prep_only"
+  ],
+  "forbidden_claim_targets": [
+    "admin_go",
+    "phase2_closure",
+    "production_go"
+  ],
+  "evidence": {
+    "completed_json": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+    "adm_u01_report": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/post-soak-staging-live-closure/adm-u01-live/report.json",
+    "p0_runtime_report": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/post-soak-staging-live-closure/p0-rbac-bypass-runtime/latest.json"
+  },
+  "note": "Phase② full closure (U02/B1-B4) after this slot; Production GO is separate ③ gate",
+  "prep_is_not_go": true
+}

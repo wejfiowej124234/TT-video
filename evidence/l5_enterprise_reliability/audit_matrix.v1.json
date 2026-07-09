@@ -1,0 +1,293 @@
+{
+  "schema": "traveltrust_l5_enterprise_reliability_audit_matrix.v1",
+  "recorded_utc": "20260608T032756Z",
+  "baseline_refs": [
+    "162",
+    "161",
+    "160"
+  ],
+  "verdict": "L5_ENTERPRISE_RELIABILITY_GO",
+  "reliability_score": 88,
+  "target_score": 85,
+  "contract_tests_ok": true,
+  "track_verdicts": {
+    "RUJR": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "RUJR_L5_GO"
+    },
+    "A11Y_LIVE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "A11Y_LIVE_GO"
+    },
+    "CHAOS_RESILIENCE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "CHAOS_RESILIENCE_GO"
+    }
+  },
+  "tracks": [
+    {
+      "id": "RUJR",
+      "title": "Real User Journey Replay",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "RUJR_L5_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "RUJR-01_pes_journey_model",
+          "pass": true
+        },
+        {
+          "id": "RUJR-02_e2e_replay_spec",
+          "pass": true
+        },
+        {
+          "id": "RUJR-03_replay_helper",
+          "pass": true
+        },
+        {
+          "id": "RUJR-04_aggregate_report",
+          "pass": true
+        },
+        {
+          "id": "RUJR-05_synth_48_runs",
+          "pass": true
+        },
+        {
+          "id": "RUJR-06_five_role_manifest",
+          "pass": true
+        },
+        {
+          "id": "RUJR-07_frca_harness",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "A11Y_LIVE",
+      "title": "A11Y Live Scan",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "A11Y_LIVE_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "A11Y-01_live_scan_spec",
+          "pass": true
+        },
+        {
+          "id": "A11Y-02_scan_markers",
+          "pass": true
+        },
+        {
+          "id": "A11Y-03_consumer_aria",
+          "pass": true
+        },
+        {
+          "id": "A11Y-04_ops_live_region",
+          "pass": true
+        },
+        {
+          "id": "A11Y-05_table_contract",
+          "pass": true
+        },
+        {
+          "id": "A11Y-06_manifest_routes",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "CHAOS_RESILIENCE",
+      "title": "Chaos & Resilience Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "CHAOS_RESILIENCE_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "CR-01_cross_domain_audit",
+          "pass": true
+        },
+        {
+          "id": "CR-02_cdia_registry",
+          "pass": true
+        },
+        {
+          "id": "CR-03_b480_gate_config",
+          "pass": true
+        },
+        {
+          "id": "CR-04_b480_acceptance",
+          "pass": true
+        },
+        {
+          "id": "CR-05_ops_retry",
+          "pass": true
+        },
+        {
+          "id": "CR-06_consumer_retry",
+          "pass": true
+        },
+        {
+          "id": "CR-07_catalog_fallback",
+          "pass": true
+        },
+        {
+          "id": "CR-08_stripe_webhook_guard",
+          "pass": true
+        },
+        {
+          "id": "CR-09_chaos_manifest",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "id": "R-TRAV",
+      "title": "Traveler \u00b7 discover \u00b7 referrals",
+      "role": "traveler",
+      "routes": [
+        "/",
+        "/market",
+        "/me/referrals"
+      ],
+      "score": 53,
+      "verdict": "GO",
+      "dimensions": {
+        "journey_replay": 9,
+        "error_recovery": 9,
+        "user_prompt": 9,
+        "data_consistency": 8,
+        "resilience": 9,
+        "a11y_live": 9
+      },
+      "issues": []
+    },
+    {
+      "id": "R-GUIDE",
+      "title": "Guide \u00b7 hub \u00b7 register",
+      "role": "guide",
+      "routes": [
+        "/guide",
+        "/guide/register"
+      ],
+      "score": 53,
+      "verdict": "GO",
+      "dimensions": {
+        "journey_replay": 9,
+        "error_recovery": 9,
+        "user_prompt": 9,
+        "data_consistency": 8,
+        "resilience": 9,
+        "a11y_live": 9
+      },
+      "issues": []
+    },
+    {
+      "id": "R-MERCH",
+      "title": "Merchant \u00b7 provider \u00b7 onboarding",
+      "role": "merchant",
+      "routes": [
+        "/provider/register",
+        "/me/onboarding"
+      ],
+      "score": 53,
+      "verdict": "GO",
+      "dimensions": {
+        "journey_replay": 9,
+        "error_recovery": 9,
+        "user_prompt": 9,
+        "data_consistency": 8,
+        "resilience": 9,
+        "a11y_live": 9
+      },
+      "issues": []
+    },
+    {
+      "id": "R-OPS",
+      "title": "Ops \u00b7 CMS \u00b7 growth \u00b7 official",
+      "role": "ops",
+      "routes": [
+        "/admin/content",
+        "/admin/growth",
+        "/admin/official"
+      ],
+      "score": 54,
+      "verdict": "GO",
+      "dimensions": {
+        "journey_replay": 9,
+        "error_recovery": 9,
+        "user_prompt": 9,
+        "data_consistency": 9,
+        "resilience": 9,
+        "a11y_live": 9
+      },
+      "issues": []
+    },
+    {
+      "id": "R-ADMIN",
+      "title": "Admin \u00b7 conversion \u00b7 analytics",
+      "role": "admin",
+      "routes": [
+        "/admin/conversion-analytics",
+        "/admin/growth/analytics"
+      ],
+      "score": 54,
+      "verdict": "GO",
+      "dimensions": {
+        "journey_replay": 9,
+        "error_recovery": 9,
+        "user_prompt": 9,
+        "data_consistency": 9,
+        "resilience": 9,
+        "a11y_live": 9
+      },
+      "issues": []
+    }
+  ],
+  "gap_matrix": [],
+  "optimizations": [
+    {
+      "id": "ER-P1-01",
+      "risk": "P1",
+      "title": "RUJR live 48-run refresh with screenshots",
+      "track": "RUJR",
+      "fix": "cd frontend && npx playwright test e2e/pes-real-user-journey-review.spec.ts"
+    },
+    {
+      "id": "ER-P1-02",
+      "risk": "P1",
+      "title": "A11Y live scan with dev server + axe-core",
+      "track": "A11Y_LIVE",
+      "fix": "L5_ER_RUN_A11Y_LIVE=1 bash scripts/dev/run-l5-a11y-live-scan.sh"
+    },
+    {
+      "id": "ER-P1-03",
+      "risk": "P1",
+      "title": "B-480 prod fault injection live drill",
+      "track": "CHAOS_RESILIENCE",
+      "fix": "scripts/ops/b480-prod-fault-injection-acceptance.py"
+    },
+    {
+      "id": "ER-P2-01",
+      "risk": "P2",
+      "title": "Redis circuit-breaker observability",
+      "track": "CHAOS_RESILIENCE",
+      "fix": "Document Redis N/A local \u00b7 prod session store drill"
+    },
+    {
+      "id": "ER-P2-02",
+      "risk": "P2",
+      "title": "Stripe payment failure UX replay",
+      "track": "CHAOS_RESILIENCE",
+      "fix": "Extend FRCA with stripe_webhook_fail scenario"
+    }
+  ],
+  "contract_test_log_tail": "\n> traveltrust-frontend@0.1.0 test\n> vitest run --run lib/l5/l5EnterpriseReliability.contract.test.ts lib/pesJourneyReviewAggregate.test.ts lib/admin/adminOpsPlaneUxL5.contract.test.ts lib/admin/adminTableA11y.contract.test.ts\n\n\n RUN  v2.1.9 D:/TravelTrust-V1.1/frontend\n\n \u2713 lib/admin/adminOpsPlaneUxL5.contract.test.ts (4 tests) 3ms\n \u2713 lib/l5/l5EnterpriseReliability.contract.test.ts (4 tests) 4ms\n \u2713 lib/admin/adminTableA11y.contract.test.ts (7 tests) 36ms\n \u2713 lib/pesJourneyReviewAggregate.test.ts (4 tests) 6ms\n\n Test Files  4 passed (4)\n      Tests  19 passed (19)\n   Start at  11:27:55\n   Duration  971ms (transform 87ms, setup 49ms, collect 237ms, tests 49ms, environment 1.74s, prepare 479ms)\n\n"
+}

@@ -1,0 +1,166 @@
+{
+  "schema": "traveltrust.project_dashboard.v2",
+  "title": "TravelTrust Project Dashboard",
+  "recorded_utc": "2026-07-08T11:47:39.662Z",
+  "layers": {
+    "layer_1_executive": {
+      "phase_1": {
+        "name": "Development",
+        "pct": 100,
+        "bar": "██████████"
+      },
+      "phase_2": {
+        "name": "Production Validation",
+        "pct": 67,
+        "bar": "███████░░░"
+      },
+      "phase_3": {
+        "name": "Production Deployment",
+        "pct": 0,
+        "bar": "░░░░░░░░░░"
+      }
+    },
+    "layer_2_sub_tracks": [
+      {
+        "id": "2A",
+        "label": "②-A Website & Product",
+        "pct": 95,
+        "drag": false
+      },
+      {
+        "id": "2B",
+        "label": "②-B Admin",
+        "pct": 73,
+        "drag": false
+      },
+      {
+        "id": "2C",
+        "label": "②-C CMS / COS / Data",
+        "pct": 74,
+        "drag": false
+      },
+      {
+        "id": "2D",
+        "label": "②-D Web3",
+        "pct": 35,
+        "drag": true
+      },
+      {
+        "id": "2E",
+        "label": "②-E Security",
+        "pct": 65,
+        "drag": false
+      },
+      {
+        "id": "2F",
+        "label": "②-F Exit Review",
+        "pct": 60,
+        "drag": false
+      }
+    ],
+    "layer_3_current_focus": {
+      "today": "2026-07-08",
+      "current_focus": "②-D Web3",
+      "mission": "Governance Lifecycle",
+      "task": "Cert #8",
+      "blocked_by": null,
+      "eta": null,
+      "next": "Cert #9",
+      "owner": "Junxi"
+    },
+    "layer_4_blockers": {
+      "P0": {
+        "count": 0,
+        "items": []
+      },
+      "P1": {
+        "count": 10,
+        "items": [
+          {
+            "id": "PG-P1-003",
+            "title": "TTG Cert 7/12 — governance lifecycle incomplete",
+            "status": "OPEN",
+            "checked": false
+          },
+          {
+            "id": "PG-P1-FL-FL-02",
+            "title": "FL-02: Bilateral Confirmation Settlement Model not implemented — release() @ Funded without service-complete gate",
+            "status": "OPEN",
+            "checked": false
+          },
+          {
+            "id": "PG-P1-ECO-ECO-ARB-01",
+            "title": "Economic arbitrage path ECO-ARB-01 not evidenced",
+            "status": "OPEN",
+            "checked": false
+          },
+          {
+            "id": "PG-P1-ECO-ECO-ARB-02",
+            "title": "Economic arbitrage path ECO-ARB-02 not evidenced",
+            "status": "OPEN",
+            "checked": false
+          },
+          {
+            "id": "PG-P1-006",
+            "title": "Escrow unauthorized release — attack surface UNVERIFIED",
+            "status": "OPEN",
+            "checked": false
+          },
+          {
+            "id": "PG-P1-007",
+            "title": "Mainnet deployment drill not executed (0/12)",
+            "status": "OPEN",
+            "checked": false
+          },
+          {
+            "id": "PG-P1-008",
+            "title": "DR/GORP Cert evidence incomplete",
+            "status": "OPEN",
+            "checked": false
+          },
+          {
+            "id": "DASH-P1-IDX",
+            "title": "Indexer RPC",
+            "status": "OPEN",
+            "checked": false
+          },
+          {
+            "id": "DASH-P1-DRILL",
+            "title": "Deployment Drill",
+            "status": "OPEN",
+            "checked": false
+          },
+          {
+            "id": "DASH-P1-PM",
+            "title": "Primary Market",
+            "status": "OPEN",
+            "checked": false
+          }
+        ]
+      },
+      "P2": {
+        "count": 0,
+        "items": []
+      }
+    },
+    "layer_5_completion_rates": {
+      "website": 95,
+      "admin": 73,
+      "web3": 50,
+      "security": 65,
+      "protocol": 72,
+      "deployment": 10,
+      "overall": 61
+    },
+    "layer_burndown": {
+      "P0": 0,
+      "P1": 10,
+      "P2": 0,
+      "open_evidence": 9,
+      "open_cert": 12,
+      "open_deployment": 15,
+      "estimated_exit_days": 53
+    }
+  },
+  "drag_track": "2D Web3"
+}

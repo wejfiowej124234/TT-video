@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T142000Z",
+  "filename": "ocs-singapore-family-provider-cover.jpg",
+  "row": 26,
+  "chain_id": "singapore-family",
+  "country_code": "SG",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "checks": {
+    "manifest_alignment": { "pass": true, "notes": "title/description/category 与 brief+dataset 100%" },
+    "destination_authenticity_9dim": { "pass": true, "notes": "水族馆/乐园入口 SG-only · 现代热带都市" },
+    "country_consistency_sg": { "pass": true, "notes": "延续 country-consistency-singapore-family 锁定" },
+    "provider_business_identity_plan": {
+      "pass": true,
+      "vs_tokyo": "亲子通票 vs 旅拍",
+      "vs_kyoto": "水族馆家庭 vs 茶室",
+      "vs_seoul": "景点快速通道 vs 夜市美食团",
+      "vs_bangkok": "乐园入口 vs 河船晚宴",
+      "vs_row25_guide": "家庭合影服务场景 vs 向导肖像"
+    },
+    "global_visual_diversity_plan": { "pass": true, "notes": "清爽日间现代乐园 · 非河船/非夜市/非茶室" },
+    "brand_consistency_plan": { "pass": true },
+    "consumer_experience_plan": { "pass": true, "notes": "Market Provider 封面可信家庭套票" },
+    "surface_identity_plan": { "pass": true, "notes": "Provider only · 非 Guide/Official/Community/Acquisition" },
+    "narrative_continuity_plan": { "pass": true, "notes": "Row25 亲子向导 → Row26 通票服务 · 同 chain 家庭主题" },
+    "business_authenticity": { "pass": true, "family pass 268 USDC · 两大一小三景点" },
+    "commercial_realism": { "pass": true },
+    "copyright_logo_watermark_ai": { "pass": true, "no_watermark": true, "no_logo": true, "no_ai_artifacts": true },
+    "nine_class_framework_frozen": true
+  }
+}

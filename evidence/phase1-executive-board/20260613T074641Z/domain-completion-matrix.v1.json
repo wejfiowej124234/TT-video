@@ -1,0 +1,83 @@
+{
+  "schema": "traveltrust.executive_domain_matrix.v1",
+  "domains": [
+    {
+      "domain": "PF",
+      "layer": "L2",
+      "status": "ACTIVE",
+      "gate": "run-product-forensic-audit-gate.sh"
+    },
+    {
+      "domain": "DOA",
+      "layer": "L1",
+      "status": "ACTIVE",
+      "gate": "run-doa-audit-gate.sh"
+    },
+    {
+      "domain": "CA",
+      "layer": "L5",
+      "status": "ACTIVE",
+      "gate": "run-lifecycle-forensic-audit-gate.sh"
+    },
+    {
+      "domain": "UXA",
+      "layer": "L2",
+      "status": "ACTIVE",
+      "gate": "run-lifecycle-forensic-audit-gate.sh"
+    },
+    {
+      "domain": "AG",
+      "layer": "L4",
+      "status": "ACTIVE",
+      "gate": "run-admin-governance-audit-gate.sh"
+    },
+    {
+      "domain": "CX",
+      "layer": "L3",
+      "status": "ACTIVE",
+      "gate": "run-platform-governance-audit-gate.sh"
+    },
+    {
+      "domain": "FZ",
+      "layer": "L7",
+      "status": "COMPLETE",
+      "gate": "run-freeze-governance-gate.sh"
+    },
+    {
+      "domain": "QA2",
+      "layer": "L7",
+      "status": "COMPLETE",
+      "gate": "run-audit-quality-gate.sh"
+    },
+    {
+      "domain": "MA",
+      "layer": "L6",
+      "status": "COMPLETE",
+      "gate": "run-meta-audit-gate.sh"
+    },
+    {
+      "domain": "BA",
+      "layer": "L3",
+      "status": "ACTIVE",
+      "gate": "run-platform-governance-audit-gate.sh"
+    },
+    {
+      "domain": "OPS",
+      "layer": "L3",
+      "status": "ACTIVE",
+      "gate": "run-platform-governance-audit-gate.sh"
+    },
+    {
+      "domain": "TRUST",
+      "layer": "L3",
+      "status": "ACTIVE",
+      "gate": "run-platform-governance-audit-gate.sh"
+    },
+    {
+      "domain": "CS",
+      "layer": "L3",
+      "status": "ACTIVE",
+      "gate": "run-platform-governance-audit-gate.sh"
+    }
+  ]
+}

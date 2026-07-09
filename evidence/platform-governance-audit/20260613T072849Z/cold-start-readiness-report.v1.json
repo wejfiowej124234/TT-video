@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.cold_start_readiness.v1",
+  "seed_ssot": "scripts/dev/start-api-with-seed-README.md",
+  "roles": [
+    "Traveler",
+    "Guide",
+    "Merchant",
+    "Acquisition",
+    "Steward"
+  ],
+  "risks": [
+    "empty discover",
+    "no seed listings",
+    "trust cold start"
+  ]
+}

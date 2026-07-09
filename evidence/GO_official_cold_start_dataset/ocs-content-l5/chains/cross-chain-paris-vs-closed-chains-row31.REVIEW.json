@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T144530Z",
+  "trigger_row": 31,
+  "trigger_filename": "ocs-paris-art-guide-avatar.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "guide_face_collision": {
+    "pass": true,
+    "note": "Claire 40s 欧洲艺术 vs 五城向导无撞脸"
+  },
+  "theme_duplication": {
+    "pass": true,
+    "note": "巴黎艺术 vs 摄影/文化/美食/寺庙/亲子"
+  },
+  "no_quality_regression_prior_30": true
+}

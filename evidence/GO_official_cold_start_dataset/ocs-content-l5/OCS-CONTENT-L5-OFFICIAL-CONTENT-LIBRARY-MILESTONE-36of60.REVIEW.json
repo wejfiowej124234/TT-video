@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.ocs_content_l5_official_content_library_milestone.v1",
+  "stamp_utc": "20260704T151530Z",
+  "milestone": "36of60",
+  "cities_completed": 6,
+  "rows_verified_pass": 36,
+  "chains": [
+    "tokyo-photo",
+    "kyoto-culture",
+    "seoul-food",
+    "bangkok-temple",
+    "singapore-family",
+    "paris-art"
+  ],
+  "TT_OFFICIAL_CONTENT_LIBRARY_MILESTONE_36of60": "PASS",
+  "checks": {
+    "guide_face_collision": {
+      "pass": true
+    },
+    "provider_business_duplication": {
+      "pass": true
+    },
+    "acquisition_product_duplication": {
+      "pass": true
+    },
+    "route_duplication": {
+      "pass": true
+    },
+    "community_style_duplication": {
+      "pass": true
+    },
+    "visual_rhythm_conflict": {
+      "pass": true
+    },
+    "brand_drift": {
+      "pass": true
+    }
+  },
+  "city_scores": {
+    "tokyo-photo": 93.2,
+    "kyoto-culture": 92.8,
+    "seoul-food": 93,
+    "bangkok-temple": 92.9,
+    "singapore-family": 93.1,
+    "paris-art": 93
+  },
+  "library_l5_standard": "ENTERPRISE_L5_MAINTAINED",
+  "no_quality_regression": true,
+  "next_milestone": "48of60"
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T152530Z",
+  "trigger_row": 38,
+  "trigger_filename": "ocs-nyc-skyline-provider-cover.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "provider_comparison": {
+    "tokyo-photo": "台场旅拍",
+    "kyoto-culture": "茶室",
+    "seoul-food": "夜市",
+    "bangkok-temple": "河船",
+    "singapore-family": "亲子通票",
+    "paris-art": "博物馆小团",
+    "nyc-skyline": "观景台联票 · 蓝调剪影",
+    "distinct": true
+  },
+  "no_quality_regression_prior_37": true
+}

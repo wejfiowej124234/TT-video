@@ -1,0 +1,79 @@
+{
+  "schema": "traveltrust.cms_city_hero_wave1_wp0_migration_evidence.v1",
+  "recorded_at_utc": "2026-07-07T12:49:00.297Z",
+  "work_package": "WP0",
+  "TT_CMS_CITY_HERO_WAVE1_WP0": "PASS",
+  "TT_CMS_CITY_HERO_WAVE1_TOKYO": "PENDING_IMPLEMENTATION",
+  "migration": "crates/api/migrations/20260707120000_cms_city_hero_asset_kind.sql",
+  "scope": {
+    "changed": [
+      "catalog_media_assets.asset_kind CHECK"
+    ],
+    "untouched": [
+      "admin",
+      "api",
+      "runtime",
+      "frontend",
+      "asset_upload",
+      "registry",
+      "ownership_matrix",
+      "p1_standard"
+    ]
+  },
+  "static_checks": [
+    {
+      "id": "migration_file_exists",
+      "verdict": "PASS",
+      "path": "crates/api/migrations/20260707120000_cms_city_hero_asset_kind.sql"
+    },
+    {
+      "id": "includes_city_hero",
+      "verdict": "PASS"
+    },
+    {
+      "id": "drops_old_check",
+      "verdict": "PASS"
+    },
+    {
+      "id": "adds_named_check",
+      "verdict": "PASS"
+    },
+    {
+      "id": "preserves_existing_kinds",
+      "verdict": "PASS"
+    },
+    {
+      "id": "scope_catalog_media_assets_only",
+      "verdict": "PASS"
+    }
+  ],
+  "sqlx": {
+    "migrate_run": {
+      "exit_code": 0,
+      "verdict": "PASS",
+      "stdout_tail": "",
+      "stderr_tail": ""
+    },
+    "migrate_info": {
+      "exit_code": 0,
+      "verdict": "PASS",
+      "applied": true,
+      "stdout_tail": "00/installed public operations display surfaces\n20260702150000/installed public operations display schedule\n20260702160000/installed public operations display history\n20260702170000/installed public operations policy\n20260702180000/installed public operations campaign center\n20260703090000/installed market listings smoke origin backfill\n20260703091500/installed market listings probe origin backfill\n20260703100000/installed orders community smoke origin backfill\n20260704100000/installed governed community posts v1\n20260704110000/installed governed market catalog v1\n20260704120000/installed governed campaign surfaces v1\n20260704130000/installed community content readiness governed\n20260704140000/installed community media runtime readiness g1\n20260707120000/installed cms city hero asset kind\n"
+    }
+  },
+  "postgres": {
+    "constraint_def": "CHECK ((asset_kind = ANY (ARRAY['poi_hero'::text, 'landing_ambient'::text, 'hotel_tier_stock'::text, 'transport_stock'::text, 'generic'::text, 'city_hero'::text])))",
+    "check_includes_city_hero": {
+      "verdict": "PASS"
+    },
+    "insert_city_hero_probe": {
+      "verdict": "PASS",
+      "note": "INSERT city_hero succeeded (rolled back)"
+    },
+    "reject_invalid_kind_probe": {
+      "verdict": "PASS",
+      "note": "invalid asset_kind still rejected"
+    }
+  },
+  "next_step": "WP1 Admin allowlist"
+}

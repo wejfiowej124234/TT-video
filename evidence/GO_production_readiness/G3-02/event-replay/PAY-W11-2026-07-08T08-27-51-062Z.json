@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W11",
+  "recorded_utc": "2026-07-08T08:27:51.062Z",
+  "run_id": "2026-07-08T08-27-51-062Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PASS",
+  "summary": {
+    "verdict": "PASS",
+    "detail": "Second reconcile pass (idempotent replay)"
+  },
+  "detail": "Second reconcile pass (idempotent replay)",
+  "tick2_http": 500,
+  "reconcile2_http": 200,
+  "note": "Dual tick/reconcile without duplicate state transition"
+}

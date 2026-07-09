@@ -1,0 +1,53 @@
+{
+  "program": "TTG_CERT_EXECUTION",
+  "phase": "②",
+  "stats_triple_sync_freeze": "evidence/GO_ttg_stats_triple_sync_freeze/20260616T131227Z",
+  "cert_session": "evidence/GO_ttg_cert/20260616T100918Z",
+  "active_cert": 2,
+  "frozen_workstreams": [
+    "TT_REPOSITORY_ALIGNMENT_CLEANUP_PROGRAM",
+    "TT_FULL_SYSTEM_ALIGNMENT_STABILITY_PROGRAM",
+    "MTM/Final Closure stats doc edits"
+  ],
+  "allowed_workstreams": [
+    "Cert #2 Multi Identity Human walkthrough",
+    "Cert #3-#12 Human/Ops/DR signoff track",
+    "Phase B when unpaused"
+  ],
+  "cert2": {
+    "cert": 2,
+    "name": "Multi Identity Walkthrough",
+    "target_tier": "HUMAN_DONE",
+    "mtm_ids": [
+      "CHK-CORE-02",
+      "CHK-CORE-23",
+      "CHK-FE-15",
+      "CHK-FE-12",
+      "CHK-ID-01",
+      "CHK-ID-02",
+      "CHK-ID-03",
+      "CHK-ID-04",
+      "CHK-ID-05",
+      "CHK-ID-06",
+      "CHK-ID-07"
+    ],
+    "uat_refs": [
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+    ],
+    "routes": [
+      "/me/identities",
+      "/me/identities/guide/settings",
+      "/me/identities/merchant/settings",
+      "/me/identities/region-steward/settings",
+      "/me/identities/acquisition/settings",
+      "/governance?view=region"
+    ],
+    "evidence_subdir": "walkthrough/multi-identity",
+    "signoff_file": "MULTI-IDENTITY-WALKTHROUGH-SIGNOFF.json",
+    "signoff_command": "bash scripts/dev/complete-ttg-cert-step.sh --cert 2 --stamp 20260616T100918Z --signer \"Sebastian Ward\""
+  },
+  "prepared_at_utc": "2026-06-16T13:55:53Z"
+}

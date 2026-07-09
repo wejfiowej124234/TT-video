@@ -1,0 +1,243 @@
+# TravelTrust Web3 Full Alignment Audit v2 — machine SSOT
+# Human report: docs/spec/governance-token/TRAVELTRUST-WEB3-FULL-ALIGNMENT-AUDIT-v2.md
+# Drift register: docs/spec/governance-token/WEB3_ALIGNMENT_DRIFT_REPORT-v2.md
+# Gate: bash scripts/gates/check-web3-full-alignment-gate.sh
+
+schema: traveltrust.web3_final_alignment_matrix.v2
+version: "2.0.0"
+audit_id: WEB3_FULL_ALIGNMENT_AUDIT_V2
+effective_utc: "2026-07-09"
+network: sepolia
+chain_id: 11155111
+phase: POST_PHASE2_RUNTIME_CLOSEOUT
+phase2_5_web3_hardening:
+  pr1: COMPLETE
+  status: PASS
+gate_script: scripts/gates/check-web3-full-alignment-gate.sh
+human_report: docs/spec/governance-token/TRAVELTRUST-WEB3-FULL-ALIGNMENT-AUDIT-v2.md
+drift_report: docs/spec/governance-token/WEB3_ALIGNMENT_DRIFT_REPORT-v2.md
+
+purpose: >
+  Higher-layer alignment audit — not bug hunting. Verify protocol, contracts, chain,
+  API, ABI, registry, frontend, and docs still describe ONE system.
+
+alignment_layers:
+  ssot_root: docs/spec/governance-token/protocol-ssot.v1.yaml
+  branches:
+    - contracts
+    - registry
+    - docs
+    - abi
+    - api
+    - frontend
+    - deployment
+    - indexer
+    - runtime_chain
+
+audit_domains:
+  A_smart_contract_inventory:
+    scope: [contracts/src, contracts/script, contracts/test, contracts/abi]
+    deliverable: Contract Inventory v2
+    status: BASELINE_COMPLETE
+    contract_src_count: 45
+    contract_script_count: 25
+    abi_json_count: 30
+  B_abi_alignment:
+    scope: [contracts/abi, crates/api, frontend, broadcast]
+    status: DRIFT_FOUND
+    priority: P0
+  C_deployment_truth:
+    scope: [registry, deployment json, broadcast, env, scripts/deploy]
+    status: MOSTLY_ALIGNED
+    gate: scripts/gates/check-web3-deployment-truth-gate.sh
+  D_api_backend:
+    scope: [crates/api]
+    status: DRIFT_FOUND
+    priority: P1
+  E_frontend_web3_ux:
+    scope: [frontend/lib/governance, frontend/app/governance]
+    status: INDEXER_ALIGNED
+    note: Vacancy UI reads API/indexer not direct RPC
+  F_tokenomics:
+    scope: [protocol-ssot, GovernanceVotesToken, frontend governance params]
+    status: ALIGNED
+    ttg_total_supply: 10000000
+  G_treasury_flow:
+    scope: [FeeRouter, PrimaryMarket, P4Cap, LegacyTreasury, CountryPool]
+    status: ON_CHAIN_CORRECT
+    naming_drift: OPEN
+  H_governance_permissions:
+    scope: [owner, timelock, proxy admin]
+    status: V2_ACTIVE
+    gate: scripts/gates/check-web3-deployment-truth-gate.sh
+  I_settlement_accounting:
+    scope: [FeeRouter, CountryPool, Vacancy, Ledger, Claim]
+    status: ACTIVE_V1_SEPOLIA
+    vacancy_milestone: VACANCY_LEDGER_V1_SEPOLIA_RUNTIME_ACTIVE_PASS
+  J_documentation:
+    scope: [docs, registry, README]
+    status: PARTIAL_DRIFT
+    priority: P2
+
+gate:
+  gate_id: WEB3_FULL_ALIGNMENT_GATE
+  script: scripts/gates/check-web3-full-alignment-gate.sh
+  policy:
+    FAIL: critical misalignment — registry vs chain active address mismatch, prerequisite gates fail
+    WARN: any OPEN HIGH drift in drift_register (expected at Phase②.5 entry)
+    PASS: zero OPEN HIGH · zero OPEN CRITICAL
+  prerequisite_gates:
+    - WEB3_PROTOCOL_MASTER_MATRIX
+    - VACANCY_DEPLOYMENT_READINESS
+    - WEB3_DEPLOYMENT_TRUTH
+
+drift_register:
+  - id: ABI-001
+    domain: B
+    severity: HIGH
+    status: RESOLVED
+    resolved_pr: PHASE2_5_PR1
+    contract: UnallocatedStewardPathVault
+    title: Checked-in ABI missing Vacancy V1 selectors
+    current: contracts/abi/UnallocatedStewardPathVault.json — Q-F01 era · no vacancyLedger()
+    expected: ABI matches contracts/src/vacancy/UnallocatedStewardPathVault.sol (4-field VacancyLedger)
+    paths:
+      - contracts/abi/UnallocatedStewardPathVault.json
+      - contracts/src/vacancy/UnallocatedStewardPathVault.sol
+    action: Re-export ABI post-W7 · add gate check
+
+  - id: ABI-002
+    domain: B
+    severity: MEDIUM
+    status: DEPLOYMENT_PREPARATION_READY
+    resolved_phase: P3-04
+    contract: EscrowV2
+    title: EscrowV2 deployment preparation
+    current: contracts/abi/EscrowV2.json checked in · DeployEscrowFactoryV2.s.sol ready
+    expected: ABI + script before mainnet broadcast wave
+    not_status: [MAINNET_READY, DEPLOYED, VERIFIED, ACTIVE]
+    paths:
+      - contracts/abi/EscrowV2.json
+      - contracts/script/DeployEscrowFactoryV2.s.sol
+    action: P3-04 complete — mainnet broadcast remains blocked until P3-05+ gates
+
+  - id: ABI-003
+    domain: B
+    severity: LOW
+    status: RESOLVED
+    resolved_pr: PHASE2_5_PR2
+    contract: UnallocatedStewardPathVault
+    title: Stale 5-tuple cast in legacy audit gate
+    current: vacancyLedger()(uint256,uint256,uint256,uint256)
+    expected: 4-tuple Vacancy V1 ABI
+    paths:
+      - scripts/gates/check-vacancy-legacy-balance-audit-gate.sh
+    action: Phase②.5 PR-2 cleanup
+
+  - id: API-001
+    domain: D
+    severity: HIGH
+    status: RESOLVED
+    resolved_pr: PHASE2_5_PR1
+    title: Treasury resolution falls back to REGION_VAULT_ADDRESS
+    current: GOVERNANCE_TREASURY_P4CAP_ADDRESS → TREASURY_ADDRESS → REGION_VAULT_ADDRESS
+    expected: GOVERNANCE_TREASURY_P4CAP_ADDRESS only (or explicit LEGACY_TREASURY_ADDRESS)
+    paths:
+      - crates/api/src/chain/mod.rs
+      - crates/api/src/routes/health_meta/handlers.rs
+    maps_to: W3-AUDIT-001
+
+  - id: API-002
+    domain: D
+    severity: HIGH
+    status: RESOLVED
+    resolved_pr: PHASE2_5_PR1
+    title: Governance pool reads GOVERNANCE_TREASURY_ADDRESS
+    current: env GOVERNANCE_TREASURY_ADDRESS for treasury pool SSOT
+    expected: GOVERNANCE_TREASURY_P4CAP_ADDRESS
+    paths:
+      - crates/api/src/routes/governance/governance_pool.rs
+      - crates/api/src/routes/governance/pool_chain.rs
+    maps_to: W3-AUDIT-002
+
+  - id: API-003
+    domain: D
+    severity: HIGH
+    status: RESOLVED
+    resolved_pr: PHASE2_5_PR1
+    title: Fundstack verify script uses deprecated treasury keys
+    current: TREASURY_ADDRESS / GOVERNANCE_TREASURY_ADDRESS
+    expected: GOVERNANCE_TREASURY_P4CAP_ADDRESS + LEGACY_TREASURY_ADDRESS
+    paths:
+      - scripts/dev/phase2-sepolia-fundstack-verify-bindings.sh
+    maps_to: W3-AUDIT-003
+
+  - id: DEP-001
+    domain: C
+    severity: MEDIUM
+    status: RESOLVED
+    resolved_pr: PHASE2_5_PR2
+    title: Treasury env key proliferation
+    current: env-key-catalog-web3.v1.yaml v2 · check-web3-env-catalog-gate.sh
+    expected: Two-key model — P4Cap ACTIVE + LEGACY_TREASURY_ADDRESS
+    paths:
+      - registry/env-key-catalog-web3.v1.yaml
+      - scripts/gates/check-web3-env-catalog-gate.sh
+    action: Phase②.5 PR-2 env catalog SSOT
+
+  - id: DOC-001
+    domain: J
+    severity: LOW
+    status: RESOLVED
+    resolved_pr: PHASE2_5_PR2
+    title: Runbooks map bare TREASURY_ADDRESS to GovernanceTreasury
+    paths:
+      - docs/runbook/WEB3-TREASURY-ENV-KEYS-OPERATOR-GUIDE.md
+      - docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md
+      - docs/runbook/TT-PHASE2-SEPOLIA-DEPLOYED-SPINE-SUMMARY.md
+    action: Phase②.5 PR-2 operator guide + runbook alignment
+
+  - id: GOV-001
+    domain: H
+    severity: INFO
+    status: DOCUMENTED
+    title: Dual timelock — V2 gov vs legacy DE Q-F01 owner history
+    current: V2 Timelock owns Vacancy V1 triplet · legacy Q-F01 retained READ_ONLY
+    expected: Documented in W7 runbook · not a defect
+    action: None
+
+  - id: TOKEN-001
+    domain: F
+    severity: INFO
+    status: PASS
+    title: TTG 10M supply aligned across SSOT · frontend · tests
+    current: protocol-ssot · governanceParamsTokenomicsModel · locales — 10_000_000
+    expected: 10M
+    action: None
+
+resolved:
+  - id: W3-AUDIT-005
+    title: Vacancy V1 runtime selectors on Sepolia DE
+    resolved_utc: "2026-07-09"
+  - id: W7-CLEANUP-01
+    title: orchestrator vacancyLedger 4-tuple ABI
+  - id: W7-CLEANUP-02
+    title: registry LEGACY_UNALLOC bash expansion
+  - id: W7-CLEANUP-03
+    title: Windows evidence path handling
+
+contract_inventory_v2_summary:
+  note: Full per-contract rows in human audit §A · on-chain fields require RPC refresh
+  active_vacancy_v1_sepolia:
+    ledger: "0x738D2c133d5F90c13eE9907386136471E1f330f5"
+    steward_path: "0xaB6c15Ebcae78606E0AE5663d831E09e05af32FA"
+    unallocated: "0xb7d0Ea9579F80B2090195d49a44941d5546554E9"
+    owner_timelock: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    runtime_status: ACTIVE
+  legacy_qf01:
+    status: LEGACY_READ_ONLY
+
+next_phase:
+  id: PHASE2_5_WEB3_HARDENING
+  plan: docs/spec/governance-token/PHASE2.5-WEB3-HARDENING-PLAN-v1.md
+  blockers_for_phase3: []

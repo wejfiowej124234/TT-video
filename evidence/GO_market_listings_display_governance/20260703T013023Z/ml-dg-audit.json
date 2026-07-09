@@ -1,0 +1,24 @@
+{
+  "schema": "traveltrust.market_listings_display_governance.v1",
+  "api": "https://tt-api-staging.fly.dev",
+  "recorded_at": "2026-07-03T01:30:48.583Z",
+  "verdict": "PASS",
+  "surfaces": {
+    "provider": {
+      "variant": "provider",
+      "public_count": 1,
+      "admin_published": 1
+    },
+    "acquisition": {
+      "variant": "acquisition",
+      "public_count": 0,
+      "admin_published": 0
+    }
+  },
+  "issue_counts": {
+    "PRODUCT_DEFECT": 0,
+    "EXPECTED_DIFFERENCE": 0,
+    "ENHANCEMENT": 0
+  },
+  "issues": []
+}

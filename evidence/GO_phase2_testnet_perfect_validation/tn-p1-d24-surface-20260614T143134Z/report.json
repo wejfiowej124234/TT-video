@@ -1,0 +1,15 @@
+{
+  "schema": "tn_p1_d24_surface_staging.v1",
+  "stamp": "20260614T143134Z",
+  "phase": "② testnet",
+  "surfaces_closed": [
+    "T-P11",
+    "M-P07",
+    "O-P02",
+    "O-P03",
+    "O-P06"
+  ],
+  "surface_coverage_target": "D24 registry OPEN→PASS",
+  "release_gate": "GO",
+  "honest_boundary": "staging browser UAT for 5 previously OPEN D24 surfaces · per-element human_uat PASS · ≠ 96-20 full enumeration"
+}

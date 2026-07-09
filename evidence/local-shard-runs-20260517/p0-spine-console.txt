@@ -1,0 +1,247 @@
+
+> traveltrust-frontend@0.1.0 e2e:chromium:p0-spine
+> node ./scripts/run-e2e-default.mjs --project=chromium e2e/p0-spine-real-api-public.spec.ts e2e/p0-spine-real-api-session.spec.ts
+
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] DATABASE_URL loaded from repo root .env
+[e2e] P3_CHAIN_OFF loaded from repo root .env
+[e2e] TRAVELTRUST_EMAIL_TRANSPORT=log (auth forgot/verify; resend incomplete or transport off)
+[e2e] TRAVELTRUST_AUTH_TOKEN_PEPPER set (Playwright dev default; set in root .env to override)
+[e2e] P3_CHAIN_OFF=1 (chromium mock-pay contract; root .env had "0"; use PLAYWRIGHT_PRESERVE_ROOT_P3_CHAIN_OFF=1 + run-e2e-sepolia for chain-on)
+sync-frontend-env: wrote D:\TravelTrust\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080 + NEXT_PUBLIC_SKIP_ME_FETCH=0 + NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI=1
+[e2e] PLAYWRIGHT_REUSE_FE_SERVER=0 + reclaimed FE listen port (default for PLAYWRIGHT_FULL_STACK=1 so Next picks .env.local SKIP_ME; set PLAYWRIGHT_REUSE_FE_SERVER=1 to reuse)
+[e2e] PLAYWRIGHT_FE_USE_PRODUCTION_START=1 — reuse existing .next production build (delete .next or unset PLAYWRIGHT_SKIP_FE_BUILD to force rebuild)
+[e2e] NODE_OPTIONS += --max-old-space-size=16384 (full-stack local; long suite / Next dev OOM guard; PLAYWRIGHT_SKIP_E2E_NODE_HEAP=1 to opt out)
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.33s
+[1A[2K[WebServer]     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
+
+[1A[2K[WebServer]      Running `target\debug\traveltrust-api.exe`
+
+[1A[2K[WebServer] TravelTrust API 启动失败: 
+
+[1A[2K[WebServer] 通常每个套接字地址(协议/网络地址/端口)只允许使用一次。 (os error 10048)
+
+[1A[2K[WebServer] error: process didn't exit successfully: `target\debug\traveltrust-api.exe` (exit code: 1)
+
+
+Running 21 tests using 1 worker
+
+[1A[2K(node:31692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:31692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/21] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:27:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K  1) [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:27:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard 
+
+    Error: apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:8080
+    Call log:
+    [2m  - → GET http://127.0.0.1:8080/meta[22m
+    [2m    - user-agent: Playwright/1.58.2 (x64; windows 10.0) node/22.22[22m
+    [2m    - accept: */*[22m
+    [2m    - accept-encoding: gzip,deflate,br[22m
+
+
+       at helpers\playwright429Backoff.ts:141
+
+      139 | ): Promise<APIResponse> {
+      140 |   const opts = withDefaultApiRequestTimeout(options);
+    > 141 |   let res = await withTransientNetRetry(() => request.get(url, opts));
+          |                                                       ^
+      142 |   if (res.ok()) return res;
+      143 |   if (res.status() !== 429) return res;
+      144 |   const body1 = await res.text();
+        at run (D:\TravelTrust\frontend\e2e\helpers\playwright429Backoff.ts:141:55)
+        at withTransientNetRetry (D:\TravelTrust\frontend\e2e\helpers\playwright429Backoff.ts:35:20)
+        at requestGetWith429Retry (D:\TravelTrust\frontend\e2e\helpers\playwright429Backoff.ts:141:13)
+        at getMetaJsonWithRetry (D:\TravelTrust\frontend\e2e\helpers\metaFetchRetry.ts:51:11)
+        at D:\TravelTrust\frontend\e2e\setup\meta-chain-contracts.spec.ts:28:27
+
+
+[1A[2K(node:23808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:23808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[2/21] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:39:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K[WebServer] Failed to proxy http://127.0.0.1:8080/meta Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Failed to proxy http://127.0.0.1:8080/meta Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Failed to proxy http://127.0.0.1:8080/meta Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Failed to proxy http://127.0.0.1:8080/meta Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Failed to proxy http://127.0.0.1:8080/meta Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Failed to proxy http://127.0.0.1:8080/meta Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Failed to proxy http://127.0.0.1:8080/meta Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Failed to proxy http://127.0.0.1:8080/meta Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K[WebServer] Error: connect ECONNREFUSED 127.0.0.1:8080
+[WebServer]     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:8080) {
+[WebServer]   errno: -4078,
+[WebServer]   code: 'ECONNREFUSED',
+[WebServer]   syscall: 'connect',
+[WebServer]   address: '127.0.0.1',
+[WebServer]   port: 8080
+[WebServer] }
+
+[1A[2K  2) [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:39:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only) 
+
+    Error: GET /meta failed: HTTP 500 Internal Server Error
+
+       at helpers\metaFetchRetry.ts:72
+
+      70 |       continue;
+      71 |     }
+    > 72 |     throw new Error(`GET ${url} failed: ${last}`);
+         |           ^
+      73 |   }
+      74 |   throw new Error(`GET ${url} failed: ${last}`);
+      75 | }
+        at getMetaJsonWithRetry (D:\TravelTrust\frontend\e2e\helpers\metaFetchRetry.ts:72:11)
+        at D:\TravelTrust\frontend\e2e\setup\meta-chain-contracts.spec.ts:44:27
+
+
+[1A[2K  2 failed
+    [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:27:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard 
+    [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:39:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only) 
+  19 did not run
+
+[e2e] Playwright exited non-zero with PLAYWRIGHT_FULL_STACK=1.
+  If many failures are `net::ERR_CONNECTION_REFUSED` to :3012, Next dev likely died mid-suite (OOM or crash); later tests cascade red.
+  If failures mention :8080 / ECONNREFUSED, API is not listening — ensure `traveltrust-api` is up (Playwright webServer starts it by default) or match PLAYWRIGHT_API_PORT / PLAYWRIGHT_API_HEALTH_URL.
+  If webServer logs `pool timed out while waiting for an open connection`, Postgres is unreachable or exhausted — fix DATABASE_URL (see scripts/dev/export-database-url-from-root-env.sh), run migrations, and ensure PG is listening before full-stack E2E.
+  Try: smaller slices `npm run e2e:chromium:smoke-surface`, `e2e:chromium:smoke-admin-all`, `e2e:chromium:core-release`, `e2e:chromium:p0-spine`, `e2e:chromium:trust-gate`, `e2e:chromium:93-admin-matrix`; full matrix: `bash scripts/gates/local-e2e-chromium-full-matrix.sh` (sets PLAYWRIGHT_FE_USE_PRODUCTION_START=1 → next start); or `npm run e2e:full-chromium:list` to see where green stops; optional `PLAYWRIGHT_SKIP_E2E_NODE_HEAP=1` to test without extra heap (not a fix for OOM).
+  Solo / independent dev: keep local exit-0 evidence per docs/solo-dev-rhythm.md and CONTRIBUTING.md (GitHub Actions green is not the sole bar).
+

@@ -1,0 +1,116 @@
+# TravelTrust · Media CDN Production Acceptance Gate · SSOT
+# Human: docs/runbook/TT-MEDIA-CDN-PRODUCTION-ACCEPTANCE-GATE.md
+
+schema: traveltrust.media_cdn_production_acceptance.v1
+version: 1
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_MEDIA_CDN_PRODUCTION_ACCEPTANCE: ENFORCED
+  TT_MEDIA_CDN_CLOSE_REQUIRES_ACCEPTANCE: ENFORCED
+  TT_ACCEPTANCE_DECOUPLED_FROM_CATALOG: ENFORCED
+
+governance:
+  acceptance_decoupling_principle: >
+    Media Infrastructure acceptance validates media service capability only — not catalog asset sources.
+    Catalog Asset Migration acceptance validates asset source, copyright, and operational content only —
+    it does not re-validate media infrastructure. No duplicate acceptance across tracks.
+
+policy:
+  configure_complete_not_equal_close: true
+  scope: media_infrastructure_only
+  rule: >
+    Acceptance validates community/user-upload media pipeline (R2, CDN, multipart, playback, cache).
+    Catalog asset URLs (Unsplash, OCS covers) are OUT OF SCOPE — see PI3-CATALOG-ASSET-MIGRATION.
+  not_blocking_pass:
+    - unsplash_in_catalog_payloads
+    - missing_owned_guide_covers
+    - hero_bundled_static_mp4
+
+state_machine:
+  PI3-MEDIA-PERSISTENT-STAGING:
+    status: CLOSED
+    note: Fly Tigris interim · off loca.lt
+  PI3-MEDIA-R2-CDN-FINAL:
+    current: WAITING_OWNER_CF
+    transitions:
+      - when: owner_completes_cloudflare_r2_cdn_fly_secrets
+        then: AWAITING_ACCEPTANCE
+      - when: MEDIA_CDN_PRODUCTION_ACCEPTANCE_PASS
+        then: CLOSED
+    close_blocked_until: MEDIA_CDN_PRODUCTION_ACCEPTANCE
+  MEDIA_CDN_PRODUCTION_ACCEPTANCE:
+    current: PENDING
+    transitions:
+      - when: owner_config_complete
+        then: READY
+      - when: acceptance_runner_started
+        then: IN_PROGRESS
+      - when: all_checks_pass
+        then: PASS
+      - when: PI3-MEDIA-R2-CDN-FINAL_closed
+        then: CLOSED
+
+target:
+  cdn_public_base: https://cdn.traveltrust.app
+  r2_bucket: traveltrust-community-media
+  fly_api_app: tt-api-staging
+  fly_web_app: tt-web-staging
+  staging_api: https://tt-api-staging.fly.dev
+  staging_web: https://tt-web-staging.fly.dev
+
+checks:
+  - id: G1_CDN_HTTP_200
+    label: CDN 返回 HTTP 200（smoke + 抽样媒体）
+    required: true
+  - id: G2_COMMUNITY_MEDIA_ON_CDN
+    label: 社区媒体 URL 已切换到 cdn.traveltrust.app（STRICT_CDN）
+    required: true
+  - id: G3_CAPABILITIES_READY
+    label: public_video_publish_ready=true
+    required: true
+  - id: G4_BROWSER_IMAGES
+    label: 浏览器图片正常（Guide / Provider / Acquisition / Community / Homepage）
+    required: true
+  - id: G5_BROWSER_VIDEO
+    label: 浏览器视频正常（Community Feed 播放）
+    required: true
+  - id: G6_UPLOAD_MULTIPART
+    label: 上传正常（multipart session → complete）
+    required: true
+  - id: G7_NEW_OBJECT_IMMEDIATE_GET
+    label: 新上传对象立即可访问（CDN GET 200）
+    required: true
+  - id: G8_CACHE_HIT
+    label: Cache 命中正常（cf-cache-status HIT 或等价）
+    required: true
+  - id: G9_ROLLBACK_VERIFIED
+    label: 回滚方案验证完成（文档 + interim 值 + 可选 drill 签字）
+    required: true
+
+forbidden_in_payload:
+  - "*.loca.lt"
+  - "*.fly.storage.tigris.dev"
+  - "*.tigris.dev"
+
+scripts:
+  runner: scripts/dev/run-media-cdn-production-acceptance-gate.sh
+  audit: scripts/dev/audit-staging-media-urls.cjs
+  c4_smoke: scripts/dev/smoke-community-c4-staging-video-playback.sh
+  owner_config: docs/runbook/TT-PI3-MEDIA-R2-CDN-FINAL-OWNER-CHECKLIST.md
+  rollback_env: scripts/dev/staging-media-tigris-rollback.env.example
+
+evidence_root: evidence/GO_media_cdn_production_acceptance/
+
+issues:
+  blocks_closure_of: PI3-MEDIA-R2-CDN-FINAL
+  depends_on_owner_step: PI3-MEDIA-R2-CDN-FINAL
+  id: MEDIA_CDN_PRODUCTION_ACCEPTANCE
+  pi3_track: PI3-MEDIA-INFRASTRUCTURE
+
+decoupled:
+  PI3-CATALOG-ASSET-MIGRATION:
+    registry: registry/catalog-asset-migration.v1.yaml
+    blocks_this_gate: false
+
+signoff_template: evidence/manual-uat/signoff/MEDIA-CDN-PRODUCTION-ACCEPTANCE-SIGNOFF-{stamp}.md

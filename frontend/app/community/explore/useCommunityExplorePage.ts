@@ -29,6 +29,7 @@ import {
 } from "./communityExplorePageConstants";
 import { resolveCommunityFeedDisplayPosts } from "@/lib/communityFeedShowcaseMerge";
 import { exploreRegionBlocksFromApiAggregate } from "@/lib/communityExploreDestinationsFromApi";
+import { isCommunityContentProductionProfile } from "@/lib/communityContentProfile";
 
 export type CommunityExploreRegionBlock = {
   regionKey: Exclude<RegionKey, "all">;
@@ -145,6 +146,13 @@ export function useCommunityExplorePage(): CommunityExplorePageViewModel {
     exploreDestCatalog: CommunityExploreDestCatalog;
   } => {
     const apiRows = exploreDestQ.data?.destinations;
+    if (isCommunityContentProductionProfile()) {
+      if (!apiRows?.length) {
+        return { regionBlocks: [], exploreDestCatalog: "api-aggregate-v1" };
+      }
+      const blocks = exploreRegionBlocksFromApiAggregate(apiRows);
+      return { regionBlocks: blocks, exploreDestCatalog: "api-aggregate-v1" };
+    }
     if (!apiRows?.length || exploreDestQ.data?.catalog === "static-fallback-v1") {
       return { regionBlocks: staticRegionBlocks, exploreDestCatalog: "static-v1" };
     }

@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.top50_permission.v1",
+  "count": 1,
+  "findings": [
+    {
+      "id": "PGX-SEED-002",
+      "domain": "DOMAIN-ADMIN",
+      "dim": "ADMIN-09",
+      "label": "Admin sidebar surface growth",
+      "suggested_verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "adminShellSidebarModel — audit menu count vs AFDA"
+    }
+  ]
+}

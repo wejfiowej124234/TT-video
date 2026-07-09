@@ -6,7 +6,10 @@
 **小组远程（协作）**：`https://github.com/TT-Expedition/TT-Expedition`（SSH：`git@github.com:TT-Expedition/TT-Expedition.git`）。  
 若仍保留个人/旧远程，本地可配置为 `git remote` 中的别名（如 `legacy`），以小组仓库为 **`origin`** 即可。
 
-可选能力包括：**链上托管（Escrow）**、**质押（Staking）**、**治理与费路由相关合约**、以及链下订单/社区/治理等 **REST API**。具体以代码与 [04-后端与API](docs/spec/04-后端与API.md) 为准。
+可选能力包括：**链上托管（Escrow）**、**USDC 原生支付**、**质押（Staking）**、**治理与费路由相关合约**、以及链下订单/社区/治理等 **REST API**。
+
+**支付架构（Production SSOT）：** 核心 = **Web3 Escrow (USDC)** · Stripe = **Optional Fiat Onboarding (P1)**。  
+**Production GO：** 四层四 Gate — [`PRODUCTION-GO-FOUR-GATE-FRAMEWORK.md`](docs/runbook/PRODUCTION-GO-FOUR-GATE-FRAMEWORK.md) · `bash scripts/check-production-go-four-gates.sh`
 
 ---
 

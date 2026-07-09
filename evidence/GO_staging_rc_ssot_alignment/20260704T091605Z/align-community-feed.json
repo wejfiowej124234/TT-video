@@ -1,0 +1,161 @@
+{
+  "schema": "traveltrust.ocs_staging_community_feed_align.v1",
+  "recorded_at": "2026-07-04T09:16:57.716Z",
+  "ocs_post_count": 10,
+  "published_before": 23,
+  "unpublish_candidates": [
+    {
+      "id": "cd7a82eb-96ea-4335-8630-098378df8bdf",
+      "label": "c6-staging-social-1780670465",
+      "in_ocs": false,
+      "smoke_body": false
+    },
+    {
+      "id": "c81364dd-767f-43cd-8211-9c7a29a145ae",
+      "label": "c6-staging-social-1780670252",
+      "in_ocs": false,
+      "smoke_body": false
+    },
+    {
+      "id": "46e0b56b-5a88-42ac-80fc-3514d1a51f03",
+      "label": "tt-phase2-c4-playback-62f884e0",
+      "in_ocs": false,
+      "smoke_body": false
+    },
+    {
+      "id": "cbb8cc82-1552-4e4c-a718-10503c3bb287",
+      "label": "tt-phase2-c4-playback-f24cb160",
+      "in_ocs": false,
+      "smoke_body": false
+    },
+    {
+      "id": "68b28439-8ef6-4919-b0d6-a1c92d688406",
+      "label": "tt-phase2-c4-playback-e364643f",
+      "in_ocs": false,
+      "smoke_body": false
+    },
+    {
+      "id": "11f13d29-20c8-4bd6-957e-46171c98cee6",
+      "label": "tt-phase2-c4-playback-e17ccc49",
+      "in_ocs": false,
+      "smoke_body": false
+    },
+    {
+      "id": "54e29584-cb85-4f06-b764-d4d045684e7b",
+      "label": "tt-phase2-c4-playback-357048ab",
+      "in_ocs": false,
+      "smoke_body": false
+    },
+    {
+      "id": "4aac83e7-9b76-4278-8d6b-858b540aaf6a",
+      "label": "tt-phase2-c4-playback-2f70c40f",
+      "in_ocs": false,
+      "smoke_body": false
+    },
+    {
+      "id": "efeadaae-bbcd-4954-aa24-c4475e894339",
+      "label": "tt-phase2-c4-playback-a97f9816",
+      "in_ocs": false,
+      "smoke_body": false
+    },
+    {
+      "id": "d57e4659-0862-4081-8a1b-d2caacce83d3",
+      "label": "tt-phase2-c4-playback-ad43ea5c",
+      "in_ocs": false,
+      "smoke_body": false
+    },
+    {
+      "id": "a1f42ead-1477-4273-9c8e-4c19ef8801f0",
+      "label": "tt-phase2-c4-playback-8fb82234",
+      "in_ocs": false,
+      "smoke_body": false
+    },
+    {
+      "id": "04a5ba4c-1a68-4b98-ab44-cb715f3f0c49",
+      "label": "tt-phase2-c4-playback-1780665978",
+      "in_ocs": false,
+      "smoke_body": false
+    },
+    {
+      "id": "19b1f6f7-b44c-4cc1-8409-7daaa36276b3",
+      "label": "tt-phase2-c4-playback-1780665686",
+      "in_ocs": false,
+      "smoke_body": false
+    }
+  ],
+  "unpublish": [
+    {
+      "id": "cd7a82eb-96ea-4335-8630-098378df8bdf",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "c81364dd-767f-43cd-8211-9c7a29a145ae",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "46e0b56b-5a88-42ac-80fc-3514d1a51f03",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "cbb8cc82-1552-4e4c-a718-10503c3bb287",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "68b28439-8ef6-4919-b0d6-a1c92d688406",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "11f13d29-20c8-4bd6-957e-46171c98cee6",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "54e29584-cb85-4f06-b764-d4d045684e7b",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "4aac83e7-9b76-4278-8d6b-858b540aaf6a",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "efeadaae-bbcd-4954-aa24-c4475e894339",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "d57e4659-0862-4081-8a1b-d2caacce83d3",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "a1f42ead-1477-4273-9c8e-4c19ef8801f0",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "04a5ba4c-1a68-4b98-ab44-cb715f3f0c49",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "19b1f6f7-b44c-4cc1-8409-7daaa36276b3",
+      "action": "unpublish",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "dry_run": false,
+  "feed_after": {
+    "count": 10,
+    "ocs_only": true,
+    "smoke_in_feed": 0,
+    "non_ocs": []
+  }
+}

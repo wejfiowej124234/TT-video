@@ -1,0 +1,443 @@
+{
+  "schema": "traveltrust.official_cold_start_dataset.run.v1",
+  "stamp": "20260708T055601Z",
+  "api": "https://tt-api-prod.fly.dev",
+  "manifest": "data/official-cold-start/dataset.v1.json",
+  "counts": {
+    "accounts": 35,
+    "guides": 10,
+    "listings": 20,
+    "official_guides": 10,
+    "community_posts": 10,
+    "campaigns": 10
+  },
+  "state": {
+    "accounts": {
+      "official": {
+        "id": "d5c6102d-164a-4e41-9967-e632e35ff6b7",
+        "user_id": "79dc2117-e956-40ee-9491-870b68c0098e",
+        "email": "official@ocs.traveltrust.app"
+      },
+      "asia": {
+        "id": "d74d79e9-5376-46d9-9ae8-65dad12b3536",
+        "user_id": "2a839b99-ecd6-4ed0-8e71-07e6db394f1f",
+        "email": "asia@ocs.traveltrust.app"
+      },
+      "japan": {
+        "id": "c586b644-1376-4fad-a838-dfed80c7060c",
+        "user_id": "4bdf6e3d-0bd6-45a7-b521-11ee9183386a",
+        "email": "japan@ocs.traveltrust.app"
+      },
+      "europe": {
+        "id": "2c27b94f-4835-4676-951f-4ff0ef3fc256",
+        "user_id": "2b77b3a3-72de-4068-b195-30271b28d4f5",
+        "email": "europe@ocs.traveltrust.app"
+      },
+      "support": {
+        "id": "18e7fd27-2d9d-4ab4-b083-f2b83fad12e9",
+        "user_id": "c1ff8352-9e05-4e2c-9086-3a9288e01d1a",
+        "email": "support@ocs.traveltrust.app"
+      },
+      "guide-acc:tokyo-photo": {
+        "id": "da811b2f-27c4-450e-8480-ea3db31155e7",
+        "user_id": "089861bf-9fe9-4ad0-9712-c174bdaf2674",
+        "email": "tokyo-photo-guide@ocs.traveltrust.app"
+      },
+      "provider-acc:tokyo-photo": {
+        "id": "2f61a5ad-2fa9-4997-b139-02c33848f099",
+        "user_id": "465d33f5-d0fc-474e-abe7-b07b5387be4f",
+        "email": "tokyo-photo-studio@ocs.traveltrust.app"
+      },
+      "acquisition-acc:tokyo-photo": {
+        "id": "743fd90d-fcb7-4901-8de7-5fd033d96800",
+        "user_id": "0fe7275f-d156-43b9-a079-64621193d1c1",
+        "email": "tokyo-lens-bounty@ocs.traveltrust.app"
+      },
+      "guide-acc:kyoto-culture": {
+        "id": "613943d9-dde9-4a70-90a0-6aa9c080fb3a",
+        "user_id": "a0439178-c1ef-4ab5-a833-1495f6ae4727",
+        "email": "kyoto-tea-guide@ocs.traveltrust.app"
+      },
+      "provider-acc:kyoto-culture": {
+        "id": "092aebf9-d1ca-4eec-8386-7d73ce49553b",
+        "user_id": "6f688ac5-472c-47d9-be59-67fa575c1c91",
+        "email": "kyoto-tea-experience@ocs.traveltrust.app"
+      },
+      "acquisition-acc:kyoto-culture": {
+        "id": "d5e5d497-c336-4b08-9f06-c780a309ccbb",
+        "user_id": "eb624226-4362-45d3-a5ac-9b985afeaa27",
+        "email": "kyoto-craft-bounty@ocs.traveltrust.app"
+      },
+      "guide-acc:seoul-food": {
+        "id": "670b093f-a594-4998-9102-a4d146072d8f",
+        "user_id": "81f07d7e-b854-40f1-991b-0aca75599093",
+        "email": "seoul-food-guide@ocs.traveltrust.app"
+      },
+      "provider-acc:seoul-food": {
+        "id": "c615cbd9-3b8d-4021-9179-dbd11502985c",
+        "user_id": "0b5fa9b2-ee98-4c60-8bd8-b4dfb9cfd10f",
+        "email": "seoul-food-tour@ocs.traveltrust.app"
+      },
+      "acquisition-acc:seoul-food": {
+        "id": "a961f441-de57-4d04-ace3-eb5e65a014a8",
+        "user_id": "0b6d6fa6-0c73-4019-9bd4-f5171dcfea8d",
+        "email": "seoul-snack-bounty@ocs.traveltrust.app"
+      },
+      "guide-acc:bangkok-temple": {
+        "id": "d30229a2-84b8-4189-b0fe-8b50aebbb4b0",
+        "user_id": "68f1e6cf-d494-47ac-828f-e761ddeee8e5",
+        "email": "bangkok-temple-guide@ocs.traveltrust.app"
+      },
+      "provider-acc:bangkok-temple": {
+        "id": "3013751a-3bef-47d8-a2dd-84964b1f28a2",
+        "user_id": "5c2744c7-2a16-492b-bb15-e061761b1b9d",
+        "email": "bangkok-river-cruise@ocs.traveltrust.app"
+      },
+      "acquisition-acc:bangkok-temple": {
+        "id": "63ef139a-7f4f-4e42-a4f1-6eff5e0c3eac",
+        "user_id": "77a7ccaf-f94c-42ca-bb4c-2795018ae8ba",
+        "email": "bangkok-silk-bounty@ocs.traveltrust.app"
+      },
+      "guide-acc:singapore-family": {
+        "id": "47e97aa0-675f-4338-9b11-4556ef705f4d",
+        "user_id": "506bd119-94a7-419d-951f-d1ea68a705f2",
+        "email": "sg-family-guide@ocs.traveltrust.app"
+      },
+      "provider-acc:singapore-family": {
+        "id": "1faa013a-3288-4a68-b928-977980a967a1",
+        "user_id": "b6d4fd81-06c4-47e1-af40-17021b9481ce",
+        "email": "sg-family-pass@ocs.traveltrust.app"
+      },
+      "acquisition-acc:singapore-family": {
+        "id": "5e046e01-7bfa-4787-a2cf-4955fa71abc9",
+        "user_id": "ac369f11-43de-4dbb-8cb7-d23836161d51",
+        "email": "sg-design-bounty@ocs.traveltrust.app"
+      },
+      "guide-acc:paris-art": {
+        "id": "2640dd4c-baa1-4c5e-ac4c-593a17d256fd",
+        "user_id": "54ff6dc9-7d22-4574-b91a-820934b65151",
+        "email": "paris-art-guide@ocs.traveltrust.app"
+      },
+      "provider-acc:paris-art": {
+        "id": "32976e9e-6c0b-428c-9f4d-38de576ff69e",
+        "user_id": "588bece3-08a0-4a3b-a917-a8cffd1b0589",
+        "email": "paris-museum-skip@ocs.traveltrust.app"
+      },
+      "acquisition-acc:paris-art": {
+        "id": "bbcf128e-3dea-4d24-bcb1-3acc08faf27b",
+        "user_id": "b2e6d13b-6965-4535-ad1a-24543c81023c",
+        "email": "paris-vintage-bounty@ocs.traveltrust.app"
+      },
+      "guide-acc:nyc-skyline": {
+        "id": "d404ba7c-c45b-4442-b7e0-77cd7fc32c01",
+        "user_id": "3e337a67-b885-4162-ac1e-f3d3bf13a164",
+        "email": "nyc-skyline-guide@ocs.traveltrust.app"
+      },
+      "provider-acc:nyc-skyline": {
+        "id": "1927c3e5-427b-45f2-a5a3-70159b0b0670",
+        "user_id": "ee30d085-82e2-4cb5-ad37-ce9d0459b8b4",
+        "email": "nyc-rooftop-tour@ocs.traveltrust.app"
+      },
+      "acquisition-acc:nyc-skyline": {
+        "id": "2d007e6c-d2ee-4b59-8b79-b969ac4fe643",
+        "user_id": "4d013071-413b-44cb-8065-93db71173085",
+        "email": "nyc-vinyl-bounty@ocs.traveltrust.app"
+      },
+      "guide-acc:sydney-coast": {
+        "id": "1d98247f-a412-44b5-a49d-759ad86119a0",
+        "user_id": "144930fc-df5b-4976-ae8a-f595c0122d49",
+        "email": "sydney-coast-guide@ocs.traveltrust.app"
+      },
+      "provider-acc:sydney-coast": {
+        "id": "23846168-a41c-45af-a131-15cb58f4ca82",
+        "user_id": "81402617-c6ba-4346-bcd3-cf81c890decf",
+        "email": "sydney-coastal-kayak@ocs.traveltrust.app"
+      },
+      "acquisition-acc:sydney-coast": {
+        "id": "23aeebfd-492b-4c2b-ab80-189997b6dc7e",
+        "user_id": "661821ed-b8d6-4505-b151-8701aa6bba8c",
+        "email": "sydney-surf-bounty@ocs.traveltrust.app"
+      },
+      "guide-acc:barcelona-arch": {
+        "id": "581ce9a0-25f8-443d-a135-c7124ce9be45",
+        "user_id": "58a92eea-0474-4de9-88a9-b189d24b0ef9",
+        "email": "bcn-arch-guide@ocs.traveltrust.app"
+      },
+      "provider-acc:barcelona-arch": {
+        "id": "30aad480-e034-448d-b933-2a1a86aa95d4",
+        "user_id": "828cb1cf-43b9-4416-8344-16cc90a2333d",
+        "email": "bcn-gaudi-tickets@ocs.traveltrust.app"
+      },
+      "acquisition-acc:barcelona-arch": {
+        "id": "c4c92714-9d3f-4a00-b9aa-ee20680b7b14",
+        "user_id": "d0c7da48-b7bc-41e0-914d-06b0f9d4979d",
+        "email": "bcn-tile-bounty@ocs.traveltrust.app"
+      },
+      "guide-acc:dubai-luxury": {
+        "id": "5cf61b3d-0aae-4878-88aa-59fec13d8131",
+        "user_id": "c66c349a-e9d8-4393-a391-e0e43c5b633f",
+        "email": "dubai-desert-guide@ocs.traveltrust.app"
+      },
+      "provider-acc:dubai-luxury": {
+        "id": "c1692753-19e9-4843-b8cf-3fd069ce9c75",
+        "user_id": "56da906c-48d0-4cd8-9942-14e3fa5018f9",
+        "email": "dubai-desert-safari@ocs.traveltrust.app"
+      },
+      "acquisition-acc:dubai-luxury": {
+        "id": "b8f85a66-559b-4690-842f-14de50253d99",
+        "user_id": "93d7b8c3-4320-4847-92fd-60a3a97331bd",
+        "email": "dubai-perfume-bounty@ocs.traveltrust.app"
+      }
+    },
+    "guides": {
+      "guide:tokyo-photo": {
+        "id": "17f3f0b1-4277-4180-872f-65704fb65531",
+        "account_id": "da811b2f-27c4-450e-8480-ea3db31155e7",
+        "email": "tokyo-photo-guide@ocs.traveltrust.app"
+      },
+      "guide:kyoto-culture": {
+        "id": "8b417a00-128a-45ba-8fac-b25db6299f10",
+        "account_id": "613943d9-dde9-4a70-90a0-6aa9c080fb3a",
+        "email": "kyoto-tea-guide@ocs.traveltrust.app"
+      },
+      "guide:seoul-food": {
+        "id": "3ac0d9db-9cdc-4f5c-b4f4-502f9fee1ca3",
+        "account_id": "670b093f-a594-4998-9102-a4d146072d8f",
+        "email": "seoul-food-guide@ocs.traveltrust.app"
+      },
+      "guide:bangkok-temple": {
+        "id": "c1824bc2-4241-490d-96ae-72a70a57331f",
+        "account_id": "d30229a2-84b8-4189-b0fe-8b50aebbb4b0",
+        "email": "bangkok-temple-guide@ocs.traveltrust.app"
+      },
+      "guide:singapore-family": {
+        "id": "9b93b6ac-fcec-489f-af6e-88e01d50e337",
+        "account_id": "47e97aa0-675f-4338-9b11-4556ef705f4d",
+        "email": "sg-family-guide@ocs.traveltrust.app"
+      },
+      "guide:paris-art": {
+        "id": "f444b9f9-a312-4db9-b504-ccd428172f7e",
+        "account_id": "2640dd4c-baa1-4c5e-ac4c-593a17d256fd",
+        "email": "paris-art-guide@ocs.traveltrust.app"
+      },
+      "guide:nyc-skyline": {
+        "id": "54493d8e-6358-4526-9b43-2cee2a759e3f",
+        "account_id": "d404ba7c-c45b-4442-b7e0-77cd7fc32c01",
+        "email": "nyc-skyline-guide@ocs.traveltrust.app"
+      },
+      "guide:sydney-coast": {
+        "id": "f55601f5-c21d-4dfd-b729-4b949eaac41b",
+        "account_id": "1d98247f-a412-44b5-a49d-759ad86119a0",
+        "email": "sydney-coast-guide@ocs.traveltrust.app"
+      },
+      "guide:barcelona-arch": {
+        "id": "f26abd6c-b225-4010-8c65-23ce4ef81de8",
+        "account_id": "581ce9a0-25f8-443d-a135-c7124ce9be45",
+        "email": "bcn-arch-guide@ocs.traveltrust.app"
+      },
+      "guide:dubai-luxury": {
+        "id": "9ccab777-3e3f-4711-af42-75203b639670",
+        "account_id": "5cf61b3d-0aae-4878-88aa-59fec13d8131",
+        "email": "dubai-desert-guide@ocs.traveltrust.app"
+      }
+    },
+    "listings": {
+      "provider:tokyo-photo": {
+        "id": "60a0fce4-ae59-48a6-a93c-bd39ce39a259",
+        "account_id": "2f61a5ad-2fa9-4997-b139-02c33848f099"
+      },
+      "acquisition:tokyo-photo": {
+        "id": "de2e86d9-cb03-4d7c-a57c-3a776dec6a7b",
+        "account_id": "743fd90d-fcb7-4901-8de7-5fd033d96800"
+      },
+      "provider:kyoto-culture": {
+        "id": "3b940f9a-b2ff-4309-8183-9cb467c5b544",
+        "account_id": "092aebf9-d1ca-4eec-8386-7d73ce49553b"
+      },
+      "acquisition:kyoto-culture": {
+        "id": "46bd9fac-7209-4825-8727-922c0dcc5664",
+        "account_id": "d5e5d497-c336-4b08-9f06-c780a309ccbb"
+      },
+      "provider:seoul-food": {
+        "id": "d42a9a54-fc92-40cf-8e78-94eaf742be73",
+        "account_id": "c615cbd9-3b8d-4021-9179-dbd11502985c"
+      },
+      "acquisition:seoul-food": {
+        "id": "338f0225-a5ff-458a-8f10-3d1ac4b5c4df",
+        "account_id": "a961f441-de57-4d04-ace3-eb5e65a014a8"
+      },
+      "provider:bangkok-temple": {
+        "id": "c4e7fcd0-0eee-48ca-9f3a-b8f66a88908d",
+        "account_id": "3013751a-3bef-47d8-a2dd-84964b1f28a2"
+      },
+      "acquisition:bangkok-temple": {
+        "id": "f28040d4-4263-455c-ad5a-707f0c2bda70",
+        "account_id": "63ef139a-7f4f-4e42-a4f1-6eff5e0c3eac"
+      },
+      "provider:singapore-family": {
+        "id": "64123bda-ee92-4d3d-82b4-a6912ec3491c",
+        "account_id": "1faa013a-3288-4a68-b928-977980a967a1"
+      },
+      "acquisition:singapore-family": {
+        "id": "aa80403b-db61-4edf-849f-ed06094669bc",
+        "account_id": "5e046e01-7bfa-4787-a2cf-4955fa71abc9"
+      },
+      "provider:paris-art": {
+        "id": "54bb451b-fc95-4c04-9a64-41c12e109100",
+        "account_id": "32976e9e-6c0b-428c-9f4d-38de576ff69e"
+      },
+      "acquisition:paris-art": {
+        "id": "2d3cf893-a81c-4a6e-b747-95b1ddd94e42",
+        "account_id": "bbcf128e-3dea-4d24-bcb1-3acc08faf27b"
+      },
+      "provider:nyc-skyline": {
+        "id": "c5e2c767-49eb-4862-ae67-0eb5588dfb6b",
+        "account_id": "1927c3e5-427b-45f2-a5a3-70159b0b0670"
+      },
+      "acquisition:nyc-skyline": {
+        "id": "41e19d23-094f-447b-8cec-2945bd5c63a1",
+        "account_id": "2d007e6c-d2ee-4b59-8b79-b969ac4fe643"
+      },
+      "provider:sydney-coast": {
+        "id": "9562d235-e514-42d3-9d81-093dab90b044",
+        "account_id": "23846168-a41c-45af-a131-15cb58f4ca82"
+      },
+      "acquisition:sydney-coast": {
+        "id": "db3dc45a-adcb-4f68-983f-6bd59fc3c6c3",
+        "account_id": "23aeebfd-492b-4c2b-ab80-189997b6dc7e"
+      },
+      "provider:barcelona-arch": {
+        "id": "bc3bfde9-2407-4d3c-a5f3-fc2bcec72453",
+        "account_id": "30aad480-e034-448d-b933-2a1a86aa95d4"
+      },
+      "acquisition:barcelona-arch": {
+        "id": "f3ad356e-2a6f-4258-9c50-0f653aba8eb6",
+        "account_id": "c4c92714-9d3f-4a00-b9aa-ee20680b7b14"
+      },
+      "provider:dubai-luxury": {
+        "id": "35a7f26f-bcf2-4967-8d2a-2fd402fce43e",
+        "account_id": "c1692753-19e9-4843-b8cf-3fd069ce9c75"
+      },
+      "acquisition:dubai-luxury": {
+        "id": "a3c80f40-3763-4d2b-9ab0-7a5990ae297e",
+        "account_id": "b8f85a66-559b-4690-842f-14de50253d99"
+      }
+    },
+    "official_guides": {
+      "official_guide:tokyo-photo": {
+        "id": "2e3c1b19-e5d4-4340-b03e-ed7e74ae1ebe"
+      },
+      "official_guide:kyoto-culture": {
+        "id": "135e6fbe-188c-4653-acd3-db845f8e6fda"
+      },
+      "official_guide:seoul-food": {
+        "id": "502a493a-500b-447e-9c71-a76dccd4e588"
+      },
+      "official_guide:bangkok-temple": {
+        "id": "be84822b-a414-4559-857c-8ed2a8a177cf"
+      },
+      "official_guide:singapore-family": {
+        "id": "af7855b9-140a-431f-9bfe-92119bdd92c8"
+      },
+      "official_guide:paris-art": {
+        "id": "b6f01271-6640-4d29-bdbd-73c499716cbf"
+      },
+      "official_guide:nyc-skyline": {
+        "id": "8616fa51-ab2c-4a3e-916b-5ad65b56c16f"
+      },
+      "official_guide:sydney-coast": {
+        "id": "ea1d0524-6a98-4d5e-a77e-a8cf95aa0520"
+      },
+      "official_guide:barcelona-arch": {
+        "id": "36652840-54af-458c-9636-6664e9ac249b"
+      },
+      "official_guide:dubai-luxury": {
+        "id": "59888020-0126-43e3-be00-0d30c7132e6d"
+      }
+    },
+    "community_posts": {
+      "community_post:tokyo-photo": {
+        "id": "9f66ae74-55b1-4429-b022-09b086a1080a",
+        "author_account_slug": "japan",
+        "canonical_key": "ocs/tokyo-photo/community-v1"
+      },
+      "community_post:kyoto-culture": {
+        "id": "30b94bc6-14a5-4eac-9c9a-7deaf4deb6a5",
+        "author_account_slug": "japan",
+        "canonical_key": "ocs/kyoto-culture/community-v1"
+      },
+      "community_post:seoul-food": {
+        "id": "78536f4a-49f6-4a0a-a753-3186f6f84d25",
+        "author_account_slug": "asia",
+        "canonical_key": "ocs/seoul-food/community-v1"
+      },
+      "community_post:bangkok-temple": {
+        "id": "708ae509-b2ed-48cd-97e8-8f3184cd5670",
+        "author_account_slug": "asia",
+        "canonical_key": "ocs/bangkok-temple/community-v1"
+      },
+      "community_post:singapore-family": {
+        "id": "e67b7c13-cf06-4ea4-a6da-af20a942618c",
+        "author_account_slug": "asia",
+        "canonical_key": "ocs/singapore-family/community-v1"
+      },
+      "community_post:paris-art": {
+        "id": "0b4c87b9-df17-4b32-9acc-7f9879e7e2e5",
+        "author_account_slug": "europe",
+        "canonical_key": "ocs/paris-art/community-v1"
+      },
+      "community_post:nyc-skyline": {
+        "id": "a4b97049-d09c-4c78-b572-0e5575e1ef81",
+        "author_account_slug": "official",
+        "canonical_key": "ocs/nyc-skyline/community-v1"
+      },
+      "community_post:sydney-coast": {
+        "id": "72aa161f-3f51-4082-a72d-6ef826a73a60",
+        "author_account_slug": "official",
+        "canonical_key": "ocs/sydney-coast/community-v1"
+      },
+      "community_post:barcelona-arch": {
+        "id": "78cd9220-48de-4e30-b3c4-8354c4663f89",
+        "author_account_slug": "europe",
+        "canonical_key": "ocs/barcelona-arch/community-v1"
+      },
+      "community_post:dubai-luxury": {
+        "id": "7c5f4809-603b-4eab-aae0-7db46f973cfe",
+        "author_account_slug": "asia",
+        "canonical_key": "ocs/dubai-luxury/community-v1"
+      }
+    },
+    "campaigns": {
+      "home-hero": {
+        "id": "bd0e988d-e949-483e-9609-83adc3485aa3"
+      },
+      "hot-guides": {
+        "id": "562c2329-a62f-4d55-ba05-2924e2c71806"
+      },
+      "hot-providers": {
+        "id": "7bfb470c-9d96-4631-997e-0e6d32bc1db3"
+      },
+      "hot-acquisition": {
+        "id": "68d31a36-7722-4b7e-8ac8-e5435d4a74d0"
+      },
+      "official-picks": {
+        "id": "30577996-e63c-43e4-ae06-577b8d34fc66"
+      },
+      "newcomer": {
+        "id": "00a15115-a40a-4caf-a730-ada2c0d67615"
+      },
+      "city-tokyo": {
+        "id": "c9cde901-1726-4124-9e65-45a22bc91424"
+      },
+      "summer": {
+        "id": "e80baee0-e17f-4545-bb25-50f23ecbdf6f"
+      },
+      "festival": {
+        "id": "6988c918-5b6c-4882-a93c-9be0c0f8c53d"
+      },
+      "weekly-picks": {
+        "id": "d03b0409-16bf-45fc-9126-91cbda492c0d"
+      }
+    }
+  }
+}

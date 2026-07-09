@@ -1,0 +1,7 @@
+{
+  "service": "traveltrust-api",
+  "build": {
+    "git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8"
+  },
+  "_probe": "meta_build_fallback"
+}

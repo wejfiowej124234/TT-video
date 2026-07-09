@@ -1,0 +1,9 @@
+{
+  "schema": "p2fc_soak_job.v1",
+  "pid": 98976,
+  "started_at": "2026-06-08T10:05:12.853Z",
+  "required_sec": 259200,
+  "actual_sec": 259200,
+  "api": "https://tt-api-staging.fly.dev",
+  "job_dir": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/job-20260608T100511Z"
+}

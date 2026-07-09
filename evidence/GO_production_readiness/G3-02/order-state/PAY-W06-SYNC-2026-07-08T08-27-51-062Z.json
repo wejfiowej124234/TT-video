@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_sync.v1",
+  "item_id": "PAY-W06",
+  "run_id": "2026-07-08T08-27-51-062Z",
+  "recorded_utc": "2026-07-08T08:39:47.458Z",
+  "prior_verdict": "PARTIAL",
+  "verdict": "PASS",
+  "sync_reason": "order_db_lagged_indexer_on_chain_escrow_funded_released_corridor_pass",
+  "db_status": "accepted",
+  "on_chain_escrow_status": "3",
+  "release_tx_hash": "0xdea475d2902c0e455693fb3d684bd5e51bc95e23d14a959e855a7d24cec22ab9"
+}

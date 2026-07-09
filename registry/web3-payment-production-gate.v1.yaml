@@ -1,0 +1,63 @@
+# Web3 USDC Payment Production Gate · G3-02 (replaces Stripe-as-core-payment gate)
+#
+#   bash scripts/check-web3-payment-production-readiness.sh
+#
+schema: traveltrust.web3_payment_production_gate.v1
+version: 2
+effective_utc: "2026-07-08"
+machine_key: TT_WEB3_PAYMENT_PRODUCTION_READINESS
+canonical_machine_key: TT_WEB3_PAYMENT_PRODUCTION_READY
+gate_tier: PAYMENT_RAIL_SUBSET
+not_full_web3_system: true
+layering_ssot: registry/web3-gate-layering.v1.yaml
+system_gate_ref: registry/web3-system-production-gate.v1.yaml
+g3_domain: G3-02
+production_scope: PRODUCTION_SCOPE_SEPOLIA
+
+replaces_misclassification:
+  removed_as_p0_core_blocker: PI3-003 Stripe Live
+  reason: Stripe is onboarding optional fiat bypass; core trip/market payment is USDC Escrow
+
+prerequisites:
+  - OCS_PRODUCTION_PARITY_AUDIT: PASS
+  - TT_PRODUCTION_READINESS_G2_GATE: PASS
+
+required_ssot_files:
+  - registry/payment-architecture-classification.v1.yaml
+  - registry/production-payment-readiness-checklist.v1.yaml
+  - registry/production-go-closure-sequence.v1.yaml
+  - docs/runbook/PRODUCTION-PAYMENT-READINESS-WEB3-USDC.md
+  - docs/runbook/TT-B435-USER-WALLET-ESCROW-FEEROUTER-PAYMENT-PATH-001.md
+  - docs/runbook/TT-CHAIN-ARCHITECTURE-AUDITABLE-SPEC.md
+  - crates/core/src/escrow.rs
+
+checklist_items: 16
+checklist_range: PAY-W01..PAY-W16
+
+required_prod_runtime_checks:
+  - id: META_NO_MOCK_PAY
+    probe: GET /meta
+    expect: order_mock_pay_enabled=false or P3_CHAIN_OFF absent
+  - id: CHAIN_ID
+    expect: "11155111"
+  - id: CONTRACT_PARITY
+    probe: API env vs FE build.env.local vs registry prod_contracts_sepolia
+
+evidence_root: evidence/GO_production_readiness/G3-02
+evidence_manifest: evidence/GO_production_readiness/G3-02/WEB3-PAYMENT-PRODUCTION-READINESS-LATEST.json
+
+verdict_enum:
+  - WEB3_PAYMENT_PRODUCTION_NOT_STARTED
+  - WEB3_PAYMENT_PRODUCTION_IN_PROGRESS
+  - WEB3_PAYMENT_PRODUCTION_PASS
+  - WEB3_PAYMENT_PRODUCTION_FAIL
+
+stripe_extension_gate:
+  id: PI3-003
+  label: Optional Fiat Onboarding (future extension)
+  classification: P1_FUTURE_FIAT_ONRAMP
+  blocks_core_payment_gate: false
+  blocks_production_go: false
+  in_production_go_main_sequence: false
+  script: scripts/check-pi3-003-stripe-live-production-webhook-execution.sh
+  ssot: docs/handbook/engineering/153-PI3-003-Stripe-Live-Production-Webhook-Report.md

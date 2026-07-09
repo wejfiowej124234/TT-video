@@ -1,0 +1,1 @@
+{"status":"ok","task":"indexer_replay_orders_projection","chain_id":11155111,"checkpoint":{"block_number":0,"log_index":0},"finality_n":12,"stats":{"rows_scanned":14,"upserts_ok":12,"skipped_no_topics":0,"skipped_no_order_uuid":0,"skipped_no_order_row":2,"skipped_no_bytes32":0,"upsert_errors":0}}

@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.web3_system_meta_contracts_closure.v1",
+  "recorded_utc": "2026-07-08T08:21:37.812Z",
+  "run_dir": "evidence/GO_production_readiness/web3-system-audit/meta-closure-2026-07-08T08-21-37",
+  "p0_item": "P0-002 Production Runtime Wiring",
+  "verdict": "WEB3_SYSTEM_META_CONTRACTS_CLOSURE_PASS",
+  "probe": {
+    "wired": "10/10",
+    "ssot_match": 10,
+    "rows": [
+      {
+        "key": "governor_address",
+        "actual": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+        "expected": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+        "status": "match"
+      },
+      {
+        "key": "timelock_address",
+        "actual": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+        "expected": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+        "status": "match"
+      },
+      {
+        "key": "governance_token_address",
+        "actual": "0x2837ea0c50e27d59b88af617abbb231a040062c5",
+        "expected": "0x2837ea0c50e27d59b88af617abbb231a040062c5",
+        "status": "match"
+      },
+      {
+        "key": "fee_router_address",
+        "actual": "0x81A8009210c5215100564c6E4123F672c4459306",
+        "expected": "0x81A8009210c5215100564c6E4123F672c4459306",
+        "status": "match"
+      },
+      {
+        "key": "treasury_address",
+        "actual": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2",
+        "expected": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2",
+        "status": "match"
+      },
+      {
+        "key": "registry_address",
+        "actual": "0xc50913e154f850583D0afbE9158a75E0e2167AAb",
+        "expected": "0xc50913e154f850583D0afbE9158a75E0e2167AAb",
+        "status": "match"
+      },
+      {
+        "key": "escrow_factory_address",
+        "actual": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+        "expected": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+        "status": "match"
+      },
+      {
+        "key": "region_steward_stake_pool_address",
+        "actual": "0x3a89378bfad12d1028707dd37055294854c8784e",
+        "expected": "0x3a89378bfad12d1028707dd37055294854c8784e",
+        "status": "match"
+      },
+      {
+        "key": "guide_staking_address",
+        "actual": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f",
+        "expected": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f",
+        "status": "match"
+      },
+      {
+        "key": "staking_provider_address",
+        "actual": "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075",
+        "expected": "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075",
+        "status": "match"
+      }
+    ]
+  },
+  "steward_stake_quote": "{\"status\":400}",
+  "governance_chain_closed": true,
+  "runbook": "docs/runbook/WEB3-SYSTEM-PRODUCTION-RUNTIME-WIRING.md",
+  "discipline": {
+    "business_code_modified": false,
+    "config_only": true
+  }
+}

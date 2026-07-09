@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-06T16:56:44Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "ES",
+    "city_zh": "塞维利亚",
+    "matrix_ids": [
+      "PH-ES-208-ATR",
+      "PH-ES-209-ATR",
+      "PH-ES-210-ATR",
+      "PH-ES-211-ATR",
+      "PH-ES-212-FOOD",
+      "PH-ES-213-FOOD",
+      "PH-ES-214-FOOD",
+      "PH-ES-215-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-ES-208-ATR",
+      "poi_id": "7d82f885-1339-4a55-a28e-924c739312d9"
+    },
+    {
+      "matrix_id": "PH-ES-209-ATR",
+      "poi_id": "754c437d-f9d6-41d0-bec8-4f2e56203292"
+    },
+    {
+      "matrix_id": "PH-ES-210-ATR",
+      "poi_id": "df4b5f45-e05a-4f7c-b473-54ce3f446355"
+    },
+    {
+      "matrix_id": "PH-ES-211-ATR",
+      "poi_id": "47ecd455-e525-432e-b6fd-3204a3955182"
+    },
+    {
+      "matrix_id": "PH-ES-212-FOOD",
+      "poi_id": "dfe7f606-3dbc-412d-b915-91df06285358"
+    },
+    {
+      "matrix_id": "PH-ES-213-FOOD",
+      "poi_id": "ebc00cf4-36b5-4102-9eb0-6d852dbcc850"
+    },
+    {
+      "matrix_id": "PH-ES-214-FOOD",
+      "poi_id": "9b2bc182-7d70-4189-867d-7a513a4a9771"
+    },
+    {
+      "matrix_id": "PH-ES-215-FOOD",
+      "poi_id": "9af2c12d-6ec6-4f42-ad5e-931198748c42"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 8,
+    "expected": 8
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

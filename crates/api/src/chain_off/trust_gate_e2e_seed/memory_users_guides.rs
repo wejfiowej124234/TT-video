@@ -196,6 +196,7 @@ pub(super) fn apply(
                 created_at: now,
                 updated_at: now,
                 data_origin: "production".into(),
+                ..Default::default()
             },
         );
         store.guides_by_user.insert(uid_u, gid);

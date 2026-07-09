@@ -1,0 +1,6 @@
+{
+  "schema": "traveltrust.phase_readiness_score.v1",
+  "phase": "phase2_testnet",
+  "score": 74,
+  "band": "READY"
+}

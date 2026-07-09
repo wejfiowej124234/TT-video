@@ -53,6 +53,8 @@ def http_json(
         merged.setdefault("Bypass-Tunnel-Reminder", "true")
         merged.setdefault("User-Agent", "TravelTrust-R003/1")
     merged.setdefault("User-Agent", "TravelTrust-R003/1")
+    if method.upper() in ("POST", "PUT", "PATCH", "DELETE"):
+        merged.setdefault("Idempotency-Key", str(uuid.uuid4()))
 
     def _parse_response(status: int, raw: str) -> tuple[int, object]:
         try:

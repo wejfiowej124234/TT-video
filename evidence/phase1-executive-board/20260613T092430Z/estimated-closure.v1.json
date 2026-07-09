@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust.estimated_closure.v1",
+  "open_p0": 0,
+  "open_p1": 0,
+  "estimated_days": 1,
+  "estimated_completion_utc": "2026-06-14",
+  "note": "Heuristic · Owner sprint velocity may differ"
+}

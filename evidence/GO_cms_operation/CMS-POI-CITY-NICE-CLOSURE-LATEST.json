@@ -1,0 +1,126 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-06T092458Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "FR",
+    "country_zh": "法国",
+    "city_zh": "尼斯",
+    "city_en": "Nice"
+  },
+  "poi_count": 8,
+  "matrix_ids": [
+    "PH-FR-127-ATR",
+    "PH-FR-128-ATR",
+    "PH-FR-129-ATR",
+    "PH-FR-130-ATR",
+    "PH-FR-131-FOOD",
+    "PH-FR-132-FOOD",
+    "PH-FR-133-FOOD",
+    "PH-FR-134-FOOD"
+  ],
+  "pois": [
+    "天使湾",
+    "老城",
+    "埃兹",
+    "马蒂斯博物馆",
+    "尼斯沙拉",
+    "索卡",
+    "海鲜",
+    "玫瑰酒"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-FR-127-ATR",
+      "legacy_value": "天使湾",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-128-ATR",
+      "legacy_value": "老城",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-129-ATR",
+      "legacy_value": "埃兹",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-130-ATR",
+      "legacy_value": "马蒂斯博物馆",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-131-FOOD",
+      "legacy_value": "尼斯沙拉",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-132-FOOD",
+      "legacy_value": "索卡",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-133-FOOD",
+      "legacy_value": "海鲜",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-134-FOOD",
+      "legacy_value": "玫瑰酒",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-127-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-128-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-129-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-130-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-131-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-132-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-133-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-134-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=FR&city=%E5%B0%BC%E6%96%AF&limit=50",
+    "http": 200,
+    "count": 8
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-nice/CMS-POI-NICE-CLOSED-LOOP-LATEST.json",
+  "next_city": null,
+  "closure_keys": {
+    "TT_CMS_POI_CITY_NICE": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": null
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_NICE": "CLOSED"
+}

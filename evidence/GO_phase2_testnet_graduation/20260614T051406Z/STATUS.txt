@@ -1,0 +1,8 @@
+phase: ② testnet
+standard: TT-PHASE2-TESTNET-CLOSURE-GOVERNANCE-STANDARD
+at: 20260614T051406Z
+graduation_verdict: OPEN
+blocking_open: 5
+open_p0: 0
+open_p1: 2
+readiness: 97

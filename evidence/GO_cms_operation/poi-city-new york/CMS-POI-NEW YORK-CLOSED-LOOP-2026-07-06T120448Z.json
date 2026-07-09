@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T12:04:48Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "US",
+    "city_zh": "纽约",
+    "city_en": "New York",
+    "matrix_ids": [
+      "PH-US-160-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-US-160-ATR",
+      "legacy_value": "中央公园",
+      "poi_id": "1c8b959b-666a-47dc-8605-02c6b76fab69",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-160-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

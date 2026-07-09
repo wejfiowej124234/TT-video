@@ -1,0 +1,183 @@
+{
+  "schema": "traveltrust.ttg-cert7-execute.v1",
+  "program": "TT_GOVERNANCE_CERT_07_EXECUTE",
+  "phase": "②",
+  "stamp_utc": "20260616T100918Z",
+  "cert_session": "evidence/GO_ttg_cert/20260616T100918Z",
+  "baseline_ssot": "docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md",
+  "hat_r1_execute_evidence": "evidence/GO_hat_r1_sepolia/20260616T063612Z/step-07-execute/",
+  "hat_r1_queue_evidence": "evidence/GO_hat_r1_sepolia/20260616T063612Z/step-06-queue/",
+  "four_ledger_evidence": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z",
+  "gorp_ssot": "docs/runbook/TTG-GOVERNANCE-OPERATIONAL-READINESS-PROGRAM.md",
+  "mtm_ssot": "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+  "mtm_ids": [
+    "CHK-CORE-07",
+    "CHK-FE-08",
+    "CHK-SC-01",
+    "CHK-SC-02",
+    "CHK-DR-01"
+  ],
+  "target_tier": "OPS_DONE",
+  "mtm_rows": [
+    {
+      "id": "CHK-CORE-07",
+      "name": "Execute",
+      "tier": "DEV_DONE",
+      "page": "/governance/proposals/[id]"
+    },
+    {
+      "id": "CHK-FE-08",
+      "name": "Execute UI",
+      "tier": "DEV_DONE",
+      "page": "/governance/proposals/[id]"
+    },
+    {
+      "id": "CHK-SC-01",
+      "name": "Governor lifecycle+Execute",
+      "tier": "DEV_DONE",
+      "page": "/governance/proposals/*"
+    },
+    {
+      "id": "CHK-SC-02",
+      "name": "V2 Timelock queue/execute",
+      "tier": "DEV_DONE",
+      "page": "/governance/proposals/[id]"
+    },
+    {
+      "id": "CHK-DR-01",
+      "name": "Execute/CallFailed RB-G-01",
+      "tier": "DEV_DONE",
+      "page": "/governance/proposals/[id]"
+    }
+  ],
+  "roles": [
+    {
+      "role": "timelock_executor",
+      "label": "Timelock Executor (public)",
+      "mtm_ids": [
+        "CHK-CORE-07",
+        "CHK-SC-02"
+      ],
+      "verifications": [
+        "queue_to_execute_chain",
+        "execute_tx_receipt_events",
+        "post_execute_state_5",
+        "no_force_execute"
+      ],
+      "recording_hint": "execute(uint256) after EXECUTE_EARLIEST_UNIX · receipt + events",
+      "screenshot": "screenshots/role-execute-tx-receipt.png"
+    },
+    {
+      "role": "governor_lifecycle",
+      "label": "Governor Queue→Execute",
+      "mtm_ids": [
+        "CHK-SC-01",
+        "CHK-CORE-07"
+      ],
+      "verifications": [
+        "phase_a_proposal_vote_queue",
+        "timelock_delay_48h",
+        "state_migration_executed",
+        "four_ledger_v2_tl_mapping"
+      ],
+      "recording_hint": "step-06 queue → step-07 execute · Governor state=Executed",
+      "screenshot": "screenshots/role-governor-lifecycle.png"
+    },
+    {
+      "role": "on_call_recovery",
+      "label": "On-call · GORP §3.1",
+      "mtm_ids": [
+        "CHK-DR-01",
+        "CHK-FE-08"
+      ],
+      "verifications": [
+        "too_early_wait_eta",
+        "call_failed_eth_call",
+        "timelock_anomaly_3_5",
+        "execute_ui_readonly_until_elapsed"
+      ],
+      "recording_hint": "§3.1 failure triage · no Admin API · no FORCE_EXECUTE",
+      "screenshot": "screenshots/role-execute-recovery.png"
+    }
+  ],
+  "machine_checks": {
+    "verdict": "PASS",
+    "exit_code": 0,
+    "stdout_tail": "smoke-cert7-execute-machine: OK Timelock elapsed ETA=1781765044\nTT_CERT7_EXECUTE_MATRIX: PASS out=D:\\TravelTrust-V1.1\\evidence\\GO_ttg_cert\\.cert7-matrix-checks.json\nTT_CERT7_EXECUTE_MACHINE: OK",
+    "stderr_tail": "",
+    "execute_matrix": {
+      "schema": "traveltrust.cert7-execute-matrix.v1",
+      "verdict": "PASS",
+      "phase": "②",
+      "baseline": "GovFreeze V2 · HAT-R1 Phase B Execute",
+      "checks": {
+        "cert6_prerequisite": {
+          "ok": true,
+          "path": "evidence/GO_ttg_cert/20260616T100918Z/phase-b/unpause/PHASE-B-UNPAUSE-SIGNOFF.json"
+        },
+        "timelock_elapsed": {
+          "ok": true,
+          "execute_earliest_unix": 1781765044,
+          "timelock_elapsed": true,
+          "remaining_seconds": 0,
+          "no_force_execute_env": true
+        },
+        "queue_chain": {
+          "ok": true,
+          "proposal_id": "1",
+          "queue_tx": "0xcfd052923a0188b732c505520d9c99773697e4e7b57181d55ce28b416776d2a2",
+          "timelock_delay_seconds": "172800",
+          "receipt_archived": true
+        },
+        "execute_evidence": {
+          "ok": true,
+          "execute_tx": "0x5ebb4046c1f00fb466d830d098ef0e272e55d0b466f6acad10f901ef3525f1ef",
+          "receipt_count": 1,
+          "events_count": 0,
+          "post_execute_state": "6",
+          "want_state": "6"
+        },
+        "four_ledger_mapping": {
+          "ok": true,
+          "verdict": "PASS",
+          "global_treasury_timelock_match": true,
+          "v2_timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+        },
+        "gorp_execute_recovery": {
+          "ok": true,
+          "sections": {
+            "execute_fail_3_1": true,
+            "too_early": true,
+            "forbid_force": true,
+            "timelock_3_5": true,
+            "gorp_07": true,
+            "governor_sc": true
+          }
+        },
+        "live_wallet_gate": {
+          "ok": true,
+          "HAT_R1_LIVE_WALLET_OK": "1",
+          "HAT_R1_PHASE_B_PAUSED": "0",
+          "note": "Required at finalize; execute evidence proves wallet was used"
+        }
+      },
+      "execute_flow_map": "evidence/GO_ttg_cert/.cert7-execute-flow-map.json",
+      "mtm_ids": [
+        "CHK-CORE-07",
+        "CHK-FE-08",
+        "CHK-SC-01",
+        "CHK-SC-02",
+        "CHK-DR-01"
+      ],
+      "blockers": []
+    }
+  },
+  "prepared_at_utc": "2026-07-08T08:56:05Z",
+  "forbidden": [
+    "new features",
+    "govfreeze re-audit",
+    "ETA bypass",
+    "HAT_R1_FORCE_EXECUTE"
+  ],
+  "honest_boundary": "Cert #7 requires on-chain execute evidence ≠ Cert #8 Spend ≠ ③ GO"
+}

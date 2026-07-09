@@ -14,6 +14,7 @@ use super::governance_pool::get_governance_pool;
 use super::governance_reads::{
     get_governance_fee_routes, get_governance_rewards, get_governance_vault_forwards,
 };
+use super::governance_vacancy_ledger::get_governance_vacancy_ledger;
 
 pub fn router() -> Router<ApiMetaState> {
     Router::new()
@@ -49,6 +50,10 @@ pub fn router() -> Router<ApiMetaState> {
         .route(
             "/api/v1/governance/ttg-exchange/quote",
             get(get_ttg_exchange_quote),
+        )
+        .route(
+            "/api/v1/governance/vacancy-ledger",
+            get(get_governance_vacancy_ledger),
         )
         .merge(super::state_machines::state_machines_route())
 }

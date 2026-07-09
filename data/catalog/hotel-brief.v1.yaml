@@ -1,0 +1,201 @@
+# Hotel · Content Brief（Design SSOT · P1）
+# 实现前设计真源 · 不写 Admin/API/Runtime/Frontend · 不上传资产
+# P1 Standard: docs/runbook/TT-CMS-P1-CONTENT-FAMILY-STANDARD.md (FROZEN v1.1.0)
+# Asset Matrix: data/catalog/hotel-matrix.v1.yaml
+# Ownership Boundary: evidence/GO_cms_operation/CMS-HOTEL-OWNERSHIP-BOUNDARY-REVIEW-LATEST.json
+
+schema: traveltrust.cms_hotel_brief.v1
+version: 1
+effective_utc: "2026-07-07"
+machine_key: TT_CMS_HOTEL_BRIEF
+status: DESIGN_SSOT
+phase: DISCOVERY_COMPLETE
+
+registry_module: hotel
+asset_kind: hotel_tier_stock
+asset_kind_verdict: FROZEN
+p1_standard: docs/runbook/TT-CMS-P1-CONTENT-FAMILY-STANDARD.md
+
+# ── 1 · 模块目标（Why） ─────────────────────────────────────────────
+
+goal_one_liner: >-
+  Hotel 为 Market / 行程预算提供全球一致的 3 档酒店 tier 库存图与展示元数据（标签 · 倍数 · 提交文案），
+  由 CMS 独立发布；不承载真实酒店 listing、不定价、不写入订单业务逻辑。
+
+not_same_as:
+  - city_hero
+  - poi_hero
+  - destination_ambient_hero
+  - provider_listing
+  - acquisition_listing
+  - per_city_hotel_inventory
+
+scope:
+  tier_count: 3
+  tier_codes: [tier_economy, tier_comfort, tier_luxury]
+  geography: global
+  rule: 3 档全球一致 · 非 per-city · 非 per-country · 与城市 POI Catalog 分母无关
+
+# ── 2 · Asset 约定 ─────────────────────────────────────────────────
+
+asset_key_convention: hotel_tier_stock_{tier_code}
+stock_pool_key_rule: tier_code 本身（例 tier_comfort）
+tier_catalog_table: catalog_hotel_tier_definitions
+media_asset_kind: hotel_tier_stock
+
+tiers:
+  - tier_code: tier_economy
+    sort_order: 0
+    multiplier: 1.0
+    label_key: market_hotel_tier_economy
+    description_key: market_hotel_tier_economy_desc
+    submit_label_zh: 经济型酒店（约3星）
+    display_en: Economy
+  - tier_code: tier_comfort
+    sort_order: 1
+    multiplier: 1.25
+    label_key: market_hotel_tier_comfort
+    description_key: market_hotel_tier_comfort_desc
+    submit_label_zh: 舒适型酒店（约4星）
+    display_en: Comfort
+  - tier_code: tier_luxury
+    sort_order: 2
+    multiplier: 1.5
+    label_key: market_hotel_tier_luxury
+    description_key: market_hotel_tier_luxury_desc
+    submit_label_zh: 豪华型酒店（约5星）
+    display_en: Luxury
+
+aspect_ratio: "4:3"
+technical_minimum:
+  min_width_px: 800
+  min_height_px: 600
+  hero_recommended: 1600x1200
+  min_bytes: 8192
+  formats: [JPEG, WebP]
+
+# ── 3 · 双读与数据来源 ─────────────────────────────────────────────
+
+dual_read:
+  type: module_exception
+  primary:
+    endpoint: GET /api/v1/catalog/hotel-tiers
+    field: stock_image_url
+    carries: [tier_code, sort_order, multiplier, label_key, description_key, submit_label_zh]
+  secondary:
+    endpoint: GET /api/v1/catalog/media?asset_kind=hotel_tier_stock
+    field: url
+    carries: [stock_pool_key, alt_text, license, version]
+  consistency_rule: >-
+    Matrix 行须 Primary 与 Secondary 指向同一 catalog_asset_id · 或文档化 Expected Difference ·
+    Verify 阶段双读对拍
+
+data_sources:
+  cms_owned:
+    - catalog_hotel_tier_definitions
+    - catalog_media_assets (asset_kind=hotel_tier_stock)
+    - catalog_content_revisions
+  booking_api_owned:
+    - catalog_pricing_templates.hotel_base_per_night_cents
+    - orders / itinerary payload 中的 hotel tier 选择值
+  forbidden_cms_writes:
+    - order rows
+    - hotel_base_per_night_cents
+    - listing cover / merchant hotel inventory
+
+ops_hierarchy: [asset_family, tier, asset]
+admin_route: /admin/content/hotel-tiers
+
+# ── 4 · 生命周期（与 P1 Standard 一致） ─────────────────────────────
+
+lifecycle:
+  - Draft
+  - Review
+  - Publish
+  - Catalog
+  - Runtime
+  - Consumer
+  - Verify
+  - Evidence
+  - Frozen
+
+pipeline: [Review, Replace, Publish, Verify, Evidence, Live]
+forbidden: [upload_direct_to_live, skip_verify, mark_pass_without_evidence]
+
+# ── 5 · Consumer Mapping ───────────────────────────────────────────
+
+consumer_pages:
+  - page: Market
+    uses_hotel_tier: true
+    surfaces: [custom_itinerary_modal, hotel_tier_picker]
+    note: 档位 picker · 库存图 · submit_label_zh
+  - page: Escrow / Orders
+    uses_hotel_tier: true
+    surfaces: [order_summary]
+    note: 展示已选 tier 文案 · 数据来自 Order API · 图/文案 SSOT 仍追溯 CMS tier 定义
+  - page: Home
+    uses_hotel_tier: false
+  - page: Travel
+    uses_hotel_tier: false
+  - page: Guide
+    uses_hotel_tier: false
+  - page: Community
+    uses_hotel_tier: false
+  - page: Provider
+    uses_hotel_tier: false
+
+consumer_column_enum: [Market, "Market · Escrow"]
+
+pricing_read_boundary: >-
+  夜价 = hotel_base_per_night_cents（Pricing Catalog · Booking/API）× tier.multiplier（CMS tier 定义）·
+  CMS 不拥有 base rate · Frontend adapter 组合两读 · 见 Ownership Boundary Review
+
+# ── 6 · L5 Exit ───────────────────────────────────────────────────
+
+l5_exit_ssot: docs/runbook/TT-CMS-P1-CONTENT-FAMILY-STANDARD.md
+l5_exit_section: "§8 · Frozen Exit Gate（六门）"
+l5_exit_rule: >-
+  不重复定义 · 模块 Frozen 须满足 P1 Standard 六门全 PASS · Catalog Ready · Runtime Ready ·
+  Consumer Ready · Verify PASS · Evidence PASS · L5 PASS
+
+# ── Discovery 完成 · 实现前禁止 ────────────────────────────────────
+
+forbidden_until_implementation_decision:
+  - wp0_migration
+  - admin_ui_change
+  - api_schema_change
+  - runtime_resolver_change
+  - frontend_wiring
+  - catalog_publish_ops
+  - upload_assets
+
+planned_ssot_after_implementation:
+  brief_merge_target: data/catalog/cms-content-brief.v1.yaml
+  matrix_ssot: data/catalog/hotel-matrix.v1.yaml
+  legacy_wave1_reference: data/catalog/hotel-transport-wave1-matrix.v1.yaml
+  verify_script_planned: scripts/dev/run-cms-content-l5-hotel-verify.cjs
+
+pilot_discipline:
+  wave_1:
+    matrix_id: HT-TIER-COMFORT-001
+    tier_code: tier_comfort
+    purpose: 单行闭环验证 P1 Standard 模板 · 对齐历史 HT-WAVE1-COMFORT
+  wave_2:
+    matrix_id: HT-TIER-ECONOMY-001
+    tier_code: tier_economy
+    purpose: 确认双读与 Verify 无需调整
+  wave_3:
+    matrix_id: HT-TIER-LUXURY-001
+    tier_code: tier_luxury
+    purpose: 三档齐 · 退出 Wave-1 单行模式
+  scale_after: wave_1_2_3_complete
+  forbidden: [batch_all_3_before_wave_1]
+
+evidence_scripts:
+  discovery: scripts/dev/run-cms-hotel-discovery.cjs
+  boundary_review: scripts/dev/run-cms-hotel-ownership-boundary-review.cjs
+  design_ssot: scripts/dev/run-cms-hotel-design-ssot.cjs
+latest_evidence:
+  boundary: evidence/GO_cms_operation/CMS-HOTEL-OWNERSHIP-BOUNDARY-REVIEW-LATEST.json
+  brief: evidence/GO_cms_operation/CMS-HOTEL-BRIEF-LATEST.json
+  matrix: evidence/GO_cms_operation/CMS-HOTEL-MATRIX-LATEST.json

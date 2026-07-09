@@ -53,6 +53,34 @@ function sameOriginApiPathInBrowser(path: string): string | null {
   return `${origin}${p}`;
 }
 
+const LOOPBACK_NEXT_DEV_PORTS = new Set(["3012", "3000"]);
+
+/**
+ * loopback 浏览器下 `/auth/*` POST 须绕过 Next 页面路由直连 API。
+ * 使用当前页 hostname（`localhost` vs `127.0.0.1`）并纠正误把 Next 端口写入 `NEXT_PUBLIC_API_BASE_URL` 的旧 bundle。
+ */
+function loopbackDirectAuthApiUrl(path: string): string {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  try {
+    const base = new URL(BASE);
+    let port = base.port || (base.protocol === "https:" ? "443" : "80");
+    if (LOOPBACK_NEXT_DEV_PORTS.has(port)) port = "8080";
+    if (typeof globalThis !== "undefined") {
+      const loc = (globalThis as {
+        window?: { location?: { hostname?: string; protocol?: string; port?: string } };
+      }).window?.location;
+      if (loc?.hostname) {
+        const pagePort = loc.port || (loc.protocol === "https:" ? "443" : "80");
+        if (LOOPBACK_NEXT_DEV_PORTS.has(port) || port === pagePort) port = "8080";
+        return `${loc.protocol}//${loc.hostname}:${port}${p}`;
+      }
+    }
+    return `${base.protocol}//${base.hostname}:${port}${p}`;
+  } catch {
+    return `${BASE}${p}`;
+  }
+}
+
 /** 健康与元数据 */
 export const routes = {
   health: "/health",
@@ -161,6 +189,9 @@ export const routes = {
   orderMockPay: (id: string) => `/api/v1/orders/${id}/mock-pay`,
   orderConfirmCompletion: (id: string) =>
     `/api/v1/orders/${id}/confirm-completion`,
+  /** Layer A：双边确认行程服务完成 */
+  orderConfirmServiceCompletion: (id: string) =>
+    `/api/v1/orders/${id}/confirm-service-completion`,
   orderMessages: (id: string) => `/api/v1/orders/${id}/messages`,
   /** 53 行程修改写回（04 PATCH；仅参与方、未 Escrowed 前可改） */
   orderPatchItinerary: (id: string) => `/api/v1/orders/${id}/itinerary`,
@@ -225,6 +256,8 @@ export const routes = {
   governanceFeeRoutes: "/api/v1/governance/fee-routes",
   /** RegionVault RegionVaultForwarded 索引只读列表；query 同 fee-routes */
   governanceVaultForwards: "/api/v1/governance/vault-forwards",
+  governanceVacancyLedger: "/api/v1/governance/vacancy-ledger",
+  adminVacancyLedgerOps: "/api/v1/admin/vacancy-ledger",
   /** B-084：投影表按 token/pool_id 累计；query chain_id? */
   governanceFeePoolAggregates: "/api/v1/governance/fee-pool-aggregates",
   governanceInvestorShareReconcile: "/api/v1/governance/investor-share-reconcile",
@@ -1074,7 +1107,7 @@ export function apiUrl(path: string): string {
   const p = path.startsWith("/") ? path : `/${path}`;
   if (browserUsesSameOriginApiProxy()) {
     if (p.startsWith("/auth/")) {
-      return `${BASE}${p}`;
+      return loopbackDirectAuthApiUrl(p);
     }
     const same = sameOriginApiPathInBrowser(p);
     if (same != null) return same;

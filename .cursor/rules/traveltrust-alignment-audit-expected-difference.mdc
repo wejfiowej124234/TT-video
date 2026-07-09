@@ -1,0 +1,34 @@
+---
+description: Production GO — fix Defect/Drift/Conflict/Risk; confirm Expected Difference only
+alwaysApply: true
+---
+
+# Production GO 前 · 真问题清零 · 预期差异只确认
+
+**SSOT:** [TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md](../docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md)
+
+## Production GO 前（写死）
+
+**全部修复：** Defect · Drift · Conflict · **Blocking Risk**  
+**可 Owner 书面接受（仅 Non-blocking Risk）：** 低优先级优化延期等 · 须 Sign-off 登记  
+**只确认、不修成一致：** Expected Difference
+
+## Risk 分级
+
+| 子类 | 处置 |
+|------|------|
+| **Blocking Risk** | **必须 FIX** — 支付/资金/数据丢失/权限绕过等 · **禁止** ACCEPT 替代修复 |
+| **Non-blocking Risk** | 优先 FIX · 无法消除 → **Owner 明确书面接受** |
+
+## 其他类别
+
+| 类别 | 处置 |
+|------|------|
+| Defect / Drift / Conflict | FIX |
+| Expected Difference | **CONFIRM_DESIGN** — **禁止** FIX_TO_MATCH |
+
+## GO Gate 硬闸
+
+`OPEN_BLOCKING_RISKS: 0` · `OPEN_P0_DEFECTS: 0` · `OPEN_P1_DEFECTS: 0` · `DRIFT_BLOCKERS: 0` · `SSOT_CONFLICTS: 0`
+
+Phase ③ 主轨：Production Readiness Review → Production GO Gate → 生产基础设施

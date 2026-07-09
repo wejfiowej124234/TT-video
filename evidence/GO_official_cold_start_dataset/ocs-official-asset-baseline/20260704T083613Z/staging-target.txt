@@ -1,0 +1,2 @@
+staging_api=https://tt-api-staging.fly.dev
+stamp=20260704T083613Z

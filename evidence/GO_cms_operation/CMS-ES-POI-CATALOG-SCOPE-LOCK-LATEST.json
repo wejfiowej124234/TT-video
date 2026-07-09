@@ -1,0 +1,949 @@
+{
+  "schema": "traveltrust.cms_es_poi_catalog_scope_lock.v1",
+  "recorded_at_utc": "2026-07-06T15:41:02.423Z",
+  "phase": "② staging",
+  "layer": "CMS_OPERATION",
+  "template_countries": [
+    {
+      "country_iso": "JP",
+      "TT_CMS_JP_COUNTRY": "CLOSED"
+    },
+    {
+      "country_iso": "KR",
+      "TT_CMS_KR_COUNTRY": "CLOSED"
+    },
+    {
+      "country_iso": "TH",
+      "TT_CMS_TH_COUNTRY": "CLOSED"
+    },
+    {
+      "country_iso": "SG",
+      "TT_CMS_SG_COUNTRY": "CLOSED"
+    },
+    {
+      "country_iso": "FR",
+      "TT_CMS_FR_COUNTRY": "CLOSED"
+    },
+    {
+      "country_iso": "US",
+      "TT_CMS_US_COUNTRY": "CLOSED"
+    },
+    {
+      "country_iso": "AU",
+      "TT_CMS_AU_COUNTRY": "CLOSED"
+    }
+  ],
+  "lock_guard": {
+    "jp_locked_required": 41,
+    "kr_locked_required": 31,
+    "th_locked_required": 28,
+    "sg_locked_required": 10,
+    "fr_locked_required": 24,
+    "us_locked_required": 33,
+    "au_locked_required": 24,
+    "verified": true
+  },
+  "country": {
+    "country_iso": "ES",
+    "country_zh": "西班牙"
+  },
+  "es_denominator": {
+    "cities": [
+      "塞维利亚",
+      "巴塞罗那",
+      "马德里"
+    ],
+    "city_breakdown": {
+      "巴塞罗那": {
+        "attraction": 4,
+        "food": 4,
+        "total": 8,
+        "matrix_ids": [
+          "PH-ES-192-ATR",
+          "PH-ES-193-ATR",
+          "PH-ES-194-ATR",
+          "PH-ES-195-ATR",
+          "PH-ES-196-FOOD",
+          "PH-ES-197-FOOD",
+          "PH-ES-198-FOOD",
+          "PH-ES-199-FOOD"
+        ]
+      },
+      "马德里": {
+        "attraction": 4,
+        "food": 4,
+        "total": 8,
+        "matrix_ids": [
+          "PH-ES-200-ATR",
+          "PH-ES-201-ATR",
+          "PH-ES-202-ATR",
+          "PH-ES-203-ATR",
+          "PH-ES-204-FOOD",
+          "PH-ES-205-FOOD",
+          "PH-ES-206-FOOD",
+          "PH-ES-207-FOOD"
+        ]
+      },
+      "塞维利亚": {
+        "attraction": 4,
+        "food": 4,
+        "total": 8,
+        "matrix_ids": [
+          "PH-ES-208-ATR",
+          "PH-ES-209-ATR",
+          "PH-ES-210-ATR",
+          "PH-ES-211-ATR",
+          "PH-ES-212-FOOD",
+          "PH-ES-213-FOOD",
+          "PH-ES-214-FOOD",
+          "PH-ES-215-FOOD"
+        ]
+      }
+    },
+    "poi_total": 24,
+    "attraction": 12,
+    "food": 12
+  },
+  "pilot_wave": {
+    "advancement_rule": "Scope → Country → City → POI · acceptance = City CLOSED → Country Runtime",
+    "ops_hierarchy": [
+      "asset_family",
+      "country",
+      "city",
+      "asset"
+    ],
+    "acceptance_unit": "city",
+    "template_countries": [
+      "JP",
+      "KR",
+      "TH",
+      "SG",
+      "FR",
+      "US",
+      "AU"
+    ],
+    "jp_country_closed_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+    "kr_country_closed_ssot": "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+    "th_country_closed_ssot": "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+    "sg_country_closed_ssot": "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json",
+    "fr_country_closed_ssot": "evidence/GO_cms_operation/CMS-FR-COUNTRY-CLOSURE-LATEST.json",
+    "us_country_closed_ssot": "evidence/GO_cms_operation/CMS-US-COUNTRY-CLOSURE-LATEST.json",
+    "au_country_closed_ssot": "evidence/GO_cms_operation/CMS-AU-COUNTRY-CLOSURE-LATEST.json",
+    "active_wave": "POI-WAVE-8-ES-PILOT",
+    "active_catalog_build": {
+      "wave_id": "POI-WAVE-8-ES-PILOT",
+      "label": "Pilot · ES · 巴塞罗那",
+      "country_iso": "ES",
+      "country_zh": "西班牙",
+      "cities": [
+        "巴塞罗那"
+      ],
+      "acceptance_unit": "city",
+      "acceptance_target": "巴塞罗那 CLOSED",
+      "purpose": "Catalog Build → per-POI Review → Live · JP/KR/TH/SG/FR/US/AU Golden Template 复制 · pilot done when 巴塞罗那 CLOSED",
+      "forbidden": [
+        "bulk_ingest_es_all",
+        "skip_pilot_before_next_city",
+        "accept_by_poi_count"
+      ],
+      "template_countries": [
+        "JP",
+        "KR",
+        "TH",
+        "SG",
+        "FR",
+        "US",
+        "AU"
+      ],
+      "template_closure": [
+        "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-FR-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-US-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-AU-COUNTRY-CLOSURE-LATEST.json"
+      ],
+      "status": "ACTIVE",
+      "catalog_build": true,
+      "matrix_ids": [
+        "PH-ES-192-ATR",
+        "PH-ES-193-ATR",
+        "PH-ES-194-ATR",
+        "PH-ES-195-ATR",
+        "PH-ES-196-FOOD",
+        "PH-ES-197-FOOD",
+        "PH-ES-198-FOOD",
+        "PH-ES-199-FOOD"
+      ],
+      "poi_count": 8,
+      "by_city": [
+        {
+          "city_zh": "巴塞罗那",
+          "acceptance_unit": "city",
+          "acceptance_target": "巴塞罗那 CLOSED",
+          "poi_count": 8,
+          "matrix_ids": [
+            "PH-ES-192-ATR",
+            "PH-ES-193-ATR",
+            "PH-ES-194-ATR",
+            "PH-ES-195-ATR",
+            "PH-ES-196-FOOD",
+            "PH-ES-197-FOOD",
+            "PH-ES-198-FOOD",
+            "PH-ES-199-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "圣家堂",
+              "poi_type": "attraction",
+              "matrix_id": "PH-ES-192-ATR"
+            },
+            {
+              "legacy_value": "古埃尔公园",
+              "poi_type": "attraction",
+              "matrix_id": "PH-ES-193-ATR"
+            },
+            {
+              "legacy_value": "兰布拉",
+              "poi_type": "attraction",
+              "matrix_id": "PH-ES-194-ATR"
+            },
+            {
+              "legacy_value": "米拉之家",
+              "poi_type": "attraction",
+              "matrix_id": "PH-ES-195-ATR"
+            },
+            {
+              "legacy_value": "海鲜饭",
+              "poi_type": "food",
+              "matrix_id": "PH-ES-196-FOOD"
+            },
+            {
+              "legacy_value": "tapas",
+              "poi_type": "food",
+              "matrix_id": "PH-ES-197-FOOD"
+            },
+            {
+              "legacy_value": "伊比利亚火腿",
+              "poi_type": "food",
+              "matrix_id": "PH-ES-198-FOOD"
+            },
+            {
+              "legacy_value": "桑格利亚",
+              "poi_type": "food",
+              "matrix_id": "PH-ES-199-FOOD"
+            }
+          ]
+        },
+        {
+          "city_zh": "马德里",
+          "acceptance_unit": "city",
+          "acceptance_target": "马德里 CLOSED",
+          "poi_count": 8,
+          "matrix_ids": [
+            "PH-ES-200-ATR",
+            "PH-ES-201-ATR",
+            "PH-ES-202-ATR",
+            "PH-ES-203-ATR",
+            "PH-ES-204-FOOD",
+            "PH-ES-205-FOOD",
+            "PH-ES-206-FOOD",
+            "PH-ES-207-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "王宫",
+              "poi_type": "attraction",
+              "matrix_id": "PH-ES-200-ATR"
+            },
+            {
+              "legacy_value": "普拉多",
+              "poi_type": "attraction",
+              "matrix_id": "PH-ES-201-ATR"
+            },
+            {
+              "legacy_value": "太阳门",
+              "poi_type": "attraction",
+              "matrix_id": "PH-ES-202-ATR"
+            },
+            {
+              "legacy_value": "丽池公园",
+              "poi_type": "attraction",
+              "matrix_id": "PH-ES-203-ATR"
+            },
+            {
+              "legacy_value": "火腿",
+              "poi_type": "food",
+              "matrix_id": "PH-ES-204-FOOD"
+            },
+            {
+              "legacy_value": "tapas",
+              "poi_type": "food",
+              "matrix_id": "PH-ES-205-FOOD"
+            },
+            {
+              "legacy_value": "海鲜饭",
+              "poi_type": "food",
+              "matrix_id": "PH-ES-206-FOOD"
+            },
+            {
+              "legacy_value": "巧克力油条",
+              "poi_type": "food",
+              "matrix_id": "PH-ES-207-FOOD"
+            }
+          ]
+        },
+        {
+          "city_zh": "塞维利亚",
+          "acceptance_unit": "city",
+          "acceptance_target": "塞维利亚 CLOSED",
+          "poi_count": 8,
+          "matrix_ids": [
+            "PH-ES-208-ATR",
+            "PH-ES-209-ATR",
+            "PH-ES-210-ATR",
+            "PH-ES-211-ATR",
+            "PH-ES-212-FOOD",
+            "PH-ES-213-FOOD",
+            "PH-ES-214-FOOD",
+            "PH-ES-215-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "王宫",
+              "poi_type": "attraction",
+              "matrix_id": "PH-ES-208-ATR"
+            },
+            {
+              "legacy_value": "大教堂",
+              "poi_type": "attraction",
+              "matrix_id": "PH-ES-209-ATR"
+            },
+            {
+              "legacy_value": "西班牙广场",
+              "poi_type": "attraction",
+              "matrix_id": "PH-ES-210-ATR"
+            },
+            {
+              "legacy_value": "弗拉明戈",
+              "poi_type": "attraction",
+              "matrix_id": "PH-ES-211-ATR"
+            },
+            {
+              "legacy_value": "tapas",
+              "poi_type": "food",
+              "matrix_id": "PH-ES-212-FOOD"
+            },
+            {
+              "legacy_value": "伊比利亚火腿",
+              "poi_type": "food",
+              "matrix_id": "PH-ES-213-FOOD"
+            },
+            {
+              "legacy_value": "橙子",
+              "poi_type": "food",
+              "matrix_id": "PH-ES-214-FOOD"
+            },
+            {
+              "legacy_value": "雪莉酒",
+              "poi_type": "food",
+              "matrix_id": "PH-ES-215-FOOD"
+            }
+          ]
+        }
+      ],
+      "first_matrix_id": "PH-ES-192-ATR",
+      "first_poi": {
+        "city_zh": "巴塞罗那",
+        "legacy_value": "圣家堂",
+        "matrix_id": "PH-ES-192-ATR"
+      },
+      "es_country_total": 24,
+      "es_cities": [
+        "巴塞罗那",
+        "马德里",
+        "塞维利亚"
+      ]
+    },
+    "waves": [
+      {
+        "wave_id": "POI-WAVE-8-ES-PILOT",
+        "label": "Pilot · ES · 巴塞罗那",
+        "country_iso": "ES",
+        "country_zh": "西班牙",
+        "cities": [
+          "巴塞罗那"
+        ],
+        "acceptance_unit": "city",
+        "acceptance_target": "巴塞罗那 CLOSED",
+        "purpose": "Catalog Build → per-POI Review → Live · JP/KR/TH/SG/FR/US/AU Golden Template 复制 · pilot done when 巴塞罗那 CLOSED",
+        "forbidden": [
+          "bulk_ingest_es_all",
+          "skip_pilot_before_next_city",
+          "accept_by_poi_count"
+        ],
+        "template_countries": [
+          "JP",
+          "KR",
+          "TH",
+          "SG",
+          "FR",
+          "US",
+          "AU"
+        ],
+        "template_closure": [
+          "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+          "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+          "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+          "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json",
+          "evidence/GO_cms_operation/CMS-FR-COUNTRY-CLOSURE-LATEST.json",
+          "evidence/GO_cms_operation/CMS-US-COUNTRY-CLOSURE-LATEST.json",
+          "evidence/GO_cms_operation/CMS-AU-COUNTRY-CLOSURE-LATEST.json"
+        ],
+        "status": "ACTIVE",
+        "catalog_build": true,
+        "matrix_ids": [
+          "PH-ES-192-ATR",
+          "PH-ES-193-ATR",
+          "PH-ES-194-ATR",
+          "PH-ES-195-ATR",
+          "PH-ES-196-FOOD",
+          "PH-ES-197-FOOD",
+          "PH-ES-198-FOOD",
+          "PH-ES-199-FOOD"
+        ],
+        "poi_count": 8,
+        "by_city": [
+          {
+            "city_zh": "巴塞罗那",
+            "acceptance_unit": "city",
+            "acceptance_target": "巴塞罗那 CLOSED",
+            "poi_count": 8,
+            "matrix_ids": [
+              "PH-ES-192-ATR",
+              "PH-ES-193-ATR",
+              "PH-ES-194-ATR",
+              "PH-ES-195-ATR",
+              "PH-ES-196-FOOD",
+              "PH-ES-197-FOOD",
+              "PH-ES-198-FOOD",
+              "PH-ES-199-FOOD"
+            ],
+            "pois": [
+              {
+                "legacy_value": "圣家堂",
+                "poi_type": "attraction",
+                "matrix_id": "PH-ES-192-ATR"
+              },
+              {
+                "legacy_value": "古埃尔公园",
+                "poi_type": "attraction",
+                "matrix_id": "PH-ES-193-ATR"
+              },
+              {
+                "legacy_value": "兰布拉",
+                "poi_type": "attraction",
+                "matrix_id": "PH-ES-194-ATR"
+              },
+              {
+                "legacy_value": "米拉之家",
+                "poi_type": "attraction",
+                "matrix_id": "PH-ES-195-ATR"
+              },
+              {
+                "legacy_value": "海鲜饭",
+                "poi_type": "food",
+                "matrix_id": "PH-ES-196-FOOD"
+              },
+              {
+                "legacy_value": "tapas",
+                "poi_type": "food",
+                "matrix_id": "PH-ES-197-FOOD"
+              },
+              {
+                "legacy_value": "伊比利亚火腿",
+                "poi_type": "food",
+                "matrix_id": "PH-ES-198-FOOD"
+              },
+              {
+                "legacy_value": "桑格利亚",
+                "poi_type": "food",
+                "matrix_id": "PH-ES-199-FOOD"
+              }
+            ]
+          },
+          {
+            "city_zh": "马德里",
+            "acceptance_unit": "city",
+            "acceptance_target": "马德里 CLOSED",
+            "poi_count": 8,
+            "matrix_ids": [
+              "PH-ES-200-ATR",
+              "PH-ES-201-ATR",
+              "PH-ES-202-ATR",
+              "PH-ES-203-ATR",
+              "PH-ES-204-FOOD",
+              "PH-ES-205-FOOD",
+              "PH-ES-206-FOOD",
+              "PH-ES-207-FOOD"
+            ],
+            "pois": [
+              {
+                "legacy_value": "王宫",
+                "poi_type": "attraction",
+                "matrix_id": "PH-ES-200-ATR"
+              },
+              {
+                "legacy_value": "普拉多",
+                "poi_type": "attraction",
+                "matrix_id": "PH-ES-201-ATR"
+              },
+              {
+                "legacy_value": "太阳门",
+                "poi_type": "attraction",
+                "matrix_id": "PH-ES-202-ATR"
+              },
+              {
+                "legacy_value": "丽池公园",
+                "poi_type": "attraction",
+                "matrix_id": "PH-ES-203-ATR"
+              },
+              {
+                "legacy_value": "火腿",
+                "poi_type": "food",
+                "matrix_id": "PH-ES-204-FOOD"
+              },
+              {
+                "legacy_value": "tapas",
+                "poi_type": "food",
+                "matrix_id": "PH-ES-205-FOOD"
+              },
+              {
+                "legacy_value": "海鲜饭",
+                "poi_type": "food",
+                "matrix_id": "PH-ES-206-FOOD"
+              },
+              {
+                "legacy_value": "巧克力油条",
+                "poi_type": "food",
+                "matrix_id": "PH-ES-207-FOOD"
+              }
+            ]
+          },
+          {
+            "city_zh": "塞维利亚",
+            "acceptance_unit": "city",
+            "acceptance_target": "塞维利亚 CLOSED",
+            "poi_count": 8,
+            "matrix_ids": [
+              "PH-ES-208-ATR",
+              "PH-ES-209-ATR",
+              "PH-ES-210-ATR",
+              "PH-ES-211-ATR",
+              "PH-ES-212-FOOD",
+              "PH-ES-213-FOOD",
+              "PH-ES-214-FOOD",
+              "PH-ES-215-FOOD"
+            ],
+            "pois": [
+              {
+                "legacy_value": "王宫",
+                "poi_type": "attraction",
+                "matrix_id": "PH-ES-208-ATR"
+              },
+              {
+                "legacy_value": "大教堂",
+                "poi_type": "attraction",
+                "matrix_id": "PH-ES-209-ATR"
+              },
+              {
+                "legacy_value": "西班牙广场",
+                "poi_type": "attraction",
+                "matrix_id": "PH-ES-210-ATR"
+              },
+              {
+                "legacy_value": "弗拉明戈",
+                "poi_type": "attraction",
+                "matrix_id": "PH-ES-211-ATR"
+              },
+              {
+                "legacy_value": "tapas",
+                "poi_type": "food",
+                "matrix_id": "PH-ES-212-FOOD"
+              },
+              {
+                "legacy_value": "伊比利亚火腿",
+                "poi_type": "food",
+                "matrix_id": "PH-ES-213-FOOD"
+              },
+              {
+                "legacy_value": "橙子",
+                "poi_type": "food",
+                "matrix_id": "PH-ES-214-FOOD"
+              },
+              {
+                "legacy_value": "雪莉酒",
+                "poi_type": "food",
+                "matrix_id": "PH-ES-215-FOOD"
+              }
+            ]
+          }
+        ],
+        "first_matrix_id": "PH-ES-192-ATR",
+        "first_poi": {
+          "city_zh": "巴塞罗那",
+          "legacy_value": "圣家堂",
+          "matrix_id": "PH-ES-192-ATR"
+        },
+        "es_country_total": 24,
+        "es_cities": [
+          "巴塞罗那",
+          "马德里",
+          "塞维利亚"
+        ]
+      }
+    ],
+    "es_denominator": {
+      "country_iso": "ES",
+      "cities": [
+        "巴塞罗那",
+        "马德里",
+        "塞维利亚"
+      ],
+      "poi_total": 24,
+      "barcelona_pilot": 8
+    },
+    "roadmap": [
+      {
+        "stage": "jp_country",
+        "status": "CLOSED",
+        "ssot": "CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+      },
+      {
+        "stage": "kr_country",
+        "status": "CLOSED",
+        "ssot": "CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+      },
+      {
+        "stage": "th_country",
+        "status": "CLOSED",
+        "ssot": "CMS-TH-COUNTRY-CLOSURE-LATEST.json"
+      },
+      {
+        "stage": "sg_country",
+        "status": "CLOSED",
+        "ssot": "CMS-SG-COUNTRY-CLOSURE-LATEST.json"
+      },
+      {
+        "stage": "fr_country",
+        "status": "CLOSED",
+        "ssot": "CMS-FR-COUNTRY-CLOSURE-LATEST.json"
+      },
+      {
+        "stage": "us_country",
+        "status": "CLOSED",
+        "ssot": "CMS-US-COUNTRY-CLOSURE-LATEST.json"
+      },
+      {
+        "stage": "au_country",
+        "status": "CLOSED",
+        "ssot": "CMS-AU-COUNTRY-CLOSURE-LATEST.json"
+      },
+      {
+        "stage": "es_scope",
+        "status": "LOCKED"
+      },
+      {
+        "stage": "catalog_build",
+        "status": "ACTIVE",
+        "city": "巴塞罗那",
+        "acceptance": "巴塞罗那 CLOSED"
+      },
+      {
+        "stage": "es_barcelona_execution",
+        "status": "ACTIVE"
+      },
+      {
+        "stage": "es_country_runtime",
+        "status": "NOT_STARTED",
+        "when": "TT_CMS_ES_COUNTRY: CLOSED"
+      }
+    ]
+  },
+  "active_catalog_build": {
+    "wave_id": "POI-WAVE-8-ES-PILOT",
+    "label": "Pilot · ES · 巴塞罗那",
+    "country_iso": "ES",
+    "country_zh": "西班牙",
+    "cities": [
+      "巴塞罗那"
+    ],
+    "acceptance_unit": "city",
+    "acceptance_target": "巴塞罗那 CLOSED",
+    "purpose": "Catalog Build → per-POI Review → Live · JP/KR/TH/SG/FR/US/AU Golden Template 复制 · pilot done when 巴塞罗那 CLOSED",
+    "forbidden": [
+      "bulk_ingest_es_all",
+      "skip_pilot_before_next_city",
+      "accept_by_poi_count"
+    ],
+    "template_countries": [
+      "JP",
+      "KR",
+      "TH",
+      "SG",
+      "FR",
+      "US",
+      "AU"
+    ],
+    "template_closure": [
+      "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+      "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+      "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+      "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json",
+      "evidence/GO_cms_operation/CMS-FR-COUNTRY-CLOSURE-LATEST.json",
+      "evidence/GO_cms_operation/CMS-US-COUNTRY-CLOSURE-LATEST.json",
+      "evidence/GO_cms_operation/CMS-AU-COUNTRY-CLOSURE-LATEST.json"
+    ],
+    "status": "ACTIVE",
+    "catalog_build": true,
+    "matrix_ids": [
+      "PH-ES-192-ATR",
+      "PH-ES-193-ATR",
+      "PH-ES-194-ATR",
+      "PH-ES-195-ATR",
+      "PH-ES-196-FOOD",
+      "PH-ES-197-FOOD",
+      "PH-ES-198-FOOD",
+      "PH-ES-199-FOOD"
+    ],
+    "poi_count": 8,
+    "by_city": [
+      {
+        "city_zh": "巴塞罗那",
+        "acceptance_unit": "city",
+        "acceptance_target": "巴塞罗那 CLOSED",
+        "poi_count": 8,
+        "matrix_ids": [
+          "PH-ES-192-ATR",
+          "PH-ES-193-ATR",
+          "PH-ES-194-ATR",
+          "PH-ES-195-ATR",
+          "PH-ES-196-FOOD",
+          "PH-ES-197-FOOD",
+          "PH-ES-198-FOOD",
+          "PH-ES-199-FOOD"
+        ],
+        "pois": [
+          {
+            "legacy_value": "圣家堂",
+            "poi_type": "attraction",
+            "matrix_id": "PH-ES-192-ATR"
+          },
+          {
+            "legacy_value": "古埃尔公园",
+            "poi_type": "attraction",
+            "matrix_id": "PH-ES-193-ATR"
+          },
+          {
+            "legacy_value": "兰布拉",
+            "poi_type": "attraction",
+            "matrix_id": "PH-ES-194-ATR"
+          },
+          {
+            "legacy_value": "米拉之家",
+            "poi_type": "attraction",
+            "matrix_id": "PH-ES-195-ATR"
+          },
+          {
+            "legacy_value": "海鲜饭",
+            "poi_type": "food",
+            "matrix_id": "PH-ES-196-FOOD"
+          },
+          {
+            "legacy_value": "tapas",
+            "poi_type": "food",
+            "matrix_id": "PH-ES-197-FOOD"
+          },
+          {
+            "legacy_value": "伊比利亚火腿",
+            "poi_type": "food",
+            "matrix_id": "PH-ES-198-FOOD"
+          },
+          {
+            "legacy_value": "桑格利亚",
+            "poi_type": "food",
+            "matrix_id": "PH-ES-199-FOOD"
+          }
+        ]
+      },
+      {
+        "city_zh": "马德里",
+        "acceptance_unit": "city",
+        "acceptance_target": "马德里 CLOSED",
+        "poi_count": 8,
+        "matrix_ids": [
+          "PH-ES-200-ATR",
+          "PH-ES-201-ATR",
+          "PH-ES-202-ATR",
+          "PH-ES-203-ATR",
+          "PH-ES-204-FOOD",
+          "PH-ES-205-FOOD",
+          "PH-ES-206-FOOD",
+          "PH-ES-207-FOOD"
+        ],
+        "pois": [
+          {
+            "legacy_value": "王宫",
+            "poi_type": "attraction",
+            "matrix_id": "PH-ES-200-ATR"
+          },
+          {
+            "legacy_value": "普拉多",
+            "poi_type": "attraction",
+            "matrix_id": "PH-ES-201-ATR"
+          },
+          {
+            "legacy_value": "太阳门",
+            "poi_type": "attraction",
+            "matrix_id": "PH-ES-202-ATR"
+          },
+          {
+            "legacy_value": "丽池公园",
+            "poi_type": "attraction",
+            "matrix_id": "PH-ES-203-ATR"
+          },
+          {
+            "legacy_value": "火腿",
+            "poi_type": "food",
+            "matrix_id": "PH-ES-204-FOOD"
+          },
+          {
+            "legacy_value": "tapas",
+            "poi_type": "food",
+            "matrix_id": "PH-ES-205-FOOD"
+          },
+          {
+            "legacy_value": "海鲜饭",
+            "poi_type": "food",
+            "matrix_id": "PH-ES-206-FOOD"
+          },
+          {
+            "legacy_value": "巧克力油条",
+            "poi_type": "food",
+            "matrix_id": "PH-ES-207-FOOD"
+          }
+        ]
+      },
+      {
+        "city_zh": "塞维利亚",
+        "acceptance_unit": "city",
+        "acceptance_target": "塞维利亚 CLOSED",
+        "poi_count": 8,
+        "matrix_ids": [
+          "PH-ES-208-ATR",
+          "PH-ES-209-ATR",
+          "PH-ES-210-ATR",
+          "PH-ES-211-ATR",
+          "PH-ES-212-FOOD",
+          "PH-ES-213-FOOD",
+          "PH-ES-214-FOOD",
+          "PH-ES-215-FOOD"
+        ],
+        "pois": [
+          {
+            "legacy_value": "王宫",
+            "poi_type": "attraction",
+            "matrix_id": "PH-ES-208-ATR"
+          },
+          {
+            "legacy_value": "大教堂",
+            "poi_type": "attraction",
+            "matrix_id": "PH-ES-209-ATR"
+          },
+          {
+            "legacy_value": "西班牙广场",
+            "poi_type": "attraction",
+            "matrix_id": "PH-ES-210-ATR"
+          },
+          {
+            "legacy_value": "弗拉明戈",
+            "poi_type": "attraction",
+            "matrix_id": "PH-ES-211-ATR"
+          },
+          {
+            "legacy_value": "tapas",
+            "poi_type": "food",
+            "matrix_id": "PH-ES-212-FOOD"
+          },
+          {
+            "legacy_value": "伊比利亚火腿",
+            "poi_type": "food",
+            "matrix_id": "PH-ES-213-FOOD"
+          },
+          {
+            "legacy_value": "橙子",
+            "poi_type": "food",
+            "matrix_id": "PH-ES-214-FOOD"
+          },
+          {
+            "legacy_value": "雪莉酒",
+            "poi_type": "food",
+            "matrix_id": "PH-ES-215-FOOD"
+          }
+        ]
+      }
+    ],
+    "first_matrix_id": "PH-ES-192-ATR",
+    "first_poi": {
+      "city_zh": "巴塞罗那",
+      "legacy_value": "圣家堂",
+      "matrix_id": "PH-ES-192-ATR"
+    },
+    "es_country_total": 24,
+    "es_cities": [
+      "巴塞罗那",
+      "马德里",
+      "塞维利亚"
+    ]
+  },
+  "barcelona_pilot": {
+    "city_zh": "巴塞罗那",
+    "poi_count": 8,
+    "matrix_ids": [
+      "PH-ES-192-ATR",
+      "PH-ES-193-ATR",
+      "PH-ES-194-ATR",
+      "PH-ES-195-ATR",
+      "PH-ES-196-FOOD",
+      "PH-ES-197-FOOD",
+      "PH-ES-198-FOOD",
+      "PH-ES-199-FOOD"
+    ],
+    "acceptance": "巴塞罗那 CLOSED"
+  },
+  "catalog_probe": {
+    "http": 200,
+    "count": 0,
+    "catalog_empty": true
+  },
+  "workflow": [
+    "ES Scope Lock",
+    "巴塞罗那 → 马德里 → 塞维利亚",
+    "ES Country Runtime",
+    "TT_CMS_ES_COUNTRY: CLOSED"
+  ],
+  "forbidden": [
+    "modify_jp_kr_th_sg_fr_lock",
+    "adjust_content_qa_standard",
+    "production_go",
+    "next_country"
+  ],
+  "production_go": "BLOCKED",
+  "next_country": "BLOCKED",
+  "TT_CMS_ES_POI_CATALOG_SCOPE_LOCK": "FROZEN",
+  "TT_CMS_ES_POI_DENOMINATOR_TOTAL": 24,
+  "TT_CMS_ES_POI_PILOT_ACCEPTANCE": "巴塞罗那 CLOSED",
+  "TT_CMS_ES_POI_NEXT_STAGE": "CATALOG_BUILD",
+  "spain_status": "ACTIVE"
+}

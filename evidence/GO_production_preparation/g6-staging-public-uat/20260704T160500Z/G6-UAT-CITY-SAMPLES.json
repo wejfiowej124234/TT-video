@@ -1,0 +1,342 @@
+[
+  {
+    "chain_id": "tokyo-photo",
+    "city": "东京",
+    "country_code": "JP",
+    "surfaces": {
+      "guide-avatar": {
+        "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-tokyo-photo-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "东京旅拍写真 · 半日套餐",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "东京限定镜头代购 · 悬赏",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-tokyo-photo-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-tokyo-photo-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    }
+  },
+  {
+    "chain_id": "kyoto-culture",
+    "city": "京都",
+    "country_code": "JP",
+    "surfaces": {
+      "guide-avatar": {
+        "filename": "ocs-kyoto-culture-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-kyoto-culture-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "京都茶道体验 · 私享包场",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-kyoto-culture-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "京都手工和纸 · 收购",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-kyoto-culture-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-kyoto-culture-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    }
+  },
+  {
+    "chain_id": "seoul-food",
+    "city": "首尔",
+    "country_code": "KR",
+    "surfaces": {
+      "guide-avatar": {
+        "filename": "ocs-seoul-food-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-seoul-food-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "首尔深夜美食团 · 4 小时",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-seoul-food-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "韩国限定零食礼包 · 悬赏",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-seoul-food-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-seoul-food-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    }
+  },
+  {
+    "chain_id": "bangkok-temple",
+    "city": "曼谷",
+    "country_code": "TH",
+    "surfaces": {
+      "guide-avatar": {
+        "filename": "ocs-bangkok-temple-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-bangkok-temple-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "湄南河 sunset 游船 · 含晚餐",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-bangkok-temple-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "泰国手工丝绸 · 收购",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-bangkok-temple-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-bangkok-temple-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    }
+  },
+  {
+    "chain_id": "singapore-family",
+    "city": "新加坡",
+    "country_code": "SG",
+    "surfaces": {
+      "guide-avatar": {
+        "filename": "ocs-singapore-family-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-singapore-family-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "新加坡亲子通票 · 官方合作",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-singapore-family-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "新加坡设计周边 · 悬赏",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-singapore-family-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-singapore-family-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    }
+  },
+  {
+    "chain_id": "paris-art",
+    "city": "巴黎",
+    "country_code": "FR",
+    "surfaces": {
+      "guide-avatar": {
+        "filename": "ocs-paris-art-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-paris-art-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "巴黎博物馆免排队 · 小团",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-paris-art-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "巴黎中古海报 · 收购",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-paris-art-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-paris-art-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    }
+  },
+  {
+    "chain_id": "nyc-skyline",
+    "city": "纽约",
+    "country_code": "US",
+    "surfaces": {
+      "guide-avatar": {
+        "filename": "ocs-nyc-skyline-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-nyc-skyline-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "纽约观景台联票 · 官方合作",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-nyc-skyline-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "纽约独立黑胶 · 悬赏",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-nyc-skyline-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-nyc-skyline-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    }
+  },
+  {
+    "chain_id": "sydney-coast",
+    "city": "悉尼",
+    "country_code": "AU",
+    "surfaces": {
+      "guide-avatar": {
+        "filename": "ocs-sydney-coast-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-sydney-coast-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "悉尼海港皮划艇 · 半日",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-sydney-coast-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "澳洲手工冲浪板 · 收购",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-sydney-coast-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-sydney-coast-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    }
+  },
+  {
+    "chain_id": "barcelona-arch",
+    "city": "巴塞罗那",
+    "country_code": "ES",
+    "surfaces": {
+      "guide-avatar": {
+        "filename": "ocs-barcelona-arch-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-barcelona-arch-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "高迪三件套联票 · 含导览",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-barcelona-arch-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "巴塞罗那马赛克瓷砖 · 收购",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-barcelona-arch-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-barcelona-arch-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    }
+  },
+  {
+    "chain_id": "dubai-luxury",
+    "city": "迪拜",
+    "country_code": "AE",
+    "surfaces": {
+      "guide-avatar": {
+        "filename": "ocs-dubai-luxury-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-dubai-luxury-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "迪拜沙漠豪华 Safari · 含晚宴",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-dubai-luxury-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "迪拜定制香氛 · 悬赏",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-dubai-luxury-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-dubai-luxury-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    }
+  }
+]

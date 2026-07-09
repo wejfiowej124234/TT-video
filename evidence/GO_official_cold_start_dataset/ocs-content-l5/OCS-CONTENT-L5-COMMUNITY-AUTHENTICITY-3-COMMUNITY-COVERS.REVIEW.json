@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.ocs_content_l5_community_authenticity_aggregate.v1",
+  "stamp_utc": "20260704T132952Z",
+  "community_slots_reviewed": 3,
+  "TT_COMMUNITY_AUTHENTICITY_AGGREGATE": "PASS",
+  "rows": [
+    {
+      "filename": "ocs-tokyo-photo-community-cover.jpg",
+      "slot": "community-cover",
+      "pass": true
+    },
+    {
+      "filename": "ocs-kyoto-culture-community-cover.jpg",
+      "slot": "community-cover",
+      "pass": true
+    },
+    {
+      "filename": "ocs-seoul-food-community-cover.jpg",
+      "slot": "community-cover",
+      "pass": true
+    }
+  ],
+  "long_term_fixed_checks": [
+    "authentic_share_feel",
+    "natural_interaction",
+    "feed_thumbnail_readability",
+    "emotional_travel_expression",
+    "ugc_style_not_commercial_poster"
+  ],
+  "policy": "Community Cover/Media 须呈现真实社区旅行瞬间；六类专项审核之 Community 闸；禁止与其它 Surface 语义混用。"
+}

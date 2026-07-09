@@ -1,0 +1,90 @@
+{
+  "kind": "traveltrust.pi3_006_golive_section_matrix.v1",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "sections": [
+    {
+      "section": 0,
+      "unchecked": 3,
+      "checked": 0,
+      "status": "OPEN"
+    },
+    {
+      "section": 1,
+      "unchecked": 5,
+      "checked": 0,
+      "status": "OPEN"
+    },
+    {
+      "section": 2,
+      "unchecked": 4,
+      "checked": 0,
+      "status": "OPEN"
+    },
+    {
+      "section": 3,
+      "unchecked": 9,
+      "checked": 0,
+      "status": "OPEN"
+    },
+    {
+      "section": 4,
+      "unchecked": 5,
+      "checked": 0,
+      "status": "OPEN"
+    },
+    {
+      "section": 5,
+      "unchecked": 4,
+      "checked": 0,
+      "status": "OPEN"
+    },
+    {
+      "section": 6,
+      "unchecked": 3,
+      "checked": 0,
+      "status": "OPEN"
+    },
+    {
+      "section": 7,
+      "unchecked": 4,
+      "checked": 0,
+      "status": "OPEN"
+    },
+    {
+      "section": 8,
+      "unchecked": 4,
+      "checked": 0,
+      "status": "OPEN"
+    },
+    {
+      "section": 9,
+      "unchecked": 7,
+      "checked": 0,
+      "status": "OPEN"
+    },
+    {
+      "section": 10,
+      "unchecked": 4,
+      "checked": 0,
+      "status": "OPEN"
+    },
+    {
+      "section": 11,
+      "unchecked": 18,
+      "checked": 0,
+      "status": "OPEN"
+    }
+  ],
+  "sections_total": 12,
+  "sections_closed": 0,
+  "checkbox_unchecked_total": 70,
+  "checkbox_checked_total": 0,
+  "section_9_mainnet": "N_A_SEPOLIA_SCOPE",
+  "pi3_execution_reports": {
+    "pi3_001": "PRESENT",
+    "pi3_002": "PRESENT",
+    "pi3_003": "PRESENT",
+    "pi3_004": "PRESENT"
+  },
+  "program_status": "COMPLETE"
+}

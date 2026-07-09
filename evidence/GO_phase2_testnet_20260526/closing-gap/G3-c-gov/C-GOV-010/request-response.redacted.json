@@ -1,0 +1,70 @@
+{
+  "verdict": "N/A",
+  "pass_for_closing_gap": true,
+  "note": "No funded Sepolia investor wallet in evidence runner; distribution-claim tx deferred. Page contract: gate:governance-matrix (phase 1).",
+  "wallet_tx_log": null,
+  "meta_chain": {
+    "chain_id": "11155111",
+    "governor_address": "0xa79c8df5C225825f6d04a497043dB0F1995B55ae",
+    "country_pool_ledger_address": null,
+    "country_pool_ledger_pilot_address": null
+  },
+  "investor_distribution_accruals": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "anchor": "B-086-INVESTOR-DISTRIBUTION-ACCRUAL",
+      "data_source": "database",
+      "items": []
+    }
+  },
+  "governance_pool": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "pool_balance": null,
+      "currency": null,
+      "updated_at": "2026-06-05T11:50:08.603469+00:00",
+      "data_source": "database",
+      "rule_version": "governance_pool_v1",
+      "chain_alignment_hint": {
+        "is_chain_ssot": false,
+        "data_source": "projection",
+        "chain_alignment_status": "not_aligned",
+        "chain_id": 11155111,
+        "fee_router_address": "0x81A8009210c5215100564c6E4123F672c4459306",
+        "chain_config_source": "api_meta_state_chain_config",
+        "fee_router_chain_read": {
+          "distribute_paused": false,
+          "read_status": "ok",
+          "method": "distributePaused()"
+        },
+        "fee_router_routing_config_read": {
+          "bps_country": "4500",
+          "read_status": "ok",
+          "method": "BPS_COUNTRY()"
+        },
+        "fee_router_balance_read": {
+          "native_balance_wei_hex": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "read_status": "ok",
+          "method": "eth_getBalance(FeeRouter)",
+          "note": "hint only, not pool SSOT; typical platform fees are ERC20, not native"
+        },
+        "fee_router_erc20_balance_read": null,
+        "balance_consistency_hint": {
+          "pattern": "native_balance_hint_only",
+          "note": "presence/read_status only; ERC20 hint missing or not ok; not SSOT"
+        },
+        "ssot_parallel_chain_snapshot": {
+          "is_chain_ssot": false,
+          "note": "B110-SSOT-03 parallel reads (04/14 B110-SSOT-01 anchors); not main field SSOT; governance_treasury_native_balance_read observation-only, not root treasury_pool* (GOVERNANCE_TREASURY_POOL_BALANCE_CHAIN_SSOT); region_vault leg observation-only, not root country_pool (GOVERNANCE_COUNTRY_POOL_BALANCE_CHAIN_SSOT)",
+          "fee_router_erc20_balance_read": null,
+          "governance_treasury_native_balance_read": null,
+          "region_vault_erc20_balance_read": null
+        },
+        "chain_alignment_derived": "fee_router_readable"
+      }
+    }
+  },
+  "local_contract_gate": "npm run gate:governance-matrix"
+}

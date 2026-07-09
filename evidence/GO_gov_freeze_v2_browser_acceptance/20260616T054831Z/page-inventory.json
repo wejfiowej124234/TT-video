@@ -1,0 +1,25 @@
+{"pages":[
+{"slug":"governance-hub","route":"C:/Program Files/Git/governance","description":"治理 Hub · 入口与诚实边界","human_signoff":false}
+,
+{"slug":"gov-params-freeze","route":"C:/Program Files/Git/governance/params#gov-params-tokenomics-freeze","description":"GOV-01～04 · Primary Market 25k cap","human_signoff":false}
+,
+{"slug":"gov-params-treasury","route":"C:/Program Files/Git/governance/params#gov-params-treasury-policy","description":"Global Treasury · P4 · 公众三轮","human_signoff":false}
+,
+{"slug":"gov-params-overview","route":"C:/Program Files/Git/governance/params#gov-params-overview","description":"Country Pool 45/55 · 净利润资金流","human_signoff":false}
+,
+{"slug":"governance-proposals","route":"C:/Program Files/Git/governance/proposals","description":"提案 · 投票 · Queue · Execute","human_signoff":false}
+,
+{"slug":"governance-proposals-create","route":"C:/Program Files/Git/governance/proposals/create","description":"提案创建","human_signoff":false}
+,
+{"slug":"governance-delegate","route":"C:/Program Files/Git/governance/delegate","description":"委托投票权","human_signoff":false}
+,
+{"slug":"steward-workbench","route":"C:/Program Files/Git/governance/steward-region-workbench","description":"Seat · Stake · 退出 requestRelease","human_signoff":false}
+,
+{"slug":"distribution-claim","route":"C:/Program Files/Git/governance/distribution-claim","description":"投资者分配领取 · 收益叙事","human_signoff":false}
+,
+{"slug":"distribution-accruals","route":"C:/Program Files/Git/governance/distribution-accruals","description":"应计分配","human_signoff":false}
+,
+{"slug":"fee-routes","route":"C:/Program Files/Git/governance/fee-routes","description":"FeeRouter 65/20/15","human_signoff":false}
+,
+{"slug":"vault-forwards","route":"C:/Program Files/Git/governance/vault-forwards","description":"Vault 转发审计","human_signoff":false}
+],"ssot":"TTG-TOKENOMICS-FREEZE-V1"}

@@ -1,0 +1,26 @@
+{
+  "schema": "production_infrastructure_audit.v1",
+  "at": "20260607T074550Z",
+  "phase": "\u2462",
+  "scope": "production_infrastructure_audit",
+  "baseline": "FINAL_SYSTEM_AUDIT: PASS",
+  "business_development": "FROZEN",
+  "system_audit_scope": "FROZEN",
+  "priority": [
+    "PI3-001",
+    "PI3-002"
+  ],
+  "counts": {
+    "p0": 4,
+    "p1": 4,
+    "p2": 0
+  },
+  "infrastructure_go_verdict": "NO_GO",
+  "b475_status": "PLANNED",
+  "prod_domain_configured": false,
+  "evidence_dir": "infra_audit_summary.json",
+  "ssot": [
+    "docs/runbook/PRODUCTION-INFRASTRUCTURE-AUDIT-REPORT.md",
+    "evidence/GO_phase2_testnet_20260526/phase3-production-prep/issues-production-infrastructure.md"
+  ]
+}

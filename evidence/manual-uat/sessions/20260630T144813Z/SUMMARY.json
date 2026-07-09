@@ -1,0 +1,243 @@
+{
+  "session_id": "TN-20260630T144813Z",
+  "session_stamp": "20260630T144813Z",
+  "phase": "\u2461-testnet",
+  "track": "testnet-signoff",
+  "commit": "987bc260",
+  "manual_uat_baseline": "20260630T142222Z",
+  "started_utc": "2026-06-30T14:48:39Z",
+  "testnet_signoff": {
+    "pass": 22,
+    "fail": 0,
+    "blocked": 0,
+    "partial": 0,
+    "total": 22
+  },
+  "checklist_items": [
+    {
+      "id": "T-ENV-01",
+      "section": "A",
+      "title": "Staging API /health",
+      "method": "probe",
+      "status": "PASS",
+      "probe_prep": "PROBE_PASS",
+      "note": "HTTP 200",
+      "verified_utc": "2026-06-30T14:48:39Z"
+    },
+    {
+      "id": "T-ENV-02",
+      "section": "A",
+      "title": "Staging FE /",
+      "method": "probe",
+      "status": "PASS",
+      "probe_prep": "PROBE_PASS",
+      "note": "HTTP 200",
+      "verified_utc": "2026-06-30T14:48:39Z"
+    },
+    {
+      "id": "T-ENV-03",
+      "section": "A",
+      "title": "deployment_profile=staging",
+      "method": "probe",
+      "status": "PASS",
+      "probe_prep": "PROBE_PASS",
+      "note": "profile='staging'\r",
+      "verified_utc": "2026-06-30T14:48:39Z"
+    },
+    {
+      "id": "T-ENV-04",
+      "section": "A",
+      "title": "chain_id Sepolia",
+      "method": "probe",
+      "status": "PASS",
+      "probe_prep": "PROBE_PASS",
+      "note": "chain_id='11155111'\r",
+      "verified_utc": "2026-06-30T14:48:40Z"
+    },
+    {
+      "id": "T-CHAIN-01",
+      "section": "B",
+      "title": "chain.contracts \u975e\u7a7a",
+      "method": "probe",
+      "status": "PASS",
+      "probe_prep": "PROBE_PASS",
+      "note": "keys=13\r",
+      "verified_utc": "2026-06-30T14:48:40Z"
+    },
+    {
+      "id": "T-CHAIN-02",
+      "section": "B",
+      "title": "registry/fee_router/escrow_factory",
+      "method": "probe",
+      "status": "PASS",
+      "probe_prep": "PROBE_PASS",
+      "note": "core trio\r",
+      "verified_utc": "2026-06-30T14:48:40Z"
+    },
+    {
+      "id": "T-CHAIN-03",
+      "section": "B",
+      "title": "governance/staking/steward pool",
+      "method": "probe",
+      "status": "PASS",
+      "probe_prep": "PROBE_PASS",
+      "note": "gov/stake trio\r",
+      "verified_utc": "2026-06-30T14:48:40Z"
+    },
+    {
+      "id": "T-ID-01",
+      "section": "C",
+      "title": "\u767b\u5f55 API \u95e8\u95f8",
+      "method": "probe",
+      "status": "PASS",
+      "probe_prep": "PROBE_PASS",
+      "note": "login gate HTTP 401",
+      "verified_utc": "2026-06-30T14:48:40Z"
+    },
+    {
+      "id": "T-RBAC-01",
+      "section": "C",
+      "title": "Admin RBAC",
+      "method": "record-adm-u01-staging-evidence.sh",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "ADM-U01 run_20260630T155708Z API 102/102 + Playwright 6/6 GO (persistent staging FE)",
+      "verified_utc": "2026-06-30T16:04:04Z"
+    },
+    {
+      "id": "T-HAT-01",
+      "section": "C",
+      "title": "HAT \u516d\u89d2\u8272",
+      "method": "record-tn-p1-007-008-hat-staging-evidence.sh",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "tn-p1-007-008-hat 20260630T145429Z API+Playwright GO",
+      "verified_utc": "2026-06-30T14:57:58Z"
+    },
+    {
+      "id": "T-ORD-01",
+      "section": "D",
+      "title": "\u8ba2\u5355 S01-S10",
+      "method": "smoke-phase2-testnet-execution-sprint.sh",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "smoke-phase2-testnet-execution-sprint S01-S10 exit 0 \u00b7 order 98f42e23",
+      "verified_utc": "2026-06-30T14:50:18Z"
+    },
+    {
+      "id": "T-PROV-01",
+      "section": "D",
+      "title": "\u5546\u5bb6\u5165\u9a7b",
+      "method": "record-tn-p1-002-provider-onboarding-staging-evidence.sh",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "tn-p1-002 20260630T151818Z \u00b7 INTERNAL_API_SECRET fix",
+      "verified_utc": "2026-06-30T15:20:08Z"
+    },
+    {
+      "id": "T-ESC-01",
+      "section": "D",
+      "title": "Escrow",
+      "method": "record-tn-p1-006-escrow-staging-evidence.sh",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "tn-p1-006-escrow-20260630T160404Z create+fund+release+refund+indexer PASS",
+      "verified_utc": "2026-06-30T16:15:57Z"
+    },
+    {
+      "id": "T-ACQ-01",
+      "section": "D",
+      "title": "\u6536\u8d2d PD-009",
+      "method": "record-tn-p1-003-acquisition-staging-evidence.sh",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "tn-p1-003 20260630T145905Z PD-009 full chain",
+      "verified_utc": "2026-06-30T14:59:50Z"
+    },
+    {
+      "id": "T-STK-01",
+      "section": "D",
+      "title": "\u4e3b\u7406\u4eba Stake",
+      "method": "record-tn-p1-004-steward-stake-staging-evidence.sh",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "tn-p1-004 20260630T153904Z live readonly + Sepolia fork write PASS (1rpc.io)",
+      "verified_utc": "2026-06-30T15:49:22Z"
+    },
+    {
+      "id": "T-PSP-01",
+      "section": "D",
+      "title": "Stripe test",
+      "method": "smoke-onboarding-testnet.sh",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "smoke-onboarding-testnet TT_SMOKE_ONBOARDING_TESTNET OK \u00b7 Stripe confirm+webhook+quad-party",
+      "verified_utc": "2026-06-30T15:33:18Z"
+    },
+    {
+      "id": "T-GOV-01",
+      "section": "E",
+      "title": "\u6cbb\u7406 MANUAL-P1",
+      "method": "human+staging",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "proposalId=4 propose+castVote on Sepolia publicnode \u00b7 t-gov-01-vote-evidence.json",
+      "verified_utc": "2026-07-01T00:22:37Z"
+    },
+    {
+      "id": "T-IDX-01",
+      "section": "E",
+      "title": "Indexer reconcile",
+      "method": "record-tn-p1-010-indexer-reconcile-staging-evidence.sh",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "tn-p1-010 20260630T152843Z compound_pass missing_projection=0",
+      "verified_utc": "2026-06-30T15:31:16Z"
+    },
+    {
+      "id": "T-COM-01",
+      "section": "E",
+      "title": "\u793e\u533a C1-C12",
+      "method": "PHASE2-START-CHECKLIST",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "PHASE2-START-CHECKLIST C1-C12 ALL PASS \u00b7 evidence/GO_phase2_testnet_20260526/community/CLOSING-REVIEW.md",
+      "verified_utc": "2026-06-30T15:32:35Z"
+    },
+    {
+      "id": "T-REG-01",
+      "section": "F",
+      "title": "P0/P1 \u5f52\u96f6",
+      "method": "defects-registry",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "open_testnet_p0=0 open_testnet_p1=0 \u00b7 defects-registry \u00b7 burn-down scan 20260630T154707Z exit 0",
+      "verified_utc": "2026-06-30T15:49:21Z"
+    },
+    {
+      "id": "T-GRAD-01",
+      "section": "F",
+      "title": "\u6bd5\u4e1a\u77e9\u9635",
+      "method": "run-phase2-testnet-closure-governance-audit.sh",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "graduation-matrix blocking_open=0 @ 20260630T154415Z \u00b7 tn_p1_010 @ 8dcd304a 20260630T153818Z \u00b7 TT_TESTNET_GRADUATION\u4ecdOPEN(\u4e0a\u4f4d)",
+      "verified_utc": "2026-06-30T15:49:21Z"
+    },
+    {
+      "id": "T-SIGN-01",
+      "section": "F",
+      "title": "Owner sign-off",
+      "method": "signoff",
+      "status": "PASS",
+      "probe_prep": "PENDING",
+      "note": "TESTNET-SIGNOFF-20260701T002252Z.md \u00b7 TT_TESTNET_SIGNOFF:CLOSED \u00b7 TT_TESTNET_GRADUATION:CLOSED @ 20260701T002046Z",
+      "verified_utc": "2026-07-01T00:22:52Z"
+    }
+  ],
+  "last_updated_utc": "2026-07-01T00:23:05Z",
+  "testnet_signoff_verdict": "CLOSED",
+  "tt_testnet_graduation_verdict": "CLOSED",
+  "graduation_evidence": "GO_phase2_testnet_graduation/20260701T002046Z",
+  "signoff_document": "evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260701T002252Z.md"
+}

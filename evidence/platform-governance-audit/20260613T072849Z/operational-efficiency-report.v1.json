@@ -1,0 +1,6 @@
+{
+  "schema": "traveltrust.operational_efficiency.v1",
+  "runbook": "ops/RUNBOOK.md",
+  "admin_ops": "frontend/app/admin/README.md",
+  "dispute": "ORDER-ESCROW-DISPUTE-DEEP-AUDIT"
+}

@@ -1,0 +1,78 @@
+{
+  "verdict": "PASS",
+  "exit_code": 0,
+  "stdout_tail": "smoke-cert6-phase-b-unpause-machine: OK Cert #5 + HAT-R1 Phase A anchors\nTT_CERT6_PHASE_B_MATRIX: PASS out=D:\\TravelTrust-V1.1\\evidence\\GO_ttg_cert\\.cert6-matrix-checks.json\nTT_CERT6_PHASE_B_UNPAUSE_MACHINE: OK",
+  "stderr_tail": "",
+  "phase_b_matrix": {
+    "schema": "traveltrust.cert6-phase-b-unpause-matrix.v1",
+    "verdict": "PASS",
+    "phase": "②",
+    "baseline": "GovFreeze V2 · HAT-R1 Phase A",
+    "roles": [
+      "Owner",
+      "Treasury Operator",
+      "Governor voter path"
+    ],
+    "checks": {
+      "hat_phase_a": {
+        "ok": true,
+        "verdict": "PASS",
+        "execute_earliest_unix": 1781765044,
+        "timelock_elapsed": false,
+        "remaining_seconds": 142366,
+        "queue_tx": "0xcfd052923a0188b732c505520d9c99773697e4e7b57181d55ce28b416776d2a2"
+      },
+      "prerequisites": {
+        "ok": true,
+        "four_ledger_pass": true,
+        "enterprise_hat_l9": true,
+        "baseline_unpause_documented": true
+      },
+      "unpause_gate": {
+        "ok": true,
+        "paused_blocks": {
+          "paused": "1",
+          "exit_code": 4,
+          "summary": "PAUSED_HUMAN_UAT",
+          "stdout_tail": "HAT_R1_PHASE_B: PAUSED — GovFreeze V2 acceptance-only window\n  1) bash scripts/dev/run-govfreeze-v2-human-screen-acceptance-prep.sh\n  2) record screen + bash scripts/dev/record-govfreeze-v2-human-screen-acceptance.sh\n  3) export HAT_R1_PHASE_B_PAUSED=0  # Owner after human UAT + Timelock ready\n  docs/runbook/TT-GOVFREEZE-V2-ECONOMIC-BASELINE-ACCEPTANCE-ONLY.md\nTT_HAT_R1_PHASE_B_SUMMARY: PAUSED_HUMAN_UAT"
+        },
+        "unpaused_probe": {
+          "paused": "0",
+          "exit_code": 0,
+          "summary": "WAIT_TIMelock",
+          "stdout_tail": "HAT_R1_PHASE_B: WAIT timelock not elapsed remaining=142366s (~1d 15h 32m) execute_earliest_unix=1781765044\nTT_HAT_R1_PHASE_B_SUMMARY: WAIT_TIMelock\nHAT_R1_PHASE_B_NOTE: human screen acceptance while waiting — bash scripts/dev/run-govfreeze-v2-human-screen-acceptance-prep.sh"
+        },
+        "expected_next_certs": [
+          "#7 Execute",
+          "#8 Treasury Spend",
+          "#9 Unstake"
+        ]
+      },
+      "gorp_phase_b": {
+        "ok": true,
+        "sections": {
+          "gorp_07": true,
+          "execute_fail_3_1": true,
+          "timelock_3_5": true,
+          "dual_timelock_2_2": true,
+          "execute_earliest": true,
+          "phase_b_chain": true,
+          "forbid_force_execute": true
+        }
+      },
+      "dual_timelock_recovery": {
+        "ok": true,
+        "v2_timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+        "legacy_timelock": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
+      }
+    },
+    "phase_b_unpause_flow_map": "evidence/GO_ttg_cert/.cert6-phase-b-flow-map.json",
+    "mtm_ids": [
+      "CHK-OPS-11",
+      "CHK-BASE-05",
+      "CHK-CORE-04",
+      "CHK-CORE-05",
+      "CHK-CORE-06"
+    ]
+  }
+}

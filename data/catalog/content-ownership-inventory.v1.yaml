@@ -1,0 +1,636 @@
+# Content Ownership Inventory · 全站只读盘点（非治理）
+# Policy: docs/runbook/TT-CONTENT-OWNERSHIP-POLICY.md
+# PER 入口: Business Closed Loop → Inventory → P0 → Evidence → Sign-off
+# CMS 入口: Wave → Inventory owner + modify_entry
+
+schema: traveltrust.content_ownership_inventory.v2
+version: 2
+effective_utc: "2026-07-05"
+inventory_type: read_only
+not_governance: true
+
+execution_links:
+  per_business_closed_loop:
+    flow: [inventory, p0_pages, evidence, signoff]
+    criticality_order: [P0, P1, P2]
+  cms_operation:
+    flow: [inventory, owner, modify_entry, publish, verify, evidence, health_score]
+  production_go:
+    requires: [per_signoff, cms_ops_maturity]
+
+ownership_planes: [OCS, CMS, PUBLIC_OPS, MEDIA_PLATFORM, API, RUNTIME, LOCALES, STATIC_TS, CSS_UI]
+
+check_dimensions:
+  - business_domain
+  - image_owner
+  - copy_owner
+  - data_owner
+  - modify_entry
+  - current_status
+  - business_criticality
+
+current_status_enum:
+  - live
+  - draft
+  - frozen
+  - not_started
+  - ops_maintenance
+  - redirect
+
+business_criticality_enum: [P0, P1, P2]
+
+completion_criterion: >-
+  Every entry answers: owner, modify_entry, current_status, business_criticality.
+
+categories:
+  - id: home
+    label: 第一类 · 首页
+    items:
+      - id: home-hero-ocs
+        page_module: Home Hero / Campaign Highlights
+        route: /
+        business_domain: Web3旅行 · 五主
+        belongs_to: Public Operations + OCS
+        owner: OPS
+        image_owner: OCS
+        copy_owner: OCS resolved + locales
+        data_owner: API /api/v1/official/cold-start/surfaces/home_hero
+        modify_entry: /admin/official/public-operations · /admin/official/cold-start
+        current_status: live
+        business_criticality: P0
+        owner_team: OPS
+      - id: home-destination-ambient
+        page_module: 首页国家背景 · Destination Ambient
+        route: /
+        business_domain: CMS Destination Ambient
+        belongs_to: CMS
+        owner: CMS
+        image_owner: CMS landing_ambient · ① fallback Unsplash TS
+        copy_owner: locales landing_*
+        data_owner: GET /api/v1/catalog/media?asset_kind=landing_ambient
+        modify_entry: /admin/content/landing-ambient
+        current_status: draft
+        business_criticality: P0
+        owner_team: CMS
+      - id: home-itinerary-preview
+        page_module: 创新行程预览卡
+        route: /
+        business_domain: Runtime itinerary
+        belongs_to: API Runtime
+        owner: API
+        image_owner: API daily_itinerary images · ambient until unlock
+        copy_owner: API mock itinerary + locales
+        data_owner: POST /api/v1/itineraries · localStorage
+        modify_entry: Backend itineraries mock · locales
+        current_status: live
+        business_criticality: P0
+        owner_team: API
+      - id: home-featured-ocs
+        page_module: Featured / 冷启动展示条
+        route: /
+        business_domain: Public Operations
+        belongs_to: Public Operations + OCS
+        owner: OPS
+        image_owner: OCS campaign item covers
+        copy_owner: OCS + locales
+        data_owner: official cold-start surfaces
+        modify_entry: /admin/official/public-operations
+        current_status: live
+        business_criticality: P0
+        owner_team: OPS
+
+  - id: market
+    label: 第二类 · Market
+    items:
+      - id: market-main
+        page_module: Market 主页面
+        route: /market
+        business_domain: Market · 五主
+        belongs_to: API + OCS + CSS UI
+        owner: API
+        image_owner: CSS backdrop + order/guide media
+        copy_owner: locales + discover/guides API
+        data_owner: GET discover/orders · guides
+        modify_entry: Backend discover · locales · /admin/official/public-operations (OCS feed)
+        current_status: live
+        business_criticality: P0
+        owner_team: API
+      - id: market-backdrop
+        page_module: Market 页身氛围 (CSS)
+        route: /market
+        business_domain: Market · 五主
+        belongs_to: CSS UI
+        owner: FE
+        image_owner: CSS tokens (无全屏摄影)
+        copy_owner: locales
+        data_owner: layout tokens
+        modify_entry: MarketAmbientBackdrop.tsx (UI frozen)
+        current_status: frozen
+        business_criticality: P0
+        owner_team: FE frozen
+      - id: market-order-cover
+        page_module: 订单卡封面
+        route: /market
+        business_domain: Discover
+        belongs_to: API Runtime
+        owner: API
+        image_owner: API image · Unsplash fallback
+        copy_owner: API highlights
+        data_owner: GET /api/v1/discover/orders
+        modify_entry: Backend discover seed · marketMediaFallback.ts
+        current_status: ops_maintenance
+        business_criticality: P0
+        owner_team: API
+      - id: market-guide-avatar
+        page_module: 向导卡头像
+        route: /market
+        business_domain: Guides
+        belongs_to: OCS
+        owner: OCS
+        image_owner: OCS seed URLs · API avatar_url
+        copy_owner: API bio/highlights
+        data_owner: GET /api/v1/guides
+        modify_entry: /admin/official/guides · OCS manifest (frozen)
+        current_status: frozen
+        business_criticality: P0
+        owner_team: OCS
+      - id: market-ocs-feed
+        page_module: Market Feed 冷启动
+        route: /market
+        business_domain: Public Operations
+        belongs_to: Public Operations + OCS
+        owner: OPS
+        image_owner: OCS market_feed surface
+        copy_owner: OCS resolved
+        data_owner: GET …/surfaces/market_feed
+        modify_entry: /admin/official/public-operations
+        current_status: live
+        business_criticality: P0
+        owner_team: OPS
+      - id: market-provider-listing
+        page_module: 商家橱窗 Listing
+        route: /market/provider
+        business_domain: CMS Catalog
+        belongs_to: CMS
+        owner: CMS
+        image_owner: PG payload · demo Unsplash
+        copy_owner: PG payload
+        data_owner: GET /api/v1/market/provider/listings
+        modify_entry: MerchantShowcaseStudio · /admin/content
+        current_status: ops_maintenance
+        business_criticality: P1
+        owner_team: CMS
+      - id: market-acquisition-listing
+        page_module: 收购 Listing
+        route: /market/acquisition
+        business_domain: CMS · PD-009
+        belongs_to: CMS
+        owner: CMS
+        image_owner: PG payload · demo Unsplash
+        copy_owner: PG payload
+        data_owner: GET /api/v1/market/acquisition/listings
+        modify_entry: AcquisitionCarryStudio
+        current_status: ops_maintenance
+        business_criticality: P1
+        owner_team: CMS
+      - id: market-discover-alias
+        page_module: Discover 别名
+        route: /discover
+        business_domain: Legacy redirect
+        belongs_to: Market
+        owner: FE
+        image_owner: N/A
+        copy_owner: locales
+        data_owner: redirect → /market
+        modify_entry: app/discover/page.tsx
+        current_status: redirect
+        business_criticality: P0
+        owner_team: FE
+      - id: itinerary-new
+        page_module: 独立行程创建
+        route: /itinerary/new
+        business_domain: Itinerary
+        belongs_to: API Runtime
+        owner: API
+        image_owner: API itinerary images
+        copy_owner: locales + API mock
+        data_owner: POST /api/v1/itineraries
+        modify_entry: Backend mock · /admin/official/itinerary-templates
+        current_status: ops_maintenance
+        business_criticality: P1
+        owner_team: API
+
+  - id: community
+    label: 第三类 · Community
+    items:
+      - id: community-main
+        page_module: Community 主 Feed
+        route: /community
+        business_domain: Community · 五主
+        belongs_to: API + Media Platform
+        owner: API
+        image_owner: UGC uploads · media multipart
+        copy_owner: UGC + locales
+        data_owner: GET /api/v1/community/feed
+        modify_entry: PublishDrawer · /admin/community
+        current_status: live
+        business_criticality: P0
+        owner_team: API
+      - id: community-feed-ocs-promo
+        page_module: Feed OCS 推广条
+        route: /community
+        business_domain: Public Operations
+        belongs_to: OCS
+        owner: OPS
+        image_owner: OCS community_feed surface
+        copy_owner: OCS resolved
+        data_owner: GET …/surfaces/community_feed
+        modify_entry: /admin/official/public-operations
+        current_status: live
+        business_criticality: P0
+        owner_team: OPS
+      - id: community-explore
+        page_module: Explore
+        route: /community/explore
+        business_domain: Community
+        belongs_to: API + CMS geo
+        owner: API
+        image_owner: Feed thumbs + dest blocks
+        copy_owner: locales + excerpts
+        data_owner: GET …/explore/destinations
+        modify_entry: CMS geo backend · frozen UI
+        current_status: ops_maintenance
+        business_criticality: P0
+        owner_team: API
+      - id: community-detail-media
+        page_module: Post / User 媒体
+        route: /community/post/[id] · /community/user/[id]
+        business_domain: Community UGC
+        belongs_to: API
+        owner: API
+        image_owner: API media URLs
+        copy_owner: UGC
+        data_owner: community APIs
+        modify_entry: User publish · /admin/community
+        current_status: live
+        business_criticality: P0
+        owner_team: API
+      - id: community-shell
+        page_module: Community 壳 UI
+        route: /community/*
+        business_domain: Community · 五主
+        belongs_to: UI frozen
+        owner: FE
+        image_owner: CSS gradients
+        copy_owner: locales
+        data_owner: layout
+        modify_entry: i18n/a11y only (COMMUNITY-PHASE1-FREEZE)
+        current_status: frozen
+        business_criticality: P0
+        owner_team: FE frozen
+
+  - id: official_guide
+    label: 第四类 · Official Guide
+    items:
+      - id: guides-list-avatar
+        page_module: 向导列表
+        route: /guides
+        business_domain: Guides
+        belongs_to: OCS
+        owner: OCS
+        image_owner: OCS URLs · API avatar
+        copy_owner: Guide fields + locales
+        data_owner: GET /api/v1/guides
+        modify_entry: /admin/official/guides (frozen)
+        current_status: frozen
+        business_criticality: P0
+        owner_team: OCS
+      - id: guide-detail
+        page_module: 向导详情
+        route: /guides/[id]
+        business_domain: Guides
+        belongs_to: OCS
+        owner: OCS
+        image_owner: OCS + credential URLs
+        copy_owner: Guide bio/services
+        data_owner: GET guide by id
+        modify_entry: /me/identities/guide/settings · /admin/guides
+        current_status: frozen
+        business_criticality: P1
+        owner_team: OCS
+      - id: official-guide-community
+        page_module: 官方向导 Community 贴
+        route: /community?official_guide=
+        business_domain: OCS
+        belongs_to: OCS
+        owner: OCS
+        image_owner: OCS manifest cover
+        copy_owner: Official body
+        data_owner: OCS → community_post_id
+        modify_entry: /admin/official/guides
+        current_status: frozen
+        business_criticality: P1
+        owner_team: OCS
+      - id: guide-workbench
+        page_module: 向导工作台
+        route: /guide
+        business_domain: Guide operator
+        belongs_to: API
+        owner: API
+        image_owner: Profile preview API
+        copy_owner: locales
+        data_owner: guide inbox APIs
+        modify_entry: /guide/* operator UI
+        current_status: ops_maintenance
+        business_criticality: P1
+        owner_team: API
+
+  - id: destination
+    label: 第五类 · Destination
+    items:
+      - id: dest-ambient-all-countries
+        page_module: 十国 Destination Ambient
+        route: / (country selection)
+        business_domain: CMS Destination Ambient
+        belongs_to: CMS
+        owner: CMS
+        image_owner: CMS landing_ambient · Unsplash fallback
+        copy_owner: Matrix + locales
+        data_owner: catalog countries · GET catalog/media
+        modify_entry: /admin/content/landing-ambient
+        current_status: draft
+        business_criticality: P0
+        owner_team: CMS
+      - id: dest-catalog-countries
+        page_module: 国家/城市 Catalog
+        route: global adapters
+        business_domain: CMS Catalog
+        belongs_to: CMS
+        owner: CMS
+        image_owner: N/A
+        copy_owner: CMS labels + i18n
+        data_owner: GET /api/v1/catalog/countries
+        modify_entry: /admin/content/countries · cities
+        current_status: ops_maintenance
+        business_criticality: P1
+        owner_team: CMS
+      - id: dest-poi-images
+        page_module: 行程/POI 配图
+        route: / · /itinerary/new · /escrow/[id]
+        business_domain: CMS POI
+        belongs_to: CMS
+        owner: CMS
+        image_owner: CMS poi_hero · API fallback
+        copy_owner: CMS + API text
+        data_owner: catalog POI
+        modify_entry: /admin/content/poi-images · pois
+        current_status: not_started
+        business_criticality: P1
+        owner_team: CMS
+
+  - id: traveltrust
+    label: 第六类 · TravelTrust
+    items:
+      - id: traveltrust-page
+        page_module: /traveltrust 品牌页
+        route: /traveltrust
+        business_domain: Brand · 五主
+        belongs_to: API + locales
+        owner: API
+        image_owner: page-brief media keys · cinematic static
+        copy_owner: locales + page-brief API
+        data_owner: GET /api/v1/traveltrust/page-brief
+        modify_entry: locales · env deploy (UI frozen)
+        current_status: frozen
+        business_criticality: P2
+        owner_team: API
+      - id: traveltrust-video
+        page_module: 品牌视频 / Poster
+        route: / · /traveltrust
+        business_domain: Media Platform
+        belongs_to: Media Platform
+        owner: Media
+        image_owner: public/media/landing static
+        copy_owner: locales
+        data_owner: static files + env flags
+        modify_entry: deploy media · Media Platform (future)
+        current_status: not_started
+        business_criticality: P2
+        owner_team: Media
+      - id: traveltrust-announcements
+        page_module: Pulse / Announcements
+        route: /traveltrust/announcements
+        business_domain: Static TS
+        belongs_to: API backlog
+        owner: API
+        image_owner: N/A
+        copy_owner: traveltrustNetworkAnnouncements.ts
+        data_owner: static array
+        modify_entry: lib/traveltrustNetworkAnnouncements.ts
+        current_status: ops_maintenance
+        business_criticality: P2
+        owner_team: API
+
+  - id: did_rank
+    label: 第七类 · 排行榜
+    items:
+      - id: did-rank-boards
+        page_module: DID Rank 各榜
+        route: /did-rank
+        business_domain: Rankings · 五主
+        belongs_to: API
+        owner: API
+        image_owner: API rank avatars
+        copy_owner: locales
+        data_owner: GET /api/v1/did-rank/*
+        modify_entry: Backend rank compute
+        current_status: live
+        business_criticality: P2
+        owner_team: API
+      - id: did-rank-trust
+        page_module: Trust 深链
+        route: /did-rank → /community/user/[id]
+        business_domain: API + Community
+        belongs_to: API
+        owner: API
+        image_owner: Community avatars
+        copy_owner: profile API
+        data_owner: did-rank + community APIs
+        modify_entry: Backend · community profile
+        current_status: live
+        business_criticality: P2
+        owner_team: API
+
+  - id: auth
+    label: 补充 · Auth / Escrow / Provider
+    items:
+      - id: auth-login
+        page_module: 登录
+        route: /auth/login
+        business_domain: Auth · 五主 adjacent
+        belongs_to: API + locales
+        owner: API
+        image_owner: N/A (UI frozen)
+        copy_owner: locales
+        data_owner: auth API
+        modify_entry: locales · backend auth (AUTH-LOGIN-UI-FREEZE)
+        current_status: frozen
+        business_criticality: P0
+        owner_team: API
+      - id: auth-register
+        page_module: 注册
+        route: /auth/register
+        business_domain: Auth
+        belongs_to: API + locales
+        owner: API
+        image_owner: N/A (UI frozen)
+        copy_owner: locales
+        data_owner: auth API
+        modify_entry: locales · backend auth
+        current_status: frozen
+        business_criticality: P0
+        owner_team: API
+      - id: escrow-order
+        page_module: Escrow 订单页
+        route: /escrow/[id]
+        business_domain: Orders
+        belongs_to: API
+        owner: API
+        image_owner: Order/itinerary images
+        copy_owner: locales + order API
+        data_owner: GET order
+        modify_entry: Backend orders
+        current_status: ops_maintenance
+        business_criticality: P0
+        owner_team: API
+      - id: provider-register
+        page_module: 商家入驻
+        route: /provider/register
+        business_domain: Provider onboarding
+        belongs_to: API
+        owner: API
+        image_owner: KYC uploads
+        copy_owner: locales (UI frozen)
+        data_owner: provider registration API
+        modify_entry: /provider/register · /admin/provider-applications
+        current_status: frozen
+        business_criticality: P0
+        owner_team: API
+      - id: hotel-transport-stock
+        page_module: 酒店/交通库存图
+        route: market/itinerary/escrow adapters
+        business_domain: CMS Hotel · Transport
+        belongs_to: CMS
+        owner: CMS
+        image_owner: CMS hotel_tier_stock · transport_stock
+        copy_owner: CMS labels
+        data_owner: catalog adapters
+        modify_entry: /admin/content/hotel-tiers · transport-region-rules
+        current_status: not_started
+        business_criticality: P1
+        owner_team: CMS
+
+  - id: admin
+    label: 第八类 · Admin
+    items:
+      - id: admin-public-ops
+        page_module: Public Operations
+        route: /admin/official/public-operations
+        business_domain: Public Operations
+        belongs_to: OCS
+        owner: OPS
+        image_owner: OCS previews
+        copy_owner: Admin locales
+        data_owner: OCS manifest + publish queue
+        modify_entry: /admin/official/public-operations
+        current_status: live
+        business_criticality: P1
+        owner_team: OPS
+      - id: admin-ocs-cold-start
+        page_module: OCS Cold Start
+        route: /admin/official/cold-start
+        business_domain: OCS
+        belongs_to: OCS
+        owner: OCS
+        image_owner: OCS manifest refs
+        copy_owner: Campaign metadata
+        data_owner: dataset.v1.json
+        modify_entry: /admin/official/cold-start (frozen)
+        current_status: frozen
+        business_criticality: P1
+        owner_team: OCS
+      - id: admin-cms-hub
+        page_module: CMS Admin
+        route: /admin/content/*
+        business_domain: CMS Catalog
+        belongs_to: CMS
+        owner: CMS
+        image_owner: CMS media assets
+        copy_owner: CMS labels · translation/seo
+        data_owner: PG catalog_*
+        modify_entry: /admin/content/*
+        current_status: ops_maintenance
+        business_criticality: P1
+        owner_team: CMS
+      - id: admin-community-mod
+        page_module: Community 审核
+        route: /admin/community/*
+        business_domain: Moderation
+        belongs_to: API
+        owner: API
+        image_owner: UGC refs
+        copy_owner: moderation UI
+        data_owner: moderation APIs
+        modify_entry: /admin/community/*
+        current_status: ops_maintenance
+        business_criticality: P1
+        owner_team: API
+
+quick_lookup:
+  - question: 首页背景去哪改？
+    owner: CMS
+    current_status: draft
+    modify_entry: /admin/content/landing-ambient
+  - question: Home Hero 去哪改？
+    owner: OPS
+    current_status: live
+    modify_entry: /admin/official/public-operations
+  - question: Guide Avatar 去哪改？
+    owner: OCS
+    current_status: frozen
+    modify_entry: /admin/official/guides
+  - question: Provider Cover 去哪改？
+    owner: OCS
+    current_status: frozen
+    modify_entry: OCS manifest provider slots
+  - question: Community Feed 去哪改？
+    owner: API
+    current_status: live
+    modify_entry: PublishDrawer · /admin/community
+  - question: TravelTrust Video 去哪改？
+    owner: Media
+    current_status: not_started
+    modify_entry: public/media · Media Platform (future)
+  - question: JP 背景 Wave1 去哪改？
+    owner: CMS
+    current_status: draft
+    modify_entry: /admin/content/landing-ambient · DA-JP-HOME
+
+per_p0_pages:
+  - home-destination-ambient
+  - home-hero-ocs
+  - home-itinerary-preview
+  - home-featured-ocs
+  - market-main
+  - market-order-cover
+  - market-guide-avatar
+  - market-ocs-feed
+  - community-main
+  - community-feed-ocs-promo
+  - community-explore
+  - guides-list-avatar
+  - dest-ambient-all-countries
+  - auth-login
+  - auth-register
+  - escrow-order
+  - provider-register

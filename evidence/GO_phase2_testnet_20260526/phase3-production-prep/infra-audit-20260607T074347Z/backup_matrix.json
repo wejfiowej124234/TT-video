@@ -1,0 +1,13 @@
+[
+  {
+    "id": "B-475-baseline",
+    "component": "PostgreSQL backup/PITR baseline",
+    "staging_pg_app": "tt-traveltrust-staging",
+    "prod_pg_app": "tt-traveltrust-prod",
+    "baseline_status": "PLANNED",
+    "last_restore_drill_utc": "2026-06-07T03:51:45Z",
+    "gate_script_exit0": true,
+    "verdict": "PARTIAL",
+    "pi3": "PI3-001"
+  }
+]

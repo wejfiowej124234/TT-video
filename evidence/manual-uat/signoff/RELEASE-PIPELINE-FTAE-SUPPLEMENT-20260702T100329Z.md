@@ -1,0 +1,17 @@
+# Release Pipeline · Full Test Account E2E Supplement
+
+**Effective:** 2026-07-02  
+**Full Test Account E2E stamp:** `20260702T100329Z` (CLOSED)
+
+```text
+TT_RELEASE_PIPELINE: ENFORCED
+TT_FULL_TEST_ACCOUNT_E2E: CLOSED
+TT_PRODUCT_DEVELOPMENT_FREEZE: ENFORCED
+TT_CURRENT_MAINLINE: PI3 → PRODUCTION_GO
+TT_PRODUCT_DEFECTS_OPEN: 0
+TT_TEST_AUTOMATION_ISSUES_OPEN: 0
+TT_RELEASE_DECISION: NO_GO (PI3-001～006)
+```
+
+Registry: `registry/full-test-account-e2e.v1.yaml`  
+Evidence: `evidence/GO_full_test_account_e2e/20260702T100329Z/`

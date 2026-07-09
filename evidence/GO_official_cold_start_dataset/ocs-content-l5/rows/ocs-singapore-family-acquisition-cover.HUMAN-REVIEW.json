@@ -1,0 +1,41 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T142530Z",
+  "filename": "ocs-singapore-family-acquisition-cover.jpg",
+  "chain_id": "singapore-family",
+  "city": "新加坡",
+  "country_code": "SG",
+  "slot": "acquisition-cover",
+  "surface": "Acquisition",
+  "copy_label": "新加坡设计周边 · 悬赏",
+  "manifest_copy": {
+    "acquisition.title": "新加坡设计周边 · 悬赏",
+    "acquisition.category": "collectibles",
+    "acquisition.description": "求购本地设计师限量周边，需正品凭证。",
+    "acquisition.bounty_min_usdc": 80,
+    "acquisition.bounty_max_usdc": 320,
+    "acquisition.cover_url": "/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg"
+  },
+  "pre_generation_check": { "pass": true, "evidence": "ocs-singapore-family-acquisition-cover.PRE-GENERATION-CHECK.json" },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 74394 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "设计礼盒+周边包装静物与 title/description/collectibles 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "设计品静物；非 Row25-26/未来 slot。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "新加坡设计文创 · 非乐园入口（与 Provider 区分）。" },
+    "G5_brand_visual": { "pass": true, "notes": "中性产品光；singapore-family chain 统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "收购/悬赏标的封面。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、包装纹理可读。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "含 Cross-Chain Acquisition + Global Regression 27/60。" },
+    "G9_content_authenticity": { "pass": true, "notes": "设计周边语义；无他国元素/无水印。" },
+    "G10_content_diversity": { "pass": true, "notes": "collectibles 礼盒 vs 镜头/和纸/零食/泰丝明显不同。" }
+  },
+  "acquisition_product_identity_review": {
+    "pass": true,
+    "vs_tokyo_kyoto_seoul_bangkok": "现代设计礼品包装 · 独特新加坡 collectibles 业态"
+  },
+  "destination_experience_review": { "pass": true },
+  "surface_boundary_review": { "pass": true, "not_guide_provider_community": true },
+  "narrative_continuity": { "pass": true, "family_chain_design_bounty": true },
+  "regression_prior_26_rows": { "pass": true },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

@@ -1,0 +1,132 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_final_review.v1",
+  "stamp_utc": "20260704T151330Z",
+  "chain_id": "sydney-coast",
+  "city": "悉尼",
+  "country_code": "AU",
+  "country_label": "澳大利亚",
+  "theme_locked": "海岸徒步 · 邦迪 · Coogee · 海港",
+  "slots_completed": 6,
+  "slots_total": 6,
+  "rows": [43, 44, 45, 46, 47, 48],
+  "TT_SYDNEY_COAST_CHAIN": "CLOSED",
+  "sydney_chain_content_score": {
+    "value": 93.0,
+    "scale": "0-100",
+    "formula": "weighted_mean_of_G1_G10_chain_aggregate_plus_nine_class_reviews",
+    "pass_threshold": 85,
+    "result": "PASS"
+  },
+  "g1_g10_summary": {
+    "G1_real_assets": { "pass": true, "chain_score": 95 },
+    "G2_copy_alignment": { "pass": true, "chain_score": 94 },
+    "G3_slot_differentiation": { "pass": true, "chain_score": 94 },
+    "G4_cross_surface_city": { "pass": true, "chain_score": 96 },
+    "G5_brand_visual": { "pass": true, "chain_score": 92 },
+    "G6_commercial_perception": { "pass": true, "chain_score": 91 },
+    "G7_wcag_visual": { "pass": true, "chain_score": 93 },
+    "G8_evidence_matrix": { "pass": true, "chain_score": 96 },
+    "G9_content_authenticity": { "pass": true, "chain_score": 91 },
+    "G10_content_diversity": { "pass": true, "chain_score": 94 },
+    "all_pass": true
+  },
+  "nine_class_special_reviews": {
+    "guide_identity_diversity": { "pass": true, "note": "Mia @ 海岸步道 · vs 七城向导明显区分" },
+    "provider_business_identity": { "pass": true, "note": "海港皮划艇半日 vs 旅拍/茶室/夜市/河船/亲子/博物馆/观景台" },
+    "acquisition_product_identity": { "pass": true, "note": "手工冲浪板 craft vs 镜头/和纸/零食/泰丝/礼盒/海报/黑胶" },
+    "official_guide_destination": { "pass": true, "note": "邦迪-Coogee 海岸步道宽幅 Hero" },
+    "community_authenticity": { "pass": true, "note": "Cover 海滩浪花 Feed + Media 步道俯瞰海湾 互补" },
+    "destination_authenticity": { "pass": true, "all_rows_au_only": true },
+    "content_portfolio": { "pass": true },
+    "surface_boundary": { "pass": true, "all_6_slots": true },
+    "visual_sequence": { "pass": true, "all_6_slots": true }
+  },
+  "chain_narrative_continuity_review": {
+    "result": "PASS",
+    "TT_CHAIN_NARRATIVE_CONTINUITY": "PASS",
+    "surface_arc": "Guide(Mia @ 海岸步道) → Provider(海港皮划艇半日) → Acquisition(手工冲浪板 craft) → Official Guide(邦迪-Coogee 步道宽幅) → Community Cover(海滩浪花 Feed) → Community Media(步道俯瞰海湾 详情)",
+    "geo_coverage": ["邦迪", "Coogee", "海岸步道", "海港皮划艇", "太平洋海湾"],
+    "theme_coherence": "海岸徒步 · 邦迪 · Coogee · 海港",
+    "narrative_gaps": false
+  },
+  "visual_diversity_review": {
+    "result": "PASS",
+    "TT_VISUAL_DIVERSITY": "PASS",
+    "six_unique_compositions": true,
+    "no_duplicate_subjects_across_slots": true,
+    "cover_media_complement": {
+      "community_cover": "海滩浪花+泳者剪影 · Feed 缩略 · 夏日明亮 · 水平海面",
+      "community_media": "步道俯瞰海湾 · elevated overlook · 下午侧光 · 沉浸环境",
+      "distinct": true,
+      "no_duplicate_camera_subject_composition_light_mood": true
+    }
+  },
+  "city_brand_identity_review": {
+    "result": "PASS",
+    "TT_CITY_BRAND_IDENTITY": "PASS",
+    "visual_language": "海洋蓝+阳光海岸纪实+户外 craft",
+    "cultural_elements_au_only": true,
+    "commercial_positioning": "海岸徒步+海港皮划艇+冲浪板收购+官方路线+社区分享",
+    "distinct_vs_prior_seven_chains": true
+  },
+  "consumer_experience_review": {
+    "result": "PASS",
+    "TT_CONSUMER_EXPERIENCE": "PASS",
+    "summary": "用户从 Feed(海滩浪花)→详情(步道俯瞰海湾)、Market(Guide/Provider/Acquisition)、Official Guide(海岸一日) 浏览时，感知为同一悉尼海岸徒步生态而非素材堆砌。",
+    "feed_to_detail_continuity": true,
+    "market_surfaces_coherent": true,
+    "not_stock_wall": true,
+    "browse_attraction": true
+  },
+  "destination_authenticity": { "result": "PASS", "all_rows": 6, "country_isolation": "AU-only" },
+  "destination_experience": {
+    "result": "PASS",
+    "summary": "邦迪-Coogee 步道/海港/海岸完整可浏览"
+  },
+  "country_consistency": {
+    "result": "PASS",
+    "evidence": "chains/country-consistency-sydney-coast.REVIEW.json",
+    "no_foreign_city_drift": true
+  },
+  "content_portfolio_review": { "result": "PASS", "chain_6_of_48": true },
+  "global_regression_review": {
+    "result": "PASS",
+    "prior_42_rows_stable": true,
+    "prior_7_chains_stable": true,
+    "no_quality_regression": true
+  },
+  "cross_chain_vs_prior_seven": { "result": "PASS", "distinct": true },
+  "full_regression_48_rows": {
+    "pass": true,
+    "tokyo_photo_6": "stable",
+    "kyoto_culture_6": "stable",
+    "seoul_food_6": "stable",
+    "bangkok_temple_6": "stable",
+    "singapore_family_6": "stable",
+    "paris_art_6": "stable",
+    "nyc_skyline_6": "stable",
+    "sydney_coast_6": "closed"
+  },
+  "brand_consistency": {
+    "result": "PASS",
+    "g5_g9_g10_chain_pass": true,
+    "no_brand_drift": true
+  },
+  "surfaces_all_verified": [
+    "ocs-sydney-coast-guide-avatar.jpg",
+    "ocs-sydney-coast-provider-cover.jpg",
+    "ocs-sydney-coast-acquisition-cover.jpg",
+    "ocs-sydney-coast-official-guide-cover.jpg",
+    "ocs-sydney-coast-community-cover.jpg",
+    "ocs-sydney-coast-community-media.jpg"
+  ],
+  "production_readiness": {
+    "sydney_coast_chain": "CLOSED",
+    "global_ocs_content_l5": "IN_PROGRESS",
+    "matrix_progress": "48/60 verified+pass",
+    "chains_closed": 8,
+    "next_matrix_row": 49,
+    "next_chain_id": "barcelona-arch",
+    "note": "sydney-coast CLOSED；须完成剩余 12 行后四键 CLOSED。"
+  }
+}

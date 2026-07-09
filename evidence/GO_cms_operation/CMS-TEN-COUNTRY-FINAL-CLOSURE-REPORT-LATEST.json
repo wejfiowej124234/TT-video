@@ -1,0 +1,159 @@
+{
+  "schema": "traveltrust.cms_ten_country_final_closure_report.v1",
+  "recorded_at_utc": "2026-07-07T11:37:31.559Z",
+  "phase": "② staging",
+  "countries": [
+    {
+      "country_iso": "JP",
+      "country_zh": "日本",
+      "machine_key": "TT_CMS_JP_COUNTRY",
+      "status": "CLOSED",
+      "poi_locked": "41/41",
+      "lock_guard_pass": true,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "KR",
+      "country_zh": "韩国",
+      "machine_key": "TT_CMS_KR_COUNTRY",
+      "status": "CLOSED",
+      "poi_locked": "31/31",
+      "lock_guard_pass": true,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "TH",
+      "country_zh": "泰国",
+      "machine_key": "TT_CMS_TH_COUNTRY",
+      "status": "CLOSED",
+      "poi_locked": "28/28",
+      "lock_guard_pass": true,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "SG",
+      "country_zh": "新加坡",
+      "machine_key": "TT_CMS_SG_COUNTRY",
+      "status": "CLOSED",
+      "poi_locked": "10/10",
+      "lock_guard_pass": true,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "FR",
+      "country_zh": "法国",
+      "machine_key": "TT_CMS_FR_COUNTRY",
+      "status": "CLOSED",
+      "poi_locked": "24/24",
+      "lock_guard_pass": true,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-FR-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "US",
+      "country_zh": "美国",
+      "machine_key": "TT_CMS_US_COUNTRY",
+      "status": "CLOSED",
+      "poi_locked": "33/33",
+      "lock_guard_pass": true,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-US-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "AU",
+      "country_zh": "澳大利亚",
+      "machine_key": "TT_CMS_AU_COUNTRY",
+      "status": "CLOSED",
+      "poi_locked": "24/24",
+      "lock_guard_pass": true,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-AU-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "ES",
+      "country_zh": "西班牙",
+      "machine_key": "TT_CMS_ES_COUNTRY",
+      "status": "CLOSED",
+      "poi_locked": "24/24",
+      "lock_guard_pass": true,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-ES-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "AE",
+      "country_zh": "阿联酋",
+      "machine_key": "TT_CMS_AE_COUNTRY",
+      "status": "CLOSED",
+      "poi_locked": "24/24",
+      "lock_guard_pass": true,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-AE-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "CN",
+      "country_zh": "中国",
+      "machine_key": "TT_CMS_CN_COUNTRY",
+      "status": "CLOSED",
+      "poi_locked": "91/91",
+      "lock_guard_pass": true,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-CN-COUNTRY-CLOSURE-LATEST.json"
+    }
+  ],
+  "cn_city_triple_pass": [
+    {
+      "city_zh": "北京",
+      "locked": "11/11",
+      "triple_pass": true
+    },
+    {
+      "city_zh": "上海",
+      "locked": "10/10",
+      "triple_pass": true
+    },
+    {
+      "city_zh": "广州",
+      "locked": "10/10",
+      "triple_pass": true
+    },
+    {
+      "city_zh": "成都",
+      "locked": "10/10",
+      "triple_pass": true
+    },
+    {
+      "city_zh": "杭州",
+      "locked": "10/10",
+      "triple_pass": true
+    },
+    {
+      "city_zh": "西安",
+      "locked": "10/10",
+      "triple_pass": true
+    },
+    {
+      "city_zh": "厦门",
+      "locked": "10/10",
+      "triple_pass": true
+    },
+    {
+      "city_zh": "青岛",
+      "locked": "10/10",
+      "triple_pass": true
+    },
+    {
+      "city_zh": "大理",
+      "locked": "10/10",
+      "triple_pass": true
+    }
+  ],
+  "summary": {
+    "countries_closed": 10,
+    "countries_total": 10,
+    "all_ten_closed": true,
+    "total_poi_locked": 330,
+    "total_poi_expected": 330
+  },
+  "production_go": "BLOCKED",
+  "cms_pipeline": "STOPPED",
+  "forbidden": [
+    "modify_locked_assets",
+    "adjust_content_qa_standard",
+    "production_go"
+  ],
+  "TT_CMS_TEN_COUNTRY_FINAL_CLOSURE": "CLOSED"
+}

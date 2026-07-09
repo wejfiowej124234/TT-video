@@ -1,0 +1,345 @@
+{
+  "schema": "traveltrust.p2fc_failure_propagation_graph.v1",
+  "generated_from": "fc_execution_path_rehearsal",
+  "trigger": "COMPLETED.json",
+  "time_to_failure_order": [
+    {
+      "offset_min": 28,
+      "fc_id": "FC-02_ITINERARIES_HUB",
+      "phase": "wave1_api_deploy",
+      "severity": "high"
+    },
+    {
+      "offset_min": 28,
+      "fc_id": "FC-03_LARGE_DIFF_BLOB",
+      "phase": "wave1_api_deploy",
+      "severity": "medium"
+    },
+    {
+      "offset_min": 45,
+      "fc_id": "FC-01_TIMEOUT_MISMATCH",
+      "phase": "meta_availability",
+      "severity": "critical"
+    }
+  ],
+  "propagation_graph": {
+    "nodes": [
+      {
+        "step": 0,
+        "phase": "completed_trigger",
+        "label": "COMPLETED.json",
+        "offset_min": 0,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 1,
+        "phase": "tn_p1_010",
+        "label": "TN-P1-010 independent",
+        "offset_min": 8,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 2,
+        "phase": "rollback_snapshot",
+        "label": "fly rollback snapshot",
+        "offset_min": 10,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 3,
+        "phase": "apply_patches",
+        "label": "apply backlog + meta hotfix",
+        "offset_min": 12,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 4,
+        "phase": "wave1_api_deploy",
+        "label": "Wave1 tt-api-staging deploy",
+        "offset_min": 28,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 5,
+        "phase": "wave2_web_deploy",
+        "label": "Wave2 tt-web-staging deploy",
+        "offset_min": 42,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 6,
+        "phase": "meta_availability",
+        "label": "meta strict gate",
+        "offset_min": 45,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 0,
+        "phase": "completed_trigger",
+        "label": "COMPLETED.json",
+        "offset_min": 0,
+        "fc_id": "FC-02_ITINERARIES_HUB",
+        "role": "timeline"
+      },
+      {
+        "step": 1,
+        "phase": "tn_p1_010",
+        "label": "TN-P1-010 independent",
+        "offset_min": 8,
+        "fc_id": "FC-02_ITINERARIES_HUB",
+        "role": "timeline"
+      },
+      {
+        "step": 2,
+        "phase": "rollback_snapshot",
+        "label": "fly rollback snapshot",
+        "offset_min": 10,
+        "fc_id": "FC-02_ITINERARIES_HUB",
+        "role": "timeline"
+      },
+      {
+        "step": 3,
+        "phase": "apply_patches",
+        "label": "apply backlog + meta hotfix",
+        "offset_min": 12,
+        "fc_id": "FC-02_ITINERARIES_HUB",
+        "role": "timeline"
+      },
+      {
+        "step": 4,
+        "phase": "wave1_api_deploy",
+        "label": "Wave1 tt-api-staging deploy",
+        "offset_min": 28,
+        "fc_id": "FC-02_ITINERARIES_HUB",
+        "role": "timeline"
+      },
+      {
+        "step": 0,
+        "phase": "completed_trigger",
+        "label": "COMPLETED.json",
+        "offset_min": 0,
+        "fc_id": "FC-03_LARGE_DIFF_BLOB",
+        "role": "timeline"
+      },
+      {
+        "step": 1,
+        "phase": "tn_p1_010",
+        "label": "TN-P1-010 independent",
+        "offset_min": 8,
+        "fc_id": "FC-03_LARGE_DIFF_BLOB",
+        "role": "timeline"
+      },
+      {
+        "step": 2,
+        "phase": "rollback_snapshot",
+        "label": "fly rollback snapshot",
+        "offset_min": 10,
+        "fc_id": "FC-03_LARGE_DIFF_BLOB",
+        "role": "timeline"
+      },
+      {
+        "step": 3,
+        "phase": "apply_patches",
+        "label": "apply backlog + meta hotfix",
+        "offset_min": 12,
+        "fc_id": "FC-03_LARGE_DIFF_BLOB",
+        "role": "timeline"
+      },
+      {
+        "step": 4,
+        "phase": "wave1_api_deploy",
+        "label": "Wave1 tt-api-staging deploy",
+        "offset_min": 28,
+        "fc_id": "FC-03_LARGE_DIFF_BLOB",
+        "role": "timeline"
+      }
+    ],
+    "edges": [
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:completed_trigger",
+        "to": "FC-01_TIMEOUT_MISMATCH:tn_p1_010",
+        "relation": "sequential_exec",
+        "elapsed_min": 8
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:tn_p1_010",
+        "to": "FC-01_TIMEOUT_MISMATCH:rollback_snapshot",
+        "relation": "sequential_exec",
+        "elapsed_min": 2
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:rollback_snapshot",
+        "to": "FC-01_TIMEOUT_MISMATCH:apply_patches",
+        "relation": "sequential_exec",
+        "elapsed_min": 2
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:apply_patches",
+        "to": "FC-01_TIMEOUT_MISMATCH:wave1_api_deploy",
+        "relation": "sequential_exec",
+        "elapsed_min": 16
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:wave1_api_deploy",
+        "to": "FC-01_TIMEOUT_MISMATCH:wave2_web_deploy",
+        "relation": "sequential_exec",
+        "elapsed_min": 14
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:wave2_web_deploy",
+        "to": "FC-01_TIMEOUT_MISMATCH:meta_availability",
+        "relation": "sequential_exec",
+        "elapsed_min": 3
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:dep:DEP-01-A",
+        "to": "FC-01_TIMEOUT_MISMATCH:meta_availability",
+        "relation": "depends_on",
+        "kind": "config"
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:dep:DEP-01-B",
+        "to": "FC-01_TIMEOUT_MISMATCH:meta_availability",
+        "relation": "depends_on",
+        "kind": "patch"
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:dep:DEP-01-C",
+        "to": "FC-01_TIMEOUT_MISMATCH:meta_availability",
+        "relation": "depends_on",
+        "kind": "patch"
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:dep:DEP-01-D",
+        "to": "FC-01_TIMEOUT_MISMATCH:meta_availability",
+        "relation": "depends_on",
+        "kind": "deploy"
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:dep:DEP-01-E",
+        "to": "FC-01_TIMEOUT_MISMATCH:meta_availability",
+        "relation": "depends_on",
+        "kind": "gate"
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:apply_patches",
+        "to": "FC-01_TIMEOUT_MISMATCH:apply_patches",
+        "relation": "patch_order_risk",
+        "note": "hotfix must succeed in step-3 for step-6"
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:completed_trigger",
+        "to": "FC-02_ITINERARIES_HUB:tn_p1_010",
+        "relation": "sequential_exec",
+        "elapsed_min": 8
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:tn_p1_010",
+        "to": "FC-02_ITINERARIES_HUB:rollback_snapshot",
+        "relation": "sequential_exec",
+        "elapsed_min": 2
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:rollback_snapshot",
+        "to": "FC-02_ITINERARIES_HUB:apply_patches",
+        "relation": "sequential_exec",
+        "elapsed_min": 2
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:apply_patches",
+        "to": "FC-02_ITINERARIES_HUB:wave1_api_deploy",
+        "relation": "sequential_exec",
+        "elapsed_min": 16
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:dep:DEP-02-A",
+        "to": "FC-02_ITINERARIES_HUB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "code"
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:dep:DEP-02-B",
+        "to": "FC-02_ITINERARIES_HUB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "consumer"
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:dep:DEP-02-C",
+        "to": "FC-02_ITINERARIES_HUB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "deploy"
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:dep:DEP-02-D",
+        "to": "FC-02_ITINERARIES_HUB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "gate"
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:completed_trigger",
+        "to": "FC-03_LARGE_DIFF_BLOB:tn_p1_010",
+        "relation": "sequential_exec",
+        "elapsed_min": 8
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:tn_p1_010",
+        "to": "FC-03_LARGE_DIFF_BLOB:rollback_snapshot",
+        "relation": "sequential_exec",
+        "elapsed_min": 2
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:rollback_snapshot",
+        "to": "FC-03_LARGE_DIFF_BLOB:apply_patches",
+        "relation": "sequential_exec",
+        "elapsed_min": 2
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:apply_patches",
+        "to": "FC-03_LARGE_DIFF_BLOB:wave1_api_deploy",
+        "relation": "sequential_exec",
+        "elapsed_min": 16
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:dep:DEP-03-A",
+        "to": "FC-03_LARGE_DIFF_BLOB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "patch"
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:dep:DEP-03-B",
+        "to": "FC-03_LARGE_DIFF_BLOB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "compound"
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:dep:DEP-03-C",
+        "to": "FC-03_LARGE_DIFF_BLOB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "deploy"
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:dep:DEP-03-D",
+        "to": "FC-03_LARGE_DIFF_BLOB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "gate"
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:wave1_api_deploy",
+        "to": "FC-03_LARGE_DIFF_BLOB:wave1_api_deploy",
+        "relation": "amplifies"
+      }
+    ]
+  },
+  "cross_fc_notes": [
+    "FC-02/03 likely surface at T+28min (wave1) before FC-01 at T+45min (meta strict) if wave1 passes",
+    "FC-01 is critical path blocker for Graduation even if wave1/2 succeed",
+    "FC-03 amplifies FC-02 at same phase — recovery REC-03-B splits waves"
+  ]
+}

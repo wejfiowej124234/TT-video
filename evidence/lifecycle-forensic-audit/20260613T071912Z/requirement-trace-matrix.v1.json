@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.requirement_trace_matrix.v1",
+  "ssot": [
+    "docs/spec/93-全站功能验证矩阵-域别回归清单.md",
+    "docs/spec/96-20-前后端页面对齐与UI生产级审计报告.md",
+    "docs/spec/04-后端与API.md"
+  ],
+  "routes_in_app": 194,
+  "gates": [
+    "check-spec93-routes-vs-app.py",
+    "run-check-04-routes.sh"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust.phase2_final_human_acceptance.v1",
+  "stamp": "20260630T030920Z",
+  "signed_at_utc": "2026-06-30T03:17:58Z",
+  "phase": "② testnet",
+  "runtime_staging_sha": "fc9266ce94f18810420e720bb933946c086ce909",
+  "soak_baseline_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "verdicts": {
+    "frca_five_role": "CONDITIONAL",
+    "phase28_hat": "PASS",
+    "p2ha_staging": "PASS",
+    "tt_testnet_graduation": "CLOSED",
+    "phase2_closure": "YES"
+  },
+  "phase3_entry": "READY",
+  "honest_boundary": "② Final Human Acceptance + Graduation CLOSED ≠ ③ Production GO",
+  "evidence": {
+    "frca": "d:\\TravelTrust-V1.1\\evidence\\GO_phase2_final_human_acceptance\\20260630T030920Z\\frca\\frca-findings.json",
+    "hat": "d:\\TravelTrust-V1.1\\evidence\\GO_phase2_final_human_acceptance\\20260630T030920Z\\phase28-hat\\hat-findings.json",
+    "p2ha": "d:\\TravelTrust-V1.1\\evidence\\GO_phase2_final_human_acceptance\\20260630T030920Z\\p2ha-staging\\p2ha-findings.json",
+    "graduation_freeze": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_testnet_graduation\\PHASE2-CLOSURE-GRADUATION-FREEZE.latest.json"
+  }
+}

@@ -1,0 +1,275 @@
+{
+  "schema": "traveltrust.enterprise_acceptance_ledger.v1",
+  "stamp": "20260702T144513Z",
+  "generated_at_utc": "2026-07-02T14:55:47.740Z",
+  "name": "Enterprise Final Acceptance Audit · Capstone Ledger",
+  "not_a_new_recurring_audit": true,
+  "product_development_freeze": "TT_PRODUCT_DEVELOPMENT_FREEZE: ENFORCED",
+  "synthesizes": [
+    "Phase12 Final Convergence",
+    "Production Release Review",
+    "Frontend-API Consistency Audit",
+    "Business Domain Validation",
+    "Enterprise Release Review browser"
+  ],
+  "prior_evidence": {
+    "production_release_review": "evidence/GO_production_release_review/20260702T084419Z/",
+    "phase12_convergence": "evidence/GO_phase12_final_convergence/20260702T023014Z/",
+    "product_freeze": "evidence/manual-uat/signoff/PRODUCT-DEVELOPMENT-FREEZE-20260702.md"
+  },
+  "machine_signals": {
+    "api_strict": true,
+    "bdv_probes_staging": true,
+    "fe_api_browser": true,
+    "bdv_browser": true,
+    "err_browser": true,
+    "all_machine_pass": true
+  },
+  "summary": {
+    "domains_total": 12,
+    "domains_pass": 12,
+    "product_defects_open": 0,
+    "production_blockers_open": 6,
+    "expected_differences": 1,
+    "enhancements_deferred": 1,
+    "enterprise_complete": true
+  },
+  "issue_counts": {
+    "PRODUCT_DEFECT": 0,
+    "PRODUCTION_BLOCKER": 6,
+    "EXPECTED_DIFFERENCE": 1,
+    "ENHANCEMENT": 1
+  },
+  "domain_matrix": [
+    {
+      "domain": "Guide · Market",
+      "pages": [
+        "/market?view=guides"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "N/A",
+      "database": "PASS",
+      "business_flow": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Provider",
+      "pages": [
+        "/market/provider"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "N/A",
+      "database": "PASS",
+      "business_flow": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Acquisition",
+      "pages": [
+        "/market/acquisition"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "N/A",
+      "database": "PASS",
+      "business_flow": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Discover · Orders",
+      "pages": [
+        "/market?view=orders"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "N/A",
+      "database": "PASS",
+      "business_flow": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Itinerary",
+      "pages": [
+        "/",
+        "/orders/new"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "N/A",
+      "database": "PASS",
+      "business_flow": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Orders · Escrow",
+      "pages": [
+        "/orders",
+        "/escrow"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "N/A",
+      "database": "PASS",
+      "business_flow": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Community",
+      "pages": [
+        "/community"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "N/A",
+      "database": "PASS",
+      "business_flow": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Messages",
+      "pages": [
+        "/community/messages"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "N/A",
+      "database": "PASS",
+      "business_flow": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Governance",
+      "pages": [
+        "/governance/proposals"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "N/A",
+      "database": "PASS",
+      "business_flow": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Web3 · Staking",
+      "pages": [
+        "/staking"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "N/A",
+      "database": "PASS",
+      "business_flow": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Admin Platform",
+      "pages": [
+        "/admin"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "PASS",
+      "database": "PASS",
+      "business_flow": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Home · Official",
+      "pages": [
+        "/",
+        "/traveltrust"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "N/A",
+      "database": "PASS",
+      "business_flow": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    }
+  ],
+  "issue_list": [
+    {
+      "id": "PB-PI3-001",
+      "classification": "PRODUCTION_BLOCKER",
+      "domain": "PI3",
+      "summary": "Production Database / Backup",
+      "disposition": "PI3_MAINLINE",
+      "fix_recommendation": "Complete PB-PI3-001 per docs/runbook/PHASE3-PRODUCTION-PREPARATION.md"
+    },
+    {
+      "id": "PB-PI3-002",
+      "classification": "PRODUCTION_BLOCKER",
+      "domain": "PI3",
+      "summary": "Domain / TLS / CDN",
+      "disposition": "PI3_MAINLINE",
+      "fix_recommendation": "Complete PB-PI3-002 per docs/runbook/PHASE3-PRODUCTION-PREPARATION.md"
+    },
+    {
+      "id": "PB-PI3-003",
+      "classification": "PRODUCTION_BLOCKER",
+      "domain": "PI3",
+      "summary": "Stripe Live",
+      "disposition": "PI3_MAINLINE",
+      "fix_recommendation": "Complete PB-PI3-003 per docs/runbook/PHASE3-PRODUCTION-PREPARATION.md"
+    },
+    {
+      "id": "PB-PI3-004",
+      "classification": "PRODUCTION_BLOCKER",
+      "domain": "PI3",
+      "summary": "Production Validation",
+      "disposition": "PI3_MAINLINE",
+      "fix_recommendation": "Complete PB-PI3-004 per docs/runbook/PHASE3-PRODUCTION-PREPARATION.md"
+    },
+    {
+      "id": "PB-PI3-005",
+      "classification": "PRODUCTION_BLOCKER",
+      "domain": "PI3",
+      "summary": "Mainnet",
+      "disposition": "PI3_MAINLINE",
+      "fix_recommendation": "Complete PB-PI3-005 per docs/runbook/PHASE3-PRODUCTION-PREPARATION.md"
+    },
+    {
+      "id": "PB-PI3-006",
+      "classification": "PRODUCTION_BLOCKER",
+      "domain": "PI3",
+      "summary": "Go-Live Checklist",
+      "disposition": "PI3_MAINLINE",
+      "fix_recommendation": "Complete PB-PI3-006 per docs/runbook/PHASE3-PRODUCTION-PREPARATION.md"
+    },
+    {
+      "id": "ED-SEPOLIA-VS-MAINNET",
+      "classification": "EXPECTED_DIFFERENCE",
+      "domain": "Web3",
+      "summary": "Staging/testnet uses Sepolia (chain_id 11155111); production mainnet addresses differ by design",
+      "disposition": "CONFIRM_DESIGN",
+      "fix_recommendation": "No product fix; complete PI3-005 Mainnet for production GO"
+    },
+    {
+      "id": "ENH-POST-GO-OPS",
+      "classification": "ENHANCEMENT",
+      "domain": "Official Ops",
+      "summary": "CDN/HLS · Admin SSO · button-by-button ops polish deferred to Post-GO Official Ops 1.1",
+      "disposition": "DEFER_POST_GO",
+      "fix_recommendation": "Track in Post-GO roadmap; not blocking Product Enterprise Complete"
+    }
+  ],
+  "machine_keys": {
+    "TT_ENTERPRISE_FINAL_ACCEPTANCE": "CLOSED",
+    "TT_PRODUCT_CAPABILITY": "ENTERPRISE_COMPLETE",
+    "TT_RELEASE_DECISION": "NO_GO"
+  }
+}

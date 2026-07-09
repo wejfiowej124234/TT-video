@@ -1,0 +1,66 @@
+{
+  "schema": "traveltrust.lifecycle_top100.v1",
+  "count": 6,
+  "findings": [
+    {
+      "id": "LFC-SEED-001",
+      "domain": "DOMAIN-R",
+      "dim": "R-10",
+      "object": "route",
+      "label": "93 §5 vs app routes",
+      "suggested_verdict": "UPDATE",
+      "severity": "P0",
+      "rationale": "check-spec93-routes WARN — sync 93 or heuristics"
+    },
+    {
+      "id": "LFC-SEED-002",
+      "domain": "DOMAIN-K",
+      "dim": "K-01",
+      "object": "knowledge",
+      "label": "Solo maintainer bus factor",
+      "suggested_verdict": "UPDATE",
+      "severity": "P0",
+      "rationale": "Document runbook handoff + SOLO-MAINTAINER index"
+    },
+    {
+      "id": "LFC-SEED-003",
+      "domain": "DOMAIN-E",
+      "dim": "E-01",
+      "object": "economics",
+      "label": "fee_schedule_v1 trace",
+      "suggested_verdict": "KEEP",
+      "severity": "P0",
+      "rationale": "onboarding-fee-schedule.v1.md ↔ fee_schedule_v1.rs"
+    },
+    {
+      "id": "LFC-SEED-005",
+      "domain": "DOMAIN-UXA",
+      "dim": "UXA-01",
+      "object": "design",
+      "label": "Five-main UI freeze",
+      "suggested_verdict": "KEEP",
+      "severity": "P0",
+      "rationale": "FIVE-MAIN-ROUTES-PHASE1-FREEZE is SSOT"
+    },
+    {
+      "id": "LFC-SEED-006",
+      "domain": "DOMAIN-X",
+      "dim": "PF-04",
+      "object": "function",
+      "label": "Publish Hub multi-entry",
+      "suggested_verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "PF-04 duplicate surfaces — see product-forensic-registry"
+    },
+    {
+      "id": "LFC-SEED-004",
+      "domain": "DOMAIN-CA",
+      "dim": "CA-06",
+      "object": "code",
+      "label": "archive/ui-v1 dead tree",
+      "suggested_verdict": "DEPRECATE",
+      "severity": "P1",
+      "rationale": "Non-SSOT archive — RETIRE path after grep zero nav refs"
+    }
+  ]
+}

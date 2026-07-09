@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T16:21:54Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "ES",
+    "city_zh": "巴塞罗那",
+    "city_en": "Barcelona",
+    "matrix_ids": [
+      "PH-ES-192-ATR",
+      "PH-ES-193-ATR",
+      "PH-ES-194-ATR",
+      "PH-ES-195-ATR",
+      "PH-ES-196-FOOD",
+      "PH-ES-197-FOOD",
+      "PH-ES-198-FOOD",
+      "PH-ES-199-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-ES-192-ATR",
+      "legacy_value": "圣家堂",
+      "poi_id": "d46e02d2-1c68-43b9-813c-c4bfaa38f344",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-192-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-ES-193-ATR",
+      "legacy_value": "古埃尔公园",
+      "poi_id": "4d6bcc9e-3bd1-4039-971e-3fed74154e28",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-193-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-ES-194-ATR",
+      "legacy_value": "兰布拉",
+      "poi_id": "e6d19850-9971-4663-a504-7df75e6026ff",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-194-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-ES-195-ATR",
+      "legacy_value": "米拉之家",
+      "poi_id": "d64f7185-36e0-46e0-8410-f885ea6d2ea3",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-195-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-ES-196-FOOD",
+      "legacy_value": "海鲜饭",
+      "poi_id": "bac97353-35e3-4450-8644-978c796f808f",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-196-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-ES-197-FOOD",
+      "legacy_value": "tapas",
+      "poi_id": "9b41b6dd-f7a6-4eb7-b9a5-21e492684d39",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-197-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-ES-198-FOOD",
+      "legacy_value": "伊比利亚火腿",
+      "poi_id": "97fc80aa-3ec7-41df-a689-abff72ece5f4",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-198-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-ES-199-FOOD",
+      "legacy_value": "桑格利亚",
+      "poi_id": "5aa68f3a-2103-4386-954d-52cf9e00e8be",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-199-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

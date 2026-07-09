@@ -1,0 +1,2 @@
+current_image=registry.fly.io/tt-web-staging:deployment-01KTFY490APCE0CXQP8TF0E91Z
+previous_image=registry.fly.io/tt-web-staging:deployment-01KTFNRVVBAXW8ADY0W70EWV31

@@ -1,0 +1,96 @@
+{
+  "schema": "traveltrust.p2fc_l5_duration_convergence.v1",
+  "snapshot_count": 153,
+  "observation_duration_sec": 129523,
+  "observation_duration_hours": 35.98,
+  "poll_interval_sec": 900,
+  "dimensions": {
+    "wall_clock_deviation": {
+      "metric": "wall_vs_budget_ratio",
+      "series": [
+        5.488,
+        5.488,
+        5.488,
+        5.488,
+        5.488,
+        5.488
+      ],
+      "latest": 5.488,
+      "trend": "stable",
+      "convergence": "converged",
+      "notes": [
+        "ratio stable → wall ETA predictable for soak completion planning"
+      ]
+    },
+    "meta_layered_propagation": {
+      "metric": "meta_chain_consistency + meta_transitions",
+      "series": [
+        0.911,
+        0.911,
+        0.911,
+        0.911,
+        0.911,
+        0.911
+      ],
+      "transitions_series": [
+        3.0,
+        3.0,
+        3.0,
+        3.0,
+        3.0,
+        3.0
+      ],
+      "latest": 0.911,
+      "trend": "stable",
+      "convergence": "converged",
+      "notes": [
+        "408→503→exec_ok chain pre-classified; acceptance deferred post-soak"
+      ]
+    },
+    "indexer_parse_rate": {
+      "metric": "indexer_parse_rate",
+      "series": [
+        0.037,
+        0.037,
+        0.037,
+        0.037,
+        0.037,
+        0.037
+      ],
+      "latest": 0.037,
+      "trend": "stable",
+      "convergence": "converged_acknowledged",
+      "notes": [
+        "low parse rate expected during soak — TN-P1-010 uses internal spine"
+      ]
+    },
+    "backlog_risk_diffusion": {
+      "metric": "backlog_diffusion_score + high_risks",
+      "series": [
+        1.1,
+        1.1,
+        1.1,
+        1.1,
+        1.1,
+        1.1
+      ],
+      "high_risks_series": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "latest": 1.1,
+      "trend": "stable",
+      "convergence": "converged",
+      "notes": [
+        "backlog frozen at ACTIVE stamp — diffusion stable until post-soak deploy"
+      ]
+    }
+  },
+  "converged_dimension_count": 4,
+  "overall_convergence": "converged",
+  "honest_boundary": "duration convergence ≠ Graduation CLOSED — matrix pre-registers post-soak gates only"
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_progress_review.v1",
+  "stamp_utc": "20260704T152330Z",
+  "chain_id": "barcelona-arch",
+  "progress": "4/6",
+  "completed_row": 52,
+  "completed_filename": "ocs-barcelona-arch-official-guide-cover.jpg",
+  "TT_CHAIN_PROGRESS_REVIEW": "PASS"
+}

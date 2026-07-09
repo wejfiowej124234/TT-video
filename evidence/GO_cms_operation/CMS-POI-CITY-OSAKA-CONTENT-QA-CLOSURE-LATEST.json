@@ -1,0 +1,116 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-05T11:26:19.836Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "大阪",
+    "city_en": "Osaka",
+    "poi_count": 8
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "checks": {
+    "assets_locked_8_8": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-JP-001-ATR",
+      "poi": "大阪城",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-osaka-castle-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T11:21:47.947Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-002-ATR",
+      "poi": "道顿堀",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-osaka-dotonbori-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T11:24:14.911Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-003-ATR",
+      "poi": "环球影城",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-osaka-usj-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T11:24:40.529Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-004-ATR",
+      "poi": "心斋桥",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-osaka-shinsaibashi-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T11:24:59.046Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-005-FOOD",
+      "poi": "章鱼烧",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-osaka-takoyaki-community-cover.jpg",
+      "locked_at_utc": "2026-07-05T11:25:19.521Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-006-FOOD",
+      "poi": "大阪烧",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-osaka-okonomiyaki-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-05T11:25:39.116Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-007-FOOD",
+      "poi": "河豚",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-osaka-fugu-acquisition-cover.jpg",
+      "locked_at_utc": "2026-07-05T11:25:59.159Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-008-FOOD",
+      "poi": "串炸",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-osaka-kushikatsu-provider-cover.jpg",
+      "locked_at_utc": "2026-07-05T11:26:19.707Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 8
+  },
+  "TT_CMS_POI_CITY_OSAKA_CONTENT_QA": "CLOSED",
+  "note": "Content QA CLOSED · 不等于 Execution CLOSED 重复劳动"
+}

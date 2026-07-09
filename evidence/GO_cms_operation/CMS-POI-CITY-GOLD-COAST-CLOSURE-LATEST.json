@@ -1,0 +1,126 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-06T152535Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "AU",
+    "country_zh": "澳大利亚",
+    "city_zh": "黄金海岸",
+    "city_en": "Gold Coast"
+  },
+  "poi_count": 8,
+  "matrix_ids": [
+    "PH-AU-168-ATR",
+    "PH-AU-169-ATR",
+    "PH-AU-170-ATR",
+    "PH-AU-171-ATR",
+    "PH-AU-172-FOOD",
+    "PH-AU-173-FOOD",
+    "PH-AU-174-FOOD",
+    "PH-AU-175-FOOD"
+  ],
+  "pois": [
+    "冲浪者天堂",
+    "梦幻世界",
+    "可伦宾",
+    "Q1",
+    "海鲜",
+    "牛排",
+    "brunch",
+    "咖啡"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-AU-168-ATR",
+      "legacy_value": "冲浪者天堂",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-AU-169-ATR",
+      "legacy_value": "梦幻世界",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-AU-170-ATR",
+      "legacy_value": "可伦宾",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-AU-171-ATR",
+      "legacy_value": "Q1",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-AU-172-FOOD",
+      "legacy_value": "海鲜",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-AU-173-FOOD",
+      "legacy_value": "牛排",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-AU-174-FOOD",
+      "legacy_value": "brunch",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-AU-175-FOOD",
+      "legacy_value": "咖啡",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-168-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-169-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-170-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-171-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-172-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-173-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-174-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-175-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=AU&city=%E9%BB%84%E9%87%91%E6%B5%B7%E5%B2%B8&limit=50",
+    "http": 200,
+    "count": 8
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-gold coast/CMS-POI-GOLD COAST-CLOSED-LOOP-LATEST.json",
+  "next_city": null,
+  "closure_keys": {
+    "TT_CMS_POI_CITY_GOLD_COAST": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": null
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_GOLD_COAST": "CLOSED"
+}

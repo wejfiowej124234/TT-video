@@ -1,0 +1,114 @@
+{
+  "schema": "traveltrust.phase2_baseline_consistency_audit.v1",
+  "stamp_utc": "20260630T100536Z",
+  "ssot_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "git_head": "422aadb9f7685c125b4f9ada83bfbb3396d881a8",
+  "api_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "api_sha_probe": "meta",
+  "web_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "sha_hard_match": false,
+  "diff_count": 1,
+  "risk_count": 6,
+  "diffs": [
+    {
+      "domain": "SHA",
+      "item": "git HEAD vs --expect-sha",
+      "local_ssot": "422aadb9f7685c125b4f9ada83bfbb3396d881a8",
+      "staging_or_remote": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+      "severity": "DIFF",
+      "note": ""
+    }
+  ],
+  "risks": [
+    {
+      "domain": "SHA/工作区",
+      "item": "deploy-path 未提交改动",
+      "local_ssot": "clean @ d5aa447f1c9e",
+      "staging_or_remote": "42 paths dirty",
+      "severity": "RISK",
+      "note": "staging 镜像已部署 committed tree；工作区漂移不影响已部署 SHA，但下次 deploy 会带入"
+    },
+    {
+      "domain": "Phase② 剩余闸",
+      "item": "TN-P1-009",
+      "local_ssot": "OPEN",
+      "staging_or_remote": "—",
+      "severity": "RISK",
+      "note": "P2FC 72h soak 未 COMPLETED"
+    },
+    {
+      "domain": "Phase② 剩余闸",
+      "item": "TN-P1-010",
+      "local_ssot": "OPEN",
+      "staging_or_remote": "—",
+      "severity": "RISK",
+      "note": "Indexer deep reconcile OPEN"
+    },
+    {
+      "domain": "Phase② 剩余闸",
+      "item": "CERT-7..9",
+      "local_ssot": "OPEN",
+      "staging_or_remote": "—",
+      "severity": "RISK",
+      "note": "Timelock/钱包闸 · Wave 1 未执行"
+    },
+    {
+      "domain": "Phase② 剩余闸",
+      "item": "TESTNET_STAGING_FREEZE",
+      "local_ssot": "OPEN",
+      "staging_or_remote": "—",
+      "severity": "RISK",
+      "note": "已 LIFTED · SHA sync 后 staging 可再 deploy"
+    },
+    {
+      "domain": "Phase② 剩余闸",
+      "item": "1057+ untracked docs",
+      "local_ssot": "OPEN",
+      "staging_or_remote": "—",
+      "severity": "RISK",
+      "note": "未纳入 SSOT commit · 不影响 staging 运行 SHA"
+    }
+  ],
+  "deep_gate": {
+    "path": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_testnet_20260526\\deep-release-gate\\latest-report.json",
+    "release_gate": "GO",
+    "gates": [
+      {
+        "id": "G01_API_WEB_SHA",
+        "verdict": "PASS"
+      },
+      {
+        "id": "G02_META_CONTRACT",
+        "verdict": "PASS"
+      },
+      {
+        "id": "G03_FIVE_ROLE_LOGIN",
+        "verdict": "PASS"
+      },
+      {
+        "id": "G04_ADMIN_RBAC",
+        "verdict": "PASS"
+      },
+      {
+        "id": "G05_DB_MIGRATE_ZERO",
+        "verdict": "PASS"
+      },
+      {
+        "id": "G06_SEED_CONSISTENCY",
+        "verdict": "PASS"
+      },
+      {
+        "id": "G07_STAGING_ENV",
+        "verdict": "PASS"
+      },
+      {
+        "id": "G08_HAT_PREREQ",
+        "verdict": "PASS"
+      }
+    ]
+  },
+  "local_migrations": {
+    "latest": "20260613120000",
+    "count": 116
+  }
+}

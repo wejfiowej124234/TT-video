@@ -1,0 +1,8 @@
+{
+  "sprint": "170-B",
+  "track": "BE-RS-01",
+  "environment": "sepolia",
+  "job_command": "bash scripts/ops/region-share-reconcile.sh",
+  "persist": true,
+  "fire_alert_on_drift": true
+}

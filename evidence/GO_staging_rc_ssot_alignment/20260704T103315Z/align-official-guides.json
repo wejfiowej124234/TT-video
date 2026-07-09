@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.ocs_staging_official_guides_align.v1",
+  "recorded_at": "2026-07-04T10:33:54.771Z",
+  "ocs_official_guide_count": 10,
+  "published_before": 10,
+  "archive": [],
+  "publish": [],
+  "errors": [],
+  "dry_run": false,
+  "published_after": 10,
+  "extras_after": [],
+  "ok": true
+}

@@ -1,0 +1,196 @@
+# Web3 Runtime Activation Sign-off v1 — machine SSOT
+# Human template: docs/spec/governance-token/TRAVELTRUST-WEB3-RUNTIME-ACTIVATION-SIGNOFF-v1.md
+# Signed copy: docs/spec/governance-token/TRAVELTRUST-WEB3-RUNTIME-ACTIVATION-SIGNOFF-v1-SIGNED.md
+
+schema: traveltrust.web3_runtime_activation_signoff.v1
+version: "1.0.0"
+effective_utc: "2026-07-09"
+sprint: W6_5
+status: WAITING_OWNER_APPROVAL
+w7_execution: BLOCKED
+sepolia_broadcast: BLOCKED
+mainnet: NOT_STARTED
+
+layer_status:
+  protocol_layer: COMPLETE
+  deployment_plan: VERIFIED
+  fork_runtime_simulation: PASS
+  sepolia_runtime_activation: WAITING_OWNER_APPROVAL
+  production_mainnet: NOT_STARTED
+
+owner_evidence_review:
+  doc: docs/spec/governance-token/TRAVELTRUST-WEB3-VACANCY-W7-OWNER-EVIDENCE-REVIEW-v1.md
+  signed_doc: docs/spec/governance-token/TRAVELTRUST-WEB3-VACANCY-W7-OWNER-EVIDENCE-REVIEW-v1-SIGNED.md
+  runbook_addendum: docs/spec/governance-token/TRAVELTRUST-WEB3-VACANCY-W7-RUNBOOK-ADDENDUM-v1.md
+  status: PENDING_SIGNATURE
+
+parent_plan: registry/runtime-activation-plan.v1.yaml
+balance_audit:
+  report: docs/spec/governance-token/VACANCY-QF01-HISTORICAL-BALANCE-AUDIT-v1.md
+  inventory: registry/vacancy-runtime-migration-inventory.v1.yaml
+  gate: VACANCY_LEGACY_BALANCE_AUDIT_GATE
+  gate_result: PASS
+  migration_case: CASE_B_TOKEN_MIGRATION
+  w6_5_b3_ready: true
+activation_plan_doc: docs/spec/governance-token/TRAVELTRUST-WEB3-RUNTIME-ACTIVATION-PLAN-v1.md
+
+sprint_state:
+  W5_master_audit: { result: COMPLETE, gate: WARN, accepted: true }
+  W6_activation_plan: { result: COMPLETE }
+  W6_5_b_balance_audit: { result: PASS, gate: VACANCY_LEGACY_BALANCE_AUDIT_GATE }
+  W6_5_owner_signoff: { result: PENDING, technical_sections: READY }
+  W7_dry_run:
+    checklist: docs/spec/governance-token/TRAVELTRUST-WEB3-VACANCY-W7-DRY-RUN-CHECKLIST-v1.md
+    machine: registry/vacancy-w7-dry-run.v1.yaml
+    gate: VACANCY_RUNTIME_MIGRATION_DRYRUN_GATE
+    gate_script: scripts/gates/check-vacancy-runtime-migration-dryrun-gate.sh
+    result: PASS
+    runtime_status: READY_FOR_ACTIVATION
+  W7_runtime_execution: { result: BLOCKED, reason: dryrun_gate_and_owner_signoff_and_activation_gate }
+
+module_activation_class:
+  treasury:
+    type: config_only
+    on_chain_deploy: false
+    priority: P0
+  vacancy_de:
+    type: migration_new_triplet
+    on_chain_deploy: true
+    proxy_upgrade: false
+    priority: P1
+  escrow_v2:
+    type: defer_sepolia
+    activation_tier: FUTURE_MAINNET_REQUIRED
+    w7_default: excluded
+
+vacancy_triplet_atomic_migration:
+  required: true
+  reason: ledger_state_vault_accounting_steward_gate_are_coupled
+  contracts:
+    - CountryPoolNetProfitLedger
+    - UnallocatedStewardPathVault
+    - StewardPathVault
+  legacy_addresses:
+    country_pool_net_profit_ledger: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+    steward_path_vault: "0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb"
+    unallocated_steward_path_vault: "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0"
+  new_addresses:
+    country_pool_net_profit_ledger: TBD_W7
+    steward_path_vault: TBD_W7
+    unallocated_steward_path_vault: TBD_W7
+  recommended_owner: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+  recommended_owner_label: V2_GovernanceTimelock
+
+balance_audit_pre_w7:
+  required: true
+  owner_fills_before_sign: true
+  checks:
+    - location: unallocated_legacy
+      address: "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0"
+      fields: [usdc_balance]
+    - location: steward_path_legacy
+      address: "0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb"
+      fields: [usdc_balance]
+    - location: ledger_legacy
+      address: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+      fields: [open_epoch, pending_settlement, unclaimed_accrual]
+  migration_paths:
+    zero_balance: deploy_probe_switch
+    non_zero_or_pending: timelock_migration_proposal_transfer_reconcile
+
+registry_switch_order:
+  - deploy_new_contracts
+  - probe_new_addresses
+  - initialize_and_wire
+  - registry_jurisdiction_env_update
+  - indexer_switch
+  - live_reconcile_enabled
+  forbidden: registry_before_probe_pass
+
+dual_address_registry_policy:
+  legacy:
+    status: LEGACY_READ_ONLY
+    retain_in_audit: true
+  active:
+    status: ACTIVE
+
+signoff_sections:
+  A_treasury:
+    items:
+      - id: A1
+        text: env unified P4Cap + LEGACY only
+      - id: A2
+        text: forbid bare TREASURY_ADDRESS
+      - id: A3
+        text: migrate GOVERNANCE_TREASURY_ADDRESS reads
+      - id: A4
+        text: remove REGION_VAULT treasury fallback
+      - id: A5
+        text: meta treasury equals P4Cap
+      - id: A6
+        text: fundstack verify globalOps equals legacy
+      - id: A7
+        text: close W3-AUDIT-001 through 003
+      - id: A8
+        text: confirm no new treasury deploy
+    owner_confirmed: false
+  B_vacancy:
+    items:
+      - id: B0
+        text: immutable confirmed option B approved
+      - id: B1
+        text: triplet atomic migration
+      - id: B2
+        text: new owner V2 timelock not EOA
+      - id: B3
+        text: balance audit and migration path selected
+      - id: B4
+        text: registry switch order 1-6
+      - id: B5
+        text: dual address LEGACY_READ_ONLY + ACTIVE
+      - id: B6
+        text: rollback plan accepted
+    owner_confirmed: false
+  C_probe:
+    selectors:
+      - { hex: ae607b9e, fn: vacancyLedger, contract: unallocated_v1 }
+      - { hex: a20b5507, fn: sweepEnabled, contract: unallocated_v1 }
+      - { hex: 0d045440, fn: vacancyState, contract: ledger_v1 }
+      - { hex: 123d1b10, fn: stewardActivationEpochId, contract: ledger_v1 }
+    owner_confirmed: false
+  D_reconcile:
+    before: SKIPPED_PRE_V1
+    after: PASS_live
+    owner_confirmed: false
+  E_escrow_v2:
+    default_w7_excluded: true
+    owner_confirmed: false
+  F_dual_timelock:
+    accept_split: true
+    owner_confirmed: false
+  G_gate_scope:
+    owner_confirmed: false
+
+activation_gate:
+  gate_id: WEB3_RUNTIME_ACTIVATION_GATE
+  runnable_after: vacancy_dryrun_pass_and_owner_signoff_signed
+  dryrun_prerequisite:
+    gate_id: VACANCY_RUNTIME_MIGRATION_DRYRUN_GATE
+    checklist: docs/spec/governance-token/TRAVELTRUST-WEB3-VACANCY-W7-DRY-RUN-CHECKLIST-v1.md
+    script: scripts/gates/check-vacancy-runtime-migration-dryrun-gate.sh
+    result: PASS
+  result: NOT_RUN
+
+signatures:
+  owner: { name: null, signed_utc: null }
+  engineering_lead: { name: null, signed_utc: null }
+  security_reviewer: { name: null, signed_utc: null }
+
+w6_5_certificate:
+  signoff_package: WAITING_OWNER_APPROVAL
+  balance_audit: PASS
+  dryrun_gate: PASS
+  fork_runtime_simulation: PASS
+  sepolia_runtime_activation: WAITING_OWNER_APPROVAL
+  production_mainnet: NOT_STARTED
+  w7_sepolia_broadcast: BLOCKED

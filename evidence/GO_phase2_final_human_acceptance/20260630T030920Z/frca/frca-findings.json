@@ -1,0 +1,104 @@
+{
+  "schema": "traveltrust.frca_five_role_full_chain.v1",
+  "recorded_at": "2026-06-30T03:10:04.452995+00:00",
+  "targets": {
+    "web": "https://tt-web-staging.fly.dev",
+    "api": "https://tt-api-staging.fly.dev"
+  },
+  "meta_git_sha": "fc9266ce94f18810420e720bb933946c086ce909",
+  "verdict": "CONDITIONAL",
+  "summary": {
+    "p0": 0,
+    "p1": 1,
+    "p2": 4
+  },
+  "role_chains": [
+    {
+      "role": "旅行者",
+      "register": "SKIP(seed)",
+      "login": "PASS",
+      "core": "PASS",
+      "logout": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "向导",
+      "register": "SKIP(seed)",
+      "login": "PASS",
+      "core": "PASS",
+      "logout": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "商家",
+      "register": "SKIP(seed)",
+      "login": "PASS",
+      "core": "PARTIAL",
+      "logout": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "register": "SKIP(seed)",
+      "login": "PASS",
+      "core": "PASS",
+      "logout": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "治理",
+      "register": "SKIP(seed)",
+      "login": "PASS",
+      "core": "PASS",
+      "logout": "PASS",
+      "notes": ""
+    }
+  ],
+  "gaps": [
+    {
+      "id": "FRCA-001",
+      "role": "商家",
+      "category": "错误提示缺失",
+      "priority": "P1",
+      "title": "/api/v1/market/subsite/provider/catalog?limit=5 HTTP 404",
+      "human_impact": "",
+      "repro": "GET /api/v1/market/subsite/provider/catalog?limit=5"
+    },
+    {
+      "id": "FRCA-GAP-M01",
+      "role": "商家",
+      "category": "全链路缺口",
+      "priority": "P2",
+      "title": "商家注册→Admin审核→listing 未在本轮 UI 手操",
+      "human_impact": "须浏览器/钱包手操复验",
+      "repro": ""
+    },
+    {
+      "id": "FRCA-GAP-M02",
+      "role": "旅行者",
+      "category": "全链路缺口",
+      "priority": "P2",
+      "title": "支付/下单/Escrow 全链未手操",
+      "human_impact": "须浏览器/钱包手操复验",
+      "repro": ""
+    },
+    {
+      "id": "FRCA-GAP-M03",
+      "role": "向导",
+      "category": "全链路缺口",
+      "priority": "P2",
+      "title": "接单→完成→评分未手操",
+      "human_impact": "须浏览器/钱包手操复验",
+      "repro": ""
+    },
+    {
+      "id": "FRCA-GAP-M04",
+      "role": "治理",
+      "category": "全链路缺口",
+      "priority": "P2",
+      "title": "链上投票/Claim 未接钱包手操",
+      "human_impact": "须浏览器/钱包手操复验",
+      "repro": ""
+    }
+  ]
+}

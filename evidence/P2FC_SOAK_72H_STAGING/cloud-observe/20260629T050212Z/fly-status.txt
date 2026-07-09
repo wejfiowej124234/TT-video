@@ -1,0 +1,2 @@
+Warning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type billable limitedAccessTokens { nodes { id name expiresAt revokedAt user { email } } } } }: context canceled
+Error: failed to get app: failed to run query ($appName: String!) { appcompact:app(name: $appName) { id internalNumericId name hostname cnameTarget deployed network status appUrl platformVersion organization { id internalNumericId slug paidPlan } postgresAppRole: role { name } } }: Post "https://api.fly.io/graphql": EOF

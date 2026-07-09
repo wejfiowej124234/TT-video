@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.cms_th_poi_wave_kickoff.v1",
+  "stamp_utc": "2026-07-06T052327Z",
+  "asset_family": "poi",
+  "country_iso": "TH",
+  "status": "TH_CITY_PILOT_COMPLETE",
+  "next_stage": null,
+  "active_city": "曼谷",
+  "template": "JP + KR Golden Template",
+  "when_pilot_complete": [
+    "曼谷 CLOSED",
+    "advance to 普吉"
+  ],
+  "TT_CMS_TH_POI_WAVE": "CHIANG_MAI_CLOSED",
+  "bangkok_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-BANGKOK-CLOSURE-LATEST.json"
+  },
+  "active_catalog_build": null,
+  "TT_CMS_POI_CITY_BANGKOK": "CLOSED",
+  "TT_CMS_POI_ACTIVE_CITY": null,
+  "phuket_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-PHUKET-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_PHUKET": "CLOSED",
+  "chiang_mai_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-CHIANG-MAI-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_CHIANG_MAI": "CLOSED"
+}

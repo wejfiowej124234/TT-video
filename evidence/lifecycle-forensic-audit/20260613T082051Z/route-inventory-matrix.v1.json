@@ -1,0 +1,782 @@
+{
+  "schema": "traveltrust.route_inventory_matrix.v1",
+  "count": 194,
+  "routes": [
+    {
+      "path": "/admin",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/alerts/incidents",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/alerts/incidents/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/api-versions",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/approvals",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/approvals/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/audit",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/audit/logs/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/audit/operations",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/auth-audit-events",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/community/abuse-policy",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/community/appeals",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/community/appeals/review",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/community/comments/visibility",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/community/moderation/cases",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/community/penalties",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/community/policy-change-logs",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/community/ranking/snapshots",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/community/reports",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/community/risk-signals",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/compliance",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/compliance/requests",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/compliance/requests/[requestId]/events",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/compliance/requests/[requestId]/update",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/config",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/config/releases",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/config/releases/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/catalog-dashboard",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/cities",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/countries",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/country-market",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/geo-validation",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/hotel-tiers",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/import-operations",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/intercity-routes",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/landing-ambient",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/media-assets",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/poi-images",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/poi-images/batches/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/pois",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/pricing",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/publish-queue",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/revisions",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/revisions/compare",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/content/transport-region-rules",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/conversion-analytics",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/cross-check",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/disputes",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/disputes/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/drift-summary",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/fee-router",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/finance",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/finance-reconciliation",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/finance-suite",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/flags",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/governance/execution-uat",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/growth",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/growth/airdrop-campaigns",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/growth/analytics",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/growth/anti-fraud",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/growth/early-bird",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/growth/kol-center",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/growth/referral-codes",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/growth/reward-ledger",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/guide-applications",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/guides",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/guides/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/inbox",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/indexer",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/indexer/reconcile-reports",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/indexer/reconcile/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/internal-tools/audits",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/jobs",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/lifecycle",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/media/access-logs",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/media/signed-url-tokens",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/observability",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/official",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/official/accounts",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/official/cold-start",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/official/guides",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/official/itinerary-templates",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/onboarding",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/onboarding/compliance-audit",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/onboarding/entitlements",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/onboarding/entitlements/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/onboarding/payment-events",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/onboarding/webhook-jobs",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/operator-guide",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/orders",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/orders/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/permissions",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/policies",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/provider-applications",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/region-share/reconcile",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/region-vault",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/reviews",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/reviews/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/scheduler/jobs",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/schema",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/secrets/metadata",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/steward-applications",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/tenants/scopes",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/trust-growth",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/users",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/admin/users/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/auth/forgot-password",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/auth/login",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/auth/register",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/auth/reset-password",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/auth/verify-email",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/activity",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/explore",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/feedback",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/friends",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/guidelines",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/me",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/me/collects",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/me/likes",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/me/posts",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/me/reports",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/me/reports/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/messages",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/messages/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/post/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/topic/[tag]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/tt",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/community/user/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/did-rank",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/discover",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/disputes",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/disputes/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/escrow/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/escrow/[id]/chain",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/escrow/[id]/proof",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/escrow/[id]/rate",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/governance",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/governance/delegate",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/governance/distribution-accruals",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/governance/distribution-accruals/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/governance/distribution-claim",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/governance/fee-routes",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/governance/params",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/governance/proposals",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/governance/proposals/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/governance/proposals/new",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/governance/vault-forwards",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/guide",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/guide/register",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/guides",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/guides/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/help",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/home",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/itinerary/new",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/market",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/market/acquisition",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/market/acquisition/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/market/provider",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/market/provider/showcase/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/identities",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/identities/acquisition/settings",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/identities/guide/settings",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/identities/merchant/settings",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/identities/region-steward/settings",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/onboarding",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/password",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/publish",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/referrals",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/security",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/settings",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/settings/data",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/settings/language",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/settings/notifications-prefs",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/settings/privacy",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/settings/profile",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/me/settings/trust",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/network",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/orders",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/orders/[id]",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/orders/new",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/pay",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/privacy",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/provider",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/provider/register",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/staking",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/steward/register",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/terms",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/terms/community-guidelines",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/traveltrust",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/traveltrust/announcements",
+      "verdict": "KEEP"
+    },
+    {
+      "path": "/trust",
+      "verdict": "KEEP"
+    }
+  ]
+}

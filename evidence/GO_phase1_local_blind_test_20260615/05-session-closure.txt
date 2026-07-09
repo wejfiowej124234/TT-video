@@ -1,0 +1,29 @@
+# ① 双轨会话收口（2026-06-15T06:06:39Z）
+
+## 执行
+
+| 动作 | 结果 |
+|------|------|
+| 保留 :8080 chain-on | OK pid 26236 /health 200 P3_CHAIN_OFF=0 |
+| 停止 :8081 chain-off | OK taskkill pid 12344 端口已释放 |
+| 删除 .api-chain-off-8081.pid | OK 防误重启混轨 |
+
+## 真人 UI 范围（仅轨 A）
+
+- Guide / Provider 质押（MetaMask + /staking 等）
+- 多身份（multi-demo@test.com）
+- 页面可用性盲测
+
+勿在 :8080 测 mock-pay（预期 501）。Chain B 已用独立 8081 会话机读闭环，不再保持 8081 常驻。
+
+## 机读复验（commit 0de2ee9d 后）
+
+- verify-root-env-vs-meta: PASS（759 十三键）
+- smoke-guide-identity-stake-anvil: PASS
+- smoke-provider-identity-stake-anvil: PASS
+- smoke-multi-identity-closure-local: PASS
+- Chain B @8081（停前）: PASS order f6fd3cf8-af0f-443a-8dbe-8cf5e2f6b29e
+
+## ② 纪律
+
+deploy-tt-web-staging.sh / soak @ 877a1e77：未修改。问题见 BACKLOG-PHASE3.md，不回流 ② 基线。

@@ -1,0 +1,174 @@
+# TT_STAGING_RC_BASELINE · Staging 唯一运行基线（② only）
+# Human: docs/runbook/TT-STAGING-RC-BASELINE-ENFORCEMENT.md
+
+schema: traveltrust.staging_rc_baseline.v1
+version: 1
+effective_utc: "2026-07-04"
+
+machine_key: TT_STAGING_RC_BASELINE
+required_status: READY
+
+# 写死 · Public Surface / 业务模块 / 公开展示能力 · 准入纪律（canonical）
+canonical_admission_policy: >-
+  任何新增 Public Surface、业务模块或公开展示能力，必须先完成 Baseline 注册、SSOT 建模、
+  统一 Gate、统一 Audit、统一 Evidence，并通过 TT_STAGING_RC_BASELINE 验证后，才允许进入 Staging；
+  任何未纳入 Baseline 的模块不得部署、不得公开展示、不得视为 Release Candidate。
+
+admission_sequence:
+  - baseline_registration
+  - ssot_modeling
+  - unified_gate
+  - unified_audit
+  - unified_evidence
+  - TT_STAGING_RC_BASELINE_verification
+
+# 企业生命周期锚点（2026-07-04 · 写死）— 47/47 PASS 是结果，不是标准本身
+lifecycle_phase:
+  development: complete
+  ssot: complete
+  baseline: complete
+  baseline_enforcement: complete
+  public_surface_governance: complete
+  release_candidate: complete
+  rc_runtime_convergence: frozen_closed
+  ocs_content_l5: closed
+  production_preparation: in_progress
+  production_verification: pending
+  production_go: pending
+
+# 唯一 Public Surface 标准 · 禁止第二套 Gate / Audit / Evidence
+single_standard_policy:
+  one_baseline: TT_STAGING_RC_BASELINE
+  one_ssot_chain: dataset.v1.json → assets.v1.json → OCS state.json → governed public views
+  one_gate: scripts/dev/lib/staging-rc-baseline-gate.sh
+  one_audit: scripts/dev/audit-staging-rc-baseline-public-surfaces.cjs
+  one_evidence_root: evidence/GO_staging_rc_baseline/
+  one_enforcement: scripts/dev/validate-staging-rc-baseline-enforcement.cjs
+  unified_lib: scripts/dev/lib/staging-rc-public-surface-unified.cjs
+  forbidden:
+    - module_specific_public_surface_gates
+    - parallel_smoke_only_surface_checks
+    - deploy_without_baseline_admission
+
+# 新增/变更公开展示面 · 准入（先于写页面 / 先于 Staging deploy）
+public_surface_admission:
+  canonical: registry/staging-rc-baseline.v1.yaml#canonical_admission_policy
+  rule: >-
+    任何新增 Public Surface、业务模块或公开展示能力，必须先完成 Baseline 注册、SSOT 建模、
+    统一 Gate、统一 Audit、统一 Evidence，并通过 TT_STAGING_RC_BASELINE 验证后，才允许进入 Staging；
+    任何未纳入 Baseline 的模块不得部署、不得公开展示、不得视为 Release Candidate。
+  before_first_line_of_ui:
+    - register_surface_in_registry_expected_public_surface
+    - extend_unified_baseline_lib_and_audit_checklist
+    - wire_align_or_governed_mutation_if_runtime_rows
+    - pass_baseline_gate_and_full_surface_audit
+    - record_evidence_under_GO_staging_rc_baseline
+  not_release_candidate_until:
+    - TT_STAGING_RC_BASELINE: READY
+    - TT_STAGING_RC_SSOT_PARITY: ALIGNED
+    - TT_STAGING_RC_BASELINE_AUDIT: PASS
+
+ssot_chain:
+  release_candidate: evidence/manual-uat/signoff/RELEASE-CANDIDATE-SIGNOFF-20260702T144513Z.md
+  official_catalog: data/official-cold-start/dataset.v1.json
+  official_asset: data/official-cold-start/assets.v1.json
+  official_media: data/official-cold-start/media/
+  ocs_registry: registry/official-cold-start-dataset.v1.yaml
+  alignment_registry: registry/staging-rc-ssot-alignment.v1.yaml
+
+active_pointer: evidence/GO_staging_rc_baseline/ACTIVE.json
+
+forbidden_on_staging:
+  - historical_smoke_display_data
+  - corridor_smoke_posts_c3_c10_c12_c4_c5
+  - non_ocs_public_catalog_rows
+  - legacy_uuid_volume_media_404
+  - unsplash_showcase_demo_seed_urls
+  - stateless_staging_deploy_without_deployment_state
+  - old_api_public_surface_drift
+
+allowed_changes:
+  - deployment_sync
+  - production_cutover_prep
+  - baseline_realignment_scripts
+  - i18n_a11y_bugfix_on_frozen_ui
+
+forbidden_changes:
+  - new_business_features
+  - new_public_catalog_entities_outside_ocs
+  - smoke_test_data_on_public_surfaces
+  - new_public_surface_without_baseline_admission
+  - module_specific_public_surface_gates
+
+expected_public_surface:
+  community_feed: 10
+  public_guides: 10
+  market_provider: 10
+  market_acquisition: 10
+  official_guides_published: 10
+  campaigns_deployed: 10
+  corridor_smoke: 0
+  official_assets: 60
+
+unified_baseline_lib: scripts/dev/lib/staging-rc-public-surface-unified.cjs
+
+campaign_surfaces:
+  - home_hero
+  - home_feed
+  - market_feed
+  - community_feed
+  - community_featured
+  - campaign_banner
+  - landing_promo
+
+machine_keys_required:
+  TT_STAGING_RC_BASELINE: READY
+  TT_STAGING_RC_SSOT_PARITY: ALIGNED
+  TT_OCS_SURFACE_EXPANSION: VERIFIED
+  TT_PRODUCTION_GO: NO_GO
+
+scripts:
+  align: scripts/dev/run-staging-rc-baseline-final-alignment.sh
+  enforce: scripts/dev/run-staging-rc-baseline-enforcement-check.sh
+  full_surface_audit: scripts/dev/run-staging-rc-baseline-full-surface-audit.sh
+  audit_checklist: scripts/dev/audit-staging-rc-baseline-public-surfaces.cjs
+  gate_lib: scripts/dev/lib/staging-rc-baseline-gate.sh
+  validate: scripts/dev/validate-staging-rc-baseline-enforcement.cjs
+  parity: scripts/dev/validate-staging-rc-ssot-parity.cjs
+  display_governance: scripts/dev/staging-full-site-display-governance-audit.cjs
+
+deploy_gate:
+  staging_apps:
+    - tt-api-staging
+    - tt-web-staging
+  pre_deploy: staging_rc_baseline_gate_pre_deploy
+  post_deploy: staging_rc_baseline_gate_post_deploy
+  pre_change: staging_rc_baseline_gate_pre_change
+  post_change: staging_rc_baseline_gate_post_change
+  override_env: TRAVELTRUST_STAGING_RC_BASELINE_OVERRIDE
+  skip_env: SKIP_STAGING_RC_BASELINE_GATE
+  aligning_env: STAGING_RC_BASELINE_ALIGNING
+  authorized_mutation_env: STAGING_RC_BASELINE_AUTHORIZED
+
+guarded_entrypoints:
+  deploy:
+    - scripts/dev/phase2-staging-fly-deploy-and-sync.sh
+    - scripts/dev/deploy-tt-web-staging.sh
+  baseline_realign:
+    - scripts/dev/run-staging-rc-baseline-final-alignment.sh
+  public_surface_mutation:
+    - scripts/dev/purge-staging-smoke-display-data.cjs
+    - scripts/dev/align-ocs-staging-guides-public-catalog.cjs
+    - scripts/dev/align-ocs-staging-community-feed.cjs
+    - scripts/dev/align-ocs-staging-market-catalog.cjs
+    - scripts/dev/align-ocs-staging-official-guides.cjs
+    - scripts/dev/align-ocs-staging-campaigns.cjs
+    - scripts/dev/align-ocs-staging-discover-orders.cjs
+    - scripts/dev/remediate-ocs-official-media-bindings-staging.cjs
+    - scripts/dev/purge-staging-community-feed-sql.cjs
+  gated_wrapper:
+    - scripts/dev/run-staging-gated-public-surface-mutation.sh
+
+honest_boundary: >-
+  READY = Staging runtime locked to OCS SSOT + RC boundaries.
+  Not Production GO. Not public release. Production Cutover is separate Phase ③ gate.

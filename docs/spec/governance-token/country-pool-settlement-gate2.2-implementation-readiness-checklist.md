@@ -104,11 +104,32 @@ cd contracts && forge test --match-contract FeeRouterTest
 | **G22-D-02** | `RouterTreasuryGovernancePayload.t.sol` 模式 payload 测试 | selector parity |
 | **G22-D-03** | ABI sync **`CountryPoolNetProfitLedger.json`** | ✅ Gate-2.3 G23-04 · manifest |
 | **G22-D-04** | **`DeployCountryPoolNetProfitStack.s.sol`** dry-run Anvil | DR-06 |
+| **G22-D-05** | Vacancy Ledger invariant suite（**Sprint 2** · **VL-01～VL-05**） | ✅ `forge test --match-contract VacancyLedgerInvariant` **18/18** · `test/vacancy/VacancyLedgerInvariant.t.sol` |
 
 ---
 
-## 7. 变更记录
+## 8. Vacancy Ledger Sprint 顺序（FROZEN · 2026-07-09 · 经济规则已锁）
+
+**SSOT：** [protocol-ssot.v1 §3c](protocol-ssot.v1.md) · [accounting-spec §6.7](country-pool-net-profit-accounting-spec-v1.md) · **[PCM v1.2](protocol-conformance-matrix-vacancy-ledger-v1.md)**
+
+**Sprint 1 前置：** PCM v1.2 **须 READ** · **Exit Criteria** PCM §3 · NatSpec 模板 PCM §4 · PR Critical 纪律 PCM §5.1
+
+**纪律：** 实现跟着 SSOT；**S4 展示层最后**；**禁止** 为 Dashboard/API 反向改经济规则。
+
+| Sprint | Exit / Gate |
+|--------|-------------|
+| **S1 · VacancyLedger Core** | I-01～I-06 · V-01（`invariant_VL01`）· V-02 零外部依赖 · V-03 NatSpec · **无 Ledger/API/UI** |
+| **S2 · 证明协议** | **100% Invariant** · fuzz 全维 · **G22-D-05** | ✅ **COMPLETE** |
+| **S3a · split→sweep** | TR-01 · SM-01 · Ledger 事件 | ✅ **COMPLETE** |
+| **S3b · Epoch Gate** | G-01～G-03 | 待办 |
+| **S3c · DAO disburse** | 闭环 | 待办 |
+| **S4 · 展示层** | Indexer → Dashboard Read Only · Gate-3 | **S4a IN_PROGRESS** |
+
+---
+
+## 9. 变更记录
 
 | Version | Date | Note |
 |---------|------|------|
+| v1.2-vacancy-sprint-20260709 | 2026-07-09 | S1 Exit Criteria · PR Critical 纪律 · PCM v1.2 |
 | v1-20260615 | 2026-06-15 | Gate-2.1 Closeout 后首版 · 全绿 · 允许 Solidity 分支 |

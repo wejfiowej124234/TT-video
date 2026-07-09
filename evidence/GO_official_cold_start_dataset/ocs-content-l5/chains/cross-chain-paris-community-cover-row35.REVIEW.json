@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T151030Z",
+  "trigger_row": 35,
+  "trigger_filename": "ocs-paris-art-community-cover.jpg",
+  "TT_CROSS_CHAIN_COMMUNITY_REVIEW": "PASS",
+  "community_cover_comparison": {
+    "tokyo-photo": "街景摄影",
+    "kyoto-culture": "茶道手势",
+    "seoul-food": "美食近景",
+    "bangkok-temple": "寺庙剪影",
+    "singapore-family": "儿童开心近景",
+    "paris-art": "博物馆展厅透视 Feed",
+    "distinct": true
+  },
+  "vs_row34": "室内透视 vs 金字塔外观 Official",
+  "no_quality_regression_prior_34": true
+}

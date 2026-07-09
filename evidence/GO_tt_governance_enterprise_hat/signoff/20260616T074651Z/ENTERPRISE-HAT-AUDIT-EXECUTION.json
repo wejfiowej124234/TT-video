@@ -1,0 +1,346 @@
+{
+  "audit_id": "TT_GOVERNANCE_ENTERPRISE_HAT",
+  "execution_utc": "20260616T074359Z",
+  "phase": "\u2461 Sepolia",
+  "method": "enterprise human acceptance + machine-assisted SSOT/RBAC/onchain review",
+  "baseline": "GOV-FREEZE-V2-CLEAN-BASELINE",
+  "machine_advisory": {
+    "ui_alignment": "PASS",
+    "onchain_verify": "FAIL",
+    "concentration_audit": "PASS"
+  },
+  "layers": [
+    {
+      "id": "L1",
+      "title": "UI / UX \u5ba1\u6838",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "id": "L1-01",
+          "item": "\u5e9f\u6b62\u53d9\u4e8b\u626b\u63cf",
+          "ok": true,
+          "evidence": "run-ttg-tokenomics-ui-alignment-audit.sh"
+        },
+        {
+          "id": "L1-02",
+          "item": "GOV-01\uff5e04 \u516c\u793a\u533a",
+          "ok": true,
+          "evidence": "GovernanceParamsGovFreezeRulesSection + freeze constants"
+        },
+        {
+          "id": "L1-03",
+          "item": "45/55 + \u591a\u56fd\u5bb6\u6c60 + P1\u2013P4 \u6587\u6848",
+          "ok": true,
+          "evidence": "locales zh/en \u00b7 governance_params_overview_* \u00b7 treasury policy"
+        },
+        {
+          "id": "L1-04",
+          "item": "Seat \u9000\u51fa\u4e0d\u9000 USDC",
+          "ok": true,
+          "evidence": "governance_params_treasury_policy_seat_exit_note"
+        }
+      ],
+      "findings": [],
+      "notes": "3 \u79d2\u8ba4\u77e5\u987b\u5728\u771f\u4eba\u6d4f\u89c8\u5668\u590d\u9a8c\u622a\u56fe\uff1b\u673a\u8bfb\u53d9\u4e8b\u626b\u63cf PASS\u3002"
+    },
+    {
+      "id": "L2",
+      "title": "TTG \u8d2d\u4e70\u6d41\u7a0b",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "id": "L2-01",
+          "item": "GOV-04 \u00b7 25000 cap \u00b7 min 100 USDC",
+          "ok": true,
+          "evidence": "governanceParamsTtgTokenomicsFreeze.ts \u00b7 params \u9875"
+        },
+        {
+          "id": "L2-02",
+          "item": "\u4e09\u8f6e\u89c4\u5219\u516c\u793a",
+          "ok": true,
+          "evidence": "treasury policy + ttg-primary-market SSOT"
+        },
+        {
+          "id": "L2-03",
+          "item": "USDC\u2192PM \u975e\u81ea\u52a8\u5206\u7ea2",
+          "ok": true,
+          "evidence": "Primary Market \u94fe\u4e0a purchase \u00b7 \u6587\u6848\u65e0\u521a\u6027\u5151\u4ed8"
+        },
+        {
+          "id": "L2-04",
+          "item": "\u9519\u8bef\u6001/\u4f59\u989d\u4e0d\u8db3",
+          "ok": true,
+          "evidence": "HAT-R1 TransferFailed when USDC=0 \u00b7 wallet errors"
+        }
+      ],
+      "findings": [],
+      "notes": "\u6e38\u5ba2/\u6301\u5e01\u4eba/Admin \u5206\u89d2\u8272 walkthrough \u5efa\u8bae\u8865 L1 \u622a\u56fe\uff1b\u94fe\u4e0a GOV-04 \u5df2\u7531 verify-gov-freeze-v2 \u5bf9\u62cd\u3002"
+    },
+    {
+      "id": "L3",
+      "title": "Seat \u4e3b\u7406\u4eba\u6d41\u7a0b",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "id": "L3-01",
+          "item": "Stake \u95e8\u69db \u00b7 10 \u56fd",
+          "ok": true,
+          "evidence": "GET /steward/stake-quote \u00b7 protocol_ssot jurisdictions"
+        },
+        {
+          "id": "L3-02",
+          "item": "180d \u9000\u51fa\u8bf4\u660e",
+          "ok": true,
+          "evidence": "locales seat_exit_note \u00b7 requestRelease HAT-R1"
+        },
+        {
+          "id": "L3-03",
+          "item": "GOV-03 \u5355 Seat / stake cap",
+          "ok": true,
+          "evidence": "seat_cap:1 \u00b7 concentration audit PASS"
+        },
+        {
+          "id": "L3-04",
+          "item": "\u7533\u8bf7/\u5ba1\u6838 API \u8fb9\u754c",
+          "ok": true,
+          "evidence": "POST /steward/applications auth \u00b7 chain_off gate"
+        }
+      ],
+      "findings": [],
+      "notes": ""
+    },
+    {
+      "id": "L4",
+      "title": "\u6536\u76ca\u5206\u914d\u5ba1\u8ba1",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "id": "L4-01",
+          "item": "45% StewardPath / 55% Global Treasury \u6570\u5b66\u4e0e\u9875",
+          "ok": true,
+          "evidence": "GOVERNANCE_NET_PROFIT_*_BPS 4500/5500"
+        },
+        {
+          "id": "L4-02",
+          "item": "P4 \u65e0\u81ea\u52a8\u5206\u7ea2 \u00b7 \u987b\u6cbb\u7406+Timelock",
+          "ok": true,
+          "evidence": "treasury policy \u00b7 TTG-TOKENOMICS-FREEZE-V1 \u00a7P4"
+        },
+        {
+          "id": "L4-03",
+          "item": "\u975e Seat \u4e0d\u5f97\u9886 45% \u8def\u5f84\uff08\u53d9\u4e8b+\u6743\u9650\uff09",
+          "ok": true,
+          "evidence": "phase1_legend \u00b7 ttg-allocation-permissions SSOT"
+        },
+        {
+          "id": "L4-04",
+          "item": "claim \u9875\u4e0d\u8c03\u7528 internal \u5199\u63a5\u53e3",
+          "ok": true,
+          "evidence": "distributionClaimPage.contract.test.ts"
+        },
+        {
+          "id": "L4-05",
+          "item": "Unallocated / \u591a Seat \u4e0a\u9650",
+          "ok": true,
+          "evidence": "GOV-03 \u00b7 CountryPoolNetProfitLedger SSOT"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ENT-L4-01",
+          "severity": "informational",
+          "title": "distribution-claim \u542b withdrawDividend \u6309\u94ae\u540d",
+          "detail": "\u9875\u8eab\u5df2\u58f0\u660e\u4ec5 InvestorDistributionClaim \u5df2\u767b\u8bb0 distribution\uff1b\u975e TTG \u6301\u4ed3\u81ea\u52a8 P4\u3002\u5efa\u8bae\u771f\u4eba\u786e\u8ba4 UI \u4e0d\u8bef\u5bfc\u4e3a\u300c\u6301 TTG \u5373\u5206\u7ea2\u300d\u3002"
+        },
+        {
+          "id": "ENT-L4-02",
+          "severity": "accepted-\u2461",
+          "title": "Country Pool \u51c0\u5229\u6da6\u94fe\u4e0a split \u2461 \u5f85\u5efa",
+          "detail": "\u6587\u6848\u5df2\u5199\u8bda\u5b9e\u8fb9\u754c\uff1bL4 \u9875\u9762/API \u8bfb\u9762 PASS \u00b7 \u2461 \u94fe\u4e0a\u7ed3\u7b97\u975e\u672c\u95f8\u8303\u56f4\u3002"
+        }
+      ],
+      "notes": "**\u91cd\u70b9\u5c42** \u00b7 \u6838\u5fc3 SSOT \u4e0e\u6743\u9650\u53d9\u4e8b PASS\uff1b\u2461 split \u5b9e\u65bd\u524d L9 Country Pool \u56db\u8d26\u4e0d\u53ef\u95ed\u3002"
+    },
+    {
+      "id": "L5",
+      "title": "Treasury \u5ba1\u8ba1",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "id": "L5-01",
+          "item": "Treasury.spend \u4ec5 Timelock spender",
+          "ok": true,
+          "evidence": "GovernanceTreasury.sol onlySpender"
+        },
+        {
+          "id": "L5-02",
+          "item": "\u652f\u51fa\u987b Governor \u63d0\u6848\u2192\u6295\u7968\u2192Queue\u2192Execute",
+          "ok": true,
+          "evidence": "HAT-R1 Phase A \u00b7 TravelTrustGovernor"
+        },
+        {
+          "id": "L5-03",
+          "item": "Admin/Seat \u65e0\u76f4\u8f6c Treasury UI/API",
+          "ok": true,
+          "evidence": "\u65e0 admin treasury spend POST \u00b7 GovernanceOpsAdminLinks \u53ea\u8bfb"
+        },
+        {
+          "id": "L5-04",
+          "item": "GOV-01 P4 deploy cap 30%",
+          "ok": true,
+          "evidence": "GOV_01_TREASURY_P4_DEPLOY_CAP_BPS=3000 \u00b7 onchain verify"
+        }
+      ],
+      "findings": [],
+      "notes": "**\u91cd\u70b9\u5c42** \u00b7 \u94fe\u4e0a\u6743\u9650\u6a21\u578b\u4e0e SSOT \u4e00\u81f4\uff1bAdmin \u4ec5 observability \u8bfb\u9762\u3002"
+    },
+    {
+      "id": "L6",
+      "title": "\u591a\u8eab\u4efd\u6c61\u67d3\u5ba1\u8ba1",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "id": "L6-01",
+          "item": "/me/identities \u5206\u8f68\u5165\u53e3",
+          "ok": true,
+          "evidence": "me_identities_* locales \u00b7 \u5404\u5de5\u4f5c\u53f0\u5206\u79bb"
+        },
+        {
+          "id": "L6-02",
+          "item": "Steward API \u987b login",
+          "ok": true,
+          "evidence": "steward.rs extract_user_with_session_check"
+        },
+        {
+          "id": "L6-03",
+          "item": "Admin RBAC \u4e0e\u6cbb\u7406\u5199\u8def\u5f84\u5206\u79bb",
+          "ok": true,
+          "evidence": "require_admin_actor \u00b7 \u65e0 castVote API"
+        },
+        {
+          "id": "L6-04",
+          "item": "\u6536\u76ca/Seat/Treasury \u8def\u7531\u4e0d\u4ea4\u53c9\u5199",
+          "ok": true,
+          "evidence": "governance \u94fe\u4e0a\u5199\u4ec5\u94b1\u5305 \u00b7 admin \u6295\u5f71\u53ea\u8bfb"
+        }
+      ],
+      "findings": [],
+      "notes": "**\u91cd\u70b9\u5c42** \u00b7 \u5efa\u8bae\u771f\u4eba\u9010\u89d2\u8272\u5207\u6362\u8865\u622a\u56fe\uff1b\u7ed3\u6784/RBAC \u5ba1\u8ba1 PASS\u3002"
+    },
+    {
+      "id": "L7",
+      "title": "\u7ba1\u7406\u5458\u7cfb\u7edf\u5ba1\u8ba1",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "id": "L7-01",
+          "item": "\u4e0d\u80fd\u6539 Treasury \u4f59\u989d",
+          "ok": true,
+          "evidence": "\u65e0 admin \u8c03 spend \u00b7 \u94fe\u4e0a owner=Timelock \u8def\u5f84"
+        },
+        {
+          "id": "L7-02",
+          "item": "\u4e0d\u80fd\u6539\u6295\u7968\u7ed3\u679c",
+          "ok": true,
+          "evidence": "\u63d0\u6848\u6295\u5f71\u53ea\u8bfb \u00b7 \u65e0 mutate vote handler"
+        },
+        {
+          "id": "L7-03",
+          "item": "\u4e0d\u80fd\u8df3\u8fc7 Timelock",
+          "ok": true,
+          "evidence": "execute \u4ec5 Queued \u00b7 delay=172800"
+        },
+        {
+          "id": "L7-04",
+          "item": "\u4e0d\u80fd\u76f4\u63a5\u53d1 TTG / \u6539 Seat \u6536\u76ca",
+          "ok": true,
+          "evidence": "\u65e0 admin mint TTG \u00b7 \u65e0 split \u5199 API"
+        }
+      ],
+      "findings": [],
+      "notes": "**\u91cd\u70b9\u5c42** \u00b7 Admin overview \u542b governance SSOT reconcile \u53ea\u8bfb\u63a2\u9488\u3002"
+    },
+    {
+      "id": "L8",
+      "title": "\u5f02\u5e38\u8def\u5f84\u5ba1\u8ba1",
+      "verdict": "PASS",
+      "checks": [
+        {
+          "id": "L8-01",
+          "item": "\u4f59\u989d/\u6743\u9650\u4e0d\u8db3\u63d0\u793a",
+          "ok": true,
+          "evidence": "mapWalletWriteError \u00b7 claim expected_fail copy"
+        },
+        {
+          "id": "L8-02",
+          "item": "\u91cd\u590d\u6295\u7968/queue \u72b6\u6001\u95f8",
+          "ok": true,
+          "evidence": "GovBadState \u00b7 HAT-R1 queue \u5931\u8d25\u590d\u73b0"
+        },
+        {
+          "id": "L8-03",
+          "item": "\u4e0d\u5d29\u6e83 \u00b7 error.tsx",
+          "ok": true,
+          "evidence": "governance routes error boundaries"
+        }
+      ],
+      "findings": [],
+      "notes": "\u91cd\u590d\u7533\u8bf7/\u9886\u53d6\u5efa\u8bae\u771f\u4eba\u5404\u70b9\u4e00\u6b21\u8865\u8bc1\u636e\u3002"
+    },
+    {
+      "id": "L9",
+      "title": "\u8d22\u52a1\u95ed\u73af\u5ba1\u8ba1",
+      "verdict": "FAIL",
+      "checks": [
+        {
+          "id": "L9-01",
+          "item": "TTG / GOV \u53c2\u6570\uff1a\u94fe\u4e0a=\u9875\u9762",
+          "ok": false,
+          "evidence": "verify-gov-freeze-v2-sepolia-onchain.sh"
+        },
+        {
+          "id": "L9-02",
+          "item": "protocol-reference \u2194 protocol_ssot \u5341\u56fd",
+          "ok": true,
+          "evidence": "API jurisdictions steward_stake_bps/seat_cap"
+        },
+        {
+          "id": "L9-03",
+          "item": "Primary Market \u94fe\u4e0a=API \u62a5\u4ef7",
+          "ok": true,
+          "evidence": "ttg-exchange/quote API 200"
+        },
+        {
+          "id": "L9-04",
+          "item": "Country Pool \u51c0\u5229\u6da6\uff1a\u94fe\u4e0a=API=DB=\u9875",
+          "ok": false,
+          "evidence": "\u2461 split \u5f85\u5efa \u00b7 gate2.4 \u8bda\u5b9e\u8fb9\u754c"
+        },
+        {
+          "id": "L9-05",
+          "item": "Treasury USDC\uff1a\u94fe\u4e0a=Admin \u8bfb\u9762",
+          "ok": true,
+          "evidence": "treasury_address meta \u00b7 admin observability"
+        }
+      ],
+      "findings": [
+        {
+          "id": "ENT-L9-BLOCKER",
+          "severity": "blocker",
+          "title": "Country Pool \u56db\u8d26\u4e00\u81f4\u672a\u95ed\uff08\u2461\uff09",
+          "detail": "\u56fd\u5bb6\u6c60\u51c0\u5229\u6da6 45/55 \u94fe\u4e0a split \u2461 NOT STARTED\uff1benterprise L9 \u4e0d\u53ef\u5ba3\u79f0\u5168\u77e9\u9635\u56db\u8d26\u4e00\u81f4\u3002GovFreeze V2 spine \u5b50\u96c6\u5df2\u5bf9\u62cd\u3002"
+        }
+      ],
+      "notes": "Gov  spine \u53ef\u5bf9\u62cd\uff1bCountry Pool \u5168\u95ed\u73af\u7559 \u2461 \u5b9e\u65bd\u540e\u518d\u7b7e L9 PASS\u3002"
+    }
+  ],
+  "focus_layers": [
+    "L4",
+    "L5",
+    "L6",
+    "L7"
+  ],
+  "overall_verdict": "FAIL",
+  "phase_b_gate": false,
+  "honest_boundary": "L9 FAIL = Country Pool \u2461 split \u672a\u95ed \u00b7 \u2260 \u5426\u5b9a L4-L7 \u91cd\u70b9\u5c42 PASS"
+}

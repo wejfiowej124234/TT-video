@@ -1,0 +1,479 @@
+# Destination Ambient · Hero Upgrade Matrix（Visual L5 · 3840×2160）
+# 与 Pipeline Matrix（destination-ambient-matrix.v1.yaml）分离 · 禁止混读为同一「CLOSED」
+#
+# Pipeline（CMS→Catalog→Runtime→Browser）② Staging：CLOSED
+# Visual L5（Hero 像素/构图/Decode/Runtime 清晰度）：CLOSED — 10/10 Hero @ 3840×2160 ② Staging
+
+schema: traveltrust.cms_destination_ambient_hero_matrix.v1
+version: 1
+effective_utc: "2026-07-05"
+machine_key: TT_CMS_DESTINATION_AMBIENT_HERO_MATRIX
+status: ACTIVE
+brief_ssot: data/catalog/cms-content-brief.v1.yaml
+pipeline_matrix_ssot: data/catalog/destination-ambient-matrix.v1.yaml
+frontend_consumer_ssot: frontend/lib/landingAmbientByCountry.ts
+runbook: docs/runbook/TT-CMS-CONTENT-L5.md
+
+closure_dimensions:
+  pipeline:
+    label: Pipeline（CMS / Catalog / Publish / Runtime / Browser / Evidence）
+    phase: "② Staging"
+    status: CLOSED
+    note: Wave 1 Destination Ambient 接线已完成 · 640×480 OCS 卡片图仅证明链路
+  visual_l5:
+    label: Visual L5（Hero Quality · Ken Burns 全屏）
+    phase: "② Staging"
+    status: CLOSED
+    note: 10/10 da-hero-* @ 3840×2160 · Verify PASS · Runtime Audit PASS
+
+asset_family_split:
+  ocs_card:
+    purpose: OCS 6 格 · Listing · Feed · Guide Card
+    dimensions: 640×480
+    forbidden_for: [landing_hero, ken_burns_backdrop]
+  destination_ambient_hero:
+    purpose: Landing Hero · Ken Burns · 全屏 object-cover
+    dimensions_recommended: 3840×2160
+    dimensions_minimum: 1920×1080
+    aspect_ratio: "16:9"
+    filename_convention: da-hero-{country_iso_lower}-home-v{N}.jpg
+    storage_planned: data/catalog/media/destination-ambient-hero/
+
+hero_render_context:
+  consumer: LandingHomeAmbientBackdrop
+  route: /
+  effects:
+    - fixed inset-0 full viewport
+    - inner canvas 124% × 124% offset -12%
+    - ken_burns scale 1.0 → 1.2 translate -4% -3%
+    - object-cover object-center
+  effective_scale_note: >-
+    动效峰值约 视口宽 × 1.49 · 1080p 需源图宽 ≥2860px · 4K 需 ≥5710px；
+    故推荐 3840×2160，最低 1920×1080（大屏可能略软）。
+
+composition_requirements:
+  aspect_ratio: "16:9"
+  subject_placement: 地标主体落在画面中心水平带（左右各留 ≥12% 裁切安全区）
+  vertical_safe_zone: 上下各留 ≥15%（Ken Burns + object-cover 会裁边）
+  ui_readability: 中下区域留给 Landing 玻璃表单 · 避免高亮天空占满下 1/3
+  sky: 中低明度 · 避免灰雾低对比 · 与 bg-experience-landing-vignette 协调
+  forbidden: [OCS 640 图 upscale, 竖图, 图内大段文字/水印, 与 OCS 6 格同构图]
+  brand: 暖色旅行纪实 · 与 cms-content-brief brand_visual 同源
+
+verify_tiers_spec:
+  description: Verify/Runtime 阈值 · scripts/dev/lib/cms-destination-ambient-hero.cjs + run-cms-content-l5-destination-ambient-verify.cjs --hero-matrix-id
+  decode_required: true
+  aspect_ratio_tolerance: "16:9 ±2%"
+  bytes_min: 16384
+  tiers:
+    PASS:
+      min_width_px: 3840
+      min_height_px: 2160
+      label: Hero Recommended
+    WARN:
+      min_width_px: 1920
+      min_height_px: 1080
+      label: Hero Minimum · 1080p 可接受 · 2K/4K 可能略软
+    FAIL:
+      below: WARN
+      label: 含 640×480 OCS 卡片 · 禁止作 Landing Hero
+
+execution_order: [JP, KR, TH, SG, FR, US, AU, ES, AE, CN]
+
+summary:
+  total_rows: 10
+  hero_live: 10
+  hero_pending: 0
+  pipeline_closed_rows: 10
+  visual_l5_open_rows: 0
+
+rows:
+  - matrix_id: DA-HERO-JP-HOME
+    pipeline_matrix_id: DA-JP-HOME
+    execution_order: 1
+    country_zh: 日本
+    country_iso: JP
+    landmark_zh: 富士山·河口湖
+    ts_reference_slug: 1741935505561-d5a83195f08e
+    pipeline_public_url_file: ocs-tokyo-photo-community-media.jpg
+    hero_target:
+      filename: da-hero-jp-home-v1.jpg
+      width_px: 3840
+      height_px: 2160
+      aspect_ratio: "16:9"
+    hero_tier: PASS
+    scene: 富士山·河口湖 · Destination Ambient Hero · Ken Burns
+    copy_label: 日本·Hero·富士山·河口湖
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-jp-home-v1.jpg
+    catalog_asset_id: 3570bab5-6641-4c5a-bec1-c1c92583417a
+    catalog_country_id: 688bdff7-d6e4-45a6-bd48-ee2f99226f18
+    visual_l5_status: CLOSED
+    hero_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+      hero_visual_l5: PASS
+    asset_version:
+      revision_number: 5
+      revision_label: hero-v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:58:06Z"
+      rollback_target_revision: 1
+    decoded_bytes: 1346151
+
+  - matrix_id: DA-HERO-KR-HOME
+    pipeline_matrix_id: DA-KR-HOME
+    execution_order: 2
+    country_zh: 韩国
+    country_iso: KR
+    landmark_zh: 景福宫
+    ts_reference_slug: 1748835600895-8ff48c51c37f
+    pipeline_public_url_file: ocs-seoul-food-community-media.jpg
+    hero_target:
+      filename: da-hero-kr-home-v1.jpg
+      width_px: 3840
+      height_px: 2160
+      aspect_ratio: "16:9"
+    hero_tier: PASS
+    scene: 景福宫 · Destination Ambient Hero · Ken Burns
+    copy_label: 韩国·Hero·景福宫
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-kr-home-v1.jpg
+    catalog_asset_id: dc392331-0185-4f63-a4c1-32a640e88ab9
+    catalog_country_id: 94d6c500-d254-42c1-b764-5a66a04a7d82
+    visual_l5_status: CLOSED
+    hero_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+      hero_visual_l5: PASS
+    asset_version:
+      revision_number: 5
+      revision_label: hero-v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T10:03:07Z"
+      rollback_target_revision: 1
+    decoded_bytes: 3509514
+
+  - matrix_id: DA-HERO-TH-HOME
+    pipeline_matrix_id: DA-TH-HOME
+    execution_order: 3
+    country_zh: 泰国
+    country_iso: TH
+    landmark_zh: 玛雅湾·皮皮岛
+    ts_reference_slug: 1534008897995-27a23e859048
+    pipeline_public_url_file: ocs-bangkok-temple-community-media.jpg
+    hero_target:
+      filename: da-hero-th-home-v1.jpg
+      width_px: 3840
+      height_px: 2160
+      aspect_ratio: "16:9"
+    hero_tier: PASS
+    scene: 玛雅湾·皮皮岛 · Destination Ambient Hero · Ken Burns
+    copy_label: 泰国·Hero·玛雅湾·皮皮岛
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-th-home-v1.jpg
+    catalog_asset_id: 600e3b64-7c78-40fc-b3b0-3cb2b46957c2
+    catalog_country_id: fee29c3a-6105-419c-b107-89bfb2fb84d3
+    visual_l5_status: CLOSED
+    hero_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+      hero_visual_l5: PASS
+    asset_version:
+      revision_number: 5
+      revision_label: hero-v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T10:03:07Z"
+      rollback_target_revision: 1
+    decoded_bytes: 2382706
+
+  - matrix_id: DA-HERO-SG-HOME
+    pipeline_matrix_id: DA-SG-HOME
+    execution_order: 4
+    country_zh: 新加坡
+    country_iso: SG
+    landmark_zh: 滨海湾金沙·蓝调
+    ts_reference_slug: 1562505415-018c3726c372
+    pipeline_public_url_file: ocs-singapore-family-community-media.jpg
+    hero_target:
+      filename: da-hero-sg-home-v1.jpg
+      width_px: 3840
+      height_px: 2160
+      aspect_ratio: "16:9"
+    hero_tier: PASS
+    scene: 滨海湾金沙·蓝调 · Destination Ambient Hero · Ken Burns
+    copy_label: 新加坡·Hero·滨海湾金沙·蓝调
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-sg-home-v1.jpg
+    catalog_asset_id: 5f2a7382-5d96-458b-9839-55888a1281f8
+    catalog_country_id: 3e859d80-ef57-4178-b5a3-ecbfe9165176
+    visual_l5_status: CLOSED
+    hero_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+      hero_visual_l5: PASS
+    asset_version:
+      revision_number: 5
+      revision_label: hero-v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T10:03:07Z"
+      rollback_target_revision: 1
+    decoded_bytes: 995643
+
+  - matrix_id: DA-HERO-FR-HOME
+    pipeline_matrix_id: DA-FR-HOME
+    execution_order: 5
+    country_zh: 法国
+    country_iso: FR
+    landmark_zh: 埃菲尔铁塔·暮色
+    ts_reference_slug: 1502602898657-3e91760cbb34
+    pipeline_public_url_file: ocs-paris-art-community-media.jpg
+    hero_target:
+      filename: da-hero-fr-home-v1.jpg
+      width_px: 3840
+      height_px: 2160
+      aspect_ratio: "16:9"
+    hero_tier: PASS
+    scene: 埃菲尔铁塔·暮色 · Destination Ambient Hero · Ken Burns
+    copy_label: 法国·Hero·埃菲尔铁塔·暮色
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-fr-home-v1.jpg
+    catalog_asset_id: 5dfb76df-5ee9-46ea-8a37-569339eaa041
+    catalog_country_id: 56472ff6-0b73-40e5-a76f-7956df1a8fbe
+    visual_l5_status: CLOSED
+    hero_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+      hero_visual_l5: PASS
+    asset_version:
+      revision_number: 5
+      revision_label: hero-v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T10:03:07Z"
+      rollback_target_revision: 1
+    decoded_bytes: 1015475
+
+  - matrix_id: DA-HERO-US-HOME
+    pipeline_matrix_id: DA-US-HOME
+    execution_order: 6
+    country_zh: 美国
+    country_iso: US
+    landmark_zh: 纽约曼哈顿天际线
+    ts_reference_slug: 1514565131-fce0801e5785
+    pipeline_public_url_file: ocs-nyc-skyline-community-media.jpg
+    hero_target:
+      filename: da-hero-us-home-v1.jpg
+      width_px: 3840
+      height_px: 2160
+      aspect_ratio: "16:9"
+    hero_tier: PASS
+    scene: 纽约曼哈顿天际线 · Destination Ambient Hero · Ken Burns
+    copy_label: 美国·Hero·纽约曼哈顿天际线
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-us-home-v1.jpg
+    catalog_asset_id: 40b8789f-839b-4b01-aff2-c8ec3a003118
+    catalog_country_id: 0bde264b-6d84-4969-9979-9b67400a0f64
+    visual_l5_status: CLOSED
+    hero_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+      hero_visual_l5: PASS
+    asset_version:
+      revision_number: 5
+      revision_label: hero-v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T10:03:07Z"
+      rollback_target_revision: 1
+    decoded_bytes: 1449039
+
+  - matrix_id: DA-HERO-AU-HOME
+    pipeline_matrix_id: DA-AU-HOME
+    execution_order: 7
+    country_zh: 澳大利亚
+    country_iso: AU
+    landmark_zh: 悉尼歌剧院·港湾
+    ts_reference_slug: 1748243262890-bffad63a7807
+    pipeline_public_url_file: ocs-sydney-coast-community-media.jpg
+    hero_target:
+      filename: da-hero-au-home-v1.jpg
+      width_px: 3840
+      height_px: 2160
+      aspect_ratio: "16:9"
+    hero_tier: PASS
+    scene: 悉尼歌剧院·港湾 · Destination Ambient Hero · Ken Burns
+    copy_label: 澳大利亚·Hero·悉尼歌剧院·港湾
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-au-home-v1.jpg
+    catalog_asset_id: fdc946c0-7f63-4460-bcae-1f2bc5438e96
+    catalog_country_id: 9ee09b52-47ab-4460-b9e5-887a57a999e9
+    visual_l5_status: CLOSED
+    hero_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+      hero_visual_l5: PASS
+    asset_version:
+      revision_number: 5
+      revision_label: hero-v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T10:03:07Z"
+      rollback_target_revision: 1
+    decoded_bytes: 1549212
+
+  - matrix_id: DA-HERO-ES-HOME
+    pipeline_matrix_id: DA-ES-HOME
+    execution_order: 8
+    country_zh: 西班牙
+    country_iso: ES
+    landmark_zh: 圣家堂·巴塞罗那
+    ts_reference_slug: 1583422409516-2895a77efded
+    pipeline_public_url_file: ocs-barcelona-arch-community-media.jpg
+    hero_target:
+      filename: da-hero-es-home-v1.jpg
+      width_px: 3840
+      height_px: 2160
+      aspect_ratio: "16:9"
+    hero_tier: PASS
+    scene: 圣家堂·巴塞罗那 · Destination Ambient Hero · Ken Burns
+    copy_label: 西班牙·Hero·圣家堂·巴塞罗那
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-es-home-v1.jpg
+    catalog_asset_id: 7341191e-c64b-4f94-823e-649a24195ff2
+    catalog_country_id: f9263249-d603-4e7d-92f0-345117c393ca
+    visual_l5_status: CLOSED
+    hero_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+      hero_visual_l5: PASS
+    asset_version:
+      revision_number: 6
+      revision_label: hero-v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T10:03:07Z"
+      rollback_target_revision: 1
+    decoded_bytes: 3108022
+
+  - matrix_id: DA-HERO-AE-HOME
+    pipeline_matrix_id: DA-AE-HOME
+    execution_order: 9
+    country_zh: 阿联酋
+    country_iso: AE
+    landmark_zh: 哈利法塔·蓝调夜景
+    ts_reference_slug: 1512453979798-5ea266f8880c
+    pipeline_public_url_file: ocs-dubai-luxury-community-media.jpg
+    hero_target:
+      filename: da-hero-ae-home-v1.jpg
+      width_px: 3840
+      height_px: 2160
+      aspect_ratio: "16:9"
+    hero_tier: PASS
+    scene: 哈利法塔·蓝调夜景 · Destination Ambient Hero · Ken Burns
+    copy_label: 阿联酋·Hero·哈利法塔·蓝调夜景
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-ae-home-v1.jpg
+    catalog_asset_id: 30064967-4c72-439a-82be-d04423dce53a
+    catalog_country_id: ebe363eb-25e8-45f5-bf3a-fc9b8a97e5f3
+    visual_l5_status: CLOSED
+    hero_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+      hero_visual_l5: PASS
+    asset_version:
+      revision_number: 5
+      revision_label: hero-v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T10:03:07Z"
+      rollback_target_revision: 1
+    decoded_bytes: 1400739
+
+  - matrix_id: DA-HERO-CN-HOME
+    pipeline_matrix_id: DA-CN-HOME
+    execution_order: 10
+    country_zh: 中国
+    country_iso: CN
+    landmark_zh: 长城·秋色山脊
+    ts_reference_slug: 1547150492-da7ff1742941
+    pipeline_public_url_file: ocs-kyoto-culture-community-media.jpg
+    hero_target:
+      filename: da-hero-cn-home-v1.jpg
+      width_px: 3840
+      height_px: 2160
+      aspect_ratio: "16:9"
+    hero_tier: PASS
+    scene: 长城·秋色山脊 · Destination Ambient Hero · Ken Burns
+    copy_label: 中国·Hero·长城·秋色山脊
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-cn-home-v1.jpg
+    catalog_asset_id: bd26b886-87e0-489e-95e0-bc44b1545b92
+    catalog_country_id: 1674476d-850f-49b2-b696-de43473039a2
+    visual_l5_status: CLOSED
+    hero_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+      hero_visual_l5: PASS
+    asset_version:
+      revision_number: 5
+      revision_label: hero-v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T10:03:07Z"
+      rollback_target_revision: 1
+    decoded_bytes: 1905902

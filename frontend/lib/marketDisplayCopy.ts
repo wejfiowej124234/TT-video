@@ -17,6 +17,9 @@ const INTERNAL_MARKET_COPY = [
   /^test guide account/i,
   /trust[-_\s]?gate/i,
   /\be2e\b/i,
+  /多重身份演示/,
+  /演示 · 向导/,
+  /Playmate/i,
 ] as const;
 
 /** 向导 service_types 中不向公众展示的系统/烟测/收购履约标签 */
@@ -28,6 +31,7 @@ const INTERNAL_GUIDE_SERVICE_TYPE = [
   /^internal[\s_-]/i,
   /^fulfillment_bond$/i,
   /^test[\s_-]/i,
+  /^playmate$/i,
 ] as const;
 
 function normalizeGuideServiceSlug(raw: string): string {
@@ -155,4 +159,18 @@ export function resolveMarketOrderCardTeaser(
   const dayText = firstPublicDayDescription(item);
   if (dayText) return dayText;
   return buildMarketOrderItineraryTeaserFallback(item, t);
+}
+
+/** Hourly rate chip/label for public market surfaces (no engineering currency placeholders). */
+export function formatGuideHourlyRateLabel(
+  guide: { hourly_rate?: string | null; hourly_currency?: string | null },
+  t: (key: string) => string,
+): string | null {
+  const rate = guide.hourly_rate;
+  if (rate == null || rate === "") return null;
+  const currency = typeof guide.hourly_currency === "string" ? guide.hourly_currency.trim() : "";
+  if (currency) {
+    return t("guide_card_perHour").replace("{{amount}}", String(rate)).replace("{{currency}}", currency);
+  }
+  return t("guide_card_perHour_on_request").replace("{{amount}}", String(rate));
 }

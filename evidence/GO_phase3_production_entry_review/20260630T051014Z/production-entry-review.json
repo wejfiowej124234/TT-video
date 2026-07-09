@@ -1,0 +1,69 @@
+{
+  "schema": "traveltrust.phase3_production_entry_review.v1",
+  "stamp": "20260630T051014Z",
+  "opened_at_utc": "2026-06-30T05:10:21Z",
+  "phase": "③ production entry review",
+  "status": "ACTIVE",
+  "runtime_baseline_sha": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+  "graduation_frozen_sha": "fc9266ce94f18810420e720bb933946c086ce909",
+  "runtime_drift": "LOCAL_FIRST_INTENTIONAL",
+  "local_first_sync": "COMPLETE",
+  "verdict": {
+    "phase3_production_entry_review": "ACTIVE",
+    "production_go": "NO",
+    "production_go_audit": "NO_GO"
+  },
+  "prerequisites_unchanged": {
+    "soak": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+    "graduation_freeze": "evidence/GO_phase2_testnet_graduation/freeze-fc9266ce/manifest.v1.json",
+    "local_first_sync": "evidence/GO_phase2_runtime_baseline/PHASE2-LOCAL-FIRST-SYNC-9979b35e.latest.json",
+    "final_human_acceptance": "20260630T030920Z",
+    "phase2_runtime_baseline": "evidence/GO_phase2_runtime_baseline/PHASE2-RUNTIME-BASELINE-FREEZE.latest.json"
+  },
+  "in_scope_review_tracks": [
+    {
+      "id": "P3-ENV",
+      "title": "Production environment preparation"
+    },
+    {
+      "id": "P3-MAINNET",
+      "title": "Mainnet configuration review"
+    },
+    {
+      "id": "P3-KEYS",
+      "title": "Secrets / keys / PSP credential governance"
+    },
+    {
+      "id": "P3-SEC",
+      "title": "Security hardening & RBAC prod promote review"
+    },
+    {
+      "id": "P3-MON",
+      "title": "Monitoring / alerting / on-call readiness"
+    },
+    {
+      "id": "P3-RB",
+      "title": "Rollback & release drill strategy"
+    },
+    {
+      "id": "P3-GOLIVE",
+      "title": "Go-live strategy & cutover runbook review"
+    }
+  ],
+  "explicitly_out_of_scope": [
+    "Production GO decision or M-00 sign-off",
+    "Mainnet deploy / broadcast without Owner-only gate",
+    "sk_live / live PSP cutover",
+    "Staging runtime redeploy off Local First baseline without RCA",
+    "Substituting local workspace for frozen testnet baseline"
+  ],
+  "honest_boundary": "Entry Review ≠ Production GO ≠ final production validation",
+  "machine_keys": {
+    "TT_PHASE2_LOCAL_FIRST_SYNC": "COMPLETE",
+    "TT_PHASE2_RUNTIME_BASELINE_FROZEN": "YES",
+    "TT_PHASE2_RUNTIME_DRIFT": "LOCAL_FIRST_INTENTIONAL",
+    "TT_PHASE3_PRODUCTION_ENTRY_REVIEW": "ACTIVE",
+    "TT_PHASE3_PRODUCTION_GO": "NO",
+    "PRODUCTION_GO_DECISION": "NO_GO"
+  }
+}

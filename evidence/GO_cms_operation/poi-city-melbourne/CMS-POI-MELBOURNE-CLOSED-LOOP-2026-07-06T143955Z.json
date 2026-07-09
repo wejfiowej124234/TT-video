@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T14:39:55Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AU",
+    "city_zh": "墨尔本",
+    "city_en": "Melbourne",
+    "matrix_ids": [
+      "PH-AU-182-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AU-182-FOOD",
+      "legacy_value": "多元料理",
+      "poi_id": "33c45bb9-fc0e-41f4-8a97-c0d440a99045",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-182-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

@@ -311,12 +311,118 @@ market_subsite_frontend_race_fix:
     source_truth: PASS
     evidence: CLOSED
 
+market_default_filter_audit:
+  classification: Market Default Filter State Audit
+  status: CLOSED
+  extends: market_subsite_frontend_race_fix
+  not_data_governance: true
+  governance_gates:
+    OCS: CLOSED
+    DDG: CLOSED
+    SOPCP: CLOSED
+    evidence_reuse: ENFORCED
+  stamp: "20260703T125300Z"
+  root_cause: Default Filter State — orphan localStorage without explicit user save
+  fix_priority: URL → explicit user save (_saved=1) → default ALL
+  pages:
+    hub: { route: /market, default: ALL, ssot: URL_only, localStorage_country: false }
+    provider: { route: /market/provider, default: ALL, ssot: URL_explicit_save_ALL }
+    acquisition: { route: /market/acquisition, default: ALL, ssot: URL_explicit_save_ALL }
+  evidence: evidence/GO_market_default_filter_audit/20260703T125300Z/default-filter-audit-closure.json
+  multi_route_probe: evidence/GO_market_default_filter_audit/20260703T125300Z/multi-route-staging-probe.json
+  signoff: evidence/manual-uat/signoff/MARKET-DEFAULT-FILTER-AUDIT-SIGNOFF-20260703T125300Z.md
+  browser_truth_attrs:
+    subsite: [data-tt-subsite-country, data-tt-subsite-list-count, data-tt-subsite-listings-query]
+    hub_non_blocking: [data-tt-market-country, data-tt-market-orders-query, data-tt-market-guides-query]
+  close_script: scripts/dev/close-market-default-filter-audit.sh
+  blocking_count: 0
+  market_runtime:
+    api_truth: PASS
+    frontend_runtime: PASS
+    browser_runtime: PASS
+    source_truth: PASS
+    evidence: CLOSED
+  verdict: CLOSED
+
+staging_infra_console_errors:
+  stamp: "20260703T133800Z"
+  market_runtime: CLOSED
+  governance_gates:
+    OCS: CLOSED
+    DDG: CLOSED
+    SOPCP: CLOSED
+    market_default_filter: CLOSED
+  evidence: evidence/GO_staging_infra_fix/20260703T133800Z/
+  fixes_deployed:
+    c4_media: short_term_tunnel_restore
+    staging_api_db: pool_retry_health_ready_metrics
+  media_architecture:
+    ssot: registry/media-three-tier-architecture.v1.yaml
+    runbook: docs/runbook/TT-MEDIA-THREE-TIER-ARCHITECTURE.md
+    staging_off_loca_lt: true
+    staging_interim_public_base: https://traveltrust-community-media.fly.storage.tigris.dev
+    ssot_target: Cloudflare_R2_cdn.traveltrust.app
+    closed_issue: PI3-MEDIA-PERSISTENT-STAGING
+    waiting_owner_issue: PI3-MEDIA-R2-CDN-FINAL
+    waiting_owner_status: WAITING_OWNER_CF
+    acceptance_gate: MEDIA_CDN_PRODUCTION_ACCEPTANCE
+    acceptance_gate_status: PENDING
+    acceptance_runbook: docs/runbook/TT-MEDIA-CDN-PRODUCTION-ACCEPTANCE-GATE.md
+    close_rule: acceptance_gate_PASS_required
+    catalog_asset_migration:
+      issue: PI3-CATALOG-ASSET-MIGRATION
+      status: DEFERRED
+      runbook: docs/runbook/TT-PI3-CATALOG-ASSET-MIGRATION.md
+      blocks_media_infra_close: false
+    evidence: evidence/GO_media_r2_cdn_migration/20260703T141500Z/
+  recovery_probe:
+    acquisition_listings: { http: 200, items: 10 }
+    market_feed: { http: 200 }
+    health_ready: { http: 200, database: ok }
+    community_media_interim:
+      public_base: https://traveltrust-community-media.fly.storage.tigris.dev
+      note: superseded loca.lt tunnel — PI3-MEDIA-PERSISTENT-STAGING CLOSED 20260703
+    minio_tunnel:
+      status: SUPERSEDED
+      note: DEPRECATED — do not use loca.lt; see media_architecture.staging_interim_public_base
+  phase_alignment:
+    phase1_local_mirror: PASS
+    phase2_staging: PASS
+    source_truth_audit: PASS
+    blocking_count: 0
+  closed_issues:
+    - id: C4-MEDIA-TUNNEL-UNAVAILABLE
+      closed_utc: "2026-07-03T13:38:00Z"
+    - id: STAGING_API_DB_TRANSIENT_503
+      closed_utc: "2026-07-03T13:38:00Z"
+  open_issues: []
+  blocking_count: 0
+
+enterprise_ssot_alignment:
+  registry: registry/enterprise-ssot-alignment.v1.yaml
+  audit_script: scripts/dev/audit-enterprise-ssot-alignment.cjs
+  policy: CLOSED_UNLESS_TOUCHED
+  boundary: governance_config_docs_scripts_non_prod_metadata_only
+  pi3_tracks:
+    media_infrastructure: registry/pi3-media-infrastructure.v1.yaml
+    catalog_asset_migration: registry/catalog-asset-migration.v1.yaml
+  acceptance_decoupling: ENFORCED
+  latest_evidence: evidence/GO_enterprise_ssot_alignment/20260703T154232Z/
+  runbook: docs/runbook/TT-ENTERPRISE-SSOT-ALIGNMENT.md
+  configuration_vs_runtime: registry/enterprise-ssot-alignment.v1.yaml#alignment_dimensions
+
 ci_build_stability:
   registry: registry/ci-build-stability.v1.yaml
   runbook: docs/runbook/TT-CI-BUILD-STABILITY.md
   issue_registry: registry/open-issues.v1.yaml
-  open_count: 1
-  open_issues:
+  open_count_ssot: registry/open-issues.v1.yaml
+  open_count: 4
+  open_issues_summary:
+    - PI3-MEDIA-R2-CDN-FINAL
+    - MEDIA_CDN_PRODUCTION_ACCEPTANCE
+    - PI3-CATALOG-ASSET-MIGRATION
+    - CI-BUILD-20260703-V49-OOM
+  ci_only_open_issues:
     - id: CI-BUILD-20260703-V49-OOM
       stamp: "20260703T113000Z"
       severity: LOW

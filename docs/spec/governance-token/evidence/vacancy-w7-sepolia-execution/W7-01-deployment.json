@@ -1,0 +1,46 @@
+{
+  "step": "deploy",
+  "result": "PASS",
+  "network": "sepolia",
+  "chainId": 11155111,
+  "rpc": "https://sepolia.drpc.org",
+  "owner": "0x904a6C4c6aab698afbf08ec6151d317c393520cc",
+  "ownerLabel": "V2_GovernanceTimelock",
+  "forbiddenOwnersChecked": [
+    "deployer_eoa",
+    "legacy_timelock",
+    "safe_only"
+  ],
+  "contracts": {
+    "ledger": "0x738D2c133d5F90c13eE9907386136471E1f330f5",
+    "stewardPathVault": "0xaB6c15Ebcae78606E0AE5663d831E09e05af32FA",
+    "unallocatedVault": "0xb7d0Ea9579F80B2090195d49a44941d5546554E9"
+  },
+  "codehashes": {
+    "ledger": "0x5f8050acd36cbc556dd8bccd4d5d5ff81fd8c3325262915cc73edb986828f092",
+    "stewardPathVault": "0xd7f83b453c463eae75f2901a79a0315acc15da84e3f04e08f4255fd9822f277d",
+    "unallocatedVault": "0x48774c1c47707f31698ea1837c3778eeadedfe96819ddc4d6627c8ecf9626670"
+  },
+  "transactions": [
+    {
+      "contract": "StewardPathVault",
+      "address": "0xab6c15ebcae78606e0ae5663d831e09e05af32fa",
+      "txHash": "0x8aeae9b035ecec758953bc299c17f0887840ac7aff2b43d74ab4c9384f2c6513",
+      "blockNumber": null
+    },
+    {
+      "contract": "UnallocatedStewardPathVault",
+      "address": "0xb7d0ea9579f80b2090195d49a44941d5546554e9",
+      "txHash": "0x2a609f0b69cc8e680aad7a9b950ad8d920192d8592e3a30aad950bf7ae77ab66",
+      "blockNumber": null
+    },
+    {
+      "contract": "CountryPoolNetProfitLedger",
+      "address": "0x738d2c133d5f90c13ee9907386136471e1f330f5",
+      "txHash": "0xa1c189a207860d9019ab33846b7bd187dd678ca568c3ad91fb9757ccfc5fe9ca",
+      "blockNumber": null
+    }
+  ],
+  "deployLog": "docs/spec/governance-token/evidence/vacancy-w7-sepolia-execution/W7-01-deploy-20260709T055043Z.log",
+  "signedAuthorization": "docs/spec/governance-token/TRAVELTRUST-WEB3-VACANCY-W7-OWNER-EVIDENCE-REVIEW-v1-SIGNED.md"
+}

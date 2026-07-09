@@ -1,0 +1,326 @@
+# Phase ②-D · Web3 Lifecycle Validation · SSOT
+#
+# SUB-TRACK ONLY — NOT the Phase ② total name.
+# Phase ② total: Staging / Sepolia Production Validation
+#   registry/phase2-staging-sepolia-production-validation.v1.yaml
+#
+#   node scripts/dev/run-sepolia-full-web3-lifecycle-validation.cjs
+#
+# Human runbook: docs/runbook/SEPOLIA-FULL-WEB3-LIFECYCLE-VALIDATION-V1.md
+
+schema: traveltrust.sepolia_full_web3_lifecycle_validation.v1
+version: 3
+effective_utc: "2026-07-08"
+machine_key: TT_PHASE2D_WEB3_LIFECYCLE_VALIDATION
+
+phase: 2
+phase_total_name: Staging / Sepolia Production Validation
+sub_track_id: 2D
+sub_track_name: Web3 Lifecycle Validation
+display_name: Phase ②-D · Web3 Lifecycle Validation
+alias_legacy: Sepolia Full Web3 Lifecycle Validation
+note: Web3 Production Validation refers to this sub-track only — NOT Phase ② total name
+
+parent_ssot: registry/phase2-staging-sepolia-production-validation.v1.yaml
+parent_runbook: docs/runbook/PHASE2-STAGING-SEPOLIA-PRODUCTION-VALIDATION-V1.md
+
+chain_id: "11155111"
+production_scope: PRODUCTION_SCOPE_SEPOLIA
+phase3_blocked_until: SEPOLIA_FULL_WEB3_LIFECYCLE_PASS
+
+phase_discipline:
+  allowed: [validation, bug_fixes, evidence, security, protocol_alignment, sepolia_on_chain_e2e]
+  forbidden: [new_features, mainnet_broadcast, param_swap_to_mainnet]
+  rationale: >
+    Phase ② validates the entire Web3 protocol. Adding features continuously delays
+    exit criteria and disrupts deployment rhythm.
+
+# Module-by-module E2E order (run sequentially on Sepolia)
+validation_modules_e2e_order:
+  - id: MOD-TTG
+    name: TTG
+    mainnet_wave: wave2
+  - id: MOD-GOV
+    name: Governance
+    mainnet_wave: wave2
+  - id: MOD-PRIMARY-MARKET
+    name: Primary Market
+    mainnet_wave: wave3
+  - id: MOD-ESCROW
+    name: Escrow
+    mainnet_wave: wave1
+    maps_to_domain: DOM-ESCROW-V2
+  - id: MOD-GUIDE-STAKE
+    name: Guide Stake
+    mainnet_wave: wave2
+  - id: MOD-PROVIDER-STAKE
+    name: Provider Stake
+    mainnet_wave: wave2
+  - id: MOD-STEWARD
+    name: Steward
+    mainnet_wave: wave2
+  - id: MOD-COUNTRY-POOL
+    name: CountryPool
+    mainnet_wave: wave3
+  - id: MOD-TREASURY
+    name: Treasury
+    mainnet_wave: wave2
+  - id: MOD-FEE-ROUTER
+    name: FeeRouter
+    mainnet_wave: wave1
+  - id: MOD-SETTLEMENT
+    name: Settlement
+    mainnet_wave: wave1
+  - id: MOD-LEDGER
+    name: Ledger
+    mainnet_wave: wave1
+  - id: MOD-EMERGENCY
+    name: Emergency
+    mainnet_wave: wave2
+    cert_refs: ["10", "11"]
+  - id: MOD-RECOVERY
+    name: Recovery
+    mainnet_wave: wave2
+    cert_refs: ["12"]
+  - id: MOD-UPGRADE
+    name: Upgrade
+    mainnet_wave: wave2
+  - id: MOD-SECURITY
+    name: Security
+    mainnet_wave: wave1
+    maps_to_domain: DOM-SECURITY
+  - id: MOD-RBAC
+    name: RBAC
+    mainnet_wave: wave1
+  - id: MOD-DEPLOYMENT
+    name: Deployment
+    mainnet_wave: wave1
+  - id: MOD-MONITORING
+    name: Monitoring
+    mainnet_wave: wave1
+
+# ── Mandatory exit rule (Owner-approved) ─────────────────────────────────────
+exit_rule:
+  id: RULE-PH2-001
+  title: Mainnet feature must have Sepolia E2E evidence
+  statement: >
+    Any Web3 feature planned for deployment to Ethereum Mainnet MUST complete
+    at least one Sepolia real on-chain end-to-end validation with traceable
+    evidence. Without such evidence, that feature SHALL NOT enter Phase ③ Mainnet.
+  enforcement:
+    - scripts/gates/check-phase2-mainnet-feature-evidence-gate.sh
+    - scripts/dev/run-sepolia-full-web3-lifecycle-validation.cjs
+  phase3_gate: TRAVELTRUST_MAINNET_PHASE3_AUTHORIZED requires SEPOLIA_FULL_WEB3_LIFECYCLE_PASS
+
+audit_tracks_required:
+  - business_logic_audit
+  - security_audit
+  - user_journey_audit
+  - four_layer_consistency_audit
+
+four_layer_consistency:
+  layers: [API, Database, Contract, Frontend]
+  probe_scripts:
+    - scripts/dev/check-web3-system-master-map-parity.cjs
+    - scripts/dev/check-web3-system-production-meta-contracts.cjs
+    - scripts/dev/run-escrow-settlement-authorization-audit.cjs
+
+personas:
+  - id: traveler
+    name: Traveler
+    web3_flows: [escrow_deposit, service_confirm, refund, dispute_open, rating]
+  - id: guide
+    name: Guide
+    web3_flows: [escrow_accept_path, service_confirm, stake, release_beneficiary]
+  - id: merchant
+    name: Merchant
+    web3_flows: [provider_stake, merchant_listing_settlement]
+  - id: region_steward
+    name: Region Steward
+    web3_flows: [steward_stake, seat_apply, jurisdiction_scope, unstake_cert9]
+  - id: ttg_holder
+    name: TTG Holder
+    web3_flows: [delegate, propose, vote, queue, execute]
+  - id: admin
+    name: Admin
+    web3_flows: [timelock_ops, emergency_pause, rbac, treasury_ops, governance_params]
+
+validation_domains:
+  - id: DOM-TTG-GOV
+    name: TTG Governance Full Lifecycle
+    mainnet_wave: wave2
+    description: Mint · delegate · propose · vote · queue · execute · treasury
+    lifecycle_steps:
+      - token_mint_or_distribute
+      - delegate_votes
+      - create_proposal
+      - cast_vote
+      - queue_proposal
+      - timelock_execute
+      - treasury_spend
+    evidence_required:
+      - evidence/GO_ttg_cert/
+      - scripts/dev/run-tt-governance-cert-08-treasury-spend.sh
+    cert_refs: ["8", "9", "10", "11", "12"]
+    status: IN_PROGRESS
+
+  - id: DOM-ESCROW-V2
+    name: EscrowV2 Bilateral Settlement
+    mainnet_wave: wave1
+    description: confirmServiceComplete ×2 → release → FeeRouter → Ledger
+    lifecycle_steps:
+      - create_escrow_v2_instance
+      - traveler_deposit
+      - service_confirm_bilateral_offchain
+      - service_confirm_bilateral_onchain
+      - permissionless_release
+      - fee_router_split
+      - ledger_projection
+    evidence_required:
+      - evidence/GO_production_readiness/escrow-bilateral-layer-a/
+      - evidence/GO_production_readiness/escrow-bilateral-layer-b/
+      - evidence/GO_production_readiness/escrow-settlement-authorization/
+      - scripts/dev/phase2-sepolia-broadcast-escrow-factory-v2.sh
+    status: IN_PROGRESS
+
+  - id: DOM-IDENTITY-STAKE
+    name: Identity Staking
+    mainnet_wave: wave2
+    description: Guide · Provider · Region Steward stake / unstake / slash path
+    lifecycle_steps:
+      - guide_stake
+      - provider_stake
+      - region_steward_stake
+      - unstake_request_release
+    evidence_required:
+      - scripts/dev/smoke-guide-identity-stake-anvil.sh
+      - scripts/dev/run-tt-governance-cert-09-unstake.sh
+    status: IN_PROGRESS
+
+  - id: DOM-SEAT-JURISDICTION
+    name: Seat / Jurisdiction / Region Steward Permissions
+    mainnet_wave: wave2
+    lifecycle_steps:
+      - steward_application
+      - seat_assignment
+      - jurisdiction_scope_binding
+      - permission_gate_enforcement
+    evidence_required:
+      - crates/api steward/seat routes
+      - evidence/GO_ttg_cert/
+    status: TARGET
+
+  - id: DOM-FUND-FLOWS
+    name: CountryPool · FeeRouter · Treasury · StewardPath
+    mainnet_wave: wave1
+    lifecycle_steps:
+      - escrow_fee_to_fee_router
+      - country_bucket_allocation
+      - treasury_receive
+      - steward_path_distribution
+      - country_pool_ledger
+    evidence_required:
+      - evidence/GO_production_readiness/G3-02/
+      - docs/spec/governance-token/fund-flow-ssot.v1.md
+    status: PARTIAL
+
+  - id: DOM-GOV-OPS
+    name: Governance Params · Timelock · Emergency · Recovery
+    mainnet_wave: wave2
+    lifecycle_steps:
+      - parameter_change_proposal
+      - timelock_delay_execute
+      - emergency_pause
+      - emergency_unpause
+      - recovery_drill
+    cert_refs: ["10", "11", "12"]
+    evidence_required:
+      - scripts/dev/run-tt-governance-cert-10-emergency-pause.sh
+      - scripts/dev/run-tt-governance-cert-11-emergency-unpause.sh
+      - scripts/dev/run-tt-governance-cert-12-dr-replay.sh
+    status: TARGET
+
+  - id: DOM-UI-UX
+    name: Web3 UI/UX ↔ On-chain State Consistency
+    mainnet_wave: wave1
+    lifecycle_steps:
+      - wallet_connect_chain_match
+      - escrow_detail_state_labels
+      - governance_ui_proposal_status
+      - tx_pending_confirmed_display
+    evidence_required:
+      - frontend e2e escrow specs
+      - scripts/dev/run-escrow-settlement-authorization-audit.cjs
+    status: IN_PROGRESS
+
+  - id: DOM-FOUR-LAYER
+    name: API ↔ DB ↔ Contract ↔ Frontend Consistency
+    mainnet_wave: wave1
+    lifecycle_steps:
+      - meta_contract_addresses_parity
+      - order_projection_chain_sync
+      - indexer_event_finality
+    evidence_required:
+      - scripts/dev/check-web3-system-master-map-parity.cjs
+      - scripts/dev/run-web3-system-closure.cjs
+    status: IN_PROGRESS
+
+  - id: DOM-EXCEPTION
+    name: Exception Flows
+    mainnet_wave: wave1
+    lifecycle_steps:
+      - cancel_pre_deposit
+      - refund_traveler
+      - dispute_open_arbitrate_resolve
+      - timeout_auto_rules
+      - recovery_after_incident
+    evidence_required:
+      - crates/api dispute flows
+      - contracts/test/Escrow.t.sol dispute paths
+    status: TARGET
+
+  - id: DOM-SECURITY
+    name: Security Boundaries
+    mainnet_wave: wave1
+    lifecycle_steps:
+      - rbac_admin_boundary
+      - permission_matrix_enforcement
+      - proxy_upgrade_timelock_only
+      - immutable_escrow_no_admin
+      - indexer_scope_no_cross_chain
+      - event_log_integrity
+    evidence_required:
+      - scripts/dev/run-rbac-d3-closure.cjs
+      - registry/g24-p-upgrade-01-contract-posture.v1.yaml
+      - scripts/dev/run-web3-protocol-grade-audit.cjs
+    status: IN_PROGRESS
+
+audit_deliverables:
+  business_logic_audit:
+    script: scripts/dev/run-sepolia-full-web3-lifecycle-validation.cjs
+    output_suffix: BUSINESS-LOGIC-AUDIT-LATEST.md
+    scope: Real business units · not isolated function tests
+  security_audit:
+    script: scripts/dev/run-web3-protocol-grade-audit.cjs
+    evidence: evidence/GO_production_readiness/web3-protocol-grade-audit/
+    companion: scripts/dev/run-escrow-settlement-authorization-audit.cjs
+  user_journey_audit:
+    script: scripts/dev/run-sepolia-full-web3-lifecycle-validation.cjs
+    output_suffix: USER-JOURNEY-AUDIT-LATEST.md
+    personas_ref: personas
+
+phase2_exit_criteria:
+  mandatory:
+    - RULE-PH2-001 satisfied for every mainnet_wave feature
+    - all validation_domains status PASS or DEFER-with-owner-waiver
+    - TTG_CERT_8_12_SIGNED on Sepolia
+    - WEB3_PROTOCOL_GRADE_P0_0
+    - ESCROW_SETTLEMENT_MODEL_ALIGNED
+    - WEB3_SYSTEM_CLOSURE_PASS or documented P1 waiver
+  verdict_pass: SEPOLIA_FULL_WEB3_LIFECYCLE_PASS
+  verdict_in_progress: SEPOLIA_FULL_WEB3_LIFECYCLE_IN_PROGRESS
+  verdict_blocked: SEPOLIA_FULL_WEB3_LIFECYCLE_BLOCKED
+
+evidence_root: evidence/GO_production_readiness/sepolia-full-web3-lifecycle
+orchestrator: scripts/dev/run-sepolia-full-web3-lifecycle-validation.cjs
+discipline_ref: registry/web3-three-phase-closure-discipline.v1.yaml

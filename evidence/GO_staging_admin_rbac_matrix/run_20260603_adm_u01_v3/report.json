@@ -1,0 +1,70 @@
+{
+  "artifact": "adm-u01-staging-rbac-matrix",
+  "phase": "\u2461",
+  "environment": {
+    "name": "staging",
+    "api_base": "https://three-lights-run.loca.lt",
+    "probe_api_base": "http://127.0.0.1:8080",
+    "not_localhost_assertion": true,
+    "health_checked_staging_url": "https://three-lights-run.loca.lt"
+  },
+  "matrix_version": "admin-rbac-v3-db-prep-2026-06-03",
+  "registry_version": "adm-u01-staging-2026-06-03",
+  "generated_at": "20260603T121834Z",
+  "roles": [
+    "SuperAdmin",
+    "Ops",
+    "CS",
+    "Risk",
+    "Finance",
+    "Auditor"
+  ],
+  "shell_domains": [
+    "workbench",
+    "onboarding",
+    "operations",
+    "community",
+    "finance",
+    "governance",
+    "more"
+  ],
+  "summary": {
+    "total": 102,
+    "pass": 102,
+    "fail": 0,
+    "by_domain": {
+      "workbench": {
+        "pass": 12,
+        "fail": 0
+      },
+      "onboarding": {
+        "pass": 12,
+        "fail": 0
+      },
+      "operations": {
+        "pass": 18,
+        "fail": 0
+      },
+      "community": {
+        "pass": 12,
+        "fail": 0
+      },
+      "finance": {
+        "pass": 12,
+        "fail": 0
+      },
+      "governance": {
+        "pass": 12,
+        "fail": 0
+      },
+      "more": {
+        "pass": 24,
+        "fail": 0
+      }
+    }
+  },
+  "release_gate": "GO",
+  "evidence_files": [
+    "matrix-api-results.json"
+  ]
+}

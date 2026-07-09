@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.p2fc_cloud_soak_watcher.v1",
+  "migrated_at_utc": "2026-06-26T:30:29Z",
+  "stamp": "20260626T002943Z",
+  "fly_app": "tt-soak-watcher-staging",
+  "fly_config": "deploy/fly/tt-soak-watcher-staging/fly.toml",
+  "local_job_archived": "/d/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/superseded-local-20260626T002812Z",
+  "cloud_job_dir": "/d/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/job-CLOUD-20260626T002943Z",
+  "handoff_ok_polls": 20,
+  "expect_git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "sync_script": "scripts/ops/p2fc-sync-cloud-soak-evidence.sh",
+  "orchestrator": "scripts/ops/p2fc-cloud-soak-orchestrator.sh --watch",
+  "post_soak_chain": "scripts/ops/p2fc-post-soak-staging-live-closure-chain.sh",
+  "phase3_policy": "Production GO requires independent GO gate — Soak PASS does not inherit"
+}

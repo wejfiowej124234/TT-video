@@ -1,0 +1,104 @@
+{
+  "schema": "traveltrust.per_production_configuration_verified_p0_5.v1",
+  "stamp_utc": "20260705T014800ZP5",
+  "phase": "Production Preparation · PER Item 5 · Production Configuration Verified",
+  "environment": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev",
+    "phase_note": "② staging config parity · not ③ Production cutover"
+  },
+  "prerequisite": {
+    "p0_4_ref": "evidence/GO_production_preparation/per-monitoring-verified/PER-MONITORING-VERIFIED-P0-4-LATEST.json",
+    "TT_PER_MONITORING_VERIFIED": "PASS",
+    "TT_PER_P0_4_OWNER_SIGNOFF": "SIGNED"
+  },
+  "per_track_item": "production_configuration",
+  "verification": [
+    {
+      "id": "prereq_p0_4_signed",
+      "title": "PER P0-4 owner sign-off prerequisite",
+      "expected_result": "TT_PER_MONITORING_VERIFIED=PASS · owner_sign_off=SIGNED",
+      "actual_result": "PASS · SIGNED",
+      "blockers": [],
+      "evidence_refs": [
+        "evidence/GO_production_preparation/per-monitoring-verified/PER-MONITORING-VERIFIED-P0-4-LATEST.json"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "deployment_profile",
+      "title": "Staging deployment_profile",
+      "expected_result": "deployment_profile=staging",
+      "actual_result": "profile=staging",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/meta/build",
+        "https://tt-api-staging.fly.dev/meta"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "registry_address_parity",
+      "title": "Registry address vs build.env.example",
+      "expected_result": "meta.chain.contracts.registry_address matches staging build.env.example",
+      "actual_result": "got=0xc50913e154f850583d0afbe9158a75e0e2167aab expected=0xc50913e154f850583d0afbe9158a75e0e2167aab",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/meta",
+        "deploy/fly/tt-web-staging/build.env.example"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "internal_api_secret",
+      "title": "internal_api_secret_configured",
+      "expected_result": "strict_mode.internal_api_secret_configured=true",
+      "actual_result": "configured=true",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/meta"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "fly_manifests",
+      "title": "Staging fly.toml manifests on disk",
+      "expected_result": "tt-api-staging + tt-web-staging fly.toml present",
+      "actual_result": "api=true web=true",
+      "blockers": [],
+      "evidence_refs": [
+        "deploy/fly/tt-api-staging/fly.toml",
+        "deploy/fly/tt-web-staging/fly.toml"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "business_surface_config",
+      "title": "Public surfaces still serving after config probe",
+      "expected_result": "discover + guides + home_hero ok",
+      "actual_result": "orders=1 guides=3 hero=ok",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/discover/orders",
+        "https://tt-api-staging.fly.dev/api/v1/guides"
+      ],
+      "loop_result": "PASS"
+    }
+  ],
+  "summary": {
+    "total": 6,
+    "pass": 6,
+    "fail": 0,
+    "blocking_items": []
+  },
+  "owner_sign_off": {
+    "status": "SIGNED",
+    "attestation": "Sebastian Ward · Solo maintainer · PER P0-5 Production Configuration Verified · ② Staging · not ③ Production GO",
+    "signed_at_utc": "2026-07-05T01:51:00Z",
+    "signer": "Sebastian Ward",
+    "phase": "Production Preparation · PER Item 5"
+  },
+  "TT_PER_PRODUCTION_CONFIGURATION_VERIFIED": "PASS",
+  "honest_boundary": "PASS = staging config/runtime parity probes · ≠ ③ Production GO · ≠ CMS Wave1",
+  "TT_PER_P0_5_OWNER_SIGNOFF": "SIGNED"
+}

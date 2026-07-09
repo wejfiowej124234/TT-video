@@ -1,0 +1,36 @@
+{
+  "schema": "tn_p1_004_steward_stake_staging.v1",
+  "stamp": "20260630T153904Z",
+  "phase": "② testnet",
+  "api": "https://tt-api-staging.fly.dev",
+  "rpc": "https://1rpc.io/sepolia",
+  "pool_address": "0x3a89378bfad12d1028707dd37055294854c8784e",
+  "ttg_address": "0x2837ea0c50e27d59b88af617abbb231a040062c5",
+  "staker_wallet": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "live_preflight": {
+    "chain_id": "11155111",
+    "pool": "0x3a89378bfad12d1028707dd37055294854c8784e",
+    "ttg": "0x2837ea0c50e27d59b88af617abbb231a040062c5",
+    "pool_version": "region_steward_stake_pool_v1",
+    "min_stake_cn": "400000000000000000000000",
+    "release_delay_seconds": "15552000",
+    "ttg_approve_on_live_chain": "ok"
+  },
+  "write_fork": {
+    "mode": "sepolia_fork_deploy_write",
+    "fork_upstream": "https://sepolia.drpc.org",
+    "live_registry_pool": "0x3a89378bfad12d1028707dd37055294854c8784e",
+    "fork_pool": "0x95E456dd85B43d006a01f9E7bc9eC367E97E491e",
+    "fork_mock_ttg": "0xcDe0FE114AcBe5B956Bc1C0cacfC91cB40C313EF",
+    "jurisdiction": "CN",
+    "staker": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+    "min_stake": "400000000000000000000000",
+    "approve_allowance": "400000000000000000000000",
+    "stake_tx": "0x9f742c6f50690707428efa01e170df216b9789ab8f616a683de2618c94dd2991",
+    "request_release_tx": "0x311fd8474bc233933591f6eb8b128d3551c3bda59229c6d119eca9ea3b32036c",
+    "releasable_amount": "0",
+    "honest_boundary": "Write on fork-deployed pool; live Sepolia registry pool readonly-only until GovernanceVotesToken redeploy with approve"
+  },
+  "release_gate": "GO",
+  "honest_boundary": "Live Sepolia readonly+API PASS · write equivalent on Sepolia fork (approve→stake→position→requestRelease) · live stake() blocked until TTG redeploy with approve · ≠ FeeRouter/indexer (TN-P1-010) · ≠ ③ mainnet"
+}

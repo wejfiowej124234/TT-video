@@ -1,0 +1,46 @@
+{
+  "schema": "traveltrust.execution_priority_matrix.v1",
+  "weights": {
+    "P0": 4,
+    "P1": 2,
+    "P2": 1,
+    "P3": 0.5
+  },
+  "NOW": [],
+  "NEXT": [
+    {
+      "id": "BL-TECH-001",
+      "category": "TECH_DEBT",
+      "severity": "P1",
+      "title": "04 route drift vs app routes",
+      "queue": "NEXT",
+      "defer_to": "phase2"
+    }
+  ],
+  "LATER": [
+    {
+      "id": "BL-PROD-001",
+      "category": "PRODUCT_DEBT",
+      "severity": "P2",
+      "title": "PF duplicate nav surfaces (MERGE backlog)",
+      "queue": "LATER",
+      "defer_to": "post-freeze"
+    },
+    {
+      "id": "BL-UX-001",
+      "category": "UX_DEBT",
+      "severity": "P2",
+      "title": "Admin L5 polish below staging bar",
+      "queue": "LATER",
+      "defer_to": "phase2"
+    },
+    {
+      "id": "BL-OPT-001",
+      "category": "FUTURE_OPTIMIZATION",
+      "severity": "P3",
+      "title": "Heat map coverage refinement per route",
+      "queue": "LATER",
+      "defer_to": "continuous"
+    }
+  ]
+}

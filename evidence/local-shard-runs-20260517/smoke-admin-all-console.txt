@@ -1,0 +1,226 @@
+
+> traveltrust-frontend@0.1.0 e2e:chromium:smoke-admin-all
+> node ./scripts/run-e2e-default.mjs --project=chromium e2e/smoke-admin.spec.ts e2e/smoke-admin-extended.spec.ts
+
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] DATABASE_URL loaded from repo root .env
+[e2e] P3_CHAIN_OFF loaded from repo root .env
+[e2e] TRAVELTRUST_EMAIL_TRANSPORT=log (auth forgot/verify; resend incomplete or transport off)
+[e2e] TRAVELTRUST_AUTH_TOKEN_PEPPER set (Playwright dev default; set in root .env to override)
+[e2e] P3_CHAIN_OFF=1 (chromium mock-pay contract; root .env had "0"; use PLAYWRIGHT_PRESERVE_ROOT_P3_CHAIN_OFF=1 + run-e2e-sepolia for chain-on)
+sync-frontend-env: wrote D:\TravelTrust\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080 + NEXT_PUBLIC_SKIP_ME_FETCH=0 + NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI=1
+[e2e] PLAYWRIGHT_REUSE_FE_SERVER=0 + reclaimed FE listen port (default for PLAYWRIGHT_FULL_STACK=1 so Next picks .env.local SKIP_ME; set PLAYWRIGHT_REUSE_FE_SERVER=1 to reuse)
+[e2e] PLAYWRIGHT_FE_USE_PRODUCTION_START=1 — reuse existing .next production build (delete .next or unset PLAYWRIGHT_SKIP_FE_BUILD to force rebuild)
+[e2e] NODE_OPTIONS += --max-old-space-size=16384 (full-stack local; long suite / Next dev OOM guard; PLAYWRIGHT_SKIP_E2E_NODE_HEAP=1 to opt out)
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 11.02s
+[1A[2K[WebServer]     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.30s
+
+[1A[2K[WebServer]      Running `target\debug\traveltrust-api.exe`
+
+[1A[2K[WebServer] [req] x-request-id=f0aa2511-e230-4751-a01b-7d952d9a4fe5 path=/health status=200
+[WebServer] [req] x-message-id=01e1f124-a69b-4071-b7fa-e6bf21467717 path=/health status=200
+
+
+Running 54 tests using 1 worker
+
+[1A[2K(node:25396) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:25396) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/54] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:27:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K[WebServer] [req] x-request-id=a7481bd0-6c5b-4286-a787-eb6bd151ac05 path=/meta status=200
+[WebServer] [req] x-message-id=cda405f8-3800-453e-badd-8089676c5465 path=/meta status=200
+
+[1A[2K[2/54] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:39:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K[WebServer] [req] x-request-id=1e93db17-ce86-4235-82e8-cc4bba0b75fd path=/meta status=200
+[WebServer] [req] x-message-id=e7f93a77-7cba-45ef-a3a8-b84d10d58244 path=/meta status=200
+
+[1A[2K(node:29500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:29500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[3/54] [chromium] › e2e\smoke-admin-extended.spec.ts:17:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 配置中心页可访问
+[1A[2K[4/54] [chromium] › e2e\smoke-admin-extended.spec.ts:26:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 功能开关页可访问
+[1A[2K[WebServer] [req] x-request-id=ad5ca892-4da9-45e4-a09e-0a579e81fb1e path=/meta status=200
+[WebServer] [req] x-message-id=cd120c14-9533-4e16-969e-405118f98554 path=/meta status=200
+
+[1A[2K[5/54] [chromium] › e2e\smoke-admin-extended.spec.ts:35:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 异步任务队列页可访问
+[1A[2K[WebServer] [req] x-request-id=974cf926-91d4-4b35-91cb-ae2e9d9ce2fa path=/meta status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] d028c6a7-4e7d-4a77-8361-ca75294c943d path=/meta status=200
+
+[1A[2K[6/54] [chromium] › e2e\smoke-admin-extended.spec.ts:44:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 配置发布登记页可访问
+[1A[2K[WebServer] [req] x-request-id=5cc901e5-203b-4c47-9153-55834c2e6d3b path=/meta status=200
+[WebServer] [req] x-message-id=40205ee2-6d0a-4f41-a763-3481383f8864 path=/meta status=200
+
+[1A[2K[7/54] [chromium] › e2e\smoke-admin-extended.spec.ts:53:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 调度运行记录页可访问
+[1A[2K[WebServer] [req] x-request-id=cdc9c26a-7350-49be-85d6-8b53dea8ce31 path=/meta status=200
+[WebServer] [req] x-message-id=0865ae30-46c9-4a5b-a48f-a060fd5ee6e6 path=/meta status=200
+
+[1A[2K[8/54] [chromium] › e2e\smoke-admin-extended.spec.ts:62:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin Secret 元数据页可访问
+[1A[2K[WebServer] [req] x-request-id=80228fc1-af90-4092-ac36-1db8d61f5b26 path=/meta status=200
+[WebServer] [req] x-message-id=15d2169e-9ce0-4f71-8aa7-8343b54ea445 path=
+
+[1A[2K[WebServer] /meta status=200
+
+[1A[2K[9/54] [chromium] › e2e\smoke-admin-extended.spec.ts:71:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 租户与区域作用域页可访问
+[1A[2K[WebServer] [req] x-request-id=e957b565-2c4a-4aaa-9f9a-f99b45ea24f4 path=/meta status=200
+[WebServer] [req] x-message-id=1f40adfc-462e-42dd-9d69-cda379192260 path=/meta status=200
+
+[1A[2K[10/54] [chromium] › e2e\smoke-admin-extended.spec.ts:80:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 社区申诉台账页可访问
+[1A[2K[WebServer] [req] x-request-id=e76b8c38-14df-4811-8203-09d51a431b2c path=/meta status=200
+[WebServer] [req] x-message-id=23a7ca5c-86dc-4f15-bb73-a0b982facd9e path=/meta status=200
+
+[1A[2K[11/54] [chromium] › e2e\smoke-admin-extended.spec.ts:89:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 社区审核审计行页可访问
+[1A[2K[WebServer] [req] x-request-id=0d59916b-5b4f-4562-ba44-708268006ffa path=/meta status=200
+[WebServer] [req] x-message-id=d3a74dc0-95ac-4609-9838-d00c11f6b212 path=/meta status=200
+
+[1A[2K[12/54] [chromium] › e2e\smoke-admin-extended.spec.ts:101:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin 社区风险信号页可访问
+[1A[2K[WebServer] [req] x-request-id=da58a59a-481e-4488-b38b-9f2bc61e7a22 path=/meta status=200
+[WebServer] [req] x-message-id=173e35ad-c32a-4f8f-8004-651a2a7e6619 path=/meta status=200
+
+[1A[2K[13/54] [chromium] › e2e\smoke-admin-extended.spec.ts:110:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台配置中心、任务调度与社区运营扩展（07 §5.8·Wave·160·70 可达性） › Admin API 版本页可访问
+[1A[2K[WebServer] [req] x-request-id=30b07563-a16f-4132-806f-6ff9f9347243 path=/meta status=200
+[WebServer] [req] x-message-id=74c74276-f7c0-44b1-b43b-f96a7b75ceb2 path=/meta status=200
+
+[1A[2K[14/54] [chromium] › e2e\smoke-admin-extended.spec.ts:121:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 社区策略变更审计页可访问
+[1A[2K[WebServer] [req] x-request-id=d3e96306-5409-43fa-9a0d-75bf0844beed path=/meta status=200
+[WebServer] [req] x-message-id=e31aac9a-e9d1-49fe-b70b-1dce6f607d7e path=/meta status=200
+
+[1A[2K[15/54] [chromium] › e2e\smoke-admin-extended.spec.ts:133:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin Feed 排序快照页可访问
+[1A[2K[WebServer] [req] x-request-id=d626bcdb-1392-44a6-84d6-c6df029b7a54 path=/meta status=200
+[WebServer] [req] x-message-id=1d20c8f7-5249-4345-b947-e8e39753f421 path=/meta status=200
+
+[1A[2K[16/54] [chromium] › e2e\smoke-admin-extended.spec.ts:142:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 社区处罚台账页可访问
+[1A[2K[WebServer] [req] x-request-id=9009510a-d072-41fb-b6ac-b919f96b13b0 path=/meta status=200
+[WebServer] [req] x-message-id=dad426a0-d688-49da-be57-2a5b051927f8 path=/meta status=200
+
+[1A[2K[17/54] [chromium] › e2e\smoke-admin-extended.spec.ts:151:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 评论可见性页可访问
+[1A[2K[18/54] [chromium] › e2e\smoke-admin-extended.spec.ts:160:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 社区滥用策略页可访问
+[1A[2K[19/54] [chromium] › e2e\smoke-admin-extended.spec.ts:169:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 生命周期状态机页可访问
+[1A[2K[WebServer] [req] x-request-id=166097c6-16ad-4560-bc39-4e3c185327d3 path=/meta status=200
+[WebServer] [req] x-message-id=be989ca7-66be-4749-adfb-61b079079745 path=
+
+[1A[2K[WebServer] /meta status=200
+
+[1A[2K[20/54] [chromium] › e2e\smoke-admin-extended.spec.ts:178:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 数据权限策略页可访问
+[1A[2K[WebServer] [req] x-request-id=0d86bfe8-3e53-4203-94b0-86289249468a path=/meta status=200
+[WebServer] [req] x-message-id=20e6c2d1-2508-48dd-b95b-be56f58efe69 path=/meta status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[21/54] [chromium] › e2e\smoke-admin-extended.spec.ts:187:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 内部工具审计页可访问
+[1A[2K[WebServer] [req] x-request-id=5ed51dcb-dbfb-41b4-97db-c04730e34974 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-message-id=e9651c59-5195-48ed-bd8f-30e7c428892b path=/meta status=200
+
+[1A[2K[22/54] [chromium] › e2e\smoke-admin-extended.spec.ts:196:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 媒体访问审计页可访问
+[1A[2K[WebServer] [req] x-request-id=2db730b0-3418-44d5-ac77-26b07b7e07c2 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-message-id=91d3964b-b5b6-4af9-88af-9eaa275199c6 path=/meta status=200
+
+[1A[2K[23/54] [chromium] › e2e\smoke-admin-extended.spec.ts:205:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 签名 URL 令牌台账页可访问
+[1A[2K[WebServer] [req] x-request-id=6b46f6bc-79d3-4a45-8fe6-7e30b88f8f06 path=/meta status=200
+[WebServer] [req] x-message-id=fb17e055-844a-4cbb-8459-76c8bc4f67d1 path=/meta status=200
+
+[1A[2K[24/54] [chromium] › e2e\smoke-admin-extended.spec.ts:217:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台社区策略、生命周期、策略与媒体审计（160 / 70 / 07 §5.3B·§5.6C 可达性·补全） › Admin 社区申诉复核页可访问
+[1A[2K[WebServer] [req] x-request-id=7f13f02f-31ad-4f15-823b-5fde91c90688 path=/meta status=200
+[WebServer] [req] x-message-id=ebeecbc9-18a9-4926-a15f-dd9c451ba742 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=ee728186-d706-407b-a5c8-8b5f91bedf6b path=/meta status=200
+[WebServer] [req] x-message-id=d84240f5-39bc-4c22-bdfb-d27802113e87 path=/meta status=200
+
+[1A[2K[25/54] [chromium] › e2e\smoke-admin-extended.spec.ts:228:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 订单详情页可访问（占位 id）
+[1A[2K[26/54] [chromium] › e2e\smoke-admin-extended.spec.ts:237:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 争议详情页可访问（占位 id）
+[1A[2K[27/54] [chromium] › e2e\smoke-admin-extended.spec.ts:246:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 用户详情页可访问（占位 id）
+[1A[2K[28/54] [chromium] › e2e\smoke-admin-extended.spec.ts:255:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 向导详情页可访问（占位 id）
+[1A[2K[29/54] [chromium] › e2e\smoke-admin-extended.spec.ts:264:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 评价详情页可访问（占位 id）
+[1A[2K[30/54] [chromium] › e2e\smoke-admin-extended.spec.ts:273:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 审批单详情页可访问（占位 id）
+[1A[2K[31/54] [chromium] › e2e\smoke-admin-extended.spec.ts:282:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 审计日志详情页可访问（占位 id）
+[1A[2K[32/54] [chromium] › e2e\smoke-admin-extended.spec.ts:291:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 索引器对账报告详情页可访问（占位 report id）
+[1A[2K[33/54] [chromium] › e2e\smoke-admin-extended.spec.ts:300:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 配置发布详情页可访问（占位 id）
+[1A[2K[34/54] [chromium] › e2e\smoke-admin-extended.spec.ts:309:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台占位详情与单条报告页（70 / 110 / 07 §5.1·§5.6A·§5.7 路由可达） › Admin 告警 incident 详情页可访问（占位 id）
+[1A[2K[35/54] [chromium] › e2e\smoke-admin-extended.spec.ts:320:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台 DSAR 合规子页（500 / 70 / 07 §5.6C 可达性） › Admin DSAR 事件轴页可访问（占位 requestId）
+[1A[2K[36/54] [chromium] › e2e\smoke-admin-extended.spec.ts:330:9 › 管理后台烟雾·配置/策略/详情（自 smoke-admin.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台 DSAR 合规子页（500 / 70 / 07 §5.6C 可达性） › Admin DSAR 登记更新页可访问（占位 requestId）
+[1A[2K[37/54] [chromium] › e2e\smoke-admin.spec.ts:17:7 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台首页可访问（middleware 占位 Cookie）
+[1A[2K[WebServer] [req] x-request-id=65123143-f7a2-4210-91ae-c6a04c6094d5 path=/meta status=200
+[WebServer] [req] x-message-id=b875a9fa-9360-4c21-84f7-c7d65a2ba5c9 path=/meta status=200
+
+[1A[2K[38/54] [chromium] › e2e\smoke-admin.spec.ts:26:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台 FeeRouter、索引器、对账与财务（5.2A / 110 / 200 / 07 §5.7 可达性） › Admin FeeRouter 事件页可访问
+[1A[2K[39/54] [chromium] › e2e\smoke-admin.spec.ts:35:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台 FeeRouter、索引器、对账与财务（5.2A / 110 / 200 / 07 §5.7 可达性） › Admin 财务摘要页可访问
+[1A[2K[WebServer] [req] x-request-id=ebeef399-786b-4844-8b5f-21fa9930fa2e path=/meta status=200
+[WebServer] [req] x-message-id=c286de9c-f0df-480e-8220-04cfb587c3b7
+
+[1A[2K[WebServer]  path=/meta status=200
+
+[1A[2K[40/54] [chromium] › e2e\smoke-admin.spec.ts:44:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台 FeeRouter、索引器、对账与财务（5.2A / 110 / 200 / 07 §5.7 可达性） › Admin 索引器健康页可访问
+[1A[2K[41/54] [chromium] › e2e\smoke-admin.spec.ts:53:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台 FeeRouter、索引器、对账与财务（5.2A / 110 / 200 / 07 §5.7 可达性） › Admin 对账报告列表页可访问
+[1A[2K[WebServer] [req] x-request-id=cfcc1b7c-2a3f-442b-8c34-06edcbaf2efe path=/meta status=200
+[WebServer] [req] x-message-id=971f4b6e-18cf-4cd4-8246-6c7d4545ba46 path=/meta status=200
+
+[1A[2K[42/54] [chromium] › e2e\smoke-admin.spec.ts:64:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 订单列表页可访问
+[1A[2K[WebServer] [req] x-request-id=94523653-38d7-4b02-8105-b54bc0060ab9 path=/meta status=200
+[WebServer] [req] x-message-id=d6c3f33f-98db-41e8-9594-7f58ffe5e9ce path=/meta status=200
+
+[1A[2K[43/54] [chromium] › e2e\smoke-admin.spec.ts:73:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 争议列表页可访问
+[1A[2K[WebServer] [req] x-request-id=80f53b7c-44de-4e61-9db4-abc52821b613 path=/meta status=200
+[WebServer] [req] x-message-id=454c69aa-9900-4614-80ba-e5d68f3267e1 path=/meta status=200
+
+[1A[2K[44/54] [chromium] › e2e\smoke-admin.spec.ts:82:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 评价列表页可访问
+[1A[2K[WebServer] [req] x-request-id=4df39003-3159-40d8-a697-a39f33aed4b2 path=/meta status=200
+[WebServer] [req] x-message-id=6fd3ccd8-fe34-49c2-ac18-7364a1f5b22c path=/meta status=200
+
+[1A[2K[45/54] [chromium] › e2e\smoke-admin.spec.ts:91:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 用户列表页可访问
+[1A[2K[WebServer] [req] x-request-id=9534fe49-82d5-49f7-8d24-4134c23f119b path=/meta status=200
+[WebServer] [req] x-message-id=5b9b2f0f-3b49-44f3-9cb4-f6a9b348111c path=/meta status=200
+
+[1A[2K[46/54] [chromium] › e2e\smoke-admin.spec.ts:100:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 向导入驻台账页可访问
+[1A[2K[WebServer] [req] x-request-id=724e629f-508a-472f-85ea-58ff31e819d9 path=/meta status=200
+[WebServer] [req] x-message-id=0faf56dc-431d-4173-95fd-e85da5c633be path=/meta status=200
+
+[1A[2K[47/54] [chromium] › e2e\smoke-admin.spec.ts:109:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 审批列表页可访问
+[1A[2K[WebServer] [req] x-request-id=dc651a8e-cbcc-4242-8be2-768810095a5c path=/meta status=200
+[WebServer] [req] x-message-id=09ee51f2-d704-4e83-aa7d-f9fe510f0c90 path=/meta status=200
+
+[1A[2K[48/54] [chromium] › e2e\smoke-admin.spec.ts:118:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台订单、争议、评价、审批、可观测性与用户向导（70 / 120 / 07 §5.1·§5.6A·§5.6C 可达性） › Admin 可观测性页可访问
+[1A[2K[49/54] [chromium] › e2e\smoke-admin.spec.ts:129:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台审计、告警、社区风控与合规台账（70 / 100 / 120 / 160 / 07 §5.3B·§5.6C 可达性） › Admin 审计日志列表页可访问
+[1A[2K[WebServer] [req] x-request-id=81619e2d-06eb-44df-ad79-28e782875d6a path=/meta status=200
+[WebServer] [req] x-message-id=60d959b3-cf51-4bd0-8590-ffb286a010d5 path=/meta status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[50/54] [chromium] › e2e\smoke-admin.spec.ts:138:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台审计、告警、社区风控与合规台账（70 / 100 / 120 / 160 / 07 §5.3B·§5.6C 可达性） › Admin 运维审计动作页可访问
+[1A[2K[WebServer] [req] x-request-id=7f44fa2f-8d4f-49ea-a6ad-08934fd2e9a4 path=/meta status=200
+[WebServer] [req] x-message-id=3b297707-fd83-4f06-b649-0da754e03698 path=/meta status=200
+
+[1A[2K[51/54] [chromium] › e2e\smoke-admin.spec.ts:147:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台审计、告警、社区风控与合规台账（70 / 100 / 120 / 160 / 07 §5.3B·§5.6C 可达性） › Admin 告警 incident 入口页可访问
+[1A[2K[WebServer] [req] x-request-id=3153b16f-849b-4d24-bf2c-03510f09f766 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-message-id=2f82c3e1-1e7a-44e6-aab0-02450393e6be path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=735b76a3-fb1d-4ee8-a5fc-7c1683d837b1 path=/meta status=200
+[WebServer] [req] x-message-id=5065b937-b33b-429f-9c17-fb098604bab2 path=/meta status=200
+
+[1A[2K[52/54] [chromium] › e2e\smoke-admin.spec.ts:156:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台审计、告警、社区风控与合规台账（70 / 100 / 120 / 160 / 07 §5.3B·§5.6C 可达性） › Admin 社区举报工单页可访问
+[1A[2K[WebServer] [req] x-request-id=51d197d4-acca-46fc-9715-e5fd239f8c19 path=/meta status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 3ed9b327-b4f3-4ade-99d3-f47b493d503f path=/meta status=200
+
+[1A[2K[53/54] [chromium] › e2e\smoke-admin.spec.ts:165:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台审计、告警、社区风控与合规台账（70 / 100 / 120 / 160 / 07 §5.3B·§5.6C 可达性） › Admin Schema 与迁移页可访问
+[1A[2K[54/54] [chromium] › e2e\smoke-admin.spec.ts:174:9 › 管理后台烟雾（自 smoke.spec.ts 拆分 · 同一 Cookie 与断言） › 管理后台审计、告警、社区风控与合规台账（70 / 100 / 120 / 160 / 07 §5.3B·§5.6C 可达性） › Admin DSAR 请求台账页可访问
+[1A[2K[WebServer] [req] x-request-id=65e9f286-4bb4-4f90-bdbd-fda55bb24b54 path=/meta status=200
+[WebServer] [req] x-message-id=e1a97456-f00c-4dad-bf3e-f7c29886e5a8 path=/meta status=200
+
+[1A[2K  54 passed (39.9s)

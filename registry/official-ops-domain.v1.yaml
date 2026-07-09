@@ -1,0 +1,78 @@
+# Official Ops Domain Freeze (v1.0)
+# Charter: docs/runbook/TT-OFFICIAL-OPS-CAPABILITY-MATRIX.md §「Official Ops 1.0 · 域冻结」
+# Public Operations SSOT: docs/runbook/TT-OFFICIAL-OPS-PUBLIC-OPERATIONS-SSOT.md
+
+domain: official_ops
+status: STABLE
+version: "1.0"
+architecture: FROZEN
+dev_frozen: true
+feature_frozen: true
+defer_enhancements_until: PRODUCTION_GO
+active_program: PHASE3_PRODUCTION_READINESS
+active_program_doc: docs/runbook/PHASE3-PRODUCTION-PREPARATION.md
+
+capability_matrix: docs/runbook/TT-OFFICIAL-OPS-CAPABILITY-MATRIX.md
+capability_matrix_registry: registry/official-ops-capability-matrix.v1.yaml
+public_operations_ssot: docs/runbook/TT-OFFICIAL-OPS-PUBLIC-OPERATIONS-SSOT.md
+public_operations_registry: registry/public-operations-mvp.v1.yaml
+gate: scripts/gates/check-official-ops-public-operations-ssot.sh
+
+maturity_layers:
+  layer1_positioning: COMPLETE
+  layer2_planes: COMPLETE
+  layer3_modules: COMPLETE
+  layer4_capability_matrix: COMPLETE
+
+frozen_at_1_0:
+  content_center: true
+  official_ops_ops_plane: true
+  public_operations_mvp: true
+  capability_matrix: true
+  cold_start_campaign: true
+
+admin_planes:
+  content_center:
+    route: /admin/content
+    ssot: CONTENT_CENTER
+    cms_freeze: C-S1_C-S5
+  official_ops:
+    route: /admin/official
+    modules:
+      - official_accounts
+      - official_guides
+      - itinerary_templates
+      - cold_start_campaign
+      - public_operations_mvp
+
+version_roadmap:
+  "1.0":
+    status: STABLE
+    scope: architecture_and_mvp_frozen
+  "1.1":
+    status: PLANNED
+    scope: post_production_go_phase2
+    features:
+      - publish_unpublish
+      - featured
+      - priority
+      - surface_entity_level
+      - display_model
+  "1.2":
+    status: PLANNED
+    scope: post_production_go_phase3
+    features:
+      - campaign_menu_merge
+      - schedule
+      - public_operations_console
+  "2.0":
+    status: PLANNED
+    scope: post_production_go_phase4
+    features:
+      - production_policy_hardening
+      - three_env_mock_removal
+
+architecture_discipline: |
+  Official Ops 1.0 admin routes, dual-plane boundary (Content Center vs Official Ops),
+  and Public Operations logic layers (Publish → Surface → Campaign) must not be overturned.
+  Enhancements ship as 1.1+ features within this architecture, not as 1.0 redesign.

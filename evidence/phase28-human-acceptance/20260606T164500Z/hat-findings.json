@@ -1,0 +1,109 @@
+{
+  "phase": "②.8 Human Acceptance Test",
+  "recorded_at": "2026-06-06T16:47:19.027Z",
+  "targets": {
+    "web": "https://tt-web-staging.fly.dev",
+    "api": "https://tt-api-staging.fly.dev"
+  },
+  "verdict": "NO-GO",
+  "summary": {
+    "p0": 1,
+    "p1": 2,
+    "p2": 0,
+    "flows_pass": 5,
+    "flows_fail": 1,
+    "flows_partial": 2,
+    "flows_blocked": 0
+  },
+  "issues": [
+    {
+      "id": "HAT-B-001",
+      "role": "管理员",
+      "area": "错误边界",
+      "route": "/admin/disputes",
+      "priority": "P0",
+      "title": "页面崩溃边界可见",
+      "observation": "error boundary rendered",
+      "human_impact": "用户无法继续使用该页"
+    },
+    {
+      "id": "HAT-B-002",
+      "role": "管理员",
+      "area": "主内容",
+      "route": "/admin/inbox",
+      "priority": "P1",
+      "title": "主区域文案不匹配",
+      "observation": "/Inbox|收件/i",
+      "human_impact": "用户可能看到空列表或错误页"
+    },
+    {
+      "id": "HAT-B-003",
+      "role": "管理员",
+      "area": "主内容",
+      "route": "/admin/provider-applications",
+      "priority": "P1",
+      "title": "主区域文案不匹配",
+      "observation": "/Provider|商家|Application|申请/i",
+      "human_impact": "用户可能看到空列表或错误页"
+    }
+  ],
+  "flows": [
+    {
+      "role": "管理员",
+      "flow": "页面壳",
+      "step": "/admin",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/orders",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/users",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/finance",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/disputes",
+      "status": "FAIL",
+      "notes": "error boundary"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/community/reports",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/inbox",
+      "status": "PARTIAL",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/provider-applications",
+      "status": "PARTIAL",
+      "notes": ""
+    }
+  ],
+  "boundary": "Human-visible HAT · browser + API probe · not Production GO"
+}

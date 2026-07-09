@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.dangerous_permission_report.v1",
+  "high_risk_ops": [
+    "admin user suspend",
+    "order force transition",
+    "governance parameter change",
+    "rbac matrix mutate"
+  ],
+  "gates": [
+    "run-admin-security-closure-audit.sh",
+    "smoke-admin-rbac-matrix-local.sh"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "phase2_sepolia_fundstack_dry_run_precheck.v1",
+  "timestamp_utc": "20260605T084840Z",
+  "chain_id": 11155111,
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "deployer_nonce": "80",
+  "deployer_balance_wei": "4829432169123916976",
+  "timelock_address": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+  "timelock_admin_address": "0x7c018293396325077bb4D039930dcEe11B7Fb1Cf",
+  "safe_admin_path": true,
+  "broadcast": false,
+  "simulated_addresses": {
+    "fee_router_address": "0x81A8009210c5215100564c6E4123F672c4459306",
+    "region_vault_address": "0x2Ea061d50393c09af2f607Ee9f89679642A3a65B",
+    "treasury_address": "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be",
+    "reserve_vault_address": "0xbC541FAf26e139eF1f0AC22b52c4b4F85FFF7855",
+    "escrow_factory_address": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+    "guide_staking_pool_address": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f"
+  },
+  "binding_check": "FUNDSTACK_BINDING_CHECK: OK",
+  "gas_estimate_note": "Estimated total gas used for script: 18782129 Estimated amount required: 0.684992315010317236 ETH ",
+  "forge_log": "forge-fundstack-dry-run-20260605T084840Z.log",
+  "ssot": "docs/runbook/TT-PHASE2-FUND-STACK-SEPOLIA-BROADCAST-CHECKLIST.md"
+}

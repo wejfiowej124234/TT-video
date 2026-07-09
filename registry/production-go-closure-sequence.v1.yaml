@@ -1,0 +1,127 @@
+# Production GO Closure Sequence · Machine SSOT (2026-07-08 correction)
+#
+# Stripe is NOT in the main chain. Web3 Payment is step ② after OCS Bootstrap.
+
+schema: traveltrust.production_go_closure_sequence.v1
+version: 2
+effective_utc: "2026-07-08"
+machine_key: TT_PRODUCTION_GO_CLOSURE_SEQUENCE
+
+four_gate_framework: registry/production-go-four-gate-framework.v1.yaml
+four_gate_runbook: docs/runbook/PRODUCTION-GO-FOUR-GATE-FRAMEWORK.md
+four_gate_runner: scripts/check-production-go-four-gates.sh
+
+payment_architecture_ssot: registry/payment-architecture-classification.v1.yaml
+
+gate_chain_summary:
+  - TT_PRODUCTION_BUSINESS_READY
+  - TT_PRODUCTION_WEB3_READY
+  - TT_PRODUCTION_INFRASTRUCTURE_READY
+  - TT_PRODUCTION_OPERATIONS_READY
+  - TT_OWNER_FINAL_SIGNOFF
+  - TT_PRODUCTION_GO
+
+gate_mapping:
+  L1_BUSINESS: GATE-1
+  L2_WEB3: GATE-2
+  L3_INFRASTRUCTURE: GATE-3
+  L4_OPERATIONS: GATE-4
+sequence:
+  - step: 1
+    id: OCS_PRODUCTION_BOOTSTRAP
+    title: OCS Production Bootstrap (Official Cold Start)
+    machine_keys: [OCS_PRODUCTION_BOOTSTRAP, OCS_PRODUCTION_PARITY_AUDIT, TT_OCS_PROD_BOOTSTRAP]
+    g3_domain: null
+    production_p0: true
+    status: PASS
+
+  - step: 2
+    id: WEB3_PAYMENT_PRODUCTION_VERIFICATION
+    title: Web3 Payment Production Verification (USDC + Escrow · Payment Rail only)
+    machine_keys: [TT_WEB3_PAYMENT_PRODUCTION_READY, TT_WEB3_PAYMENT_PRODUCTION_READINESS]
+    g3_domain: G3-02
+    matrix_gap: PRM-WEB3-PAY-B001
+    production_p0: true
+    status: PASS
+    note: Does NOT close TT_WEB3_SYSTEM_PRODUCTION_READY or TT_PRODUCTION_WEB3_READY alone
+
+  - step: 2b
+    id: WEB3_SYSTEM_PRODUCTION_VERIFICATION
+    title: Entire Web3 System Production Verification (M01-M24)
+    machine_keys: [TT_WEB3_SYSTEM_PRODUCTION_READY]
+    production_p0: true
+    status: IN_PROGRESS
+    runbook: docs/runbook/WEB3-SYSTEM-PRODUCTION-RUNTIME-WIRING.md
+    audit_script: scripts/dev/run-web3-system-deep-audit.cjs
+
+  - step: 3
+    id: CMS_FULL_OPERATIONS
+    title: CMS Full Operations Verification
+    machine_keys: [TT_PRODUCTION_OPERATIONS_GO]
+    production_p0: true
+    status: GO
+
+  - step: 4
+    id: API_DATA_LINEAGE_PARITY
+    title: API / Data Lineage / Parity
+    machine_keys: [OCS_PRODUCTION_PARITY_AUDIT]
+    production_p0: true
+    status: PASS
+
+  - step: 5
+    id: CDN_MEDIA
+    title: CDN / Media
+    g3_domain: G3-01
+    matrix_gap: PRM-DOM-B001
+    production_p0: true
+    status: PLANNED
+
+  - step: 6
+    id: DOMAIN_TLS_CORS
+    title: Domain / TLS / CORS
+    g3_domain: G3-01
+    pi3_ref: PI3-002
+    production_p0: true
+    status: PLANNED
+
+  - step: 7
+    id: MONITORING_ALERT
+    title: Monitoring / Alert
+    g3_domain: G3-04
+    production_p0: true
+    status: PLANNED
+
+  - step: 8
+    id: BACKUP_ROLLBACK
+    title: Backup / Rollback
+    g3_domain: G3-03
+    pi3_ref: PI3-001
+    matrix_gaps: [PRM-DR-B001, PRM-DR-B002]
+    production_p0: true
+    status: PLANNED
+
+  - step: 9
+    id: SECURITY_REVIEW
+    title: Security Review
+    production_p0: true
+    status: PLANNED
+
+  - step: 10
+    id: OWNER_FINAL_SIGNOFF
+    title: Owner Final Sign-off
+    machine_keys: [TT_PRODUCTION_GO, TT_OWNER_FINAL_SIGNOFF]
+    g3_domain: G3-06
+    production_p0: true
+    status: PENDING
+
+optional_extensions:
+  - id: STRIPE_FIAT_ONBOARDING
+    title: Optional Fiat Onboarding (Stripe PI3-003)
+    classification: P1_FUTURE_FIAT_ONRAMP
+    in_main_sequence: false
+    blocks_production_go: false
+    when_required: TRAVELTRUST_ONBOARDING_STRIPE_ENABLED=1
+
+forbidden_in_main_sequence:
+  - stripe_live_as_core_payment
+  - pi3_003_as_p0_payment_gate

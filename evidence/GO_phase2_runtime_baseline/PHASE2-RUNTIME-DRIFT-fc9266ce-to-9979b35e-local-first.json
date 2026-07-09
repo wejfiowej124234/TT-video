@@ -1,0 +1,47 @@
+{
+  "schema": "traveltrust.phase2_runtime_drift_analysis.v1",
+  "analyzed_at_utc": "2026-06-30T05:10:14Z",
+  "phase": "② testnet",
+  "baseline": {
+    "label": "Phase② Graduation Runtime (immutable)",
+    "git_sha": "fc9266ce94f18810420e720bb933946c086ce909",
+    "staging_api": "https://tt-api-staging.fly.dev",
+    "soak_baseline_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7"
+  },
+  "compare": {
+    "git_sha": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+    "label": "Local First sync deploy (Phase② closure slice)",
+    "diff_range": "fc9266ce94f18810420e720bb933946c086ce909..9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+    "commits_intentional": true
+  },
+  "verdict": {
+    "runtime_drift": "LOCAL_FIRST_INTENTIONAL",
+    "uncontrolled_drift": "NONE",
+    "local_first_sync_complete": true
+  },
+  "retest_evidence": {
+    "r003_staging_regression": {
+      "release_gate": "GO",
+      "cases": 12,
+      "report": "evidence/GO_phase2_testnet_20260526/report.json"
+    },
+    "adm_u01_staging": {
+      "release_gate": "GO",
+      "api_matrix": "102/102",
+      "playwright_shell": "GO",
+      "run_id": "adm_u01_localfirst_retest3_20260630",
+      "evidence": "evidence/GO_staging_admin_rbac_matrix/adm_u01_localfirst_retest3_20260630"
+    },
+    "uat_cross_domain": {
+      "test": "跨域 · meta 同源代理 + CORS /governance",
+      "verdict": "PASS"
+    },
+    "deep_release_gate": {
+      "verdict": "PASS",
+      "release_gate": "GO",
+      "evidence": "evidence/GO_phase2_testnet_20260526/local-staging-parity/20260630T041949Z/deep-release-gate"
+    },
+    "transient_failures_ruled_out": true,
+    "notes": "Prior SSL/ERR_CONNECTION_CLOSED failures reproduced as client-path flakes; stable-window retest all PASS."
+  }
+}

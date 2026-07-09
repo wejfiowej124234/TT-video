@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T23:32:42Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "釜山",
+    "city_en": "Busan",
+    "matrix_ids": [
+      "PH-KR-047-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-KR-047-FOOD",
+      "legacy_value": "生鱼片",
+      "poi_id": "5e6ac1ce-84d7-44e2-9799-6bb8c2f7d289",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-official-guide-cover.jpg",
+      "hero_file": "ocs-busan-coast-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-047-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

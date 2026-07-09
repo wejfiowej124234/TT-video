@@ -67,7 +67,9 @@ export PRIVATE_KEY="$PK"
 
 RPC="${CHAIN_RPC_URL:-https://ethereum-sepolia-rpc.publicnode.com}"
 export CHAIN_RPC_URL="$RPC"
-export GOVERNOR_ADDRESS="${GOVERNOR_ADDRESS:-${GOV_FREEZE_V2_GOVERNOR_ADDRESS:-}}}"
+export GOVERNOR_ADDRESS="${GOVERNOR_ADDRESS:-${GOV_FREEZE_V2_GOVERNOR_ADDRESS:-}}"
+GOVERNOR_ADDRESS="$(echo "$GOVERNOR_ADDRESS" | tr -d '\r\n')"
+export GOVERNOR_ADDRESS
 [[ -n "$GOVERNOR_ADDRESS" ]] || { echo "cert7-execute-evidence: GOVERNOR_ADDRESS unset" >&2; exit 2; }
 
 PID="$(cat "$HAT_EVID/MINIMAL_PROPOSAL_ID.txt" 2>/dev/null | tr -d '\r\n' || true)"
@@ -90,10 +92,10 @@ hat_r1_save_json "$HAT_EVID/step-07-execute/post-execute-state.json" "$(jq -n \
   --arg tx "$EXEC_TX" \
   --arg eta "$ETA" \
   --arg now "$NOW" \
-  '{proposal_id:$pid,state:$st,want:"5=Executed",execute_tx:$tx,execute_earliest_unix:$eta,executed_at_unix:$now,no_force_execute:true}')"
+  '{proposal_id:$pid,state:$st,want:"6=Executed",execute_tx:$tx,execute_earliest_unix:$eta,executed_at_unix:$now,no_force_execute:true}')"
 
-[[ "$ST" == "5" ]] || {
-  echo "cert7-execute-evidence: WARN post-execute state=${ST} want 5 (Executed)" >&2
+[[ "$ST" == "6" ]] || {
+  echo "cert7-execute-evidence: WARN post-execute state=${ST} want 6 (Executed)" >&2
 }
 
 echo "CERT7_HAT_R1_EXECUTE: OK tx=${EXEC_TX} state=${ST}"

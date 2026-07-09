@@ -7,8 +7,8 @@
  * 机读：$ADM_U01_EVIDENCE_DIR/playwright-shell-matrix.json
  * 复跑：cd frontend && ADM_U01_STAGING=1 STAGING_FE_BASE=… npx playwright test e2e/admin-rbac-staging-six-roles.spec.ts --project=chromium
  */
-import { mkdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 
 import { test, expect } from "@playwright/test";
 
@@ -29,9 +29,15 @@ const feBase = (
   ""
 ).replace(/\/$/, "");
 const stagingFeProbe = (process.env.STAGING_FE_BASE ?? "").replace(/\/$/, "");
-const evidenceDir =
-  process.env.ADM_U01_EVIDENCE_DIR?.trim() ||
-  join(process.cwd(), "..", "evidence", "GO_staging_admin_rbac_matrix", "latest");
+const evidenceDir = (() => {
+  const raw =
+    process.env.ADM_U01_EVIDENCE_DIR?.trim() ||
+    join(process.cwd(), "..", "evidence", "GO_staging_admin_rbac_matrix", "latest");
+  if (/^evidence[/\\]/.test(raw)) {
+    return resolve(process.cwd(), "..", raw);
+  }
+  return resolve(raw);
+})();
 
 type ShellRow = {
   role: AdmU01Role;
@@ -41,7 +47,44 @@ type ShellRow = {
   status: "PASS" | "FAIL";
 };
 
-const shellResults: ShellRow[] = [];
+function playwrightShellEvidencePath() {
+  return join(evidenceDir, "playwright-shell-matrix.json");
+}
+
+function mergeRoleShellRows(role: AdmU01Role, roleRows: ShellRow[]) {
+  const path = playwrightShellEvidencePath();
+  let rows: ShellRow[] = [];
+  try {
+    if (existsSync(path)) {
+      const parsed = JSON.parse(readFileSync(path, "utf-8")) as { rows?: ShellRow[] };
+      rows = (parsed.rows ?? []).filter((row) => row.role !== role);
+    }
+  } catch {
+    rows = [];
+  }
+  rows.push(...roleRows);
+  const fails = rows.filter((row) => row.status === "FAIL");
+  const payload = {
+    artifact: "adm-u01-playwright-shell",
+    phase: "②",
+    staging_fe_probe: stagingFeProbe || feBase,
+    playwright_fe_base: feBase,
+    generated_at: new Date().toISOString(),
+    summary: { total: rows.length, pass: rows.length - fails.length, fail: fails.length },
+    rows,
+  };
+  writeFileSync(path, JSON.stringify(payload, null, 2), "utf-8");
+}
+
+function readShellEvidenceRows(): ShellRow[] {
+  const path = playwrightShellEvidencePath();
+  if (!existsSync(path)) return [];
+  try {
+    return (JSON.parse(readFileSync(path, "utf-8")) as { rows?: ShellRow[] }).rows ?? [];
+  } catch {
+    return [];
+  }
+}
 
 test.describe("ADM-U01 staging · six-role shell visibility @adm-u01-staging", () => {
   test.describe.configure({ timeout: 120_000, mode: "serial" });
@@ -66,21 +109,15 @@ test.describe("ADM-U01 staging · six-role shell visibility @adm-u01-staging", (
 
   test.afterAll(() => {
     if (!enabled) return;
-    const fails = shellResults.filter((r) => r.status === "FAIL");
-    const payload = {
-      artifact: "adm-u01-playwright-shell",
-      phase: "②",
-      staging_fe_probe: stagingFeProbe || feBase,
-      playwright_fe_base: feBase,
-      generated_at: new Date().toISOString(),
-      summary: { total: shellResults.length, pass: shellResults.length - fails.length, fail: fails.length },
-      rows: shellResults,
-    };
-    writeFileSync(
-      join(evidenceDir, "playwright-shell-matrix.json"),
-      JSON.stringify(payload, null, 2),
-      "utf-8",
-    );
+    const fails = readShellEvidenceRows().filter((row) => row.status === "FAIL");
+    if (fails.length > 0) {
+      throw new Error(`ADM-U01 shell matrix failures: ${fails.length}`);
+    }
+    const rows = readShellEvidenceRows();
+    const expected = ADM_U01_ROLES.length * Object.keys(ADM_U01_SHELL_GROUP_VISIBILITY).length;
+    if (rows.length < expected) {
+      throw new Error(`ADM-U01 shell matrix incomplete: ${rows.length}/${expected} rows`);
+    }
   });
 
   for (const role of ADM_U01_ROLES) {
@@ -117,13 +154,14 @@ test.describe("ADM-U01 staging · six-role shell visibility @adm-u01-staging", (
       ]);
       await gotoWithAdminShellSessionReady(page, `${origin}/admin`, { token, userId });
 
+      const roleRows: ShellRow[] = [];
       for (const [groupId, expectations] of Object.entries(ADM_U01_SHELL_GROUP_VISIBILITY)) {
         const expected = expectations[role];
         const loc = page.locator(`[data-tt-admin-shell-nav-group="${groupId}"]`);
         const count = await loc.count();
         const actual = count > 0;
         const status = actual === expected ? "PASS" : "FAIL";
-        shellResults.push({
+        roleRows.push({
           role,
           group_id: groupId,
           expected_visible: expected,
@@ -134,6 +172,7 @@ test.describe("ADM-U01 staging · six-role shell visibility @adm-u01-staging", (
           expect(actual, `${role} shell group ${groupId}`).toBe(expected);
         }
       }
+      mergeRoleShellRows(role, roleRows);
     });
   }
 });

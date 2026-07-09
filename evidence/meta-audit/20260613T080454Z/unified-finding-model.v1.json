@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust.unified_finding.v1",
+  "required_fields": [
+    "id",
+    "layer",
+    "domain",
+    "dim",
+    "severity",
+    "verdict",
+    "title",
+    "rationale",
+    "execution_queue",
+    "evidence_path"
+  ],
+  "severity_enum": [
+    "P0",
+    "P1",
+    "P2",
+    "P3"
+  ],
+  "verdict_enum": [
+    "KEEP",
+    "MERGE",
+    "RETIRE",
+    "REFACTOR",
+    "UPDATE",
+    "DEPRECATE",
+    "REMOVE"
+  ],
+  "execution_queue_enum": [
+    "NOW",
+    "NEXT",
+    "LATER"
+  ]
+}

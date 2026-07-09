@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.closure_readiness_score.v1",
+  "score": 90,
+  "band": "FREEZE_CANDIDATE",
+  "thresholds": {
+    "NO_GO": "<80",
+    "HOLD": "80-89",
+    "FREEZE_CANDIDATE": "90-94",
+    "PHASE1_EXIT_READY": "95+"
+  },
+  "domain_counts": {
+    "COMPLETE": 16,
+    "ACTIVE": 1,
+    "PARTIAL": 0
+  },
+  "phase2_entry_allowed": true
+}

@@ -1,0 +1,32 @@
+{
+  "request_chain": [
+    {
+      "method": "POST",
+      "url": "https://tt-api-prod.fly.dev/auth/logout",
+      "headers": {
+        "Authorization": "Bearer tts_[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "body": {}
+    },
+    {
+      "method": "GET",
+      "url": "https://tt-api-prod.fly.dev/api/v1/me",
+      "headers": {
+        "Authorization": "Bearer tts_[REDACTED]"
+      }
+    }
+  ],
+  "response": {
+    "logout_http": 200,
+    "logout_body": {
+      "status": "ok",
+      "message": "logged_out"
+    },
+    "me_after_http": 401,
+    "me_after_body": {
+      "error": "login_required",
+      "message": "login_required"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_verify.v1",
+  "stamp_utc": "20260704T123426Z",
+  "filename": "ocs-tokyo-photo-community-cover.jpg",
+  "row": {
+    "filename": "ocs-tokyo-photo-community-cover.jpg",
+    "chain_id": "tokyo-photo",
+    "city": "东京",
+    "slot": "community-cover",
+    "surface": "Community Cover",
+    "scene": "街景摄影瞬间 · 交叉路口或神社鸟居 · Feed 缩略",
+    "copy_label": "清晨从浅草寺出发，沿隅田川步行至晴空塔——官方摄影路线一日实录，附机位与时间窗口建议。",
+    "asset_status": "verified",
+    "review_status": "pass"
+  },
+  "checks": [
+    {
+      "id": "media_exists",
+      "pass": true,
+      "detail": "D:\\TravelTrust-V1.1\\data\\official-cold-start\\media\\ocs-tokyo-photo-community-cover.jpg"
+    },
+    {
+      "id": "jpeg_magic",
+      "pass": true,
+      "detail": "ok"
+    },
+    {
+      "id": "min_size_16kb",
+      "pass": true,
+      "detail": "113904 bytes"
+    },
+    {
+      "id": "matrix_asset_status",
+      "pass": true,
+      "detail": "verified"
+    },
+    {
+      "id": "matrix_review_pass",
+      "pass": true,
+      "detail": "pass"
+    }
+  ],
+  "TT_OCS_CONTENT_L5_ROW_VERIFY": "PASS",
+  "gates_manual": {
+    "G2_copy_alignment": "pending_human",
+    "G3_slot_differentiation": "pending_human",
+    "G9_content_authenticity": "pending_human",
+    "G10_content_diversity": "pending_human"
+  }
+}

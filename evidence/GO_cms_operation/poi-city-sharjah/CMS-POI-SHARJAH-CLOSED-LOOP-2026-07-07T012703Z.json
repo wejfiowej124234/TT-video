@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T01:27:03Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AE",
+    "city_zh": "沙迦",
+    "city_en": "Sharjah",
+    "matrix_ids": [
+      "PH-AE-233-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AE-233-ATR",
+      "legacy_value": "遗产区",
+      "poi_id": "1fa5d867-3d73-4334-88d8-e7e2dcf1f7b8",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-233-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

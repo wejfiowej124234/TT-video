@@ -1,0 +1,5 @@
+chain_id=11155111
+internal_api_secret_configured=True
+strict_ssot=True
+strict_session_gate=True
+seed_test_accounts_present=True

@@ -357,8 +357,9 @@ pub async fn order_mock_pay_impl(
     })))
 }
 
-pub async fn order_confirm_completion_impl(
+pub async fn order_confirm_service_completion_impl(
     state: ChainOffState,
+    request_id: Option<&str>,
     order_id: Uuid,
     user_id: Uuid,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
@@ -385,33 +386,72 @@ pub async fn order_confirm_completion_impl(
             Json(crate::api_json::err_key(err_key)),
         ));
     }
-    if !order_before.state.can_transition_to(OrderState::Completed) {
+    if order_before.state != OrderState::Escrowed {
         return Err((
             StatusCode::CONFLICT,
-            Json(
-                json!({"error": "invalid_state", "message": "invalid_state", "current": order_state_to_str(order_before.state)}),
-            ),
+            Json(json!({
+                "error": "invalid_state",
+                "message": "invalid_state",
+                "hint": "仅 Escrowed 订单可确认行程服务完成",
+                "current": order_state_to_str(order_before.state)
+            })),
         ));
     }
+    let guide_user_id = crate::chain_off::order_guide_user_id(&store, &order_before);
     let guide_id = order_before.guide_id;
     let slot_restore = store.guide_slot.get(&guide_id).copied();
-    let order = store.orders.get_mut(&order_id).ok_or((
-        StatusCode::NOT_FOUND,
-        Json(json!({"error": "order_not_found", "message": "order_not_found"})),
-    ))?;
     let now = Utc::now();
-    order.state = OrderState::Completed;
-    order.completed_at = Some(now);
-    order.updated_at = now;
-    let order_clone = order.clone();
-    let (order_id_val, completed_at) = (order_clone.id, order_clone.completed_at);
-    store.guide_slot.remove(&guide_id);
+    let (order_clone, transitioned) = {
+        let order = store.orders.get_mut(&order_id).ok_or((
+            StatusCode::NOT_FOUND,
+            Json(json!({"error": "order_not_found", "message": "order_not_found"})),
+        ))?;
+        if order.tourist_id == user_id {
+            if order.service_tourist_confirmed == Some(true) {
+                return Err((
+                    StatusCode::CONFLICT,
+                    Json(json!({"error": "already_confirmed", "message": "already_confirmed"})),
+                ));
+            }
+            order.service_tourist_confirmed = Some(true);
+        } else if guide_user_id == Some(user_id) {
+            if order.service_guide_confirmed == Some(true) {
+                return Err((
+                    StatusCode::CONFLICT,
+                    Json(json!({"error": "already_confirmed", "message": "already_confirmed"})),
+                ));
+            }
+            order.service_guide_confirmed = Some(true);
+        } else {
+            return Err((
+                StatusCode::FORBIDDEN,
+                Json(json!({"error": "forbidden", "message": "forbidden"})),
+            ));
+        }
+        let both = order.service_tourist_confirmed == Some(true)
+            && order.service_guide_confirmed == Some(true);
+        let transitioned = if both {
+            order.state = OrderState::Completed;
+            order.completed_at = Some(now);
+            order.sub_status = Some("service_completion_confirmed".to_string());
+            true
+        } else {
+            order.sub_status = Some("service_completion_pending".to_string());
+            false
+        };
+        order.updated_at = now;
+        (order.clone(), transitioned)
+    };
+    if transitioned {
+        store.guide_slot.remove(&guide_id);
+    }
+    let order_id_val = order_clone.id;
     drop(store);
     if state.db_pool.is_some() {
         if strict_order_db_write_enabled() {
             if let Err(e) = try_persist_order_to_db(&state, &order_clone).await {
                 eprintln!(
-                    "[audit] strict order_confirm_completion: upsert_order failed order_id={} error={}",
+                    "[audit] strict order_confirm_service_completion: upsert_order failed order_id={} error={}",
                     order_id_val, e
                 );
                 let mut store = state.store.write().await;
@@ -424,7 +464,7 @@ pub async fn order_confirm_completion_impl(
                     Json(json!({
                         "error": "order_db_persist_failed",
                         "message": "order_db_persist_failed",
-                        "rule": "TRAVELTRUST_STRICT_ORDER_DB_WRITE=1; completion reverted in memory",
+                        "rule": "TRAVELTRUST_STRICT_ORDER_DB_WRITE=1; service completion reverted in memory",
                     })),
                 ));
             }
@@ -432,19 +472,42 @@ pub async fn order_confirm_completion_impl(
             persist_order_if_db(&state, &order_clone).await;
         }
     }
-    let _ = schedule_engine::release_slot(guide_id, order_id_val).await;
-    if let Some(ref pool) = state.db_pool {
-        let had_escrow = order_before.escrowed_at.is_some()
-            || order_before
-                .escrow_address
-                .as_deref()
-                .map(str::trim)
-                .is_some_and(|s| !s.is_empty());
-        crate::db::observe_order_completed(pool, order_before.tourist_id, order_id_val, had_escrow)
+    if transitioned {
+        let _ = schedule_engine::release_slot(guide_id, order_id_val).await;
+        if let Some(ref pool) = state.db_pool {
+            let had_escrow = order_before.escrowed_at.is_some()
+                || order_before
+                    .escrow_address
+                    .as_deref()
+                    .map(str::trim)
+                    .is_some_and(|s| !s.is_empty());
+            crate::db::observe_order_completed(
+                pool,
+                order_before.tourist_id,
+                order_id_val,
+                had_escrow,
+            )
             .await;
+        }
     }
+    audit_key_write_stderr("order_confirm_service_completion", request_id, user_id, order_id_val);
     Ok(Json(json!({
         "status": "ok",
-        "order": { "id": order_id_val.to_string(), "status": "completed", "completed_at": completed_at.map(|t| t.to_rfc3339()) }
+        "order": {
+            "id": order_id_val.to_string(),
+            "status": order_state_to_str(order_clone.state),
+            "sub_status": order_clone.sub_status,
+            "service_tourist_confirmed": order_clone.service_tourist_confirmed,
+            "service_guide_confirmed": order_clone.service_guide_confirmed,
+            "completed_at": order_clone.completed_at.map(|t| t.to_rfc3339())
+        }
     })))
+}
+
+pub async fn order_confirm_completion_impl(
+    state: ChainOffState,
+    order_id: Uuid,
+    user_id: Uuid,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    order_confirm_service_completion_impl(state, None, order_id, user_id).await
 }

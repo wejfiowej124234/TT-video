@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T06:11:49Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "SG",
+    "city_zh": "新加坡",
+    "city_en": "Singapore",
+    "matrix_ids": [
+      "PH-SG-101-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-SG-101-ATR",
+      "legacy_value": "滨海湾",
+      "poi_id": "4555f779-cab8-4d2c-9088-6c80249f6f1c",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+      "hero_file": "ocs-singapore-family-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-SG-101-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

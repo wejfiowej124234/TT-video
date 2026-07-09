@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust_l5_enterprise_reliability_baseline.v1",
+  "status": "PASS",
+  "baseline_refs": [
+    "162",
+    "161",
+    "160"
+  ],
+  "last_audit_matrix_path": "evidence/l5_enterprise_reliability/audit_matrix.v1.json",
+  "audit_verdict": "L5_ENTERPRISE_RELIABILITY_GO",
+  "reliability_score": 88,
+  "track_verdicts": {
+    "RUJR": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "RUJR_L5_GO"
+    },
+    "A11Y_LIVE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "A11Y_LIVE_GO"
+    },
+    "CHAOS_RESILIENCE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "CHAOS_RESILIENCE_GO"
+    }
+  },
+  "last_audit_run_utc": "20260608T032754Z"
+}

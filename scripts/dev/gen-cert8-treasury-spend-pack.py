@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 import sys
 from pathlib import Path as _Path
-sys.path.insert(0, str(_Path(__file__).resolve().parents[1] / "lib"))
+sys.path.insert(0, str(_Path(__file__).resolve().parent / "lib"))
 from hat_r1_resolve import resolve_hat_r1_evid_dir, hat_r1_rel_path, hat_r1_stamp
 sys.path.insert(0, str(ROOT / "scripts/release"))
 from win_bash import bash_exe  # noqa: E402

@@ -1,0 +1,289 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_exit_check.v1",
+  "recorded_at_utc": "2026-07-06T08:04:58.023Z",
+  "city": {
+    "city_zh": "巴黎",
+    "city_en": "Paris",
+    "country_iso": "FR",
+    "poi_count": 8
+  },
+  "replicated_from": "JP + KR + TH + SG Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "checks": [
+    {
+      "id": "assets_locked_8_8",
+      "label": "8/8 Asset 全部 LOCKED · 无 Unlock",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-FR-111-ATR",
+          "poi": "埃菲尔铁塔",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-FR-112-ATR",
+          "poi": "卢浮宫",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-FR-113-ATR",
+          "poi": "凯旋门",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-FR-114-ATR",
+          "poi": "圣母院",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-FR-115-FOOD",
+          "poi": "法餐",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-FR-116-FOOD",
+          "poi": "可丽饼",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-FR-117-FOOD",
+          "poi": "马卡龙",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-FR-118-FOOD",
+          "poi": "咖啡厅",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "six_dimensions_pass",
+      "label": "六维全部 PASS（City Runtime = Gate 4 同源 · 非 national）",
+      "pass": true,
+      "runtime_scope": "city_consumer_runtime",
+      "city_snapshot": {
+        "execution": "PASS",
+        "cms_ownership": "PASS",
+        "runtime_consumer": "PASS",
+        "geo_matching": "PASS",
+        "content_accuracy": "PASS",
+        "l5_quality": "PASS",
+        "content_qa_closed": true
+      },
+      "issues": []
+    },
+    {
+      "id": "catalog_api_paris",
+      "label": "Catalog API 8/8 与 LOCK 一致",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-FR-111-ATR",
+          "poi": "埃菲尔铁塔",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-FR-112-ATR",
+          "poi": "卢浮宫",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-FR-113-ATR",
+          "poi": "凯旋门",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-FR-114-ATR",
+          "poi": "圣母院",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-FR-115-FOOD",
+          "poi": "法餐",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-FR-116-FOOD",
+          "poi": "可丽饼",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-FR-117-FOOD",
+          "poi": "马卡龙",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-FR-118-FOOD",
+          "poi": "咖啡厅",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "consumer_runtime_cms",
+      "label": "Consumer Runtime 实际页面读取 CMS（非仅 Verify）",
+      "pass": true,
+      "catalog_api_requests": 4,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/paris/paris-poi-runtime-20260706T080457Z.png",
+      "rows": [
+        {
+          "matrix_id": "PH-FR-111-ATR",
+          "poi": "埃菲尔铁塔",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-FR-112-ATR",
+          "poi": "卢浮宫",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-FR-113-ATR",
+          "poi": "凯旋门",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-FR-114-ATR",
+          "poi": "圣母院",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-FR-115-FOOD",
+          "poi": "法餐",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-FR-116-FOOD",
+          "poi": "可丽饼",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-FR-117-FOOD",
+          "poi": "马卡龙",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-FR-118-FOOD",
+          "poi": "咖啡厅",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        }
+      ],
+      "issues": [],
+      "probe_attempt": 3
+    },
+    {
+      "id": "visual_screenshot",
+      "label": "页面截图/DOM · 无旧图/错图/Fallback",
+      "pass": true,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/paris/paris-poi-runtime-20260706T080457Z.png",
+      "issues": []
+    },
+    {
+      "id": "no_backlog_unlock",
+      "label": "无 Open Backlog · 无 Unlock",
+      "pass": true,
+      "issues": []
+    }
+  ],
+  "all_pass": true,
+  "city_runtime_pass_count": 8,
+  "city_runtime_required": 8,
+  "verdict": "CONTENT_QA_EXIT_PASS",
+  "TT_CMS_POI_CITY_PARIS_CONTENT_QA": "CLOSED",
+  "TT_CMS_POI_CITY_PARIS_CONTENT_QA_EXIT": "PASS",
+  "runtime_tiers": {
+    "city": {
+      "tier": "city_consumer_runtime",
+      "gate_2_equals_gate_4": true
+    },
+    "country": {
+      "tier": "national_runtime",
+      "when": "TT_CMS_FR_COUNTRY: CLOSED",
+      "not_in_scope": true
+    }
+  },
+  "blockers": []
+}

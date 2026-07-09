@@ -16,7 +16,7 @@ import {
 export function useAdminGuidesPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { limit, status } = useMemo(
+  const { limit, status, data_origin } = useMemo(
     () => parseGuidesListQuery(new URLSearchParams(searchParams.toString())),
     [searchParams],
   );
@@ -45,24 +45,30 @@ export function useAdminGuidesPage() {
     setDraftStatus(status);
   }, [limit, status]);
 
+  const filteredItems = useMemo(() => {
+    if (!data_origin) return items;
+    return items.filter((row) => (row.data_origin ?? "").trim() === data_origin);
+  }, [items, data_origin]);
+
   const apply = (e?: FormEvent) => {
     e?.preventDefault();
     const lim = clampGuideLimit(Number.parseInt(draftLimit.trim(), 10));
     const st = draftStatus.trim().slice(0, ADMIN_GUIDES_STATUS_MAX);
-    router.push(buildGuidesListPath({ limit: lim, status: st }));
+    router.push(buildGuidesListPath({ limit: lim, status: st, data_origin }));
   };
 
   const reset = () => {
-    router.push(buildGuidesListPath({ limit: 100, status: "" }));
+    router.push(buildGuidesListPath({ limit: 100, status: "", data_origin: "" }));
   };
 
   return {
     limit,
     status,
+    data_origin,
     loading,
     refreshing,
     error,
-    items,
+    items: filteredItems,
     appliedFilters,
     meta,
     draftLimit,

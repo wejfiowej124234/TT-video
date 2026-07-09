@@ -1,0 +1,6 @@
+traveler_order_id=81b1665c-f2c7-4f5a-b2b7-6833436a5b40
+guide_bind=OK guide=rov-w1-guide-20260608T045515Z@rov-cohort.invalid
+merchant_onboarding=OK email=rov-w1-2-20260608T045515Z@rov-cohort.invalid
+ops_get /api/v1/admin/growth/analytics/overview -> HTTP 403
+ops_get /api/v1/admin/content/entities?limit=5 -> HTTP 404
+ops_get /api/v1/admin/official/accounts?limit=5 -> HTTP 403

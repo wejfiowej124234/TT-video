@@ -1,0 +1,111 @@
+{
+  "schema": "traveltrust.p3_02_vacancy_production_entry_reconcile.v1",
+  "generated_utc": "2026-07-09T08:16:21Z",
+  "verdict": "VACANCY_PRODUCTION_ENTRY_RECONCILE: PASS",
+  "acceptance_phase": "P3-02",
+  "chain": {
+    "chain_id": 11155111,
+    "rpc_url_used": "https://sepolia.drpc.org",
+    "rpc_note": "publicnode TLS failed; drpc used for P3-02 evidence capture",
+    "latest_block": "11235127",
+    "rpc_retry_warnings": 5
+  },
+  "contracts": {
+    "unallocated_vault": "0xb7d0Ea9579F80B2090195d49a44941d5546554E9",
+    "net_profit_ledger": "0x738D2c133d5F90c13eE9907386136471E1f330f5",
+    "governance_treasury_p4cap": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2",
+    "legacy_treasury": "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be"
+  },
+  "chain_views": {
+    "vacancyLedger_4tuple": {
+      "ok": true,
+      "value": "0\n0\n0\n0"
+    },
+    "sweepEnabled": {
+      "ok": true,
+      "value": "true"
+    },
+    "vacancyState": {
+      "ok": false,
+      "value": "Error: server returned an error response: error code 3: execution reverted"
+    },
+    "stewardActivationEpochId": {
+      "ok": false,
+      "value": "Error: error sending request for url (https://sepolia.drpc.org/)\n\nContext:\n- Error #0: client error (Connect)\n- Error #1: tls handshake eof"
+    }
+  },
+  "baseline_registry_parity": {
+    "GOVERNANCE_TREASURY_P4CAP_ADDRESS": {
+      "baseline": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2",
+      "env": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2",
+      "match": true
+    },
+    "LEGACY_TREASURY_ADDRESS": {
+      "baseline": "0x6a8323fb2394a1e9655f7132f4e4b8222d2898be",
+      "env": "0x6a8323fb2394a1e9655f7132f4e4b8222d2898be",
+      "match": true
+    },
+    "TIMELOCK_ADDRESS": {
+      "baseline": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+      "env": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+      "match": true
+    },
+    "GOVERNOR_ADDRESS": {
+      "baseline": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+      "env": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+      "match": true
+    },
+    "COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS": {
+      "baseline": "0x738d2c133d5f90c13ee9907386136471e1f330f5",
+      "env": "0x738d2c133d5f90c13ee9907386136471e1f330f5",
+      "match": true
+    },
+    "COUNTRY_POOL_STEWARD_PATH_VAULT_ADDRESS": {
+      "baseline": "0xab6c15ebcae78606e0ae5663d831e09e05af32fa",
+      "env": "0xab6c15ebcae78606e0ae5663d831e09e05af32fa",
+      "match": true
+    },
+    "UNALLOCATED_STEWARD_PATH_VAULT_ADDRESS": {
+      "baseline": "0xb7d0ea9579f80b2090195d49a44941d5546554e9",
+      "env": "0xb7d0ea9579f80b2090195d49a44941d5546554e9",
+      "match": true
+    }
+  },
+  "catalog_parity": {
+    "p4cap_treasury": {
+      "catalog": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2",
+      "env": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2",
+      "match": true
+    },
+    "legacy_treasury": {
+      "catalog": "0x6a8323fb2394a1e9655f7132f4e4b8222d2898be",
+      "env": "0x6a8323fb2394a1e9655f7132f4e4b8222d2898be",
+      "match": true
+    },
+    "vacancy_v1_unalloc": {
+      "catalog": "0xb7d0ea9579f80b2090195d49a44941d5546554e9",
+      "env": "0xb7d0ea9579f80b2090195d49a44941d5546554e9",
+      "match": true
+    }
+  },
+  "reconcile": {
+    "live_mode": "LIVE_V1",
+    "gate": "PASS",
+    "projection_mismatch_count": 0
+  },
+  "gates_acceptance": {
+    "WEB3_ENV_CATALOG_GATE": "PASS",
+    "WEB3_VACANCY_INDEXER_RECONCILE": "PASS",
+    "WEB3_FULL_ALIGNMENT_GATE": "PASS",
+    "PHASE2_5_WEB3_HARDENING_READY": "PASS",
+    "TT_PHASE2_WEB3_RUNTIME_READY": "PASS"
+  },
+  "registry_env_catalog_consistent": true,
+  "evidence_files": [
+    "P3-02-env-catalog.log",
+    "P3-02-vacancy-indexer-reconcile.log",
+    "P3-02-GATE-RESULT.log",
+    "P3-02-VACANCY-RECONCILE.json",
+    "P3-02-CLOSEOUT.md"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T10:00:00Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "US",
+    "city_zh": "旧金山",
+    "city_en": "San Francisco",
+    "matrix_ids": [
+      "PH-US-138-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-US-138-ATR",
+      "legacy_value": "九曲花街",
+      "poi_id": "59d6106c-929e-4000-bfc7-f4c2627d2435",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-138-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

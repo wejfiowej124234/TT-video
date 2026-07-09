@@ -11,6 +11,8 @@ pub mod fee_router_verify;
 pub mod governor;
 pub mod timelock;
 pub mod indexer;
+pub mod vacancy_ledger_indexer;
+pub mod vacancy_ledger_reconcile;
 pub mod region_vault_verify;
 pub mod outbox;
 pub mod resolution_tx;
@@ -25,12 +27,17 @@ pub struct ChainConfig {
     pub rpc_url: String,
     pub chain_id: u64,
     pub escrow_factory_address: Option<String>,
+    /// **`EscrowFactoryV2`**；与 **`ESCROW_FACTORY_V2_ADDRESS`** / **`GET /meta` `escrow_factory_v2_address`** 同源（Phase ② Sepolia bilateral）
+    pub escrow_factory_v2_address: Option<String>,
     /// FeeRouter 合约地址；设后 `indexer-tick` 额外拉取 `PlatformFeeRouted`（14 §1.1、110）
     pub fee_router_address: Option<String>,
     /// RegionVault 合约地址；设后 `indexer-tick` 额外拉取 `RegionVaultForwarded`（14 §1.1.1、110）
     pub region_vault_address: Option<String>,
     /// **CountryPoolLedgerV0**；设后 **`indexer-tick`** 拉取 **`CountryLedgerCredited`** → **`p5_country_ledger_lines`**（**P5-1-B**）
+    /// 亦用于 **D-4555-B** **`CountryPoolNetProfitLedger`** Vacancy 生命周期事件（S4a）
     pub country_pool_ledger_address: Option<String>,
+    /// **UnallocatedStewardPathVault**（S4a · sweep / reserve / disburse 事件）
+    pub unallocated_steward_path_vault_address: Option<String>,
     /// 份额代币（TTG / Country Pool 等）ERC20 地址列表；`indexer-tick` 写入 `investor_share_transfer_events`（B-085）
     #[serde(default)]
     pub investor_share_token_addresses: Vec<String>,
@@ -49,7 +56,9 @@ pub struct ChainConfig {
     pub governance_timelock_address: Option<String>,
     /// 与 Governor 绑定的 **`GovernanceVotesToken`**；**`GET …/governance/proposals/:id`** 可选 **`getPastVotes`** 对拍
     pub governance_votes_token_address: Option<String>,
-    /// **`TREASURY_ADDRESS`** 或 **`REGION_VAULT_ADDRESS`**；**`GET /meta` `treasury_address`**
+    /// **GovernanceTreasuryP4Cap** (ACTIVE) · **`GOVERNANCE_TREASURY_P4CAP_ADDRESS`**;
+    /// legacy FeeRouter treasury · **`LEGACY_TREASURY_ADDRESS`** (deprecated **`TREASURY_ADDRESS`**).
+    /// **`GET /meta` `treasury_address`** resolves P4Cap first.
     pub treasury_address: Option<String>,
     pub registry_address: Option<String>,
     /// 执行器单笔最大金额（guide_amount + traveler_refund + platform_fee），0 或不设表示不限制
@@ -109,18 +118,22 @@ impl ChainConfig {
             .or_else(|| Self::env_nonempty("GUIDE_STAKING_ADDRESS"));
         let staking_provider_address = Self::env_nonempty("STAKING_PROVIDER_ADDRESS")
             .or_else(|| Self::env_nonempty("PROVIDER_STAKING_POOL_ADDRESS"));
-        let treasury_address = Self::env_nonempty("TREASURY_ADDRESS")
-            .or_else(|| Self::env_nonempty("REGION_VAULT_ADDRESS"));
+        let treasury_address = Self::env_nonempty("GOVERNANCE_TREASURY_P4CAP_ADDRESS")
+            .or_else(|| Self::env_nonempty("TREASURY_P4_CAP_ADDRESS"));
         let governance_votes_token_address = Self::env_nonempty("GOVERNANCE_VOTES_TOKEN_ADDRESS")
             .or_else(|| Self::env_nonempty("GOVERNANCE_TOKEN_ADDRESS"));
         Some(Self {
             rpc_url,
             chain_id,
             escrow_factory_address: Self::env_nonempty("ESCROW_FACTORY_ADDRESS"),
+            escrow_factory_v2_address: Self::env_nonempty("ESCROW_FACTORY_V2_ADDRESS"),
             fee_router_address: Self::env_nonempty("FEE_ROUTER_ADDRESS"),
             region_vault_address: Self::env_nonempty("REGION_VAULT_ADDRESS"),
             country_pool_ledger_address: Self::env_nonempty("COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS")
                 .or_else(|| Self::env_nonempty("COUNTRY_POOL_LEDGER_ADDRESS")),
+            unallocated_steward_path_vault_address: Self::env_nonempty(
+                "UNALLOCATED_STEWARD_PATH_VAULT_ADDRESS",
+            ),
             investor_share_token_addresses,
             staking_address: guide_staking_address.clone(),
             guide_staking_address,

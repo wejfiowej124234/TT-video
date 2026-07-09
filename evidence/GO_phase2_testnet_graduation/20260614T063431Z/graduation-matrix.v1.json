@@ -1,0 +1,1672 @@
+{
+  "schema": "traveltrust.phase2_testnet_graduation_matrix.v1.4",
+  "standard": "TT-PHASE2-TESTNET-CLOSURE-GOVERNANCE-STANDARD",
+  "addendum": "Deep + Enterprise + Operational + Governance + Full Surface v4",
+  "stamp": "20260614T063431Z",
+  "phase_scope": "② testnet",
+  "api": "https://tt-api-staging.fly.dev",
+  "graduation_verdict": "OPEN",
+  "l5_composite_score": null,
+  "l5_composite_score_eligible": false,
+  "l5_composite_score_forbidden_reasons": [
+    "open_testnet_p1>0",
+    "tt_phase2_readiness<100",
+    "blocking_open>0",
+    "missing_coverage>0",
+    "evidence_gap>0",
+    "full_closure_coverage_pct<100",
+    "reconcile_compound_pass=false",
+    "missing_projection>0",
+    "p2fc_soak_72h_staging_not_completed",
+    "tt_testnet_perfect_validation_go_not_go",
+    "tt_testnet_graduation_not_closed",
+    "owner_signoff_incomplete",
+    "d1_d24_not_all_pass"
+  ],
+  "l5_composite_score_grep": "TT_PHASE2_L5_COMPOSITE_SCORE: NOT_ELIGIBLE",
+  "owner_signoff_complete": false,
+  "gates": {
+    "open_testnet_p0": 0,
+    "open_testnet_p1": 2,
+    "tt_phase2_readiness": 97,
+    "p2fc_soak_completed": false,
+    "indexer_compound_pass": false,
+    "missing_projection": 3,
+    "perfect_validation_go": false,
+    "deep_closure_missing_coverage": 8,
+    "deep_closure_evidence_gap": 15,
+    "enterprise_coverage_pct": 38,
+    "operational_readiness_pct": 100,
+    "full_closure_coverage_pct": 67,
+    "surface_coverage_pct": 100,
+    "untested_ui_element": 0,
+    "untested_user_action": 0,
+    "governance_closure_pct": 100
+  },
+  "dimensions": [
+    {
+      "id": "A1",
+      "name": "Happy Path"
+    },
+    {
+      "id": "A2",
+      "name": "Exception / degraded"
+    },
+    {
+      "id": "A3",
+      "name": "RBAC / permission boundary"
+    },
+    {
+      "id": "A4",
+      "name": "State migration"
+    },
+    {
+      "id": "A5",
+      "name": "Recovery chain"
+    },
+    {
+      "id": "A6",
+      "name": "Long soak (72h)"
+    },
+    {
+      "id": "A7",
+      "name": "Indexer / Reconcile"
+    },
+    {
+      "id": "A8",
+      "name": "Human / browser UAT"
+    },
+    {
+      "id": "A9",
+      "name": "Evidence chain"
+    }
+  ],
+  "domains": [
+    {
+      "id": "G01",
+      "name": "Admin RBAC",
+      "tn": [
+        "TN-P0-001",
+        "TN-P1-001"
+      ]
+    },
+    {
+      "id": "G02",
+      "name": "Six-role HAT",
+      "tn": [
+        "TN-P1-007",
+        "TN-P1-008"
+      ]
+    },
+    {
+      "id": "G03",
+      "name": "Multi-identity",
+      "tn": [
+        "TN-P1-007",
+        "TN-P1-008"
+      ]
+    },
+    {
+      "id": "G04",
+      "name": "Orders corridor",
+      "tn": [
+        "P2Exec"
+      ]
+    },
+    {
+      "id": "G05",
+      "name": "Provider onboarding",
+      "tn": [
+        "TN-P1-002"
+      ]
+    },
+    {
+      "id": "G06",
+      "name": "Escrow WEB3",
+      "tn": [
+        "TN-P1-006"
+      ]
+    },
+    {
+      "id": "G07",
+      "name": "Acquisition PD-009",
+      "tn": [
+        "TN-P1-003"
+      ]
+    },
+    {
+      "id": "G08",
+      "name": "Steward stake",
+      "tn": [
+        "TN-P1-004"
+      ]
+    },
+    {
+      "id": "G09",
+      "name": "Governance",
+      "tn": [
+        "Closing-Gap-C-GOV"
+      ]
+    },
+    {
+      "id": "G10",
+      "name": "Community C1-C12",
+      "tn": [
+        "C1-C12"
+      ]
+    },
+    {
+      "id": "G11",
+      "name": "Stripe PSP",
+      "tn": [
+        "TN-P1-005"
+      ]
+    },
+    {
+      "id": "G12",
+      "name": "Indexer Reconcile",
+      "tn": [
+        "TN-P1-010"
+      ]
+    }
+  ],
+  "cells": [
+    {
+      "domain": "G01",
+      "domain_name": "Admin RBAC",
+      "dimension": "A1",
+      "dimension_name": "Happy Path",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G01",
+      "domain_name": "Admin RBAC",
+      "dimension": "A2",
+      "dimension_name": "Exception / degraded",
+      "status": "PARTIAL",
+      "note": "Spot checks only · no full exception matrix",
+      "blocking": false
+    },
+    {
+      "domain": "G01",
+      "domain_name": "Admin RBAC",
+      "dimension": "A3",
+      "dimension_name": "RBAC / permission boundary",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G01",
+      "domain_name": "Admin RBAC",
+      "dimension": "A4",
+      "dimension_name": "State migration",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G01",
+      "domain_name": "Admin RBAC",
+      "dimension": "A5",
+      "dimension_name": "Recovery chain",
+      "status": "PARTIAL",
+      "note": "Runbook referenced · not full reorg drill",
+      "blocking": false
+    },
+    {
+      "domain": "G01",
+      "domain_name": "Admin RBAC",
+      "dimension": "A6",
+      "dimension_name": "Long soak (72h)",
+      "status": "PASS",
+      "note": "N/A for domain",
+      "blocking": false
+    },
+    {
+      "domain": "G01",
+      "domain_name": "Admin RBAC",
+      "dimension": "A7",
+      "dimension_name": "Indexer / Reconcile",
+      "status": "PASS",
+      "note": "N/A",
+      "blocking": false
+    },
+    {
+      "domain": "G01",
+      "domain_name": "Admin RBAC",
+      "dimension": "A8",
+      "dimension_name": "Human / browser UAT",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G01",
+      "domain_name": "Admin RBAC",
+      "dimension": "A9",
+      "dimension_name": "Evidence chain",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G02",
+      "domain_name": "Six-role HAT",
+      "dimension": "A1",
+      "dimension_name": "Happy Path",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G02",
+      "domain_name": "Six-role HAT",
+      "dimension": "A2",
+      "dimension_name": "Exception / degraded",
+      "status": "PARTIAL",
+      "note": "Spot checks only · no full exception matrix",
+      "blocking": false
+    },
+    {
+      "domain": "G02",
+      "domain_name": "Six-role HAT",
+      "dimension": "A3",
+      "dimension_name": "RBAC / permission boundary",
+      "status": "PARTIAL",
+      "note": "Publish Hub L5 not on staging FE",
+      "blocking": false
+    },
+    {
+      "domain": "G02",
+      "domain_name": "Six-role HAT",
+      "dimension": "A4",
+      "dimension_name": "State migration",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G02",
+      "domain_name": "Six-role HAT",
+      "dimension": "A5",
+      "dimension_name": "Recovery chain",
+      "status": "PARTIAL",
+      "note": "Runbook referenced · not full reorg drill",
+      "blocking": false
+    },
+    {
+      "domain": "G02",
+      "domain_name": "Six-role HAT",
+      "dimension": "A6",
+      "dimension_name": "Long soak (72h)",
+      "status": "PASS",
+      "note": "N/A for domain",
+      "blocking": false
+    },
+    {
+      "domain": "G02",
+      "domain_name": "Six-role HAT",
+      "dimension": "A7",
+      "dimension_name": "Indexer / Reconcile",
+      "status": "PASS",
+      "note": "N/A",
+      "blocking": false
+    },
+    {
+      "domain": "G02",
+      "domain_name": "Six-role HAT",
+      "dimension": "A8",
+      "dimension_name": "Human / browser UAT",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G02",
+      "domain_name": "Six-role HAT",
+      "dimension": "A9",
+      "dimension_name": "Evidence chain",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G03",
+      "domain_name": "Multi-identity",
+      "dimension": "A1",
+      "dimension_name": "Happy Path",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G03",
+      "domain_name": "Multi-identity",
+      "dimension": "A2",
+      "dimension_name": "Exception / degraded",
+      "status": "PARTIAL",
+      "note": "Spot checks only · no full exception matrix",
+      "blocking": false
+    },
+    {
+      "domain": "G03",
+      "domain_name": "Multi-identity",
+      "dimension": "A3",
+      "dimension_name": "RBAC / permission boundary",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G03",
+      "domain_name": "Multi-identity",
+      "dimension": "A4",
+      "dimension_name": "State migration",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G03",
+      "domain_name": "Multi-identity",
+      "dimension": "A5",
+      "dimension_name": "Recovery chain",
+      "status": "PARTIAL",
+      "note": "Runbook referenced · not full reorg drill",
+      "blocking": false
+    },
+    {
+      "domain": "G03",
+      "domain_name": "Multi-identity",
+      "dimension": "A6",
+      "dimension_name": "Long soak (72h)",
+      "status": "PASS",
+      "note": "N/A for domain",
+      "blocking": false
+    },
+    {
+      "domain": "G03",
+      "domain_name": "Multi-identity",
+      "dimension": "A7",
+      "dimension_name": "Indexer / Reconcile",
+      "status": "PASS",
+      "note": "N/A",
+      "blocking": false
+    },
+    {
+      "domain": "G03",
+      "domain_name": "Multi-identity",
+      "dimension": "A8",
+      "dimension_name": "Human / browser UAT",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G03",
+      "domain_name": "Multi-identity",
+      "dimension": "A9",
+      "dimension_name": "Evidence chain",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G04",
+      "domain_name": "Orders corridor",
+      "dimension": "A1",
+      "dimension_name": "Happy Path",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G04",
+      "domain_name": "Orders corridor",
+      "dimension": "A2",
+      "dimension_name": "Exception / degraded",
+      "status": "PARTIAL",
+      "note": "Spot checks only · no full exception matrix",
+      "blocking": false
+    },
+    {
+      "domain": "G04",
+      "domain_name": "Orders corridor",
+      "dimension": "A3",
+      "dimension_name": "RBAC / permission boundary",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G04",
+      "domain_name": "Orders corridor",
+      "dimension": "A4",
+      "dimension_name": "State migration",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G04",
+      "domain_name": "Orders corridor",
+      "dimension": "A5",
+      "dimension_name": "Recovery chain",
+      "status": "PARTIAL",
+      "note": "Runbook referenced · not full reorg drill",
+      "blocking": false
+    },
+    {
+      "domain": "G04",
+      "domain_name": "Orders corridor",
+      "dimension": "A6",
+      "dimension_name": "Long soak (72h)",
+      "status": "OPEN",
+      "note": "TN-P1-009 · 72h soak INFLIGHT/NOT STARTED",
+      "blocking": true
+    },
+    {
+      "domain": "G04",
+      "domain_name": "Orders corridor",
+      "dimension": "A7",
+      "dimension_name": "Indexer / Reconcile",
+      "status": "PASS",
+      "note": "N/A",
+      "blocking": false
+    },
+    {
+      "domain": "G04",
+      "domain_name": "Orders corridor",
+      "dimension": "A8",
+      "dimension_name": "Human / browser UAT",
+      "status": "PARTIAL",
+      "note": "API-only domains",
+      "blocking": false
+    },
+    {
+      "domain": "G04",
+      "domain_name": "Orders corridor",
+      "dimension": "A9",
+      "dimension_name": "Evidence chain",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G05",
+      "domain_name": "Provider onboarding",
+      "dimension": "A1",
+      "dimension_name": "Happy Path",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G05",
+      "domain_name": "Provider onboarding",
+      "dimension": "A2",
+      "dimension_name": "Exception / degraded",
+      "status": "PARTIAL",
+      "note": "Spot checks only · no full exception matrix",
+      "blocking": false
+    },
+    {
+      "domain": "G05",
+      "domain_name": "Provider onboarding",
+      "dimension": "A3",
+      "dimension_name": "RBAC / permission boundary",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G05",
+      "domain_name": "Provider onboarding",
+      "dimension": "A4",
+      "dimension_name": "State migration",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G05",
+      "domain_name": "Provider onboarding",
+      "dimension": "A5",
+      "dimension_name": "Recovery chain",
+      "status": "PARTIAL",
+      "note": "Runbook referenced · not full reorg drill",
+      "blocking": false
+    },
+    {
+      "domain": "G05",
+      "domain_name": "Provider onboarding",
+      "dimension": "A6",
+      "dimension_name": "Long soak (72h)",
+      "status": "PASS",
+      "note": "N/A for domain",
+      "blocking": false
+    },
+    {
+      "domain": "G05",
+      "domain_name": "Provider onboarding",
+      "dimension": "A7",
+      "dimension_name": "Indexer / Reconcile",
+      "status": "PASS",
+      "note": "N/A",
+      "blocking": false
+    },
+    {
+      "domain": "G05",
+      "domain_name": "Provider onboarding",
+      "dimension": "A8",
+      "dimension_name": "Human / browser UAT",
+      "status": "PARTIAL",
+      "note": "API-only domains",
+      "blocking": false
+    },
+    {
+      "domain": "G05",
+      "domain_name": "Provider onboarding",
+      "dimension": "A9",
+      "dimension_name": "Evidence chain",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G06",
+      "domain_name": "Escrow WEB3",
+      "dimension": "A1",
+      "dimension_name": "Happy Path",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G06",
+      "domain_name": "Escrow WEB3",
+      "dimension": "A2",
+      "dimension_name": "Exception / degraded",
+      "status": "PARTIAL",
+      "note": "Spot checks only · no full exception matrix",
+      "blocking": false
+    },
+    {
+      "domain": "G06",
+      "domain_name": "Escrow WEB3",
+      "dimension": "A3",
+      "dimension_name": "RBAC / permission boundary",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G06",
+      "domain_name": "Escrow WEB3",
+      "dimension": "A4",
+      "dimension_name": "State migration",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G06",
+      "domain_name": "Escrow WEB3",
+      "dimension": "A5",
+      "dimension_name": "Recovery chain",
+      "status": "PARTIAL",
+      "note": "Runbook referenced · not full reorg drill",
+      "blocking": false
+    },
+    {
+      "domain": "G06",
+      "domain_name": "Escrow WEB3",
+      "dimension": "A6",
+      "dimension_name": "Long soak (72h)",
+      "status": "OPEN",
+      "note": "TN-P1-009 · 72h soak INFLIGHT/NOT STARTED",
+      "blocking": true
+    },
+    {
+      "domain": "G06",
+      "domain_name": "Escrow WEB3",
+      "dimension": "A7",
+      "dimension_name": "Indexer / Reconcile",
+      "status": "PARTIAL",
+      "note": "FeeRouter distribute deferred · TN-P1-010 OPEN",
+      "blocking": false
+    },
+    {
+      "domain": "G06",
+      "domain_name": "Escrow WEB3",
+      "dimension": "A8",
+      "dimension_name": "Human / browser UAT",
+      "status": "PARTIAL",
+      "note": "API-only domains",
+      "blocking": false
+    },
+    {
+      "domain": "G06",
+      "domain_name": "Escrow WEB3",
+      "dimension": "A9",
+      "dimension_name": "Evidence chain",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G07",
+      "domain_name": "Acquisition PD-009",
+      "dimension": "A1",
+      "dimension_name": "Happy Path",
+      "status": "PARTIAL",
+      "note": "mock bond + mock-pay · ≠ ③",
+      "blocking": false
+    },
+    {
+      "domain": "G07",
+      "domain_name": "Acquisition PD-009",
+      "dimension": "A2",
+      "dimension_name": "Exception / degraded",
+      "status": "PARTIAL",
+      "note": "Spot checks only · no full exception matrix",
+      "blocking": false
+    },
+    {
+      "domain": "G07",
+      "domain_name": "Acquisition PD-009",
+      "dimension": "A3",
+      "dimension_name": "RBAC / permission boundary",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G07",
+      "domain_name": "Acquisition PD-009",
+      "dimension": "A4",
+      "dimension_name": "State migration",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G07",
+      "domain_name": "Acquisition PD-009",
+      "dimension": "A5",
+      "dimension_name": "Recovery chain",
+      "status": "PARTIAL",
+      "note": "Runbook referenced · not full reorg drill",
+      "blocking": false
+    },
+    {
+      "domain": "G07",
+      "domain_name": "Acquisition PD-009",
+      "dimension": "A6",
+      "dimension_name": "Long soak (72h)",
+      "status": "PASS",
+      "note": "N/A for domain",
+      "blocking": false
+    },
+    {
+      "domain": "G07",
+      "domain_name": "Acquisition PD-009",
+      "dimension": "A7",
+      "dimension_name": "Indexer / Reconcile",
+      "status": "PASS",
+      "note": "N/A",
+      "blocking": false
+    },
+    {
+      "domain": "G07",
+      "domain_name": "Acquisition PD-009",
+      "dimension": "A8",
+      "dimension_name": "Human / browser UAT",
+      "status": "PARTIAL",
+      "note": "API-only domains",
+      "blocking": false
+    },
+    {
+      "domain": "G07",
+      "domain_name": "Acquisition PD-009",
+      "dimension": "A9",
+      "dimension_name": "Evidence chain",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G08",
+      "domain_name": "Steward stake",
+      "dimension": "A1",
+      "dimension_name": "Happy Path",
+      "status": "DEFER_③",
+      "note": "live Sepolia stake blocked · fork write PASS · DEFER live TTG approve",
+      "blocking": false
+    },
+    {
+      "domain": "G08",
+      "domain_name": "Steward stake",
+      "dimension": "A2",
+      "dimension_name": "Exception / degraded",
+      "status": "PARTIAL",
+      "note": "Spot checks only · no full exception matrix",
+      "blocking": false
+    },
+    {
+      "domain": "G08",
+      "domain_name": "Steward stake",
+      "dimension": "A3",
+      "dimension_name": "RBAC / permission boundary",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G08",
+      "domain_name": "Steward stake",
+      "dimension": "A4",
+      "dimension_name": "State migration",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G08",
+      "domain_name": "Steward stake",
+      "dimension": "A5",
+      "dimension_name": "Recovery chain",
+      "status": "PARTIAL",
+      "note": "Runbook referenced · not full reorg drill",
+      "blocking": false
+    },
+    {
+      "domain": "G08",
+      "domain_name": "Steward stake",
+      "dimension": "A6",
+      "dimension_name": "Long soak (72h)",
+      "status": "PASS",
+      "note": "N/A for domain",
+      "blocking": false
+    },
+    {
+      "domain": "G08",
+      "domain_name": "Steward stake",
+      "dimension": "A7",
+      "dimension_name": "Indexer / Reconcile",
+      "status": "PASS",
+      "note": "N/A",
+      "blocking": false
+    },
+    {
+      "domain": "G08",
+      "domain_name": "Steward stake",
+      "dimension": "A8",
+      "dimension_name": "Human / browser UAT",
+      "status": "PARTIAL",
+      "note": "API-only domains",
+      "blocking": false
+    },
+    {
+      "domain": "G08",
+      "domain_name": "Steward stake",
+      "dimension": "A9",
+      "dimension_name": "Evidence chain",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G09",
+      "domain_name": "Governance",
+      "dimension": "A1",
+      "dimension_name": "Happy Path",
+      "status": "PARTIAL",
+      "note": "on-chain execute Owner-only · staging API PASS",
+      "blocking": false
+    },
+    {
+      "domain": "G09",
+      "domain_name": "Governance",
+      "dimension": "A2",
+      "dimension_name": "Exception / degraded",
+      "status": "PARTIAL",
+      "note": "Spot checks only · no full exception matrix",
+      "blocking": false
+    },
+    {
+      "domain": "G09",
+      "domain_name": "Governance",
+      "dimension": "A3",
+      "dimension_name": "RBAC / permission boundary",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G09",
+      "domain_name": "Governance",
+      "dimension": "A4",
+      "dimension_name": "State migration",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G09",
+      "domain_name": "Governance",
+      "dimension": "A5",
+      "dimension_name": "Recovery chain",
+      "status": "PARTIAL",
+      "note": "Runbook referenced · not full reorg drill",
+      "blocking": false
+    },
+    {
+      "domain": "G09",
+      "domain_name": "Governance",
+      "dimension": "A6",
+      "dimension_name": "Long soak (72h)",
+      "status": "PASS",
+      "note": "N/A for domain",
+      "blocking": false
+    },
+    {
+      "domain": "G09",
+      "domain_name": "Governance",
+      "dimension": "A7",
+      "dimension_name": "Indexer / Reconcile",
+      "status": "PASS",
+      "note": "N/A",
+      "blocking": false
+    },
+    {
+      "domain": "G09",
+      "domain_name": "Governance",
+      "dimension": "A8",
+      "dimension_name": "Human / browser UAT",
+      "status": "PARTIAL",
+      "note": "API-only domains",
+      "blocking": false
+    },
+    {
+      "domain": "G09",
+      "domain_name": "Governance",
+      "dimension": "A9",
+      "dimension_name": "Evidence chain",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G10",
+      "domain_name": "Community C1-C12",
+      "dimension": "A1",
+      "dimension_name": "Happy Path",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G10",
+      "domain_name": "Community C1-C12",
+      "dimension": "A2",
+      "dimension_name": "Exception / degraded",
+      "status": "PARTIAL",
+      "note": "Spot checks only · no full exception matrix",
+      "blocking": false
+    },
+    {
+      "domain": "G10",
+      "domain_name": "Community C1-C12",
+      "dimension": "A3",
+      "dimension_name": "RBAC / permission boundary",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G10",
+      "domain_name": "Community C1-C12",
+      "dimension": "A4",
+      "dimension_name": "State migration",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G10",
+      "domain_name": "Community C1-C12",
+      "dimension": "A5",
+      "dimension_name": "Recovery chain",
+      "status": "PARTIAL",
+      "note": "Runbook referenced · not full reorg drill",
+      "blocking": false
+    },
+    {
+      "domain": "G10",
+      "domain_name": "Community C1-C12",
+      "dimension": "A6",
+      "dimension_name": "Long soak (72h)",
+      "status": "PASS",
+      "note": "N/A for domain",
+      "blocking": false
+    },
+    {
+      "domain": "G10",
+      "domain_name": "Community C1-C12",
+      "dimension": "A7",
+      "dimension_name": "Indexer / Reconcile",
+      "status": "PASS",
+      "note": "N/A",
+      "blocking": false
+    },
+    {
+      "domain": "G10",
+      "domain_name": "Community C1-C12",
+      "dimension": "A8",
+      "dimension_name": "Human / browser UAT",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G10",
+      "domain_name": "Community C1-C12",
+      "dimension": "A9",
+      "dimension_name": "Evidence chain",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G11",
+      "domain_name": "Stripe PSP",
+      "dimension": "A1",
+      "dimension_name": "Happy Path",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G11",
+      "domain_name": "Stripe PSP",
+      "dimension": "A2",
+      "dimension_name": "Exception / degraded",
+      "status": "PARTIAL",
+      "note": "Spot checks only · no full exception matrix",
+      "blocking": false
+    },
+    {
+      "domain": "G11",
+      "domain_name": "Stripe PSP",
+      "dimension": "A3",
+      "dimension_name": "RBAC / permission boundary",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G11",
+      "domain_name": "Stripe PSP",
+      "dimension": "A4",
+      "dimension_name": "State migration",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G11",
+      "domain_name": "Stripe PSP",
+      "dimension": "A5",
+      "dimension_name": "Recovery chain",
+      "status": "PARTIAL",
+      "note": "Runbook referenced · not full reorg drill",
+      "blocking": false
+    },
+    {
+      "domain": "G11",
+      "domain_name": "Stripe PSP",
+      "dimension": "A6",
+      "dimension_name": "Long soak (72h)",
+      "status": "OPEN",
+      "note": "TN-P1-009 · 72h soak INFLIGHT/NOT STARTED",
+      "blocking": true
+    },
+    {
+      "domain": "G11",
+      "domain_name": "Stripe PSP",
+      "dimension": "A7",
+      "dimension_name": "Indexer / Reconcile",
+      "status": "PASS",
+      "note": "N/A",
+      "blocking": false
+    },
+    {
+      "domain": "G11",
+      "domain_name": "Stripe PSP",
+      "dimension": "A8",
+      "dimension_name": "Human / browser UAT",
+      "status": "PARTIAL",
+      "note": "API-only domains",
+      "blocking": false
+    },
+    {
+      "domain": "G11",
+      "domain_name": "Stripe PSP",
+      "dimension": "A9",
+      "dimension_name": "Evidence chain",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    },
+    {
+      "domain": "G12",
+      "domain_name": "Indexer Reconcile",
+      "dimension": "A1",
+      "dimension_name": "Happy Path",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G12",
+      "domain_name": "Indexer Reconcile",
+      "dimension": "A2",
+      "dimension_name": "Exception / degraded",
+      "status": "PARTIAL",
+      "note": "Spot checks only · no full exception matrix",
+      "blocking": false
+    },
+    {
+      "domain": "G12",
+      "domain_name": "Indexer Reconcile",
+      "dimension": "A3",
+      "dimension_name": "RBAC / permission boundary",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G12",
+      "domain_name": "Indexer Reconcile",
+      "dimension": "A4",
+      "dimension_name": "State migration",
+      "status": "PARTIAL",
+      "note": "—",
+      "blocking": false
+    },
+    {
+      "domain": "G12",
+      "domain_name": "Indexer Reconcile",
+      "dimension": "A5",
+      "dimension_name": "Recovery chain",
+      "status": "OPEN",
+      "note": "TN-P1-010 OPEN",
+      "blocking": true
+    },
+    {
+      "domain": "G12",
+      "domain_name": "Indexer Reconcile",
+      "dimension": "A6",
+      "dimension_name": "Long soak (72h)",
+      "status": "PASS",
+      "note": "N/A for domain",
+      "blocking": false
+    },
+    {
+      "domain": "G12",
+      "domain_name": "Indexer Reconcile",
+      "dimension": "A7",
+      "dimension_name": "Indexer / Reconcile",
+      "status": "OPEN",
+      "note": "compound=false missing=3",
+      "blocking": true
+    },
+    {
+      "domain": "G12",
+      "domain_name": "Indexer Reconcile",
+      "dimension": "A8",
+      "dimension_name": "Human / browser UAT",
+      "status": "PARTIAL",
+      "note": "API-only domains",
+      "blocking": false
+    },
+    {
+      "domain": "G12",
+      "domain_name": "Indexer Reconcile",
+      "dimension": "A9",
+      "dimension_name": "Evidence chain",
+      "status": "PASS",
+      "note": "Burn-down evidence on file",
+      "blocking": false
+    }
+  ],
+  "deep_closure": {
+    "execution_order": "D1→D24",
+    "tracks": [
+      {
+        "id": "D1",
+        "order": 1,
+        "name": "新增功能反查",
+        "status": "OPEN",
+        "gaps": [
+          "TN-P1-005: evidence dir missing",
+          "TN-P1-009: P2FC 72h soak · COMPLETED.json missing",
+          "TN-P1-010: Indexer reconcile compound clean · OPEN"
+        ],
+        "notes": [
+          "ADM-U01: evidence\\GO_staging_admin_rbac_matrix\\run_adm_u01_close_20260603",
+          "ADM-U02: evidence\\GO_staging_admin_adm_u02\\run_20260614T024359Z",
+          "TN-P1-002: evidence\\GO_phase2_testnet_perfect_validation\\tn-p1-002-provider-onboarding-20260614T034743Z",
+          "TN-P1-003: evidence\\GO_phase2_testnet_perfect_validation\\tn-p1-003-acquisition-20260614T034501Z",
+          "TN-P1-004: evidence\\GO_phase2_testnet_perfect_validation\\tn-p1-004-steward-stake-20260614T033714Z",
+          "TN-P1-006: evidence\\GO_phase2_testnet_perfect_validation\\tn-p1-006-escrow-20260614T030618Z",
+          "TN-P1-007/008: evidence\\GO_phase2_testnet_perfect_validation\\tn-p1-007-008-hat-20260614T040856Z"
+        ],
+        "blocking": true
+      },
+      {
+        "id": "D2",
+        "order": 2,
+        "name": "六角色负向矩阵",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "ADM-U01 deny matrix on file",
+          "HAT matrix probe PASS"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D3",
+        "order": 3,
+        "name": "多身份污染测试",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "multi-identity smoke ALL PASS",
+          "hat probe includes multi-role payload"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D4",
+        "order": 4,
+        "name": "DB/API/UI/链上/Indexer 五方对账",
+        "status": "OPEN",
+        "gaps": [
+          "reconcile compound_pass=false",
+          "missing_projection=3"
+        ],
+        "notes": [
+          "API meta chain_id=11155111",
+          "Escrow on-chain evidence on file",
+          "Human acceptance UI sprint on file"
+        ],
+        "blocking": true
+      },
+      {
+        "id": "D5",
+        "order": 5,
+        "name": "恢复/重放/幂等/安全滥用",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "indexer-replay endpoint executable",
+          "indexer-tick without secret denied"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D6",
+        "order": 6,
+        "name": "长尾页面真人抽检",
+        "status": "OPEN",
+        "gaps": [
+          "staging-ui-real-user evidence missing (long-tail UI sample)",
+          "Playwright hat browser log missing"
+        ],
+        "notes": [
+          "phase2-human-acceptance-staging-sprint OK",
+          "tn-p1-d6-reliability-surface manifest on file"
+        ],
+        "blocking": true
+      },
+      {
+        "id": "D7",
+        "order": 7,
+        "name": "证据完整性审计",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "ADM-U01: integrity OK",
+          "ADM-U02: integrity OK",
+          "TN-P1-002: integrity OK",
+          "TN-P1-003: integrity OK",
+          "TN-P1-004: integrity OK",
+          "TN-P1-006: integrity OK",
+          "TN-P1-007/008: integrity OK",
+          "testnet-perfect-validation-manifest.v1.json on file"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D8",
+        "order": 8,
+        "name": "多身份角色组合爆炸矩阵",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "HAT combo probes 34>=30",
+          "Admin RBAC matrix 102>=90"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D9",
+        "order": 9,
+        "name": "全生命周期状态迁移",
+        "status": "PARTIAL",
+        "gaps": [
+          "P2Exec execution sprint lifecycle evidence missing"
+        ],
+        "notes": [
+          "TN-P1-003-acquisition: lifecycle states covered",
+          "TN-P1-006-escrow: lifecycle states covered"
+        ],
+        "blocking": true
+      },
+      {
+        "id": "D10",
+        "order": 10,
+        "name": "CMS/Growth/Governance/Admin 运营后台",
+        "status": "PARTIAL",
+        "gaps": [
+          "CMS/Growth/Official staging-api-parity evidence missing",
+          "Governance params/proposals staging evidence missing"
+        ],
+        "notes": [
+          "ADM-U01 admin consoles PASS",
+          "ADM-U02 PASS"
+        ],
+        "blocking": true
+      },
+      {
+        "id": "D11",
+        "order": 11,
+        "name": "订单/Escrow/FeeRouter/PSP 财务一致性",
+        "status": "OPEN",
+        "gaps": [
+          "reconcile compound_pass=false (TN-P1-010)",
+          "missing_projection=3"
+        ],
+        "notes": [
+          "TN-P1-006 Escrow financial leg",
+          "Stripe test PSP corridor",
+          "FeeRouter observability partial (distribute ② defer OK)"
+        ],
+        "blocking": true
+      },
+      {
+        "id": "D12",
+        "order": 12,
+        "name": "异常运营恢复链路",
+        "status": "OPEN",
+        "gaps": [
+          "TN-P1-009: P2FC soak not started"
+        ],
+        "notes": [
+          "indexer-replay cached OK",
+          "recovery runbook SSOT on file"
+        ],
+        "blocking": true
+      },
+      {
+        "id": "D13",
+        "order": 13,
+        "name": "国际化边界",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "i18n ci evidence referenced",
+          "/meta probe for locale-safe errors"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D14",
+        "order": 14,
+        "name": "安全攻击与重放防护",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "/meta rate_limits + idempotency_cache observable",
+          "indexer-reconcile without secret denied"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D15",
+        "order": 15,
+        "name": "真实运营日模拟",
+        "status": "OPEN",
+        "gaps": [
+          "P2FC 72h COMPLETED missing (ops-day soak)",
+          "smoke-phase2-testnet-execution-sprint evidence missing"
+        ],
+        "notes": [
+          "human acceptance ops-day script"
+        ],
+        "blocking": true
+      },
+      {
+        "id": "D16",
+        "order": 16,
+        "name": "Runbook 完整性审计",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "docs/go-live-checklist.md OK",
+          "docs/runbook/README.md OK",
+          "docs/runbook/PHASE2-START-CHECKLIST.md OK",
+          "docs/runbook/TT-PHASE2-TESTNET-CLOSURE-GOVERNANCE-STANDARD.md OK",
+          "docs/runbook/TESTNET-PERFECT-VALIDATION-REPORT.md OK",
+          "docs/runbook/TT-9618-onboarding-local-testnet.md OK",
+          "docs/runbook/PRODUCTION-INFRASTRUCTURE-AUDIT-REPORT.md OK",
+          "docs/runbook/PHASE2-REPOSITORY-STATUS.md OK",
+          "scripts/dev/run-production-infrastructure-audit.sh OK",
+          "scripts/dev/phase2-staging-fly-deploy-and-sync.sh OK",
+          "docs/runbook TT-* count=222"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D17",
+        "order": 17,
+        "name": "灾难恢复与故障演练",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "rollback drill script on file",
+          "staging DR drill evidence on file",
+          "DR matrix runbook SSOT",
+          "db-restore drill script path"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D18",
+        "order": 18,
+        "name": "监控与告警覆盖率",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "/health 200",
+          "/meta observability anchors >=3",
+          "fault/SLO or infra audit runbook",
+          "Admin observability route SSOT"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D19",
+        "order": 19,
+        "name": "发布/回滚/热修变更管理",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "TESTNET_FREEZE_OVERRIDE discipline",
+          "tt-api-staging fly.toml",
+          "rollback drill entry",
+          "rollback drill evidence archived"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D20",
+        "order": 20,
+        "name": "Production Readiness Review 多维签审",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "PRR dim function: OK",
+          "PRR dim permission: OK",
+          "PRR dim data: OK",
+          "PRR dim financial: OK",
+          "PRR dim security: OK",
+          "PRR dim operations: OK",
+          "PRR dim recovery: OK",
+          "PRR dim monitoring: OK",
+          "PRR dim release: OK",
+          "TT_PHASE3_PRODUCTION_READINESS_REVIEW: REQUESTED",
+          "PRODUCTION-GO-DECISION-PACKAGE on file"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D21",
+        "order": 21,
+        "name": "Governance 提案/投票/委托链",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "governance proposals L5 smoke SSOT",
+          "TN-P1-004 steward stake evidence",
+          "proposal UI/API references in evidence or frontend"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D22",
+        "order": 22,
+        "name": "Governance 参数/质押/链上观测",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "governance params L5 smoke",
+          "/meta governance contracts observable",
+          "Timelock runbook reference"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D23",
+        "order": 23,
+        "name": "Governance 权限边界与主理人走廊",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "steward workbench L5 smoke",
+          "HAT steward corridor in TN-P1-007/008",
+          "steward vs admin IA boundary SSOT"
+        ],
+        "blocking": false
+      },
+      {
+        "id": "D24",
+        "order": 24,
+        "name": "Full Surface Coverage Audit",
+        "status": "PASS",
+        "gaps": [],
+        "notes": [
+          "surface_coverage_pct=100",
+          "untested_ui_element=0",
+          "untested_user_action=0",
+          "human_uat_all_pass",
+          "exception_path_verified_all_pass",
+          "registry/phase2-testnet-surface-coverage-registry.v1.yaml on file"
+        ],
+        "blocking": false
+      }
+    ],
+    "enterprise_closure": {
+      "tracks": [
+        {
+          "id": "D8",
+          "name": "多身份角色组合爆炸矩阵",
+          "status": "PASS",
+          "gap_count": 0
+        },
+        {
+          "id": "D9",
+          "name": "全生命周期状态迁移",
+          "status": "PARTIAL",
+          "gap_count": 1
+        },
+        {
+          "id": "D10",
+          "name": "CMS/Growth/Governance/Admin 运营后台",
+          "status": "PARTIAL",
+          "gap_count": 2
+        },
+        {
+          "id": "D11",
+          "name": "订单/Escrow/FeeRouter/PSP 财务一致性",
+          "status": "OPEN",
+          "gap_count": 2
+        },
+        {
+          "id": "D12",
+          "name": "异常运营恢复链路",
+          "status": "OPEN",
+          "gap_count": 1
+        },
+        {
+          "id": "D13",
+          "name": "国际化边界",
+          "status": "PASS",
+          "gap_count": 0
+        },
+        {
+          "id": "D14",
+          "name": "安全攻击与重放防护",
+          "status": "PASS",
+          "gap_count": 0
+        },
+        {
+          "id": "D15",
+          "name": "真实运营日模拟",
+          "status": "OPEN",
+          "gap_count": 2
+        }
+      ],
+      "coverage_pct": 38,
+      "enterprise_pass": 3,
+      "enterprise_total": 8
+    },
+    "operational_readiness": {
+      "tracks": [
+        {
+          "id": "D16",
+          "name": "Runbook 完整性审计",
+          "status": "PASS",
+          "gap_count": 0
+        },
+        {
+          "id": "D17",
+          "name": "灾难恢复与故障演练",
+          "status": "PASS",
+          "gap_count": 0
+        },
+        {
+          "id": "D18",
+          "name": "监控与告警覆盖率",
+          "status": "PASS",
+          "gap_count": 0
+        },
+        {
+          "id": "D19",
+          "name": "发布/回滚/热修变更管理",
+          "status": "PASS",
+          "gap_count": 0
+        },
+        {
+          "id": "D20",
+          "name": "Production Readiness Review 多维签审",
+          "status": "PASS",
+          "gap_count": 0
+        }
+      ],
+      "coverage_pct": 100,
+      "operational_pass": 5,
+      "operational_total": 5
+    },
+    "governance_closure": {
+      "tracks": [
+        {
+          "id": "D21",
+          "name": "Governance 提案/投票/委托链",
+          "status": "PASS",
+          "gap_count": 0
+        },
+        {
+          "id": "D22",
+          "name": "Governance 参数/质押/链上观测",
+          "status": "PASS",
+          "gap_count": 0
+        },
+        {
+          "id": "D23",
+          "name": "Governance 权限边界与主理人走廊",
+          "status": "PASS",
+          "gap_count": 0
+        }
+      ],
+      "coverage_pct": 100,
+      "governance_pass": 3,
+      "governance_total": 3
+    },
+    "full_surface_coverage": {
+      "surfaces_total": 52,
+      "surfaces_tested": 52,
+      "surface_coverage_pct": 100,
+      "untested_ui_element": 0,
+      "untested_user_action": 0,
+      "human_uat_pass_count": 52,
+      "exception_path_pass_count": 52,
+      "roles": [
+        "traveler",
+        "guide",
+        "merchant",
+        "steward",
+        "moderator",
+        "admin"
+      ]
+    },
+    "summary": {
+      "pass": 16,
+      "partial": 2,
+      "open": 6,
+      "tracks_total": 24,
+      "missing_coverage": 8,
+      "evidence_gap": 15,
+      "deep_blocking": 8,
+      "enterprise_coverage_pct": 38,
+      "operational_readiness_pct": 100,
+      "governance_closure_pct": 100,
+      "full_closure_coverage_pct": 67,
+      "surface_coverage_pct": 100,
+      "untested_ui_element": 0,
+      "untested_user_action": 0,
+      "ready_for_owner_signoff": false
+    }
+  },
+  "summary": {
+    "cells_total": 108,
+    "pass": 48,
+    "partial": 54,
+    "open": 5,
+    "defer_3": 1,
+    "blocking_open": 5,
+    "l5_composite_score": null,
+    "l5_composite_score_eligible": false
+  },
+  "evidence_anchors": {
+    "burn_down_report": "docs/runbook/TESTNET-PERFECT-VALIDATION-REPORT.md",
+    "tn_p1_010": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_testnet_perfect_validation\\tn-p1-010-root-cause-audit-20260614T070000Z",
+    "tn_p1_009_soak": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "tn_p1_d24_surface_staging.v1",
+  "stamp": "20260614T054557Z",
+  "phase": "② testnet",
+  "surfaces_closed": [
+    "T-P11",
+    "M-P07",
+    "O-P02",
+    "O-P03",
+    "O-P06"
+  ],
+  "release_gate": "GO"
+}

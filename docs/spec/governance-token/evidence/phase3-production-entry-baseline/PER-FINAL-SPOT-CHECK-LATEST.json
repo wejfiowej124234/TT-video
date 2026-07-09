@@ -1,0 +1,101 @@
+{
+  "schema": "traveltrust.per_final_spot_check.v1",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-09T15:30:47.214Z",
+  "web_base": "http://127.0.0.1:3012",
+  "api_base": "http://127.0.0.1:8080",
+  "verdict": "PASS",
+  "p0_p1": [],
+  "warns": [],
+  "pages": {
+    "home": {
+      "route": "/",
+      "status": 200,
+      "title": "TravelTrust",
+      "canonical": "https://traveltrust.app",
+      "og_url": "https://traveltrust.app",
+      "pattern_hits": []
+    },
+    "traveltrust": {
+      "route": "/traveltrust",
+      "status": 200,
+      "title": "TravelTrust 网络 | TravelTrust",
+      "canonical": "https://traveltrust.app/traveltrust",
+      "og_url": "https://traveltrust.app/traveltrust",
+      "pattern_hits": []
+    },
+    "market": {
+      "route": "/market",
+      "status": 200,
+      "title": "自由市场 | TravelTrust",
+      "canonical": "https://traveltrust.app/market",
+      "og_url": "https://traveltrust.app/market",
+      "pattern_hits": []
+    },
+    "help": {
+      "route": "/help",
+      "status": 200,
+      "title": "帮助中心 | TravelTrust",
+      "canonical": "https://traveltrust.app/help",
+      "og_url": "https://traveltrust.app/help",
+      "pattern_hits": []
+    },
+    "trust": {
+      "route": "/trust",
+      "status": 200,
+      "title": "信任中心 | TravelTrust",
+      "canonical": "https://traveltrust.app/trust",
+      "og_url": "https://traveltrust.app/trust",
+      "pattern_hits": []
+    },
+    "governance": {
+      "route": "/governance",
+      "status": 200,
+      "title": "治理门户 | TravelTrust",
+      "canonical": "https://traveltrust.app/governance",
+      "og_url": "https://traveltrust.app/governance",
+      "pattern_hits": []
+    },
+    "announcements": {
+      "route": "/traveltrust/announcements",
+      "status": 200,
+      "title": "项目动态与公告",
+      "canonical": "https://traveltrust.app/traveltrust/announcements",
+      "og_url": "https://traveltrust.app/traveltrust/announcements",
+      "pattern_hits": []
+    }
+  },
+  "public_surface_parity": {
+    "guide_count_hangzhou": 1,
+    "trust_gate_on_list": 0,
+    "announcement_sample_titles": [
+      "",
+      "",
+      ""
+    ],
+    "announcements_title_zh": "项目动态与公告",
+    "announcements_title_en": "Project updates &amp; announcements",
+    "metadata": {
+      "home_title": "TravelTrust",
+      "home_canonical": "https://traveltrust.app",
+      "home_og_url": "https://traveltrust.app",
+      "traveltrust_og_url": "https://traveltrust.app/traveltrust"
+    },
+    "footer": {
+      "home_fee_router_hit": false
+    }
+  },
+  "gates": {
+    "production_ui_hygiene": "PASS",
+    "public_surface_audit": "PASS",
+    "market_guide_catalog_parity": "PASS"
+  },
+  "round1_exit_criteria": {
+    "confirmed_ci_open": 0,
+    "per_final_spot_check": "PASS",
+    "hygiene_gate": "PASS",
+    "public_surface_gate": "PASS",
+    "eligible_for_round1_exit": true
+  },
+  "pass": true
+}

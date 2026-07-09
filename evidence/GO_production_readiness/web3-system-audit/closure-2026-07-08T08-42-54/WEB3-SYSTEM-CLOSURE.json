@@ -1,0 +1,137 @@
+{
+  "schema": "traveltrust.web3_system_closure.v1",
+  "recorded_utc": "2026-07-08T08:42:54.921Z",
+  "run_dir": "evidence/GO_production_readiness/web3-system-audit/closure-2026-07-08T08-42-54",
+  "audit_verdict": "WEB3_SYSTEM_AUDIT_BLOCKERS_PRESENT",
+  "verdict": "WEB3_SYSTEM_CLOSURE_BLOCKED",
+  "summary": {
+    "blockers_p0": 0,
+    "blockers_p1": 4,
+    "blockers_p2": 0,
+    "payment_rail_subset_pass": true,
+    "web3_system_ready": false,
+    "closure_eligible": false
+  },
+  "honest_boundary": {
+    "payment_rail_g3_02": "G3-02 PAY-W01..W16 may PASS while full Web3 System (Governance/TTG/Staking/Primary Market) remains OPEN",
+    "gate2_registry_note": "TT_PRODUCTION_WEB3_READY=IN_PROGRESS until TT_WEB3_SYSTEM_PRODUCTION_READY=PASS (layering SSOT 2026-07-08)"
+  },
+  "open_blockers": [
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-004",
+      "dimension": "Primary Market · UI/UX",
+      "title": "TtgPrimaryMarketV1 deployed on Sepolia SSOT but no FE purchase route — locales disclose ② on-chain Primary Market NOT STARTED",
+      "paths": [
+        "contracts/src/TtgPrimaryMarketV1.sol",
+        "frontend/locales/en.ts",
+        "registry/protocol-convergence-deployments.v1.yaml"
+      ],
+      "fix": "Either: (A) ship /primary-market wallet purchase UI + prod env wiring, or (B) formal Owner deferral with TT_WEB3_SYSTEM scope excluding Primary Market until Phase ③",
+      "status": "OPEN",
+      "risk": "MEDIUM"
+    },
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-005",
+      "dimension": "RBAC · 安全",
+      "title": "P2FC D3_admin_rbac_chain=FAIL — closure RBAC_D3_PRODUCTION_BOUNDARY_PARTIAL (D3-F01 permission drift · D3-F04 ADM-U01 staging open)",
+      "paths": [
+        "scripts/dev/gen-p2fc-web3-system-security-audit.py",
+        "evidence/GO_production_readiness/web3-system-audit/RBAC-D3-CLOSURE-LATEST.json"
+      ],
+      "fix": "Close D3-F01 registry sync + D3-F04 ADM-U01 staging; D3-F02 bypass already mitigated on prod",
+      "status": "OPEN",
+      "risk": "HIGH"
+    },
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-003",
+      "dimension": "智能合约 · ABI",
+      "title": "GovFreeze shell ABIs missing in contracts/abi/: TtgPrimaryMarketV1.json, TtgSeatConcentrationRegistry.json, GovernanceTreasuryP4Cap.json",
+      "paths": [
+        "contracts/abi/",
+        "contracts/script/DeployGovFreezeV2CleanBaseline.s.sol"
+      ],
+      "fix": "Export/sync ABIs for TtgPrimaryMarketV1, TtgSeatConcentrationRegistry, GovernanceTreasuryP4Cap",
+      "status": "OPEN",
+      "risk": "MEDIUM"
+    },
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-002",
+      "dimension": "Evidence · TTG Cert",
+      "title": "TTG Governance Cert signoffs 6/12 — certs 7-12 (Execute/Treasury/Unstake/DR) pending on chain-enabled staging",
+      "paths": [
+        "registry/ttg-governance-cert-gates.v1.yaml",
+        "evidence/GO_production_readiness/web3-system-audit/TTG-CERT-EVIDENCE-INDEX-LATEST.json",
+        "evidence/GO_ttg_cert/"
+      ],
+      "fix": "Run scripts/dev/run-tt-governance-cert-07..11 with --finalize after prod contract wiring (Step 2)",
+      "status": "OPEN",
+      "risk": "HIGH"
+    }
+  ],
+  "closure_steps": [
+    {
+      "id": "STEP-1-GATE-LAYERING",
+      "title": "Split TT_WEB3_PAYMENT_PRODUCTION_READY vs TT_WEB3_SYSTEM_PRODUCTION_READY",
+      "paths": [
+        "registry/web3-gate-layering.v1.yaml",
+        "registry/web3-system-production-gate.v1.yaml",
+        "docs/runbook/WEB3-GATE-LAYERING.md",
+        "registry/production-readiness-master-matrix.v1.yaml",
+        "registry/production-go-four-gate-framework.v1.yaml"
+      ],
+      "status": "CLOSED",
+      "evidence": "evidence/GO_production_readiness/web3-system-audit/WEB3-GATE-LAYERING-CLOSURE-LATEST.json"
+    },
+    {
+      "id": "STEP-2-RUNTIME-WIRING",
+      "title": "Prod /meta 10/10 contract wiring",
+      "paths": [
+        "docs/runbook/WEB3-SYSTEM-PRODUCTION-RUNTIME-WIRING.md",
+        "scripts/dev/check-web3-system-production-meta-contracts.cjs"
+      ],
+      "status": "OPEN",
+      "note": "Requires Fly secrets deploy — configuration only documented"
+    },
+    {
+      "id": "STEP-3-G24-REGISTRY",
+      "title": "G24 proxy registry restored + gate PASS",
+      "paths": [
+        "registry/g24-p-upgrade-01-contract-posture.v1.yaml",
+        "scripts/gates/check-g24-p-upgrade-01-proxy-architecture.sh"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "id": "STEP-4-TTG-CERT",
+      "title": "TTG Cert evidence index",
+      "paths": [
+        "scripts/dev/gen-ttg-cert-production-evidence-index.cjs",
+        "evidence/GO_ttg_cert/"
+      ],
+      "status": "PARTIAL"
+    },
+    {
+      "id": "STEP-5-RBAC-D3",
+      "title": "RBAC D3 closure manifest",
+      "paths": [
+        "evidence/GO_production_readiness/web3-system-audit/RBAC-D3-CLOSURE-LATEST.json"
+      ],
+      "status": "PARTIAL"
+    }
+  ],
+  "closure_prereqs_met": false,
+  "discipline": {
+    "business_code_modified": false,
+    "audit_only": true
+  },
+  "references": {
+    "deep_audit_latest": "evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-DEEP-AUDIT-LATEST.json",
+    "blockers_md": "evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-BLOCKERS-LATEST.md",
+    "payment_rail_subset": "evidence/GO_production_readiness/payment-deep-audit/PAYMENT-USDC-WEB3-DEEP-AUDIT-LATEST.json",
+    "g3_02": "evidence/GO_production_readiness/G3-02/WEB3-PAYMENT-PRODUCTION-READINESS-LATEST.json"
+  }
+}

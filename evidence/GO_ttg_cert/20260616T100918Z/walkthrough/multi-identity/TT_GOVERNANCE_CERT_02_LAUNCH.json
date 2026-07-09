@@ -1,0 +1,18 @@
+{
+  "program": "TT_GOVERNANCE_CERT_02_MULTI_IDENTITY_WALKTHROUGH",
+  "status": "LAUNCHED",
+  "phase": "②",
+  "stamp_utc": "20260616T100918Z",
+  "machine_checks_verdict": "PARTIAL",
+  "mtm_ids_count": 11,
+  "roles": [
+    "traveler",
+    "investor",
+    "steward",
+    "guide",
+    "merchant",
+    "admin"
+  ],
+  "owner_blocker": "recordings in walkthrough/multi-identity/recordings/ (≥1 file)",
+  "signoff_path": "walkthrough/multi-identity/MULTI-IDENTITY-WALKTHROUGH-SIGNOFF.json"
+}

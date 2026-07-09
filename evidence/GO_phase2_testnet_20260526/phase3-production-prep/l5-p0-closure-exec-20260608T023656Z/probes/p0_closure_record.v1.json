@@ -1,0 +1,54 @@
+{
+  "schema": "traveltrust_l5_p0_closure_record.v1",
+  "recorded_utc": "20260608T023656Z",
+  "probes": {
+    "E2": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "D:/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/l5-p0-closure-exec-20260608T023656Z/probes/E2-20260608T023656Z.log",
+      "log_path": "20260608T023656Z",
+      "gate_script": "scripts/dev/l5-p0-e2-approval-chain-smoke.sh"
+    },
+    "E3": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "D:/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/l5-p0-closure-exec-20260608T023656Z/probes/E3-20260608T023706Z.log",
+      "log_path": "20260608T023706Z",
+      "gate_script": "scripts/dev/l5-p0-e3-2fa-coverage-smoke.sh"
+    },
+    "E4": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "D:/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/l5-p0-closure-exec-20260608T023656Z/probes/E4-20260608T023712Z.log",
+      "log_path": "20260608T023712Z",
+      "gate_script": "scripts/dev/l5-p0-e4-rbac-escalation-smoke.sh"
+    },
+    "C5": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "D:/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/l5-p0-closure-exec-20260608T023656Z/probes/C5-20260608T023716Z.log",
+      "log_path": "20260608T023716Z",
+      "gate_script": "scripts/dev/l5-p0-c5-growth-freeze-cross-smoke.sh"
+    },
+    "D3": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "D:/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/l5-p0-closure-exec-20260608T023656Z/probes/D3-20260608T023723Z.log",
+      "log_path": "20260608T023723Z",
+      "gate_script": "scripts/dev/l5-p0-d3-cold-start-linkage-smoke.sh"
+    }
+  },
+  "summary": {
+    "go": 5,
+    "hold": 0,
+    "total": 5
+  },
+  "target_ids": [
+    "E2",
+    "E3",
+    "E4",
+    "C5",
+    "D3",
+    "F5"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T151500Z",
+  "filename": "ocs-barcelona-arch-guide-avatar.jpg",
+  "row": 49,
+  "chain_id": "barcelona-arch",
+  "country_code": "ES",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "celebrity_portraits",
+      "brand_logos",
+      "copyrighted_artworks_interior",
+      "commercial_ad_posters"
+    ],
+    "safe_expression": "Carlos 圣家堂外建筑向导肖像 · 地中海光 · 外观地标"
+  },
+  "checks": {
+    "manifest_full_field_alignment": {
+      "pass": true,
+      "notes": "nickname 巴塞罗那建筑向导·Carlos · bio 高迪/圣家堂/桂尔公园 · ES"
+    },
+    "destination_authenticity_9dim_plan": {
+      "pass": true,
+      "notes": "圣家堂外 · 高迪石立面 · 地中海金阳光"
+    },
+    "country_consistency_es_only": {
+      "pass": true,
+      "notes": "禁 JP/KR/TH/SG/FR/US/AU 元素 · ES 高迪视觉语言"
+    },
+    "guide_identity_diversity_plan": {
+      "pass": true,
+      "vs_ken": "西男建筑 vs 日男摄影",
+      "vs_yuki": "现代便装 vs 和服",
+      "vs_min": "30s 建筑 vs 45+ 美食",
+      "vs_arun": "地中海 vs 泰男寺庙",
+      "vs_lee": "男建筑 vs 女亲子",
+      "vs_claire": "男建筑 vs 女巴黎艺术",
+      "vs_alex": "高迪暖石 vs NYC 冷调",
+      "vs_mia": "城市建筑 vs 澳女户外"
+    },
+    "global_visual_diversity": { "pass": true },
+    "brand_consistency": { "pass": true },
+    "consumer_experience": { "pass": true },
+    "surface_identity": { "pass": true, "notes": "纯 Guide" },
+    "narrative_planning": { "pass": true },
+    "nine_class_framework_frozen": true
+  }
+}

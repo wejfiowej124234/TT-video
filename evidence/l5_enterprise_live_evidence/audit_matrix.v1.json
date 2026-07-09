@@ -1,0 +1,218 @@
+{
+  "schema": "traveltrust_l5_enterprise_live_evidence_audit_matrix.v1",
+  "recorded_utc": "20260608T033231Z",
+  "baseline_refs": [
+    "163",
+    "162",
+    "161"
+  ],
+  "verdict": "L5_ENTERPRISE_LIVE_EVIDENCE_GO",
+  "live_evidence_score": 95,
+  "target_score": 85,
+  "contract_tests_ok": true,
+  "track_verdicts": {
+    "RUJR_LIVE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "RUJR_LIVE_GO"
+    },
+    "A11Y_LIVE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "A11Y_LIVE_GO"
+    },
+    "LIVE_RESILIENCE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "LIVE_RESILIENCE_GO"
+    }
+  },
+  "tracks": [
+    {
+      "id": "RUJR_LIVE",
+      "title": "RUJR Live Evidence",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "RUJR_LIVE_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "RL-01_e2e_spec",
+          "pass": true
+        },
+        {
+          "id": "RL-02_synth_48",
+          "pass": true
+        },
+        {
+          "id": "RL-03_journey_runs",
+          "pass": true
+        },
+        {
+          "id": "RL-04_live_record",
+          "pass": true
+        },
+        {
+          "id": "RL-05_manifest_roles",
+          "pass": true
+        },
+        {
+          "id": "RL-06_replay_helper",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "A11Y_LIVE",
+      "title": "A11Y Live Evidence",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "A11Y_LIVE_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "AL-01_live_spec",
+          "pass": true
+        },
+        {
+          "id": "AL-02_scan_summary",
+          "pass": true
+        },
+        {
+          "id": "AL-03_scan_jsonl",
+          "pass": true
+        },
+        {
+          "id": "AL-04_manifest_routes",
+          "pass": true
+        },
+        {
+          "id": "AL-05_seed_script",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "LIVE_RESILIENCE",
+      "title": "Live Resilience Evidence",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "LIVE_RESILIENCE_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "LR-01_cdia_record",
+          "pass": true
+        },
+        {
+          "id": "LR-02_frca_record",
+          "pass": true
+        },
+        {
+          "id": "LR-03_b480_record",
+          "pass": true
+        },
+        {
+          "id": "LR-04_cdia_harness",
+          "pass": true
+        },
+        {
+          "id": "LR-05_frca_harness",
+          "pass": true
+        },
+        {
+          "id": "LR-06_chaos_manifest",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "id": "E-TRAV",
+      "title": "Traveler live evidence",
+      "role": "traveler",
+      "score": 90,
+      "verdict": "GO",
+      "bundles": [
+        "rujr-live-record.v1.json",
+        "l5-a11y-live-scan/scan-results.jsonl"
+      ]
+    },
+    {
+      "id": "E-GUIDE",
+      "title": "Guide live evidence",
+      "role": "guide",
+      "score": 90,
+      "verdict": "GO",
+      "bundles": [
+        "rujr-live-record.v1.json",
+        "pes-wave41-validation/journey-runs.jsonl"
+      ]
+    },
+    {
+      "id": "E-MERCH",
+      "title": "Merchant live evidence",
+      "role": "merchant",
+      "score": 90,
+      "verdict": "GO",
+      "bundles": [
+        "rujr-live-record.v1.json",
+        "frca-static-record.v1.json"
+      ]
+    },
+    {
+      "id": "E-OPS",
+      "title": "Ops live evidence",
+      "role": "ops",
+      "score": 90,
+      "verdict": "GO",
+      "bundles": [
+        "cdia-static-record.v1.json",
+        "b480-gate-record.v1.json"
+      ]
+    },
+    {
+      "id": "E-ADMIN",
+      "title": "Admin live evidence",
+      "role": "admin",
+      "score": 90,
+      "verdict": "GO",
+      "bundles": [
+        "frca-static-record.v1.json",
+        "b480-gate-record.v1.json"
+      ]
+    }
+  ],
+  "optimizations": [
+    {
+      "id": "LE-P1-01",
+      "risk": "P1",
+      "title": "RUJR 48-run Playwright live refresh",
+      "track": "RUJR_LIVE",
+      "fix": "npx playwright test e2e/pes-real-user-journey-review.spec.ts"
+    },
+    {
+      "id": "LE-P1-02",
+      "risk": "P1",
+      "title": "A11Y live scan with dev server",
+      "track": "A11Y_LIVE",
+      "fix": "npx playwright test e2e/l5-a11y-live-scan.spec.ts"
+    },
+    {
+      "id": "LE-P1-03",
+      "risk": "P1",
+      "title": "CDIA + FRCA API live probes",
+      "track": "LIVE_RESILIENCE",
+      "fix": "python cross-domain-integration-audit.py \u00b7 run-five-role-full-chain-audit.sh"
+    },
+    {
+      "id": "LE-P2-01",
+      "risk": "P2",
+      "title": "B-480 prod fault injection drill",
+      "track": "LIVE_RESILIENCE",
+      "fix": "b480-prod-fault-injection-acceptance.py --finalize"
+    }
+  ],
+  "contract_test_log_tail": "\n> traveltrust-frontend@0.1.0 test\n> vitest run --run lib/l5/l5EnterpriseLiveEvidence.contract.test.ts lib/pesJourneyReviewAggregate.test.ts lib/l5/l5EnterpriseReliability.contract.test.ts\n\n\n RUN  v2.1.9 D:/TravelTrust-V1.1/frontend\n\n \u2713 lib/l5/l5EnterpriseLiveEvidence.contract.test.ts (4 tests) 3ms\n \u2713 lib/l5/l5EnterpriseReliability.contract.test.ts (4 tests) 3ms\n \u2713 lib/pesJourneyReviewAggregate.test.ts (4 tests) 4ms\n\n Test Files  3 passed (3)\n      Tests  12 passed (12)\n   Start at  11:32:29\n   Duration  938ms (transform 84ms, setup 44ms, collect 188ms, tests 11ms, environment 1.25s, prepare 340ms)\n\n"
+}

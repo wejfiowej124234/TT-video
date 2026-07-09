@@ -92,12 +92,13 @@ Wave 2.4  Matrix sync + G2 gate validate + commit evidence
 
 ---
 
-## 3. 编排脚本（待实现 · Wave 2 正式验收）
+## 3. 编排脚本
 
 | 脚本 | 作用 |
 |------|------|
-| `run-production-readiness-wave-2-g2-formal.sh` | 主入口 · 分项 evidence · matrix sync |
-| `sync-production-readiness-g2-matrix.cjs` | 按分项 signoff 关闭 Blocker |
+| `bash scripts/dev/run-production-readiness-wave-2-g2-formal.sh` | **主入口** · Formal Checklist · Evidence · Sign-off · G2 Gate |
+| `validate-g2-formal-acceptance.cjs` | Formal signoff JSON |
+| `sync-production-readiness-g2-matrix.cjs --mode formal` | `TT_WAVE2_FORMAL_ACCEPTANCE: COMPLETE` |
 | `validate-production-readiness-g2-gate.cjs` | G2 PASS 硬闸 |
 
 **G2 Reality Audit（本轮已完成 · `20260704T015213Z`）：**

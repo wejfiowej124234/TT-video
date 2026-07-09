@@ -1,0 +1,705 @@
+{
+  "schema": "traveltrust.admin_product_experience_audit.v1",
+  "report_id": "APEA-ADMIN-SOAK-20260608",
+  "title": "Admin Product Experience Audit · UX Findings Report",
+  "completed_at": "2026-06-08T11:00:41Z",
+  "audit_scope": {
+    "routes": "/admin/*",
+    "page_count": 106,
+    "persona": "Operator · first contact · no training assumed"
+  },
+  "audit_method": "static review of nav SSOT, page titles/subtitles, empty/error patterns, KPI labels, confirm flows · no code-correctness gate",
+  "grading_rubric": {
+    "P0": "看不懂 — operator cannot understand what page/module/metric means or where they are",
+    "P1": "容易误操作 — naming/IA/ missing guardrails lead to wrong module or risky action",
+    "P2": "效率低 — task completable but slow, inconsistent patterns, missing shortcuts"
+  },
+  "goal": "Admin usable for daily ops without training before real-user UAT",
+  "exec_env": "codebase review during staging-soak freeze",
+  "staging_policy": "no staging changes · no token fixes · no new features during soak",
+  "dimensions": [
+    "menu_naming",
+    "page_titles",
+    "description_copy",
+    "information_architecture",
+    "empty_states",
+    "metric_definitions",
+    "operation_feedback",
+    "risk_warnings",
+    "task_completion_paths"
+  ],
+  "admin_groups_audited": [
+    "workspace",
+    "onboarding",
+    "operations",
+    "content",
+    "official_ops",
+    "growth",
+    "community",
+    "finance",
+    "governance",
+    "more"
+  ],
+  "summary": {
+    "total": 40,
+    "P0": 10,
+    "P1": 15,
+    "P2": 15
+  },
+  "findings_by_admin_group": {
+    "growth": 6,
+    "operations": 2,
+    "community": 3,
+    "cross_cutting": 5,
+    "content": 5,
+    "workspace": 5,
+    "governance": 2,
+    "official_ops": 4,
+    "more": 3,
+    "onboarding": 3,
+    "finance": 2
+  },
+  "post_audit_sequence": [
+    "Unified Admin UX optimization sprint (P0→P1→P2)",
+    "Admin PEA spot-check on /admin/* sample paths",
+    "Real-user UAT (ten operational scenarios)",
+    "33/33 GO → Token Debt Sprint → next testnet release"
+  ],
+  "findings": [
+    {
+      "id": "ADMIN-UX-P0-01",
+      "severity": "P0",
+      "admin_group": "growth",
+      "domain": "Growth",
+      "surface": "/admin/growth vs /admin/trust-growth",
+      "kind": "naming",
+      "title": "Growth Center 与 Trust Growth 同名异义，运营无法区分",
+      "expected": "Sidebar/标题明确区分 Referral/Early Bird 增长台 vs Banner A/B 信任增长台",
+      "actual": "Growth 组 vs Governance 组 trust-growth 均含 Growth/增长；Home audit_finance 卡片再引入第三入口",
+      "operator_impact": "首次运营不知道打开哪个控制台配置邀请码或 Banner",
+      "evidence": [
+        "frontend/lib/admin/adminShellGrowthNavLinks.ts",
+        "frontend/lib/admin/adminShellGovernanceNavLinks.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P0-02",
+      "severity": "P0",
+      "admin_group": "operations",
+      "domain": "Official OPS",
+      "surface": "/admin/guides vs /admin/official/guides",
+      "kind": "naming",
+      "title": "Operations「Guide onboarding」与 Official「Official Guides」导航无法区分",
+      "expected": "Nav 消歧：入驻审核 vs 官方内容发布",
+      "actual": "Operations admin_guides_title=Guide onboarding；Official admin_shell_nav_official_guides=Official Guides",
+      "operator_impact": "发布官方攻略时可能进入向导 KYB 台账",
+      "evidence": [
+        "frontend/lib/admin/adminShellOperationsNavLinks.ts",
+        "frontend/lib/admin/adminShellOfficialOpsNavLinks.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P0-03",
+      "severity": "P0",
+      "admin_group": "community",
+      "domain": "Community Moderation",
+      "surface": "/admin/community/reports (first nav item)",
+      "kind": "naming",
+      "title": "Community 首项 Nav「Community governance」实际指向举报队列",
+      "expected": "Nav 标签与页面 H1「Community reports/举报工单」一致",
+      "actual": "admin_shell_nav_community_hub=Community governance；无 /admin/community hub；H1=Community reports",
+      "operator_impact": "运营找「治理台」却进入工单列表，或找「举报」对不上 Nav",
+      "evidence": [
+        "frontend/lib/admin/adminShellCommunityNavLinks.ts",
+        "frontend/locales/en.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P0-04",
+      "severity": "P0",
+      "admin_group": "cross_cutting",
+      "domain": "CMS",
+      "surface": "Content/Official/Growth deep pages breadcrumb",
+      "kind": "navigation",
+      "title": "P1 四平面深页 breadcrumb 仅显示 Workspace，丢失域上下文",
+      "expected": "Breadcrumb 显示 Content / Official Ops / Growth 分组 + 叶子页",
+      "actual": "adminShellContextForPath 缺少 content/official_ops/growth PREFIX_GROUPS；返回 null",
+      "operator_impact": "深页运营不知道自己在哪个平面，无法回溯 Hub",
+      "evidence": [
+        "frontend/lib/admin/adminShellContextForPath.ts",
+        "frontend/components/admin/AdminSubpageBreadcrumb.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P0-05",
+      "severity": "P0",
+      "admin_group": "cross_cutting",
+      "domain": "CMS",
+      "surface": "Page subtitles (M1, G-S7, O-S4, C-S1…)",
+      "kind": "copy",
+      "title": "页面副标题大量 Sprint/模块代号，运营看不懂业务含义",
+      "expected": "副标题描述业务目的与消费者影响，无工程 ticket",
+      "actual": "Content/Official/Growth 页 subtitle 含 M1–M10、G-S7、O-S4、C-S1 等代号",
+      "operator_impact": "首次接触无法从标题理解页面职责",
+      "evidence": [
+        "frontend/locales/en.ts",
+        "frontend/components/admin/content/AdminContentPageShell.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P0-06",
+      "severity": "P0",
+      "admin_group": "growth",
+      "domain": "Growth",
+      "surface": "/admin/growth/analytics vs /admin/conversion-analytics",
+      "kind": "metric_definitions",
+      "title": "两套 Analytics 指标来源不同但命名相近，指标定义未自解释",
+      "expected": "页级说明 KPI 口径、时间窗、数据源",
+      "actual": "Growth analytics=server aggregates；Conversion analytics=localStorage PES；Registrations 一个有(30d)一个无",
+      "operator_impact": "运营对比两页数字会得出错误结论",
+      "evidence": [
+        "frontend/app/admin/growth/analytics/AdminGrowthAnalyticsPageMain.tsx",
+        "frontend/app/admin/conversion-analytics/AdminConversionAnalyticsPageMain.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P0-07",
+      "severity": "P0",
+      "admin_group": "content",
+      "domain": "CMS",
+      "surface": "/admin/content/geo-validation",
+      "kind": "copy",
+      "title": "Geo validation 页展示原始 HOLD/GO、PASS/FAIL、环境变量名",
+      "expected": "运营可读的状态与修复建议",
+      "actual": "UI 渲染技术枚举与 env 名",
+      "operator_impact": "非工程运营无法理解验证结果",
+      "evidence": [
+        "frontend/app/admin/content/geo-validation/AdminContentGeoValidationPageMain.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P0-08",
+      "severity": "P0",
+      "admin_group": "community",
+      "domain": "Community Moderation",
+      "surface": "Penalties/Appeals breadcrumb",
+      "kind": "navigation",
+      "title": "Penalties/Appeals breadcrumb 引用缺失 i18n key，叶子标题不可读",
+      "expected": "Breadcrumb 显示与 Sidebar 一致的 Penalties/Appeals",
+      "actual": "adminShellContextForPath 用 admin_community_penalties_title/admin_community_appeals_title，locale 不存在",
+      "operator_impact": "面包屑显示 raw key 或空白，位置感丢失",
+      "evidence": [
+        "frontend/lib/admin/adminShellContextForPath.ts",
+        "frontend/locales/en.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P0-09",
+      "severity": "P0",
+      "admin_group": "workspace",
+      "domain": "CMS",
+      "surface": "/admin home",
+      "kind": "information_architecture",
+      "title": "Workspace Home 无 Content/Official/Growth 入口，四平面仅 Sidebar 可见",
+      "expected": "首次登录 Home 可发现 CMS/Official/Growth 日常任务入口",
+      "actual": "ADMIN_HOME_CARDS 无 P1 平面卡片；Command palette 亦不含；Home section 仍标 Community & content",
+      "operator_impact": "无培训时运营不知道 CMS/Growth 在哪开始",
+      "evidence": [
+        "frontend/lib/admin/adminHomeModel.ts",
+        "frontend/lib/admin/adminCommandPaletteEntries.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P0-10",
+      "severity": "P0",
+      "admin_group": "governance",
+      "domain": "Governance",
+      "surface": "/admin/governance/execution-uat",
+      "kind": "copy",
+      "title": "Governance execution UAT 页为脚本/证据路径，非日常运营语言",
+      "expected": "治理 UAT 页有运营可读摘要或链到 runbook",
+      "actual": "Sepolia script sequence + evidence pack 目录名",
+      "operator_impact": "Ops 误入后无法理解要做什么",
+      "evidence": [
+        "frontend/app/admin/governance/execution-uat/AdminGovernanceExecutionUatPageMain.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-01",
+      "severity": "P1",
+      "admin_group": "content",
+      "domain": "CMS",
+      "surface": "Content publish actions",
+      "kind": "risk_warnings",
+      "title": "CMS 发布/Import 无 L5 确认对话框，与 Community 处置不一致",
+      "expected": "Publish/import 前有后果说明与二次确认",
+      "actual": "countries/POI/publish-queue/import 一键 Publish；Community moderation 有 admin_l5_confirm",
+      "operator_impact": "易误触 live catalog 变更",
+      "evidence": [
+        "frontend/app/admin/content/countries/AdminContentCountriesPageMain.tsx",
+        "frontend/app/admin/community/reports/useAdminCommunityReportsPage.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-02",
+      "severity": "P1",
+      "admin_group": "official_ops",
+      "domain": "Official OPS",
+      "surface": "/admin/official/* publish · /admin/official/cold-start deploy",
+      "kind": "risk_warnings",
+      "title": "Official 发布与冷启动 Deploy/Rollback 无确认与风险 Banner",
+      "expected": "Deploy/rollback 前确认 consumer 影响范围",
+      "actual": "Publish directly / deploy / rollback 即时执行；subtitle 提 impact 但无 inline guard",
+      "operator_impact": "易误部署冷启动或发布错误官方内容",
+      "evidence": [
+        "frontend/app/admin/official/cold-start/AdminOfficialColdStartPageMain.tsx",
+        "frontend/app/admin/official/guides/AdminOfficialGuidesPageMain.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-03",
+      "severity": "P1",
+      "admin_group": "growth",
+      "domain": "Growth",
+      "surface": "/admin/growth/anti-fraud",
+      "kind": "risk_warnings",
+      "title": "Growth anti-fraud freeze/unfreeze 无确认",
+      "expected": "冻结/解冻邀请或账户前二次确认",
+      "actual": "Underlined link 即时执行",
+      "operator_impact": "误冻结增长用户或 referral",
+      "evidence": [
+        "frontend/app/admin/growth/anti-fraud/AdminAntiFraudPageMain.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-04",
+      "severity": "P1",
+      "admin_group": "more",
+      "domain": "Growth",
+      "surface": "/admin/conversion-analytics",
+      "kind": "operation_feedback",
+      "title": "Conversion analytics「Clear local data」无确认对话框",
+      "expected": " destructive clear 需确认",
+      "actual": "ConversionFunnelDashboard 直接清除 localStorage",
+      "operator_impact": "误删本地漏斗样本",
+      "evidence": [
+        "frontend/components/product-enhancement/ConversionFunnelDashboard.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-05",
+      "severity": "P1",
+      "admin_group": "content",
+      "domain": "CMS",
+      "surface": "/admin/content hub vs sidebar",
+      "kind": "navigation",
+      "title": "Content Hub 链接网格遗漏 Country market（Sidebar 有）",
+      "expected": "Hub 覆盖 Sidebar 全部 Content 模块",
+      "actual": "adminShellContentNavLinks 含 country-market；AdminContentHubLinks 未含",
+      "operator_impact": "从 Hub 进入后找不到国别市场模块，改从 Sidebar 摸索",
+      "evidence": [
+        "frontend/components/admin/content/AdminContentPageShell.tsx",
+        "frontend/lib/admin/adminShellContentNavLinks.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-06",
+      "severity": "P1",
+      "admin_group": "official_ops",
+      "domain": "Official OPS",
+      "surface": "/admin/official hub",
+      "kind": "copy",
+      "title": "Official Hub 副标题/正文锁死在 O-S4 冷启动，掩盖 M7–M9 模块",
+      "expected": "Hub 概述账号/攻略/模板/冷启动四模块",
+      "actual": "Hub 仅用 admin_official_hub_subtitle_os4；os1–os3 locale 未用",
+      "operator_impact": "运营以为 Official Ops=仅冷启动",
+      "evidence": [
+        "frontend/app/admin/official/page.tsx",
+        "frontend/locales/en.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-07",
+      "severity": "P1",
+      "admin_group": "cross_cutting",
+      "domain": "CMS",
+      "surface": "AdminShellBar vs Sidebar permissions",
+      "kind": "navigation",
+      "title": "Top bar 与 Sidebar 权限 SSOT 不一致，链接可见性可能不同",
+      "expected": "Top bar 与 Sidebar 同一 permission 规则",
+      "actual": "shellNav() 用 adminHomeCardRequiredPermission 默认 admin.read；Sidebar 用 CONTENT_READ 等",
+      "operator_impact": "Top bar 出现无法使用的链接或 Sidebar 有而 Top bar 无",
+      "evidence": [
+        "frontend/components/admin/AdminShellBar.tsx",
+        "frontend/lib/admin/adminHomeCardPermission.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-08",
+      "severity": "P1",
+      "admin_group": "cross_cutting",
+      "domain": "Governance",
+      "surface": "Sidebar partial group · capabilities API",
+      "kind": "operation_feedback",
+      "title": "Sidebar 组可见但子链按 capability 隐藏，无「权限不足」解释",
+      "expected": "空组或折叠时说明所需 console role/perm",
+      "actual": "Ops 见 Finance/Community 组但 finance/disputes/penalties 链可能缺失",
+      "operator_impact": "运营以为功能未上线而非权限问题",
+      "evidence": [
+        "frontend/lib/admin/admU01ShellGroupVisibility.ts",
+        "frontend/evidence/adm-u01-shell-browser-audit/20260607T050950Z/adm-u01-shell-browser-findings.json"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-09",
+      "severity": "P1",
+      "admin_group": "growth",
+      "domain": "Growth",
+      "surface": "/admin/growth/analytics fraud breakdown",
+      "kind": "metric_definitions",
+      "title": "Growth analytics 展示 raw growth_fraud_status 枚举",
+      "expected": "运营可读欺诈状态标签",
+      "actual": "Fraud breakdown 渲染 API 原始 status 字符串",
+      "operator_impact": "误判风险等级或无法向业务解释",
+      "evidence": [
+        "frontend/app/admin/growth/analytics/AdminGrowthAnalyticsPageMain.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-10",
+      "severity": "P1",
+      "admin_group": "more",
+      "domain": "Growth",
+      "surface": "/admin/conversion-analytics drop-off matrix",
+      "kind": "metric_definitions",
+      "title": "Conversion analytics 漏斗矩阵显示 raw stage ID",
+      "expected": "阶段名翻译为运营语言",
+      "actual": "fromStageId/toStageId 直接展示",
+      "operator_impact": "无法解读 drop-off 发生在哪一步",
+      "evidence": [
+        "frontend/components/product-enhancement/ConversionFunnelDashboard.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-11",
+      "severity": "P1",
+      "admin_group": "onboarding",
+      "domain": "Identity",
+      "surface": "Provider/Steward/Approvals queues",
+      "kind": "naming",
+      "title": "入驻三队列 Sidebar/Home/Operator guide 各用不同名称",
+      "expected": "同一队列在 Nav、Home card、Guide 步骤同名",
+      "actual": "Provider queue vs Merchant onboarding queue vs admin_operator_flow_provider 等 3–4 套",
+      "operator_impact": "重复搜索同一队列",
+      "evidence": [
+        "frontend/lib/admin/adminShellOnboardingNavLinks.ts",
+        "frontend/app/admin/operator-guide/adminOperatorGuidePageModel.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-12",
+      "severity": "P1",
+      "admin_group": "workspace",
+      "domain": "CMS",
+      "surface": "/admin/operator-guide",
+      "kind": "task_completion_paths",
+      "title": "Operator guide 仅 6 步 inbox 流，未覆盖 CMS/Official/Growth 日常任务",
+      "expected": "首次运营 runbook 覆盖四平面主路径",
+      "actual": "inbox→provider→steward→approvals→reports→permissions；无 content/official/growth",
+      "operator_impact": "按 guide 完成仍不会 CMS 发布或 Growth 配置",
+      "evidence": [
+        "frontend/app/admin/operator-guide/adminOperatorGuidePageModel.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-13",
+      "severity": "P1",
+      "admin_group": "content",
+      "domain": "CMS",
+      "surface": "Content list pages empty",
+      "kind": "empty_states",
+      "title": "多数 CMS 列表页空数据时仅空白表格，无引导空态",
+      "expected": "空态说明如何创建首条记录 + 链到 publish-queue",
+      "actual": "countries/cities/pois 等无 empty prop；与 Community warm empty 对比",
+      "operator_impact": "新环境运营以为页面故障",
+      "evidence": [
+        "frontend/app/admin/content/countries/AdminContentCountriesPageMain.tsx",
+        "frontend/components/admin/AdminListPageEmptyState.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-14",
+      "severity": "P1",
+      "admin_group": "official_ops",
+      "domain": "Official OPS",
+      "surface": "Official list pages",
+      "kind": "empty_states",
+      "title": "Official 列表统一 ops_plane_empty「Nothing here yet.» 无下一步",
+      "expected": "空态链到创建账号/攻略/模板或 cold-start deploy 文档",
+      "actual": "Generic empty；无 nextLinks",
+      "operator_impact": "空库时不知先做什么",
+      "evidence": [
+        "frontend/app/admin/official/guides/AdminOfficialGuidesPageMain.tsx",
+        "frontend/components/admin/ops/OpsPlaneFetchStates.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P1-15",
+      "severity": "P1",
+      "admin_group": "finance",
+      "domain": "Governance",
+      "surface": "/admin/finance summary KPI grid",
+      "kind": "metric_definitions",
+      "title": "Finance summary 部分 KPI 以 raw JSON 块展示",
+      "expected": "卡片化可读指标 + 口径 footnote",
+      "actual": "AdminFinanceSummaryGridSection 含 status count JSON tiles",
+      "operator_impact": "财务/运营无法快速读数",
+      "evidence": [
+        "frontend/app/admin/finance/AdminFinanceSummaryGridSection.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-01",
+      "severity": "P2",
+      "admin_group": "official_ops",
+      "domain": "Official OPS",
+      "surface": "/admin/official hub H1",
+      "kind": "naming",
+      "title": "Sidebar「Official Ops」vs Hub H1「Official Operations」",
+      "expected": "Nav 与 H1 一致",
+      "actual": "admin_shell_nav_official_hub vs admin_official_hub_title",
+      "operator_impact": "轻度 — 同一模块两种英文",
+      "evidence": [
+        "frontend/locales/en.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-02",
+      "severity": "P2",
+      "admin_group": "content",
+      "domain": "CMS",
+      "surface": "/admin/content",
+      "kind": "naming",
+      "title": "Sidebar 组「Content」vs Hub「Content Center」",
+      "expected": "组名与 Hub 标题一致",
+      "actual": "admin_shell_nav_group_content vs admin_content_hub_title",
+      "operator_impact": "轻度命名漂移",
+      "evidence": [
+        "frontend/locales/en.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-03",
+      "severity": "P2",
+      "admin_group": "community",
+      "domain": "Community Moderation",
+      "surface": "Community sub-nav vs page titles",
+      "kind": "naming",
+      "title": "Community 子项 Nav 缩写与 Page H1 长度不一致",
+      "expected": "Nav 可短但 tooltip/aria 与 H1 对齐",
+      "actual": "Mod cases vs Community moderation cases 等",
+      "operator_impact": "轻度 — 搜索时匹配困难",
+      "evidence": [
+        "frontend/lib/admin/adminShellCommunityNavLinks.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-04",
+      "severity": "P2",
+      "admin_group": "finance",
+      "domain": "Governance",
+      "surface": "Finance sidebar",
+      "kind": "naming",
+      "title": "Finance suite / Finance · hub / reconciliation suite 三名混用",
+      "expected": "Finance 组内链接命名层级一致",
+      "actual": "admin_shell_nav_finance_suite vs finance_reconciliation vs admin_fin_suite_title",
+      "operator_impact": "轻度 — 多点击试错",
+      "evidence": [
+        "frontend/lib/admin/adminShellFinanceNavLinks.ts",
+        "frontend/locales/en.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-05",
+      "severity": "P2",
+      "admin_group": "cross_cutting",
+      "domain": "CMS",
+      "surface": "Ops plane vs L5 list loading",
+      "kind": "interaction_feedback",
+      "title": "Content/Growth 用 skeleton；Community/Operations 用文本 loading",
+      "expected": "Admin 内 loading 模式统一",
+      "actual": "OpsPlaneFetchStates skeleton vs AdminListLoadingStatus text",
+      "operator_impact": "轻度 — 感知性能与专业度不一致",
+      "evidence": [
+        "frontend/components/admin/ops/OpsPlaneFetchStates.tsx",
+        "frontend/components/admin/AdminListLoadingStatus.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-06",
+      "severity": "P2",
+      "admin_group": "workspace",
+      "domain": "CMS",
+      "surface": "/admin home KPI strips",
+      "kind": "metric_definitions",
+      "title": "Home 三层 KPI（inbox / ops snapshot / system overview）口径未互链",
+      "expected": "Footnote 说明各层数据源与 cap",
+      "actual": "三层并存；honesty footnote 分散",
+      "operator_impact": "轻度 — 读数需交叉验证",
+      "evidence": [
+        "frontend/components/admin/AdminHomeInboxStrip.tsx",
+        "frontend/components/admin/AdminHomeKpiStrip.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-07",
+      "severity": "P2",
+      "admin_group": "growth",
+      "domain": "Growth",
+      "surface": "/admin/growth hub",
+      "kind": "copy",
+      "title": "Growth Hub subtitle 仍引用 G-S7/S1 且 locale body 有过时 copy",
+      "expected": "Hub intro 描述当前已 ship 模块",
+      "actual": "admin_growth_hub_subtitle_s1；admin_growth_hub_body_s1 过时",
+      "operator_impact": "轻度 — 信任度下降",
+      "evidence": [
+        "frontend/app/admin/growth/AdminGrowthHubMain.tsx",
+        "frontend/locales/en.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-08",
+      "severity": "P2",
+      "admin_group": "onboarding",
+      "domain": "Identity",
+      "surface": "/admin/onboarding nav order",
+      "kind": "information_architecture",
+      "title": "Onboarding Sidebar 三队列在前、Hub 居中，与 mental model 相反",
+      "expected": "Hub 置顶或分组「Queues / Tools」",
+      "actual": "adminShellOnboardingNavLinks 顺序：queues→hub→entitlements→…",
+      "operator_impact": "轻度 — 首次需滚动找 Hub",
+      "evidence": [
+        "frontend/lib/admin/adminShellOnboardingNavLinks.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-09",
+      "severity": "P2",
+      "admin_group": "workspace",
+      "domain": "CMS",
+      "surface": "/admin/operator-guide discoverability",
+      "kind": "task_completion_paths",
+      "title": "Operator guide 不在 Sidebar workspace 组，仅 Home/maintainer fold",
+      "expected": "Workspace 组固定「Operator guide / 运营手册」",
+      "actual": "Sidebar workspace 仅 /admin + /admin/inbox",
+      "operator_impact": "轻度 — 手册难找",
+      "evidence": [
+        "frontend/lib/admin/adminShellSidebarModel.ts",
+        "frontend/lib/admin/adminOperatorGuideRelatedFoldLinks.ts"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-10",
+      "severity": "P2",
+      "admin_group": "more",
+      "domain": "Governance",
+      "surface": "/admin/observability empty",
+      "kind": "empty_states",
+      "title": "Observability overview 空态为 plain text 无 retry 组件",
+      "expected": "与 OpsPlane 一致 empty + retry",
+      "actual": "No overview payload returned plain <p>",
+      "operator_impact": "轻度 — 空态体验弱于其他页",
+      "evidence": [
+        "frontend/app/admin/observability/AdminObservabilityPageMain.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-11",
+      "severity": "P2",
+      "admin_group": "growth",
+      "domain": "Growth",
+      "surface": "/admin/growth/kol-center",
+      "kind": "metric_definitions",
+      "title": "KOL center 复用 analytics window label key，控件语义漂移",
+      "expected": "KOL 专属时间窗/指标标签",
+      "actual": "admin_growth_analytics_window_label 用于非 analytics 控件",
+      "operator_impact": "轻度 — 误解时间窗含义",
+      "evidence": [
+        "frontend/app/admin/growth/kol-center/AdminKolCenterPageMain.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-12",
+      "severity": "P2",
+      "admin_group": "operations",
+      "domain": "Market",
+      "surface": "/admin/orders · /admin/disputes empty",
+      "kind": "empty_states",
+      "title": "Operations 列表空态缺少 Community 级 hintKey/nextLinks",
+      "expected": "Orders/Disputes empty 链到 inbox 或 filter 说明",
+      "actual": "AdminListPageEmptyState 无 nextLinks（对比 community reports）",
+      "operator_impact": "轻度 — 空队列时不知下一步",
+      "evidence": [
+        "frontend/app/admin/orders/AdminOrdersPageMain.tsx",
+        "frontend/app/admin/community/reports/AdminCommunityReportsPageInner.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-13",
+      "severity": "P2",
+      "admin_group": "onboarding",
+      "domain": "Identity",
+      "surface": "/admin/users dual label",
+      "kind": "naming",
+      "title": "Users 在 Operations 与 Onboarding Hub 意图标签不同",
+      "expected": "同一路由单一产品名 + 场景副标题",
+      "actual": "admin_users_title vs admin_onboarding_hub_users Per-user entitlements",
+      "operator_impact": "轻度 — 同一页两种入口叙事",
+      "evidence": [
+        "frontend/lib/admin/adminShellOperationsNavLinks.ts",
+        "frontend/app/admin/onboarding/page.tsx"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-14",
+      "severity": "P2",
+      "admin_group": "governance",
+      "domain": "Governance",
+      "surface": "Governance nav vs folder",
+      "kind": "information_architecture",
+      "title": "Governance 组含 cross-check/drift/trust-growth，仅 execution-uat 在 governance/ 目录",
+      "expected": "Nav 分组与 URL 路径或文档一致",
+      "actual": "Folder structure ≠ sidebar grouping",
+      "operator_impact": "轻度 — 深链接/bookmark 混乱",
+      "evidence": [
+        "frontend/lib/admin/adminShellGovernanceNavLinks.ts",
+        "frontend/app/admin/governance/"
+      ]
+    },
+    {
+      "id": "ADMIN-UX-P2-15",
+      "severity": "P2",
+      "admin_group": "workspace",
+      "domain": "CMS",
+      "surface": "Ops primary CTAs",
+      "kind": "task_completion_paths",
+      "title": "Ops 角色 Home primary CTA 仅 provider/steward/reports，缺 Content/Growth",
+      "expected": "Home CTA 与 Sidebar 四平面 visibility 对齐",
+      "actual": "adminHomePrimaryCtaByRole Ops 不含 content/official/growth",
+      "operator_impact": "轻度 — 日常 CMS/Growth 任务多一步",
+      "evidence": [
+        "frontend/lib/admin/adminHomePrimaryCtaByRole.ts"
+      ]
+    }
+  ],
+  "ssot_files": [
+    "frontend/lib/admin/adminShellSidebarModel.ts",
+    "frontend/lib/admin/adminShell*NavLinks.ts",
+    "frontend/lib/admin/adminShellContextForPath.ts",
+    "frontend/lib/admin/adminHomeModel.ts",
+    "frontend/app/admin/operator-guide/adminOperatorGuidePageModel.ts",
+    "frontend/locales/en.ts",
+    "frontend/locales/zh.ts"
+  ],
+  "handbook_ref": "docs/handbook/engineering/180-Parallel-UAT-During-Soak-Sprint.md"
+}

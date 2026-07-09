@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T11:17:10Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "US",
+    "city_zh": "洛杉矶",
+    "city_en": "Los Angeles",
+    "matrix_ids": [
+      "PH-US-152-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-US-152-ATR",
+      "legacy_value": "圣莫尼卡",
+      "poi_id": "ba5cca5a-4c00-496a-bc6a-796bba3a5d3f",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-152-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

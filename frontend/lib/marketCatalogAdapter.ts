@@ -44,6 +44,26 @@ function sortKeyFromUpdatedAt(updatedAt: string): number {
 const PLACEHOLDER_IMG =
   "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80";
 
+function resolveCatalogImageSrc(p: Record<string, unknown>): string {
+  const pick = (raw: unknown): string | null => {
+    if (typeof raw !== "string") return null;
+    const u = raw.trim();
+    if (!u) return null;
+    if (u.startsWith("http://") || u.startsWith("https://") || u.startsWith("/api/")) return u;
+    return null;
+  };
+  const cover = pick(p.cover_url) || pick(p.coverUrl);
+  if (cover) return cover;
+  const media = Array.isArray(p.media_urls) ? p.media_urls : [];
+  for (const m of media) {
+    const u = pick(m);
+    if (u) return u;
+  }
+  const video = pick(p.videoUrl) || pick(p.video_url);
+  if (video) return video;
+  return PLACEHOLDER_IMG;
+}
+
 /** API 列表项：`{ id, payload, updated_at }`；**`data_origin`** 标明 PG 真源（**L-008** · ①）。 */
 export type MarketCatalogListRow = {
   id: string;
@@ -61,9 +81,7 @@ export function catalogRowToDemoMerchantListing(row: MarketCatalogListRow): Demo
   const categoryStr = typeof p.category === "string" ? p.category : "";
   const priceRaw = typeof p.priceUsdc === "string" ? parseFloat(p.priceUsdc) : Number(p.priceUsdc);
   const priceUsdc = Number.isFinite(priceRaw) ? priceRaw : 0;
-  const videoUrl = typeof p.videoUrl === "string" ? p.videoUrl.trim() : "";
-  const imageSrc =
-    videoUrl.startsWith("http://") || videoUrl.startsWith("https://") ? videoUrl : PLACEHOLDER_IMG;
+  const imageSrc = resolveCatalogImageSrc(p);
 
   return {
     id: row.id,
@@ -93,9 +111,7 @@ export function catalogRowToDemoAcquisitionListing(row: MarketCatalogListRow): D
     typeof p.bountyMaxUsdc === "string" ? parseFloat(p.bountyMaxUsdc) : Number(p.bountyMaxUsdc);
   const bountyMinUsdc = Number.isFinite(minRaw) ? minRaw : 0;
   const bountyMaxUsdc = Number.isFinite(maxRaw) ? maxRaw : bountyMinUsdc;
-  const videoUrl = typeof p.videoUrl === "string" ? p.videoUrl.trim() : "";
-  const imageSrc =
-    videoUrl.startsWith("http://") || videoUrl.startsWith("https://") ? videoUrl : PLACEHOLDER_IMG;
+  const imageSrc = resolveCatalogImageSrc(p);
 
   return {
     id: row.id,

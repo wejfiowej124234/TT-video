@@ -23,7 +23,7 @@ use crate::state::{extract_user_with_session_check, ApiMetaState};
 use super::not_impl_json;
 use mutations::{
     confirm_final_plan, order_accept, order_cancel, order_confirm_bilateral,
-    order_confirm_completion, order_confirm_rating, order_mock_pay, patch_order_guide,
+    order_confirm_completion, order_confirm_rating, order_confirm_service_completion, order_mock_pay, patch_order_guide,
     patch_order_itinerary, patch_order_trip_dates, set_order_escrow_address,
 };
 use reviews::{review_submit, reviews_list};
@@ -387,6 +387,10 @@ pub fn router() -> Router<ApiMetaState> {
         .route(
             "/api/v1/orders/:id/confirm-completion",
             post(order_confirm_completion),
+        )
+        .route(
+            "/api/v1/orders/:id/confirm-service-completion",
+            post(order_confirm_service_completion),
         )
         .route(
             "/api/v1/orders/:id/reviews",

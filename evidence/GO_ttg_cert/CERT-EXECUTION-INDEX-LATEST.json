@@ -1,0 +1,83 @@
+{
+  "schema": "traveltrust.ttg_cert_execution_index.v1",
+  "recorded_utc": "2026-07-08T14:02:12.670Z",
+  "cert_root": "evidence/GO_ttg_cert",
+  "signed_count": 7,
+  "total_certs": 12,
+  "active_cert": 8,
+  "verdict": "TTG_CERT_EVIDENCE_PARTIAL",
+  "certs": [
+    {
+      "cert": 1,
+      "expected_file": "HUMAN-SCREEN-ACCEPTANCE-SIGNOFF.json",
+      "found": true,
+      "path": "20260616T100918Z/human-uat/HUMAN-SCREEN-ACCEPTANCE-SIGNOFF.json"
+    },
+    {
+      "cert": 2,
+      "expected_file": "MULTI-IDENTITY-WALKTHROUGH-SIGNOFF.json",
+      "found": true,
+      "path": "20260616T100918Z/walkthrough/multi-identity/MULTI-IDENTITY-WALKTHROUGH-SIGNOFF.json"
+    },
+    {
+      "cert": 3,
+      "expected_file": "ADMIN-WALKTHROUGH-SIGNOFF.json",
+      "found": true,
+      "path": "20260616T100918Z/walkthrough/admin/ADMIN-WALKTHROUGH-SIGNOFF.json"
+    },
+    {
+      "cert": 4,
+      "expected_file": "SAFE-WALKTHROUGH-SIGNOFF.json",
+      "found": true,
+      "path": "20260616T100918Z/walkthrough/safe/SAFE-WALKTHROUGH-SIGNOFF.json"
+    },
+    {
+      "cert": 5,
+      "expected_file": "FINANCE-WALKTHROUGH-SIGNOFF.json",
+      "found": true,
+      "path": "20260616T100918Z/walkthrough/finance/FINANCE-WALKTHROUGH-SIGNOFF.json"
+    },
+    {
+      "cert": 6,
+      "expected_file": "PHASE-B-UNPAUSE-SIGNOFF.json",
+      "found": true,
+      "path": "20260616T100918Z/phase-b/unpause/PHASE-B-UNPAUSE-SIGNOFF.json"
+    },
+    {
+      "cert": 7,
+      "expected_file": "PHASE-B-EXECUTE-SIGNOFF.json",
+      "found": true,
+      "path": "20260616T100918Z/phase-b/execute/PHASE-B-EXECUTE-SIGNOFF.json"
+    },
+    {
+      "cert": 8,
+      "expected_file": "PHASE-B-TREASURY-SPEND-SIGNOFF.json",
+      "found": false,
+      "path": null
+    },
+    {
+      "cert": 9,
+      "expected_file": "PHASE-B-UNSTAKE-SIGNOFF.json",
+      "found": false,
+      "path": null
+    },
+    {
+      "cert": 10,
+      "expected_file": "INCIDENT-TABLETOP-SIGNOFF.json",
+      "found": false,
+      "path": null
+    },
+    {
+      "cert": 11,
+      "expected_file": "DR-DRILL-SIGNOFF.json",
+      "found": false,
+      "path": null
+    },
+    {
+      "cert": 12,
+      "expected_file": "GORP-SIGNOFF.json",
+      "found": false,
+      "path": null
+    }
+  ]
+}

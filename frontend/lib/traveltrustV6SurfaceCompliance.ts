@@ -10,7 +10,7 @@ export const TRAVELTRUST_V6_SURFACE_KEYS = [
   "traveltrust_hero_kicker",
   "traveltrust_hero_cta_plan",
   "traveltrust_scroll_hint",
-  "traveltrust_pulse_v6_cinematic",
+  "traveltrust_pulse_trust_escrow_core",
   "traveltrust_liquidity_preview_banner",
   "traveltrust_liquidity_disclaimer",
   "traveltrust_settlement_title",

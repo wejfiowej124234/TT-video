@@ -1,0 +1,26 @@
+{
+  "schema": "traveltrust.phase2_runtime_baseline_freeze.v1",
+  "frozen_at_utc": "2026-06-30T03:35:08Z",
+  "phase": "② testnet",
+  "runtime_staging_sha": "fc9266ce94f18810420e720bb933946c086ce909",
+  "soak_baseline_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "immutable_evidence": {
+    "soak": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+    "graduation": "evidence/GO_phase2_testnet_graduation/freeze-fc9266ce/",
+    "graduation_latest": "evidence/GO_phase2_testnet_graduation/PHASE2-CLOSURE-GRADUATION-FREEZE.latest.json",
+    "final_human_acceptance": "evidence/GO_phase2_final_human_acceptance/PHASE2-FINAL-HUMAN-ACCEPTANCE.latest.json",
+    "runtime_drift": "evidence/GO_phase2_runtime_baseline/PHASE2-RUNTIME-DRIFT-dd5df42-vs-fc9266ce.json"
+  },
+  "soak_snapshot": {
+    "ok_polls": 4320,
+    "fail_polls": 0,
+    "completed_at": "2026-06-29T18:17:13.697Z"
+  },
+  "verdicts": {
+    "tt_phase2_runtime_drift": "NONE",
+    "tt_testnet_graduation": "CLOSED",
+    "tt_phase2_final_human_acceptance": "PASS",
+    "phase2_baseline_frozen": true
+  },
+  "honest_boundary": "② frozen baseline ≠ ③ Production GO"
+}

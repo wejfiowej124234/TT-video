@@ -1,0 +1,45 @@
+{
+  "freeze_id": "GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE",
+  "frozen_at_utc": "20260616T065614Z",
+  "phase": "\u2461 Sepolia",
+  "ssot": [
+    "TTG-TOKENOMICS-FREEZE-V1",
+    "GOV-FREEZE-V2-CLEAN-BASELINE"
+  ],
+  "active_addresses": {
+    "ttg": "0x2837ea0c50e27d59b88af617abbb231a040062c5",
+    "governor": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+    "timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+    "primary_market": "0x7af15f98622b9282298ca3070a698ca4a96a4016",
+    "stake_pool": "0x3a89378bfad12d1028707dd37055294854c8784e",
+    "seat_registry": "0xc99776e980d33f1857d5bb9a57b35ab7669aad1f",
+    "treasury_p4": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+  },
+  "legacy_read_only": {
+    "ttg": "0xaC2E29AC7089e4863C21dAF232cF8bbb025d91ca",
+    "note": "LEGACY_PRE_GOVFREEZE_V2_* \u2014 no rollback, no patches"
+  },
+  "change_boundary": {
+    "allowed": [
+      "bugfix",
+      "evidence",
+      "i18n",
+      "a11y",
+      "HAT-R1 Phase B after Timelock",
+      "concentration audit"
+    ],
+    "forbidden": [
+      "new governance features",
+      "GOV-01\uff5e04 parameter changes",
+      "redeploy baseline",
+      "legacy stack reactivation"
+    ]
+  },
+  "hat_r1": {
+    "phase_a_evidence": "D:/TravelTrust-V1.1/evidence/GO_hat_r1_sepolia/20260616T063612Z",
+    "phase_a_verdict": "PASS",
+    "phase_b_execute_earliest_unix": "1781765044",
+    "phase_b_status": "WAIT_TIMelock_48h"
+  },
+  "honest_boundary": "\u2461 freeze \u2260 \u2462 Production GO"
+}

@@ -1,0 +1,2445 @@
+{
+  "schema": "traveltrust.mtm-146-ai-gap-list.v1",
+  "check_id": "MTM-146-AI-FUNCTIONAL-SWEEP",
+  "stamp_utc": "20260616T115725Z",
+  "baseline_ssot": "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+  "baseline_freeze": "GovFreeze V2 Clean Baseline",
+  "sweep_inputs": {
+    "ai_pre_human_uat": "evidence/GO_ai_pre_human_uat/20260616T114646Z",
+    "probe_verdict": "PASS",
+    "playwright_checks": 14,
+    "screenshots": 14,
+    "screenshots_l1": 10
+  },
+  "summary": {
+    "rows": 146,
+    "pass": 31,
+    "partial": 115,
+    "fail": 0
+  },
+  "honest_boundary": "AI sweep != HUMAN_DONE != OPS_DONE != ③ GO · no GovFreeze re-audit",
+  "rows": [
+    {
+      "mtm_id": "CHK-CORE-01",
+      "name": "真人验收 aggregate",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/*",
+      "api": "—",
+      "role": "Owner·全角色",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Human signoff",
+      "ai_dimensions": [
+        "page:governance shell"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-02",
+      "name": "多身份 enterprise",
+      "matrix": 12,
+      "matrix_name": "Multi-Identity Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/me/identities",
+      "api": "GET /me/*",
+      "role": "Traveler…Admin",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Human signoff",
+      "ai_dimensions": [
+        "page:/me/identities"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-03",
+      "name": "管理员 enterprise",
+      "matrix": 11,
+      "matrix_name": "Admin Boundary Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "—",
+      "role": "Admin",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Human signoff",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-04",
+      "name": "提案",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/proposals/new",
+      "api": "GET/POST proposals",
+      "role": "proposer",
+      "flow": "—",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:match /governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-05",
+      "name": "投票",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/proposals/[id]",
+      "api": "POST …/vote",
+      "role": "voter",
+      "flow": "—",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:match /governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-06",
+      "name": "Queue",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/proposals/[id]",
+      "api": "GET proposal-status",
+      "role": "anyone",
+      "flow": "—",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:match /governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-07",
+      "name": "Execute",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "BLOCKED",
+      "page": "/governance/proposals/[id]",
+      "api": "—",
+      "role": "anyone",
+      "flow": "payload effect",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Phase B blocked",
+      "ai_dimensions": [
+        "page:match /governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-08",
+      "name": "Treasury Spend",
+      "matrix": 3,
+      "matrix_name": "Governance Treasury Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "BLOCKED",
+      "page": "/governance/params#treasury",
+      "api": "—",
+      "role": "V2_TL only",
+      "flow": "USDC out",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Phase B blocked",
+      "ai_dimensions": [
+        "page:/governance/params"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-09",
+      "name": "Country Pool 45/55",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/params",
+      "api": "GET params·country-ledger",
+      "role": "public+session",
+      "flow": "NPP→45/55",
+      "ai_verdict": "PASS",
+      "ai_reason": "fl aligned",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-PARAMS",
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-10",
+      "name": "Steward 收益路径",
+      "matrix": 7,
+      "matrix_name": "Stake/Seat/Unstake Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance?view=region",
+      "api": "GET steward/*",
+      "role": "Steward",
+      "flow": "45% vault",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:/governance",
+        "api:api family"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-11",
+      "name": "TTG 持有人 distribution",
+      "matrix": 8,
+      "matrix_name": "Claim/Distribution Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/distribution-*",
+      "api": "GET accruals",
+      "role": "Investor",
+      "flow": "off-chain accrual",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:match /governance",
+        "api:API-ACCRUALS"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-12",
+      "name": "Claim",
+      "matrix": 8,
+      "matrix_name": "Claim/Distribution Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/distribution-claim",
+      "api": "—",
+      "role": "Investor",
+      "flow": "USDC claim",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance/distribution-claim"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-13",
+      "name": "Buyback/Burn",
+      "matrix": 9,
+      "matrix_name": "Buyback/Burn Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/params",
+      "api": "—",
+      "role": "Timelock",
+      "flow": "USDC→buyback·TTG burn",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance/params"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-14",
+      "name": "USDC Treasury 使用",
+      "matrix": 3,
+      "matrix_name": "Governance Treasury Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/params#treasury",
+      "api": "GET protocol-reference",
+      "role": "public",
+      "flow": "P1–P4·55% receipt",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-PROTO"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-15",
+      "name": "Finance Operator",
+      "matrix": 3,
+      "matrix_name": "Governance Treasury Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "doc+params",
+      "api": "—",
+      "role": "Finance Op",
+      "flow": "fundingSource pull",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-CORE-16",
+      "name": "Treasury Operator",
+      "matrix": 3,
+      "matrix_name": "Governance Treasury Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "Safe+doc",
+      "api": "—",
+      "role": "Treasury Op",
+      "flow": "Safe→TL batches",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-CORE-17",
+      "name": "Safe 多签",
+      "matrix": 3,
+      "matrix_name": "Governance Treasury Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "Safe UI",
+      "api": "—",
+      "role": "Safe Signer",
+      "flow": "multisig",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-CORE-18",
+      "name": "Disaster Recovery aggregate",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "On-call",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-CORE-19",
+      "name": "Four-Ledger",
+      "matrix": 13,
+      "matrix_name": "Four-Ledger Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PARTIAL",
+      "page": "/governance/params",
+      "api": "GET country-ledger/DE",
+      "role": "session",
+      "flow": "45/55 reconcile",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DB leg open",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-CP-DE",
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-20",
+      "name": "DB 对账",
+      "matrix": 13,
+      "matrix_name": "Four-Ledger Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "internal reconcile",
+      "role": "Finance Op",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-CORE-21",
+      "name": "API 对账",
+      "matrix": 13,
+      "matrix_name": "Four-Ledger Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "GET country-ledger",
+      "role": "API",
+      "flow": "chain=API",
+      "ai_verdict": "PASS",
+      "ai_reason": "fl aligned",
+      "ai_dimensions": [
+        "api:API-CP-DE",
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-22",
+      "name": "页面展示",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/*",
+      "api": "multi GET",
+      "role": "public",
+      "flow": "—",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:governance shell"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-23",
+      "name": "多角色权限",
+      "matrix": 2,
+      "matrix_name": "Governance Permission Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/me/*·/governance",
+      "api": "RBAC",
+      "role": "all roles",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-CORE-24",
+      "name": "Admin 权限边界",
+      "matrix": 11,
+      "matrix_name": "Admin Boundary Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "—",
+      "role": "Admin",
+      "flow": "no spend",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-25",
+      "name": "Upgrade 流程",
+      "matrix": 10,
+      "matrix_name": "Upgrade/Proxy Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/params",
+      "api": "GET state-machines",
+      "role": "Timelock",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance/params"
+      ]
+    },
+    {
+      "mtm_id": "CHK-CORE-26",
+      "name": "Rollback 流程",
+      "matrix": 10,
+      "matrix_name": "Upgrade/Proxy Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Owner",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-CORE-27",
+      "name": "Timelock 故障恢复",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "On-call",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-CORE-28",
+      "name": "Treasury 误转恢复",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Treasury Op",
+      "flow": "USDC mis-route",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-CORE-29",
+      "name": "Country Pool 异常恢复",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Finance Op",
+      "flow": "split pause",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-CORE-30",
+      "name": "Governance 运营流程",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "GORP doc",
+      "api": "—",
+      "role": "Owner",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Human signoff",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-FE-01",
+      "name": "Hub UAT A1",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance",
+      "api": "GET pool·rewards",
+      "role": "guest",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-02",
+      "name": "Params UAT A2",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/params",
+      "api": "GET params",
+      "role": "TTG holder",
+      "flow": "45/55 read",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-PARAMS"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-03",
+      "name": "Treasury policy UAT A3",
+      "matrix": 3,
+      "matrix_name": "Governance Treasury Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/params#gov-params-treasury-policy",
+      "api": "GET protocol-reference",
+      "role": "TTG holder",
+      "flow": "P1–P4 narrative",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-PROTO"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-04",
+      "name": "Proposals list",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/proposals",
+      "api": "GET proposals",
+      "role": "public",
+      "flow": "—",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:/governance/proposals",
+        "api:API-PROPOSALS"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-05",
+      "name": "Proposals new",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/proposals/new",
+      "api": "—",
+      "role": "proposer",
+      "flow": "—",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:match /governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-06",
+      "name": "Vote UI",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/proposals/[id]",
+      "api": "POST vote",
+      "role": "voter",
+      "flow": "—",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:match /governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-07",
+      "name": "Queue UI",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/proposals/[id]",
+      "api": "GET proposal-status",
+      "role": "public",
+      "flow": "—",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:match /governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-08",
+      "name": "Execute UI",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "BLOCKED",
+      "page": "/governance/proposals/[id]",
+      "api": "—",
+      "role": "public",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Phase B blocked",
+      "ai_dimensions": [
+        "page:match /governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-09",
+      "name": "Accruals UAT A5",
+      "matrix": 8,
+      "matrix_name": "Claim/Distribution Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/distribution-accruals",
+      "api": "GET accruals",
+      "role": "Investor",
+      "flow": "accrual read",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance/distribution-accruals",
+        "api:API-ACCRUALS"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-10",
+      "name": "Claim UAT A6",
+      "matrix": 8,
+      "matrix_name": "Claim/Distribution Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/distribution-claim",
+      "api": "—",
+      "role": "Investor",
+      "flow": "claim boundary",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance/distribution-claim"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-11",
+      "name": "PM exchange UI",
+      "matrix": 5,
+      "matrix_name": "TTG Purchase Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/params",
+      "api": "GET ttg-exchange/quote",
+      "role": "Investor",
+      "flow": "USDC→TTG quote",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-PM-QUOTE"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-12",
+      "name": "Stake/Seat B2",
+      "matrix": 7,
+      "matrix_name": "Stake/Seat/Unstake Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance?view=region",
+      "api": "GET steward/*",
+      "role": "Steward",
+      "flow": "TTG lock",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:/governance",
+        "api:api family"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-13",
+      "name": "CP 45/55 visual D1",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/params",
+      "api": "GET country-ledger",
+      "role": "public",
+      "flow": "45/55 display",
+      "ai_verdict": "PASS",
+      "ai_reason": "fl aligned",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-CP-DE",
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-14",
+      "name": "Admin read C1",
+      "matrix": 11,
+      "matrix_name": "Admin Boundary Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "—",
+      "role": "Admin",
+      "flow": "no spend",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-15",
+      "name": "Multi-id B1/B3/B4",
+      "matrix": 12,
+      "matrix_name": "Multi-Identity Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/me/identities",
+      "api": "GET /me/*",
+      "role": "multi",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/me/identities"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-16",
+      "name": "Delegate UI",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/delegate",
+      "api": "GET/POST delegate",
+      "role": "TTG holder",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:match /governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-17",
+      "name": "Vault forwards",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PARTIAL",
+      "page": "/governance/vault-forwards",
+      "api": "GET vault-forwards",
+      "role": "public",
+      "flow": "escrow forward",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "MTM partial",
+      "ai_dimensions": [
+        "page:match /governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FE-18",
+      "name": "Fee routes",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PARTIAL",
+      "page": "/governance/fee-routes",
+      "api": "GET fee-routes",
+      "role": "public",
+      "flow": "65/20/15",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "MTM partial",
+      "ai_dimensions": [
+        "page:/governance/fee-routes",
+        "api:API-FEE-ROUTES"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BE-01",
+      "name": "protocol-reference",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "GET /governance/protocol-reference",
+      "role": "public",
+      "flow": "GOV mirror",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "api:API-PROTO"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BE-02",
+      "name": "params API",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/params",
+      "api": "GET /governance/params",
+      "role": "public",
+      "flow": "45/55 params",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-PARAMS"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BE-03",
+      "name": "country-ledger DE",
+      "matrix": 13,
+      "matrix_name": "Four-Ledger Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "GET /governance/country-ledger/:j",
+      "role": "session",
+      "flow": "ledger read",
+      "ai_verdict": "PASS",
+      "ai_reason": "fl aligned",
+      "ai_dimensions": [
+        "api:API-CP-DE",
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BE-04",
+      "name": "proposals API",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "GET /governance/proposals",
+      "role": "public",
+      "flow": "—",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "api:API-PROPOSALS"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BE-05",
+      "name": "vote API",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PARTIAL",
+      "page": "—",
+      "api": "POST …/vote",
+      "role": "voter",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "MTM partial",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-BE-06",
+      "name": "proposal-status",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "GET /governance/proposal-status/:id",
+      "role": "public",
+      "flow": "—",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "api:api family"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BE-07",
+      "name": "ttg-exchange quote",
+      "matrix": 5,
+      "matrix_name": "TTG Purchase Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "GET /governance/ttg-exchange/quote",
+      "role": "public",
+      "flow": "USDC→TTG",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "api:API-PM-QUOTE"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BE-08",
+      "name": "investor accruals",
+      "matrix": 8,
+      "matrix_name": "Claim/Distribution Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/distribution-accruals",
+      "api": "GET investor-distribution-accruals",
+      "role": "Investor",
+      "flow": "accrual",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance/distribution-accruals",
+        "api:API-ACCRUALS"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BE-09",
+      "name": "internal distribution write",
+      "matrix": 8,
+      "matrix_name": "Claim/Distribution Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "POST /internal/investor-distribution-*",
+      "role": "internal",
+      "flow": "accrual write",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-BE-10",
+      "name": "fee-pool-aggregates",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "GET /governance/fee-pool-aggregates",
+      "role": "public",
+      "flow": "Σ read",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "api:api family"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BE-11",
+      "name": "state-machines",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/params",
+      "api": "GET /governance/state-machines",
+      "role": "public",
+      "flow": "epoch FSM",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:api family"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BE-12",
+      "name": "steward APIs",
+      "matrix": 7,
+      "matrix_name": "Stake/Seat/Unstake Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PARTIAL",
+      "page": "/governance?view=region",
+      "api": "GET /steward/*",
+      "role": "Steward",
+      "flow": "stake·apply",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "MTM partial",
+      "ai_dimensions": [
+        "page:/governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BE-13",
+      "name": "audit observability",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "audit endpoints",
+      "role": "Admin·SRE",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-DB-01",
+      "name": "proposals projection",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "—",
+      "role": "indexer",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "out of sweep scope",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-DB-02",
+      "name": "rewards projection",
+      "matrix": 8,
+      "matrix_name": "Claim/Distribution Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance",
+      "api": "GET /governance/rewards",
+      "role": "auth",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance",
+        "api:api family"
+      ]
+    },
+    {
+      "mtm_id": "CHK-DB-03",
+      "name": "cp epochs projection",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "indexer",
+      "flow": "NPP epochs",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-DB-04",
+      "name": "accrual lines projection",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "indexer",
+      "flow": "accrual lines",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-DB-05",
+      "name": "investor accrual reconcile",
+      "matrix": 8,
+      "matrix_name": "Claim/Distribution Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "GET accruals",
+      "role": "Finance Op",
+      "flow": "accrual=DB",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "api:API-ACCRUALS"
+      ]
+    },
+    {
+      "mtm_id": "CHK-DB-06",
+      "name": "Four-Ledger DB leg",
+      "matrix": 13,
+      "matrix_name": "Four-Ledger Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "reconcile",
+      "role": "Finance Op",
+      "flow": "DB=chain",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DB leg open",
+      "ai_dimensions": [
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-DB-07",
+      "name": "audit trail",
+      "matrix": 11,
+      "matrix_name": "Admin Boundary Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "audit",
+      "role": "Admin",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-DB-08",
+      "name": "PG backup restore drill",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "SRE",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-ADM-01",
+      "name": "Gov admin walkthrough C1",
+      "matrix": 11,
+      "matrix_name": "Admin Boundary Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "—",
+      "role": "Admin",
+      "flow": "read only",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ADM-02",
+      "name": "Treasury admin no spend",
+      "matrix": 11,
+      "matrix_name": "Admin Boundary Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "—",
+      "role": "Admin",
+      "flow": "forbidden spend",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ADM-03",
+      "name": "CP admin no split",
+      "matrix": 11,
+      "matrix_name": "Admin Boundary Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "—",
+      "role": "Admin",
+      "flow": "no split write",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ADM-04",
+      "name": "Steward review walk",
+      "matrix": 7,
+      "matrix_name": "Stake/Seat/Unstake Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "POST steward review",
+      "role": "Admin",
+      "flow": "Seat gate",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ADM-05",
+      "name": "Distribution admin write",
+      "matrix": 8,
+      "matrix_name": "Claim/Distribution Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "internal POST",
+      "role": "Distribution Admin",
+      "flow": "internal write",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ADM-06",
+      "name": "RBAC SoD ADM-U02",
+      "matrix": 2,
+      "matrix_name": "Governance Permission Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin/rbac",
+      "api": "—",
+      "role": "Admin",
+      "flow": "SoD",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:match /admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ADM-07",
+      "name": "suspend no 45/55",
+      "matrix": 11,
+      "matrix_name": "Admin Boundary Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "suspend",
+      "role": "Admin",
+      "flow": "gate only",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ADM-08",
+      "name": "Seat→链上 E2E",
+      "matrix": 7,
+      "matrix_name": "Stake/Seat/Unstake Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "—",
+      "role": "Admin",
+      "flow": "Seat active",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ID-01",
+      "name": "Traveler boundary",
+      "matrix": 12,
+      "matrix_name": "Multi-Identity Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/me/*·/governance",
+      "api": "GET /me/*",
+      "role": "Traveler",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-ID-02",
+      "name": "Investor boundary",
+      "matrix": 12,
+      "matrix_name": "Multi-Identity Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/distribution-*",
+      "api": "GET accruals",
+      "role": "Investor",
+      "flow": "distribution read",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:match /governance",
+        "api:API-ACCRUALS"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ID-03",
+      "name": "Steward boundary",
+      "matrix": 12,
+      "matrix_name": "Multi-Identity Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance?view=region",
+      "api": "GET steward/*",
+      "role": "Steward",
+      "flow": "stake path",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance",
+        "api:api family"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ID-04",
+      "name": "Guide boundary",
+      "matrix": 12,
+      "matrix_name": "Multi-Identity Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/guide/*",
+      "api": "—",
+      "role": "Guide",
+      "flow": "no gov write",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:governance shell"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ID-05",
+      "name": "Merchant boundary",
+      "matrix": 12,
+      "matrix_name": "Multi-Identity Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/provider/*",
+      "api": "—",
+      "role": "Merchant",
+      "flow": "no gov write",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:governance shell"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ID-06",
+      "name": "Moderator boundary",
+      "matrix": 12,
+      "matrix_name": "Multi-Identity Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/moderation/*",
+      "api": "—",
+      "role": "Moderator",
+      "flow": "no Treasury",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:governance shell"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ID-07",
+      "name": "Admin boundary walk",
+      "matrix": 12,
+      "matrix_name": "Multi-Identity Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "—",
+      "role": "Admin",
+      "flow": "read/gate",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-ID-08",
+      "name": "Treasury Op POL-01",
+      "matrix": 2,
+      "matrix_name": "Governance Permission Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "Safe+doc",
+      "api": "—",
+      "role": "Treasury Op",
+      "flow": "Safe sign",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-ID-09",
+      "name": "Finance Op POL-02",
+      "matrix": 2,
+      "matrix_name": "Governance Permission Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "doc",
+      "api": "—",
+      "role": "Finance Op",
+      "flow": "fundingSource",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-ID-10",
+      "name": "Safe Signer POL-03",
+      "matrix": 2,
+      "matrix_name": "Governance Permission Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "Safe UI",
+      "api": "—",
+      "role": "Safe Signer",
+      "flow": "multisig",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-ID-11",
+      "name": "TL Executor on-call",
+      "matrix": 2,
+      "matrix_name": "Governance Permission Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "GORP",
+      "api": "—",
+      "role": "On-call",
+      "flow": "execute",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-ID-12",
+      "name": "POL-06 Seat SoD",
+      "matrix": 2,
+      "matrix_name": "Governance Permission Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/admin",
+      "api": "—",
+      "role": "Admin",
+      "flow": "SoD sign",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/admin"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FN-01",
+      "name": "USDC→TTG Primary Market",
+      "matrix": 5,
+      "matrix_name": "TTG Purchase Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PARTIAL",
+      "page": "/governance/params",
+      "api": "GET ttg-exchange/quote",
+      "role": "Investor",
+      "flow": "USDC in→TTG",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "MTM partial",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-PM-QUOTE"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FN-02",
+      "name": "Treasury P1–P4 spend",
+      "matrix": 3,
+      "matrix_name": "Governance Treasury Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "BLOCKED",
+      "page": "/governance/params#treasury",
+      "api": "—",
+      "role": "V2_TL",
+      "flow": "USDC spend",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Phase B blocked",
+      "ai_dimensions": [
+        "page:/governance/params"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FN-03",
+      "name": "CP Revenue 45/55",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/params",
+      "api": "GET country-ledger",
+      "role": "Finance Op",
+      "flow": "NPP split",
+      "ai_verdict": "PASS",
+      "ai_reason": "fl aligned",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-CP-DE",
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FN-04",
+      "name": "Steward 45% path",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/params",
+      "api": "—",
+      "role": "Steward",
+      "flow": "45% vault",
+      "ai_verdict": "PASS",
+      "ai_reason": "fl aligned",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FN-05",
+      "name": "Global 55%→V2 TL",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/params",
+      "api": "GET country-ledger",
+      "role": "Ledger owner TL",
+      "flow": "55% USDC",
+      "ai_verdict": "PASS",
+      "ai_reason": "fl aligned",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-CP-DE",
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FN-06",
+      "name": "holder distribution path",
+      "matrix": 8,
+      "matrix_name": "Claim/Distribution Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/distribution-*",
+      "api": "GET accruals",
+      "role": "Investor",
+      "flow": "accrual",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:match /governance",
+        "api:API-ACCRUALS"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FN-07",
+      "name": "Buyback",
+      "matrix": 9,
+      "matrix_name": "Buyback/Burn Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/params",
+      "api": "—",
+      "role": "Timelock",
+      "flow": "USDC buyback",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance/params"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FN-08",
+      "name": "Burn",
+      "matrix": 9,
+      "matrix_name": "Buyback/Burn Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/params",
+      "api": "—",
+      "role": "Timelock",
+      "flow": "TTG burn",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance/params"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FN-09",
+      "name": "Claim live",
+      "matrix": 8,
+      "matrix_name": "Claim/Distribution Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/distribution-claim",
+      "api": "—",
+      "role": "Investor",
+      "flow": "USDC out",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance/distribution-claim"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FN-10",
+      "name": "Distribution accrual",
+      "matrix": 8,
+      "matrix_name": "Claim/Distribution Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/distribution-accruals",
+      "api": "GET accruals",
+      "role": "Investor",
+      "flow": "register accrual",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "AI hit dev open",
+      "ai_dimensions": [
+        "page:/governance/distribution-accruals",
+        "api:API-ACCRUALS"
+      ]
+    },
+    {
+      "mtm_id": "CHK-FN-11",
+      "name": "fundingSource custody",
+      "matrix": 3,
+      "matrix_name": "Governance Treasury Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "doc",
+      "api": "—",
+      "role": "Finance Op",
+      "flow": "USDC pull approve",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-FN-12",
+      "name": "Four-Ledger full+DB",
+      "matrix": 13,
+      "matrix_name": "Four-Ledger Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PARTIAL",
+      "page": "/governance/params",
+      "api": "GET country-ledger",
+      "role": "Finance Op",
+      "flow": "chain=API=page(+DB)",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DB leg open",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-CP-DE",
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-SC-01",
+      "name": "Governor lifecycle+Execute",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "PARTIAL",
+      "page": "/governance/proposals/*",
+      "api": "—",
+      "role": "proposer·voter",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "MTM partial",
+      "ai_dimensions": [
+        "page:governance shell"
+      ]
+    },
+    {
+      "mtm_id": "CHK-SC-02",
+      "name": "V2 Timelock queue/execute",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "PARTIAL",
+      "page": "/governance/proposals/[id]",
+      "api": "GET proposal-status",
+      "role": "anyone",
+      "flow": "schedule/execute",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "MTM partial",
+      "ai_dimensions": [
+        "page:match /governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-SC-03",
+      "name": "Legacy TL NetProfit batch",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "—",
+      "role": "Safe→Legacy TL",
+      "flow": "batch ops",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "out of sweep scope",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-SC-04",
+      "name": "GovTreasury spend",
+      "matrix": 3,
+      "matrix_name": "Governance Treasury Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "BLOCKED",
+      "page": "—",
+      "api": "—",
+      "role": "V2_TL only",
+      "flow": "USDC out",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Phase B blocked",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-SC-05",
+      "name": "PM purchase contract",
+      "matrix": 5,
+      "matrix_name": "TTG Purchase Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PARTIAL",
+      "page": "/governance/params",
+      "api": "GET quote",
+      "role": "buyer EOA",
+      "flow": "USDC→TTG",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "MTM partial",
+      "ai_dimensions": [
+        "page:/governance/params"
+      ]
+    },
+    {
+      "mtm_id": "CHK-SC-06",
+      "name": "StakePool stake/unstake",
+      "matrix": 7,
+      "matrix_name": "Stake/Seat/Unstake Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "PARTIAL",
+      "page": "/governance?view=region",
+      "api": "GET steward/*",
+      "role": "Steward",
+      "flow": "TTG lock/unlock",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "MTM partial",
+      "ai_dimensions": [
+        "page:/governance",
+        "api:api family"
+      ]
+    },
+    {
+      "mtm_id": "CHK-SC-07",
+      "name": "Seat Registry",
+      "matrix": 7,
+      "matrix_name": "Stake/Seat/Unstake Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PARTIAL",
+      "page": "/governance?view=region",
+      "api": "POST applications",
+      "role": "Steward",
+      "flow": "Seat logic",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "MTM partial",
+      "ai_dimensions": [
+        "page:/governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-SC-08",
+      "name": "DE NetProfit epoch",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "GET country-ledger",
+      "role": "Ledger owner TL",
+      "flow": "epoch FSM",
+      "ai_verdict": "PASS",
+      "ai_reason": "fl aligned",
+      "ai_dimensions": [
+        "api:API-CP-DE",
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-SC-09",
+      "name": "StewardPathVault",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "—",
+      "role": "ledger only",
+      "flow": "45% eligible",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DB leg open",
+      "ai_dimensions": [
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-SC-10",
+      "name": "UnallocatedStewardVault",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "—",
+      "role": "ledger only",
+      "flow": "45% ineligible",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DB leg open",
+      "ai_dimensions": [
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-SC-11",
+      "name": "settlementPaused drill",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Owner",
+      "flow": "pause split",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-SC-12",
+      "name": "双 Timelock 运维矩阵",
+      "matrix": 3,
+      "matrix_name": "Governance Treasury Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "Safe+doc",
+      "api": "—",
+      "role": "Treasury Op",
+      "flow": "matrix",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-UP-01",
+      "name": "Proxy upgrade drill",
+      "matrix": 10,
+      "matrix_name": "Upgrade/Proxy Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Timelock",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-UP-02",
+      "name": "Upgrade authority doc",
+      "matrix": 10,
+      "matrix_name": "Upgrade/Proxy Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/params",
+      "api": "GET state-machines",
+      "role": "public",
+      "flow": "Timelock upgrade",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:/governance/params"
+      ]
+    },
+    {
+      "mtm_id": "CHK-UP-03",
+      "name": "Emergency upgrade 08-4",
+      "matrix": 10,
+      "matrix_name": "Upgrade/Proxy Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "doc",
+      "api": "—",
+      "role": "Owner",
+      "flow": "emergency path",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-UP-04",
+      "name": "Rollback drill",
+      "matrix": 10,
+      "matrix_name": "Upgrade/Proxy Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Owner",
+      "flow": "rollback",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-UP-05",
+      "name": "UPGRADE posture ops",
+      "matrix": 10,
+      "matrix_name": "Upgrade/Proxy Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PARTIAL",
+      "page": "/governance/params",
+      "api": "GET protocol-reference",
+      "role": "Owner",
+      "flow": "ops confirm",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "MTM partial",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-PROTO"
+      ]
+    },
+    {
+      "mtm_id": "CHK-OPS-01",
+      "name": "GORP Authority roster",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "GORP §1.3",
+      "api": "—",
+      "role": "Owner",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-OPS-02",
+      "name": "Finance walk GORP-05",
+      "matrix": 3,
+      "matrix_name": "Governance Treasury Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "doc",
+      "api": "—",
+      "role": "Finance Op",
+      "flow": "W-F",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-OPS-03",
+      "name": "Safe walk GORP-06",
+      "matrix": 3,
+      "matrix_name": "Governance Treasury Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "Safe",
+      "api": "—",
+      "role": "Treasury Op",
+      "flow": "Safe ops",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-OPS-04",
+      "name": "Runbook confirm GORP-02",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "GORP",
+      "api": "—",
+      "role": "Owner",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-OPS-05",
+      "name": "双 TL 矩阵 GORP-08",
+      "matrix": 3,
+      "matrix_name": "Governance Treasury Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "Safe wall",
+      "api": "—",
+      "role": "Treasury Op",
+      "flow": "matrix posted",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-OPS-06",
+      "name": "settlementPaused policy GORP-09",
+      "matrix": 4,
+      "matrix_name": "Country Pool Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "doc",
+      "api": "—",
+      "role": "Owner",
+      "flow": "pause policy",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-OPS-07",
+      "name": "SEV-1 POL-08",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "incident",
+      "api": "—",
+      "role": "Owner",
+      "flow": "TTG incident",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-OPS-08",
+      "name": "Four-Ledger standing GORP-11",
+      "matrix": 13,
+      "matrix_name": "Four-Ledger Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "reconcile",
+      "api": "reconcile scripts",
+      "role": "Finance Op",
+      "flow": "monthly",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "no sweep hit",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-OPS-09",
+      "name": "GORP-SIGNOFF.json",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Owner",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Human signoff",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-OPS-10",
+      "name": "GECP-SIGNOFF.json",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Owner",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Human signoff",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-OPS-11",
+      "name": "Phase B evidence GORP-07",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "BLOCKED",
+      "page": "/governance/proposals/[id]",
+      "api": "—",
+      "role": "Owner",
+      "flow": "Execute→Spend→Unstake",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Phase B blocked",
+      "ai_dimensions": [
+        "page:match /governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-OPS-12",
+      "name": "HUMAN-SCREEN signoff",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/*",
+      "api": "—",
+      "role": "Owner",
+      "flow": "UAT sign",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Human signoff",
+      "ai_dimensions": [
+        "page:governance shell"
+      ]
+    },
+    {
+      "mtm_id": "CHK-DR-01",
+      "name": "Execute/CallFailed RB-G-01",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "/governance/proposals/[id]",
+      "api": "—",
+      "role": "On-call",
+      "flow": "failed execute",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": [
+        "page:match /governance"
+      ]
+    },
+    {
+      "mtm_id": "CHK-DR-02",
+      "name": "Treasury mis-transfer RB-G-05",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Treasury Op",
+      "flow": "USDC mis-route",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-DR-03",
+      "name": "CP split interrupt RB-G-03",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Finance Op",
+      "flow": "split fail",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-DR-04",
+      "name": "TL/Safe stall RB-G-02",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "Safe",
+      "api": "—",
+      "role": "Treasury Op",
+      "flow": "stuck ops",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-DR-05",
+      "name": "settlementPaused RB-G-04",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Owner",
+      "flow": "pause",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-DR-06",
+      "name": "fundingSource leak REC-07",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Finance Op",
+      "flow": "key rotate",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-DR-07",
+      "name": "Four-Ledger FAIL REC-06",
+      "matrix": 13,
+      "matrix_name": "Four-Ledger Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "reconcile",
+      "api": "reconcile",
+      "role": "Finance Op",
+      "flow": "FAIL triage",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-DR-08",
+      "name": "CPNP replay REC-08",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "indexer replay",
+      "role": "SRE",
+      "flow": "indexer replay",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-DR-09",
+      "name": "RTO/RPO sign",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "doc",
+      "api": "—",
+      "role": "Owner",
+      "flow": "DR numbers",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-DR-10",
+      "name": "Incident tabletop GORP-03",
+      "matrix": 14,
+      "matrix_name": "Disaster Recovery Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Owner",
+      "flow": "incident",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DR ops",
+      "ai_dimensions": []
+    },
+    {
+      "mtm_id": "CHK-BASE-01",
+      "name": "GovFreeze V2 baseline",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "GET /meta",
+      "role": "observability",
+      "flow": "—",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "chain:baseline gate"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BASE-02",
+      "name": "Legacy rollback forbid",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "—",
+      "role": "—",
+      "flow": "forbidden rollback",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "chain:baseline gate"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BASE-03",
+      "name": "Enterprise HAT L9 machine",
+      "matrix": 13,
+      "matrix_name": "Four-Ledger Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "—",
+      "api": "—",
+      "role": "—",
+      "flow": "—",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "DB leg open",
+      "ai_dimensions": [
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BASE-04",
+      "name": "CP HAT four-ledger machine",
+      "matrix": 13,
+      "matrix_name": "Four-Ledger Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/params",
+      "api": "GET country-ledger",
+      "role": "—",
+      "flow": "four-ledger",
+      "ai_verdict": "PASS",
+      "ai_reason": "fl aligned",
+      "ai_dimensions": [
+        "page:/governance/params",
+        "api:API-CP-DE",
+        "chain:fl ref"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BASE-05",
+      "name": "HAT-R1 Phase A chain",
+      "matrix": 6,
+      "matrix_name": "Proposal/Vote/Queue/Execute Matrix",
+      "tier": "TESTNET_DONE",
+      "mtm_status": "PASS",
+      "page": "/governance/proposals/*",
+      "api": "multi",
+      "role": "HAT wallet",
+      "flow": "Phase A txs",
+      "ai_verdict": "PASS",
+      "ai_reason": "sweep aligned",
+      "ai_dimensions": [
+        "page:governance shell",
+        "chain:phase A anchor"
+      ]
+    },
+    {
+      "mtm_id": "CHK-BASE-06",
+      "name": "HUMAN-ENTERPRISE-HAT sign",
+      "matrix": 1,
+      "matrix_name": "Governance Function Matrix",
+      "tier": "DEV_DONE",
+      "mtm_status": "OPEN",
+      "page": "—",
+      "api": "—",
+      "role": "Owner",
+      "flow": "human sign",
+      "ai_verdict": "PARTIAL",
+      "ai_reason": "Human signoff",
+      "ai_dimensions": []
+    }
+  ]
+}

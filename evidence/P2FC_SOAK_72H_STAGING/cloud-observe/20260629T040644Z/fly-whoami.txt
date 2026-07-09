@@ -1,0 +1,2 @@
+Warning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type billable limitedAccessTokens { nodes { id name expiresAt revokedAt user { email } } } } }: context canceled
+Error: failed retrieving current user: failed to run query { viewer { ... on User { id email enablePaidHobby } ... on Macaroon { email } } }: Post "https://api.fly.io/graphql": EOF

@@ -1,0 +1,118 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-06T17:33:24.232Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "ES",
+    "city_zh": "塞维利亚",
+    "city_en": "Seville",
+    "poi_count": 8
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-SEVILLE-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "JP + KR + TH + US Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "cross_region_remediated": "all_8_execution_plus_geo",
+  "checks": {
+    "assets_locked_8_8": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-ES-208-ATR",
+      "poi": "王宫",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-06T16:57:21.416Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-ES-209-ATR",
+      "poi": "大教堂",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "locked_at_utc": "2026-07-06T17:02:22.655Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-ES-210-ATR",
+      "poi": "西班牙广场",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "locked_at_utc": "2026-07-06T17:07:23.258Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-ES-211-ATR",
+      "poi": "弗拉明戈",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "locked_at_utc": "2026-07-06T17:12:24.475Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-ES-212-FOOD",
+      "poi": "tapas",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-06T17:17:25.541Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-ES-213-FOOD",
+      "poi": "伊比利亚火腿",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-06T17:22:26.197Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-ES-214-FOOD",
+      "poi": "橙子",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "locked_at_utc": "2026-07-06T17:27:27.467Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-ES-215-FOOD",
+      "poi": "雪莉酒",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "locked_at_utc": "2026-07-06T17:32:28.501Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 8
+  },
+  "TT_CMS_POI_CITY_SEVILLE_CONTENT_QA": "CLOSED"
+}

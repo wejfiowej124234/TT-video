@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T23:42:00Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AE",
+    "city_zh": "阿布扎比",
+    "city_en": "Abu Dhabi",
+    "matrix_ids": [
+      "PH-AE-216-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AE-216-ATR",
+      "legacy_value": "谢赫扎耶德清真寺",
+      "poi_id": "e2d4a651-d4fb-47a3-82c4-32a4ff21bfb8",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-216-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

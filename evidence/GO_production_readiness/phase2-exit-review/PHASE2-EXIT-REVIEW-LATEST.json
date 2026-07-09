@@ -1,0 +1,125 @@
+{
+  "schema": "traveltrust.phase2_exit_review_report.v1",
+  "recorded_utc": "2026-07-08T14:04:54.625Z",
+  "stamp": "2026-07-08T14-04-54",
+  "run_dir": "evidence/GO_production_readiness/phase2-exit-review/review-2026-07-08T14-04-54",
+  "verdict": "PHASE2_EXIT_REVIEW_IN_PROGRESS",
+  "purpose": "Phase ②-F Exit Review — all sub-tracks ②-A…②-E before Web3 Freeze",
+  "phase_2_total_name": "Staging / Sepolia Production Validation",
+  "parent_ssot": "registry/phase2-staging-sepolia-production-validation.v1.yaml",
+  "next_stage_on_pass": "run-phase3-deployment-prerequisite-review.cjs → run-web3-freeze.cjs → generate-mainnet-deployment-package.cjs",
+  "forbidden_shortcut": {
+    "id": "RULE-DEPLOY-001",
+    "statement": "Do NOT swap testnet params to mainnet — generate Mainnet Deployment Package first"
+  },
+  "checks": [
+    {
+      "id": "2A-WEBSITE-PRODUCT-UAT",
+      "sub_track": "2A",
+      "pass": true,
+      "detail": "UAT signoff + Layer A PASS"
+    },
+    {
+      "id": "2B-ADMIN-OPS-UAT",
+      "sub_track": "2B",
+      "pass": true,
+      "detail": "Admin UAT signoff + RBAC D3 closed"
+    },
+    {
+      "id": "2C-DATA-CMS-COS",
+      "sub_track": "2C",
+      "pass": true,
+      "detail": "CMS/COS validation PASS"
+    },
+    {
+      "id": "2D-WEB3-LIFECYCLE",
+      "sub_track": "2D",
+      "pass": true,
+      "detail": "SEPOLIA_FULL_WEB3_LIFECYCLE_PASS"
+    },
+    {
+      "id": "2D-RULE-PH2-001",
+      "sub_track": "2D",
+      "pass": true,
+      "detail": "Every mainnet Web3 feature has Sepolia E2E evidence"
+    },
+    {
+      "id": "2D-WEB3-SYSTEM-CLOSURE",
+      "sub_track": "2D",
+      "pass": false,
+      "detail": "WEB3_SYSTEM_CLOSURE_BLOCKED"
+    },
+    {
+      "id": "2D-PROTOCOL-GRADE-P0",
+      "sub_track": "2D",
+      "pass": true,
+      "detail": "WEB3_PROTOCOL_GRADE_IN_PROGRESS"
+    },
+    {
+      "id": "2D-ESCROW-SETTLEMENT",
+      "sub_track": "2D",
+      "pass": true,
+      "detail": "ESCROW_SETTLEMENT_MODEL_ALIGNED"
+    },
+    {
+      "id": "2D-TTG-CERT-8-12",
+      "sub_track": "2D",
+      "pass": false,
+      "detail": "Cert 7/12"
+    },
+    {
+      "id": "2E-SECURITY-RBAC",
+      "sub_track": "2E",
+      "pass": false,
+      "detail": "Protocol-Grade P0 · RBAC=RBAC_D3_PRODUCTION_BOUNDARY_CLOSED"
+    },
+    {
+      "id": "CROSS-BUSINESS-LOGIC-AUDIT",
+      "sub_track": "2D",
+      "pass": true,
+      "detail": "Web3 business logic audit (②-D)"
+    },
+    {
+      "id": "CROSS-USER-JOURNEY-AUDIT",
+      "sub_track": "2D",
+      "pass": true,
+      "detail": "Multi-identity user journey audit"
+    }
+  ],
+  "summary": {
+    "pass": 9,
+    "total": 12
+  },
+  "steps": [
+    {
+      "label": "phase2_master",
+      "ok": false,
+      "status": 1
+    },
+    {
+      "label": "sepolia_lifecycle_2d",
+      "ok": false,
+      "status": 1
+    },
+    {
+      "label": "web3_system_closure",
+      "ok": false,
+      "status": 1
+    },
+    {
+      "label": "protocol_grade",
+      "ok": false,
+      "status": 1
+    },
+    {
+      "label": "escrow_settlement",
+      "ok": false,
+      "status": 1
+    }
+  ],
+  "freeze_on_pass": {
+    "code": "Tag/commit freeze after Owner signoff",
+    "registry": "registry/protocol-convergence-deployments.v1.yaml mainnet block",
+    "evidence": "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/"
+  }
+}

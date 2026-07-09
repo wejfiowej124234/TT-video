@@ -1,0 +1,77 @@
+# G24-P-UPGRADE-01 · Contract Posture Registry · Machine SSOT
+#
+# Human: docs/spec/governance-token/G24-P-UPGRADE-01-proxy-architecture-gate.md
+# Gate: bash scripts/gates/check-g24-p-upgrade-01-proxy-architecture.sh
+
+schema: traveltrust.g24_p_upgrade_01_contract_posture.v1
+version: 1
+effective_utc: "2026-06-16"
+gate_id: G24-P-UPGRADE-01
+phase: "② Sepolia testnet broadcast pregate"
+
+policy:
+  governable_shell_admin: GovernanceTimelock
+  proxy_contract: TimelockUpgradeableProxy
+  immutable_exempt_upgrade: forbidden
+  controller_timelock: CONTROLLER_NON_UPGRADEABLE
+
+contracts:
+  TravelTrustGovernor:
+    posture: PROXY_REQUIRED
+    source: contracts/src/TravelTrustGovernor.sol
+    deploy_var: GOV_FREEZE_V1_GOVERNOR_PROXY
+    upgrade_path: Timelock.upgradeTo
+  GovernanceTimelock:
+    posture: CONTROLLER_NON_UPGRADEABLE
+    source: contracts/src/GovernanceTimelock.sol
+    note: immutable delay · fresh deploy only · not a user-facing proxy address
+  GovernanceTreasuryP4Cap:
+    posture: PROXY_REQUIRED
+    source: contracts/src/GovernanceTreasuryP4Cap.sol
+    deploy_var: TREASURY_P4_CAP_PROXY
+    init_fn: initializeProxyStorage
+  TtgPrimaryMarketV1:
+    posture: PROXY_REQUIRED
+    source: contracts/src/TtgPrimaryMarketV1.sol
+    deploy_var: PRIMARY_MARKET_PROXY
+    init_fn: initializeProxyStorage
+  TtgSeatConcentrationRegistry:
+    posture: PROXY_REQUIRED
+    source: contracts/src/TtgSeatConcentrationRegistry.sol
+    deploy_var: SEAT_REGISTRY_PROXY
+    init_fn: initializeProxyStorage
+  RegionStewardStakePool:
+    posture: PROXY_REQUIRED
+    source: contracts/src/RegionStewardStakePool.sol
+    deploy_var: REGION_STEWARD_STAKE_POOL_PROXY
+    init_fn: initializeProxyStorage
+  CountryPoolNetProfitLedger:
+    posture: IMMUTABLE_EXEMPT
+    source: contracts/src/CountryPoolNetProfitLedger.sol
+    note: G23-04 ABI freeze · no proxy upgrade surface
+  CountryPoolSettlementVaults:
+    posture: IMMUTABLE_EXEMPT
+    sources:
+      - contracts/src/StewardPathVault.sol
+      - contracts/src/vacancy/UnallocatedStewardPathVault.sol
+
+deploy_scripts:
+  primary: contracts/script/DeployGovFreezeV1Stack.s.sol
+  clean_baseline: contracts/script/DeployGovFreezeV2CleanBaseline.s.sol
+  required_patterns:
+    - deployTimelockControlledProxy
+    - TimelockUpgradeableProxy
+  forbidden_bare_baseline:
+    - new GovernanceTreasuryP4Cap(
+    - new TtgPrimaryMarketV1(
+    - new TtgSeatConcentrationRegistry(
+    - new TravelTrustGovernor(
+    - new RegionStewardStakePool(
+
+forge_tests:
+  - TtgGovFreezeV1ProxyArchitecture
+  - TtgGovFreezeV1Enforcement
+  - RegionStewardStakePoolProxyBootstrap
+
+evidence_root: evidence/GO_local_gov_freeze_v1_onchain/g24-p-upgrade-01
+summary_line: G24_P_UPGRADE_01_SUMMARY

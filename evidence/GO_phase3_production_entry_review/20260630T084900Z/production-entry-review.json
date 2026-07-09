@@ -1,0 +1,63 @@
+{
+  "schema": "traveltrust.phase3_production_entry_review.v1",
+  "stamp": "20260630T084900Z",
+  "opened_at_utc": "2026-06-30T08:50:58Z",
+  "phase": "③ production entry review",
+  "status": "ACTIVE",
+  "runtime_baseline_sha": "f29b2772ed39afd57ff604704c1c8329358d08d0",
+  "phase2_closed_at": "2026-06-30T08:50:58Z",
+  "runtime_drift": "NONE",
+  "verdict": {
+    "phase3_production_entry_review": "ACTIVE",
+    "production_go": "NO",
+    "production_go_audit": "NO_GO"
+  },
+  "prerequisites": {
+    "phase2_closed": "evidence/GO_phase2_testnet_graduation/PHASE2-CLOSED.latest.json",
+    "h1_human_acceptance": "evidence/GO_phase2_testnet_graduation/h1-human-acceptance/20260630T083749Z/",
+    "final_human_acceptance": "evidence/GO_phase2_final_human_acceptance/PHASE2-FINAL-HUMAN-ACCEPTANCE.latest.json",
+    "deep_release_gate": "evidence/GO_phase2_testnet_20260526/deep-release-gate/20260630T083023Z/",
+    "go_live_checklist": "docs/go-live-checklist.md"
+  },
+  "in_scope_review_tracks": [
+    {
+      "id": "P3-ENV",
+      "title": "Production environment preparation"
+    },
+    {
+      "id": "P3-MAINNET",
+      "title": "Mainnet configuration review"
+    },
+    {
+      "id": "P3-KEYS",
+      "title": "Secrets / keys / PSP credential governance"
+    },
+    {
+      "id": "P3-SEC",
+      "title": "Security hardening & RBAC prod promote review"
+    },
+    {
+      "id": "P3-MON",
+      "title": "Monitoring / alerting / on-call readiness"
+    },
+    {
+      "id": "P3-RB",
+      "title": "Rollback & release drill strategy"
+    },
+    {
+      "id": "P3-GOLIVE",
+      "title": "Go-live strategy & cutover runbook review"
+    }
+  ],
+  "known_p1_backlog_from_h1": [
+    "HAT-P1-001",
+    "HAT-P1-002"
+  ],
+  "honest_boundary": "Entry Review ACTIVE ≠ Production GO",
+  "machine_keys": {
+    "TT_PHASE2_CLOSED": "YES",
+    "TT_H1_HUMAN_ACCEPTANCE": "PASS",
+    "TT_PHASE3_PRODUCTION_ENTRY_REVIEW": "ACTIVE",
+    "TT_PHASE3_PRODUCTION_GO": "NO"
+  }
+}

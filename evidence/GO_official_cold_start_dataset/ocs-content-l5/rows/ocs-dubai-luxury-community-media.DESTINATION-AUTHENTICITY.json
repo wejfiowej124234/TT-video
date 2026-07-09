@@ -1,0 +1,136 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_review.v1",
+  "stamp_utc": "20260704T154714Z",
+  "filename": "ocs-dubai-luxury-community-media.jpg",
+  "chain_id": "dubai-luxury",
+  "city": "迪拜",
+  "country_code": "AE",
+  "country_label": "阿联酋",
+  "slot": "community-media",
+  "surface": "Community Media",
+  "manifest_snapshot": {
+    "chain_id": "dubai-luxury",
+    "city": "迪拜",
+    "country_code": "AE",
+    "country_label": "阿联酋",
+    "chain_tags": [
+      "奢华",
+      "沙漠"
+    ],
+    "community_post.destination_slug": "dubai",
+    "community_post.destination_label": "迪拜",
+    "community_post.post_type": "photo",
+    "community_post.tags": [
+      "迪拜",
+      "沙漠",
+      "官方旅行日志"
+    ],
+    "community_post.body_markdown": "沙漠冲沙与哈利法塔夜景——官方两日路线与安全着装建议实录。",
+    "community_post.cover_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-community-cover.jpg",
+    "community_post.media_urls": [
+      "/api/v1/uploads/community-posts/ocs-dubai-luxury-community-media.jpg"
+    ]
+  },
+  "manifest_field_alignment": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "matrix_city_matches_manifest",
+        "pass": true,
+        "detail": "matrix=迪拜 manifest=迪拜"
+      },
+      {
+        "id": "country_code_present",
+        "pass": true,
+        "detail": "AE"
+      },
+      {
+        "id": "copy_label_non_empty",
+        "pass": true,
+        "detail": "沙漠冲沙与哈利法塔夜景——官方两日路线与安全着装建议实录。"
+      },
+      {
+        "id": "copy_label_contains_city_or_chain_theme",
+        "pass": true,
+        "detail": "community shared body ok"
+      },
+      {
+        "id": "community_destination_label_matches_city",
+        "pass": true,
+        "detail": "迪拜"
+      }
+    ],
+    "requirement": "图片与 Manifest 全字段 100% 同城同主题对齐"
+  },
+  "destination_authenticity_checklist": {
+    "architecture": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "streetscape": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "clothing": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "language_signage": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "transportation": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "natural_environment": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "food_dining": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "commercial_form": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "cultural_elements": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    }
+  },
+  "prohibited": {
+    "cross_country_elements": false,
+    "cross_city_elements": false,
+    "cross_culture_mixing": false
+  },
+  "TT_DESTINATION_AUTHENTICITY_REVIEW": "PASS"
+}

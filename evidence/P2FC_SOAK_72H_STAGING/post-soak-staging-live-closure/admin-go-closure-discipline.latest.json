@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.admin_go_closure_discipline.v1",
+  "generated_at_utc": "2026-06-30T02:50:54Z",
+  "phase": "②",
+  "admin_go_ssot": "TT_ADMIN_STAGING_GO_CLAIM",
+  "admin_go_ssot_registry": "registry/admin-staging-go-claim-ssot.v1.yaml",
+  "admin_go_ssot_artifact": "post-soak-staging-live-closure/admin-go-claim-gate.latest.json",
+  "unique_closure_loop": [
+    "COMPLETED.json",
+    "MR12 one-shot TT_P2FC_POST_SOAK_ONE_SHOT: PASS",
+    "ADM-U01 live report.json release_gate=GO (persistent_host · not tunnel/local)",
+    "P0 Runtime TT_P2FC_P0_RBAC_BYPASS_RUNTIME: CONFIRMED",
+    "TT_ADMIN_STAGING_GO_CLAIM: ALLOWED"
+  ],
+  "forbidden_as_go": [
+    "prep_ready",
+    "prep_only",
+    "soak_inflight",
+    "static_p0_confirmed",
+    "tunnel_ephemeral",
+    "local_smoke",
+    "watcher_alive",
+    "health_200",
+    "health_200_only",
+    "meta_unreachable",
+    "blocker_watch_inflight",
+    "mr12_prep_only",
+    "web3_audit_warn"
+  ],
+  "forbidden_claim_targets_unless_loop_closed": [
+    "admin_go",
+    "phase2_closure",
+    "production_go"
+  ],
+  "closure_loop": {
+    "steps": [
+      {
+        "id": "S0_COMPLETED",
+        "pass": true,
+        "evidence": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\COMPLETED.json"
+      },
+      {
+        "id": "S1_MR12_ONE_SHOT",
+        "pass": true,
+        "evidence": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-one-shot\\one-shot.log"
+      },
+      {
+        "id": "S2_ADM_U01_LIVE_GO",
+        "pass": true,
+        "evidence": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-staging-live-closure\\adm-u01-live\\report.json",
+        "release_gate": "GO",
+        "deployment_kind": "persistent_host"
+      },
+      {
+        "id": "S3_P0_RUNTIME",
+        "pass": true,
+        "evidence": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-staging-live-closure\\p0-rbac-bypass-runtime\\latest.json"
+      },
+      {
+        "id": "S4_ADMIN_GO_CLAIM",
+        "pass": true,
+        "evidence": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-staging-live-closure\\admin-go-claim-gate.latest.json"
+      }
+    ],
+    "loop_closed": true,
+    "admin_go_claim_allowed": true
+  },
+  "premature_substitute_audit": [
+    {
+      "id": "V-TUNNEL-PRE-RUN",
+      "artifact": "D:\\TravelTrust-V1.1\\evidence\\GO_staging_admin_rbac_matrix\\run_adm_u01_close_20260603\\report.json",
+      "note": "tunnel pre-run must not substitute live persistent ADM-U01 GO"
+    },
+    {
+      "id": "V-LOCAL-SMOKE-EXISTS",
+      "artifact": "D:\\TravelTrust-V1.1\\scripts\\dev\\smoke-admin-rbac-matrix-local.sh",
+      "severity": "info",
+      "note": "① local smoke exists — cannot claim ② Admin GO"
+    },
+    {
+      "id": "V-WATCHER-ALIVE",
+      "artifact": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-staging-live-closure\\closure-chain-watcher.pid",
+      "severity": "info",
+      "note": "watcher pid present — not Admin GO"
+    }
+  ],
+  "claim_matrix": {
+    "admin_go": true,
+    "phase2_admin_closure": true,
+    "production_go": false
+  },
+  "ssot_query": "bash scripts/ops/p2fc-query-admin-staging-go-claim.sh",
+  "discipline_verdict": "CLOSED",
+  "honest_boundary": "TT_ADMIN_STAGING_GO_CLAIM=ALLOWED is the ONLY lawful Admin GO claim · prep/static/tunnel/local/smoke/watcher/health/prep-only/soak-inflight must NEVER substitute Admin GO · Phase② Closure · Production GO"
+}

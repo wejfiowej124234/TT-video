@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.ocs_content_l5_country_consistency_review.v1",
+  "stamp_utc": "20260704T141530Z",
+  "chain_id": "singapore-family",
+  "city": "新加坡",
+  "country_code": "SG",
+  "country_label": "新加坡",
+  "theme_locked": "亲子 · 滨海湾 · 圣淘沙",
+  "TT_COUNTRY_CONSISTENCY_REVIEW": "PASS",
+  "isolation_rules": {
+    "no_japan_elements": true,
+    "no_korea_elements": true,
+    "no_thailand_elements": true,
+    "no_china_elements": true,
+    "no_other_country_landmarks": true,
+    "sg_modern_tropical_family_visual_language": true
+  },
+  "future_slots_require": [
+    "provider: 亲子通票水族馆/乐园入口",
+    "acquisition: 新加坡设计周边礼品",
+    "official_guide: 滨海湾天际线+家庭周末路线",
+    "community: 儿童景点瞬间 + 圣淘沙/超级树详情"
+  ],
+  "gate_singapore_chain_completion": "6/6 must maintain SG-only family visual language"
+}

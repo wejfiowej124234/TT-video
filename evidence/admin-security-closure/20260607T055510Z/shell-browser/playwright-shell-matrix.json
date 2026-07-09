@@ -1,0 +1,12 @@
+{
+  "artifact": "adm-u01-playwright-shell",
+  "phase": "\u2461",
+  "rows": [],
+  "summary": {
+    "total": 0,
+    "pass": 0,
+    "fail": 0
+  },
+  "playwright_fe_base": "http://127.0.0.1:3012",
+  "generated_at": "2026-06-07T06:11:57.292Z"
+}

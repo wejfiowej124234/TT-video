@@ -1,0 +1,138 @@
+# Vacancy W7 Dry Run v1 — machine SSOT (simulation only · no Sepolia broadcast)
+# Human: docs/spec/governance-token/TRAVELTRUST-WEB3-VACANCY-W7-DRY-RUN-CHECKLIST-v1.md
+# Gate: scripts/gates/check-vacancy-runtime-migration-dryrun-gate.sh
+
+schema: traveltrust.vacancy_w7_dry_run.v1
+version: "1.0.0"
+effective_utc: "2026-07-09"
+sprint: W7_DRYRUN
+status: PASS
+sepolia_mutations: forbidden
+registry_mutations: forbidden_until_w7_execution
+fork_sim:
+  executed_utc: "2026-07-09T04:55:00Z"
+  fork_rpc: https://1rpc.io/sepolia
+  forge_test: contracts/test/vacancy/VacancyW7DryRunFork.t.sol
+  broadcast: false
+
+prerequisites:
+  w5_master_audit: COMPLETE
+  w6_activation_plan: COMPLETE
+  w6_5_b_balance_audit:
+    gate: VACANCY_LEGACY_BALANCE_AUDIT_GATE
+    result: PASS
+    migration_case: CASE_B_TOKEN_MIGRATION
+    migration_amount_raw: "495000"
+    migration_amount_human: "0.495000 USDC"
+
+constants:
+  v2_timelock: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+  legacy_timelock: "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
+  legacy_unallocated: "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0"
+  legacy_ledger: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+  legacy_steward: "0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb"
+  settlement_token: "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
+  steward_stake_pool: "0x3a89378bfad12d1028707dd37055294854c8784e"
+  token_decimals: 6
+
+new_triplet:
+  ledger: "0xc0Da7c66C39C154a11F307e10070E44DEFeec1ED"
+  steward_path_vault: "0xD351078d4677a063F8608cC27E4C58499CdB0210"
+  unallocated_vault: "0x367571A4bb72DE563F7fc7E9e785eA2E9DE8488c"
+  note: fork-only simulated addresses · not Sepolia broadcast
+  required_owner: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+  forbidden_owners:
+    - deployer_eoa
+    - timelock_admin_safe_only_without_timelock_as_owner
+    - legacy_timelock
+
+dry_run_steps:
+  - id: W7-DryRun-01
+    name: new_triplet_deployment_simulation
+    script: contracts/script/DeployCountryPoolNetProfitStack.s.sol
+    method: forge_test_fork_no_broadcast
+    status: PASS
+    verifies:
+      - owner_equals_v2_timelock
+      - triplet_wiring
+      - global_treasury_v2
+  - id: W7-DryRun-02
+    name: vacancy_capability_probe
+    status: PASS
+    target_mode: LIVE_CAPABLE
+  - id: W7-DryRun-03
+    name: historical_asset_migration_simulation
+    status: PASS
+    amount_raw: "495000"
+    from: "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0"
+    to: TBD_DRYRUN
+    actor: legacy_timelock
+    pre:
+      old_balance_raw: "495000"
+      new_balance_raw: "0"
+    post:
+      old_balance_raw: "0"
+      new_balance_raw: "495000"
+    ledger_state_import: false
+    outputs:
+      - migration_reference
+      - proposal_ref
+      - simulated_tx_hash
+  - id: W7-DryRun-04
+    name: registry_switch_order_rehearsal
+    status: PASS
+    forbidden_order:
+      - registry_active_before_deploy
+    required_order:
+      - deploy
+      - probe_pass
+      - migration_pass
+      - balance_reconcile_pass
+      - registry_active
+      - indexer_live_mode
+      - live_reconcile_pass
+    rehearsal_artifact: docs/spec/governance-token/evidence/vacancy-w7-dry-run/registry-switch-rehearsal.v1.yaml
+    production_registry_touch: false
+
+rollback:
+  before_registry_switch: discard_fork_no_production_impact
+  after_w7_real_switch: revert_registry_env_to_legacy_read_only
+  status: NOT_RUN
+
+dryrun_gate:
+  gate_id: VACANCY_RUNTIME_MIGRATION_DRYRUN_GATE
+  gate_script: scripts/gates/check-vacancy-runtime-migration-dryrun-gate.sh
+  status: PASS
+  checks:
+    new_triplet_deployment_simulation: PASS
+    owner_timelock_verified: PASS
+    capability_probe: PASS
+    migration_simulation_495000_usdc: PASS
+    ledger_state_unchanged: PASS
+    registry_switch_rehearsal: PASS
+    rollback_path: PASS
+  evidence_result: docs/spec/governance-token/evidence/vacancy-w7-dry-run/DRYRUN-RESULT-v1.md
+
+workflow:
+  - W5_COMPLETE
+  - W6_COMPLETE
+  - W6_5_B_PASS
+  - W7_DRYRUN_PASS
+  - WEB3_RUNTIME_ACTIVATION_GATE_PENDING
+  - W6_5_OWNER_SIGN_PENDING
+  - W7_EXECUTION_BLOCKED
+
+owner_signoff:
+  technical_sections_ready: true
+  b1_triplet_atomic: READY
+  b2_owner_v2_timelock: READY
+  b3_balance_audit: READY
+  b4_registry_order: READY
+  b5_legacy_retention: READY
+  owner_signature: PENDING
+  recommended_before_sign: W7_DRYRUN_PASS
+  dryrun_complete: true
+
+orchestrator:
+  script: scripts/ops/vacancy-w7-dry-run-orchestrator.sh
+  default_mode: plan_only

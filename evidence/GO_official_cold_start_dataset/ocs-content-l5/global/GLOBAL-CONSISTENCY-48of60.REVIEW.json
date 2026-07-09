@@ -1,0 +1,11 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_consistency_review.v1",
+  "stamp_utc": "20260704T151130Z",
+  "progress": "48/60",
+  "trigger_filename": "ocs-sydney-coast-community-media.jpg",
+  "TT_GLOBAL_CONSISTENCY_REVIEW": "PASS",
+  "matrix_registry_alignment": true,
+  "brief_alignment": true,
+  "dataset_copy_alignment": true,
+  "no_brand_drift": true
+}

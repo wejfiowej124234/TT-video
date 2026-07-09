@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.ocs_content_l5_execution_closed.v1",
+  "stamp_utc": "20260704T155000Z",
+  "supersedes": "OCS-CONTENT-L5-EXECUTION-OPEN-20260704T121500Z.json",
+  "machine_keys": {
+    "TT_OCS_CONTENT_L5": "CLOSED",
+    "TT_OCS_CONTENT_L5_EXECUTION": "CLOSED",
+    "TT_OCS_CONTENT_L5_READY": "YES",
+    "TT_CONTENT_PRODUCTION_MATRIX": "PASS",
+    "TT_CONTENT_BRAND_CONSISTENCY": "PASS"
+  },
+  "matrix_progress": {
+    "verified_pass": 60,
+    "total": 60
+  },
+  "closure_evidence": "evidence/GO_official_cold_start_dataset/ocs-content-l5/20260704T155000Z/"
+}

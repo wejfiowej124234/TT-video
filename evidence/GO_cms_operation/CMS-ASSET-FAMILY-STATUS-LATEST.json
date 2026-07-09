@@ -1,0 +1,192 @@
+{
+  "schema": "traveltrust.cms_asset_family_status.v1",
+  "stamp_utc": "20260705T104328Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "pipeline": [
+    "Review",
+    "Replace",
+    "Publish",
+    "Verify",
+    "Evidence",
+    "Live"
+  ],
+  "closure_discipline": [
+    "all_items_live_in_family",
+    "run_cms_denominator_lock",
+    "run_cms_ops_refresh",
+    "write_family_closure_evidence",
+    "freeze_family_do_not_reopen"
+  ],
+  "families": [
+    {
+      "id": "destination_ambient",
+      "label": "Destination Ambient",
+      "order": 1,
+      "status": "CLOSED",
+      "lock_category": {
+        "label": "Destination Ambient",
+        "total": 10,
+        "live": 10,
+        "pending": 0,
+        "completion": "10/10 (100%)",
+        "catalog_empty": false,
+        "target": "100% Live"
+      },
+      "closure_evidence": "evidence/GO_cms_operation/CMS-AMBIENT-WAVE1-CLOSURE-LATEST.json",
+      "runtime_closure_evidence": "evidence/GO_cms_operation/CMS-DESTINATION-AMBIENT-RUNTIME-CLOSURE-LATEST.json",
+      "runtime_status": "CLOSED"
+    },
+    {
+      "id": "poi",
+      "label": "POI",
+      "order": 2,
+      "status": "SCOPE_LOCKED",
+      "lock_category": {
+        "label": "POI",
+        "total": 330,
+        "live": 0,
+        "pending": 330,
+        "completion": "0/330 (scope_locked · pilot 9 next)",
+        "catalog_empty": true,
+        "target": "Pilot · 东京 CLOSED → Osaka ACTIVE → … · not bulk 330"
+      },
+      "closure_evidence": null,
+      "scope_lock_evidence": "evidence/GO_cms_operation/CMS-POI-CATALOG-SCOPE-LOCK-LATEST.json",
+      "matrix_ssot": "data/catalog/poi-hero-matrix.v1.yaml",
+      "denominator": {
+        "description": "Each catalog_pois row (city × poi_type × legacy_value) in ten product countries · not IMG-FAM-POI-* family slots",
+        "cities": 38,
+        "attraction": 169,
+        "food": 161,
+        "total": 330,
+        "cms_lock_categories": {
+          "poi": 169,
+          "food": 161,
+          "note": "After catalog ingest · run-cms-denominator-lock re-probes /api/v1/catalog/poi-images"
+        }
+      },
+      "pilot_wave_evidence": "evidence/GO_cms_operation/CMS-POI-PILOT-WAVE-LATEST.json",
+      "next_stage": "catalog_build",
+      "full_scope_denominator": {
+        "description": "Each catalog_pois row (city × poi_type × legacy_value) in ten product countries · not IMG-FAM-POI-* family slots",
+        "cities": 38,
+        "attraction": 169,
+        "food": 161,
+        "total": 330,
+        "cms_lock_categories": {
+          "poi": 169,
+          "food": 161,
+          "note": "After catalog ingest · run-cms-denominator-lock re-probes /api/v1/catalog/poi-images"
+        }
+      },
+      "active_catalog_build": {
+        "wave_id": "POI-WAVE-1-PILOT",
+        "country_iso": "JP",
+        "cities": [
+          "东京"
+        ],
+        "poi_count": 9
+      }
+    },
+    {
+      "id": "hotel",
+      "label": "Hotel",
+      "order": 3,
+      "status": "NOT_STARTED",
+      "lock_category": {
+        "label": "Hotel",
+        "total": 0,
+        "live": 0,
+        "pending": 0,
+        "completion": "0/0 (catalog_empty)",
+        "catalog_empty": true,
+        "target": "re_lock_after_catalog_ingest"
+      },
+      "closure_evidence": null
+    },
+    {
+      "id": "transport",
+      "label": "Transport",
+      "order": 4,
+      "status": "NOT_STARTED",
+      "lock_category": {
+        "label": "Transport",
+        "total": 0,
+        "live": 0,
+        "pending": 0,
+        "completion": "0/0 (catalog_empty)",
+        "catalog_empty": true,
+        "target": "re_lock_after_catalog_ingest"
+      },
+      "closure_evidence": null
+    },
+    {
+      "id": "provider_listing",
+      "label": "Provider Listing",
+      "order": 5,
+      "status": "NOT_STARTED",
+      "lock_category": {
+        "label": "Provider Listing Cover",
+        "total": 10,
+        "live": 0,
+        "pending": 10,
+        "completion": "0/10 (0%)",
+        "catalog_empty": false,
+        "target": "100% Live"
+      },
+      "closure_evidence": null
+    },
+    {
+      "id": "acquisition_listing",
+      "label": "Acquisition Listing",
+      "order": 6,
+      "status": "NOT_STARTED",
+      "lock_category": {
+        "label": "Acquisition Listing Cover",
+        "total": 10,
+        "live": 0,
+        "pending": 10,
+        "completion": "0/10 (0%)",
+        "catalog_empty": false,
+        "target": "100% Live"
+      },
+      "closure_evidence": null
+    },
+    {
+      "id": "video_poster",
+      "label": "Video / Poster",
+      "order": 7,
+      "status": "NOT_STARTED",
+      "lock_category": {
+        "label": "Video Poster",
+        "total": 1,
+        "live": 0,
+        "pending": 1,
+        "completion": "0/1 (0%)",
+        "catalog_empty": false,
+        "target": "100% Live"
+      },
+      "closure_evidence": null
+    }
+  ],
+  "active_family": {
+    "id": "poi",
+    "label": "POI",
+    "status": "ACTIVE",
+    "admin_entry": "/admin/content/poi-images",
+    "catalog_probe": "GET /api/v1/catalog/poi-images?type=attraction|food",
+    "catalog_empty": true,
+    "first_step": "Catalog ingest → re-lock → first item Review",
+    "next_label": "POI · catalog ingest",
+    "blocker": "Staging catalog POI empty · ingest or create first poi-images row before item loop"
+  },
+  "frozen_families": [
+    "destination_ambient"
+  ],
+  "TT_CMS_ACTIVE_ASSET_FAMILY": "poi",
+  "TT_CMS_POI_STATUS": "SCOPE_LOCKED",
+  "TT_CMS_POI_NEXT_STAGE": "CATALOG_BUILD",
+  "active_catalog_build": "POI-WAVE-1-PILOT"
+}

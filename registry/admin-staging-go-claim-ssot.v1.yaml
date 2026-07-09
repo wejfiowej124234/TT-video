@@ -1,0 +1,70 @@
+# TT_ADMIN_STAGING_GO_CLAIM · 子真源（Phase ② · 仅 Admin GO）
+#
+# 父子两级真源：
+#   子 TT_ADMIN_STAGING_GO_CLAIM — 仅 Admin GO（ALLOWED/DENIED）
+#   父 TT_LIVE_CLOSURE_CHAIN_VERDICT — 汇总 admin_go · phase2_closure · production_go
+#
+# 父真源 admin_go=YES 必须依赖本子真源 ALLOWED
+
+version: admin-staging-go-claim-ssot-2026-06-24-v2
+
+runtime_adjudication_ssot:
+  child: TT_ADMIN_STAGING_GO_CLAIM
+  parent: TT_LIVE_CLOSURE_CHAIN_VERDICT
+  role: admin_go_only
+
+parent_ssot: registry/live-closure-chain-ssot.v1.yaml
+unified_query: scripts/ops/p2fc-query-runtime-adjudication.sh
+ssot_artifact: "evidence/P2FC_SOAK_72H_STAGING/post-soak-staging-live-closure/admin-go-claim-gate.latest.json"
+
+allowed_value: ALLOWED
+denied_value: DENIED
+
+unique_closure_loop:
+  - id: S0
+    requirement: "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json exists"
+  - id: S1
+    requirement: "post-soak-one-shot/one-shot.log contains TT_P2FC_POST_SOAK_ONE_SHOT: PASS"
+  - id: S2
+    requirement: "adm-u01-live/report.json release_gate=GO"
+    constraints:
+      deployment_kind: persistent_host
+      not_localhost_assertion: true
+      forbid_api_base: ["127.0.0.1", "localhost", ".loca.lt"]
+  - id: S3
+    requirement: "p0-rbac-bypass-runtime/latest.json status=CONFIRMED"
+    note: "runtime only — static p0-rbac-bypass-isolation.json is NOT sufficient"
+  - id: S4
+    requirement: "TT_ADMIN_STAGING_GO_CLAIM=ALLOWED"
+    note: "this line is the ONLY lawful Admin GO claim export"
+
+forbidden_substitutes_for:
+  - admin_go
+  - phase2_closure
+  - production_go
+
+forbidden_substitute_signals:
+  - prep_ready
+  - prep_only
+  - soak_inflight
+  - static_p0_confirmed
+  - tunnel_ephemeral
+  - local_smoke
+  - watcher_alive
+  - health_200_only
+  - meta_unreachable
+  - mr12_prep_only
+  - web3_audit_warn
+  - blocker_watch_inflight
+
+honest_boundary: |
+  TT_ADMIN_STAGING_GO_CLAIM=ALLOWED is the sole lawful Admin GO claim (Phase ②).
+  Phase② full closure (ADM-U02, B1-B4) and Production GO (③) are separate gates.
+  Prep, Static, Tunnel, Local, Smoke, Watcher, Health, Prep-Only, Soak Inflight
+  must NEVER substitute or pre-empt Admin GO, Phase② Closure, or Production GO.
+
+gate_script: scripts/ops/p2fc-gate-admin-staging-go-claim.sh
+discipline_audit_script: scripts/ops/p2fc-audit-admin-go-closure-discipline-readonly.sh
+query_script: scripts/ops/p2fc-query-admin-staging-go-claim.sh
+parent_ssot: registry/live-closure-chain-ssot.v1.yaml
+live_closure_verdict_query: scripts/ops/p2fc-query-live-closure-verdict.sh

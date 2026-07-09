@@ -1,0 +1,58 @@
+{
+  "schema": "testnet_perfect_validation.v1",
+  "stamp": "20260613T121800Z",
+  "recorded_at": "2026-06-13T12:18:00Z",
+  "phase": "② testnet",
+  "phase1_status": {
+    "frozen": true,
+    "master_ready": true,
+    "readiness_95": true,
+    "admin_perfect_closure": true,
+    "open_p0_p1_p2": 0
+  },
+  "targets": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev",
+    "chain_id": 11155111
+  },
+  "exit_criteria": {
+    "open_testnet_p0": 0,
+    "open_testnet_p1": 0,
+    "six_role_matrix_pct": 100,
+    "critical_business_chains_pct": 100,
+    "phase2_readiness": 100
+  },
+  "current_verdict": {
+    "open_testnet_p0": 1,
+    "open_testnet_p1": 10,
+    "six_role_matrix_pct": 33,
+    "critical_business_chains_pct": 47,
+    "phase2_readiness": 72,
+    "tt_testnet_perfect_validation_go": "NO-GO"
+  },
+  "evidence_runs": [
+    {
+      "id": "P2EXEC-SPRINT",
+      "script": "scripts/dev/smoke-phase2-testnet-execution-sprint.sh",
+      "stamp": "20260613T120948Z",
+      "verdict": "PASS",
+      "artifact": "frontend/evidence/GO_phase2_testnet_execution_sprint/steps-20260613T120948Z"
+    },
+    {
+      "id": "SIX-DOMAIN-UAT",
+      "script": "scripts/dev/run-staging-uat-six-domains.sh",
+      "stamp": "20260613T121041Z",
+      "verdict": "PASS",
+      "summary": "25 PASS / 0 WARN / 0 FAIL",
+      "artifact": "evidence/staging-uat-six-domains/20260613T121041Z/uat-findings.json"
+    },
+    {
+      "id": "ADM-U01",
+      "script": "scripts/dev/record-adm-u01-staging-evidence.sh",
+      "stamp": "20260613T121636Z",
+      "verdict": "FAIL",
+      "blocker": "STAGING_DATABASE_URL flycast host unreachable from validation runner"
+    }
+  ],
+  "report_ssot": "docs/runbook/TESTNET-PERFECT-VALIDATION-REPORT.md"
+}

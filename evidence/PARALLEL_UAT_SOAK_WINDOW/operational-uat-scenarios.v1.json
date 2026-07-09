@@ -1,0 +1,319 @@
+{
+  "schema": "traveltrust.operational_uat_scenarios.v1",
+  "version": "1.0.0",
+  "policy": "soak window · record only · no new features · no token fixes · no staging changes",
+  "exec_env": "local_or_staging_dev · :8080 API · :3012 FE",
+  "finding_kinds": [
+    "ui",
+    "interaction",
+    "naming",
+    "workflow",
+    "feedback",
+    "cognitive_cost",
+    "a11y",
+    "copy",
+    "data"
+  ],
+  "scenarios": [
+    {
+      "id": "SCN-CMS",
+      "track": "CMS",
+      "personas": [
+        "operator"
+      ],
+      "primary_routes": [
+        "/admin/content",
+        "/admin/content/countries",
+        "/admin/content/cities",
+        "/admin/content/pois"
+      ],
+      "consumer_check": [
+        "/",
+        "/market",
+        "GET /api/v1/catalog/countries",
+        "GET /api/v1/catalog/pois"
+      ],
+      "mission": "运营首次维护国家→城市→POI→媒体/定价 tier，并确认消费者面可读",
+      "steps_operator": [
+        "以 Ops 登录 Admin → 进入 Content/CMS",
+        "新建或编辑国家/城市（含 slug、发布状态）",
+        "创建 POI（attraction/hotel/food）并完成发布/修订",
+        "检查定价 tier / POI 媒体关联",
+        "切换消费者路由或 catalog API，确认已发布内容可见、空态诚实"
+      ],
+      "cognitive_cost_prompts": [
+        "模块命名是否与 101 M1–M6 一致？",
+        "发布 vs 草稿状态是否一眼可辨？",
+        "修订/回滚路径是否可发现？"
+      ]
+    },
+    {
+      "id": "SCN-OFFICIAL-OPS",
+      "track": "Official OPS",
+      "personas": [
+        "operator"
+      ],
+      "primary_routes": [
+        "/admin/official",
+        "/admin/official/accounts",
+        "/admin/official/guides",
+        "/admin/official/itinerary-templates"
+      ],
+      "consumer_check": [
+        "/community",
+        "official guide posts on feed",
+        "cold-start consumer surface"
+      ],
+      "mission": "运营编排官方账号→攻略→行程模板→冷启动 campaign 露出",
+      "steps_operator": [
+        "创建/绑定官方账号（account_kind、展示名）",
+        "发布官方攻略帖并关联账号",
+        "创建官方行程模板并设可见性",
+        "配置/部署冷启动 campaign（若有）",
+        "在 consumer 面验证 official seed 露出与 fallback 披露"
+      ],
+      "cognitive_cost_prompts": [
+        "Official OPS 与 CMS 边界是否清晰？",
+        "冷启动 deploy 后果是否有确认？",
+        "consumer 空态是否说明 data_origin？"
+      ]
+    },
+    {
+      "id": "SCN-GROWTH",
+      "track": "Growth",
+      "personas": [
+        "operator"
+      ],
+      "primary_routes": [
+        "/admin/growth",
+        "/admin/growth/analytics",
+        "/admin/growth/referral-codes"
+      ],
+      "consumer_check": [],
+      "mission": "运营从 Growth 控制台理解漏斗、配置与只读/写边界",
+      "steps_operator": [
+        "进入 Growth hub，浏览各子模块入口与命名",
+        "打开 Analytics overview / funnel / top referrers",
+        "查看 referral codes / ledger / fraud 入口（如有）",
+        "确认权限不足时的诚实错误态",
+        "记录指标时间窗、空数据与 loading 反馈"
+      ],
+      "cognitive_cost_prompts": [
+        "Growth 与 trust-growth A/B 是否混淆？",
+        "KPI 定义是否在 UI 自解释？",
+        "写操作是否有二次确认？"
+      ]
+    },
+    {
+      "id": "SCN-REFERRAL",
+      "track": "Referral",
+      "personas": [
+        "traveler",
+        "operator"
+      ],
+      "primary_routes": [
+        "/me/referrals",
+        "/auth/register",
+        "/admin/growth/referral-codes"
+      ],
+      "consumer_check": [
+        "/me/referrals",
+        "register with referral_code"
+      ],
+      "mission": "旅行者首次获取/分享邀请码；运营查看绑定与校验",
+      "steps_traveler": [
+        "新用户注册并登录",
+        "打开 /me/referrals，理解自己的邀请码与分享方式",
+        "（可选）用邀请码注册第二名用户，观察绑定反馈"
+      ],
+      "steps_operator": [
+        "Admin 查看 referral codes / binds / validate API 等价 UI",
+        "核对邀请绑定是否在 analytics 可追踪"
+      ],
+      "cognitive_cost_prompts": [
+        "邀请码格式/复制是否友好？",
+        "绑定成功/失败反馈是否明确？",
+        "与 Early Bird 文案是否冲突？"
+      ]
+    },
+    {
+      "id": "SCN-EARLY-BIRD",
+      "track": "Early Bird",
+      "personas": [
+        "traveler",
+        "operator"
+      ],
+      "primary_routes": [
+        "/auth/register",
+        "/admin/growth/early-bird"
+      ],
+      "consumer_check": [
+        "register response early_bird field",
+        "/me/referrals"
+      ],
+      "mission": "旅行者注册触达早鸟阶段；运营配置/查看 stages",
+      "steps_traveler": [
+        "新用户注册，注意注册成功页/Toast 是否披露 early bird 状态",
+        "在 Me/Referrals 或设置中查找早鸟相关说明"
+      ],
+      "steps_operator": [
+        "Admin 打开 Early Bird stages 列表",
+        "理解阶段规则、名额、时间与 consumer 触达关系"
+      ],
+      "cognitive_cost_prompts": [
+        "早鸟权益是否在 consumer 可理解？",
+        "阶段命名是否运营友好？",
+        "与 Referral 优先级是否清晰？"
+      ]
+    },
+    {
+      "id": "SCN-MODERATION",
+      "track": "Moderation",
+      "personas": [
+        "operator",
+        "traveler"
+      ],
+      "primary_routes": [
+        "/admin/community/reports",
+        "/community",
+        "/community/posts"
+      ],
+      "consumer_check": [
+        "public feed after moderation",
+        "author me/posts after hide"
+      ],
+      "mission": "旅行者举报→运营审核→内容下架/恢复全链",
+      "steps_traveler": [
+        "用户 A 发帖；用户 B 浏览 feed 并举报",
+        "观察举报提交反馈与后续 feed 变化（若已处置）"
+      ],
+      "steps_operator": [
+        "Ops 打开举报队列，定位 open report",
+        "执行 moderation 处置（如 content_remove）",
+        "确认 public/anonymous 不可见、作者 archived 可见",
+        "记录 penalties/appeals 入口（如有）"
+      ],
+      "cognitive_cost_prompts": [
+        "队列筛选/排序是否够用？",
+        "处置动作命名是否准确？",
+        "误操作是否有 guard/确认？"
+      ]
+    },
+    {
+      "id": "SCN-MERCHANT",
+      "track": "Merchant",
+      "personas": [
+        "merchant"
+      ],
+      "primary_routes": [
+        "/provider/register",
+        "/me/onboarding",
+        "/market"
+      ],
+      "consumer_check": [
+        "/market listing flow"
+      ],
+      "mission": "商家首次入驻→KYB/上架→Market 露出",
+      "steps_merchant": [
+        "以商家身份注册或登录",
+        "完成 provider register / me onboarding 步骤",
+        "提交 KYB 或上架所需信息（按当前产品态）",
+        "在 Market 或 Me 查看状态与审核反馈"
+      ],
+      "cognitive_cost_prompts": [
+        "入驻步骤是否可续作？",
+        "审核中/拒绝态是否诚实？",
+        "与 Guide 路径是否混淆？"
+      ]
+    },
+    {
+      "id": "SCN-GUIDE",
+      "track": "Guide",
+      "personas": [
+        "guide",
+        "traveler"
+      ],
+      "primary_routes": [
+        "/guide",
+        "/guide/register",
+        "/guide/orders"
+      ],
+      "consumer_check": [
+        "traveler creates order/itinerary",
+        "guide accept flow"
+      ],
+      "mission": "向导注册→接单/履约→与旅行者闭环",
+      "steps_guide": [
+        "新向导注册 /guide/register",
+        "进入 guide hub，理解可执行动作",
+        "（可选）接受旅行者订单或 itinerary 请求"
+      ],
+      "steps_traveler": [
+        "旅行者创建行程/订单并向向导发起请求"
+      ],
+      "cognitive_cost_prompts": [
+        "Guide hub 信息架构是否清晰？",
+        "接单状态机反馈是否及时？",
+        "与 Official guide 是否命名冲突？"
+      ]
+    },
+    {
+      "id": "SCN-TRAVELER",
+      "track": "Traveler",
+      "personas": [
+        "traveler"
+      ],
+      "primary_routes": [
+        "/",
+        "/market",
+        "/community",
+        "/me",
+        "/me/itineraries"
+      ],
+      "consumer_check": [
+        "home catalog",
+        "community feed",
+        "referrals entry"
+      ],
+      "mission": "旅行者首次发现→浏览→互动→个人中心全旅程",
+      "steps_traveler": [
+        "匿名访问 Home/Market，理解价值主张与 catalog 露出",
+        "注册登录，完成 return URL / 首屏引导",
+        "浏览 Community、Me、Referrals 入口",
+        "（可选）创建 itinerary 或 market 互动"
+      ],
+      "cognitive_cost_prompts": [
+        "首访是否理解 Trust/Catalog 边界？",
+        "登录/register CTA 是否一致？",
+        "空态/错误态是否可行动？"
+      ]
+    },
+    {
+      "id": "SCN-ADMIN",
+      "track": "Admin",
+      "personas": [
+        "admin",
+        "operator"
+      ],
+      "primary_routes": [
+        "/admin",
+        "/admin/conversion-analytics",
+        "/admin/growth/analytics",
+        "/admin/permissions"
+      ],
+      "consumer_check": [],
+      "mission": "SuperAdmin/管理员跨平面观测、权限与治理入口",
+      "steps_operator": [
+        "SuperAdmin 登录 Admin Home",
+        "浏览 conversion analytics、growth analytics、observability 入口",
+        "检查 RBAC/permissions 矩阵或 route deny 提示",
+        "抽样跨链到 CMS/Official/Growth/Moderation 无断点"
+      ],
+      "cognitive_cost_prompts": [
+        "Admin Home 是否反映四平面？",
+        "越权提示是否可理解？",
+        "2FA/RBAC 与 Ops 角色差异是否明示？"
+      ]
+    }
+  ]
+}

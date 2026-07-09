@@ -1,0 +1,27 @@
+{
+  "schema": "traveltrust.cms_poi_wave_kickoff.v1",
+  "stamp_utc": "20260705T032315Z",
+  "asset_family": "poi",
+  "status": "ACTIVE",
+  "not_started_items": true,
+  "workflow": [
+    "Review",
+    "Replace",
+    "Publish",
+    "Verify",
+    "Evidence",
+    "Live"
+  ],
+  "do_not_modify": [
+    "destination_ambient_matrix",
+    "DA-*-HOME evidence except CN visual replace"
+  ],
+  "catalog_gate": "Staging catalog POI empty · ingest or create first poi-images row before item loop",
+  "when_catalog_ready": [
+    "re-run run-cms-denominator-lock.cjs",
+    "first POI item: Review → Replace → Publish → Verify → Evidence → Live",
+    "refresh after each item",
+    "when all POI live: POI closure same as Ambient"
+  ],
+  "TT_CMS_POI_WAVE": "ACTIVE_NOT_STARTED"
+}

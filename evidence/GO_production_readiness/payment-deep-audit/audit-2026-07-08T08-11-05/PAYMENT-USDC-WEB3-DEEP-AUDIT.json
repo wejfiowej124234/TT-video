@@ -1,0 +1,215 @@
+{
+  "schema": "traveltrust.payment_usdc_web3_deep_audit.v1",
+  "recorded_utc": "2026-07-08T08:11:11.262Z",
+  "stamp": "2026-07-08T08-11-05-579Z",
+  "run_dir": "evidence/GO_production_readiness/payment-deep-audit/audit-2026-07-08T08-11-05",
+  "ssot": {
+    "core_rail": "Web3 Escrow (USDC)",
+    "optional_rail": "Stripe Optional Fiat Onboarding (P1)",
+    "prod_forbidden": [
+      "P3_CHAIN_OFF=1 on prod",
+      "mock-pay on prod payment path"
+    ],
+    "architecture": "registry/payment-architecture-classification.v1.yaml"
+  },
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PAYMENT_RAIL_AUDIT_ACCEPTABLE_DRIFT",
+  "summary": {
+    "blockers_p0": 0,
+    "blockers_p1": 0,
+    "blockers_p2": 0,
+    "total_findings": 2,
+    "prod_mock_pay_ok": true,
+    "g3_02_evidence_pass": true
+  },
+  "dimensions": {
+    "runtime_prod": {
+      "http": 200,
+      "chain_id": "11155111",
+      "deployment_profile": "production",
+      "order_mock_pay_enabled": false,
+      "mock_pay_forbidden_ok": true
+    },
+    "i18n": {
+      "pay_mockPay_disabledNotice_missing": []
+    },
+    "order_currency": {
+      "usdc_default_ok": true
+    },
+    "chain_branding": {
+      "primary_locale_keys_ok": true
+    },
+    "docs_drift": {
+      "legacy_stripe_as_core": []
+    },
+    "registry_sync": {
+      "PRM_WEB3_planned": true,
+      "PRM_WEB3_closed": true,
+      "g3_02_pass_evidence": true
+    },
+    "hat_matrix": {
+      "mock_pay_annotated_sandbox": true
+    },
+    "api_tests": {
+      "mock_pay_it_hits": 8,
+      "prod_usdc_note": true
+    },
+    "e2e": {
+      "mock_pay_specs": 145,
+      "sample": [
+        {
+          "file": "frontend/e2e/53-main-path.spec.ts",
+          "line": 5,
+          "snippet": "* 完整主路径（登录→创建行程→抢单→双边确认→mock-pay→评分）需后端 + 测试账号，见 53-E2E 文档。"
+        },
+        {
+          "file": "frontend/e2e/93-matrix-path-f1-f4.spec.ts",
+          "line": 9,
+          "snippet": "* 依赖：`traveltrust-api` + Postgres；**mock-pay 段**另须 **`P3_CHAIN_OFF=1`**。Playwright **setup-meta-chain** 在本地无合约时可设 **`PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1`**。"
+        },
+        {
+          "file": "frontend/e2e/93-matrix-path-f1-f4.spec.ts",
+          "line": 53,
+          "snippet": "/** 全段补口：93 F1 要求「注册 **或** 登录」— 本文件在 mock-pay 主用例外单独覆盖 **注册 UI**。 */"
+        },
+        {
+          "file": "frontend/e2e/93-matrix-path-f1-f4.spec.ts",
+          "line": 91,
+          "snippet": "tag: \"@e2e-chain-off-mock-pay\","
+        },
+        {
+          "file": "frontend/e2e/93-matrix-path-f1-f4.spec.ts",
+          "line": 93,
+          "snippet": "test(\"F1 登录页 → F2 市场 → F3 托管页（已 mock-pay）→ F4 治理\", async ({ page, request }) => {"
+        },
+        {
+          "file": "frontend/e2e/93-matrix-path-f1-f4.spec.ts",
+          "line": 144,
+          "snippet": "const payRes = await request.post(`${API_BASE}/api/v1/orders/${orderId}/mock-pay`, {"
+        },
+        {
+          "file": "frontend/e2e/b463-browser-reviews-contract.spec.ts",
+          "line": 3,
+          "snippet": "* 依赖全栈：`SEED_TEST_ACCOUNTS`、`P3_CHAIN_OFF`（mock-pay），与 Epic F 同源 API 前置链。"
+        },
+        {
+          "file": "frontend/e2e/b463-browser-reviews-contract.spec.ts",
+          "line": 45,
+          "snippet": "/** chain_off：下单 → 接单 → mock-pay → confirm-completion → completed（资金终态后可链下评价） */"
+        }
+      ]
+    },
+    "dev_defaults": {
+      "force_chain_off": [
+        {
+          "file": "scripts/dev/start-api-with-seed.bat",
+          "line": 764,
+          "snippet": "echo     Local chain-off: force P3_CHAIN_OFF=1 + TRAVELTRUST_PUBLIC_CATALOG_SURFACE=1 [overrides .env TT ANVIL P3_CHAIN_OFF=0]"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed.bat",
+          "line": 766,
+          "snippet": "set \"TT_API_CHAIN_OFF_ENV=set P3_CHAIN_OFF=1 ^&^& !TT_CATALOG_ENV!\""
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 36,
+          "snippet": "| `scripts\\start-api-with-seed.bat` | 全栈默认仍 **mock-pay**（`P3_CHAIN_OFF=1`）；chain-on 时 Step 5 **不**覆盖根 `.env` 的 `P3_CHAIN_OFF=0` |"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 288,
+          "snippet": "| **③ 确认终版/付款** | 已绑向导后可更换（`PATCH` reassign）→ 确认方案 | 向导接单 → `/pay?orderId=`（本地须 **`P3_CHAIN_OFF=1`**） |"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 294,
+          "snippet": "**流程**：游客登录 → **①** 创建行程（无向导）→ 保存发布 → **②** Escrow「请选择向导」/ 市场 `bindGuideToOrder` → `PATCH` 绑定（可 **更换向导** reassign）→ **③** **确认最终方案** → 向导 **接单** 后 `/pay?orderId"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 299,
+          "snippet": "| `TRAVELTRUST_CHAIN_ON=1` | Step 5 **不**强制 `P3_CHAIN_OFF=1`；启用 Anvil align（Step **3b4**）+ forge ABI verify（**1b2**）+ Step **6c1** env↔meta；`dotenv` 读根 `.env` |"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 393,
+          "snippet": "| **Step 5** | 本地 **强制 `P3_CHAIN_OFF=1`** + **`TRAVELTRUST_PUBLIC_CATALOG_SURFACE=1`**（覆盖 `.env` Anvil 块里的 `P3_CHAIN_OFF=0`）；链上 E2E 用 **`TRAVELTRUST_CHAIN_ON=1`"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 458,
+          "snippet": "| **公众 catalog 过滤（企业级 · ①）** | **`TRAVELTRUST_PUBLIC_CATALOG_SURFACE=1`**（或 **`P3_CHAIN_OFF=1`** 默认开）：`GET /discover/orders` · `GET /guides`（含 `:id`）· `GET /mar"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 462,
+          "snippet": "| **默认全栈** | 未设时 **`P3_CHAIN_OFF=1`** → 公众读面过滤 **默认开**；验全链烟测仍用默认启动（可 `=0` 看全量） |"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 586,
+          "snippet": "| `TRAVELTRUST_MARKET_PUBLIC_SURFACE=1` | API 过滤内部向导 / 烟测 discover 行（**`P3_CHAIN_OFF=1` 且未设时默认等同**） |"
+        }
+      ]
+    },
+    "onboarding_stripe": {
+      "classification": "P1_FUTURE_FIAT_ONRAMP",
+      "note": "MeOnboarding Stripe fallback OK when USDC env unset; admin Stripe ledger = ops Phase 01"
+    },
+    "ssot_2026_07_08": {
+      "files_present": true,
+      "core_rail": "Web3 Escrow (USDC)"
+    }
+  },
+  "blockers": [
+    {
+      "priority": "P2",
+      "id": "PAY-AUD-P2-002",
+      "dimension": "测试证据",
+      "title": "145 E2E references use mock-pay as payment spine (acceptable ①/② sandbox if tagged)",
+      "paths": [
+        "frontend/e2e/53-main-path.spec.ts",
+        "frontend/e2e/93-matrix-path-f1-f4.spec.ts"
+      ],
+      "fix": "Tag @e2e-chain-off-mock-pay vs @e2e-usdc-escrow; prod smoke must use wallet deposit only",
+      "status": "ACCEPTED_SANDBOX"
+    },
+    {
+      "priority": "P2",
+      "id": "PAY-AUD-P2-003",
+      "dimension": "配置 · 钱包",
+      "title": "Local seed stack forces P3_CHAIN_OFF=1 — de-facto mock-pay as default dev payment rail",
+      "paths": [
+        "scripts/dev/start-api-with-seed.bat",
+        "scripts/dev/start-api-with-seed.bat",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md"
+      ],
+      "fix": "Document USDC chain-on dev path; mock-pay = debug rail only (honest-boundary banner)",
+      "status": "ACCEPTED_DEV"
+    }
+  ],
+  "scan_roots": [
+    "frontend/app/pay",
+    "frontend/app/escrow",
+    "frontend/components/escrow",
+    "frontend/locales",
+    "frontend/e2e",
+    "crates/api/src/routes/orders",
+    "registry",
+    "docs/runbook",
+    "scripts/dev",
+    "deploy/fly"
+  ],
+  "discipline": {
+    "business_code_modified": false,
+    "audit_only": true
+  }
+}

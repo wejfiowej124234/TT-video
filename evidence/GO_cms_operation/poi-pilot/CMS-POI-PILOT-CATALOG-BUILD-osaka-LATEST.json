@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-05T10:55:38Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "JP",
+    "city_zh": "大阪",
+    "matrix_ids": [
+      "PH-JP-001-ATR",
+      "PH-JP-002-ATR",
+      "PH-JP-003-ATR",
+      "PH-JP-004-ATR",
+      "PH-JP-005-FOOD",
+      "PH-JP-006-FOOD",
+      "PH-JP-007-FOOD",
+      "PH-JP-008-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-community-media.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-JP-001-ATR",
+      "poi_id": "b6cbcc85-cc4e-4d36-a251-12653de2499d"
+    },
+    {
+      "matrix_id": "PH-JP-002-ATR",
+      "poi_id": "a9f85d46-4a91-47ec-b3a7-021c37c087f9"
+    },
+    {
+      "matrix_id": "PH-JP-003-ATR",
+      "poi_id": "e083b977-0511-4978-a764-1e3c7091ecbf"
+    },
+    {
+      "matrix_id": "PH-JP-004-ATR",
+      "poi_id": "fe2b6536-70f5-42ed-9f59-19619bd43d57"
+    },
+    {
+      "matrix_id": "PH-JP-005-FOOD",
+      "poi_id": "c1e12d1c-64bd-425a-8cdd-e550bbc0e9b6"
+    },
+    {
+      "matrix_id": "PH-JP-006-FOOD",
+      "poi_id": "b7673df7-d69f-446f-85b1-5b1c93d39200"
+    },
+    {
+      "matrix_id": "PH-JP-007-FOOD",
+      "poi_id": "bb8f8e8e-b1dc-409c-baec-f036b19351db"
+    },
+    {
+      "matrix_id": "PH-JP-008-FOOD",
+      "poi_id": "862e38ef-2c52-4e59-86f1-5233e6005ec0"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 8,
+    "expected": 8
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

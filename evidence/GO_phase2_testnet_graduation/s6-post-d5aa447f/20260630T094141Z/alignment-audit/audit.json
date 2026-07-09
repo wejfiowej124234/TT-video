@@ -1,0 +1,65 @@
+{
+  "schema": "traveltrust.local_first_alignment_audit.v2",
+  "at": "20260630T094141Z",
+  "head": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "staging_api_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "staging_web_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "local_first": {
+    "local_ahead_undeployed": false,
+    "runtime_drift": false,
+    "phase3_wip_isolated_count": 30
+  },
+  "verdict": "NOT_100_PERCENT_ALIGNED",
+  "tt_marker": "TT_LOCAL_FIRST_ALIGNMENT: NOT_100_PERCENT_ALIGNED",
+  "gaps": [
+    {
+      "id": "GAP-DEPLOY-SSOT",
+      "sev": "P1",
+      "count": 20,
+      "sample": [
+        "frontend/components/auth/AuthLoginGovernanceRemediationProgress.tsx",
+        "frontend/components/governance/GovernanceConvergencePathGate.tsx",
+        "frontend/evidence/GO_local_phase1/site10-alignment-audit.latest.txt",
+        "frontend/evidence/GO_phase2_testnet_graduation/",
+        "frontend/evidence/staging-uat-six-domains/",
+        "frontend/lib/auth/authLoginGovernanceRemediationModel.ts",
+        "frontend/lib/complexityConvergenceSurface.test.ts",
+        "frontend/lib/complexityConvergenceSurface.ts"
+      ],
+      "note": "Phase② deploy-path uncommitted — not staging runtime drift until S5 deploy"
+    },
+    {
+      "id": "GAP-PHASE3-WIP-ISOLATED",
+      "sev": "INFO",
+      "count": 30,
+      "note": "Phase③ WIP in worktree — must stay isolated from Phase② deploy"
+    },
+    {
+      "id": "GAP-EVIDENCE-HISTORICAL",
+      "sev": "INFO",
+      "note": "TN-P1-010/D24/D6 historical gates · TN-P1-010: need post-soak TN-P1-010 @ freeze 8dcd304a (historical-only reports excluded)"
+    }
+  ],
+  "probes": {
+    "D6": true,
+    "D24": true,
+    "TN-P1-010": false,
+    "TN-P1-010_gate": {
+      "pass": false,
+      "state": "no",
+      "note": "need post-soak TN-P1-010 @ freeze 8dcd304a (historical-only reports excluded)",
+      "freeze_sha": "8dcd304afae1bafe5a4de738175e171256a9501e"
+    },
+    "DEEP_GATE": true,
+    "G04": true,
+    "ADM_U01": true,
+    "HAT": true
+  },
+  "wt": {
+    "porcelain_count": 818,
+    "closure_dirty": [],
+    "deploy_phase2_uncommitted": 20,
+    "deploy_phase3_isolated": 30,
+    "non_exempt_dirty": 182
+  }
+}

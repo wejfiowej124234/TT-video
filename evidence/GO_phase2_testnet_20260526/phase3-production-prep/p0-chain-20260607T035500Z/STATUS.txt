@@ -1,0 +1,7 @@
+TT_PHASE3_PRODUCTION_PREP_P0: OK
+at=20260607T035500Z
+merchant: OK (merchant@test.com · listing published)
+db_drill: OK (fly backups not enabled · psql drill PASS)
+rollback_drill: OK (tt-api-staging + tt-web-staging)
+phase3_entry_gate: READY
+phase3_production_prep: ACTIVE

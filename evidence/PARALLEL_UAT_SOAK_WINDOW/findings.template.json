@@ -1,0 +1,122 @@
+{
+  "schema": "traveltrust.parallel_uat_findings.v1",
+  "sprint": "运营视角人工 UAT · 十条真实业务场景 · soak window record-only",
+  "exec_env": "local_or_staging_dev_only",
+  "staging_soak_touch_policy": "no_redeploy_no_restart_no_migration_no_config_on_tt-api-staging_or_tt-web-staging",
+  "fix_policy": "record_only_during_soak_window",
+  "post_soak": "P2FC 33/33 GO → unfreeze → Token Debt Sprint → next testnet deploy/regression",
+  "reviewer": "",
+  "started_at": "",
+  "run_ref": "",
+  "operational_uat": {
+    "scenarios_ref": "operational-uat-scenarios.v1.json",
+    "policy": "禁止新增功能 · 禁止修 token · 禁止修改 staging · 仅登记 findings",
+    "finding_kinds": [
+      "ui",
+      "interaction",
+      "naming",
+      "workflow",
+      "feedback",
+      "cognitive_cost",
+      "a11y",
+      "copy",
+      "data"
+    ],
+    "scenario_progress": [
+      {
+        "scenario_id": "SCN-CMS",
+        "track": "CMS",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-OFFICIAL-OPS",
+        "track": "Official OPS",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-GROWTH",
+        "track": "Growth",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-REFERRAL",
+        "track": "Referral",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-EARLY-BIRD",
+        "track": "Early Bird",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-MODERATION",
+        "track": "Moderation",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-MERCHANT",
+        "track": "Merchant",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-GUIDE",
+        "track": "Guide",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-TRAVELER",
+        "track": "Traveler",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-ADMIN",
+        "track": "Admin",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      }
+    ]
+  },
+  "item_schema_example": {
+    "id": "UAT-<TRACK>-NNN",
+    "scenario_id": "SCN-CMS",
+    "track": "CMS",
+    "persona": "operator | traveler | merchant | guide | admin",
+    "surface": "route or UI surface",
+    "kind": "ui | interaction | naming | workflow | feedback | cognitive_cost | a11y | copy | data",
+    "failure_step": "where stuck",
+    "steps": [
+      "1. …",
+      "2. …"
+    ],
+    "expected": "operational outcome",
+    "actual": "what happened",
+    "cognitive_cost_notes": "why hard for first-time user or operator",
+    "evidence": [
+      "attachments/scn-cms-01.png"
+    ],
+    "severity": "P0 | P1 | P2",
+    "blocks_phase2": false,
+    "fix_window": "post_soak",
+    "status": "open"
+  },
+  "items": []
+}

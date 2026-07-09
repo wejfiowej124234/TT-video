@@ -37,6 +37,12 @@ export const ADMIN_SHELL_FINANCE_NAV_LINKS: readonly AdminShellNavLinkDef[] = [
     permission: ADMIN_PERM.READ,
   },
   {
+    href: "/admin/vacancy-ledger",
+    labelKey: "admin_shell_nav_vacancy_ledger_ops",
+    permission: ADMIN_PERM.FINANCE_READ,
+    matchPrefix: "/admin/vacancy-ledger",
+  },
+  {
     href: "/admin/alerts/incidents",
     labelKey: "admin_alert_incident_hub_title",
     permission: ADMIN_PERM.READ,

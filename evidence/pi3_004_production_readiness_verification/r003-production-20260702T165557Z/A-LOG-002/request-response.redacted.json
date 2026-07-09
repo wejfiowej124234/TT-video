@@ -1,0 +1,18 @@
+{
+  "request_chain": [
+    {
+      "note": "同一会话第二次 GET /me",
+      "headers": {
+        "Authorization": "Bearer tts_[REDACTED]"
+      }
+    }
+  ],
+  "response": {
+    "http_status": 401,
+    "body": {
+      "error": "unauthorized",
+      "message": "unauthorized",
+      "detail": "STRICT_SESSION_GATE=1：须提供 Authorization: Bearer <session_token>（不接受仅 X-User-Id）"
+    }
+  }
+}

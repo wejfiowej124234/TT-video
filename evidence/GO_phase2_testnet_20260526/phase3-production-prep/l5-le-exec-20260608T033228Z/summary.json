@@ -1,0 +1,18 @@
+{
+  "kind": "traveltrust.l5_enterprise_live_evidence_execution.v1",
+  "recorded_utc": "20260608T033228Z",
+  "verdict": "L5_ENTERPRISE_LIVE_EVIDENCE_GO",
+  "audit_matrix_verdict": "L5_ENTERPRISE_LIVE_EVIDENCE_GO",
+  "live_evidence_score": 95,
+  "target_score": 85,
+  "track_targets": [
+    "RUJR_LIVE_GO",
+    "A11Y_LIVE_GO",
+    "LIVE_RESILIENCE_GO"
+  ],
+  "baseline_refs": [
+    "163",
+    "162",
+    "161"
+  ]
+}

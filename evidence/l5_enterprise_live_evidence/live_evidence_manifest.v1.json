@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust_l5_enterprise_live_evidence_manifest.v1",
+  "recorded_utc": "20260608T000000Z",
+  "baseline_refs": ["163", "162", "161"],
+  "roles": ["traveler", "guide", "merchant", "ops", "admin"],
+  "rujr": {
+    "rujr_id": "pes-real-user-journey-review-20260607",
+    "target_runs": 48,
+    "synth_report": "frontend/evidence/pes-rujr-20260607/rujr-report-synth.json",
+    "journey_runs_ref": "frontend/evidence/pes-wave41-validation-20260607/journey-runs.jsonl",
+    "e2e_spec": "frontend/e2e/pes-real-user-journey-review.spec.ts",
+    "live_record": "evidence/l5_enterprise_live_evidence/rujr-live-record.v1.json"
+  },
+  "a11y_live_routes": [
+    { "role": "traveler", "route": "/", "probe": "home" },
+    { "role": "traveler", "route": "/market", "probe": "market" },
+    { "role": "traveler", "route": "/community", "probe": "community" },
+    { "role": "guide", "route": "/guide", "probe": "guide" },
+    { "role": "merchant", "route": "/provider/register", "probe": "merchant" }
+  ],
+  "chaos_scenarios": {
+    "api_unavailable": { "layer": "API", "live_record": "evidence/l5_enterprise_live_evidence/cdia-static-record.v1.json" },
+    "pg_latency": { "layer": "PG", "live_record": "evidence/l5_enterprise_live_evidence/b480-gate-record.v1.json" },
+    "redis_unavailable": { "layer": "Redis", "live_record": "LE-P2-01 backlog" },
+    "stripe_webhook_fail": { "layer": "Stripe", "harness": "scripts/dev/verify-production-stripe-webhook-signature-static.sh" },
+    "catalog_fallback": { "layer": "Catalog", "harness": "frontend/app/community/explore/useCommunityExplorePage.ts" }
+  },
+  "role_evidence": {
+    "traveler": {
+      "bundles": ["rujr-live-record.v1.json", "l5-a11y-live-scan/scan-results.jsonl"]
+    },
+    "guide": {
+      "bundles": ["rujr-live-record.v1.json", "pes-wave41-validation/journey-runs.jsonl"]
+    },
+    "merchant": {
+      "bundles": ["rujr-live-record.v1.json", "frca-static-record.v1.json"]
+    },
+    "ops": {
+      "bundles": ["cdia-static-record.v1.json", "b480-gate-record.v1.json"]
+    },
+    "admin": {
+      "bundles": ["frca-static-record.v1.json", "b480-gate-record.v1.json"]
+    }
+  },
+  "open_backlog": [
+    { "id": "LE-P1-01", "risk": "P1", "summary": "RUJR Playwright live 48-run refresh" },
+    { "id": "LE-P1-02", "risk": "P1", "summary": "A11Y dev-server live scan" },
+    { "id": "LE-P1-03", "risk": "P1", "summary": "CDIA + FRCA API live probes" }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "order_id": "35e03768-79fa-41ba-9377-62f70110c723",
+  "guide_row_id": "333a2ed2-d439-47cd-b674-9542d2f3245d",
+  "escrow_address": "0x3fD721fCE96D1872846AeE93f5D7351D03351368",
+  "deposit_tx": "0x00fc140d680c0ebd36936e405eb0483e6fe2f1820d5ae2b3f2663d3669f13257",
+  "approve_tx": "0x22099b47d04e5165e9d5e21ac18db9018fb0abbb14eb686f146a746a6191adce",
+  "payment_token": "0x241948bE49a778490c8A4Ae8D98b7537fE001f63",
+  "amount_wei": "100000000",
+  "tourist_email": "p2b407-tourist-1781482423-16003@traveltrust.testnet",
+  "guide_email": "p2b407-guide-1781482423-16003@traveltrust.testnet",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "phase": "② WEB3-P2-003 + B-407 real fund closure",
+  "honest_boundary": "Sepolia MockERC20 fund track · ≠ mock-pay · ≠ ③ Production GO"
+}

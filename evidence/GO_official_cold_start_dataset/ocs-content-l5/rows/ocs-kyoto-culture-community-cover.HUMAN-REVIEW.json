@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T125330Z",
+  "filename": "ocs-kyoto-culture-community-cover.jpg",
+  "chain_id": "kyoto-culture",
+  "city": "京都",
+  "country_code": "JP",
+  "slot": "community-cover",
+  "surface": "Community Cover",
+  "copy_label": "祇园晨雾中的茶道体验与岚山竹林午后——官方文化路线两日记录。",
+  "manifest_copy": {
+    "community_post.destination_slug": "kyoto",
+    "community_post.destination_label": "京都",
+    "community_post.post_type": "photo",
+    "community_post.tags": ["京都", "文化", "官方旅行日志"],
+    "community_post.body_markdown": "祇园晨雾中的茶道体验与岚山竹林午后——官方文化路线两日记录。",
+    "community_post.cover_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-community-cover.jpg"
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 66802 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "茶道奉茶瞬间与 body/tags/destination 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "奉茶手势 intimate；非 Row7 肖像/Row8 空茶室/Row9 和纸/Row10 竹林宽幅/Row12 竹林行人。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "京都同 chain。" },
+    "G5_brand_visual": { "pass": true, "notes": " intimate 暖色；kyoto 品牌统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "Feed 缩略真实分享感。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光柔和、主体可辨。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "全层 Evidence 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "手脸自然；无水印/Logo；② AI 素材。" },
+    "G10_content_diversity": { "pass": true, "notes": "茶道瞬间 slot。" }
+  },
+  "user_experience_review": {
+    "pass": true,
+    "first_screen_attraction": true,
+    "click_intent": true,
+    "message_clarity": true,
+    "thumbnail_recognition": true,
+    "platform_authenticity": true,
+    "emotional_resonance": true,
+    "city_recognizability": true,
+    "browse_continuity": true,
+    "notes": "抹茶碗+和服袖+奉茶手势在缩略图可识别；邀请式生活瞬间，非硬广/素材库感；与正文茶道+岚山双主题首屏呼应。"
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

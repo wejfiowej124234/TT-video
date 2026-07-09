@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T03:34:56Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "TH",
+    "city_zh": "曼谷",
+    "city_en": "Bangkok",
+    "matrix_ids": [
+      "PH-TH-082-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-TH-082-FOOD",
+      "legacy_value": "泰式奶茶",
+      "poi_id": "f7377784-e853-429e-84fa-a1e539e63b1c",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg",
+      "hero_file": "ocs-bangkok-temple-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-082-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

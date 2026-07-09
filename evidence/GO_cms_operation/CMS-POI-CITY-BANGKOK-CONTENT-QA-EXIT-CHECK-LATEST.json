@@ -1,0 +1,339 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_exit_check.v1",
+  "recorded_at_utc": "2026-07-06T04:11:38.686Z",
+  "city": {
+    "city_zh": "曼谷",
+    "city_en": "Bangkok",
+    "country_iso": "TH",
+    "poi_count": 10
+  },
+  "replicated_from": "JP Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "checks": [
+    {
+      "id": "assets_locked_10_10",
+      "label": "10/10 Asset 全部 LOCKED · 无 Unlock",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-TH-073-ATR",
+          "poi": "大皇宫",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-TH-074-ATR",
+          "poi": "卧佛寺",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-TH-075-ATR",
+          "poi": "郑王庙",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-TH-076-ATR",
+          "poi": "考山路",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-TH-077-ATR",
+          "poi": "水上市场",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-TH-078-FOOD",
+          "poi": "冬阴功",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-TH-079-FOOD",
+          "poi": "泰式炒河粉",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-TH-080-FOOD",
+          "poi": "芒果糯米饭",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-TH-081-FOOD",
+          "poi": "青木瓜沙拉",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-TH-082-FOOD",
+          "poi": "泰式奶茶",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "six_dimensions_pass",
+      "label": "六维全部 PASS（City Runtime = Gate 4 同源 · 非 national）",
+      "pass": true,
+      "runtime_scope": "city_consumer_runtime",
+      "city_snapshot": {
+        "execution": "PASS",
+        "cms_ownership": "PASS",
+        "runtime_consumer": "PASS",
+        "geo_matching": "PASS",
+        "content_accuracy": "PASS",
+        "l5_quality": "PASS",
+        "content_qa_closed": true
+      },
+      "issues": []
+    },
+    {
+      "id": "catalog_api_bangkok",
+      "label": "Catalog API 10/10 与 LOCK 一致",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-TH-073-ATR",
+          "poi": "大皇宫",
+          "expected": "ocs-bangkok-temple-official-guide-cover.jpg",
+          "catalog": "ocs-bangkok-temple-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-TH-074-ATR",
+          "poi": "卧佛寺",
+          "expected": "ocs-bangkok-temple-community-media.jpg",
+          "catalog": "ocs-bangkok-temple-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-TH-075-ATR",
+          "poi": "郑王庙",
+          "expected": "ocs-bangkok-temple-community-cover.jpg",
+          "catalog": "ocs-bangkok-temple-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-TH-076-ATR",
+          "poi": "考山路",
+          "expected": "ocs-bangkok-temple-provider-cover.jpg",
+          "catalog": "ocs-bangkok-temple-provider-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-TH-077-ATR",
+          "poi": "水上市场",
+          "expected": "ocs-bangkok-temple-acquisition-cover.jpg",
+          "catalog": "ocs-bangkok-temple-acquisition-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-TH-078-FOOD",
+          "poi": "冬阴功",
+          "expected": "ocs-bangkok-temple-guide-avatar.jpg",
+          "catalog": "ocs-bangkok-temple-guide-avatar.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-TH-079-FOOD",
+          "poi": "泰式炒河粉",
+          "expected": "ocs-bangkok-temple-official-guide-cover.jpg",
+          "catalog": "ocs-bangkok-temple-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-TH-080-FOOD",
+          "poi": "芒果糯米饭",
+          "expected": "ocs-bangkok-temple-community-media.jpg",
+          "catalog": "ocs-bangkok-temple-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-TH-081-FOOD",
+          "poi": "青木瓜沙拉",
+          "expected": "ocs-bangkok-temple-community-cover.jpg",
+          "catalog": "ocs-bangkok-temple-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-TH-082-FOOD",
+          "poi": "泰式奶茶",
+          "expected": "ocs-bangkok-temple-community-media.jpg",
+          "catalog": "ocs-bangkok-temple-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "consumer_runtime_cms",
+      "label": "Consumer Runtime 实际页面读取 CMS（非仅 Verify）",
+      "pass": true,
+      "catalog_api_requests": 4,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/bangkok/bangkok-poi-runtime-20260706T041138Z.png",
+      "rows": [
+        {
+          "matrix_id": "PH-TH-073-ATR",
+          "poi": "大皇宫",
+          "expected_fn": "ocs-bangkok-temple-official-guide-cover.jpg",
+          "runtime_fn": "ocs-bangkok-temple-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-TH-074-ATR",
+          "poi": "卧佛寺",
+          "expected_fn": "ocs-bangkok-temple-community-media.jpg",
+          "runtime_fn": "ocs-bangkok-temple-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-TH-075-ATR",
+          "poi": "郑王庙",
+          "expected_fn": "ocs-bangkok-temple-community-cover.jpg",
+          "runtime_fn": "ocs-bangkok-temple-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-TH-076-ATR",
+          "poi": "考山路",
+          "expected_fn": "ocs-bangkok-temple-provider-cover.jpg",
+          "runtime_fn": "ocs-bangkok-temple-provider-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-TH-077-ATR",
+          "poi": "水上市场",
+          "expected_fn": "ocs-bangkok-temple-acquisition-cover.jpg",
+          "runtime_fn": "ocs-bangkok-temple-acquisition-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-TH-078-FOOD",
+          "poi": "冬阴功",
+          "expected_fn": "ocs-bangkok-temple-guide-avatar.jpg",
+          "runtime_fn": "ocs-bangkok-temple-guide-avatar.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-guide-avatar.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-TH-079-FOOD",
+          "poi": "泰式炒河粉",
+          "expected_fn": "ocs-bangkok-temple-official-guide-cover.jpg",
+          "runtime_fn": "ocs-bangkok-temple-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-TH-080-FOOD",
+          "poi": "芒果糯米饭",
+          "expected_fn": "ocs-bangkok-temple-community-media.jpg",
+          "runtime_fn": "ocs-bangkok-temple-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-TH-081-FOOD",
+          "poi": "青木瓜沙拉",
+          "expected_fn": "ocs-bangkok-temple-community-cover.jpg",
+          "runtime_fn": "ocs-bangkok-temple-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-TH-082-FOOD",
+          "poi": "泰式奶茶",
+          "expected_fn": "ocs-bangkok-temple-community-media.jpg",
+          "runtime_fn": "ocs-bangkok-temple-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        }
+      ],
+      "issues": [],
+      "probe_attempt": 1
+    },
+    {
+      "id": "visual_screenshot",
+      "label": "页面截图/DOM · 无旧图/错图/Fallback",
+      "pass": true,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/bangkok/bangkok-poi-runtime-20260706T041138Z.png",
+      "issues": []
+    },
+    {
+      "id": "no_backlog_unlock",
+      "label": "无 Open Backlog · 无 Unlock",
+      "pass": true,
+      "issues": []
+    }
+  ],
+  "all_pass": true,
+  "city_runtime_pass_count": 10,
+  "city_runtime_required": 10,
+  "verdict": "CONTENT_QA_EXIT_PASS",
+  "TT_CMS_POI_CITY_BANGKOK_CONTENT_QA": "CLOSED",
+  "TT_CMS_POI_CITY_BANGKOK_CONTENT_QA_EXIT": "PASS",
+  "runtime_tiers": {
+    "city": {
+      "tier": "city_consumer_runtime",
+      "gate_2_equals_gate_4": true
+    },
+    "country": {
+      "tier": "national_runtime",
+      "when": "TT_CMS_TH_COUNTRY: CLOSED",
+      "not_in_scope": true
+    }
+  },
+  "blockers": []
+}

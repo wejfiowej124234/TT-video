@@ -1,0 +1,71 @@
+{
+  "schema": "traveltrust.p2fc_graduation_review_pack.v1",
+  "generated_at_utc": "2026-06-24T03:30:44Z",
+  "phase": "② testnet",
+  "honest_boundary": "② graduation CLOSED ≠ ③ Production GO",
+  "soak": {
+    "completed": false,
+    "completed_json": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+    "job_dir": null
+  },
+  "local_HEAD": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "artifact_refs": {
+    "pre_accept": "D:/TravelTrust-V1.1/evidence/GO_phase2_deploy_backlog/pre-accept-convergence/latest.json",
+    "layer_review": "D:/TravelTrust-V1.1/evidence/GO_phase2_deploy_backlog/layer-review/latest.json",
+    "wave_plan": "D:/TravelTrust-V1.1/evidence/GO_phase2_deploy_backlog/wave-rollback-plan/latest.json",
+    "meta_rca": "D:/TravelTrust-V1.1/evidence/GO_phase2_deploy_backlog/meta-rca/latest.json",
+    "backlog_active": "D:/TravelTrust-V1.1/evidence/GO_phase2_deploy_backlog/ACTIVE.json",
+    "meta_obs": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/meta-observability/latest.json"
+  },
+  "artifacts_present": {
+    "pre_accept": true,
+    "layer_review": true,
+    "wave_plan": true,
+    "meta_rca": true,
+    "backlog_active": true,
+    "meta_obs": true
+  },
+  "graduation_checklist": [
+    {
+      "id": "G-06",
+      "item": "P2FC soak COMPLETED.json",
+      "ready": false,
+      "phase": "post-soak"
+    },
+    {
+      "id": "G-07a",
+      "item": "TN-P1-010 evidence (tn-p1-010-indexer-reconcile-*)",
+      "ready": true,
+      "phase": "post-soak step 1",
+      "note": "scripts ready; run after COMPLETED"
+    },
+    {
+      "id": "G-02",
+      "item": "staging /meta 200 (api+web)",
+      "ready": false,
+      "phase": "post-soak deploy"
+    },
+    {
+      "id": "G-01",
+      "item": "Deep release gate PASS --require-meta-green",
+      "ready": false,
+      "phase": "post-soak"
+    },
+    {
+      "id": "G-08",
+      "item": "graduation-matrix.v1.json CLOSED",
+      "ready": false,
+      "phase": "graduation closure"
+    },
+    {
+      "id": "G-09",
+      "item": "OWNER-SIGNOFF.md",
+      "ready": false,
+      "phase": "graduation closure"
+    }
+  ],
+  "one_shot_entrypoint": "bash scripts/ops/p2fc-post-soak-one-shot-execute.sh --watch",
+  "ready_for_execute": false,
+  "verdict": "PARTIAL",
+  "awaiting": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json"
+}

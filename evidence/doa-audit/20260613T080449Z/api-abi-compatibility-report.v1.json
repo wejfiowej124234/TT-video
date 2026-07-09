@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.doa_api_abi_compatibility.v1",
+  "gates": [
+    "bash scripts/run-check-04-routes.sh",
+    "bash scripts/check-55-s13.sh",
+    "python scripts/check-spec93-routes-vs-app.py"
+  ],
+  "note": "Run gates locally for PASS/FAIL; this artifact records gate presence"
+}

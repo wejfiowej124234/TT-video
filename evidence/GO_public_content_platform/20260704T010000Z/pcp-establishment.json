@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.public_content_platform_establishment.v1",
+  "stamp": "20260704T010000Z",
+  "verdict": "ESTABLISHED",
+  "scope": "architecture_abstraction_and_ssot_alignment_only",
+  "reopen_closed_gates": false,
+  "gates_touched": [],
+  "artifacts": [
+    "registry/public-content-platform.v1.yaml",
+    "docs/runbook/TT-PUBLIC-CONTENT-PLATFORM.md"
+  ],
+  "legacy_registries_aligned": [
+    "registry/display-data-governance.v1.yaml",
+    "registry/official-cold-start-dataset.v1.yaml",
+    "registry/single-official-public-catalog-policy.v1.yaml",
+    "registry/official-catalog-identity-policy.v1.yaml",
+    "registry/public-operations-mvp.v1.yaml",
+    "registry/enterprise-ssot-alignment.v1.yaml"
+  ],
+  "standard_pipeline": "Database → PCP Governance → Public Engine Builder → Public API → Frontend",
+  "blocking_count": 0
+}

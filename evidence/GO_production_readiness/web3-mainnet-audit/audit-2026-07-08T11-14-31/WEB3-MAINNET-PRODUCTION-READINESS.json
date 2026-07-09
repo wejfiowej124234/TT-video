@@ -1,0 +1,796 @@
+{
+  "schema": "traveltrust.web3_mainnet_production_readiness.v1",
+  "audit_name": "Web3 Mainnet Production Readiness Audit",
+  "recorded_utc": "2026-07-08T11:16:00.117Z",
+  "run_dir": "evidence/GO_production_readiness/web3-mainnet-audit/audit-2026-07-08T11-14-31",
+  "target_chain_id": "1",
+  "target_network": "Ethereum Mainnet",
+  "current_scope": {
+    "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+    "production_chain_id": "11155111",
+    "mainnet_cutover_authorized": false
+  },
+  "audit_principle": "Never assume design correct — conclusions require cross-validation of source, registry, master map, runtime, deploy scripts, and evidence",
+  "verdict": "WEB3_MAINNET_PRODUCTION_BLOCKED",
+  "summary": {
+    "blockers_p0": 6,
+    "blockers_p1": 5,
+    "blockers_p2": 0,
+    "findings_count": 1,
+    "sepolia_substitution_allowed": false
+  },
+  "dimensions": {
+    "D01_scope": {
+      "mainnetNotSelected": true,
+      "sepoliaSelected": true,
+      "prod_api": "https://tt-api-prod.fly.dev"
+    },
+    "D02_mainnet_registry": {
+      "hasMainnetEnv": false,
+      "gap_99_07": true
+    },
+    "D03_prod_runtime": {
+      "http": 200,
+      "chain_id": "11155111",
+      "deployment_profile": "production",
+      "mock_pay": false
+    },
+    "D04_proxy_upgrade": {
+      "g24Pass": true,
+      "note": "Source/deploy-script posture only — mainnet proxy instances not verified"
+    },
+    "D05_tokenomics": {
+      "source_vs_protocol_ssot": true
+    },
+    "D06_dual_accounting": {
+      "documented": false,
+      "mainnet_ops_training": "NOT_EVIDENCED"
+    },
+    "D07_master_map": {
+      "verdict": "WEB3_MASTER_MAP_PARITY_PASS",
+      "sepolia_only": true
+    },
+    "D08_sepolia_system_audit": {
+      "verdict": "WEB3_SYSTEM_AUDIT_HIGH_DRIFT",
+      "p0": 0,
+      "p1": 1,
+      "note": "Sepolia audit state — does NOT imply mainnet PASS"
+    },
+    "D09_ttg_cert": {
+      "signoffs": 7,
+      "total": 12
+    },
+    "D10_external_audit": {
+      "r01_open": true
+    },
+    "D11_tt_mainnet_gates": {
+      "G0": true,
+      "SL_shadow_go": false,
+      "G6_ack": false
+    },
+    "D15_rbac": {
+      "f01_closed": true,
+      "d3_closure": "RBAC_D3_PRODUCTION_BOUNDARY_CLOSED",
+      "p0_bypass_isolated": "prod TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT must be verified manually"
+    },
+    "D16_contract_security": {
+      "escrow_reentrancy_guard": false,
+      "feerouter_pause": true,
+      "proxy_admin_gate": true
+    },
+    "D17_abi": {
+      "govfreeze_shells": [
+        {
+          "file": "TtgPrimaryMarketV1.json",
+          "ok": true
+        },
+        {
+          "file": "TtgSeatConcentrationRegistry.json",
+          "ok": true
+        },
+        {
+          "file": "GovernanceTreasuryP4Cap.json",
+          "ok": true
+        }
+      ]
+    },
+    "D18_deploy_env": {
+      "mainnet_rpc_documented": false,
+      "sepolia_prod_wired": true
+    },
+    "D19_contract_inventory": {
+      "sol_count": 33
+    },
+    "D20_protocol_grade": {
+      "exit_code": 1,
+      "verdict": "WEB3_PROTOCOL_GRADE_BLOCKED",
+      "p0": 1,
+      "p1": 8,
+      "evidence": "evidence/GO_production_readiness/web3-protocol-grade-audit/"
+    }
+  },
+  "blockers": [
+    {
+      "priority": "P0",
+      "id": "MN-P0-001",
+      "domain": "Scope",
+      "title": "PRODUCTION_SCOPE_MAINNET not selected — mainnet cutover unauthorized",
+      "paths": [
+        "docs/handbook/engineering/148-PI3-005-Production-Scope-Decision-Report.md",
+        "registry/web3-mainnet-production-readiness-gate.v1.yaml"
+      ],
+      "fix": "Complete PI3-005-M program + Owner signoff before mainnet Web3 audit can pass",
+      "risk": "CRITICAL",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P0",
+      "id": "MN-P0-002",
+      "domain": "Registry",
+      "title": "No mainnet address registry slot in protocol-convergence-deployments (GAP-99-07)",
+      "paths": [
+        "registry/protocol-convergence-deployments.v1.yaml",
+        "docs/spec/99-链上合约与池子总览.md §13"
+      ],
+      "fix": "Add environments.mainnet with chain_id=1 addresses after controlled mainnet broadcast",
+      "risk": "CRITICAL",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P1",
+      "id": "MN-P1-002",
+      "domain": "Business Logic",
+      "title": "D-4555-A/B dual-track not fully documented in SSOT cross-check",
+      "paths": [
+        "docs/spec/governance-token/fund-flow-ssot.v1.md",
+        "docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md"
+      ],
+      "fix": "Complete ops/finance training docs before mainnet",
+      "risk": "HIGH",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P1",
+      "id": "MN-P1-003",
+      "domain": "Sepolia prerequisite",
+      "title": "Sepolia Web3 system audit P1=1 (Cert/RBAC/etc.)",
+      "paths": [
+        "evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-BLOCKERS-LATEST.md"
+      ],
+      "fix": "Close Sepolia P1 before mainnet scope expansion",
+      "risk": "HIGH",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P1",
+      "id": "MN-P1-004",
+      "domain": "Governance lifecycle",
+      "title": "TTG Cert 7/12 — mainnet governance lifecycle replay not started",
+      "paths": [
+        "registry/ttg-governance-cert-gates.v1.yaml",
+        "evidence/GO_ttg_cert/"
+      ],
+      "fix": "Complete Cert #8–12 on Sepolia then plan mainnet replay",
+      "risk": "HIGH",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P0",
+      "id": "MN-P0-006",
+      "domain": "External audit",
+      "title": "R-01 third-party contract audit OPEN (GAP-99-01)",
+      "paths": [
+        "docs/spec/99-链上合约与池子总览.md §13"
+      ],
+      "fix": "Close R-01 before mainnet deploy",
+      "risk": "CRITICAL",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P0",
+      "id": "MN-P0-007",
+      "domain": "TT-MAINNET SL",
+      "title": "Mainnet Shadow Launch evidence not GO",
+      "paths": [
+        "evidence/mainnet_shadow_launch/README.md"
+      ],
+      "fix": "Complete shadow launch per TT-MAINNET §7",
+      "risk": "CRITICAL",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P0",
+      "id": "MN-P0-008",
+      "domain": "TT-MAINNET G6",
+      "title": "G6 no-rollback acknowledgment not evidenced",
+      "paths": [
+        "evidence/mainnet_launch_gate/G6_no_rollback_ack.md"
+      ],
+      "fix": "Record G6 team signoff before mainnet",
+      "risk": "HIGH",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P1",
+      "id": "MN-P1-006",
+      "domain": "Business Logic",
+      "title": "CountryPool full Snapshot/Claim/Payout not production-wide (GAP-99-03)",
+      "paths": [
+        "docs/spec/99-链上合约与池子总览.md §13"
+      ],
+      "fix": "Complete Wave 2 before mainnet steward payouts at scale",
+      "risk": "HIGH",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P1",
+      "id": "MN-P1-007",
+      "domain": "Deploy/Env",
+      "title": "Mainnet deployment env matrix not populated (addresses, RPC, USDC)",
+      "paths": [
+        "deploy/fly/",
+        "registry/protocol-convergence-deployments.v1.yaml"
+      ],
+      "fix": "Create mainnet env template + dual-control broadcast runbook",
+      "risk": "HIGH",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P0",
+      "id": "MN-P0-010",
+      "domain": "Protocol-Grade",
+      "title": "Protocol-grade audit P0=1",
+      "paths": [
+        "evidence/GO_production_readiness/web3-protocol-grade-audit/PROTOCOL-GRADE-BLOCKERS-LATEST.md"
+      ],
+      "fix": "Close protocol-grade P0 blockers (fund lifecycle, G24, etc.)",
+      "risk": "CRITICAL",
+      "status": "OPEN"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "info",
+      "id": "MN-INFO-003",
+      "domain": "Runtime",
+      "note": "Prod runtime correctly scoped to Sepolia — cannot substitute for mainnet verification",
+      "evidence": [
+        "https://tt-api-prod.fly.dev/meta"
+      ]
+    }
+  ],
+  "contract_deployment_matrix": [
+    {
+      "module": "M02",
+      "contract": "TimelockUpgradeableProxy",
+      "source": "contracts/src/upgrade/TimelockUpgradeableProxy.sol",
+      "upgrade": "proxy",
+      "accounting_track": "orthogonal",
+      "sepolia_address": null,
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave1"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M03",
+      "contract": "TtgPrimaryMarketV1",
+      "source": "contracts/src/TtgPrimaryMarketV1.sol",
+      "upgrade": "proxy",
+      "accounting_track": "orthogonal",
+      "sepolia_address": null,
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M03",
+      "contract": "TtgSeatConcentrationRegistry",
+      "source": "contracts/src/TtgSeatConcentrationRegistry.sol",
+      "upgrade": "proxy",
+      "accounting_track": "orthogonal",
+      "sepolia_address": null,
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M03",
+      "contract": "GovernanceTreasuryP4Cap",
+      "source": "contracts/src/GovernanceTreasuryP4Cap.sol",
+      "upgrade": "proxy",
+      "accounting_track": "orthogonal",
+      "sepolia_address": null,
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M03",
+      "contract": "RegionStewardStakePool",
+      "source": "contracts/src/RegionStewardStakePool.sol",
+      "upgrade": "proxy",
+      "accounting_track": "orthogonal",
+      "sepolia_address": null,
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M04",
+      "contract": "GovernanceVotesToken",
+      "source": "contracts/src/GovernanceVotesToken.sol",
+      "upgrade": "parameter",
+      "accounting_track": "R1_ttg",
+      "sepolia_address": "0x2837ea0c50e27d59b88af617abbb231a040062c5",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M05",
+      "contract": "TtgPrimaryMarketV1",
+      "source": "contracts/src/TtgPrimaryMarketV1.sol",
+      "upgrade": "proxy",
+      "accounting_track": "R1_ttg",
+      "sepolia_address": "0x7af15f98622b9282298ca3070a698ca4a96a4016",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "DEFER",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M06",
+      "contract": "TravelTrustGovernor",
+      "source": "contracts/src/TravelTrustGovernor.sol",
+      "upgrade": "proxy",
+      "accounting_track": "orthogonal",
+      "sepolia_address": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave1"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M07",
+      "contract": "GovernanceTimelock",
+      "source": "contracts/src/GovernanceTimelock.sol",
+      "upgrade": "controller",
+      "accounting_track": "orthogonal",
+      "sepolia_address": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave1"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M08",
+      "contract": "GovernanceTreasuryP4Cap",
+      "source": "contracts/src/GovernanceTreasuryP4Cap.sol",
+      "upgrade": "proxy",
+      "accounting_track": "R1_ttg",
+      "sepolia_address": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave1"
+      ],
+      "mainnet_readiness": "IN_PROGRESS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M09",
+      "contract": "FeeRouter",
+      "source": "contracts/src/FeeRouter.sol",
+      "upgrade": "parameter",
+      "accounting_track": "R4_platform_fee",
+      "sepolia_address": "0x81A8009210c5215100564c6E4123F672c4459306",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave1"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M10",
+      "contract": "EscrowFactory",
+      "source": "contracts/src/EscrowFactory.sol",
+      "upgrade": "immutable_instance",
+      "accounting_track": "R3_escrow",
+      "sepolia_address": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave1"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M10",
+      "contract": "Escrow",
+      "source": "contracts/src/Escrow.sol",
+      "upgrade": "immutable_instance",
+      "accounting_track": "R3_escrow",
+      "sepolia_address": null,
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave1"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M11",
+      "contract": "CountryPoolNetProfitLedger",
+      "source": "contracts/src/CountryPoolNetProfitLedger.sol",
+      "upgrade": "target",
+      "accounting_track": "D4555_B_net_profit_split",
+      "sepolia_address": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "PARTIAL",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M11",
+      "contract": "StewardPathVault",
+      "source": "contracts/src/StewardPathVault.sol",
+      "upgrade": "target",
+      "accounting_track": "D4555_B_net_profit_split",
+      "sepolia_address": null,
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "PARTIAL",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M11",
+      "contract": "UnallocatedStewardPathVault",
+      "source": "contracts/src/UnallocatedStewardPathVault.sol",
+      "upgrade": "target",
+      "accounting_track": "D4555_B_net_profit_split",
+      "sepolia_address": null,
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "PARTIAL",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M12",
+      "contract": "GuideIdentityStakingPool",
+      "source": "contracts/src/GuideIdentityStakingPool.sol",
+      "upgrade": "proxy",
+      "accounting_track": "orthogonal",
+      "sepolia_address": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "IN_PROGRESS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M12",
+      "contract": "ProviderIdentityStakingPool",
+      "source": "contracts/src/ProviderIdentityStakingPool.sol",
+      "upgrade": "proxy",
+      "accounting_track": "orthogonal",
+      "sepolia_address": "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "IN_PROGRESS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M12",
+      "contract": "RegionStewardStakePool",
+      "source": "contracts/src/RegionStewardStakePool.sol",
+      "upgrade": "proxy",
+      "accounting_track": "orthogonal",
+      "sepolia_address": "0x3a89378bfad12d1028707dd37055294854c8784e",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "IN_PROGRESS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M13",
+      "contract": "TtgSeatConcentrationRegistry",
+      "source": "contracts/src/TtgSeatConcentrationRegistry.sol",
+      "upgrade": "proxy",
+      "accounting_track": "R1_ttg",
+      "sepolia_address": "0xc99776e980d33f1857d5bb9a57b35ab7669aad1f",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M14",
+      "contract": "RegionStewardStakePool",
+      "source": "contracts/src/RegionStewardStakePool.sol",
+      "upgrade": "parameter",
+      "accounting_track": "orthogonal",
+      "sepolia_address": null,
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M18",
+      "contract": "CountryPoolLedgerV0",
+      "source": "contracts/src/CountryPoolLedgerV0.sol",
+      "upgrade": "target",
+      "accounting_track": "R2_country_pool",
+      "sepolia_address": "0x63bd7d5ee5c5dde707e5e65303f3876267c78e97",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "TARGET",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M18",
+      "contract": "RegionDistributionClaim",
+      "source": "contracts/src/RegionDistributionClaim.sol",
+      "upgrade": "target",
+      "accounting_track": "R2_country_pool",
+      "sepolia_address": null,
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave2"
+      ],
+      "mainnet_readiness": "TARGET",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M19",
+      "contract": "TtgGovFreezeConstants",
+      "source": "contracts/src/TtgGovFreezeConstants.sol",
+      "upgrade": "parameter",
+      "accounting_track": "orthogonal",
+      "sepolia_address": null,
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave1"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M24",
+      "contract": "TimelockUpgradeableProxy",
+      "source": "contracts/src/upgrade/TimelockUpgradeableProxy.sol",
+      "upgrade": "proxy",
+      "accounting_track": "orthogonal",
+      "sepolia_address": null,
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave1"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M25",
+      "contract": "RegionVault",
+      "source": "contracts/src/RegionVault.sol",
+      "upgrade": "parameter",
+      "accounting_track": "D4555_A_platform_fee_country_bucket",
+      "sepolia_address": "0x2Ea061d50393c09af2f607Ee9f89679642A3a65B",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave1"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    },
+    {
+      "module": "M25",
+      "contract": "ReserveVault",
+      "source": "contracts/src/ReserveVault.sol",
+      "upgrade": "parameter",
+      "accounting_track": "D4555_A_platform_fee_country_bucket",
+      "sepolia_address": "0xbC541FAf26e139eF1f0AC22b52c4b4F85FFF7855",
+      "mainnet_address": null,
+      "mainnet_deploy_wave": [
+        "wave1"
+      ],
+      "mainnet_readiness": "PASS",
+      "mainnet_blocker": "No mainnet registry slot · GAP-99-07"
+    }
+  ],
+  "mainnet_deployment_checklist": [
+    {
+      "wave": "PRE",
+      "item": "PRODUCTION_SCOPE_MAINNET selected + Owner signoff",
+      "status": "BLOCKED",
+      "ref": "148-PI3-005"
+    },
+    {
+      "wave": "PRE",
+      "item": "MAINNET_CUTOVER_AUTHORIZED=true",
+      "status": "BLOCKED",
+      "ref": "PRODUCTION-ENV-MATRIX"
+    },
+    {
+      "wave": "PRE",
+      "item": "External audit R-01 CLOSED",
+      "status": "BLOCKED",
+      "ref": "GAP-99-01"
+    },
+    {
+      "wave": "PRE",
+      "item": "TT-MAINNET G0–G6 + SL all GO",
+      "status": "BLOCKED",
+      "ref": "TT-MAINNET §0"
+    },
+    {
+      "wave": "PRE",
+      "item": "Mainnet Shadow Launch evidence GO",
+      "status": "BLOCKED",
+      "ref": "evidence/mainnet_shadow_launch/"
+    },
+    {
+      "wave": "PRE",
+      "item": "registry mainnet addresses populated",
+      "status": "BLOCKED",
+      "ref": "GAP-99-07"
+    },
+    {
+      "wave": "PRE",
+      "item": "WEB3_SYSTEM_CLOSURE_PASS (Sepolia)",
+      "status": "IN_PROGRESS",
+      "ref": "Cert #8–12 pending"
+    },
+    {
+      "wave": "W1",
+      "item": "Safe → Timelock admin (mainnet)",
+      "status": "NOT_STARTED",
+      "ref": "Deploy batch 0"
+    },
+    {
+      "wave": "W1",
+      "item": "GovernanceStack mainnet broadcast",
+      "status": "NOT_STARTED",
+      "ref": "DeployGovernanceStack"
+    },
+    {
+      "wave": "W1",
+      "item": "FundStack under Timelock (USDC mainnet)",
+      "status": "NOT_STARTED",
+      "ref": "DeployFundStackUnderTimelock"
+    },
+    {
+      "wave": "W1",
+      "item": "Escrow + FeeRouter + Settlement token = mainnet USDC",
+      "status": "NOT_STARTED",
+      "ref": "Master Map W1"
+    },
+    {
+      "wave": "W1",
+      "item": "G1 bytecode identity manifest (chain_id=1)",
+      "status": "NOT_STARTED",
+      "ref": "TT-MAINNET §1.3"
+    },
+    {
+      "wave": "W1",
+      "item": "G2 indexer full-path replay on mainnet",
+      "status": "NOT_STARTED",
+      "ref": "TT-MAINNET §2.2"
+    },
+    {
+      "wave": "W1",
+      "item": "G3 Timelock delay ≥ 86400s verified on-chain",
+      "status": "NOT_STARTED",
+      "ref": "TT-MAINNET §3.2"
+    },
+    {
+      "wave": "W2",
+      "item": "GovFreeze V2 proxy overlay mainnet",
+      "status": "NOT_STARTED",
+      "ref": "DeployGovFreezeV2CleanBaseline"
+    },
+    {
+      "wave": "W2",
+      "item": "RegionStewardStakePool + Seat + TTG lifecycle cert on mainnet",
+      "status": "NOT_STARTED",
+      "ref": "Cert replay mainnet"
+    },
+    {
+      "wave": "W2",
+      "item": "CountryPool NetProfit full jurisdiction rollout",
+      "status": "TARGET",
+      "ref": "GAP-99-03"
+    },
+    {
+      "wave": "W3",
+      "item": "SlashRouter wired to identity pools",
+      "status": "TARGET",
+      "ref": "GAP-99-02"
+    },
+    {
+      "wave": "W3",
+      "item": "Primary Market UI (if Owner lifts DEFER)",
+      "status": "DEFER",
+      "ref": "WEB3-PRIMARY-MARKET-DEFER-V1"
+    }
+  ],
+  "fix_priority": [
+    {
+      "order": 1,
+      "items": [
+        "MN-P0-001",
+        "MN-P0-002",
+        "MN-P0-006",
+        "MN-P0-007",
+        "MN-P0-008",
+        "MN-P0-010"
+      ]
+    },
+    {
+      "order": 2,
+      "items": [
+        "MN-P1-002",
+        "MN-P1-003",
+        "MN-P1-004",
+        "MN-P1-006",
+        "MN-P1-007"
+      ]
+    },
+    {
+      "order": 3,
+      "items": []
+    }
+  ],
+  "references": {
+    "gate_registry": "registry/web3-mainnet-production-readiness-gate.v1.yaml",
+    "master_map": "registry/web3-system-master-map.v1.yaml",
+    "protocol_grade_framework": "registry/web3-protocol-grade-audit-framework.v1.yaml",
+    "tt_mainnet": "docs/runbook/TT-MAINNET-LAUNCH-PRECHECK-AFTER-B435-001.md",
+    "scope_decision": "docs/handbook/engineering/148-PI3-005-Production-Scope-Decision-Report.md"
+  },
+  "discipline": {
+    "business_code_modified": false,
+    "audit_only": true
+  }
+}

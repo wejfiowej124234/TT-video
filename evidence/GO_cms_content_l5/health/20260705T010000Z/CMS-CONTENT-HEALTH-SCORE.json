@@ -1,0 +1,48 @@
+{
+  "schema": "traveltrust.cms_content_health_score.v1",
+  "stamp_utc": "20260705T010000Z",
+  "product_name": "Destination Ambient",
+  "matrix_path": "data/catalog/destination-ambient-matrix.v1.yaml",
+  "change_policy": "docs/runbook/TT-CMS-CHANGE-POLICY.md",
+  "metrics": {
+    "live_assets": {
+      "live": 0,
+      "total": 10,
+      "display": "0/10",
+      "pct": 0
+    },
+    "review_sla": {
+      "pct": 100,
+      "in_review": 0,
+      "sla_days": 7,
+      "note": "no rows in review"
+    },
+    "verify_pass_rate": {
+      "pct": 100,
+      "pass": 0,
+      "attempts": 0,
+      "note": "no verify attempts yet"
+    },
+    "revision_rollback_success": {
+      "pct": 100,
+      "ready": 0,
+      "live": 0,
+      "label": "Rollback Readiness",
+      "note": "governance rollback runbook ready"
+    },
+    "evidence_completeness": {
+      "pct": 100,
+      "complete": 0,
+      "live": 0,
+      "note": "no live rows requiring evidence"
+    },
+    "overall": {
+      "status": "BASELINE_ESTABLISHED",
+      "label": "BASELINE ESTABLISHED",
+      "score_pct": null
+    }
+  },
+  "TT_CMS_CONTENT_HEALTH_SCORE": "BASELINE ESTABLISHED",
+  "TT_CMS_CONTENT_HEALTH_STATUS": "BASELINE_ESTABLISHED",
+  "honest_boundary": "Health Score tracks CMS ops maturity; ≠ Production GO"
+}

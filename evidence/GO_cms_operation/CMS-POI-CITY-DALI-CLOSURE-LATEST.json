@@ -1,0 +1,146 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-07T112945Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "CN",
+    "country_zh": "中国",
+    "city_zh": "大理",
+    "city_en": "Dali"
+  },
+  "poi_count": 10,
+  "matrix_ids": [
+    "PH-CN-261-ATR",
+    "PH-CN-262-ATR",
+    "PH-CN-263-ATR",
+    "PH-CN-264-ATR",
+    "PH-CN-265-ATR",
+    "PH-CN-266-FOOD",
+    "PH-CN-267-FOOD",
+    "PH-CN-268-FOOD",
+    "PH-CN-269-FOOD",
+    "PH-CN-270-FOOD"
+  ],
+  "pois": [
+    "洱海",
+    "古城",
+    "崇圣寺",
+    "双廊",
+    "喜洲",
+    "乳扇",
+    "饵块",
+    "酸辣鱼",
+    "白族三道茶",
+    "喜洲粑粑"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-CN-261-ATR",
+      "legacy_value": "洱海",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-262-ATR",
+      "legacy_value": "古城",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-263-ATR",
+      "legacy_value": "崇圣寺",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-264-ATR",
+      "legacy_value": "双廊",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-265-ATR",
+      "legacy_value": "喜洲",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-266-FOOD",
+      "legacy_value": "乳扇",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-267-FOOD",
+      "legacy_value": "饵块",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-268-FOOD",
+      "legacy_value": "酸辣鱼",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-269-FOOD",
+      "legacy_value": "白族三道茶",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-270-FOOD",
+      "legacy_value": "喜洲粑粑",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-261-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-262-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-263-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-264-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-265-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-266-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-267-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-268-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-269-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-270-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=CN&city=%E5%A4%A7%E7%90%86&limit=50",
+    "http": 200,
+    "count": 10
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-dali/CMS-POI-DALI-CLOSED-LOOP-LATEST.json",
+  "next_city": null,
+  "closure_keys": {
+    "TT_CMS_POI_CITY_DALI": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": null
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_DALI": "CLOSED"
+}

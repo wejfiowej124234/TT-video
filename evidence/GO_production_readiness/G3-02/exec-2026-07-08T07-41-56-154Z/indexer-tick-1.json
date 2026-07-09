@@ -1,0 +1,5 @@
+{
+  "error": "fetch_escrow_logs_failed",
+  "message": "fetch_escrow_logs_failed",
+  "detail": "Too many request, try again later"
+}

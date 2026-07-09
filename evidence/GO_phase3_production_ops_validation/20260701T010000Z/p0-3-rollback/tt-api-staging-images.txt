@@ -1,0 +1,2 @@
+current_image=registry.fly.io/tt-api-staging:deployment-01KWCD3WJSK58FE0P5GPJXX0EM
+previous_image=registry.fly.io/tt-api-staging:deployment-01KWCBEMX7JF5EK9XB32Q27Q3S

@@ -1,0 +1,11 @@
+{
+  "probes": {
+    "D3": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "20260608T093257Z",
+      "log_path": "D:/TravelTrust-V1.1/evidence/ROV_01/wave2-20260608T093257Z/tracks/ROV-T4/probes/D3-20260608T093257Z.log",
+      "gate_script": "scripts/dev/l5-p0-d3-cold-start-linkage-smoke.sh"
+    }
+  }
+}

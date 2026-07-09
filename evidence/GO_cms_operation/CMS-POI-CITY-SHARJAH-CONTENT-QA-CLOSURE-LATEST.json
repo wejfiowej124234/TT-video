@@ -1,0 +1,108 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-07T02:02:56.804Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "AE",
+    "city_zh": "沙迦",
+    "city_en": "Sharjah",
+    "poi_count": 7
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "JP + KR + TH + US Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "cross_region_remediated": "all_8_execution_plus_geo",
+  "checks": {
+    "assets_locked_8_8": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-AE-233-ATR",
+      "poi": "遗产区",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-07T01:27:08.123Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-AE-234-ATR",
+      "poi": "蓝色市场",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "locked_at_utc": "2026-07-07T01:32:09.734Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-AE-235-ATR",
+      "poi": "艺术博物馆",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "locked_at_utc": "2026-07-07T01:37:10.132Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-AE-236-FOOD",
+      "poi": "中东烤肉",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "locked_at_utc": "2026-07-07T01:42:11.329Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-AE-237-FOOD",
+      "poi": "库斯库斯",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-07T01:47:12.034Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-AE-238-FOOD",
+      "poi": "薄荷茶",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-07T01:52:13.111Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-AE-239-FOOD",
+      "poi": "炸蚕豆",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "locked_at_utc": "2026-07-07T01:57:14.269Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "PASS",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 7
+  },
+  "TT_CMS_POI_CITY_SHARJAH_CONTENT_QA": "CLOSED"
+}

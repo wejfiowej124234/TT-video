@@ -1,0 +1,100 @@
+{
+  "program": "ROV-01",
+  "wave": 1,
+  "phase": "②",
+  "collected_at": "2026-06-08T09:23:55.205Z",
+  "evidence_dir": "D:/TravelTrust-V1.1/evidence/PHASE2_FULL_COVERAGE/full-closure-20260608T092200Z/rov-cohort",
+  "registrations_non_seed": 32,
+  "registrations_total_api": 32,
+  "referral_bound": 15,
+  "early_bird_assigned": 31,
+  "activated_users": 31,
+  "wau": null,
+  "d1_retention_pct": null,
+  "d7_retention_pct": null,
+  "click_to_register_pct": 100,
+  "activation_rate_pct": 46.9,
+  "conversion_funnel_steps": [
+    {
+      "step": "registrations",
+      "count": 610,
+      "rate_from_start_pct": 100,
+      "rate_from_previous_pct": null
+    },
+    {
+      "step": "with_referral",
+      "count": 180,
+      "rate_from_start_pct": 29.508196721311474,
+      "rate_from_previous_pct": 29.508196721311474
+    },
+    {
+      "step": "referral_events",
+      "count": 180,
+      "rate_from_start_pct": 29.508196721311474,
+      "rate_from_previous_pct": 100
+    },
+    {
+      "step": "with_points",
+      "count": 8,
+      "rate_from_start_pct": 1.3114754098360655,
+      "rate_from_previous_pct": 4.444444444444445
+    }
+  ],
+  "growth_overview": {
+    "status": "ok",
+    "read_only": true,
+    "summary": {
+      "window": {
+        "from": "2026-06-08T00:00:00Z",
+        "to": "2026-06-08T09:23:45Z"
+      },
+      "registrations_total": 610,
+      "registrations_with_referral": 180,
+      "referral_events_total": 180,
+      "users_with_points": 8,
+      "total_growth_points": 800,
+      "referral_code_active_count": 608,
+      "referral_code_conversion_uses": 180,
+      "fraud_breakdown": [
+        {
+          "growth_fraud_status": "normal",
+          "user_count": 1792
+        },
+        {
+          "growth_fraud_status": "airdrop_ineligible",
+          "user_count": 279
+        },
+        {
+          "growth_fraud_status": "points_frozen",
+          "user_count": 11
+        }
+      ],
+      "frozen_or_ineligible_count": 290,
+      "frozen_or_ineligible_pct": 13.928914505283382,
+      "early_bird_distribution": [
+        {
+          "early_bird_stage": 2,
+          "user_count": 610,
+          "points_sum": 800
+        },
+        {
+          "early_bird_stage": null,
+          "user_count": 1472,
+          "points_sum": 0
+        }
+      ],
+      "airdrop": {
+        "campaign_count": 0,
+        "snapshot_locked_count": 0,
+        "calculated_count": 0,
+        "total_snapshot_rows": 0,
+        "total_eligible_rows": 0,
+        "latest_campaign_name": null,
+        "latest_campaign_status": null
+      }
+    }
+  },
+  "ops_cost_usd": null,
+  "ops_cost_notes": "Wave-1 Week-1: local spine API; Fly staging Growth 404 — ops hours/bills TBD",
+  "user_feedback_samples": 0
+}

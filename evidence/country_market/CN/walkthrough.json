@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust_country_market_walkthrough.v1",
+  "jurisdiction_iso": "CN",
+  "pilot_sprint": "168-B",
+  "phase": "geo",
+  "checklist_snapshot": {
+    "legal": {
+      "tos_version": { "status": "pass", "ref": "docs/handbook/engineering/168-Business-Expansion-Sprint168-BE-FRD01-BE-GCM01-Blueprint.md" },
+      "payment_policy_ref": { "status": "pass", "ref": "101-CMS" },
+      "data_transfer": { "status": "pass" }
+    },
+    "geo": {
+      "meta_parity": { "status": "pass", "checked_at": "2026-06-08T00:00:00Z", "note": "CN row in C-S5 meta-parity when catalog published" }
+    },
+    "steward": {
+      "user_id": "pilot-placeholder",
+      "status": "pending"
+    }
+  },
+  "notes": "Pilot walkthrough for Sprint 168-B gate; steward binding remains BE-GCM-02 P1."
+}

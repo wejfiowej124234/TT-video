@@ -1,0 +1,8 @@
+TT_PHASE3_PRODUCTION_GO_AUDIT: NO_GO
+TT_PHASE3_CONVERGENCE_GATE: PASS
+at=20260701T004342Z
+pass=12
+warn=2
+blocker_non_production=0
+blocker_production_only=7
+reason=0 non-prod BLOCKER · 7 production-only BLOCKER(s) · 2 WARN · 12 PASS

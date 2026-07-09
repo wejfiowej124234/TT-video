@@ -1,0 +1,78 @@
+{
+  "schema": "traveltrust.phase2_graduation_package_manifest.v1",
+  "phase": "② testnet",
+  "mode": "Reliability Freeze",
+  "updated_at": "2026-06-14T08:02:52.570Z",
+  "graduation_standard": "docs/runbook/TT-PHASE2-TESTNET-CLOSURE-GOVERNANCE-STANDARD.md",
+  "post_soak_orchestrator": "scripts/dev/run-phase2-testnet-post-soak-graduation-closure.sh",
+  "soak": {
+    "job": "job-20260614T070154Z",
+    "pid_file": "evidence/P2FC_SOAK_72H_STAGING/job-20260614T070154Z/pid.txt",
+    "close_when": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+    "watcher_log": "evidence/P2FC_SOAK_72H_STAGING/post-soak-graduation-watcher.log"
+  },
+  "closed_items_do_not_rerun": {
+    "TN-P1-010": "evidence/GO_phase2_testnet_perfect_validation/tn-p1-010-indexer-reconcile-20260614T065942Z",
+    "TN-P1-009_start": "evidence/GO_phase2_testnet_perfect_validation/tn-p1-009-soak-start-20260614T064026Z",
+    "D6_52_surfaces": "evidence/GO_phase2_testnet_perfect_validation/tn-p1-d6-reliability-surface-20260614T073334Z",
+    "TN-P1-001": "evidence/GO_phase2_testnet_perfect_validation/tn-p1-001-*",
+    "TN-P1-002": "evidence/GO_phase2_testnet_perfect_validation/tn-p1-002-provider-onboarding-20260614T034743Z",
+    "TN-P1-003": "evidence/GO_phase2_testnet_perfect_validation/tn-p1-003-acquisition-20260614T034501Z",
+    "TN-P1-004": "evidence/GO_phase2_testnet_perfect_validation/tn-p1-004-steward-stake-20260614T033714Z",
+    "TN-P1-005": "evidence/GO_phase2_testnet_perfect_validation (TN-P1-005 stripe)",
+    "TN-P1-006": "evidence/GO_phase2_testnet_perfect_validation/tn-p1-006-escrow-20260614T030618Z",
+    "TN-P1-007_008": "evidence/GO_phase2_testnet_perfect_validation/tn-p1-007-008-hat-20260614T040856Z"
+  },
+  "graduation_gates_g01_g09": {
+    "G01": {
+      "key": "open_testnet_p0",
+      "target": 0
+    },
+    "G02": {
+      "key": "open_testnet_p1",
+      "target": 0
+    },
+    "G03": {
+      "key": "tt_phase2_readiness",
+      "target": 100
+    },
+    "G04": {
+      "key": "tt_testnet_perfect_validation_go",
+      "target": "GO"
+    },
+    "G05": {
+      "key": "blocking_open",
+      "target": 0
+    },
+    "G06": {
+      "key": "p2fc_soak_completed",
+      "target": true
+    },
+    "G07": {
+      "key": "indexer_compound_pass",
+      "target": true,
+      "missing_projection": 0
+    },
+    "G08": {
+      "key": "deep_closure",
+      "target": "D1-D24 PASS · surface 100% · untested 0"
+    },
+    "G09": {
+      "key": "owner_signoff",
+      "artifact": "OWNER-SIGNOFF.md"
+    }
+  },
+  "audit_commands": [
+    "bash scripts/dev/run-phase2-testnet-post-soak-graduation-closure.sh",
+    "bash scripts/dev/run-phase2-testnet-closure-governance-audit.sh"
+  ],
+  "latest_pre_soak_audit": "evidence/GO_phase2_testnet_graduation/20260614T063431Z",
+  "owner_signoff_template": "docs/runbook/evidence-templates/PHASE2-TESTNET-OWNER-SIGNOFF-SOLO.md",
+  "grep_anchors": {
+    "graduation_closed": "TT_TESTNET_GRADUATION: CLOSED",
+    "audit_pass": "TT_PHASE2_TESTNET_CLOSURE_GOVERNANCE_AUDIT: PASS",
+    "d6_pass": "TT_TN_P1_D6_RELIABILITY_SURFACE_EVIDENCE: PASS",
+    "tn010_pass": "TT_TN_P1_010_INDEXER_RECONCILE_EVIDENCE: PASS"
+  },
+  "honest_boundary": "② CLOSED unlocks ③ entry review only · ≠ Production GO"
+}

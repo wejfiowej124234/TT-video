@@ -1,0 +1,100 @@
+{
+  "audit": "TT_PCP_ARCHITECTURE_COMPLIANCE",
+  "phase": "0.5",
+  "stamp": "20260703T231501Z",
+  "overall": "PASS",
+  "principle": "P2 — All Public APIs consume Governed Views only",
+  "governed_view": "governed_community_posts_v1",
+  "surfaces": [
+    {
+      "id": "community_feed",
+      "label": "Community Feed",
+      "status": "PASS",
+      "detail": "Uses Governed View"
+    },
+    {
+      "id": "community_feed_hot",
+      "label": "Community Feed (hot)",
+      "status": "PASS",
+      "detail": "Uses Governed View"
+    },
+    {
+      "id": "community_feed_following",
+      "label": "Community Feed (following)",
+      "status": "PASS",
+      "detail": "Uses Governed View"
+    },
+    {
+      "id": "community_post_detail",
+      "label": "Community Post Detail (governed read)",
+      "status": "PASS",
+      "detail": "Uses Governed View"
+    },
+    {
+      "id": "community_user_profile_timeline",
+      "label": "User Profile Timeline (public_only)",
+      "status": "PASS",
+      "detail": "Uses Governed View"
+    },
+    {
+      "id": "community_explore_destinations",
+      "label": "Explore Destinations",
+      "status": "PASS",
+      "detail": "Uses Governed View"
+    },
+    {
+      "id": "community_posts_by_tag_stats",
+      "label": "Posts-by-tag public count",
+      "status": "PASS",
+      "detail": "Uses Governed View"
+    },
+    {
+      "id": "community_post_detail_route",
+      "label": "GET /posts/:id non-owner path",
+      "status": "PASS",
+      "detail": "Route delegates public read to get_governed_public_post_by_id"
+    },
+    {
+      "id": "feed_builder_purity",
+      "label": "FeedBuilder — no governance rules",
+      "status": "PASS",
+      "detail": "Builder re-exports db feed queries only"
+    }
+  ],
+  "expected_differences": [
+    {
+      "id": "author_raw_read",
+      "label": "Author/owner reads (get_post_by_id, me/posts)",
+      "status": "EXPECTED",
+      "detail": "Non-catalog authenticated paths may read community_posts"
+    },
+    {
+      "id": "viewer_non_production_supplement",
+      "label": "list_viewer_own_non_production_feed_supplement",
+      "status": "EXPECTED",
+      "detail": "Dev/test supplement for viewer own non-production posts — not public catalog"
+    },
+    {
+      "id": "market_builder",
+      "label": "MarketBuilder",
+      "status": "PASS",
+      "detail": "pcp/market_builder.rs + governed_market_* (Phase 1 Batch 1)"
+    },
+    {
+      "id": "campaign_builder",
+      "label": "CampaignBuilder",
+      "status": "PASS",
+      "detail": "pcp/campaign_builder.rs + governed_campaign_* (Phase 1 Batch 2)"
+    }
+  ],
+  "phase_1_deferred": [
+    "SearchBuilder",
+    "RecommendationBuilder",
+    "trait PublicBuilder abstraction"
+  ],
+  "summary": {
+    "pass": 9,
+    "warn": 0,
+    "fail": 0
+  }
+}

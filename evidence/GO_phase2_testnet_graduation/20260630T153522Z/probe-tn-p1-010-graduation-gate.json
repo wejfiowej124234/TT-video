@@ -1,0 +1,6 @@
+{
+  "pass": false,
+  "state": "no",
+  "note": "need post-soak TN-P1-010 @ freeze 8dcd304a (historical-only reports excluded)",
+  "freeze_sha": "8dcd304afae1bafe5a4de738175e171256a9501e"
+}

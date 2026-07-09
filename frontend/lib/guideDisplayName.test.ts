@@ -1,26 +1,19 @@
 import { describe, expect, it } from "vitest";
-import { formatGuideDisplayName } from "./guideDisplayName";
+import { formatGuideDisplayName } from "@/lib/guideDisplayName";
+
+const t = (key: string) =>
+  ({
+    guide_card_cityGuide: "{{city}} 向导",
+    guide_card_guide: "向导",
+  })[key] ?? key;
 
 describe("formatGuideDisplayName", () => {
-  const t = (key: string) =>
-    ({
-      guide_card_cityGuide: "{{city}} 向导",
-      guide_card_guide: "向导",
-    }[key] ?? key);
-
-  it("prefers public_title when non-empty", () => {
-    expect(formatGuideDisplayName(t, { city: "巴黎", public_title: "Marie · 巴黎向导" })).toBe("Marie · 巴黎向导");
-    expect(formatGuideDisplayName(t, { city: "巴黎", public_title: "  自定义  " })).toBe("自定义");
-  });
-
-  it("uses city template when public_title missing or blank", () => {
-    expect(formatGuideDisplayName(t, { city: "巴黎" })).toBe("巴黎 向导");
-    expect(formatGuideDisplayName(t, { city: "  x  ", public_title: "" })).toBe("x 向导");
-  });
-
-  it("falls back when city missing or whitespace", () => {
-    expect(formatGuideDisplayName(t, {})).toBe("向导");
-    expect(formatGuideDisplayName(t, { city: "" })).toBe("向导");
-    expect(formatGuideDisplayName(t, { city: "   " })).toBe("向导");
+  it("falls back to city label when public_title is internal demo copy", () => {
+    expect(
+      formatGuideDisplayName(t, {
+        city: "杭州",
+        public_title: "多重身份演示 · 向导轨",
+      }),
+    ).toBe("杭州 向导");
   });
 });

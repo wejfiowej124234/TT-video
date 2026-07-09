@@ -1,0 +1,66 @@
+{
+  "schema": "traveltrust.cert7-execute-matrix.v1",
+  "verdict": "PASS",
+  "phase": "②",
+  "baseline": "GovFreeze V2 · HAT-R1 Phase B Execute",
+  "checks": {
+    "cert6_prerequisite": {
+      "ok": true,
+      "path": "evidence/GO_ttg_cert/20260616T100918Z/phase-b/unpause/PHASE-B-UNPAUSE-SIGNOFF.json"
+    },
+    "timelock_elapsed": {
+      "ok": true,
+      "execute_earliest_unix": 1781765044,
+      "timelock_elapsed": true,
+      "remaining_seconds": 0,
+      "no_force_execute_env": true
+    },
+    "queue_chain": {
+      "ok": true,
+      "proposal_id": "1",
+      "queue_tx": "0xcfd052923a0188b732c505520d9c99773697e4e7b57181d55ce28b416776d2a2",
+      "timelock_delay_seconds": "172800",
+      "receipt_archived": true
+    },
+    "execute_evidence": {
+      "ok": true,
+      "execute_tx": "0x5ebb4046c1f00fb466d830d098ef0e272e55d0b466f6acad10f901ef3525f1ef",
+      "receipt_count": 1,
+      "events_count": 0,
+      "post_execute_state": "6",
+      "want_state": "6"
+    },
+    "four_ledger_mapping": {
+      "ok": true,
+      "verdict": "PASS",
+      "global_treasury_timelock_match": true,
+      "v2_timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    },
+    "gorp_execute_recovery": {
+      "ok": true,
+      "sections": {
+        "execute_fail_3_1": true,
+        "too_early": true,
+        "forbid_force": true,
+        "timelock_3_5": true,
+        "gorp_07": true,
+        "governor_sc": true
+      }
+    },
+    "live_wallet_gate": {
+      "ok": true,
+      "HAT_R1_LIVE_WALLET_OK": "1",
+      "HAT_R1_PHASE_B_PAUSED": "0",
+      "note": "Required at finalize; execute evidence proves wallet was used"
+    }
+  },
+  "execute_flow_map": "evidence/GO_ttg_cert/.cert7-execute-flow-map.json",
+  "mtm_ids": [
+    "CHK-CORE-07",
+    "CHK-FE-08",
+    "CHK-SC-01",
+    "CHK-SC-02",
+    "CHK-DR-01"
+  ],
+  "blockers": []
+}

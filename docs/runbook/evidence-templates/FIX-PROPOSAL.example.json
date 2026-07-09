@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.fix_proposal.v1",
+  "issue_id": "EXAMPLE-D3-F02",
+  "generated_at_utc": "2026-06-26T00:00:00Z",
+  "patch_type": "unified_diff",
+  "patch_ref": "patch.diff",
+  "deployment_state": "fix",
+  "fix_deploy_ledger_id": "BOOK-P0-04",
+  "gate_subset": [
+    "bash scripts/dev/smoke-web3-itinerary-full-chain-local.sh",
+    "cargo test -p traveltrust-api matrix_93 -- --test-threads=1"
+  ],
+  "summary": "Replace fixed timeout with data-tt-city-ready selector",
+  "risk": "low",
+  "signed_by": "owner-or-agent-attestation-id",
+  "honest_boundary": "Proposal execution != Production GO"
+}

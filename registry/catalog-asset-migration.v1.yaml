@@ -1,0 +1,96 @@
+# TravelTrust · Catalog Asset Migration · SSOT
+# Human: docs/runbook/TT-PI3-CATALOG-ASSET-MIGRATION.md
+#
+# Scope: operational catalog imagery (Guide/Provider/Acquisition covers, campaigns, hero, avatars)
+# NOT IN SCOPE: multipart pipeline, R2 bucket provisioning, CDN TLS — see pi3-media-infrastructure.v1.yaml
+
+schema: traveltrust.catalog_asset_migration.v1
+version: 1
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_PI3_CATALOG_ASSET_MIGRATION: DEFERRED
+  TT_CATALOG_UNSplash_NOT_INFRA_DEFECT: ENFORCED
+  TT_CATALOG_ASSET_ACCEPTANCE_SCOPE: ENFORCED
+
+governance:
+  acceptance_decoupling_principle: >
+    Media Infrastructure acceptance validates media service capability only (object storage,
+    upload, download, CDN, cache, multipart, playback, CORS) — not catalog asset sources.
+    Catalog Asset Migration acceptance validates asset source, copyright, and operational
+    content only — it does not re-validate media infrastructure.
+  question_answered: 用户最终看到的素材是不是我们的正式运营素材？
+  independent_progress_example:
+    media_infrastructure: "100% CLOSED while catalog_asset_migration at 30% is normal"
+  no_duplicate_acceptance: true
+
+policy:
+  current_source: unsplash_and_client_fallback
+  not_a_bug: >
+    Unsplash/Pexels/Pixabay for early-stage catalog is intentional placeholder sourcing.
+    Absence of owned copyright assets is a content/ops decision, not media infrastructure failure.
+  target_source: owned_assets_on_cdn
+  decoupled_from: PI3-MEDIA-INFRASTRUCTURE
+  blocks_media_infra_close: false
+
+asset_classes:
+  - id: guide_cover_avatar
+    fields: [avatar_url, cover_url]
+    surfaces: [market_guides, guides_detail]
+    current: unsplash_manifest_and_marketMediaFallback.ts
+  - id: provider_listing_cover
+    fields: [payload.videoUrl, cover_url]
+    surfaces: [market_provider]
+    current: unsplash_in_ocs_manifest_and_db
+  - id: acquisition_listing_cover
+    fields: [payload.videoUrl, cover_url]
+    surfaces: [market_acquisition]
+    current: unsplash_in_ocs_manifest_and_db
+  - id: official_guide_cover
+    fields: [cover_url]
+    surfaces: [community_official_posts, admin_official_guides]
+    current: unsplash_via_ocs_orchestrator
+  - id: campaign_banner
+    fields: [inherited_from_entities]
+    surfaces: [homepage_cold_start, market_feed]
+    current: no_standalone_asset_inherits_catalog
+  - id: hero_banner
+    fields: [NEXT_PUBLIC_TRAVELTRUST_HERO_*]
+    surfaces: [home, discover]
+    current: bundled_frontend_public_media
+  - id: poi_image
+    fields: [client_poiStockPool]
+    surfaces: [itinerary, city_detail]
+    current: unsplash_client_pool
+  - id: profile_avatar
+    fields: [avatar_url]
+    surfaces: [me_settings, community_profile]
+    current: profile_avatar_s3_when_configured_else_placeholder
+
+migration_phases:
+  - id: ingest_owned_assets
+    action: upload to R2/CDN prefix catalog/v1/...
+  - id: update_ocs_manifest
+    file: data/official-cold-start/dataset.v1.json
+  - id: fix_orchestrator
+    script: scripts/dev/run-official-cold-start-dataset.cjs
+    note: apply guide.avatar_url to API
+  - id: reapply_ocs_staging
+  - id: remove_client_unsplash_fallback
+    files: [frontend/lib/marketMediaFallback.ts]
+  - id: optional_hero_poi_migration
+
+issues:
+  track: PI3-CATALOG-ASSET-MIGRATION
+  id: PI3-CATALOG-ASSET-MIGRATION
+  status: OPEN
+  display_status: DEFERRED
+  owner: product_operations
+  depends_on_infra_optional: PI3-MEDIA-INFRASTRUCTURE
+  evidence: registry/catalog-asset-migration.v1.yaml
+
+pointers:
+  ocs_manifest: data/official-cold-start/dataset.v1.json
+  ocs_registry: registry/official-cold-start-dataset.v1.yaml
+  ocs_runbook: docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md
+  profile_avatar_runbook: docs/runbook/PROFILE-AVATAR-OBJECT-STORAGE.md

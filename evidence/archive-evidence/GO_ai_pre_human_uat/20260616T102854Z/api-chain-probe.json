@@ -1,0 +1,72 @@
+{
+  "check_id": "AI_PRE_HUMAN_UAT_PROBE",
+  "verdict": "FAIL",
+  "fail_count": 4,
+  "skip_count": 1,
+  "checks": [
+    {
+      "id": "API-FL-REF",
+      "dimension": "four_ledger_reference",
+      "verdict": "PASS",
+      "detail": "four-ledger cached verdict=PASS"
+    },
+    {
+      "id": "API-PROTO",
+      "dimension": "api_read",
+      "verdict": "PASS",
+      "detail": "http=200",
+      "http": 200
+    },
+    {
+      "id": "API-PARAMS",
+      "dimension": "api_read",
+      "verdict": "FAIL",
+      "detail": "http=401",
+      "http": 401
+    },
+    {
+      "id": "API-FEE-ROUTES",
+      "dimension": "api_read",
+      "verdict": "FAIL",
+      "detail": "http=401",
+      "http": 401
+    },
+    {
+      "id": "API-PROPOSALS",
+      "dimension": "api_read",
+      "verdict": "FAIL",
+      "detail": "http=401",
+      "http": 401
+    },
+    {
+      "id": "API-PM-QUOTE",
+      "dimension": "api_read",
+      "verdict": "FAIL",
+      "detail": "http=401",
+      "http": 401
+    },
+    {
+      "id": "API-CP-DE",
+      "dimension": "country_ledger_4555",
+      "verdict": "PASS",
+      "detail": "http=200 has_4555=True",
+      "http": 200
+    },
+    {
+      "id": "API-ACCRUALS",
+      "dimension": "investor_accruals",
+      "verdict": "PASS",
+      "detail": "http=200 (404 acceptable empty)",
+      "http": 200
+    },
+    {
+      "id": "CHAIN-4555",
+      "dimension": "onchain_ledger_bps",
+      "verdict": "SKIP",
+      "detail": "Error: server returned an error response: error code 3: execution reverted, data: \"0x\"\n",
+      "rpc": true,
+      "ledger": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+    }
+  ],
+  "honest_boundary": "read-only probes · not a substitute for Cert #1 human signoff"
+}

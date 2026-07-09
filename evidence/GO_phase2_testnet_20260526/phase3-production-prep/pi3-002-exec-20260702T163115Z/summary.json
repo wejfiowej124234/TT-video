@@ -1,0 +1,15 @@
+{
+  "kind": "traveltrust.pi3_002_domain_tls_cdn_cors_execution.v1",
+  "recorded_utc": "20260702T163115Z",
+  "verdict": "PI3-002_GO",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "chain_id": 11155111,
+  "execution_sprint": "151",
+  "prod_domain_configured": true,
+  "prod_tls_health_ok": true,
+  "prod_cors_preflight_ok": true,
+  "prod_alignment_ok": true,
+  "cdn_hls": "NOT_STARTED",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev"
+}

@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T23:42:16Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "釜山",
+    "city_en": "Busan",
+    "matrix_ids": [
+      "PH-KR-042-ATR",
+      "PH-KR-043-ATR",
+      "PH-KR-044-ATR",
+      "PH-KR-045-ATR",
+      "PH-KR-046-FOOD",
+      "PH-KR-047-FOOD",
+      "PH-KR-048-FOOD",
+      "PH-KR-049-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-KR-042-ATR",
+      "legacy_value": "海云台",
+      "poi_id": "42abb1b3-687b-4e94-91c5-65e440a33922",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-official-guide-cover.jpg",
+      "hero_file": "ocs-busan-coast-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-042-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-043-ATR",
+      "legacy_value": "甘川文化村",
+      "poi_id": "71287a8b-ffdd-4bd6-8b0f-07cffc7fecc7",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-community-media.jpg",
+      "hero_file": "ocs-busan-coast-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-043-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-044-ATR",
+      "legacy_value": "札嘎其市场",
+      "poi_id": "9874beba-8539-47a7-9fc2-63b6f34c8139",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-community-cover.jpg",
+      "hero_file": "ocs-busan-coast-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-044-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-045-ATR",
+      "legacy_value": "广安里大桥",
+      "poi_id": "c8c94aeb-13f7-4315-a324-720663294b91",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-provider-cover.jpg",
+      "hero_file": "ocs-busan-coast-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-045-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-046-FOOD",
+      "legacy_value": "猪肉汤饭",
+      "poi_id": "806b33b3-34cb-49ea-957b-e43d151ca68c",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-guide-avatar.jpg",
+      "hero_file": "ocs-busan-coast-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-046-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-047-FOOD",
+      "legacy_value": "生鱼片",
+      "poi_id": "5e6ac1ce-84d7-44e2-9799-6bb8c2f7d289",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-official-guide-cover.jpg",
+      "hero_file": "ocs-busan-coast-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-047-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-048-FOOD",
+      "legacy_value": "鱼饼",
+      "poi_id": "264ad838-31e9-4105-886b-a400a8dc1906",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-community-media.jpg",
+      "hero_file": "ocs-busan-coast-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-048-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-049-FOOD",
+      "legacy_value": "小麦面",
+      "poi_id": "bdc9e11d-72aa-43fe-9228-f35b5deeb569",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-community-cover.jpg",
+      "hero_file": "ocs-busan-coast-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-049-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

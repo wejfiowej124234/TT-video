@@ -1,0 +1,109 @@
+{
+  "schema": "traveltrust.cms_p1_standard_review.v1",
+  "recorded_at_utc": "2026-07-07T12:26:24.614Z",
+  "standard_version": "1.1.0",
+  "TT_CMS_P1_STANDARD_REVIEW": "PASS",
+  "TT_CMS_P1_CONTENT_FAMILY_STANDARD": "FROZEN",
+  "asset_kind_review": [
+    {
+      "module": "City Hero",
+      "asset_kind": "city_hero",
+      "verdict": "CONFIRMED_RESERVED",
+      "api_allowlist": false,
+      "catalog_count": 0,
+      "note": "最终命名 city_hero · 实现时须加入 catalog_ops_admin allowlist"
+    },
+    {
+      "module": "Hotel",
+      "asset_kind": "hotel_tier_stock",
+      "verdict": "FROZEN",
+      "api_allowlist": true,
+      "catalog_count": 1,
+      "note": "已在 API/catalog/brief/wave1 · 双读 hotel-tiers + catalog/media"
+    },
+    {
+      "module": "Transport",
+      "asset_kind": "transport_stock",
+      "verdict": "FROZEN",
+      "api_allowlist": true,
+      "catalog_count": 1,
+      "note": "已在 API/catalog/brief/wave1 · country_iso 键"
+    },
+    {
+      "module": "Listings",
+      "content_families": [
+        "provider_listing",
+        "acquisition_listing"
+      ],
+      "verdict": "CONFIRMED_NOT_MEDIA_KIND",
+      "rejected_kind": "listing_cover",
+      "listing_cover_probe_count": 0,
+      "note": "Runtime=listing API payload.cover_url · 非 catalog/media asset_kind"
+    }
+  ],
+  "api_allowlist_reference": [
+    "poi_hero",
+    "landing_ambient",
+    "hotel_tier_stock",
+    "transport_stock",
+    "generic"
+  ],
+  "staging_probes": {
+    "city_hero": {
+      "ok": true,
+      "count": 0
+    },
+    "hotel_tier_stock": {
+      "ok": true,
+      "count": 1
+    },
+    "transport_stock": {
+      "ok": true,
+      "count": 1
+    },
+    "listing_cover": {
+      "ok": true,
+      "count": 0
+    }
+  },
+  "review_questions": [
+    {
+      "id": 1,
+      "topic": "asset_kind 稳定性",
+      "verdict": "PASS_WITH_AMENDMENT",
+      "summary": "city_hero/hotel_tier_stock/transport_stock 确认 · Listings 改为 provider_listing+acquisition_listing"
+    },
+    {
+      "id": 2,
+      "topic": "Runtime Contract 统一",
+      "verdict": "PASS",
+      "summary": "统一生命周期 · Hotel/Listings 标注例外"
+    },
+    {
+      "id": 3,
+      "topic": "Admin 统一",
+      "verdict": "PASS",
+      "summary": "Content Center 统一壳 · 族路由可不同"
+    },
+    {
+      "id": 4,
+      "topic": "Verify 统一",
+      "verdict": "PASS",
+      "summary": "每族独立 script · 统一 evidence · Registry 只收 PASS/FAIL"
+    },
+    {
+      "id": 5,
+      "topic": "Frozen Exit Gate",
+      "verdict": "PASS",
+      "summary": "六门一致"
+    }
+  ],
+  "amendments": [
+    "Listings: 删除 listing_cover · 改用 provider_listing + acquisition_listing",
+    "Hotel: 标注 dual-read 例外",
+    "city_hero: reserved · 待 API allowlist",
+    "统一六门 Frozen Exit Gate",
+    "统一 Verify evidence schema"
+  ],
+  "next_step": "City Hero Brief + Asset Matrix only"
+}

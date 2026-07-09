@@ -1,0 +1,115 @@
+{
+  "schema": "traveltrust.p2fc_t_plus_execution_timeline.v2",
+  "trigger": "COMPLETED.json",
+  "strategy": "STRAT-A_PLUS_MR12",
+  "timeline": [
+    {
+      "step": 1,
+      "phase": "tn_p1_010",
+      "label": "TN-P1-010 independent",
+      "offset_min": 8,
+      "phase_success_p": 0.72,
+      "cumulative_success_p": 0.72,
+      "competition_winner": "BP-TN-02",
+      "arena_fail_p": 0.543,
+      "key_breakpoints": [
+        "BP-TN-02",
+        "BP-DATA-01"
+      ]
+    },
+    {
+      "step": 2,
+      "phase": "rollback_snapshot",
+      "label": "fly rollback snapshot",
+      "offset_min": 10,
+      "phase_success_p": 0.96,
+      "cumulative_success_p": 0.6912,
+      "competition_winner": null,
+      "arena_fail_p": null,
+      "key_breakpoints": []
+    },
+    {
+      "step": 3,
+      "phase": "apply_patches",
+      "label": "MR-01 hotfix + backlog (MR-02 scope note)",
+      "offset_min": 12,
+      "phase_success_p": 0.78,
+      "cumulative_success_p": 0.5391,
+      "competition_winner": null,
+      "arena_fail_p": null,
+      "key_breakpoints": []
+    },
+    {
+      "step": 4,
+      "phase": "wave1_api_deploy",
+      "label": "Wave1 API (MR-02 subset)",
+      "offset_min": 28,
+      "phase_success_p": 0.8,
+      "cumulative_success_p": 0.4313,
+      "competition_winner": "BP-W1-02",
+      "arena_fail_p": 0.707,
+      "key_breakpoints": [
+        "BP-W1-02",
+        "BP-W1-03"
+      ]
+    },
+    {
+      "step": 5,
+      "phase": "wave2_web_deploy",
+      "label": "Wave2 Web",
+      "offset_min": 42,
+      "phase_success_p": 0.83,
+      "cumulative_success_p": 0.358,
+      "competition_winner": null,
+      "arena_fail_p": null,
+      "key_breakpoints": []
+    },
+    {
+      "step": 6,
+      "phase": "meta_availability",
+      "label": "meta --strict",
+      "offset_min": 45,
+      "phase_success_p": 0.7,
+      "cumulative_success_p": 0.2506,
+      "competition_winner": "BP-META-01",
+      "arena_fail_p": 0.958,
+      "key_breakpoints": [
+        "BP-META-01",
+        "BP-META-02"
+      ]
+    },
+    {
+      "step": 7,
+      "phase": "g02_deep_gate",
+      "label": "Deep Gate G02",
+      "offset_min": 55,
+      "phase_success_p": 0.72,
+      "cumulative_success_p": 0.1804,
+      "competition_winner": null,
+      "arena_fail_p": null,
+      "key_breakpoints": []
+    },
+    {
+      "step": 8,
+      "phase": "graduation",
+      "label": "Graduation closure",
+      "offset_min": 65,
+      "phase_success_p": 0.9,
+      "cumulative_success_p": 0.1624,
+      "competition_winner": null,
+      "arena_fail_p": null,
+      "key_breakpoints": []
+    }
+  ],
+  "end_to_end_success_p": 0.1624,
+  "end_to_end_success_pct": 16.2,
+  "predicted_first_fail": {
+    "bp_id": "BP-W1-02",
+    "score": 0.55,
+    "first_fail_at_min": 28,
+    "blocks": "meta+acceptance cascade"
+  },
+  "predicted_graduation_blocker": "BP-META-01",
+  "time_to_first_fail_min": 28,
+  "time_to_graduation_block_min": 45
+}

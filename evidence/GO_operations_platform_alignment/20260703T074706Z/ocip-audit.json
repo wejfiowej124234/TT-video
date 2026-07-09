@@ -1,0 +1,1053 @@
+{
+  "schema": "traveltrust.official_catalog_identity_audit.v1",
+  "policy": "official_catalog_identity_policy",
+  "policy_registry": "registry/official-catalog-identity-policy.v1.yaml",
+  "stamp": "20260703T074900Z",
+  "recorded_at": "2026-07-03T07:50:10.405Z",
+  "api": "http://127.0.0.1:8080",
+  "state_path": "D:/TravelTrust-V1.1/evidence/GO_official_cold_start_dataset/20260703T044855Z/state.json",
+  "verdict": "PASS",
+  "layer_stack": [
+    "official_dataset_ocs",
+    "canonical_identity_immutable",
+    "mutable_content",
+    "public_catalog_sopcp"
+  ],
+  "identity_map": [
+    {
+      "chain_id": "tokyo-photo",
+      "city": "东京",
+      "key": "guide:tokyo-photo",
+      "slug": "tokyo-photo-guide",
+      "bucket": "guides",
+      "id": "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b"
+    },
+    {
+      "chain_id": "tokyo-photo",
+      "city": "东京",
+      "key": "provider:tokyo-photo",
+      "slug": "tokyo-photo-studio",
+      "bucket": "listings",
+      "id": "0b222fa9-f283-45a6-85a9-41da343c841d"
+    },
+    {
+      "chain_id": "tokyo-photo",
+      "city": "东京",
+      "key": "acquisition:tokyo-photo",
+      "slug": "tokyo-lens-bounty",
+      "bucket": "listings",
+      "id": "7bfea606-6481-4499-b88f-4864d3946396"
+    },
+    {
+      "chain_id": "tokyo-photo",
+      "city": "东京",
+      "key": "official_guide:tokyo-photo",
+      "slug": "tokyo-photo",
+      "bucket": "official_guides",
+      "id": "bd518b74-4e5c-4da3-b41e-586f3bd14afe"
+    },
+    {
+      "chain_id": "kyoto-culture",
+      "city": "京都",
+      "key": "guide:kyoto-culture",
+      "slug": "kyoto-tea-guide",
+      "bucket": "guides",
+      "id": "2f51212f-6ac0-445e-bf94-8338738b2de3"
+    },
+    {
+      "chain_id": "kyoto-culture",
+      "city": "京都",
+      "key": "provider:kyoto-culture",
+      "slug": "kyoto-tea-experience",
+      "bucket": "listings",
+      "id": "29eedfb5-5e23-4adf-a28e-6f395dfe1ee7"
+    },
+    {
+      "chain_id": "kyoto-culture",
+      "city": "京都",
+      "key": "acquisition:kyoto-culture",
+      "slug": "kyoto-craft-bounty",
+      "bucket": "listings",
+      "id": "e7a3ada1-2547-4d7c-b900-23802aac99d6"
+    },
+    {
+      "chain_id": "kyoto-culture",
+      "city": "京都",
+      "key": "official_guide:kyoto-culture",
+      "slug": "kyoto-culture",
+      "bucket": "official_guides",
+      "id": "8d29ca44-bf62-4e0c-9ff6-c76150dfc720"
+    },
+    {
+      "chain_id": "seoul-food",
+      "city": "首尔",
+      "key": "guide:seoul-food",
+      "slug": "seoul-food-guide",
+      "bucket": "guides",
+      "id": "519d9067-f2b2-49aa-9f76-8665cb24e85b"
+    },
+    {
+      "chain_id": "seoul-food",
+      "city": "首尔",
+      "key": "provider:seoul-food",
+      "slug": "seoul-food-tour",
+      "bucket": "listings",
+      "id": "471173e0-8c08-4dac-9332-6a9cdd1fdbd5"
+    },
+    {
+      "chain_id": "seoul-food",
+      "city": "首尔",
+      "key": "acquisition:seoul-food",
+      "slug": "seoul-snack-bounty",
+      "bucket": "listings",
+      "id": "6f512a7b-6c0a-45c5-a8e4-4d90fe7f523c"
+    },
+    {
+      "chain_id": "seoul-food",
+      "city": "首尔",
+      "key": "official_guide:seoul-food",
+      "slug": "seoul-food",
+      "bucket": "official_guides",
+      "id": "21d483ea-a565-4ba4-b2b8-11da28891e07"
+    },
+    {
+      "chain_id": "bangkok-temple",
+      "city": "曼谷",
+      "key": "guide:bangkok-temple",
+      "slug": "bangkok-temple-guide",
+      "bucket": "guides",
+      "id": "da75b617-64bf-4338-a5b2-daf32921d695"
+    },
+    {
+      "chain_id": "bangkok-temple",
+      "city": "曼谷",
+      "key": "provider:bangkok-temple",
+      "slug": "bangkok-river-cruise",
+      "bucket": "listings",
+      "id": "5ed30bdd-08d9-4e60-af0d-266abfb5929e"
+    },
+    {
+      "chain_id": "bangkok-temple",
+      "city": "曼谷",
+      "key": "acquisition:bangkok-temple",
+      "slug": "bangkok-silk-bounty",
+      "bucket": "listings",
+      "id": "78618d20-982b-4948-9bfa-f4a22d086959"
+    },
+    {
+      "chain_id": "bangkok-temple",
+      "city": "曼谷",
+      "key": "official_guide:bangkok-temple",
+      "slug": "bangkok-temple",
+      "bucket": "official_guides",
+      "id": "766dcf9f-2954-4547-b949-b1282dcce989"
+    },
+    {
+      "chain_id": "singapore-family",
+      "city": "新加坡",
+      "key": "guide:singapore-family",
+      "slug": "sg-family-guide",
+      "bucket": "guides",
+      "id": "ea732e91-f0f3-42da-b4ae-1a1f5f0f592c"
+    },
+    {
+      "chain_id": "singapore-family",
+      "city": "新加坡",
+      "key": "provider:singapore-family",
+      "slug": "sg-family-pass",
+      "bucket": "listings",
+      "id": "2deb3bd8-5d3e-4451-b44a-79c2587ebb41"
+    },
+    {
+      "chain_id": "singapore-family",
+      "city": "新加坡",
+      "key": "acquisition:singapore-family",
+      "slug": "sg-design-bounty",
+      "bucket": "listings",
+      "id": "490078e3-57f4-4d78-b01c-ed817a3f2df6"
+    },
+    {
+      "chain_id": "singapore-family",
+      "city": "新加坡",
+      "key": "official_guide:singapore-family",
+      "slug": "singapore-family",
+      "bucket": "official_guides",
+      "id": "2b30657f-4fce-4b9b-adca-eacfc96af650"
+    },
+    {
+      "chain_id": "paris-art",
+      "city": "巴黎",
+      "key": "guide:paris-art",
+      "slug": "paris-art-guide",
+      "bucket": "guides",
+      "id": "692a940e-1d25-452d-83f8-5b37f9141f60"
+    },
+    {
+      "chain_id": "paris-art",
+      "city": "巴黎",
+      "key": "provider:paris-art",
+      "slug": "paris-museum-skip",
+      "bucket": "listings",
+      "id": "cf6462c7-37b5-41b4-b9ee-a8c07bcc8412"
+    },
+    {
+      "chain_id": "paris-art",
+      "city": "巴黎",
+      "key": "acquisition:paris-art",
+      "slug": "paris-vintage-bounty",
+      "bucket": "listings",
+      "id": "7991a8bf-c358-48df-98e8-c6a3048abb8d"
+    },
+    {
+      "chain_id": "paris-art",
+      "city": "巴黎",
+      "key": "official_guide:paris-art",
+      "slug": "paris-art",
+      "bucket": "official_guides",
+      "id": "ed68cdc7-bd9c-4aa3-a117-8191479ca92d"
+    },
+    {
+      "chain_id": "nyc-skyline",
+      "city": "纽约",
+      "key": "guide:nyc-skyline",
+      "slug": "nyc-skyline-guide",
+      "bucket": "guides",
+      "id": "c5d963f9-e679-43a6-9b84-5f7073a51109"
+    },
+    {
+      "chain_id": "nyc-skyline",
+      "city": "纽约",
+      "key": "provider:nyc-skyline",
+      "slug": "nyc-rooftop-tour",
+      "bucket": "listings",
+      "id": "2f8cfdf7-417d-4c9a-b3da-45a22237eac0"
+    },
+    {
+      "chain_id": "nyc-skyline",
+      "city": "纽约",
+      "key": "acquisition:nyc-skyline",
+      "slug": "nyc-vinyl-bounty",
+      "bucket": "listings",
+      "id": "8885e2b7-f51d-432d-858c-cbe83140a3d8"
+    },
+    {
+      "chain_id": "nyc-skyline",
+      "city": "纽约",
+      "key": "official_guide:nyc-skyline",
+      "slug": "nyc-skyline",
+      "bucket": "official_guides",
+      "id": "108e8182-5c94-4f87-9043-f26394d394e5"
+    },
+    {
+      "chain_id": "sydney-coast",
+      "city": "悉尼",
+      "key": "guide:sydney-coast",
+      "slug": "sydney-coast-guide",
+      "bucket": "guides",
+      "id": "e551bed7-f455-4102-9fa3-b791a68e06d5"
+    },
+    {
+      "chain_id": "sydney-coast",
+      "city": "悉尼",
+      "key": "provider:sydney-coast",
+      "slug": "sydney-coastal-kayak",
+      "bucket": "listings",
+      "id": "1693a76b-8b0e-4526-b0f8-6b22c10594f5"
+    },
+    {
+      "chain_id": "sydney-coast",
+      "city": "悉尼",
+      "key": "acquisition:sydney-coast",
+      "slug": "sydney-surf-bounty",
+      "bucket": "listings",
+      "id": "fa3bed24-d8eb-4270-ada9-08eec8358648"
+    },
+    {
+      "chain_id": "sydney-coast",
+      "city": "悉尼",
+      "key": "official_guide:sydney-coast",
+      "slug": "sydney-coast",
+      "bucket": "official_guides",
+      "id": "a9037477-cfd1-4219-8750-af607c5ec119"
+    },
+    {
+      "chain_id": "barcelona-arch",
+      "city": "巴塞罗那",
+      "key": "guide:barcelona-arch",
+      "slug": "bcn-arch-guide",
+      "bucket": "guides",
+      "id": "dddf81f0-28b7-4aba-b744-70026d9fb148"
+    },
+    {
+      "chain_id": "barcelona-arch",
+      "city": "巴塞罗那",
+      "key": "provider:barcelona-arch",
+      "slug": "bcn-gaudi-tickets",
+      "bucket": "listings",
+      "id": "4832bced-9f95-4459-9a54-0744e37fb642"
+    },
+    {
+      "chain_id": "barcelona-arch",
+      "city": "巴塞罗那",
+      "key": "acquisition:barcelona-arch",
+      "slug": "bcn-tile-bounty",
+      "bucket": "listings",
+      "id": "59ac5a99-0504-43ff-8904-37bab0a093e0"
+    },
+    {
+      "chain_id": "barcelona-arch",
+      "city": "巴塞罗那",
+      "key": "official_guide:barcelona-arch",
+      "slug": "barcelona-arch",
+      "bucket": "official_guides",
+      "id": "ab59943c-7558-4ac9-b1a6-9ea614b2968d"
+    },
+    {
+      "chain_id": "dubai-luxury",
+      "city": "迪拜",
+      "key": "guide:dubai-luxury",
+      "slug": "dubai-desert-guide",
+      "bucket": "guides",
+      "id": "cd69b54b-6407-4a34-90c6-f36c0c658dd7"
+    },
+    {
+      "chain_id": "dubai-luxury",
+      "city": "迪拜",
+      "key": "provider:dubai-luxury",
+      "slug": "dubai-desert-safari",
+      "bucket": "listings",
+      "id": "d92ea03e-35b5-4c1e-803e-44e43ee748d8"
+    },
+    {
+      "chain_id": "dubai-luxury",
+      "city": "迪拜",
+      "key": "acquisition:dubai-luxury",
+      "slug": "dubai-perfume-bounty",
+      "bucket": "listings",
+      "id": "dd638810-8074-47ef-80ae-92da6c89cf06"
+    },
+    {
+      "chain_id": "dubai-luxury",
+      "city": "迪拜",
+      "key": "official_guide:dubai-luxury",
+      "slug": "dubai-luxury",
+      "bucket": "official_guides",
+      "id": "205d73cd-1bd6-45cb-a99e-00b28321f42c"
+    },
+    {
+      "chain_id": null,
+      "key": "home-hero",
+      "slug": "home-hero",
+      "bucket": "campaigns",
+      "id": "a8a3a1c2-b37f-4828-99cb-f9b8e33eb30e"
+    },
+    {
+      "chain_id": null,
+      "key": "hot-guides",
+      "slug": "hot-guides",
+      "bucket": "campaigns",
+      "id": "1eb93f6b-3172-4bcb-83ff-1b57ece6dbf3"
+    },
+    {
+      "chain_id": null,
+      "key": "hot-providers",
+      "slug": "hot-providers",
+      "bucket": "campaigns",
+      "id": "f6bba8a1-484e-4f91-a2f6-a0700ee0ee53"
+    },
+    {
+      "chain_id": null,
+      "key": "hot-acquisition",
+      "slug": "hot-acquisition",
+      "bucket": "campaigns",
+      "id": "5c2e6580-1245-40f6-bf92-3fcce091c84a"
+    },
+    {
+      "chain_id": null,
+      "key": "official-picks",
+      "slug": "official-picks",
+      "bucket": "campaigns",
+      "id": "89c7fdb2-af8d-4029-b8d6-4155b6c97e32"
+    },
+    {
+      "chain_id": null,
+      "key": "newcomer",
+      "slug": "newcomer",
+      "bucket": "campaigns",
+      "id": "d979dc79-d897-4b93-a862-0e2baf453f3d"
+    },
+    {
+      "chain_id": null,
+      "key": "city-tokyo",
+      "slug": "city-tokyo",
+      "bucket": "campaigns",
+      "id": "b385cac2-45ff-4a9a-b577-096bd43cc633"
+    },
+    {
+      "chain_id": null,
+      "key": "summer",
+      "slug": "summer",
+      "bucket": "campaigns",
+      "id": "276a68a7-6966-436e-a98f-1a1bac26d1b2"
+    },
+    {
+      "chain_id": null,
+      "key": "festival",
+      "slug": "festival",
+      "bucket": "campaigns",
+      "id": "7f506d82-cbfa-40bb-b394-0e7a631f8e15"
+    },
+    {
+      "chain_id": null,
+      "key": "weekly-picks",
+      "slug": "weekly-picks",
+      "bucket": "campaigns",
+      "id": "9289a931-38d0-4a92-bf2e-52d2810bf2a0"
+    }
+  ],
+  "live_checks": [
+    {
+      "canonical_key": "guide:tokyo-photo",
+      "chain_id": "tokyo-photo",
+      "manifest_slug": "tokyo-photo-guide",
+      "uuid": "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+      "surface": "guides_public",
+      "live": true
+    },
+    {
+      "canonical_key": "provider:tokyo-photo",
+      "chain_id": "tokyo-photo",
+      "manifest_slug": "tokyo-photo-studio",
+      "uuid": "0b222fa9-f283-45a6-85a9-41da343c841d",
+      "surface": "provider_public",
+      "live": true
+    },
+    {
+      "canonical_key": "acquisition:tokyo-photo",
+      "chain_id": "tokyo-photo",
+      "manifest_slug": "tokyo-lens-bounty",
+      "uuid": "7bfea606-6481-4499-b88f-4864d3946396",
+      "surface": "acquisition_public",
+      "live": true
+    },
+    {
+      "canonical_key": "official_guide:tokyo-photo",
+      "chain_id": "tokyo-photo",
+      "manifest_slug": "tokyo-photo",
+      "uuid": "bd518b74-4e5c-4da3-b41e-586f3bd14afe",
+      "surface": "official_guides_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "guide:kyoto-culture",
+      "chain_id": "kyoto-culture",
+      "manifest_slug": "kyoto-tea-guide",
+      "uuid": "2f51212f-6ac0-445e-bf94-8338738b2de3",
+      "surface": "guides_public",
+      "live": true
+    },
+    {
+      "canonical_key": "provider:kyoto-culture",
+      "chain_id": "kyoto-culture",
+      "manifest_slug": "kyoto-tea-experience",
+      "uuid": "29eedfb5-5e23-4adf-a28e-6f395dfe1ee7",
+      "surface": "provider_public",
+      "live": true
+    },
+    {
+      "canonical_key": "acquisition:kyoto-culture",
+      "chain_id": "kyoto-culture",
+      "manifest_slug": "kyoto-craft-bounty",
+      "uuid": "e7a3ada1-2547-4d7c-b900-23802aac99d6",
+      "surface": "acquisition_public",
+      "live": true
+    },
+    {
+      "canonical_key": "official_guide:kyoto-culture",
+      "chain_id": "kyoto-culture",
+      "manifest_slug": "kyoto-culture",
+      "uuid": "8d29ca44-bf62-4e0c-9ff6-c76150dfc720",
+      "surface": "official_guides_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "guide:seoul-food",
+      "chain_id": "seoul-food",
+      "manifest_slug": "seoul-food-guide",
+      "uuid": "519d9067-f2b2-49aa-9f76-8665cb24e85b",
+      "surface": "guides_public",
+      "live": true
+    },
+    {
+      "canonical_key": "provider:seoul-food",
+      "chain_id": "seoul-food",
+      "manifest_slug": "seoul-food-tour",
+      "uuid": "471173e0-8c08-4dac-9332-6a9cdd1fdbd5",
+      "surface": "provider_public",
+      "live": true
+    },
+    {
+      "canonical_key": "acquisition:seoul-food",
+      "chain_id": "seoul-food",
+      "manifest_slug": "seoul-snack-bounty",
+      "uuid": "6f512a7b-6c0a-45c5-a8e4-4d90fe7f523c",
+      "surface": "acquisition_public",
+      "live": true
+    },
+    {
+      "canonical_key": "official_guide:seoul-food",
+      "chain_id": "seoul-food",
+      "manifest_slug": "seoul-food",
+      "uuid": "21d483ea-a565-4ba4-b2b8-11da28891e07",
+      "surface": "official_guides_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "guide:bangkok-temple",
+      "chain_id": "bangkok-temple",
+      "manifest_slug": "bangkok-temple-guide",
+      "uuid": "da75b617-64bf-4338-a5b2-daf32921d695",
+      "surface": "guides_public",
+      "live": true
+    },
+    {
+      "canonical_key": "provider:bangkok-temple",
+      "chain_id": "bangkok-temple",
+      "manifest_slug": "bangkok-river-cruise",
+      "uuid": "5ed30bdd-08d9-4e60-af0d-266abfb5929e",
+      "surface": "provider_public",
+      "live": true
+    },
+    {
+      "canonical_key": "acquisition:bangkok-temple",
+      "chain_id": "bangkok-temple",
+      "manifest_slug": "bangkok-silk-bounty",
+      "uuid": "78618d20-982b-4948-9bfa-f4a22d086959",
+      "surface": "acquisition_public",
+      "live": true
+    },
+    {
+      "canonical_key": "official_guide:bangkok-temple",
+      "chain_id": "bangkok-temple",
+      "manifest_slug": "bangkok-temple",
+      "uuid": "766dcf9f-2954-4547-b949-b1282dcce989",
+      "surface": "official_guides_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "guide:singapore-family",
+      "chain_id": "singapore-family",
+      "manifest_slug": "sg-family-guide",
+      "uuid": "ea732e91-f0f3-42da-b4ae-1a1f5f0f592c",
+      "surface": "guides_public",
+      "live": true
+    },
+    {
+      "canonical_key": "provider:singapore-family",
+      "chain_id": "singapore-family",
+      "manifest_slug": "sg-family-pass",
+      "uuid": "2deb3bd8-5d3e-4451-b44a-79c2587ebb41",
+      "surface": "provider_public",
+      "live": true
+    },
+    {
+      "canonical_key": "acquisition:singapore-family",
+      "chain_id": "singapore-family",
+      "manifest_slug": "sg-design-bounty",
+      "uuid": "490078e3-57f4-4d78-b01c-ed817a3f2df6",
+      "surface": "acquisition_public",
+      "live": true
+    },
+    {
+      "canonical_key": "official_guide:singapore-family",
+      "chain_id": "singapore-family",
+      "manifest_slug": "singapore-family",
+      "uuid": "2b30657f-4fce-4b9b-adca-eacfc96af650",
+      "surface": "official_guides_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "guide:paris-art",
+      "chain_id": "paris-art",
+      "manifest_slug": "paris-art-guide",
+      "uuid": "692a940e-1d25-452d-83f8-5b37f9141f60",
+      "surface": "guides_public",
+      "live": true
+    },
+    {
+      "canonical_key": "provider:paris-art",
+      "chain_id": "paris-art",
+      "manifest_slug": "paris-museum-skip",
+      "uuid": "cf6462c7-37b5-41b4-b9ee-a8c07bcc8412",
+      "surface": "provider_public",
+      "live": true
+    },
+    {
+      "canonical_key": "acquisition:paris-art",
+      "chain_id": "paris-art",
+      "manifest_slug": "paris-vintage-bounty",
+      "uuid": "7991a8bf-c358-48df-98e8-c6a3048abb8d",
+      "surface": "acquisition_public",
+      "live": true
+    },
+    {
+      "canonical_key": "official_guide:paris-art",
+      "chain_id": "paris-art",
+      "manifest_slug": "paris-art",
+      "uuid": "ed68cdc7-bd9c-4aa3-a117-8191479ca92d",
+      "surface": "official_guides_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "guide:nyc-skyline",
+      "chain_id": "nyc-skyline",
+      "manifest_slug": "nyc-skyline-guide",
+      "uuid": "c5d963f9-e679-43a6-9b84-5f7073a51109",
+      "surface": "guides_public",
+      "live": true
+    },
+    {
+      "canonical_key": "provider:nyc-skyline",
+      "chain_id": "nyc-skyline",
+      "manifest_slug": "nyc-rooftop-tour",
+      "uuid": "2f8cfdf7-417d-4c9a-b3da-45a22237eac0",
+      "surface": "provider_public",
+      "live": true
+    },
+    {
+      "canonical_key": "acquisition:nyc-skyline",
+      "chain_id": "nyc-skyline",
+      "manifest_slug": "nyc-vinyl-bounty",
+      "uuid": "8885e2b7-f51d-432d-858c-cbe83140a3d8",
+      "surface": "acquisition_public",
+      "live": true
+    },
+    {
+      "canonical_key": "official_guide:nyc-skyline",
+      "chain_id": "nyc-skyline",
+      "manifest_slug": "nyc-skyline",
+      "uuid": "108e8182-5c94-4f87-9043-f26394d394e5",
+      "surface": "official_guides_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "guide:sydney-coast",
+      "chain_id": "sydney-coast",
+      "manifest_slug": "sydney-coast-guide",
+      "uuid": "e551bed7-f455-4102-9fa3-b791a68e06d5",
+      "surface": "guides_public",
+      "live": true
+    },
+    {
+      "canonical_key": "provider:sydney-coast",
+      "chain_id": "sydney-coast",
+      "manifest_slug": "sydney-coastal-kayak",
+      "uuid": "1693a76b-8b0e-4526-b0f8-6b22c10594f5",
+      "surface": "provider_public",
+      "live": true
+    },
+    {
+      "canonical_key": "acquisition:sydney-coast",
+      "chain_id": "sydney-coast",
+      "manifest_slug": "sydney-surf-bounty",
+      "uuid": "fa3bed24-d8eb-4270-ada9-08eec8358648",
+      "surface": "acquisition_public",
+      "live": true
+    },
+    {
+      "canonical_key": "official_guide:sydney-coast",
+      "chain_id": "sydney-coast",
+      "manifest_slug": "sydney-coast",
+      "uuid": "a9037477-cfd1-4219-8750-af607c5ec119",
+      "surface": "official_guides_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "guide:barcelona-arch",
+      "chain_id": "barcelona-arch",
+      "manifest_slug": "bcn-arch-guide",
+      "uuid": "dddf81f0-28b7-4aba-b744-70026d9fb148",
+      "surface": "guides_public",
+      "live": true
+    },
+    {
+      "canonical_key": "provider:barcelona-arch",
+      "chain_id": "barcelona-arch",
+      "manifest_slug": "bcn-gaudi-tickets",
+      "uuid": "4832bced-9f95-4459-9a54-0744e37fb642",
+      "surface": "provider_public",
+      "live": true
+    },
+    {
+      "canonical_key": "acquisition:barcelona-arch",
+      "chain_id": "barcelona-arch",
+      "manifest_slug": "bcn-tile-bounty",
+      "uuid": "59ac5a99-0504-43ff-8904-37bab0a093e0",
+      "surface": "acquisition_public",
+      "live": true
+    },
+    {
+      "canonical_key": "official_guide:barcelona-arch",
+      "chain_id": "barcelona-arch",
+      "manifest_slug": "barcelona-arch",
+      "uuid": "ab59943c-7558-4ac9-b1a6-9ea614b2968d",
+      "surface": "official_guides_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "guide:dubai-luxury",
+      "chain_id": "dubai-luxury",
+      "manifest_slug": "dubai-desert-guide",
+      "uuid": "cd69b54b-6407-4a34-90c6-f36c0c658dd7",
+      "surface": "guides_public",
+      "live": true
+    },
+    {
+      "canonical_key": "provider:dubai-luxury",
+      "chain_id": "dubai-luxury",
+      "manifest_slug": "dubai-desert-safari",
+      "uuid": "d92ea03e-35b5-4c1e-803e-44e43ee748d8",
+      "surface": "provider_public",
+      "live": true
+    },
+    {
+      "canonical_key": "acquisition:dubai-luxury",
+      "chain_id": "dubai-luxury",
+      "manifest_slug": "dubai-perfume-bounty",
+      "uuid": "dd638810-8074-47ef-80ae-92da6c89cf06",
+      "surface": "acquisition_public",
+      "live": true
+    },
+    {
+      "canonical_key": "official_guide:dubai-luxury",
+      "chain_id": "dubai-luxury",
+      "manifest_slug": "dubai-luxury",
+      "uuid": "205d73cd-1bd6-45cb-a99e-00b28321f42c",
+      "surface": "official_guides_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "home-hero",
+      "chain_id": null,
+      "manifest_slug": "home-hero",
+      "uuid": "a8a3a1c2-b37f-4828-99cb-f9b8e33eb30e",
+      "surface": "campaigns_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "hot-guides",
+      "chain_id": null,
+      "manifest_slug": "hot-guides",
+      "uuid": "1eb93f6b-3172-4bcb-83ff-1b57ece6dbf3",
+      "surface": "campaigns_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "hot-providers",
+      "chain_id": null,
+      "manifest_slug": "hot-providers",
+      "uuid": "f6bba8a1-484e-4f91-a2f6-a0700ee0ee53",
+      "surface": "campaigns_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "hot-acquisition",
+      "chain_id": null,
+      "manifest_slug": "hot-acquisition",
+      "uuid": "5c2e6580-1245-40f6-bf92-3fcce091c84a",
+      "surface": "campaigns_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "official-picks",
+      "chain_id": null,
+      "manifest_slug": "official-picks",
+      "uuid": "89c7fdb2-af8d-4029-b8d6-4155b6c97e32",
+      "surface": "campaigns_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "newcomer",
+      "chain_id": null,
+      "manifest_slug": "newcomer",
+      "uuid": "d979dc79-d897-4b93-a862-0e2baf453f3d",
+      "surface": "campaigns_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "city-tokyo",
+      "chain_id": null,
+      "manifest_slug": "city-tokyo",
+      "uuid": "b385cac2-45ff-4a9a-b577-096bd43cc633",
+      "surface": "campaigns_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "summer",
+      "chain_id": null,
+      "manifest_slug": "summer",
+      "uuid": "276a68a7-6966-436e-a98f-1a1bac26d1b2",
+      "surface": "campaigns_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "festival",
+      "chain_id": null,
+      "manifest_slug": "festival",
+      "uuid": "7f506d82-cbfa-40bb-b394-0e7a631f8e15",
+      "surface": "campaigns_admin",
+      "live": true
+    },
+    {
+      "canonical_key": "weekly-picks",
+      "chain_id": null,
+      "manifest_slug": "weekly-picks",
+      "uuid": "9289a931-38d0-4a92-bf2e-52d2810bf2a0",
+      "surface": "campaigns_admin",
+      "live": true
+    }
+  ],
+  "campaign_ref_checks": [
+    {
+      "campaign": "home-hero",
+      "ref": "guide:tokyo-photo",
+      "expected_uuid": "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+      "bound": true
+    },
+    {
+      "campaign": "home-hero",
+      "ref": "official_guide:tokyo-photo",
+      "expected_uuid": "bd518b74-4e5c-4da3-b41e-586f3bd14afe",
+      "bound": true
+    },
+    {
+      "campaign": "hot-guides",
+      "ref": "guide:kyoto-culture",
+      "expected_uuid": "2f51212f-6ac0-445e-bf94-8338738b2de3",
+      "bound": true
+    },
+    {
+      "campaign": "hot-guides",
+      "ref": "guide:seoul-food",
+      "expected_uuid": "519d9067-f2b2-49aa-9f76-8665cb24e85b",
+      "bound": true
+    },
+    {
+      "campaign": "hot-guides",
+      "ref": "guide:paris-art",
+      "expected_uuid": "692a940e-1d25-452d-83f8-5b37f9141f60",
+      "bound": true
+    },
+    {
+      "campaign": "hot-providers",
+      "ref": "provider:tokyo-photo",
+      "expected_uuid": "0b222fa9-f283-45a6-85a9-41da343c841d",
+      "bound": true
+    },
+    {
+      "campaign": "hot-providers",
+      "ref": "provider:barcelona-arch",
+      "expected_uuid": "4832bced-9f95-4459-9a54-0744e37fb642",
+      "bound": false
+    },
+    {
+      "campaign": "hot-providers",
+      "ref": "provider:dubai-luxury",
+      "expected_uuid": "d92ea03e-35b5-4c1e-803e-44e43ee748d8",
+      "bound": false
+    },
+    {
+      "campaign": "hot-acquisition",
+      "ref": "acquisition:tokyo-photo",
+      "expected_uuid": "7bfea606-6481-4499-b88f-4864d3946396",
+      "bound": false
+    },
+    {
+      "campaign": "hot-acquisition",
+      "ref": "acquisition:paris-art",
+      "expected_uuid": "7991a8bf-c358-48df-98e8-c6a3048abb8d",
+      "bound": false
+    },
+    {
+      "campaign": "official-picks",
+      "ref": "official_guide:tokyo-photo",
+      "expected_uuid": "bd518b74-4e5c-4da3-b41e-586f3bd14afe",
+      "bound": true
+    },
+    {
+      "campaign": "official-picks",
+      "ref": "official_guide:singapore-family",
+      "expected_uuid": "2b30657f-4fce-4b9b-adca-eacfc96af650",
+      "bound": true
+    },
+    {
+      "campaign": "newcomer",
+      "ref": "guide:sydney-coast",
+      "expected_uuid": "e551bed7-f455-4102-9fa3-b791a68e06d5",
+      "bound": true
+    },
+    {
+      "campaign": "newcomer",
+      "ref": "guide:nyc-skyline",
+      "expected_uuid": "c5d963f9-e679-43a6-9b84-5f7073a51109",
+      "bound": true
+    },
+    {
+      "campaign": "city-tokyo",
+      "ref": "guide:tokyo-photo",
+      "expected_uuid": "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+      "bound": true
+    },
+    {
+      "campaign": "city-tokyo",
+      "ref": "provider:tokyo-photo",
+      "expected_uuid": "0b222fa9-f283-45a6-85a9-41da343c841d",
+      "bound": false
+    },
+    {
+      "campaign": "city-tokyo",
+      "ref": "official_guide:tokyo-photo",
+      "expected_uuid": "bd518b74-4e5c-4da3-b41e-586f3bd14afe",
+      "bound": true
+    },
+    {
+      "campaign": "summer",
+      "ref": "guide:bangkok-temple",
+      "expected_uuid": "da75b617-64bf-4338-a5b2-daf32921d695",
+      "bound": true
+    },
+    {
+      "campaign": "summer",
+      "ref": "provider:bangkok-temple",
+      "expected_uuid": "5ed30bdd-08d9-4e60-af0d-266abfb5929e",
+      "bound": false
+    },
+    {
+      "campaign": "festival",
+      "ref": "guide:barcelona-arch",
+      "expected_uuid": "dddf81f0-28b7-4aba-b744-70026d9fb148",
+      "bound": true
+    },
+    {
+      "campaign": "festival",
+      "ref": "official_guide:barcelona-arch",
+      "expected_uuid": "ab59943c-7558-4ac9-b1a6-9ea614b2968d",
+      "bound": true
+    },
+    {
+      "campaign": "weekly-picks",
+      "ref": "provider:seoul-food",
+      "expected_uuid": "471173e0-8c08-4dac-9332-6a9cdd1fdbd5",
+      "bound": false
+    },
+    {
+      "campaign": "weekly-picks",
+      "ref": "provider:paris-art",
+      "expected_uuid": "cf6462c7-37b5-41b4-b9ee-a8c07bcc8412",
+      "bound": false
+    },
+    {
+      "campaign": "weekly-picks",
+      "ref": "acquisition:seoul-food",
+      "expected_uuid": "6f512a7b-6c0a-45c5-a8e4-4d90fe7f523c",
+      "bound": false
+    }
+  ],
+  "issues": [
+    {
+      "severity": "enhancement",
+      "id": "CAMPAIGN_REF_DRIFT",
+      "canonical_key": "hot-providers:provider:barcelona-arch",
+      "msg": "campaign item not bound to canonical UUID (content gap, identity OK)",
+      "detail": {
+        "expected": "4832bced-9f95-4459-9a54-0744e37fb642",
+        "campId": "f6bba8a1-484e-4f91-a2f6-a0700ee0ee53"
+      }
+    },
+    {
+      "severity": "enhancement",
+      "id": "CAMPAIGN_REF_DRIFT",
+      "canonical_key": "hot-providers:provider:dubai-luxury",
+      "msg": "campaign item not bound to canonical UUID (content gap, identity OK)",
+      "detail": {
+        "expected": "d92ea03e-35b5-4c1e-803e-44e43ee748d8",
+        "campId": "f6bba8a1-484e-4f91-a2f6-a0700ee0ee53"
+      }
+    },
+    {
+      "severity": "enhancement",
+      "id": "CAMPAIGN_REF_DRIFT",
+      "canonical_key": "hot-acquisition:acquisition:tokyo-photo",
+      "msg": "campaign item not bound to canonical UUID (content gap, identity OK)",
+      "detail": {
+        "expected": "7bfea606-6481-4499-b88f-4864d3946396",
+        "campId": "5c2e6580-1245-40f6-bf92-3fcce091c84a"
+      }
+    },
+    {
+      "severity": "enhancement",
+      "id": "CAMPAIGN_REF_DRIFT",
+      "canonical_key": "hot-acquisition:acquisition:paris-art",
+      "msg": "campaign item not bound to canonical UUID (content gap, identity OK)",
+      "detail": {
+        "expected": "7991a8bf-c358-48df-98e8-c6a3048abb8d",
+        "campId": "5c2e6580-1245-40f6-bf92-3fcce091c84a"
+      }
+    },
+    {
+      "severity": "enhancement",
+      "id": "CAMPAIGN_REF_DRIFT",
+      "canonical_key": "city-tokyo:provider:tokyo-photo",
+      "msg": "campaign item not bound to canonical UUID (content gap, identity OK)",
+      "detail": {
+        "expected": "0b222fa9-f283-45a6-85a9-41da343c841d",
+        "campId": "b385cac2-45ff-4a9a-b577-096bd43cc633"
+      }
+    },
+    {
+      "severity": "enhancement",
+      "id": "CAMPAIGN_REF_DRIFT",
+      "canonical_key": "summer:provider:bangkok-temple",
+      "msg": "campaign item not bound to canonical UUID (content gap, identity OK)",
+      "detail": {
+        "expected": "5ed30bdd-08d9-4e60-af0d-266abfb5929e",
+        "campId": "276a68a7-6966-436e-a98f-1a1bac26d1b2"
+      }
+    },
+    {
+      "severity": "enhancement",
+      "id": "CAMPAIGN_REF_DRIFT",
+      "canonical_key": "weekly-picks:provider:seoul-food",
+      "msg": "campaign item not bound to canonical UUID (content gap, identity OK)",
+      "detail": {
+        "expected": "471173e0-8c08-4dac-9332-6a9cdd1fdbd5",
+        "campId": "9289a931-38d0-4a92-bf2e-52d2810bf2a0"
+      }
+    },
+    {
+      "severity": "enhancement",
+      "id": "CAMPAIGN_REF_DRIFT",
+      "canonical_key": "weekly-picks:provider:paris-art",
+      "msg": "campaign item not bound to canonical UUID (content gap, identity OK)",
+      "detail": {
+        "expected": "cf6462c7-37b5-41b4-b9ee-a8c07bcc8412",
+        "campId": "9289a931-38d0-4a92-bf2e-52d2810bf2a0"
+      }
+    },
+    {
+      "severity": "enhancement",
+      "id": "CAMPAIGN_REF_DRIFT",
+      "canonical_key": "weekly-picks:acquisition:seoul-food",
+      "msg": "campaign item not bound to canonical UUID (content gap, identity OK)",
+      "detail": {
+        "expected": "6f512a7b-6c0a-45c5-a8e4-4d90fe7f523c",
+        "campId": "9289a931-38d0-4a92-bf2e-52d2810bf2a0"
+      }
+    }
+  ],
+  "summary": {
+    "canonical_entities": 50,
+    "blocking": 0,
+    "major": 0
+  }
+}

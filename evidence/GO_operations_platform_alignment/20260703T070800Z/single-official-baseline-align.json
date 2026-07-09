@@ -1,0 +1,131 @@
+{
+  "schema": "traveltrust.single_official_public_catalog_align.v1",
+  "policy": "single_official_public_catalog_policy",
+  "scope": "public_catalog_unpublish_only",
+  "db_deletion": false,
+  "recorded_at": "2026-07-03T07:08:11.405Z",
+  "dry_run": false,
+  "unpublish": [
+    {
+      "entity_type": "guides",
+      "id": "d45162a0-f9f2-4030-93a1-82003a9753ac",
+      "label": "杭州 · CN",
+      "reason": "TEST_SEED",
+      "status": 200
+    },
+    {
+      "entity_type": "guides",
+      "id": "f0e0b101-0001-4001-8001-000000000003",
+      "label": "杭州 · CN",
+      "reason": "CANONICAL_SHOWCASE",
+      "status": 200
+    },
+    {
+      "entity_type": "guides",
+      "id": "f0e0b101-0001-4001-8001-000000000002",
+      "label": "杭州 · CN",
+      "reason": "CANONICAL_SHOWCASE",
+      "status": 200
+    },
+    {
+      "entity_type": "guides",
+      "id": "f0e0b101-0001-4001-8001-000000000001",
+      "label": "杭州 · CN",
+      "reason": "CANONICAL_SHOWCASE",
+      "status": 200
+    },
+    {
+      "entity_type": "guides",
+      "id": "00000000-0000-4000-8000-000000000311",
+      "label": "北京 · CN",
+      "reason": "CANONICAL_SHOWCASE",
+      "status": 200
+    },
+    {
+      "entity_type": "guides",
+      "id": "00000000-0000-4000-8000-000000000312",
+      "label": "上海 · CN",
+      "reason": "CANONICAL_SHOWCASE",
+      "status": 200
+    },
+    {
+      "entity_type": "guides",
+      "id": "00000000-0000-4000-8000-000000000313",
+      "label": "京都 · JP",
+      "reason": "CANONICAL_SHOWCASE",
+      "status": 200
+    },
+    {
+      "entity_type": "market_listings",
+      "id": "25ae053a-d947-4e25-a3ff-4579244acc4e",
+      "label": "Multi-demo shop 1782818603 · provider",
+      "reason": "LEGACY_PRODUCTION",
+      "status": 200
+    },
+    {
+      "entity_type": "market_listings",
+      "id": "9e536a41-9f6b-4cf2-9c5b-67f7f00f9a9c",
+      "label": "Multi-demo acq 1782817800 · acquisition",
+      "reason": "LEGACY_PRODUCTION",
+      "status": 200
+    },
+    {
+      "entity_type": "market_listings",
+      "id": "fedea2b5-296e-47b1-82a5-3ede78f94c29",
+      "label": "Multi-demo shop 1782817800 · provider",
+      "reason": "LEGACY_PRODUCTION",
+      "status": 200
+    },
+    {
+      "entity_type": "guides",
+      "id": "d45162a0-f9f2-4030-93a1-82003a9753ac",
+      "label": "杭州",
+      "reason": "PUBLIC_API_EXTRA",
+      "status": 200
+    },
+    {
+      "entity_type": "market_listings",
+      "id": "fedea2b5-296e-47b1-82a5-3ede78f94c29",
+      "label": "Multi-demo shop 1782817800",
+      "reason": "PUBLIC_API_EXTRA",
+      "status": 200
+    },
+    {
+      "entity_type": "market_listings",
+      "id": "25ae053a-d947-4e25-a3ff-4579244acc4e",
+      "label": "Multi-demo shop 1782818603",
+      "reason": "PUBLIC_API_EXTRA",
+      "status": 200
+    },
+    {
+      "entity_type": "market_listings",
+      "id": "9e536a41-9f6b-4cf2-9c5b-67f7f00f9a9c",
+      "label": "Multi-demo acq 1782817800",
+      "reason": "PUBLIC_API_EXTRA",
+      "status": 200
+    }
+  ],
+  "errors": [
+    {
+      "entity_type": "guides",
+      "id": "274ab21a-eb69-4b2c-8821-cbddd7ac63d4",
+      "status": 404,
+      "body": {
+        "status": "error",
+        "error": "entity_not_found"
+      }
+    }
+  ],
+  "before": {
+    "publish_queue_guides": 7,
+    "publish_queue_market_listings": 3
+  },
+  "after": {
+    "guides_public": 2,
+    "provider_public": 2,
+    "acquisition_public": 1,
+    "publish_queue_guides": 0,
+    "publish_queue_listings": 3,
+    "publish_queue_market_listings": 0
+  }
+}

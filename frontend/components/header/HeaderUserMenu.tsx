@@ -26,6 +26,7 @@ import { HeaderUtilityMenuL5Chrome } from "@/components/header/HeaderUtilityMenu
 import { HeaderUserMenuItemIcon } from "@/components/header/HeaderUserMenuItemIcon";
 import { HeaderUserMenuNavLinks } from "@/components/header/HeaderUserMenuNavLinks";
 import { useHeaderUserMenuMeSync } from "@/components/header/useHeaderUserMenuMeSync";
+import { emailFromMePayload, publicChromeDisplayName } from "@/lib/publicChromeHygiene";
 
 /** 54-S18：登录后顶栏右侧用户头像 + 下拉（仅在校验 GET /me 有有效用户后由父级挂载；与 `useHeaderSession` 同源）。 */
 export function HeaderUserMenu({
@@ -106,7 +107,8 @@ export function HeaderUserMenu({
   const displayAvatarUrl = avatarUrl ? communityMediaAbsoluteUrlForRender(avatarUrl) : "";
   const showAvatar = Boolean(avatarUrl) && !avatarError;
   const initial = nickname ? nickname.slice(0, 1).toUpperCase() : null;
-  const displayName = nickname && nickname.length > 0 ? nickname : t("header_userDefaultName");
+  const meEmail = emailFromMePayload(mePayload);
+  const displayName = publicChromeDisplayName(nickname, meEmail, t("header_userDefaultName"));
 
   const menuButtonA11y = useMemo(
     () => headerUserMenuButtonA11yLabel(mePayload, locale, t),

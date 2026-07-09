@@ -1,0 +1,3 @@
+status: NO_GO
+phase3_entry_gate: HOLD
+at: 20260607T014245Z

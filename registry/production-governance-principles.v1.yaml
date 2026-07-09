@@ -1,0 +1,187 @@
+# Production Governance · Governance Root · Machine SSOT
+#
+# CANONICAL ROOT for Production Release Governance v1.
+# All governance docs cite this file — do not copy principles inline.
+#
+# Human: docs/runbook/PRODUCTION-GOVERNANCE-PRINCIPLES-V1.md
+# Active when: GOVERNANCE_FREEZE_ACTIVE (registry/governance-freeze.v1.yaml)
+
+schema: traveltrust.production_governance_principles.v1
+version: 1
+effective_utc: "2026-07-08"
+machine_key: TT_PRODUCTION_GOVERNANCE_PRINCIPLES
+
+governance_root: true
+governance_version:
+  id: production_release_governance_v1
+  label: Production Release Governance v1
+  machine_key: TT_PRODUCTION_RELEASE_GOVERNANCE_V1
+  status: FROZEN
+  lifecycle: COMPLETE
+  mode: OPERATE
+  compatibility: PATCH_ONLY
+  compatibility_label: "Patch only (v1.x)"
+  declared_complete_utc: "2026-07-08"
+  note: >
+    v1 lifecycle COMPLETE — governance system build finished. Operate mode: State Update,
+    Execution, Evidence. Freeze is a governance constraint; lifecycle is version lifecycle.
+    Future semantic changes → Production Release Governance v2.
+
+post_v1_discipline:
+  no_governance_design_unless_v2:
+    forbidden_unless_v2:
+      - new_principle
+      - new_gate
+      - new_governance_root
+      - new_governance_document_layer
+      - four_gate_structure_change
+      - readiness_book_structure_change
+  all_work_maps_to:
+    - state_update
+    - execution
+    - evidence
+  review_rule: >
+    If a change is not State Update, Execution, Evidence, or a v2 evolution per
+    compatibility_rule, reconsider whether it belongs in v1.
+
+compatibility_rule:
+  title: Compatibility Rule
+  summary: Do not mix field fixes with governance-process changes — use the correct version lane.
+  patch_v1_x:
+    label: Patch (v1.x)
+    allowed: true
+    includes:
+      - documentation_errors
+      - broken_cross_references
+      - spelling_typos
+      - non_semantic_clarifications
+    excludes:
+      - governance_semantics
+      - process_flow_changes
+      - gate_definitions
+      - principle_changes
+      - structural_schema_changes
+  minor_major_v2:
+    label: Minor / Major (v2)
+    required_when:
+      - governance_semantics_change
+      - process_or_runbook_flow_change
+      - gate_or_review_category_change
+      - principle_or_structure_change
+      - registry_schema_or_machine_key_change
+    action: Open Production Release Governance v2 cycle — do not patch v1 in place
+
+governance_hierarchy:
+  - layer: 1
+    name: Production Governance Principles
+    role: governance_root
+    ssot: registry/production-governance-principles.v1.yaml
+  - layer: 2
+    name: Governance Freeze
+    ssot: registry/governance-freeze.v1.yaml
+  - layer: 3
+    name: Four-Gate Framework
+    ssot: registry/production-go-four-gate-framework.v1.yaml
+  - layer: 4
+    name: Production Readiness Book
+    ssot: evidence/GO_production_readiness/production-readiness-book/PRODUCTION-READINESS-BOOK-LATEST.md
+  - layer: 5
+    name: Deployment Track
+    ssot: registry/mainnet-deployment-package.v1.yaml
+  - layer: 6
+    name: Evidence / Registry / Dashboard
+    note: Runtime SSOT — state continues under Principle #1
+
+governance_freeze_ref: registry/governance-freeze.v1.yaml
+runbook: docs/runbook/PRODUCTION-GOVERNANCE-PRINCIPLES-V1.md
+
+child_ssot_refs:
+  governance_freeze: registry/governance-freeze.v1.yaml
+  four_gate: registry/production-go-four-gate-framework.v1.yaml
+  prerequisite_review: registry/phase3-deployment-prerequisite-review.v1.yaml
+  mainnet_deployment_package: registry/mainnet-deployment-package.v1.yaml
+  production_readiness_book: scripts/dev/gen-production-readiness-book.cjs
+principle_1:
+  id: PG-P1
+  title: Structure Frozen · State Continues
+  statement: >
+    Release governance structure, schemas, templates, and process definitions remain frozen
+    after GOVERNANCE_FREEZE_ACTIVE. Runtime state, evidence, certification progress, and
+    deployment execution continue without requiring governance unfreeze.
+
+derived_principles:
+  - id: PG-P1-A
+    title: Structure Frozen
+    statement: Do not modify governance structure, schemas, templates, or Gate definitions post-freeze.
+  - id: PG-P1-B
+    title: State Continues
+    statement: Status, evidence, Dashboard, and Readiness Book may refresh continuously.
+  - id: PG-P1-C
+    title: Execution Continues
+    statement: Cert, Freeze, Package, Deployment, and Sign-off proceed per frozen runbooks.
+  - id: PG-P1-D
+    title: Truth Comes from SSOT
+    statement: All status is authoritative from Registry and Evidence — not narrative docs.
+
+update_types:
+  structure_update:
+    label: Structure Update
+    default_post_governance_freeze: FORBIDDEN
+    includes:
+      - runbook_process_definition_changes
+      - registry_schema_or_machine_key_changes
+      - gate_or_review_category_changes
+      - book_matrix_checklist_layout_changes
+      - evidence_directory_tree_changes
+      - prep_template_structure_changes
+    unfreeze_only_via: registry/governance-freeze.v1.yaml#unfreeze_exceptions
+
+  state_update:
+    label: State Update
+    default_post_governance_freeze: ALLOWED
+    includes:
+      - dashboard_status_refresh
+      - production_readiness_book_status_regen
+      - evidence_content_and_latest_pointers
+      - registry_status_fields_without_schema_change
+      - cert_progress_reflected_in_evidence
+    orchestrators:
+      - scripts/dev/refresh-governance-status.cjs
+      - scripts/dev/gen-production-readiness-book.cjs
+      - scripts/dev/run-phase-dashboard.cjs
+
+  execution:
+    label: Execution
+    default_post_governance_freeze: ALLOWED
+    includes:
+      - cert_chain_8_12
+      - web3_freeze
+      - mainnet_deployment_package_generation
+      - owner_signoff
+      - shadow_launch
+      - wave_1_deployment
+    note: Must follow frozen runbooks — not ad-hoc process invention
+
+current_phase_chain:
+  - governance_system: COMPLETE
+  - governance_freeze: ACTIVE
+  - timelock_waiting: IN_PROGRESS
+  - cert_8_12: WAIT
+  - phase_2f_exit_review: WAIT
+  - web3_freeze: WAIT
+  - generate_mainnet_package: WAIT
+  - owner_signoff: WAIT
+  - shadow_launch: WAIT
+  - wave_1: WAIT
+
+post_freeze_work_discipline:
+  mode: operate
+  prior_mode: design
+  allowed_focus:
+    - state_update
+    - execution
+    - evidence
+  forbidden_focus:
+    - new_governance_concepts
+    - structure_update_without_unfreeze_exception
+    - principle_2_or_meta_governance_without_v2_cycle

@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-06-07T07:24:31.591948+00:00",
+  "issues": [],
+  "pg_consistency_matrix": [
+    {
+      "probe_id": "pg.order_happy",
+      "check": "state",
+      "target": "f8c861b0-f05e-4ee9-a51a-1f2fe1d5d874",
+      "pg_value": "completed",
+      "api_value": "completed|escrowed|accepted",
+      "expected": "progressed",
+      "status": "PASS",
+      "notes": "completed"
+    },
+    {
+      "probe_id": "pg.order_dispute_terminal",
+      "check": "sync",
+      "target": "b0167ef5-0007-4574-be11-7f654a8b7ef3",
+      "pg_value": "refunded",
+      "api_value": "refunded",
+      "expected": "equal+terminal",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.dispute_resolved",
+      "check": "sync",
+      "target": "cbbebaa5-20cd-48fb-8e53-f7ee2ef789b6",
+      "pg_value": "resolved",
+      "api_value": "resolved",
+      "expected": "resolved",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.penalty_active",
+      "check": "state",
+      "target": "b3a777e0-7af9-42e3-963d-d5d7ccb16d87",
+      "pg_value": "2",
+      "api_value": ">=1",
+      "expected": "active",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.auth_audit_events",
+      "check": "infra",
+      "target": "auth_audit_events",
+      "pg_value": "73",
+      "api_value": "readable",
+      "expected": "ok",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.admin_audit_logs",
+      "check": "infra",
+      "target": "admin_audit_logs",
+      "pg_value": "5667",
+      "api_value": "readable",
+      "expected": "ok",
+      "status": "PASS",
+      "notes": ""
+    }
+  ],
+  "summary": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 0,
+    "pg_pass": 6,
+    "pg_total": 6
+  }
+}

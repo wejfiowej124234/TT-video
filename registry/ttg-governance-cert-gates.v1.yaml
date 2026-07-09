@@ -123,6 +123,7 @@ certs:
     target_tier: OPS_DONE
     evidence_subdir: phase-b/unstake
     signoff_file: PHASE-B-UNSTAKE-SIGNOFF.json
+    runner: scripts/dev/run-tt-governance-cert-09-unstake.sh
     mtm_ids:
     - CHK-SC-06
     - CHK-CORE-10

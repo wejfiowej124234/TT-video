@@ -1,0 +1,4541 @@
+{
+  "schema": "traveltrust.cms_cn_country_runtime_audit.v1",
+  "recorded_at_utc": "2026-07-07T11:38:23.570Z",
+  "phase": "② staging",
+  "country": {
+    "country_iso": "CN",
+    "country_zh": "中国",
+    "cities": [
+      "北京",
+      "上海",
+      "广州",
+      "成都",
+      "杭州",
+      "西安",
+      "厦门",
+      "青岛",
+      "大理"
+    ]
+  },
+  "jp_lock_guard": {
+    "required": 41,
+    "unchanged": true
+  },
+  "kr_lock_guard": {
+    "required": 31,
+    "unchanged": true
+  },
+  "th_lock_guard": {
+    "required": 28,
+    "unchanged": true
+  },
+  "sg_lock_guard": {
+    "required": 10,
+    "unchanged": true
+  },
+  "fr_lock_guard": {
+    "required": 24,
+    "unchanged": true
+  },
+  "us_lock_guard": {
+    "required": 33,
+    "unchanged": true
+  },
+  "cn_lock_guard": {
+    "required": 24,
+    "unchanged": true
+  },
+  "next_country": "BLOCKED",
+  "production_go": "BLOCKED",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "runtime_tier": "national_runtime",
+  "consumer_surfaces": [
+    "home_cn",
+    "market",
+    "market_itinerary_au",
+    "market_provider",
+    "market_acquisition",
+    "traveltrust",
+    "community"
+  ],
+  "checks": [
+    {
+      "id": "jp_lock_registry_unchanged",
+      "label": "日本五城 LOCK 资产未改动 (41/41)",
+      "pass": true,
+      "locked_count": 41,
+      "total": 41,
+      "rows": [
+        {
+          "matrix_id": "PH-JP-009-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-010-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-011-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-012-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-013-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-014-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-015-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-016-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-017-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-001-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-002-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-003-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-004-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-005-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-006-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-007-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-008-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-026-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-027-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-028-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-029-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-030-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-031-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-032-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-033-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-034-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-035-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-036-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-037-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-038-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-039-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-040-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-041-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-018-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-019-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-020-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-021-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-022-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-023-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-024-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-025-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "kr_lock_registry_unchanged",
+      "label": "韩国三城 LOCK 资产未改动 (31/31)",
+      "pass": true,
+      "locked_count": 31,
+      "total": 31,
+      "rows": [
+        {
+          "matrix_id": "PH-KR-064-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-065-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-066-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-067-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-068-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-069-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-070-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-071-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-072-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-042-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-043-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-044-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-045-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-046-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-047-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-048-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-049-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-050-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-051-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-052-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-053-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-054-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-055-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-056-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-057-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-058-ATR",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-059-ATR",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-060-ATR",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-061-FOOD",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-062-FOOD",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-063-FOOD",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "th_lock_registry_unchanged",
+      "label": "泰国三城 LOCK 资产未改动 (28/28)",
+      "pass": true,
+      "locked_count": 28,
+      "total": 28,
+      "rows": [
+        {
+          "matrix_id": "PH-TH-073-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-074-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-075-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-076-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-077-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-078-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-079-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-080-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-081-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-082-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-083-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-084-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-085-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-086-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-087-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-088-FOOD",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-089-FOOD",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-090-FOOD",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-091-FOOD",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-092-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-093-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-094-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-095-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-096-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-097-FOOD",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-098-FOOD",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-099-FOOD",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-100-FOOD",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "sg_lock_registry_unchanged",
+      "label": "新加坡 SG LOCK 资产未改动 (10/10)",
+      "pass": true,
+      "locked_count": 10,
+      "total": 10,
+      "rows": [
+        {
+          "matrix_id": "PH-SG-101-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-102-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-103-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-104-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-105-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-106-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-107-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-108-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-109-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-110-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "us_lock_registry_unchanged",
+      "label": "美国四城 LOCK 资产未改动 (33/33)",
+      "pass": true,
+      "locked_count": 33,
+      "total": 33,
+      "rows": [
+        {
+          "matrix_id": "PH-US-135-ATR",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-136-ATR",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-137-ATR",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-138-ATR",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-139-FOOD",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-140-FOOD",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-141-FOOD",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-142-FOOD",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-143-ATR",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-144-ATR",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-145-ATR",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-146-ATR",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-147-FOOD",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-148-FOOD",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-149-FOOD",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-150-ATR",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-151-ATR",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-152-ATR",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-153-ATR",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-154-FOOD",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-155-FOOD",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-156-FOOD",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-157-FOOD",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-158-ATR",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-159-ATR",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-160-ATR",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-161-ATR",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-162-ATR",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-163-FOOD",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-164-FOOD",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-165-FOOD",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-166-FOOD",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-167-FOOD",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "fr_lock_registry_unchanged",
+      "label": "法国三城 LOCK 资产未改动 (24/24)",
+      "pass": true,
+      "locked_count": 24,
+      "total": 24,
+      "rows": [
+        {
+          "matrix_id": "PH-FR-111-ATR",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-112-ATR",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-113-ATR",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-114-ATR",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-115-FOOD",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-116-FOOD",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-117-FOOD",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-118-FOOD",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-119-ATR",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-120-ATR",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-121-ATR",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-122-ATR",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-123-FOOD",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-124-FOOD",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-125-FOOD",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-126-FOOD",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-127-ATR",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-128-ATR",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-129-ATR",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-130-ATR",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-131-FOOD",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-132-FOOD",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-133-FOOD",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-134-FOOD",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "cn_lock_registry_unchanged",
+      "label": "九城 CN LOCK 资产 (24/24)",
+      "pass": true,
+      "locked_count": 91,
+      "total": 91,
+      "rows": [
+        {
+          "matrix_id": "PH-CN-240-ATR",
+          "city_zh": "北京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-241-ATR",
+          "city_zh": "北京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-242-ATR",
+          "city_zh": "北京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-243-ATR",
+          "city_zh": "北京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-244-ATR",
+          "city_zh": "北京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-245-ATR",
+          "city_zh": "北京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-246-FOOD",
+          "city_zh": "北京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-247-FOOD",
+          "city_zh": "北京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-248-FOOD",
+          "city_zh": "北京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-249-FOOD",
+          "city_zh": "北京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-250-FOOD",
+          "city_zh": "北京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-311-ATR",
+          "city_zh": "上海",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-312-ATR",
+          "city_zh": "上海",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-313-ATR",
+          "city_zh": "上海",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-314-ATR",
+          "city_zh": "上海",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-315-ATR",
+          "city_zh": "上海",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-316-FOOD",
+          "city_zh": "上海",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-317-FOOD",
+          "city_zh": "上海",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-318-FOOD",
+          "city_zh": "上海",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-319-FOOD",
+          "city_zh": "上海",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-320-FOOD",
+          "city_zh": "上海",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-271-ATR",
+          "city_zh": "广州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-272-ATR",
+          "city_zh": "广州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-273-ATR",
+          "city_zh": "广州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-274-ATR",
+          "city_zh": "广州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-275-ATR",
+          "city_zh": "广州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-276-FOOD",
+          "city_zh": "广州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-277-FOOD",
+          "city_zh": "广州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-278-FOOD",
+          "city_zh": "广州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-279-FOOD",
+          "city_zh": "广州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-280-FOOD",
+          "city_zh": "广州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-251-ATR",
+          "city_zh": "成都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-252-ATR",
+          "city_zh": "成都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-253-ATR",
+          "city_zh": "成都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-254-ATR",
+          "city_zh": "成都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-255-ATR",
+          "city_zh": "成都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-256-FOOD",
+          "city_zh": "成都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-257-FOOD",
+          "city_zh": "成都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-258-FOOD",
+          "city_zh": "成都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-259-FOOD",
+          "city_zh": "成都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-260-FOOD",
+          "city_zh": "成都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-281-ATR",
+          "city_zh": "杭州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-282-ATR",
+          "city_zh": "杭州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-283-ATR",
+          "city_zh": "杭州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-284-ATR",
+          "city_zh": "杭州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-285-ATR",
+          "city_zh": "杭州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-286-FOOD",
+          "city_zh": "杭州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-287-FOOD",
+          "city_zh": "杭州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-288-FOOD",
+          "city_zh": "杭州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-289-FOOD",
+          "city_zh": "杭州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-290-FOOD",
+          "city_zh": "杭州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-321-ATR",
+          "city_zh": "西安",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-322-ATR",
+          "city_zh": "西安",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-323-ATR",
+          "city_zh": "西安",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-324-ATR",
+          "city_zh": "西安",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-325-ATR",
+          "city_zh": "西安",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-326-FOOD",
+          "city_zh": "西安",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-327-FOOD",
+          "city_zh": "西安",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-328-FOOD",
+          "city_zh": "西安",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-329-FOOD",
+          "city_zh": "西安",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-330-FOOD",
+          "city_zh": "西安",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-301-ATR",
+          "city_zh": "厦门",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-302-ATR",
+          "city_zh": "厦门",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-303-ATR",
+          "city_zh": "厦门",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-304-ATR",
+          "city_zh": "厦门",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-305-ATR",
+          "city_zh": "厦门",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-306-FOOD",
+          "city_zh": "厦门",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-307-FOOD",
+          "city_zh": "厦门",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-308-FOOD",
+          "city_zh": "厦门",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-309-FOOD",
+          "city_zh": "厦门",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-310-FOOD",
+          "city_zh": "厦门",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-291-ATR",
+          "city_zh": "青岛",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-292-ATR",
+          "city_zh": "青岛",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-293-ATR",
+          "city_zh": "青岛",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-294-ATR",
+          "city_zh": "青岛",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-295-ATR",
+          "city_zh": "青岛",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-296-FOOD",
+          "city_zh": "青岛",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-297-FOOD",
+          "city_zh": "青岛",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-298-FOOD",
+          "city_zh": "青岛",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-299-FOOD",
+          "city_zh": "青岛",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-300-FOOD",
+          "city_zh": "青岛",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-261-ATR",
+          "city_zh": "大理",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-262-ATR",
+          "city_zh": "大理",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-263-ATR",
+          "city_zh": "大理",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-264-ATR",
+          "city_zh": "大理",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-265-ATR",
+          "city_zh": "大理",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-266-FOOD",
+          "city_zh": "大理",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-267-FOOD",
+          "city_zh": "大理",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-268-FOOD",
+          "city_zh": "大理",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-269-FOOD",
+          "city_zh": "大理",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-CN-270-FOOD",
+          "city_zh": "大理",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "cn_scope_lock",
+      "label": "CN POI Catalog Scope Lock · 24 POI / 3 cities 不变",
+      "pass": false,
+      "doc": {
+        "poi_total": 91,
+        "city_count": 9,
+        "TT": "FROZEN"
+      },
+      "issues": [
+        "AE scope poi_total=91 (expected 24)",
+        "AE scope city_count=9 (expected 3)"
+      ]
+    },
+    {
+      "id": "four_city_execution_closed",
+      "label": "三城 Execution CLOSED",
+      "pass": false,
+      "rows": [
+        {
+          "city_zh": "北京",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "上海",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "广州",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "成都",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "杭州",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "西安",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-XI'AN-CLOSURE-LATEST.json",
+          "pass": false
+        },
+        {
+          "city_zh": "厦门",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "青岛",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "大理",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CLOSURE-LATEST.json",
+          "pass": true
+        }
+      ],
+      "issues": [
+        "西安: Execution closure evidence missing"
+      ]
+    },
+    {
+      "id": "four_city_content_qa_closed",
+      "label": "三城 Content QA CLOSED · LOCK 不变",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "北京",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "11/11",
+          "pass": true
+        },
+        {
+          "city_zh": "上海",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "10/10",
+          "pass": true
+        },
+        {
+          "city_zh": "广州",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "10/10",
+          "pass": true
+        },
+        {
+          "city_zh": "成都",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "10/10",
+          "pass": true
+        },
+        {
+          "city_zh": "杭州",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "10/10",
+          "pass": true
+        },
+        {
+          "city_zh": "西安",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "10/10",
+          "pass": true
+        },
+        {
+          "city_zh": "厦门",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "10/10",
+          "pass": true
+        },
+        {
+          "city_zh": "青岛",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "10/10",
+          "pass": true
+        },
+        {
+          "city_zh": "大理",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "10/10",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "four_city_exit_checks",
+      "label": "三城 Golden Template Exit Check · city_consumer_runtime",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "北京",
+          "city_en": "Beijing",
+          "poi_count": 11,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "11/11",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "上海",
+          "city_en": "Shanghai",
+          "poi_count": 10,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "10/10",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "广州",
+          "city_en": "Guangzhou",
+          "poi_count": 10,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "10/10",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "成都",
+          "city_en": "Chengdu",
+          "poi_count": 10,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "10/10",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "杭州",
+          "city_en": "Hangzhou",
+          "poi_count": 10,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "10/10",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "西安",
+          "city_en": "Xi'an",
+          "poi_count": 10,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "10/10",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "厦门",
+          "city_en": "Xiamen",
+          "poi_count": 10,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "10/10",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "青岛",
+          "city_en": "Qingdao",
+          "poi_count": 10,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "10/10",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "大理",
+          "city_en": "Dali",
+          "poi_count": 10,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "10/10",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "china_ambient_runtime",
+      "label": "首页 Destination Ambient · 中国读 CMS · 无 Unsplash",
+      "pass": true,
+      "row": {
+        "country_zh": "澳大利亚",
+        "country_iso": "AU",
+        "page_path": "/?country=澳大利亚",
+        "cms_jurisdiction": true,
+        "catalog_has_data": true,
+        "catalog_published": true,
+        "catalog_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-au-home-v1.jpg",
+        "runtime_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-au-home-v1.jpg",
+        "runtime_reads_cms_catalog": true,
+        "runtime_cms_mismatch": false,
+        "still_unsplash": false,
+        "still_ts_fallback": false,
+        "l5_compliant": true,
+        "cms_ownership_ok": true,
+        "l5_issues": [],
+        "priority": "P0"
+      },
+      "ssot": "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+      "issues": []
+    },
+    {
+      "id": "catalog_api_cn_poi",
+      "label": "Catalog API AU POI 91/91 与 LOCK 一致",
+      "pass": true,
+      "pass_count": 91,
+      "required": 91,
+      "rows": [
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-240-ATR",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-241-ATR",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-242-ATR",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-243-ATR",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-244-ATR",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-245-ATR",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-246-FOOD",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-247-FOOD",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-248-FOOD",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-249-FOOD",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-250-FOOD",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-311-ATR",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-312-ATR",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-313-ATR",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-314-ATR",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-315-ATR",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-316-FOOD",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-317-FOOD",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-318-FOOD",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-319-FOOD",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-320-FOOD",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-271-ATR",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-272-ATR",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-273-ATR",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-274-ATR",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-275-ATR",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-276-FOOD",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-277-FOOD",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-278-FOOD",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-279-FOOD",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-280-FOOD",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-251-ATR",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-252-ATR",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-253-ATR",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-254-ATR",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-255-ATR",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-256-FOOD",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-257-FOOD",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-258-FOOD",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-259-FOOD",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-260-FOOD",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-281-ATR",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-282-ATR",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-283-ATR",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-284-ATR",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-285-ATR",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-286-FOOD",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-287-FOOD",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-288-FOOD",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-289-FOOD",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-290-FOOD",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-321-ATR",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-322-ATR",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-323-ATR",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-324-ATR",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-325-ATR",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-326-FOOD",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-327-FOOD",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-328-FOOD",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-329-FOOD",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-330-FOOD",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-301-ATR",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-302-ATR",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-303-ATR",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-304-ATR",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-305-ATR",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-306-FOOD",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-307-FOOD",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-308-FOOD",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-309-FOOD",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-310-FOOD",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-291-ATR",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-292-ATR",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-293-ATR",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-294-ATR",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-295-ATR",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-296-FOOD",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-297-FOOD",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-298-FOOD",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-299-FOOD",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-300-FOOD",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-261-ATR",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-262-ATR",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-263-ATR",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-264-ATR",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-265-ATR",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-266-FOOD",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-267-FOOD",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-268-FOOD",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-269-FOOD",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-270-FOOD",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "cn_poi_runtime_exit_aggregate",
+      "label": "三城 Market POI Runtime · Exit Check Gate 4 聚合",
+      "pass": true,
+      "poi_runtime": {
+        "pass": 91,
+        "total": 91
+      },
+      "poi_rows": [
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-240-ATR",
+          "poi": "故宫",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-241-ATR",
+          "poi": "长城",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-242-ATR",
+          "poi": "颐和园",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-243-ATR",
+          "poi": "天坛",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-244-ATR",
+          "poi": "圆明园",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-245-ATR",
+          "poi": "南锣鼓巷",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-246-FOOD",
+          "poi": "全聚德烤鸭",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-247-FOOD",
+          "poi": "东来顺涮肉",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-248-FOOD",
+          "poi": "卤煮火烧",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-249-FOOD",
+          "poi": "豆汁焦圈",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-250-FOOD",
+          "poi": "炸酱面",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-311-ATR",
+          "poi": "外滩",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-312-ATR",
+          "poi": "东方明珠",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-313-ATR",
+          "poi": "豫园",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-314-ATR",
+          "poi": "田子坊",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-315-ATR",
+          "poi": "迪士尼",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-316-FOOD",
+          "poi": "小笼包",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-317-FOOD",
+          "poi": "生煎",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-318-FOOD",
+          "poi": "本帮菜",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-319-FOOD",
+          "poi": "南翔馒头",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-320-FOOD",
+          "poi": "蟹粉面",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-271-ATR",
+          "poi": "广州塔",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-272-ATR",
+          "poi": "陈家祠",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-273-ATR",
+          "poi": "沙面",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-274-ATR",
+          "poi": "长隆",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-275-ATR",
+          "poi": "白云山",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-276-FOOD",
+          "poi": "早茶",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-277-FOOD",
+          "poi": "烧鹅",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-278-FOOD",
+          "poi": "煲仔饭",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-279-FOOD",
+          "poi": "糖水",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-280-FOOD",
+          "poi": "肠粉",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-251-ATR",
+          "poi": "宽窄巷子",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-252-ATR",
+          "poi": "大熊猫基地",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-253-ATR",
+          "poi": "锦里",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-254-ATR",
+          "poi": "都江堰",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-255-ATR",
+          "poi": "武侯祠",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-256-FOOD",
+          "poi": "火锅",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-257-FOOD",
+          "poi": "串串",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-258-FOOD",
+          "poi": "担担面",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-259-FOOD",
+          "poi": "龙抄手",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-260-FOOD",
+          "poi": "兔头",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-281-ATR",
+          "poi": "西湖",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-282-ATR",
+          "poi": "灵隐寺",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-283-ATR",
+          "poi": "雷峰塔",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-284-ATR",
+          "poi": "西溪湿地",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-285-ATR",
+          "poi": "宋城",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-286-FOOD",
+          "poi": "西湖醋鱼",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-287-FOOD",
+          "poi": "龙井虾仁",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-288-FOOD",
+          "poi": "片儿川",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-289-FOOD",
+          "poi": "知味观",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-290-FOOD",
+          "poi": "楼外楼",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-321-ATR",
+          "poi": "兵马俑",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-322-ATR",
+          "poi": "大雁塔",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-323-ATR",
+          "poi": "城墙",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-324-ATR",
+          "poi": "回民街",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-325-ATR",
+          "poi": "华清池",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-326-FOOD",
+          "poi": "肉夹馍",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-327-FOOD",
+          "poi": "羊肉泡馍",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-328-FOOD",
+          "poi": "凉皮",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-329-FOOD",
+          "poi": "biangbiang面",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-330-FOOD",
+          "poi": "回民街小吃",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-301-ATR",
+          "poi": "鼓浪屿",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-302-ATR",
+          "poi": "南普陀",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-303-ATR",
+          "poi": "曾厝垵",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-304-ATR",
+          "poi": "环岛路",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-305-ATR",
+          "poi": "土楼",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-306-FOOD",
+          "poi": "沙茶面",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-307-FOOD",
+          "poi": "海蛎煎",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-308-FOOD",
+          "poi": "花生汤",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-309-FOOD",
+          "poi": "馅饼",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-310-FOOD",
+          "poi": "土笋冻",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-291-ATR",
+          "poi": "栈桥",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-292-ATR",
+          "poi": "八大关",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-293-ATR",
+          "poi": "崂山",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-294-ATR",
+          "poi": "啤酒博物馆",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-295-ATR",
+          "poi": "金沙滩",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-296-FOOD",
+          "poi": "海鲜",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-297-FOOD",
+          "poi": "啤酒",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-298-FOOD",
+          "poi": "蛤蜊",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-299-FOOD",
+          "poi": "鲅鱼水饺",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-300-FOOD",
+          "poi": "烧烤",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-261-ATR",
+          "poi": "洱海",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-262-ATR",
+          "poi": "古城",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-263-ATR",
+          "poi": "崇圣寺",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-264-ATR",
+          "poi": "双廊",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-265-ATR",
+          "poi": "喜洲",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-266-FOOD",
+          "poi": "乳扇",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-267-FOOD",
+          "poi": "饵块",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-268-FOOD",
+          "poi": "酸辣鱼",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-269-FOOD",
+          "poi": "白族三道茶",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-270-FOOD",
+          "poi": "喜洲粑粑",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "live_consumer_runtime",
+      "label": "Live Consumer · 首页中国 Ambient + Market 壳 + 中国相关内容无 fallback",
+      "pass": true,
+      "catalog_api_requests": 0,
+      "poi_runtime": {
+        "pass": 91,
+        "total": 91
+      },
+      "poi_rows": [
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-240-ATR",
+          "poi": "故宫",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-241-ATR",
+          "poi": "长城",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-242-ATR",
+          "poi": "颐和园",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-243-ATR",
+          "poi": "天坛",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-244-ATR",
+          "poi": "圆明园",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-245-ATR",
+          "poi": "南锣鼓巷",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-246-FOOD",
+          "poi": "全聚德烤鸭",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-247-FOOD",
+          "poi": "东来顺涮肉",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-248-FOOD",
+          "poi": "卤煮火烧",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-249-FOOD",
+          "poi": "豆汁焦圈",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "北京",
+          "matrix_id": "PH-CN-250-FOOD",
+          "poi": "炸酱面",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-311-ATR",
+          "poi": "外滩",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-312-ATR",
+          "poi": "东方明珠",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-313-ATR",
+          "poi": "豫园",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-314-ATR",
+          "poi": "田子坊",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-315-ATR",
+          "poi": "迪士尼",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-316-FOOD",
+          "poi": "小笼包",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-317-FOOD",
+          "poi": "生煎",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-318-FOOD",
+          "poi": "本帮菜",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-319-FOOD",
+          "poi": "南翔馒头",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "上海",
+          "matrix_id": "PH-CN-320-FOOD",
+          "poi": "蟹粉面",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-271-ATR",
+          "poi": "广州塔",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-272-ATR",
+          "poi": "陈家祠",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-273-ATR",
+          "poi": "沙面",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-274-ATR",
+          "poi": "长隆",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-275-ATR",
+          "poi": "白云山",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-276-FOOD",
+          "poi": "早茶",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-277-FOOD",
+          "poi": "烧鹅",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-278-FOOD",
+          "poi": "煲仔饭",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-279-FOOD",
+          "poi": "糖水",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "广州",
+          "matrix_id": "PH-CN-280-FOOD",
+          "poi": "肠粉",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-251-ATR",
+          "poi": "宽窄巷子",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-252-ATR",
+          "poi": "大熊猫基地",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-253-ATR",
+          "poi": "锦里",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-254-ATR",
+          "poi": "都江堰",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-255-ATR",
+          "poi": "武侯祠",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-256-FOOD",
+          "poi": "火锅",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-257-FOOD",
+          "poi": "串串",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-258-FOOD",
+          "poi": "担担面",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-259-FOOD",
+          "poi": "龙抄手",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "成都",
+          "matrix_id": "PH-CN-260-FOOD",
+          "poi": "兔头",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-281-ATR",
+          "poi": "西湖",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-282-ATR",
+          "poi": "灵隐寺",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-283-ATR",
+          "poi": "雷峰塔",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-284-ATR",
+          "poi": "西溪湿地",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-285-ATR",
+          "poi": "宋城",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-286-FOOD",
+          "poi": "西湖醋鱼",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-287-FOOD",
+          "poi": "龙井虾仁",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-288-FOOD",
+          "poi": "片儿川",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-289-FOOD",
+          "poi": "知味观",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "杭州",
+          "matrix_id": "PH-CN-290-FOOD",
+          "poi": "楼外楼",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-321-ATR",
+          "poi": "兵马俑",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-322-ATR",
+          "poi": "大雁塔",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-323-ATR",
+          "poi": "城墙",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-324-ATR",
+          "poi": "回民街",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-325-ATR",
+          "poi": "华清池",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-326-FOOD",
+          "poi": "肉夹馍",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-327-FOOD",
+          "poi": "羊肉泡馍",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-328-FOOD",
+          "poi": "凉皮",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-329-FOOD",
+          "poi": "biangbiang面",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "西安",
+          "matrix_id": "PH-CN-330-FOOD",
+          "poi": "回民街小吃",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-301-ATR",
+          "poi": "鼓浪屿",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-302-ATR",
+          "poi": "南普陀",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-303-ATR",
+          "poi": "曾厝垵",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-304-ATR",
+          "poi": "环岛路",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-305-ATR",
+          "poi": "土楼",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-306-FOOD",
+          "poi": "沙茶面",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-307-FOOD",
+          "poi": "海蛎煎",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-308-FOOD",
+          "poi": "花生汤",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-309-FOOD",
+          "poi": "馅饼",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "厦门",
+          "matrix_id": "PH-CN-310-FOOD",
+          "poi": "土笋冻",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-291-ATR",
+          "poi": "栈桥",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-292-ATR",
+          "poi": "八大关",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-293-ATR",
+          "poi": "崂山",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-294-ATR",
+          "poi": "啤酒博物馆",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-295-ATR",
+          "poi": "金沙滩",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-296-FOOD",
+          "poi": "海鲜",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-297-FOOD",
+          "poi": "啤酒",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-298-FOOD",
+          "poi": "蛤蜊",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-299-FOOD",
+          "poi": "鲅鱼水饺",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "青岛",
+          "matrix_id": "PH-CN-300-FOOD",
+          "poi": "烧烤",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-261-ATR",
+          "poi": "洱海",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-262-ATR",
+          "poi": "古城",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-263-ATR",
+          "poi": "崇圣寺",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-264-ATR",
+          "poi": "双廊",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-265-ATR",
+          "poi": "喜洲",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-266-FOOD",
+          "poi": "乳扇",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-267-FOOD",
+          "poi": "饵块",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-268-FOOD",
+          "poi": "酸辣鱼",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-269-FOOD",
+          "poi": "白族三道茶",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大理",
+          "matrix_id": "PH-CN-270-FOOD",
+          "poi": "喜洲粑粑",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        }
+      ],
+      "surface_rows": [
+        {
+          "surface": "home_cn_ambient_catalog_fallback",
+          "pass": true,
+          "runtime_src": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-cn-home-v1.jpg",
+          "note": "landing 中国 pill not visible · catalog media fallback"
+        },
+        {
+          "surface": "market_custom_itinerary_shell",
+          "pass": true
+        },
+        {
+          "surface": "market_provider",
+          "pass": true,
+          "image_count": 10,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "market_acquisition",
+          "pass": true,
+          "image_count": 10,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "traveltrust",
+          "pass": true,
+          "image_count": 0,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "community",
+          "pass": true,
+          "image_count": 0,
+          "forbidden_count": 0
+        }
+      ],
+      "issues": [],
+      "attempt": 2
+    }
+  ],
+  "all_pass": false,
+  "poi_runtime_pass": 91,
+  "poi_runtime_required": 91,
+  "city_summary": [
+    {
+      "city_zh": "北京",
+      "exit_runtime": "11/11",
+      "catalog_pass": 11,
+      "catalog_total": 11,
+      "live_pass": 11,
+      "live_total": 11
+    },
+    {
+      "city_zh": "上海",
+      "exit_runtime": "10/10",
+      "catalog_pass": 10,
+      "catalog_total": 10,
+      "live_pass": 10,
+      "live_total": 10
+    },
+    {
+      "city_zh": "广州",
+      "exit_runtime": "10/10",
+      "catalog_pass": 10,
+      "catalog_total": 10,
+      "live_pass": 10,
+      "live_total": 10
+    },
+    {
+      "city_zh": "成都",
+      "exit_runtime": "10/10",
+      "catalog_pass": 10,
+      "catalog_total": 10,
+      "live_pass": 10,
+      "live_total": 10
+    },
+    {
+      "city_zh": "杭州",
+      "exit_runtime": "10/10",
+      "catalog_pass": 10,
+      "catalog_total": 10,
+      "live_pass": 10,
+      "live_total": 10
+    },
+    {
+      "city_zh": "西安",
+      "exit_runtime": "10/10",
+      "catalog_pass": 10,
+      "catalog_total": 10,
+      "live_pass": 10,
+      "live_total": 10
+    },
+    {
+      "city_zh": "厦门",
+      "exit_runtime": "10/10",
+      "catalog_pass": 10,
+      "catalog_total": 10,
+      "live_pass": 10,
+      "live_total": 10
+    },
+    {
+      "city_zh": "青岛",
+      "exit_runtime": "10/10",
+      "catalog_pass": 10,
+      "catalog_total": 10,
+      "live_pass": 10,
+      "live_total": 10
+    },
+    {
+      "city_zh": "大理",
+      "exit_runtime": "10/10",
+      "catalog_pass": 10,
+      "catalog_total": 10,
+      "live_pass": 10,
+      "live_total": 10
+    }
+  ],
+  "verdict": "NOT_READY",
+  "TT_CMS_CN_COUNTRY_RUNTIME": "FAIL",
+  "blockers": [
+    "AE scope poi_total=91 (expected 24)",
+    "AE scope city_count=9 (expected 3)",
+    "西安: Execution closure evidence missing"
+  ]
+}

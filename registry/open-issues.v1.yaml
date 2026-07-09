@@ -28,11 +28,101 @@ field_schema:
   runbook: { required: false }
 
 rollup:
-  open_count: 1
+  open_count: 4
   blocking_open_count: 0
-  by_severity: { LOW: 1, MEDIUM: 0, HIGH: 0, CRITICAL: 0 }
+  by_severity: { LOW: 2, MEDIUM: 2, HIGH: 0, CRITICAL: 0 }
+
+pi3_tracks:
+  governance:
+    acceptance_decoupling_principle: >
+      Media Infrastructure acceptance validates media service capability only (object storage,
+      upload, download, CDN, cache, multipart, playback, CORS) — not catalog asset sources.
+      Catalog Asset Migration acceptance validates asset source, copyright, and operational
+      content only — it does not re-validate media infrastructure.
+    independent_progress: >
+      Media Infrastructure 100% CLOSED while Catalog Asset Migration 30% is normal and expected.
+  PI3-MEDIA-INFRASTRUCTURE:
+    registry: registry/pi3-media-infrastructure.v1.yaml
+    scope: upload_download_object_storage_cdn_cache_playback
+    not_in_scope: catalog_asset_sources
+  PI3-CATALOG-ASSET-MIGRATION:
+    registry: registry/catalog-asset-migration.v1.yaml
+    scope: guide_provider_campaign_hero_avatar_poi_covers
+    decoupled_from: PI3-MEDIA-INFRASTRUCTURE
+    blocks_infra_close: false
 
 issues:
+  - id: PI3-MEDIA-R2-CDN-FINAL
+    pi3_track: PI3-MEDIA-INFRASTRUCTURE
+    category: Production Infrastructure
+    severity: MEDIUM
+    owner: owner_live
+    status: OPEN
+    display_status: WAITING_OWNER_CF
+    blocking: false
+    target_gate: PI3_PRODUCTION_INFRASTRUCTURE
+    evidence: registry/media-three-tier-architecture.v1.yaml
+    opened_utc: "2026-07-03T14:15:00Z"
+    closed_utc: null
+    summary: >
+      Cloudflare account + traveltrust.app DNS + R2 bucket + cdn.traveltrust.app CDN cutover.
+      Not started — requires Owner CF token. Follow Owner checklist:
+      docs/runbook/TT-PI3-MEDIA-R2-CDN-FINAL-OWNER-CHECKLIST.md
+      Close blocked until MEDIA_CDN_PRODUCTION_ACCEPTANCE PASS.
+    module_registry: registry/media-three-tier-architecture.v1.yaml
+    runbook: docs/runbook/TT-PI3-MEDIA-R2-CDN-FINAL-OWNER-CHECKLIST.md
+    acceptance_gate: MEDIA_CDN_PRODUCTION_ACCEPTANCE
+    close_requires_acceptance: true
+    depends_on_closed: PI3-MEDIA-PERSISTENT-STAGING
+    not_market_runtime: true
+    not_ocs_ddg_sopcp_reopen: true
+
+  - id: MEDIA_CDN_PRODUCTION_ACCEPTANCE
+    pi3_track: PI3-MEDIA-INFRASTRUCTURE
+    category: Production Validation
+    severity: MEDIUM
+    owner: platform_engineering
+    status: OPEN
+    display_status: PENDING
+    blocking: false
+    blocks_closure_of: PI3-MEDIA-R2-CDN-FINAL
+    target_gate: PI3_PRODUCTION_INFRASTRUCTURE
+    evidence: registry/media-cdn-production-acceptance.v1.yaml
+    opened_utc: "2026-07-03T15:30:00Z"
+    closed_utc: null
+    summary: >
+      Formal production acceptance for MEDIA INFRASTRUCTURE only (community multipart media):
+      CDN 200, community URLs on CDN, upload/playback/cache, rollback verified.
+      Catalog Unsplash URLs do NOT block PASS. Run run-media-cdn-production-acceptance-gate.sh --with-c4 --with-playwright.
+    module_registry: registry/media-cdn-production-acceptance.v1.yaml
+    runbook: docs/runbook/TT-MEDIA-CDN-PRODUCTION-ACCEPTANCE-GATE.md
+    depends_on_owner_step: PI3-MEDIA-R2-CDN-FINAL
+    not_market_runtime: true
+    not_ocs_ddg_sopcp_reopen: true
+
+  - id: PI3-CATALOG-ASSET-MIGRATION
+    pi3_track: PI3-CATALOG-ASSET-MIGRATION
+    category: Catalog Operations
+    severity: LOW
+    owner: product_operations
+    status: OPEN
+    display_status: DEFERRED
+    blocking: false
+    blocks_media_infra_close: false
+    target_gate: PI3_PRODUCTION_INFRASTRUCTURE
+    evidence: registry/catalog-asset-migration.v1.yaml
+    opened_utc: "2026-07-03T15:45:00Z"
+    closed_utc: null
+    summary: >
+      Catalog asset source migration: Unsplash/placeholders → owned copyright assets on R2/CDN.
+      Guide/Provider/Acquisition/Official covers, Campaign/Hero, Avatar, POI. NOT media infra;
+      does NOT block PI3-MEDIA-INFRASTRUCTURE close when catalog still uses Unsplash.
+    module_registry: registry/catalog-asset-migration.v1.yaml
+    runbook: docs/runbook/TT-PI3-CATALOG-ASSET-MIGRATION.md
+    decoupled_from: PI3-MEDIA-INFRASTRUCTURE
+    not_market_runtime: true
+    not_ocs_ddg_sopcp_reopen: true
+
   - id: CI-BUILD-20260703-V49-OOM
     category: Build Infrastructure
     severity: LOW
@@ -50,7 +140,63 @@ issues:
     runbook: docs/runbook/TT-CI-BUILD-STABILITY.md
     not_market_race_fix: true
 
-closed_issues: []
+closed_issues:
+  - id: C4-MEDIA-TUNNEL-UNAVAILABLE
+    category: Production Infrastructure
+    severity: MEDIUM
+    owner: platform_engineering
+    status: CLOSED
+    blocking: false
+    target_gate: PI3_PRODUCTION_INFRASTRUCTURE
+    evidence: evidence/GO_staging_infra_fix/20260703T133800Z/c4-media-restore.json
+    opened_utc: "2026-07-03T13:09:00Z"
+    closed_utc: "2026-07-03T13:38:00Z"
+    summary: >
+      Short-term restore: MinIO :19000 + localtunnel synced to Fly tt-api-staging secrets;
+      tunnel health 200 at closeout. Superseded by PI3-MEDIA-PERSISTENT-STAGING.
+    runbook: docs/runbook/TT-C4-MEDIA-TUNNEL-UNAVAILABLE.md
+    superseded_by: PI3-MEDIA-PERSISTENT-STAGING
+    not_market_runtime: true
+    not_ocs_ddg_sopcp_reopen: true
+
+  - id: STAGING_API_DB_TRANSIENT_503
+    category: Production Infrastructure
+    severity: LOW
+    owner: platform_engineering
+    status: CLOSED
+    blocking: false
+    target_gate: PI3_PRODUCTION_INFRASTRUCTURE
+    evidence: evidence/GO_staging_infra_fix/20260703T133800Z/staging-api-db-fix.json
+    opened_utc: "2026-07-03T13:09:00Z"
+    closed_utc: "2026-07-03T13:38:00Z"
+    summary: >
+      Deployed B-474 pool (test_before_acquire) + pg transient retry + /health/ready DB ping
+      + metrics counters; Phase①/② probes 200 · blocking=0.
+    runbook: docs/runbook/TT-STAGING-API-DB-TRANSIENT-503.md
+    not_market_runtime: true
+    not_ocs_ddg_sopcp_reopen: true
+
+  - id: PI3-MEDIA-PERSISTENT-STAGING
+    pi3_track: PI3-MEDIA-INFRASTRUCTURE
+    category: Production Infrastructure
+    severity: MEDIUM
+    owner: platform_engineering
+    status: CLOSED
+    display_status: CLOSED
+    blocking: false
+    target_gate: PI3_PRODUCTION_INFRASTRUCTURE
+    evidence: evidence/GO_media_r2_cdn_migration/20260703T141500Z/closeout.json
+    opened_utc: "2026-07-03T13:45:00Z"
+    closed_utc: "2026-07-03T14:15:00Z"
+    renamed_from: PI3-MEDIA-R2-CDN-STAGING
+    summary: >
+      Staging off localtunnel: Fly Tigris public bucket +
+      traveltrust-community-media.fly.storage.tigris.dev; capabilities ready; no loca.lt in API payloads.
+      Does NOT claim Cloudflare R2 landed — see PI3-MEDIA-R2-CDN-FINAL.
+    module_registry: registry/media-three-tier-architecture.v1.yaml
+    runbook: docs/runbook/TT-MEDIA-THREE-TIER-ARCHITECTURE.md
+    not_market_runtime: true
+    not_ocs_ddg_sopcp_reopen: true
 
 program_phase:
   phase2:
@@ -75,6 +221,14 @@ pointers:
   executive_dashboard: registry/executive-dashboard.v1.yaml
   release_pipeline: registry/release-pipeline.v1.yaml
   ci_build_module: registry/ci-build-stability.v1.yaml
+  staging_infra_evidence: evidence/GO_staging_infra_fix/20260703T133800Z/
+  media_r2_cdn_migration: evidence/GO_media_r2_cdn_migration/20260703T141500Z/
+  media_cdn_production_acceptance: registry/media-cdn-production-acceptance.v1.yaml
+  pi3_media_infrastructure: registry/pi3-media-infrastructure.v1.yaml
+  catalog_asset_migration: registry/catalog-asset-migration.v1.yaml
+  media_three_tier_architecture: registry/media-three-tier-architecture.v1.yaml
+  enterprise_ssot_alignment: registry/enterprise-ssot-alignment.v1.yaml
+  market_runtime_status: CLOSED
 
 maintenance:
   rule: >

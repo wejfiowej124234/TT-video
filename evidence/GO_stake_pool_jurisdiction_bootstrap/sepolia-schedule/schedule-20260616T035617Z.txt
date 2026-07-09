@@ -1,0 +1,53 @@
+Compiling 55 files with Solc 0.8.19
+Solc 0.8.19 finished in 25.39s
+Compiler run successful with warnings:
+Warning (2072): Unused local variable.
+   --> script/Phase2SafeExec.sol:165:9:
+    |
+165 |         uint256 end;
+    |         ^^^^^^^^^^^
+
+Warning (2018): Function state mutability can be restricted to pure
+   --> script/Phase2SafeExec.sol:154:5:
+    |
+154 |     function _signSafeTxAsOwner(bytes32 txHash, uint256 ownerPrivateKey)
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Script ran successfully.
+
+== Logs ==
+  setAllowedExecutionTarget(pool,true) via Safe
+  scheduled configureJurisdiction 17230 400
+  scheduled configureJurisdiction 21843 400
+  scheduled configureJurisdiction 18002 450
+  scheduled configureJurisdiction 17747 450
+  scheduled configureJurisdiction 19024 250
+  scheduled configureJurisdiction 21576 250
+  scheduled configureJurisdiction 21319 200
+  scheduled configureJurisdiction 19282 200
+  scheduled configureJurisdiction 16725 150
+  scheduled configureJurisdiction 16709 150
+
+## Setting up 1 EVM.
+
+==========================
+
+Chain 11155111
+
+Estimated gas price: 2.355134179 gwei
+
+Estimated total gas used for script: 2680163
+
+Estimated amount required: 0.006312143486591177 ETH
+
+==========================
+
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+
+Transactions saved to: D:/TravelTrust-V1.1/contracts/broadcast\BootstrapStakePoolJurisdictionsViaTimelock.s.sol\11155111\run-latest.json
+
+Sensitive values saved to: D:/TravelTrust-V1.1/contracts/cache\BootstrapStakePoolJurisdictionsViaTimelock.s.sol\11155111\run-latest.json
+

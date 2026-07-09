@@ -1,0 +1,160 @@
+{
+  "schema": "traveltrust.p2fc_graduation_risk_preconvergence_matrix.v3",
+  "generated_at_utc": "2026-06-25T02:33:43Z",
+  "phase": "②",
+  "soak_completed": false,
+  "matrix_rows": [
+    {
+      "id": "M1_WALL_CLOCK",
+      "dimension": "wall-clock 偏差",
+      "current": 5.488,
+      "unit": "ratio",
+      "trend": "stable",
+      "convergence": "converged",
+      "graduation_gate": "SOAK_72H",
+      "pre_soak_status": "warn",
+      "post_soak_action": "monitor wall ETA ~390.4h — no deploy during soak",
+      "blocks_graduation": false
+    },
+    {
+      "id": "M2_META_PROPAGATION",
+      "dimension": "/meta 分层传播",
+      "current": "408>503>exec_ok>accept_deferred",
+      "unit": "chain",
+      "trend": "stable",
+      "convergence": "converged",
+      "graduation_gate": "G02",
+      "pre_soak_status": "preclassified",
+      "post_soak_action": "wave-0 meta hotfix + p2fc-verify-staging-meta-availability.sh --strict",
+      "blocks_graduation": true
+    },
+    {
+      "id": "M3_INDEXER_PARSE",
+      "dimension": "indexer parse rate",
+      "current": 0.037,
+      "unit": "rate",
+      "trend": "stable",
+      "convergence": "converged_acknowledged",
+      "graduation_gate": "TN-P1-010",
+      "pre_soak_status": "acknowledged_low",
+      "post_soak_action": "TN-P1-010 independent via internal/indexer-* — not GET /meta parse",
+      "blocks_graduation": true
+    },
+    {
+      "id": "M4_BACKLOG_DIFFUSION",
+      "dimension": "backlog 风险扩散",
+      "current": 1.1,
+      "unit": "score",
+      "trend": "stable",
+      "convergence": "converged",
+      "graduation_gate": "WAVE-1/2",
+      "pre_soak_status": "frozen_registered",
+      "post_soak_action": "deploy backlog stamp + review 1 high-severity files",
+      "blocks_graduation": true
+    }
+  ],
+  "blocking_gates_post_soak": [
+    "M2_META_PROPAGATION",
+    "M3_INDEXER_PARSE",
+    "M4_BACKLOG_DIFFUSION"
+  ],
+  "duration_convergence": "converged",
+  "converged_dimensions": 4,
+  "preconvergence_score": 65,
+  "matrix_ready_for_completed_json": false,
+  "must_close_post_soak": [
+    {
+      "id": "PC-01",
+      "gate": "G02",
+      "action": "wave-0 meta hotfix + --strict meta verify"
+    },
+    {
+      "id": "PC-02",
+      "gate": "TN-P1-010",
+      "action": "internal/indexer-* spine — not GET /meta parse"
+    },
+    {
+      "id": "PC-03",
+      "gate": "SOAK_72H",
+      "action": "await ok_polls=4320 — wall ETA ~390.4h"
+    },
+    {
+      "id": "PC-BL-HR_ITINERARIES_HUB",
+      "gate": "WAVE-1",
+      "action": "itineraries.rs hub change — impacts market/escrow/guide consumer paths"
+    }
+  ],
+  "honest_boundary": "matrix updated pre-COMPLETED.json · no deploy · no staging state change",
+  "long_term_drift_scan": {
+    "drift_signal_count": 3,
+    "wall_growth": "stable",
+    "indexer_decline": "stable",
+    "meta_cluster_verdict": "stable_cluster",
+    "hotspot_count": 5
+  },
+  "post_completed_failure_forecast": {
+    "high_likelihood_count": 2,
+    "high_likelihood_phases": [
+      "wave1_api_deploy",
+      "meta_availability"
+    ],
+    "recommended_pre_completed_actions": [
+      "Review wave-rollback-plan + fly-rollback-snapshot before COMPLETED",
+      "Wave-0 hotfix must land before step-6 strict meta gate",
+      "TN-P1-010: confirm internal spine green locally",
+      "Wave1: stage itineraries.rs blast-radius review"
+    ]
+  },
+  "future_certain_failures": {
+    "critical_count": 1,
+    "high_count": 1,
+    "ids": [
+      "FC-01_TIMEOUT_MISMATCH",
+      "FC-02_ITINERARIES_HUB",
+      "FC-03_LARGE_DIFF_BLOB"
+    ]
+  },
+  "fc_execution_path_rehearsal": {
+    "first_failure_fc": "FC-02_ITINERARIES_HUB",
+    "first_failure_offset_min": 28,
+    "time_to_failure_order": [
+      {
+        "offset_min": 28,
+        "fc_id": "FC-02_ITINERARIES_HUB",
+        "phase": "wave1_api_deploy",
+        "severity": "high"
+      },
+      {
+        "offset_min": 28,
+        "fc_id": "FC-03_LARGE_DIFF_BLOB",
+        "phase": "wave1_api_deploy",
+        "severity": "medium"
+      },
+      {
+        "offset_min": 45,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "phase": "meta_availability",
+        "severity": "critical"
+      }
+    ],
+    "rehearsal_converged": true
+  },
+  "fc_failure_competition_optimization": {
+    "baseline_success_score": 11.1,
+    "projected_score_with_mr": 35.6,
+    "optimal_strategy": "STRAT-B_WAVE0_FIRST",
+    "first_competition_winner": "FC-02_ITINERARIES_HUB"
+  },
+  "mr_execution_benefit_evaluation": {
+    "decision_verdict": "KEEP_DEFAULT_ONE_SHOT_APPLY_MR12",
+    "mr12_wgg_gain_pp": 19.5,
+    "mr12_vs_strat_b_delta_pp": 7.3,
+    "best_scenario": "STRAT-A_PLUS_MR12"
+  },
+  "mr12_execution_lock": {
+    "lock_status": "FROZEN",
+    "locked_strategy": "STRAT-A_PLUS_MR12",
+    "strat_b_blocked": true,
+    "shell_verify": "TT_MR12_EXECUTION_LOCK: FROZEN strategy=STRAT-A_PLUS_MR12 reject=STRAT-B entrypoint=one-shot"
+  }
+}

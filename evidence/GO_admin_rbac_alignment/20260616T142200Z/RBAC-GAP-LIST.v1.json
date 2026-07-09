@@ -1,0 +1,288 @@
+{
+  "program": "TT_ADMIN_RBAC_ALIGNMENT_PROGRAM",
+  "phase": "①",
+  "generated_at_utc": "2026-06-16T14:22:01Z",
+  "ssot": {
+    "admin_rbac": "crates/api/src/routes/admin/admin_rbac.rs",
+    "live_router": "crates/api/src/routes/admin/mod.rs",
+    "route_matrix_yaml": "registry/admin-rbac-route-matrix.v1.yaml",
+    "rbac_matrix_version": "admin-rbac-v4-cms-ops-growth-2026-06-07"
+  },
+  "four_cluster_summary": {
+    "finance": {
+      "handlers": 5,
+      "aligned": 5,
+      "gaps": 0
+    },
+    "community": {
+      "handlers": 12,
+      "aligned": 12,
+      "gaps": 0
+    },
+    "audit": {
+      "handlers": 4,
+      "aligned": 4,
+      "gaps": 0
+    },
+    "approval": {
+      "handlers": 4,
+      "aligned": 4,
+      "gaps": 0
+    }
+  },
+  "handlers_total": 25,
+  "handlers_aligned": 25,
+  "handlers_gap": 0,
+  "route_deny_matrix_count": 36,
+  "yaml_route_count": 36,
+  "yaml_version_match": true,
+  "gaps": [],
+  "clusters": {
+    "finance": [
+      {
+        "handler": "get_admin_finance_summary",
+        "cluster": "finance",
+        "expected_gate": "require_finance_read_uid",
+        "expected_permission": "admin.finance.read",
+        "actual_gate": "require_finance_read_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_finance_summary_export",
+        "cluster": "finance",
+        "expected_gate": "require_finance_read_uid",
+        "expected_permission": "admin.finance.read",
+        "actual_gate": "require_finance_read_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_fee_router_routed_events",
+        "cluster": "finance",
+        "expected_gate": "require_finance_read_uid",
+        "expected_permission": "admin.finance.read",
+        "actual_gate": "require_finance_read_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_region_vault_forwarded_events",
+        "cluster": "finance",
+        "expected_gate": "require_finance_read_uid",
+        "expected_permission": "admin.finance.read",
+        "actual_gate": "require_finance_read_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_region_vault_forwarded_events_export",
+        "cluster": "finance",
+        "expected_gate": "require_finance_read_uid",
+        "expected_permission": "admin.finance.read",
+        "actual_gate": "require_finance_read_uid",
+        "status": "ALIGNED"
+      }
+    ],
+    "community": [
+      {
+        "handler": "get_admin_community_reports",
+        "cluster": "community",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.community.read",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_community_appeals",
+        "cluster": "community",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.community.read",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_community_ranking_snapshots",
+        "cluster": "community",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.community.read",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_community_penalties",
+        "cluster": "community",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.community.read",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_community_moderation_cases",
+        "cluster": "community",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.community.read",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_community_risk_signals",
+        "cluster": "community",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.community.read",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_community_policy_change_logs",
+        "cluster": "community",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.community.read",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "patch_admin_community_moderation",
+        "cluster": "community",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.community.moderate",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "patch_admin_community_comment",
+        "cluster": "community",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.community.moderate",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "post_admin_community_penalty",
+        "cluster": "community",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.community.moderate",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "patch_admin_community_abuse_policy",
+        "cluster": "community",
+        "expected_gate": "require_community_super_uid",
+        "expected_permission": "admin.community.super",
+        "actual_gate": "require_community_super_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "post_admin_community_appeal_review",
+        "cluster": "community",
+        "expected_gate": "require_community_super_uid",
+        "expected_permission": "admin.community.super",
+        "actual_gate": "require_community_super_uid",
+        "status": "ALIGNED"
+      }
+    ],
+    "audit": [
+      {
+        "handler": "get_admin_audit_operations",
+        "cluster": "audit",
+        "expected_gate": "require_read_uid",
+        "expected_permission": "admin.read",
+        "actual_gate": "require_read_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_audit_logs",
+        "cluster": "audit",
+        "expected_gate": "require_read_uid",
+        "expected_permission": "admin.read",
+        "actual_gate": "require_read_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_audit_log_by_id",
+        "cluster": "audit",
+        "expected_gate": "require_read_uid",
+        "expected_permission": "admin.read",
+        "actual_gate": "require_read_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_auth_audit_events",
+        "cluster": "audit",
+        "expected_gate": "require_read_uid",
+        "expected_permission": "admin.read",
+        "actual_gate": "require_read_uid",
+        "status": "ALIGNED"
+      }
+    ],
+    "approval": [
+      {
+        "handler": "get_admin_approvals",
+        "cluster": "approval",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.approve",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "get_admin_approval_by_id",
+        "cluster": "approval",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.approve",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "post_admin_approval_approve",
+        "cluster": "approval",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.approve",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      },
+      {
+        "handler": "post_admin_approval_reject",
+        "cluster": "approval",
+        "expected_gate": "require_admin_perm_uid",
+        "expected_permission": "admin.approve",
+        "actual_gate": "require_admin_perm_uid",
+        "status": "ALIGNED"
+      }
+    ]
+  },
+  "orphan_split_stubs": [
+    "crates/api/src/routes/admin/admin_acquisition_suspend_http.rs",
+    "crates/api/src/routes/admin/admin_approvals_http.rs",
+    "crates/api/src/routes/admin/admin_audit_http.rs",
+    "crates/api/src/routes/admin/admin_catalog_ops_http.rs",
+    "crates/api/src/routes/admin/admin_catalog_revision_http.rs",
+    "crates/api/src/routes/admin/admin_cold_start_http.rs",
+    "crates/api/src/routes/admin/admin_content_http.rs",
+    "crates/api/src/routes/admin/admin_country_market_http.rs",
+    "crates/api/src/routes/admin/admin_cross_drift_http.rs",
+    "crates/api/src/routes/admin/admin_data_policies_http.rs",
+    "crates/api/src/routes/admin/admin_disputes_http.rs",
+    "crates/api/src/routes/admin/admin_fee_router_routed_http.rs",
+    "crates/api/src/routes/admin/admin_finance_summary_http.rs",
+    "crates/api/src/routes/admin/admin_growth_airdrop_http.rs",
+    "crates/api/src/routes/admin/admin_growth_analytics_http.rs",
+    "crates/api/src/routes/admin/admin_growth_early_bird_http.rs",
+    "crates/api/src/routes/admin/admin_growth_fraud_http.rs",
+    "crates/api/src/routes/admin/admin_growth_ledger_http.rs",
+    "crates/api/src/routes/admin/admin_growth_referral_http.rs",
+    "crates/api/src/routes/admin/admin_guide_application_http.rs",
+    "crates/api/src/routes/admin/admin_guides_http.rs",
+    "crates/api/src/routes/admin/admin_metrics_home_http.rs",
+    "crates/api/src/routes/admin/admin_official_accounts_http.rs",
+    "crates/api/src/routes/admin/admin_official_guides_http.rs",
+    "crates/api/src/routes/admin/admin_official_itinerary_templates_http.rs",
+    "crates/api/src/routes/admin/admin_orders_http.rs",
+    "crates/api/src/routes/admin/admin_poi_media_http.rs",
+    "crates/api/src/routes/admin/admin_provider_application_http.rs",
+    "crates/api/src/routes/admin/admin_region_share_reconcile_http.rs",
+    "crates/api/src/routes/admin/admin_region_vault_forwarded_http.rs",
+    "crates/api/src/routes/admin/admin_reviews_http.rs",
+    "crates/api/src/routes/admin/admin_schema_http.rs",
+    "crates/api/src/routes/admin/admin_steward_application_http.rs",
+    "crates/api/src/routes/admin/admin_tenant_scopes_http.rs",
+    "crates/api/src/routes/admin/admin_users_http.rs"
+  ],
+  "admin_ui_routes_ssot": "frontend/lib/admin/adminAdminPerfectClosureL5.contract.test.ts (107 pages)"
+}

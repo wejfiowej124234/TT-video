@@ -1,0 +1,7 @@
+{
+  "step": "step-04-proposal-create",
+  "label": "propose",
+  "tx_hash": "0x8f1b765ea88f0143aca6cf26cbda8f6cb6aeeb85d8bce86a8ada4c7cdfc136cb",
+  "recorded_at": "2026-06-16T06:48:00Z",
+  "source": "forge-broadcast-backfill"
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-05T11:04:32Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "JP",
+    "city_zh": "札幌",
+    "matrix_ids": [
+      "PH-JP-033-ATR",
+      "PH-JP-034-ATR",
+      "PH-JP-035-ATR",
+      "PH-JP-036-ATR",
+      "PH-JP-037-ATR",
+      "PH-JP-038-FOOD",
+      "PH-JP-039-FOOD",
+      "PH-JP-040-FOOD",
+      "PH-JP-041-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-community-media.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-JP-033-ATR",
+      "poi_id": "61b601c5-56a2-45b2-80dc-6d458546028e"
+    },
+    {
+      "matrix_id": "PH-JP-034-ATR",
+      "poi_id": "d13d0b1a-f514-4e52-b05e-6c9482504c33"
+    },
+    {
+      "matrix_id": "PH-JP-035-ATR",
+      "poi_id": "2e804313-feb6-4a35-9c1e-f2e54d6f3723"
+    },
+    {
+      "matrix_id": "PH-JP-036-ATR",
+      "poi_id": "8036cf7f-3632-4f61-8693-2c24c4ada165"
+    },
+    {
+      "matrix_id": "PH-JP-037-ATR",
+      "poi_id": "35eaff99-d19a-434f-a5d4-a4b41f521bff"
+    },
+    {
+      "matrix_id": "PH-JP-038-FOOD",
+      "poi_id": "62f6777b-749d-45b7-92ac-800d61819178"
+    },
+    {
+      "matrix_id": "PH-JP-039-FOOD",
+      "poi_id": "be977cf0-1530-403e-bdf3-a9bb6b051bc5"
+    },
+    {
+      "matrix_id": "PH-JP-040-FOOD",
+      "poi_id": "30501de9-3494-4e4b-a013-65f86bd08282"
+    },
+    {
+      "matrix_id": "PH-JP-041-FOOD",
+      "poi_id": "de70452d-d488-4a25-94bd-b9b2b3f02cba"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 9,
+    "expected": 9
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

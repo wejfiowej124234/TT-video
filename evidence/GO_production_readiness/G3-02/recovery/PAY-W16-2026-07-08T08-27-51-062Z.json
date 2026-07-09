@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W16",
+  "recorded_utc": "2026-07-08T08:27:51.062Z",
+  "run_id": "2026-07-08T08-27-51-062Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PASS",
+  "summary": {
+    "verdict": "PASS",
+    "detail": "Gas/balance/revert paths documented + pre-deposit probes"
+  },
+  "detail": "Gas/balance/revert paths documented + pre-deposit probes",
+  "traveler_eth": "0.032550973840488470",
+  "traveler_usdc": "890000000 [8.9e8]",
+  "insufficient_balance_simulation": "Mint path used when balance < totalAmount before deposit",
+  "cancel_before_deposit": "Order accept → Created escrow; cancel path not exercised in this funded run"
+}

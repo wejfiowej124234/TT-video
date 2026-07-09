@@ -1,0 +1,299 @@
+{
+  "schema": "traveltrust.enterprise_acceptance_ledger.v1",
+  "stamp": "20260702T115255Z",
+  "generated_at_utc": "2026-07-02T12:02:49.000Z",
+  "name": "Enterprise Final Acceptance Audit · Capstone Ledger",
+  "not_a_new_recurring_audit": true,
+  "product_development_freeze": "TT_PRODUCT_DEVELOPMENT_FREEZE: ENFORCED",
+  "synthesizes": [
+    "Phase12 Final Convergence",
+    "Production Release Review",
+    "Frontend-API Consistency Audit",
+    "Business Domain Validation",
+    "Enterprise Release Review browser"
+  ],
+  "prior_evidence": {
+    "production_release_review": "evidence/GO_production_release_review/20260702T084419Z/",
+    "phase12_convergence": "evidence/GO_phase12_final_convergence/20260702T023014Z/",
+    "product_freeze": "evidence/manual-uat/signoff/PRODUCT-DEVELOPMENT-FREEZE-20260702.md"
+  },
+  "machine_signals": {
+    "api_strict": false,
+    "bdv_probes_staging": true,
+    "fe_api_browser": true,
+    "bdv_browser": true,
+    "err_browser": false,
+    "all_machine_pass": false
+  },
+  "summary": {
+    "domains_total": 12,
+    "domains_pass": 0,
+    "product_defects_open": 3,
+    "production_blockers_open": 6,
+    "expected_differences": 1,
+    "enhancements_deferred": 1,
+    "enterprise_complete": false
+  },
+  "issue_counts": {
+    "PRODUCT_DEFECT": 3,
+    "PRODUCTION_BLOCKER": 6,
+    "EXPECTED_DIFFERENCE": 1,
+    "ENHANCEMENT": 1
+  },
+  "domain_matrix": [
+    {
+      "domain": "Guide · Market",
+      "pages": [
+        "/market?view=guides"
+      ],
+      "api": "FAIL",
+      "browser": "FAIL",
+      "admin": "N/A",
+      "database": "FAIL",
+      "business_flow": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Provider",
+      "pages": [
+        "/market/provider"
+      ],
+      "api": "FAIL",
+      "browser": "FAIL",
+      "admin": "N/A",
+      "database": "FAIL",
+      "business_flow": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Acquisition",
+      "pages": [
+        "/market/acquisition"
+      ],
+      "api": "FAIL",
+      "browser": "FAIL",
+      "admin": "N/A",
+      "database": "FAIL",
+      "business_flow": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Discover · Orders",
+      "pages": [
+        "/market?view=orders"
+      ],
+      "api": "FAIL",
+      "browser": "FAIL",
+      "admin": "N/A",
+      "database": "FAIL",
+      "business_flow": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Itinerary",
+      "pages": [
+        "/",
+        "/orders/new"
+      ],
+      "api": "FAIL",
+      "browser": "FAIL",
+      "admin": "N/A",
+      "database": "FAIL",
+      "business_flow": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Orders · Escrow",
+      "pages": [
+        "/orders",
+        "/escrow"
+      ],
+      "api": "FAIL",
+      "browser": "FAIL",
+      "admin": "N/A",
+      "database": "FAIL",
+      "business_flow": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Community",
+      "pages": [
+        "/community"
+      ],
+      "api": "FAIL",
+      "browser": "FAIL",
+      "admin": "N/A",
+      "database": "FAIL",
+      "business_flow": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Messages",
+      "pages": [
+        "/community/messages"
+      ],
+      "api": "FAIL",
+      "browser": "FAIL",
+      "admin": "N/A",
+      "database": "FAIL",
+      "business_flow": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Governance",
+      "pages": [
+        "/governance/proposals"
+      ],
+      "api": "FAIL",
+      "browser": "FAIL",
+      "admin": "N/A",
+      "database": "FAIL",
+      "business_flow": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Web3 · Staking",
+      "pages": [
+        "/staking"
+      ],
+      "api": "FAIL",
+      "browser": "FAIL",
+      "admin": "N/A",
+      "database": "FAIL",
+      "business_flow": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Admin Platform",
+      "pages": [
+        "/admin"
+      ],
+      "api": "FAIL",
+      "browser": "FAIL",
+      "admin": "PASS",
+      "database": "FAIL",
+      "business_flow": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Home · Official",
+      "pages": [
+        "/",
+        "/traveltrust"
+      ],
+      "api": "FAIL",
+      "browser": "FAIL",
+      "admin": "N/A",
+      "database": "FAIL",
+      "business_flow": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    }
+  ],
+  "issue_list": [
+    {
+      "id": "PD-API-S04_GOVERNANCE-API_UNREACHABLE",
+      "classification": "PRODUCT_DEFECT",
+      "domain": "S04_GOVERNANCE",
+      "summary": "500",
+      "disposition": "FIX",
+      "fix_recommendation": "Resolve API audit blocking: API_UNREACHABLE on S04_GOVERNANCE"
+    },
+    {
+      "id": "W001",
+      "classification": "PRODUCT_DEFECT",
+      "domain": "S01_MARKET_GUIDES",
+      "summary": "4 production guides public but not in admin published queue",
+      "disposition": "FIX",
+      "fix_recommendation": "Resolve strict warning: STATUS_DRIFT"
+    },
+    {
+      "id": "PD-ERR-BROWSER",
+      "classification": "PRODUCT_DEFECT",
+      "domain": "Multi-domain parity",
+      "summary": "Enterprise Release Review browser parity failed",
+      "disposition": "FIX",
+      "fix_recommendation": "Fix failures in frontend/e2e/enterprise-release-review.spec.ts"
+    },
+    {
+      "id": "PB-PI3-001",
+      "classification": "PRODUCTION_BLOCKER",
+      "domain": "PI3",
+      "summary": "Production Database / Backup",
+      "disposition": "PI3_MAINLINE",
+      "fix_recommendation": "Complete PB-PI3-001 per docs/runbook/PHASE3-PRODUCTION-PREPARATION.md"
+    },
+    {
+      "id": "PB-PI3-002",
+      "classification": "PRODUCTION_BLOCKER",
+      "domain": "PI3",
+      "summary": "Domain / TLS / CDN",
+      "disposition": "PI3_MAINLINE",
+      "fix_recommendation": "Complete PB-PI3-002 per docs/runbook/PHASE3-PRODUCTION-PREPARATION.md"
+    },
+    {
+      "id": "PB-PI3-003",
+      "classification": "PRODUCTION_BLOCKER",
+      "domain": "PI3",
+      "summary": "Stripe Live",
+      "disposition": "PI3_MAINLINE",
+      "fix_recommendation": "Complete PB-PI3-003 per docs/runbook/PHASE3-PRODUCTION-PREPARATION.md"
+    },
+    {
+      "id": "PB-PI3-004",
+      "classification": "PRODUCTION_BLOCKER",
+      "domain": "PI3",
+      "summary": "Production Validation",
+      "disposition": "PI3_MAINLINE",
+      "fix_recommendation": "Complete PB-PI3-004 per docs/runbook/PHASE3-PRODUCTION-PREPARATION.md"
+    },
+    {
+      "id": "PB-PI3-005",
+      "classification": "PRODUCTION_BLOCKER",
+      "domain": "PI3",
+      "summary": "Mainnet",
+      "disposition": "PI3_MAINLINE",
+      "fix_recommendation": "Complete PB-PI3-005 per docs/runbook/PHASE3-PRODUCTION-PREPARATION.md"
+    },
+    {
+      "id": "PB-PI3-006",
+      "classification": "PRODUCTION_BLOCKER",
+      "domain": "PI3",
+      "summary": "Go-Live Checklist",
+      "disposition": "PI3_MAINLINE",
+      "fix_recommendation": "Complete PB-PI3-006 per docs/runbook/PHASE3-PRODUCTION-PREPARATION.md"
+    },
+    {
+      "id": "ED-SEPOLIA-VS-MAINNET",
+      "classification": "EXPECTED_DIFFERENCE",
+      "domain": "Web3",
+      "summary": "Staging/testnet uses Sepolia (chain_id 11155111); production mainnet addresses differ by design",
+      "disposition": "CONFIRM_DESIGN",
+      "fix_recommendation": "No product fix; complete PI3-005 Mainnet for production GO"
+    },
+    {
+      "id": "ENH-POST-GO-OPS",
+      "classification": "ENHANCEMENT",
+      "domain": "Official Ops",
+      "summary": "CDN/HLS · Admin SSO · button-by-button ops polish deferred to Post-GO Official Ops 1.1",
+      "disposition": "DEFER_POST_GO",
+      "fix_recommendation": "Track in Post-GO roadmap; not blocking Product Enterprise Complete"
+    }
+  ],
+  "machine_keys": {
+    "TT_ENTERPRISE_FINAL_ACCEPTANCE": "IN_PROGRESS",
+    "TT_PRODUCT_CAPABILITY": "ENTERPRISE_COMPLETE_PENDING_VERIFICATION",
+    "TT_RELEASE_DECISION": "NO_GO"
+  }
+}

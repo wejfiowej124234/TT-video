@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T11:24:20Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "大理",
+    "city_en": "Dali",
+    "matrix_ids": [
+      "PH-CN-269-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-269-FOOD",
+      "legacy_value": "白族三道茶",
+      "poi_id": "45cec0c7-f304-40f2-ac36-8ab7654e3f22",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-269-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

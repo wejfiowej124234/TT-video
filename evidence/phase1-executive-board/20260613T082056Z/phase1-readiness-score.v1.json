@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.phase1_executive_readiness.v1",
+  "score": 88,
+  "band": "HOLD",
+  "freeze_recommendation": "HOLD",
+  "thresholds": {
+    "NO_GO": "<80",
+    "HOLD": "80-89",
+    "FREEZE_CANDIDATE": "90-94",
+    "PHASE1_EXIT_READY": "95+"
+  },
+  "phase2_review_allowed": false
+}

@@ -65,6 +65,23 @@ describe("useLandingAmbientUrl", () => {
     expect(result.current).toBe(CN_TS);
   });
 
+  it("country switch from empty uses TS immediately before catalog upgrade", async () => {
+    vi.mocked(isCatalogApiEnabled).mockReturnValue(true);
+    vi.mocked(resolveLandingAmbientUrl).mockResolvedValue({
+      data: "https://api.example/ocs-kyoto-culture-community-media.jpg",
+      source: "catalog-api",
+    });
+    const { result, rerender } = renderHook(({ c }) => useLandingAmbientUrl(c), {
+      initialProps: { c: "" },
+    });
+    expect(result.current).toBe(landingAmbientImageUrl(""));
+    rerender({ c: "中国" });
+    expect(result.current).toBe(CN_TS);
+    await waitFor(() => {
+      expect(result.current).toBe("https://api.example/ocs-kyoto-culture-community-media.jpg");
+    });
+  });
+
   it("no hydration mismatch: first render equals TS before effect", () => {
     vi.mocked(isCatalogApiEnabled).mockReturnValue(true);
     vi.mocked(resolveLandingAmbientUrl).mockResolvedValue({

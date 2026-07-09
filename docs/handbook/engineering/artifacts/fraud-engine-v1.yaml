@@ -1,0 +1,150 @@
+# Fraud Engine v1 — machine-readable spec (BE-FRD-01)
+# SSOT: Sprint 168 · 102 §8 · 102 §10.4
+schema: traveltrust_fraud_engine.v1
+version: "1.0.0"
+phase: "①_local_②_testnet"
+excluded:
+  - community_risk_signals_merge  # BE-FRD-03 P1
+  - kol_gmv_arbitrage               # BE-FRD-04 P2
+  - on_chain_gov_transfer           # 133 HOLD
+
+enterprise_targets:
+  automation_pct: 72
+  ops_cost_tier: MEDIUM
+  revenue_closure: PARTIAL
+  audit: required
+
+internal_api:
+  method: POST
+  path: /api/v1/internal/growth/fraud-scan
+  auth: internal_operator_secret
+  body:
+    user_id: uuid
+    trigger: enum[register, manual, scheduled]
+    idempotency_key: string
+    context:
+      client_ip: string_optional
+      email: string_optional
+      referral_code: string_optional
+      default_wallet_address: string_optional
+      user_agent: string_optional
+  responses:
+    "200":
+      status: ok
+      outcome: enum[clean, signaled, auto_action]
+      rules_fired: array
+      scan_run_id: uuid
+    "409": duplicate_idempotency_key
+
+register_hook:
+  location: crates/api/src/chain_off/auth.rs
+  timing: after insert_user + referral bind + ensure_referral_code
+  mode: best_effort_async
+  failure_policy: never_block_register
+
+rules_v1:
+  - id: register_email_disposable_domain
+    signal_type: email_disposable_domain
+    risk_level: MEDIUM
+    action: record_signal
+    config:
+      blocklist_source: static_v1_list
+  - id: register_email_alias_burst
+    signal_type: email_alias_pattern
+    risk_level: MEDIUM
+    action: record_signal
+    config:
+      window_minutes: 60
+      max_accounts_per_base: 5
+  - id: register_ip_velocity
+    signal_type: register_ip_velocity
+    risk_level: HIGH
+    action: auto_airdrop_ineligible
+    config:
+      window_minutes: 60
+      max_registers_per_ip: 8
+      ip_source: auth_audit_events
+  - id: register_wallet_collision
+    signal_type: wallet_address_collision
+    risk_level: HIGH
+    action: auto_points_frozen
+    config:
+      requires_wallet_on_register: false
+  - id: referral_hourly_rate_limit
+    signal_type: referral_hourly_rate_limit
+    risk_level: HIGH
+    action: reject_bind  # existing G-S1
+    source: growth_referral.rs
+  - id: referral_self_forbidden
+    signal_type: referral_self_forbidden
+    risk_level: HIGH
+    action: reject_bind
+    source: growth_referral.rs
+
+risk_actions:
+  LOW:
+    - record_signal
+  MEDIUM:
+    - record_signal
+    - open_case_if_repeat
+  HIGH:
+    - record_signal
+    - set_growth_fraud_status
+    - open_growth_fraud_case
+    - disable_referral_codes_optional
+
+auto_status_map:
+  auto_points_frozen: points_frozen
+  auto_airdrop_ineligible: airdrop_ineligible
+  auto_banned: banned
+
+data_model:
+  new_tables:
+    - name: growth_fraud_scan_runs
+      columns:
+        - id: uuid PK
+        - subject_user_id: uuid FK users
+        - trigger: text
+        - idempotency_key: text UNIQUE
+        - outcome: text
+        - rules_fired: jsonb
+        - context_snapshot: jsonb
+        - created_at: timestamptz
+  existing_tables:
+    - growth_fraud_signals
+    - growth_fraud_cases
+    - users.growth_fraud_status
+
+admin_api_extensions:
+  - method: GET
+    path: /api/v1/admin/growth/anti-fraud/scan-runs
+    perm: admin.growth.read
+  - method: POST
+    path: /api/v1/admin/growth/anti-fraud/scan-runs/trigger
+    perm: admin.growth.fraud
+    note: manual rescan for ops
+
+admin_console:
+  route: /admin/growth/anti-fraud
+  v1_additions:
+    - scan_runs_table_readonly
+    - last_scan_outcome_on_user_row
+    - link_to_cases
+  ui_scope: data_only_no_layout_change
+
+ops_sop:
+  daily:
+    - review open growth_fraud_cases
+    - check scan_runs auto_action count
+  weekly:
+    - tune ip_velocity threshold from false positive rate
+    - export signals CSV for audit
+  escalation:
+    HIGH_auto_action: Risk reviews within 24h
+    repeat_MEDIUM: upgrade to points_frozen via PATCH user
+
+acceptance_gates:
+  - cargo test growth_fraud_scan
+  - smoke-growth-fraud-scan-p0-local.sh
+  - adminGrowthAntiFraud.contract.test.ts extended
+  - run-sprint168-be-frd01-implementation-gate.sh

@@ -1,0 +1,20 @@
+{
+  "schema": "phase2_sepolia_p51_country_ledger_broadcast.v1",
+  "timestamp_utc": "20260605T101358Z",
+  "chain_id": 11155111,
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "timelock_address": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+  "broadcast": true,
+  "pilot_jurisdiction": "DE",
+  "addresses": {
+    "country_pool_ledger_pilot_address": "0x63bd7d5ee5c5dde707e5e65303f3876267c78e97",
+    "country_pool_ledger_address": "0x63bd7d5ee5c5dde707e5e65303f3876267c78e97",
+    "country_ledger_ssot_token_address": "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
+  },
+  "transaction": {
+    "country_pool_ledger_v0": "0xa041bddd12015b31b16bf8f8ee2ef0c7596c06b5c8d57f8d5d4c833f092191f5"
+  },
+  "forge_log": "forge-broadcast-20260605T101358Z.log",
+  "broadcast_json": "contracts/broadcast/DeployP51CountryLedger.s.sol/11155111/run-latest.json",
+  "ssot": "docs/runbook/TT-PHASE2-P51-COUNTRY-LEDGER-SEPOLIA-BROADCAST-CHECKLIST.md"
+}

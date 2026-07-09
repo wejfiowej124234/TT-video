@@ -1,0 +1,11 @@
+{
+  "step": "step-03-split-4555",
+  "layers": [
+    "page_ui",
+    "wallet_tx",
+    "chain_events",
+    "api_response",
+    "db_state"
+  ],
+  "required": true
+}

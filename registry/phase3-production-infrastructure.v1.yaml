@@ -36,7 +36,7 @@ interim_prod_hosts:
   api: https://tt-api-prod.fly.dev
   web: https://tt-web-prod.fly.dev
   mpg_cluster_id: q49ypo4e98pr17ln
-  note: "*.fly.dev interim — brand domain + Stripe Live block final GO"
+  note: "*.fly.dev interim — brand domain + Web3 payment prod verification block final GO"
 
 orchestrator:
   prep: scripts/dev/run-pi3-production-infra-prep.sh
@@ -51,6 +51,9 @@ items:
     sprint: "151"
     execution_gate: scripts/check-pi3-002-production-domain-tls-cdn-cors-execution.sh
     runbook: docs/handbook/engineering/151-PI3-002-Production-Domain-TLS-CDN-CORS-Execution-Report.md
+    media_three_tier: registry/media-three-tier-architecture.v1.yaml
+    media_runbook: docs/runbook/TT-MEDIA-THREE-TIER-ARCHITECTURE.md
+    staging_media_migration: scripts/dev/configure-staging-media-r2-cdn.sh
     status: INTERIM_GO
     execution_prep: COMPLETE
     owner_live: INTERIM_CLOSED
@@ -68,8 +71,11 @@ items:
     evidence: evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-001-exec-20260702T171201Z/
     prod_drill: evidence/GO_phase2_testnet_20260526/phase3-production-prep/prod-db-restore-drill-20260702T164909Z/
   PI3-003:
-    name: Stripe Live
+    name: Optional Fiat Onboarding (Stripe)
+    classification: P1_FUTURE_FIAT_ONRAMP
     gate_status: WAITING_OWNER
+    blocks_production_go: false
+    blocks_core_payment: false
     sprint: "153"
     execution_gate: scripts/check-pi3-003-stripe-live-production-webhook-execution.sh
     baseline: evidence/pi3_003_stripe_live_production_webhook/baseline_record.v1.json
@@ -78,7 +84,18 @@ items:
     execution_prep: COMPLETE
     owner_live: OPEN
     depends_on: [PI3-002]
+    note: NOT core Production Payment — onboarding optional bypass only
     evidence: evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-003-exec-20260702T171212Z/
+  G3-02-WEB3-PAYMENT:
+    name: Web3 USDC Escrow Payment Production Verification
+    classification: P0_CORE_PAYMENT
+    gate_status: NOT_STARTED
+    machine_key: TT_WEB3_PAYMENT_PRODUCTION_READINESS
+    execution_gate: scripts/check-web3-payment-production-readiness.sh
+    checklist: registry/production-payment-readiness-checklist.v1.yaml
+    runbook: docs/runbook/PRODUCTION-PAYMENT-READINESS-WEB3-USDC.md
+    status: NOT_STARTED
+    depends_on: [OCS_PRODUCTION_BOOTSTRAP]
   PI3-004:
     name: Production Validation
     gate_status: INTERIM_GO
@@ -95,9 +112,10 @@ items:
     prod_uat: evidence/pi3_004_production_readiness_verification/prod-uat-six-domains-20260702T170211Z/
 
 exit_criteria_live:
+  G3-02-WEB3-PAYMENT: TT_WEB3_PAYMENT_PRODUCTION_READINESS equals WEB3_PAYMENT_PRODUCTION_PASS
   PI3-002: TT_PI3_002 equals PI3-002_GO or PI3-002_INTERIM_GO
   PI3-001: B-475 status equals PASS and prod drill READY
-  PI3-003: PI3-003_GO or WAITING_OWNER_STRIPE (infra track continues)
+  PI3-003: optional — PI3-003_GO or WAITING_OWNER_STRIPE (does not block Web3-only GO)
   PI3-004: PI3-004_GO or PI3-004_INTERIM_GO with R-003 PARTIAL_GO+ and six-domain UAT evidence
 
 remaining_blockers_for_tt_release_go:

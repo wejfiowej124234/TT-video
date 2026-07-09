@@ -3,7 +3,8 @@ pragma solidity 0.8.19;
 
 import "./IERC20.sol";
 import "./StewardPathVault.sol";
-import "./UnallocatedStewardPathVault.sol";
+import "./vacancy/UnallocatedStewardPathVault.sol";
+import "./vacancy/VacancyTypes.sol";
 
 interface IRegionStewardStakePool {
     function hasJurisdictionStake(address user, bytes2 jurisdiction) external view returns (bool);
@@ -35,6 +36,12 @@ contract CountryPoolNetProfitLedger {
         NO_SPLIT,
         SPLIT_PENDING,
         SPLIT_COMPLETED
+    }
+
+    enum VacancyState {
+        STEWARD_ACTIVE,
+        GRACE_PERIOD,
+        SWEEP
     }
 
     struct ActiveStewardConfig {
@@ -74,6 +81,7 @@ contract CountryPoolNetProfitLedger {
     }
 
     uint256 internal constant MAX_ACCRUAL_BATCH_LINES = 32;
+    uint16 internal constant VACANCY_EVENT_VERSION = 1;
 
     bytes32 internal constant ACCT_R100 = bytes32("R-100");
     bytes32 internal constant ACCT_R110 = bytes32("R-110");
@@ -103,6 +111,12 @@ contract CountryPoolNetProfitLedger {
     bool public settlementPaused;
 
     ActiveStewardConfig public activeSteward;
+
+    /// @dev G-01 · last epoch whose Unallocated/Reserve is historical (post-activation = epochId > this).
+    uint256 public stewardActivationEpochId;
+
+    VacancyState public vacancyState;
+    uint64 public vacancyGraceStartedAt;
 
     mapping(uint256 => EpochRecord) public epochs;
     mapping(bytes32 => bool) public accrualRefs;
@@ -168,6 +182,24 @@ contract CountryPoolNetProfitLedger {
     );
     event SettlementPausedSet(bool paused);
 
+    /// @dev EV-01 · S3a Ledger lifecycle events (signatures match VacancyEvents.sol).
+    event VacancyEntered(
+        uint16 version,
+        bytes2 indexed jurisdiction,
+        uint256 epochId,
+        uint256 principal,
+        uint256 reserve,
+        uint256 swept,
+        uint256 disbursed
+    );
+    event GraceStarted(uint16 version, bytes2 indexed jurisdiction, uint256 epochId, uint32 graceDays);
+    event StewardActivated(
+        uint16 version,
+        bytes2 indexed jurisdiction,
+        uint256 stewardActivationEpochId,
+        address indexed steward
+    );
+
     error OnlyOwner();
     error InvalidJurisdiction();
     error InvalidAddress();
@@ -227,6 +259,7 @@ contract CountryPoolNetProfitLedger {
         closeDelaySeconds = closeDelaySeconds_;
         bpsStewardPath = bpsStewardPath_;
         bpsGlobalTreasury = bpsGlobalTreasury_;
+        vacancyState = VacancyState.STEWARD_ACTIVE;
     }
 
     function transferOwnership(address newOwner) external onlyOwner {
@@ -273,6 +306,8 @@ contract CountryPoolNetProfitLedger {
         bool tenureWaived,
         bytes32 proposalRef
     ) external onlyOwner {
+        ActiveStewardConfig memory prev = activeSteward;
+
         activeSteward = ActiveStewardConfig({
             steward: steward,
             suspended: suspended,
@@ -281,9 +316,24 @@ contract CountryPoolNetProfitLedger {
             updatedAtBlock: uint64(block.number),
             proposalRef: proposalRef
         });
+
         emit ActiveStewardConfigSet(
             jurisdiction, steward, suspended, tenureSatisfied, tenureWaived, proposalRef
         );
+
+        if (!_stewardPathEligibleFrom(activeSteward) || steward == address(0)) {
+            return;
+        }
+
+        bool newlyActivated = prev.steward != steward || prev.suspended || !_stewardPathEligibleFrom(prev);
+        if (!newlyActivated) {
+            return;
+        }
+
+        /// @dev G-01 · PCM §1.3 G-01 | Risk: Critical
+        stewardActivationEpochId = latestEpochId;
+        vacancyState = VacancyState.STEWARD_ACTIVE;
+        emit StewardActivated(VACANCY_EVENT_VERSION, jurisdiction, latestEpochId, steward);
     }
 
     function openEpoch(uint256 epochId, uint64 epochStart, uint64 epochEnd) external onlyOwner whenNotPaused {
@@ -449,13 +499,16 @@ contract CountryPoolNetProfitLedger {
 
         bool eligible = _stewardPathEligible();
         (uint256 stewardLeg, uint256 globalLeg) = _splitLegs(np);
-        uint256 unallocatedLeg = _routeStewardLeg(eligible, stewardLeg, epochId);
+        (uint256 stewardRouted, uint256 unallocatedLeg) = _routeStewardLeg(eligible, stewardLeg, epochId);
         if (globalLeg > 0 && !settlementToken.transfer(globalTreasury, globalLeg)) revert TransferFailed();
+
+        _updateVacancyState(eligible, epochId);
+        _maybeExecuteVacancySweep(epochId);
 
         e.stewardPathEligible = eligible;
         e.qualifiedSteward = activeSteward.steward;
         e.qualificationSnapshotBlock = uint64(block.number);
-        e.stewardAmount = eligible ? stewardLeg : 0;
+        e.stewardAmount = stewardRouted;
         e.unallocatedAmount = unallocatedLeg;
         e.globalAmount = globalLeg;
         e.splitAt = uint64(block.timestamp);
@@ -481,23 +534,30 @@ contract CountryPoolNetProfitLedger {
         globalLeg = globalBase + (np - stewardLeg - globalBase);
     }
 
+    /// @dev G-03 · PCM §1.3 G-03 | Risk: Critical
     function _routeStewardLeg(bool eligible, uint256 stewardLeg, uint256 epochId)
         internal
-        returns (uint256 unallocatedLeg)
+        returns (uint256 stewardRouted, uint256 unallocatedLeg)
     {
-        if (stewardLeg == 0) return 0;
-        if (eligible) {
+        if (stewardLeg == 0) return (0, 0);
+
+        bool routeToSteward = eligible && epochId > stewardActivationEpochId;
+        if (routeToSteward) {
             if (!settlementToken.approve(address(stewardPathVault), stewardLeg)) revert TransferFailed();
             stewardPathVault.depositFromLedger(stewardLeg, epochId);
-            return 0;
+            return (stewardLeg, 0);
         }
+
         if (!settlementToken.approve(address(unallocatedStewardPathVault), stewardLeg)) revert TransferFailed();
         unallocatedStewardPathVault.depositFromLedger(stewardLeg, epochId);
-        return stewardLeg;
+        return (0, stewardLeg);
     }
 
     function _stewardPathEligible() internal view returns (bool) {
-        ActiveStewardConfig memory cfg = activeSteward;
+        return _stewardPathEligibleFrom(activeSteward);
+    }
+
+    function _stewardPathEligibleFrom(ActiveStewardConfig memory cfg) internal view returns (bool) {
         if (cfg.steward == address(0)) return false;
         if (cfg.suspended) return false;
         if (!cfg.tenureSatisfied && !cfg.tenureWaived) return false;
@@ -506,6 +566,51 @@ contract CountryPoolNetProfitLedger {
         (uint256 amount,,,,, bool active) = stewardStakePool.stakes(cfg.steward, jurisdiction);
         if (!active) return false;
         return amount >= stewardStakePool.minStakeAmount(jurisdiction);
+    }
+
+    /// @dev Spec: SM-01 | PCM: §1.4 SM-01 | Risk: High
+    function _updateVacancyState(bool stewardEligible, uint256 epochId) internal {
+        if (stewardEligible) {
+            vacancyState = VacancyState.STEWARD_ACTIVE;
+            return;
+        }
+
+        if (vacancyState == VacancyState.STEWARD_ACTIVE) {
+            vacancyGraceStartedAt = uint64(block.timestamp);
+            vacancyState = VacancyState.GRACE_PERIOD;
+            VacancyTypes.VacancyLedger memory vl = unallocatedStewardPathVault.vacancyLedger();
+            emit VacancyEntered(
+                VACANCY_EVENT_VERSION,
+                jurisdiction,
+                epochId,
+                vl.principal,
+                vl.reserve,
+                vl.swept,
+                vl.disbursed
+            );
+            emit GraceStarted(VACANCY_EVENT_VERSION, jurisdiction, epochId, _vacancyGraceDays());
+            return;
+        }
+
+        if (vacancyState == VacancyState.GRACE_PERIOD && _gracePeriodElapsed()) {
+            vacancyState = VacancyState.SWEEP;
+        }
+    }
+
+    /// @dev Spec: TR-01 | PCM: §1.4 TR-01 | Risk: Critical
+    function _maybeExecuteVacancySweep(uint256 epochId) internal {
+        if (vacancyState != VacancyState.SWEEP) return;
+        unallocatedStewardPathVault.evaluateAndExecuteVacancySweep(epochId);
+    }
+
+    function _gracePeriodElapsed() internal view returns (bool) {
+        if (vacancyGraceStartedAt == 0) return false;
+        return block.timestamp >= uint256(vacancyGraceStartedAt) + uint256(_vacancyGraceDays()) * 1 days;
+    }
+
+    function _vacancyGraceDays() internal view returns (uint32) {
+        (,,, uint32 graceDays,) = unallocatedStewardPathVault.vacancyParams();
+        return graceDays;
     }
 
     function _isAllowedAccountCode(bytes32 code) internal pure returns (bool) {

@@ -1,0 +1,10 @@
+{
+  "schema": "phase3_db_restore_drill.v1",
+  "at": "20260701T003600Z",
+  "fly_pg_app": "tt-traveltrust-staging",
+  "last_restore_drill_utc": "2026-07-01T00:36:36Z",
+  "fly_backups_enabled": false,
+  "pg_dump_ok": 0,
+  "users_count": "673",
+  "notes": "Staging drill: backup list + logical dump + post-check SELECT; full PITR restore documented in PHASE3-PRODUCTION-PREPARATION.md"
+}

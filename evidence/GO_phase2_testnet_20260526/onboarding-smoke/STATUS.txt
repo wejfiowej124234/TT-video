@@ -1,0 +1,6 @@
+status: PASS
+last_run: 20260606T095305Z
+api_base: https://tt-api-staging.fly.dev
+note: ONB-P2-006 quote→PI→webhook→entitlement→role-confirm exit 0
+phase: ② testnet closing gap
+artifacts: smoke-onboarding.log run.log (G4 dir payment-flow.log webhook.log)

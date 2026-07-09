@@ -1,0 +1,10 @@
+{
+  "schema": "tn_p1_009_p2fc_soak_start.v1",
+  "stamp": "20260614T135451Z",
+  "phase": "② testnet",
+  "status": "INFLIGHT",
+  "soak_dir": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING",
+  "job_dir": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/job-20260614T135452Z",
+  "required_sec": 259200,
+  "honest_boundary": "72h wall-clock soak in flight · TN-P1-009 stays OPEN until COMPLETED.json · no new product features during soak"
+}

@@ -1,0 +1,15 @@
+# MTM tier count machine mirror — SSOT: docs/master/MTM-COUNT-SSOT.md
+schema: traveltrust.ttg_governance_mtm_counts.v1
+version: 1
+effective_utc: "2026-07-09"
+canonical_matrix: docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md
+
+counts:
+  rows: 146
+  dev_done: 58
+  testnet_done: 40
+  human_done: 48
+  ops_done: 18
+  dr_done: 0
+
+machine_key: "TTG_GOV_MTM: ROWS=146 DEV=58 TN=40 HUMAN=48 OPS=18 DR=0"

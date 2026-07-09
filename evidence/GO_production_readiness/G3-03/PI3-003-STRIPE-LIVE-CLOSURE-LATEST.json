@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.pi3_003_stripe_live_closure_preflight.v1",
+  "stamp": "20260708T070435Z",
+  "recorded_at": "2026-07-08T07:05:09.996Z",
+  "verdict": "PI3-003_BLOCKED_OWNER_CREDENTIALS",
+  "machine_keys": {
+    "PI3_003_STRIPE_LIVE": "NOT_STARTED",
+    "TT_PRODUCTION_STRIPE_LIVE": "NOT_READY",
+    "OCS_PRODUCTION_PARITY_AUDIT": "PASS",
+    "TT_PI3_003_STRIPE_LIVE_PRODUCTION_WEBHOOK_EXECUTION": "PI3-003_WAITING_OWNER_STRIPE"
+  },
+  "credential_readiness": {
+    "sk_live": "EMPTY",
+    "whsec": "EMPTY",
+    "onboarding_enabled": "0",
+    "pk_live_fe": "EMPTY",
+    "has_sk_test": false
+  },
+  "blocked_reason": "Owner must fill scripts/dev/.env.production.local",
+  "resume_trigger": "Owner: Stripe Live secrets ready"
+}

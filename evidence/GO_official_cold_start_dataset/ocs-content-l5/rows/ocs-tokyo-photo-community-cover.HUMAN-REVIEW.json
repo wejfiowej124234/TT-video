@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T123430Z",
+  "filename": "ocs-tokyo-photo-community-cover.jpg",
+  "chain_id": "tokyo-photo",
+  "city": "东京",
+  "country_code": "JP",
+  "slot": "community-cover",
+  "surface": "Community Cover",
+  "copy_label": "清晨从浅草寺出发，沿隅田川步行至晴空塔——官方摄影路线一日实录，附机位与时间窗口建议。",
+  "manifest_copy": {
+    "community_post.destination_slug": "tokyo",
+    "community_post.destination_label": "东京",
+    "community_post.post_type": "photo",
+    "community_post.tags": ["东京", "摄影", "官方旅行日志"],
+    "community_post.body_markdown": "清晨从浅草寺出发，沿隅田川步行至晴空塔——官方摄影路线一日实录，附机位与时间窗口建议。",
+    "community_post.cover_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-community-cover.jpg"
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 113904 bytes；非纯色占位。" },
+    "G2_copy_alignment": { "pass": true, "notes": "东京街景摄影瞬间；destination/tags/正文摄影路线日志语义一致；chain 东京。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "涩谷十字路口生活化瞬间；与 Row1 肖像/Row2 情侣/Row3 静物/Row4 史诗路线均不同。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "东京同 chain；无他国地标。" },
+    "G5_brand_visual": { "pass": true, "notes": "略高饱和都市纪实；与 tokyo-photo chain 品牌统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "Community Feed 缩略观感；非硬广。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光均衡、640x480 无低清块。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "HUMAN-REVIEW + chain + consumer evidence 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "涩谷实景氛围；手脸自然；无水印/Logo 叠加；② AI 素材。" },
+    "G10_content_diversity": { "pass": true, "notes": "都市交叉路口 slot；chain 内场景类型独立。" }
+  },
+  "consumer_experience_review": {
+    "pass": true,
+    "perspective": "普通用户首次浏览 Community Feed",
+    "authentic_share_feel": true,
+    "browse_attraction": true,
+    "community_atmosphere": true,
+    "not_ad_like": true,
+    "not_staged_photoshoot": true,
+    "not_stock_library": true,
+    "not_duplicate_official_guide_cover": true,
+    "notes": "行人自然穿越、手机查看、霓虹街景；像旅行者分享的东京摄影街景瞬间，非 Provider 摆拍或 Official 路线封面。"
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

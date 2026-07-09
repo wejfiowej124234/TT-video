@@ -1,0 +1,24 @@
+{
+  "schema": "traveltrust.ocs_content_l5_country_consistency_review.v1",
+  "stamp_utc": "20260704T133930Z",
+  "chain_id": "bangkok-temple",
+  "city": "曼谷",
+  "country_code": "TH",
+  "country_label": "泰国",
+  "theme_locked": "寺庙 · 湄南河 · 游船日落",
+  "TT_COUNTRY_CONSISTENCY_REVIEW": "PASS",
+  "isolation_rules": {
+    "no_japan_elements": true,
+    "no_korea_elements": true,
+    "no_china_elements": true,
+    "no_other_country_landmarks": true,
+    "thai_temple_river_visual_language": true
+  },
+  "future_slots_require": [
+    "provider: 湄南河 sunset 游船晚餐",
+    "acquisition: 泰国手工丝绸",
+    "official_guide: 黎明寺+河景一日路线",
+    "community: 寺庙晨光+河面游船"
+  ],
+  "gate_bangkok_chain_completion": "6/6 must maintain TH-only visual language"
+}

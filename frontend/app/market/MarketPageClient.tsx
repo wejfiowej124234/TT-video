@@ -39,6 +39,11 @@ import {
 import { buildLoginReturnPathWithQuery } from "@/lib/marketLoginReturnPath";
 import { formatGuideDisplayName } from "@/lib/guideDisplayName";
 import type { MarketPageInitialSnapshot } from "@/lib/market/marketPageInitialData";
+import {
+  buildMarketHubDiscoverOrdersQuery,
+  buildMarketHubGuidesQuery,
+  marketHubEffectiveCountry,
+} from "@/lib/marketHubBrowserTruth";
 
 const CustomItineraryModal = dynamic(
   () => import("@/components/market/CustomItineraryModal").then((m) => m.default),
@@ -84,6 +89,26 @@ function MarketPageInner({ initialSnapshot }: { initialSnapshot?: MarketPageInit
   const data = useMarketPage({
     initialSnapshot: hasListFilters ? null : initialSnapshot ?? null,
   });
+  const hubCountry = marketHubEffectiveCountry(data.country);
+  const hubOrdersQuery = useMemo(
+    () =>
+      buildMarketHubDiscoverOrdersQuery({
+        country: data.country,
+        city: data.city,
+        tripDaysFilter: data.tripDaysFilter,
+      }),
+    [data.country, data.city, data.tripDaysFilter],
+  );
+  const hubGuidesQuery = useMemo(
+    () =>
+      buildMarketHubGuidesQuery({
+        country: data.country,
+        city: data.city,
+        languages: data.languages,
+        serviceTypes: data.serviceTypes,
+      }),
+    [data.country, data.city, data.languages, data.serviceTypes],
+  );
   const marketDarkSurface = resolveMarketBackdropSurface();
 
   return (
@@ -97,6 +122,9 @@ function MarketPageInner({ initialSnapshot }: { initialSnapshot?: MarketPageInit
       data-tt-market-filter-sort-frozen="1"
       data-tt-market-favorites-mode="localstorage-f020-sync-v1"
       data-tt-market-dark-surface={marketDarkSurface}
+      data-tt-market-country={hubCountry}
+      data-tt-market-orders-query={hubOrdersQuery}
+      data-tt-market-guides-query={hubGuidesQuery}
     >
       <MarketAmbientBackdrop />
       <div className="absolute inset-0 z-0 bg-experience-landing-vignette pointer-events-none" aria-hidden />

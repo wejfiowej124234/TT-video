@@ -145,6 +145,20 @@ describe("traveltrust network page (contract)", () => {
     expect(src).not.toMatch(/\/api\/v1\/internal\//);
   });
 
+  it("gates spacing debug chrome behind opt-in or tt_spacing query (PER-R1-CI-09)", () => {
+    const spacingDebug = readFileSync(
+      join(__dir, "../../lib/traveltrustSpacingDebug.ts"),
+      "utf8",
+    );
+    expect(spacingDebug).toContain("allowTravelTrustSpacingDebugChrome");
+    expect(spacingDebug).not.toMatch(
+      /shouldMountTravelTrustSpacingDebug[\s\S]*isTravelTrustSpacingDebugDevHost\(\)\)\s*return\s*true/,
+    );
+    expect(
+      readFileSync(join(cinematicDir, "TravelTrustSectionSpacingDebug.tsx"), "utf8"),
+    ).toContain("shouldMountTravelTrustSpacingDebug");
+  });
+
   it("keeps v6 cinematic shell markers", () => {
     expect(src).toContain('data-tt-traveltrust-network-page="1"');
     expect(src).toContain("TravelTrustCinematicShell");

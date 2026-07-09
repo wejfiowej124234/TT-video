@@ -1,0 +1,113 @@
+{
+  "verdict": "PASS",
+  "mode": "governor_indexed",
+  "note": "POST vote vote_on_chain_required + cast_vote_calldata; on-chain re-read via proposal-status",
+  "seed": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "mode": "governance_proposals_projection",
+      "proposal_id": "911919911919911919911919911919911919",
+      "chain_id": 11155111
+    }
+  },
+  "proposals_list": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "items": [
+        {
+          "id": "911919911919911919911919911919911919",
+          "title": "TravelTrust E2E governance seed (SEED_TEST_ACCOUNTS)",
+          "status": "active"
+        }
+      ],
+      "data_source": "governance_proposals_projection",
+      "chain_id": 11155111,
+      "note": "B-089 Governor events via indexer-tick → DB; status from projection (see GET detail for eth_call state)"
+    }
+  },
+  "proposal_detail": {
+    "http_status": 200,
+    "implementation_status": "chain_governor_indexed",
+    "body": {
+      "status": "ok",
+      "proposal": {
+        "id": "911919911919911919911919911919911919",
+        "title": "TravelTrust E2E governance seed (SEED_TEST_ACCOUNTS)",
+        "body": "TravelTrust E2E governance seed (SEED_TEST_ACCOUNTS)",
+        "status": "active",
+        "proposer": null,
+        "snapshot_block": 1,
+        "vote_start_block": 1,
+        "vote_end_block": 999999999,
+        "operation_id": null
+      },
+      "governance_vote": {
+        "kind": "on_chain_governor",
+        "triggers_on_chain_execution": true,
+        "weight_ssot": "GovernanceVotesToken.getPastVotes@snapshot",
+        "anchor": "TT-COMP-B089-GOVERNOR-CHAIN-VOTING-001"
+      },
+      "vote_counts": {
+        "yes": "0",
+        "no": "0",
+        "abstain": "0"
+      },
+      "chain": {
+        "governor_address": "0xa79c8df5C225825f6d04a497043dB0F1995B55ae",
+        "votes_token_address": null,
+        "state_live": null,
+        "state_rpc_error": "execution reverted",
+        "projection_state": "active"
+      },
+      "voting_power_at_snapshot": null,
+      "cast_vote_calldata": {
+        "yes": "0x567813880000000000000000000000000000000000afa11f79ad373db7381ab17ff383ef0000000000000000000000000000000000000000000000000000000000000001",
+        "no": "0x567813880000000000000000000000000000000000afa11f79ad373db7381ab17ff383ef0000000000000000000000000000000000000000000000000000000000000000",
+        "abstain": "0x567813880000000000000000000000000000000000afa11f79ad373db7381ab17ff383ef0000000000000000000000000000000000000000000000000000000000000002",
+        "selector_note": "TravelTrustGovernor.castVote(uint256,uint8)"
+      },
+      "my_vote": null,
+      "my_vote_weight": null
+    }
+  },
+  "post_vote": {
+    "http_status": 400,
+    "body": {
+      "error": "vote_on_chain_required",
+      "message": "vote_on_chain_required",
+      "hint": "Governor mode: submit castVote(uint256,uint8) on-chain; API does not record signal votes (B-089 Completion)",
+      "cast_vote_calldata": "0x567813880000000000000000000000000000000000afa11f79ad373db7381ab17ff383ef0000000000000000000000000000000000000000000000000000000000000001"
+    }
+  },
+  "proposal_status": {
+    "http_status": 200,
+    "body": {
+      "status": "active",
+      "is_chain_ssot": false,
+      "data_source": "governance_proposals_projection",
+      "read_error": "execution reverted"
+    }
+  },
+  "voting_power_probe": {
+    "http_status": 200,
+    "body_keys": [
+      "status",
+      "authenticated",
+      "vote_kind",
+      "triggers_on_chain_execution",
+      "weight_ssot",
+      "anchor",
+      "unified_on_chain_vote_weight_u256_dec",
+      "weight_formula_anchor",
+      "can_cast_vote",
+      "delegate_to",
+      "delegator_count",
+      "total_weight_units",
+      "on_chain_vote_weight",
+      "stake_snapshot",
+      "country_pool_share_snapshot"
+    ]
+  }
+}

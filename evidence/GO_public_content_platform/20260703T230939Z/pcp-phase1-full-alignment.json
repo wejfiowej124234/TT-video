@@ -1,0 +1,603 @@
+{
+  "audit": "TT_PCP_PHASE1_FULL_ALIGNMENT",
+  "stamp": "20260703T230939Z",
+  "pipeline_standard": "Database → PCP Governance → Public Engine Builder → Public API → Frontend",
+  "machine_key": "TT_PCP_PHASE_1",
+  "machine_key_status": "IN_PROGRESS",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "domain_matrix": [
+    {
+      "domain": "community",
+      "layer": "governance",
+      "status": "PASS",
+      "note": "governed_community_posts_v1",
+      "target": null
+    },
+    {
+      "domain": "community",
+      "layer": "builder",
+      "status": "PASS",
+      "note": "pcp/feed_builder.rs",
+      "target": null
+    },
+    {
+      "domain": "community",
+      "layer": "public_api",
+      "status": "PASS",
+      "note": "feed · detail · governed read paths",
+      "target": null
+    },
+    {
+      "domain": "community",
+      "layer": "frontend",
+      "status": "PASS",
+      "note": "/community/*",
+      "target": null
+    },
+    {
+      "domain": "community",
+      "layer": "registry",
+      "status": "PASS",
+      "note": "public-content-platform.v1.yaml",
+      "target": null
+    },
+    {
+      "domain": "community",
+      "layer": "runbook",
+      "status": "PASS",
+      "note": "TT-PUBLIC-CONTENT-PLATFORM.md",
+      "target": null
+    },
+    {
+      "domain": "community",
+      "layer": "evidence",
+      "status": "PASS",
+      "note": "phase0.5 validation chain",
+      "target": null
+    },
+    {
+      "domain": "market",
+      "layer": "governance",
+      "status": "PASS",
+      "note": "governed_market_* SQL views",
+      "target": "governed_market_guides_v1 · governed_market_listings_v1 · governed_discover_orders_v1"
+    },
+    {
+      "domain": "market",
+      "layer": "builder",
+      "status": "PASS",
+      "note": "pcp/market_builder.rs",
+      "target": "pcp/market_builder.rs"
+    },
+    {
+      "domain": "market",
+      "layer": "public_api",
+      "status": "PASS",
+      "note": "GET /guides · discover/orders · listings",
+      "target": null
+    },
+    {
+      "domain": "market",
+      "layer": "frontend",
+      "status": "PASS",
+      "note": "/guides · /market",
+      "target": null
+    },
+    {
+      "domain": "market",
+      "layer": "registry",
+      "status": "PASS",
+      "note": "content_domains.market",
+      "target": null
+    },
+    {
+      "domain": "market",
+      "layer": "runbook",
+      "status": "PASS",
+      "note": "runbook market section",
+      "target": null
+    },
+    {
+      "domain": "market",
+      "layer": "evidence",
+      "status": "PASS",
+      "note": "evidence/GO_public_content_platform/20260703T230939Z/phase1-market-batch-validation-chain.json",
+      "target": "phase1-market-batch-validation-chain.json"
+    },
+    {
+      "domain": "provider",
+      "layer": "governance",
+      "status": "PASS",
+      "note": "Shared with market — no separate fork allowed",
+      "target": "market_builder + governed_market_listings_v1 (variant=provider)"
+    },
+    {
+      "domain": "provider",
+      "layer": "builder",
+      "status": "PASS",
+      "note": "Shared with market — no separate fork allowed",
+      "target": "market_builder + governed_market_listings_v1 (variant=provider)"
+    },
+    {
+      "domain": "provider",
+      "layer": "public_api",
+      "status": "PASS",
+      "note": "GET /market/provider/listings",
+      "target": null
+    },
+    {
+      "domain": "provider",
+      "layer": "frontend",
+      "status": "PASS",
+      "note": "/market/provider",
+      "target": null
+    },
+    {
+      "domain": "provider",
+      "layer": "registry",
+      "status": "PASS",
+      "note": "content_domains.provider",
+      "target": null
+    },
+    {
+      "domain": "provider",
+      "layer": "runbook",
+      "status": "PASS",
+      "note": "Provider documented under MarketBuilder (shared pipeline)",
+      "target": null
+    },
+    {
+      "domain": "provider",
+      "layer": "evidence",
+      "status": "PASS",
+      "note": "Shared phase1 market batch evidence",
+      "target": "phase1 market batch evidence"
+    },
+    {
+      "domain": "acquisition",
+      "layer": "governance",
+      "status": "PASS",
+      "note": "Shared with market",
+      "target": "market_builder + governed_market_listings_v1 (variant=acquisition)"
+    },
+    {
+      "domain": "acquisition",
+      "layer": "builder",
+      "status": "PASS",
+      "note": "Shared with market",
+      "target": "market_builder + governed_market_listings_v1 (variant=acquisition)"
+    },
+    {
+      "domain": "acquisition",
+      "layer": "public_api",
+      "status": "PASS",
+      "note": "GET /market/acquisition/listings",
+      "target": null
+    },
+    {
+      "domain": "acquisition",
+      "layer": "frontend",
+      "status": "PASS",
+      "note": "/market/acquisition",
+      "target": null
+    },
+    {
+      "domain": "acquisition",
+      "layer": "registry",
+      "status": "PASS",
+      "note": "content_domains.acquisition",
+      "target": null
+    },
+    {
+      "domain": "acquisition",
+      "layer": "runbook",
+      "status": "PASS",
+      "note": "Acquisition documented under MarketBuilder (shared pipeline)",
+      "target": null
+    },
+    {
+      "domain": "acquisition",
+      "layer": "evidence",
+      "status": "PASS",
+      "note": "Shared phase1 market batch evidence",
+      "target": "phase1 market batch evidence"
+    },
+    {
+      "domain": "official_guide",
+      "layer": "governance",
+      "status": "PASS",
+      "note": "governed_guides_v1",
+      "target": "governed_guides_v1"
+    },
+    {
+      "domain": "official_guide",
+      "layer": "builder",
+      "status": "PASS",
+      "note": "Guides public surface via MarketBuilder",
+      "target": "pcp/market_builder.rs guides surface"
+    },
+    {
+      "domain": "official_guide",
+      "layer": "public_api",
+      "status": "PASS",
+      "note": "GET /api/v1/guides",
+      "target": null
+    },
+    {
+      "domain": "official_guide",
+      "layer": "frontend",
+      "status": "PASS",
+      "note": "/guides",
+      "target": null
+    },
+    {
+      "domain": "official_guide",
+      "layer": "registry",
+      "status": "PASS",
+      "note": "content_domains.official_guide",
+      "target": null
+    },
+    {
+      "domain": "official_guide",
+      "layer": "runbook",
+      "status": "PASS",
+      "note": "runbook",
+      "target": null
+    },
+    {
+      "domain": "official_guide",
+      "layer": "evidence",
+      "status": "PASS",
+      "note": "Shared phase1 market batch evidence (governed_market_guides_v1)",
+      "target": "phase1 guides migration evidence"
+    },
+    {
+      "domain": "campaign",
+      "layer": "governance",
+      "status": "GAP",
+      "note": "ops_cold_start direct read",
+      "target": "governed_campaign_surfaces_v1"
+    },
+    {
+      "domain": "campaign",
+      "layer": "builder",
+      "status": "PASS",
+      "note": "pcp/campaign_builder.rs",
+      "target": "pcp/campaign_builder.rs"
+    },
+    {
+      "domain": "campaign",
+      "layer": "public_api",
+      "status": "PASS",
+      "note": "GET /official/cold-start/surfaces/*",
+      "target": null
+    },
+    {
+      "domain": "campaign",
+      "layer": "frontend",
+      "status": "PASS",
+      "note": "cold-start surfaces",
+      "target": null
+    },
+    {
+      "domain": "campaign",
+      "layer": "registry",
+      "status": "PASS",
+      "note": "content_domains.campaign",
+      "target": null
+    },
+    {
+      "domain": "campaign",
+      "layer": "runbook",
+      "status": "PASS",
+      "note": "runbook campaign section",
+      "target": null
+    },
+    {
+      "domain": "campaign",
+      "layer": "evidence",
+      "status": "PASS",
+      "note": "evidence/GO_public_content_platform/20260703T230939Z/phase1-campaign-batch-validation-chain.json",
+      "target": "phase1-campaign-batch-validation-chain.json"
+    },
+    {
+      "domain": "admin_public_content_center",
+      "layer": "governance",
+      "status": "PASS",
+      "note": "Public Ops write console (4 entities)",
+      "target": null
+    },
+    {
+      "domain": "admin_public_content_center",
+      "layer": "builder",
+      "status": "N/A",
+      "note": "Write-path governance — no public builder",
+      "target": null
+    },
+    {
+      "domain": "admin_public_content_center",
+      "layer": "public_api",
+      "status": "PASS",
+      "note": "/admin/official/public-operations/*",
+      "target": null
+    },
+    {
+      "domain": "admin_public_content_center",
+      "layer": "frontend",
+      "status": "PASS",
+      "note": "/admin/official/public-operations",
+      "target": null
+    },
+    {
+      "domain": "admin_public_content_center",
+      "layer": "registry",
+      "status": "PASS",
+      "note": "public-operations-mvp.v1.yaml",
+      "target": null
+    },
+    {
+      "domain": "admin_public_content_center",
+      "layer": "runbook",
+      "status": "PASS",
+      "note": "Public Operations SSOT runbook",
+      "target": null
+    },
+    {
+      "domain": "admin_public_content_center",
+      "layer": "evidence",
+      "status": "PASS",
+      "note": "Phase 0.5 validation + publish-queue probes",
+      "target": null
+    },
+    {
+      "domain": "ddg",
+      "layer": "registry",
+      "status": "PASS",
+      "note": "registry/display-data-governance.v1.yaml → PCP cross-ref",
+      "target": null
+    },
+    {
+      "domain": "ddg",
+      "layer": "runbook",
+      "status": "PASS",
+      "note": "PCP sub-capability pointer",
+      "target": null
+    },
+    {
+      "domain": "ddg",
+      "layer": "evidence",
+      "status": "PASS",
+      "note": "SSOT alignment evidence",
+      "target": null
+    },
+    {
+      "domain": "ocs",
+      "layer": "registry",
+      "status": "PASS",
+      "note": "registry/official-cold-start-dataset.v1.yaml → PCP cross-ref",
+      "target": null
+    },
+    {
+      "domain": "ocs",
+      "layer": "runbook",
+      "status": "PASS",
+      "note": "PCP sub-capability pointer",
+      "target": null
+    },
+    {
+      "domain": "ocs",
+      "layer": "evidence",
+      "status": "PASS",
+      "note": "SSOT alignment evidence",
+      "target": null
+    },
+    {
+      "domain": "sopcp",
+      "layer": "registry",
+      "status": "PASS",
+      "note": "registry/single-official-public-catalog-policy.v1.yaml → PCP cross-ref",
+      "target": null
+    },
+    {
+      "domain": "sopcp",
+      "layer": "runbook",
+      "status": "PASS",
+      "note": "PCP sub-capability pointer",
+      "target": null
+    },
+    {
+      "domain": "sopcp",
+      "layer": "evidence",
+      "status": "PASS",
+      "note": "SSOT alignment evidence",
+      "target": null
+    },
+    {
+      "domain": "ocip",
+      "layer": "registry",
+      "status": "PASS",
+      "note": "registry/official-catalog-identity-policy.v1.yaml → PCP cross-ref",
+      "target": null
+    },
+    {
+      "domain": "ocip",
+      "layer": "runbook",
+      "status": "PASS",
+      "note": "PCP sub-capability pointer",
+      "target": null
+    },
+    {
+      "domain": "ocip",
+      "layer": "evidence",
+      "status": "PASS",
+      "note": "SSOT alignment evidence",
+      "target": null
+    }
+  ],
+  "domain_scores": [
+    {
+      "domain": "community",
+      "aligned": 7,
+      "total": 7,
+      "pct": 100,
+      "status": "ALIGNED"
+    },
+    {
+      "domain": "market",
+      "aligned": 7,
+      "total": 7,
+      "pct": 100,
+      "status": "ALIGNED"
+    },
+    {
+      "domain": "provider",
+      "aligned": 7,
+      "total": 7,
+      "pct": 100,
+      "status": "ALIGNED"
+    },
+    {
+      "domain": "acquisition",
+      "aligned": 7,
+      "total": 7,
+      "pct": 100,
+      "status": "ALIGNED"
+    },
+    {
+      "domain": "official_guide",
+      "aligned": 7,
+      "total": 7,
+      "pct": 100,
+      "status": "ALIGNED"
+    },
+    {
+      "domain": "campaign",
+      "aligned": 6,
+      "total": 7,
+      "pct": 86,
+      "status": "GAP"
+    },
+    {
+      "domain": "admin_public_content_center",
+      "aligned": 7,
+      "total": 7,
+      "pct": 100,
+      "status": "ALIGNED"
+    }
+  ],
+  "old_read_paths": [
+    {
+      "id": "OLD-MKT-001",
+      "domain": "market",
+      "file": "crates/api/src/db/market_listings.rs",
+      "pattern": {},
+      "note": "Public listings read governed_market_listings_v1 via market_catalog",
+      "fix": null,
+      "aligned": true,
+      "status": "MISSING"
+    },
+    {
+      "id": "OLD-MKT-002",
+      "domain": "market",
+      "file": "crates/api/src/chain_off/market_public_surface.rs",
+      "pattern": {},
+      "note": "Legacy in-memory governance fallback when db_pool unavailable",
+      "fix": "Prefer PG governed path; retain for chain_off-only mode",
+      "status": "LEGACY"
+    },
+    {
+      "id": "OLD-CAM-OK",
+      "domain": "campaign",
+      "file": "crates/api/src/db/campaign_catalog.rs",
+      "pattern": {},
+      "note": "Campaign public catalog uses governed view (aligned)",
+      "fix": null,
+      "aligned": true,
+      "status": "MISSING"
+    },
+    {
+      "id": "OLD-COM-OK",
+      "domain": "community",
+      "file": "crates/api/src/db/community.rs",
+      "pattern": {},
+      "note": "Community public catalog uses governed view (aligned)",
+      "fix": null,
+      "aligned": true,
+      "status": "ALIGNED"
+    }
+  ],
+  "gaps": [
+    {
+      "severity": "PHASE1",
+      "domain": "market",
+      "layer": "governance",
+      "id": "OLD-MKT-002",
+      "note": "Legacy in-memory governance fallback when db_pool unavailable",
+      "fix": "Prefer PG governed path; retain for chain_off-only mode",
+      "classification": "OLD_READ_PATH"
+    },
+    {
+      "severity": "PHASE1",
+      "domain": "campaign",
+      "layer": "governance",
+      "id": "P1-CAM-GOV-001",
+      "note": "Campaign public read not wired to governed_campaign_surfaces_v1",
+      "fix": "Apply migration 20260704120000 + campaign_catalog + pcp/campaign_builder.rs",
+      "classification": "REFERENCE_IMPL"
+    }
+  ],
+  "fix_order": [
+    {
+      "id": "P1-CAM-GOV-001",
+      "severity": "PHASE1",
+      "classification": "REFERENCE_IMPL",
+      "action": "Apply migration 20260704120000 + campaign_catalog + pcp/campaign_builder.rs"
+    },
+    {
+      "id": "OLD-MKT-002",
+      "severity": "PHASE1",
+      "classification": "OLD_READ_PATH",
+      "action": "Prefer PG governed path; retain for chain_off-only mode"
+    }
+  ],
+  "staging_runtime": {
+    "state": "PASS",
+    "routes": {
+      "community": true,
+      "market": true,
+      "provider": true,
+      "acquisition": true,
+      "official_guide": true,
+      "campaign": true
+    }
+  },
+  "sub_audits": {
+    "architecture_compliance": "PASS",
+    "full_pipeline": "PASS",
+    "phase_0_5_staging": "PASS",
+    "phase_1_market_batch": "PASS",
+    "phase_1_campaign_batch": "PASS",
+    "enterprise_ssot": "PASS"
+  },
+  "sub_audit_notes": {
+    "architecture_compliance": "Community governed-view compliance (Phase 0.5 gate)",
+    "full_pipeline": "Phase ①/② pipeline matrix + community staging loop",
+    "phase_0_5_staging": "Publish/Unpublish · Surface OFF/ON · Feed+Detail",
+    "phase_1_market_batch": "governed_market_* · MarketBuilder · staging market routes",
+    "phase_1_campaign_batch": "governed_campaign_* · CampaignBuilder · staging cold-start surfaces",
+    "enterprise_ssot": "Cross-platform registry/governance/config alignment"
+  },
+  "summary": {
+    "domain_count": 7,
+    "domains_fully_aligned": 6,
+    "phase1_gaps": 2,
+    "blocking": 0,
+    "legacy_read_paths": 1
+  },
+  "verdict": {
+    "phase1_alignment": "IN_PROGRESS",
+    "community_baseline": "PASS",
+    "sign_off_allowed": false,
+    "note": "Phase 1 IN_PROGRESS — eliminate REFERENCE_IMPL / PARTIAL / OLD_READ_PATH per domain"
+  }
+}

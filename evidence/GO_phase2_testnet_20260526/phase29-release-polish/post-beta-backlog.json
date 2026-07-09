@@ -1,0 +1,104 @@
+{
+  "schema_version": "1",
+  "kind": "traveltrust.phase29_post_beta_backlog.v1",
+  "updated_at": "2026-06-07T00:00:00.000Z",
+  "phase": "post-beta",
+  "note": "功能新增与非 polish 项 — 禁止进入 Phase ②.9 Release Polish 本轮",
+  "items": [
+    {
+      "id": "RP-002",
+      "title": "Staging merchant seed account",
+      "priority": "P2",
+      "impacts": [
+        "DB",
+        "API",
+        "seed"
+      ],
+      "source": "HAT-P2-001"
+    },
+    {
+      "id": "RP-004",
+      "title": "meta.seed_test_accounts.enabled exposure",
+      "priority": "P1",
+      "impacts": [
+        "API",
+        "meta"
+      ],
+      "source": "deep-gate-G06"
+    },
+    {
+      "id": "RP-005",
+      "title": "Merchant full closure",
+      "priority": "P2",
+      "impacts": [
+        "DB",
+        "RBAC",
+        "ORD"
+      ],
+      "source": "HAT-role-matrix"
+    },
+    {
+      "id": "RP-007",
+      "title": "Traveler pay/order/dispute full chain",
+      "priority": "P2",
+      "impacts": [
+        "ORD",
+        "FUNDS",
+        "API"
+      ],
+      "source": "HAT-role-matrix"
+    },
+    {
+      "id": "RP-014",
+      "title": "Community feed server search",
+      "priority": "P1",
+      "impacts": [
+        "API",
+        "DB"
+      ],
+      "source": "AF-04"
+    },
+    {
+      "id": "RP-020",
+      "title": "Market subsite staging filters",
+      "priority": "P2",
+      "impacts": [
+        "API",
+        "ORD",
+        "DB"
+      ],
+      "source": "MKT-FILT-P2"
+    },
+    {
+      "id": "RP-021",
+      "title": "nil-guide one-step accept",
+      "priority": "P2",
+      "impacts": [
+        "API",
+        "ORD",
+        "FUNDS"
+      ],
+      "source": "MKT-FILT-P2-011"
+    },
+    {
+      "id": "RP-030",
+      "title": "Onboarding Stripe new scenarios",
+      "priority": "P1",
+      "impacts": [
+        "FUNDS",
+        "API"
+      ],
+      "source": "ONB-P2"
+    },
+    {
+      "id": "RP-035",
+      "title": "Mainnet / live PSP",
+      "priority": "P0",
+      "impacts": [
+        "FUNDS",
+        "INFRA"
+      ],
+      "source": "phase3"
+    }
+  ]
+}

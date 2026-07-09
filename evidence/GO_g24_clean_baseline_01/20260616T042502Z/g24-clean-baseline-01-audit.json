@@ -1,0 +1,55 @@
+{
+  "audit_id": "G24-CLEAN-BASELINE-01",
+  "stamp_utc": "20260616T042502Z",
+  "phase": "\u2461",
+  "verdict": "PASS_CLEAN_BASELINE",
+  "recommendation": "PROCEED_HAT_R1_PREFLIGHT",
+  "clean_baseline_criteria": [
+    {
+      "id": "CB-C1",
+      "status": "PASS",
+      "note": "patch_pending_ops=0"
+    },
+    {
+      "id": "CB-C2",
+      "status": "PASS",
+      "note": "proxy_failures=0"
+    },
+    {
+      "id": "CB-C3",
+      "status": "PASS",
+      "note": "jurisdiction_init_failures=0/10"
+    },
+    {
+      "id": "CB-C4",
+      "status": "PASS",
+      "note": "{\"governor\": true, \"primary_market\": true, \"treasury_p4_cap\": true, \"seat_registry\": true, \"stake_pool\": true}"
+    },
+    {
+      "id": "CB-C5",
+      "status": "PASS",
+      "note": "env_registry_p0=0 legacy_keys=0"
+    },
+    {
+      "id": "CB-C6",
+      "status": "PASS",
+      "note": "ui=PASS gov_verify=PASS"
+    }
+  ],
+  "p0_findings": [],
+  "onchain_summary": {
+    "patch_pending_count": 0,
+    "stake_pool_jurisdiction_failures": 0,
+    "allowed_execution_target": {
+      "governor": true,
+      "primary_market": true,
+      "treasury_p4_cap": true,
+      "seat_registry": true,
+      "stake_pool": true
+    }
+  },
+  "paused_workstreams": [
+    "HAT-R1 Phase A",
+    "bootstrap-stake-pool-jurisdictions-sepolia schedule/execute patch"
+  ]
+}

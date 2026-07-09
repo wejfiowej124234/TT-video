@@ -1,0 +1,23 @@
+{
+  "schema": "p2fc_soak_graduation_wait.v1",
+  "phase": "② testnet",
+  "mode": "Reliability Closure",
+  "active_job": "job-20260614T070154Z",
+  "started_at": "2026-06-14T07:01:55.263Z",
+  "required_sec": 259200,
+  "close_when": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+  "post_soak_script": "bash scripts/dev/run-phase2-testnet-post-soak-graduation-closure.sh",
+  "post_soak_with_wait": "bash scripts/dev/run-phase2-testnet-post-soak-graduation-closure.sh --wait-soak",
+  "do_not_kill_soak": true,
+  "tn_p1_010": "CLOSED",
+  "d6_surfaces": "52/52 PASS tn-p1-d6-reliability-surface-20260614T073334Z",
+  "honest_boundary": "72h wall-clock wait · ② graduation ≠ ③ Production GO",
+  "package_index": "evidence/P2FC_SOAK_72H_STAGING/PHASE2-PHASE3-GRADUATION-PACKAGE-INDEX.md",
+  "machine_registries": [
+    "phase2-graduation-package-manifest.v1.json",
+    "phase3-production-readiness-backlog.v1.json",
+    "production-blocker-registry.v1.json",
+    "technical-debt-registry.v1.json"
+  ],
+  "monitoring_only": true
+}

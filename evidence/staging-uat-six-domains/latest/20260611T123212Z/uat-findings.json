@@ -1,0 +1,244 @@
+{
+  "base_url": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "recorded_at": "2026-06-11T12:38:24.042Z",
+  "boundary": "staging UAT · bugfix only · not Production GO",
+  "auth": {
+    "email": "tourist@test.com",
+    "user_id": "2760d445-cbf4-47d0-9461-fcba3db0516f",
+    "bearer_preflight": true,
+    "note": "Auth-gated routes probed with Bearer (tourist + promote_admin); public routes unauthenticated; 401/403 on public = P1 not P0"
+  },
+  "findings": [
+    {
+      "domain": "首页",
+      "route": "/",
+      "status": "FAIL",
+      "auth_mode": "public",
+      "notes": [
+        "navigation/assert: page.goto: net::ERR_CONNECTION_CLOSED at https://tt-web-staging.fly.dev/\nCall log:\n\u001b[2m  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"load\"\u001b[22m\n"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/traveltrust",
+      "status": "FAIL",
+      "auth_mode": "public",
+      "notes": [
+        "navigation/assert: page.goto: Navigation to \"https://tt-web-staging.fly.dev/traveltrust\" is interrupted by another navigation to \"chrome-error://chromewebdata/\"\nCall log:\n\u001b[2m  - navigating to \"https:"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/trust",
+      "status": "FAIL",
+      "auth_mode": "public",
+      "notes": [
+        "navigation/assert: page.goto: Navigation to \"https://tt-web-staging.fly.dev/trust\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/traveltrust\"\nCall log:\n\u001b[2m  - navigating to "
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/did-rank",
+      "status": "FAIL",
+      "auth_mode": "public",
+      "notes": [
+        "navigation/assert: page.goto: Navigation to \"https://tt-web-staging.fly.dev/did-rank\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/trust\"\nCall log:\n\u001b[2m  - navigating to \"ht"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/auth/login",
+      "status": "FAIL",
+      "auth_mode": "public",
+      "notes": [
+        "navigation/assert: page.goto: net::ERR_TIMED_OUT at https://tt-web-staging.fly.dev/auth/login\nCall log:\n\u001b[2m  - navigating to \"https://tt-web-staging.fly.dev/auth/login\", waiting until \"load\"\u001b[22m\n"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/auth/register",
+      "status": "FAIL",
+      "auth_mode": "public",
+      "notes": [
+        "navigation/assert: page.goto: Navigation to \"https://tt-web-staging.fly.dev/auth/register\" is interrupted by another navigation to \"chrome-error://chromewebdata/\"\nCall log:\n\u001b[2m  - navigating to \"http"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me/settings",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me/identities",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "市场",
+      "route": "/market",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "市场",
+      "route": "/market/acquisition",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/explore",
+      "status": "WARN",
+      "auth_mode": "public",
+      "notes": [
+        "console.error×1: Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/messages",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/me/posts",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "api auth-only (401/403 ignored for public probe): 401 /api/v1/governance/pool; 401 /api/v1/governance/rewards"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance/proposals",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance/delegate",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/staking",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin",
+      "status": "WARN",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "data-tt page shell not visible"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/orders",
+      "status": "PASS",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/users",
+      "status": "PASS",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/finance",
+      "status": "PASS",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "跨域",
+      "route": "GET /meta (same-origin via Next)",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "chain_id=11155111"
+      ]
+    },
+    {
+      "domain": "跨域",
+      "route": "OPTIONS /api/v1/governance/proposals (CORS)",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "preflight ok"
+      ]
+    }
+  ],
+  "summary": {
+    "pass": 17,
+    "warn": 2,
+    "fail": 6
+  }
+}

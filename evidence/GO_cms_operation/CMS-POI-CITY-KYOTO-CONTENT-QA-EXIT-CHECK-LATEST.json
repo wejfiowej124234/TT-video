@@ -1,0 +1,249 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_exit_check.v1",
+  "recorded_at_utc": "2026-07-05T14:40:08.927Z",
+  "city": {
+    "city_zh": "京都",
+    "city_en": "Kyoto",
+    "country_iso": "JP",
+    "poi_count": 7
+  },
+  "replicated_from": "Osaka Golden Template",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "checks": [
+    {
+      "id": "assets_locked_7_7",
+      "label": "7/7 Asset 全部 LOCKED · 无 Unlock",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-JP-026-ATR",
+          "poi": "伏见稻荷",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-027-ATR",
+          "poi": "清水寺",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-028-ATR",
+          "poi": "金阁寺",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-029-ATR",
+          "poi": "祇园",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-030-FOOD",
+          "poi": "怀石料理",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-031-FOOD",
+          "poi": "抹茶甜品",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-032-FOOD",
+          "poi": "汤豆腐",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "six_dimensions_pass",
+      "label": "六维全部 PASS（City Runtime = Gate 4 同源 · 非 national）",
+      "pass": true,
+      "runtime_scope": "city_consumer_runtime",
+      "city_snapshot": {
+        "execution": "PASS",
+        "cms_ownership": "PASS",
+        "runtime_consumer": "PASS",
+        "geo_matching": "PASS",
+        "content_accuracy": "PASS",
+        "l5_quality": "PASS",
+        "content_qa_closed": true
+      },
+      "issues": []
+    },
+    {
+      "id": "catalog_api_kyoto",
+      "label": "Catalog API 7/7 与 LOCK 一致",
+      "pass": true,
+      "rows": [
+        {
+          "poi": "伏见稻荷",
+          "expected": "ocs-kyoto-culture-official-guide-cover.jpg",
+          "catalog": "ocs-kyoto-culture-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "清水寺",
+          "expected": "ocs-kyoto-culture-community-media.jpg",
+          "catalog": "ocs-kyoto-culture-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "金阁寺",
+          "expected": "ocs-kyoto-culture-community-cover.jpg",
+          "catalog": "ocs-kyoto-culture-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "祇园",
+          "expected": "ocs-kyoto-culture-provider-cover.jpg",
+          "catalog": "ocs-kyoto-culture-provider-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "怀石料理",
+          "expected": "ocs-kyoto-culture-acquisition-cover.jpg",
+          "catalog": "ocs-kyoto-culture-acquisition-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "抹茶甜品",
+          "expected": "ocs-kyoto-culture-guide-avatar.jpg",
+          "catalog": "ocs-kyoto-culture-guide-avatar.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "汤豆腐",
+          "expected": "ocs-kyoto-yudofu-community-cover.jpg",
+          "catalog": "ocs-kyoto-yudofu-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "consumer_runtime_cms",
+      "label": "Consumer Runtime 实际页面读取 CMS（非仅 Verify）",
+      "pass": true,
+      "catalog_api_requests": 4,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/kyoto/kyoto-poi-runtime-20260705T144008Z.png",
+      "rows": [
+        {
+          "poi": "伏见稻荷",
+          "expected_fn": "ocs-kyoto-culture-official-guide-cover.jpg",
+          "runtime_fn": "ocs-kyoto-culture-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "清水寺",
+          "expected_fn": "ocs-kyoto-culture-community-media.jpg",
+          "runtime_fn": "ocs-kyoto-culture-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "金阁寺",
+          "expected_fn": "ocs-kyoto-culture-community-cover.jpg",
+          "runtime_fn": "ocs-kyoto-culture-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "祇园",
+          "expected_fn": "ocs-kyoto-culture-provider-cover.jpg",
+          "runtime_fn": "ocs-kyoto-culture-provider-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "怀石料理",
+          "expected_fn": "ocs-kyoto-culture-acquisition-cover.jpg",
+          "runtime_fn": "ocs-kyoto-culture-acquisition-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "抹茶甜品",
+          "expected_fn": "ocs-kyoto-culture-guide-avatar.jpg",
+          "runtime_fn": "ocs-kyoto-culture-guide-avatar.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-guide-avatar.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "汤豆腐",
+          "expected_fn": "ocs-kyoto-yudofu-community-cover.jpg",
+          "runtime_fn": "ocs-kyoto-yudofu-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-yudofu-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "visual_screenshot",
+      "label": "页面截图/DOM · 无旧图/错图/Fallback",
+      "pass": true,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/kyoto/kyoto-poi-runtime-20260705T144008Z.png",
+      "issues": []
+    },
+    {
+      "id": "no_backlog_unlock",
+      "label": "无 Open Backlog · 无 Unlock",
+      "pass": true,
+      "issues": []
+    }
+  ],
+  "all_pass": true,
+  "city_runtime_pass_count": 7,
+  "city_runtime_required": 7,
+  "verdict": "CONTENT_QA_EXIT_PASS",
+  "TT_CMS_POI_CITY_KYOTO_CONTENT_QA": "CLOSED",
+  "TT_CMS_POI_CITY_KYOTO_CONTENT_QA_EXIT": "PASS",
+  "runtime_tiers": {
+    "city": {
+      "tier": "city_consumer_runtime",
+      "gate_2_equals_gate_4": true
+    },
+    "country": {
+      "tier": "national_runtime",
+      "when": "TT_CMS_JP_COUNTRY: CLOSED",
+      "not_in_scope": true
+    }
+  },
+  "blockers": []
+}

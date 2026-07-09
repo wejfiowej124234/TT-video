@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T144000Z",
+  "filename": "ocs-singapore-family-community-media.jpg",
+  "row": 30,
+  "chain_id": "singapore-family",
+  "country_code": "SG",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "checks": {
+    "manifest_alignment": { "pass": true },
+    "destination_authenticity_9dim": { "pass": true, "notes": "圣淘沙海滩下午环境 SG-only" },
+    "country_consistency_sg": { "pass": true },
+    "community_authenticity_plan": { "pass": true, "environment_narrative_detail": true },
+    "surface_boundary_plan": { "pass": true },
+    "cover_media_complement_plan": {
+      "pass": true,
+      "row29_cover": "儿童开心近景 · Feed 情绪",
+      "row30_media": "圣淘沙海滩环境广角 · 下午柔光 · 详情叙事",
+      "different_subject_angle_composition_light": true
+    },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row28": "海滩环境 vs Official 天际线",
+      "vs_row29": "环境广角 vs 儿童近景"
+    },
+    "cross_chain_community_media_plan": { "pass": true },
+    "brand_consistency_plan": { "pass": true },
+    "consumer_experience_plan": { "pass": true },
+    "business_authenticity": { "pass": true },
+    "copyright_logo_watermark_ai": { "pass": true, "no_watermark": true, "no_logo": true, "no_ai_artifacts": true },
+    "nine_class_framework_frozen": true
+  }
+}

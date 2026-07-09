@@ -1,6 +1,5 @@
 import type { ProductCountryIso } from "@/lib/productCountries";
 import { isAllowedProductIso3166 } from "@/lib/productCountries";
-import { useSyncExternalStore } from "react";
 import type {
   AcquisitionCategorySlug,
   DemoAcquisitionListing,
@@ -99,11 +98,57 @@ export const MARKET_SUBSITE_COUNTRY_STORAGE = {
   acquisition: "tt_market_subsite_country_pref_acquisition",
 } as const;
 
-/** Client-only: persisted subsite country pref (empty URL → read before first catalog fetch). */
+/** Set only when user explicitly picks a country pill (not on init / URL sync). */
+export const MARKET_SUBSITE_COUNTRY_SAVED_STORAGE = {
+  provider: "tt_market_subsite_country_pref_provider_saved",
+  acquisition: "tt_market_subsite_country_pref_acquisition_saved",
+} as const;
+
+export function hasExplicitSubsiteCountryPref(
+  variant: keyof typeof MARKET_SUBSITE_COUNTRY_STORAGE,
+): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return localStorage.getItem(MARKET_SUBSITE_COUNTRY_SAVED_STORAGE[variant]) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function clearSubsiteCountryPref(variant: keyof typeof MARKET_SUBSITE_COUNTRY_STORAGE): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.removeItem(MARKET_SUBSITE_COUNTRY_STORAGE[variant]);
+    localStorage.removeItem(MARKET_SUBSITE_COUNTRY_SAVED_STORAGE[variant]);
+  } catch {
+    /* ignore */
+  }
+}
+
+/** User picked a country pill — persist for next visit (explicit save only). */
+export function writeSubsiteCountryPref(
+  variant: keyof typeof MARKET_SUBSITE_COUNTRY_STORAGE,
+  country: MarketSubsiteCountryParam,
+): void {
+  if (typeof window === "undefined") return;
+  if (country === "all") {
+    clearSubsiteCountryPref(variant);
+    return;
+  }
+  try {
+    localStorage.setItem(MARKET_SUBSITE_COUNTRY_STORAGE[variant], country);
+    localStorage.setItem(MARKET_SUBSITE_COUNTRY_SAVED_STORAGE[variant], "1");
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Client-only: user-saved subsite country (no URL param). Default ALL when never explicitly saved. */
 export function readStoredSubsiteCountryPref(
   variant: keyof typeof MARKET_SUBSITE_COUNTRY_STORAGE,
 ): MarketSubsiteCountryParam {
   if (typeof window === "undefined") return "all";
+  if (!hasExplicitSubsiteCountryPref(variant)) return "all";
   try {
     return parseCountryParam(localStorage.getItem(MARKET_SUBSITE_COUNTRY_STORAGE[variant]));
   } catch {
@@ -111,7 +156,7 @@ export function readStoredSubsiteCountryPref(
   }
 }
 
-/** URL `country` wins; otherwise localStorage pref (runtime SSOT for API query + filter UI). */
+/** URL `country` → explicit user save → default ALL. */
 export function resolveEffectiveSubsiteCountry(
   searchParams: Pick<URLSearchParams, "get">,
   variant: keyof typeof MARKET_SUBSITE_COUNTRY_STORAGE,
@@ -119,20 +164,6 @@ export function resolveEffectiveSubsiteCountry(
   const fromUrl = parseCountryParam(searchParams.get("country"));
   if (fromUrl !== "all") return fromUrl;
   return readStoredSubsiteCountryPref(variant);
-}
-
-/** Client hook: avoids SSR "all" flash before localStorage hydration on dev/strict mode. */
-export function useEffectiveSubsiteCountry(
-  searchParams: Pick<URLSearchParams, "get">,
-  variant: keyof typeof MARKET_SUBSITE_COUNTRY_STORAGE,
-): MarketSubsiteCountryParam {
-  const fromUrl = parseCountryParam(searchParams.get("country"));
-  const stored = useSyncExternalStore(
-    () => () => {},
-    () => readStoredSubsiteCountryPref(variant),
-    () => "all" as MarketSubsiteCountryParam,
-  );
-  return fromUrl !== "all" ? fromUrl : stored;
 }
 
 export type MarketSubsiteListingsQueryParams = {

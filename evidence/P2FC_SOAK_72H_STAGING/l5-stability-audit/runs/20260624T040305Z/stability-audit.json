@@ -1,0 +1,213 @@
+{
+  "schema": "traveltrust.p2fc_soak_l5_stability_audit.v1",
+  "generated_at_utc": "2026-06-24T04:03:05Z",
+  "phase": "②",
+  "policy": "read_only_no_staging_no_worker_no_watcher_changes",
+  "soak_dir": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING",
+  "soak_completed": false,
+  "job": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/job-20260624T011124Z",
+  "job_meta": {
+    "schema": "p2fc_staging_soak_job.v1",
+    "stamp_utc": "20260624T011124Z",
+    "api_base": "https://tt-api-staging.fly.dev",
+    "web_base": "https://tt-web-staging.fly.dev",
+    "poll_sec": 60,
+    "required_sec": 259200,
+    "expect_git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+    "expect_git_sha_source": "runtime_meta_build_or_resolve",
+    "probe_policy": "meta_meta_build_health_fallback",
+    "phase": "②",
+    "policy": "read_only_no_redeploy"
+  },
+  "dimensions": {
+    "runtime_volatility": {
+      "ok_polls": 32,
+      "detail_polls": 32,
+      "fail_events": 0,
+      "budget_elapsed_sec": 1920,
+      "wall_elapsed_sec": 9995,
+      "wall_vs_budget_ratio": 5.206,
+      "interval_stats": {
+        "count": 31,
+        "min_sec": 293.0,
+        "max_sec": 349.0,
+        "mean_sec": 320.5,
+        "stdev_sec": 14.7,
+        "expected_poll_sec": 60,
+        "budget_credit_sec_per_ok": 60,
+        "slow_poll_count": 31,
+        "slow_poll_ratio": 1.0
+      },
+      "distribution": {
+        "health": {
+          "200": 32
+        },
+        "web": {
+          "200": 32
+        },
+        "probe": {
+          "meta_build": 32
+        },
+        "indexer_source": {
+          "(empty)": 31,
+          "runtime": 1
+        }
+      },
+      "sha_unique_count": 1,
+      "sha_aligned_with_expect": true,
+      "verdict": "warn",
+      "notes": [
+        "majority polls wall-clock slow (>3× poll_sec) — /meta timeout pressure"
+      ],
+      "recent_failures": []
+    },
+    "meta_408_503_layers": {
+      "sample_count": 17,
+      "latest": {
+        "schema": "traveltrust.p2fc_meta_observability.v1",
+        "recorded_at_utc": "2026-06-24T03:58:08Z",
+        "observability_only": true,
+        "policy": "execution_chain_non_blocking · acceptance_deferred_until_post_soak_deploy",
+        "probes": {
+          "api_health": "200",
+          "api_meta": "408",
+          "api_meta_build": "200",
+          "web_meta": "503",
+          "git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+          "probe_source": "meta_build"
+        },
+        "execution_chain_ok": true,
+        "acceptance_chain_ok": false,
+        "fallback": "meta → meta_build → health (p2fc-staging-probe-lib)"
+      },
+      "code_distribution": {
+        "api_meta": {
+          "408": 17
+        },
+        "web_meta": {
+          "503": 17
+        }
+      },
+      "execution_chain_ok_ratio": 1.0,
+      "acceptance_chain_ok_ratio": 0.0,
+      "layered_root_cause": [
+        {
+          "layer": "L1_API",
+          "symptom": "GET /meta → 408",
+          "cause": "REQUEST_TIMEOUT_SECS=30 · heavy aggregate"
+        },
+        {
+          "layer": "L2_WEB",
+          "symptom": "GET /meta → 503",
+          "cause": "route.ts proxy maps upstream non-200"
+        },
+        {
+          "layer": "L3_EXEC",
+          "symptom": "probe=meta_build",
+          "cause": "p2fc-staging-probe-lib fallback — non-blocking"
+        },
+        {
+          "layer": "L4_ACCEPT",
+          "symptom": "acceptance_chain_ok=false",
+          "cause": "deferred until post-soak wave-0 hotfix"
+        }
+      ],
+      "rca_alignment": {
+        "root_cause_chain": [
+          "API_TIMEOUT_LAYER: GET /meta exceeds REQUEST_TIMEOUT_SECS (staging default 30)",
+          "WEB_PROXY_DEGRADED: app/meta/route.ts maps upstream non-200 to 503 meta_unavailable"
+        ],
+        "api_meta_code": 408,
+        "web_meta_code": 503,
+        "recorded_at_utc": "2026-06-24T03:33:24Z"
+      },
+      "verdict": "observed_degraded_acceptance_ok",
+      "notes": [
+        "api_meta 408 + web_meta 503 stable during soak — expected under observability_only policy",
+        "execution_chain_ok via meta_build fallback"
+      ]
+    },
+    "indexer_exec_chain_drift": {
+      "probe_fallback_ratio": 1.0,
+      "indexer_source_distribution": {
+        "(empty)": 31,
+        "runtime": 1
+      },
+      "chronic_drift_signals": [
+        {
+          "id": "DRIFT_PROBE_FALLBACK",
+          "severity": "medium",
+          "note": "≥95% polls use meta_build fallback — full /meta never succeeds during soak (expected)"
+        },
+        {
+          "id": "DRIFT_INDEXER_SOURCE_EMPTY",
+          "severity": "medium",
+          "note": "indexer_source empty 97% of polls — /meta body unavailable; TN-P1-010 must use internal spine"
+        },
+        {
+          "id": "DRIFT_INDEXER_SOURCE_FLAP",
+          "severity": "low",
+          "note": "indexer_source alternates empty/runtime — /meta intermittently parseable"
+        }
+      ],
+      "verdict": "stable",
+      "notes": [
+        "≥95% polls use meta_build fallback — full /meta never succeeds during soak (expected)",
+        "indexer_source empty 97% of polls — /meta body unavailable; TN-P1-010 must use internal spine",
+        "indexer_source alternates empty/runtime — /meta intermittently parseable"
+      ]
+    },
+    "backlog_dependency_graph": {
+      "summary_line": "TT_BACKLOG_DEPENDENCY_GRAPH: WARN files=180 risks=1 out=D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/l5-stability-audit/runs/20260624T040305Z",
+      "high_severity_risks": 1,
+      "total_files": 180
+    }
+  },
+  "hidden_stability_risks": [
+    {
+      "id": "DRIFT_PROBE_FALLBACK",
+      "severity": "medium",
+      "note": "≥95% polls use meta_build fallback — full /meta never succeeds during soak (expected)"
+    },
+    {
+      "id": "DRIFT_INDEXER_SOURCE_EMPTY",
+      "severity": "medium",
+      "note": "indexer_source empty 97% of polls — /meta body unavailable; TN-P1-010 must use internal spine"
+    },
+    {
+      "id": "DRIFT_INDEXER_SOURCE_FLAP",
+      "severity": "low",
+      "note": "indexer_source alternates empty/runtime — /meta intermittently parseable"
+    },
+    {
+      "id": "HR_LARGE_DIFF_BLOB",
+      "severity": "medium",
+      "note": "42 files with delta≥50 — review blast radius before wave-1",
+      "files": [
+        "crates/api/src/routes/itineraries.rs",
+        ".../components/admin/AdminNavContentTransition.tsx",
+        ".../market/marketStandaloneBusinessPageUtils.ts",
+        "frontend/components/market/useMarketPage.ts",
+        "frontend/e2e/53-main-path.spec.ts",
+        "frontend/e2e/93-matrix-path-p1-remediation.spec.ts",
+        ".../e2e/auth-register-login-market-chain.spec.ts",
+        ".../b468-market-discovery-full-ui-journey.spec.ts"
+      ]
+    },
+    {
+      "id": "HR_ITINERARIES_HUB",
+      "severity": "high",
+      "note": "itineraries.rs hub change — impacts market/escrow/guide consumer paths",
+      "files": [
+        "crates/api/src/routes/itineraries.rs"
+      ]
+    },
+    {
+      "id": "HR_WALL_BUDGET_DIVERGE",
+      "severity": "medium",
+      "note": "wall/budget ratio 5.206 — 72h completion wall-clock >> nominal"
+    }
+  ],
+  "graduation_readiness_hint": "Soak INFLIGHT: exec chain stable; acceptance /meta deferred to post-soak wave-0",
+  "verdict": "WARN"
+}

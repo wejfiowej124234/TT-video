@@ -1,0 +1,70 @@
+# CMS Wave 1 · Hotel + Transport pilot (family ×1 each)
+schema: traveltrust.cms_hotel_transport_wave1_matrix.v1
+version: 1
+effective_utc: "2026-07-05"
+machine_key: TT_CMS_HOTEL_TRANSPORT_WAVE1_MATRIX
+wave_id: HOTEL-TRANSPORT-WAVE-1
+
+rows:
+  - matrix_id: HT-WAVE1-COMFORT
+    execution_order: 1
+    asset_family: hotel
+    asset_kind: hotel_tier_stock
+    tier_code: tier_comfort
+    inventory_id: IMG-FAM-HOTEL
+    scan_id: VIS-HOTEL-tier_comfort
+    scene: 舒适型酒店客房 · 自然采光 · 无水印
+    copy_label: 舒适型 · Hotel Tier Stock
+    current_label: Catalog API
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 4
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:21:22Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 22293cc4-c38b-413f-8b07-717eddcb2067
+    catalog_tier_id: 84000517-83ef-4908-89f0-946f557e1bba
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg
+
+  - matrix_id: TS-WAVE1-JP
+    execution_order: 2
+    asset_family: transport
+    asset_kind: transport_stock
+    country_iso: JP
+    country_zh: 日本
+    inventory_id: IMG-FAM-TRANSPORT
+    scan_id: VIS-TRANSPORT-0-JP
+    scene: 城市轨道交通/机场接驳 · 日本区域交通 stock
+    copy_label: 日本 · Transport Stock
+    current_label: Catalog API
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:21:22Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 39b163a6-62a1-4034-9bb6-56ec9d1e9740
+    
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg

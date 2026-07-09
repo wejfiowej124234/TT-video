@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T150000Z",
+  "filename": "ocs-paris-art-acquisition-cover.jpg",
+  "row": 33,
+  "chain_id": "paris-art",
+  "country_code": "FR",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "recognizable_masterpieces",
+      "brand_logos",
+      "copyrighted_posters",
+      "celebrity_portraits",
+      "museum_gallery_interior",
+      "people_faces",
+      "eiffel_tower_hero",
+      "provider_guide_semantics"
+    ],
+    "safe_expression": "原创中古海报静物平铺 · 抽象复古图形 · 无可读版权标题"
+  },
+  "post_generation_quality_gate": {
+    "required": [
+      "jpeg_decodable",
+      "min_16kb",
+      "640x480",
+      "not_placeholder"
+    ],
+    "note": "Row32 lesson: verify bytes before row-complete"
+  },
+  "checks": {
+    "manifest_alignment": {
+      "pass": true,
+      "notes": "title/description/category/bounty 与 dataset 100%"
+    },
+    "destination_authenticity_9dim": {
+      "pass": true,
+      "notes": "巴黎复古艺术纸品 FR-only"
+    },
+    "country_consistency_fr": {
+      "pass": true
+    },
+    "acquisition_product_identity_plan": {
+      "pass": true,
+      "vs_tokyo": "中古海报 vs 镜头",
+      "vs_kyoto": "海报 vs 和纸",
+      "vs_seoul": "海报 vs 零食",
+      "vs_bangkok": "纸品 vs 泰丝",
+      "vs_singapore": "复古海报 vs 设计礼盒",
+      "vs_row31_32": "静物 vs 向导/Provider"
+    },
+    "cross_chain_acquisition_plan": {
+      "pass": true
+    },
+    "surface_boundary_plan": {
+      "pass": true,
+      "acquisition_still_life_only": true
+    },
+    "visual_sequence_plan": {
+      "pass": true
+    },
+    "brand_consistency_plan": {
+      "pass": true
+    },
+    "consumer_experience_plan": {
+      "pass": true
+    },
+    "business_authenticity": {
+      "pass": true,
+      "bounty": "100-600 USDC",
+      "era": "1960-1990"
+    },
+    "copyright_logo_watermark_ai": {
+      "pass": true
+    },
+    "nine_class_framework_frozen": true
+  }
+}

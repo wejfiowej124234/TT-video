@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-06-13T08:25:06.848459+00:00",
+  "pg_matrix": [
+    {
+      "probe_id": "pg.open_disputes",
+      "check": "count",
+      "target": "f0e0a001-0001-4001-8001-000000000003",
+      "pg_value": "4",
+      "expected": ">=4",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.risk_order",
+      "check": "state",
+      "target": "f0e0c201-0001-4001-8001-000000000003",
+      "pg_value": "created",
+      "expected": "readable",
+      "status": "PASS",
+      "notes": "created"
+    },
+    {
+      "probe_id": "pg.tg_users",
+      "check": "infra",
+      "target": "users",
+      "pg_value": "20",
+      "expected": ">=10",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.auth_audit",
+      "check": "infra",
+      "target": "auth_audit_events",
+      "pg_value": "73",
+      "expected": "readable",
+      "status": "PASS",
+      "notes": ""
+    }
+  ],
+  "summary": {
+    "pg_pass": 4,
+    "pg_total": 4
+  }
+}

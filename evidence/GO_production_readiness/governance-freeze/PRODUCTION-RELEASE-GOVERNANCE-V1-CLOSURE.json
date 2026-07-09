@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.production_release_governance_v1_closure.v1",
+  "declared_utc": "2026-07-08T14:34:21.576Z",
+  "verdict": "PRODUCTION_RELEASE_GOVERNANCE_V1_COMPLETE",
+  "governance_version": {
+    "id": "production_release_governance_v1",
+    "label": "Production Release Governance v1",
+    "status": "FROZEN",
+    "lifecycle": "COMPLETE",
+    "mode": "OPERATE",
+    "compatibility": "PATCH_ONLY"
+  },
+  "governance_root": "registry/production-governance-principles.v1.yaml",
+  "governance_freeze": "GOVERNANCE_FREEZE_ACTIVE",
+  "post_v1_work_types": [
+    "state_update",
+    "execution",
+    "evidence"
+  ]
+}

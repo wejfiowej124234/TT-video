@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T150530Z",
+  "trigger_row": 34,
+  "trigger_filename": "ocs-paris-art-official-guide-cover.jpg",
+  "TT_CROSS_CHAIN_OFFICIAL_GUIDE_REVIEW": "PASS",
+  "official_guide_comparison": {
+    "tokyo-photo": "浅草→晴空塔摄影一日",
+    "kyoto-culture": "岚山祇园文化两日",
+    "seoul-food": "明洞→广藏 48h 美食地图",
+    "bangkok-temple": "寺庙河景一日",
+    "singapore-family": "滨海湾亲子周末",
+    "paris-art": "卢浮宫金字塔 · 艺术博物馆两日",
+    "distinct_route_brand": true
+  },
+  "no_quality_regression_prior_33": true
+}

@@ -1,0 +1,116 @@
+{
+  "validation": "PCP_PHASE_0_5",
+  "stamp": "20260703T231905Z",
+  "sequence": [
+    "local_architecture",
+    "staging_runtime",
+    "evidence",
+    "sign_off_if_pass"
+  ],
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "overall": "PASS",
+  "sign_off": false,
+  "sign_off_note": "All checks PASS — user may mark TT_PCP_PHASE_0_5 COMPLETE",
+  "checks": [
+    {
+      "id": "architecture_compliance",
+      "label": "TT_PCP_ARCHITECTURE_COMPLIANCE (local)",
+      "status": "PASS",
+      "detail": "All public catalog surfaces + FeedBuilder purity PASS"
+    },
+    {
+      "id": "builder_purity",
+      "label": "FeedBuilder — no governance rules",
+      "status": "PASS",
+      "detail": "No display_status/surface/tier checks in Builder"
+    },
+    {
+      "id": "staging_health",
+      "label": "Staging /health/ready",
+      "status": "PASS",
+      "detail": "database=ok"
+    },
+    {
+      "id": "staging_db",
+      "label": "Staging database reachable",
+      "status": "PASS",
+      "detail": "health/ready database ok"
+    },
+    {
+      "id": "staging_feed_baseline",
+      "label": "Community Feed baseline",
+      "status": "PASS",
+      "detail": "Found post 2a4dc1b0-7328-4883-8c90-67563def3610 in feed (limit=50, count=50)"
+    },
+    {
+      "id": "scenario_1_unpublish",
+      "label": "Admin Unpublish",
+      "status": "PASS",
+      "detail": "display_status→hidden for 2a4dc1b0-7328-4883-8c90-67563def3610"
+    },
+    {
+      "id": "scenario_1_feed_hidden",
+      "label": "Unpublish → Feed hidden",
+      "status": "PASS",
+      "detail": "Post absent from feed immediately after unpublish"
+    },
+    {
+      "id": "scenario_1_detail_hidden",
+      "label": "Unpublish → Detail invisible",
+      "status": "PASS",
+      "detail": "GET /posts/:id returns post=null for anonymous"
+    },
+    {
+      "id": "scenario_1_publish",
+      "label": "Admin Publish (restore)",
+      "status": "PASS",
+      "detail": "display_status→published"
+    },
+    {
+      "id": "scenario_1_feed_restored",
+      "label": "Publish → Feed restored",
+      "status": "PASS",
+      "detail": "Post back in feed"
+    },
+    {
+      "id": "scenario_1_detail_restored",
+      "label": "Publish → Detail visible",
+      "status": "PASS",
+      "detail": "Detail visible again"
+    },
+    {
+      "id": "scenario_2_surface_off",
+      "label": "Surface OFF (no community_feed)",
+      "status": "PASS",
+      "detail": "display_surfaces=[\"market_feed\"]"
+    },
+    {
+      "id": "scenario_2_feed_off",
+      "label": "Surface OFF → Feed hidden",
+      "status": "PASS",
+      "detail": "Absent from feed"
+    },
+    {
+      "id": "scenario_2_detail_off",
+      "label": "Surface OFF → Detail invisible (governed view)",
+      "status": "PASS",
+      "detail": "Detail null — same governed view as feed"
+    },
+    {
+      "id": "scenario_2_surface_on",
+      "label": "Surface ON (community_feed)",
+      "status": "PASS",
+      "detail": "display_surfaces=[\"community_feed\"]"
+    },
+    {
+      "id": "scenario_2_feed_on",
+      "label": "Surface ON → Feed restored",
+      "status": "PASS",
+      "detail": "Back in feed"
+    }
+  ],
+  "summary": {
+    "pass": 16,
+    "fail": 0
+  }
+}

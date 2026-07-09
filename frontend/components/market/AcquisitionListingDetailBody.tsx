@@ -119,6 +119,8 @@ export function AcquisitionListingDetailBody({
 
           priority={!embed}
 
+          fallbackSeed={listing.id}
+
         />
 
       </div>

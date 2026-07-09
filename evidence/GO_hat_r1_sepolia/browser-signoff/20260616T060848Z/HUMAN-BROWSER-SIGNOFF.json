@@ -1,0 +1,10 @@
+{
+  "audit_id": "G24-BROWSER-ACCEPT-01",
+  "signoff_utc": "20260616T060848Z",
+  "signer": "Solo Maintainer",
+  "baseline": "GOV-FREEZE-V2-TTG-APPROVE-PIVOT",
+  "ssot": "TTG-TOKENOMICS-FREEZE-V1",
+  "machine_evidence": "/d/TravelTrust-V1.1/evidence/GO_gov_freeze_v2_browser_acceptance/20260616T054831Z/",
+  "verdict": "HUMAN_SIGNED",
+  "note": "Latest TTG + GovFreeze V2 only · LEGACY read-only archived"
+}

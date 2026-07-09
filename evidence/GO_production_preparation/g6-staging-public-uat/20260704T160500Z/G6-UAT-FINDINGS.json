@@ -1,0 +1,472 @@
+[
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "tokyo-photo",
+    "surface": "guide-avatar",
+    "filename": "ocs-tokyo-photo-guide-avatar.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "tokyo-photo",
+    "surface": "provider-cover",
+    "filename": "ocs-tokyo-photo-provider-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "tokyo-photo",
+    "surface": "acquisition-cover",
+    "filename": "ocs-tokyo-photo-acquisition-cover.jpg"
+  },
+  {
+    "severity": "Major",
+    "code": "G6_OFFICIAL_GUIDE_MISSING",
+    "message": "No official guide row for 东京",
+    "chain_id": "tokyo-photo",
+    "surface": "official-guide-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "tokyo-photo",
+    "surface": "community-cover",
+    "filename": "ocs-tokyo-photo-community-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "tokyo-photo",
+    "surface": "community-media",
+    "filename": "ocs-tokyo-photo-community-media.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "kyoto-culture",
+    "surface": "guide-avatar",
+    "filename": "ocs-kyoto-culture-guide-avatar.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "kyoto-culture",
+    "surface": "provider-cover",
+    "filename": "ocs-kyoto-culture-provider-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "kyoto-culture",
+    "surface": "acquisition-cover",
+    "filename": "ocs-kyoto-culture-acquisition-cover.jpg"
+  },
+  {
+    "severity": "Major",
+    "code": "G6_OFFICIAL_GUIDE_MISSING",
+    "message": "No official guide row for 京都",
+    "chain_id": "kyoto-culture",
+    "surface": "official-guide-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "kyoto-culture",
+    "surface": "community-cover",
+    "filename": "ocs-kyoto-culture-community-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "kyoto-culture",
+    "surface": "community-media",
+    "filename": "ocs-kyoto-culture-community-media.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "seoul-food",
+    "surface": "guide-avatar",
+    "filename": "ocs-seoul-food-guide-avatar.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "seoul-food",
+    "surface": "provider-cover",
+    "filename": "ocs-seoul-food-provider-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "seoul-food",
+    "surface": "acquisition-cover",
+    "filename": "ocs-seoul-food-acquisition-cover.jpg"
+  },
+  {
+    "severity": "Major",
+    "code": "G6_OFFICIAL_GUIDE_MISSING",
+    "message": "No official guide row for 首尔",
+    "chain_id": "seoul-food",
+    "surface": "official-guide-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "seoul-food",
+    "surface": "community-cover",
+    "filename": "ocs-seoul-food-community-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "seoul-food",
+    "surface": "community-media",
+    "filename": "ocs-seoul-food-community-media.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "bangkok-temple",
+    "surface": "guide-avatar",
+    "filename": "ocs-bangkok-temple-guide-avatar.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "bangkok-temple",
+    "surface": "provider-cover",
+    "filename": "ocs-bangkok-temple-provider-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "bangkok-temple",
+    "surface": "acquisition-cover",
+    "filename": "ocs-bangkok-temple-acquisition-cover.jpg"
+  },
+  {
+    "severity": "Major",
+    "code": "G6_OFFICIAL_GUIDE_MISSING",
+    "message": "No official guide row for 曼谷",
+    "chain_id": "bangkok-temple",
+    "surface": "official-guide-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "bangkok-temple",
+    "surface": "community-cover",
+    "filename": "ocs-bangkok-temple-community-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "bangkok-temple",
+    "surface": "community-media",
+    "filename": "ocs-bangkok-temple-community-media.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "singapore-family",
+    "surface": "guide-avatar",
+    "filename": "ocs-singapore-family-guide-avatar.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "singapore-family",
+    "surface": "provider-cover",
+    "filename": "ocs-singapore-family-provider-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "singapore-family",
+    "surface": "acquisition-cover",
+    "filename": "ocs-singapore-family-acquisition-cover.jpg"
+  },
+  {
+    "severity": "Major",
+    "code": "G6_OFFICIAL_GUIDE_MISSING",
+    "message": "No official guide row for 新加坡",
+    "chain_id": "singapore-family",
+    "surface": "official-guide-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "singapore-family",
+    "surface": "community-cover",
+    "filename": "ocs-singapore-family-community-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "singapore-family",
+    "surface": "community-media",
+    "filename": "ocs-singapore-family-community-media.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "paris-art",
+    "surface": "guide-avatar",
+    "filename": "ocs-paris-art-guide-avatar.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "paris-art",
+    "surface": "provider-cover",
+    "filename": "ocs-paris-art-provider-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "paris-art",
+    "surface": "acquisition-cover",
+    "filename": "ocs-paris-art-acquisition-cover.jpg"
+  },
+  {
+    "severity": "Major",
+    "code": "G6_OFFICIAL_GUIDE_MISSING",
+    "message": "No official guide row for 巴黎",
+    "chain_id": "paris-art",
+    "surface": "official-guide-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "paris-art",
+    "surface": "community-cover",
+    "filename": "ocs-paris-art-community-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "paris-art",
+    "surface": "community-media",
+    "filename": "ocs-paris-art-community-media.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "nyc-skyline",
+    "surface": "guide-avatar",
+    "filename": "ocs-nyc-skyline-guide-avatar.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "nyc-skyline",
+    "surface": "provider-cover",
+    "filename": "ocs-nyc-skyline-provider-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "nyc-skyline",
+    "surface": "acquisition-cover",
+    "filename": "ocs-nyc-skyline-acquisition-cover.jpg"
+  },
+  {
+    "severity": "Major",
+    "code": "G6_OFFICIAL_GUIDE_MISSING",
+    "message": "No official guide row for 纽约",
+    "chain_id": "nyc-skyline",
+    "surface": "official-guide-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "nyc-skyline",
+    "surface": "community-cover",
+    "filename": "ocs-nyc-skyline-community-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "nyc-skyline",
+    "surface": "community-media",
+    "filename": "ocs-nyc-skyline-community-media.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "sydney-coast",
+    "surface": "guide-avatar",
+    "filename": "ocs-sydney-coast-guide-avatar.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "sydney-coast",
+    "surface": "provider-cover",
+    "filename": "ocs-sydney-coast-provider-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "sydney-coast",
+    "surface": "acquisition-cover",
+    "filename": "ocs-sydney-coast-acquisition-cover.jpg"
+  },
+  {
+    "severity": "Major",
+    "code": "G6_OFFICIAL_GUIDE_MISSING",
+    "message": "No official guide row for 悉尼",
+    "chain_id": "sydney-coast",
+    "surface": "official-guide-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "sydney-coast",
+    "surface": "community-cover",
+    "filename": "ocs-sydney-coast-community-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "sydney-coast",
+    "surface": "community-media",
+    "filename": "ocs-sydney-coast-community-media.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "barcelona-arch",
+    "surface": "guide-avatar",
+    "filename": "ocs-barcelona-arch-guide-avatar.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "barcelona-arch",
+    "surface": "provider-cover",
+    "filename": "ocs-barcelona-arch-provider-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "barcelona-arch",
+    "surface": "acquisition-cover",
+    "filename": "ocs-barcelona-arch-acquisition-cover.jpg"
+  },
+  {
+    "severity": "Major",
+    "code": "G6_OFFICIAL_GUIDE_MISSING",
+    "message": "No official guide row for 巴塞罗那",
+    "chain_id": "barcelona-arch",
+    "surface": "official-guide-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "barcelona-arch",
+    "surface": "community-cover",
+    "filename": "ocs-barcelona-arch-community-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "barcelona-arch",
+    "surface": "community-media",
+    "filename": "ocs-barcelona-arch-community-media.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "dubai-luxury",
+    "surface": "guide-avatar",
+    "filename": "ocs-dubai-luxury-guide-avatar.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "dubai-luxury",
+    "surface": "provider-cover",
+    "filename": "ocs-dubai-luxury-provider-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "dubai-luxury",
+    "surface": "acquisition-cover",
+    "filename": "ocs-dubai-luxury-acquisition-cover.jpg"
+  },
+  {
+    "severity": "Major",
+    "code": "G6_OFFICIAL_GUIDE_MISSING",
+    "message": "No official guide row for 迪拜",
+    "chain_id": "dubai-luxury",
+    "surface": "official-guide-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "dubai-luxury",
+    "surface": "community-cover",
+    "filename": "ocs-dubai-luxury-community-cover.jpg"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ASSET_HTTP",
+    "message": "Asset HTTP 0",
+    "chain_id": "dubai-luxury",
+    "surface": "community-media",
+    "filename": "ocs-dubai-luxury-community-media.jpg"
+  }
+]

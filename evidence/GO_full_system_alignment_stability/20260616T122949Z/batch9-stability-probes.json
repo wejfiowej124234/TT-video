@@ -1,0 +1,91 @@
+{
+  "local_api": {
+    "/health": {
+      "status": 200,
+      "ok": true
+    },
+    "/meta": {
+      "ok": false,
+      "error": "timed out"
+    },
+    "/api/v1/governance/protocol-reference": {
+      "status": 200,
+      "ok": true
+    }
+  },
+  "ai_probe": {
+    "check_id": "AI_PRE_HUMAN_UAT_PROBE",
+    "verdict": "PASS",
+    "fail_count": 0,
+    "skip_count": 0,
+    "checks": [
+      {
+        "id": "API-FL-REF",
+        "dimension": "four_ledger_reference",
+        "verdict": "PASS",
+        "detail": "four-ledger cached verdict=PASS"
+      },
+      {
+        "id": "API-PROTO",
+        "dimension": "api_read",
+        "verdict": "PASS",
+        "detail": "http=200",
+        "http": 200
+      },
+      {
+        "id": "API-PARAMS",
+        "dimension": "api_read",
+        "verdict": "PASS",
+        "detail": "http=200",
+        "http": 200
+      },
+      {
+        "id": "API-FEE-ROUTES",
+        "dimension": "api_read",
+        "verdict": "PASS",
+        "detail": "http=200",
+        "http": 200
+      },
+      {
+        "id": "API-PROPOSALS",
+        "dimension": "api_read",
+        "verdict": "PASS",
+        "detail": "http=200",
+        "http": 200
+      },
+      {
+        "id": "API-PM-QUOTE",
+        "dimension": "api_read",
+        "verdict": "PASS",
+        "detail": "http=200",
+        "http": 200
+      },
+      {
+        "id": "API-CP-DE",
+        "dimension": "country_ledger_4555",
+        "verdict": "PASS",
+        "detail": "http=200 has_4555=True",
+        "http": 200
+      },
+      {
+        "id": "API-ACCRUALS",
+        "dimension": "investor_accruals",
+        "verdict": "PASS",
+        "detail": "http=200 (404 acceptable empty)",
+        "http": 200
+      },
+      {
+        "id": "CHAIN-4555",
+        "dimension": "onchain_ledger_bps",
+        "verdict": "PASS",
+        "detail": "bpsStewardPath=4500 bpsGlobalTreasury=5500",
+        "rpc": true,
+        "ledger": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa",
+        "steward_bps": 4500,
+        "global_bps": 5500
+      }
+    ],
+    "honest_boundary": "read-only probes · not a substitute for Cert #1 human signoff"
+  },
+  "chain_read": {}
+}

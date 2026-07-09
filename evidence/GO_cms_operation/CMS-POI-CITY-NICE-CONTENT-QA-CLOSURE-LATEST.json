@@ -1,0 +1,118 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-06T09:25:28.291Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "FR",
+    "city_zh": "尼斯",
+    "city_en": "Chiang Mai",
+    "poi_count": 8
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-NICE-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "JP Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "cross_region_remediated": "all_9_execution_plus_geo",
+  "checks": {
+    "assets_locked_8_8": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-FR-127-ATR",
+      "poi": "天使湾",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-06T08:44:35.759Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-FR-128-ATR",
+      "poi": "老城",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "locked_at_utc": "2026-07-06T08:49:37.384Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-FR-129-ATR",
+      "poi": "埃兹",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "locked_at_utc": "2026-07-06T08:54:38.282Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-FR-130-ATR",
+      "poi": "马蒂斯博物馆",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "locked_at_utc": "2026-07-06T08:59:38.960Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-FR-131-FOOD",
+      "poi": "尼斯沙拉",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-06T09:04:39.963Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-FR-132-FOOD",
+      "poi": "索卡",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-06T09:09:41.325Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-FR-133-FOOD",
+      "poi": "海鲜",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "locked_at_utc": "2026-07-06T09:14:42.077Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-FR-134-FOOD",
+      "poi": "玫瑰酒",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "locked_at_utc": "2026-07-06T09:19:42.761Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 8
+  },
+  "TT_CMS_POI_CITY_NICE_CONTENT_QA": "CLOSED"
+}

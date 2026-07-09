@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.ocs_content_l5_guide_identity_diversity_aggregate.v1",
+  "stamp_utc": "20260704T134016Z",
+  "guide_avatars_reviewed": 4,
+  "TT_GUIDE_IDENTITY_DIVERSITY_AGGREGATE": "PASS",
+  "rows": [
+    {
+      "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-kyoto-culture-guide-avatar.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-seoul-food-guide-avatar.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-bangkok-temple-guide-avatar.jpg",
+      "pass": true
+    }
+  ],
+  "policy": "不同城市 Guide 不得高度撞脸；年龄/性别/发型/脸型/气质须有明显区别；连续浏览不会误认同一位向导。"
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.risk_weight_matrix.v1",
+  "weights": {
+    "P0": 4,
+    "P1": 2,
+    "P2": 1,
+    "P3": 0.5
+  }
+}

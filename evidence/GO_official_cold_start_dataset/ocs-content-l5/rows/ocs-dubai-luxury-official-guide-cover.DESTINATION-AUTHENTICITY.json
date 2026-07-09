@@ -1,0 +1,132 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_review.v1",
+  "stamp_utc": "20260704T154538Z",
+  "filename": "ocs-dubai-luxury-official-guide-cover.jpg",
+  "chain_id": "dubai-luxury",
+  "city": "迪拜",
+  "country_code": "AE",
+  "country_label": "阿联酋",
+  "slot": "official-guide-cover",
+  "surface": "Official Guide",
+  "manifest_snapshot": {
+    "chain_id": "dubai-luxury",
+    "city": "迪拜",
+    "country_code": "AE",
+    "country_label": "阿联酋",
+    "chain_tags": [
+      "奢华",
+      "沙漠"
+    ],
+    "official_guide.title": "迪拜沙漠与都市官方两日",
+    "official_guide.destination": "迪拜",
+    "official_guide.body": "沙漠活动与都市地标组合，附官方安全与着装建议。",
+    "official_guide.tags": [
+      "迪拜",
+      "沙漠",
+      "官方攻略"
+    ],
+    "official_guide.cover_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-official-guide-cover.jpg"
+  },
+  "manifest_field_alignment": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "matrix_city_matches_manifest",
+        "pass": true,
+        "detail": "matrix=迪拜 manifest=迪拜"
+      },
+      {
+        "id": "country_code_present",
+        "pass": true,
+        "detail": "AE"
+      },
+      {
+        "id": "copy_label_non_empty",
+        "pass": true,
+        "detail": "迪拜沙漠与都市官方两日"
+      },
+      {
+        "id": "copy_label_contains_city_or_chain_theme",
+        "pass": true,
+        "detail": "city in copy_label"
+      },
+      {
+        "id": "official_guide_destination_matches_city",
+        "pass": true,
+        "detail": "迪拜"
+      }
+    ],
+    "requirement": "图片与 Manifest 全字段 100% 同城同主题对齐"
+  },
+  "destination_authenticity_checklist": {
+    "architecture": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "streetscape": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "clothing": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "language_signage": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "transportation": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "natural_environment": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "food_dining": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "commercial_form": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "cultural_elements": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    }
+  },
+  "prohibited": {
+    "cross_country_elements": false,
+    "cross_city_elements": false,
+    "cross_culture_mixing": false
+  },
+  "TT_DESTINATION_AUTHENTICITY_REVIEW": "PASS"
+}

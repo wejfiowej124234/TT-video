@@ -1,0 +1,49 @@
+{
+  "verdict": "LAYER_A_EVIDENCE_PASS",
+  "stamp": "2026-07-08T13-23-44",
+  "decision": "B3 EscrowV2 + FactoryV2",
+  "model": "Bilateral Confirmation Settlement Model",
+  "checks": [
+    {
+      "name": "migration_service_completion_columns",
+      "pass": true,
+      "detail": "orders.service_tourist_confirmed + service_guide_confirmed"
+    },
+    {
+      "name": "api_confirm_service_completion_route",
+      "pass": true,
+      "detail": "POST /api/v1/orders/:id/confirm-service-completion"
+    },
+    {
+      "name": "api_bilateral_service_completion_impl",
+      "pass": true,
+      "detail": "Bilateral Escrowed → pending → Completed"
+    },
+    {
+      "name": "frontend_release_gate_service_completion",
+      "pass": true,
+      "detail": "Release gated on service completion, not rating"
+    },
+    {
+      "name": "frontend_api_client_service_completion",
+      "pass": true,
+      "detail": "orderConfirmServiceCompletion client"
+    },
+    {
+      "name": "layer_b_escrow_v2_contract",
+      "pass": true,
+      "detail": "EscrowV2.sol present"
+    },
+    {
+      "name": "layer_b_factory_v2_contract",
+      "pass": true,
+      "detail": "EscrowFactoryV2.sol present"
+    },
+    {
+      "name": "registry_mainnet_policy",
+      "pass": true,
+      "detail": "V1 mainnet forbidden SSOT"
+    }
+  ],
+  "v1_mainnet": "FORBIDDEN — testnet legacy only"
+}

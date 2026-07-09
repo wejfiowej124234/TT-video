@@ -1,0 +1,38 @@
+{
+  "schema": "testnet_reality_uat_sprint.v1",
+  "stamp": "20260611T124500Z",
+  "freeze_git_sha": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+  "recorded_at": "2026-06-11T12:43:12.096108+00:00",
+  "phase": "② testnet",
+  "targets": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev"
+  },
+  "role_verdicts": {
+    "游客": {
+      "frca": "PASS",
+      "p2ha": "PASS"
+    },
+    "向导": {
+      "frca": "PASS",
+      "p2ha": "PASS"
+    },
+    "商家": {
+      "frca": "PASS",
+      "p2ha": "—"
+    },
+    "管理员": {
+      "frca": "PASS",
+      "p2ha": "PASS"
+    },
+    "运营": {
+      "frca": "PASS",
+      "p2ha": "PASS"
+    }
+  },
+  "p0_count": 0,
+  "p1_count": 0,
+  "gaps_p0_p1": [],
+  "tt_phase2_go_verdict": "PHASE2_GO_READY",
+  "tt_testnet_reality_uat_go": "GO"
+}

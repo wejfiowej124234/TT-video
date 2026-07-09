@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-06T07:58:21Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "FR",
+    "city_zh": "里昂",
+    "matrix_ids": [
+      "PH-FR-119-ATR",
+      "PH-FR-120-ATR",
+      "PH-FR-121-ATR",
+      "PH-FR-122-ATR",
+      "PH-FR-123-FOOD",
+      "PH-FR-124-FOOD",
+      "PH-FR-125-FOOD",
+      "PH-FR-126-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-FR-119-ATR",
+      "poi_id": "19d33ee8-c0d7-4180-becb-6a96d15748e3"
+    },
+    {
+      "matrix_id": "PH-FR-120-ATR",
+      "poi_id": "ee9049e4-0bd0-4979-a349-c217a1a2f97b"
+    },
+    {
+      "matrix_id": "PH-FR-121-ATR",
+      "poi_id": "980b5eb7-505f-4681-a3e2-dbea1af9095b"
+    },
+    {
+      "matrix_id": "PH-FR-122-ATR",
+      "poi_id": "745e0413-295e-4293-b42f-8e971407a238"
+    },
+    {
+      "matrix_id": "PH-FR-123-FOOD",
+      "poi_id": "081138ea-5068-4ce7-a781-1d1f07ba5651"
+    },
+    {
+      "matrix_id": "PH-FR-124-FOOD",
+      "poi_id": "5798e292-58dc-46f3-a8c2-6fdfb9b624c0"
+    },
+    {
+      "matrix_id": "PH-FR-125-FOOD",
+      "poi_id": "b646c17b-a76a-4422-beae-a54ee9cc6ed1"
+    },
+    {
+      "matrix_id": "PH-FR-126-FOOD",
+      "poi_id": "ba9f2fc5-019e-472c-9776-2c2fe7d1d7ea"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 8,
+    "expected": 8
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

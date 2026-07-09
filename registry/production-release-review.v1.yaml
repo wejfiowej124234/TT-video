@@ -1,0 +1,85 @@
+# Production Release Review · Business Domain Validation · SSOT
+# Runbook: docs/runbook/TT-PRODUCTION-RELEASE-REVIEW.md
+# One-shot graduation to equal depth per domain — NOT a recurring audit type
+
+schema: traveltrust.production_release_review.v1
+version: 1
+effective_utc: "2026-07-02"
+
+machine_keys:
+  TT_PRODUCTION_RELEASE_REVIEW: CLOSED
+  TT_FULL_TEST_ACCOUNT_E2E: CLOSED
+  TT_BUSINESS_DOMAIN_VALIDATION: PASS
+  TT_RELEASE_DECISION: NO_GO
+
+rerun_policy:
+  status: CLOSED_UNLESS_TOUCHED
+  evidence_reuse: registry/evidence-reuse-policy.v1.yaml#gates/RELEASE_CANDIDATE
+
+latest_run:
+  stamp: "20260702T114024Z"
+  ledger: evidence/GO_production_release_review/20260702T114024Z/release-review-ledger.json
+  signoff: evidence/manual-uat/signoff/PRODUCTION-RELEASE-REVIEW-SIGNOFF-20260702T114024Z.md
+  staging_web_deploy: deployment-01KWH932M1RT388ZQ6QHQ8SK2A
+  domains_pass: 12
+  product_defects_open: 0
+  test_automation_issues_open: 0
+
+supplementary_full_test_account_e2e:
+  status: CLOSED
+  stamp: "20260702T114733Z"
+  evidence: evidence/GO_full_test_account_e2e/20260702T114733Z/
+  signoff: evidence/manual-uat/signoff/FTAE-SIGNOFF-20260702T114733Z.md
+  accounts_pass: 6
+  product_defects_open: 0
+  test_automation_issues_open: 0
+
+placement:
+  after: phase12_final_convergence
+  before: PI3_product_signoff
+  one_time_product_gate: true
+  not_a_new_audit_type: true
+
+five_layers:
+  L1_all_pages: "UI complete · API-sourced · admin entry · L5 · no test leak · no placeholder abuse"
+  L2_business_flows: "Tourist · Guide · Merchant · Governance end-to-end"
+  L3_admin_functions: "Button-by-button beyond 40/40 machine gate"
+  L4_page_consistency: "API → Frontend → Browser per domain"
+  L5_enterprise_ux: "Experience review — information density · affordance · misunderstanding risk"
+
+domain_matrix_columns:
+  - api
+  - browser
+  - admin
+  - business
+  - ux
+  - status
+
+status_values:
+  - PASS
+  - PARTIAL
+  - GAP
+
+scripts:
+  review: scripts/dev/run-production-release-review.sh
+  api_probes: scripts/dev/business-domain-validation-probes.cjs
+  browser: frontend/e2e/business-domain-validation.spec.ts
+  browser_enterprise: frontend/e2e/enterprise-release-review.spec.ts
+  ledger: scripts/dev/gen-production-release-review-ledger.cjs
+
+evidence_root: evidence/GO_production_release_review
+
+synthesizes_audits:
+  - registry/admin-functional-usability-audit.v1.yaml
+  - registry/enterprise-capability-audit.v1.yaml
+  - registry/frontend-api-consistency-audit.v1.yaml
+  - registry/display-data-governance.v1.yaml
+  - registry/phase12-final-convergence.v1.yaml
+  - registry/full-test-account-e2e.v1.yaml
+
+exit_criteria:
+  all_domains_status: PASS
+  product_defects_open: 0
+  test_automation_issues_open: 0
+  production_blockers_phase12_scope: 0
+  pi3_blockers_queued_not_blocking_product_signoff: true

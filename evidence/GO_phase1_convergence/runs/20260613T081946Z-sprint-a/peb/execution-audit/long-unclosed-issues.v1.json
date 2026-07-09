@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.long_unclosed.v1",
+  "issues": [
+    {
+      "id": "LFC-UXA-001",
+      "domain": "UXA",
+      "severity": "P1",
+      "title": "L5 spacing on settings hub",
+      "verdict": "KEEP",
+      "queue": "LATER",
+      "age_days": 40,
+      "status": "OPEN"
+    },
+    {
+      "id": "PF-SEED-004",
+      "domain": "PF",
+      "severity": "P1",
+      "title": "archive/ui-v1 retire backlog",
+      "verdict": "RETIRE",
+      "queue": "NEXT",
+      "age_days": 60,
+      "status": "OPEN"
+    }
+  ]
+}

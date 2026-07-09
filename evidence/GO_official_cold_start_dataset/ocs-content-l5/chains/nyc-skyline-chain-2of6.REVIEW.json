@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_review.v1",
+  "stamp_utc": "20260704T152530Z",
+  "chain_id": "nyc-skyline",
+  "slots_completed": 2,
+  "slots_total": 6,
+  "TT_NYC_SKYLINE_CHAIN_REVIEW": "PASS",
+  "gate_to_row39": "PASS"
+}

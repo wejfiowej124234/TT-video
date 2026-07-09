@@ -1,0 +1,102 @@
+{
+  "schema": "traveltrust.p2fc_competition_failure_paths.v1",
+  "strategy_locked": "STRAT-A_PLUS_MR12",
+  "arenas": [
+    {
+      "arena_id": "ARENA-T+8",
+      "offset_min": 8,
+      "phase": "tn_p1_010",
+      "competitors": [
+        {
+          "bp_id": "BP-TN-02",
+          "fail_p": 0.35,
+          "win_score": 0.332,
+          "mechanism": "db/mod+itineraries compound reconcile"
+        },
+        {
+          "bp_id": "BP-DATA-01",
+          "fail_p": 0.2975,
+          "win_score": 0.28,
+          "mechanism": "indexer PG drift"
+        }
+      ],
+      "predicted_winner": "BP-TN-02",
+      "combined_fail_p": 0.543
+    },
+    {
+      "arena_id": "ARENA-T+28",
+      "offset_min": 28,
+      "phase": "wave1_api_deploy",
+      "competitors": [
+        {
+          "bp_id": "BP-W1-02",
+          "fail_p": 0.52,
+          "win_score": 0.55,
+          "mechanism": "itineraries hub Δ195 compile/OOM"
+        },
+        {
+          "bp_id": "BP-W1-03",
+          "fail_p": 0.39,
+          "win_score": 0.41,
+          "mechanism": "market/escrow consumer regression"
+        }
+      ],
+      "predicted_winner": "BP-W1-02",
+      "combined_fail_p": 0.707,
+      "mr12_note": "MR-02 defer shifts winner to BP-W1-03 or none if hub excluded"
+    },
+    {
+      "arena_id": "ARENA-T+45",
+      "offset_min": 45,
+      "phase": "meta_availability",
+      "competitors": [
+        {
+          "bp_id": "BP-META-01",
+          "fail_p": 0.92,
+          "win_score": 0.85,
+          "mechanism": "FC-01 30s live vs 120s hotfix"
+        },
+        {
+          "bp_id": "BP-META-02",
+          "fail_p": 0.48,
+          "win_score": 0.35,
+          "mechanism": "web proxy 503 if wave2 incomplete"
+        }
+      ],
+      "predicted_winner": "BP-META-01",
+      "combined_fail_p": 0.958
+    }
+  ],
+  "global_ranking": [
+    {
+      "bp_id": "BP-META-01",
+      "score": 0.85,
+      "first_fail_at_min": 45,
+      "blocks": "G02+Graduation"
+    },
+    {
+      "bp_id": "BP-W1-02",
+      "score": 0.55,
+      "first_fail_at_min": 28,
+      "blocks": "meta+acceptance cascade"
+    },
+    {
+      "bp_id": "BP-TN-02",
+      "score": 0.35,
+      "first_fail_at_min": 8,
+      "blocks": "wave1 if step-1 fail"
+    }
+  ],
+  "first_execution_fail_winner": {
+    "bp_id": "BP-W1-02",
+    "score": 0.55,
+    "first_fail_at_min": 28,
+    "blocks": "meta+acceptance cascade"
+  },
+  "first_acceptance_fail_winner": "BP-META-01",
+  "ingested_l5_competition": {
+    "present": true,
+    "first_competition_winner": "FC-02_ITINERARIES_HUB"
+  },
+  "wave1_vs_meta_competition": "wave1 (T+28) fails first on deploy · meta (T+45) blocks graduation regardless"
+}

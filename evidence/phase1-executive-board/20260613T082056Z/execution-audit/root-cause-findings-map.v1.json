@@ -1,0 +1,68 @@
+{
+  "schema": "traveltrust.root_cause_findings_map.v1",
+  "map": [
+    {
+      "root_cause_id": "RC-01",
+      "finding_ids": [
+        "PF-SEED-001",
+        "PF-SEED-002",
+        "PF-SEED-003"
+      ],
+      "domains": [
+        "PF",
+        "CX",
+        "UXA"
+      ]
+    },
+    {
+      "root_cause_id": "RC-02",
+      "finding_ids": [
+        "DOA-SEED-001",
+        "DOA-SEED-004"
+      ],
+      "domains": [
+        "DOA"
+      ]
+    },
+    {
+      "root_cause_id": "RC-03",
+      "finding_ids": [
+        "AG-SEED-001",
+        "AG-SEED-003"
+      ],
+      "domains": [
+        "AG",
+        "CX"
+      ]
+    },
+    {
+      "root_cause_id": "RC-04",
+      "finding_ids": [
+        "LFC-CA-001",
+        "LFC-CA-002"
+      ],
+      "domains": [
+        "CA"
+      ]
+    },
+    {
+      "root_cause_id": "RC-05",
+      "finding_ids": [
+        "LFC-UXA-001",
+        "LFC-UXA-002"
+      ],
+      "domains": [
+        "UXA"
+      ]
+    },
+    {
+      "root_cause_id": "RC-06",
+      "finding_ids": [
+        "PF-SEED-004"
+      ],
+      "domains": [
+        "PF"
+      ]
+    }
+  ]
+}

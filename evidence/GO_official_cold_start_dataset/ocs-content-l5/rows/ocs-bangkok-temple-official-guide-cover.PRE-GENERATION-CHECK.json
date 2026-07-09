@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T135230Z",
+  "filename": "ocs-bangkok-temple-official-guide-cover.jpg",
+  "chain_id": "bangkok-temple",
+  "row": 22,
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "checks": {
+    "manifest_full_field_alignment": { "pass": true, "notes": "曼谷经典寺庙与河景一日 · destination 曼谷 · 着装/游船时段" },
+    "destination_authenticity_9dim": { "pass": true, "notes": "郑王庙尖塔+湄南河+长尾船 · 金蓝晨光" },
+    "country_consistency_th_only": { "pass": true },
+    "official_guide_destination_plan": { "pass": true, "notes": "多站点路线宽幅；非单一景点" },
+    "surface_boundary_plan": {
+      "pass": true,
+      "no_guide_portrait": true,
+      "no_provider_dinner_deck": true,
+      "no_acquisition_silk": true,
+      "no_community_ugc": true
+    },
+    "cross_chain_official_guide_plan": {
+      "pass": true,
+      "vs_tokyo": "寺庙河景 vs 浅草晴空塔摄影",
+      "vs_kyoto": "金庙河景 vs 岚山祇园文化",
+      "vs_seoul": "寺庙路线 vs 美食地图"
+    },
+    "global_visual_diversity": { "pass": true },
+    "narrative_continuity": { "pass": true },
+    "business_authenticity": { "pass": true },
+    "commercial_realism": { "pass": true }
+  }
+}

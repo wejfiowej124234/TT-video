@@ -1,0 +1,83 @@
+{
+  "generated_at": "2026-06-13T09:03:06.961387+00:00",
+  "issues": [],
+  "pg_consistency_matrix": [
+    {
+      "probe_id": "pg.order_happy",
+      "check": "state",
+      "target": "66bf0e52-ce1f-4ad6-972f-c8943c723f3a",
+      "pg_value": "completed",
+      "api_value": "completed|escrowed|accepted",
+      "expected": "progressed",
+      "status": "PASS",
+      "notes": "completed"
+    },
+    {
+      "probe_id": "pg.order_dispute_terminal",
+      "check": "sync",
+      "target": "51d579f0-51f6-4b11-97bb-6ae68232870a",
+      "pg_value": "refunded",
+      "api_value": "refunded",
+      "expected": "equal+terminal",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.dispute_resolved",
+      "check": "sync",
+      "target": "9c45be33-de78-44a5-ab64-6470a2514fcc",
+      "pg_value": "resolved",
+      "api_value": "resolved",
+      "expected": "resolved",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.penalty_active",
+      "check": "state",
+      "target": "0deef470-abf4-48ef-91b9-7e65cddcd335",
+      "pg_value": "2",
+      "api_value": ">=1",
+      "expected": "active",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.risk_open_disputes",
+      "check": "count",
+      "target": "f0e0a001-0001-4001-8001-000000000003",
+      "pg_value": "4",
+      "api_value": ">=4",
+      "expected": "risk_inputs",
+      "status": "PASS",
+      "notes": "open=4"
+    },
+    {
+      "probe_id": "pg.auth_audit_events",
+      "check": "infra",
+      "target": "auth_audit_events",
+      "pg_value": "73",
+      "api_value": "readable",
+      "expected": "ok",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.admin_audit_logs",
+      "check": "infra",
+      "target": "admin_audit_logs",
+      "pg_value": "6545",
+      "api_value": "readable",
+      "expected": "ok",
+      "status": "PASS",
+      "notes": ""
+    }
+  ],
+  "summary": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 0,
+    "pg_pass": 7,
+    "pg_total": 7
+  }
+}

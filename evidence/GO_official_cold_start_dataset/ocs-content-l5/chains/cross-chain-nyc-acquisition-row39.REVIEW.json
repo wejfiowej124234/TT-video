@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T153030Z",
+  "trigger_row": 39,
+  "trigger_filename": "ocs-nyc-skyline-acquisition-cover.jpg",
+  "TT_CROSS_CHAIN_ACQUISITION_REVIEW": "PASS",
+  "acquisition_comparison": {
+    "tokyo-photo": "镜头",
+    "kyoto-culture": "和纸",
+    "seoul-food": "零食",
+    "bangkok-temple": "泰丝",
+    "singapore-family": "设计礼盒",
+    "paris-art": "中古海报",
+    "nyc-skyline": "独立黑胶",
+    "distinct": true
+  },
+  "no_quality_regression_prior_38": true
+}

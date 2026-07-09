@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_narrative_plan.v1",
+  "stamp_utc": "20260704T133930Z",
+  "chain_id": "bangkok-temple",
+  "theme": "寺庙 · 湄南河 · 游船日落",
+  "six_slot_plan": [
+    { "row": 19, "slot": "guide-avatar", "scene": "Arun @ Wat Arun steps morning" },
+    { "row": 20, "slot": "provider-cover", "scene": "Chao Phraya sunset cruise dinner deck" },
+    { "row": 21, "slot": "acquisition-cover", "scene": "Thai silk craft still life" },
+    { "row": 22, "slot": "official-guide-cover", "scene": "Wat Arun spire + river wide route" },
+    { "row": 23, "slot": "community-cover", "scene": "Temple dawn spire silhouette Feed" },
+    { "row": 24, "slot": "community-media", "scene": "River cruise POV detail" }
+  ],
+  "geo_coverage_planned": ["郑王庙/黎明寺", "大皇宫区域", "湄南河", "游船"],
+  "TT_NARRATIVE_PLANNING": "PASS"
+}

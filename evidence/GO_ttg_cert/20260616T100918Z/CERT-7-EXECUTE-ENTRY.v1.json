@@ -1,0 +1,29 @@
+{
+  "program": "TTG_CERT_EXECUTION",
+  "phase": "②",
+  "active_cert": 7,
+  "cert6_signoff": "evidence/GO_ttg_cert/20260616T100918Z/phase-b/unpause/PHASE-B-UNPAUSE-SIGNOFF.json",
+  "hat_r1_queue": "evidence/GO_hat_r1_sepolia/20260616T063612Z/step-06-queue",
+  "cert7": {
+    "cert": 7,
+    "name": "Execute",
+    "target_tier": "OPS_DONE",
+    "mtm_ids": [
+      "CHK-CORE-07",
+      "CHK-FE-08",
+      "CHK-SC-01",
+      "CHK-SC-02",
+      "CHK-DR-01"
+    ],
+    "requires": [
+      "Timelock elapsed",
+      "HAT_R1_LIVE_WALLET_OK=1",
+      "HAT_R1_PHASE_B_PAUSED=0",
+      "no HAT_R1_FORCE_EXECUTE"
+    ],
+    "execute_script": "scripts/dev/run-cert7-hat-r1-execute-evidence.sh",
+    "evidence_subdir": "phase-b/execute",
+    "signoff_file": "PHASE-B-EXECUTE-SIGNOFF.json"
+  },
+  "prepared_at_utc": "2026-07-08T08:55:27Z"
+}

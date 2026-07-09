@@ -72,8 +72,8 @@ governance_ladder:
     short: GO
     status: NO_GO
   note: >
-    Product (RC + DDG + OCS) graduation gates are CLOSED. Remaining blockers to Go Live
-    are production engineering: PI3 (domain/TLS, Stripe Live, Mainnet) then Production GO.
+    Product graduation gates CLOSED. Remaining blockers: Web3 USDC Escrow payment prod verification,
+    then PI3 (domain/TLS, DR, monitoring) and Production GO. Stripe = optional fiat onboarding only.
 
 # 产品开发冻结 — 2026-07-02 · 产品验收已闭 · 唯一主线 PI3→GO
 product_development_freeze:
@@ -217,7 +217,12 @@ current_mainline:
     - id: PI3-002
       name: Domain / TLS / CDN
     - id: PI3-003
-      name: Stripe Live
+      name: Optional Fiat Onboarding (Stripe)
+      classification: P1_FUTURE_FIAT_ONRAMP
+      blocks_production_go: false
+    - id: G3-02
+      name: Web3 USDC Escrow Payment Production Verification
+      classification: P0_CORE_PAYMENT
     - id: PI3-004
       name: Production Validation
     - id: PI3-005

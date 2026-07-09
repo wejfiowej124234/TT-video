@@ -1,0 +1,34 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T145800Z",
+  "filename": "ocs-nyc-skyline-community-media.jpg",
+  "row": 42,
+  "chain_id": "nyc-skyline",
+  "country_code": "US",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "brand_logos",
+      "celebrity_portraits",
+      "commercial_ad_posters",
+      "recognizable_faces"
+    ],
+    "safe_expression": "帝国大厦 blue hour 夜景仰拍 · 与 Row41 钢索细节互补"
+  },
+  "checks": {
+    "manifest_alignment": { "pass": true, "notes": "body_markdown 摄影路线 · 帝国大厦光线时段" },
+    "destination_authenticity_9dim": { "pass": true, "notes": "Empire State blue hour · 曼哈顿夜景" },
+    "country_consistency_us": { "pass": true },
+    "community_authenticity_plan": { "pass": true, "notes": "详情页环境叙事 · UGC 感" },
+    "surface_boundary_plan": { "pass": true, "notes": "Community Media · 非 Cover/Official/Guide/Provider" },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row41": "夜景仰拍天际线 vs 大桥钢索细节 Cover",
+      "vs_row40": "街景仰拍 vs Official 宽幅 Hero"
+    },
+    "cross_chain_community_plan": { "pass": true },
+    "nine_class_framework_frozen": true
+  }
+}

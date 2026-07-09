@@ -1,12 +1,12 @@
 {
   "rujrId": "pes-real-user-journey-review-20260607",
-  "generatedAt": 1781324405560,
+  "generatedAt": 1782910512403,
   "totalRuns": 48,
   "totalEvents": 150,
   "uniqueSessions": 48,
   "snapshot": {
     "wave3Id": "product-enhancement-wave3-analytics-20260607",
-    "generatedAt": 1781324405559,
+    "generatedAt": 1782910512403,
     "totalEvents": 150,
     "uniqueSessions": 48,
     "funnelStages": [

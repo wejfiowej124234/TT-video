@@ -12,8 +12,6 @@ import { TouchpointEmptyPanel } from "@/components/product-enhancement/Touchpoin
 
 import { TouchpointConversionStrip } from "@/components/product-enhancement/TouchpointConversionStrip";
 
-import { ConversionFunnelRail } from "@/components/product-enhancement/ConversionFunnelRail";
-
 import { GovernanceProposalListCard } from "@/components/governance/GovernanceProposalListCard";
 
 import {
@@ -60,6 +58,7 @@ import {
   GovernanceProposalsL5Panel,
 
 } from "@/lib/governance/governanceProposalsL5Ui";
+import { resolveGovernanceProposalDisplayTitle } from "@/lib/governance/governanceStarterProposalDisplay";
 
 import { useGovernanceProposalsPage } from "./useGovernanceProposalsPage";
 
@@ -167,23 +166,7 @@ export function GovernanceProposalsPageMain() {
 
       <GovernanceProposalsPageGuide />
 
-
-
-      <details className={`${GOV_PROPOSALS_L5.accordion} mt-4`}>
-
-        <summary className={GOV_PROPOSALS_L5.accordionSummary}>{t("governance_proposals_l5_journey_toggle")}</summary>
-
-        <div className="border-t border-white/10 px-3 pb-3 pt-2">
-
-          <ConversionFunnelRail touchpoint="governance" t={t} variant="dark" className="mt-0 border-0 bg-transparent p-0 shadow-none" />
-
-        </div>
-
-      </details>
-
-
-
-      <p className={`${GOV_PROPOSALS_L5.noticeSoft} mt-4`} role="note">
+      <p className={`${GOV_PROPOSALS_L5.noticeSoft} mt-5`} role="note">
 
         {t("governance_proposals_l5_disclaimer")}
 
@@ -204,6 +187,8 @@ export function GovernanceProposalsPageMain() {
           onPersonaViewChange={onPersonaChange}
 
           proposalCount={filteredItems?.length ?? items?.length}
+
+          showCreateCta={false}
 
         />
 
@@ -433,17 +418,15 @@ export function GovernanceProposalsPageMain() {
 
                 typeof proposal.id === "string" && proposal.id.trim() ? proposal.id : `proposal-${i}`;
 
-              const title =
-
-                typeof proposal.title === "string" && proposal.title.trim()
-
-                  ? proposal.title
-
-                  : t("governance_proposals_item_untitled");
-
               const pid =
 
                 typeof proposal.id === "string" && proposal.id.trim() ? proposal.id.trim() : "";
+
+              const title = resolveGovernanceProposalDisplayTitle(
+                pid,
+                typeof proposal.title === "string" ? proposal.title : undefined,
+                t,
+              );
 
               if (!pid) {
 
@@ -519,15 +502,15 @@ export function GovernanceProposalsPageMain() {
 
           </Link>
 
-          <Link href="/governance/proposals/new" className={GOV_PROPOSALS_L5.footerLink}>
-
-            {t("governance_proposals_create_cta")}
-
-          </Link>
-
           <Link href="/governance/delegate" className={GOV_PROPOSALS_L5.footerLink}>
 
             {t("governance_delegate_nav")}
+
+          </Link>
+
+          <Link href="/governance/params" className={GOV_PROPOSALS_L5.footerLink}>
+
+            {t("governance_params_title")}
 
           </Link>
 

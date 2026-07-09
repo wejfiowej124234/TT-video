@@ -1,0 +1,54 @@
+{
+  "schema": "traveltrust.cms_phase1_single_asset_evidence.v1",
+  "product_name": "Market Listing Cover",
+  "matrix_id": "ML-WAVE1-002-PRV",
+  "variant": "provider",
+  "chain_slug": "barcelona-arch",
+  "listing_id": "4a62be85-92aa-4423-9136-9b26e47924f6",
+  "scaffolded_at_utc": "2026-07-05T09:41:31Z",
+  "step_1_brief_review": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "reviewed_at_utc": "2026-07-05T09:41:31Z"
+  },
+  "step_2_designer_upload": {
+    "status": "COMPLETE",
+    "catalog_asset_id": "b459ed57-a9cd-465c-9747-6681db5d0b12",
+    "uploaded_at_utc": "2026-07-05T09:41:31Z",
+    "notes": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg"
+  },
+  "step_3_cms_review": {
+    "status": "COMPLETE",
+    "gates": {
+      "cms_review": "PASS",
+      "destination_authenticity": "PASS",
+      "brand_consistency": "PASS"
+    }
+  },
+  "step_4_catalog_publish": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "published_at_utc": "2026-07-05T09:41:31Z"
+  },
+  "step_5_verify": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "cover_catalog_asset_id": "b459ed57-a9cd-465c-9747-6681db5d0b12",
+    "cover_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg",
+    "verified_at_utc": "2026-07-05T09:41:31Z"
+  },
+  "step_6_evidence": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "completed_at_utc": "2026-07-05T09:41:31Z"
+  },
+  "matrix_snapshot": {
+    "matrix_row_status": "pass",
+    "asset_lifecycle": "live",
+    "current_source": "catalog_api",
+    "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg",
+    "listing_id": "4a62be85-92aa-4423-9136-9b26e47924f6"
+  },
+  "TT_CMS_LISTINGS_WAVE1_ROW_VERIFY": "PASS",
+  "TT_CMS_PHASE1_SINGLE_ASSET_ROW": "COMPLETE"
+}

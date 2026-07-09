@@ -1,0 +1,14 @@
+{
+  "verdict": "PASS",
+  "recorded_at": "2026-06-07T05:00:42.361216+00:00",
+  "evidence_dir": "D:\\TravelTrust-V1.1\\evidence\\adm-u01-full-write-matrix-audit\\adm_u01_write_20260607T045647Z",
+  "summary": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 0,
+    "api_pass": 102,
+    "api_fail": 0
+  },
+  "issues": [],
+  "release_gate": "GO"
+}

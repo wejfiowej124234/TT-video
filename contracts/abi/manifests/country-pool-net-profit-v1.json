@@ -495,8 +495,16 @@
       "selector": "0x4fe38819"
     },
     "releaseToStewardPath": {
-      "signature": "releaseToStewardPath(uint256,bytes32)",
-      "selector": "0x7fc399a2"
+      "signature": "releaseToStewardPath(uint256,uint256,bytes32)",
+      "selector": "0xdfa1aad4"
+    },
+    "disburseJurisdictionReserve": {
+      "signature": "disburseJurisdictionReserve(uint256,address,bytes32)",
+      "selector": "0x0e5d6614"
+    },
+    "setDisburseRecipientAllowed": {
+      "signature": "setDisburseRecipientAllowed(address,bool)",
+      "selector": "0xf2522a68"
     }
   },
   "governance_payload": {
@@ -529,8 +537,16 @@
       "selector": "0x4c6043ec"
     },
     "CPNP_RELEASE_UNALLOCATED": {
-      "target_signature": "releaseToStewardPath(uint256,bytes32)",
-      "selector": "0x7fc399a2"
+      "target_signature": "releaseToStewardPath(uint256,uint256,bytes32)",
+      "selector": "0xdfa1aad4"
+    },
+    "CPNP_DISBURSE_JURISDICTION_RESERVE": {
+      "target_signature": "disburseJurisdictionReserve(uint256,address,bytes32)",
+      "selector": "0x0e5d6614"
+    },
+    "CPNP_SET_DISBURSE_RECIPIENT": {
+      "target_signature": "setDisburseRecipientAllowed(address,bool)",
+      "selector": "0xf2522a68"
     }
   }
 }

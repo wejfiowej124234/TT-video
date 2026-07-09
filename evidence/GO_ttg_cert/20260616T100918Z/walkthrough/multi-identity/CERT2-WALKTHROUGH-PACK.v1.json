@@ -1,0 +1,229 @@
+{
+  "schema": "traveltrust.ttg-cert2-multi-identity-walkthrough.v1",
+  "program": "TT_GOVERNANCE_CERT_02_MULTI_IDENTITY_WALKTHROUGH",
+  "phase": "②",
+  "stamp_utc": "20260616T100918Z",
+  "cert_session": "evidence/GO_ttg_cert/20260616T100918Z",
+  "mtm_ssot": "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+  "mtm_ids": [
+    "CHK-CORE-02",
+    "CHK-CORE-23",
+    "CHK-FE-15",
+    "CHK-FE-12",
+    "CHK-ID-01",
+    "CHK-ID-02",
+    "CHK-ID-03",
+    "CHK-ID-04",
+    "CHK-ID-05",
+    "CHK-ID-06",
+    "CHK-ID-07"
+  ],
+  "mtm_rows": [
+    {
+      "id": "CHK-CORE-02",
+      "name": "多身份 enterprise",
+      "tier": "DEV_DONE",
+      "page": "/me/identities",
+      "role": "Traveler…Admin"
+    },
+    {
+      "id": "CHK-CORE-23",
+      "name": "多角色权限",
+      "tier": "DEV_DONE",
+      "page": "/me/*·/governance",
+      "role": "all roles"
+    },
+    {
+      "id": "CHK-FE-15",
+      "name": "Multi-id B1/B3/B4",
+      "tier": "DEV_DONE",
+      "page": "/me/identities",
+      "role": "multi"
+    },
+    {
+      "id": "CHK-FE-12",
+      "name": "Stake/Seat B2",
+      "tier": "TESTNET_DONE",
+      "page": "/governance?view=region",
+      "role": "Steward"
+    },
+    {
+      "id": "CHK-ID-01",
+      "name": "Traveler boundary",
+      "tier": "DEV_DONE",
+      "page": "/me/*·/governance",
+      "role": "Traveler"
+    },
+    {
+      "id": "CHK-ID-02",
+      "name": "Investor boundary",
+      "tier": "DEV_DONE",
+      "page": "/governance/distribution-*",
+      "role": "Investor"
+    },
+    {
+      "id": "CHK-ID-03",
+      "name": "Steward boundary",
+      "tier": "DEV_DONE",
+      "page": "/governance?view=region",
+      "role": "Steward"
+    },
+    {
+      "id": "CHK-ID-04",
+      "name": "Guide boundary",
+      "tier": "DEV_DONE",
+      "page": "/guide/*",
+      "role": "Guide"
+    },
+    {
+      "id": "CHK-ID-05",
+      "name": "Merchant boundary",
+      "tier": "DEV_DONE",
+      "page": "/provider/*",
+      "role": "Merchant"
+    },
+    {
+      "id": "CHK-ID-06",
+      "name": "Moderator boundary",
+      "tier": "DEV_DONE",
+      "page": "/moderation/*",
+      "role": "Moderator"
+    },
+    {
+      "id": "CHK-ID-07",
+      "name": "Admin boundary walk",
+      "tier": "DEV_DONE",
+      "page": "/admin",
+      "role": "Admin"
+    }
+  ],
+  "uat_refs": [
+    "B1",
+    "B2",
+    "B3",
+    "B4"
+  ],
+  "roles": [
+    {
+      "role": "traveler",
+      "label": "Traveler",
+      "mtm_ids": [
+        "CHK-ID-01",
+        "CHK-CORE-02"
+      ],
+      "uat_ref": "B1",
+      "routes": [
+        "/me/identities",
+        "/community",
+        "/market"
+      ],
+      "recording_hint": "B1 · Hub 旅行者视角 · 无治理写入口",
+      "screenshot": "screenshots/role-traveler-hub.png",
+      "isolation": "无 steward 工作台写入口 · 无 Admin 后台"
+    },
+    {
+      "role": "investor",
+      "label": "Investor",
+      "mtm_ids": [
+        "CHK-ID-02",
+        "CHK-CORE-23"
+      ],
+      "uat_ref": "B4",
+      "routes": [
+        "/governance/distribution-accruals",
+        "/governance/distribution-claim",
+        "/governance/params"
+      ],
+      "recording_hint": "B4 · 投资者读路径 · 无 45% steward 写",
+      "screenshot": "screenshots/role-investor-governance-read.png",
+      "isolation": "distribution 只读 · 无 region stake 写"
+    },
+    {
+      "role": "steward",
+      "label": "Steward / Region",
+      "mtm_ids": [
+        "CHK-ID-03",
+        "CHK-FE-12",
+        "CHK-CORE-23"
+      ],
+      "uat_ref": "B2",
+      "routes": [
+        "/governance?view=region",
+        "/me/identities/region-steward/settings"
+      ],
+      "recording_hint": "B2 · Region 工作台 · stake/seat 边界（② 链上只读认知）",
+      "screenshot": "screenshots/role-steward-region-workbench.png",
+      "isolation": "无 USDC 退席 · 无 Treasury spend UI"
+    },
+    {
+      "role": "guide",
+      "label": "Guide",
+      "mtm_ids": [
+        "CHK-ID-04",
+        "CHK-FE-15"
+      ],
+      "uat_ref": "B3",
+      "routes": [
+        "/me/identities/guide/settings",
+        "/guide"
+      ],
+      "recording_hint": "B3 · 向导资料与 /guide 子站 · 与 merchant 数据隔离",
+      "screenshot": "screenshots/role-guide-settings.png",
+      "isolation": "guide-profile 不写 merchant/steward 字段"
+    },
+    {
+      "role": "merchant",
+      "label": "Merchant",
+      "mtm_ids": [
+        "CHK-ID-05",
+        "CHK-FE-15"
+      ],
+      "uat_ref": "B3",
+      "routes": [
+        "/me/identities/merchant/settings",
+        "/provider"
+      ],
+      "recording_hint": "B3 · 商家资料与 /provider · 与 guide 列表隔离",
+      "screenshot": "screenshots/role-merchant-settings.png",
+      "isolation": "merchant listing 不串 guide 域"
+    },
+    {
+      "role": "admin",
+      "label": "Admin",
+      "mtm_ids": [
+        "CHK-ID-06",
+        "CHK-ID-07",
+        "CHK-CORE-23"
+      ],
+      "uat_ref": "B4",
+      "routes": [
+        "/admin",
+        "/admin/users",
+        "/admin/governance/execution-uat"
+      ],
+      "recording_hint": "B4 · Admin 只读治理面 · 无链上 spend · RBAC banner 可见",
+      "screenshot": "screenshots/role-admin-governance-readonly.png",
+      "isolation": "Admin 观测 ≠ 45/55 写 · UI RBAC advisory"
+    }
+  ],
+  "machine_checks": {
+    "verdict": "PARTIAL",
+    "checks": {
+      "cert2_machine_gates": {
+        "cmd": "C:\\Program Files\\Git\\bin\\bash.exe D:\\TravelTrust-V1.1\\scripts\\dev\\smoke-cert2-multi-identity-machine-gates.sh",
+        "exit_code": 1,
+        "stdout_tail": "smoke-cert2-multi-identity-machine: OK vitest IA union\n== smoke-multi-identity-closure-local (① only) API=http://127.0.0.1:8080 ==\nsmoke-multi-identity-closure: OK login multi-demo@test.com\nsmoke-multi-identity-closure: OK identity_slots guide+merchant+steward active\nsmoke-multi-identity-closure: OK guide settings write\nsmoke-multi-identity-closure: OK merchant settings write\nsmoke-multi-identity-closure: OK steward settings write\nsmoke-multi-identity-closure: OK acquisition settings write\nsmoke-multi-identity-closure: OK merchant listing publish",
+        "stderr_tail": "smoke-multi-identity-closure: FAIL POST acquisition listing HTTP 429 body={\"status\":\"error\",\"error\":\"acquisition_publish_rate_limited\",\"message\":\"acquisition_publish_rate_limited\"}\nsmoke-cert2-multi-identity-machine: FAIL api multi-identity closure",
+        "ok": false,
+        "api_skipped": false
+      }
+    }
+  },
+  "prepared_at_utc": "2026-06-16T13:56:01Z",
+  "owner_next": "recordings + screenshots → record-cert2 signoff → complete-ttg-cert-step --cert 2",
+  "forbidden": [
+    "new features",
+    "govfreeze re-audit",
+    "docs/spec expansion"
+  ]
+}

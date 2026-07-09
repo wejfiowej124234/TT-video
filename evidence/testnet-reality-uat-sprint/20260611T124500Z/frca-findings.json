@@ -1,0 +1,245 @@
+{
+  "schema": "five_role_full_chain_audit.v1",
+  "phase": "② staging / ③ prep",
+  "recorded_at": "2026-06-11T12:31:43.765694+00:00",
+  "targets": {
+    "web": "https://tt-web-staging.fly.dev",
+    "api": "https://tt-api-staging.fly.dev"
+  },
+  "meta_git_sha": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+  "verdict": "PASS",
+  "summary": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 0,
+    "matrix_rows": 5,
+    "issues": 0
+  },
+  "matrix": [
+    {
+      "role": "旅行者",
+      "step": "注册→登录→核心→退出",
+      "register": "PASS",
+      "login": "PASS",
+      "core": "PASS",
+      "logout": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "向导",
+      "step": "登录→向导端→退出",
+      "register": "SKIP(seed)",
+      "login": "PASS",
+      "core": "PASS",
+      "logout": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "商家",
+      "step": "登录→入驻态→橱窗→退出",
+      "register": "SKIP(merchant@test.com)",
+      "login": "PASS",
+      "core": "PASS",
+      "logout": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "step": "promote→登录→Admin API→退出",
+      "register": "SKIP(promote_admin)",
+      "login": "PASS",
+      "core": "PASS",
+      "logout": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "治理",
+      "step": "登录→提案/委托→退出",
+      "register": "SKIP(同旅行者)",
+      "login": "PASS",
+      "core": "PASS",
+      "logout": "PASS",
+      "notes": ""
+    }
+  ],
+  "issues": [],
+  "flows": [
+    {
+      "role": "旅行者",
+      "flow": "错误态",
+      "step": "错误密码",
+      "status": "PASS",
+      "notes": "HTTP 401 error=invalid_credentials"
+    },
+    {
+      "role": "旅行者",
+      "flow": "错误态",
+      "step": "短密码",
+      "status": "PASS",
+      "notes": "HTTP 400 error=password_too_short"
+    },
+    {
+      "role": "全局",
+      "flow": "错误态",
+      "step": "无 Bearer logout",
+      "status": "PASS",
+      "notes": "HTTP 401 error=session_token_required"
+    },
+    {
+      "role": "旅行者",
+      "flow": "注册",
+      "step": "new traveler",
+      "status": "PASS",
+      "notes": "frca-traveler-f1d0929b7a@audit.example.com"
+    },
+    {
+      "role": "旅行者",
+      "flow": "登录",
+      "step": "GET /me",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "核心",
+      "step": "我的订单",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "核心",
+      "step": "私信",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "核心",
+      "step": "治理提案",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "退出",
+      "step": "POST /auth/logout",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "旅行者",
+      "flow": "退出后会话",
+      "step": "GET /me",
+      "status": "PASS",
+      "notes": "401"
+    },
+    {
+      "role": "商家",
+      "flow": "入驻状态机",
+      "step": "entitlements/me",
+      "status": "PASS",
+      "notes": "{\"status\": \"ok\", \"entitlements\": [{\"id\": \"faae9578-3c7d-4046-8742-9044a0aeb184\", \"role_target\": \"provider\", \"sku\": \"provider_onboarding_default\", \"fee_schedule_version\": \"fee_schedule_v1\", \"status\": \""
+    },
+    {
+      "role": "商家",
+      "flow": "门闸",
+      "step": "listing POST denied",
+      "status": "PASS",
+      "notes": "HTTP 400 invalid_market_listing_payload"
+    },
+    {
+      "role": "管理员",
+      "flow": "Admin",
+      "step": "capabilities",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "台账",
+      "step": "/api/v1/admin/orders?limit=3",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "台账",
+      "step": "/api/v1/admin/users?limit=3",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "治理",
+      "flow": "治理读",
+      "step": "提案列表",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "治理",
+      "flow": "治理读",
+      "step": "委托状态",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "治理",
+      "flow": "治理读",
+      "step": "投票权",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "权限",
+      "step": "旅行者→Admin 订单",
+      "status": "PASS",
+      "notes": "HTTP 403"
+    },
+    {
+      "role": "旅行者",
+      "flow": "权限",
+      "step": "旅行者→Admin 用户",
+      "status": "PASS",
+      "notes": "HTTP 403"
+    },
+    {
+      "role": "向导",
+      "flow": "权限",
+      "step": "向导→Admin capabilities",
+      "status": "PASS",
+      "notes": "HTTP 403"
+    },
+    {
+      "role": "向导",
+      "flow": "权限",
+      "step": "role-change-request denied",
+      "status": "PASS",
+      "notes": "HTTP 400"
+    },
+    {
+      "role": "全局",
+      "flow": "internal 门闸",
+      "step": "indexer-tick",
+      "status": "PASS",
+      "notes": "HTTP 403"
+    },
+    {
+      "role": "全局",
+      "flow": "页面壳",
+      "step": "/auth/login",
+      "status": "PASS",
+      "notes": ""
+    }
+  ],
+  "categories": [
+    "权限泄漏",
+    "状态机断裂",
+    "错误提示缺失",
+    "异常流程",
+    "边界条件",
+    "全链路缺口"
+  ],
+  "boundary": "API-first full-chain audit · register/login/core/logout · not Production GO"
+}

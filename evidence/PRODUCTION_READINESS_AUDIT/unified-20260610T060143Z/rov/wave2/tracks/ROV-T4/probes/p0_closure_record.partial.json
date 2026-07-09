@@ -1,0 +1,11 @@
+{
+  "probes": {
+    "D3": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "20260610T070509Z",
+      "log_path": "evidence/PRODUCTION_READINESS_AUDIT/unified-20260610T060143Z/rov/wave2/tracks/ROV-T4/probes/D3-20260610T070509Z.log",
+      "gate_script": "scripts/dev/l5-p0-d3-cold-start-linkage-smoke.sh"
+    }
+  }
+}

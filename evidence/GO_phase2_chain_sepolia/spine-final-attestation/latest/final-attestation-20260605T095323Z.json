@@ -1,0 +1,28 @@
+{
+  "schema": "phase2_sepolia_spine_final_attestation.v1",
+  "timestamp_utc": "20260605T095323Z",
+  "chain_id": 11155111,
+  "phase": "② Sepolia testnet",
+  "result": "PASS",
+  "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "timelock": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+  "timelock_admin_safe": "0x7c018293396325077bb4D039930dcEe11B7Fb1Cf",
+  "sequences_verified": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "checks": {
+    "spine_audit": "phase2-sepolia-spine-audit.sh",
+    "fundstack_verify": "phase2-sepolia-fundstack-verify-bindings.sh",
+    "steward_verify": "phase2-sepolia-steward-pool-verify-bindings.sh",
+    "redemption_verify": "phase2-sepolia-redemption-epoch-verify-bindings.sh",
+    "quote_parity": "check-protocol-quote-parity.sh",
+    "governance_allowlist": "Governor+Token on Timelock",
+    "http_quote_routes": "warn_live_api_drift"
+  },
+  "seq5_gate": "DeployP51CountryLedger — authorized after this attestation PASS",
+  "ssot": "docs/runbook/TT-PHASE2-SEPOLIA-SPINE-FINAL-ATTESTATION.md"
+}

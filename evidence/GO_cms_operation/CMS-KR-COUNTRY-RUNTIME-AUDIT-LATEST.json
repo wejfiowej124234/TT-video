@@ -1,0 +1,1576 @@
+{
+  "schema": "traveltrust.cms_kr_country_runtime_audit.v1",
+  "recorded_at_utc": "2026-07-06T01:35:42.160Z",
+  "phase": "② staging",
+  "country": {
+    "country_iso": "KR",
+    "country_zh": "韩国",
+    "cities": [
+      "首尔",
+      "釜山",
+      "济州",
+      "仁川"
+    ]
+  },
+  "jp_lock_guard": {
+    "required": 41,
+    "unchanged": true
+  },
+  "next_country": "BLOCKED",
+  "production_go": "BLOCKED",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "runtime_tier": "national_runtime",
+  "consumer_surfaces": [
+    "home_korea",
+    "market",
+    "market_itinerary_kr",
+    "market_provider",
+    "market_acquisition",
+    "traveltrust",
+    "community"
+  ],
+  "checks": [
+    {
+      "id": "jp_lock_registry_unchanged",
+      "label": "日本五城 LOCK 资产未改动 (41/41)",
+      "pass": true,
+      "locked_count": 41,
+      "total": 41,
+      "rows": [
+        {
+          "matrix_id": "PH-JP-009-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-010-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-011-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-012-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-013-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-014-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-015-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-016-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-017-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-001-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-002-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-003-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-004-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-005-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-006-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-007-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-008-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-026-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-027-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-028-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-029-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-030-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-031-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-032-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-033-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-034-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-035-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-036-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-037-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-038-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-039-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-040-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-041-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-018-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-019-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-020-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-021-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-022-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-023-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-024-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-025-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "kr_lock_registry_unchanged",
+      "label": "四城 KR LOCK 资产未改动 (31/31)",
+      "pass": true,
+      "locked_count": 31,
+      "total": 31,
+      "rows": [
+        {
+          "matrix_id": "PH-KR-064-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-065-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-066-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-067-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-068-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-069-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-070-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-071-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-072-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-042-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-043-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-044-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-045-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-046-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-047-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-048-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-049-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-050-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-051-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-052-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-053-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-054-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-055-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-056-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-057-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-058-ATR",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-059-ATR",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-060-ATR",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-061-FOOD",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-062-FOOD",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-063-FOOD",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "kr_scope_lock",
+      "label": "KR POI Catalog Scope Lock · 31 POI / 4 cities 不变",
+      "pass": true,
+      "doc": {
+        "poi_total": 31,
+        "city_count": 4,
+        "TT": "FROZEN"
+      },
+      "issues": []
+    },
+    {
+      "id": "four_city_execution_closed",
+      "label": "四城 Execution CLOSED",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "首尔",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "釜山",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "济州",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "仁川",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CLOSURE-LATEST.json",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "four_city_content_qa_closed",
+      "label": "四城 Content QA CLOSED · LOCK 不变",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "首尔",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "9/9",
+          "pass": true
+        },
+        {
+          "city_zh": "釜山",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "8/8",
+          "pass": true
+        },
+        {
+          "city_zh": "济州",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "8/8",
+          "pass": true
+        },
+        {
+          "city_zh": "仁川",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "6/6",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "four_city_exit_checks",
+      "label": "四城 Golden Template Exit Check · city_consumer_runtime",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "首尔",
+          "city_en": "Seoul",
+          "poi_count": 9,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "9/9",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "釜山",
+          "city_en": "Busan",
+          "poi_count": 8,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "8/8",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "济州",
+          "city_en": "Jeju",
+          "poi_count": 8,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "8/8",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "仁川",
+          "city_en": "Incheon",
+          "poi_count": 6,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "6/6",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "korea_ambient_runtime",
+      "label": "首页 Destination Ambient · 韩国读 CMS · 无 Unsplash",
+      "pass": true,
+      "row": {
+        "country_zh": "韩国",
+        "country_iso": "KR",
+        "page_path": "/?country=韩国",
+        "cms_jurisdiction": true,
+        "catalog_has_data": true,
+        "catalog_published": true,
+        "catalog_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-kr-home-v1.jpg",
+        "runtime_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-kr-home-v1.jpg",
+        "runtime_reads_cms_catalog": true,
+        "runtime_cms_mismatch": false,
+        "still_unsplash": false,
+        "still_ts_fallback": false,
+        "l5_compliant": true,
+        "cms_ownership_ok": true,
+        "l5_issues": [],
+        "priority": "P0"
+      },
+      "ssot": "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+      "issues": []
+    },
+    {
+      "id": "catalog_api_kr_poi",
+      "label": "Catalog API KR POI 31/31 与 LOCK 一致",
+      "pass": true,
+      "pass_count": 31,
+      "required": 31,
+      "rows": [
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-064-ATR",
+          "expected": "ocs-seoul-food-official-guide-cover.jpg",
+          "catalog": "ocs-seoul-food-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-065-ATR",
+          "expected": "ocs-seoul-food-community-media.jpg",
+          "catalog": "ocs-seoul-food-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-066-ATR",
+          "expected": "ocs-seoul-food-community-cover.jpg",
+          "catalog": "ocs-seoul-food-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-067-ATR",
+          "expected": "ocs-seoul-food-provider-cover.jpg",
+          "catalog": "ocs-seoul-food-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-068-ATR",
+          "expected": "ocs-seoul-food-acquisition-cover.jpg",
+          "catalog": "ocs-seoul-food-acquisition-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-069-FOOD",
+          "expected": "ocs-seoul-food-guide-avatar.jpg",
+          "catalog": "ocs-seoul-food-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-070-FOOD",
+          "expected": "ocs-seoul-food-official-guide-cover.jpg",
+          "catalog": "ocs-seoul-food-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-071-FOOD",
+          "expected": "ocs-seoul-food-community-media.jpg",
+          "catalog": "ocs-seoul-food-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-072-FOOD",
+          "expected": "ocs-seoul-food-community-cover.jpg",
+          "catalog": "ocs-seoul-food-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-042-ATR",
+          "expected": "ocs-busan-coast-official-guide-cover.jpg",
+          "catalog": "ocs-busan-coast-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-043-ATR",
+          "expected": "ocs-busan-coast-community-media.jpg",
+          "catalog": "ocs-busan-coast-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-044-ATR",
+          "expected": "ocs-busan-coast-community-cover.jpg",
+          "catalog": "ocs-busan-coast-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-045-ATR",
+          "expected": "ocs-busan-coast-provider-cover.jpg",
+          "catalog": "ocs-busan-coast-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-046-FOOD",
+          "expected": "ocs-busan-coast-guide-avatar.jpg",
+          "catalog": "ocs-busan-coast-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-047-FOOD",
+          "expected": "ocs-busan-coast-official-guide-cover.jpg",
+          "catalog": "ocs-busan-coast-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-048-FOOD",
+          "expected": "ocs-busan-coast-community-media.jpg",
+          "catalog": "ocs-busan-coast-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-049-FOOD",
+          "expected": "ocs-busan-coast-community-cover.jpg",
+          "catalog": "ocs-busan-coast-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-050-ATR",
+          "expected": "ocs-jeju-island-official-guide-cover.jpg",
+          "catalog": "ocs-jeju-island-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-051-ATR",
+          "expected": "ocs-jeju-island-community-media.jpg",
+          "catalog": "ocs-jeju-island-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-052-ATR",
+          "expected": "ocs-jeju-island-community-cover.jpg",
+          "catalog": "ocs-jeju-island-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-053-ATR",
+          "expected": "ocs-jeju-island-provider-cover.jpg",
+          "catalog": "ocs-jeju-island-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-054-FOOD",
+          "expected": "ocs-jeju-island-guide-avatar.jpg",
+          "catalog": "ocs-jeju-island-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-055-FOOD",
+          "expected": "ocs-jeju-island-official-guide-cover.jpg",
+          "catalog": "ocs-jeju-island-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-056-FOOD",
+          "expected": "ocs-jeju-island-community-media.jpg",
+          "catalog": "ocs-jeju-island-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-057-FOOD",
+          "expected": "ocs-jeju-island-community-cover.jpg",
+          "catalog": "ocs-jeju-island-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-058-ATR",
+          "expected": "ocs-incheon-port-official-guide-cover.jpg",
+          "catalog": "ocs-incheon-port-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-059-ATR",
+          "expected": "ocs-incheon-port-community-media.jpg",
+          "catalog": "ocs-incheon-port-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-060-ATR",
+          "expected": "ocs-incheon-port-community-cover.jpg",
+          "catalog": "ocs-incheon-port-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-061-FOOD",
+          "expected": "ocs-incheon-port-guide-avatar.jpg",
+          "catalog": "ocs-incheon-port-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-062-FOOD",
+          "expected": "ocs-incheon-port-official-guide-cover.jpg",
+          "catalog": "ocs-incheon-port-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-063-FOOD",
+          "expected": "ocs-incheon-port-community-media.jpg",
+          "catalog": "ocs-incheon-port-community-media.jpg",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "kr_poi_runtime_exit_aggregate",
+      "label": "四城 Market POI Runtime · Exit Check Gate 4 聚合",
+      "pass": true,
+      "poi_runtime": {
+        "pass": 31,
+        "total": 31
+      },
+      "poi_rows": [
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-064-ATR",
+          "poi": "景福宫",
+          "expected_fn": "ocs-seoul-food-official-guide-cover.jpg",
+          "runtime_fn": "ocs-seoul-food-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-065-ATR",
+          "poi": "北村韩屋村",
+          "expected_fn": "ocs-seoul-food-community-media.jpg",
+          "runtime_fn": "ocs-seoul-food-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-066-ATR",
+          "poi": "明洞",
+          "expected_fn": "ocs-seoul-food-community-cover.jpg",
+          "runtime_fn": "ocs-seoul-food-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-067-ATR",
+          "poi": "N首尔塔",
+          "expected_fn": "ocs-seoul-food-provider-cover.jpg",
+          "runtime_fn": "ocs-seoul-food-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-068-ATR",
+          "poi": "汉江公园",
+          "expected_fn": "ocs-seoul-food-acquisition-cover.jpg",
+          "runtime_fn": "ocs-seoul-food-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-069-FOOD",
+          "poi": "韩式烤肉",
+          "expected_fn": "ocs-seoul-food-guide-avatar.jpg",
+          "runtime_fn": "ocs-seoul-food-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-070-FOOD",
+          "poi": "拌饭",
+          "expected_fn": "ocs-seoul-food-official-guide-cover.jpg",
+          "runtime_fn": "ocs-seoul-food-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-071-FOOD",
+          "poi": "炸鸡",
+          "expected_fn": "ocs-seoul-food-community-media.jpg",
+          "runtime_fn": "ocs-seoul-food-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-072-FOOD",
+          "poi": "参鸡汤",
+          "expected_fn": "ocs-seoul-food-community-cover.jpg",
+          "runtime_fn": "ocs-seoul-food-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-042-ATR",
+          "poi": "海云台",
+          "expected_fn": "ocs-busan-coast-official-guide-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-043-ATR",
+          "poi": "甘川文化村",
+          "expected_fn": "ocs-busan-coast-community-media.jpg",
+          "runtime_fn": "ocs-busan-coast-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-044-ATR",
+          "poi": "札嘎其市场",
+          "expected_fn": "ocs-busan-coast-community-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-045-ATR",
+          "poi": "广安里大桥",
+          "expected_fn": "ocs-busan-coast-provider-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-046-FOOD",
+          "poi": "猪肉汤饭",
+          "expected_fn": "ocs-busan-coast-guide-avatar.jpg",
+          "runtime_fn": "ocs-busan-coast-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-047-FOOD",
+          "poi": "生鱼片",
+          "expected_fn": "ocs-busan-coast-official-guide-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-048-FOOD",
+          "poi": "鱼饼",
+          "expected_fn": "ocs-busan-coast-community-media.jpg",
+          "runtime_fn": "ocs-busan-coast-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-049-FOOD",
+          "poi": "小麦面",
+          "expected_fn": "ocs-busan-coast-community-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-050-ATR",
+          "poi": "城山日出峰",
+          "expected_fn": "ocs-jeju-island-official-guide-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-051-ATR",
+          "poi": "涉地可支",
+          "expected_fn": "ocs-jeju-island-community-media.jpg",
+          "runtime_fn": "ocs-jeju-island-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-052-ATR",
+          "poi": "汉拿山",
+          "expected_fn": "ocs-jeju-island-community-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-053-ATR",
+          "poi": "橘子园",
+          "expected_fn": "ocs-jeju-island-provider-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-054-FOOD",
+          "poi": "黑猪肉",
+          "expected_fn": "ocs-jeju-island-guide-avatar.jpg",
+          "runtime_fn": "ocs-jeju-island-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-055-FOOD",
+          "poi": "海鲜面",
+          "expected_fn": "ocs-jeju-island-official-guide-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-056-FOOD",
+          "poi": "橘子甜品",
+          "expected_fn": "ocs-jeju-island-community-media.jpg",
+          "runtime_fn": "ocs-jeju-island-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-057-FOOD",
+          "poi": "鲍鱼粥",
+          "expected_fn": "ocs-jeju-island-community-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-058-ATR",
+          "poi": "中华街",
+          "expected_fn": "ocs-incheon-port-official-guide-cover.jpg",
+          "runtime_fn": "ocs-incheon-port-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-059-ATR",
+          "poi": "月尾岛",
+          "expected_fn": "ocs-incheon-port-community-media.jpg",
+          "runtime_fn": "ocs-incheon-port-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-060-ATR",
+          "poi": "松岛新城",
+          "expected_fn": "ocs-incheon-port-community-cover.jpg",
+          "runtime_fn": "ocs-incheon-port-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-061-FOOD",
+          "poi": "炸酱面",
+          "expected_fn": "ocs-incheon-port-guide-avatar.jpg",
+          "runtime_fn": "ocs-incheon-port-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-062-FOOD",
+          "poi": "海鲜",
+          "expected_fn": "ocs-incheon-port-official-guide-cover.jpg",
+          "runtime_fn": "ocs-incheon-port-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-063-FOOD",
+          "poi": "辣炒年糕",
+          "expected_fn": "ocs-incheon-port-community-media.jpg",
+          "runtime_fn": "ocs-incheon-port-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "live_consumer_runtime",
+      "label": "Live Consumer · 首页韩国 Ambient + Market 壳 + 韩国相关内容无 fallback",
+      "pass": true,
+      "catalog_api_requests": 2,
+      "poi_runtime": {
+        "pass": 31,
+        "total": 31
+      },
+      "poi_rows": [
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-064-ATR",
+          "poi": "景福宫",
+          "expected_fn": "ocs-seoul-food-official-guide-cover.jpg",
+          "runtime_fn": "ocs-seoul-food-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-065-ATR",
+          "poi": "北村韩屋村",
+          "expected_fn": "ocs-seoul-food-community-media.jpg",
+          "runtime_fn": "ocs-seoul-food-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-066-ATR",
+          "poi": "明洞",
+          "expected_fn": "ocs-seoul-food-community-cover.jpg",
+          "runtime_fn": "ocs-seoul-food-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-067-ATR",
+          "poi": "N首尔塔",
+          "expected_fn": "ocs-seoul-food-provider-cover.jpg",
+          "runtime_fn": "ocs-seoul-food-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-068-ATR",
+          "poi": "汉江公园",
+          "expected_fn": "ocs-seoul-food-acquisition-cover.jpg",
+          "runtime_fn": "ocs-seoul-food-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-069-FOOD",
+          "poi": "韩式烤肉",
+          "expected_fn": "ocs-seoul-food-guide-avatar.jpg",
+          "runtime_fn": "ocs-seoul-food-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-070-FOOD",
+          "poi": "拌饭",
+          "expected_fn": "ocs-seoul-food-official-guide-cover.jpg",
+          "runtime_fn": "ocs-seoul-food-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-071-FOOD",
+          "poi": "炸鸡",
+          "expected_fn": "ocs-seoul-food-community-media.jpg",
+          "runtime_fn": "ocs-seoul-food-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "首尔",
+          "matrix_id": "PH-KR-072-FOOD",
+          "poi": "参鸡汤",
+          "expected_fn": "ocs-seoul-food-community-cover.jpg",
+          "runtime_fn": "ocs-seoul-food-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-042-ATR",
+          "poi": "海云台",
+          "expected_fn": "ocs-busan-coast-official-guide-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-043-ATR",
+          "poi": "甘川文化村",
+          "expected_fn": "ocs-busan-coast-community-media.jpg",
+          "runtime_fn": "ocs-busan-coast-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-044-ATR",
+          "poi": "札嘎其市场",
+          "expected_fn": "ocs-busan-coast-community-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-045-ATR",
+          "poi": "广安里大桥",
+          "expected_fn": "ocs-busan-coast-provider-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-046-FOOD",
+          "poi": "猪肉汤饭",
+          "expected_fn": "ocs-busan-coast-guide-avatar.jpg",
+          "runtime_fn": "ocs-busan-coast-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-047-FOOD",
+          "poi": "生鱼片",
+          "expected_fn": "ocs-busan-coast-official-guide-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-048-FOOD",
+          "poi": "鱼饼",
+          "expected_fn": "ocs-busan-coast-community-media.jpg",
+          "runtime_fn": "ocs-busan-coast-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "釜山",
+          "matrix_id": "PH-KR-049-FOOD",
+          "poi": "小麦面",
+          "expected_fn": "ocs-busan-coast-community-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-050-ATR",
+          "poi": "城山日出峰",
+          "expected_fn": "ocs-jeju-island-official-guide-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-051-ATR",
+          "poi": "涉地可支",
+          "expected_fn": "ocs-jeju-island-community-media.jpg",
+          "runtime_fn": "ocs-jeju-island-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-052-ATR",
+          "poi": "汉拿山",
+          "expected_fn": "ocs-jeju-island-community-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-053-ATR",
+          "poi": "橘子园",
+          "expected_fn": "ocs-jeju-island-provider-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-054-FOOD",
+          "poi": "黑猪肉",
+          "expected_fn": "ocs-jeju-island-guide-avatar.jpg",
+          "runtime_fn": "ocs-jeju-island-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-055-FOOD",
+          "poi": "海鲜面",
+          "expected_fn": "ocs-jeju-island-official-guide-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-056-FOOD",
+          "poi": "橘子甜品",
+          "expected_fn": "ocs-jeju-island-community-media.jpg",
+          "runtime_fn": "ocs-jeju-island-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "济州",
+          "matrix_id": "PH-KR-057-FOOD",
+          "poi": "鲍鱼粥",
+          "expected_fn": "ocs-jeju-island-community-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-058-ATR",
+          "poi": "中华街",
+          "expected_fn": "ocs-incheon-port-official-guide-cover.jpg",
+          "runtime_fn": "ocs-incheon-port-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-059-ATR",
+          "poi": "月尾岛",
+          "expected_fn": "ocs-incheon-port-community-media.jpg",
+          "runtime_fn": "ocs-incheon-port-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-060-ATR",
+          "poi": "松岛新城",
+          "expected_fn": "ocs-incheon-port-community-cover.jpg",
+          "runtime_fn": "ocs-incheon-port-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-061-FOOD",
+          "poi": "炸酱面",
+          "expected_fn": "ocs-incheon-port-guide-avatar.jpg",
+          "runtime_fn": "ocs-incheon-port-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-062-FOOD",
+          "poi": "海鲜",
+          "expected_fn": "ocs-incheon-port-official-guide-cover.jpg",
+          "runtime_fn": "ocs-incheon-port-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "仁川",
+          "matrix_id": "PH-KR-063-FOOD",
+          "poi": "辣炒年糕",
+          "expected_fn": "ocs-incheon-port-community-media.jpg",
+          "runtime_fn": "ocs-incheon-port-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        }
+      ],
+      "surface_rows": [
+        {
+          "surface": "home_korea_ambient",
+          "pass": true,
+          "runtime_src": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-kr-home-v1.jpg"
+        },
+        {
+          "surface": "market_custom_itinerary_shell",
+          "pass": true
+        },
+        {
+          "surface": "market_provider",
+          "pass": true,
+          "image_count": 10,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "market_acquisition",
+          "pass": true,
+          "image_count": 10,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "traveltrust",
+          "pass": true,
+          "image_count": 0,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "community",
+          "pass": true,
+          "image_count": 10,
+          "forbidden_count": 0
+        }
+      ],
+      "issues": [],
+      "attempt": 3
+    }
+  ],
+  "all_pass": true,
+  "poi_runtime_pass": 31,
+  "poi_runtime_required": 31,
+  "city_summary": [
+    {
+      "city_zh": "首尔",
+      "exit_runtime": "9/9",
+      "catalog_pass": 9,
+      "catalog_total": 9,
+      "live_pass": 9,
+      "live_total": 9
+    },
+    {
+      "city_zh": "釜山",
+      "exit_runtime": "8/8",
+      "catalog_pass": 8,
+      "catalog_total": 8,
+      "live_pass": 8,
+      "live_total": 8
+    },
+    {
+      "city_zh": "济州",
+      "exit_runtime": "8/8",
+      "catalog_pass": 8,
+      "catalog_total": 8,
+      "live_pass": 8,
+      "live_total": 8
+    },
+    {
+      "city_zh": "仁川",
+      "exit_runtime": "6/6",
+      "catalog_pass": 6,
+      "catalog_total": 6,
+      "live_pass": 6,
+      "live_total": 6
+    }
+  ],
+  "verdict": "KR_COUNTRY_RUNTIME_PASS",
+  "TT_CMS_KR_COUNTRY_RUNTIME": "PASS",
+  "blockers": []
+}

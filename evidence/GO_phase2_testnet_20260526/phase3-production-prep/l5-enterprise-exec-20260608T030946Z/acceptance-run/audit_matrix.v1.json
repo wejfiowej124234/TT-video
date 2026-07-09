@@ -1,0 +1,233 @@
+{
+  "schema": "traveltrust_l5_enterprise_acceptance_matrix.v1",
+  "recorded_utc": "20260608T030949Z",
+  "baseline_refs": [
+    "157",
+    "160",
+    "158"
+  ],
+  "verdict": "L5_ENTERPRISE_ACCEPTANCE_GO",
+  "enterprise_score": 100,
+  "target_score": 85,
+  "contract_tests_ok": true,
+  "track_verdicts": {
+    "UX_P1_P2": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "UX_P1_P2_GO"
+    },
+    "DATA_INTEGRITY": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "DATA_INTEGRITY_GO"
+    },
+    "RBAC_SECURITY": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "RBAC_SECURITY_GO"
+    },
+    "PERFORMANCE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "PERFORMANCE_GO"
+    },
+    "HUMAN_ACCEPTANCE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "HUMAN_ACCEPTANCE_GO"
+    }
+  },
+  "tracks": [
+    {
+      "id": "UX_P1_P2",
+      "title": "UX P1/P2 closure",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "UX_P1_P2_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "UX-P1-04_me_referrals_login_cta",
+          "pass": true
+        },
+        {
+          "id": "UX-P1-02_cold_start_dom",
+          "pass": true
+        },
+        {
+          "id": "UX-P2-01_growth_hub_kpi",
+          "pass": true
+        },
+        {
+          "id": "UX-P2-02_conversion_nav",
+          "pass": true
+        },
+        {
+          "id": "UX-P1-03_airdrop_export_progress",
+          "pass": true
+        },
+        {
+          "id": "UX-P2-02_analytics_presets",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "DATA_INTEGRITY",
+      "title": "Data Integrity Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "DATA_INTEGRITY_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "DI-01_growth_ledger_gate",
+          "pass": true
+        },
+        {
+          "id": "DI-02_cross_domain_audit",
+          "pass": true
+        },
+        {
+          "id": "DI-03_reward_ledger_reconcile",
+          "pass": true
+        },
+        {
+          "id": "DI-04_early_bird_reconcile",
+          "pass": true
+        },
+        {
+          "id": "DI-05_analytics_readonly",
+          "pass": true
+        },
+        {
+          "id": "DI-06_cms_audit_route",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "RBAC_SECURITY",
+      "title": "RBAC Security Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "RBAC_SECURITY_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "RBAC-01_local_matrix_smoke",
+          "pass": true
+        },
+        {
+          "id": "RBAC-02_e4_escalation_probe",
+          "pass": true
+        },
+        {
+          "id": "RBAC-03_2fa_probe",
+          "pass": true
+        },
+        {
+          "id": "RBAC-04_ops_plane_auth_hints",
+          "pass": true
+        },
+        {
+          "id": "RBAC-05_admin_permission_ids",
+          "pass": true
+        },
+        {
+          "id": "RBAC-06_mutating_audit",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "PERFORMANCE",
+      "title": "Performance Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "PERFORMANCE_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "PERF-01_benchmark_harness",
+          "pass": true
+        },
+        {
+          "id": "PERF-02_admin_l5_green_bundle",
+          "pass": true
+        },
+        {
+          "id": "PERF-03_cold_start_consumer_contract",
+          "pass": true
+        },
+        {
+          "id": "PERF-04_growth_analytics_page",
+          "pass": true
+        },
+        {
+          "id": "PERF-05_cms_publish_queue_smoke",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "HUMAN_ACCEPTANCE",
+      "title": "Human Acceptance Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "HUMAN_ACCEPTANCE_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "HA-01_manifest",
+          "pass": true
+        },
+        {
+          "id": "HA-role-admin",
+          "pass": true
+        },
+        {
+          "id": "HA-role-guide",
+          "pass": true
+        },
+        {
+          "id": "HA-role-merchant",
+          "pass": true
+        },
+        {
+          "id": "HA-role-ops",
+          "pass": true
+        },
+        {
+          "id": "HA-role-traveler",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "gap_matrix": [],
+  "optimizations": [
+    {
+      "id": "ENT-P1-01",
+      "risk": "P1",
+      "title": "Live RBAC matrix on staging",
+      "track": "RBAC_SECURITY",
+      "fix": "Run smoke-admin-rbac-staging-matrix.sh after PI3-002 prod domain"
+    },
+    {
+      "id": "ENT-P1-02",
+      "risk": "P1",
+      "title": "CMS publish-queue load benchmark live",
+      "track": "PERFORMANCE",
+      "fix": "Execute l5-enterprise-performance-benchmark.sh with API+PG"
+    },
+    {
+      "id": "ENT-P2-01",
+      "risk": "P2",
+      "title": "Human acceptance screenshot evidence",
+      "track": "HUMAN_ACCEPTANCE",
+      "fix": "Attach Playwright traces per role journey"
+    }
+  ],
+  "contract_test_log_tail": "\n> traveltrust-frontend@0.1.0 test\n> vitest run --run lib/l5/l5EnterpriseAcceptance.contract.test.ts app/me/referrals/meReferralsPage.contract.test.ts lib/coldStartCampaign/coldStartCampaignE2eA01.contract.test.ts lib/admin/adminOpsPlaneUxL5.contract.test.ts\n\n\n RUN  v2.1.9 D:/TravelTrust-V1.1/frontend\n\n \u2713 lib/coldStartCampaign/coldStartCampaignE2eA01.contract.test.ts (4 tests) 4ms\n \u2713 lib/admin/adminOpsPlaneUxL5.contract.test.ts (4 tests) 3ms\n \u2713 lib/l5/l5EnterpriseAcceptance.contract.test.ts (3 tests) 3ms\n \u2713 app/me/referrals/meReferralsPage.contract.test.ts (2 tests) 2ms\n\n Test Files  4 passed (4)\n      Tests  13 passed (13)\n   Start at  11:09:48\n   Duration  1.30s (transform 142ms, setup 65ms, collect 341ms, tests 12ms, environment 1.77s, prepare 404ms)\n\n"
+}

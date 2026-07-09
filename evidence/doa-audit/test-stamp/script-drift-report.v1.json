@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust.doa_script_drift.v1",
+  "items": [
+    {
+      "path": "scripts/dev/run-full-system-audit-master-gate.sh",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "path": "scripts/dev/run-product-forensic-audit-gate.sh",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "path": "scripts/dev/run-doa-audit-gate.sh",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "path": "scripts/dev/run-go-local-phase1-acceptance.sh",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "path": "scripts/dev/start-api-with-seed.bat",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "path": "scripts/dev/start-api-with-seed-README.md",
+      "exists": true,
+      "verdict": "KEEP"
+    }
+  ]
+}

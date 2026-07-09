@@ -1,0 +1,152 @@
+{
+  "schema": "traveltrust.phase2_full_coverage_validation.v1",
+  "recorded_utc": "2026-06-08T06:57:00.285Z",
+  "stamp": "20260608T063019Z",
+  "overall_verdict": "FAIL",
+  "failure_count": 6,
+  "feature_freeze": true,
+  "phase": "②",
+  "production_go": "NO",
+  "strict_policy": "all_checks_GO_no_PARTIAL_no_FAIL_no_uncovered",
+  "counts": {
+    "go": 17,
+    "fail": 16,
+    "partial": 0,
+    "total": 33
+  },
+  "checks": {
+    "P2FC-P00-baseline-freeze": {
+      "verdict": "GO",
+      "note": "12/12"
+    },
+    "P2FC-T01-five-role-chain": {
+      "verdict": "FAIL",
+      "note": "harness exit non-zero"
+    },
+    "P2FC-T02-rov-wave1-pack": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-T03-rov-wave2-pack": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-T04-governance-gap": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "TRACK-A-business": {
+      "verdict": "FAIL",
+      "note": "track"
+    },
+    "P2FC-E01-order-cancel": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-E02-duplicate-submit": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-E03-refund-webhook": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-E04-session-wallet-2fa": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-E05-network-interrupt": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-E06-cold-start-rollback": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "TRACK-B-exceptions": {
+      "verdict": "GO",
+      "note": "track"
+    },
+    "P2FC-D01-cross-domain-pg": {
+      "verdict": "FAIL",
+      "note": "harness exit non-zero"
+    },
+    "P2FC-D02-order-escrow-pg": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-D03-community-pg": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-D04-growth-funnel": {
+      "verdict": "FAIL",
+      "note": "harness exit non-zero"
+    },
+    "TRACK-C-consistency": {
+      "verdict": "FAIL",
+      "note": "track"
+    },
+    "P2FC-W01-web3-itinerary": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-W02-governance-uat": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-W03-community-deep": {
+      "verdict": "FAIL",
+      "note": "harness exit non-zero"
+    },
+    "P2FC-W04-community-moderation": {
+      "verdict": "FAIL",
+      "note": "harness exit non-zero"
+    },
+    "TRACK-D-web3-community": {
+      "verdict": "FAIL",
+      "note": "track"
+    },
+    "P2FC-B01-chrome": {
+      "verdict": "FAIL",
+      "note": "chromium"
+    },
+    "P2FC-B02-edge": {
+      "verdict": "FAIL",
+      "note": "chromium"
+    },
+    "P2FC-B03-firefox": {
+      "verdict": "FAIL",
+      "note": "firefox"
+    },
+    "P2FC-B04-safari": {
+      "verdict": "FAIL",
+      "note": "webkit"
+    },
+    "TRACK-E-browser-mobile": {
+      "verdict": "FAIL",
+      "note": "track"
+    },
+    "P2FC-F01-deps-normal": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-F02-deps-recovery": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-F03-deps-finalize": {
+      "verdict": "FAIL",
+      "note": "harness exit non-zero"
+    },
+    "TRACK-F-fault-deps": {
+      "verdict": "FAIL",
+      "note": "track"
+    },
+    "P2FC-S01-soak-72h": {
+      "verdict": "FAIL",
+      "note": "P2FC_INCLUDE_SOAK=0 not allowed in strict mode"
+    }
+  },
+  "report_ssot": "docs/handbook/engineering/179-Phase2-Full-Coverage-Validation-Report.md"
+}

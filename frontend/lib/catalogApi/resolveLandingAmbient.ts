@@ -27,9 +27,12 @@ export async function resolveLandingAmbientUrl(
   if (!deps.isEnabled()) {
     return { data: tsUrl, source: "ts" };
   }
+  const trimmed = countryZh.trim();
+  if (!trimmed) {
+    return { data: tsUrl, source: "ts" };
+  }
   try {
-    const trimmed = countryZh.trim();
-    const iso = trimmed ? countryNameZhToIso(trimmed) : undefined;
+    const iso = countryNameZhToIso(trimmed);
     const res = await deps.fetchMedia({
       assetKind: "landing_ambient",
       ...(iso ? { countryIso: iso } : {}),

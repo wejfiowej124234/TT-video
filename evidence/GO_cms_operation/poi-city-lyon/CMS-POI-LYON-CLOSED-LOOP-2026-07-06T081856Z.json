@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T08:18:56Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "FR",
+    "city_zh": "里昂",
+    "city_en": "Lyon",
+    "matrix_ids": [
+      "PH-FR-123-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-FR-123-FOOD",
+      "legacy_value": "里昂菜",
+      "poi_id": "081138ea-5068-4ce7-a781-1d1f07ba5651",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-123-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

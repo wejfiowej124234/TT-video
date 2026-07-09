@@ -1,0 +1,60 @@
+{
+  "schema": "traveltrust_l5_enterprise_reliability_manifest.v1",
+  "recorded_utc": "20260608T000000Z",
+  "baseline_refs": ["162", "161", "160"],
+  "roles": ["traveler", "guide", "merchant", "ops", "admin"],
+  "dimensions_per_role": [
+    "journey_replay",
+    "error_recovery",
+    "user_prompt",
+    "data_consistency",
+    "resilience",
+    "a11y_live"
+  ],
+  "rujr": {
+    "rujr_id": "pes-real-user-journey-review-20260607",
+    "target_runs": 48,
+    "synth_report": "frontend/evidence/pes-rujr-20260607/rujr-report-synth.json",
+    "e2e_spec": "frontend/e2e/pes-real-user-journey-review.spec.ts",
+    "frca_ref": "scripts/dev/five-role-full-chain-audit.py"
+  },
+  "a11y_live_routes": [
+    { "role": "traveler", "route": "/", "probe": "home" },
+    { "role": "traveler", "route": "/market", "probe": "market" },
+    { "role": "traveler", "route": "/community", "probe": "community" },
+    { "role": "guide", "route": "/guide", "probe": "guide" },
+    { "role": "merchant", "route": "/provider/register", "probe": "merchant" }
+  ],
+  "chaos_scenarios": {
+    "api_unavailable": {
+      "layer": "API",
+      "recovery": "OpsPlaneFetchStates · ConsumerSurfaceStatePanel retry",
+      "harness": "scripts/dev/cross-domain-integration-audit.py"
+    },
+    "pg_latency": {
+      "layer": "PG",
+      "recovery": "catalog core fallback · b480 fault segments",
+      "harness": "scripts/ops/b480-prod-fault-injection-acceptance.py"
+    },
+    "redis_unavailable": {
+      "layer": "Redis",
+      "recovery": "local N/A · prod session store TBD",
+      "harness": "ER-P2-01 backlog"
+    },
+    "stripe_webhook_fail": {
+      "layer": "Stripe",
+      "recovery": "503 stripe_webhook_not_configured · invalid signature 400",
+      "harness": "scripts/dev/verify-production-stripe-webhook-signature-static.sh"
+    },
+    "catalog_fallback": {
+      "layer": "Catalog",
+      "recovery": "static-fallback-v1 disclosure · core snapshot",
+      "harness": "frontend/app/community/explore/useCommunityExplorePage.ts"
+    }
+  },
+  "open_backlog": [
+    { "id": "ER-P1-01", "risk": "P1", "summary": "RUJR live 48-run refresh" },
+    { "id": "ER-P1-02", "risk": "P1", "summary": "A11Y live scan with dev server" },
+    { "id": "ER-P1-03", "risk": "P1", "summary": "B-480 prod fault injection live" }
+  ]
+}

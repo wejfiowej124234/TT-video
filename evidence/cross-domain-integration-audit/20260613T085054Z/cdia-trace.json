@@ -1,0 +1,106 @@
+{
+  "risk_token": "tts_d43fd0a3-7cda-43cc-98d6-509fb1557749",
+  "risk_user_id": "f0e0a001-0001-4001-8001-000000000003",
+  "clean_token": "tts_e557938f-587f-4a7c-8133-51d748a8a1a5",
+  "arbitrator_token": "tts_ad00f206-c097-42fb-ba37-727a5ee8fb30",
+  "arbitrator_user_id": "f0e0a001-0001-4001-8001-000000000009",
+  "guide_main": "f0e0b101-0001-4001-8001-000000000001",
+  "trust_gate_seed": {
+    "status": "ok",
+    "password": "Test123!",
+    "users": {
+      "tourist_pending": {
+        "id": "f0e0a001-0001-4001-8001-000000000001",
+        "email": "tg_tourist_pending@trustgate-e2e.local"
+      },
+      "tourist_restricted": {
+        "id": "f0e0a001-0001-4001-8001-000000000002",
+        "email": "tg_tourist_restricted@trustgate-e2e.local"
+      },
+      "tourist_risk": {
+        "id": "f0e0a001-0001-4001-8001-000000000003",
+        "email": "tg_tourist_risk@trustgate-e2e.local"
+      },
+      "tourist_clean": {
+        "id": "f0e0a001-0001-4001-8001-000000000004",
+        "email": "tg_tourist_clean@trustgate-e2e.local"
+      },
+      "tourist_stranger": {
+        "id": "f0e0a001-0001-4001-8001-000000000005",
+        "email": "tg_tourist_stranger@trustgate-e2e.local"
+      },
+      "guide_main": {
+        "id": "f0e0a001-0001-4001-8001-000000000006",
+        "email": "tg_guide_main@trustgate-e2e.local"
+      },
+      "guide_second": {
+        "id": "f0e0a001-0001-4001-8001-000000000007",
+        "email": "tg_guide_second@trustgate-e2e.local"
+      },
+      "guide_pending": {
+        "id": "f0e0a001-0001-4001-8001-000000000008",
+        "email": "tg_guide_pending@trustgate-e2e.local"
+      },
+      "guide_accept_trust": {
+        "id": "f0e0a001-0001-4001-8001-000000000012",
+        "email": "tg_guide_accept_trust@trustgate-e2e.local"
+      },
+      "guide_invalid": {
+        "id": "f0e0a001-0001-4001-8001-000000000010",
+        "email": "tg_guide_invalid@trustgate-e2e.local"
+      },
+      "arbitrator": {
+        "id": "f0e0a001-0001-4001-8001-000000000009",
+        "email": "tg_arbitrator@trustgate-e2e.local"
+      }
+    },
+    "guide_rows": {
+      "main": "f0e0b101-0001-4001-8001-000000000001",
+      "second": "f0e0b101-0001-4001-8001-000000000002",
+      "pending": "f0e0b101-0001-4001-8001-000000000003",
+      "invalid_accept": "f0e0b101-0001-4001-8001-000000000016"
+    },
+    "orders": {
+      "cancel_trust_pending": "f0e0c201-0001-4001-8001-000000000001",
+      "cancel_identity_restricted": "f0e0c201-0001-4001-8001-000000000002",
+      "cancel_risk_too_high": "f0e0c201-0001-4001-8001-000000000003",
+      "cancel_forbidden_same": "f0e0c201-0001-4001-8001-000000000001",
+      "tourist_accept_not_guide": "f0e0c201-0001-4001-8001-000000000004",
+      "guide_accept_trust": "f0e0c201-0001-4001-8001-000000000005",
+      "accept_window_expired": "f0e0c201-0001-4001-8001-000000000006",
+      "accept_schedule_conflict": "f0e0c201-0001-4001-8001-000000000007",
+      "accept_invalid_state": "f0e0c201-0001-4001-8001-000000000009",
+      "confirm_completion_trust": "f0e0c201-0001-4001-8001-00000000000a",
+      "guide_bilateral_trust": "f0e0c201-0001-4001-8001-00000000000b",
+      "chat_draft_trust": "f0e0c201-0001-4001-8001-00000000000c",
+      "review_completed_trust": "f0e0c201-0001-4001-8001-00000000000d",
+      "dispute_offchain_trust": "f0e0c201-0001-4001-8001-00000000000e",
+      "evidence_trust_order": "f0e0c201-0001-4001-8001-00000000000f",
+      "resolve_carrier": "f0e0c201-0001-4001-8001-000000000010",
+      "execute_intent_resolved": "f0e0c201-0001-4001-8001-000000000011"
+    },
+    "disputes": {
+      "evidence_open": "f0e0d301-0001-4001-8001-000000000005",
+      "evidence_rate_limit": "f0e0d301-0001-4001-8001-000000000008",
+      "evidence_hex": "f0e0d301-0001-4001-8001-000000000009",
+      "resolve_open": "f0e0d301-0001-4001-8001-000000000006",
+      "execute_resolved": "f0e0d301-0001-4001-8001-000000000007"
+    }
+  },
+  "arbitrator_email": "tg_arbitrator@trustgate-e2e.local",
+  "arbitrator_role": "arbitrator",
+  "order_id": "9edf4ecb-b7bb-497d-a53f-53bf662c400f",
+  "dispute_order_id": "6314c454-9003-4f08-a4fc-2e618a1cca5b",
+  "dispute_id": "683af006-5cef-4e15-abcd-d1e2b400a490",
+  "dispute_traveler_token": "tts_105e4585-422a-4472-82e7-b9e7aa264888",
+  "author_user_id": "92e31d4c-758f-44fc-9fb2-da655ecc86cf",
+  "post_id": "8353fb12-aa3b-430d-b509-6df3e8d88e01",
+  "report_id": "0f6eeab6-efc7-4f52-aa84-f97e0ad42d9d",
+  "penalty_ok": true,
+  "governance_proposal_id": "911919911919911919911919911919911919",
+  "traveler_user_id": "a9ff94dc-01b8-4068-b764-b4bc4788b01d",
+  "guide_row_id": "5f754221-a8b0-40d8-9ac4-dada5af76bc2",
+  "api_base": "http://127.0.0.1:8080",
+  "stamp": 1781340654,
+  "run_id": "cf15307c"
+}

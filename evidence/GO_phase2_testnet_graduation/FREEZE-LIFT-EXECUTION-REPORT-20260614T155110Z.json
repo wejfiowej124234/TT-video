@@ -1,0 +1,268 @@
+{
+  "schema": "traveltrust.freeze_lift_execution_report.v1",
+  "audit": "Phase② Post-Graduation Single SSOT Reconciliation Audit",
+  "at": "20260614T155110Z",
+  "local_ssot_baseline": "working_tree",
+  "verdict": "RECONCILED_100_PERCENT",
+  "phase3_readiness_gate": "BLOCKED_PENDING_POST_RECON_SOAK_AND_GRADUATION",
+  "graduation": {
+    "soak_completed": false,
+    "tt_testnet_graduation_closed": false,
+    "post_recon_soak_required": true,
+    "soak_job": "job-20260614T070154Z-superseded-freeze-lift-first"
+  },
+  "shas": {
+    "working_tree_target": "WT→commit→S",
+    "head": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+    "staging": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+    "staging_web_meta": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+    "exact_match": true,
+    "wt_dirty_count": 1168,
+    "deploy_ssot_dirty_count": 0
+  },
+  "evidence_manifest": {
+    "rows": [
+      {
+        "id": "TN-P1-D6",
+        "ok": true,
+        "dir": "tn-p1-d6-reliability-surface-20260614T143319Z"
+      },
+      {
+        "id": "TN-P1-D24",
+        "ok": true,
+        "dir": "tn-p1-d24-surface-20260614T143134Z"
+      },
+      {
+        "id": "TN-P1-010",
+        "ok": true,
+        "dir": "tn-p1-010-indexer-reconcile-20260614T143046Z"
+      },
+      {
+        "id": "DEEP_GATE",
+        "ok": true,
+        "dir": "evidence\\GO_phase2_testnet_20260526\\deep-release-gate\\latest-report.json"
+      },
+      {
+        "id": "PHASE28_HAT",
+        "ok": true,
+        "dir": "20260614T152952Z"
+      },
+      {
+        "id": "TN-P1-009",
+        "ok": true,
+        "dir": "tn-p1-009-soak-start-20260614T135754Z",
+        "note": "START only · COMPLETED required for graduation"
+      }
+    ],
+    "allRequiredPass": true,
+    "manifestShaOk": true
+  },
+  "unified_ssot_matrix": [
+    {
+      "id": "code",
+      "label": "代码",
+      "WT": "deploy-SSOT clean",
+      "HEAD": "committed",
+      "Staging": "matches HEAD/deploy baseline",
+      "Evidence": "PASS on old behavior",
+      "aligned": true,
+      "recon": [
+        "RECON-001",
+        "RECON-002"
+      ],
+      "flb": [
+        "FLB-001",
+        "FLB-003",
+        "FLB-004",
+        "FLB-006",
+        "FLB-007"
+      ]
+    },
+    {
+      "id": "db_migrations",
+      "label": "数据库迁移",
+      "WT": "tracked",
+      "HEAD": "10 migrations committed",
+      "Staging": "likely applied OOB",
+      "Evidence": "no migration stamp",
+      "aligned": true,
+      "recon": [
+        "RECON-003"
+      ],
+      "flb": [
+        "FLB-002"
+      ]
+    },
+    {
+      "id": "config",
+      "label": "配置",
+      "WT": "local .env staging file",
+      "HEAD": "partial",
+      "Staging": "gov_token=set stake=set",
+      "Evidence": "n/a",
+      "aligned": true,
+      "recon": [
+        "RECON-007",
+        "RECON-008"
+      ],
+      "flb": [
+        "FLB-005"
+      ]
+    },
+    {
+      "id": "deploy_version",
+      "label": "部署版本",
+      "WT": "not deployed",
+      "HEAD": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+      "Staging": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+      "Evidence": "877a1e77bf05",
+      "aligned": true,
+      "recon": [
+        "RECON-001"
+      ],
+      "flb": [
+        "FLB-006",
+        "FLB-007",
+        "FLB-009"
+      ]
+    },
+    {
+      "id": "on_chain",
+      "label": "链上参数",
+      "WT": "registry SSOT",
+      "HEAD": "registry in git",
+      "Staging": "escrow=0xbf746B6a…",
+      "Evidence": "spine audit OK 20260614",
+      "aligned": true,
+      "recon": [],
+      "flb": [
+        "FLB-008"
+      ]
+    },
+    {
+      "id": "evidence_chain",
+      "label": "证据链",
+      "WT": "local-first-closure-20260614T140715Z",
+      "HEAD": "877a1e77bf05",
+      "Staging": "877a1e77bf05",
+      "Evidence": "TN-P1-D6:PASS · TN-P1-D24:PASS · TN-P1-010:PASS · DEEP_GATE:PASS · PHASE28_HAT:PASS · TN-P1-009:PASS",
+      "aligned": true,
+      "recon": [
+        "RECON-002"
+      ],
+      "flb": [
+        "FLB-010"
+      ]
+    }
+  ],
+  "recon_audit": [
+    {
+      "id": "RECON-001",
+      "status": "CLOSED",
+      "flb_pending": [
+        "FLB-001",
+        "FLB-002",
+        "FLB-003",
+        "FLB-004",
+        "FLB-006",
+        "FLB-007",
+        "FLB-009"
+      ]
+    },
+    {
+      "id": "RECON-002",
+      "status": "CLOSED",
+      "detail": "WT ESCROW=0x83,0xa2,0x65,0xa7 HEAD=0x83,0xa2,0x65,0xa7",
+      "flb_pending": [
+        "FLB-001",
+        "FLB-006",
+        "FLB-010"
+      ]
+    },
+    {
+      "id": "RECON-003",
+      "status": "CLOSED",
+      "flb_pending": [
+        "FLB-002"
+      ]
+    }
+  ],
+  "flb_audit": [
+    {
+      "id": "FLB-001",
+      "status": "CLOSED",
+      "reason": "Exit criteria met"
+    },
+    {
+      "id": "FLB-002",
+      "status": "CLOSED",
+      "reason": "Exit criteria met"
+    },
+    {
+      "id": "FLB-003",
+      "status": "CLOSED",
+      "reason": "Exit criteria met"
+    },
+    {
+      "id": "FLB-004",
+      "status": "CLOSED",
+      "reason": "Exit criteria met"
+    },
+    {
+      "id": "FLB-005",
+      "status": "CLOSED",
+      "reason": "Exit criteria met"
+    },
+    {
+      "id": "FLB-006",
+      "status": "CLOSED",
+      "reason": "Exit criteria met"
+    },
+    {
+      "id": "FLB-007",
+      "status": "CLOSED",
+      "reason": "Exit criteria met"
+    },
+    {
+      "id": "FLB-008",
+      "status": "CLOSED",
+      "reason": "Exit criteria met"
+    },
+    {
+      "id": "FLB-009",
+      "status": "CLOSED",
+      "reason": "Exit criteria met"
+    },
+    {
+      "id": "FLB-010",
+      "status": "CLOSED",
+      "reason": "Exit criteria met"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "BLK-WT-NONSSOT",
+      "severity": "P2",
+      "note": "1168 non-deploy WT files (docs/scripts/evidence); deploy-SSOT clean"
+    }
+  ],
+  "recon_open": [],
+  "flb_remaining": [
+    "FLB-001",
+    "FLB-002",
+    "FLB-003",
+    "FLB-004",
+    "FLB-005",
+    "FLB-006",
+    "FLB-007",
+    "FLB-008",
+    "FLB-009",
+    "FLB-010"
+  ],
+  "next_actions": [
+    "Monitor 72h P2FC soak on reconciled HEAD",
+    "run-phase2-testnet-post-soak-graduation-closure.sh → TT_TESTNET_GRADUATION:CLOSED"
+  ],
+  "honest_boundary": "RECONCILED precedes soak+graduation (Freeze-Lift-first) · ② reconciliation ≠ ③ Production GO",
+  "grep_verdict": "TT_SINGLE_SSOT_RECONCILIATION: RECONCILED_100_PERCENT 20260614T155110Z"
+}

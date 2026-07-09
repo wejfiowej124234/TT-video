@@ -1,0 +1,29 @@
+{
+  "schema": "traveltrust_l5_ui_ux_playwright_manifest.v1",
+  "specs": [
+    "frontend/e2e/admin-rbac-staging-six-roles.spec.ts",
+    "frontend/e2e/c-s1-admin-content-crud.spec.ts",
+    "frontend/e2e/c-s2-poi-media-review-workflow.spec.ts",
+    "frontend/e2e/c-s3-catalog-operations-admin.spec.ts",
+    "frontend/e2e/c-s4-catalog-revision-import-operations.spec.ts",
+    "frontend/e2e/c-s5-catalog-server-geo-validation-operations.spec.ts",
+    "frontend/e2e/c-s6-catalog-consumer-opt-in-cutover.spec.ts",
+    "frontend/e2e/community-c6-staging-social-graph.spec.ts",
+    "frontend/e2e/community-c9-staging-shell-signoff.spec.ts",
+    "frontend/e2e/e2e-a-01-cold-start-campaign-consumer.spec.ts",
+    "frontend/e2e/g-s1-referral-minimum-loop.spec.ts",
+    "frontend/e2e/g-s2-growth-ledger-observer.spec.ts",
+    "frontend/e2e/g-s3-early-bird-multiplier.spec.ts",
+    "frontend/e2e/g-s4-user-referral-center.spec.ts",
+    "frontend/e2e/g-s5-admin-growth-fraud-reward-ops.spec.ts",
+    "frontend/e2e/g-s6-airdrop-snapshot-reward-calc.spec.ts",
+    "frontend/e2e/g-s7-growth-analytics-kol-readonly.spec.ts",
+    "frontend/e2e/home-landing-shell.spec.ts",
+    "frontend/e2e/o-s1-official-accounts-management.spec.ts",
+    "frontend/e2e/o-s2-official-guides-community-publishing.spec.ts",
+    "frontend/e2e/o-s3-official-itinerary-templates.spec.ts",
+    "frontend/e2e/o-s4-cold-start-campaigns-deployment-operations.spec.ts"
+  ],
+  "run_hint": "PLAYWRIGHT_BASE_URL=http://localhost:3012 npm run e2e -- frontend/e2e/<spec>",
+  "screenshot_hint": "Re-run with --headed \u00b7 traces in frontend/test-results/ on failure"
+}

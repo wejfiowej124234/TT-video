@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.top50_cold_start.v1",
+  "count": 1,
+  "findings": [
+    {
+      "id": "PGX-SEED-004",
+      "domain": "DOMAIN-CS",
+      "dim": "CS-01",
+      "label": "Seed accounts + empty market",
+      "suggested_verdict": "UPDATE",
+      "severity": "P0",
+      "rationale": "start-api-with-seed-README — liquidity for discover"
+    }
+  ]
+}

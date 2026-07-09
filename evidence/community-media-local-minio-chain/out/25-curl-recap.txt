@@ -1,0 +1,12 @@
+# Full bodies: sibling JSON/txt in out/. Replace <token> from 09-login.json.
+curl -sS -D - -o /d/TravelTrust/evidence/community-media-local-minio-chain/out/06-health-body.txt http://127.0.0.1:8080/health
+curl -sS http://127.0.0.1:8080/api/v1/community/media/capabilities
+curl -sS -X POST http://127.0.0.1:8080/auth/seed-test-accounts -H 'Content-Type: application/json' -d '{}'
+curl -sS -X POST http://127.0.0.1:8080/auth/login -H 'Content-Type: application/json' -d '{"email":"tourist@test.com","password":"Test123!"}'
+curl -sS -X POST http://127.0.0.1:8080/api/v1/community/media-assets/sessions -H "Authorization: Bearer <token>" -H 'Content-Type: application/json' -d '{"content_type":"video/mp4","byte_length":<bytes>}'
+curl -sS -X POST http://127.0.0.1:8080/api/v1/community/media-assets/sessions/<asset>/parts -H "Authorization: Bearer <token>" -H 'Content-Type: application/json' -d '{"part_numbers":[1]}'
+# PUT presigned URL from 11-presign.json; body = real MP4; ETag in 13-put-response-headers.txt
+curl -sS -X POST http://127.0.0.1:8080/api/v1/community/media-assets/sessions/<asset>/complete -H "Authorization: Bearer <token>" -H 'Content-Type: application/json' -d '{"parts":[{"part_number":1,"etag":"<etag>"}]}'
+curl -sS -I "http://127.0.0.1:19000/traveltrust-community-evidence/community-media/v1/bf7e90f7-207d-4b01-9666-fc67b73fef79/52ad89ce-a6ac-4ea4-97bc-2a3d818e1e50.mp4"
+curl -sS -X POST http://127.0.0.1:8080/api/v1/community/posts -H "Authorization: Bearer <token>" -H 'Content-Type: application/json' -d '{"post_type":"video","body":"…","tags":[],"media_asset_id":"<asset>"}'
+curl -sS "http://127.0.0.1:8080/api/v1/community/feed?limit=30"

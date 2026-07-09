@@ -22,7 +22,7 @@ C6="$ROOT/evidence/GO_ttg_cert/${STAMP}/phase-b/unpause/PHASE-B-UNPAUSE-SIGNOFF.
 
 [[ "${HAT_R1_FORCE_EXECUTE:-0}" == "0" ]] || fail "HAT_R1_FORCE_EXECUTE forbidden for Cert #7"
 
-ETA="$(cat "$HAT_R1_ROOT"/EXECUTE_EARLIEST_UNIX.txt" | tr -d '\r\n')"
+ETA="$(cat "$HAT_R1_ROOT/EXECUTE_EARLIEST_UNIX.txt" | tr -d '\r\n')"
 NOW="$(date +%s)"
 if [[ "$NOW" -lt "$ETA" ]]; then
   fail "Timelock not elapsed (ETA=${ETA} remaining=$((ETA-NOW))s) — cannot Cert #7 Execute"

@@ -1,0 +1,116 @@
+{
+  "schema": "traveltrust.freeze_lift_four_layer_matrix.v1",
+  "phase": "② testnet",
+  "mode": "Reliability Freeze · planning-only · no deploy until TT_TESTNET_GRADUATION:CLOSED",
+  "updated_at": "20260614T083420Z",
+  "local_ssot_baseline": "working_tree",
+  "layers": [
+    "WT",
+    "HEAD",
+    "Staging",
+    "Evidence"
+  ],
+  "trigger": {
+    "wait_for": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+    "then": "TT_TESTNET_GRADUATION:CLOSED via run-phase2-testnet-post-soak-graduation-closure.sh",
+    "then_immediately": "Wave-1 FLB-001 + FLB-002 (commit-only)"
+  },
+  "soak": {
+    "job": "job-20260614T070154Z",
+    "pid": 118335,
+    "status": "INFLIGHT",
+    "completed_json": false
+  },
+  "head_sha": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+  "staging_git_sha": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+  "recon_priority": [
+    {
+      "id": "RECON-001",
+      "severity": "Critical",
+      "four_layer": {
+        "WT": "278 modified + ~1800 untracked",
+        "HEAD": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+        "Staging": "Fly git_sha = HEAD (not WT)",
+        "Evidence": "PASS markers assume staging behavior; WT delta not attested"
+      },
+      "flb": [
+        "FLB-001",
+        "FLB-002",
+        "FLB-003",
+        "FLB-004",
+        "FLB-006",
+        "FLB-007",
+        "FLB-009"
+      ]
+    },
+    {
+      "id": "RECON-002",
+      "severity": "Critical",
+      "four_layer": {
+        "WT": "SELECTOR 0x83a265a7 / 0x200d2ed2 + indexer.rs delta",
+        "HEAD": "SELECTOR 0x87906b1e / 0x6601cb31 (wrong)",
+        "Staging": "HEAD image; reconcile compound_pass via log path",
+        "Evidence": "TN-P1-010 PASS 20260614T065942Z"
+      },
+      "flb": [
+        "FLB-001",
+        "FLB-006",
+        "FLB-010"
+      ]
+    },
+    {
+      "id": "RECON-003",
+      "severity": "Critical",
+      "four_layer": {
+        "WT": "10 untracked migrations",
+        "HEAD": "116 tracked; 10 CMS/Growth/guides missing",
+        "Staging": "CMS/Growth admin API 200 — DB likely OOB migrated",
+        "Evidence": "D6/D10 PASS; no migration stamp file"
+      },
+      "flb": [
+        "FLB-002"
+      ],
+      "migration_files": [
+        "20260607120000_cms_catalog_p1.sql",
+        "20260607120100_cms_official_ops_p2.sql",
+        "20260607120200_cms_growth_p3.sql",
+        "20260607130000_cms_catalog_s2_004_pricing_tiers_media.sql",
+        "20260607140000_growth_early_bird_g_s3.sql",
+        "20260607150000_growth_airdrop_g_s6.sql",
+        "20260608120000_sprint168_business_expansion.sql",
+        "20260609120000_guides_hourly_rate_avatar_url.sql",
+        "20260612120000_guides_public_title.sql",
+        "20260613120000_guide_exit_requests.sql"
+      ]
+    }
+  ],
+  "flb_waves": {
+    "wave_1_post_graduation": [
+      "FLB-001",
+      "FLB-002"
+    ],
+    "wave_2_domain_commit": [
+      "FLB-003",
+      "FLB-004"
+    ],
+    "wave_3_deploy": [
+      "FLB-005",
+      "FLB-006",
+      "FLB-007"
+    ],
+    "wave_4_optional": [
+      "FLB-008"
+    ],
+    "wave_5_verify": [
+      "FLB-009",
+      "FLB-010"
+    ]
+  },
+  "forbidden_during_freeze": [
+    "fly deploy",
+    "feature changes",
+    "rerun closed TN-P1-010/D6/soak",
+    "kill soak pid 118335"
+  ],
+  "grep_plan": "TT_FREEZE_LIFT_RECON_PLAN: ACTIVE 20260614T083420Z"
+}

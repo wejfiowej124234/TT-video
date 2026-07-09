@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T131830Z",
+  "row": 15,
+  "filename": "ocs-seoul-food-acquisition-cover.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "acquisition_cover_comparison": {
+    "tokyo-photo": "限量镜头 · collectibles · 店内陈列",
+    "kyoto-culture": "和纸/手工纸品 · 工艺细节",
+    "seoul-food": "韩式限定零食礼包 · food · 平铺包装",
+    "distinct_product_categories": true
+  },
+  "homogenization_risk": false,
+  "regression_prior_rows": { "pass": true, "rows_1_14": "verified+pass unchanged" }
+}

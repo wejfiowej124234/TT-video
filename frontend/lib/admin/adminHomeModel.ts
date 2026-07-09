@@ -278,6 +278,12 @@ export const ADMIN_HOME_CARDS: AdminHomeCard[] = [
     section: "audit_finance",
   },
   {
+    href: "/admin/vacancy-ledger",
+    titleKey: "admin_vacancy_ledger_ops_title",
+    descKey: "admin_home_desc_vacancy_ledger_ops",
+    section: "audit_finance",
+  },
+  {
     href: "/admin/compliance/requests",
     titleKey: "admin_compliance_requests_title",
     descKey: "admin_home_desc_compliance_requests",
@@ -299,6 +305,7 @@ export const ADMIN_HOME_CARDS: AdminHomeCard[] = [
     superAdminOnly: true,
   },
   { href: "/admin/schema", titleKey: "admin_schema_title", descKey: "admin_home_desc_schema", section: "audit_finance" },
+  { href: "/admin/backup", titleKey: "admin_backup_title", descKey: "admin_home_desc_backup", section: "platform" },
 ];
 
 /** ① L5：合并能力表 tier（显式 `card.tier` 优先）。 */
@@ -338,6 +345,7 @@ export const ADMIN_HOME_DEV_API_BY_HREF: Record<string, string> = {
   "/admin/indexer": "GET /api/v1/admin/indexer/health",
   "/admin/indexer/reconcile-reports": "GET /api/v1/admin/indexer/reconcile-reports",
   "/admin/schema": "GET /api/v1/admin/schema/migrations",
+  "/admin/backup": "GET /api/v1/admin/platform/backup-status",
   "/admin/community/reports": "GET /api/v1/admin/community/reports",
   "/admin/community/appeals": "GET /api/v1/admin/community/appeals",
   "/admin/api-versions": "GET /api/v1/admin/api-versions",

@@ -1,0 +1,2147 @@
+{
+  "schema": "traveltrust.cms_ae_country_runtime_audit.v1",
+  "recorded_at_utc": "2026-07-07T02:07:36.848Z",
+  "phase": "② staging",
+  "country": {
+    "country_iso": "AE",
+    "country_zh": "阿联酋",
+    "cities": [
+      "阿布扎比",
+      "迪拜",
+      "沙迦"
+    ]
+  },
+  "jp_lock_guard": {
+    "required": 41,
+    "unchanged": true
+  },
+  "kr_lock_guard": {
+    "required": 31,
+    "unchanged": true
+  },
+  "th_lock_guard": {
+    "required": 28,
+    "unchanged": true
+  },
+  "sg_lock_guard": {
+    "required": 10,
+    "unchanged": true
+  },
+  "fr_lock_guard": {
+    "required": 24,
+    "unchanged": true
+  },
+  "us_lock_guard": {
+    "required": 33,
+    "unchanged": true
+  },
+  "ae_lock_guard": {
+    "required": 24,
+    "unchanged": true
+  },
+  "next_country": "BLOCKED",
+  "production_go": "BLOCKED",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "runtime_tier": "national_runtime",
+  "consumer_surfaces": [
+    "home_ae",
+    "market",
+    "market_itinerary_au",
+    "market_provider",
+    "market_acquisition",
+    "traveltrust",
+    "community"
+  ],
+  "checks": [
+    {
+      "id": "jp_lock_registry_unchanged",
+      "label": "日本五城 LOCK 资产未改动 (41/41)",
+      "pass": true,
+      "locked_count": 41,
+      "total": 41,
+      "rows": [
+        {
+          "matrix_id": "PH-JP-009-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-010-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-011-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-012-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-013-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-014-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-015-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-016-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-017-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-001-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-002-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-003-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-004-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-005-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-006-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-007-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-008-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-026-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-027-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-028-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-029-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-030-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-031-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-032-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-033-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-034-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-035-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-036-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-037-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-038-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-039-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-040-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-041-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-018-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-019-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-020-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-021-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-022-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-023-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-024-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-025-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "kr_lock_registry_unchanged",
+      "label": "韩国三城 LOCK 资产未改动 (31/31)",
+      "pass": true,
+      "locked_count": 31,
+      "total": 31,
+      "rows": [
+        {
+          "matrix_id": "PH-KR-064-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-065-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-066-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-067-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-068-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-069-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-070-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-071-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-072-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-042-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-043-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-044-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-045-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-046-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-047-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-048-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-049-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-050-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-051-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-052-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-053-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-054-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-055-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-056-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-057-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-058-ATR",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-059-ATR",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-060-ATR",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-061-FOOD",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-062-FOOD",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-063-FOOD",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "th_lock_registry_unchanged",
+      "label": "泰国三城 LOCK 资产未改动 (28/28)",
+      "pass": true,
+      "locked_count": 28,
+      "total": 28,
+      "rows": [
+        {
+          "matrix_id": "PH-TH-073-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-074-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-075-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-076-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-077-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-078-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-079-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-080-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-081-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-082-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-083-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-084-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-085-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-086-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-087-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-088-FOOD",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-089-FOOD",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-090-FOOD",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-091-FOOD",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-092-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-093-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-094-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-095-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-096-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-097-FOOD",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-098-FOOD",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-099-FOOD",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-100-FOOD",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "sg_lock_registry_unchanged",
+      "label": "新加坡 SG LOCK 资产未改动 (10/10)",
+      "pass": true,
+      "locked_count": 10,
+      "total": 10,
+      "rows": [
+        {
+          "matrix_id": "PH-SG-101-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-102-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-103-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-104-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-105-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-106-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-107-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-108-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-109-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-110-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "us_lock_registry_unchanged",
+      "label": "美国四城 LOCK 资产未改动 (33/33)",
+      "pass": true,
+      "locked_count": 33,
+      "total": 33,
+      "rows": [
+        {
+          "matrix_id": "PH-US-135-ATR",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-136-ATR",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-137-ATR",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-138-ATR",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-139-FOOD",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-140-FOOD",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-141-FOOD",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-142-FOOD",
+          "city_zh": "旧金山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-143-ATR",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-144-ATR",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-145-ATR",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-146-ATR",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-147-FOOD",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-148-FOOD",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-149-FOOD",
+          "city_zh": "拉斯维加斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-150-ATR",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-151-ATR",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-152-ATR",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-153-ATR",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-154-FOOD",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-155-FOOD",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-156-FOOD",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-157-FOOD",
+          "city_zh": "洛杉矶",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-158-ATR",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-159-ATR",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-160-ATR",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-161-ATR",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-162-ATR",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-163-FOOD",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-164-FOOD",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-165-FOOD",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-166-FOOD",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-US-167-FOOD",
+          "city_zh": "纽约",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "fr_lock_registry_unchanged",
+      "label": "法国三城 LOCK 资产未改动 (24/24)",
+      "pass": true,
+      "locked_count": 24,
+      "total": 24,
+      "rows": [
+        {
+          "matrix_id": "PH-FR-111-ATR",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-112-ATR",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-113-ATR",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-114-ATR",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-115-FOOD",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-116-FOOD",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-117-FOOD",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-118-FOOD",
+          "city_zh": "巴黎",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-119-ATR",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-120-ATR",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-121-ATR",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-122-ATR",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-123-FOOD",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-124-FOOD",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-125-FOOD",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-126-FOOD",
+          "city_zh": "里昂",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-127-ATR",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-128-ATR",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-129-ATR",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-130-ATR",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-131-FOOD",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-132-FOOD",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-133-FOOD",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-FR-134-FOOD",
+          "city_zh": "尼斯",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "ae_lock_registry_unchanged",
+      "label": "三城 AE LOCK 资产 (24/24)",
+      "pass": true,
+      "locked_count": 24,
+      "total": 24,
+      "rows": [
+        {
+          "matrix_id": "PH-AE-216-ATR",
+          "city_zh": "阿布扎比",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-217-ATR",
+          "city_zh": "阿布扎比",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-218-ATR",
+          "city_zh": "阿布扎比",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-219-ATR",
+          "city_zh": "阿布扎比",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-220-FOOD",
+          "city_zh": "阿布扎比",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-221-FOOD",
+          "city_zh": "阿布扎比",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-222-FOOD",
+          "city_zh": "阿布扎比",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-223-FOOD",
+          "city_zh": "阿布扎比",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-224-ATR",
+          "city_zh": "迪拜",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-225-ATR",
+          "city_zh": "迪拜",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-226-ATR",
+          "city_zh": "迪拜",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-227-ATR",
+          "city_zh": "迪拜",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-228-ATR",
+          "city_zh": "迪拜",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-229-FOOD",
+          "city_zh": "迪拜",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-230-FOOD",
+          "city_zh": "迪拜",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-231-FOOD",
+          "city_zh": "迪拜",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-232-FOOD",
+          "city_zh": "迪拜",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-233-ATR",
+          "city_zh": "沙迦",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-234-ATR",
+          "city_zh": "沙迦",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-235-ATR",
+          "city_zh": "沙迦",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-236-FOOD",
+          "city_zh": "沙迦",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-237-FOOD",
+          "city_zh": "沙迦",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-238-FOOD",
+          "city_zh": "沙迦",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-AE-239-FOOD",
+          "city_zh": "沙迦",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "ae_scope_lock",
+      "label": "AE POI Catalog Scope Lock · 24 POI / 3 cities 不变",
+      "pass": true,
+      "doc": {
+        "poi_total": 24,
+        "city_count": 3,
+        "TT": "FROZEN"
+      },
+      "issues": []
+    },
+    {
+      "id": "four_city_execution_closed",
+      "label": "三城 Execution CLOSED",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "阿布扎比",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-ABU-DHABI-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "迪拜",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "沙迦",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CLOSURE-LATEST.json",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "four_city_content_qa_closed",
+      "label": "三城 Content QA CLOSED · LOCK 不变",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "阿布扎比",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "8/8",
+          "pass": true
+        },
+        {
+          "city_zh": "迪拜",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "9/9",
+          "pass": true
+        },
+        {
+          "city_zh": "沙迦",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "7/7",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "four_city_exit_checks",
+      "label": "三城 Golden Template Exit Check · city_consumer_runtime",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "阿布扎比",
+          "city_en": "Abu Dhabi",
+          "poi_count": 8,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "8/8",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "迪拜",
+          "city_en": "Dubai",
+          "poi_count": 9,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "9/9",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "沙迦",
+          "city_en": "Sharjah",
+          "poi_count": 7,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "7/7",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "uae_ambient_runtime",
+      "label": "首页 Destination Ambient · 阿联酋读 CMS · 无 Unsplash",
+      "pass": true,
+      "row": {
+        "country_zh": "澳大利亚",
+        "country_iso": "AU",
+        "page_path": "/?country=澳大利亚",
+        "cms_jurisdiction": true,
+        "catalog_has_data": true,
+        "catalog_published": true,
+        "catalog_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-au-home-v1.jpg",
+        "runtime_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-au-home-v1.jpg",
+        "runtime_reads_cms_catalog": true,
+        "runtime_cms_mismatch": false,
+        "still_unsplash": false,
+        "still_ts_fallback": false,
+        "l5_compliant": true,
+        "cms_ownership_ok": true,
+        "l5_issues": [],
+        "priority": "P0"
+      },
+      "ssot": "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+      "issues": []
+    },
+    {
+      "id": "catalog_api_ae_poi",
+      "label": "Catalog API AU POI 24/24 与 LOCK 一致",
+      "pass": true,
+      "pass_count": 24,
+      "required": 24,
+      "rows": [
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-216-ATR",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-217-ATR",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-218-ATR",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-219-ATR",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-220-FOOD",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-221-FOOD",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-222-FOOD",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-223-FOOD",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-224-ATR",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-225-ATR",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-226-ATR",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-227-ATR",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-228-ATR",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-229-FOOD",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-230-FOOD",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-231-FOOD",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-232-FOOD",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-233-ATR",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-234-ATR",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-235-ATR",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-236-FOOD",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-237-FOOD",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-238-FOOD",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-239-FOOD",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "ae_poi_runtime_exit_aggregate",
+      "label": "三城 Market POI Runtime · Exit Check Gate 4 聚合",
+      "pass": true,
+      "poi_runtime": {
+        "pass": 24,
+        "total": 24
+      },
+      "poi_rows": [
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-216-ATR",
+          "poi": "谢赫扎耶德清真寺",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-217-ATR",
+          "poi": "卢浮宫阿布扎比",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-218-ATR",
+          "poi": "法拉利世界",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-219-ATR",
+          "poi": "滨海大道",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-220-FOOD",
+          "poi": "鹰嘴豆泥",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-221-FOOD",
+          "poi": "海鲜饭",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-222-FOOD",
+          "poi": "骆驼奶",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-223-FOOD",
+          "poi": "烤肉拼盘",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-224-ATR",
+          "poi": "哈利法塔",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-225-ATR",
+          "poi": "迪拜购物中心",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-226-ATR",
+          "poi": "棕榈岛",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-227-ATR",
+          "poi": "阿法迪历史区",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-228-ATR",
+          "poi": "沙漠冲沙",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-229-FOOD",
+          "poi": "阿拉伯烤肉",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-230-FOOD",
+          "poi": "沙威玛",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-231-FOOD",
+          "poi": "椰枣甜品",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-232-FOOD",
+          "poi": "阿拉伯咖啡",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-233-ATR",
+          "poi": "遗产区",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-234-ATR",
+          "poi": "蓝色市场",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-235-ATR",
+          "poi": "艺术博物馆",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-236-FOOD",
+          "poi": "中东烤肉",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-237-FOOD",
+          "poi": "库斯库斯",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-238-FOOD",
+          "poi": "薄荷茶",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-239-FOOD",
+          "poi": "炸蚕豆",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "live_consumer_runtime",
+      "label": "Live Consumer · 首页阿联酋 Ambient + Market 壳 + 阿联酋相关内容无 fallback",
+      "pass": true,
+      "catalog_api_requests": 0,
+      "poi_runtime": {
+        "pass": 24,
+        "total": 24
+      },
+      "poi_rows": [
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-216-ATR",
+          "poi": "谢赫扎耶德清真寺",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-217-ATR",
+          "poi": "卢浮宫阿布扎比",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-218-ATR",
+          "poi": "法拉利世界",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-219-ATR",
+          "poi": "滨海大道",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-220-FOOD",
+          "poi": "鹰嘴豆泥",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-221-FOOD",
+          "poi": "海鲜饭",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-222-FOOD",
+          "poi": "骆驼奶",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "阿布扎比",
+          "matrix_id": "PH-AE-223-FOOD",
+          "poi": "烤肉拼盘",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-ABU_DHABI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-224-ATR",
+          "poi": "哈利法塔",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-225-ATR",
+          "poi": "迪拜购物中心",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-226-ATR",
+          "poi": "棕榈岛",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-227-ATR",
+          "poi": "阿法迪历史区",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-228-ATR",
+          "poi": "沙漠冲沙",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-229-FOOD",
+          "poi": "阿拉伯烤肉",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-230-FOOD",
+          "poi": "沙威玛",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-231-FOOD",
+          "poi": "椰枣甜品",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "迪拜",
+          "matrix_id": "PH-AE-232-FOOD",
+          "poi": "阿拉伯咖啡",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-233-ATR",
+          "poi": "遗产区",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-234-ATR",
+          "poi": "蓝色市场",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-235-ATR",
+          "poi": "艺术博物馆",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-236-FOOD",
+          "poi": "中东烤肉",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-237-FOOD",
+          "poi": "库斯库斯",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-238-FOOD",
+          "poi": "薄荷茶",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "沙迦",
+          "matrix_id": "PH-AE-239-FOOD",
+          "poi": "炸蚕豆",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        }
+      ],
+      "surface_rows": [
+        {
+          "surface": "home_ae_ambient_catalog_fallback",
+          "pass": true,
+          "runtime_src": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-ae-home-v1.jpg",
+          "note": "landing 阿联酋 pill not visible · catalog media fallback"
+        },
+        {
+          "surface": "market_custom_itinerary_shell",
+          "pass": true
+        },
+        {
+          "surface": "market_provider",
+          "pass": true,
+          "image_count": 10,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "market_acquisition",
+          "pass": true,
+          "image_count": 10,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "traveltrust",
+          "pass": true,
+          "image_count": 0,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "community",
+          "pass": true,
+          "image_count": 10,
+          "forbidden_count": 0
+        }
+      ],
+      "issues": [],
+      "attempt": 1
+    }
+  ],
+  "all_pass": true,
+  "poi_runtime_pass": 24,
+  "poi_runtime_required": 24,
+  "city_summary": [
+    {
+      "city_zh": "阿布扎比",
+      "exit_runtime": "8/8",
+      "catalog_pass": 8,
+      "catalog_total": 8,
+      "live_pass": 8,
+      "live_total": 8
+    },
+    {
+      "city_zh": "迪拜",
+      "exit_runtime": "9/9",
+      "catalog_pass": 9,
+      "catalog_total": 9,
+      "live_pass": 9,
+      "live_total": 9
+    },
+    {
+      "city_zh": "沙迦",
+      "exit_runtime": "7/7",
+      "catalog_pass": 7,
+      "catalog_total": 7,
+      "live_pass": 7,
+      "live_total": 7
+    }
+  ],
+  "verdict": "AE_COUNTRY_RUNTIME_PASS",
+  "TT_CMS_AE_COUNTRY_RUNTIME": "PASS",
+  "blockers": []
+}

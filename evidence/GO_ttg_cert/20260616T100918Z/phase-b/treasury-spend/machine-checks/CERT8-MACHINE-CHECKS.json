@@ -1,0 +1,40 @@
+{
+  "verdict": "FAIL",
+  "exit_code": 1,
+  "treasury_matrix": {
+    "schema": "traveltrust.cert8-treasury-matrix.v1",
+    "verdict": "FAIL",
+    "phase": "②",
+    "checks": {
+      "cert7_execute": {
+        "ok": true,
+        "execute_tx": "0x5ebb4046c1f00fb466d830d098ef0e272e55d0b466f6acad10f901ef3525f1ef"
+      },
+      "treasury_proposal": {
+        "ok": true,
+        "proposal_id": "4"
+      },
+      "treasury_queue": {
+        "ok": true,
+        "treasury_execute_earliest_unix": "1783675206"
+      },
+      "treasury_execute": {
+        "ok": false,
+        "reason": "treasury execute pending 2nd Timelock",
+        "remaining_seconds": 159476
+      },
+      "live_wallet_gate": {
+        "ok": false
+      }
+    },
+    "mtm_ids": [
+      "CHK-CORE-08",
+      "CHK-CORE-14",
+      "CHK-FN-02",
+      "CHK-SC-04"
+    ],
+    "blockers": [
+      "treasury_execute"
+    ]
+  }
+}

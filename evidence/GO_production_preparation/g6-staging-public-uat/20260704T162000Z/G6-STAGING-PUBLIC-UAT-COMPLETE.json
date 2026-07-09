@@ -1,0 +1,678 @@
+{
+  "schema": "traveltrust.ocs_g6_staging_public_uat_blind_review.v1",
+  "stamp_utc": "20260704T162000Z",
+  "phase": "② Production Preparation · G6 Staging Public UAT",
+  "method": "Official Content Library Blind Review",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "cities": 10,
+  "surfaces_per_city": 6,
+  "total_cells": 60,
+  "blind_review_rules": {
+    "no_manifest_during_blind": true,
+    "manifest_cross_check_after": true,
+    "frozen": [
+      "runtime",
+      "api",
+      "db",
+      "ssot",
+      "registry",
+      "runbook",
+      "ocs_content_l5",
+      "content_assets"
+    ]
+  },
+  "checklist_dimensions": {
+    "G2_copy_alignment": {
+      "pass": true
+    },
+    "G4_city_authenticity": {
+      "pass": true
+    },
+    "G3_surface_differentiation": {
+      "pass": true
+    },
+    "G6_commercial_perception": {
+      "pass": true
+    },
+    "G6_real_photos_no_placeholder": {
+      "pass": true
+    },
+    "G9_content_authenticity": {
+      "pass": true
+    },
+    "G10_diversity": {
+      "pass": true
+    },
+    "browser_dim07_mobile_desktop": {
+      "pass": true
+    },
+    "browser_dim08_load_reveal": {
+      "pass": true,
+      "minor_notes": 2
+    },
+    "browser_dim09_wcag_l5": {
+      "pass": true,
+      "minor_notes": 1
+    },
+    "browser_dim10_commercial_60": {
+      "pass": true
+    }
+  },
+  "findings": {
+    "critical": [],
+    "major": [],
+    "minor": [
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "kyoto-culture",
+        "surface": "guide-avatar",
+        "public": "祇园与岚山文化讲解，专注茶道体验与和服街",
+        "matrix_copy_label": "京都茶道向导·Yuki"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "seoul-food",
+        "surface": "guide-avatar",
+        "public": "弘大、明洞与广藏市场深度美食路线，擅长韩",
+        "matrix_copy_label": "首尔美食向导·Min"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "bangkok-temple",
+        "surface": "guide-avatar",
+        "public": "大皇宫、郑王庙与湄南河游船路线，提供泰英",
+        "matrix_copy_label": "曼谷文化向导·Arun"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "singapore-family",
+        "surface": "guide-avatar",
+        "public": "滨海湾、动物园与圣淘沙亲子路线，熟悉推车",
+        "matrix_copy_label": "新加坡亲子向导·Lee"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "paris-art",
+        "surface": "guide-avatar",
+        "public": "卢浮宫、奥赛与玛黑区画廊讲解，擅长印象派",
+        "matrix_copy_label": "巴黎艺术向导·Claire"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "nyc-skyline",
+        "surface": "guide-avatar",
+        "public": "布鲁克林大桥、DUMBO 与洛克菲勒观景",
+        "matrix_copy_label": "纽约天际线向导·Alex"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "sydney-coast",
+        "surface": "guide-avatar",
+        "public": "邦迪至 Coogee 海岸步道与歌剧院周",
+        "matrix_copy_label": "悉尼海岸向导·Mia"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "barcelona-arch",
+        "surface": "guide-avatar",
+        "public": "高迪建筑专题讲解，熟悉圣家堂与桂尔公园预",
+        "matrix_copy_label": "巴塞罗那建筑向导·Carlos"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "dubai-luxury",
+        "surface": "guide-avatar",
+        "public": "沙漠冲沙、老城黄金市集与哈利法塔观景路线",
+        "matrix_copy_label": "迪拜沙漠向导·Omar"
+      }
+    ],
+    "total": 9
+  },
+  "blind_matrix": {
+    "tokyo-photo": {
+      "guide-avatar": {
+        "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+        "bytes": 61826,
+        "public_title": "十年东京街景与神社摄影路线，熟悉浅草、涩谷与台场最佳机位。",
+        "blind_pass": true
+      },
+      "provider-cover": {
+        "filename": "ocs-tokyo-photo-provider-cover.jpg",
+        "bytes": 83004,
+        "public_title": "东京旅拍写真 · 半日套餐",
+        "blind_pass": true
+      },
+      "acquisition-cover": {
+        "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+        "bytes": 71791,
+        "public_title": "东京限定镜头代购 · 悬赏",
+        "blind_pass": true
+      },
+      "official-guide-cover": {
+        "filename": "ocs-tokyo-photo-official-guide-cover.jpg",
+        "bytes": 88885,
+        "public_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+        "blind_pass": true
+      },
+      "community-cover": {
+        "filename": "ocs-tokyo-photo-community-cover.jpg",
+        "bytes": 113904,
+        "public_title": "清晨从浅草寺出发，沿隅田川步行至晴空塔——官方摄影路线一日实录，附机位与时间窗口建议。",
+        "blind_pass": true
+      },
+      "community-media": {
+        "filename": "ocs-tokyo-photo-community-media.jpg",
+        "bytes": 113315,
+        "blind_pass": true
+      }
+    },
+    "kyoto-culture": {
+      "guide-avatar": {
+        "filename": "ocs-kyoto-culture-guide-avatar.jpg",
+        "bytes": 66416,
+        "public_title": "祇园与岚山文化讲解，专注茶道体验与和服街拍路线规划。",
+        "blind_pass": true
+      },
+      "provider-cover": {
+        "filename": "ocs-kyoto-culture-provider-cover.jpg",
+        "bytes": 73369,
+        "public_title": "京都茶道体验 · 私享包场",
+        "blind_pass": true
+      },
+      "acquisition-cover": {
+        "filename": "ocs-kyoto-culture-acquisition-cover.jpg",
+        "bytes": 108760,
+        "public_title": "京都手工和纸 · 收购",
+        "blind_pass": true
+      },
+      "official-guide-cover": {
+        "filename": "ocs-kyoto-culture-official-guide-cover.jpg",
+        "bytes": 147626,
+        "public_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+        "blind_pass": true
+      },
+      "community-cover": {
+        "filename": "ocs-kyoto-culture-community-cover.jpg",
+        "bytes": 66802,
+        "public_title": "祇园晨雾中的茶道体验与岚山竹林午后——官方文化路线两日记录。",
+        "blind_pass": true
+      },
+      "community-media": {
+        "filename": "ocs-kyoto-culture-community-media.jpg",
+        "bytes": 133702,
+        "blind_pass": true
+      }
+    },
+    "seoul-food": {
+      "guide-avatar": {
+        "filename": "ocs-seoul-food-guide-avatar.jpg",
+        "bytes": 61768,
+        "public_title": "弘大、明洞与广藏市场深度美食路线，擅长韩餐与咖啡地图。",
+        "blind_pass": true
+      },
+      "provider-cover": {
+        "filename": "ocs-seoul-food-provider-cover.jpg",
+        "bytes": 124901,
+        "public_title": "首尔深夜美食团 · 4 小时",
+        "blind_pass": true
+      },
+      "acquisition-cover": {
+        "filename": "ocs-seoul-food-acquisition-cover.jpg",
+        "bytes": 126383,
+        "public_title": "韩国限定零食礼包 · 悬赏",
+        "blind_pass": true
+      },
+      "official-guide-cover": {
+        "filename": "ocs-seoul-food-official-guide-cover.jpg",
+        "bytes": 151652,
+        "public_url": "/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+        "blind_pass": true
+      },
+      "community-cover": {
+        "filename": "ocs-seoul-food-community-cover.jpg",
+        "bytes": 88993,
+        "public_title": "明洞到广藏市场的 48 小时美食巡礼——官方实测排队时间与人均预算。",
+        "blind_pass": true
+      },
+      "community-media": {
+        "filename": "ocs-seoul-food-community-media.jpg",
+        "bytes": 129511,
+        "blind_pass": true
+      }
+    },
+    "bangkok-temple": {
+      "guide-avatar": {
+        "filename": "ocs-bangkok-temple-guide-avatar.jpg",
+        "bytes": 76981,
+        "public_title": "大皇宫、郑王庙与湄南河游船路线，提供泰英双语讲解。",
+        "blind_pass": true
+      },
+      "provider-cover": {
+        "filename": "ocs-bangkok-temple-provider-cover.jpg",
+        "bytes": 101680,
+        "public_title": "湄南河 sunset 游船 · 含晚餐",
+        "blind_pass": true
+      },
+      "acquisition-cover": {
+        "filename": "ocs-bangkok-temple-acquisition-cover.jpg",
+        "bytes": 135921,
+        "public_title": "泰国手工丝绸 · 收购",
+        "blind_pass": true
+      },
+      "official-guide-cover": {
+        "filename": "ocs-bangkok-temple-official-guide-cover.jpg",
+        "bytes": 122079,
+        "public_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+        "blind_pass": true
+      },
+      "community-cover": {
+        "filename": "ocs-bangkok-temple-community-cover.jpg",
+        "bytes": 87718,
+        "public_title": "黎明寺晨光与湄南河游船——官方寺庙一日路线实录与着装提醒。",
+        "blind_pass": true
+      },
+      "community-media": {
+        "filename": "ocs-bangkok-temple-community-media.jpg",
+        "bytes": 90578,
+        "blind_pass": true
+      }
+    },
+    "singapore-family": {
+      "guide-avatar": {
+        "filename": "ocs-singapore-family-guide-avatar.jpg",
+        "bytes": 91448,
+        "public_title": "滨海湾、动物园与圣淘沙亲子路线，熟悉推车友好动线。",
+        "blind_pass": true
+      },
+      "provider-cover": {
+        "filename": "ocs-singapore-family-provider-cover.jpg",
+        "bytes": 83836,
+        "public_title": "新加坡亲子通票 · 官方合作",
+        "blind_pass": true
+      },
+      "acquisition-cover": {
+        "filename": "ocs-singapore-family-acquisition-cover.jpg",
+        "bytes": 74394,
+        "public_title": "新加坡设计周边 · 悬赏",
+        "blind_pass": true
+      },
+      "official-guide-cover": {
+        "filename": "ocs-singapore-family-official-guide-cover.jpg",
+        "bytes": 83366,
+        "public_url": "/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+        "blind_pass": true
+      },
+      "community-cover": {
+        "filename": "ocs-singapore-family-community-cover.jpg",
+        "bytes": 62767,
+        "public_title": "滨海湾到圣淘沙的亲子周末——官方路线含午休与室内备选实测。",
+        "blind_pass": true
+      },
+      "community-media": {
+        "filename": "ocs-singapore-family-community-media.jpg",
+        "bytes": 125577,
+        "blind_pass": true
+      }
+    },
+    "paris-art": {
+      "guide-avatar": {
+        "filename": "ocs-paris-art-guide-avatar.jpg",
+        "bytes": 56416,
+        "public_title": "卢浮宫、奥赛与玛黑区画廊讲解，擅长印象派专题路线。",
+        "blind_pass": true
+      },
+      "provider-cover": {
+        "filename": "ocs-paris-art-provider-cover.jpg",
+        "bytes": 81046,
+        "public_title": "巴黎博物馆免排队 · 小团",
+        "blind_pass": true
+      },
+      "acquisition-cover": {
+        "filename": "ocs-paris-art-acquisition-cover.jpg",
+        "bytes": 78485,
+        "public_title": "巴黎中古海报 · 收购",
+        "blind_pass": true
+      },
+      "official-guide-cover": {
+        "filename": "ocs-paris-art-official-guide-cover.jpg",
+        "bytes": 155546,
+        "public_url": "/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+        "blind_pass": true
+      },
+      "community-cover": {
+        "filename": "ocs-paris-art-community-cover.jpg",
+        "bytes": 98392,
+        "public_title": "卢浮宫到奥赛的两日艺术之旅——官方预约窗口与休息点记录。",
+        "blind_pass": true
+      },
+      "community-media": {
+        "filename": "ocs-paris-art-community-media.jpg",
+        "bytes": 143327,
+        "blind_pass": true
+      }
+    },
+    "nyc-skyline": {
+      "guide-avatar": {
+        "filename": "ocs-nyc-skyline-guide-avatar.jpg",
+        "bytes": 56685,
+        "public_title": "布鲁克林大桥、DUMBO 与洛克菲勒观景台最佳拍摄时段。",
+        "blind_pass": true
+      },
+      "provider-cover": {
+        "filename": "ocs-nyc-skyline-provider-cover.jpg",
+        "bytes": 119821,
+        "public_title": "纽约观景台联票 · 官方合作",
+        "blind_pass": true
+      },
+      "acquisition-cover": {
+        "filename": "ocs-nyc-skyline-acquisition-cover.jpg",
+        "bytes": 75296,
+        "public_title": "纽约独立黑胶 · 悬赏",
+        "blind_pass": true
+      },
+      "official-guide-cover": {
+        "filename": "ocs-nyc-skyline-official-guide-cover.jpg",
+        "bytes": 132606,
+        "public_url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-official-guide-cover.jpg",
+        "blind_pass": true
+      },
+      "community-cover": {
+        "filename": "ocs-nyc-skyline-community-cover.jpg",
+        "bytes": 83814,
+        "public_title": "布鲁克林大桥到帝国大厦——官方天际线摄影一日路线与光线时段记录。",
+        "blind_pass": true
+      },
+      "community-media": {
+        "filename": "ocs-nyc-skyline-community-media.jpg",
+        "bytes": 105255,
+        "blind_pass": true
+      }
+    },
+    "sydney-coast": {
+      "guide-avatar": {
+        "filename": "ocs-sydney-coast-guide-avatar.jpg",
+        "bytes": 105178,
+        "public_title": "邦迪至 Coogee 海岸步道与歌剧院周边讲解。",
+        "blind_pass": true
+      },
+      "provider-cover": {
+        "filename": "ocs-sydney-coast-provider-cover.jpg",
+        "bytes": 102550,
+        "public_title": "悉尼海港皮划艇 · 半日",
+        "blind_pass": true
+      },
+      "acquisition-cover": {
+        "filename": "ocs-sydney-coast-acquisition-cover.jpg",
+        "bytes": 76826,
+        "public_title": "澳洲手工冲浪板 · 收购",
+        "blind_pass": true
+      },
+      "official-guide-cover": {
+        "filename": "ocs-sydney-coast-official-guide-cover.jpg",
+        "bytes": 172633,
+        "public_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg",
+        "blind_pass": true
+      },
+      "community-cover": {
+        "filename": "ocs-sydney-coast-community-cover.jpg",
+        "bytes": 118417,
+        "public_title": "邦迪到 Coogee 海岸步道——官方一日徒步与潮汐窗口记录。",
+        "blind_pass": true
+      },
+      "community-media": {
+        "filename": "ocs-sydney-coast-community-media.jpg",
+        "bytes": 218904,
+        "blind_pass": true
+      }
+    },
+    "barcelona-arch": {
+      "guide-avatar": {
+        "filename": "ocs-barcelona-arch-guide-avatar.jpg",
+        "bytes": 83508,
+        "public_title": "高迪建筑专题讲解，熟悉圣家堂与桂尔公园预约。",
+        "blind_pass": true
+      },
+      "provider-cover": {
+        "filename": "ocs-barcelona-arch-provider-cover.jpg",
+        "bytes": 105068,
+        "public_title": "高迪三件套联票 · 含导览",
+        "blind_pass": true
+      },
+      "acquisition-cover": {
+        "filename": "ocs-barcelona-arch-acquisition-cover.jpg",
+        "bytes": 152326,
+        "public_title": "巴塞罗那马赛克瓷砖 · 收购",
+        "blind_pass": true
+      },
+      "official-guide-cover": {
+        "filename": "ocs-barcelona-arch-official-guide-cover.jpg",
+        "bytes": 123192,
+        "public_url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-official-guide-cover.jpg",
+        "blind_pass": true
+      },
+      "community-cover": {
+        "filename": "ocs-barcelona-arch-community-cover.jpg",
+        "bytes": 185670,
+        "public_title": "圣家堂到桂尔公园——官方高迪建筑一日路线与预约策略实录。",
+        "blind_pass": true
+      },
+      "community-media": {
+        "filename": "ocs-barcelona-arch-community-media.jpg",
+        "bytes": 149989,
+        "blind_pass": true
+      }
+    },
+    "dubai-luxury": {
+      "guide-avatar": {
+        "filename": "ocs-dubai-luxury-guide-avatar.jpg",
+        "bytes": 56250,
+        "public_title": "沙漠冲沙、老城黄金市集与哈利法塔观景路线。",
+        "blind_pass": true
+      },
+      "provider-cover": {
+        "filename": "ocs-dubai-luxury-provider-cover.jpg",
+        "bytes": 85017,
+        "public_title": "迪拜沙漠豪华 Safari · 含晚宴",
+        "blind_pass": true
+      },
+      "acquisition-cover": {
+        "filename": "ocs-dubai-luxury-acquisition-cover.jpg",
+        "bytes": 115171,
+        "public_title": "迪拜定制香氛 · 悬赏",
+        "blind_pass": true
+      },
+      "official-guide-cover": {
+        "filename": "ocs-dubai-luxury-official-guide-cover.jpg",
+        "bytes": 92511,
+        "public_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-official-guide-cover.jpg",
+        "blind_pass": true
+      },
+      "community-cover": {
+        "filename": "ocs-dubai-luxury-community-cover.jpg",
+        "bytes": 88833,
+        "public_title": "沙漠冲沙与哈利法塔夜景——官方两日路线与安全着装建议实录。",
+        "blind_pass": true
+      },
+      "community-media": {
+        "filename": "ocs-dubai-luxury-community-media.jpg",
+        "bytes": 62627,
+        "blind_pass": true
+      }
+    }
+  },
+  "manifest_cross_check": {
+    "performed": true,
+    "matrix_source": "content-production-matrix.v1.yaml"
+  },
+  "TT_G6_STAGING_PUBLIC_UAT_BLIND_REVIEW": "PASS",
+  "TT_G6_COMMERCIAL_PERCEPTION": "PASS",
+  "honest_boundary": "G6 Staging Public UAT (API 60-cell + browser UX) PASS ≠ Production GO · ② only",
+  "browser_ux_supplement": {
+    "performed": true,
+    "evidence": "evidence/GO_production_preparation/g6-staging-public-uat/20260704T162000Z/G6-BROWSER-UX-SUPPLEMENT.json",
+    "TT_G6_BROWSER_UX_SUPPLEMENT": "PASS"
+  },
+  "findings_combined": {
+    "critical": [],
+    "major": [],
+    "minor": [
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "kyoto-culture",
+        "surface": "guide-avatar",
+        "public": "祇园与岚山文化讲解，专注茶道体验与和服街",
+        "matrix_copy_label": "京都茶道向导·Yuki"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "seoul-food",
+        "surface": "guide-avatar",
+        "public": "弘大、明洞与广藏市场深度美食路线，擅长韩",
+        "matrix_copy_label": "首尔美食向导·Min"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "bangkok-temple",
+        "surface": "guide-avatar",
+        "public": "大皇宫、郑王庙与湄南河游船路线，提供泰英",
+        "matrix_copy_label": "曼谷文化向导·Arun"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "singapore-family",
+        "surface": "guide-avatar",
+        "public": "滨海湾、动物园与圣淘沙亲子路线，熟悉推车",
+        "matrix_copy_label": "新加坡亲子向导·Lee"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "paris-art",
+        "surface": "guide-avatar",
+        "public": "卢浮宫、奥赛与玛黑区画廊讲解，擅长印象派",
+        "matrix_copy_label": "巴黎艺术向导·Claire"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "nyc-skyline",
+        "surface": "guide-avatar",
+        "public": "布鲁克林大桥、DUMBO 与洛克菲勒观景",
+        "matrix_copy_label": "纽约天际线向导·Alex"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "sydney-coast",
+        "surface": "guide-avatar",
+        "public": "邦迪至 Coogee 海岸步道与歌剧院周",
+        "matrix_copy_label": "悉尼海岸向导·Mia"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "barcelona-arch",
+        "surface": "guide-avatar",
+        "public": "高迪建筑专题讲解，熟悉圣家堂与桂尔公园预",
+        "matrix_copy_label": "巴塞罗那建筑向导·Carlos"
+      },
+      {
+        "severity": "Minor",
+        "code": "G2_COPY_SOFT_DRIFT",
+        "message": "Public copy soft drift vs matrix copy_label",
+        "chain_id": "dubai-luxury",
+        "surface": "guide-avatar",
+        "public": "沙漠冲沙、老城黄金市集与哈利法塔观景路线",
+        "matrix_copy_label": "迪拜沙漠向导·Omar"
+      },
+      {
+        "severity": "Minor",
+        "code": "G9_WCAG_IMG_ALT_EMPTY",
+        "message": "OCS feed/market masonry images use empty alt; decorative travel photos lack descriptive alt text",
+        "surface": "community-cover",
+        "pages": [
+          "/community"
+        ],
+        "detail": {
+          "empty_alt_ocs_count_mobile": 19,
+          "viewport": "390x844"
+        }
+      },
+      {
+        "severity": "Minor",
+        "code": "G8_LAZY_LOAD_SCROLL_REQUIRED",
+        "message": "Acquisition/provider masonry covers load via lazy reveal; below-fold tiles show w/h=0 until scrollIntoView (expected behavior, no broken assets)",
+        "surface": "acquisition-cover",
+        "pages": [
+          "/market/acquisition",
+          "/market/provider"
+        ],
+        "detail": {
+          "post_scroll_all_10_loaded": true,
+          "dimensions": "640x480"
+        }
+      },
+      {
+        "severity": "Minor",
+        "code": "G8_PROVIDER_FIRST_PAINT_FLAKY",
+        "message": "First cold visit to /market/provider briefly showed market load error before retry succeeded; API returned 200 with 10 items throughout",
+        "surface": "provider-cover",
+        "pages": [
+          "/market/provider"
+        ],
+        "detail": {
+          "transient_ui_error": true,
+          "api_ok": true,
+          "retry_ok": true
+        }
+      },
+      {
+        "severity": "Minor",
+        "code": "G5_OCS_CAMPAIGN_LABEL_VISIBLE",
+        "message": "Community feed shows Official Cold Start Campaign banner; acceptable for cold-start but slightly less organic UGC tone",
+        "surface": "community-cover",
+        "pages": [
+          "/community"
+        ],
+        "detail": {
+          "label": "Official Cold Start Campaign · Community Feed"
+        }
+      }
+    ],
+    "api_minor": 9,
+    "browser_minor": 4,
+    "total": 13
+  },
+  "TT_G6_STAGING_PUBLIC_UAT_COMPLETE": "PASS"
+}

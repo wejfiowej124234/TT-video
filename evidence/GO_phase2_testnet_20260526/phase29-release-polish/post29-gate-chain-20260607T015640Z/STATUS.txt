@@ -1,0 +1,4 @@
+NO_GO
+phase3_entry_gate: HOLD
+freeze_commit: bc5a939cd89c624be7c128b551306da177bf6016
+at: 20260607T015640Z

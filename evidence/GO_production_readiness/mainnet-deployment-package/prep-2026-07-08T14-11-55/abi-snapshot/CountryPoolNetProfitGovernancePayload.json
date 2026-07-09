@@ -1,0 +1,39 @@
+{
+  "type": "governance_payload_selector_registry",
+  "library": "CountryPoolNetProfitGovernancePayload",
+  "manifest": "contracts/abi/manifests/country-pool-net-profit-v1.json",
+  "selectors": {
+    "CPNP_OPEN_EPOCH": {
+      "target_signature": "openEpoch(uint256,uint64,uint64)",
+      "selector": "0xd47859c9"
+    },
+    "CPNP_RECORD_ACCRUAL": {
+      "target_signature": "recordAccrual(uint256,bytes32,int256,bytes32)",
+      "selector": "0xa53eabbe"
+    },
+    "CPNP_RECORD_ACCRUAL_BATCH": {
+      "target_signature": "recordAccrualBatch(uint256,(bytes32,int256,bytes32)[])",
+      "selector": "0x017dd292"
+    },
+    "CPNP_CLOSE_EPOCH": {
+      "target_signature": "closeEpoch(uint256)",
+      "selector": "0xd16d9057"
+    },
+    "CPNP_FUND_LEDGER_FOR_SPLIT": {
+      "target_signature": "fundLedgerForSplit(uint256)",
+      "selector": "0xa5ccc568"
+    },
+    "CPNP_SPLIT_NET_PROFIT": {
+      "target_signature": "splitNetProfit(uint256)",
+      "selector": "0xc90d5363"
+    },
+    "CPNP_SET_ACTIVE_STEWARD": {
+      "target_signature": "setActiveStewardConfig(address,bool,bool,bool,bytes32)",
+      "selector": "0x4c6043ec"
+    },
+    "CPNP_RELEASE_UNALLOCATED": {
+      "target_signature": "releaseToStewardPath(uint256,bytes32)",
+      "selector": "0x7fc399a2"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.cost_projection_report.v1",
+  "phase": "①",
+  "items": [
+    {
+      "item": "local dev",
+      "cost": "maintainer time",
+      "verdict": "KEEP"
+    },
+    {
+      "item": "fly/staging",
+      "cost": "② OPEN",
+      "verdict": "UPDATE"
+    },
+    {
+      "item": "chain gas",
+      "cost": "Sepolia test ETH only",
+      "verdict": "KEEP"
+    }
+  ]
+}

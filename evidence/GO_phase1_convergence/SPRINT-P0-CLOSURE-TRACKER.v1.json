@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.phase1_p0_closure_tracker.v1",
+  "standard_version": "1.14.0",
+  "structure_frozen": true,
+  "sprint_mode": "ROOT_CAUSE_ELIMINATION",
+  "readiness_targets": { "FREEZE_CANDIDATE": 90, "PHASE1_EXIT_READY": 95 },
+  "baseline_readiness": 77,
+  "current_readiness": 90,
+  "current_band": "FREEZE_CANDIDATE",
+  "burn_down_queue": [
+    { "order": 1, "id": "D46", "status": "CLOSED", "readiness_delta": 2, "evidence": "evidence/GO_phase1_convergence/sprint-a/D46-closure/" },
+    { "order": 2, "id": "U12-1", "status": "CLOSED", "readiness_delta": 4, "evidence": "evidence/GO_phase1_convergence/sprint-a/U12-1-closure/" },
+    { "order": 3, "id": "RC-02", "status": "CLOSED", "readiness_delta": 6, "findings": ["DOA-SEED-001", "DOA-SEED-004"] },
+    { "order": 4, "id": "RC-01", "status": "CLOSED", "readiness_delta": 8, "findings": ["PF-SEED-001", "PF-SEED-002", "PF-SEED-003"] },
+    { "order": 5, "id": "RC-03", "status": "CLOSED", "readiness_delta": 5, "findings": ["AG-SEED-001", "AG-SEED-003"] }
+  ],
+  "master_gate": { "status": "PARTIAL", "note": "U12-1+D46 green; phase12 bundle D52+ may need follow-up" },
+  "next_milestone": "PHASE1_EXIT_READY >=95 before Phase② wide review"
+}

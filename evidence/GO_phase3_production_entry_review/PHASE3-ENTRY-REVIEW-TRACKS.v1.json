@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.phase3_entry_review_tracks.v1",
   "stamp": "20260630T100000Z",
-  "updated_at_utc": "2026-06-30T10:00:13Z",
+  "updated_at_utc": "2026-06-30T10:12:57Z",
   "runtime_baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
   "phase2_reopen": "NO",
   "tracks": [
@@ -28,7 +28,13 @@
         {
           "id": "HYG-04",
           "title": "WT untracked docs/WIP quarantine",
-          "status": "OPEN"
+          "status": "IN_PROGRESS",
+          "note": "WT quarantine ongoing \u2014 do not mass-commit; see DEPLOY-PATH-ISOLATION"
+        },
+        {
+          "id": "HYG-05",
+          "title": "Deploy guard wired to fly deploy + deep gate",
+          "status": "DONE"
         }
       ]
     },
@@ -56,53 +62,112 @@
           "id": "DG-04",
           "title": "TTG cert registry present",
           "status": "DONE"
+        },
+        {
+          "id": "DG-05",
+          "title": "Machine deploy guard (S5/S6 block evidence-only)",
+          "status": "DONE",
+          "artifacts": [
+            "scripts/ops/lib/deploy-governance-phase3-guard.sh",
+            "scripts/dev/classify-deploy-change-scope.py"
+          ]
         }
       ]
     },
     {
       "id": "P3-ENV",
-      "title": "Production environment",
-      "status": "OPEN"
+      "title": "Production environment (Fly PG \u00b7 API/Web prod apps \u00b7 CORS/TLS)",
+      "status": "OPEN",
+      "go_live_sections": [
+        "\u00a70",
+        "\u00a72",
+        "\u00a73"
+      ],
+      "entry": [
+        "docs/runbook/PHASE3-PRODUCTION-PREPARATION.md",
+        "scripts/dev/run-phase3-production-prep-p0.sh"
+      ]
     },
     {
       "id": "P3-MAINNET",
-      "title": "Mainnet configuration",
-      "status": "OPEN"
+      "title": "Mainnet configuration (CHAIN_ID=1 \u00b7 TT-MAINNET G0\u2013G6 \u00b7 SL)",
+      "status": "OPEN",
+      "go_live_sections": [
+        "\u00a71",
+        "\u00a79"
+      ],
+      "entry": [
+        "docs/runbook/TT-MAINNET-LAUNCH-PRECHECK-AFTER-B435-001.md"
+      ]
     },
     {
       "id": "P3-KEYS",
-      "title": "Secrets / PSP credentials",
-      "status": "OPEN"
+      "title": "Secrets / PSP live credentials (Stripe live \u00b7 chain keys Owner-only)",
+      "status": "OPEN",
+      "go_live_sections": [
+        "\u00a73",
+        "\u00a74"
+      ],
+      "deferred_staging": [
+        "Stripe alignment WARN\u00d72 \u2014 Fly secrets verify"
+      ]
     },
     {
       "id": "P3-SEC",
-      "title": "Security / RBAC prod promote",
-      "status": "OPEN"
+      "title": "Security / RBAC prod promote (Admin 2FA \u00b7 ADM-U01 prod matrix)",
+      "status": "OPEN",
+      "go_live_sections": [
+        "\u00a73",
+        "\u00a75"
+      ],
+      "staging_baseline": "deep-gate G04 @ 20260630T093714Z"
     },
     {
       "id": "P3-MON",
-      "title": "Monitoring / alerting",
-      "status": "OPEN"
+      "title": "Monitoring / on-call / incident response",
+      "status": "OPEN",
+      "go_live_sections": [
+        "\u00a710"
+      ],
+      "entry": [
+        "docs/runbook/PRODUCTION-OPS-RUNBOOK.md"
+      ]
     },
     {
       "id": "P3-RB",
-      "title": "Rollback drill",
-      "status": "OPEN"
+      "title": "Runbooks / DR / rollback drills",
+      "status": "OPEN",
+      "go_live_sections": [
+        "\u00a78"
+      ],
+      "entry": [
+        "scripts/dev/run-phase3-db-restore-drill-staging.sh",
+        "scripts/dev/run-phase3-fly-release-rollback-drill.sh"
+      ]
     },
     {
       "id": "P3-GOLIVE",
-      "title": "Go-live cutover",
-      "status": "OPEN"
+      "title": "Go-live decision package (PI-3 \u00b7 R-002 \u00b7 Production GO signoff)",
+      "status": "OPEN",
+      "go_live_sections": [
+        "\u00a711",
+        "go-decision-entry-point"
+      ],
+      "entry": [
+        "docs/go-live-checklist.md",
+        "scripts/dev/run-phase3-production-go-audit.sh"
+      ],
+      "verdict": "PRODUCTION_GO_DECISION: NO_GO"
     }
   ],
   "explicitly_deferred_from_phase3": [
     {
       "id": "ENT-P1-001",
-      "note": "b739fca3 evidence-only LOCAL_AHEAD — no S5 per deploy governance"
+      "note": "b739fca3 evidence-only LOCAL_AHEAD \u2014 no S5 per deploy governance"
     },
     {
       "id": "TN-P1-009",
-      "note": "P2FC soak legacy — not Phase② reopen"
+      "note": "P2FC soak legacy \u2014 not Phase\u2461 reopen"
     },
     {
       "id": "TN-P1-010",
@@ -113,5 +178,65 @@
     "TT_PHASE3_PRODUCTION_ENTRY_REVIEW": "ACTIVE",
     "TT_PHASE3_PRODUCTION_GO": "NO",
     "TT_PHASE2_REOPEN": "NO"
-  }
+  },
+  "unique_publish_chain": "L0\u2192L6\u2192S5\u2192S6\u2192H1\u2192Phase\u2461 CLOSED\u2192\u2462 Production Entry Review\u2192Production GO",
+  "s5_s6_trigger": "staging_runtime_or_config_only",
+  "work_taxonomy": "evidence/GO_phase3_production_entry_review/PHASE3-WORK-TAXONOMY.v1.json",
+  "runtime_consistency_closure": "evidence/GO_phase3_production_entry_review/LOCAL-STAGING-RUNTIME-CONSISTENCY-CLOSED.v1.json",
+  "phase3_four_directions": [
+    {
+      "id": "REPOSITORY_HYGIENE",
+      "track": "P3-HYG",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "PRODUCTION_ENTRY_REVIEW",
+      "tracks": [
+        "P3-ENV",
+        "P3-KEYS",
+        "P3-SEC",
+        "P3-MON",
+        "P3-RB",
+        "P3-GOLIVE"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "MANUAL_VALIDATION",
+      "status": "OPEN"
+    },
+    {
+      "id": "MAINNET_PREP",
+      "track": "P3-MAINNET",
+      "status": "OPEN"
+    }
+  ],
+  "four_directions_phase3": [
+    {
+      "id": "REPOSITORY_HYGIENE",
+      "track": "P3-HYG",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "PRODUCTION_ENTRY_REVIEW",
+      "tracks": [
+        "P3-ENV",
+        "P3-KEYS",
+        "P3-SEC",
+        "P3-MON",
+        "P3-RB",
+        "P3-GOLIVE"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "id": "MANUAL_VALIDATION",
+      "status": "OPEN"
+    },
+    {
+      "id": "MAINNET_PREP",
+      "track": "P3-MAINNET",
+      "status": "OPEN"
+    }
+  ]
 }

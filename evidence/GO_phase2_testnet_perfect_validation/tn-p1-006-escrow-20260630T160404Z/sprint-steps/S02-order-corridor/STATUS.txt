@@ -1,0 +1,5 @@
+step: S02-order-corridor
+status: PASS
+api: https://tt-api-staging.fly.dev
+at: 2026-06-30T16:08:02Z
+note: register → final-plan (pre-pay)

@@ -1,0 +1,8 @@
+phase: ② testnet C6 (social graph & engagement)
+status: PASS
+last_run: 20260605T144104Z
+api_base: https://tt-api-staging.fly.dev
+social_it: social-it-20260605T144104Z.log
+staging_social_e2e: staging-social-e2e-20260605T144104Z.log
+log: run-20260605T144104Z.log
+note: C6 slot PASS only — NOT Phase ② GO / NOT C7-C12 GO

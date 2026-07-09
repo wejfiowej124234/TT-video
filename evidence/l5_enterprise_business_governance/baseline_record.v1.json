@@ -1,0 +1,40 @@
+{
+  "schema": "traveltrust_l5_enterprise_business_governance_baseline.v1",
+  "status": "PASS",
+  "baseline_refs": [
+    "164",
+    "133",
+    "124"
+  ],
+  "last_audit_matrix_path": "evidence/l5_enterprise_business_governance/audit_matrix.v1.json",
+  "audit_verdict": "L5_ENTERPRISE_BUSINESS_GOVERNANCE_GO",
+  "business_governance_score": 95,
+  "track_verdicts": {
+    "BUSINESS_RULES": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "BUSINESS_RULES_GO"
+    },
+    "TOKENOMICS": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "TOKENOMICS_GO"
+    },
+    "ECONOMIC_ATTACK": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "ECONOMIC_ATTACK_GO"
+    },
+    "GOVERNANCE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "GOVERNANCE_GO"
+    },
+    "INVESTOR_READY": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "INVESTOR_READY_GO"
+    }
+  },
+  "last_audit_run_utc": "20260608T033826Z"
+}

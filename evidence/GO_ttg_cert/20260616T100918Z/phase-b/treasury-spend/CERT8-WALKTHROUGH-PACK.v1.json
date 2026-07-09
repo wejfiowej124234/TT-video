@@ -1,0 +1,79 @@
+{
+  "schema": "traveltrust.ttg-cert8-treasury-spend.v1",
+  "program": "TT_GOVERNANCE_CERT_08_TREASURY_SPEND",
+  "phase": "②",
+  "stamp_utc": "20260616T100918Z",
+  "baseline_ssot": "docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md",
+  "hat_r1_treasury_evidence": "evidence/GO_hat_r1_sepolia/20260616T063612Z/step-08-treasury-proposal/",
+  "hat_r1_treasury_queue": "evidence/GO_hat_r1_sepolia/20260616T063612Z/step-09-treasury-queue/",
+  "hat_r1_treasury_execute": "evidence/GO_hat_r1_sepolia/20260616T063612Z/step-10-treasury-execute/",
+  "mtm_ids": [
+    "CHK-CORE-08",
+    "CHK-CORE-14",
+    "CHK-FN-02",
+    "CHK-SC-04"
+  ],
+  "mtm_rows": [
+    {
+      "id": "CHK-CORE-08",
+      "name": "Treasury Spend",
+      "tier": "DEV_DONE"
+    },
+    {
+      "id": "CHK-CORE-14",
+      "name": "USDC Treasury 使用",
+      "tier": "TESTNET_DONE"
+    },
+    {
+      "id": "CHK-FN-02",
+      "name": "Treasury P1–P4 spend",
+      "tier": "DEV_DONE"
+    },
+    {
+      "id": "CHK-SC-04",
+      "name": "GovTreasury spend",
+      "tier": "DEV_DONE"
+    }
+  ],
+  "machine_checks": {
+    "verdict": "FAIL",
+    "exit_code": 1,
+    "treasury_matrix": {
+      "schema": "traveltrust.cert8-treasury-matrix.v1",
+      "verdict": "FAIL",
+      "phase": "②",
+      "checks": {
+        "cert7_execute": {
+          "ok": true,
+          "execute_tx": "0x5ebb4046c1f00fb466d830d098ef0e272e55d0b466f6acad10f901ef3525f1ef"
+        },
+        "treasury_proposal": {
+          "ok": true,
+          "proposal_id": "4"
+        },
+        "treasury_queue": {
+          "ok": true,
+          "treasury_execute_earliest_unix": "1783675206"
+        },
+        "treasury_execute": {
+          "ok": false,
+          "reason": "treasury execute pending 2nd Timelock",
+          "remaining_seconds": 159476
+        },
+        "live_wallet_gate": {
+          "ok": false
+        }
+      },
+      "mtm_ids": [
+        "CHK-CORE-08",
+        "CHK-CORE-14",
+        "CHK-FN-02",
+        "CHK-SC-04"
+      ],
+      "blockers": [
+        "treasury_execute"
+      ]
+    }
+  },
+  "honest_boundary": "Cert #8 requires treasury spend execute after 2nd 48h Timelock ≠ ③ GO"
+}

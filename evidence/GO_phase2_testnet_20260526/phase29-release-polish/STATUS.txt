@@ -1,0 +1,20 @@
+# Phase ②.9 · Release Polish · Status
+
+status: UI_FROZEN
+phase3_entry_gate: HOLD
+phase29_dev_gate: OPEN
+activated_at: 2026-06-07T00:00:00Z
+dev_gate_opened_at: 2026-06-07T12:00:00Z
+w3_completed_at: 2026-06-07T01:09:33.000Z
+dev_gate_signoff: W1+W2+W3 UI polish complete · 8/8 in-scope · staging R1-R7 pending
+runbook: docs/runbook/PHASE29-RELEASE-POLISH.md
+backlog_ssot: docs/runbook/PHASE29-RELEASE-POLISH-BACKLOG.md
+
+in_scope_done: RP-001, RP-003, RP-006, RP-010, RP-011, RP-012, RP-013, RP-015
+
+phase3_eval: HOLD — ②.9 UI 8/8 done · await S5 deploy + full R1-R7 green + Owner sign-off
+
+post29_gate_chain: NO_GO
+post29_gate_review_at: 2026-06-07T01:42:53.000Z
+phase3_entry_review: NO_GO
+ui_dev: FROZEN

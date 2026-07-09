@@ -1,0 +1,62 @@
+{
+  "schema": "traveltrust.phase3_production_readiness_backlog.v1",
+  "phase": "③ production prep",
+  "status": "DRAFT_NOT_STARTED",
+  "entry_prerequisite": "TT_TESTNET_GRADUATION: CLOSED",
+  "ssot": {
+    "preparation": "docs/runbook/PHASE3-PRODUCTION-PREPARATION.md",
+    "go_live": "docs/go-live-checklist.md",
+    "go_decision": "docs/runbook/PRODUCTION-GO-DECISION-PACKAGE.md",
+    "entry_matrix": "docs/runbook/PHASE3-ENTRY-PRODUCTION-READINESS-MATRIX.md",
+    "single_path": "docs/runbook/TT-9626-zero-to-production-go-single-path.md",
+    "mainnet": "docs/runbook/TT-MAINNET-LAUNCH-PRECHECK-AFTER-B435-001.md"
+  },
+  "pi3_p0_sequence": [
+    {
+      "id": "PI3-001",
+      "theme": "Fly PG backup / B-475",
+      "status": "open",
+      "script": "run-phase3-db-restore-drill-prod.sh"
+    },
+    {
+      "id": "PI3-002",
+      "theme": "Production domain / CDN / CORS",
+      "status": "open",
+      "script": "phase3-production-fly-deploy-and-sync.sh"
+    },
+    {
+      "id": "PI3-003",
+      "theme": "Stripe live PSP",
+      "status": "open",
+      "gate": "go-live §6"
+    },
+    {
+      "id": "PI3-004",
+      "theme": "R-002 / 93 prod matrix GO",
+      "status": "open",
+      "gate": "R-003 prod regression"
+    },
+    {
+      "id": "PI3-005",
+      "theme": "Mainnet G0-G6 + Shadow Launch",
+      "status": "open",
+      "gate": "TT-MAINNET"
+    },
+    {
+      "id": "PI3-006",
+      "theme": "go-live checklist §0-11",
+      "status": "open",
+      "gate": "P0 12-item parallel"
+    }
+  ],
+  "staging_prep_pass_not_pi3_close": [
+    "merchant-closure-20260607T034937Z",
+    "db-restore-drill-20260607T035120Z",
+    "rollback-drill-20260607T035153Z"
+  ],
+  "entry_review_keys": [
+    "TT_PHASE3_ENTRY_REVIEW: ELIGIBLE",
+    "TT_PHASE3_PRODUCTION_READINESS_REVIEW: REQUESTED"
+  ],
+  "honest_boundary": "Planning only during ② soak · no cutover"
+}

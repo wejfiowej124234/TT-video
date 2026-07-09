@@ -60,14 +60,17 @@ describe("governance params page L5 full closure (① local · frozen)", () => {
     expect(overview).toContain('id="gov-params-overview"');
     expect(feeRouterTech).toContain('id="gov-params-fee-split"');
     expect(main).toContain("GovernanceParamsGlobalTreasuryUsageSection");
-    expect(main).toContain("governance_params_treasury_section_title");
+    expect(read("app/governance/params/GovernanceParamsGlobalTreasuryUsageSection.tsx")).toContain(
+      "governance_params_treasury_section_short_title",
+    );
     expect(read("app/governance/params/GovernanceParamsTechnicalAppendixSection.tsx")).toContain(
       'id="gov-params-fee-routing"',
     );
+    expect(read("app/governance/params/GovernanceParamsTechnicalAppendixSection.tsx")).toContain("<details");
     expect(main).toContain('id="gov-params-countries"');
     expect(main).toContain("GovernanceParamsOverviewSection");
     expect(main).toContain("GovernanceParamsFeeRouterTechnicalSection");
-    expect(overview).toContain("governance_params_dual_track_disclaimer");
+    expect(overview).toContain("governance_params_dual_track_summary");
     expect(read("app/governance/params/GovernanceParamsFeeRouterTechnicalSection.tsx")).not.toContain(
       "data-tt-governance-params-dual-track-disclaimer",
     );
@@ -83,7 +86,8 @@ describe("governance params page L5 full closure (① local · frozen)", () => {
     expect(main).toContain("GovernanceParamsTechnicalDetails");
     expect(main).toContain("GovernanceParamsParticipatePanel");
     expect(main).not.toContain("ConversionFunnelRail");
-    expect(overview).toContain("governance_params_page_notice");
+    expect(overview).toContain("GovernanceParamsWeb3RuntimeStrip");
+    expect(overview).toContain("governance_params_data_scope_bullet_customer");
     expect(main).not.toContain("governance_hub_target_notice");
     expect(main).toContain("GovernanceParamsChecksumDetails");
     expect(main).toContain("GovernanceParamsPhase1IndependentParamsDetails");

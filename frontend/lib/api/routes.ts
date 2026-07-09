@@ -14,6 +14,12 @@ export const routes = {
   /** 同 GET /meta 的 build 快照（688）；契约 04 §3.4 GET /meta/build */
   metaBuild: "/meta/build",
 
+  /** CMS public announcements (Rust API · rewrites) */
+  publicAnnouncements: "/api/v1/public/announcements",
+  publicAnnouncementsPulse: "/api/v1/public/announcements/pulse",
+  publicAnnouncementBySlug: (slug: string) =>
+    `/api/v1/public/announcements/${encodeURIComponent(slug)}`,
+
   /** 认证 */
   auth: {
     register: "/auth/register",
@@ -163,6 +169,9 @@ export const routes = {
   orderMockPay: (id: string) => `/api/v1/orders/${id}/mock-pay`,
   orderConfirmCompletion: (id: string) =>
     `/api/v1/orders/${id}/confirm-completion`,
+  /** Layer A：双边确认行程服务完成（Escrowed → service_completion_pending / Completed） */
+  orderConfirmServiceCompletion: (id: string) =>
+    `/api/v1/orders/${id}/confirm-service-completion`,
   orderMessages: (id: string) => `/api/v1/orders/${id}/messages`,
   /** 53 行程修改写回（04 PATCH；仅参与方、未 Escrowed 前可改） */
   orderPatchItinerary: (id: string) => `/api/v1/orders/${id}/itinerary`,
@@ -224,6 +233,8 @@ export const routes = {
   governanceFeeRoutes: "/api/v1/governance/fee-routes",
   /** RegionVault RegionVaultForwarded 索引只读列表；query 同 fee-routes */
   governanceVaultForwards: "/api/v1/governance/vault-forwards",
+  governanceVacancyLedger: "/api/v1/governance/vacancy-ledger",
+  adminVacancyLedgerOps: "/api/v1/admin/vacancy-ledger",
   /** B-084：投影表按 token/pool_id 累计；query chain_id? */
   governanceFeePoolAggregates: "/api/v1/governance/fee-pool-aggregates",
   governanceInvestorShareReconcile: "/api/v1/governance/investor-share-reconcile",
@@ -283,6 +294,12 @@ export const routes = {
   adminContentHotelTiers: "/api/v1/admin/content/hotel-tiers",
   adminContentTransportRegionRules: "/api/v1/admin/content/transport-region-rules",
   adminContentMediaAssets: "/api/v1/admin/content/media-assets",
+  adminContentTranslations: "/api/v1/admin/content/translations",
+  adminContentSeo: "/api/v1/admin/content/seo",
+  adminContentAnnouncements: "/api/v1/admin/content/announcements",
+  adminContentRoadmapSection: "/api/v1/admin/content/roadmap/section",
+  adminContentRoadmapMilestones: "/api/v1/admin/content/roadmap/milestones",
+  publicRoadmap: "/api/v1/public/roadmap",
   adminContentLandingAmbient: (countryId: string) =>
     `/api/v1/admin/content/countries/${encodeURIComponent(countryId)}/landing-ambient`,
   adminContentRevisionsDetail: "/api/v1/admin/content/revisions/detail",
@@ -350,6 +367,41 @@ export const routes = {
     `/api/v1/admin/official/cold-start/campaigns/${encodeURIComponent(id)}/items`,
   adminOfficialColdStartCampaignItem: (campaignId: string, itemId: string) =>
     `/api/v1/admin/official/cold-start/campaigns/${encodeURIComponent(campaignId)}/items/${encodeURIComponent(itemId)}`,
+  adminOfficialPublicOperationsStats: "/api/v1/admin/official/public-operations/stats",
+  adminOfficialPublicOperationsPublishQueue: "/api/v1/admin/official/public-operations/publish-queue",
+  adminOfficialPublicOperationsEntityPublish: (entityType: string, id: string) =>
+    `/api/v1/admin/official/public-operations/entities/${entityType}/${id}/publish`,
+  adminOfficialPublicOperationsEntityUnpublish: (entityType: string, id: string) =>
+    `/api/v1/admin/official/public-operations/entities/${entityType}/${id}/unpublish`,
+  adminOfficialPublicOperationsEntityFeatured: (entityType: string, id: string) =>
+    `/api/v1/admin/official/public-operations/entities/${entityType}/${id}/featured`,
+  adminOfficialPublicOperationsEntityPriority: (entityType: string, id: string) =>
+    `/api/v1/admin/official/public-operations/entities/${entityType}/${id}/priority`,
+  adminOfficialPublicOperationsEntitySurfaces: (entityType: string, id: string) =>
+    `/api/v1/admin/official/public-operations/entities/${entityType}/${id}/surfaces`,
+  adminOfficialPublicOperationsEntitySchedule: (entityType: string, id: string) =>
+    `/api/v1/admin/official/public-operations/entities/${entityType}/${id}/schedule`,
+  adminOfficialPublicOperationsEntityPreview: (entityType: string, id: string) =>
+    `/api/v1/admin/official/public-operations/entities/${entityType}/${id}/preview`,
+  adminOfficialPublicOperationsHistory: "/api/v1/admin/official/public-operations/history",
+  adminOfficialPublicOperationsPolicy: "/api/v1/admin/official/public-operations/policy",
+  adminOfficialPublicOperationsCampaigns: "/api/v1/admin/official/public-operations/campaigns",
+  adminOfficialPublicOperationsCampaignKinds: "/api/v1/admin/official/public-operations/campaigns/kinds",
+  adminOfficialPublicOperationsCampaign: (id: string) =>
+    `/api/v1/admin/official/public-operations/campaigns/${encodeURIComponent(id)}`,
+  adminOfficialPublicOperationsCampaignPreview: (id: string) =>
+    `/api/v1/admin/official/public-operations/campaigns/${encodeURIComponent(id)}/preview`,
+  adminOfficialPublicOperationsCampaignSubmitReview: (id: string) =>
+    `/api/v1/admin/official/public-operations/campaigns/${encodeURIComponent(id)}/submit-review`,
+  adminOfficialPublicOperationsCampaignRequestDeploy: (id: string) =>
+    `/api/v1/admin/official/public-operations/campaigns/${encodeURIComponent(id)}/request-deploy`,
+  adminOfficialPublicOperationsCampaignDeploy: (id: string) =>
+    `/api/v1/admin/official/public-operations/campaigns/${encodeURIComponent(id)}/deploy`,
+  adminOfficialPublicOperationsCampaignRollback: (id: string) =>
+    `/api/v1/admin/official/public-operations/campaigns/${encodeURIComponent(id)}/rollback`,
+  adminOfficialPublicOperationsCampaignItems: (id: string) =>
+    `/api/v1/admin/official/public-operations/campaigns/${encodeURIComponent(id)}/items`,
+  adminPlatformBackupStatus: "/api/v1/admin/platform/backup-status",
   /** E2E-A-01 · Cold Start Campaign consumer RO */
   officialColdStartSurface: (surface: string) =>
     `/api/v1/official/cold-start/surfaces/${encodeURIComponent(surface)}`,

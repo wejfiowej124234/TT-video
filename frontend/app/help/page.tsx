@@ -20,6 +20,7 @@ import {
   meSettingsExtensionDocSectionTitleClass,
   meSettingsExtensionDocTitleClass,
 } from "@/lib/me/meSettingsExtensionDocumentUi";
+import { GOV_PROPOSALS_L5 } from "@/lib/governance/governanceProposalsListL5";
 import { ME_SETTINGS_HUB_PATH } from "@/lib/me/meSettingsL5";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
@@ -75,7 +76,7 @@ export default function HelpPage() {
             {t("help_faqPayCta")}
             {t("ui_link_nav_arrow_suffix")}
           </Link>
-          <p className={`mt-2 ${fromSettings ? "text-meta text-slate-400/90" : "text-meta text-ink-600"} leading-relaxed`}>
+          <p className="mt-2 text-meta text-slate-400/90 leading-relaxed">
             {t("help_faqPayDeepLink")}
           </p>
         </details>
@@ -99,16 +100,12 @@ export default function HelpPage() {
           <summary>{t("help_faqFeeRouterQ")}</summary>
           <p className={`mt-2 ${meSettingsExtensionDocBodyClass(fromSettings)}`}>{t("help_faqFeeRouterA")}</p>
           <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
-            <Link href="/governance/fee-routes" className={linkClassWithOffset}>
-              {t("footer_link_governance_fee_routes")}
+            <Link href="/trust" className={linkClassWithOffset}>
+              {t("footer_link_trust_center")}
               {t("ui_link_nav_arrow_suffix")}
             </Link>
-            <Link href="/traveltrust#fee-router" className={linkClassWithOffset}>
-              {t("traveltrust_link_feeRouter")}
-              {t("ui_link_nav_arrow_suffix")}
-            </Link>
-            <Link href="/traveltrust#liquidity" className={linkClassWithOffset}>
-              {t("traveltrust_link_tokenSystem")}
+            <Link href="/governance" className={linkClassWithOffset}>
+              {t("governance_title")}
               {t("ui_link_nav_arrow_suffix")}
             </Link>
           </p>
@@ -150,7 +147,7 @@ export default function HelpPage() {
         </Link>
       </p>
 
-      <p className={fromSettings ? "text-meta text-slate-400/90 mt-6" : "text-meta text-ink-600 mt-6"}>
+      <p className="text-meta text-slate-400/90 mt-6">
         {t("help_termsIntro")}
         <Link href={termsHref} className={footerLinkClassWithOffset}>
           {t("help_terms")}
@@ -191,7 +188,9 @@ export default function HelpPage() {
         <ProductCrossNav
           ariaLabelKey="help_relatedNav_aria"
           showGuides
-          className="not-prose mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-ink-200 pt-6 text-meta text-ink-600"
+          className={`not-prose ${GOV_PROPOSALS_L5.crossNavWrap} border-t border-ref-sun/14 pt-6`}
+          linkClassName={GOV_PROPOSALS_L5.crossNavLink}
+          separatorClassName={GOV_PROPOSALS_L5.crossNavSep}
         />
       ) : null}
     </>
@@ -200,8 +199,8 @@ export default function HelpPage() {
   return (
     <MeSettingsExtensionDocumentShell
       fromSettings={fromSettings}
-      route="help-from-settings"
-      dataMarker="data-tt-help-from-settings"
+      route={fromSettings ? "help-from-settings" : "help"}
+      dataMarker={fromSettings ? "data-tt-help-from-settings" : "data-tt-help-page"}
       noticeKey="me_settings_help_from_settings_notice"
       ariaLabel={t("help_title")}
       t={t}

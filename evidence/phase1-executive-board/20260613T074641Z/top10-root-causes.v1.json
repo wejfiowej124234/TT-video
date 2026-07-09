@@ -1,0 +1,62 @@
+{
+  "schema": "traveltrust.executive_top10_root_causes.v1",
+  "root_causes": [
+    {
+      "id": "RC-01",
+      "title": "Navigation / IA duplication (PF · CX · UXA)",
+      "domains": [
+        "PF",
+        "CX",
+        "UXA"
+      ],
+      "verdict": "MERGE",
+      "queue": "NOW"
+    },
+    {
+      "id": "RC-02",
+      "title": "Runbook ↔ scripts / spec-path drift (DOA)",
+      "domains": [
+        "DOA"
+      ],
+      "verdict": "UPDATE",
+      "queue": "NOW"
+    },
+    {
+      "id": "RC-03",
+      "title": "Admin governance boundary (AG · PGX-ADMIN)",
+      "domains": [
+        "AG",
+        "CX"
+      ],
+      "verdict": "REFACTOR",
+      "queue": "NOW"
+    },
+    {
+      "id": "RC-04",
+      "title": "Architecture SSOT spine (CA · API)",
+      "domains": [
+        "CA"
+      ],
+      "verdict": "KEEP",
+      "queue": "NOW"
+    },
+    {
+      "id": "RC-05",
+      "title": "L5 freeze compliance (UXA · five-main)",
+      "domains": [
+        "UXA"
+      ],
+      "verdict": "KEEP",
+      "queue": "NOW"
+    },
+    {
+      "id": "RC-06",
+      "title": "Closure readiness / backlog hygiene (FZ)",
+      "domains": [
+        "FZ"
+      ],
+      "verdict": "UPDATE",
+      "queue": "NEXT"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "traveltrust.product_forensic_complexity_score.v1",
+  "score": 100,
+  "band": "HIGH",
+  "inputs": {
+    "routes": 194,
+    "buttons": 0,
+    "admin_pages": 107,
+    "findings": 60
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "schema": "traveltrust.cms_sg_country_closure.v1",
+  "recorded_at_utc": "2026-07-06T06:42:41.326Z",
+  "phase": "② staging",
+  "layer": "CONTENT_QA",
+  "country": {
+    "country_iso": "SG",
+    "country_zh": "新加坡",
+    "city_count": 1,
+    "poi_total": 10
+  },
+  "jp_lock_guard": {
+    "required": 41,
+    "unchanged": true
+  },
+  "kr_lock_guard": {
+    "required": 31,
+    "unchanged": true
+  },
+  "th_lock_guard": {
+    "required": 28,
+    "unchanged": true
+  },
+  "sg_lock_guard": {
+    "required": 10,
+    "unchanged": true
+  },
+  "next_country": "BLOCKED",
+  "production_go": "BLOCKED",
+  "workflow": "Execution → Content QA → Country Runtime → Country CLOSED",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "runtime_audit_ssot": "evidence/GO_cms_operation/CMS-SG-COUNTRY-RUNTIME-AUDIT-LATEST.json",
+  "singapore_content_qa_ssot": "evidence/GO_cms_operation/CMS-SINGAPORE-CONTENT-QA-LATEST.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "template_countries": [
+    "JP",
+    "KR",
+    "TH"
+  ],
+  "runtime_tier": "national_runtime",
+  "consumer_surfaces": [
+    "home_singapore",
+    "market",
+    "market_itinerary_sg",
+    "market_provider",
+    "market_acquisition",
+    "traveltrust",
+    "community"
+  ],
+  "city_summary": [
+    {
+      "city_zh": "新加坡",
+      "city_en": "Singapore",
+      "poi_count": 10,
+      "execution": "PASS",
+      "content_qa_closed": true,
+      "runtime_consumer": "PASS",
+      "geo_matching": "PASS",
+      "content_accuracy": "PASS",
+      "l5_quality": "PASS",
+      "locked": "10/10",
+      "exit_runtime": "10/10",
+      "live_runtime": "10/10",
+      "catalog_runtime": "10/10"
+    }
+  ],
+  "country_criteria": [
+    {
+      "id": "all_city_execution_closed",
+      "label": "所有 City Execution CLOSED",
+      "key": "all_city_execution_closed",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "content_accuracy_100",
+      "label": "Content Accuracy = 100%",
+      "key": "content_accuracy_100",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "runtime_consumer_cms",
+      "label": "Runtime Consumer = CMS",
+      "key": "runtime_consumer_cms",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "geo_matching_100",
+      "label": "Geo Matching = 100%",
+      "key": "geo_matching_100",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "l5_visual_pass",
+      "label": "L5 Visual = PASS",
+      "key": "l5_visual_pass",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "cross_region_images_0",
+      "label": "Cross-region Images = 0",
+      "key": "cross_region_images_0",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "unsplash_0",
+      "label": "Unsplash = 0（CMS 管辖 POI 范围）",
+      "key": "unsplash_0",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "ocs_runtime_0",
+      "label": "OCS Runtime = 0（CMS 管辖 POI 范围）",
+      "key": "ocs_runtime_0",
+      "pass": true,
+      "verdict": "PASS"
+    }
+  ],
+  "country_runtime_consumer": {
+    "verdict": "PASS",
+    "reason": "Singapore Country Runtime audit PASS · 新加坡 Consumer + Catalog + Ambient",
+    "tier": "national_runtime",
+    "ssot": "evidence/GO_cms_operation/CMS-SG-COUNTRY-RUNTIME-AUDIT-LATEST.json",
+    "poi_runtime": "10/10"
+  },
+  "checks": {
+    "singapore_city_execution_closed": true,
+    "singapore_city_content_qa_closed": true,
+    "singapore_city_exit_checks": true,
+    "sg_lock_registry_unchanged": true,
+    "th_lock_registry_unchanged": true,
+    "kr_lock_registry_unchanged": true,
+    "jp_lock_registry_unchanged": true,
+    "sg_country_runtime_pass": true,
+    "content_accuracy_100": true,
+    "cross_region_0": true
+  },
+  "TT_CMS_SG_COUNTRY": "CLOSED",
+  "TT_CMS_SG_CONTENT_QA": "CLOSED",
+  "verdict": "SG_COUNTRY_CLOSED"
+}

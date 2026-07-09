@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_consistency_review.v1",
+  "stamp_utc": "20260704T125030Z",
+  "matrix_rows_reviewed": 10,
+  "matrix_rows_total": 60,
+  "TT_GLOBAL_CONSISTENCY_REVIEW": "PASS",
+  "checks": {
+    "duplicate_image_reuse": { "pass": true, "notes": "10 行无同图缩放复用。" },
+    "duplicate_composition": { "pass": true, "notes": "每行主体/场景/机位可区分。" },
+    "tone_homogenization": { "pass": true, "notes": "tokyo 暖金都市 vs kyoto 禅意青绿/木质，链内各有调性。" },
+    "subject_repeat": { "pass": true, "notes": "无跨行同主体重复。" },
+    "landmark_repeat_across_chains": { "pass": true, "notes": "东京/京都地标无交叉。" },
+    "copy_duplicate_conflict": { "pass": true, "notes": "各行 copy_label 与 manifest 一致无冲突。" },
+    "surface_semantics_conflict": { "pass": true, "notes": "Guide/Provider/Acquisition/Official/Community slot 语义无混用。" },
+    "chain_narrative_conflict": { "pass": true, "notes": "tokyo CLOSED 连贯；kyoto 4/6 叙事递进正常。" },
+    "brand_style_drift": { "pass": true, "notes": "TravelTrust 纪实商业风统一。" }
+  },
+  "rows_inventory": [
+    { "row": 1, "file": "ocs-tokyo-photo-guide-avatar.jpg", "chain": "tokyo-photo", "slot": "guide-avatar" },
+    { "row": 2, "file": "ocs-tokyo-photo-provider-cover.jpg", "chain": "tokyo-photo", "slot": "provider-cover" },
+    { "row": 3, "file": "ocs-tokyo-photo-acquisition-cover.jpg", "chain": "tokyo-photo", "slot": "acquisition-cover" },
+    { "row": 4, "file": "ocs-tokyo-photo-official-guide-cover.jpg", "chain": "tokyo-photo", "slot": "official-guide-cover" },
+    { "row": 5, "file": "ocs-tokyo-photo-community-cover.jpg", "chain": "tokyo-photo", "slot": "community-cover" },
+    { "row": 6, "file": "ocs-tokyo-photo-community-media.jpg", "chain": "tokyo-photo", "slot": "community-media" },
+    { "row": 7, "file": "ocs-kyoto-culture-guide-avatar.jpg", "chain": "kyoto-culture", "slot": "guide-avatar" },
+    { "row": 8, "file": "ocs-kyoto-culture-provider-cover.jpg", "chain": "kyoto-culture", "slot": "provider-cover" },
+    { "row": 9, "file": "ocs-kyoto-culture-acquisition-cover.jpg", "chain": "kyoto-culture", "slot": "acquisition-cover" },
+    { "row": 10, "file": "ocs-kyoto-culture-official-guide-cover.jpg", "chain": "kyoto-culture", "slot": "official-guide-cover" }
+  ],
+  "gate_to_row11": "PASS"
+}

@@ -1,0 +1,221 @@
+
+> traveltrust-frontend@0.1.0 e2e:chromium:core-release
+> node ./scripts/run-e2e-default.mjs --project=chromium e2e/core-path.spec.ts e2e/release-flow.spec.ts
+
+[e2e] local default → PLAYWRIGHT_FULL_STACK=1 (API + Next via playwright webServer)
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] P3_CHAIN_OFF loaded from repo root .env
+[e2e] TRAVELTRUST_EMAIL_TRANSPORT=log (auth forgot/verify; resend incomplete or transport off)
+[e2e] TRAVELTRUST_AUTH_TOKEN_PEPPER set (Playwright dev default; set in root .env to override)
+[e2e] P3_CHAIN_OFF=1 (chromium mock-pay contract; root .env had "0"; use PLAYWRIGHT_PRESERVE_ROOT_P3_CHAIN_OFF=1 + run-e2e-sepolia for chain-on)
+sync-frontend-env: wrote D:\TravelTrust\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080 + NEXT_PUBLIC_SKIP_ME_FETCH=0
+[e2e] PLAYWRIGHT_REUSE_FE_SERVER=0 + reclaimed FE listen port (default for PLAYWRIGHT_FULL_STACK=1 so Next picks .env.local SKIP_ME; set PLAYWRIGHT_REUSE_FE_SERVER=1 to reuse)
+[e2e] NODE_OPTIONS += --max-old-space-size=16384 (full-stack local; long suite / Next dev OOM guard; PLAYWRIGHT_SKIP_E2E_NODE_HEAP=1 to opt out)
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.34s
+[1A[2K[WebServer]     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
+
+[1A[2K[WebServer]      Running `target\debug\traveltrust-api.exe`
+
+[1A[2K[WebServer] [req] x-request-id=c9ef70ca-9ef6-4355-9b58-2637abf0880c path=/health status=200
+[WebServer] [req] x-message-id=761185d5-610a-4b27-be8e-5e72bd3354a2 path=/health status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [traveltrust] dev: Webpack on Windows (avoid Turbopack HMR manifest races). Use `npm run dev:turbopack` or TRAVELTRUST_DEV_TURBO=1 for Turbopack.
+
+
+Running 25 tests using 1 worker
+
+[1A[2K(node:2824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:2824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/25] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:27:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K[WebServer] [req] x-request-id=1f9ffa40-0a96-4df0-b6fa-0090f37744f7 path=/meta status=200
+[WebServer] [req] x-message-id=53f7be75-c8eb-403f-935b-e5c1a6a8f844 path=/meta status=200
+
+[1A[2K[2/25] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:39:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K[WebServer] [req] x-request-id=befe8b94-4a63-4959-aafb-4d9373786c55 path=/meta status=200
+[WebServer] [req] x-message-id=88faea7f-7aea-4b3d-97dd-a6ff13d352ed path=
+
+[1A[2K[WebServer] /meta status=200
+
+[1A[2K(node:22992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:22992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[3/25] [chromium] › e2e\core-path.spec.ts:35:7 › 核心路径 Landing → Market → Escrow Detail › Landing 可访问并含发现/市场入口
+[1A[2K[4/25] [chromium] › e2e\core-path.spec.ts:43:7 › 核心路径 Landing → Market → Escrow Detail › Market 页可访问并展示双栏或空态
+[1A[2K[5/25] [chromium] › e2e\core-path.spec.ts:53:7 › 核心路径 Landing → Market → Escrow Detail › Escrow Detail 页可打开（含状态或加载/错误态）
+[1A[2K[WebServer] [req] x-request-id=8faf58dc-3143-4ae6-9bcd-87b748fc234e path=/meta status=200
+[WebServer] [req] x-message-id=1b3bcc65-57c9-4750-bb8b-5df788e9aa71
+
+[1A[2K[WebServer]  path=/meta status=200
+
+[1A[2K[6/25] [chromium] › e2e\core-path.spec.ts:63:7 › 核心路径 Landing → Market → Escrow Detail › 整条路径：Landing → Market → Escrow Detail
+[1A[2K[WebServer] [req] x-request-id=9d69d7c9-708b-4908-ae63-a579ac4a976a path=/meta status=200
+[WebServer] [req] x-message-id=8525ba35-af80-4cb1-929c-7a4787a0f05d path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=fcac159a-d964-4b7e-abfb-89d669244ebc path=/api/v1/discover/orders status=200
+[WebServer] [req] x-message-id=eb25580a-1a72-402a-a525-c441aa2b23f8 path=/api/v1/discover/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=05f8d944-5cdb-44a3-b516-a05c65941bda path=/api/v1/discover/orders status=200
+[WebServer] [req] x-message-id=53002de1-e07a-49d7-bf39-99d74e70c14c path=/api/v1/discover/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=7262934a-8a17-4155-a98b-9ff4e1e978de path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=ee7442b6-d757-4ace-b392-216a34450e46 path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=3d6be81c-8fcf-4f33-8d36-bc0743285c79 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=d6eaf666-15b0-42f8-a447-e7771f12647a path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=aa370d05-72af-4107-a52b-82baa850a3c8 path=/meta status=200
+[WebServer] [req] x-message-id=10bc3c88-a400-49d7-b6a4-ca33a6ccb52a path=/meta status=200
+
+[1A[2K[7/25] [chromium] › e2e\core-path.spec.ts:90:7 › 核心路径 Landing → Market → Escrow Detail › TT社区可访问并展示 Feed 或空态（45 关键路径）
+[1A[2K[8/25] [chromium] › e2e\core-path.spec.ts:100:7 › 核心路径 Landing → Market → Escrow Detail › Market 顶栏含 TT 社区入口（36 增补）
+[1A[2K[9/25] [chromium] › e2e\core-path.spec.ts:110:7 › 核心路径 Landing → Market → Escrow Detail › Market → TT 社区链接进入 Feed 主区（36 增补）
+[1A[2K[WebServer] [req] x-request-id=7b3183b0-b83d-4144-af73-ddc46433e0ec path=/meta status=200
+[WebServer] [req] x-message-id=97804934-d8ec-4572-b267-6b2e684bb9f6 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=676df552-2cca-4282-9df8-d4a6db694523 path=/api/v1/discover/orders status=200
+[WebServer] [req] x-message-id=83eb1878-481d-43d6-954e-ef8351ac799a path=/api/v1/discover/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=3a4c9114-2ae0-45e4-b847-a493307a1d40 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=562ec9b2-b829-48e3-a9c6-ea3af584e520 path=
+
+[1A[2K[WebServer] /api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=9a1d412b-830d-4102-84e4-813e9f2cf3c8 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=f07dd814-ce11-4ccb-8b09-2306448cdca2 path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=f0ad8355-14ff-46c5-9b7b-fa44665aaca7 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=52ca07bf-d5b2-4ffc-874d-a6712ace0c25 path=/api/v1/community/feed status=200
+
+[1A[2K[10/25] [chromium] › e2e\core-path.spec.ts:127:7 › 核心路径 Landing → Market → Escrow Detail › Escrow 页未连接钱包时不展示 Deposit/Release 主按钮
+[1A[2K[WebServer] [req] x-request-id=875bd4d5-f303-4495-be17-4dcc840bdb77 path=/meta status=200
+[WebServer] [req] x-message-id=39283d0a-80cd-4f4a-8e1e-2aa8ff243ffd path=/meta status=200
+
+[1A[2K[11/25] [chromium] › e2e\core-path.spec.ts:140:7 › 核心路径 Landing → Market → Escrow Detail › 争议列表页可访问并展示列表或空态
+[1A[2K[WebServer] [req] x-request-id=8c13349d-bcc3-48d2-b810-93027c8da54e path=/meta status=200
+[WebServer] [req] x-message-id=bc916812-2d10-465a-9dcd-4e9dcd932327 path=/meta status=200
+
+[1A[2K[12/25] [chromium] › e2e\core-path.spec.ts:151:7 › 核心路径 Landing → Market → Escrow Detail › 治理页可访问且含 Target 披露
+[1A[2K[13/25] [chromium] › e2e\core-path.spec.ts:165:7 › 核心路径 Landing → Market → Escrow Detail › 向导工作台可访问
+[1A[2K[WebServer] [req] x-request-id=beb55c96-37aa-4ff4-878e-a6bb04541930 path=/health status=200
+[WebServer] [req] x-message-id=4ee718e6-6969-42f2-a088-1da634a03a09 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=c14ee651-b34f-4a3f-9e0c-97242f31ecea path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=d33ee278-650f-4e56-b98b-7beddef32d61 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=cdb6a2ee-85f6-4c0b-b9da-5ad62d534fde path=/auth/login status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] f2cd180e-b22a-43aa-a455-62286de2fa65 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=90d68c4e-f1c9-4faf-bdf8-d6f222fbedba path=/auth/login status=200
+[WebServer] [req] x-message-id=be580683-cc97-4d0c-8e2b-1a39194c5781 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=2e51379f-50e2-4005-adf0-ba8136de5c0a path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=d07344c5-76d1-4db0-8cf5-f385376e2378 path=/api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=ac9012f2-9a24-4f43-8e6c-92e05eeddcae path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+[WebServer] [req] x-message-id=5d4d6822-af17-437c-94f5-5ac27e5c1e75
+
+[1A[2K[WebServer]  path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=c0e769a3-f66f-4c04-b1a6-2938d85e1f61 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+[WebServer] [req] x-message-id=5bc185ab-1634-433c-a32a-7ff546bb5067 path=
+
+[1A[2K[WebServer] /api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=a4d0cdea-8c88-4153-a700-bbb075554184 path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 404ec02e-b786-4fab-bbab-8d8e01667d6f path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=16441f73-ca33-4ace-a885-e09f304a0cf6 path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+[WebServer] [req] x-message-id=05481788-2f8e-4577-9a5a-3381ea3dcd07 path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=7949dd26-522c-4646-9785-729852badf9d path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+[WebServer] [req] x-message-id=8721bedc-a3f0-4865-a540-67542aae8111 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=c79783f9-353b-4612-985f-5acb2297feb9 path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 80e2fc61-ca45-442b-88ff-21c2142def98 path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=90e7817c-d903-4b71-81cd-7a1e4301d676 path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+[WebServer] [req] x-message-id=5afa1704-f139-44b0-ae04-ee883e098a78 path=
+
+[1A[2K[WebServer] /api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=d441bab2-48a9-43b1-9c0e-fc7c3c39f6ec path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=d5938273-f4e5-4396-b3a5-5a50f138eb68 path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=a5e504a3-1258-45ca-b4ce-7a0db9b04adf path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=41f08844-1573-4c7c-b33f-609b881da64a path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=01be40ab-119b-4365-9d9f-9f2164387a19 path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=2ff1dc77-deb3-4204-80a9-4277841fbde9 path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=38a00bc3-99fb-4177-ab22-8528ce41c8e6 path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=ea2d4733-7b17-4cde-a9d8-f17d2d15ca5a path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=ab396d0f-b636-4407-a361-1bb646041d2d path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+[WebServer] [req] x-message-id=b987422e-0a1e-4752-9d26-44cc60b639ed path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=00b58cdb-b271-4b31-8fcc-b203c786e469 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+[WebServer] [req] x-message-id=315f470f-bbc3-42e1-8779-5ca3dee82a8d path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel
+
+[1A[2K[WebServer]  status=403
+
+[1A[2K[WebServer] [req] x-request-id=22f92aa5-5d9a-46f7-8c78-dfe5acf5e8f4 path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=56c8d6e6-c8fc-4a0a-96e1-65c958045eac path=/auth/seed-test-accounts
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=aa5a90f5-708a-4721-a646-68b98715dd12 path=/auth/login status=200
+[WebServer] [req] x-message-id=56c5121e-f3d5-4fa1-84d9-689287cf1206 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=e4b505e5-e519-4c71-90de-fc8abe773c35 path=/meta status=200
+[WebServer] [req] x-message-id=33360a84-0267-4bdb-9353-5b644fdde84d path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=426ae53d-768e-4387-af06-3c2341d8c987 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=0ad2da53-cd7c-445b-860e-dcae16fadb5a path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=a9260f24-b751-4c71-abf0-c088318f9301 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=a2ffda26-59ef-4518-80a3-d413cc85b8ea path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=2b07d1db-ccb7-4167-882b-507c64a2c531 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=a251f6b0-3521-46e2-9126-d9ed375c343a path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=06b652a1-d56e-477f-b713-d73052d6515f path=/api/v1/me status=200
+[WebServer] [req] x-message-id=3db573e7-868c-4d88-a7c4-879d22b887e6 path=/api/v1/me status=200
+
+[1A[2K[14/25] [chromium] › e2e\core-path.spec.ts:186:7 › 核心路径 Landing → Market → Escrow Detail › 行程生成页可访问
+[1A[2K[15/25] [chromium] › e2e\release-flow.spec.ts:12:7 › 01 核心流程页面结构（发版前 E2E 清单） › 订单列表页可访问
+[1A[2K[16/25] [chromium] › e2e\release-flow.spec.ts:20:7 › 01 核心流程页面结构（发版前 E2E 清单） › 新建订单入口可访问
+[1A[2K[17/25] [chromium] › e2e\release-flow.spec.ts:28:7 › 01 核心流程页面结构（发版前 E2E 清单） › Market → Escrow 路径可走通
+[1A[2K[18/25] [chromium] › e2e\release-flow.spec.ts:39:7 › 01 核心流程页面结构（发版前 E2E 清单） › 完整导航链：Landing → Market → Orders → Escrow
+[1A[2K[19/25] [chromium] › e2e\release-flow.spec.ts:53:7 › 01 核心流程页面结构（发版前 E2E 清单） › 支付与托管说明页可访问
+[1A[2K[20/25] [chromium] › e2e\release-flow.spec.ts:62:7 › 01 核心流程页面结构（发版前 E2E 清单） › 支付页 orderId 查询预填输入框（订单→支付深链）
+[1A[2K[21/25] [chromium] › e2e\release-flow.spec.ts:70:7 › 01 核心流程页面结构（发版前 E2E 清单） › 治理费用路由页可访问（含 Target 披露）
+[1A[2K[22/25] [chromium] › e2e\release-flow.spec.ts:82:7 › 01 核心流程页面结构（发版前 E2E 清单） › 治理国家桶转出页可访问（vault-forwards · 含 Target 披露）
+[1A[2K[23/25] [chromium] › e2e\release-flow.spec.ts:96:7 › 01 核心流程页面结构（发版前 E2E 清单） › 帮助中心可访问
+[1A[2K[24/25] [chromium] › e2e\release-flow.spec.ts:103:7 › 01 核心流程页面结构（发版前 E2E 清单） › 向导质押页可访问
+[1A[2K[25/25] [chromium] › e2e\release-flow.spec.ts:112:7 › 01 核心流程页面结构（发版前 E2E 清单） › TravelTrust 网络落地页可访问
+[1A[2K  25 passed (1.6m)

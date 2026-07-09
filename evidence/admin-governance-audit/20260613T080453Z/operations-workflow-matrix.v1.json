@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.operations_workflow_matrix.v1",
+  "routes": [
+    "/admin/inbox",
+    "/admin/official",
+    "/admin/official/accounts",
+    "/admin/official/cold-start",
+    "/admin/official/guides",
+    "/admin/official/itinerary-templates",
+    "/admin/onboarding",
+    "/admin/onboarding/compliance-audit",
+    "/admin/onboarding/entitlements",
+    "/admin/onboarding/entitlements/[id]",
+    "/admin/onboarding/payment-events",
+    "/admin/onboarding/webhook-jobs",
+    "/admin/orders",
+    "/admin/orders/[id]"
+  ]
+}

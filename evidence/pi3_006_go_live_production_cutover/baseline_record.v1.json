@@ -1,0 +1,24 @@
+{
+  "schema": "traveltrust_pi3_006_go_live_production_cutover.v1",
+  "status": "PLANNED",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "go_live_sections_program": "COMPLETE",
+  "go_live_sections_checked": 0,
+  "go_live_sections_total": 12,
+  "p0_twelve_items_closed": 0,
+  "p0_twelve_items_total": 12,
+  "mainnet_section_9_status": "N_A_SEPOLIA_SCOPE",
+  "m00_signed": false,
+  "production_go_decision": "NO_GO",
+  "last_m00_audit_path": "evidence/pi3_006_go_live_production_cutover/m00-audit-20260608T024127Z/phase3-go-audit/go_no_go.json",
+  "last_cutover_smoke_utc": "",
+  "cutover_runbook_path": "docs/runbook/PRODUCTION-CUTOVER-RUNBOOK-SEPOLIA-SCOPE.md",
+  "pi3_dependency_gates": {
+    "pi3_001": "HOLD",
+    "pi3_002": "HOLD",
+    "pi3_003": "HOLD",
+    "pi3_004": "HOLD",
+    "pi3_005": "N_A_SEPOLIA"
+  },
+  "notes": "PI3-006 execution baseline. GO requires PI3-001~004 Owner GO, go-live \u00a70~\u00a711 checked, P0 twelve items 12/12, M-00 signed, run-phase3-production-go-audit BLOCKER=0 on prod bases, PRODUCTION_GO_DECISION: GO. Sepolia scope: \u00a79 Mainnet N/A per 148."
+}

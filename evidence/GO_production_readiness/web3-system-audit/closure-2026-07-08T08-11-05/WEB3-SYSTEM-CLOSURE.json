@@ -1,0 +1,178 @@
+{
+  "schema": "traveltrust.web3_system_closure.v1",
+  "recorded_utc": "2026-07-08T08:11:05.507Z",
+  "run_dir": "evidence/GO_production_readiness/web3-system-audit/closure-2026-07-08T08-11-05",
+  "audit_verdict": "WEB3_SYSTEM_AUDIT_BLOCKERS_PRESENT",
+  "verdict": "WEB3_SYSTEM_CLOSURE_BLOCKED",
+  "summary": {
+    "blockers_p0": 3,
+    "blockers_p1": 8,
+    "blockers_p2": 0,
+    "payment_rail_subset_pass": true,
+    "web3_system_ready": false,
+    "closure_eligible": false
+  },
+  "honest_boundary": {
+    "payment_rail_g3_02": "G3-02 PAY-W01..W16 may PASS while full Web3 System (Governance/TTG/Staking/Primary Market) remains OPEN",
+    "gate2_registry_note": "TT_PRODUCTION_WEB3_READY=PASS in registry reflects payment rail scope until TT_WEB3_SYSTEM_PRODUCTION_READINESS gate is introduced"
+  },
+  "open_blockers": [
+    {
+      "priority": "P0",
+      "id": "WEB3-SYS-P0-002",
+      "dimension": "运行时 · Registry 对拍",
+      "title": "Prod /meta missing 5 chain contract addresses — governance/staking/treasury stack not production-wired",
+      "paths": [
+        "https://tt-api-prod.fly.dev/meta",
+        "scripts/dev/.env.production.example",
+        "deploy/fly/tt-api-prod/fly.toml"
+      ],
+      "fix": "Set Fly secrets TIMELOCK_ADDRESS, GOVERNANCE_TOKEN_ADDRESS, TREASURY_ADDRESS, REGION_STEWARD_STAKE_POOL_ADDRESS, GUIDE_STAKING_ADDRESS per gov_freeze_v2 + re-verify /meta parity",
+      "status": "OPEN",
+      "risk": "CRITICAL"
+    },
+    {
+      "priority": "P0",
+      "id": "WEB3-SYS-P0-001",
+      "dimension": "Registry · Production GO",
+      "title": "TT_PRODUCTION_WEB3_READY=PASS conflates G3-02 payment rail (PAY-W01..W16) with full L2 Web3 scope (Governance/Treasury/Staking/Primary Market)",
+      "paths": [
+        "registry/production-go-four-gate-framework.v1.yaml",
+        "registry/web3-payment-production-gate.v1.yaml",
+        "registry/production-readiness-master-matrix.v1.yaml"
+      ],
+      "fix": "Split machine keys: TT_WEB3_PAYMENT_PRODUCTION_READINESS (subset PASS) vs TT_WEB3_SYSTEM_PRODUCTION_READINESS (full stack); do not mark GATE-2 PASS until governance stack prod-wired + evidenced",
+      "status": "OPEN",
+      "risk": "CRITICAL"
+    },
+    {
+      "priority": "P0",
+      "id": "WEB3-SYS-P0-003",
+      "dimension": "Evidence · 完整性",
+      "title": "G3-02 evidence drift: READINESS-LATEST=WEB3_PAYMENT_PRODUCTION_PASS vs EXECUTION-LATEST=WEB3_PAYMENT_PRODUCTION_IN_PROGRESS",
+      "paths": [
+        "evidence/GO_production_readiness/G3-02/WEB3-PAYMENT-PRODUCTION-READINESS-LATEST.json",
+        "evidence/GO_production_readiness/G3-02/G3-02-EXECUTION-LATEST.json"
+      ],
+      "fix": "Re-run run-g3-02-web3-payment-production-verification.cjs and sync both manifests to same verdict",
+      "status": "OPEN",
+      "risk": "HIGH"
+    },
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-001",
+      "dimension": "智能合约 · Proxy/Storage",
+      "title": "G24-P-UPGRADE-01 registry missing — proxy architecture gate cannot PASS",
+      "paths": [
+        "registry/g24-p-upgrade-01-contract-posture.v1.yaml",
+        "scripts/gates/check-g24-p-upgrade-01-proxy-architecture.sh"
+      ],
+      "fix": "Restore registry/g24-p-upgrade-01-contract-posture.v1.yaml from SSOT or regenerate from G24 spec",
+      "status": "OPEN",
+      "risk": "HIGH"
+    },
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-004",
+      "dimension": "Primary Market · UI/UX",
+      "title": "TtgPrimaryMarketV1 deployed on Sepolia SSOT but no FE purchase route — locales disclose ② on-chain Primary Market NOT STARTED",
+      "paths": [
+        "contracts/src/TtgPrimaryMarketV1.sol",
+        "frontend/locales/en.ts",
+        "registry/protocol-convergence-deployments.v1.yaml"
+      ],
+      "fix": "Either: (A) ship /primary-market wallet purchase UI + prod env wiring, or (B) formal Owner deferral with TT_WEB3_SYSTEM scope excluding Primary Market until Phase ③",
+      "status": "OPEN",
+      "risk": "MEDIUM"
+    },
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-006",
+      "dimension": "Seat/Staking · 运行时",
+      "title": "Prod steward/stake-quote unavailable (400/503) — RegionStewardStakePool not configured for production API",
+      "paths": [
+        "crates/api/src/routes/steward.rs",
+        "https://tt-api-prod.fly.dev/api/v1/steward/stake-quote"
+      ],
+      "fix": "Set REGION_STEWARD_STAKE_POOL_ADDRESS + related env on tt-api-prod; verify stake-quote 200",
+      "status": "OPEN",
+      "risk": "HIGH"
+    },
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-008",
+      "dimension": "Governance · Timelock/Execute",
+      "title": "Prod exposes governor_address but timelock_address=null — propose/vote/execute/timelock path incomplete on production runtime",
+      "paths": [
+        "https://tt-api-prod.fly.dev/meta",
+        "scripts/dev/.env.production.example"
+      ],
+      "fix": "Wire TIMELOCK_ADDRESS on prod; verify indexer Governor+Timelock events",
+      "status": "OPEN",
+      "risk": "HIGH"
+    },
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-005",
+      "dimension": "RBAC · 安全",
+      "title": "P2FC Web3 security audit D3_admin_rbac_chain=FAIL (admin RBAC ↔ chain permission boundary)",
+      "paths": [
+        "scripts/dev/gen-p2fc-web3-system-security-audit.py",
+        "crates/api/src/routes/admin/admin_rbac.rs"
+      ],
+      "fix": "Close D3 findings in latest WEB3-SYSTEM-SECURITY-AUDIT.json before Web3 System CLOSURE",
+      "status": "OPEN",
+      "risk": "HIGH"
+    },
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-003",
+      "dimension": "智能合约 · ABI",
+      "title": "GovFreeze shell ABIs missing in contracts/abi/: TtgPrimaryMarketV1.json, TtgSeatConcentrationRegistry.json, GovernanceTreasuryP4Cap.json",
+      "paths": [
+        "contracts/abi/",
+        "contracts/script/DeployGovFreezeV2CleanBaseline.s.sol"
+      ],
+      "fix": "Export/sync ABIs for TtgPrimaryMarketV1, TtgSeatConcentrationRegistry, GovernanceTreasuryP4Cap",
+      "status": "OPEN",
+      "risk": "MEDIUM"
+    },
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-002",
+      "dimension": "Evidence · TTG Cert",
+      "title": "TTG Governance Cert #1-12 evidence absent (evidence/GO_ttg_cert/ empty) — human/ops governance walkthroughs not production-verified",
+      "paths": [
+        "registry/ttg-governance-cert-gates.v1.yaml",
+        "evidence/GO_ttg_cert/"
+      ],
+      "fix": "Execute TTG Cert runners (scripts/dev/run-tt-governance-cert-*) and archive signoffs before full Web3 System GO",
+      "status": "OPEN",
+      "risk": "HIGH"
+    },
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-010",
+      "dimension": "Frontend Web3 UX · 部署对拍",
+      "title": "Prod FE build.env.local missing 3 Web3 NEXT_PUBLIC_* keys vs sepolia-prod.example (NEXT_PUBLIC_SETTLEMENT_TOKEN_ADDRESS, NEXT_PUBLIC_GOVERNANCE_TOKEN_ADDRESS, NEXT_PUBLIC_REGION_STEWARD_STAKE_POOL_ADDRESS)",
+      "paths": [
+        "deploy/fly/tt-web-prod/build.env.local",
+        "deploy/fly/tt-web-prod/build.env.sepolia-prod.example"
+      ],
+      "fix": "Align build.env.local with example SSOT; redeploy tt-web-prod; verify wallet/governance/staking surfaces read correct chain addresses",
+      "status": "OPEN",
+      "risk": "HIGH"
+    }
+  ],
+  "closure_prereqs_met": false,
+  "discipline": {
+    "business_code_modified": false,
+    "audit_only": true
+  },
+  "references": {
+    "deep_audit_latest": "evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-DEEP-AUDIT-LATEST.json",
+    "blockers_md": "evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-BLOCKERS-LATEST.md",
+    "payment_rail_subset": "evidence/GO_production_readiness/payment-deep-audit/PAYMENT-USDC-WEB3-DEEP-AUDIT-LATEST.json",
+    "g3_02": "evidence/GO_production_readiness/G3-02/WEB3-PAYMENT-PRODUCTION-READINESS-LATEST.json"
+  }
+}

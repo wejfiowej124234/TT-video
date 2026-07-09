@@ -153,7 +153,7 @@ function upsertMachineKey(yaml, key, value) {
 function main() {
   const { signoff, evidenceDir, mode } = parseArgs();
   if (!signoff) {
-    console.error('Usage: --signoff evidence/.../signoff.json [--mode audit|fix|re-audit]');
+    console.error('Usage: --signoff evidence/.../signoff.json [--mode audit|fix|re-audit|verification|formal]');
     process.exit(1);
   }
   const sp = path.isAbsolute(signoff) ? signoff : path.join(ROOT, signoff);
@@ -167,7 +167,9 @@ function main() {
         ? 'g2_reality_re_audit'
         : mode === 'verification'
           ? 'g2_reality_verification'
-          : 'g2_reality';
+          : mode === 'formal'
+            ? 'g2_formal_acceptance'
+            : 'g2_reality';
 
   let yaml = fs.readFileSync(REG_PATH, 'utf8');
   const report = { sync: 'G2_MATRIX_SYNC', mode, signoff: evidRel, applied: [] };
@@ -188,7 +190,6 @@ function main() {
     const goGate = ['security', 'performance', 'monitoring'].includes(dom) ? 'G2' : null;
     yaml = recomputeDomainBlocking(yaml, dom, goGate);
   }
-  yaml = recomputeG2Gate(yaml);
 
   if (mode === 'audit') {
     yaml = upsertMachineKey(yaml, 'TT_G2_REALITY_AUDIT', 'COMPLETE');
@@ -218,6 +219,11 @@ function main() {
       yaml = upsertMachineKey(yaml, 'TT_CONFIGURATION_TRUTH', audit.machine_keys.TT_CONFIGURATION_TRUTH);
     }
   }
+  if (mode === 'formal' && audit.machine_keys?.TT_WAVE2_FORMAL_ACCEPTANCE) {
+    yaml = upsertMachineKey(yaml, 'TT_WAVE2_FORMAL_ACCEPTANCE', audit.machine_keys.TT_WAVE2_FORMAL_ACCEPTANCE);
+  }
+
+  yaml = recomputeG2Gate(yaml);
 
   yaml = yaml.replace(/updated_utc: "[^"]+"/, `updated_utc: "${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}"`);
 

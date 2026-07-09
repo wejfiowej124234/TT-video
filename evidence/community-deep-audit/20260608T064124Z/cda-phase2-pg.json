@@ -1,0 +1,114 @@
+{
+  "generated_at": "2026-06-08T06:43:47.704076+00:00",
+  "issues": [
+    {
+      "id": "CDA-PG-1-001",
+      "priority": "P1",
+      "category": "\u72b6\u6001\u673a",
+      "role": "admin",
+      "step": "\u4e0b\u67b6",
+      "route": "post/1f1b7f97-5fcd-4e4e-8c22-46d7d5f9deba",
+      "title": "\u4e0b\u67b6\u540e visibility \u5f02\u5e38",
+      "observation": "visibility_status=public"
+    }
+  ],
+  "pg_consistency_matrix": [
+    {
+      "probe_id": "pg.like_count",
+      "check": "count",
+      "target": "c92680db-080b-4460-9e95-6cbb163ec910",
+      "pg_value": "1",
+      "api_value": "1",
+      "expected": "equal",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.collect_count",
+      "check": "count",
+      "target": "c92680db-080b-4460-9e95-6cbb163ec910",
+      "pg_value": "1",
+      "api_value": "1",
+      "expected": "equal",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.like_idempotent",
+      "check": "rows",
+      "target": "c92680db-080b-4460-9e95-6cbb163ec910",
+      "pg_value": "1",
+      "api_value": "1",
+      "expected": "single_row",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.comment_count",
+      "check": "count",
+      "target": "c92680db-080b-4460-9e95-6cbb163ec910",
+      "pg_value": "2",
+      "api_value": ">=2",
+      "expected": ">=2",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.post_visibility",
+      "check": "state",
+      "target": "1f1b7f97-5fcd-4e4e-8c22-46d7d5f9deba",
+      "pg_value": "public",
+      "api_value": "archived|removed",
+      "expected": "hidden",
+      "status": "FAIL",
+      "notes": "public"
+    },
+    {
+      "probe_id": "pg.report_status",
+      "check": "state",
+      "target": "2a7829d6-9f17-43aa-b439-f87cbf274fe2",
+      "pg_value": "open",
+      "api_value": "resolved",
+      "expected": "resolved",
+      "status": "FAIL",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.moderation_case",
+      "check": "audit",
+      "target": "2a7829d6-9f17-43aa-b439-f87cbf274fe2",
+      "pg_value": "0",
+      "api_value": ">=1",
+      "expected": "row_exists",
+      "status": "FAIL",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.comment_visibility",
+      "check": "state",
+      "target": "e7d851e9-0dd6-41a0-b701-15998e6c64ab",
+      "pg_value": "visible",
+      "api_value": "hidden",
+      "expected": "hidden",
+      "status": "SKIP",
+      "notes": "visible"
+    },
+    {
+      "probe_id": "pg.auth_audit_events",
+      "check": "infra",
+      "target": "auth_audit_events",
+      "pg_value": "73",
+      "api_value": "readable",
+      "expected": "ok",
+      "status": "PASS",
+      "notes": ""
+    }
+  ],
+  "summary": {
+    "p0": 0,
+    "p1": 1,
+    "p2": 0,
+    "pg_pass": 5,
+    "pg_total": 8
+  }
+}

@@ -181,7 +181,7 @@ export async function orderMockPay(orderId: string, idempotencyKey?: string): Pr
   return data;
 }
 
-/** **`POST …/confirm-completion`**：**无 chain_off** → **503**；**401**。 */
+/** **`POST …/confirm-completion`**：**无 chain_off** → **503**；**401**。Legacy alias → confirm-service-completion。 */
 export async function orderConfirmCompletion(orderId: string, idempotencyKey?: string): Promise<unknown> {
   const res = await fetch(apiUrl(routes.orderConfirmCompletion(orderId)), {
     method: "POST",
@@ -189,6 +189,21 @@ export async function orderConfirmCompletion(orderId: string, idempotencyKey?: s
   });
   const data = await parseResponse(res);
   logApiJsonStatusNotOk("orderConfirmCompletion", data);
+  throwUnlessApiOk(data);
+  return data;
+}
+
+/** **`POST …/confirm-service-completion`**（Layer A）：**无 chain_off** → **503**；**401**；须 Escrowed。 */
+export async function orderConfirmServiceCompletion(
+  orderId: string,
+  idempotencyKey?: string,
+): Promise<unknown> {
+  const res = await fetch(apiUrl(routes.orderConfirmServiceCompletion(orderId)), {
+    method: "POST",
+    headers: writeRequestHeaders(idempotencyKey),
+  });
+  const data = await parseResponse(res);
+  logApiJsonStatusNotOk("orderConfirmServiceCompletion", data);
   throwUnlessApiOk(data);
   return data;
 }

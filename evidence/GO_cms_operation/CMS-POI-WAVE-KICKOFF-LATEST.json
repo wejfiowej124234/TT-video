@@ -1,0 +1,151 @@
+{
+  "schema": "traveltrust.cms_poi_wave_kickoff.v1",
+  "stamp_utc": "2026-07-05T153700Z",
+  "asset_family": "poi",
+  "status": "JP_CITY_PILOT_COMPLETE",
+  "next_stage": "CATALOG_BUILD",
+  "upload_paused": false,
+  "not_started_items": false,
+  "advancement_rule": "Scope → Country → City → POI · acceptance = City CLOSED",
+  "workflow": [
+    "POI Catalog Scope Lock",
+    "Pilot Catalog Build (Country → City → POI)",
+    "Review",
+    "Replace",
+    "Publish",
+    "Verify",
+    "Evidence",
+    "Live"
+  ],
+  "do_not_modify": [
+    "destination_ambient_matrix",
+    "DA-*-HOME evidence except CN visual replace"
+  ],
+  "scope_lock": {
+    "status": "FROZEN",
+    "denominator_total": 330,
+    "cities": 38,
+    "attraction": 169,
+    "food": 161,
+    "matrix_ssot": "data/catalog/poi-hero-matrix.v1.yaml"
+  },
+  "active_catalog_build": null,
+  "pilot_acceptance": {
+    "unit": "city",
+    "target": "福冈 CLOSED",
+    "country_iso": "JP"
+  },
+  "pilot_waves": [
+    {
+      "wave_id": "POI-WAVE-1-PILOT",
+      "label": "Pilot · JP · 东京",
+      "status": "ACTIVE",
+      "poi_count": 9
+    },
+    {
+      "wave_id": "POI-WAVE-2",
+      "label": "Wave 2 · KR · 全量",
+      "status": "NOT_STARTED",
+      "poi_count": 31
+    },
+    {
+      "wave_id": "POI-WAVE-3-PLUS",
+      "label": "Wave 3+ · TH → SG → FR → US → AU → ES → AE → CN",
+      "status": "NOT_STARTED",
+      "poi_count": 258
+    }
+  ],
+  "catalog_gate": "Pilot city only · JP · 东京 catalog build · acceptance = 东京 CLOSED · not 330 bulk",
+  "forbidden": [
+    "poi_upload_while_catalog_empty",
+    "ingest_all_330_on_day_one",
+    "skip_pilot_before_wave_2",
+    "accept_by_poi_count"
+  ],
+  "when_pilot_complete": [
+    "东京 CLOSED (all city POIs Live)",
+    "re-run run-cms-denominator-lock.cjs + run-cms-poi-city-ops-sync.cjs",
+    "validate Catalog API · CMS · page · Evidence · Daily Board",
+    "advance to next city (Osaka) or POI-WAVE-2 (KR)"
+  ],
+  "roadmap": [
+    {
+      "stage": "destination_ambient",
+      "status": "CLOSED"
+    },
+    {
+      "stage": "poi_scope",
+      "status": "LOCKED",
+      "denominator": 330
+    },
+    {
+      "stage": "catalog_build",
+      "status": "ACTIVE",
+      "city": "东京",
+      "acceptance": "东京 CLOSED"
+    },
+    {
+      "stage": "poi_wave_1",
+      "status": "ACTIVE",
+      "note": "Pilot · per-POI loop · city CLOSED = wave milestone"
+    },
+    {
+      "stage": "poi_wave_2",
+      "status": "NOT_STARTED",
+      "country_iso": "KR"
+    },
+    {
+      "stage": "poi_wave_3_plus",
+      "status": "NOT_STARTED"
+    },
+    {
+      "stage": "poi_closed",
+      "status": "NOT_STARTED",
+      "target": "330/330"
+    },
+    {
+      "stage": "hotel",
+      "status": "NOT_STARTED"
+    },
+    {
+      "stage": "transport",
+      "status": "NOT_STARTED"
+    },
+    {
+      "stage": "listing",
+      "status": "NOT_STARTED"
+    }
+  ],
+  "TT_CMS_POI_WAVE": "JP_CITY_PILOT_COMPLETE",
+  "ambient_runtime_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-DESTINATION-AMBIENT-RUNTIME-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_UPLOAD_PAUSED": false,
+  "tokyo_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_TOKYO": "CLOSED",
+  "TT_CMS_POI_ACTIVE_CITY": null,
+  "osaka_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_OSAKA": "CLOSED",
+  "kyoto_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_KYOTO": "CLOSED",
+  "sapporo_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_SAPPORO": "CLOSED",
+  "fukuoka_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_FUKUOKA": "CLOSED"
+}

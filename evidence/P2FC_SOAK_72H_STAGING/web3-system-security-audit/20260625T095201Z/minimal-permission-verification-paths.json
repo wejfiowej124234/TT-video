@@ -1,0 +1,101 @@
+{
+  "schema": "traveltrust.minimal_permission_verification_paths.v1",
+  "D1_contract_upgrade": {
+    "authority": "GovernanceTimelock admin slot on TimelockUpgradeableProxy",
+    "minimal_path": [
+      {
+        "step": 1,
+        "actor": "Timelock proposer (Safe/multisig)",
+        "action": "schedule(target, value, data, predecessor, salt, delay)"
+      },
+      {
+        "step": 2,
+        "actor": "time",
+        "action": "wait >= GOVERNANCE_TIMELOCK_DELAY_SECONDS (48h frozen)"
+      },
+      {
+        "step": 3,
+        "actor": "Timelock executor",
+        "action": "execute → proxy.upgradeTo(newImpl) or upgradeToAndCall"
+      }
+    ],
+    "denied_without": [
+      "EOA direct upgradeTo",
+      "bare implementation deploy as production baseline",
+      "MR12 one-shot API/Web deploy"
+    ],
+    "verification_hooks": [
+      "contracts/test/TtgGovFreezeV1ProxyArchitecture.t.sol",
+      "contracts/src/upgrade/TimelockUpgradeableProxy.sol::_onlyAdmin"
+    ]
+  },
+  "D2_governance_economic": {
+    "authority": "On-chain TTG voting power + timelock queue",
+    "minimal_path": [
+      {
+        "step": 1,
+        "actor": "TTG holder",
+        "action": "delegate + accrue voting power (snapshot block)"
+      },
+      {
+        "step": 2,
+        "actor": "voter",
+        "action": "castVote(proposalId) capped by MAX_VOTING_POWER_PER_ADDRESS_BPS"
+      },
+      {
+        "step": 3,
+        "actor": "Governor",
+        "action": "queue successful proposal → Timelock schedule"
+      },
+      {
+        "step": 4,
+        "actor": "Timelock",
+        "action": "execute after delay — treasury/seat/param changes"
+      }
+    ],
+    "denied_without": [
+      "flash-loan same-block vote (snapshot/delay)",
+      "seat over MAX_ACTIVE_SEATS (TtgSeatConcentrationRegistry)",
+      "treasury spend over P4 cap (GovernanceTreasuryP4Cap)"
+    ],
+    "verification_hooks": [
+      "contracts/src/TtgGovFreezeConstants.sol",
+      "contracts/src/TtgSeatConcentrationRegistry.sol",
+      "contracts/src/GovernanceTreasuryP4Cap.sol"
+    ]
+  },
+  "D3_admin_rbac": {
+    "authority": "API require_admin_permission + console_role bundle + ADM-U02 approval",
+    "production_minimal_path": [
+      {
+        "step": 1,
+        "actor": "SuperAdmin/Ops with PERM_USERS_WRITE",
+        "action": "POST console-role change approval request"
+      },
+      {
+        "step": 2,
+        "actor": "SuperAdmin approver",
+        "action": "approve with TOTP 2FA when enforced"
+      },
+      {
+        "step": 3,
+        "actor": "system",
+        "action": "admin_console_roles DB update + admin_audit_logs persist"
+      }
+    ],
+    "bypass_path_blocked_on_staging": [
+      {
+        "step": "PUT /admin/users/{id}/console-role",
+        "gate": "TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT=1",
+        "default": "unset/false → 409 console_role_use_approval_flow"
+      }
+    ],
+    "local_only_bypass_scope": "scripts/dev/* sets DIRECT=1 for ① matrix smoke — must not appear in deploy/fly or scripts/ops/p2fc*",
+    "verification_hooks": [
+      "crates/api/src/routes/admin/admin_rbac.rs::console_role_direct_assign_enabled",
+      "crates/api/src/routes/admin/admin_rbac.rs::put_admin_user_console_role",
+      "registry/admin-rbac-permissions.v1.yaml"
+    ]
+  },
+  "cross_domain_note": "D3 CeFi RBAC does not grant on-chain proposer/timelock admin — D1/D2 orthogonal to MR12 API deploy"
+}

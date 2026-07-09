@@ -1,0 +1,17 @@
+attempt=1 rc=1
+Warning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type billable limitedAccessTokens { nodes { id name expiresAt revokedAt user { email } } } } }: context canceled
+Error: app tt-soak-watcher-staging has no started VMs.
+It may be unhealthy or not have been deployed yet.
+Try the following command to verify:
+
+fly status
+attempt=2 rc=1
+Warning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type billable limitedAccessTokens { nodes { id name expiresAt revokedAt user { email } } } } }: context canceled
+Error: app tt-soak-watcher-staging has no started VMs.
+It may be unhealthy or not have been deployed yet.
+Try the following command to verify:
+
+fly status
+attempt=3 rc=1
+Warning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type billable limitedAccessTokens { nodes { id name expiresAt revokedAt user { email } } } } }: context canceled
+Error: failed to list active VMs: Get "https://api.machines.dev/v1/apps/tt-soak-watcher-staging/machines": tls: received record with version 4717 when expecting version 303

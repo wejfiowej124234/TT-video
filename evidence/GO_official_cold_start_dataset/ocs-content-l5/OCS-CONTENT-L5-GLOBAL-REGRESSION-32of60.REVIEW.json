@@ -1,0 +1,11 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_regression_review.v1",
+  "stamp_utc": "20260704T145500Z",
+  "trigger_row": 32,
+  "trigger_filename": "ocs-paris-art-provider-cover.jpg",
+  "rows_reviewed": 32,
+  "TT_GLOBAL_REGRESSION_REVIEW": "PASS",
+  "nine_class_all_pass": true,
+  "no_quality_regression": true,
+  "gate_to_row33": "PASS"
+}

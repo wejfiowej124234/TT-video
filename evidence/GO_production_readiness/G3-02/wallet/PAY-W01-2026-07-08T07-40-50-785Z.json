@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W01",
+  "recorded_utc": "2026-07-08T07:40:50.786Z",
+  "run_id": "2026-07-08T07-40-50-785Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PASS",
+  "summary": {
+    "verdict": "PASS",
+    "detail": "Prod session + on-chain traveler identity for deposit corridor"
+  },
+  "detail": "Prod session + on-chain traveler identity for deposit corridor",
+  "tourist_email": "g3w03-t--50-785Z@traveltrust.prod",
+  "tourist_user_id": "63d5c5dd-bca1-4546-b6ff-01850027859d",
+  "session_role": "traveler",
+  "on_chain_traveler": "0xFA62bb5F7B21C160eFe115297dc5338982E24649",
+  "wallet_verify_api": {
+    "http": 422,
+    "note": "wallet verify available"
+  },
+  "prod_web": "https://tt-web-prod.fly.dev"
+}

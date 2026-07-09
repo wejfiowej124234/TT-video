@@ -1,0 +1,16 @@
+{
+  "artifact": "ADM-U02",
+  "phase": "\u2461",
+  "deployment_kind": "persistent_staging",
+  "release_gate": "GO",
+  "summary": {
+    "smoke_pass": true,
+    "playwright_pass": true
+  },
+  "evidence_files": [
+    "smoke-run.log",
+    "playwright-run.log",
+    "playwright-exit.txt"
+  ],
+  "staging_api_base": "https://tt-api-staging.fly.dev"
+}

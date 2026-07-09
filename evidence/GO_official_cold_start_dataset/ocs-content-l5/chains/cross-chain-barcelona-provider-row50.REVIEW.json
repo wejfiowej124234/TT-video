@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T151930Z",
+  "trigger_row": 50,
+  "trigger_filename": "ocs-barcelona-arch-provider-cover.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "provider_comparison": {
+    "tokyo-photo": "台场半日旅拍",
+    "kyoto-culture": "私享茶室",
+    "seoul-food": "夜市美食团",
+    "bangkok-temple": "湄南河 sunset 游船",
+    "singapore-family": "亲子通票",
+    "paris-art": "博物馆小团",
+    "nyc-skyline": "观景台联票",
+    "sydney-coast": "海港皮划艇",
+    "barcelona-arch": "高迪三件套联票小团",
+    "distinct": true
+  },
+  "no_quality_regression_prior_49": true
+}

@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://tt-api-prod.fly.dev/api/v1/me",
+    "headers": {
+      "Authorization": "Bearer tts_[REDACTED]"
+    }
+  },
+  "response": {
+    "http_status": 401,
+    "body": {
+      "error": "unauthorized",
+      "message": "unauthorized",
+      "detail": "STRICT_SESSION_GATE=1：须提供 Authorization: Bearer <session_token>（不接受仅 X-User-Id）"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T151900Z",
+  "filename": "ocs-barcelona-arch-provider-cover.jpg",
+  "row": 50,
+  "chain_id": "barcelona-arch",
+  "country_code": "ES",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "no_quality_regression_acknowledged": true,
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "brand_logos",
+      "celebrity_portraits",
+      "readable_trademarks",
+      "commercial_ad_posters"
+    ],
+    "safe_expression": "桂尔公园马赛克前小团+联票 · 背影/侧影为主 · 无可读 Logo"
+  },
+  "checks": {
+    "manifest_full_field_alignment": {
+      "pass": true,
+      "notes": "高迪三件套联票含导览 · 圣家堂/巴特罗/桂尔公园"
+    },
+    "destination_authenticity_9dim_plan": {
+      "pass": true,
+      "notes": "桂尔公园 trencadis 马赛克 · 地中海阳光 · 小团体验"
+    },
+    "country_consistency_es_only": { "pass": true },
+    "provider_business_identity_plan": {
+      "pass": true,
+      "vs_tokyo": "高迪联票小团 vs 台场旅拍",
+      "vs_kyoto": "马赛克公园 vs 茶室",
+      "vs_seoul": "建筑联票 vs 夜市美食",
+      "vs_bangkok": "桂尔公园 vs 河船晚宴",
+      "vs_singapore": "建筑导览 vs 亲子通票",
+      "vs_paris": "高迪三件套 vs 博物馆小团",
+      "vs_nyc": "马赛克公园 vs 观景台",
+      "vs_sydney": "建筑联票 vs 皮划艇",
+      "vs_row49": "服务场景 vs Carlos 向导肖像"
+    },
+    "surface_boundary_plan": { "pass": true },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row49": "小团马赛克 vs 圣家堂肖像"
+    },
+    "nine_class_framework_frozen": true
+  }
+}

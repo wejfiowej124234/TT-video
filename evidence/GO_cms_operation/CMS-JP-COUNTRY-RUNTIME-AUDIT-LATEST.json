@@ -1,0 +1,1596 @@
+{
+  "schema": "traveltrust.cms_jp_country_runtime_audit.v1",
+  "recorded_at_utc": "2026-07-05T16:05:05.366Z",
+  "phase": "② staging",
+  "country": {
+    "country_iso": "JP",
+    "country_zh": "日本",
+    "cities": [
+      "东京",
+      "大阪",
+      "京都",
+      "札幌",
+      "福冈"
+    ]
+  },
+  "korea_status": "PAUSED",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "runtime_tier": "national_runtime",
+  "consumer_surfaces": [
+    "home_japan",
+    "market",
+    "market_itinerary_jp",
+    "market_provider",
+    "market_acquisition",
+    "traveltrust",
+    "community"
+  ],
+  "checks": [
+    {
+      "id": "lock_registry_unchanged",
+      "label": "五城 LOCK 资产未改动",
+      "pass": true,
+      "locked_count": 41,
+      "total": 41,
+      "rows": [
+        {
+          "matrix_id": "PH-JP-009-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-010-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-011-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-012-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-013-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-014-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-015-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-016-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-017-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-001-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-002-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-003-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-004-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-005-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-006-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-007-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-008-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-026-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-027-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-028-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-029-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-030-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-031-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-032-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-033-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-034-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-035-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-036-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-037-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-038-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-039-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-040-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-041-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-018-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-019-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-020-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-021-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-022-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-023-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-024-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-025-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "five_city_execution_closed",
+      "label": "五城 Execution CLOSED",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "东京",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "大阪",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "京都",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "札幌",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CLOSURE-LATEST.json",
+          "pass": true
+        },
+        {
+          "city_zh": "福冈",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CLOSURE-LATEST.json",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "five_city_content_qa_closed",
+      "label": "五城 Content QA CLOSED · LOCK 不变",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "东京",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "9/9",
+          "pass": true
+        },
+        {
+          "city_zh": "大阪",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "8/8",
+          "pass": true
+        },
+        {
+          "city_zh": "京都",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "7/7",
+          "pass": true
+        },
+        {
+          "city_zh": "札幌",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "9/9",
+          "pass": true
+        },
+        {
+          "city_zh": "福冈",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "8/8",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "five_city_exit_checks",
+      "label": "五城 Golden Template Exit Check · city_consumer_runtime",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "东京",
+          "city_en": "Tokyo",
+          "poi_count": 9,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "9/9",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "大阪",
+          "city_en": "Osaka",
+          "poi_count": 8,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "undefined/undefined",
+          "verdict": "GOLDEN_TEMPLATE_READY"
+        },
+        {
+          "city_zh": "京都",
+          "city_en": "Kyoto",
+          "poi_count": 7,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "7/7",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "札幌",
+          "city_en": "Sapporo",
+          "poi_count": 9,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "9/9",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        },
+        {
+          "city_zh": "福冈",
+          "city_en": "Fukuoka",
+          "poi_count": 8,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "8/8",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "japan_ambient_runtime",
+      "label": "首页 Destination Ambient · 日本读 CMS · 无 Unsplash",
+      "pass": true,
+      "row": {
+        "country_zh": "日本",
+        "country_iso": "JP",
+        "page_path": "/?country=日本",
+        "cms_jurisdiction": true,
+        "catalog_has_data": true,
+        "catalog_published": true,
+        "catalog_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-jp-home-v1.jpg",
+        "runtime_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-jp-home-v1.jpg",
+        "runtime_reads_cms_catalog": true,
+        "runtime_cms_mismatch": false,
+        "still_unsplash": false,
+        "still_ts_fallback": false,
+        "l5_compliant": true,
+        "cms_ownership_ok": true,
+        "l5_issues": [],
+        "priority": "P0"
+      },
+      "ssot": "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+      "issues": []
+    },
+    {
+      "id": "catalog_api_jp_poi",
+      "label": "Catalog API JP POI 41/41 与 LOCK 一致",
+      "pass": true,
+      "pass_count": 41,
+      "required": 41,
+      "rows": [
+        {
+          "city_zh": "东京",
+          "matrix_id": "PH-JP-009-ATR",
+          "expected": "ocs-tokyo-photo-official-guide-cover.jpg",
+          "catalog": "ocs-tokyo-photo-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "东京",
+          "matrix_id": "PH-JP-010-ATR",
+          "expected": "ocs-tokyo-photo-community-media.jpg",
+          "catalog": "ocs-tokyo-photo-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "东京",
+          "matrix_id": "PH-JP-011-ATR",
+          "expected": "ocs-tokyo-photo-community-cover.jpg",
+          "catalog": "ocs-tokyo-photo-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "东京",
+          "matrix_id": "PH-JP-012-ATR",
+          "expected": "ocs-tokyo-photo-provider-cover.jpg",
+          "catalog": "ocs-tokyo-photo-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "东京",
+          "matrix_id": "PH-JP-013-ATR",
+          "expected": "ocs-tokyo-photo-acquisition-cover.jpg",
+          "catalog": "ocs-tokyo-photo-acquisition-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "东京",
+          "matrix_id": "PH-JP-014-FOOD",
+          "expected": "ocs-tokyo-sushi-community-cover.jpg",
+          "catalog": "ocs-tokyo-sushi-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "东京",
+          "matrix_id": "PH-JP-015-FOOD",
+          "expected": "ocs-tokyo-ramen-guide-avatar.jpg",
+          "catalog": "ocs-tokyo-ramen-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "东京",
+          "matrix_id": "PH-JP-016-FOOD",
+          "expected": "ocs-tokyo-tempura-provider-cover.jpg",
+          "catalog": "ocs-tokyo-tempura-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "东京",
+          "matrix_id": "PH-JP-017-FOOD",
+          "expected": "ocs-tokyo-photo-guide-avatar.jpg",
+          "catalog": "ocs-tokyo-photo-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大阪",
+          "matrix_id": "PH-JP-001-ATR",
+          "expected": "ocs-osaka-castle-official-guide-cover.jpg",
+          "catalog": "ocs-osaka-castle-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大阪",
+          "matrix_id": "PH-JP-002-ATR",
+          "expected": "ocs-osaka-dotonbori-official-guide-cover.jpg",
+          "catalog": "ocs-osaka-dotonbori-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大阪",
+          "matrix_id": "PH-JP-003-ATR",
+          "expected": "ocs-osaka-usj-official-guide-cover.jpg",
+          "catalog": "ocs-osaka-usj-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大阪",
+          "matrix_id": "PH-JP-004-ATR",
+          "expected": "ocs-osaka-shinsaibashi-official-guide-cover.jpg",
+          "catalog": "ocs-osaka-shinsaibashi-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大阪",
+          "matrix_id": "PH-JP-005-FOOD",
+          "expected": "ocs-osaka-takoyaki-community-cover.jpg",
+          "catalog": "ocs-osaka-takoyaki-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大阪",
+          "matrix_id": "PH-JP-006-FOOD",
+          "expected": "ocs-osaka-okonomiyaki-guide-avatar.jpg",
+          "catalog": "ocs-osaka-okonomiyaki-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大阪",
+          "matrix_id": "PH-JP-007-FOOD",
+          "expected": "ocs-osaka-fugu-acquisition-cover.jpg",
+          "catalog": "ocs-osaka-fugu-acquisition-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "大阪",
+          "matrix_id": "PH-JP-008-FOOD",
+          "expected": "ocs-osaka-kushikatsu-provider-cover.jpg",
+          "catalog": "ocs-osaka-kushikatsu-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "京都",
+          "matrix_id": "PH-JP-026-ATR",
+          "expected": "ocs-kyoto-culture-official-guide-cover.jpg",
+          "catalog": "ocs-kyoto-culture-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "京都",
+          "matrix_id": "PH-JP-027-ATR",
+          "expected": "ocs-kyoto-culture-community-media.jpg",
+          "catalog": "ocs-kyoto-culture-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "京都",
+          "matrix_id": "PH-JP-028-ATR",
+          "expected": "ocs-kyoto-culture-community-cover.jpg",
+          "catalog": "ocs-kyoto-culture-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "京都",
+          "matrix_id": "PH-JP-029-ATR",
+          "expected": "ocs-kyoto-culture-provider-cover.jpg",
+          "catalog": "ocs-kyoto-culture-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "京都",
+          "matrix_id": "PH-JP-030-FOOD",
+          "expected": "ocs-kyoto-culture-acquisition-cover.jpg",
+          "catalog": "ocs-kyoto-culture-acquisition-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "京都",
+          "matrix_id": "PH-JP-031-FOOD",
+          "expected": "ocs-kyoto-culture-guide-avatar.jpg",
+          "catalog": "ocs-kyoto-culture-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "京都",
+          "matrix_id": "PH-JP-032-FOOD",
+          "expected": "ocs-kyoto-yudofu-community-cover.jpg",
+          "catalog": "ocs-kyoto-yudofu-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "札幌",
+          "matrix_id": "PH-JP-033-ATR",
+          "expected": "ocs-sapporo-odori-park-official-guide-cover.jpg",
+          "catalog": "ocs-sapporo-odori-park-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "札幌",
+          "matrix_id": "PH-JP-034-ATR",
+          "expected": "ocs-sapporo-clock-tower-community-media.jpg",
+          "catalog": "ocs-sapporo-clock-tower-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "札幌",
+          "matrix_id": "PH-JP-035-ATR",
+          "expected": "ocs-sapporo-hitachi-hill-community-cover.jpg",
+          "catalog": "ocs-sapporo-hitachi-hill-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "札幌",
+          "matrix_id": "PH-JP-036-ATR",
+          "expected": "ocs-sapporo-shiroi-koibito-provider-cover.jpg",
+          "catalog": "ocs-sapporo-shiroi-koibito-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "札幌",
+          "matrix_id": "PH-JP-037-ATR",
+          "expected": "ocs-sapporo-moiwa-acquisition-cover.jpg",
+          "catalog": "ocs-sapporo-moiwa-acquisition-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "札幌",
+          "matrix_id": "PH-JP-038-FOOD",
+          "expected": "ocs-sapporo-miso-ramen-guide-avatar.jpg",
+          "catalog": "ocs-sapporo-miso-ramen-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "札幌",
+          "matrix_id": "PH-JP-039-FOOD",
+          "expected": "ocs-sapporo-jingisukan-official-guide-cover.jpg",
+          "catalog": "ocs-sapporo-jingisukan-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "札幌",
+          "matrix_id": "PH-JP-040-FOOD",
+          "expected": "ocs-sapporo-soup-curry-community-cover.jpg",
+          "catalog": "ocs-sapporo-soup-curry-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "札幌",
+          "matrix_id": "PH-JP-041-FOOD",
+          "expected": "ocs-sapporo-seafood-provider-cover.jpg",
+          "catalog": "ocs-sapporo-seafood-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-018-ATR",
+          "expected": "ocs-fukuoka-hakata-official-guide-cover.jpg",
+          "catalog": "ocs-fukuoka-hakata-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-019-ATR",
+          "expected": "ocs-fukuoka-dazaifu-community-media.jpg",
+          "catalog": "ocs-fukuoka-dazaifu-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-020-ATR",
+          "expected": "ocs-fukuoka-nokonoshima-community-cover.jpg",
+          "catalog": "ocs-fukuoka-nokonoshima-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-021-ATR",
+          "expected": "ocs-fukuoka-yatai-atr-provider-cover.jpg",
+          "catalog": "ocs-fukuoka-yatai-atr-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-022-FOOD",
+          "expected": "ocs-fukuoka-tonkotsu-ramen-guide-avatar.jpg",
+          "catalog": "ocs-fukuoka-tonkotsu-ramen-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-023-FOOD",
+          "expected": "ocs-fukuoka-mentaiko-acquisition-cover.jpg",
+          "catalog": "ocs-fukuoka-mentaiko-acquisition-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-024-FOOD",
+          "expected": "ocs-fukuoka-mizutaki-official-guide-cover.jpg",
+          "catalog": "ocs-fukuoka-mizutaki-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-025-FOOD",
+          "expected": "ocs-fukuoka-yatai-food-community-media.jpg",
+          "catalog": "ocs-fukuoka-yatai-food-community-media.jpg",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "jp_poi_runtime_exit_aggregate",
+      "label": "五城 Market POI Runtime · Exit Check Gate 4 聚合",
+      "pass": true,
+      "poi_runtime": {
+        "pass": 41,
+        "total": 41
+      },
+      "poi_rows": [
+        {
+          "city_zh": "东京",
+          "poi": "浅草寺",
+          "expected_fn": "ocs-tokyo-photo-official-guide-cover.jpg",
+          "runtime_fn": "ocs-tokyo-photo-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "东京塔",
+          "expected_fn": "ocs-tokyo-photo-community-media.jpg",
+          "runtime_fn": "ocs-tokyo-photo-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "新宿",
+          "expected_fn": "ocs-tokyo-photo-community-cover.jpg",
+          "runtime_fn": "ocs-tokyo-photo-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "涩谷",
+          "expected_fn": "ocs-tokyo-photo-provider-cover.jpg",
+          "runtime_fn": "ocs-tokyo-photo-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "上野公园",
+          "expected_fn": "ocs-tokyo-photo-acquisition-cover.jpg",
+          "runtime_fn": "ocs-tokyo-photo-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "寿司",
+          "expected_fn": "ocs-tokyo-sushi-community-cover.jpg",
+          "runtime_fn": "ocs-tokyo-sushi-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "拉面",
+          "expected_fn": "ocs-tokyo-ramen-guide-avatar.jpg",
+          "runtime_fn": "ocs-tokyo-ramen-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "天妇罗",
+          "expected_fn": "ocs-tokyo-tempura-provider-cover.jpg",
+          "runtime_fn": "ocs-tokyo-tempura-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "居酒屋",
+          "expected_fn": "ocs-tokyo-photo-guide-avatar.jpg",
+          "runtime_fn": "ocs-tokyo-photo-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "大阪城",
+          "expected_fn": "ocs-osaka-castle-official-guide-cover.jpg",
+          "runtime_fn": "ocs-osaka-castle-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "道顿堀",
+          "expected_fn": "ocs-osaka-dotonbori-official-guide-cover.jpg",
+          "runtime_fn": "ocs-osaka-dotonbori-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "环球影城",
+          "expected_fn": "ocs-osaka-usj-official-guide-cover.jpg",
+          "runtime_fn": "ocs-osaka-usj-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "心斋桥",
+          "expected_fn": "ocs-osaka-shinsaibashi-official-guide-cover.jpg",
+          "runtime_fn": "ocs-osaka-shinsaibashi-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "章鱼烧",
+          "expected_fn": "ocs-osaka-takoyaki-community-cover.jpg",
+          "runtime_fn": "ocs-osaka-takoyaki-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "大阪烧",
+          "expected_fn": "ocs-osaka-okonomiyaki-guide-avatar.jpg",
+          "runtime_fn": "ocs-osaka-okonomiyaki-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "河豚",
+          "expected_fn": "ocs-osaka-fugu-acquisition-cover.jpg",
+          "runtime_fn": "ocs-osaka-fugu-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "串炸",
+          "expected_fn": "ocs-osaka-kushikatsu-provider-cover.jpg",
+          "runtime_fn": "ocs-osaka-kushikatsu-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "伏见稻荷",
+          "expected_fn": "ocs-kyoto-culture-official-guide-cover.jpg",
+          "runtime_fn": "ocs-kyoto-culture-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "清水寺",
+          "expected_fn": "ocs-kyoto-culture-community-media.jpg",
+          "runtime_fn": "ocs-kyoto-culture-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "金阁寺",
+          "expected_fn": "ocs-kyoto-culture-community-cover.jpg",
+          "runtime_fn": "ocs-kyoto-culture-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "祇园",
+          "expected_fn": "ocs-kyoto-culture-provider-cover.jpg",
+          "runtime_fn": "ocs-kyoto-culture-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "怀石料理",
+          "expected_fn": "ocs-kyoto-culture-acquisition-cover.jpg",
+          "runtime_fn": "ocs-kyoto-culture-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "抹茶甜品",
+          "expected_fn": "ocs-kyoto-culture-guide-avatar.jpg",
+          "runtime_fn": "ocs-kyoto-culture-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "汤豆腐",
+          "expected_fn": "ocs-kyoto-yudofu-community-cover.jpg",
+          "runtime_fn": "ocs-kyoto-yudofu-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "大通公园",
+          "expected_fn": "ocs-sapporo-odori-park-official-guide-cover.jpg",
+          "runtime_fn": "ocs-sapporo-odori-park-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "时计台",
+          "expected_fn": "ocs-sapporo-clock-tower-community-media.jpg",
+          "runtime_fn": "ocs-sapporo-clock-tower-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "羊之丘",
+          "expected_fn": "ocs-sapporo-hitachi-hill-community-cover.jpg",
+          "runtime_fn": "ocs-sapporo-hitachi-hill-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "白色恋人工厂",
+          "expected_fn": "ocs-sapporo-shiroi-koibito-provider-cover.jpg",
+          "runtime_fn": "ocs-sapporo-shiroi-koibito-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "藻岩山",
+          "expected_fn": "ocs-sapporo-moiwa-acquisition-cover.jpg",
+          "runtime_fn": "ocs-sapporo-moiwa-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "味噌拉面",
+          "expected_fn": "ocs-sapporo-miso-ramen-guide-avatar.jpg",
+          "runtime_fn": "ocs-sapporo-miso-ramen-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "成吉思汗",
+          "expected_fn": "ocs-sapporo-jingisukan-official-guide-cover.jpg",
+          "runtime_fn": "ocs-sapporo-jingisukan-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "汤咖喱",
+          "expected_fn": "ocs-sapporo-soup-curry-community-cover.jpg",
+          "runtime_fn": "ocs-sapporo-soup-curry-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "海鲜",
+          "expected_fn": "ocs-sapporo-seafood-provider-cover.jpg",
+          "runtime_fn": "ocs-sapporo-seafood-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-018-ATR",
+          "poi": "博多",
+          "expected_fn": "ocs-fukuoka-hakata-official-guide-cover.jpg",
+          "runtime_fn": "ocs-fukuoka-hakata-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-019-ATR",
+          "poi": "太宰府",
+          "expected_fn": "ocs-fukuoka-dazaifu-community-media.jpg",
+          "runtime_fn": "ocs-fukuoka-dazaifu-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-020-ATR",
+          "poi": "能古岛",
+          "expected_fn": "ocs-fukuoka-nokonoshima-community-cover.jpg",
+          "runtime_fn": "ocs-fukuoka-nokonoshima-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-021-ATR",
+          "poi": "屋台",
+          "expected_fn": "ocs-fukuoka-yatai-atr-provider-cover.jpg",
+          "runtime_fn": "ocs-fukuoka-yatai-atr-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-022-FOOD",
+          "poi": "豚骨拉面",
+          "expected_fn": "ocs-fukuoka-tonkotsu-ramen-guide-avatar.jpg",
+          "runtime_fn": "ocs-fukuoka-tonkotsu-ramen-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-023-FOOD",
+          "poi": "明太子",
+          "expected_fn": "ocs-fukuoka-mentaiko-acquisition-cover.jpg",
+          "runtime_fn": "ocs-fukuoka-mentaiko-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-024-FOOD",
+          "poi": "水炊锅",
+          "expected_fn": "ocs-fukuoka-mizutaki-official-guide-cover.jpg",
+          "runtime_fn": "ocs-fukuoka-mizutaki-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-025-FOOD",
+          "poi": "屋台",
+          "expected_fn": "ocs-fukuoka-yatai-food-community-media.jpg",
+          "runtime_fn": "ocs-fukuoka-yatai-food-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "live_consumer_runtime",
+      "label": "Live Consumer · 首页日本 Ambient + Market 壳 + 日本相关内容无 fallback",
+      "pass": true,
+      "catalog_api_requests": 2,
+      "poi_runtime": {
+        "pass": 41,
+        "total": 41
+      },
+      "poi_rows": [
+        {
+          "city_zh": "东京",
+          "poi": "浅草寺",
+          "expected_fn": "ocs-tokyo-photo-official-guide-cover.jpg",
+          "runtime_fn": "ocs-tokyo-photo-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "东京塔",
+          "expected_fn": "ocs-tokyo-photo-community-media.jpg",
+          "runtime_fn": "ocs-tokyo-photo-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "新宿",
+          "expected_fn": "ocs-tokyo-photo-community-cover.jpg",
+          "runtime_fn": "ocs-tokyo-photo-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "涩谷",
+          "expected_fn": "ocs-tokyo-photo-provider-cover.jpg",
+          "runtime_fn": "ocs-tokyo-photo-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "上野公园",
+          "expected_fn": "ocs-tokyo-photo-acquisition-cover.jpg",
+          "runtime_fn": "ocs-tokyo-photo-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "寿司",
+          "expected_fn": "ocs-tokyo-sushi-community-cover.jpg",
+          "runtime_fn": "ocs-tokyo-sushi-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "拉面",
+          "expected_fn": "ocs-tokyo-ramen-guide-avatar.jpg",
+          "runtime_fn": "ocs-tokyo-ramen-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "天妇罗",
+          "expected_fn": "ocs-tokyo-tempura-provider-cover.jpg",
+          "runtime_fn": "ocs-tokyo-tempura-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "东京",
+          "poi": "居酒屋",
+          "expected_fn": "ocs-tokyo-photo-guide-avatar.jpg",
+          "runtime_fn": "ocs-tokyo-photo-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "大阪城",
+          "expected_fn": "ocs-osaka-castle-official-guide-cover.jpg",
+          "runtime_fn": "ocs-osaka-castle-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "道顿堀",
+          "expected_fn": "ocs-osaka-dotonbori-official-guide-cover.jpg",
+          "runtime_fn": "ocs-osaka-dotonbori-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "环球影城",
+          "expected_fn": "ocs-osaka-usj-official-guide-cover.jpg",
+          "runtime_fn": "ocs-osaka-usj-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "心斋桥",
+          "expected_fn": "ocs-osaka-shinsaibashi-official-guide-cover.jpg",
+          "runtime_fn": "ocs-osaka-shinsaibashi-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "章鱼烧",
+          "expected_fn": "ocs-osaka-takoyaki-community-cover.jpg",
+          "runtime_fn": "ocs-osaka-takoyaki-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "大阪烧",
+          "expected_fn": "ocs-osaka-okonomiyaki-guide-avatar.jpg",
+          "runtime_fn": "ocs-osaka-okonomiyaki-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "河豚",
+          "expected_fn": "ocs-osaka-fugu-acquisition-cover.jpg",
+          "runtime_fn": "ocs-osaka-fugu-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "大阪",
+          "poi": "串炸",
+          "expected_fn": "ocs-osaka-kushikatsu-provider-cover.jpg",
+          "runtime_fn": "ocs-osaka-kushikatsu-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "伏见稻荷",
+          "expected_fn": "ocs-kyoto-culture-official-guide-cover.jpg",
+          "runtime_fn": "ocs-kyoto-culture-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "清水寺",
+          "expected_fn": "ocs-kyoto-culture-community-media.jpg",
+          "runtime_fn": "ocs-kyoto-culture-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "金阁寺",
+          "expected_fn": "ocs-kyoto-culture-community-cover.jpg",
+          "runtime_fn": "ocs-kyoto-culture-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "祇园",
+          "expected_fn": "ocs-kyoto-culture-provider-cover.jpg",
+          "runtime_fn": "ocs-kyoto-culture-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "怀石料理",
+          "expected_fn": "ocs-kyoto-culture-acquisition-cover.jpg",
+          "runtime_fn": "ocs-kyoto-culture-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "抹茶甜品",
+          "expected_fn": "ocs-kyoto-culture-guide-avatar.jpg",
+          "runtime_fn": "ocs-kyoto-culture-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "京都",
+          "poi": "汤豆腐",
+          "expected_fn": "ocs-kyoto-yudofu-community-cover.jpg",
+          "runtime_fn": "ocs-kyoto-yudofu-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "大通公园",
+          "expected_fn": "ocs-sapporo-odori-park-official-guide-cover.jpg",
+          "runtime_fn": "ocs-sapporo-odori-park-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "时计台",
+          "expected_fn": "ocs-sapporo-clock-tower-community-media.jpg",
+          "runtime_fn": "ocs-sapporo-clock-tower-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "羊之丘",
+          "expected_fn": "ocs-sapporo-hitachi-hill-community-cover.jpg",
+          "runtime_fn": "ocs-sapporo-hitachi-hill-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "白色恋人工厂",
+          "expected_fn": "ocs-sapporo-shiroi-koibito-provider-cover.jpg",
+          "runtime_fn": "ocs-sapporo-shiroi-koibito-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "藻岩山",
+          "expected_fn": "ocs-sapporo-moiwa-acquisition-cover.jpg",
+          "runtime_fn": "ocs-sapporo-moiwa-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "味噌拉面",
+          "expected_fn": "ocs-sapporo-miso-ramen-guide-avatar.jpg",
+          "runtime_fn": "ocs-sapporo-miso-ramen-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "成吉思汗",
+          "expected_fn": "ocs-sapporo-jingisukan-official-guide-cover.jpg",
+          "runtime_fn": "ocs-sapporo-jingisukan-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "汤咖喱",
+          "expected_fn": "ocs-sapporo-soup-curry-community-cover.jpg",
+          "runtime_fn": "ocs-sapporo-soup-curry-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "札幌",
+          "poi": "海鲜",
+          "expected_fn": "ocs-sapporo-seafood-provider-cover.jpg",
+          "runtime_fn": "ocs-sapporo-seafood-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-018-ATR",
+          "poi": "博多",
+          "expected_fn": "ocs-fukuoka-hakata-official-guide-cover.jpg",
+          "runtime_fn": "ocs-fukuoka-hakata-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-019-ATR",
+          "poi": "太宰府",
+          "expected_fn": "ocs-fukuoka-dazaifu-community-media.jpg",
+          "runtime_fn": "ocs-fukuoka-dazaifu-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-020-ATR",
+          "poi": "能古岛",
+          "expected_fn": "ocs-fukuoka-nokonoshima-community-cover.jpg",
+          "runtime_fn": "ocs-fukuoka-nokonoshima-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-021-ATR",
+          "poi": "屋台",
+          "expected_fn": "ocs-fukuoka-yatai-atr-provider-cover.jpg",
+          "runtime_fn": "ocs-fukuoka-yatai-atr-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-022-FOOD",
+          "poi": "豚骨拉面",
+          "expected_fn": "ocs-fukuoka-tonkotsu-ramen-guide-avatar.jpg",
+          "runtime_fn": "ocs-fukuoka-tonkotsu-ramen-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-023-FOOD",
+          "poi": "明太子",
+          "expected_fn": "ocs-fukuoka-mentaiko-acquisition-cover.jpg",
+          "runtime_fn": "ocs-fukuoka-mentaiko-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-024-FOOD",
+          "poi": "水炊锅",
+          "expected_fn": "ocs-fukuoka-mizutaki-official-guide-cover.jpg",
+          "runtime_fn": "ocs-fukuoka-mizutaki-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "福冈",
+          "matrix_id": "PH-JP-025-FOOD",
+          "poi": "屋台",
+          "expected_fn": "ocs-fukuoka-yatai-food-community-media.jpg",
+          "runtime_fn": "ocs-fukuoka-yatai-food-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        }
+      ],
+      "surface_rows": [
+        {
+          "surface": "home_japan_ambient",
+          "pass": true,
+          "runtime_src": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-jp-home-v1.jpg"
+        },
+        {
+          "surface": "market_custom_itinerary_shell",
+          "pass": true
+        },
+        {
+          "surface": "market_provider",
+          "pass": true,
+          "image_count": 0,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "market_acquisition",
+          "pass": true,
+          "image_count": 10,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "traveltrust",
+          "pass": true,
+          "image_count": 0,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "community",
+          "pass": true,
+          "image_count": 10,
+          "forbidden_count": 0
+        }
+      ],
+      "issues": []
+    }
+  ],
+  "all_pass": true,
+  "poi_runtime_pass": 41,
+  "poi_runtime_required": 41,
+  "city_summary": [
+    {
+      "city_zh": "东京",
+      "exit_runtime": "9/9",
+      "catalog_pass": 9,
+      "catalog_total": 9,
+      "live_pass": 9,
+      "live_total": 9
+    },
+    {
+      "city_zh": "大阪",
+      "exit_runtime": "undefined/undefined",
+      "catalog_pass": 8,
+      "catalog_total": 8,
+      "live_pass": 8,
+      "live_total": 8
+    },
+    {
+      "city_zh": "京都",
+      "exit_runtime": "7/7",
+      "catalog_pass": 7,
+      "catalog_total": 7,
+      "live_pass": 7,
+      "live_total": 7
+    },
+    {
+      "city_zh": "札幌",
+      "exit_runtime": "9/9",
+      "catalog_pass": 9,
+      "catalog_total": 9,
+      "live_pass": 9,
+      "live_total": 9
+    },
+    {
+      "city_zh": "福冈",
+      "exit_runtime": "8/8",
+      "catalog_pass": 8,
+      "catalog_total": 8,
+      "live_pass": 8,
+      "live_total": 8
+    }
+  ],
+  "verdict": "JP_COUNTRY_RUNTIME_PASS",
+  "TT_CMS_JP_COUNTRY_RUNTIME": "PASS",
+  "blockers": []
+}

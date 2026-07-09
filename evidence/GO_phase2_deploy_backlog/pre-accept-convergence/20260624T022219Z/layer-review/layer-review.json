@@ -1,0 +1,977 @@
+{
+  "schema": "traveltrust.p2fc_deploy_backlog_layer_review.v1",
+  "generated_at_utc": "2026-06-24T02:24:00Z",
+  "backlog_stamp": "20260624T013808Z",
+  "active": {
+    "schema": "traveltrust.local_deploy_backlog_active.v1",
+    "frozen_at_utc": "2026-06-24T01:38:52Z",
+    "stamp": "20260624T013808Z",
+    "dirty_path_count": 354,
+    "local_HEAD_at_freeze": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+    "staging_runtime_git_sha_at_freeze": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+    "apply_after": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+    "apply_script": "scripts/ops/p2fc-post-soak-deploy-backlog-and-graduate.sh",
+    "artifacts": {
+      "porcelain": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\20260624T013808Z\\dirty-paths.porcelain",
+      "diff_stat": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\20260624T013808Z\\diff-stat.txt",
+      "patch": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\20260624T013808Z\\deploy-backlog.patch"
+    },
+    "clean_summary": {
+      "dirty_before": 354,
+      "dirty_after": 104
+    },
+    "policy": "soak_inflight_no_staging_redeploy_until_completed",
+    "meta_availability_hotfix_patch": "evidence/GO_phase2_deploy_backlog/meta-availability-hotfix.patch",
+    "clean_note": "tracked backlog in deploy-backlog.patch (250 files); untracked ?? paths removed at clean — re-archive script now copies untracked for future runs"
+  },
+  "counts": {
+    "files_in_diff_stat": 107,
+    "patch_bytes": 1136317,
+    "hotfix_patch_bytes": 5964
+  },
+  "layers": {
+    "L0_META_HOTFIX": {
+      "title": "meta 可用性 · G02 验收前置",
+      "files": [
+        {
+          "path": "crates/api/src/middleware/mod.rs",
+          "delta": 12,
+          "layer_title": "meta 可用性 · G02 验收前置",
+          "risk_tags": [
+            "UNCLASSIFIED"
+          ]
+        },
+        {
+          "path": "crates/api/src/router.rs",
+          "delta": 2,
+          "layer_title": "meta 可用性 · G02 验收前置",
+          "risk_tags": [
+            "UNCLASSIFIED"
+          ]
+        },
+        {
+          "path": "crates/api/src/routes/health_meta/handlers.rs",
+          "delta": 2,
+          "layer_title": "meta 可用性 · G02 验收前置",
+          "risk_tags": [
+            "BLOCKING_GRADUATION"
+          ]
+        },
+        {
+          "path": "frontend/app/meta/route.ts",
+          "delta": 9,
+          "layer_title": "meta 可用性 · G02 验收前置",
+          "risk_tags": [
+            "BLOCKING_GRADUATION",
+            "MEDIUM_UI"
+          ]
+        }
+      ]
+    },
+    "L1_API_RUNTIME": {
+      "title": "API 运行时 / 路由 / DB",
+      "files": [
+        {
+          "path": "crates/api/src/db/mod.rs",
+          "delta": 2,
+          "layer_title": "API 运行时 / 路由 / DB",
+          "risk_tags": [
+            "HIGH_API_DATA"
+          ]
+        },
+        {
+          "path": "crates/api/src/routes/itineraries.rs",
+          "delta": 195,
+          "layer_title": "API 运行时 / 路由 / DB",
+          "risk_tags": [
+            "HIGH_API_DATA"
+          ]
+        }
+      ]
+    },
+    "L2_FRONTEND_RUNTIME": {
+      "title": "Web 运行时 UI/数据链",
+      "files": [
+        {
+          "path": "frontend/.i18n-coverage.json",
+          "delta": 17,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "UNCLASSIFIED"
+          ]
+        },
+        {
+          "path": "frontend/app/guides/page.tsx",
+          "delta": 5,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "MEDIUM_UI"
+          ]
+        },
+        {
+          "path": "frontend/app/market/MarketPageClient.tsx",
+          "delta": 4,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "MEDIUM_UI"
+          ]
+        },
+        {
+          "path": "frontend/app/orders/OrdersListCardItem.tsx",
+          "delta": 9,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "MEDIUM_UI"
+          ]
+        },
+        {
+          "path": "frontend/app/orders/OrdersListCards.tsx",
+          "delta": 33,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "MEDIUM_UI"
+          ]
+        },
+        {
+          "path": "frontend/app/orders/useOrdersListPageCore.ts",
+          "delta": 7,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "MEDIUM_UI"
+          ]
+        },
+        {
+          "path": "frontend/app/terms/community-guidelines/page.tsx",
+          "delta": 1,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "MEDIUM_UI"
+          ]
+        },
+        {
+          "path": "frontend/components/admin/AdminMainBootGate.tsx",
+          "delta": 32,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "MEDIUM_UI"
+          ]
+        },
+        {
+          "path": "frontend/components/header/HeaderUserMenu.tsx",
+          "delta": 11,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "MEDIUM_UI"
+          ]
+        },
+        {
+          "path": "frontend/components/market/useMarketPage.ts",
+          "delta": 119,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "MEDIUM_UI"
+          ]
+        },
+        {
+          "path": "frontend/evidence/GO_local_phase1/README.md",
+          "delta": 45,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "UNCLASSIFIED"
+          ]
+        },
+        {
+          "path": "frontend/lib/admin/adminNavPerfL5.contract.test.ts",
+          "delta": 5,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/lib/apiClient/marketSubsite/http.ts",
+          "delta": 3,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "UNCLASSIFIED"
+          ]
+        },
+        {
+          "path": "frontend/lib/marketingUi.ts",
+          "delta": 2,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "UNCLASSIFIED"
+          ]
+        },
+        {
+          "path": "frontend/lib/orders/ordersListL5.contract.test.ts",
+          "delta": 29,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/lib/traveltrust/home/visualQaManifest.ts",
+          "delta": 10,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "UNCLASSIFIED"
+          ]
+        },
+        {
+          "path": "frontend/locales/en.ts",
+          "delta": 10,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "UNCLASSIFIED"
+          ]
+        },
+        {
+          "path": "frontend/playwright.config.ts",
+          "delta": 53,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "UNCLASSIFIED"
+          ]
+        },
+        {
+          "path": "frontend/scripts/run-dev-webserver-logged.mjs",
+          "delta": 4,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "UNCLASSIFIED"
+          ]
+        },
+        {
+          "path": "frontend/scripts/run-e2e-default.mjs",
+          "delta": 21,
+          "layer_title": "Web 运行时 UI/数据链",
+          "risk_tags": [
+            "UNCLASSIFIED"
+          ]
+        }
+      ]
+    },
+    "L3_FRONTEND_E2E": {
+      "title": "E2E/烟测（不随镜像默认执行）",
+      "files": [
+        {
+          "path": "frontend/e2e/53-main-path.spec.ts",
+          "delta": 237,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/93-matrix-admin-deep-batch.spec.ts",
+          "delta": 28,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/93-matrix-admin-domain-batch.spec.ts",
+          "delta": 15,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/93-matrix-enterprise-p1-batch.spec.ts",
+          "delta": 6,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/93-matrix-path-f1-f4.spec.ts",
+          "delta": 31,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/93-matrix-path-p1-remediation.spec.ts",
+          "delta": 97,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/96-17-header-identity-spine.spec.ts",
+          "delta": 10,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/account-nav-header-ia.spec.ts",
+          "delta": 29,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/admin-l5-staging-closure.spec.ts",
+          "delta": 11,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/auth-reset-password-api-happy.spec.ts",
+          "delta": 5,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/auth-reset-password-api.spec.ts",
+          "delta": 3,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/auth-verify-email-api.spec.ts",
+          "delta": 3,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/c-s1-admin-content-crud.spec.ts",
+          "delta": 24,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/c-s3-catalog-operations-admin.spec.ts",
+          "delta": 18,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/community-feed-discovery-geo.spec.ts",
+          "delta": 4,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/community-me-data-state.spec.ts",
+          "delta": 176,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/community-modals-interaction.spec.ts",
+          "delta": 61,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/community-phase1-narrow-flows.spec.ts",
+          "delta": 136,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/community-subroutes-data.spec.ts",
+          "delta": 16,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/core-path.spec.ts",
+          "delta": 2,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/f012-f013-f014-request.spec.ts",
+          "delta": 34,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/f021-f022-f023-request.spec.ts",
+          "delta": 28,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/f024-f025-f026-request.spec.ts",
+          "delta": 4,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/f027-f028-f033-request.spec.ts",
+          "delta": 2,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/f029-f030-f031-request.spec.ts",
+          "delta": 25,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/g-s1-referral-minimum-loop.spec.ts",
+          "delta": 9,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/g-s2-growth-ledger-observer.spec.ts",
+          "delta": 8,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/g-s3-early-bird-multiplier.spec.ts",
+          "delta": 17,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/g-s4-user-referral-center.spec.ts",
+          "delta": 18,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/governance-params-full-l5.spec.ts",
+          "delta": 84,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/governance-proposal-create-l5.spec.ts",
+          "delta": 31,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/guide-register-l5.spec.ts",
+          "delta": 15,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/guide-workbench-full-l5.spec.ts",
+          "delta": 2,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/guide-workbench-inbox-l5.spec.ts",
+          "delta": 2,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/accountNavSession.ts",
+          "delta": 13,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/adminCapabilitiesSession.ts",
+          "delta": 30,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/apiSession.ts",
+          "delta": 91,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/communityFeedPostDeepLink.ts",
+          "delta": 5,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/communityMeLegacyRedirects.ts",
+          "delta": 21,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/communityMePageReady.ts",
+          "delta": 198,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/communitySocialFlow.ts",
+          "delta": 30,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/headerUserMenu.ts",
+          "delta": 3,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/landingHomeForm.ts",
+          "delta": 13,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/marketSeedGuideCard.ts",
+          "delta": 95,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/marketStudioOpen.ts",
+          "delta": 41,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/meIdentitiesHubMocks.ts",
+          "delta": 4,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/meSettingsE2e.ts",
+          "delta": 41,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/p0RealApiWaits.ts",
+          "delta": 31,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/seedPaidMarketEntitlements.ts",
+          "delta": 100,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/smoke-nav.ts",
+          "delta": 45,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/traveltrustV6Ready.ts",
+          "delta": 10,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/uiAuthControlledForms.ts",
+          "delta": 44,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/home-landing-shell.spec.ts",
+          "delta": 13,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/itinerary-52.spec.ts",
+          "delta": 136,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/l5-a11y-live-scan.spec.ts",
+          "delta": 22,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/market-deep-link.spec.ts",
+          "delta": 118,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/market-subsite-shared.ts",
+          "delta": 240,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/market-subsite-studios.body.ts",
+          "delta": 81,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/me-identities-core-hub.spec.ts",
+          "delta": 20,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/me-onboarding-96-18-shell.spec.ts",
+          "delta": 130,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/me-security-community-hub.spec.ts",
+          "delta": 60,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/me-settings-l5-hub.spec.ts",
+          "delta": 35,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/orders-list-filters-search.spec.ts",
+          "delta": 94,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/orders-list-keyboard.spec.ts",
+          "delta": 52,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/orders-list-to-escrow.spec.ts",
+          "delta": 44,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/orders-list-to-pay.spec.ts",
+          "delta": 40,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/p0-spine-real-api-public.spec.ts",
+          "delta": 38,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/p0-spine-real-api-session.spec.ts",
+          "delta": 79,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/p01-login-market-auth.spec.ts",
+          "delta": 58,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/p02-tourist-order-create-list.spec.ts",
+          "delta": 12,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/p03-tourist-guide-accept.spec.ts",
+          "delta": 15,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/p04-bilateral-confirm.spec.ts",
+          "delta": 12,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/release-flow.spec.ts",
+          "delta": 46,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/smoke-admin-extended.spec.ts",
+          "delta": 81,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/smoke-admin.spec.ts",
+          "delta": 143,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/smoke-community.spec.ts",
+          "delta": 7,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/smoke-governance.spec.ts",
+          "delta": 50,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/smoke.spec.ts",
+          "delta": 401,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/steward-workbench-full-l5.spec.ts",
+          "delta": 28,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        },
+        {
+          "path": "frontend/e2e/trust-gate-escrow.spec.ts",
+          "delta": 281,
+          "layer_title": "E2E/烟测（不随镜像默认执行）",
+          "risk_tags": [
+            "LOW_TEST_ONLY"
+          ]
+        }
+      ]
+    },
+    "L9_OTHER": {
+      "title": "其它",
+      "files": [
+        {
+          "path": ".../api/src/middleware/auth_pause_metrics/mod.rs",
+          "delta": 1,
+          "layer_title": "其它",
+          "risk_tags": [
+            "UNCLASSIFIED"
+          ]
+        }
+      ]
+    }
+  },
+  "risk_summary": {
+    "HIGH_API_DATA": 2,
+    "UNCLASSIFIED": 12,
+    "BLOCKING_GRADUATION": 2,
+    "MEDIUM_UI": 10,
+    "LOW_TEST_ONLY": 82
+  },
+  "deploy_waves": [
+    {
+      "wave": 0,
+      "name": "meta-hotfix",
+      "layer": "L0_META_HOTFIX",
+      "action": "apply meta-availability-hotfix.patch + fly.toml REQUEST_TIMEOUT_SECS=120",
+      "blocks": [
+        "G02",
+        "Graduation"
+      ],
+      "file_count": 4
+    },
+    {
+      "wave": 1,
+      "name": "api-runtime",
+      "layer": "L1_API_RUNTIME",
+      "action": "deploy tt-api-staging（含 L1 变更）",
+      "blocks": [
+        "TN-P1-010 compound",
+        "indexer reconcile read"
+      ],
+      "file_count": 2
+    },
+    {
+      "wave": 2,
+      "name": "web-runtime",
+      "layer": "L2_FRONTEND_RUNTIME",
+      "action": "deploy tt-web-staging",
+      "blocks": [
+        "web /meta rewrite G01"
+      ],
+      "file_count": 20
+    },
+    {
+      "wave": 3,
+      "name": "backlog-remainder",
+      "layer": "L3+",
+      "action": "同批 deploy-backlog.patch 余量（e2e 不进镜像关键路径）",
+      "blocks": [],
+      "file_count": 81
+    }
+  ],
+  "post_soak_order": [
+    "TN-P1-010 independent (internal spine)",
+    "wave-0 meta hotfix",
+    "wave-1 api deploy",
+    "wave-2 web deploy",
+    "p2fc-verify-staging-meta-availability.sh --strict",
+    "run-phase2-testnet-post-soak-graduation-closure.sh"
+  ],
+  "verdict": "PASS",
+  "notes": [
+    "soak_inflight: review-only until COMPLETED.json"
+  ]
+}

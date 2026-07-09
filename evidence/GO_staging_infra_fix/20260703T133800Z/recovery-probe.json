@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.staging_infra_recovery_probe.v1",
+  "stamp": "20260703T133800Z",
+  "market_runtime": "CLOSED",
+  "phase1_local_mirror": { "acquisition_listings_http": 200, "market_feed_http": 200, "health_ready_http": 200 },
+  "phase2_staging": { "acquisition_listings_http": 200, "market_feed_http": 200, "health_ready_http": 200 },
+  "media": { "tunnel_url": "https://sixty-foxes-grin.loca.lt", "minio_health_http": 200 },
+  "source_truth_audit": "PASS",
+  "blocking_count": 0
+}

@@ -1,0 +1,261 @@
+{
+  "schema": "traveltrust.production_release_review_ledger.v1",
+  "stamp": "20260702T023800Z",
+  "generated_at_utc": "2026-07-02T02:46:31.434Z",
+  "name": "Production Release Review · Business Domain Validation",
+  "not_a_new_audit_type": true,
+  "synthesizes": [
+    "Functional Audit",
+    "Enterprise Capability Audit",
+    "Frontend-API Consistency Audit",
+    "Display Data Governance",
+    "Business Manual UAT",
+    "Phase12 Final Convergence"
+  ],
+  "layers": [
+    "L1_all_pages",
+    "L2_business_flows",
+    "L3_admin_functions",
+    "L4_page_consistency",
+    "L5_enterprise_ux"
+  ],
+  "summary": {
+    "domains_total": 12,
+    "pass": 1,
+    "partial": 9,
+    "gap": 2,
+    "product_defects_open": 2,
+    "production_blockers_pi3": 6,
+    "all_domains_pass": false
+  },
+  "domain_matrix": [
+    {
+      "domain": "Home",
+      "pages": [
+        "/",
+        "/traveltrust"
+      ],
+      "api": "PASS",
+      "browser": "PARTIAL",
+      "admin": "N/A",
+      "business": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL",
+      "gap": "No dedicated BDV browser + campaign cold-start depth vs Guide"
+    },
+    {
+      "domain": "Market · Guides",
+      "pages": [
+        "/market?view=guides"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "PASS",
+      "business": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Discover · Orders",
+      "pages": [
+        "/market?view=orders"
+      ],
+      "api": "PASS",
+      "browser": "PARTIAL",
+      "admin": "N/A",
+      "business": "PASS",
+      "ux": "PARTIAL",
+      "status": "PARTIAL",
+      "gap": "BDV browser PASS (page load); strict UI count vs API pending"
+    },
+    {
+      "domain": "Provider",
+      "pages": [
+        "/market?view=provider",
+        "/provider"
+      ],
+      "api": "PARTIAL",
+      "browser": "PARTIAL",
+      "admin": "PARTIAL",
+      "business": "PARTIAL",
+      "ux": "GAP",
+      "status": "PARTIAL",
+      "gap": "UAT-04 + BDV browser PASS; provider card FE↔API parity not Guide-depth"
+    },
+    {
+      "domain": "Acquisition",
+      "pages": [
+        "/market/acquisition"
+      ],
+      "api": "PARTIAL",
+      "browser": "PARTIAL",
+      "admin": "PARTIAL",
+      "business": "PARTIAL",
+      "ux": "GAP",
+      "status": "PARTIAL",
+      "gap": "UAT-09 + BDV browser PASS; settlement/detail chain not release-reviewed"
+    },
+    {
+      "domain": "Itinerary",
+      "pages": [
+        "/",
+        "/orders/new",
+        "/itineraries"
+      ],
+      "api": "PARTIAL",
+      "browser": "PARTIAL",
+      "admin": "N/A",
+      "business": "PARTIAL",
+      "ux": "GAP",
+      "status": "PARTIAL",
+      "gap": "BDV landing only; draft/publish/preview/order chain not browser-audited"
+    },
+    {
+      "domain": "Community",
+      "pages": [
+        "/community",
+        "/community/explore"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "PASS",
+      "business": "PASS",
+      "ux": "PARTIAL",
+      "status": "PARTIAL",
+      "gap": "UX review informal; feed depth PASS"
+    },
+    {
+      "domain": "Messages",
+      "pages": [
+        "/community/messages"
+      ],
+      "api": "PARTIAL",
+      "browser": "PARTIAL",
+      "admin": "N/A",
+      "business": "PARTIAL",
+      "ux": "GAP",
+      "status": "PARTIAL",
+      "gap": "UAT-10 + BDV browser PASS; strict API count == UI rows pending"
+    },
+    {
+      "domain": "Governance",
+      "pages": [
+        "/governance",
+        "/governance/proposals"
+      ],
+      "api": "PASS",
+      "browser": "PARTIAL",
+      "admin": "PASS",
+      "business": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL",
+      "gap": "Browser skipped without STAGING_AUDIT_EMAIL in CI"
+    },
+    {
+      "domain": "Orders · Escrow",
+      "pages": [
+        "/escrow",
+        "/orders"
+      ],
+      "api": "PARTIAL",
+      "browser": "GAP",
+      "admin": "PARTIAL",
+      "business": "PARTIAL",
+      "ux": "GAP",
+      "status": "GAP",
+      "gap": "S08 API only; cross-role order identity not in browser ledger"
+    },
+    {
+      "domain": "Web3 · Staking",
+      "pages": [
+        "/staking",
+        "/treasury"
+      ],
+      "api": "PARTIAL",
+      "browser": "GAP",
+      "admin": "N/A",
+      "business": "PARTIAL",
+      "ux": "GAP",
+      "status": "GAP",
+      "gap": "Sepolia complete on testnet; mainnet = PI3-005"
+    },
+    {
+      "domain": "Admin Platform",
+      "pages": [
+        "/admin/*"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "PASS",
+      "business": "PASS",
+      "ux": "PARTIAL",
+      "status": "PARTIAL",
+      "gap": "40/40 machine PASS; button-by-button Release Review layer pending"
+    }
+  ],
+  "ledger": {
+    "product_defects": [
+      {
+        "id": "PD-BDV-Orders_Escrow",
+        "classification": "PRODUCT_DEFECT",
+        "domain": "Orders · Escrow",
+        "disposition": "CLOSE_BEFORE_PI3_PRODUCT_SIGNOFF",
+        "gap": "S08 API only; cross-role order identity not in browser ledger",
+        "status": "OPEN"
+      },
+      {
+        "id": "PD-BDV-Web3_Staking",
+        "classification": "PRODUCT_DEFECT",
+        "domain": "Web3 · Staking",
+        "disposition": "CLOSE_BEFORE_PI3_PRODUCT_SIGNOFF",
+        "gap": "Sepolia complete on testnet; mainnet = PI3-005",
+        "status": "OPEN"
+      }
+    ],
+    "production_blockers": [
+      {
+        "id": "PB-PI3-001",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Production Database / Backup",
+        "disposition": "PI3_MAINLINE"
+      },
+      {
+        "id": "PB-PI3-002",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Domain / TLS / CDN",
+        "disposition": "PI3_MAINLINE"
+      },
+      {
+        "id": "PB-PI3-003",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Stripe Live",
+        "disposition": "PI3_MAINLINE"
+      },
+      {
+        "id": "PB-PI3-004",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Production Validation",
+        "disposition": "PI3_MAINLINE"
+      },
+      {
+        "id": "PB-PI3-005",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Mainnet",
+        "disposition": "PI3_MAINLINE"
+      },
+      {
+        "id": "PB-PI3-006",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Go-Live Checklist",
+        "disposition": "PI3_MAINLINE"
+      }
+    ],
+    "expected_differences": "docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md §4",
+    "enhancements": "Post-GO Official Ops 1.1 · CDN/HLS · Admin SSO"
+  },
+  "machine_keys": {
+    "TT_PRODUCTION_RELEASE_REVIEW": "IN_PROGRESS",
+    "TT_BUSINESS_DOMAIN_VALIDATION": "IN_PROGRESS",
+    "TT_RELEASE_DECISION": "NO_GO"
+  }
+}

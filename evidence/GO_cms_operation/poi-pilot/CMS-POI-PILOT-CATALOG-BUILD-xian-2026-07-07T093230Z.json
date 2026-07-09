@@ -1,0 +1,69 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-07T09:32:30Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "CN",
+    "city_zh": "西安",
+    "matrix_ids": [
+      "PH-CN-321-ATR",
+      "PH-CN-322-ATR",
+      "PH-CN-323-ATR",
+      "PH-CN-324-ATR",
+      "PH-CN-325-ATR",
+      "PH-CN-326-FOOD",
+      "PH-CN-327-FOOD",
+      "PH-CN-328-FOOD",
+      "PH-CN-329-FOOD",
+      "PH-CN-330-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-CN-321-ATR",
+      "poi_id": "c94f2a68-ea15-4443-966d-fa847aba5ece"
+    },
+    {
+      "matrix_id": "PH-CN-322-ATR",
+      "poi_id": "9826c5c8-2fea-4d9b-a44b-c3aecdd03884"
+    },
+    {
+      "matrix_id": "PH-CN-323-ATR",
+      "poi_id": "96614f22-2c8f-447f-8507-5891c3a34d08"
+    },
+    {
+      "matrix_id": "PH-CN-324-ATR",
+      "poi_id": "b2110967-b201-4194-9442-c10cedb9b24a"
+    },
+    {
+      "matrix_id": "PH-CN-325-ATR",
+      "poi_id": "1c7ac46a-1b33-4589-a218-bef3266f065b"
+    },
+    {
+      "matrix_id": "PH-CN-326-FOOD",
+      "poi_id": "b0ec027f-cb40-424c-a583-86ee993f886c"
+    },
+    {
+      "matrix_id": "PH-CN-327-FOOD",
+      "poi_id": "d423670f-0168-4d6a-801a-a795f67b860b"
+    },
+    {
+      "matrix_id": "PH-CN-328-FOOD",
+      "poi_id": "62c7ba26-02c5-4acb-b36c-5e601a51c432"
+    },
+    {
+      "matrix_id": "PH-CN-329-FOOD",
+      "poi_id": "4a414be8-9f23-40c6-94dc-529689d3dae9"
+    },
+    {
+      "matrix_id": "PH-CN-330-FOOD",
+      "poi_id": "37e2fabf-9782-4a04-931c-cb9ffee12bfd"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 10,
+    "expected": 10
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

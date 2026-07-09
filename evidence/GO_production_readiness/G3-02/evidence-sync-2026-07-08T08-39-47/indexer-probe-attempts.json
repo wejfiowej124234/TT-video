@@ -1,0 +1,29 @@
+{
+  "ok": false,
+  "attempts": [
+    {
+      "attempt": 1,
+      "http": 500,
+      "error": "fetch_escrow_logs_failed",
+      "detail": "Too many request, try again later"
+    },
+    {
+      "attempt": 2,
+      "http": 500,
+      "error": "get_latest_block_failed",
+      "detail": "Too many request, try again later"
+    },
+    {
+      "attempt": 3,
+      "http": 500,
+      "error": "fetch_escrow_logs_failed",
+      "detail": "Too many request, try again later"
+    },
+    {
+      "attempt": 4,
+      "http": 500,
+      "error": "get_latest_block_failed",
+      "detail": "Too many request, try again later"
+    }
+  ]
+}

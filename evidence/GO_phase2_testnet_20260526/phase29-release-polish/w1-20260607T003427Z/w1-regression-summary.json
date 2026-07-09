@@ -1,0 +1,77 @@
+{
+  "batch": "W1",
+  "items": [
+    "RP-001",
+    "RP-012"
+  ],
+  "git_sha_worktree": "7b86e58b04eb45b18e9528f63dfefb3efeabba70",
+  "regression": {
+    "L0": {
+      "script": "scripts/gates/ci-local-delivery-minimum.sh",
+      "exit": 0
+    },
+    "MKT": {
+      "script": "scripts/dev/run-web3-itinerary-l5-green.sh",
+      "exit": 0,
+      "tests": "133 passed"
+    },
+    "AUTH": {
+      "script": "vitest auth L5 + authErrorA11y + marketFilterSearch",
+      "exit": 0,
+      "tests": "29 passed (8 files)"
+    },
+    "HAT_local_market": {
+      "target": "http://127.0.0.1:3012",
+      "spec": "phase28-human-acceptance-browser.spec.ts --grep \u5e02\u573a",
+      "exit": 0,
+      "note": "RP-001 searchbox visible on local W1 code"
+    },
+    "HAT_staging_full": {
+      "target": "https://tt-web-staging.fly.dev",
+      "out": "evidence/phase28-human-acceptance/20260607T003521Z",
+      "verdict": "PASS",
+      "p0": 0,
+      "p1": 0,
+      "p2": 1,
+      "exit": 0,
+      "note": "Staging not yet deployed W1; P2=1 pre-existing (merchant seed). RP-001 fix verified on local HAT leg."
+    }
+  },
+  "scope_discipline": "UI-only; no API/DB/RBAC/orders/funds changes",
+  "HAT_staging_findings": {
+    "p2_issues": [
+      {
+        "id": "HAT-P2-001",
+        "role": "\u5546\u5bb6",
+        "area": "\u6d4b\u8bd5\u8d26\u53f7",
+        "route": "/provider/register",
+        "priority": "P2",
+        "title": "Staging \u65e0\u9884\u7f6e\u5546\u5bb6\u6d4b\u8bd5\u8d26\u53f7",
+        "observation": "\u4ec5 tourist/guide \u79cd\u5b50\uff1b\u5546\u5bb6\u987b\u5b8c\u6574\u6ce8\u518c+\u5ba1\u6838\u94fe",
+        "human_impact": "QA \u65e0\u6cd5\u4e00\u952e\u5207\u6362\u5546\u5bb6\u89d2\u8272\uff0c\u5ef6\u957f\u9a8c\u6536\u5468\u671f",
+        "repro": "docs/\u6d4b\u8bd5\u8d26\u53f7\u4e0e\u672c\u5730\u8054\u8c03.md \u4ec5\u5217 tourist/guide"
+      },
+      {
+        "id": "HAT-B-001",
+        "role": "\u65c5\u884c\u8005",
+        "area": "\u5e02\u573a",
+        "route": "/market",
+        "priority": "P2",
+        "title": "\u641c\u7d22\u6846\u4e0d\u660e\u663e",
+        "observation": "no searchbox role",
+        "human_impact": "\u7b5b\u9009/\u641c\u7d22\u4f53\u9a8c\u5f31"
+      },
+      {
+        "id": "HAT-B-003",
+        "role": "\u5546\u5bb6",
+        "area": "\u6d4b\u8bd5\u8d26\u53f7",
+        "route": "/provider/register",
+        "priority": "P2",
+        "title": "\u65e0\u9884\u7f6e\u5546\u5bb6\u4e00\u952e\u8d26\u53f7",
+        "observation": "staging seed \u4ec5 tourist/guide",
+        "human_impact": "\u5b8c\u6574\u5546\u5bb6\u95ed\u73af\u9700\u6ce8\u518c+Admin \u5ba1\u6838\uff0c\u624b\u6d4b\u6210\u672c\u9ad8"
+      }
+    ],
+    "verdict": "PASS"
+  }
+}

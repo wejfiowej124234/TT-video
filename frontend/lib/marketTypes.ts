@@ -68,6 +68,8 @@ export interface OrderCardItem {
   cityTransports?: string[] | null;
   /** 用于排序：最新优先 */
   created_at?: string | null;
+  /** Phase 0+1：公众展示数据分离（`GET discover/orders` / `GET orders`） */
+  data_origin?: string | null;
 }
 
 /** P29 向导卡片：29 §9 可选报价范围 */
@@ -95,4 +97,6 @@ export interface GuideCardItem {
   rating?: number | null;
   completedCount?: number | null;
   responseSLA?: string | null;
+  /** Phase 0+1：公众展示数据分离（`GET guides` 列表卡） */
+  data_origin?: string | null;
 }

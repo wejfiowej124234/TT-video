@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust_l5_b480_gate_record.v1",
+  "recordedUtc": "2026-06-08T03:32:28Z",
+  "gateConfig": "config/b480_prod_fault_slo_gate.v1.json",
+  "acceptanceScript": "scripts/ops/b480-prod-fault-injection-acceptance.py",
+  "liveDrill": "PENDING",
+  "status": "GATE_CONFIG_VERIFIED"
+}

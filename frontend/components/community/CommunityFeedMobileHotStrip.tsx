@@ -39,6 +39,7 @@ export function CommunityFeedMobileHotStrip({
                 <CommunityFeedPromoThumb
                   src={row.thumbSrc}
                   sizes="36px"
+                  fallbackSeed={row.destination}
                   fallback={
                     !row.thumbSrc ? (
                       <span className="absolute inset-0 flex items-center justify-center text-[0.65rem] font-bold text-ref-sun/90">

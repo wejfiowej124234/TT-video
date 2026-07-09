@@ -1,0 +1,99 @@
+{
+  "schema": "traveltrust.p2fc_freeze_candidate_manifest.v1",
+  "generated_at_utc": "2026-06-26T00:13:20Z",
+  "strategy": "STRAT-F_FINAL_CANDIDATE_PRE_SOAK",
+  "phase": "②",
+  "verdict": "CANDIDATE",
+  "git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "baseline": {
+    "gate_p1_01": {
+      "log": "D:/TravelTrust-V1.1/frontend/evidence/GO_local_phase1/site10-p1-slices-recheck.latest.log",
+      "pass": 26,
+      "fail": 0,
+      "ok": true,
+      "summary_line": "# summary pass=25 fail=0 total=25 · 2026-06-25T20:25:26Z"
+    },
+    "gate_p1_01_closed_at": "2026-06-25T23:35:42Z",
+    "site10_log": "D:/TravelTrust-V1.1/frontend/evidence/GO_local_phase1/site10-p1-slices-recheck.latest.log",
+    "policy": "no_gate_rerun — use existing 25/25 log"
+  },
+  "ledger": {
+    "path": "registry/complexity-convergence-fix-ledger.v1.yaml",
+    "status_path": "D:/TravelTrust-V1.1/evidence/COMPLEXITY_CONVERGENCE/ledger-status.latest.json",
+    "counts": {
+      "total": 21,
+      "open_p0": 12,
+      "open_p1": 6,
+      "in_progress": 0,
+      "closed": 0,
+      "gap_open": 18
+    },
+    "ready_for_staging_live": false,
+    "ready_for_freeze_candidate": false,
+    "drift": []
+  },
+  "gap_inventory": {
+    "path": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/gap-inventory.latest.json",
+    "open_count": 18,
+    "fix_before_soak_open": 18
+  },
+  "checks": [
+    {
+      "name": "GATE-P1-01_baseline_25_25",
+      "status": "PASS",
+      "detail": "# summary pass=25 fail=0 total=25 · 2026-06-25T20:25:26Z"
+    },
+    {
+      "name": "GATE-P1-01_phase1_evidence",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "ledger_ready_for_staging_live",
+      "status": "FAIL",
+      "detail": ""
+    },
+    {
+      "name": "ledger_no_drift",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "name": "phase12_consistency_bundle",
+      "status": "FAIL",
+      "detail": ""
+    },
+    {
+      "name": "minimal_smoke_parity",
+      "status": "FAIL",
+      "detail": ""
+    }
+  ],
+  "blocked": [
+    "ledger_ready_for_staging_live",
+    "phase12_consistency_bundle",
+    "minimal_smoke_parity"
+  ],
+  "staging": {
+    "testnet_staging_freeze_active": false,
+    "deploy_complete": true
+  },
+  "soak_prep": {
+    "ready_to_launch": false,
+    "requires_before_launch": [
+      "bash scripts/ops/p2fc-pivot-final-candidate-pre-soak.sh --phase-staging-live",
+      "TT_P2FC_FINAL_CANDIDATE_PHASE_STAGING_LIVE: PASS",
+      "bash scripts/ops/p2fc-pivot-final-candidate-pre-soak.sh --engage-freeze",
+      "P2FC_SOAK_SUPERSEDE=1 bash scripts/ops/p2fc-pivot-final-candidate-pre-soak.sh --launch-soak"
+    ],
+    "launch_command": "P2FC_SOAK_SUPERSEDE=1 bash scripts/ops/p2fc-launch-staging-soak-72h.sh",
+    "soak_dir": "evidence/P2FC_SOAK_72H_STAGING",
+    "duration_hours": 72
+  },
+  "ssot": [
+    "docs/handbook/engineering/181-Complexity-Audit-Final-Candidate-Before-Soak.md",
+    "registry/complexity-convergence-fix-ledger.v1.yaml",
+    "scripts/ops/p2fc-pivot-final-candidate-pre-soak.sh"
+  ],
+  "alignment_report": "D:/TravelTrust-V1.1/evidence/GO_phase2_baseline_consistency_audit/20260626T000751Z/AUDIT-REPORT.md"
+}

@@ -1,0 +1,81 @@
+{
+  "schema": "traveltrust.p2fc_failure_surface_mapping.v1",
+  "surfaces": [
+    {
+      "breakpoint_id": "BP-META-01",
+      "layer": "acceptance",
+      "surface": "meta-chain",
+      "mr12_step": 6,
+      "mr12_phase": "meta_availability",
+      "likelihood": "critical",
+      "failure_mode": "FC-01 timeout mismatch — live 30s vs hotfix 120s",
+      "exposed_during_soak": true,
+      "exposed_post_completed": true,
+      "mr12_mitigation": "MR-01 hotfix-first + wave1/2 before --strict"
+    },
+    {
+      "breakpoint_id": "BP-TN-02",
+      "layer": "execution",
+      "surface": "data/indexer",
+      "mr12_step": 1,
+      "mr12_phase": "tn_p1_010",
+      "likelihood": "high",
+      "failure_mode": "db/mod.rs drift surfaces at reconcile",
+      "exposed_during_soak": false,
+      "exposed_post_completed": true,
+      "mr12_mitigation": "step-1 internal spine before wave1"
+    },
+    {
+      "breakpoint_id": "BP-W1-02",
+      "layer": "deploy",
+      "surface": "api-runtime",
+      "mr12_step": 4,
+      "mr12_phase": "wave1_api_deploy",
+      "likelihood": "high",
+      "failure_mode": "compile OOM / health≠200",
+      "exposed_during_soak": false,
+      "exposed_post_completed": true,
+      "mr12_mitigation": "MR-02 defer itineraries.rs"
+    },
+    {
+      "breakpoint_id": "BP-W1-03",
+      "layer": "deploy",
+      "surface": "consumer-routes",
+      "mr12_step": 4,
+      "mr12_phase": "wave1_api_deploy",
+      "likelihood": "high",
+      "failure_mode": "market/escrow/guide consumer regression post API deploy",
+      "exposed_during_soak": false,
+      "exposed_post_completed": true,
+      "mr12_mitigation": null
+    },
+    {
+      "breakpoint_id": "BP-META-02",
+      "layer": "deploy",
+      "surface": "web-meta-proxy",
+      "mr12_step": 5,
+      "mr12_phase": "wave2_web_deploy",
+      "likelihood": "high",
+      "failure_mode": "web /meta proxy timeout < API cold start",
+      "exposed_during_soak": false,
+      "exposed_post_completed": true,
+      "mr12_mitigation": null
+    },
+    {
+      "breakpoint_id": "BP-DATA-01",
+      "layer": "data",
+      "surface": "indexer-db",
+      "mr12_step": 1,
+      "mr12_phase": "tn_p1_010",
+      "likelihood": "high",
+      "failure_mode": "reconcile read vs PG schema drift after wave1",
+      "exposed_during_soak": false,
+      "exposed_post_completed": true,
+      "mr12_mitigation": null
+    }
+  ],
+  "critical_surface_count": 1,
+  "acceptance_surface_blocked": [
+    "BP-META-01"
+  ]
+}

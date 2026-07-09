@@ -1,0 +1,502 @@
+[
+    {
+        "ID": "MZzaeRX0025zqI0qQJ8g55q9G",
+        "Version": 48,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-07T02:36:15Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTFXQC5VAVPJPV25ND6XJSAK"
+    },
+    {
+        "ID": "8z4AyglQQDp4BTozNyV1AZ9e",
+        "Version": 47,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-07T02:20:02Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTFXQC5VAVPJPV25ND6XJSAK"
+    },
+    {
+        "ID": "8z4AyglQQDp4BTZBoaaBLb9we",
+        "Version": 46,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-07T02:13:33Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTFNBEPGQYH9NBXG3Q1EM9C1"
+    },
+    {
+        "ID": "6DeM8g9BBOqeQF4zqVMYQDkLN",
+        "Version": 45,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T23:53:51Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTFNBEPGQYH9NBXG3Q1EM9C1"
+    },
+    {
+        "ID": "Z960BNMooxl63ubNOV1XGMN4",
+        "Version": 44,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T23:47:14Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTEVHK104YYF3HAFN4GDWG05"
+    },
+    {
+        "ID": "vOjyazkKK28j5u2n4OVP854ak",
+        "Version": 43,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T16:22:47Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTEVHK104YYF3HAFN4GDWG05"
+    },
+    {
+        "ID": "XaYvVXJNNq9YPT7RzOQ5MAag",
+        "Version": 42,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T16:16:08Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTER1MWJGPDA0PNZ0T623E7D"
+    },
+    {
+        "ID": "YgoYklRLL8Xo3fXb68qYVwv4",
+        "Version": 41,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T15:21:58Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTER1MWJGPDA0PNZ0T623E7D"
+    },
+    {
+        "ID": "8z4AyglQQDp4BTo4M3Z8AAemK",
+        "Version": 40,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T15:14:54Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTEN4QZ4SNP20PBW445H1ZB0"
+    },
+    {
+        "ID": "XaYvVXJNNq9YPT6M4L9oByVRD",
+        "Version": 39,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T14:56:20Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTEN4QZ4SNP20PBW445H1ZB0"
+    },
+    {
+        "ID": "yaZe4zjKK0pZnTLbjK4m2mMg",
+        "Version": 38,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T14:28:21Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTEN4QZ4SNP20PBW445H1ZB0"
+    },
+    {
+        "ID": "jp1QZVeBBN01OTlmlZnGm6kq6",
+        "Version": 37,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T14:24:19Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTEFVSB7PW7X8AYR791TKCA0"
+    },
+    {
+        "ID": "vOjyazkKK28j5u3g4ynmbYAYn",
+        "Version": 36,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T14:20:45Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTEFVSB7PW7X8AYR791TKCA0"
+    },
+    {
+        "ID": "akRvx4BJJDKR8uzmeQP2J9DL",
+        "Version": 35,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T14:14:54Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTEMDEKQ3HWVYW36WFVNQEB8"
+    },
+    {
+        "ID": "L4gbaJ933MmgDHgNR73b0GlvB",
+        "Version": 34,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T14:11:44Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTEKY67HPY8M7N8PX26Z2NAX"
+    },
+    {
+        "ID": "jp1QZVeBBN01OT1kz5P8VVM7",
+        "Version": 33,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T14:10:11Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTEKY67HPY8M7N8PX26Z2NAX"
+    },
+    {
+        "ID": "Nj7oGMlVVpZ7JT0oD9Ln6ORkA",
+        "Version": 32,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "failed",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T14:07:21Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTEKY67HPY8M7N8PX26Z2NAX"
+    },
+    {
+        "ID": "L4gbaJ933MmgDHgnbPbMp5Dyl",
+        "Version": 31,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T14:03:14Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTEFVSB7PW7X8AYR791TKCA0"
+    },
+    {
+        "ID": "og8k9ZRKKeO8MfQ4210pb5nN",
+        "Version": 30,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T12:53:02Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTEFVSB7PW7X8AYR791TKCA0"
+    },
+    {
+        "ID": "VRl7314XXwvlkHzLnxGll2aVe",
+        "Version": 29,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T12:52:03Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTE63VY3FRBXX469A4NBSX22"
+    },
+    {
+        "ID": "Knyl6AYppR5yqCyXOyXAKA8k1",
+        "Version": 28,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T10:10:36Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTE63VY3FRBXX469A4NBSX22"
+    },
+    {
+        "ID": "gBVgYpo0096V8HVARb51kYY6",
+        "Version": 27,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T10:08:23Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTE63VY3FRBXX469A4NBSX22"
+    },
+    {
+        "ID": "k4QVvkG11LgQOHwnbkvMKpRO",
+        "Version": 26,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T09:11:26Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTDWJDT2W675DAEB9M6EY3J1"
+    },
+    {
+        "ID": "3Ao2wbV00g5oQUD8lAYYBJwDK",
+        "Version": 25,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T09:09:31Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTDWJDT2W675DAEB9M6EY3J1"
+    },
+    {
+        "ID": "og8k9ZRKKeO8MfLVK2Y76Rqkk",
+        "Version": 24,
+        "Stable": false,
+        "InProgress": false,
+        "Reason": "",
+        "Description": "Release",
+        "Status": "complete",
+        "DeploymentStrategy": "",
+        "Metadata": null,
+        "User": {
+            "ID": "YjakBqY7kGjOlTGN3KOj",
+            "Name": "",
+            "Email": "github3344@hotmail.com",
+            "EnablePaidHobby": false
+        },
+        "EvaluationID": "",
+        "CreatedAt": "2026-06-06T07:16:09Z",
+        "ImageRef": "registry.fly.io/tt-api-staging:deployment-01KTDWJDT2W675DAEB9M6EY3J1"
+    }
+]

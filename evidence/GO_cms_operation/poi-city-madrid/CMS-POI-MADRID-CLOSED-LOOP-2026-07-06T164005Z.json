@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T16:40:05Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "ES",
+    "city_zh": "马德里",
+    "city_en": "Madrid",
+    "matrix_ids": [
+      "PH-ES-204-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-ES-204-FOOD",
+      "legacy_value": "火腿",
+      "poi_id": "40cce5da-774c-4ce6-8311-cc94beef539c",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-204-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

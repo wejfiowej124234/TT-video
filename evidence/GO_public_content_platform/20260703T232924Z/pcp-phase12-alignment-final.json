@@ -1,0 +1,515 @@
+{
+  "audit": "TT_PCP_AUTHENTICITY_PHASE12_FINAL",
+  "stamp": "20260703T232924Z",
+  "machine_keys": {
+    "TT_PCP_ARCHITECTURE": "FROZEN",
+    "TT_PCP_PHASE_1": "COMPLETE",
+    "TT_PCP_AUTHENTICITY_PHASE12": "VERIFIED"
+  },
+  "pipeline": "Database → PCP Governance → Builder → Public API → Frontend",
+  "local_api": "http://127.0.0.1:8080",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "domains": [
+    "community",
+    "market",
+    "provider",
+    "acquisition",
+    "official_guide",
+    "campaign",
+    "admin_public_content_center"
+  ],
+  "checks": [
+    {
+      "id": "LEG-COM-001",
+      "domain": "community",
+      "phase": "phase1",
+      "capability": "legacy_read_path",
+      "status": "PASS",
+      "detail": "Community public reads use governed_community_posts_v1"
+    },
+    {
+      "id": "LEG-MKT-001",
+      "domain": "market",
+      "phase": "phase1",
+      "capability": "legacy_read_path",
+      "status": "PASS",
+      "detail": "Market catalog reads governed_market_listings_v1"
+    },
+    {
+      "id": "LEG-MKT-002",
+      "domain": "market",
+      "phase": "phase1",
+      "capability": "legacy_read_path",
+      "status": "EXPECTED",
+      "detail": "chain_off in-memory DDG fallback when db_pool unavailable"
+    },
+    {
+      "id": "LEG-GUI-001",
+      "domain": "official_guide",
+      "phase": "phase1",
+      "capability": "legacy_read_path",
+      "status": "PASS",
+      "detail": "Guides public catalog uses governed_market_guides path"
+    },
+    {
+      "id": "LEG-CAM-001",
+      "domain": "campaign",
+      "phase": "phase1",
+      "capability": "legacy_read_path",
+      "status": "PASS",
+      "detail": "Campaign catalog must not read raw ops_cold_start_campaigns"
+    },
+    {
+      "id": "LEG-CAM-002",
+      "domain": "campaign",
+      "phase": "phase1",
+      "capability": "legacy_read_path",
+      "status": "PASS",
+      "detail": "Consumer delegates to governed campaign catalog"
+    },
+    {
+      "id": "static_builder_community",
+      "domain": "community",
+      "phase": "phase1",
+      "capability": "builder_purity",
+      "status": "PASS",
+      "detail": "crates/api/src/pcp/feed_builder.rs — no inline governance"
+    },
+    {
+      "id": "static_builder_market",
+      "domain": "market",
+      "phase": "phase1",
+      "capability": "builder_purity",
+      "status": "PASS",
+      "detail": "crates/api/src/pcp/market_builder.rs — no inline governance"
+    },
+    {
+      "id": "static_builder_campaign",
+      "domain": "campaign",
+      "phase": "phase1",
+      "capability": "builder_purity",
+      "status": "PASS",
+      "detail": "crates/api/src/pcp/campaign_builder.rs — no inline governance"
+    },
+    {
+      "id": "static_gov_community",
+      "domain": "community",
+      "phase": "phase1",
+      "capability": "governance_migration",
+      "status": "PASS",
+      "detail": "crates/api/migrations/20260704100000_governed_community_posts_v1.sql"
+    },
+    {
+      "id": "static_gov_market",
+      "domain": "market",
+      "phase": "phase1",
+      "capability": "governance_migration",
+      "status": "PASS",
+      "detail": "crates/api/migrations/20260704110000_governed_market_catalog_v1.sql"
+    },
+    {
+      "id": "static_gov_campaign",
+      "domain": "campaign",
+      "phase": "phase1",
+      "capability": "governance_migration",
+      "status": "PASS",
+      "detail": "crates/api/migrations/20260704120000_governed_campaign_surfaces_v1.sql"
+    },
+    {
+      "id": "static_fe_community",
+      "domain": "community",
+      "phase": "phase1",
+      "capability": "frontend_contract",
+      "status": "PASS",
+      "detail": "frontend/lib/api.ts + frontend/app/community → /api/v1/community"
+    },
+    {
+      "id": "static_fe_official_guide",
+      "domain": "official_guide",
+      "phase": "phase1",
+      "capability": "frontend_contract",
+      "status": "PASS",
+      "detail": "frontend/lib/api.ts + frontend/app/guides → /api/v1/guides"
+    },
+    {
+      "id": "static_fe_provider",
+      "domain": "provider",
+      "phase": "phase1",
+      "capability": "frontend_contract",
+      "status": "PASS",
+      "detail": "frontend/lib/api.ts + frontend/app/market/provider → market/provider/listings"
+    },
+    {
+      "id": "static_fe_acquisition",
+      "domain": "acquisition",
+      "phase": "phase1",
+      "capability": "frontend_contract",
+      "status": "PASS",
+      "detail": "frontend/lib/api.ts + frontend/app/market/acquisition → market/acquisition/listings"
+    },
+    {
+      "id": "static_fe_admin_public_content_center",
+      "domain": "admin_public_content_center",
+      "phase": "phase1",
+      "capability": "frontend_contract",
+      "status": "PASS",
+      "detail": "frontend/lib/api/routes.ts + frontend/app/admin/official/public-operations → public-operations"
+    },
+    {
+      "id": "static_fe_campaign",
+      "domain": "campaign",
+      "phase": "phase1",
+      "capability": "frontend_contract",
+      "status": "PASS",
+      "detail": "frontend/e2e/frontend-api-consistency-audit.spec.ts → cold-start/surfaces"
+    },
+    {
+      "id": "sub_architecture_compliance",
+      "domain": "_sub_audit",
+      "phase": "phase1",
+      "capability": "sub_audit",
+      "status": "PASS",
+      "detail": "architecture_compliance"
+    },
+    {
+      "id": "sub_phase0_5",
+      "domain": "_sub_audit",
+      "phase": "phase1",
+      "capability": "sub_audit",
+      "status": "PASS",
+      "detail": "phase0_5"
+    },
+    {
+      "id": "sub_market_batch",
+      "domain": "_sub_audit",
+      "phase": "phase1",
+      "capability": "sub_audit",
+      "status": "PASS",
+      "detail": "market_batch"
+    },
+    {
+      "id": "sub_campaign_batch",
+      "domain": "_sub_audit",
+      "phase": "phase1",
+      "capability": "sub_audit",
+      "status": "PASS",
+      "detail": "campaign_batch"
+    },
+    {
+      "id": "sub_phase1_full_alignment",
+      "domain": "_sub_audit",
+      "phase": "phase1",
+      "capability": "sub_audit",
+      "status": "PASS",
+      "detail": "phase1_full_alignment"
+    },
+    {
+      "id": "p1_local_api",
+      "domain": "_runtime",
+      "phase": "phase1",
+      "capability": "local_api",
+      "status": "SKIPPED",
+      "detail": "Local API not up at http://127.0.0.1:8080"
+    },
+    {
+      "id": "p2_staging",
+      "domain": "_runtime",
+      "phase": "phase2",
+      "capability": "staging",
+      "status": "PASS",
+      "detail": "https://tt-api-staging.fly.dev"
+    },
+    {
+      "id": "p2_admin_auth",
+      "domain": "admin_public_content_center",
+      "phase": "phase2",
+      "capability": "admin_auth",
+      "status": "PASS",
+      "detail": "tourist@test.com"
+    },
+    {
+      "id": "gov_com_baseline",
+      "domain": "community",
+      "phase": "phase2",
+      "capability": "feed_baseline",
+      "status": "PASS",
+      "detail": "post 2a4dc1b0-7328-4883-8c90-67563def3610"
+    },
+    {
+      "id": "gov_com_ops_controllable",
+      "domain": "community",
+      "phase": "phase2",
+      "capability": "ops_data_controllable",
+      "status": "PASS",
+      "detail": "Publish-queue row matches feed post with governance fields"
+    },
+    {
+      "id": "gov_com_stats",
+      "domain": "community",
+      "phase": "phase2",
+      "capability": "ops_stats",
+      "status": "PASS",
+      "detail": "data_origin_counts present"
+    },
+    {
+      "id": "gov_com_unpublish",
+      "domain": "community",
+      "phase": "phase2",
+      "capability": "publish_unpublish",
+      "status": "PASS",
+      "detail": "unpublish HTTP 200 feedHidden=true detailHidden=true"
+    },
+    {
+      "id": "gov_com_surface",
+      "domain": "community",
+      "phase": "phase2",
+      "capability": "surface",
+      "status": "PASS",
+      "detail": "Removed community_feed surface → hidden from feed"
+    },
+    {
+      "id": "gov_com_priority",
+      "domain": "community",
+      "phase": "phase2",
+      "capability": "priority",
+      "status": "PASS",
+      "detail": "display_priority=100"
+    },
+    {
+      "id": "gov_com_schedule",
+      "domain": "community",
+      "phase": "phase2",
+      "capability": "schedule",
+      "status": "PASS",
+      "detail": "display_end_at past → hidden"
+    },
+    {
+      "id": "gov_guides_unpublish",
+      "domain": "official_guide",
+      "phase": "phase2",
+      "capability": "publish_unpublish",
+      "status": "PASS",
+      "detail": "guides b4d9ecf8-4762-4bc8-95f6-d1c339d2975b wasVisible=true hiddenAfter=true"
+    },
+    {
+      "id": "gov_market_listings_unpublish",
+      "domain": "market",
+      "phase": "phase2",
+      "capability": "publish_unpublish",
+      "status": "PASS",
+      "detail": "market_listings 0f0749b5-beab-443b-bb4a-36a71b152214 wasVisible=true hiddenAfter=true"
+    },
+    {
+      "id": "gov_cam_surface_home_hero",
+      "domain": "campaign",
+      "phase": "phase2",
+      "capability": "public_api",
+      "status": "PASS",
+      "detail": "GET surface/home_hero HTTP 200"
+    },
+    {
+      "id": "gov_cam_surface_market_feed",
+      "domain": "campaign",
+      "phase": "phase2",
+      "capability": "public_api",
+      "status": "PASS",
+      "detail": "GET surface/market_feed HTTP 200"
+    },
+    {
+      "id": "gov_cam_surface_community_feed",
+      "domain": "campaign",
+      "phase": "phase2",
+      "capability": "public_api",
+      "status": "PASS",
+      "detail": "GET surface/community_feed HTTP 200"
+    },
+    {
+      "id": "gov_admin_pq",
+      "domain": "admin_public_content_center",
+      "phase": "phase2",
+      "capability": "publish_queue",
+      "status": "PASS",
+      "detail": "items=5"
+    },
+    {
+      "id": "p2_provider_api",
+      "domain": "provider",
+      "phase": "phase2",
+      "capability": "public_api",
+      "status": "PASS",
+      "detail": "HTTP 200"
+    },
+    {
+      "id": "p2_acquisition_api",
+      "domain": "acquisition",
+      "phase": "phase2",
+      "capability": "public_api",
+      "status": "PASS",
+      "detail": "HTTP 200"
+    }
+  ],
+  "gaps": [],
+  "fix_order": [],
+  "domain_summary": [
+    {
+      "domain": "community",
+      "passes": 11,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    },
+    {
+      "domain": "market",
+      "passes": 4,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    },
+    {
+      "domain": "provider",
+      "passes": 2,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    },
+    {
+      "domain": "acquisition",
+      "passes": 2,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    },
+    {
+      "domain": "official_guide",
+      "passes": 3,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    },
+    {
+      "domain": "campaign",
+      "passes": 8,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    },
+    {
+      "domain": "admin_public_content_center",
+      "passes": 3,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    }
+  ],
+  "capability_summary": [
+    {
+      "capability": "legacy_read_path",
+      "pass": 5,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "governance_migration",
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "builder_purity",
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "publish_unpublish",
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "surface",
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "priority",
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "schedule",
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "feed",
+      "pass": 0,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "public_api",
+      "pass": 5,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "frontend_contract",
+      "pass": 6,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "ops_data_controllable",
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0
+    }
+  ],
+  "sub_audits": {
+    "architecture_compliance": {
+      "pass": true,
+      "status": 0,
+      "tail": "\n=== TT_PCP_ARCHITECTURE_COMPLIANCE · PASS ===\n\n  [PASS] Community Feed\n  [PASS] Community Feed (hot)\n  [PASS] Community Feed (following)\n  [PASS] Community Post Detail (governed read)\n  [PASS] User Profile Timeline (public_only)\n  [PASS] Explore Destinations\n  [PASS] Posts-by-tag public count\n  [PASS] GET /posts/:id non-owner path\n  [PASS] FeedBuilder — no governance rules\n\nEvidence: evidence\\GO_public_content_platform\\20260703T232924Z\\phase0.5-architecture-validation.json\nPhase 1 deferred until validation PASS: SearchBuilder, RecommendationBuilder, trait PublicBuilder abstraction\n\n"
+    },
+    "phase0_5": {
+      "pass": true,
+      "status": 0,
+      "tail": " Community Feed baseline\n  [PASS] Admin Unpublish\n  [PASS] Unpublish → Feed hidden\n  [PASS] Unpublish → Detail invisible\n  [PASS] Admin Publish (restore)\n  [PASS] Publish → Feed restored\n  [PASS] Publish → Detail visible\n  [PASS] Surface OFF (no community_feed)\n  [PASS] Surface OFF → Feed hidden\n  [PASS] Surface OFF → Detail invisible (governed view)\n  [PASS] Surface ON (community_feed)\n  [PASS] Surface ON → Feed restored\n\nEvidence: evidence\\GO_public_content_platform\\20260703T232924Z\\phase0.5-validation-chain.json\nSign-off: BLOCKED (All checks PASS — user may mark TT_PCP_PHASE_0_5 COMPLETE)\n\n"
+    },
+    "market_batch": {
+      "pass": true,
+      "status": 0,
+      "tail": "verned views (no inline governance)\n  [PASS] db/market_catalog.rs reads governed_market_* views\n  [PASS] GET /guides wired to list_governed_market_guides when catalog filter on\n  [PASS] Staging /health/ready\n  [PASS] GET /api/v1/guides?limit=5\n  [PASS] GET /api/v1/market/provider/listings?limit=5\n  [PASS] GET /api/v1/market/acquisition/listings?limit=5\n  [PASS] GET /api/v1/discover/orders?limit=5\n\nEvidence: evidence\\GO_public_content_platform\\20260703T232924Z\\phase1-market-batch-validation-chain.json\nBatch 1 sign-off: ALLOWED (Market batch 1 PASS — may proceed to CampaignBuilder engineering)\n\n"
+    },
+    "campaign_batch": {
+      "pass": true,
+      "status": 0,
+      "tail": ")\n  [PASS] db/campaign_catalog.rs reads governed_campaign_* views\n  [PASS] ops_cold_start consumer delegates to governed catalog (no raw campaign table reads)\n  [PASS] Staging /health/ready\n  [PASS] GET /api/v1/official/cold-start/surfaces/home_hero\n  [PASS] GET /api/v1/official/cold-start/surfaces/market_feed\n  [PASS] GET /api/v1/official/cold-start/surfaces/community_feed\n\nEvidence: evidence\\GO_public_content_platform\\20260703T232924Z\\phase1-campaign-batch-validation-chain.json\nBatch 2 sign-off: ALLOWED (Campaign batch 2 PASS — run Phase 1 final sign-off audit for TT_PCP_PHASE_1: COMPLETE)\n\n"
+    },
+    "phase1_full_alignment": {
+      "pass": true,
+      "status": 0,
+      "tail": "\n=== PCP Phase 1 Full Platform Architecture Alignment ===\n\nRunning sub-audits…\nPhase 1 alignment: COMPLETE\nDomains fully aligned: 7/7\nPhase 1 gaps: 0 · Blocking: 0\nSub-audits: arch=PASS pipeline=PASS staging=PASS market_batch=PASS campaign_batch=PASS enterprise=SKIPPED\n\nEvidence:\n  evidence\\GO_public_content_platform\\20260703T232924Z\\pcp-phase1-full-alignment.json\n  evidence\\GO_public_content_platform\\20260703T232924Z\\PCP-PHASE1-FULL-ALIGNMENT-REPORT.md\n  evidence\\GO_public_content_platform\\20260703T232924Z\\enterprise-platform-consistency-summary.json\n\n"
+    }
+  },
+  "summary": {
+    "checks_total": 41,
+    "checks_pass": 39,
+    "checks_fail": 0,
+    "blocker_gaps": 0,
+    "defect_gaps": 0,
+    "domains_green": 7,
+    "domains_red": 0
+  },
+  "verdict": {
+    "phase1_static": "PASS",
+    "phase1_runtime": "SKIPPED",
+    "phase2_staging": "PASS",
+    "overall": "ALIGNED",
+    "sign_off_allowed": true
+  }
+}

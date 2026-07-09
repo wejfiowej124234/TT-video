@@ -1,0 +1,5 @@
+phase: ① IT + ② staging API (P0 media read-path + detail drawer fix regression)
+status: PASS
+last_run: 20260531T165949Z
+api_base: http://127.0.0.1:8080
+note: P0 maintenance — C1–C12 historical PASS unchanged; NOT Production CDN/HLS GO

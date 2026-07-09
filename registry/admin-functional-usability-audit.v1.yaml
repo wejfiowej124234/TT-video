@@ -1,0 +1,110 @@
+# Admin · Four permanent docs + full feature map
+# Audit = sole status · Feature SSOT = sole technical source · one gate per feature
+
+version: v3.1.0
+date: 2026-07-01
+capability_complete: true
+
+permanent_docs:
+  architecture: docs/runbook/TT-ADMIN-THREE-CENTERS-ARCHITECTURE.md
+  functional_audit: docs/runbook/TT-ADMIN-FUNCTIONAL-USABILITY-AUDIT-20260701.md
+  feature_ssot: docs/runbook/TT-ADMIN-FEATURE-SSOT.md
+  checklist: docs/runbook/TT-ADMIN-CHECKLIST.md
+
+dev_entry: FUNCTIONAL_AUDIT_ONLY
+dev_not_from: [CHECKLIST, INSPIRATION]
+
+summary:
+  total: 40
+  complete: 40
+  partial: 0
+  missing: 0
+  open_checklist: 0
+
+ssot_modules:
+  SSOT-CMS: docs/handbook/engineering/101-CMS与内容运营中心实施蓝图.md
+  SSOT-PUB-OPS: docs/runbook/TT-OFFICIAL-OPS-PUBLIC-OPERATIONS-SSOT.md
+  SSOT-OFFICIAL: admin_official_*_http.rs
+  SSOT-CAMPAIGN: docs/runbook/TT-OFFICIAL-OPS-ENTERPRISE-ROADMAP.md
+  SSOT-API: docs/spec/04-后端与API.md
+  SSOT-PLATFORM: admin_rbac.rs
+
+gates:
+  G-L5:
+    script: scripts/dev/run-admin-l5-green.sh
+  G-L5-PUB:
+    scripts: [scripts/dev/run-admin-l5-green.sh, scripts/dev/check-official-ops-public-operations-ssot.sh]
+  G-L5-RBAC:
+    requires: [G-L5, ADM-U01]
+  G-L5-U02:
+    requires: [G-L5, ADM-U02]
+
+features:
+  - { id: F-UM-01, center: user_management, status: COMPLETE, ssot: SSOT-API, gate: G-L5-U02, checklist: done }
+  - { id: F-UM-02, center: user_management, status: COMPLETE, ssot: SSOT-API, gate: G-L5, checklist: done }
+  - { id: F-UM-03, center: user_management, status: COMPLETE, ssot: SSOT-API, gate: G-L5, checklist: done }
+  - { id: F-UM-04, center: user_management, status: COMPLETE, ssot: SSOT-API, gate: G-L5, checklist: done }
+  - { id: F-UM-05, center: user_management, status: COMPLETE, ssot: SSOT-API, gate: G-L5-U02, checklist: done }
+  - { id: F-CC-01, center: content_center, status: COMPLETE, ssot: SSOT-CMS, gate: G-L5, checklist: done }
+  - { id: F-CC-02, center: content_center, status: COMPLETE, ssot: SSOT-CMS, gate: G-L5, checklist: done }
+  - { id: F-CC-03, center: content_center, status: COMPLETE, ssot: SSOT-CMS, gate: G-L5, checklist: done }
+  - { id: F-CC-04, center: content_center, status: COMPLETE, ssot: SSOT-CMS, gate: G-L5, checklist: done }
+  - { id: F-CC-05, center: content_center, status: COMPLETE, ssot: SSOT-CMS, gate: G-L5, checklist: done }
+  - { id: F-CC-06, center: content_center, status: COMPLETE, ssot: SSOT-CMS, ssot_section: C-S3-landing-ambient, gate: G-L5, checklist: done }
+  - { id: F-CC-07, center: content_center, status: COMPLETE, ssot: SSOT-CMS, ssot_section: C-S3-media-assets, gate: G-L5, checklist: done }
+  - { id: F-CC-08, center: content_center, status: COMPLETE, ssot: SSOT-CMS, ssot_section: C-S1-publish-queue, gate: G-L5, checklist: done }
+  - { id: F-CC-09, center: content_center, status: COMPLETE, ssot: SSOT-CMS, ssot_section: C-S7-translation, gate: G-L5, checklist: done }
+  - { id: F-CC-10, center: content_center, status: COMPLETE, ssot: SSOT-CMS, ssot_section: C-S8-seo, gate: G-L5, checklist: done }
+  - { id: F-OO-01, center: official_ops, status: COMPLETE, ssot: SSOT-OFFICIAL, gate: G-L5, checklist: done }
+  - { id: F-OO-02, center: official_ops, status: COMPLETE, ssot: SSOT-OFFICIAL, gate: G-L5, checklist: done }
+  - { id: F-OO-03, center: official_ops, status: COMPLETE, ssot: SSOT-OFFICIAL, gate: G-L5, checklist: done }
+  - { id: F-OO-04, center: official_ops, status: COMPLETE, ssot: SSOT-OFFICIAL, gate: G-L5, checklist: done }
+  - { id: F-OO-05, center: official_ops, status: COMPLETE, ssot: SSOT-PUB-OPS, ssot_section: MVP-stats, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-06, center: official_ops, status: COMPLETE, ssot: SSOT-PUB-OPS, ssot_section: O1-display-publish, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-07, center: official_ops, status: COMPLETE, ssot: SSOT-PUB-OPS, ssot_section: O2-featured, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-08, center: official_ops, status: COMPLETE, ssot: SSOT-PUB-OPS, ssot_section: O3-display-priority, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-09, center: official_ops, status: COMPLETE, ssot: SSOT-PUB-OPS, ssot_section: O4-display-surfaces, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-10, center: official_ops, status: COMPLETE, ssot: SSOT-PUB-OPS, ssot_section: O5-display-schedule, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-11, center: official_ops, status: COMPLETE, ssot: SSOT-PUB-OPS, ssot_section: O6-preview, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-12, center: official_ops, status: COMPLETE, ssot: SSOT-PUB-OPS, ssot_section: O7, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-13, center: official_ops, status: COMPLETE, ssot: SSOT-PUB-OPS, ssot_section: O9, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-14, center: official_ops, status: COMPLETE, ssot: SSOT-CAMPAIGN, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-15, center: official_ops, status: COMPLETE, ssot: SSOT-CAMPAIGN, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-16, center: official_ops, status: COMPLETE, ssot: SSOT-CAMPAIGN, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-17, center: official_ops, status: COMPLETE, ssot: SSOT-CAMPAIGN, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-18, center: official_ops, status: COMPLETE, ssot: SSOT-CAMPAIGN, gate: G-L5-PUB, checklist: done }
+  - { id: F-OO-19, center: official_ops, status: COMPLETE, ssot: SSOT-CAMPAIGN, gate: G-L5-PUB, checklist: done }
+  - { id: F-PC-01, center: platform_center, status: COMPLETE, ssot: SSOT-PLATFORM, gate: G-L5, checklist: done }
+  - { id: F-PC-02, center: platform_center, status: COMPLETE, ssot: SSOT-PLATFORM, gate: G-L5-RBAC, checklist: done }
+  - { id: F-PC-03, center: platform_center, status: COMPLETE, ssot: SSOT-PLATFORM, gate: G-L5, checklist: done }
+  - { id: F-PC-04, center: platform_center, status: COMPLETE, ssot: SSOT-PLATFORM, gate: G-L5, checklist: done }
+  - { id: F-PC-05, center: platform_center, status: COMPLETE, ssot: SSOT-PLATFORM, gate: G-L5, checklist: done }
+  - { id: F-PC-06, center: platform_center, status: COMPLETE, ssot: SSOT-PLATFORM, gate: G-L5, checklist: done }
+
+mapping_verified:
+  one_ssot_per_feature: true
+  one_status_per_feature: true
+  one_gate_per_feature: true
+  orphan_features: 0
+
+machine_validation:
+  orchestrator: scripts/gates/run-admin-platform-40-verification.sh
+  evidence_root: evidence/GO_admin_platform_40_complete
+  latest_stamp: 20260701T172708Z
+  verdict: PASS_MACHINE
+  rerun_policy:
+    status: CLOSED_UNLESS_TOUCHED
+    evidence_reuse: registry/evidence-reuse-policy.v1.yaml#gates/ADMIN_40_40
+  local:
+    ADM_U01: PASS
+    ADM_U02: PASS
+    admin_pages_smoke: PASS
+  staging: WARN_P0_CLEAR
+  staging_manual_walkthrough: GO
+  staging_manual_evidence: evidence/GO_staging_admin_final_validation_walkthrough/20260702T003523Z
+  phase2_admin_final_validation: GO
+  dev_validation: CLOSED
+  enterprise_capability_complete: true
+  manual_uat_next:
+    - local_admin_public_operations_browser_optional
+    - market_display_manual_uat

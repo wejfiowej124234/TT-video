@@ -1,0 +1,41 @@
+{
+  "schema": "traveltrust_l5_human_acceptance_manifest.v1",
+  "baseline_refs": ["145", "150", "157", "160"],
+  "journeys": [
+    {
+      "role": "traveler",
+      "title": "Traveler cold start + referral center",
+      "routes": ["/", "/market", "/me/referrals"],
+      "playwright": ["frontend/e2e/e2e-a-01-cold-start-campaign-consumer.spec.ts", "frontend/e2e/g-s4-user-referral-center.spec.ts"],
+      "smoke": "scripts/dev/smoke-growth-user-referral-center-p0-local.sh"
+    },
+    {
+      "role": "guide",
+      "title": "Guide official content path",
+      "routes": ["/community", "/guides"],
+      "playwright": ["frontend/e2e/o-s2-official-guides-management.spec.ts"],
+      "smoke": "scripts/dev/smoke-admin-official-guides-p0-local.sh"
+    },
+    {
+      "role": "merchant",
+      "title": "Merchant provider onboarding",
+      "routes": ["/provider/register", "/market"],
+      "playwright": [],
+      "smoke": "scripts/dev/smoke-provider-onboarding-local.sh"
+    },
+    {
+      "role": "ops",
+      "title": "Ops CMS + Official + Growth console",
+      "routes": ["/admin/content", "/admin/official/accounts", "/admin/growth"],
+      "playwright": ["frontend/e2e/c-s1-admin-content-crud.spec.ts", "frontend/e2e/g-s1-referral-minimum-loop.spec.ts"],
+      "smoke": "scripts/dev/run-admin-l5-green.sh"
+    },
+    {
+      "role": "admin",
+      "title": "SuperAdmin RBAC + cold start deploy",
+      "routes": ["/admin/growth/analytics", "/admin/official/cold-start"],
+      "playwright": ["frontend/e2e/o-s4-cold-start-campaigns-deployment-operations.spec.ts"],
+      "smoke": "scripts/dev/l5-p0-d3-cold-start-linkage-smoke.sh"
+    }
+  ]
+}

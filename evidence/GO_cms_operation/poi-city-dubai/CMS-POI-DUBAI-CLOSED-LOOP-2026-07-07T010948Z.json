@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T01:09:48Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AE",
+    "city_zh": "迪拜",
+    "city_en": "Dubai",
+    "matrix_ids": [
+      "PH-AE-230-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AE-230-FOOD",
+      "legacy_value": "沙威玛",
+      "poi_id": "274cd4a1-7ede-442e-a6ca-4887ac4abc70",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-230-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

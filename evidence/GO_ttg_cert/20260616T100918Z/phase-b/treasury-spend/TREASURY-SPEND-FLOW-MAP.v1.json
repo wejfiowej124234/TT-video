@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.cert8-treasury-flow-map.v1",
+  "phase": "②",
+  "chain": "Treasury spend propose → vote → queue → 48h → execute",
+  "hat_evidence": "evidence/GO_hat_r1_sepolia/20260616T063612Z",
+  "checks_summary": {
+    "cert7_execute": true,
+    "treasury_proposal": true,
+    "treasury_queue": true,
+    "treasury_execute": false,
+    "live_wallet_gate": false
+  }
+}

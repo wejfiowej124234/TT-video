@@ -1,0 +1,54 @@
+{
+  "schema": "traveltrust.cms_phase1_single_asset_evidence.v1",
+  "product_name": "Market Listing Cover",
+  "matrix_id": "ML-WAVE1-018-ACQ",
+  "variant": "acquisition",
+  "chain_slug": "seoul-food",
+  "listing_id": "62173ab8-b657-4b8c-9654-6dbac09b3ced",
+  "scaffolded_at_utc": "2026-07-05T09:44:37Z",
+  "step_1_brief_review": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "reviewed_at_utc": "2026-07-05T09:44:37Z"
+  },
+  "step_2_designer_upload": {
+    "status": "COMPLETE",
+    "catalog_asset_id": "db4af6ed-c2e8-4096-85d0-485830d8b5b7",
+    "uploaded_at_utc": "2026-07-05T09:44:37Z",
+    "notes": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg"
+  },
+  "step_3_cms_review": {
+    "status": "COMPLETE",
+    "gates": {
+      "cms_review": "PASS",
+      "destination_authenticity": "PASS",
+      "brand_consistency": "PASS"
+    }
+  },
+  "step_4_catalog_publish": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "published_at_utc": "2026-07-05T09:44:37Z"
+  },
+  "step_5_verify": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "cover_catalog_asset_id": "db4af6ed-c2e8-4096-85d0-485830d8b5b7",
+    "cover_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg",
+    "verified_at_utc": "2026-07-05T09:44:37Z"
+  },
+  "step_6_evidence": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "completed_at_utc": "2026-07-05T09:44:37Z"
+  },
+  "matrix_snapshot": {
+    "matrix_row_status": "pass",
+    "asset_lifecycle": "live",
+    "current_source": "catalog_api",
+    "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg",
+    "listing_id": "62173ab8-b657-4b8c-9654-6dbac09b3ced"
+  },
+  "TT_CMS_LISTINGS_WAVE1_ROW_VERIFY": "PASS",
+  "TT_CMS_PHASE1_SINGLE_ASSET_ROW": "COMPLETE"
+}

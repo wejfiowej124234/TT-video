@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust_production_readiness_deep_audit.v1",
+  "anchor": "PRODUCTION-READINESS-DEEP-AUDIT-V1",
+  "status": "PLANNED",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "production_go_decision": "NO_GO",
+  "baseline_refs": [
+    "147",
+    "148",
+    "151",
+    "152",
+    "153",
+    "154",
+    "155",
+    "157"
+  ],
+  "pi3_tracks": [
+    "PI3-001",
+    "PI3-002",
+    "PI3-003",
+    "PI3-004",
+    "PI3-005",
+    "PI3-006"
+  ],
+  "last_audit_matrix_path": "evidence/production_readiness_deep_audit/audit_matrix.v1.json",
+  "notes": "158 deep audit \u00b7 Owner closure OPEN on PI3-001~004/006 \u00b7 L5 ops GO (157) does not substitute Production GO",
+  "last_audit_run_utc": "20260610T110405Z",
+  "audit_verdict": "PRODUCTION_READINESS_DEEP_AUDIT_HOLD",
+  "production_readiness_score": 58
+}

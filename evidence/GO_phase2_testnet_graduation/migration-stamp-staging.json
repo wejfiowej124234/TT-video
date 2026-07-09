@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.migration_stamp_staging.v1",
+  "at": "20260614T090100Z",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "git_sha": "0d8d09702a368c254db2893617df4439344fe582",
+  "note": "Staging DB migrations applied at deploy; max version inferred from committed migration files",
+  "committed_migration_files": [
+    "20260607120000_cms_catalog_p1.sql",
+    "20260607120100_cms_official_ops_p2.sql",
+    "20260607120200_cms_growth_p3.sql",
+    "20260607130000_cms_catalog_s2_004_pricing_tiers_media.sql",
+    "20260607140000_growth_early_bird_g_s3.sql",
+    "20260607150000_growth_airdrop_g_s6.sql",
+    "20260608120000_sprint168_business_expansion.sql",
+    "20260609120000_guides_hourly_rate_avatar_url.sql",
+    "20260612120000_guides_public_title.sql",
+    "20260613120000_guide_exit_requests.sql"
+  ],
+  "max_version": "20260613120000"
+}

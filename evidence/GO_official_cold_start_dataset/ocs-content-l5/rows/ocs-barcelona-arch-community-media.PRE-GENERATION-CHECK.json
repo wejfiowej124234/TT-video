@@ -1,0 +1,70 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T152800Z",
+  "filename": "ocs-barcelona-arch-community-media.jpg",
+  "row": 54,
+  "chain_id": "barcelona-arch",
+  "country_code": "ES",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "no_quality_regression_acknowledged": true,
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "brand_logos",
+      "celebrity_portraits",
+      "copyrighted_artworks_interior",
+      "commercial_ad_posters",
+      "recognizable_faces",
+      "watermarks",
+      "ai_artifacts",
+      "protected_artwork_closeups"
+    ],
+    "safe_expression": "桂尔公园全景台 · 日间通透 · 环境叙事 · 无人物正面"
+  },
+  "cover_media_complement_plan": {
+    "pass": true,
+    "row53_community_cover": {
+      "role": "Feed 缩略 · 第一眼吸引",
+      "scene_locked": "马赛克蜥蜴/细节特写 · playful color · 近景"
+    },
+    "row54_community_media": {
+      "role": "详情主图 · 环境叙事与沉浸",
+      "scene_locked": "桂尔公园全景台 · 日间通透 · elevated panorama"
+    },
+    "forbidden_overlap": [
+      "同机位",
+      "同主体(蜥蜴特写)",
+      "同构图(近景特写)",
+      "同光线(playful 近景)",
+      "同情绪/同视角"
+    ],
+    "complement_confirmed": true
+  },
+  "checks": {
+    "manifest_full_field_alignment": {
+      "pass": true,
+      "notes": "body 圣家堂-桂尔公园高迪一日 · media_urls · tags"
+    },
+    "destination_authenticity_9dim_plan": {
+      "pass": true,
+      "notes": "Park Guell terrace panorama · 高迪马赛克 · 地中海 · ES-only"
+    },
+    "country_consistency_es_only": { "pass": true },
+    "community_authenticity_plan": { "pass": true },
+    "surface_boundary_plan": { "pass": true },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row53": "全景台 vs 蜥蜴 Feed 特写",
+      "vs_row52": "桂尔公园全景 vs 圣家堂 Official Hero",
+      "vs_row50": "环境全景 vs 小团联票"
+    },
+    "brand_consistency_plan": { "pass": true },
+    "consumer_experience_plan": { "pass": true },
+    "business_authenticity_plan": { "pass": true },
+    "cross_chain_community_plan": { "pass": true },
+    "global_consistency_plan": { "pass": true },
+    "global_regression_plan": { "pass": true },
+    "nine_class_framework_frozen": true
+  }
+}

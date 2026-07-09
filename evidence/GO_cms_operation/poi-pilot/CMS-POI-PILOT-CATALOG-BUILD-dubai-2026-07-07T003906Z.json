@@ -1,0 +1,64 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-07T00:39:06Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "AE",
+    "city_zh": "迪拜",
+    "matrix_ids": [
+      "PH-AE-224-ATR",
+      "PH-AE-225-ATR",
+      "PH-AE-226-ATR",
+      "PH-AE-227-ATR",
+      "PH-AE-228-ATR",
+      "PH-AE-229-FOOD",
+      "PH-AE-230-FOOD",
+      "PH-AE-231-FOOD",
+      "PH-AE-232-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-AE-224-ATR",
+      "poi_id": "63f9aca8-bf10-427f-908e-38ed8e3284e3"
+    },
+    {
+      "matrix_id": "PH-AE-225-ATR",
+      "poi_id": "8c7c3d35-2790-4be2-bd1b-4628a7f05aa7"
+    },
+    {
+      "matrix_id": "PH-AE-226-ATR",
+      "poi_id": "a2191b09-9006-41c7-842d-0f192dad1686"
+    },
+    {
+      "matrix_id": "PH-AE-227-ATR",
+      "poi_id": "09abd4ba-117b-4da4-add3-ea7d8e030e46"
+    },
+    {
+      "matrix_id": "PH-AE-228-ATR",
+      "poi_id": "8784e8b4-e585-4a9d-b4ce-7e852b1693c0"
+    },
+    {
+      "matrix_id": "PH-AE-229-FOOD",
+      "poi_id": "c5f1a21a-af7a-4d36-92a2-438cec5df439"
+    },
+    {
+      "matrix_id": "PH-AE-230-FOOD",
+      "poi_id": "274cd4a1-7ede-442e-a6ca-4887ac4abc70"
+    },
+    {
+      "matrix_id": "PH-AE-231-FOOD",
+      "poi_id": "10d04f96-cfdb-4ac5-b083-62f39c684e96"
+    },
+    {
+      "matrix_id": "PH-AE-232-FOOD",
+      "poi_id": "2ac3bd42-d3e8-4d0f-bf91-33a19356ff1a"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 9,
+    "expected": 9
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

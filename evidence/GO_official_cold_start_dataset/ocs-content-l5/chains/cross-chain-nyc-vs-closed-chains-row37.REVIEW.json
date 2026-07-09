@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T152030Z",
+  "trigger_row": 37,
+  "trigger_filename": "ocs-nyc-skyline-guide-avatar.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "guide_face_collision": {
+    "pass": true,
+    "note": "Alex 美式摄影 vs 六城向导无撞脸"
+  },
+  "theme_duplication": {
+    "pass": true,
+    "note": "NYC 天际线 vs 六城主题各异"
+  },
+  "no_quality_regression_prior_36": true
+}

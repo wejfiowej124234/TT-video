@@ -1,0 +1,152 @@
+# Protocol SSOT v1 — machine-readable mirror (P1)
+# Authoritative prose: protocol-ssot.v1.md — on conflict, markdown wins until YAML codegen lands (P2).
+version: "1.0.3"
+status: locked
+phase: target
+
+governance_freeze_v1:
+  document_id: TTG-TOKENOMICS-FREEZE-V1
+  frozen_at: "2026-06-16"
+  GOV-01:
+    treasury_p4_deploy_cap_bps: 3000
+  GOV-02:
+    governance_quorum_bps: 400
+    governance_approval_threshold_bps: 5000
+    governance_timelock_delay_hours: 48
+  GOV-03:
+    max_active_seats_per_controlling_entity: 1
+    max_voting_power_per_address_bps: 400
+    max_aggregate_seat_stake_per_entity_bps: 400
+  GOV-04:
+    public_sale_per_wallet_cap_ttg: 25000
+    public_sale_min_purchase_usdc: 100
+
+ttg:
+  symbol: TTG
+  decimals: 18
+  total_supply: 10000000
+
+token_allocation_bps:
+  country_pool_shelf: 2500
+  public_global: 2000
+  ecosystem: 1500
+  team: 1500
+  advisors: 500
+  treasury_dao: 2000
+
+fee_router_layer1_bps:
+  country_bucket: 4500
+  global_pool: 5500
+
+global_pool_split_bps:
+  ttg_staking_incentive: 6500
+  reserve: 2000
+  operations: 1500
+
+lock_tiers:
+  snapshot_min_lock_days: 7
+  seat_buyout_min_lock_days: 90
+  buyout_cooldown_days: 180
+  steward_seat_min_tenure_months: 24
+  steward_resign_notice_days: 180
+  steward_stake_release_delay_days: 90
+  steward_stake_release_vest_days: 365
+  country_pool_subscription_lock_months: 24
+  redemption_window_days_per_quarter: 15
+  redemption_max_nav_pct_bps: 1000
+
+vacancy_ledger_v1:
+  vacancy_grace_days_default: 180
+  vacancy_sweep_interval: QUARTER
+  vacancy_sweep_rate_bps: 2500
+  vacancy_sweep_cap_bps: 7500
+  jurisdiction_reserve_bps: 2500
+  steward_activation_epoch_gate: true
+  vacancy_sweep_auto_reenable: false
+
+jurisdictions:
+  - id: CN
+    tier: S
+    fee_route_bps: 400
+    phase1_open_bps: 300
+    steward_stake_bps: 400
+    min_hold_bps: 300
+    seat_cap: 1
+    subscription_lock_months: 24
+  - id: US
+    tier: S
+    fee_route_bps: 400
+    phase1_open_bps: 300
+    steward_stake_bps: 400
+    min_hold_bps: 300
+    seat_cap: 1
+    subscription_lock_months: 24
+  - id: FR
+    tier: S
+    fee_route_bps: 450
+    phase1_open_bps: 350
+    steward_stake_bps: 450
+    min_hold_bps: 350
+    seat_cap: 1
+    subscription_lock_months: 24
+  - id: ES
+    tier: S
+    fee_route_bps: 450
+    phase1_open_bps: 350
+    steward_stake_bps: 450
+    min_hold_bps: 350
+    seat_cap: 1
+    subscription_lock_months: 24
+  - id: JP
+    tier: A
+    fee_route_bps: 250
+    phase1_open_bps: 200
+    steward_stake_bps: 250
+    min_hold_bps: 200
+    seat_cap: 1
+    subscription_lock_months: 24
+  - id: TH
+    tier: A
+    fee_route_bps: 250
+    phase1_open_bps: 200
+    steward_stake_bps: 250
+    min_hold_bps: 200
+    seat_cap: 1
+    subscription_lock_months: 24
+  - id: SG
+    tier: A
+    fee_route_bps: 200
+    phase1_open_bps: 150
+    steward_stake_bps: 200
+    min_hold_bps: 200
+    seat_cap: 1
+    subscription_lock_months: 24
+  - id: KR
+    tier: A
+    fee_route_bps: 200
+    phase1_open_bps: 150
+    steward_stake_bps: 200
+    min_hold_bps: 200
+    seat_cap: 1
+    subscription_lock_months: 24
+  - id: AU
+    tier: B
+    fee_route_bps: 150
+    phase1_open_bps: 100
+    steward_stake_bps: 150
+    min_hold_bps: 100
+    seat_cap: 1
+    subscription_lock_months: 24
+  - id: AE
+    tier: B
+    fee_route_bps: 150
+    phase1_open_bps: 100
+    steward_stake_bps: 150
+    min_hold_bps: 100
+    seat_cap: 1
+    subscription_lock_months: 24
+
+p1_resolutions:
+  steward_stake_equals_fee_route_phase1: true
+  nav_redemption_non_principal: true
+  legal_signoff_pending: true

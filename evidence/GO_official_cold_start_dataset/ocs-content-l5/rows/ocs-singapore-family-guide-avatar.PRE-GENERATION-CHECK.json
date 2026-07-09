@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T141500Z",
+  "filename": "ocs-singapore-family-guide-avatar.jpg",
+  "row": 25,
+  "chain_id": "singapore-family",
+  "country_code": "SG",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "checks": {
+    "manifest_alignment": { "pass": true, "notes": "nickname/bio/tags/service_types 与 brief+dataset 100%" },
+    "destination_authenticity_9dim": { "pass": true, "notes": "滨海湾花园 SG-only · 热带现代都市 · 亲子动线" },
+    "country_consistency_sg": { "pass": true, "notes": "新 country 首行 · 锁定 SG 视觉语言" },
+    "guide_identity_diversity_plan": {
+      "pass": true,
+      "vs_tokyo_ken": "女性亲子 vs 男性摄影师",
+      "vs_kyoto_yuki": "现代便装 vs 和服",
+      "vs_seoul_min": "30s 亲子 vs 45+ 美食",
+      "vs_bangkok_arun": "花园亲子 vs 寺庙男向导"
+    },
+    "global_visual_diversity_plan": { "pass": true, "notes": "明亮家庭友好色调 · 非金庙/非霓虹夜市" },
+    "brand_consistency_plan": { "pass": true, "notes": "暖色旅行纪实 L5" },
+    "consumer_experience_plan": { "pass": true, "notes": "可信亲子向导 · 非广告模特" },
+    "surface_identity_plan": { "pass": true, "notes": "Guide portrait only · 非 Provider/Community" },
+    "narrative_planning": { "pass": true, "evidence": "singapore-family-chain-NARRATIVE-PLAN.json" },
+    "business_authenticity": { "pass": true, "family walking guide service" },
+    "commercial_realism": { "pass": true, "stake 700 USDC · price 175" },
+    "copyright_logo_watermark_ai": { "pass": true, "no_watermark": true, "no_logo": true, "no_ai_artifacts": true },
+    "nine_class_framework_frozen": true
+  }
+}

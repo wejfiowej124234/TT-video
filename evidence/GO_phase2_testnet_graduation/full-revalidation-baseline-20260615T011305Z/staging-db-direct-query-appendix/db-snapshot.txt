@@ -1,0 +1,5 @@
+       db       |    db_user     | users_total | orders_total 
+----------------+----------------+-------------+--------------
+ tt_api_staging | tt_api_staging |         530 |           57
+(1 row)
+

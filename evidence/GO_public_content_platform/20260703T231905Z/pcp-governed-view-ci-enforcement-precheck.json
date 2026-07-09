@@ -1,0 +1,95 @@
+{
+  "audit": "TT_PCP_GOVERNED_VIEW_CI_ENFORCEMENT_PRECHECK",
+  "stamp": "20260703T231905Z",
+  "phase": "phase_1_freeze_regression_window",
+  "overall": "PASS",
+  "ci_enforcement_ready": false,
+  "ci_enforcement_precheck_only": true,
+  "note": "Static builders/migrations PASS — CI workflow wiring deferred to Phase 2",
+  "checks": [
+    {
+      "id": "gov_community",
+      "label": "Migration 20260704100000_governed_community_posts_v1.sql",
+      "status": "PASS",
+      "detail": "crates/api/migrations/20260704100000_governed_community_posts_v1.sql"
+    },
+    {
+      "id": "gov_market",
+      "label": "Migration 20260704110000_governed_market_catalog_v1.sql",
+      "status": "PASS",
+      "detail": "crates/api/migrations/20260704110000_governed_market_catalog_v1.sql"
+    },
+    {
+      "id": "gov_campaign",
+      "label": "Migration 20260704120000_governed_campaign_surfaces_v1.sql",
+      "status": "PASS",
+      "detail": "crates/api/migrations/20260704120000_governed_campaign_surfaces_v1.sql"
+    },
+    {
+      "id": "builder_feed",
+      "label": "Builder feed_builder.rs",
+      "status": "PASS",
+      "detail": "crates/api/src/pcp/feed_builder.rs"
+    },
+    {
+      "id": "builder_market",
+      "label": "Builder market_builder.rs",
+      "status": "PASS",
+      "detail": "crates/api/src/pcp/market_builder.rs"
+    },
+    {
+      "id": "builder_campaign",
+      "label": "Builder campaign_builder.rs",
+      "status": "PASS",
+      "detail": "crates/api/src/pcp/campaign_builder.rs"
+    },
+    {
+      "id": "no_search_builder",
+      "label": "Phase 1 freeze — search_builder.rs must not exist yet",
+      "status": "PASS",
+      "detail": "Not present (correct during freeze)"
+    },
+    {
+      "id": "no_recommendation_builder",
+      "label": "Phase 1 freeze — recommendation_builder.rs must not exist yet",
+      "status": "PASS",
+      "detail": "Not present (correct during freeze)"
+    },
+    {
+      "id": "community_public_read",
+      "label": "Community public catalog",
+      "status": "WARN",
+      "detail": "crates/api/src/db/community.rs mixes governed + raw reads (review before CI gate)"
+    },
+    {
+      "id": "market_public_read",
+      "label": "Market public catalog",
+      "status": "WARN",
+      "detail": "crates/api/src/db/market_catalog.rs mixes governed + raw reads (review before CI gate)"
+    },
+    {
+      "id": "campaign_public_read",
+      "label": "Campaign public catalog",
+      "status": "PASS",
+      "detail": "crates/api/src/db/campaign_catalog.rs uses governed read path"
+    },
+    {
+      "id": "ci_workflow_governed_view_gate",
+      "label": "GitHub Actions governed-view enforcement workflow",
+      "status": "PRECHECK",
+      "detail": "No CI workflow yet — Phase 2 wiring item (pre-check only, non-blocking for freeze)"
+    },
+    {
+      "id": "ci_local_gate_scripts",
+      "label": "Local gate scripts available for CI wiring",
+      "status": "PASS",
+      "detail": "audit-pcp-architecture-compliance.cjs + audit-pcp-phase1-full-alignment.cjs"
+    }
+  ],
+  "summary": {
+    "pass": 10,
+    "warn": 2,
+    "precheck": 1,
+    "fail": 0
+  }
+}

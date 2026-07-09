@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T01:37:05Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AE",
+    "city_zh": "沙迦",
+    "city_en": "Sharjah",
+    "matrix_ids": [
+      "PH-AE-235-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AE-235-ATR",
+      "legacy_value": "艺术博物馆",
+      "poi_id": "b72ad389-b41d-43c2-bbfe-2b99f1edc134",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-235-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

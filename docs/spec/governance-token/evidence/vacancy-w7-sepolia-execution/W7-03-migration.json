@@ -1,0 +1,1 @@
+{"step":"migration","result":"PASS","case":"CASE_B","amountRaw":"495000","legs":["legacy_releaseToStewardPath","funder_transfer_new_unalloc"],"log":"/d/TravelTrust-V1.1/docs/spec/governance-token/evidence/vacancy-w7-sepolia-execution/W7-03-migration-20260709T060534Z.log"}

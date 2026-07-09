@@ -1,0 +1,765 @@
+{
+  "schema": "traveltrust.p2fc_soak_l5_stability_audit.v3",
+  "snapshot_stamp": "20260624T041316Z",
+  "generated_at_utc": "2026-06-24T04:13:16Z",
+  "phase": "②",
+  "policy": "read_only_no_staging_no_worker_no_watcher_changes",
+  "soak_dir": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING",
+  "soak_completed": false,
+  "job": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/job-20260624T011124Z",
+  "job_meta": {
+    "schema": "p2fc_staging_soak_job.v1",
+    "stamp_utc": "20260624T011124Z",
+    "api_base": "https://tt-api-staging.fly.dev",
+    "web_base": "https://tt-web-staging.fly.dev",
+    "poll_sec": 60,
+    "required_sec": 259200,
+    "expect_git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+    "expect_git_sha_source": "runtime_meta_build_or_resolve",
+    "probe_policy": "meta_meta_build_health_fallback",
+    "phase": "②",
+    "policy": "read_only_no_redeploy"
+  },
+  "dimensions": {
+    "runtime_volatility": {
+      "ok_polls": 34,
+      "detail_polls": 34,
+      "fail_events": 0,
+      "budget_elapsed_sec": 2040,
+      "wall_elapsed_sec": 10645,
+      "wall_vs_budget_ratio": 5.218,
+      "wall_clock_deviation": {
+        "required_sec": 259200,
+        "ok_needed": 4320,
+        "ok_remaining": 4286,
+        "budget_remaining_sec": 257160,
+        "wall_eta_sec": 1341860,
+        "budget_eta_sec": 257160,
+        "wall_eta_hours": 372.7,
+        "budget_eta_hours": 71.4,
+        "poll_overhead_sec_mean": 260.8,
+        "deviation_sec_per_poll": 260.8,
+        "jitter_trend": "stable"
+      },
+      "interval_stats": {
+        "count": 33,
+        "min_sec": 293.0,
+        "max_sec": 349.0,
+        "mean_sec": 320.8,
+        "stdev_sec": 14.4,
+        "expected_poll_sec": 60,
+        "budget_credit_sec_per_ok": 60,
+        "slow_poll_count": 33,
+        "slow_poll_ratio": 1.0,
+        "jitter_trend": "stable",
+        "recent_mean_sec": 326.7,
+        "prior_mean_sec": 314.5,
+        "mean_delta_pct": 0.039
+      },
+      "distribution": {
+        "health": {
+          "200": 34
+        },
+        "web": {
+          "200": 34
+        },
+        "probe": {
+          "meta_build": 34
+        },
+        "indexer_source": {
+          "(empty)": 33,
+          "runtime": 1
+        }
+      },
+      "sha_unique_count": 1,
+      "sha_aligned_with_expect": true,
+      "verdict": "warn",
+      "notes": [
+        "majority polls wall-clock slow (>3× poll_sec) — /meta timeout pressure"
+      ],
+      "recent_failures": []
+    },
+    "meta_408_503_layers": {
+      "sample_count": 19,
+      "latest": {
+        "schema": "traveltrust.p2fc_meta_observability.v1",
+        "recorded_at_utc": "2026-06-24T04:07:23Z",
+        "observability_only": true,
+        "policy": "execution_chain_non_blocking · acceptance_deferred_until_post_soak_deploy",
+        "probes": {
+          "api_health": "200",
+          "api_meta": "408",
+          "api_meta_build": "200",
+          "web_meta": "503",
+          "git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+          "probe_source": "meta_build"
+        },
+        "execution_chain_ok": true,
+        "acceptance_chain_ok": false,
+        "fallback": "meta → meta_build → health (p2fc-staging-probe-lib)"
+      },
+      "code_distribution": {
+        "api_meta": {
+          "408": 19
+        },
+        "web_meta": {
+          "503": 19
+        }
+      },
+      "execution_chain_ok_ratio": 1.0,
+      "acceptance_chain_ok_ratio": 0.0,
+      "layered_root_cause": [
+        {
+          "layer": "L1_API",
+          "symptom": "GET /meta → 408",
+          "cause": "REQUEST_TIMEOUT_SECS=30 · heavy aggregate"
+        },
+        {
+          "layer": "L2_WEB",
+          "symptom": "GET /meta → 503",
+          "cause": "route.ts proxy maps upstream non-200"
+        },
+        {
+          "layer": "L3_EXEC",
+          "symptom": "probe=meta_build",
+          "cause": "p2fc-staging-probe-lib fallback — non-blocking"
+        },
+        {
+          "layer": "L4_ACCEPT",
+          "symptom": "acceptance_chain_ok=false",
+          "cause": "deferred until post-soak wave-0 hotfix"
+        }
+      ],
+      "failure_propagation": {
+        "dominant_chain": "408>503>exec_ok>accept_deferred",
+        "dominant_ratio": 1.0,
+        "expected_chain": "408>503>exec_ok>accept_deferred",
+        "matches_expected": true,
+        "chain_consistency_ratio": 1.0,
+        "l1_api_to_l2_web_503_ratio": 1.0,
+        "transition_count": 0,
+        "recent_transitions": [],
+        "chain_distribution": {
+          "408>503>exec_ok>accept_deferred": 19
+        },
+        "verdict": "stable_propagation",
+        "notes": [
+          "expected soak chain 408>503>exec_ok>accept_deferred holds 100% of samples"
+        ]
+      },
+      "rca_alignment": {
+        "root_cause_chain": [
+          "API_TIMEOUT_LAYER: GET /meta exceeds REQUEST_TIMEOUT_SECS (staging default 30)",
+          "WEB_PROXY_DEGRADED: app/meta/route.ts maps upstream non-200 to 503 meta_unavailable"
+        ],
+        "api_meta_code": 408,
+        "web_meta_code": 503,
+        "recorded_at_utc": "2026-06-24T03:33:24Z"
+      },
+      "verdict": "observed_degraded_acceptance_ok",
+      "notes": [
+        "api_meta 408 + web_meta 503 stable during soak — expected under observability_only policy",
+        "execution_chain_ok via meta_build fallback"
+      ]
+    },
+    "indexer_exec_chain_drift": {
+      "probe_fallback_ratio": 1.0,
+      "indexer_source_distribution": {
+        "(empty)": 33,
+        "runtime": 1
+      },
+      "indexer_parse_rate": {
+        "parse_rate": 0.029,
+        "empty_rate": 0.971,
+        "flap_rate": 0.029,
+        "flap_detected": true,
+        "runtime_hits": 1,
+        "empty_hits": 33,
+        "total_polls": 34,
+        "graduation_gate": "TN-P1-010 must not depend on GET /meta body parse",
+        "pre_convergence_action": "post-soak wave-0 meta hotfix + internal/indexer-* spine"
+      },
+      "chronic_drift_signals": [
+        {
+          "id": "DRIFT_PROBE_FALLBACK",
+          "severity": "medium",
+          "note": "≥95% polls use meta_build fallback — full /meta never succeeds during soak (expected)"
+        },
+        {
+          "id": "DRIFT_INDEXER_SOURCE_EMPTY",
+          "severity": "medium",
+          "note": "indexer_source empty 97% of polls — /meta body unavailable; TN-P1-010 must use internal spine"
+        },
+        {
+          "id": "DRIFT_INDEXER_SOURCE_FLAP",
+          "severity": "low",
+          "note": "indexer_source alternates empty/runtime — /meta intermittently parseable"
+        }
+      ],
+      "verdict": "stable",
+      "notes": [
+        "≥95% polls use meta_build fallback — full /meta never succeeds during soak (expected)",
+        "indexer_source empty 97% of polls — /meta body unavailable; TN-P1-010 must use internal spine",
+        "indexer_source alternates empty/runtime — /meta intermittently parseable"
+      ]
+    },
+    "backlog_dependency_graph": {
+      "summary_line": "TT_BACKLOG_DEPENDENCY_GRAPH: WARN files=180 risks=1 diffusion=1.1 out=D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/l5-stability-audit/runs/20260624T041316Z",
+      "high_severity_risks": 1,
+      "total_files": 180,
+      "risk_diffusion": {
+        "gate_fanout_score": 11,
+        "max_gates_per_subsystem": 3,
+        "wave_blast_radius": 21,
+        "diffusion_score": 1.1,
+        "new_risks_vs_prior": [],
+        "resolved_risks_vs_prior": [],
+        "prior_snapshot_present": true,
+        "verdict": "stable"
+      }
+    }
+  },
+  "hidden_stability_risks": [
+    {
+      "id": "DRIFT_PROBE_FALLBACK",
+      "severity": "medium",
+      "note": "≥95% polls use meta_build fallback — full /meta never succeeds during soak (expected)"
+    },
+    {
+      "id": "DRIFT_INDEXER_SOURCE_EMPTY",
+      "severity": "medium",
+      "note": "indexer_source empty 97% of polls — /meta body unavailable; TN-P1-010 must use internal spine"
+    },
+    {
+      "id": "DRIFT_INDEXER_SOURCE_FLAP",
+      "severity": "low",
+      "note": "indexer_source alternates empty/runtime — /meta intermittently parseable"
+    },
+    {
+      "id": "HR_LARGE_DIFF_BLOB",
+      "severity": "medium",
+      "note": "42 files with delta≥50 — review blast radius before wave-1",
+      "files": [
+        "crates/api/src/routes/itineraries.rs",
+        ".../components/admin/AdminNavContentTransition.tsx",
+        ".../market/marketStandaloneBusinessPageUtils.ts",
+        "frontend/components/market/useMarketPage.ts",
+        "frontend/e2e/53-main-path.spec.ts",
+        "frontend/e2e/93-matrix-path-p1-remediation.spec.ts",
+        ".../e2e/auth-register-login-market-chain.spec.ts",
+        ".../b468-market-discovery-full-ui-journey.spec.ts"
+      ]
+    },
+    {
+      "id": "HR_ITINERARIES_HUB",
+      "severity": "high",
+      "note": "itineraries.rs hub change — impacts market/escrow/guide consumer paths",
+      "files": [
+        "crates/api/src/routes/itineraries.rs"
+      ]
+    },
+    {
+      "id": "HR_WALL_BUDGET_DIVERGE",
+      "severity": "medium",
+      "note": "wall/budget ratio 5.218 — 72h completion wall-clock >> nominal"
+    },
+    {
+      "id": "DRIFT_HOTSPOT_SYS_OTHER",
+      "severity": "medium",
+      "note": "backlog hotspot SYS_OTHER Δ9613 gates=['ESCROW_CHAIN', 'LOW_SURFACE']"
+    },
+    {
+      "id": "DRIFT_HOTSPOT_SYS_E2E",
+      "severity": "medium",
+      "note": "backlog hotspot E2E / 烟测（非镜像关键路径） Δ4342 gates=['ESCROW_CHAIN']"
+    },
+    {
+      "id": "DRIFT_HOTSPOT_SYS_FRONTEND_OTHER",
+      "severity": "medium",
+      "note": "backlog hotspot SYS_FRONTEND_OTHER Δ335 gates=['ESCROW_CHAIN', 'LOW_SURFACE']"
+    }
+  ],
+  "graduation_readiness_hint": "Soak INFLIGHT: exec chain stable; acceptance /meta deferred to post-soak wave-0",
+  "verdict": "WARN",
+  "graduation_risk_preconvergence": {
+    "schema": "traveltrust.p2fc_graduation_risk_preconvergence.v2",
+    "generated_at_utc": "2026-06-24T04:13:16Z",
+    "convergence_score": 100,
+    "convergence_max": 100,
+    "soak_exec_chain_stable": true,
+    "meta_propagation_preclassified": true,
+    "indexer_parse_risk_acknowledged": true,
+    "new_risks_since_prior_snapshot": [],
+    "must_close_post_soak": [
+      {
+        "id": "PC-01",
+        "gate": "G02",
+        "action": "wave-0 meta hotfix + --strict meta verify"
+      },
+      {
+        "id": "PC-02",
+        "gate": "TN-P1-010",
+        "action": "internal/indexer-* spine — not GET /meta parse"
+      },
+      {
+        "id": "PC-03",
+        "gate": "SOAK_72H",
+        "action": "await ok_polls=4320 — wall ETA ~372.7h"
+      },
+      {
+        "id": "PC-BL-HR_ITINERARIES_HUB",
+        "gate": "WAVE-1",
+        "action": "itineraries.rs hub change — impacts market/escrow/guide consumer paths"
+      }
+    ],
+    "honest_boundary": "pre-convergence score ≠ Graduation CLOSED — post-soak one-shot still required",
+    "duration_convergence": "converged",
+    "converged_dimensions": 4,
+    "matrix_ready": true
+  },
+  "graduation_risk_matrix": {
+    "schema": "traveltrust.p2fc_graduation_risk_preconvergence_matrix.v2",
+    "generated_at_utc": "2026-06-24T04:13:16Z",
+    "phase": "②",
+    "soak_completed": false,
+    "matrix_rows": [
+      {
+        "id": "M1_WALL_CLOCK",
+        "dimension": "wall-clock 偏差",
+        "current": 5.218,
+        "unit": "ratio",
+        "trend": "stable",
+        "convergence": "converged",
+        "graduation_gate": "SOAK_72H",
+        "pre_soak_status": "observed",
+        "post_soak_action": "monitor wall ETA ~372.7h — no deploy during soak",
+        "blocks_graduation": false
+      },
+      {
+        "id": "M2_META_PROPAGATION",
+        "dimension": "/meta 分层传播",
+        "current": "408>503>exec_ok>accept_deferred",
+        "unit": "chain",
+        "trend": "stable",
+        "convergence": "converged",
+        "graduation_gate": "G02",
+        "pre_soak_status": "preclassified",
+        "post_soak_action": "wave-0 meta hotfix + p2fc-verify-staging-meta-availability.sh --strict",
+        "blocks_graduation": true
+      },
+      {
+        "id": "M3_INDEXER_PARSE",
+        "dimension": "indexer parse rate",
+        "current": 0.029,
+        "unit": "rate",
+        "trend": "stable",
+        "convergence": "converged_acknowledged",
+        "graduation_gate": "TN-P1-010",
+        "pre_soak_status": "acknowledged_low",
+        "post_soak_action": "TN-P1-010 independent via internal/indexer-* — not GET /meta parse",
+        "blocks_graduation": true
+      },
+      {
+        "id": "M4_BACKLOG_DIFFUSION",
+        "dimension": "backlog 风险扩散",
+        "current": 1.1,
+        "unit": "score",
+        "trend": "stable",
+        "convergence": "converged",
+        "graduation_gate": "WAVE-1/2",
+        "pre_soak_status": "frozen_registered",
+        "post_soak_action": "deploy backlog stamp + review 1 high-severity files",
+        "blocks_graduation": true
+      }
+    ],
+    "blocking_gates_post_soak": [
+      "M2_META_PROPAGATION",
+      "M3_INDEXER_PARSE",
+      "M4_BACKLOG_DIFFUSION"
+    ],
+    "duration_convergence": "converged",
+    "converged_dimensions": 4,
+    "preconvergence_score": 100,
+    "matrix_ready_for_completed_json": true,
+    "must_close_post_soak": [
+      {
+        "id": "PC-01",
+        "gate": "G02",
+        "action": "wave-0 meta hotfix + --strict meta verify"
+      },
+      {
+        "id": "PC-02",
+        "gate": "TN-P1-010",
+        "action": "internal/indexer-* spine — not GET /meta parse"
+      },
+      {
+        "id": "PC-03",
+        "gate": "SOAK_72H",
+        "action": "await ok_polls=4320 — wall ETA ~372.7h"
+      },
+      {
+        "id": "PC-BL-HR_ITINERARIES_HUB",
+        "gate": "WAVE-1",
+        "action": "itineraries.rs hub change — impacts market/escrow/guide consumer paths"
+      }
+    ],
+    "honest_boundary": "matrix updated pre-COMPLETED.json · no deploy · no staging state change",
+    "long_term_drift_scan": {
+      "drift_signal_count": 3,
+      "wall_growth": "stable",
+      "indexer_decline": "stable",
+      "meta_cluster_verdict": "stable_cluster",
+      "hotspot_count": 5
+    },
+    "post_completed_failure_forecast": {
+      "high_likelihood_count": 2,
+      "high_likelihood_phases": [
+        "wave1_api_deploy",
+        "meta_availability"
+      ],
+      "recommended_pre_completed_actions": [
+        "Review wave-rollback-plan + fly-rollback-snapshot before COMPLETED",
+        "Wave-0 hotfix must land before step-6 strict meta gate",
+        "TN-P1-010: confirm internal spine green locally",
+        "Wave1: stage itineraries.rs blast-radius review"
+      ]
+    },
+    "future_certain_failures": {
+      "critical_count": 1,
+      "high_count": 1,
+      "ids": [
+        "FC-01_TIMEOUT_MISMATCH",
+        "FC-02_ITINERARIES_HUB",
+        "FC-03_LARGE_DIFF_BLOB"
+      ]
+    }
+  },
+  "duration_convergence": {
+    "schema": "traveltrust.p2fc_l5_duration_convergence.v1",
+    "snapshot_count": 3,
+    "observation_duration_sec": 478,
+    "observation_duration_hours": 0.13,
+    "poll_interval_sec": 900,
+    "dimensions": {
+      "wall_clock_deviation": {
+        "metric": "wall_vs_budget_ratio",
+        "series": [
+          5.206,
+          5.208,
+          5.218
+        ],
+        "latest": 5.218,
+        "trend": "stable",
+        "convergence": "converged",
+        "notes": [
+          "ratio stable → wall ETA predictable for soak completion planning"
+        ]
+      },
+      "meta_layered_propagation": {
+        "metric": "meta_chain_consistency + meta_transitions",
+        "series": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "transitions_series": [
+          0.0,
+          0.0
+        ],
+        "latest": 1.0,
+        "trend": "stable",
+        "convergence": "converged",
+        "notes": [
+          "408→503→exec_ok chain pre-classified; acceptance deferred post-soak"
+        ]
+      },
+      "indexer_parse_rate": {
+        "metric": "indexer_parse_rate",
+        "series": [
+          0.031,
+          0.03,
+          0.029
+        ],
+        "latest": 0.029,
+        "trend": "stable",
+        "convergence": "converged_acknowledged",
+        "notes": [
+          "low parse rate expected during soak — TN-P1-010 uses internal spine"
+        ]
+      },
+      "backlog_risk_diffusion": {
+        "metric": "backlog_diffusion_score + high_risks",
+        "series": [
+          1.1,
+          1.1
+        ],
+        "high_risks_series": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "latest": 1.1,
+        "trend": "stable",
+        "convergence": "converged",
+        "notes": [
+          "backlog frozen at ACTIVE stamp — diffusion stable until post-soak deploy"
+        ]
+      }
+    },
+    "converged_dimension_count": 4,
+    "overall_convergence": "converged",
+    "honest_boundary": "duration convergence ≠ Graduation CLOSED — matrix pre-registers post-soak gates only"
+  },
+  "long_term_drift_scan": {
+    "schema": "traveltrust.p2fc_long_term_drift_scan.v1",
+    "wall_clock": {
+      "ratio_series": [
+        5.206,
+        5.208,
+        5.218
+      ],
+      "ratio_slope_per_snapshot": 0.006,
+      "eta_hours_series": [
+        372.1,
+        372.1,
+        372.7
+      ],
+      "overhead_slope_per_snapshot": 0.4,
+      "growth_verdict": "stable"
+    },
+    "indexer_parse": {
+      "rate_series": [
+        0.031,
+        0.03,
+        0.029
+      ],
+      "slope_per_snapshot": -0.001,
+      "log_half_windows": {
+        "first_half_parse_rate": 0.0,
+        "second_half_parse_rate": 0.0588,
+        "half_window_slope": 0.0588,
+        "trend": "rising",
+        "verdict": "stable"
+      },
+      "decline_verdict": "stable"
+    },
+    "meta_propagation": {
+      "sample_count": 19,
+      "dominant_chain": "408>503>exec_ok",
+      "cluster_density": 1.0,
+      "transition_count": 0,
+      "cluster_window_count": 0,
+      "verdict": "stable_cluster"
+    },
+    "backlog_hotspots": [
+      {
+        "subsystem": "SYS_OTHER",
+        "title": "SYS_OTHER",
+        "file_count": 74,
+        "total_delta": 9613,
+        "gates": [
+          "ESCROW_CHAIN",
+          "LOW_SURFACE"
+        ]
+      },
+      {
+        "subsystem": "SYS_E2E",
+        "title": "E2E / 烟测（非镜像关键路径）",
+        "file_count": 80,
+        "total_delta": 4342,
+        "gates": [
+          "ESCROW_CHAIN"
+        ]
+      },
+      {
+        "subsystem": "SYS_FRONTEND_OTHER",
+        "title": "SYS_FRONTEND_OTHER",
+        "file_count": 13,
+        "total_delta": 335,
+        "gates": [
+          "ESCROW_CHAIN",
+          "LOW_SURFACE"
+        ]
+      },
+      {
+        "subsystem": "SYS_API_ROUTES",
+        "title": "API 路由域",
+        "file_count": 1,
+        "total_delta": 195,
+        "gates": [
+          "ESCROW_CHAIN"
+        ]
+      },
+      {
+        "subsystem": "SYS_META_G02",
+        "title": "G02 /meta 验收链",
+        "file_count": 3,
+        "total_delta": 23,
+        "gates": [
+          "G01_WEB",
+          "G02_META",
+          "SOAK_EXEC"
+        ]
+      }
+    ],
+    "drift_signals": [
+      {
+        "id": "DRIFT_HOTSPOT_SYS_OTHER",
+        "severity": "medium",
+        "note": "backlog hotspot SYS_OTHER Δ9613 gates=['ESCROW_CHAIN', 'LOW_SURFACE']"
+      },
+      {
+        "id": "DRIFT_HOTSPOT_SYS_E2E",
+        "severity": "medium",
+        "note": "backlog hotspot E2E / 烟测（非镜像关键路径） Δ4342 gates=['ESCROW_CHAIN']"
+      },
+      {
+        "id": "DRIFT_HOTSPOT_SYS_FRONTEND_OTHER",
+        "severity": "medium",
+        "note": "backlog hotspot SYS_FRONTEND_OTHER Δ335 gates=['ESCROW_CHAIN', 'LOW_SURFACE']"
+      }
+    ],
+    "drift_signal_count": 3
+  },
+  "post_completed_failure_forecast": {
+    "schema": "traveltrust.p2fc_post_completed_failure_forecast.v1",
+    "trigger_file": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+    "execution_entrypoint": "scripts/ops/p2fc-post-soak-one-shot-execute.sh",
+    "failure_paths": [
+      {
+        "step": 1,
+        "phase": "tn_p1_010",
+        "failure_mode": "TN-P1-010 replay / reconcile read failure",
+        "likelihood": "low",
+        "trigger": "COMPLETED.json → p2fc-run-tn-p1-010-independent.sh",
+        "why": "internal spine isolated from /meta",
+        "precheck": "pass",
+        "mitigation": "use internal/indexer-* only; do not gate on GET /meta body"
+      },
+      {
+        "step": 2,
+        "phase": "rollback_snapshot",
+        "failure_mode": "fly snapshot capture fail",
+        "likelihood": "low",
+        "trigger": "p2fc_capture_fly_rollback_snapshot",
+        "why": "fly CLI auth / network",
+        "precheck": "pass",
+        "mitigation": "wave-rollback-plan/latest.json manual revert"
+      },
+      {
+        "step": 3,
+        "phase": "apply_patches",
+        "failure_mode": "meta hotfix + backlog patch conflict",
+        "likelihood": "medium",
+        "trigger": "p2fc_apply_backlog_patches wave-0 hotfix then deploy-backlog.patch",
+        "why": "overlapping middleware/mod.rs · health_meta · fly.toml hunks",
+        "precheck": "warn",
+        "mitigation": "apply hotfix first; resolve reject with git apply --3way; wave plan documents order"
+      },
+      {
+        "step": 4,
+        "phase": "wave1_api_deploy",
+        "failure_mode": "API deploy OOM / compile timeout / health≠200",
+        "likelihood": "high",
+        "trigger": "p2fc_deploy_api_wave tt-api-staging",
+        "why": "itineraries.rs Δ195 + L1 API backlog",
+        "precheck": "warn",
+        "mitigation": "fly rollback previous_image from fly-rollback-snapshot.json"
+      },
+      {
+        "step": 5,
+        "phase": "wave2_web_deploy",
+        "failure_mode": "Web deploy fail / meta route mismatch",
+        "likelihood": "medium",
+        "trigger": "p2fc_deploy_web_wave tt-web-staging",
+        "why": "app/meta/route.ts 130s timeout must align post hotfix",
+        "precheck": "warn",
+        "mitigation": "rollback tt-web-staging previous_image"
+      },
+      {
+        "step": 6,
+        "phase": "meta_availability",
+        "failure_mode": "G02 strict /meta still 408 — 30s legacy vs 120s hotfix not live",
+        "likelihood": "high",
+        "trigger": "p2fc-verify-staging-meta-availability.sh --strict",
+        "why": "staging REQUEST_TIMEOUT_SECS=30 until wave-0 deploy; GET /meta >30s → 408",
+        "precheck": "warn",
+        "mitigation": "confirm fly.toml REQUEST_TIMEOUT_SECS=120 + web META_ROUTE_FETCH_TIMEOUT_MS=130000 deployed before strict gate"
+      },
+      {
+        "step": 7,
+        "phase": "g02_deep_gate",
+        "failure_mode": "Deep Gate G02 fallback fail / non-meta G03·G08",
+        "likelihood": "medium",
+        "trigger": "run-phase2-deep-release-gate.sh --require-meta-green",
+        "why": "meta green necessary not sufficient; other gates may FAIL",
+        "precheck": "warn",
+        "mitigation": "fix meta first; rerun gate; accept non-meta items as separate backlog"
+      },
+      {
+        "step": 8,
+        "phase": "graduation",
+        "failure_mode": "Graduation closure partial / soak attestation mismatch",
+        "likelihood": "low",
+        "trigger": "run-phase2-testnet-post-soak-graduation-closure.sh",
+        "why": "prior step latent debt",
+        "precheck": "pass",
+        "mitigation": "checkpoint.json phase trace; do not claim CLOSED until TT_TESTNET_GRADUATION"
+      }
+    ],
+    "high_likelihood_count": 2,
+    "high_likelihood_phases": [
+      "wave1_api_deploy",
+      "meta_availability"
+    ],
+    "recommended_pre_completed_actions": [
+      "Review wave-rollback-plan + fly-rollback-snapshot before COMPLETED",
+      "Wave-0 hotfix must land before step-6 strict meta gate",
+      "TN-P1-010: confirm internal spine green locally",
+      "Wave1: stage itineraries.rs blast-radius review"
+    ],
+    "honest_boundary": "forecast only — no deploy until COMPLETED.json"
+  },
+  "future_certain_failure_register": {
+    "schema": "traveltrust.p2fc_future_certain_failure_register.v1",
+    "register": [
+      {
+        "id": "FC-01_TIMEOUT_MISMATCH",
+        "severity": "critical",
+        "category": "config_drift",
+        "current_state": "staging REQUEST_TIMEOUT_SECS=30 (live)",
+        "future_state_required": "120 API + 130s web proxy after wave-0",
+        "fails_at": "step-6 meta_availability --strict",
+        "not_failing_now_because": "observability_only policy defers acceptance",
+        "pre_convergence": "wave-0 hotfix in meta-availability-hotfix.patch — apply before strict gate"
+      },
+      {
+        "id": "FC-02_ITINERARIES_HUB",
+        "severity": "high",
+        "category": "backlog_blast",
+        "current_state": "itineraries.rs hub change — impacts market/escrow/guide consumer paths",
+        "future_state_required": "wave-1 deploy without consumer regression",
+        "fails_at": "step-4 wave1_api_deploy or post-deploy market/escrow",
+        "not_failing_now_because": "soak freeze — staging still on pre-backlog build",
+        "pre_convergence": "blast-radius review + rollback snapshot"
+      },
+      {
+        "id": "FC-03_LARGE_DIFF_BLOB",
+        "severity": "medium",
+        "category": "backlog_blast",
+        "current_state": "42 files with delta≥50 — review blast radius before wave-1",
+        "future_state_required": "controlled wave-1/2 deploy",
+        "fails_at": "step-4/5 deploy OOM or runtime error",
+        "not_failing_now_because": "backlog not applied",
+        "pre_convergence": "wave plan + fly rollback"
+      }
+    ],
+    "critical_count": 1,
+    "high_count": 1,
+    "honest_boundary": "registered failures are post-soak unless soak exec chain breaks"
+  },
+  "metrics_timeseries_summary": {
+    "snapshot_count": 3,
+    "overall_convergence": "converged"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T00:48:14Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "仁川",
+    "city_en": "Incheon",
+    "matrix_ids": [
+      "PH-KR-058-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-KR-058-ATR",
+      "legacy_value": "中华街",
+      "poi_id": "5ad5627d-5aca-4621-909a-1ade4b35bf94",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-incheon-port-official-guide-cover.jpg",
+      "hero_file": "ocs-incheon-port-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-058-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

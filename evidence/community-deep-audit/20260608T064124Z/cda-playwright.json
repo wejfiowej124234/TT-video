@@ -1,0 +1,36 @@
+{
+  "passed": false,
+  "exit_code": 1,
+  "ui_corridor_matrix": [
+    {
+      "probe_id": "ui.f015",
+      "spec": "f015-f018-request.spec.ts",
+      "step": "F-015 POST post GET detail",
+      "status": "FAIL"
+    },
+    {
+      "probe_id": "ui.f016",
+      "spec": "f015-f018-request.spec.ts",
+      "step": "F-016 like unlike relike",
+      "status": "FAIL"
+    },
+    {
+      "probe_id": "ui.f017",
+      "spec": "f015-f018-request.spec.ts",
+      "step": "F-017 collect",
+      "status": "FAIL"
+    },
+    {
+      "probe_id": "ui.f018",
+      "spec": "f015-f018-request.spec.ts",
+      "step": "F-018 community report",
+      "status": "FAIL"
+    },
+    {
+      "probe_id": "ui.f019",
+      "spec": "f015-f018-request.spec.ts",
+      "step": "F-019 me posts likes collects",
+      "status": "FAIL"
+    }
+  ]
+}

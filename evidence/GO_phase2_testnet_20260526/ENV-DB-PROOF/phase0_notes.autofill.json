@@ -1,0 +1,6 @@
+{
+  "phase": "0",
+  "note": "铁律①：须由执行人在 staging PG 完成至少一次写后读；可将脱敏 SQL 结论粘贴到 ENV-DB-PROOF/notes.md",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "hint": "可与主链订单 id / user id 对齐 SELECT（orders/users/order_messages/sessions）"
+}

@@ -1,0 +1,324 @@
+{
+  "schema": "traveltrust.local_ssot_reconciliation_report.v1",
+  "at": "20260614T083023Z",
+  "phase": "② testnet",
+  "mode": "Reliability Freeze · audit-only",
+  "local_ssot": "working_tree",
+  "baselines": {
+    "working_tree": {
+      "modified": 278,
+      "untracked": 1802
+    },
+    "git_head": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+    "staging_git_sha": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+    "head_equals_staging": true,
+    "working_tree_equals_staging": false
+  },
+  "reconciliation_verdict": "RECONCILIATION_REQUIRED",
+  "aligned_items": [
+    "HEAD git_sha = staging /meta.build.git_sha",
+    "escrow_factory_address: registry = staging /meta",
+    "fee_router_address: registry = staging /meta",
+    "governor_address: registry = staging /meta",
+    "Sepolia spine audit OK (registry ↔ on-chain)",
+    "check-staging-web-alignment PASS (prior: CORS/Sepolia/NEXT_PUBLIC core trio)"
+  ],
+  "gaps": [
+    {
+      "id": "RECON-001",
+      "severity": "Critical",
+      "category": "local_exists_uncommitted",
+      "domain": "Version / SSOT",
+      "title": "Working tree is Local SSOT but not in git",
+      "observation": "278 modified + 1802 untracked vs HEAD 5ab1f8ba2229; staging /meta git_sha = HEAD (not working tree).",
+      "impact": "Single Source of Truth split: developers run WT; staging runs HEAD; redeploy without commit drops latest work.",
+      "fix": "Freeze Lift: structured commit waves (see FLB-001..003) then deploy from one SHA."
+    },
+    {
+      "id": "RECON-002",
+      "severity": "Critical",
+      "category": "evidence_code_semantic_mismatch",
+      "domain": "Indexer",
+      "title": "TN-P1-010 CLOSED in evidence · selector fix only in working tree",
+      "observation": "HEAD ESCROW=0x87,0x90,0x6b,0x1e STATUS=0x66,0x01,0xcb,0x31; WT ESCROW=0x83,0xa2,0x65,0xa7 STATUS=0x20,0x0d,0x2e,0xd2. TN-P1-010 evidence PASS; staging reconcile compound_pass=true (log path may mask RPC reads).",
+      "impact": "Evidence claims indexer reconcile closed; git HEAD still has wrong eth_call selectors.",
+      "fix": "FLB-001: commit mod.rs + indexer.rs bundle; redeploy API; append reconcile evidence with new git_sha."
+    },
+    {
+      "id": "RECON-003",
+      "severity": "Critical",
+      "category": "db_executed_not_in_repo",
+      "domain": "Database",
+      "title": "CMS/Growth/guides migrations on disk · not in git",
+      "observation": "10 files: 20260607120000_cms_catalog_p1.sql, 20260607120100_cms_official_ops_p2.sql, 20260607120200_cms_growth_p3.sql, 20260607130000_cms_catalog_s2_004_pricing_tiers_media.sql, 20260607140000_growth_early_bird_g_s3.sql, 20260607150000_growth_airdrop_g_s6.sql, 20260608120000_sprint168_business_expansion.sql, 20260609120000_guides_hourly_rate_avatar_url.sql, 20260612120000_guides_public_title.sql, 20260613120000_guide_exit_requests.sql. Staging CMS/Growth admin API parity PASS → DB likely migrated out-of-band.",
+      "impact": "Clone-from-git + migrate would miss schema; reproducibility broken.",
+      "fix": "FLB-002: git add migrations + record staging _sqlx_migrations stamp in evidence."
+    },
+    {
+      "id": "RECON-004",
+      "severity": "High",
+      "category": "local_exists_uncommitted",
+      "domain": "Admin / CMS / Growth",
+      "title": "Admin HTTP handlers exist locally · not in HEAD",
+      "observation": "17 untracked admin route modules (catalog, growth, official, …). Staging returns 200 — likely deployed from dirty tree earlier or partial overlap with HEAD routes.",
+      "impact": "Admin console FE/BE parity fragile across environments.",
+      "fix": "FLB-003: commit admin + catalog + growth route tree; verify admin mod.rs mounts."
+    },
+    {
+      "id": "RECON-005",
+      "severity": "High",
+      "category": "local_exists_uncommitted",
+      "domain": "Admin UI",
+      "title": "Admin FE route trees untracked",
+      "observation": "7 dirs: content, conversion-analytics, governance, growth, guide-applications, official, region-share under frontend/app/admin/.",
+      "impact": "Staging web may lack new admin pages present locally.",
+      "fix": "FLB-004: commit admin FE; deploy tt-web-staging from same SHA as API."
+    },
+    {
+      "id": "RECON-006",
+      "severity": "High",
+      "category": "local_exists_uncommitted",
+      "domain": "Governance UI",
+      "title": "Governance module FE changes not committed",
+      "observation": "21 modified files under frontend/app/governance/ (proposals, params, hub).",
+      "impact": "Local governance UX ≠ staging until commit+deploy.",
+      "fix": "FLB-004: include in frontend commit wave."
+    },
+    {
+      "id": "RECON-007",
+      "severity": "High",
+      "category": "config_exists_not_exposed",
+      "domain": "Governance / Meta",
+      "title": "Governance token in registry · absent from staging /meta",
+      "observation": "registry=0xac2e29ac7089e4863c21daf232cf8bbb025d91ca; local env=set; /meta governance_votes_token_address=null.",
+      "impact": "Governance vote weight / getPastVotes UI cannot self-configure from meta on staging.",
+      "fix": "FLB-005: set GOVERNANCE_VOTES_TOKEN_ADDRESS (or GOVERNANCE_TOKEN_ADDRESS) on Fly; redeploy API."
+    },
+    {
+      "id": "RECON-008",
+      "severity": "High",
+      "category": "config_exists_not_exposed",
+      "domain": "Steward / Meta",
+      "title": "REGION_STEWARD_STAKE_POOL_ADDRESS set · /meta staking_address null",
+      "observation": "env REGION_STEWARD_STAKE_POOL_ADDRESS=0x16F914f3…; meta reads STAKING_ADDRESS not REGION_STEWARD_*; registry=0x16f914f3d50f7aa02665589e715f94ca3b7ab47c.",
+      "impact": "Steward stake API may work while meta observability / FE guards show null staking.",
+      "fix": "FLB-005: align Fly STAKING_ADDRESS=pool or extend ChainConfig meta mapping (post-freeze code if needed)."
+    },
+    {
+      "id": "RECON-009",
+      "severity": "Medium",
+      "category": "config_exists_not_exposed",
+      "domain": "Observability",
+      "title": "/meta build.deployed_at null on staging",
+      "observation": "TRAVELTRUST_DEPLOYED_AT not injected on tt-api-staging.",
+      "impact": "Deploy audit trail weak for reconciliation.",
+      "fix": "FLB-006: set TRAVELTRUST_DEPLOYED_AT on Fly release."
+    },
+    {
+      "id": "RECON-010",
+      "severity": "Medium",
+      "category": "local_exists_uncommitted",
+      "domain": "Indexer",
+      "title": "indexer.rs substantial uncommitted delta",
+      "observation": " 1 file changed, 162 insertions(+), 8 deletions(-)",
+      "impact": "Indexer tick/reconcile behavior differs WT vs staging HEAD.",
+      "fix": "FLB-001: commit with selector fix."
+    },
+    {
+      "id": "RECON-011",
+      "severity": "Medium",
+      "category": "local_exists_uncommitted",
+      "domain": "Contracts",
+      "title": "Phase② contract artifacts untracked",
+      "observation": "18 untracked under contracts/ (scripts, src, abi, test).",
+      "impact": "On-chain tooling not reproducible from git HEAD.",
+      "fix": "FLB-007: commit contracts wave or document deploy-only exclusion."
+    },
+    {
+      "id": "RECON-012",
+      "severity": "Medium",
+      "category": "local_exists_uncommitted",
+      "domain": "API / Domain",
+      "title": "New chain_off modules untracked",
+      "observation": "10 modules (guide_exit, identity_slots, slot_rbac, steward_seat, …).",
+      "impact": "Business logic on disk not in HEAD/staging.",
+      "fix": "FLB-003: commit API domain wave with routes."
+    },
+    {
+      "id": "RECON-013",
+      "severity": "Low",
+      "category": "committed_not_deployed",
+      "domain": "Deploy",
+      "title": "HEAD equals staging SHA · no committed-but-not-deployed gap",
+      "observation": "HEAD 5ab1f8ba2229 = staging git_sha; gap is WT→HEAD not HEAD→staging.",
+      "impact": "None for committed code; WT is the drift source.",
+      "fix": "N/A — focus FLB commit waves."
+    },
+    {
+      "id": "RECON-014",
+      "severity": "Low",
+      "category": "graduation_gate",
+      "domain": "Reliability",
+      "title": "TN-P1-009 soak INFLIGHT (not SSOT drift)",
+      "observation": "P2FC 72h soak; COMPLETED.json pending.",
+      "impact": "Phase② graduation OPEN until soak + post-soak closure.",
+      "fix": "Wait soak; run post-soak graduation (no redeploy required for soak itself)."
+    }
+  ],
+  "gap_summary": {
+    "critical": 3,
+    "high": 5,
+    "medium": 4,
+    "low": 2
+  },
+  "freeze_lift_backlog": [
+    {
+      "id": "FLB-001",
+      "priority": "P0",
+      "title": "Commit Indexer TN-P1-010 bundle",
+      "scope": [
+        "crates/api/src/chain/mod.rs",
+        "crates/api/src/chain/indexer.rs"
+      ],
+      "exit": "HEAD selectors match WT; cargo test -p traveltrust-api chain",
+      "blocks": [
+        "RECON-002",
+        "RECON-010"
+      ]
+    },
+    {
+      "id": "FLB-002",
+      "priority": "P0",
+      "title": "Track SQL migrations in git",
+      "scope": [
+        "crates/api/migrations/20260607120000_cms_catalog_p1.sql",
+        "crates/api/migrations/20260607120100_cms_official_ops_p2.sql",
+        "crates/api/migrations/20260607120200_cms_growth_p3.sql",
+        "crates/api/migrations/20260607130000_cms_catalog_s2_004_pricing_tiers_media.sql",
+        "crates/api/migrations/20260607140000_growth_early_bird_g_s3.sql",
+        "crates/api/migrations/20260607150000_growth_airdrop_g_s6.sql",
+        "crates/api/migrations/20260608120000_sprint168_business_expansion.sql",
+        "crates/api/migrations/20260609120000_guides_hourly_rate_avatar_url.sql",
+        "crates/api/migrations/20260612120000_guides_public_title.sql",
+        "crates/api/migrations/20260613120000_guide_exit_requests.sql"
+      ],
+      "exit": "10 migrations in git; staging _sqlx_migrations stamp recorded",
+      "blocks": [
+        "RECON-003"
+      ]
+    },
+    {
+      "id": "FLB-003",
+      "priority": "P0",
+      "title": "Commit CMS/Growth/Admin API + chain_off domain",
+      "scope": [
+        "crates/api/src/routes/admin/*",
+        "crates/api/src/routes/catalog/",
+        "crates/api/src/routes/growth/",
+        "crates/api/src/chain_off/*"
+      ],
+      "exit": "run-check-04-routes.sh exit 0; admin routes mounted",
+      "blocks": [
+        "RECON-004",
+        "RECON-012"
+      ]
+    },
+    {
+      "id": "FLB-004",
+      "priority": "P1",
+      "title": "Commit Admin + Governance frontend",
+      "scope": [
+        "frontend/app/admin/*",
+        "frontend/app/governance/*"
+      ],
+      "exit": "admin/governance vitest contracts pass (subset)",
+      "blocks": [
+        "RECON-005",
+        "RECON-006"
+      ]
+    },
+    {
+      "id": "FLB-005",
+      "priority": "P1",
+      "title": "Fly env sync · meta exposure",
+      "scope": [
+        "GOVERNANCE_VOTES_TOKEN_ADDRESS",
+        "STAKING_ADDRESS or REGION_STEWARD_STAKE_POOL_ADDRESS",
+        "TRAVELTRUST_DEPLOYED_AT"
+      ],
+      "exit": "/meta shows governance_votes_token_address + staking_address + deployed_at",
+      "blocks": [
+        "RECON-007",
+        "RECON-008",
+        "RECON-009"
+      ]
+    },
+    {
+      "id": "FLB-006",
+      "priority": "P1",
+      "title": "Deploy tt-api-staging from unified commit",
+      "scope": [
+        "scripts/dev/phase2-staging-fly-deploy-and-sync.sh"
+      ],
+      "exit": "staging /meta git_sha = new HEAD; reconcile compound_pass",
+      "blocks": [
+        "RECON-001"
+      ]
+    },
+    {
+      "id": "FLB-007",
+      "priority": "P1",
+      "title": "Deploy tt-web-staging from same SHA",
+      "scope": [
+        "scripts/dev/deploy-tt-web-staging.sh"
+      ],
+      "exit": "check-staging-web-alignment FAIL=0",
+      "blocks": [
+        "RECON-001",
+        "RECON-005"
+      ]
+    },
+    {
+      "id": "FLB-008",
+      "priority": "P2",
+      "title": "Commit contracts Phase② artifacts (if in scope)",
+      "scope": [
+        "contracts/src/*",
+        "contracts/abi/*",
+        "registry/*"
+      ],
+      "exit": "phase2-sepolia-spine-audit OK",
+      "blocks": [
+        "RECON-011"
+      ]
+    },
+    {
+      "id": "FLB-009",
+      "priority": "P2",
+      "title": "Reconciliation verification gate",
+      "scope": [
+        "scripts/dev/run-phase1-phase2-full-alignment-audit.sh",
+        "scripts/dev/emit-local-ssot-reconciliation-report.mjs"
+      ],
+      "exit": "TT_LOCAL_SSOT_RECONCILIATION: RECONCILED; non-soak alignment gaps=0",
+      "blocks": [
+        "all"
+      ]
+    },
+    {
+      "id": "FLB-010",
+      "priority": "P2",
+      "title": "Evidence SHA refresh (no closed-item rerun)",
+      "scope": [
+        "Append git_sha to TN-P1-010 STATUS",
+        "Update testnet-perfect-validation-manifest"
+      ],
+      "exit": "Evidence git_sha matches deployed HEAD post-FLB-006",
+      "blocks": [
+        "RECON-002"
+      ]
+    }
+  ],
+  "honest_boundary": "Execute FLB after TT_TESTNET_GRADUATION:CLOSED or explicit Freeze Lift; ② reconciliation ≠ ③ Production GO.",
+  "grep_verdict": "TT_LOCAL_SSOT_RECONCILIATION: RECONCILIATION_REQUIRED 20260614T083023Z"
+}

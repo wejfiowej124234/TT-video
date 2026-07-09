@@ -1,0 +1,57 @@
+{
+  "phase": "\u2460+\u2461",
+  "generated_at": "2026-06-07T07:23:22.258128+00:00",
+  "verdict": "PASS",
+  "summary": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 0,
+    "issues": 0,
+    "pg_pass": 2,
+    "pg_total": 2
+  },
+  "issues": [],
+  "pg_consistency_matrix": [
+    {
+      "probe_id": "pg.auth_audit_events",
+      "check": "infra",
+      "target": "auth_audit_events",
+      "pg_value": "73",
+      "api_value": "readable",
+      "expected": "ok",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.admin_audit_logs",
+      "check": "infra",
+      "target": "admin_audit_logs",
+      "pg_value": "5659",
+      "api_value": "readable",
+      "expected": "ok",
+      "status": "PASS",
+      "notes": ""
+    }
+  ],
+  "coverage_layers": {
+    "api_cross_domain": "executed",
+    "state_propagation_chains": "A,B,C,F,H,I",
+    "postgres_direct": "executed",
+    "audit_log_tables": "auth_audit_events + admin_audit_logs",
+    "state_machine_ssot": "escrow OrderState + community_penalties + governance_mvp",
+    "domains_frozen": "admin+oed+community+itg"
+  },
+  "phase2": {
+    "pg": {
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "pg_pass": 2,
+      "pg_total": 2
+    }
+  },
+  "admin_audit_frozen": true,
+  "oed_audit_frozen": true,
+  "cda_audit_frozen": true,
+  "itg_audit_frozen": true
+}

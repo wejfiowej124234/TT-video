@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.cross_domain_deps.v1",
+  "dependencies": [
+    {
+      "root_cause_id": "RC-01",
+      "domains": [
+        "PF",
+        "CX",
+        "UXA"
+      ],
+      "title": "Navigation / IA duplication (PF · CX · UXA)"
+    },
+    {
+      "root_cause_id": "RC-03",
+      "domains": [
+        "AG",
+        "CX"
+      ],
+      "title": "Admin governance boundary (AG · PGX-ADMIN)"
+    }
+  ]
+}

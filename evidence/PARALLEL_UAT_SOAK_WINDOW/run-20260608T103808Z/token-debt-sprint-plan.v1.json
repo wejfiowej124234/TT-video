@@ -1,0 +1,826 @@
+{
+  "schema": "traveltrust.token_debt_sprint_plan.v1",
+  "generated_at": "2026-06-08T11:45:06Z",
+  "tool": "npm run check:tokens",
+  "handbook": "docs/handbook/engineering/180-Parallel-UAT-During-Soak-Sprint.md §5",
+  "gate": "P2FC 33/33 GO → unfreeze → this sprint → next testnet round",
+  "policy": "Do not fix during staging-soak; batch by domain; admin batch excludes frozen IA work",
+  "summary": {
+    "files_with_violations": 81,
+    "violation_lines": 210,
+    "unique_rules": 6
+  },
+  "by_rule": {
+    "bg-slate-*": 136,
+    "bg-amber-*": 29,
+    "text-red-*": 18,
+    "bg-emerald-*": 17,
+    "rounded-md (未走变量)": 8,
+    "text-green-*": 2
+  },
+  "by_domain": {
+    "me": 71,
+    "escrow": 35,
+    "trust": 25,
+    "other": 19,
+    "guide": 19,
+    "disputes": 12,
+    "admin": 9,
+    "governance": 8,
+    "orders": 7,
+    "market": 5
+  },
+  "by_batch": {
+    "B3-me-guide-provider": 91,
+    "B2-escrow-orders": 54,
+    "B4-trust-governance-market": 42,
+    "B5-shell-misc": 14,
+    "B1-admin-ops": 9
+  },
+  "batches": {
+    "B1-admin-ops": {
+      "files": 7,
+      "violations": 9,
+      "file_list": [
+        "app/admin/content/poi-images/batches/[id]/AdminContentPoiImageBatchPageMain.tsx",
+        "app/admin/growth/reward-ledger/AdminRewardLedgerPageMain.tsx",
+        "app/admin/official/cold-start/AdminOfficialColdStartPageMain.tsx",
+        "app/admin/permissions/adminPermissionsPage.contract.test.ts",
+        "components/admin/AdminHomeInboxStrip.tsx",
+        "components/admin/AdminHomeSystemOverviewTrends.tsx",
+        "components/admin/ops/AdminOpsRiskBanner.tsx"
+      ],
+      "suggested_order": 1
+    },
+    "B2-escrow-orders": {
+      "files": 28,
+      "violations": 54,
+      "file_list": [
+        "app/disputes/DisputesListPageMain.tsx",
+        "app/disputes/[id]/DisputeDetailTimelineSection.tsx",
+        "app/disputes/[id]/loading.tsx",
+        "app/disputes/error.tsx",
+        "app/escrow/[id]/error.tsx",
+        "app/escrow/error.tsx",
+        "app/orders/OrdersPageLoadingView.tsx",
+        "app/orders/new/loading.tsx",
+        "components/escrow/EscrowDetail/BilateralConfirmBlock.tsx",
+        "components/escrow/EscrowDetail/ChainSyncStatusPanel.tsx",
+        "components/escrow/EscrowDetail/CreateOnChainEscrowBlock.tsx",
+        "components/escrow/EscrowDetail/DisputeResolutionFundBlock.tsx",
+        "components/escrow/EscrowDetail/EscrowCancelPolicySection.tsx",
+        "components/escrow/EscrowDetail/EscrowChainReadDegradedBanner.tsx",
+        "components/escrow/EscrowDetail/EscrowDraftAdvancedProtocolFold.tsx",
+        "components/escrow/EscrowDetail/EscrowDraftPublishedBanner.tsx",
+        "components/escrow/EscrowDetail/EscrowOnChainActions.tsx",
+        "components/escrow/EscrowDetail/EscrowOrderGetRateLimitBanner.tsx",
+        "components/escrow/EscrowDetail/EscrowRiskNotice.tsx",
+        "components/escrow/EscrowDetail/EscrowTxModal.tsx",
+        "components/escrow/EscrowDetail/IntentSignFacts.tsx",
+        "components/escrow/EscrowDetail/OrderActionsBlock.tsx",
+        "components/escrow/EscrowDetail/QuoteSummaryCard.tsx",
+        "components/escrow/EscrowDetail/ReorgBanner.tsx",
+        "components/escrow/EscrowDetail/index.tsx",
+        "components/escrow/FeeRouterWiringNotice.tsx",
+        "components/escrow/OrderFlowSteps.tsx",
+        "components/orders/OrdersSegmentErrorView.tsx"
+      ],
+      "suggested_order": 2
+    },
+    "B3-me-guide-provider": {
+      "files": 22,
+      "violations": 91,
+      "file_list": [
+        "app/guide/register/GuideRegisterRejectedGate.tsx",
+        "app/me/error.tsx",
+        "app/me/onboarding/StripeOnboardingPayment.tsx",
+        "app/me/referrals/MeReferralsPageMain.tsx",
+        "app/me/settings/loading.tsx",
+        "app/provider/register/ProviderRegisterRejectedGate.tsx",
+        "components/guide/GuideBillingPeriodCard.tsx",
+        "components/guide/GuideDashboardStats.tsx",
+        "components/guide/GuideRegistrationStatusBanner.tsx",
+        "components/guides/GuideOccupiedScheduleBlock.tsx",
+        "components/me/CopyButton.tsx",
+        "components/me/MeAcquisitionPublishBondAction.tsx",
+        "components/me/MeLogoutL5Button.tsx",
+        "components/me/MePageSkeleton.tsx",
+        "components/me/MeProfileSection.tsx",
+        "components/me/MeQuickLinksSection.tsx",
+        "components/me/MeSettingsLanguagePicker.tsx",
+        "components/me/MeSettingsProfileCard.tsx",
+        "components/me/MeSettingsProfilePanelLoading.tsx",
+        "components/me/MeSettingsProfileSocialStats.tsx",
+        "components/me/MeStatsSection.tsx",
+        "components/me/MeTrustSection.tsx"
+      ],
+      "suggested_order": 3
+    },
+    "B4-trust-governance-market": {
+      "files": 16,
+      "violations": 42,
+      "file_list": [
+        "components/governance/GovernancePreExecutionHint.tsx",
+        "components/governance/GovernanceProposalExecStatusBadge.tsx",
+        "components/landing/UnlockModal.tsx",
+        "components/market/AcquisitionFulfillmentBondBanner.tsx",
+        "components/market/BookGuideModal.tsx",
+        "components/market/CustomItineraryModal/sections/GuideFormQuoteAndCoverSection.tsx",
+        "components/market/MarketSubsiteListingOrderCta.tsx",
+        "components/market/marketTheme.contract.test.ts",
+        "components/product-enhancement/ConversionFunnelRail.tsx",
+        "components/product-enhancement/EscrowTrustMicro.tsx",
+        "components/product-enhancement/MarketOrderClosureStrip.tsx",
+        "components/trust/ExternalVerificationPanel.tsx",
+        "components/trust/InlineTransparencyVerification.tsx",
+        "components/trust/TechnicalTransparencyDetails.tsx",
+        "components/trust/TrustGrowthMomentBanner.tsx",
+        "components/trust/TrustStatusCallout.tsx"
+      ],
+      "suggested_order": 4
+    },
+    "B5-shell-misc": {
+      "files": 8,
+      "violations": 14,
+      "file_list": [
+        "app/(home)/loading.tsx",
+        "app/traveltrust/traveltrustIdentityModel.ts",
+        "components/ApiErrorAlert.tsx",
+        "components/consumer/ConsumerSurfaceStatePanel.tsx",
+        "components/itinerary/UnifiedItineraryList.tsx",
+        "components/traveltrust/TravelTrustPageBriefStatus.tsx",
+        "components/traveltrust/cinematic/TravelTrustHeroChainHud.tsx",
+        "components/traveltrust/cinematic/TravelTrustRouteArc.tsx"
+      ],
+      "suggested_order": 5
+    }
+  },
+  "violations": [
+    {
+      "file": "app/(home)/loading.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "other",
+      "batch": "B5-shell-misc"
+    },
+    {
+      "file": "app/admin/content/poi-images/batches/[id]/AdminContentPoiImageBatchPageMain.tsx",
+      "rule": "text-red-*",
+      "count": 1,
+      "domain": "admin",
+      "batch": "B1-admin-ops"
+    },
+    {
+      "file": "app/admin/content/poi-images/batches/[id]/AdminContentPoiImageBatchPageMain.tsx",
+      "rule": "text-green-*",
+      "count": 1,
+      "domain": "admin",
+      "batch": "B1-admin-ops"
+    },
+    {
+      "file": "app/admin/growth/reward-ledger/AdminRewardLedgerPageMain.tsx",
+      "rule": "bg-amber-*",
+      "count": 1,
+      "domain": "admin",
+      "batch": "B1-admin-ops"
+    },
+    {
+      "file": "app/admin/official/cold-start/AdminOfficialColdStartPageMain.tsx",
+      "rule": "text-red-*",
+      "count": 1,
+      "domain": "admin",
+      "batch": "B1-admin-ops"
+    },
+    {
+      "file": "app/admin/permissions/adminPermissionsPage.contract.test.ts",
+      "rule": "bg-amber-*",
+      "count": 1,
+      "domain": "admin",
+      "batch": "B1-admin-ops"
+    },
+    {
+      "file": "app/disputes/DisputesListPageMain.tsx",
+      "rule": "rounded-md (未走变量)",
+      "count": 1,
+      "domain": "disputes",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "app/disputes/error.tsx",
+      "rule": "bg-slate-*",
+      "count": 4,
+      "domain": "disputes",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "app/disputes/[id]/DisputeDetailTimelineSection.tsx",
+      "rule": "bg-slate-*",
+      "count": 2,
+      "domain": "disputes",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "app/disputes/[id]/loading.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "disputes",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "app/disputes/[id]/loading.tsx",
+      "rule": "rounded-md (未走变量)",
+      "count": 4,
+      "domain": "disputes",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "app/escrow/error.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "app/escrow/[id]/error.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "app/guide/register/GuideRegisterRejectedGate.tsx",
+      "rule": "rounded-md (未走变量)",
+      "count": 1,
+      "domain": "guide",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "app/me/error.tsx",
+      "rule": "bg-slate-*",
+      "count": 4,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "app/me/onboarding/StripeOnboardingPayment.tsx",
+      "rule": "text-red-*",
+      "count": 1,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "app/me/referrals/MeReferralsPageMain.tsx",
+      "rule": "text-red-*",
+      "count": 1,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "app/me/settings/loading.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "app/orders/new/loading.tsx",
+      "rule": "bg-slate-*",
+      "count": 5,
+      "domain": "orders",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "app/orders/OrdersPageLoadingView.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "orders",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "app/provider/register/ProviderRegisterRejectedGate.tsx",
+      "rule": "rounded-md (未走变量)",
+      "count": 1,
+      "domain": "other",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "app/traveltrust/traveltrustIdentityModel.ts",
+      "rule": "bg-amber-*",
+      "count": 2,
+      "domain": "other",
+      "batch": "B5-shell-misc"
+    },
+    {
+      "file": "components/admin/AdminHomeInboxStrip.tsx",
+      "rule": "bg-slate-*",
+      "count": 2,
+      "domain": "admin",
+      "batch": "B1-admin-ops"
+    },
+    {
+      "file": "components/admin/AdminHomeSystemOverviewTrends.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "admin",
+      "batch": "B1-admin-ops"
+    },
+    {
+      "file": "components/admin/ops/AdminOpsRiskBanner.tsx",
+      "rule": "bg-amber-*",
+      "count": 1,
+      "domain": "admin",
+      "batch": "B1-admin-ops"
+    },
+    {
+      "file": "components/ApiErrorAlert.tsx",
+      "rule": "text-red-*",
+      "count": 2,
+      "domain": "other",
+      "batch": "B5-shell-misc"
+    },
+    {
+      "file": "components/consumer/ConsumerSurfaceStatePanel.tsx",
+      "rule": "text-red-*",
+      "count": 1,
+      "domain": "other",
+      "batch": "B5-shell-misc"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/BilateralConfirmBlock.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/ChainSyncStatusPanel.tsx",
+      "rule": "bg-slate-*",
+      "count": 2,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/CreateOnChainEscrowBlock.tsx",
+      "rule": "bg-slate-*",
+      "count": 4,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/DisputeResolutionFundBlock.tsx",
+      "rule": "bg-slate-*",
+      "count": 3,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/EscrowCancelPolicySection.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/EscrowChainReadDegradedBanner.tsx",
+      "rule": "bg-amber-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/EscrowDraftAdvancedProtocolFold.tsx",
+      "rule": "bg-amber-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/EscrowDraftPublishedBanner.tsx",
+      "rule": "bg-emerald-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/EscrowOnChainActions.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/EscrowOrderGetRateLimitBanner.tsx",
+      "rule": "bg-amber-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/EscrowRiskNotice.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/EscrowTxModal.tsx",
+      "rule": "bg-slate-*",
+      "count": 3,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/index.tsx",
+      "rule": "bg-amber-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/IntentSignFacts.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/OrderActionsBlock.tsx",
+      "rule": "bg-slate-*",
+      "count": 2,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/OrderActionsBlock.tsx",
+      "rule": "bg-amber-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/QuoteSummaryCard.tsx",
+      "rule": "text-red-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/QuoteSummaryCard.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/QuoteSummaryCard.tsx",
+      "rule": "bg-emerald-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/EscrowDetail/ReorgBanner.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/FeeRouterWiringNotice.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/escrow/OrderFlowSteps.tsx",
+      "rule": "bg-slate-*",
+      "count": 3,
+      "domain": "escrow",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/governance/GovernancePreExecutionHint.tsx",
+      "rule": "bg-amber-*",
+      "count": 2,
+      "domain": "governance",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/governance/GovernanceProposalExecStatusBadge.tsx",
+      "rule": "bg-amber-*",
+      "count": 2,
+      "domain": "governance",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/governance/GovernanceProposalExecStatusBadge.tsx",
+      "rule": "bg-emerald-*",
+      "count": 4,
+      "domain": "governance",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/guide/GuideBillingPeriodCard.tsx",
+      "rule": "bg-slate-*",
+      "count": 7,
+      "domain": "guide",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/guide/GuideDashboardStats.tsx",
+      "rule": "bg-slate-*",
+      "count": 6,
+      "domain": "guide",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/guide/GuideRegistrationStatusBanner.tsx",
+      "rule": "bg-slate-*",
+      "count": 2,
+      "domain": "guide",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/guide/GuideRegistrationStatusBanner.tsx",
+      "rule": "bg-amber-*",
+      "count": 1,
+      "domain": "guide",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/guides/GuideOccupiedScheduleBlock.tsx",
+      "rule": "bg-slate-*",
+      "count": 2,
+      "domain": "guide",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/itinerary/UnifiedItineraryList.tsx",
+      "rule": "bg-slate-*",
+      "count": 3,
+      "domain": "other",
+      "batch": "B5-shell-misc"
+    },
+    {
+      "file": "components/landing/UnlockModal.tsx",
+      "rule": "text-red-*",
+      "count": 1,
+      "domain": "other",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/market/AcquisitionFulfillmentBondBanner.tsx",
+      "rule": "text-red-*",
+      "count": 1,
+      "domain": "market",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/market/BookGuideModal.tsx",
+      "rule": "text-red-*",
+      "count": 1,
+      "domain": "market",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/market/CustomItineraryModal/sections/GuideFormQuoteAndCoverSection.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "market",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/market/MarketSubsiteListingOrderCta.tsx",
+      "rule": "text-red-*",
+      "count": 1,
+      "domain": "market",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/market/marketTheme.contract.test.ts",
+      "rule": "bg-amber-*",
+      "count": 1,
+      "domain": "market",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/me/CopyButton.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/me/MeAcquisitionPublishBondAction.tsx",
+      "rule": "bg-amber-*",
+      "count": 3,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/me/MeLogoutL5Button.tsx",
+      "rule": "bg-slate-*",
+      "count": 2,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/me/MePageSkeleton.tsx",
+      "rule": "bg-slate-*",
+      "count": 16,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/me/MeProfileSection.tsx",
+      "rule": "bg-slate-*",
+      "count": 7,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/me/MeQuickLinksSection.tsx",
+      "rule": "bg-slate-*",
+      "count": 3,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/me/MeQuickLinksSection.tsx",
+      "rule": "bg-emerald-*",
+      "count": 2,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/me/MeSettingsLanguagePicker.tsx",
+      "rule": "rounded-md (未走变量)",
+      "count": 1,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/me/MeSettingsProfileCard.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/me/MeSettingsProfilePanelLoading.tsx",
+      "rule": "bg-slate-*",
+      "count": 2,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/me/MeSettingsProfileSocialStats.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/me/MeStatsSection.tsx",
+      "rule": "bg-slate-*",
+      "count": 8,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/me/MeTrustSection.tsx",
+      "rule": "bg-slate-*",
+      "count": 17,
+      "domain": "me",
+      "batch": "B3-me-guide-provider"
+    },
+    {
+      "file": "components/orders/OrdersSegmentErrorView.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "orders",
+      "batch": "B2-escrow-orders"
+    },
+    {
+      "file": "components/product-enhancement/ConversionFunnelRail.tsx",
+      "rule": "bg-emerald-*",
+      "count": 1,
+      "domain": "other",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/product-enhancement/EscrowTrustMicro.tsx",
+      "rule": "bg-emerald-*",
+      "count": 1,
+      "domain": "other",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/product-enhancement/MarketOrderClosureStrip.tsx",
+      "rule": "bg-emerald-*",
+      "count": 1,
+      "domain": "other",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/traveltrust/cinematic/TravelTrustHeroChainHud.tsx",
+      "rule": "bg-amber-*",
+      "count": 2,
+      "domain": "other",
+      "batch": "B5-shell-misc"
+    },
+    {
+      "file": "components/traveltrust/cinematic/TravelTrustRouteArc.tsx",
+      "rule": "bg-amber-*",
+      "count": 1,
+      "domain": "other",
+      "batch": "B5-shell-misc"
+    },
+    {
+      "file": "components/traveltrust/TravelTrustPageBriefStatus.tsx",
+      "rule": "bg-amber-*",
+      "count": 2,
+      "domain": "other",
+      "batch": "B5-shell-misc"
+    },
+    {
+      "file": "components/trust/ExternalVerificationPanel.tsx",
+      "rule": "text-red-*",
+      "count": 2,
+      "domain": "trust",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/trust/ExternalVerificationPanel.tsx",
+      "rule": "text-green-*",
+      "count": 1,
+      "domain": "trust",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/trust/ExternalVerificationPanel.tsx",
+      "rule": "bg-slate-*",
+      "count": 4,
+      "domain": "trust",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/trust/InlineTransparencyVerification.tsx",
+      "rule": "text-red-*",
+      "count": 2,
+      "domain": "trust",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/trust/InlineTransparencyVerification.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "trust",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/trust/TechnicalTransparencyDetails.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "trust",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/trust/TrustGrowthMomentBanner.tsx",
+      "rule": "bg-emerald-*",
+      "count": 1,
+      "domain": "trust",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/trust/TrustStatusCallout.tsx",
+      "rule": "text-red-*",
+      "count": 2,
+      "domain": "trust",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/trust/TrustStatusCallout.tsx",
+      "rule": "bg-slate-*",
+      "count": 1,
+      "domain": "trust",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/trust/TrustStatusCallout.tsx",
+      "rule": "bg-amber-*",
+      "count": 5,
+      "domain": "trust",
+      "batch": "B4-trust-governance-market"
+    },
+    {
+      "file": "components/trust/TrustStatusCallout.tsx",
+      "rule": "bg-emerald-*",
+      "count": 5,
+      "domain": "trust",
+      "batch": "B4-trust-governance-market"
+    }
+  ],
+  "admin_ux_freeze_note": "Admin IA/Guide/nav frozen; token fixes in admin files are CSS token only, not IA"
+}

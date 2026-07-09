@@ -1,0 +1,279 @@
+{
+  "schema": "traveltrust.cms_phase1_single_asset_evidence.v1",
+  "template_version": "1.0.0",
+  "template_runbook": "docs/runbook/TT-CMS-PHASE1-SINGLE-ASSET-TEMPLATE.md",
+  "phase_discipline": "① local → ② staging → ③ production",
+  "forbidden_shortcuts": [
+    "upload_direct_to_live",
+    "skip_review",
+    "skip_verify",
+    "batch_upload_then_accept",
+    "mark_pass_without_evidence"
+  ],
+  "matrix_id": "DA-ES-HOME",
+  "product_name": "Destination Ambient",
+  "country_iso": "ES",
+  "execution_order": 8,
+  "step_1_brief_review": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "draft",
+    "gate": "brief_review",
+    "gate_result": "PASS",
+    "checks": {
+      "destination": "ES · 巴塞罗那高迪建筑或城市天际",
+      "business_theme": "barcelona-arch · Destination Ambient home",
+      "brand_tone": "cms-content-brief destination_ambient",
+      "composition": "home surface hero ambient",
+      "lighting": "natural daylight per brief prefer",
+      "forbidden_elements_clear": true
+    },
+    "reviewer": "CMS Operation Owner",
+    "reviewed_at_utc": "2026-07-05T04:47:29Z",
+    "notes": "Brief aligned DA-ES-HOME"
+  },
+  "step_2_designer_upload": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "review",
+    "catalog_asset_id": "7341191e-c64b-4f94-823e-649a24195ff2",
+    "upload_format": "image/jpeg",
+    "uploaded_by": "CMS Operation via Admin media-assets",
+    "uploaded_at_utc": "2026-07-05T04:47:29Z",
+    "notes": "OCS owned URL · barcelona-arch"
+  },
+  "step_3_cms_review": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "approved",
+    "gates": {
+      "cms_review": "PASS",
+      "destination_authenticity": "PASS",
+      "brand_consistency": "PASS"
+    },
+    "reviewer": "CMS Operation Owner",
+    "reviewed_at_utc": "2026-07-05T04:47:29Z",
+    "notes": "Same closed loop as JP/KR"
+  },
+  "step_4_catalog_publish": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "published",
+    "gate": "catalog_publish",
+    "gate_result": "PASS",
+    "admin_route": "/admin/content/landing-ambient",
+    "published_by": "tourist@test.com",
+    "published_at_utc": "2026-07-05T04:47:29Z",
+    "revision": {
+      "revision_number": 5,
+      "revision_label": "v1",
+      "rollback_target_revision": 1
+    }
+  },
+  "step_5_verify": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "live",
+    "gate": "verify",
+    "gate_result": "PASS",
+    "script": "scripts/dev/run-cms-content-l5-destination-ambient-verify.cjs",
+    "api_base": "https://tt-api-staging.fly.dev",
+    "checks": [
+      {
+        "id": "asset_lifecycle_live",
+        "pass": true,
+        "detail": "live"
+      },
+      {
+        "id": "matrix_row_status_pass",
+        "pass": true,
+        "detail": "pass"
+      },
+      {
+        "id": "consumer_not_ts_fallback",
+        "pass": true,
+        "detail": "catalog_api"
+      },
+      {
+        "id": "asset_version_revision_number",
+        "pass": true,
+        "detail": "5"
+      },
+      {
+        "id": "asset_version_rollback_target",
+        "pass": true,
+        "detail": "1"
+      },
+      {
+        "id": "execution_gate_brief_review",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_cms_review",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_destination_authenticity",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_brand_consistency",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_catalog_publish",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_verify",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "catalog_api_url",
+        "pass": true,
+        "detail": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-community-media.jpg"
+      },
+      {
+        "id": "public_http_200",
+        "pass": true,
+        "detail": "200"
+      },
+      {
+        "id": "public_min_bytes_16kb",
+        "pass": true,
+        "detail": "149989B"
+      },
+      {
+        "id": "public_mime_image",
+        "pass": true,
+        "detail": "image/jpeg"
+      },
+      {
+        "id": "no_production_external_host",
+        "pass": true,
+        "detail": "owned or catalog url"
+      }
+    ],
+    "verified_at_utc": "2026-07-05T04:47:35.691Z"
+  },
+  "step_6_evidence": {
+    "status": "COMPLETE",
+    "gate": "evidence_complete",
+    "gate_result": "PASS",
+    "sections_present": {
+      "review": true,
+      "publish": true,
+      "revision": true,
+      "verify": true,
+      "matrix": true
+    },
+    "completed_at_utc": "2026-07-05T04:47:29Z"
+  },
+  "matrix_snapshot": {
+    "matrix_row_status": "pass",
+    "asset_lifecycle": "live",
+    "current_source": "catalog_api",
+    "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-community-media.jpg",
+    "country_zh": "西班牙",
+    "scene": "巴塞罗那高迪建筑或城市天际",
+    "copy_label": "西班牙·Destination Ambient",
+    "surface": "home",
+    "matrix_id": "DA-ES-HOME",
+    "execution_order": "8",
+    "country_iso": "ES",
+    "execution_gates": {
+      "brief_review": "PASS",
+      "cms_review": "PASS",
+      "destination_authenticity": "PASS",
+      "brand_consistency": "PASS",
+      "catalog_publish": "PASS",
+      "verify": "PASS",
+      "evidence_complete": "PASS"
+    },
+    "catalog_asset_id": "7341191e-c64b-4f94-823e-649a24195ff2",
+    "asset_version": {
+      "revision_number": "5",
+      "revision_label": "v1",
+      "rollback_target_revision": "1"
+    }
+  },
+  "change_record": {
+    "change_type": "initial_publish",
+    "change_reason": "DA-ES-HOME Wave 1 ambient closed loop",
+    "new_revision": 5,
+    "approved_by": "CMS Operation Owner"
+  },
+  "definition_of_done": {
+    "brief_review_pass": true,
+    "cms_review_pass": true,
+    "destination_authenticity_pass": true,
+    "brand_consistency_pass": true,
+    "catalog_publish_pass": true,
+    "verify_pass": true,
+    "evidence_complete": true,
+    "matrix_row_pass": true,
+    "asset_lifecycle_live": true
+  },
+  "TT_CMS_DESTINATION_AMBIENT_ROW_VERIFY": "PASS",
+  "TT_CMS_PHASE1_SINGLE_ASSET_ROW": "COMPLETE",
+  "scaffolded_at_utc": "2026-07-05T04:47:29Z",
+  "dod_checked_at_utc": "2026-07-05T04:47:35.737Z",
+  "dod_checks": [
+    {
+      "id": "execution_gate_brief_review",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_cms_review",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_destination_authenticity",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_brand_consistency",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_catalog_publish",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_verify",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_evidence_complete",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "matrix_row_status_pass",
+      "pass": true,
+      "detail": "pass"
+    },
+    {
+      "id": "asset_lifecycle_live",
+      "pass": true,
+      "detail": "live"
+    },
+    {
+      "id": "evidence_file_exists",
+      "pass": true,
+      "detail": "D:/TravelTrust-V1.1/evidence/GO_cms_content_l5/destination-ambient/rows/DA-ES-HOME.EVIDENCE.json"
+    },
+    {
+      "id": "evidence_row_verify_pass",
+      "pass": true,
+      "detail": "PASS"
+    }
+  ]
+}

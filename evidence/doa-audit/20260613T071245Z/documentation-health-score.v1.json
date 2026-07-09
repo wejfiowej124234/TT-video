@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.doa_documentation_health_score.v1",
+  "score": 2,
+  "band": "LOW",
+  "missing_critical_scripts": 4,
+  "p0_findings": 3
+}

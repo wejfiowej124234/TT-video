@@ -1,0 +1,1 @@
+{"error":"upsert_indexer_checkpoint_failed","message":"upsert_indexer_checkpoint_failed","detail":"error communicating with database: expected to read 5 bytes, got 0 bytes at EOF"}

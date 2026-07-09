@@ -1,0 +1,29 @@
+{
+  "schema": "traveltrust.open_p1.v1",
+  "findings": [
+    {
+      "id": "AG-SEED-003",
+      "domain": "AG",
+      "severity": "P1",
+      "title": "RBAC boundary matrix drift",
+      "verdict": "UPDATE",
+      "queue": "NEXT"
+    },
+    {
+      "id": "DOA-SEED-001",
+      "domain": "DOA",
+      "severity": "P1",
+      "title": "README port narrative drift",
+      "verdict": "UPDATE",
+      "queue": "NEXT"
+    },
+    {
+      "id": "LFC-CA-001",
+      "domain": "CA",
+      "severity": "P1",
+      "title": "Module boundary doc vs crate graph",
+      "verdict": "UPDATE",
+      "queue": "NEXT"
+    }
+  ]
+}

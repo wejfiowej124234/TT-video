@@ -1,0 +1,686 @@
+{
+  "schema": "traveltrust.web3_system_deep_audit.v2",
+  "audit_tier": "ENTIRE_WEB3_SYSTEM",
+  "production_go_standard": true,
+  "module_tree": [
+    {
+      "id": "M01",
+      "name": "Smart Contracts",
+      "paths": [
+        "contracts/src/"
+      ]
+    },
+    {
+      "id": "M02",
+      "name": "Upgradeability",
+      "paths": [
+        "contracts/src/upgrade/",
+        "contracts/script/DeployGovFreezeV2CleanBaseline.s.sol"
+      ]
+    },
+    {
+      "id": "M03",
+      "name": "Storage Layout",
+      "paths": [
+        "contracts/test/TtgGovFreezeV1ProxyArchitecture.t.sol",
+        "contracts/test/RegionStewardStakePoolProxyBootstrap.t.sol"
+      ]
+    },
+    {
+      "id": "M04",
+      "name": "TTG Token",
+      "paths": [
+        "contracts/src/GovernanceVotesToken.sol",
+        "contracts/src/TtgGovFreezeConstants.sol"
+      ]
+    },
+    {
+      "id": "M05",
+      "name": "Primary Market",
+      "paths": [
+        "contracts/src/TtgPrimaryMarketV1.sol"
+      ]
+    },
+    {
+      "id": "M06",
+      "name": "Governance",
+      "paths": [
+        "contracts/src/TravelTrustGovernor.sol",
+        "frontend/app/governance/"
+      ]
+    },
+    {
+      "id": "M07",
+      "name": "Timelock",
+      "paths": [
+        "contracts/src/GovernanceTimelock.sol"
+      ]
+    },
+    {
+      "id": "M08",
+      "name": "Treasury",
+      "paths": [
+        "contracts/src/GovernanceTreasury.sol",
+        "contracts/src/GovernanceTreasuryP4Cap.sol"
+      ]
+    },
+    {
+      "id": "M09",
+      "name": "FeeRouter",
+      "paths": [
+        "contracts/src/FeeRouter.sol"
+      ]
+    },
+    {
+      "id": "M10",
+      "name": "Escrow",
+      "paths": [
+        "contracts/src/Escrow.sol",
+        "contracts/src/EscrowFactory.sol",
+        "frontend/app/pay/",
+        "frontend/app/escrow/"
+      ]
+    },
+    {
+      "id": "M11",
+      "name": "Settlement",
+      "paths": [
+        "contracts/src/CountryPoolNetProfitLedger.sol"
+      ]
+    },
+    {
+      "id": "M12",
+      "name": "Staking",
+      "paths": [
+        "contracts/src/RegionStewardStakePool.sol",
+        "frontend/app/staking/"
+      ]
+    },
+    {
+      "id": "M13",
+      "name": "Seat",
+      "paths": [
+        "contracts/src/TtgSeatConcentrationRegistry.sol"
+      ]
+    },
+    {
+      "id": "M14",
+      "name": "Jurisdiction",
+      "paths": [
+        "contracts/src/RegionStewardStakePool.sol",
+        "docs/spec/governance-token/protocol-ssot.v1.yaml"
+      ]
+    },
+    {
+      "id": "M15",
+      "name": "RBAC",
+      "paths": [
+        "crates/api/src/routes/admin/admin_rbac.rs",
+        "registry/admin-rbac-permissions.v1.yaml"
+      ]
+    },
+    {
+      "id": "M16",
+      "name": "Wallet",
+      "paths": [
+        "frontend/components/Providers.tsx"
+      ]
+    },
+    {
+      "id": "M17",
+      "name": "Indexer",
+      "paths": [
+        "crates/api/src/chain/indexer.rs"
+      ]
+    },
+    {
+      "id": "M18",
+      "name": "Ledger",
+      "paths": [
+        "crates/api/src/chain/country_ledger.rs",
+        "contracts/src/CountryPoolNetProfitLedger.sol"
+      ]
+    },
+    {
+      "id": "M19",
+      "name": "Tokenomics",
+      "paths": [
+        "docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md",
+        "docs/spec/governance-token/protocol-ssot.v1.yaml"
+      ]
+    },
+    {
+      "id": "M20",
+      "name": "Frontend Web3 UX",
+      "paths": [
+        "frontend/app/governance/",
+        "frontend/app/staking/",
+        "frontend/locales/"
+      ]
+    },
+    {
+      "id": "M21",
+      "name": "Admin Web3",
+      "paths": [
+        "frontend/app/admin/governance/",
+        "frontend/components/admin/AdminFinanceObservabilityDepthPanel.tsx"
+      ]
+    },
+    {
+      "id": "M22",
+      "name": "Registry",
+      "paths": [
+        "registry/protocol-convergence-deployments.v1.yaml",
+        "registry/production-readiness-master-matrix.v1.yaml"
+      ]
+    },
+    {
+      "id": "M23",
+      "name": "Evidence",
+      "paths": [
+        "evidence/GO_production_readiness/",
+        "evidence/GO_ttg_cert/"
+      ]
+    },
+    {
+      "id": "M24",
+      "name": "Security",
+      "paths": [
+        "scripts/dev/gen-p2fc-web3-system-security-audit.py",
+        "contracts/src/upgrade/TimelockUpgradeableProxy.sol"
+      ]
+    },
+    {
+      "id": "M25",
+      "name": "Payment Rail (subset)",
+      "paths": [
+        "evidence/GO_production_readiness/G3-02/",
+        "registry/web3-payment-production-gate.v1.yaml"
+      ]
+    }
+  ],
+  "recorded_utc": "2026-07-08T14:01:10.944Z",
+  "stamp": "2026-07-08T14-00-04-344Z",
+  "run_dir": "evidence/GO_production_readiness/web3-system-audit/audit-2026-07-08T14-00-04",
+  "ssot": {
+    "audit_name": "Entire Web3 System Deep Audit",
+    "audit_tier": "ENTIRE_WEB3_SYSTEM",
+    "not_same_as": "Payment Rail Audit (G3-02 · one module only)",
+    "production_go_standard": true,
+    "payment_rail_subset": "G3-02 PAY-W01..W16 (necessary · not sufficient)",
+    "governance_baseline": "registry/protocol-convergence-deployments.v1.yaml#gov_freeze_v2_clean_baseline",
+    "prod_scope": "PRODUCTION_SCOPE_SEPOLIA",
+    "chain_id": "11155111"
+  },
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "WEB3_SYSTEM_AUDIT_HIGH_DRIFT",
+  "summary": {
+    "blockers_p0": 0,
+    "blockers_p1": 1,
+    "blockers_p2": 0,
+    "total_findings": 4,
+    "modules_total": 25,
+    "modules_pass": 16,
+    "modules_fail": 0,
+    "modules_warn": 9,
+    "payment_rail_subset_pass": true,
+    "payment_rail_verdict": "PAYMENT_RAIL_AUDIT_HIGH_DRIFT",
+    "web3_system_ready": false,
+    "gate2_payment_only_pass_payment_rail": false,
+    "tier_distinction": "Payment Audit = M25/G3-02 only · Entire Web3 System Audit = M01-M24 full module tree for Production GO"
+  },
+  "dimensions": {
+    "D18_payment_rail_subset": {
+      "verdict": "PAYMENT_RAIL_AUDIT_HIGH_DRIFT",
+      "blockers_p0": 0,
+      "g3_02_pass": true,
+      "note": "Payment rail is necessary but not sufficient for full Web3 System GO"
+    },
+    "D14_prod_meta_contracts": {
+      "prodMeta": {
+        "http": 200,
+        "chain_id": "11155111",
+        "mock_pay": false
+      },
+      "metaNullKeys": [],
+      "metaParity": {
+        "timelock_address": "match",
+        "governor_address": "match",
+        "treasury_p4_cap_address": "null_on_prod",
+        "primary_market_address": "null_on_prod",
+        "seat_registry_address": "null_on_prod",
+        "region_steward_stake_pool_proxy_address": "match",
+        "governance_token_address": "match",
+        "escrow_factory_address": "match",
+        "fee_router_address": "match",
+        "registry_address": "match",
+        "guide_staking_address": "match"
+      }
+    },
+    "P0_002_runtime_wiring": {
+      "status": "CLOSED",
+      "evidence": "evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-META-CONTRACTS-CLOSURE-LATEST.json",
+      "wired": "10/10"
+    },
+    "D17_production_go_gates": {
+      "gate_layering_ssot_present": true,
+      "tt_web3_ready": false,
+      "tt_web3_ready_in_progress": true,
+      "tt_web3_payment_ready": true,
+      "tt_web3_system_ready": false,
+      "tt_web3_system_in_progress": true,
+      "gate2_scope_includes_treasury": true,
+      "gate2_checklist_is_payment_only": true,
+      "payment_gate_verdict": "WEB3_PAYMENT_PRODUCTION_PASS",
+      "g3_exec_verdict": "WEB3_PAYMENT_PRODUCTION_PASS",
+      "evidence_drift": false
+    },
+    "D17_gate_layering_correction": {
+      "status": "CLOSED",
+      "note": "2026-07-08 governance — payment vs system machine keys split; TT_PRODUCTION_WEB3_READY=IN_PROGRESS",
+      "ssot": "registry/web3-gate-layering.v1.yaml"
+    },
+    "D01_contract_architecture": {
+      "sol_count": 1,
+      "note": "35+ contracts under contracts/src/"
+    },
+    "D02_proxy_upgrade": {
+      "proxy": true,
+      "shell": true,
+      "usesProxy": true,
+      "g24Registry": true,
+      "g24Pass": true,
+      "g24Log": "G24 registry present (bash gate skipped on win32)"
+    },
+    "D03_ttg_token": {
+      "contract": "contracts/src/GovernanceVotesToken.sol",
+      "symbol": "TTG"
+    },
+    "D04_tokenomics_consistency": {
+      "checks": {
+        "total_supply_10m": true,
+        "quorum_400": true,
+        "timelock_48h": true,
+        "public_round_caps": true,
+        "per_wallet_cap": true
+      },
+      "ok": true
+    },
+    "D05_primary_market": {
+      "contract": "contracts/src/TtgPrimaryMarketV1.sol",
+      "registry_address": "0x7af15f98622b9282298ca3070a698ca4a96a4016",
+      "fe_route": false,
+      "disclosed_not_started": true
+    },
+    "D06_staking": {
+      "identity_pools": [
+        "GuideIdentityStakingPool",
+        "ProviderIdentityStakingPool",
+        "IdentityStakingPool"
+      ],
+      "steward_pool": "RegionStewardStakePool",
+      "prod_steward_null": false
+    },
+    "D07_seat_jurisdiction": {
+      "seat_registry": "TtgSeatConcentrationRegistry",
+      "steward_workbench": "frontend/app/governance/StewardRegionWorkbenchMain.tsx"
+    },
+    "D08_governance": {
+      "governor": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+      "timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+      "prod_governor_set": true,
+      "prod_timelock_null": false,
+      "fe_routes": true
+    },
+    "D09_treasury_feerouter_settlement": {
+      "fee_router_prod": "0x81A8009210c5215100564c6E4123F672c4459306",
+      "treasury_prod_null": false,
+      "settlement_ledger": "CountryPoolNetProfitLedger.sol",
+      "g3_02_feerouter_evidence": true
+    },
+    "D10_escrow_marketplace": {
+      "escrow_factory_prod": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+      "pay_route": true,
+      "payment_rail_verdict": "PAYMENT_RAIL_AUDIT_HIGH_DRIFT"
+    },
+    "D15_security": {
+      "verdict": "WARN",
+      "D1": "WARN",
+      "D2": "WARN",
+      "D3": "WARN",
+      "D4": "WARN",
+      "p0_rbac_isolated": false
+    },
+    "D12_multi_wallet": {
+      "wagmi_injected": true,
+      "walletconnect_env_gated": true,
+      "note": "W14 multi-wallet prod manual evidence still partial (G3-02)"
+    },
+    "D13_indexer_ledger": {
+      "module": "crates/api/src/chain/indexer.rs",
+      "tick_route": "crates/api/src/routes/internal/indexer/tick.rs",
+      "note": "In-process indexer; requires full contract env for governance+stake events"
+    },
+    "D19_abi_coverage": {
+      "missingGovFreeze": [],
+      "missingInFeDapp": [
+        "GovernanceVotesToken.json",
+        "TravelTrustGovernor.json",
+        "GovernanceTimelock.json",
+        "RegionStewardStakePool.json",
+        "CountryPoolNetProfitLedger.json"
+      ],
+      "contractsAbiOk": true
+    },
+    "D20_ttg_cert_evidence": {
+      "certRootExists": true,
+      "certCount": 12,
+      "signoffs": 7,
+      "total": 12,
+      "verdict": "TTG_CERT_EVIDENCE_PARTIAL",
+      "index_path": "evidence/GO_production_readiness/web3-system-audit/TTG-CERT-EVIDENCE-INDEX-LATEST.json"
+    },
+    "D21_master_map_parity": {
+      "verdict": "WEB3_MASTER_MAP_PARITY_PASS",
+      "summary": {
+        "modules_total": 25,
+        "strict_modules": 23,
+        "registered_only": 2,
+        "strict_pass": 23,
+        "strict_fail": 0
+      },
+      "failed_modules": [],
+      "registry": "registry/web3-system-master-map.v1.yaml",
+      "probe_log_tail": "{\n  \"verdict\": \"WEB3_MASTER_MAP_PARITY_PASS\",\n  \"strict_pass\": \"23/23\",\n  \"failed\": [],\n  \"evidence\": \"evidence/GO_production_readiness/web3-system-audit/WEB3-MASTER-MAP-PARITY-LATEST.json\"\n}\n"
+    },
+    "D16_registry_docs_evidence": {
+      "ssot_files_present": true,
+      "ssot_files": [
+        "registry/payment-architecture-classification.v1.yaml",
+        "registry/protocol-convergence-deployments.v1.yaml",
+        "registry/web3-payment-production-gate.v1.yaml",
+        "registry/web3-system-master-map.v1.yaml",
+        "docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md",
+        "docs/spec/governance-token/protocol-ssot.v1.yaml",
+        "docs/runbook/TT-CHAIN-ARCHITECTURE-AUDITABLE-SPEC.md"
+      ]
+    },
+    "M03_storage_layout": {
+      "proxy_shells_with_init": 4,
+      "proxy_shells_total": 4,
+      "storage_layout_tests": [
+        "contracts/test/TtgGovFreezeV1ProxyArchitecture.t.sol",
+        "contracts/test/RegionStewardStakePoolProxyBootstrap.t.sol"
+      ],
+      "g24_spec_present": true,
+      "ok": true
+    },
+    "M20_fe_deploy_parity": {
+      "missingInLocal": [],
+      "missingInExample": [],
+      "feVsMeta": {
+        "NEXT_PUBLIC_ESCROW_FACTORY_ADDRESS": "match",
+        "NEXT_PUBLIC_FEE_ROUTER_ADDRESS": "match",
+        "NEXT_PUBLIC_GOVERNOR_ADDRESS": "match",
+        "NEXT_PUBLIC_GOVERNANCE_TOKEN_ADDRESS": "match",
+        "NEXT_PUBLIC_REGION_STEWARD_STAKE_POOL_ADDRESS": "match",
+        "NEXT_PUBLIC_GUIDE_STAKING_ADDRESS": "match"
+      },
+      "localKeys": 14
+    },
+    "M21_admin_web3": {
+      "routes": {
+        "governance_execution_uat": true,
+        "finance_observability": true,
+        "growth_reward_ledger": true,
+        "region_share_reconcile": true
+      },
+      "any_present": true
+    },
+    "M24_security_boundaries": {
+      "escrow_pause_or_guard": true,
+      "feerouter_pause": true,
+      "proxy_admin_only_timelock": true,
+      "governor_snapshot_votes": true
+    },
+    "M18_ledger": {
+      "on_chain": true,
+      "api_country_ledger": true,
+      "governance_route": true,
+      "legacy_pilot": true
+    },
+    "M14_jurisdiction": {
+      "bootstrap_once": true,
+      "configure_jurisdiction": true,
+      "protocol_ssot_jurisdictions": true
+    },
+    "module_tree_rollup": {
+      "modules_total": 25,
+      "modules_pass": 16,
+      "modules_fail": 0,
+      "modules_warn": 9,
+      "modules": [
+        {
+          "id": "M01",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M02",
+          "status": "PARTIAL",
+          "verdict": "WARN"
+        },
+        {
+          "id": "M03",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M04",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M05",
+          "status": "PARTIAL",
+          "verdict": "WARN"
+        },
+        {
+          "id": "M06",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M07",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M08",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M09",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M10",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M11",
+          "status": "PARTIAL",
+          "verdict": "WARN"
+        },
+        {
+          "id": "M12",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M13",
+          "status": "PARTIAL",
+          "verdict": "WARN"
+        },
+        {
+          "id": "M14",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M15",
+          "status": "PARTIAL",
+          "verdict": "WARN"
+        },
+        {
+          "id": "M16",
+          "status": "PARTIAL",
+          "verdict": "WARN"
+        },
+        {
+          "id": "M17",
+          "status": "PARTIAL",
+          "verdict": "WARN"
+        },
+        {
+          "id": "M18",
+          "status": "PARTIAL",
+          "verdict": "WARN"
+        },
+        {
+          "id": "M19",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M20",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M21",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M22",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M23",
+          "status": "PASS",
+          "verdict": "PASS"
+        },
+        {
+          "id": "M24",
+          "status": "PARTIAL",
+          "verdict": "WARN"
+        },
+        {
+          "id": "M25",
+          "status": "PASS",
+          "verdict": "PASS"
+        }
+      ]
+    }
+  },
+  "blockers": [
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-004",
+      "dimension": "Primary Market · UI/UX",
+      "title": "TtgPrimaryMarketV1 deployed on Sepolia SSOT but no FE purchase route — locales disclose ② on-chain Primary Market NOT STARTED",
+      "paths": [
+        "contracts/src/TtgPrimaryMarketV1.sol",
+        "frontend/locales/en.ts",
+        "registry/protocol-convergence-deployments.v1.yaml"
+      ],
+      "fix": "Either: (A) ship /primary-market wallet purchase UI + prod env wiring, or (B) formal Owner deferral with TT_WEB3_SYSTEM scope excluding Primary Market until Phase ③",
+      "status": "OPEN",
+      "risk": "MEDIUM"
+    },
+    {
+      "priority": "P2",
+      "id": "WEB3-SYS-P2-001",
+      "dimension": "钱包 · Multi-wallet",
+      "title": "Multi-wallet prod manual matrix (W14) not fully evidenced — injected default only unless WalletConnect project id set",
+      "paths": [
+        "frontend/components/Providers.tsx",
+        "evidence/GO_production_readiness/G3-02/"
+      ],
+      "fix": "Complete W14 manual evidence or document WalletConnect as optional with Owner sign-off",
+      "status": "ACCEPTED_PARTIAL",
+      "risk": "LOW"
+    },
+    {
+      "priority": "P2",
+      "id": "WEB3-SYS-P2-002",
+      "dimension": "前端 · ABI",
+      "title": "frontend/dapp/abis missing 5 governance/escrow ABIs (inline TS ABI fragments may partially compensate)",
+      "paths": [
+        "frontend/dapp/abis/",
+        "frontend/lib/governance/*Abi.ts"
+      ],
+      "fix": "Sync contracts/abi → frontend/dapp/abis for governance stack",
+      "status": "ACCEPTED_DRIFT",
+      "risk": "LOW"
+    },
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-002",
+      "dimension": "Evidence · TTG Cert",
+      "title": "TTG Governance Cert signoffs 7/12 — certs 7-12 (Execute/Treasury/Unstake/DR) pending on chain-enabled staging",
+      "paths": [
+        "registry/ttg-governance-cert-gates.v1.yaml",
+        "evidence/GO_production_readiness/web3-system-audit/TTG-CERT-EVIDENCE-INDEX-LATEST.json",
+        "evidence/GO_ttg_cert/"
+      ],
+      "fix": "Run scripts/dev/run-tt-governance-cert-07..11 with --finalize after prod contract wiring (Step 2)",
+      "status": "ACCEPTED_PARTIAL",
+      "risk": "MEDIUM"
+    }
+  ],
+  "risk_register": [
+    {
+      "id": "WEB3-SYS-P1-004",
+      "priority": "P1",
+      "risk": "MEDIUM",
+      "status": "OPEN",
+      "title": "TtgPrimaryMarketV1 deployed on Sepolia SSOT but no FE purchase route — locales disclose ② on-chain Primary Market NOT STARTED"
+    },
+    {
+      "id": "WEB3-SYS-P2-001",
+      "priority": "P2",
+      "risk": "LOW",
+      "status": "ACCEPTED_PARTIAL",
+      "title": "Multi-wallet prod manual matrix (W14) not fully evidenced — injected default only unless WalletConnect project id set"
+    },
+    {
+      "id": "WEB3-SYS-P2-002",
+      "priority": "P2",
+      "risk": "LOW",
+      "status": "ACCEPTED_DRIFT",
+      "title": "frontend/dapp/abis missing 5 governance/escrow ABIs (inline TS ABI fragments may partially compensate)"
+    },
+    {
+      "id": "WEB3-SYS-P1-002",
+      "priority": "P1",
+      "risk": "MEDIUM",
+      "status": "ACCEPTED_PARTIAL",
+      "title": "TTG Governance Cert signoffs 7/12 — certs 7-12 (Execute/Treasury/Unstake/DR) pending on chain-enabled staging"
+    }
+  ],
+  "discipline": {
+    "business_code_modified": false,
+    "audit_only": true
+  },
+  "closure_prereqs": {
+    "WEB3_SYSTEM_CLOSURE_PASS_requires": "blockers_p0=0 AND blockers_p1=0",
+    "current_closure_eligible": false,
+    "payment_rail_can_be_pass_while_system_open": true
+  }
+}

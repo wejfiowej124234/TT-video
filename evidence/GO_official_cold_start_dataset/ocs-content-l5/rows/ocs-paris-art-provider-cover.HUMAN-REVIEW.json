@@ -1,0 +1,77 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T145500Z",
+  "filename": "ocs-paris-art-provider-cover.jpg",
+  "chain_id": "paris-art",
+  "city": "巴黎",
+  "country_code": "FR",
+  "slot": "provider-cover",
+  "surface": "Provider",
+  "copy_label": "巴黎博物馆免排队 · 小团",
+  "manifest_copy": {
+    "provider.title": "巴黎博物馆免排队 · 小团",
+    "provider.category": "experience",
+    "provider.description": "含卢浮宫预约与中文讲解，最多 6 人。",
+    "provider.price_usdc": 320
+  },
+  "pre_generation_check": {
+    "pass": true,
+    "evidence": "ocs-paris-art-provider-cover.PRE-GENERATION-CHECK.json"
+  },
+  "generation_note": "首次 Prompt 被安全策略拦截；v2 采用背影小团+通廊展厅重试成功。",
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG，>16KB。"
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "博物馆展厅小团背影与 title/description 对齐。"
+    },
+    "G3_slot_differentiation": {
+      "pass": true,
+      "notes": "室内艺术小团；非 Row31 肖像/未来 slot。"
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "巴黎 FR-only · 博物馆语义。"
+    },
+    "G5_brand_visual": {
+      "pass": true,
+      "notes": "室内博物馆光；paris-art chain 统一。"
+    },
+    "G6_commercial_platform": {
+      "pass": true,
+      "notes": "Provider 封面可信。"
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true,
+      "notes": "清晰可读。"
+    },
+    "G8_evidence_matrix": {
+      "pass": true,
+      "notes": "Global Regression 32/60。"
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "notes": "无水印/Logo/畸形；无可识别名画复刻。"
+    },
+    "G10_content_diversity": {
+      "pass": true,
+      "notes": "vs 各城 Provider 明显不同。"
+    }
+  },
+  "provider_business_identity_review": {
+    "pass": true
+  },
+  "destination_experience_review": {
+    "pass": true
+  },
+  "surface_boundary_review": {
+    "pass": true
+  },
+  "regression_prior_31_rows": {
+    "pass": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

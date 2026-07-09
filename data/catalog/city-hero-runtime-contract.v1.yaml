@@ -1,0 +1,217 @@
+# City Hero · Runtime Contract V1（设计 · 未实现）
+#
+# 上级 SSOT（只读引用 · 不得修改）:
+#   docs/runbook/TT-CMS-P1-CONTENT-FAMILY-STANDARD.md (FROZEN v1.1.0)
+#   data/catalog/city-hero-brief.v1.yaml
+#   data/catalog/city-hero-matrix.v1.yaml
+#
+# 本文档：实现阶段 Runtime 接线真源 · 当前 **CONTRACT_ONLY**
+
+schema: traveltrust.cms_city_hero_runtime_contract.v1
+version: 1
+effective_utc: "2026-07-07"
+machine_key: TT_CMS_CITY_HERO_RUNTIME_CONTRACT
+status: CONTRACT_ONLY
+phase: DESIGN_BEFORE_IMPLEMENTATION
+
+upstream:
+  p1_standard: docs/runbook/TT-CMS-P1-CONTENT-FAMILY-STANDARD.md
+  brief: data/catalog/city-hero-brief.v1.yaml
+  matrix: data/catalog/city-hero-matrix.v1.yaml
+
+forbidden_in_contract_phase:
+  - admin_ui
+  - api_implementation
+  - catalog_ingest
+  - runtime_resolver_code
+  - frontend_wiring
+  - asset_upload
+  - registry_update
+  - ownership_matrix_update
+  - p1_standard_update
+
+# ── 1 · API 读取（Catalog Read） ───────────────────────────────────
+
+api_read:
+  primary:
+    method: GET
+    path: /api/v1/catalog/media
+    query:
+      asset_kind: city_hero
+      country_iso: "{ISO3166}" # required at runtime
+      city_slug: "{city_slug}" # planned · 例 tokyo · beijing · san_francisco
+    response_item_fields:
+      required: [url, asset_kind, country_iso, version]
+      planned: [city_slug, stock_pool_key, license]
+    notes: >-
+      当前 staging MediaQuery 仅有 asset_kind+country_iso · 实现阶段须扩展 city_slug
+      （或 catalog city_id join）· PER 前 asset_kind=city_hero 须加入 admin allowlist
+
+  catalog_row_binding:
+    asset_key: city_hero_{city_slug}
+    bind_via: stock_pool_key_or_license_usage_equals_asset_key
+
+  resolver_planned: frontend/lib/catalogApi/resolveCityHero.ts
+  enabled_flag: catalog_api_enabled # 同 resolveLandingAmbient 模式
+
+# ── 2 · Fallback 规则 ─────────────────────────────────────────────
+
+fallback:
+  order:
+    - step: 1
+      name: city_hero_primary
+      read: GET /api/v1/catalog/media?asset_kind=city_hero&country_iso&city_slug
+      success: return url · source=catalog-api · resolved_asset_key=asset_key
+    - step: 2
+      name: country_hero_fallback
+      trigger: step_1 empty or HTTP error
+      read: GET /api/v1/catalog/media?asset_kind=landing_ambient&country_iso={ISO}
+      map: fallback_key → hero_{country_slug} → landing_ambient row (destination-ambient-hero-matrix)
+      success: return url · source=catalog-api-fallback · fallback_key=hero_{country_slug}
+    - step: 3
+      name: ts_fallback
+      trigger: step_2 empty
+      read: frontend TS static # Expected Difference until Wave 1 live
+      success: return url · source=ts · must_not_count_as_l5_pass
+
+  matrix_authority:
+    asset_key: city-hero-matrix row
+    fallback_key: city-hero-matrix row
+    example:
+      city: Tokyo
+      asset_key: city_hero_tokyo
+      fallback_key: hero_japan
+      fallback_api: landing_ambient · country_iso=JP
+
+  forbidden:
+    - skip_fallback_and_use_unsplash_in_production
+    - treat_ts_fallback_as_verify_pass
+
+# ── 3 · Consumer Mapping ───────────────────────────────────────────
+
+consumers:
+  home:
+    route: /
+    uses_city_hero: true
+    trigger: user selects country + city on landing hero form
+    resolver_input: { country_zh, city_zh, city_slug, country_iso }
+    matrix_consumer: Home · Travel
+    component_planned: LandingHomeAmbientBackdrop or dedicated CityHero layer
+    note: 城市选中后优先 city_hero · 非国家级 da-hero alone
+
+  travel:
+    route: /traveltrust
+    uses_city_hero: true
+    trigger: destination/city narrative blocks with city context
+    resolver_input: { country_iso, city_slug }
+    matrix_consumer: Home · Travel
+
+  excluded:
+    - /guides
+    - /market
+    - /community
+    - /governance
+    - /me
+
+  resolve_result_shape:
+    schema: CatalogResolveResult
+    fields:
+      data: url string
+      source: catalog-api | catalog-api-fallback | ts
+      asset_key: string | null
+      fallback_key: string | null
+      fallback_used: boolean
+
+# ── 4 · Verify 探针 ───────────────────────────────────────────────
+
+verify:
+  script_planned: scripts/dev/run-cms-content-l5-city-hero-verify.cjs
+  invoke_example: node scripts/dev/run-cms-content-l5-city-hero-verify.cjs --matrix-id CH-JP-TOKYO-001
+
+  probes:
+    catalog:
+      - GET media asset_kind=city_hero country_iso city_slug → count>=1 · url non-empty
+      - asset_key matches matrix row
+    api_bytes:
+      - HEAD url · Content-Length >= 16384
+      - MIME image/jpeg or image/webp
+    decode:
+      - naturalWidth >= 1920 · naturalHeight >= 1080
+    l5:
+      - url must not match unsplash|pexels|placeholder
+      - country_iso matches matrix JP for tokyo row
+    fallback_drill:
+      - when city row absent · resolver returns landing_ambient JP (hero_japan path)
+      - fallback_used=true recorded in evidence
+    matrix_gates:
+      - execution_gates catalog_publish verify evidence_complete → PASS at Wave 1 close
+
+  registry_output: PASS | FAIL only
+
+# ── 5 · Evidence Schema ───────────────────────────────────────────
+
+evidence_schema:
+  family_verify:
+    schema: traveltrust.cms_p1_family_verify.v1
+    extends: P1 Standard verify_unified
+    required_keys:
+      - TT_CMS_CITY_HERO_ROW_VERIFY
+      - gate_result
+    city_hero_fields:
+      matrix_id: string
+      asset_key: string
+      fallback_key: string
+      country_iso: string
+      city_slug: string
+      catalog_url: string | null
+      fallback_url: string | null
+      fallback_used: boolean
+      source: catalog-api | catalog-api-fallback | ts
+      checks:
+        catalog: PASS | FAIL
+        api: PASS | FAIL
+        decode: PASS | FAIL
+        l5: PASS | FAIL
+        fallback_drill: PASS | FAIL | SKIP
+        consumer_home: PASS | FAIL | SKIP
+        consumer_travel: PASS | FAIL | SKIP
+
+  paths:
+    row: evidence/GO_cms_content_l5/city-hero/rows/{matrix_id}.EVIDENCE.json
+    latest: evidence/GO_cms_operation/city-hero/CMS-CITY-HERO-VERIFY-LATEST.json
+    wave1_closure: evidence/GO_cms_operation/city-hero/CMS-CITY-HERO-WAVE1-TOKYO-CLOSURE-LATEST.json
+
+  machine_keys:
+    row: TT_CMS_CITY_HERO_ROW_VERIFY
+    wave1: TT_CMS_CITY_HERO_WAVE1_TOKYO
+
+# ── 6 · Wave 1 东京验收口径 ─────────────────────────────────────────
+
+wave1_acceptance:
+  matrix_id: CH-JP-TOKYO-001
+  country_iso: JP
+  city_zh: 东京
+  city_en: Tokyo
+  city_slug: tokyo
+  asset_key: city_hero_tokyo
+  fallback_key: hero_japan
+
+  must_pass:
+    - catalog publishes city_hero row for tokyo with live url
+    - GET catalog/media returns tokyo row when city_slug=tokyo
+    - verify script exit 0 · TT_CMS_CITY_HERO_ROW_VERIFY=PASS
+    - HEAD decode meets brief minimum 1920x1080
+    - no external stock url on live path
+    - matrix execution_gates verify evidence_complete PASS
+    - consumer_home probe sees catalog-api source (② staging)
+    - fallback_drill hero_japan path documented if city row removed in drill
+
+  must_not:
+    - batch other 37 cities before wave_2 seoul
+    - mark registry frozen on wave1 alone
+    - count ts_fallback as PASS
+
+  wave1_complete_key: TT_CMS_CITY_HERO_WAVE1_TOKYO: PASS
+
+evidence_script: scripts/dev/run-cms-city-hero-runtime-contract.cjs
+latest_evidence: evidence/GO_cms_operation/CMS-CITY-HERO-RUNTIME-CONTRACT-LATEST.json

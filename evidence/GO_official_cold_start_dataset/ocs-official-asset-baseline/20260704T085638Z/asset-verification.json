@@ -1,0 +1,1260 @@
+{
+  "schema": "traveltrust.ocs_official_asset_verification.v1",
+  "api": "https://tt-api-staging.fly.dev",
+  "recorded_at": "2026-07-04T08:58:48.012Z",
+  "asset_count": 60,
+  "delivery_ok": true,
+  "delivery_pass": 60,
+  "delivery_fail": 0,
+  "legacy_violations": [],
+  "legacy_ok": true,
+  "results": [
+    {
+      "asset_id": "ocs/tokyo-photo/guide-avatar",
+      "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/tokyo-photo/provider-cover",
+      "filename": "ocs-tokyo-photo-provider-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/tokyo-photo/acquisition-cover",
+      "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/tokyo-photo/official-guide-cover",
+      "filename": "ocs-tokyo-photo-official-guide-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/tokyo-photo/community-cover",
+      "filename": "ocs-tokyo-photo-community-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/tokyo-photo/community-media",
+      "filename": "ocs-tokyo-photo-community-media.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/kyoto-culture/guide-avatar",
+      "filename": "ocs-kyoto-culture-guide-avatar.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-guide-avatar.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/kyoto-culture/provider-cover",
+      "filename": "ocs-kyoto-culture-provider-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/kyoto-culture/acquisition-cover",
+      "filename": "ocs-kyoto-culture-acquisition-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/kyoto-culture/official-guide-cover",
+      "filename": "ocs-kyoto-culture-official-guide-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/kyoto-culture/community-cover",
+      "filename": "ocs-kyoto-culture-community-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/kyoto-culture/community-media",
+      "filename": "ocs-kyoto-culture-community-media.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/seoul-food/guide-avatar",
+      "filename": "ocs-seoul-food-guide-avatar.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-guide-avatar.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/seoul-food/provider-cover",
+      "filename": "ocs-seoul-food-provider-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/seoul-food/acquisition-cover",
+      "filename": "ocs-seoul-food-acquisition-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/seoul-food/official-guide-cover",
+      "filename": "ocs-seoul-food-official-guide-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/seoul-food/community-cover",
+      "filename": "ocs-seoul-food-community-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/seoul-food/community-media",
+      "filename": "ocs-seoul-food-community-media.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/bangkok-temple/guide-avatar",
+      "filename": "ocs-bangkok-temple-guide-avatar.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-guide-avatar.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/bangkok-temple/provider-cover",
+      "filename": "ocs-bangkok-temple-provider-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/bangkok-temple/acquisition-cover",
+      "filename": "ocs-bangkok-temple-acquisition-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/bangkok-temple/official-guide-cover",
+      "filename": "ocs-bangkok-temple-official-guide-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/bangkok-temple/community-cover",
+      "filename": "ocs-bangkok-temple-community-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/bangkok-temple/community-media",
+      "filename": "ocs-bangkok-temple-community-media.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/singapore-family/guide-avatar",
+      "filename": "ocs-singapore-family-guide-avatar.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-guide-avatar.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/singapore-family/provider-cover",
+      "filename": "ocs-singapore-family-provider-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/singapore-family/acquisition-cover",
+      "filename": "ocs-singapore-family-acquisition-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/singapore-family/official-guide-cover",
+      "filename": "ocs-singapore-family-official-guide-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/singapore-family/community-cover",
+      "filename": "ocs-singapore-family-community-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/singapore-family/community-media",
+      "filename": "ocs-singapore-family-community-media.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/paris-art/guide-avatar",
+      "filename": "ocs-paris-art-guide-avatar.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/paris-art/provider-cover",
+      "filename": "ocs-paris-art-provider-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/paris-art/acquisition-cover",
+      "filename": "ocs-paris-art-acquisition-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-acquisition-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/paris-art/official-guide-cover",
+      "filename": "ocs-paris-art-official-guide-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/paris-art/community-cover",
+      "filename": "ocs-paris-art-community-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/paris-art/community-media",
+      "filename": "ocs-paris-art-community-media.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/nyc-skyline/guide-avatar",
+      "filename": "ocs-nyc-skyline-guide-avatar.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-guide-avatar.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/nyc-skyline/provider-cover",
+      "filename": "ocs-nyc-skyline-provider-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/nyc-skyline/acquisition-cover",
+      "filename": "ocs-nyc-skyline-acquisition-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-acquisition-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/nyc-skyline/official-guide-cover",
+      "filename": "ocs-nyc-skyline-official-guide-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-official-guide-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/nyc-skyline/community-cover",
+      "filename": "ocs-nyc-skyline-community-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/nyc-skyline/community-media",
+      "filename": "ocs-nyc-skyline-community-media.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/sydney-coast/guide-avatar",
+      "filename": "ocs-sydney-coast-guide-avatar.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-guide-avatar.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/sydney-coast/provider-cover",
+      "filename": "ocs-sydney-coast-provider-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/sydney-coast/acquisition-cover",
+      "filename": "ocs-sydney-coast-acquisition-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/sydney-coast/official-guide-cover",
+      "filename": "ocs-sydney-coast-official-guide-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/sydney-coast/community-cover",
+      "filename": "ocs-sydney-coast-community-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/sydney-coast/community-media",
+      "filename": "ocs-sydney-coast-community-media.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/barcelona-arch/guide-avatar",
+      "filename": "ocs-barcelona-arch-guide-avatar.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-guide-avatar.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/barcelona-arch/provider-cover",
+      "filename": "ocs-barcelona-arch-provider-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/barcelona-arch/acquisition-cover",
+      "filename": "ocs-barcelona-arch-acquisition-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-acquisition-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/barcelona-arch/official-guide-cover",
+      "filename": "ocs-barcelona-arch-official-guide-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-official-guide-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/barcelona-arch/community-cover",
+      "filename": "ocs-barcelona-arch-community-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/barcelona-arch/community-media",
+      "filename": "ocs-barcelona-arch-community-media.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/dubai-luxury/guide-avatar",
+      "filename": "ocs-dubai-luxury-guide-avatar.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-guide-avatar.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/dubai-luxury/provider-cover",
+      "filename": "ocs-dubai-luxury-provider-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-provider-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/dubai-luxury/acquisition-cover",
+      "filename": "ocs-dubai-luxury-acquisition-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-acquisition-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/dubai-luxury/official-guide-cover",
+      "filename": "ocs-dubai-luxury-official-guide-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-official-guide-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/dubai-luxury/community-cover",
+      "filename": "ocs-dubai-luxury-community-cover.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "asset_id": "ocs/dubai-luxury/community-media",
+      "filename": "ocs-dubai-luxury-community-media.jpg",
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    }
+  ],
+  "feed_probe": [
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-community-cover.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    },
+    {
+      "ok": true,
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-community-media.jpg",
+      "status": 200,
+      "mime": "image/jpeg",
+      "content_length": 287,
+      "checks": {
+        "head_200": true,
+        "get_200": true,
+        "mime_ok": true,
+        "content_length_ok": true,
+        "decodable": true
+      }
+    }
+  ],
+  "machine_keys": {
+    "TT_OCS_OFFICIAL_ASSET_BASELINE": "V1_VERIFIED",
+    "TT_OCS_OFFICIAL_ASSET_BASELINE_V1": "VERIFIED",
+    "TT_OCS_ASSET_VERIFICATION": "PASS"
+  }
+}

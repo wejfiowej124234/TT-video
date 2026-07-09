@@ -1,0 +1,83 @@
+{
+  "generated_utc": "2026-07-09T08:37:52.371Z",
+  "mode": "simulation_only",
+  "verdict": "MAINNET_DEPLOYMENT_PLAN_DRY_RUN: PASS",
+  "checks": [
+    {
+      "id": "file:registry/mainnet-deployment-plan.v1.yaml",
+      "result": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "file:registry/mainnet-address-registry.v1.yaml",
+      "result": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "file:registry/phase3-production-entry-baseline.v1.yaml",
+      "result": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "file:docs/spec/governance-token/MAINNET-DEPLOYMENT-PLAN-v1.md",
+      "result": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "file:contracts/abi/EscrowV2.json",
+      "result": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "file:contracts/abi/EscrowFactoryV2.json",
+      "result": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "file:contracts/script/DeployEscrowFactoryV2.s.sol",
+      "result": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "file:contracts/script/DeployGovFreezeV2CleanBaseline.s.sol",
+      "result": "PASS",
+      "detail": "present"
+    },
+    {
+      "id": "plan:verdict",
+      "result": "PASS",
+      "detail": "MAINNET_DEPLOYMENT_PLAN_READY"
+    },
+    {
+      "id": "plan:execution_status",
+      "result": "PASS",
+      "detail": "PLAN_ONLY"
+    },
+    {
+      "id": "abi-002:status",
+      "result": "PASS",
+      "detail": "DEPLOYMENT_PREPARATION_READY"
+    },
+    {
+      "id": "network:broadcast",
+      "result": "PASS",
+      "detail": "not authorized"
+    },
+    {
+      "id": "deploy:steps",
+      "result": "PASS",
+      "detail": "14 documented steps"
+    },
+    {
+      "id": "abi-002:confirmServiceComplete",
+      "result": "PASS",
+      "detail": "selector present"
+    },
+    {
+      "id": "p3-03:complete",
+      "result": "PASS",
+      "detail": "true"
+    }
+  ],
+  "fail_count": 0
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "traveltrust.admin_final_spot_check.v1",
+  "session_id": "AFSC-20260608",
+  "started_at": "2026-06-22T23:33:24.538Z",
+  "env": {
+    "fe_base": "http://127.0.0.1:3012",
+    "api_base": "http://127.0.0.1:8080",
+    "admin_email": "tourist@test.com"
+  },
+  "policy": "record_only · no UX fixes except P0/P1 block · wait staging-soak",
+  "path_log": {
+    "Guide-Countries-Publish": [
+      "goto /admin/operator-guide",
+      "click daily ops #1 href=/admin/content/countries",
+      "landed http://localhost:3012/admin/content/countries"
+    ],
+    "Guide-Official-Deploy": [
+      "goto /admin/operator-guide",
+      "click daily ops #4 href=/admin/official",
+      "hub http://localhost:3012/admin/official"
+    ],
+    "Guide-Reports-Wizard": [
+      "goto /admin/operator-guide",
+      "reports http://localhost:3012/admin/community/reports?status=open"
+    ]
+  },
+  "summary": {
+    "total": 3,
+    "P0": 0,
+    "P1": 3,
+    "P2": 0
+  },
+  "task_completion": {
+    "Guide-Countries-Publish": {
+      "nav": "ok href=/admin/content/countries",
+      "shell": "see findings"
+    },
+    "Guide-Official-Deploy": {
+      "nav": "ok href=/admin/official",
+      "shell": "see findings"
+    },
+    "Guide-Reports-Wizard": {
+      "nav": "ok /admin/community/reports?status=open",
+      "shell": "see findings"
+    }
+  },
+  "findings": [
+    {
+      "id": "AFSC-001",
+      "track": "Admin-Final-Spot-Check",
+      "status": "open",
+      "fix_policy": "deferred_post_soak",
+      "path_id": "Guide-Countries-Publish",
+      "severity": "P1",
+      "kind": "blocked",
+      "title": "Countries publish page shell not rendered",
+      "observation": "url=http://localhost:3012/admin/content/countries — list marker missing (API error, RBAC, or capabilities pending)"
+    },
+    {
+      "id": "AFSC-002",
+      "track": "Admin-Final-Spot-Check",
+      "status": "open",
+      "fix_policy": "deferred_post_soak",
+      "path_id": "Guide-Official-Deploy",
+      "severity": "P1",
+      "kind": "blocked",
+      "title": "Official hub shell not rendered",
+      "observation": "http://localhost:3012/admin/official"
+    },
+    {
+      "id": "AFSC-003",
+      "track": "Admin-Final-Spot-Check",
+      "status": "open",
+      "fix_policy": "deferred_post_soak",
+      "path_id": "Guide-Reports-Wizard",
+      "severity": "P1",
+      "kind": "blocked",
+      "title": "Community reports page shell not rendered",
+      "observation": "http://localhost:3012/admin/community/reports?status=open"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "traveltrust.phase1_convergence_compare.v1",
+  "pass": true,
+  "readiness_delta": 11,
+  "current_readiness": 88,
+  "baseline_readiness": 77,
+  "new_open_p0": [],
+  "issues": [],
+  "sprint_a_targets": [
+    "RC-01",
+    "RC-02",
+    "RC-03"
+  ],
+  "targets": {
+    "FREEZE_CANDIDATE": 90,
+    "PHASE1_EXIT_READY": 95
+  },
+  "current": {
+    "schema": "traveltrust.phase1_convergence_snapshot.v1",
+    "captured_at": "2026-06-13T08:20:57.862800+00:00",
+    "peb_path": "evidence/GO_phase1_convergence/runs/20260613T081946Z-sprint-a/peb",
+    "readiness_score": 88,
+    "readiness_band": "HOLD",
+    "freeze_recommendation": "HOLD",
+    "open_p0_count": 0,
+    "open_p1_count": 2,
+    "open_p0_ids": [],
+    "open_p1_ids": [
+      "AG-SEED-003",
+      "LFC-CA-001"
+    ],
+    "top20_blocker_ids": [
+      "AG-SEED-001",
+      "AG-SEED-002",
+      "DOA-SEED-002",
+      "DOA-SEED-003",
+      "DOA-SEED-004",
+      "LFC-CA-002",
+      "LFC-UXA-002",
+      "PF-SEED-001",
+      "PF-SEED-002",
+      "PF-SEED-003",
+      "PGX-CX-001",
+      "AG-SEED-003",
+      "DOA-SEED-001",
+      "LFC-CA-001",
+      "LFC-UXA-001",
+      "PF-SEED-004",
+      "PGX-CX-002"
+    ],
+    "top10_root_cause_ids": [
+      "RC-01",
+      "RC-02",
+      "RC-03",
+      "RC-04",
+      "RC-05",
+      "RC-06"
+    ],
+    "execution_rate_pct": 82.4,
+    "forecast": {
+      "schema": "traveltrust.phase1_exit_forecast.v1",
+      "current_score": 88,
+      "current_band": "HOLD",
+      "days_to_FREEZE_CANDIDATE": 2,
+      "date_FREEZE_CANDIDATE_utc": "2026-06-15",
+      "days_to_PHASE1_EXIT_READY": 7,
+      "date_PHASE1_EXIT_READY_utc": "2026-06-20",
+      "assumed_readiness_points_per_week": 6.3,
+      "if_fix_top3_root_causes": {
+        "readiness_delta": 19,
+        "projected_score": 100
+      }
+    }
+  },
+  "baseline_path": "evidence/GO_phase1_convergence/baseline/phase1-convergence-baseline.v1.json"
+}

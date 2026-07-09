@@ -1,0 +1,104 @@
+{
+  "schema": "traveltrust.cert1-minimal-9-mapping.v1",
+  "cert_step": 1,
+  "cert_stamp": "20260616T100918Z",
+  "signed_by": "Sebastian Ward",
+  "prepared_at_utc": "2026-06-16T12:05:59Z",
+  "ai_pre_human_uat": "evidence/GO_ai_pre_human_uat/20260616T114646Z",
+  "ai_sweep_gap_list": "evidence/GO_mtm_146_ai_functional_sweep/20260616T115725Z/MTM-146-AI-GAP-LIST.v1.json",
+  "ai_sweep_verdict": "FAIL=0",
+  "walkthrough_mp4": "human-uat/recordings/CERT1-MINIMAL-9ITEM-WALKTHROUGH.mp4",
+  "items": [
+    {
+      "mtm_id": "CHK-CORE-01",
+      "name": "真人验收 aggregate",
+      "route": "/governance/*",
+      "uat_ref": "A1 aggregate",
+      "screenshot": "ledger-screenshots/CHK-CORE-01.png",
+      "human_uat_screenshot": "human-uat/screenshots/CHK-CORE-01.png",
+      "recording": "human-uat/recordings/CHK-CORE-01.mp4",
+      "target_tier": "HUMAN_DONE"
+    },
+    {
+      "mtm_id": "CHK-FE-01",
+      "name": "Hub UAT A1",
+      "route": "/governance",
+      "uat_ref": "A1",
+      "screenshot": "ledger-screenshots/CHK-FE-01.png",
+      "human_uat_screenshot": "human-uat/screenshots/CHK-FE-01.png",
+      "recording": "human-uat/recordings/CHK-FE-01.mp4",
+      "target_tier": "HUMAN_DONE"
+    },
+    {
+      "mtm_id": "CHK-FE-02",
+      "name": "Params UAT A2",
+      "route": "/governance/params",
+      "uat_ref": "A2",
+      "screenshot": "ledger-screenshots/CHK-FE-02.png",
+      "human_uat_screenshot": "human-uat/screenshots/CHK-FE-02.png",
+      "recording": "human-uat/recordings/CHK-FE-02.mp4",
+      "target_tier": "HUMAN_DONE"
+    },
+    {
+      "mtm_id": "CHK-FE-03",
+      "name": "Treasury policy UAT A3",
+      "route": "/governance/params#gov-params-treasury-policy",
+      "uat_ref": "A3",
+      "screenshot": "ledger-screenshots/CHK-FE-03.png",
+      "human_uat_screenshot": "human-uat/screenshots/CHK-FE-03.png",
+      "recording": "human-uat/recordings/CHK-FE-03.mp4",
+      "target_tier": "HUMAN_DONE"
+    },
+    {
+      "mtm_id": "CHK-FE-09",
+      "name": "Accruals UAT A5",
+      "route": "/governance/distribution-accruals",
+      "uat_ref": "A5",
+      "screenshot": "ledger-screenshots/CHK-FE-09.png",
+      "human_uat_screenshot": "human-uat/screenshots/CHK-FE-09.png",
+      "recording": "human-uat/recordings/CHK-FE-09.mp4",
+      "target_tier": "HUMAN_DONE"
+    },
+    {
+      "mtm_id": "CHK-FE-10",
+      "name": "Claim UAT A6",
+      "route": "/governance/distribution-claim",
+      "uat_ref": "A6",
+      "screenshot": "ledger-screenshots/CHK-FE-10.png",
+      "human_uat_screenshot": "human-uat/screenshots/CHK-FE-10.png",
+      "recording": "human-uat/recordings/CHK-FE-10.mp4",
+      "target_tier": "HUMAN_DONE"
+    },
+    {
+      "mtm_id": "CHK-FE-13",
+      "name": "CP 45/55 visual D1",
+      "route": "/governance/params",
+      "uat_ref": "D1",
+      "screenshot": "ledger-screenshots/CHK-FE-13.png",
+      "human_uat_screenshot": "human-uat/screenshots/CHK-FE-13.png",
+      "recording": "human-uat/recordings/CHK-FE-13.mp4",
+      "target_tier": "HUMAN_DONE"
+    },
+    {
+      "mtm_id": "CHK-OPS-12",
+      "name": "HUMAN-SCREEN signoff",
+      "route": "/governance/*",
+      "uat_ref": "signoff",
+      "screenshot": "ledger-screenshots/CHK-OPS-12.png",
+      "human_uat_screenshot": "human-uat/screenshots/CHK-OPS-12.png",
+      "recording": "human-uat/recordings/CHK-OPS-12.mp4",
+      "target_tier": "HUMAN_DONE"
+    },
+    {
+      "mtm_id": "CHK-BASE-06",
+      "name": "HUMAN-ENTERPRISE-HAT sign",
+      "route": "—",
+      "uat_ref": "Enterprise HAT",
+      "screenshot": "ledger-screenshots/CHK-BASE-06.png",
+      "human_uat_screenshot": "human-uat/screenshots/CHK-BASE-06.png",
+      "recording": "human-uat/recordings/CHK-BASE-06.mp4",
+      "target_tier": "HUMAN_DONE"
+    }
+  ],
+  "honest_boundary": "② Cert #1 minimal 9-item human pack ≠ 58/58 Human ≠ ③ Production GO"
+}

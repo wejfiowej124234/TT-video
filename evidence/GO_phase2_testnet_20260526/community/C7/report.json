@@ -1,0 +1,263 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_phase2_testnet_20260526_community_C7_20260605T144845Z",
+  "title": "Phase ② · C7 community 93 matrix staging validation",
+  "executor": "scripts/gen-community-c7-staging-matrix-report.py",
+  "started_at": "20260605T144845Z",
+  "finished_at": "2026-06-05T14:48:47Z",
+  "environment": {
+    "name": "staging",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer",
+    "api_base": "https://tt-api-staging.fly.dev"
+  },
+  "release_gate": "GO",
+  "release_gate_reason": "C7 community D-domain staging matrix: 22 PASS, 2 BLOCKED (③ production CDN/HLS), 1 PENDING (NOT_RUN · out of C1–C6 scope); C1–C6 slots mapped PASS from sealed evidence. **NOT** Phase ② GO · **NOT** full-site 93 GO.",
+  "community_c7_staging_matrix": {
+    "scope_note": "Community D-domain staging matrix backed by C1–C6 slot evidence; does not claim Phase ② GO or full A+B/C/D site matrix GO.",
+    "c_slot_status": {
+      "C1": "PASS",
+      "C2": "PASS",
+      "C3": "PASS",
+      "C4": "PASS",
+      "C5": "PASS",
+      "C6": "PASS"
+    },
+    "staging_feed_probe": "feed posts=5"
+  },
+  "cases": [
+    {
+      "id": "PHASE2-C1-FEED-UGC",
+      "status": "PASS",
+      "category": "content",
+      "c_slot": "C1",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C1/",
+      "notes": "C1 staging feed ≥20 UGC · automation_leak=0 | mapped from community/C1/STATUS.txt PASS | staging feed probe: feed posts=5"
+    },
+    {
+      "id": "PHASE2-C2-UPLOAD-SECURITY",
+      "status": "PASS",
+      "category": "security",
+      "c_slot": "C2",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C2/",
+      "notes": "C2 MIME/magic/size/path upload security IT + staging upload E2E | mapped from community/C2/STATUS.txt PASS | mapped from community/C2/STATUS.txt PASS"
+    },
+    {
+      "id": "PHASE2-C3-MODERATION",
+      "status": "PASS",
+      "category": "moderation",
+      "c_slot": "C3",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C3/",
+      "notes": "C3 report→admin queue→content_remove staging chain | mapped from community/C3/STATUS.txt PASS | mapped from community/C3/STATUS.txt PASS"
+    },
+    {
+      "id": "PHASE2-C4-VIDEO-MP4",
+      "status": "PASS",
+      "category": "media",
+      "c_slot": "C4",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C4/",
+      "notes": "C4 staging MP4 playback + Feed canplay (② slot PASS) | mapped from community/C4/STATUS.txt PASS | mapped from community/C4/STATUS.txt PASS"
+    },
+    {
+      "id": "PHASE2-C4-HLS-CDN",
+      "status": "BLOCKED",
+      "category": "media",
+      "c_slot": "C4",
+      "blocker": true,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C4/",
+      "notes": "HLS manifest / production CDN edge — ③ pending (C4 slot MP4 only PASS) | mapped from community/C4/STATUS.txt PASS"
+    },
+    {
+      "id": "PHASE2-C5-IMAGE-DELIVERY",
+      "status": "PASS",
+      "category": "media",
+      "c_slot": "C5",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C5/",
+      "notes": "C5 staging image delivery + Cache-Control + multi-image read paths | mapped from community/C5/STATUS.txt PASS | mapped from community/C5/STATUS.txt PASS"
+    },
+    {
+      "id": "PHASE2-C5-PRODUCTION-CDN",
+      "status": "BLOCKED",
+      "category": "media",
+      "c_slot": "C5",
+      "blocker": true,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C5/",
+      "notes": "Production CDN edge — ③ pending (C5 staging image delivery only PASS) | mapped from community/C5/STATUS.txt PASS"
+    },
+    {
+      "id": "PHASE2-C6-SOCIAL-GRAPH",
+      "status": "PASS",
+      "category": "social",
+      "c_slot": "C6",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C6/",
+      "notes": "C6 follow/DM/likes_received + staging browser revisit | mapped from community/C6/STATUS.txt PASS | mapped from community/C6/STATUS.txt PASS"
+    },
+    {
+      "id": "D-COM-001",
+      "status": "PASS",
+      "category": "content",
+      "c_slot": "C1",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C1/",
+      "notes": "Feed hot mode — C1 staging UGC density + feed API | mapped from community/C1/STATUS.txt PASS"
+    },
+    {
+      "id": "D-COM-001B",
+      "status": "PASS",
+      "category": "content",
+      "c_slot": "C1",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C1/",
+      "notes": "Feed tag= filter — C1 feed seed evidence | mapped from community/C1/STATUS.txt PASS"
+    },
+    {
+      "id": "D-COM-001C",
+      "status": "PASS",
+      "category": "content",
+      "c_slot": "C6",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C6/",
+      "notes": "Follow feed — C6 social graph evidence | mapped from community/C6/STATUS.txt PASS"
+    },
+    {
+      "id": "D-COM-002",
+      "status": "PASS",
+      "category": "content",
+      "c_slot": "C1",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C1/",
+      "notes": "POST + public GET detail — C1 content chain | mapped from community/C1/STATUS.txt PASS"
+    },
+    {
+      "id": "D-COM-003",
+      "status": "PASS",
+      "category": "engagement",
+      "c_slot": "C6",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C6/",
+      "notes": "Like/engagement — mapped from C6 social + likes_received evidence | mapped from community/C6/STATUS.txt PASS"
+    },
+    {
+      "id": "D-COM-004",
+      "status": "PASS",
+      "category": "social",
+      "c_slot": "C6",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C6/",
+      "notes": "DM ensure/send/unread/read — C6 staging social E2E | mapped from community/C6/STATUS.txt PASS"
+    },
+    {
+      "id": "D-COM-005",
+      "status": "PASS",
+      "category": "social",
+      "c_slot": "C6",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C6/",
+      "notes": "Follow/followers/following — C6 staging social E2E | mapped from community/C6/STATUS.txt PASS"
+    },
+    {
+      "id": "D-COM-006",
+      "status": "NOT_RUN",
+      "category": "feedback",
+      "c_slot": "C10",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C10/",
+      "notes": "PENDING — feedback browser E2E deferred to C10 wide path (MANUAL-P1)"
+    },
+    {
+      "id": "D-COM-007",
+      "status": "PASS",
+      "category": "discovery",
+      "c_slot": "C5",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C5/",
+      "notes": "Explore/read surfaces — C5 image + C6 explore browser E2E | mapped from community/C5/STATUS.txt PASS"
+    },
+    {
+      "id": "D-COM-008",
+      "status": "PASS",
+      "category": "engagement",
+      "c_slot": "C1",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C1/",
+      "notes": "Collect engagement — mapped from C1 feed/content ①+② evidence | mapped from community/C1/STATUS.txt PASS"
+    },
+    {
+      "id": "D-COM-009",
+      "status": "PASS",
+      "category": "content",
+      "c_slot": "C1",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C1/",
+      "notes": "GET me/posts — C1 feed/content evidence | mapped from community/C1/STATUS.txt PASS"
+    },
+    {
+      "id": "D-COM-010",
+      "status": "PASS",
+      "category": "moderation",
+      "c_slot": "C3",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C3/",
+      "notes": "Report + content_remove — mapped from C3 moderation evidence | mapped from community/C3/STATUS.txt PASS"
+    },
+    {
+      "id": "D-COM-011",
+      "status": "PASS",
+      "category": "commerce",
+      "c_slot": "C1",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C1/",
+      "notes": "Acquisition-led post — C1 UGC density includes commerce posts | mapped from community/C1/STATUS.txt PASS"
+    },
+    {
+      "id": "D-COM-NOTIFY-LIKES",
+      "status": "PASS",
+      "category": "engagement",
+      "c_slot": "C6",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C6/",
+      "notes": "likes_received notification proxy — C6 Activity page evidence | mapped from community/C6/STATUS.txt PASS"
+    },
+    {
+      "id": "SPOTCHECK-C2-SECURITY-IT",
+      "status": "PASS",
+      "category": "security",
+      "c_slot": "C2",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C2/",
+      "notes": "Live cargo: matrix_93_d_com_c2_upload_png_ok_pg"
+    },
+    {
+      "id": "SPOTCHECK-C5-IMAGE-IT",
+      "status": "PASS",
+      "category": "media",
+      "c_slot": "C5",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C5/",
+      "notes": "Live cargo: matrix_93_d_com_c5_multi_image_feed_profile_explore_read_pg"
+    },
+    {
+      "id": "SPOTCHECK-C6-SOCIAL-IT",
+      "status": "PASS",
+      "category": "social",
+      "c_slot": "C6",
+      "blocker": false,
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/community/C6/",
+      "notes": "Live cargo: matrix_93_d_com_c6_follow_followers_following_feed_profile_pg"
+    }
+  ],
+  "summary": {
+    "PASS": 22,
+    "FAIL": 0,
+    "BLOCKED": 2,
+    "N_A": 0,
+    "NOT_RUN": 1
+  }
+}

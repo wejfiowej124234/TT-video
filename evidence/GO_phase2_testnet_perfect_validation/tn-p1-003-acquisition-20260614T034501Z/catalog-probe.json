@@ -1,0 +1,1 @@
+{"status":"ok","items":[{"id":"15a97171-bf0a-431c-a2dd-bfecdf58682f","payload":{"kind":"acquisition_carry_studio_v1","title":"probe 1781408670"},"updated_at":"2026-06-14T03:44:35.678197+00:00"}],"meta":{"variant":"acquisition","source":"postgres_catalog","count":1,"limit":200,"has_more":false,"next_cursor":null}}

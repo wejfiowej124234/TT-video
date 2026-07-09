@@ -1,4 +1,6 @@
-/** `/traveltrust` 区块垂直间距调试（① 本地 · `?tt_spacing=1`） */
+/** `/traveltrust` 区块垂直间距调试（① 本地 · `?tt_spacing=1` 或显式 env opt-in） */
+
+import { allowTravelTrustSpacingDebugChrome } from "./travelTrustUiGuards";
 
 export const TT_SPACING_DEBUG_QUERY = "tt_spacing";
 export const TT_SPACING_DEBUG_STORAGE_KEY = "tt_spacing_debug";
@@ -21,15 +23,20 @@ export const TT_SPACING_DEBUG_GAP_TARGETS_PX: Record<string, number> = {
   "faq→start": 64,
 };
 
+/** @deprecated NODE_ENV alone must not mount public spacing debug (PER-R1-CI-09). */
 export function isTravelTrustSpacingDebugDevHost(): boolean {
   return process.env.NODE_ENV === "development";
 }
 
-/** 生产叙事页不挂调试 chrome；仅 ① dev 或 `?tt_spacing=1` */
-export function shouldMountTravelTrustSpacingDebug(): boolean {
-  if (isTravelTrustSpacingDebugDevHost()) return true;
-  if (typeof window === "undefined") return false;
-  return new URLSearchParams(window.location.search).get(TT_SPACING_DEBUG_QUERY) === "1";
+function hasTravelTrustSpacingDebugQuery(search: string): boolean {
+  return new URLSearchParams(search).get(TT_SPACING_DEBUG_QUERY) === "1";
+}
+
+/** 公众页默认不挂；仅 `?tt_spacing=1` 或 `NEXT_PUBLIC_TRAVELTRUST_ALLOW_TRAVELTRUST_SPACING_DEBUG=1`。 */
+export function shouldMountTravelTrustSpacingDebug(search?: string): boolean {
+  const q = search ?? (typeof window === "undefined" ? "" : window.location.search);
+  if (hasTravelTrustSpacingDebugQuery(q)) return true;
+  return allowTravelTrustSpacingDebugChrome();
 }
 
 export function isTravelTrustSpacingDebugEnabled(): boolean {

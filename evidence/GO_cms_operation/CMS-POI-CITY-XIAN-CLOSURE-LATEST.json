@@ -1,0 +1,150 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-07T100449Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "CN",
+    "country_zh": "中国",
+    "city_zh": "西安",
+    "city_en": "Xi'an"
+  },
+  "poi_count": 10,
+  "matrix_ids": [
+    "PH-CN-321-ATR",
+    "PH-CN-322-ATR",
+    "PH-CN-323-ATR",
+    "PH-CN-324-ATR",
+    "PH-CN-325-ATR",
+    "PH-CN-326-FOOD",
+    "PH-CN-327-FOOD",
+    "PH-CN-328-FOOD",
+    "PH-CN-329-FOOD",
+    "PH-CN-330-FOOD"
+  ],
+  "pois": [
+    "兵马俑",
+    "大雁塔",
+    "城墙",
+    "回民街",
+    "华清池",
+    "肉夹馍",
+    "羊肉泡馍",
+    "凉皮",
+    "biangbiang面",
+    "回民街小吃"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-CN-321-ATR",
+      "legacy_value": "兵马俑",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-322-ATR",
+      "legacy_value": "大雁塔",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-323-ATR",
+      "legacy_value": "城墙",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-324-ATR",
+      "legacy_value": "回民街",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-325-ATR",
+      "legacy_value": "华清池",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-326-FOOD",
+      "legacy_value": "肉夹馍",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-327-FOOD",
+      "legacy_value": "羊肉泡馍",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-328-FOOD",
+      "legacy_value": "凉皮",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-329-FOOD",
+      "legacy_value": "biangbiang面",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-330-FOOD",
+      "legacy_value": "回民街小吃",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-321-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-322-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-323-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-324-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-325-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-326-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-327-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-328-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-329-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-330-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=CN&city=%E8%A5%BF%E5%AE%89&limit=50",
+    "http": 200,
+    "count": 10
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-xian/CMS-POI-XIAN-CLOSED-LOOP-LATEST.json",
+  "next_city": {
+    "country_iso": "CN",
+    "city_zh": "厦门",
+    "city_en": "Xiamen"
+  },
+  "closure_keys": {
+    "TT_CMS_POI_CITY_XIAN": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": "CN · 厦门"
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_XIAN": "CLOSED"
+}

@@ -1,0 +1,146 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-06T123810Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "US",
+    "country_zh": "美国",
+    "city_zh": "纽约",
+    "city_en": "New York"
+  },
+  "poi_count": 10,
+  "matrix_ids": [
+    "PH-US-158-ATR",
+    "PH-US-159-ATR",
+    "PH-US-160-ATR",
+    "PH-US-161-ATR",
+    "PH-US-162-ATR",
+    "PH-US-163-FOOD",
+    "PH-US-164-FOOD",
+    "PH-US-165-FOOD",
+    "PH-US-166-FOOD",
+    "PH-US-167-FOOD"
+  ],
+  "pois": [
+    "自由女神",
+    "时代广场",
+    "中央公园",
+    "大都会",
+    "帝国大厦",
+    "披萨",
+    "热狗",
+    "贝果",
+    "牛排",
+    "brunch"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-US-158-ATR",
+      "legacy_value": "自由女神",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-159-ATR",
+      "legacy_value": "时代广场",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-US-160-ATR",
+      "legacy_value": "中央公园",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-161-ATR",
+      "legacy_value": "大都会",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-162-ATR",
+      "legacy_value": "帝国大厦",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-US-163-FOOD",
+      "legacy_value": "披萨",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-164-FOOD",
+      "legacy_value": "热狗",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-US-165-FOOD",
+      "legacy_value": "贝果",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-166-FOOD",
+      "legacy_value": "牛排",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-167-FOOD",
+      "legacy_value": "brunch",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-158-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-159-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-160-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-161-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-162-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-163-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-164-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-165-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-166-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-167-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=US&city=%E7%BA%BD%E7%BA%A6&limit=50",
+    "http": 200,
+    "count": 10
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-new york/CMS-POI-NEW YORK-CLOSED-LOOP-LATEST.json",
+  "next_city": null,
+  "closure_keys": {
+    "TT_CMS_POI_CITY_NEW_YORK": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": null
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_NEW_YORK": "CLOSED"
+}

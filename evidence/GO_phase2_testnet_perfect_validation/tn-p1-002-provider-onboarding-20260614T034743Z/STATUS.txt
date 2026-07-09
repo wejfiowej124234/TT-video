@@ -1,0 +1,6 @@
+status: PASS
+phase: ②
+artifact: TN-P1-002 Provider Onboarding
+at: 20260614T034743Z
+release_gate: GO
+merchant: merchant@test.com

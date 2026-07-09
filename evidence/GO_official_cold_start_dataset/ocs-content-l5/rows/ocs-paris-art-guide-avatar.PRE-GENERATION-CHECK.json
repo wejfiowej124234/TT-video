@@ -1,0 +1,55 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T144500Z",
+  "filename": "ocs-paris-art-guide-avatar.jpg",
+  "row": 31,
+  "chain_id": "paris-art",
+  "country_code": "FR",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "checks": {
+    "manifest_alignment": {
+      "pass": true
+    },
+    "destination_authenticity_9dim": {
+      "pass": true,
+      "notes": "博物馆雕塑庭院 FR-only"
+    },
+    "country_consistency_fr": {
+      "pass": true
+    },
+    "guide_identity_diversity_plan": {
+      "pass": true,
+      "vs_tokyo_ken": "40s 欧洲艺术女 vs 日摄影师",
+      "vs_kyoto_yuki": "便装艺术 vs 和服",
+      "vs_seoul_min": "艺术 vs 美食",
+      "vs_bangkok_arun": "博物馆 vs 寺庙",
+      "vs_singapore_lee": "艺术学者 vs 亲子"
+    },
+    "global_visual_diversity_plan": {
+      "pass": true,
+      "notes": "经典巴黎灰+金"
+    },
+    "brand_consistency_plan": {
+      "pass": true
+    },
+    "consumer_experience_plan": {
+      "pass": true
+    },
+    "surface_identity_plan": {
+      "pass": true
+    },
+    "narrative_planning": {
+      "pass": true
+    },
+    "business_authenticity": {
+      "pass": true
+    },
+    "copyright_logo_watermark_ai": {
+      "pass": true,
+      "no_watermark": true,
+      "no_logo": true,
+      "no_ai_artifacts": true
+    },
+    "nine_class_framework_frozen": true
+  }
+}

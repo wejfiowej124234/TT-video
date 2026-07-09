@@ -1,0 +1,12 @@
+{
+  "kind": "traveltrust.pi3_002_domain_cdn_cors_readiness.v1",
+  "recorded_utc": "20260607T150053Z",
+  "verdict": "PI3-002_HOLD",
+  "prod_domain_configured": false,
+  "prod_tls_health_ok": false,
+  "prod_cors_preflight_ok": false,
+  "cdn_hls": "NOT_STARTED",
+  "catalog_freeze": "CATALOG_RELEASE_FREEZE_GO",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev"
+}

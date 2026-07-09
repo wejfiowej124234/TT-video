@@ -1,0 +1,9 @@
+TT_OCS_OFFICIAL_ASSET_BASELINE_V1: VERIFIED
+environment: staging
+at=20260704T085638Z
+api=https://tt-api-staging.fly.dev
+evidence=20260704T085638Z
+signoff=ocs-official-asset-baseline-signoff.json
+asset_count=60
+note=Independent staging evidence — not G3 Production CDN — not Production GO
+honest_boundary=Staging VERIFIED only

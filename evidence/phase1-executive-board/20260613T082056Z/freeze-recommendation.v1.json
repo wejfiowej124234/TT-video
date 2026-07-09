@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.freeze_recommendation.v1",
+  "recommendation": "HOLD",
+  "band": "HOLD",
+  "score": 88,
+  "phase2_review_allowed": false
+}

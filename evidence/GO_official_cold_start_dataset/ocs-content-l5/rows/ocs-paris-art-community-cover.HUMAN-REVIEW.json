@@ -1,0 +1,92 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T151030Z",
+  "filename": "ocs-paris-art-community-cover.jpg",
+  "chain_id": "paris-art",
+  "city": "巴黎",
+  "country_code": "FR",
+  "slot": "community-cover",
+  "surface": "Community Cover",
+  "copy_label": "卢浮宫到奥赛的两日艺术之旅——官方预约窗口与休息点记录。",
+  "manifest_copy": {
+    "community_post.body_markdown": "卢浮宫到奥赛的两日艺术之旅——官方预约窗口与休息点记录。",
+    "community_post.tags": [
+      "巴黎",
+      "艺术",
+      "官方旅行日志"
+    ]
+  },
+  "cover_media_complementarity": {
+    "pass": true,
+    "row35_cover": "展厅透视 Feed intimate",
+    "row36_media_planned": "奥赛钟面/雕塑厅不同馆",
+    "feed_detail_pair": true
+  },
+  "content_safety_pre_check": {
+    "pass": true
+  },
+  "post_generation_quality_check": {
+    "pass": true,
+    "bytes": 98392
+  },
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG 98392 bytes。"
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "展厅透视与 body 卢浮宫到奥赛两日艺术之旅对齐。"
+    },
+    "G3_slot_differentiation": {
+      "pass": true,
+      "notes": "Feed 透视；非 Row34 外观/非 Row31-33。"
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "巴黎 FR-only。"
+    },
+    "G5_brand_visual": {
+      "pass": true,
+      "notes": "艺术 intimate UGC。"
+    },
+    "G6_commercial_platform": {
+      "pass": true,
+      "notes": "Feed 缩略可读。"
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true,
+      "notes": "清晰。"
+    },
+    "G8_evidence_matrix": {
+      "pass": true,
+      "notes": "Global Regression 35/60。"
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "notes": "无可识别名画/无水印。"
+    },
+    "G10_content_diversity": {
+      "pass": true,
+      "notes": "vs 各城 Community Cover 不同。"
+    }
+  },
+  "community_authenticity_review": {
+    "pass": true,
+    "authentic_share_feel": true,
+    "not_ad_poster": true
+  },
+  "destination_experience_review": {
+    "pass": true
+  },
+  "surface_boundary_review": {
+    "pass": true
+  },
+  "visual_sequence_review": {
+    "pass": true
+  },
+  "regression_prior_34_rows": {
+    "pass": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

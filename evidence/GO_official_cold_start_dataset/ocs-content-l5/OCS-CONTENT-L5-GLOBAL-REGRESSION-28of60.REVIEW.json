@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_regression_review.v1",
+  "stamp_utc": "20260704T143030Z",
+  "trigger_row": 28,
+  "trigger_filename": "ocs-singapore-family-official-guide-cover.jpg",
+  "rows_reviewed": 28,
+  "TT_GLOBAL_REGRESSION_REVIEW": "PASS",
+  "nine_class_all_pass": true,
+  "no_quality_regression": true,
+  "prior_rows_stable": true,
+  "gate_to_row29": "PASS"
+}

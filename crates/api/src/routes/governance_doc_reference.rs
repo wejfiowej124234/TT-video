@@ -176,7 +176,7 @@ pub fn protocol_reference_pending_json() -> Value {
 }
 
 /// [protocol-ssot.v1.yaml](../../../../docs/spec/governance-token/protocol-ssot.v1.yaml) 只读镜像（Protocol Convergence P2）。
-pub const PROTOCOL_SSOT_VERSION: &str = "1.0.1";
+pub const PROTOCOL_SSOT_VERSION: &str = "1.0.3";
 
 /// 与 **protocol-ssot.v1** 同源；**`GET /steward/stake-quote`** 等只读路由消费。
 pub fn protocol_ssot_json() -> Value {

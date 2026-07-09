@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T08:28:58Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "FR",
+    "city_zh": "里昂",
+    "city_en": "Lyon",
+    "matrix_ids": [
+      "PH-FR-125-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-FR-125-FOOD",
+      "legacy_value": "可丽饼",
+      "poi_id": "b646c17b-a76a-4422-beae-a54ee9cc6ed1",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-125-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

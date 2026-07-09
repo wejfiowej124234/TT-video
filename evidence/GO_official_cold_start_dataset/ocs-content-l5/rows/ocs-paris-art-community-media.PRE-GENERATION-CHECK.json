@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T151500Z",
+  "filename": "ocs-paris-art-community-media.jpg",
+  "row": 36,
+  "chain_id": "paris-art",
+  "country_code": "FR",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "safe_expression": "奥赛钟面建筑内景 · 无馆藏名画/无雕塑特写",
+    "blocked_elements_avoided": [
+      "recognizable_masterpieces",
+      "celebrity_portraits",
+      "brand_logos"
+    ]
+  },
+  "cover_media_complement_plan": {
+    "pass": true,
+    "row35_cover": "展厅透视走廊 Feed",
+    "row36_media": "奥赛钟面内景详情 · 不同馆/角度",
+    "distinct": true
+  },
+  "checks": {
+    "manifest_alignment": {
+      "pass": true
+    },
+    "country_consistency_fr": {
+      "pass": true
+    },
+    "nine_class_framework_frozen": true
+  }
+}

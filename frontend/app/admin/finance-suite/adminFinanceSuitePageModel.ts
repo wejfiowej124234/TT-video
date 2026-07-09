@@ -93,6 +93,12 @@ export const FINANCE_SUITE_SUPPLEMENT_MODULES = [
     descKey: "admin_fin_suite_supplement_reconcile_reports_desc",
   },
   {
+    id: "vacancy-ledger-ops",
+    href: "/admin/vacancy-ledger",
+    titleKey: "admin_fin_suite_supplement_vacancy_ledger_ops",
+    descKey: "admin_fin_suite_supplement_vacancy_ledger_ops_desc",
+  },
+  {
     id: "observability",
     href: "/admin/observability",
     titleKey: "admin_fin_suite_supplement_observability",

@@ -1,0 +1,20 @@
+{
+  "schema": "t_gov_01_staging_wallet_vote.v1",
+  "phase": "\u2461 testnet",
+  "api": "https://tt-api-staging.fly.dev",
+  "at_utc": "2026-07-01T00:22:37Z",
+  "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
+  "governor": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+  "governance_token": "0x2837ea0c50e27d59b88af617abbb231a040062c5",
+  "proposal_id": 4,
+  "propose_tx": "0x75e0b282055a87b0323f1bd487d9c76fce4a76ab7c79c076a08b6d19b6f2e9fb",
+  "cast_vote_tx": "0x0d694d05965b91bc482521a702d682d56afdc093e09b3c046f6d9c526cab2be0",
+  "on_chain_state_after_vote": 1,
+  "on_chain_state_note": "Active (1) \u2014 castVote archived; Succeeded (4) after vote period",
+  "api_read": "PASS (staging /api/v1/governance/proposals)",
+  "release_gate": "PASS",
+  "broadcast_paths": [
+    "contracts/broadcast/SepoliaProposeMinimal.s.sol/11155111/run-latest.json",
+    "contracts/broadcast/SepoliaCastVote.s.sol/11155111/run-latest.json"
+  ]
+}

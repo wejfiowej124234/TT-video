@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 import "./CountryPoolNetProfitLedger.sol";
-import "./UnallocatedStewardPathVault.sol";
+import "./vacancy/UnallocatedStewardPathVault.sol";
 
 /**
  * @title CountryPoolNetProfitGovernancePayload
@@ -19,6 +19,10 @@ library CountryPoolNetProfitGovernancePayload {
     bytes4 internal constant CPNP_SET_SETTLEMENT_PARAMS = CountryPoolNetProfitLedger.setSettlementParams.selector;
     bytes4 internal constant CPNP_RELEASE_UNALLOCATED =
         UnallocatedStewardPathVault.releaseToStewardPath.selector;
+    bytes4 internal constant CPNP_DISBURSE_JURISDICTION_RESERVE =
+        UnallocatedStewardPathVault.disburseJurisdictionReserve.selector;
+    bytes4 internal constant CPNP_SET_DISBURSE_RECIPIENT =
+        UnallocatedStewardPathVault.setDisburseRecipientAllowed.selector;
 
     function encodeOpenEpoch(uint256 epochId, uint64 epochStart, uint64 epochEnd)
         internal
@@ -75,9 +79,29 @@ library CountryPoolNetProfitGovernancePayload {
         );
     }
 
-    function encodeReleaseUnallocated(uint256 amount, bytes32 proposalRef) internal pure returns (bytes memory) {
+    function encodeReleaseUnallocated(uint256 amount, uint256 releaseEpochId, bytes32 proposalRef)
+        internal
+        pure
+        returns (bytes memory)
+    {
         return abi.encodeWithSelector(
-            UnallocatedStewardPathVault.releaseToStewardPath.selector, amount, proposalRef
+            UnallocatedStewardPathVault.releaseToStewardPath.selector, amount, releaseEpochId, proposalRef
+        );
+    }
+
+    function encodeDisburseJurisdictionReserve(uint256 amount, address recipient, bytes32 proposalRef)
+        internal
+        pure
+        returns (bytes memory)
+    {
+        return abi.encodeWithSelector(
+            UnallocatedStewardPathVault.disburseJurisdictionReserve.selector, amount, recipient, proposalRef
+        );
+    }
+
+    function encodeSetDisburseRecipientAllowed(address recipient, bool allowed) internal pure returns (bytes memory) {
+        return abi.encodeWithSelector(
+            UnallocatedStewardPathVault.setDisburseRecipientAllowed.selector, recipient, allowed
         );
     }
 }

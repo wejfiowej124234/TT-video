@@ -1,0 +1,51 @@
+{
+  "audit_id": "GOV-CONCENTRATION-AUDIT-01",
+  "stamp_utc": "20260616T084739Z",
+  "phase": "\u2461 Sepolia",
+  "baseline": "GOV-FREEZE-V2-CLEAN-BASELINE",
+  "ssot": "TTG-TOKENOMICS-FREEZE-V1 \u00b7 GOV-02 \u00b7 GOV-03",
+  "wallet": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "metrics": {
+    "total_supply_wei": "10000000000000000000000000",
+    "total_supply_ttg": 10000000.0,
+    "wallet_balance_wei": "7800099990000000000000000",
+    "wallet_balance_ttg": 7800099.99,
+    "wallet_raw_holding_pct": 78.001,
+    "staked_wei": "200000000000000000000000",
+    "staked_ttg": 200000.0,
+    "max_vote_weight_wei": "400000000000000000000000",
+    "max_vote_weight_ttg": 400000.0,
+    "effective_vote_weight_wei": "400000000000000000000000",
+    "effective_vote_pct_of_supply": 4.0,
+    "quorum_required_wei": "400000000000000000000000",
+    "quorum_required_ttg": 400000.0,
+    "quorum_solo_possible_at_cap": true,
+    "hat_r1_proposal_for_votes_wei": "400000000000000000000000",
+    "hat_r1_proposal_against_votes_wei": "0"
+  },
+  "checks": {
+    "GOV-02-quorum-bps": true,
+    "GOV-02-timelock-48h": true,
+    "GOV-03-vote-cap-bps": true,
+    "GOV-03-max-aggregate-stake": true,
+    "GOV-03-stake-within-cap": true,
+    "GOV-03-vote-cap-enforced-hat-r1": true,
+    "SSOT-params-aligned": true
+  },
+  "findings": [
+    {
+      "id": "ECON-01",
+      "severity": "informational",
+      "title": "Raw TTG economic concentration exceeds 4%",
+      "detail": "Wallet holds 78.00% of total supply raw; on-chain vote weight capped at 4.00% per GOV-03."
+    },
+    {
+      "id": "GOV-CAP-01",
+      "severity": "accepted-design",
+      "title": "Capped single address can satisfy quorum alone",
+      "detail": "max_voting_power_per_address_bps equals governance_quorum_bps (400). A holder at the cap contributes exactly quorum threshold \u2014 not uncapped capture; mitigated by Timelock 48h + disclosure rules in SSOT."
+    }
+  ],
+  "verdict": "PASS",
+  "honest_boundary": "\u2461 Sepolia HAT wallet scenario \u00b7 \u2260 mainnet decentralization proof \u00b7 \u2260 \u2462 Production GO"
+}

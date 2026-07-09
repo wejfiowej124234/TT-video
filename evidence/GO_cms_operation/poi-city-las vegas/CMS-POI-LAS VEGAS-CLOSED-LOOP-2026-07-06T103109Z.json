@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T10:31:09Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "US",
+    "city_zh": "拉斯维加斯",
+    "city_en": "Las Vegas",
+    "matrix_ids": [
+      "PH-US-145-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-US-145-ATR",
+      "legacy_value": "大峡谷",
+      "poi_id": "3a3c5638-cbbd-409c-a38f-28c385e94386",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-145-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

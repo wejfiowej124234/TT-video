@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T134330Z",
+  "filename": "ocs-bangkok-temple-provider-cover.jpg",
+  "chain_id": "bangkok-temple",
+  "city": "曼谷",
+  "country_code": "TH",
+  "slot": "provider-cover",
+  "surface": "Provider",
+  "copy_label": "湄南河 sunset 游船 · 含晚餐",
+  "manifest_copy": {
+    "provider.title": "湄南河 sunset 游船 · 含晚餐",
+    "provider.category": "experience",
+    "provider.description": "私人包船 2 小时，含泰式晚餐与酒店接送。",
+    "provider.cover_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg"
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 101680 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "河船甲板泰式晚餐+日落+郑王庙远景，与 title/description 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "河船服务场景；非 Row19 向导肖像/未来 slot。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "曼谷 TH-only；湄南河语义。" },
+    "G5_brand_visual": { "pass": true, "notes": "暖橙日落河景；bangkok-temple chain 统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "私人包船晚宴 Provider 封面。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光自然。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "含 Global Regression 20/60。" },
+    "G9_content_authenticity": { "pass": true, "notes": "湄南河游船语义正确；无他国元素。" },
+    "G10_content_diversity": { "pass": true, "notes": "河船晚宴 vs Tokyo/Kyoto/Seoul Provider 明显不同。" }
+  },
+  "provider_business_identity_review": {
+    "pass": true,
+    "vs_tokyo_kyoto_seoul": "河船 sunset 晚宴 · 独特泰国业态"
+  },
+  "destination_experience_review": { "pass": true },
+  "global_regression_review": { "pass": true, "evidence": "OCS-CONTENT-L5-GLOBAL-REGRESSION-20of60.REVIEW.json" },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_narrative_plan.v1",
+  "stamp_utc": "20260704T151500Z",
+  "chain_id": "barcelona-arch",
+  "city": "巴塞罗那",
+  "country_code": "ES",
+  "theme": "高迪 · 圣家堂 · 桂尔公园 · 马赛克",
+  "six_slot_plan": [
+    { "row": 49, "slot": "guide-avatar", "scene": "Carlos architecture guide @ Sagrada Familia exterior" },
+    { "row": 50, "slot": "provider-cover", "scene": "Gaudi trio tickets small group @ Park Guell mosaic" },
+    { "row": 51, "slot": "acquisition-cover", "scene": "Mosaic tile craft still life" },
+    { "row": 52, "slot": "official-guide-cover", "scene": "Sagrada Familia facade wide hero" },
+    { "row": 53, "slot": "community-cover", "scene": "Mosaic detail or park lizard Feed" },
+    { "row": 54, "slot": "community-media", "scene": "Park Guell terrace panorama different angle" }
+  ],
+  "TT_NARRATIVE_PLANNING": "PASS"
+}

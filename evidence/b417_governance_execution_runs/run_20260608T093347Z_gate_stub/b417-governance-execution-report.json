@@ -1,0 +1,12 @@
+{
+  "anchor": "B417-GOVERNANCE-EXECUTION-REPORT-V1",
+  "schema_version": "b417_governance_execution_report_v1",
+  "rule_version": "b417_governance_execution_report_schema_v1",
+  "generated_at_utc": "2026-06-08T09:33:47Z",
+  "implementation_tt": "TT-B417-GOVERNANCE-EXECUTION-AUTOMATION-L3-001",
+  "mother_table": "B-417",
+  "dry_run": true,
+  "execution_verdict": "GO",
+  "execution_steps": [],
+  "notes": "stub dry_run — not on-chain evidence; b417-evidence-pack-verify must FAIL"
+}

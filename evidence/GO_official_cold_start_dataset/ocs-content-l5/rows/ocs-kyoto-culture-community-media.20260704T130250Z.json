@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_verify.v1",
+  "stamp_utc": "20260704T130250Z",
+  "filename": "ocs-kyoto-culture-community-media.jpg",
+  "row": {
+    "filename": "ocs-kyoto-culture-community-media.jpg",
+    "chain_id": "kyoto-culture",
+    "city": "京都",
+    "slot": "community-media",
+    "surface": "Community Media",
+    "scene": "岚山竹林小径行人 · 与 cover 不同场景",
+    "copy_label": "祇园晨雾中的茶道体验与岚山竹林午后——官方文化路线两日记录。",
+    "asset_status": "verified",
+    "review_status": "pass"
+  },
+  "checks": [
+    {
+      "id": "media_exists",
+      "pass": true,
+      "detail": "D:\\TravelTrust-V1.1\\data\\official-cold-start\\media\\ocs-kyoto-culture-community-media.jpg"
+    },
+    {
+      "id": "jpeg_magic",
+      "pass": true,
+      "detail": "ok"
+    },
+    {
+      "id": "min_size_16kb",
+      "pass": true,
+      "detail": "133702 bytes"
+    },
+    {
+      "id": "matrix_asset_status",
+      "pass": true,
+      "detail": "verified"
+    },
+    {
+      "id": "matrix_review_pass",
+      "pass": true,
+      "detail": "pass"
+    }
+  ],
+  "TT_OCS_CONTENT_L5_ROW_VERIFY": "PASS",
+  "gates_manual": {
+    "G2_copy_alignment": "pending_human",
+    "G3_slot_differentiation": "pending_human",
+    "G9_content_authenticity": "pending_human",
+    "G10_content_diversity": "pending_human"
+  }
+}

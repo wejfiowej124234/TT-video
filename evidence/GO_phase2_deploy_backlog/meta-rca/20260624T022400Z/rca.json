@@ -1,0 +1,56 @@
+{
+  "schema": "traveltrust.p2fc_meta_503_rca.v1",
+  "recorded_at_utc": "2026-06-24T02:24:21Z",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "probes": {
+    "api_health": {
+      "url": "https://tt-api-staging.fly.dev/health",
+      "code": 0,
+      "elapsed_sec": 5.076,
+      "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)>"
+    },
+    "api_meta": {
+      "url": "https://tt-api-staging.fly.dev/meta",
+      "code": 0,
+      "elapsed_sec": 5.069,
+      "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)>"
+    },
+    "api_meta_build": {
+      "url": "https://tt-api-staging.fly.dev/meta/build",
+      "code": 0,
+      "elapsed_sec": 5.073,
+      "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)>"
+    },
+    "web_meta": {
+      "url": "https://tt-web-staging.fly.dev/meta",
+      "code": 0,
+      "elapsed_sec": 5.132,
+      "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)>"
+    }
+  },
+  "root_cause_chain": [],
+  "remediation_waves": [
+    {
+      "layer": "L0_API",
+      "action": "Set REQUEST_TIMEOUT_SECS=120 on tt-api-staging (fly.toml [env] or secret)",
+      "artifact": "evidence/GO_phase2_deploy_backlog/meta-availability-hotfix.patch"
+    },
+    {
+      "layer": "L0_WEB",
+      "action": "Align app/meta/route.ts fetch timeout ≥ API timeout + 10s (META_ROUTE_FETCH_TIMEOUT_MS default 130000)",
+      "artifact": "frontend/app/meta/route.ts"
+    },
+    {
+      "layer": "L0_WEB",
+      "action": "Keep 408/502/503/504 retry (3x) before returning 503",
+      "artifact": "frontend/app/meta/route.ts"
+    },
+    {
+      "layer": "acceptance",
+      "action": "Post-soak: p2fc-verify-staging-meta-availability.sh --strict before Graduation",
+      "artifact": "scripts/ops/p2fc-verify-staging-meta-availability.sh"
+    }
+  ],
+  "honest_boundary": "② soak freeze: 408/503 non-blocking for exec chain; acceptance deferred until post-soak deploy"
+}

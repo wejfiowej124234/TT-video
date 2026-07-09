@@ -1,0 +1,313 @@
+{
+  "schema": "traveltrust.cms_fr_poi_pilot_wave.v1",
+  "stamp_utc": "2026-07-06T092458Z",
+  "advancement_rule": "Scope → Country → City → POI · acceptance = City CLOSED → Country Runtime",
+  "ops_hierarchy": [
+    "asset_family",
+    "country",
+    "city",
+    "asset"
+  ],
+  "acceptance_unit": "city",
+  "template_countries": [
+    "JP",
+    "KR",
+    "TH",
+    "SG"
+  ],
+  "jp_country_closed_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+  "kr_country_closed_ssot": "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+  "th_country_closed_ssot": "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+  "sg_country_closed_ssot": "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json",
+  "active_wave": "POI-WAVE-5-FR-PILOT",
+  "active_catalog_build": null,
+  "waves": [
+    {
+      "wave_id": "POI-WAVE-5-FR-PILOT",
+      "label": "Pilot · FR · 巴黎",
+      "country_iso": "FR",
+      "country_zh": "法国",
+      "cities": [
+        "巴黎"
+      ],
+      "acceptance_unit": "city",
+      "acceptance_target": "巴黎 CLOSED",
+      "purpose": "Catalog Build → per-POI Review → Live · JP/KR/TH/SG Golden Template 复制 · pilot done when 巴黎 CLOSED",
+      "forbidden": [
+        "bulk_ingest_fr_all",
+        "skip_pilot_before_next_city",
+        "accept_by_poi_count"
+      ],
+      "template_countries": [
+        "JP",
+        "KR",
+        "TH",
+        "SG"
+      ],
+      "template_closure": [
+        "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json"
+      ],
+      "status": "ACTIVE",
+      "catalog_build": true,
+      "matrix_ids": [
+        "PH-FR-111-ATR",
+        "PH-FR-112-ATR",
+        "PH-FR-113-ATR",
+        "PH-FR-114-ATR",
+        "PH-FR-115-FOOD",
+        "PH-FR-116-FOOD",
+        "PH-FR-117-FOOD",
+        "PH-FR-118-FOOD"
+      ],
+      "poi_count": 8,
+      "by_city": [
+        {
+          "city_zh": "巴黎",
+          "acceptance_unit": "city",
+          "acceptance_target": "巴黎 CLOSED",
+          "poi_count": 8,
+          "matrix_ids": [
+            "PH-FR-111-ATR",
+            "PH-FR-112-ATR",
+            "PH-FR-113-ATR",
+            "PH-FR-114-ATR",
+            "PH-FR-115-FOOD",
+            "PH-FR-116-FOOD",
+            "PH-FR-117-FOOD",
+            "PH-FR-118-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "埃菲尔铁塔",
+              "poi_type": "attraction",
+              "matrix_id": "PH-FR-111-ATR"
+            },
+            {
+              "legacy_value": "卢浮宫",
+              "poi_type": "attraction",
+              "matrix_id": "PH-FR-112-ATR"
+            },
+            {
+              "legacy_value": "凯旋门",
+              "poi_type": "attraction",
+              "matrix_id": "PH-FR-113-ATR"
+            },
+            {
+              "legacy_value": "圣母院",
+              "poi_type": "attraction",
+              "matrix_id": "PH-FR-114-ATR"
+            },
+            {
+              "legacy_value": "法餐",
+              "poi_type": "food",
+              "matrix_id": "PH-FR-115-FOOD"
+            },
+            {
+              "legacy_value": "可丽饼",
+              "poi_type": "food",
+              "matrix_id": "PH-FR-116-FOOD"
+            },
+            {
+              "legacy_value": "马卡龙",
+              "poi_type": "food",
+              "matrix_id": "PH-FR-117-FOOD"
+            },
+            {
+              "legacy_value": "咖啡厅",
+              "poi_type": "food",
+              "matrix_id": "PH-FR-118-FOOD"
+            }
+          ]
+        },
+        {
+          "city_zh": "里昂",
+          "acceptance_unit": "city",
+          "acceptance_target": "里昂 CLOSED",
+          "poi_count": 8,
+          "matrix_ids": [
+            "PH-FR-119-ATR",
+            "PH-FR-120-ATR",
+            "PH-FR-121-ATR",
+            "PH-FR-122-ATR",
+            "PH-FR-123-FOOD",
+            "PH-FR-124-FOOD",
+            "PH-FR-125-FOOD",
+            "PH-FR-126-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "富维耶",
+              "poi_type": "attraction",
+              "matrix_id": "PH-FR-119-ATR"
+            },
+            {
+              "legacy_value": "老城",
+              "poi_type": "attraction",
+              "matrix_id": "PH-FR-120-ATR"
+            },
+            {
+              "legacy_value": "壁画",
+              "poi_type": "attraction",
+              "matrix_id": "PH-FR-121-ATR"
+            },
+            {
+              "legacy_value": "金头公园",
+              "poi_type": "attraction",
+              "matrix_id": "PH-FR-122-ATR"
+            },
+            {
+              "legacy_value": "里昂菜",
+              "poi_type": "food",
+              "matrix_id": "PH-FR-123-FOOD"
+            },
+            {
+              "legacy_value": "猪肠",
+              "poi_type": "food",
+              "matrix_id": "PH-FR-124-FOOD"
+            },
+            {
+              "legacy_value": "可丽饼",
+              "poi_type": "food",
+              "matrix_id": "PH-FR-125-FOOD"
+            },
+            {
+              "legacy_value": "红酒",
+              "poi_type": "food",
+              "matrix_id": "PH-FR-126-FOOD"
+            }
+          ]
+        },
+        {
+          "city_zh": "尼斯",
+          "acceptance_unit": "city",
+          "acceptance_target": "尼斯 CLOSED",
+          "poi_count": 8,
+          "matrix_ids": [
+            "PH-FR-127-ATR",
+            "PH-FR-128-ATR",
+            "PH-FR-129-ATR",
+            "PH-FR-130-ATR",
+            "PH-FR-131-FOOD",
+            "PH-FR-132-FOOD",
+            "PH-FR-133-FOOD",
+            "PH-FR-134-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "天使湾",
+              "poi_type": "attraction",
+              "matrix_id": "PH-FR-127-ATR"
+            },
+            {
+              "legacy_value": "老城",
+              "poi_type": "attraction",
+              "matrix_id": "PH-FR-128-ATR"
+            },
+            {
+              "legacy_value": "埃兹",
+              "poi_type": "attraction",
+              "matrix_id": "PH-FR-129-ATR"
+            },
+            {
+              "legacy_value": "马蒂斯博物馆",
+              "poi_type": "attraction",
+              "matrix_id": "PH-FR-130-ATR"
+            },
+            {
+              "legacy_value": "尼斯沙拉",
+              "poi_type": "food",
+              "matrix_id": "PH-FR-131-FOOD"
+            },
+            {
+              "legacy_value": "索卡",
+              "poi_type": "food",
+              "matrix_id": "PH-FR-132-FOOD"
+            },
+            {
+              "legacy_value": "海鲜",
+              "poi_type": "food",
+              "matrix_id": "PH-FR-133-FOOD"
+            },
+            {
+              "legacy_value": "玫瑰酒",
+              "poi_type": "food",
+              "matrix_id": "PH-FR-134-FOOD"
+            }
+          ]
+        }
+      ],
+      "first_matrix_id": "PH-FR-111-ATR",
+      "first_poi": {
+        "city_zh": "巴黎",
+        "legacy_value": "埃菲尔铁塔",
+        "matrix_id": "PH-FR-111-ATR"
+      },
+      "fr_country_total": 24,
+      "fr_cities": [
+        "巴黎",
+        "里昂",
+        "尼斯"
+      ]
+    }
+  ],
+  "fr_denominator": {
+    "country_iso": "FR",
+    "cities": [
+      "巴黎",
+      "里昂",
+      "尼斯"
+    ],
+    "poi_total": 24,
+    "paris_pilot": 8
+  },
+  "roadmap": [
+    {
+      "stage": "jp_country",
+      "status": "CLOSED",
+      "ssot": "CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "kr_country",
+      "status": "CLOSED",
+      "ssot": "CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "th_country",
+      "status": "CLOSED",
+      "ssot": "CMS-TH-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "sg_country",
+      "status": "CLOSED",
+      "ssot": "CMS-SG-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "fr_scope",
+      "status": "LOCKED"
+    },
+    {
+      "stage": "catalog_build",
+      "status": "ACTIVE",
+      "city": "巴黎",
+      "acceptance": "巴黎 CLOSED"
+    },
+    {
+      "stage": "fr_paris_execution",
+      "status": "ACTIVE"
+    },
+    {
+      "stage": "fr_country_runtime",
+      "status": "NOT_STARTED",
+      "when": "TT_CMS_FR_COUNTRY: CLOSED"
+    }
+  ],
+  "paris_closed": true,
+  "TT_CMS_POI_CITY_PARIS": "CLOSED",
+  "lyon_closed": true,
+  "TT_CMS_POI_CITY_LYON": "CLOSED",
+  "nice_closed": true,
+  "TT_CMS_POI_CITY_NICE": "CLOSED"
+}

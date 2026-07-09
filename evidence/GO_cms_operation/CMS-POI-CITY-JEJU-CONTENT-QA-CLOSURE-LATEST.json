@@ -1,0 +1,118 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-06T00:40:05.934Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "济州",
+    "city_en": "Jeju",
+    "poi_count": 8
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "JP Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "cross_region_remediated": "all_8_execution_plus_geo",
+  "checks": {
+    "assets_locked_8_8": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-KR-050-ATR",
+      "poi": "城山日出峰",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-jeju-island-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T23:59:13.417Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-051-ATR",
+      "poi": "涉地可支",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-jeju-island-community-media.jpg",
+      "locked_at_utc": "2026-07-06T00:04:14.204Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-052-ATR",
+      "poi": "汉拿山",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-jeju-island-community-cover.jpg",
+      "locked_at_utc": "2026-07-06T00:09:17.220Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-053-ATR",
+      "poi": "橘子园",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-jeju-island-provider-cover.jpg",
+      "locked_at_utc": "2026-07-06T00:14:19.274Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-054-FOOD",
+      "poi": "黑猪肉",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-jeju-island-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-06T00:19:19.326Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-055-FOOD",
+      "poi": "海鲜面",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-jeju-island-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-06T00:24:22.015Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-056-FOOD",
+      "poi": "橘子甜品",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-jeju-island-community-media.jpg",
+      "locked_at_utc": "2026-07-06T00:29:21.662Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-057-FOOD",
+      "poi": "鲍鱼粥",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-jeju-island-community-cover.jpg",
+      "locked_at_utc": "2026-07-06T00:34:22.872Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 8
+  },
+  "TT_CMS_POI_CITY_JEJU_CONTENT_QA": "CLOSED"
+}

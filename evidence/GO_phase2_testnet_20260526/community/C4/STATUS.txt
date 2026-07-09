@@ -1,0 +1,10 @@
+phase: ② testnet C4 (HLS/MP4 + CDN staging playback)
+status: PASS
+last_run: 20260605T141755Z
+api_base: https://tt-api-staging.fly.dev
+playback: staging MP4 PASS
+hls_cdn: pending (no production HLS/manifest/CDN GO)
+video_it: video-it-20260605T141755Z.log
+staging_video_playback_e2e: staging-video-playback-e2e-20260605T141755Z.log
+log: run-20260605T141755Z.log
+note: C4 slot PASS only — NOT Phase ② GO / NOT C5-C12 GO / NOT Production CDN/HLS GO

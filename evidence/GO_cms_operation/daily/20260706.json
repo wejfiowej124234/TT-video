@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.cms_daily_ops_snapshot.v1",
+  "date_utc": "2026-07-06",
+  "stamp_utc": "20260706T173302Z",
+  "metrics": {
+    "date_utc": "2026-07-06",
+    "live_assets": 10,
+    "live_assets_display": "10/10",
+    "live_countries": [
+      "JP",
+      "KR",
+      "TH",
+      "SG",
+      "FR",
+      "US",
+      "AU",
+      "ES",
+      "AE",
+      "CN"
+    ],
+    "source_alignment_pct": 75,
+    "source_alignment_display": "6 / 8",
+    "source_alignment_aligned": 6,
+    "verify_fail": 0,
+    "rollback": 10,
+    "pending_review": 0,
+    "pending_publish": 0,
+    "wave1_live": 72,
+    "wave1_display": "72/72 (100%)"
+  }
+}

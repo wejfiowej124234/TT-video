@@ -35,15 +35,17 @@
       "id": "DEFECT-002",
       "module": "Infra / Playwright",
       "severity": "P1",
-      "status": "OPEN",
+      "status": "CLOSED",
       "requirement": "R-INFRA-PW-001",
       "opened_session": "S001",
       "opened_commit": "422aadb9",
       "opened_utc": "2026-06-30T11:33:00Z",
-      "fix_commit": null,
+      "fix_commit": "pending-local",
       "regression_session": null,
       "last_commit": "422aadb9",
-      "layer": "②-ui-sidecar"
+      "layer": "②-ui-sidecar",
+      "closed_utc": "2026-06-30T14:41:10Z",
+      "resolution": "Superseded by manual-uat-c1e2-browser-walkthrough.spec.ts (Manual UAT C1-E2 runner)"
     },
     {
       "id": "DEFECT-003",

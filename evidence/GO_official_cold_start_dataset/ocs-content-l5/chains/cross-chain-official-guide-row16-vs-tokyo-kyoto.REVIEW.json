@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T132430Z",
+  "row": 16,
+  "filename": "ocs-seoul-food-official-guide-cover.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "official_guide_cover_comparison": {
+    "tokyo-photo": "浅草寺→晴空塔 · 摄影一日路线",
+    "kyoto-culture": "岚山竹林/祇园 · 文化两日慢游",
+    "seoul-food": "明洞→益善洞→广藏市场 · 48h 美食地图",
+    "distinct_route_narratives": true
+  },
+  "homogenization_risk": false,
+  "regression_prior_rows": { "pass": true }
+}

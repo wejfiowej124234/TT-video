@@ -1,0 +1,13 @@
+log=frontend\evidence\GO_local_phase1\site10.acceptance.latest.log
+first ERR_CONNECTION_REFUSED at char 113245
+REAL failures before FE crash: 30
+
+=== e2e\53-main-path.spec.ts:57:7 (1) ===
+Traceback (most recent call last):
+  File "D:\TravelTrust-V1.1\scripts\dev\parse-site10-failures.py", line 63, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "D:\TravelTrust-V1.1\scripts\dev\parse-site10-failures.py", line 55, in main
+    print(f"  - {title[:110]}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'gbk' codec can't encode character '\u203a' in position 34: illegal multibyte sequence

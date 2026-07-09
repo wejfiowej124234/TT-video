@@ -20,8 +20,22 @@ TT_RELEASE_DECISION: NO_GO
 Product                 COMPLETE
 Operations              COMPLETE
 Governance              COMPLETE
-Alignment               COMPLETE
+Enterprise Alignment    PASS
 ```
+
+**Enterprise Alignment（配置 vs 运行态 — 勿混淆）：**
+
+```text
+Enterprise Alignment
+├── Configuration Alignment      PASS
+├── Local Runtime Validation     SKIPPED
+├── Staging Runtime Validation   PASS
+└── Overall Enterprise Alignment PASS
+```
+
+- **Configuration Alignment PASS** = Registry / Runbook / config / governance SSOT 一致 — **不表示** Local API 当时已启动。
+- **Local Runtime Validation SKIPPED** = 审计时 Local API 未运行 — **合法**，不挡 Overall PASS；按需启动 Local 后重跑审计可得 PASS。
+- SSOT：[`registry/enterprise-ssot-alignment.v1.yaml`](../../registry/enterprise-ssot-alignment.v1.yaml) · Runbook：[`TT-ENTERPRISE-SSOT-ALIGNMENT.md`](TT-ENTERPRISE-SSOT-ALIGNMENT.md)
 
 Phase ② 已收口 — **不等于**整个项目完成。
 
@@ -86,15 +100,18 @@ node scripts/dev/audit-executive-dashboard-gate-consistency.cjs
 
 | 开放 | Blocking | id | Category | Severity |
 |------|----------|-----|----------|----------|
-| 1 | 0 | `CI-BUILD-20260703-V49-OOM` | Build Infrastructure | LOW |
+| 4 | 0 | `PI3-MEDIA-R2-CDN-FINAL` | Production Infrastructure | MEDIUM |
+| | | `MEDIA_CDN_PRODUCTION_ACCEPTANCE` | Production Validation | MEDIUM |
+| | | `PI3-CATALOG-ASSET-MIGRATION` | Catalog Operations | LOW |
+| | | `CI-BUILD-20260703-V49-OOM` | Build Infrastructure | LOW |
 
-PI3 Gate 与 Owner Live 项见 `remaining_work` / `pi3_release_gates` — 与 Build Infrastructure 问题分账。
+详见 [`TT-OPEN-ISSUES-REGISTRY.md`](TT-OPEN-ISSUES-REGISTRY.md) — Infra / Catalog 双轨分账。
 
 ---
 
 ## 程序主线（Production Engineering）
 
-Phase ②：**CLOSED**（Product · Operations · Governance · Alignment）
+Phase ②：**CLOSED**（Product · Operations · Governance · Enterprise Alignment）
 
 Phase ③ 当前焦点：
 

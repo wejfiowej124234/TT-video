@@ -1,0 +1,74 @@
+# Announcement lane governance · immutable audience categories (Production Entry)
+#
+# Closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/ANNOUNCEMENT-LANE-GOVERNANCE-CLOSEOUT.md
+# Gate: bash scripts/gates/check-announcement-lane-governance-gate.sh
+
+schema: traveltrust.announcement_lane_governance.v1
+version: 1
+frozen: true
+frozen_utc: "2026-07-09T10:00:00Z"
+verdict: ANNOUNCEMENT_LANE_GOVERNANCE_FROZEN
+machine_key: TT_ANNOUNCEMENT_LANE_GOV
+
+# Lane audience is immutable unless registry unlock (Owner + new version).
+# CMS / future Admin must map edit permissions to audience — not merge lanes.
+
+lanes:
+  product:
+    audience: public_user
+    immutable: true
+    pulse_default: true
+    homepage_pulse: true
+    catalog: frontend/lib/traveltrustAnnouncementCatalog.ts
+    array_key: TRAVELTRUST_PRODUCT_ANNOUNCEMENTS
+    forbidden_in_pulse:
+      - protocol_status
+      - runtime_phase
+      - indexer
+      - hardening
+
+  governance:
+    audience: token_holder
+    immutable: true
+    pulse_default: false
+    catalog: frontend/lib/traveltrustAnnouncementCatalog.ts
+    array_key: TRAVELTRUST_GOVERNANCE_ANNOUNCEMENTS
+
+  protocol_status:
+    audience: technical_public
+    immutable: true
+    pulse_default: false
+    collapsed_default: true
+    catalog: frontend/lib/traveltrustAnnouncementCatalog.ts
+    array_key: TRAVELTRUST_PROTOCOL_STATUS_ANNOUNCEMENTS
+    fixed_disclaimer_key: traveltrust_announcements_protocol_section_disclaimer
+
+  ttg_round:
+    audience: participant
+    immutable: true
+    pulse_default: false
+    catalog: frontend/lib/traveltrustTtgPublicRounds.ts
+    array_key: TRAVELTRUST_TTG_PUBLIC_ROUNDS
+    status_machine:
+      - upcoming
+      - active
+      - paused
+      - closed
+      - cancelled
+      - governance_approval_required
+
+  roadmap:
+    audience: public_user
+    immutable: true
+    pulse_default: false
+    catalog: frontend/lib/traveltrustRoadmap2026.ts
+    public_api: GET /api/v1/public/roadmap
+    array_key: TRAVELTRUST_ROADMAP_2026
+
+ttg_round_transitions:
+  upcoming: [active, cancelled]
+  active: [paused, closed]
+  paused: [active, closed, cancelled]
+  governance_approval_required: [active, cancelled]
+  closed: []
+  cancelled: []

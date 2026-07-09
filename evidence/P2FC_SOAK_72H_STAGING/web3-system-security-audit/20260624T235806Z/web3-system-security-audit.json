@@ -1,0 +1,1097 @@
+{
+  "schema": "traveltrust.p2fc_web3_system_security_audit.v3",
+  "generated_at_utc": "2026-06-24T23:58:54Z",
+  "phase": "②",
+  "read_only": true,
+  "no_deploy": true,
+  "no_restart": true,
+  "no_strategy_change": true,
+  "no_permission_change": true,
+  "soak_completed": false,
+  "domains": {
+    "D1_contract_upgradeability": {
+      "domain": "D1_contract_upgradeability",
+      "title": "智能合约可升级性与漏洞分析",
+      "findings": [
+        {
+          "id": "D1-F01",
+          "severity": "info",
+          "note": "Proxy upgrade gated by admin slot (expected = Timelock)"
+        },
+        {
+          "id": "D1-F02",
+          "severity": "medium",
+          "note": "Deploy scripts may expose bare implementation paths — formal baseline must use Proxy",
+          "artifacts": [
+            "contracts/script/ConfigureFundStackTimelockViaSafe.s.sol",
+            "contracts/script/ConfigureGovernanceTimelockViaSafe.s.sol",
+            "contracts/script/Deploy.s.sol",
+            "contracts/script/DeployCountryPoolNetProfitStack.s.sol",
+            "contracts/script/DeployCountryPoolRedemptionEpochV0.s.sol",
+            "contracts/script/DeployFundStackUnderTimelock.s.sol",
+            "contracts/script/DeployGovernanceStack.s.sol",
+            "contracts/script/DeployP51CountryLedger.s.sol"
+          ]
+        },
+        {
+          "id": "D1-F03",
+          "severity": "info",
+          "note": "Proxy architecture tests present",
+          "artifact": "TtgGovFreezeV1ProxyArchitecture.t.sol"
+        },
+        {
+          "id": "D1-F04",
+          "severity": "high",
+          "note": "delegatecall/upgradeToAndCall surfaces — timelock delay is primary mitigation",
+          "files": [
+            "contracts/src/GovernanceTreasuryP4Cap.sol",
+            "contracts/src/TtgPrimaryMarketV1.sol",
+            "contracts/src/upgrade/TimelockUpgradeableProxy.sol"
+          ]
+        }
+      ],
+      "single_point_controls": [
+        {
+          "id": "SPOF-D1-01",
+          "control": "Timelock admin on all Governable Shell proxies",
+          "bypass_vector": "direct EOA admin if mis-deployed without proxy",
+          "mr12_relation": "post-soak fly deploy must not swap proxy admin off timelock"
+        },
+        {
+          "id": "SPOF-D1-02",
+          "control": "upgradeTo only via timelock schedule+execute",
+          "bypass_vector": "emergency script --broadcast without timelock (Owner-only · forbidden in soak)",
+          "mr12_relation": "MR12 one-shot is API/Web deploy — on-chain upgrade is separate Owner gate"
+        }
+      ],
+      "verdict": "WARN"
+    },
+    "D2_governance_attack_surface": {
+      "domain": "D2_governance_attack_surface",
+      "title": "治理币治理逻辑与攻击面分析",
+      "findings": [
+        {
+          "id": "D2-F01",
+          "severity": "info",
+          "note": "Timelock delay frozen: 48 hours"
+        },
+        {
+          "id": "D2-F02",
+          "severity": "info",
+          "note": "Per-address voting cap in TtgGovFreezeConstants (400 bps)"
+        },
+        {
+          "id": "D2-F03",
+          "severity": "medium",
+          "note": "Review Governor privileged modifiers — manual follow-up"
+        }
+      ],
+      "attack_surface_matrix": [
+        {
+          "vector": "flash-loan vote",
+          "mitigation": "GovernanceVotesToken + snapshot / delay",
+          "residual": "medium"
+        },
+        {
+          "vector": "seat concentration",
+          "mitigation": "TtgSeatConcentrationRegistry + MAX_ACTIVE_SEATS",
+          "residual": "medium"
+        },
+        {
+          "vector": "treasury P4 cap bypass",
+          "mitigation": "GovernanceTreasuryP4Cap + GOV-01 3000 bps",
+          "residual": "low"
+        },
+        {
+          "vector": "governance param drift",
+          "mitigation": "TTG-TOKENOMICS-FREEZE-V1 constants",
+          "residual": "low"
+        }
+      ],
+      "single_point_controls": [
+        {
+          "id": "SPOF-D2-01",
+          "control": "Timelock 48h on governance execution",
+          "bypass_vector": "compromised timelock proposer / canceller keys",
+          "mr12_relation": "MR12 does not mutate on-chain gov — no bypass via one-shot"
+        },
+        {
+          "id": "SPOF-D2-02",
+          "control": "Seat concentration registry",
+          "bypass_vector": "sybil across entities if off-chain KYC weak",
+          "mr12_relation": "off-chain admin cannot override on-chain seat limits"
+        }
+      ],
+      "verdict": "WARN"
+    },
+    "D3_admin_rbac_chain": {
+      "domain": "D3_admin_rbac_chain",
+      "title": "管理员系统 RBAC 权限链路验证",
+      "permission_counts": {
+        "rust": 28,
+        "yaml": 28,
+        "typescript": 28
+      },
+      "findings": [
+        {
+          "id": "D3-F01",
+          "severity": "info",
+          "note": "Rust/YAML/TS permission IDs aligned"
+        },
+        {
+          "id": "D3-F02",
+          "severity": "high",
+          "note": "Direct console-role write bypass path exists when env enabled",
+          "artifacts": [
+            "crates/api/src/routes/admin/admin_rbac.rs"
+          ],
+          "bypass": "PUT /console-role without approval workflow"
+        },
+        {
+          "id": "D3-F04",
+          "severity": "high",
+          "note": "Phase ② staging RBAC matrix GO not started — ADM-U01 deferred"
+        }
+      ],
+      "single_point_controls": [
+        {
+          "id": "SPOF-D3-01",
+          "control": "require_admin_actor on mutating routes",
+          "bypass_vector": "UI-only gate without API deny",
+          "mr12_relation": "post-soak backlog admin routes must preserve API enforcement"
+        },
+        {
+          "id": "SPOF-D3-02",
+          "control": "SuperAdmin admin.approve + 2FA",
+          "bypass_vector": "TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT=1 on staging",
+          "mr12_relation": "MR12 deploy must not enable direct-role env in fly secrets"
+        }
+      ],
+      "verdict": "FAIL"
+    },
+    "D4_ui_api_chain_consistency": {
+      "domain": "D4_ui_api_chain_consistency",
+      "title": "UI/API/链上三层权限一致性校验",
+      "layers": [
+        {
+          "layer": "UI",
+          "ssot": "frontend/lib/admin/adminPermissionIds.ts + AdminConsoleActorGate",
+          "enforcement": "advisory_navigation + RSC gate",
+          "note": "UI freeze docs state API is real boundary"
+        },
+        {
+          "layer": "API",
+          "ssot": "crates/api/src/routes/admin/admin_rbac.rs",
+          "enforcement": "require_admin_actor + console_role bundles",
+          "matrix_version": "admin-rbac-v4-cms-ops-growth-2026-06-07"
+        },
+        {
+          "layer": "Chain",
+          "ssot": "TravelTrustGovernor + Timelock + on-chain TTG",
+          "enforcement": "wallet-signed txs · timelock delay",
+          "api_read_projection": 3
+        }
+      ],
+      "findings": [
+        {
+          "id": "D4-F01",
+          "severity": "medium",
+          "note": "Admin RBAC (CeFi ops) ≠ on-chain governance roles — intentional split",
+          "gap": "SuperAdmin API role does not map 1:1 to on-chain proposer"
+        },
+        {
+          "id": "D4-F02",
+          "severity": "info",
+          "note": "Governance UI routes exist — chain wallet is authority for vote/stake"
+        },
+        {
+          "id": "D4-F03",
+          "severity": "medium",
+          "note": "16 UI permission checks — must mirror API deny matrix",
+          "sample": [
+            "frontend/components/admin/AdminActorCapabilityStrip.tsx",
+            "frontend/components/admin/AdminCommandPalette.tsx",
+            "frontend/components/admin/AdminFinanceSuiteHubDepthSection.tsx",
+            "frontend/components/admin/AdminHomeCardSearch.tsx",
+            "frontend/components/admin/AdminHomeClient.tsx"
+          ]
+        }
+      ],
+      "single_point_controls": [
+        {
+          "id": "SPOF-D4-01",
+          "control": "API deny matrix ADM-U01",
+          "bypass_vector": "direct API call skipping UI",
+          "mr12_relation": "unchanged by MR12 unless backlog touches admin_rbac.rs"
+        },
+        {
+          "id": "SPOF-D4-02",
+          "control": "On-chain timelock for governance writes",
+          "bypass_vector": "API governance projection write without wallet",
+          "mr12_relation": "indexer/API projection read-only for proposals in soak"
+        }
+      ],
+      "verdict": "WARN"
+    }
+  },
+  "attack_surface_convergence_model": {
+    "schema": "traveltrust.attack_surface_convergence.v1",
+    "nodes": [
+      {
+        "id": "N-TIMLOCK",
+        "domain": "D1+D2",
+        "control": "GovernanceTimelock 48h delay",
+        "spof": "SPOF-D1-02"
+      },
+      {
+        "id": "N-PROXY-ADMIN",
+        "domain": "D1",
+        "control": "Proxy ADMIN_SLOT = timelock",
+        "spof": "SPOF-D1-01"
+      },
+      {
+        "id": "N-VOTE-CAP",
+        "domain": "D2",
+        "control": "MAX_VOTING_POWER_PER_ADDRESS_BPS",
+        "spof": "SPOF-D2-01"
+      },
+      {
+        "id": "N-SEAT-REG",
+        "domain": "D2",
+        "control": "TtgSeatConcentrationRegistry",
+        "spof": "SPOF-D2-02"
+      },
+      {
+        "id": "N-API-RBAC",
+        "domain": "D3+D4",
+        "control": "require_admin_permission deny matrix",
+        "spof": "SPOF-D3-01"
+      },
+      {
+        "id": "N-CONSOLE-DIRECT",
+        "domain": "D3",
+        "control": "TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT gate",
+        "spof": "SPOF-D3-02"
+      },
+      {
+        "id": "N-MR12-DEPLOY",
+        "domain": "MR12",
+        "control": "post-soak fly API/Web only",
+        "spof": null
+      }
+    ],
+    "convergence_edges": [
+      {
+        "from": "N-MR12-DEPLOY",
+        "to": "N-CONSOLE-DIRECT",
+        "vector": "fly secrets / [env] injection during one-shot",
+        "mitigation": "static: bypass env absent from staging fly.toml + ops scripts",
+        "residual": "low"
+      },
+      {
+        "from": "N-CONSOLE-DIRECT",
+        "to": "N-API-RBAC",
+        "vector": "PUT console-role skips approval → privilege escalation",
+        "mitigation": "env default off · 409 when disabled · isolated to scripts/dev",
+        "residual": "low"
+      },
+      {
+        "from": "N-TIMLOCK",
+        "to": "N-PROXY-ADMIN",
+        "vector": "compromised timelock proposer schedules malicious upgrade",
+        "mitigation": "48h delay + Safe multisig + Owner review",
+        "residual": "medium"
+      },
+      {
+        "from": "N-VOTE-CAP",
+        "to": "N-TIMLOCK",
+        "vector": "economic attack accumulates governance control",
+        "mitigation": "400 bps cap + seat registry + P4 treasury cap",
+        "residual": "medium"
+      },
+      {
+        "from": "N-API-RBAC",
+        "to": "N-TIMLOCK",
+        "vector": "none direct — CeFi admin ≠ on-chain proposer",
+        "mitigation": "intentional split (D4-F01)",
+        "residual": "none"
+      }
+    ],
+    "breakpoints": [
+      {
+        "id": "BP-P0-RBAC-01",
+        "priority": "P0",
+        "surface": "N-CONSOLE-DIRECT",
+        "requirement": "staging deploy path must not set TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT",
+        "blocks": "MR12 one-shot → off-chain SuperAdmin escalation without approval"
+      },
+      {
+        "id": "BP-D1-01",
+        "priority": "P1",
+        "surface": "N-PROXY-ADMIN",
+        "requirement": "production baseline = TimelockUpgradeableProxy only",
+        "blocks": "instant implementation swap"
+      },
+      {
+        "id": "BP-D2-01",
+        "priority": "P1",
+        "surface": "N-TIMLOCK",
+        "requirement": "GOVERNANCE_TIMELOCK_DELAY_SECONDS frozen at 48h",
+        "blocks": "governance param / treasury rush"
+      }
+    ],
+    "domain_verdicts": {
+      "D1": "WARN",
+      "D2": "WARN",
+      "D3": "FAIL"
+    },
+    "mr12_isolated_from_on_chain": null,
+    "unified_residual_risk": "WARN"
+  },
+  "minimal_permission_verification_paths": {
+    "schema": "traveltrust.minimal_permission_verification_paths.v1",
+    "D1_contract_upgrade": {
+      "authority": "GovernanceTimelock admin slot on TimelockUpgradeableProxy",
+      "minimal_path": [
+        {
+          "step": 1,
+          "actor": "Timelock proposer (Safe/multisig)",
+          "action": "schedule(target, value, data, predecessor, salt, delay)"
+        },
+        {
+          "step": 2,
+          "actor": "time",
+          "action": "wait >= GOVERNANCE_TIMELOCK_DELAY_SECONDS (48h frozen)"
+        },
+        {
+          "step": 3,
+          "actor": "Timelock executor",
+          "action": "execute → proxy.upgradeTo(newImpl) or upgradeToAndCall"
+        }
+      ],
+      "denied_without": [
+        "EOA direct upgradeTo",
+        "bare implementation deploy as production baseline",
+        "MR12 one-shot API/Web deploy"
+      ],
+      "verification_hooks": [
+        "contracts/test/TtgGovFreezeV1ProxyArchitecture.t.sol",
+        "contracts/src/upgrade/TimelockUpgradeableProxy.sol::_onlyAdmin"
+      ]
+    },
+    "D2_governance_economic": {
+      "authority": "On-chain TTG voting power + timelock queue",
+      "minimal_path": [
+        {
+          "step": 1,
+          "actor": "TTG holder",
+          "action": "delegate + accrue voting power (snapshot block)"
+        },
+        {
+          "step": 2,
+          "actor": "voter",
+          "action": "castVote(proposalId) capped by MAX_VOTING_POWER_PER_ADDRESS_BPS"
+        },
+        {
+          "step": 3,
+          "actor": "Governor",
+          "action": "queue successful proposal → Timelock schedule"
+        },
+        {
+          "step": 4,
+          "actor": "Timelock",
+          "action": "execute after delay — treasury/seat/param changes"
+        }
+      ],
+      "denied_without": [
+        "flash-loan same-block vote (snapshot/delay)",
+        "seat over MAX_ACTIVE_SEATS (TtgSeatConcentrationRegistry)",
+        "treasury spend over P4 cap (GovernanceTreasuryP4Cap)"
+      ],
+      "verification_hooks": [
+        "contracts/src/TtgGovFreezeConstants.sol",
+        "contracts/src/TtgSeatConcentrationRegistry.sol",
+        "contracts/src/GovernanceTreasuryP4Cap.sol"
+      ]
+    },
+    "D3_admin_rbac": {
+      "authority": "API require_admin_permission + console_role bundle + ADM-U02 approval",
+      "production_minimal_path": [
+        {
+          "step": 1,
+          "actor": "SuperAdmin/Ops with PERM_USERS_WRITE",
+          "action": "POST console-role change approval request"
+        },
+        {
+          "step": 2,
+          "actor": "SuperAdmin approver",
+          "action": "approve with TOTP 2FA when enforced"
+        },
+        {
+          "step": 3,
+          "actor": "system",
+          "action": "admin_console_roles DB update + admin_audit_logs persist"
+        }
+      ],
+      "bypass_path_blocked_on_staging": [
+        {
+          "step": "PUT /admin/users/{id}/console-role",
+          "gate": "TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT=1",
+          "default": "unset/false → 409 console_role_use_approval_flow"
+        }
+      ],
+      "local_only_bypass_scope": "scripts/dev/* sets DIRECT=1 for ① matrix smoke — must not appear in deploy/fly or scripts/ops/p2fc*",
+      "verification_hooks": [
+        "crates/api/src/routes/admin/admin_rbac.rs::console_role_direct_assign_enabled",
+        "crates/api/src/routes/admin/admin_rbac.rs::put_admin_user_console_role",
+        "registry/admin-rbac-permissions.v1.yaml"
+      ]
+    },
+    "cross_domain_note": "D3 CeFi RBAC does not grant on-chain proposer/timelock admin — D1/D2 orthogonal to MR12 API deploy"
+  },
+  "p0_rbac_bypass_isolation_confirmation": {
+    "schema": "traveltrust.p0_rbac_bypass_isolation.v1",
+    "status": "NOT_CONFIRMED",
+    "confirmed_before_completed_json": false,
+    "checks": [
+      {
+        "id": "CHK-FLY-deploy-fly-tt-api-staging-fly.toml",
+        "scope": "deploy/fly/tt-api-staging/fly.toml",
+        "pass": true,
+        "detail": "no bypass env in fly.toml [env]"
+      },
+      {
+        "id": "CHK-FLY-deploy-fly-tt-api-prod-fly.toml",
+        "scope": "deploy/fly/tt-api-prod/fly.toml",
+        "pass": true,
+        "detail": "no bypass env in fly.toml [env]"
+      },
+      {
+        "id": "CHK-FLY-deploy-fly-tt-web-staging-fly.toml",
+        "scope": "deploy/fly/tt-web-staging/fly.toml",
+        "pass": true,
+        "detail": "no bypass env in fly.toml [env]"
+      },
+      {
+        "id": "CHK-FLY-frontend-fly.staging.toml",
+        "scope": "frontend/fly.staging.toml",
+        "pass": true,
+        "detail": "no bypass env in fly.toml [env]"
+      },
+      {
+        "id": "CHK-FLY-frontend-fly.production.toml",
+        "scope": "frontend/fly.production.toml",
+        "pass": true,
+        "detail": "no bypass env in fly.toml [env]"
+      },
+      {
+        "id": "CHK-OPS-P2FC",
+        "scope": "scripts/ops/p2fc*.sh",
+        "pass": true,
+        "detail": "ops scripts clean"
+      },
+      {
+        "id": "CHK-MR12-ONE-SHOT",
+        "scope": "scripts/ops/p2fc-post-soak-one-shot-execute.sh",
+        "pass": true,
+        "detail": "one-shot does not export bypass env"
+      },
+      {
+        "id": "CHK-CODE-GATE-409",
+        "scope": "put_admin_user_console_role",
+        "pass": true,
+        "detail": "PUT returns 409 when TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT unset"
+      },
+      {
+        "id": "CHK-LOCAL-SCOPE",
+        "scope": "scripts/dev only",
+        "pass": true,
+        "detail": "local DIRECT refs=17 outside_dev=[]"
+      },
+      {
+        "id": "CHK-MR12-LOCK-PRESENT",
+        "scope": "MR12-EXECUTION-LOCK.json",
+        "pass": true,
+        "detail": "lock_status=FROZEN"
+      },
+      {
+        "id": "CHK-STAGING-LIVE-META",
+        "scope": "GET /meta phase2_prep.console_role_direct_allowed",
+        "pass": false,
+        "detail": {
+          "reachable": true,
+          "http_status": 200,
+          "console_role_direct_allowed": null,
+          "staging_admin_matrix_go": null,
+          "adm_u02_local_ready": null
+        },
+        "note": "null pass = unreachable · static checks authoritative during soak"
+      }
+    ],
+    "static_pass": false,
+    "live_probe": {
+      "reachable": true,
+      "http_status": 200,
+      "console_role_direct_allowed": null,
+      "staging_admin_matrix_go": null,
+      "adm_u02_local_ready": null
+    },
+    "bypass_route": {
+      "endpoint": "PUT /api/v1/admin/users/{user_id}/console-role",
+      "env_gate": "TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT",
+      "disabled_response": "409 console_role_use_approval_flow",
+      "enabled_scope": "① local dev scripts only",
+      "staging_deploy_injection": false,
+      "mr12_one_shot_injection": true
+    },
+    "residual_p0": [
+      "fix failing static isolation checks before COMPLETED.json"
+    ],
+    "residual_non_p0": [
+      "ADM-U01 staging admin matrix GO not started (D3-F04) — separate from bypass path isolation",
+      "Permission ID drift may exist across Rust/YAML/TS — verify separately"
+    ],
+    "honest_boundary": "CONFIRMED = deploy/MR12 path cannot enable bypass env · ≠ ADM-U01 matrix GO · ≠ live exploit test"
+  },
+  "adm_u01_staging_live_prep": {
+    "schema": "traveltrust.adm_u01_staging_live_prep.v1",
+    "generated_at_utc": "2026-06-24T23:58:54Z",
+    "phase": "②",
+    "read_only": true,
+    "no_deploy": true,
+    "no_restart": true,
+    "no_permission_change": true,
+    "mr12_unchanged": true,
+    "p0_rbac_bypass_status": "NOT_CONFIRMED",
+    "p0_rbac_bypass_unchanged": false,
+    "soak_completed": false,
+    "live_verification_deferred_until": "COMPLETED.json + MR12 one-shot (if not yet run)",
+    "status": "BLOCKED",
+    "static_preconditions": [
+      {
+        "id": "PRE-01-SCRIPT-INVENTORY",
+        "pass": true,
+        "detail": "all ADM-U01 live scripts present"
+      },
+      {
+        "id": "PRE-02-DB-MIGRATIONS",
+        "pass": true,
+        "detail": "admin_console_roles + approval + audit migrations on disk"
+      },
+      {
+        "id": "PRE-03-MATRIX-VERSION-ALIGN",
+        "pass": true,
+        "detail": {
+          "rust": "admin-rbac-v4-cms-ops-growth-2026-06-07",
+          "yaml": "admin-rbac-v4-cms-ops-growth-2026-06-07"
+        }
+      },
+      {
+        "id": "PRE-04-PROBE-REGISTRY",
+        "pass": true,
+        "detail": "probes=17 registry=admin-rbac-staging-probes.v1.yaml"
+      },
+      {
+        "id": "PRE-05-P0-BYPASS-CONFIRMED",
+        "pass": false,
+        "detail": "p0_rbac_bypass_isolation=NOT_CONFIRMED (must stay CONFIRMED)"
+      },
+      {
+        "id": "PRE-06-MR12-LOCK-FROZEN",
+        "pass": true,
+        "detail": "lock_status=FROZEN"
+      },
+      {
+        "id": "PRE-07-NO-TUNNEL-GO-CLAIM",
+        "pass": true,
+        "detail": "existing evidence deployment_kind=tunnel_ephemeral — persistent Fly re-run required post-soak",
+        "note": "informational — prior tunnel pre-run must not substitute live Fly matrix"
+      }
+    ],
+    "static_preconditions_pass": false,
+    "non_invasive_live_probes": {
+      "schema": "traveltrust.adm_u01_non_invasive_probes.v1",
+      "api_base": "https://tt-api-staging.fly.dev",
+      "fe_base": "https://tt-web-staging.fly.dev",
+      "probes": [
+        {
+          "id": "LIVE-01-HEALTH",
+          "url": "https://tt-api-staging.fly.dev/health",
+          "reachable": true,
+          "http_status": 200,
+          "body_sample": "ok"
+        },
+        {
+          "id": "LIVE-02-META",
+          "url": "https://tt-api-staging.fly.dev/meta",
+          "reachable": true,
+          "http_status": 200,
+          "body_sample": "{\"service\":\"traveltrust-api\",\"api_version\":\"0.1.0\",\"build\":{\"git_sha\":\"3bbedda776b2cf2666efaac055ce9e13d98127b7\",\"deployed_at\":null,\"rule\":\"120/140：预发/生产建议在容器或进程注入 TRAVELTRUST_GIT_SHA（或 GIT_COMMIT_SHA、SOURCE_VERSION）与 TRAVELTRUST_DEPLOYED_AT（UTC ISO8601）；镜像构建可在 cargo 前 export TRAVELTRUST_BUILD_GIT_SHA 写入编译期兜底；730 GET /meta build 对象 build_top_keys / build_top_keys_contract_730 与 META_BUILD_TOP_KEYS 五键顺序同源\",\"build_top_keys\":[\"git_sha\",\"deployed_at\",\"rule\",\"build_top_keys\",\"build_top_keys_contract_730\"],\"build_top_keys_contract_730\":\"**730**：**`build_top_keys`** **与 **`META_BUILD_TOP_KEYS`** **同源（顺序 `git_sha`****→**`deployed_at`****→**`rule`****→**`build_top_keys`****→**`build_top_keys_contract_730`）\"},\"chain\":{\"chain_id\":\"11155111\",\"contracts\":{\"guide_staking_address\":\"0x3a89378bfad12d1028707dd37055294854c8784e\",\"staking_provider_address\":\"0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075\",\"governor_address\":\"0x847b00ddb6ffed71812abc358a407dad4b099fcb\",\"timelock_address\":\"0x904a6c4c6aab698afbf08ec6151d317c393520cc\",\"governance_token_address\":\"0x2837ea0c50e27d59b88af617abbb231a040062c5\",\"fee_router_address\":\"0x81A8009210c5215100564c6E4123F672c4459306\",\"treasury_address\":\"0x6a8323fb2394A1e9655F7132F4E4B8222d2898be\",\"registry_address\":null,\"escrow_factory_address\":\"0xbf746B6a330e61416c6D87aB9b0758f7107C8006\",\"region_steward_stake_pool_address\":\"0x3a89378bfad12d1028707dd37055294854c8784e\",\"rule\":\"仅当 CHAIN_RPC_URL 等已加载 ChainConfig 时有值；guide_staking_address 与 STAKING_ADDRESS/GUIDE_STAKING_ADDRESS 同源；staking_provider_address 与 STAKING_PROVIDER_ADDRESS 同源；governance_token_address 与 GOVERNANCE_VOTES_TOKEN_ADDRESS/GOVERNANCE_TOKEN_ADDRESS 同源；registry_address/escrow_factory_address 与 REGISTRY_ADDRESS/ESCROW_FACTORY_ADDRESS 同源；region_steward_stake_pool_address 与 REGION_STEWARD_STAKE_POOL_ADDRESS 同源；FEE_ROUTER_ADDRESS 设后 indexer-tick 拉取 PlatformFeeRouted；GOVERNOR_ADDRESS 设后拉取 Governor 事件（B-089）；前端 NEXT_PUBLIC_* 须与部署一致；759 GET /meta chain.contracts 对象 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 与 CHAIN_CONTRACTS_META_TOP_KEYS 十三键顺序同源\",\"chain_contracts_top_keys\":[\"guide_staking_address\",\"staking_provider_address\",\"governor_address\",\"timelock_address\",\"governance_token_address\",\"fee_router_address\",\"treasury_address\",\"registry_address\",\"escrow_factory_address\",\"region_steward_stake_pool_address\",\"rule\",\"chain_contracts_top_keys\",\"chain_contracts_top_keys_contract_759\"],\"chain_contracts_top_keys_contract_759\":\"**759**：**`chain_contracts_top_keys`** **与 **`CHAIN_CONTRACTS_META_TOP_KEYS`** **同源（顺序 `guide_staking_address`****→**`staking_provider_address`****→**`governor_address`****→**`timelock_address`****→**`governance_token_address`****→**`fee_router_address`****→**`treasury_address`****→**`registry_address`****→**`escrow_factory_address`****→**`region_steward_stake_pool_address`****→**`rule`****→**`chain_contracts_top_keys`****→**`chain_contracts_top_keys_contract_759`）\"},\"rule\":\"与 intents EIP-712 domain、前端 NEXT_PUBLIC_CHAIN_ID 应对齐；contracts 见 ChainConfig；759：ChainConfig 挂载且 contracts 非 null 时 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 与 CHAIN_CONTRACTS_META_TOP_KEYS 十键顺序同源；760：GET /meta database 对象 database_top_keys / database_top_keys_contract_760 与 DATABASE_META_TOP_KEYS 四键顺序同源，database.connected 与根级 database_connected 布尔同源；762：GET /meta rate_limits.guide_upload 对象 guide_upload_top_keys / guide_upload_top_keys_contract_761 与 GUIDE_UPLOAD_META_TOP_KEYS 五键顺序同源（761 子树机读互链）；763：GET /meta 根级 service（traveltrust-api）与 api_version（CARGO_PKG_VERSION）为实例版本可观测锚点，与 META_ROOT_TOP_KEYS 首二键 service→api_version 及 728 meta_top_keys 机读同源；765：GET /meta 根�"
+        },
+        {
+          "id": "LIVE-03-ADMIN-CAPABILITIES-UNAUTH",
+          "url": "https://tt-api-staging.fly.dev/api/v1/admin/capabilities",
+          "reachable": true,
+          "http_status": 401,
+          "body_sample": "{\"error\":\"unauthorized\",\"message\":\"unauthorized\",\"detail\":\"需登录：请提供 X-User-Id 或 Authorization\"}",
+          "note": "expect 401/403 — confirms route exists without granting access"
+        },
+        {
+          "id": "LIVE-04-FE-ADMIN-SHELL",
+          "url": "https://tt-web-staging.fly.dev/admin",
+          "reachable": true,
+          "http_status": 200,
+          "body_sample": "<!DOCTYPE html><!--BYb07Y3xVZ6ZJL0ezTY3r--><html lang=\"zh-CN\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/stat",
+          "note": "expect 200/307/308 for Playwright shell matrix entry"
+        }
+      ],
+      "honest_boundary": "read-only GET · no account registration · no console_role writes · no fly proxy side effects in this generator"
+    },
+    "live_readiness_blockers": [],
+    "minimal_permission_verification_paths": {
+      "schema": "traveltrust.adm_u01_minimal_permission_paths.v1",
+      "roles": [
+        "SuperAdmin",
+        "Ops",
+        "CS",
+        "Risk",
+        "Finance",
+        "Auditor"
+      ],
+      "shell_domains": [
+        "workbench",
+        "onboarding",
+        "operations",
+        "community",
+        "finance",
+        "governance",
+        "more"
+      ],
+      "matrix_version": "admin-rbac-v4-cms-ops-growth-2026-06-07",
+      "per_role": {
+        "SuperAdmin": {
+          "console_role_70": "SuperAdmin",
+          "permission_bundle": "all_write_and_approve + PERM_USERS_WRITE approval path",
+          "live_verification": [
+            "Bearer TRAVELTRUST_ADMIN_TOKEN_SUPERADMIN or DB admin_console_roles=SuperAdmin",
+            "GET /api/v1/admin/capabilities → console_role_70 matches",
+            "Run 17 registry probes"
+          ],
+          "probe_summary": {
+            "allow_count": 17,
+            "deny_count": 0,
+            "domains": {
+              "workbench": {
+                "allow": 2,
+                "deny": 0
+              },
+              "onboarding": {
+                "allow": 2,
+                "deny": 0
+              },
+              "operations": {
+                "allow": 3,
+                "deny": 0
+              },
+              "community": {
+                "allow": 2,
+                "deny": 0
+              },
+              "finance": {
+                "allow": 2,
+                "deny": 0
+              },
+              "governance": {
+                "allow": 2,
+                "deny": 0
+              },
+              "more": {
+                "allow": 4,
+                "deny": 0
+              }
+            }
+          },
+          "minimal_path": {
+            "auth": "login → Bearer token (staging seeded account)",
+            "matrix": "run-admin-rbac-staging-matrix.py deny/pass per probe",
+            "shell": "playwright admin-rbac-staging-six-roles.spec.ts per Shell domain",
+            "console_role_change": "approval flow only (TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT unset)"
+          }
+        },
+        "Ops": {
+          "console_role_70": "Ops",
+          "permission_bundle": "legacy_admin_bundle — no SuperAdmin-only approve",
+          "live_verification": [
+            "Bearer TRAVELTRUST_ADMIN_TOKEN_OPS or DB admin_console_roles=Ops",
+            "GET /api/v1/admin/capabilities → console_role_70 matches",
+            "Run 14 registry probes"
+          ],
+          "probe_summary": {
+            "allow_count": 14,
+            "deny_count": 0,
+            "domains": {
+              "workbench": {
+                "allow": 2,
+                "deny": 0
+              },
+              "onboarding": {
+                "allow": 2,
+                "deny": 0
+              },
+              "operations": {
+                "allow": 3,
+                "deny": 0
+              },
+              "community": {
+                "allow": 2,
+                "deny": 0
+              },
+              "finance": {
+                "allow": 2,
+                "deny": 0
+              },
+              "governance": {
+                "allow": 1,
+                "deny": 1
+              },
+              "more": {
+                "allow": 2,
+                "deny": 2
+              }
+            }
+          },
+          "minimal_path": {
+            "auth": "login → Bearer token (staging seeded account)",
+            "matrix": "run-admin-rbac-staging-matrix.py deny/pass per probe",
+            "shell": "playwright admin-rbac-staging-six-roles.spec.ts per Shell domain",
+            "console_role_change": "approval flow only (TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT unset)"
+          }
+        },
+        "CS": {
+          "console_role_70": "CS",
+          "permission_bundle": "read_assist — deny publish/finance write",
+          "live_verification": [
+            "Bearer TRAVELTRUST_ADMIN_TOKEN_CS or DB admin_console_roles=CS",
+            "GET /api/v1/admin/capabilities → console_role_70 matches",
+            "Run 12 registry probes"
+          ],
+          "probe_summary": {
+            "allow_count": 10,
+            "deny_count": 2,
+            "domains": {
+              "workbench": {
+                "allow": 2,
+                "deny": 0
+              },
+              "onboarding": {
+                "allow": 2,
+                "deny": 0
+              },
+              "operations": {
+                "allow": 3,
+                "deny": 0
+              },
+              "community": {
+                "allow": 1,
+                "deny": 1
+              },
+              "finance": {
+                "allow": 1,
+                "deny": 1
+              },
+              "governance": {
+                "allow": 0,
+                "deny": 2
+              },
+              "more": {
+                "allow": 1,
+                "deny": 3
+              }
+            }
+          },
+          "minimal_path": {
+            "auth": "login → Bearer token (staging seeded account)",
+            "matrix": "run-admin-rbac-staging-matrix.py deny/pass per probe",
+            "shell": "playwright admin-rbac-staging-six-roles.spec.ts per Shell domain",
+            "console_role_change": "approval flow only (TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT unset)"
+          }
+        },
+        "Risk": {
+          "console_role_70": "Risk",
+          "permission_bundle": "moderate_and_disputes_no_publish",
+          "live_verification": [
+            "Bearer TRAVELTRUST_ADMIN_TOKEN_RISK or DB admin_console_roles=Risk",
+            "GET /api/v1/admin/capabilities → console_role_70 matches",
+            "Run 13 registry probes"
+          ],
+          "probe_summary": {
+            "allow_count": 13,
+            "deny_count": 0,
+            "domains": {
+              "workbench": {
+                "allow": 2,
+                "deny": 0
+              },
+              "onboarding": {
+                "allow": 2,
+                "deny": 0
+              },
+              "operations": {
+                "allow": 3,
+                "deny": 0
+              },
+              "community": {
+                "allow": 2,
+                "deny": 0
+              },
+              "finance": {
+                "allow": 1,
+                "deny": 1
+              },
+              "governance": {
+                "allow": 1,
+                "deny": 1
+              },
+              "more": {
+                "allow": 2,
+                "deny": 2
+              }
+            }
+          },
+          "minimal_path": {
+            "auth": "login → Bearer token (staging seeded account)",
+            "matrix": "run-admin-rbac-staging-matrix.py deny/pass per probe",
+            "shell": "playwright admin-rbac-staging-six-roles.spec.ts per Shell domain",
+            "console_role_change": "approval flow only (TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT unset)"
+          }
+        },
+        "Finance": {
+          "console_role_70": "Finance",
+          "permission_bundle": "finance_and_orders_read",
+          "live_verification": [
+            "Bearer TRAVELTRUST_ADMIN_TOKEN_FINANCE or DB admin_console_roles=Finance",
+            "GET /api/v1/admin/capabilities → console_role_70 matches",
+            "Run 11 registry probes"
+          ],
+          "probe_summary": {
+            "allow_count": 9,
+            "deny_count": 2,
+            "domains": {
+              "workbench": {
+                "allow": 2,
+                "deny": 0
+              },
+              "onboarding": {
+                "allow": 2,
+                "deny": 0
+              },
+              "operations": {
+                "allow": 2,
+                "deny": 1
+              },
+              "community": {
+                "allow": 0,
+                "deny": 2
+              },
+              "finance": {
+                "allow": 2,
+                "deny": 0
+              },
+              "governance": {
+                "allow": 0,
+                "deny": 2
+              },
+              "more": {
+                "allow": 1,
+                "deny": 3
+              }
+            }
+          },
+          "minimal_path": {
+            "auth": "login → Bearer token (staging seeded account)",
+            "matrix": "run-admin-rbac-staging-matrix.py deny/pass per probe",
+            "shell": "playwright admin-rbac-staging-six-roles.spec.ts per Shell domain",
+            "console_role_change": "approval flow only (TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT unset)"
+          }
+        },
+        "Auditor": {
+          "console_role_70": "Auditor",
+          "permission_bundle": "read_only_audit — all mutating writes 403",
+          "live_verification": [
+            "Bearer TRAVELTRUST_ADMIN_TOKEN_AUDITOR or DB admin_console_roles=Auditor",
+            "GET /api/v1/admin/capabilities → console_role_70 matches",
+            "Run 13 registry probes"
+          ],
+          "probe_summary": {
+            "allow_count": 11,
+            "deny_count": 2,
+            "domains": {
+              "workbench": {
+                "allow": 2,
+                "deny": 0
+              },
+              "onboarding": {
+                "allow": 2,
+                "deny": 0
+              },
+              "operations": {
+                "allow": 3,
+                "deny": 0
+              },
+              "community": {
+                "allow": 1,
+                "deny": 1
+              },
+              "finance": {
+                "allow": 2,
+                "deny": 0
+              },
+              "governance": {
+                "allow": 0,
+                "deny": 2
+              },
+              "more": {
+                "allow": 1,
+                "deny": 3
+              }
+            }
+          },
+          "minimal_path": {
+            "auth": "login → Bearer token (staging seeded account)",
+            "matrix": "run-admin-rbac-staging-matrix.py deny/pass per probe",
+            "shell": "playwright admin-rbac-staging-six-roles.spec.ts per Shell domain",
+            "console_role_change": "approval flow only (TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT unset)"
+          }
+        }
+      },
+      "global_minimal_path": [
+        "STAGING_API_BASE + STAGING_FE_BASE (HTTPS Fly, not localhost/tunnel)",
+        "STAGING_DATABASE_URL or six pre-provisioned Bearer tokens",
+        "ADM_U01_REQUIRE_PERSISTENT_HOST=1 · ADM_U01_STRICT=1",
+        "bash scripts/dev/record-adm-u01-staging-evidence.sh",
+        "Expected: TT_ADM_U01_EVIDENCE: PASS · report.json release_gate=GO"
+      ]
+    },
+    "post_completed_activation_playbook": {
+      "trigger": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json present + MR12 one-shot complete",
+      "orchestrators": {
+        "master": "scripts/ops/p2fc-post-soak-staging-live-closure-chain.sh --watch",
+        "mr12_one_shot": "scripts/ops/p2fc-post-soak-one-shot-execute.sh --watch",
+        "admin_live_chain": "scripts/ops/p2fc-run-post-soak-admin-staging-live-chain.sh",
+        "p0_runtime": "scripts/ops/p2fc-verify-p0-rbac-bypass-runtime.sh",
+        "closure_evidence": "scripts/dev/gen-p2fc-post-soak-staging-live-closure-evidence.py"
+      },
+      "sequence_after_mr12": [
+        {
+          "step": 1,
+          "action": "MR12 one-shot (8 steps) — existing frozen entrypoint",
+          "gate": "TT_P2FC_POST_SOAK_ONE_SHOT: PASS"
+        },
+        {
+          "step": 2,
+          "action": "ADM-U01 live six-role RBAC matrix (persistent Fly)",
+          "gate": "TT_ADM_U01_EVIDENCE: PASS + report.json release_gate GO"
+        },
+        {
+          "step": 3,
+          "action": "P0 RBAC bypass runtime re-verify (/meta + unauth PUT)",
+          "gate": "TT_P2FC_P0_RBAC_BYPASS_RUNTIME: CONFIRMED"
+        },
+        {
+          "step": 4,
+          "action": "ADM-U02 staging 2FA/approval chain",
+          "gate": "TT_ADM_U02_STAGING_EVIDENCE: PASS"
+        },
+        {
+          "step": 5,
+          "action": "B1–B4 blocker convergence from live checkpoint + evidence",
+          "gate": "TT_P2FC_POST_SOAK_STAGING_LIVE_CLOSURE: PASS (open_blocker_count=0)"
+        }
+      ],
+      "forbidden_during_prep": [
+        "TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT=1 on staging",
+        "direct PUT /admin/users/{id}/console-role without approval",
+        "tunnel (*.loca.lt) or localhost as STAGING_API_BASE for GO claim",
+        "claiming prep READY as ADM-U01 GO"
+      ],
+      "evidence_output": "evidence/P2FC_SOAK_72H_STAGING/post-soak-staging-live-closure/"
+    },
+    "d3_adm_u01_note": "D3-F04 open = matrix GO not started; this prep enables post-soak live run without changing bypass isolation",
+    "honest_boundary": "READY = static prep complete · live matrix still requires STAGING_DATABASE_URL + record-adm-u01-staging-evidence.sh · ≠ ③ Production GO"
+  },
+  "d3_adm_u01_live_prep_status": "BLOCKED",
+  "mr12_governance_isolation": {
+    "mr12_lock_status": "FROZEN",
+    "cross_domain_risks": [
+      {
+        "id": "MR12-X03",
+        "severity": "info",
+        "note": "MR12 scopes post-soak API/Web deploy only — on-chain upgrade/governance is orthogonal Owner gate",
+        "isolation": true
+      },
+      {
+        "id": "MR12-X04",
+        "severity": "medium",
+        "note": "Single-point: fly secrets / env injection during one-shot could enable RBAC bypass env vars",
+        "mitigation": "verify fly.toml + secrets exclude ADMIN_CONSOLE_ROLE_DIRECT in post-soak checklist"
+      }
+    ],
+    "mr12_bypass_via_one_shot": false,
+    "verdict": "WARN"
+  },
+  "single_point_control_register": [
+    {
+      "id": "SPOF-D1-01",
+      "control": "Timelock admin on all Governable Shell proxies",
+      "bypass_vector": "direct EOA admin if mis-deployed without proxy",
+      "mr12_relation": "post-soak fly deploy must not swap proxy admin off timelock"
+    },
+    {
+      "id": "SPOF-D1-02",
+      "control": "upgradeTo only via timelock schedule+execute",
+      "bypass_vector": "emergency script --broadcast without timelock (Owner-only · forbidden in soak)",
+      "mr12_relation": "MR12 one-shot is API/Web deploy — on-chain upgrade is separate Owner gate"
+    },
+    {
+      "id": "SPOF-D2-01",
+      "control": "Timelock 48h on governance execution",
+      "bypass_vector": "compromised timelock proposer / canceller keys",
+      "mr12_relation": "MR12 does not mutate on-chain gov — no bypass via one-shot"
+    },
+    {
+      "id": "SPOF-D2-02",
+      "control": "Seat concentration registry",
+      "bypass_vector": "sybil across entities if off-chain KYC weak",
+      "mr12_relation": "off-chain admin cannot override on-chain seat limits"
+    },
+    {
+      "id": "SPOF-D3-01",
+      "control": "require_admin_actor on mutating routes",
+      "bypass_vector": "UI-only gate without API deny",
+      "mr12_relation": "post-soak backlog admin routes must preserve API enforcement"
+    },
+    {
+      "id": "SPOF-D3-02",
+      "control": "SuperAdmin admin.approve + 2FA",
+      "bypass_vector": "TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT=1 on staging",
+      "mr12_relation": "MR12 deploy must not enable direct-role env in fly secrets"
+    },
+    {
+      "id": "SPOF-D4-01",
+      "control": "API deny matrix ADM-U01",
+      "bypass_vector": "direct API call skipping UI",
+      "mr12_relation": "unchanged by MR12 unless backlog touches admin_rbac.rs"
+    },
+    {
+      "id": "SPOF-D4-02",
+      "control": "On-chain timelock for governance writes",
+      "bypass_vector": "API governance projection write without wallet",
+      "mr12_relation": "indexer/API projection read-only for proposals in soak"
+    }
+  ],
+  "spof_count": 8,
+  "high_finding_count": 3,
+  "p0_rbac_bypass_isolated": false,
+  "verdict": "FAIL",
+  "honest_boundary": "static/read-only audit during soak · P0 bypass isolation = deploy path static · ADM-U01/on-chain GO separate · ≠ ③ Production"
+}

@@ -4,6 +4,7 @@
  */
 
 import type { CommunityPost, CommunityPostAuthor, CommunityUserItem } from "@/lib/communityMockData";
+import { allowCommunityShowcaseLayers, isCommunityContentProductionProfile } from "@/lib/communityContentProfile";
 import { AVATARS, FOOD_IMAGES_POOL, TRAVEL_IMAGES_POOL, pick } from "@/lib/communityMockData/constants";
 import type { CommunityDmMessageRow } from "@/lib/apiClient/community";
 
@@ -27,17 +28,9 @@ function communityShowcaseExplicitlyOff(): boolean {
   return v === "0" || v === "false" || v === "off";
 }
 
-/** ② 测试网构建档：默认不注入 showcase（与 staging 真 UGC 密度对齐）。 */
-function communityShowcaseTestnetProfile(): boolean {
-  const phase = (process.env.NEXT_PUBLIC_TRAVELTRUST_PHASE ?? "").trim();
-  const profile = (process.env.NEXT_PUBLIC_TRAVELTRUST_DEPLOY_PROFILE ?? "").trim().toLowerCase();
-  return phase === "2" || profile === "testnet" || profile === "staging";
-}
-
 export function shouldUseCommunityShowcaseOnEmpty(): boolean {
   if (typeof process === "undefined") return false;
-  if (process.env.NODE_ENV === "production") return false;
-  if (communityShowcaseTestnetProfile()) return false;
+  if (!allowCommunityShowcaseLayers()) return false;
   if (communityShowcaseExplicitlyOff()) return false;
   if (process.env.NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_SHOWCASE === "1") return true;
   return process.env.NODE_ENV === "development";
@@ -276,8 +269,8 @@ export const COMMUNITY_SHOWCASE_POSTS: CommunityPost[] = [
   }),
 ];
 
-/** 深链 / 分享：`?post=tt-showcase-post-*` 不依赖 Feed 首屏已 hydrate。 */
 export function findCommunityShowcasePostById(postId: string): CommunityPost | undefined {
+  if (isCommunityContentProductionProfile()) return undefined;
   if (!isShowcasePostId(postId)) return undefined;
   return COMMUNITY_SHOWCASE_POSTS.find((p) => p.id === postId);
 }

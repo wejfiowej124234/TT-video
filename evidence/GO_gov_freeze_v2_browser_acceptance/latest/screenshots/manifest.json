@@ -1,0 +1,67 @@
+{
+  "base": "http://127.0.0.1:3012",
+  "mode": "browser-acceptance",
+  "step": null,
+  "shots": [
+    {
+      "route": "/governance",
+      "ok": false,
+      "error": "TimeoutError: page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"http://127.0.0.1:3012/governance\", waiting until \"networkidle\"\n"
+    },
+    {
+      "route": "/governance/params#gov-params-tokenomics-freeze",
+      "file": "evidence\\GO_gov_freeze_v2_browser_acceptance\\latest\\screenshots\\gov-params-freeze.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/params#gov-params-treasury-policy",
+      "file": "evidence\\GO_gov_freeze_v2_browser_acceptance\\latest\\screenshots\\gov-params-treasury.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/params#gov-params-overview",
+      "file": "evidence\\GO_gov_freeze_v2_browser_acceptance\\latest\\screenshots\\gov-params-overview.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/proposals",
+      "file": "evidence\\GO_gov_freeze_v2_browser_acceptance\\latest\\screenshots\\governance-proposals.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/proposals/create",
+      "file": "evidence\\GO_gov_freeze_v2_browser_acceptance\\latest\\screenshots\\governance-proposals-create.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/delegate",
+      "file": "evidence\\GO_gov_freeze_v2_browser_acceptance\\latest\\screenshots\\governance-delegate.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/steward-region-workbench",
+      "file": "evidence\\GO_gov_freeze_v2_browser_acceptance\\latest\\screenshots\\steward-workbench.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/distribution-claim",
+      "ok": false,
+      "error": "TimeoutError: page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"http://127.0.0.1:3012/governance/distribution-claim\", waiting until \"networkidle\"\n"
+    },
+    {
+      "route": "/governance/distribution-accruals",
+      "file": "evidence\\GO_gov_freeze_v2_browser_acceptance\\latest\\screenshots\\distribution-accruals.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/fee-routes",
+      "file": "evidence\\GO_gov_freeze_v2_browser_acceptance\\latest\\screenshots\\fee-routes.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/vault-forwards",
+      "file": "evidence\\GO_gov_freeze_v2_browser_acceptance\\latest\\screenshots\\vault-forwards.png",
+      "ok": true
+    }
+  ]
+}

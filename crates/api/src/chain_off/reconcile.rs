@@ -104,6 +104,24 @@ pub fn event_name_from_topic0(topic0: &str) -> Option<&'static str> {
             b"ProposalCanceled(uint256)".as_slice(),
             "ProposalCanceled",
         ),
+        (crate::chain::vacancy_ledger_indexer::VACANCY_ENTERED_SIG, "VacancyEntered"),
+        (crate::chain::vacancy_ledger_indexer::GRACE_STARTED_SIG, "GraceStarted"),
+        (
+            crate::chain::vacancy_ledger_indexer::SWEEP_EXECUTED_SIG,
+            "SweepExecuted",
+        ),
+        (
+            crate::chain::vacancy_ledger_indexer::RESERVE_REACHED_SIG,
+            "ReserveReached",
+        ),
+        (
+            crate::chain::vacancy_ledger_indexer::STEWARD_ACTIVATED_SIG,
+            "StewardActivated",
+        ),
+        (
+            crate::chain::vacancy_ledger_indexer::JURISDICTION_RESERVE_DISBURSED_SIG,
+            "JurisdictionReserveDisbursed",
+        ),
     ];
     for (sig, name) in sigs {
         if hex::encode(Keccak256::digest(sig)) == topic_hex {

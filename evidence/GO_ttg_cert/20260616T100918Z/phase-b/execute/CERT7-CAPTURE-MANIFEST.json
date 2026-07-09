@@ -1,0 +1,18 @@
+{
+  "captured_at_utc": "2026-06-17T00:55:45Z",
+  "recordings": [
+    "C-EX-01-governor-queue-execute.mp4",
+    "C-EX-02-state-four-ledger-consistency.mp4",
+    "C-EX-03-recovery-execute-ui.mp4"
+  ],
+  "screenshots": [
+    "role-governor-lifecycle.png",
+    "role-execute-tx-receipt.png",
+    "role-four-ledger-mapping.png",
+    "role-execute-state-consistency.png",
+    "role-execute-recovery.png",
+    "role-execute-ui.png"
+  ],
+  "execute_earliest_unix": "1781765044",
+  "honest_boundary": "Walkthrough slides + HAT step-07 on-chain evidence when present"
+}

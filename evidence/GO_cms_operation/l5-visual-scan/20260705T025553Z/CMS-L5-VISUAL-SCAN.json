@@ -1,0 +1,5408 @@
+{
+  "schema": "traveltrust.cms_l5_visual_scan.v1",
+  "stamp_utc": "20260705T025553Z",
+  "layer": "CMS_OPERATION",
+  "role": "read_only_visual_scan",
+  "not_governance": true,
+  "scan_mode": "read_only",
+  "ssot_inputs": {
+    "content_ownership_inventory": "data/catalog/content-ownership-inventory.v1.yaml",
+    "cms_asset_matrix": "data/catalog/cms-asset-matrix.v1.yaml",
+    "cms_image_inventory": "data/catalog/cms-image-inventory.v1.yaml",
+    "image_inventory_latest": "evidence/GO_cms_operation/CMS-IMAGE-INVENTORY-LATEST.json"
+  },
+  "probe_api": "https://tt-api-staging.fly.dev",
+  "probe_skipped": false,
+  "ops_priority_wave": "P0 Destination Ambient (JP→KR→TH→SG→FR→US→AU→ES→AE→CN) · P1 POI/Hotel/Transport · P2 listing covers split by source",
+  "pages_in_scope": [
+    "/",
+    "/market",
+    "/market/provider",
+    "/market/acquisition",
+    "/itinerary/new",
+    "/traveltrust",
+    "POI adapters",
+    "hotel/transport stock",
+    "did-rank (reference only)"
+  ],
+  "forbidden": [
+    "batch_replace_without_l5",
+    "route_back_to_ocs",
+    "business_code_changes",
+    "db_schema_changes"
+  ],
+  "workflow": [
+    "upload",
+    "review",
+    "publish",
+    "verify",
+    "evidence",
+    "live"
+  ],
+  "cms_queues": [
+    "destination_ambient",
+    "poi",
+    "hotel",
+    "transport",
+    "provider_listing",
+    "acquisition_listing",
+    "guide_listing",
+    "discover_listing",
+    "video"
+  ],
+  "summary": {
+    "ownership_modules_scanned": 33,
+    "visual_findings_total": 45,
+    "cms_scope": 33,
+    "needs_cms_l5_workflow": 26,
+    "l5_compliant_partial": 7,
+    "excluded_ocs_count": 12,
+    "reference_non_cms_count": 5,
+    "by_current_source": {
+      "catalog": 7,
+      "unsplash_fallback": 3,
+      "placeholder": 3,
+      "catalog_partial": 20
+    },
+    "by_cms_queue": {
+      "destination_ambient": 10,
+      "poi": 1,
+      "hotel": 1,
+      "transport": 1,
+      "provider_listing": 10,
+      "acquisition_listing": 10
+    },
+    "by_l5_status": {
+      "PASS": 0,
+      "REVIEW_REQUIRED": 26,
+      "VERIFIED": 0,
+      "LIVE": 7
+    },
+    "flag_counts": {
+      "unsplash": 3,
+      "pexels": 0,
+      "placeholder": 3,
+      "old_external": 3,
+      "region_review_required": 3
+    },
+    "ops_priority_tiers": {
+      "P0": {
+        "label": "首页第一印象 · Wave 1",
+        "description": "Destination Ambient · 十国完成后首页质感明显提升",
+        "total": 10,
+        "pending": 3,
+        "tracked_total": 10,
+        "wave_order": [
+          "JP",
+          "KR",
+          "TH",
+          "SG",
+          "FR",
+          "US",
+          "AU",
+          "ES",
+          "AE",
+          "CN"
+        ],
+        "subqueues": {
+          "destination_ambient": {
+            "total": 10,
+            "cms_total": 10,
+            "pending": 3,
+            "owners": [
+              "CMS"
+            ]
+          }
+        }
+      },
+      "P1": {
+        "label": "业务展示 · CMS POI / Hotel / Transport",
+        "description": "定制旅行 · 行程详情直接受益",
+        "total": 3,
+        "pending": 3,
+        "tracked_total": 3,
+        "subqueues": {
+          "poi": {
+            "total": 1,
+            "cms_total": 1,
+            "pending": 1,
+            "owners": [
+              "CMS"
+            ]
+          },
+          "hotel": {
+            "total": 1,
+            "cms_total": 1,
+            "pending": 1,
+            "owners": [
+              "CMS"
+            ]
+          },
+          "transport": {
+            "total": 1,
+            "cms_total": 1,
+            "pending": 1,
+            "owners": [
+              "CMS"
+            ]
+          }
+        }
+      },
+      "P2": {
+        "label": "运营内容 · Market Listing Covers",
+        "description": "按来源分子队列 · 避免 Banner 混排",
+        "total": 20,
+        "pending": 20,
+        "tracked_total": 32,
+        "subqueues": {
+          "provider_listing": {
+            "total": 10,
+            "cms_total": 10,
+            "pending": 10,
+            "owners": [
+              "CMS"
+            ]
+          },
+          "acquisition_listing": {
+            "total": 10,
+            "cms_total": 10,
+            "pending": 10,
+            "owners": [
+              "CMS"
+            ]
+          },
+          "guide_listing": {
+            "total": 10,
+            "cms_total": 0,
+            "pending": 0,
+            "owners": [
+              "OCS"
+            ]
+          },
+          "discover_listing": {
+            "total": 1,
+            "cms_total": 0,
+            "pending": 0,
+            "owners": [
+              "API"
+            ]
+          },
+          "video": {
+            "total": 1,
+            "cms_total": 0,
+            "pending": 0,
+            "owners": [
+              "Media"
+            ]
+          }
+        }
+      }
+    },
+    "todays_review": [
+      {
+        "scan_id": "VIS-DA-ES-HOME",
+        "matrix_id": "DA-ES-HOME",
+        "country_iso": "ES",
+        "label": "ES Ambient",
+        "operational_action": "Region Review Required",
+        "ops_priority": "P0",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      {
+        "scan_id": "VIS-DA-AE-HOME",
+        "matrix_id": "DA-AE-HOME",
+        "country_iso": "AE",
+        "label": "AE Ambient",
+        "operational_action": "Region Review Required",
+        "ops_priority": "P0",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      {
+        "scan_id": "VIS-DA-CN-HOME",
+        "matrix_id": "DA-CN-HOME",
+        "country_iso": "CN",
+        "label": "CN Ambient",
+        "operational_action": "Region Review Required",
+        "ops_priority": "P0",
+        "modify_entry": "/admin/content/landing-ambient"
+      }
+    ],
+    "cms_operation_wave_1": {
+      "id": "wave_1",
+      "label": "CMS Operation Wave 1",
+      "closed_loop_queues": [
+        "destination_ambient",
+        "poi",
+        "hotel",
+        "transport",
+        "provider_listing",
+        "acquisition_listing"
+      ],
+      "tracking_only": [
+        {
+          "queue": "guide_listing",
+          "owner": "OCS",
+          "note": "跟踪 · 不纳入 CMS 闭环"
+        },
+        {
+          "queue": "discover_listing",
+          "owner": "API",
+          "note": "跟踪 · 不纳入 CMS 闭环"
+        }
+      ],
+      "phases": [
+        {
+          "priority": "P0",
+          "queues": [
+            "destination_ambient"
+          ],
+          "label": "Destination Ambient · 10 国",
+          "next_step": "逐国完成 JP→KR→TH→SG→FR→US→AU→ES→AE→CN"
+        },
+        {
+          "priority": "P1",
+          "queues": [
+            "poi",
+            "hotel",
+            "transport"
+          ],
+          "label": "POI · Hotel · Transport",
+          "next_step": "各家族完成 L5 替换"
+        },
+        {
+          "priority": "P2",
+          "queues": [
+            "provider_listing",
+            "acquisition_listing"
+          ],
+          "label": "Provider · Acquisition Listing",
+          "next_step": "逐项替换"
+        }
+      ],
+      "current_phase": {
+        "priority": "P0",
+        "label": "Destination Ambient · 10 国",
+        "next_step": "逐国完成 JP→KR→TH→SG→FR→US→AU→ES→AE→CN",
+        "next_asset": {
+          "matrix_id": "DA-ES-HOME",
+          "country_iso": "ES",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "complete": false
+      },
+      "queue_completion": {
+        "destination_ambient": {
+          "label": "Destination Ambient",
+          "priority": "P0",
+          "live": 7,
+          "total": 10,
+          "pending": 3,
+          "rate_pct": 70,
+          "display": "7/10 (70%)"
+        },
+        "poi": {
+          "label": "POI",
+          "priority": "P1",
+          "live": 0,
+          "total": 1,
+          "pending": 1,
+          "rate_pct": 0,
+          "display": "0/1 (0%)"
+        },
+        "hotel": {
+          "label": "Hotel",
+          "priority": "P1",
+          "live": 0,
+          "total": 1,
+          "pending": 1,
+          "rate_pct": 0,
+          "display": "0/1 (0%)"
+        },
+        "transport": {
+          "label": "Transport",
+          "priority": "P1",
+          "live": 0,
+          "total": 1,
+          "pending": 1,
+          "rate_pct": 0,
+          "display": "0/1 (0%)"
+        },
+        "provider_listing": {
+          "label": "Provider Listing",
+          "priority": "P2",
+          "live": 0,
+          "total": 10,
+          "pending": 10,
+          "rate_pct": 0,
+          "display": "0/10 (0%)"
+        },
+        "acquisition_listing": {
+          "label": "Acquisition Listing",
+          "priority": "P2",
+          "live": 0,
+          "total": 10,
+          "pending": 10,
+          "rate_pct": 0,
+          "display": "0/10 (0%)"
+        }
+      },
+      "work_plan": [
+        {
+          "priority": "P0",
+          "queue": "destination_ambient",
+          "label": "Destination Ambient",
+          "count": 10,
+          "completion": "7/10 (70%)",
+          "next_step": "逐国完成 JP→KR→TH→SG→FR→US→AU→ES→AE→CN"
+        },
+        {
+          "priority": "P1",
+          "queue": "poi",
+          "label": "POI",
+          "count": 1,
+          "completion": "0/1 (0%)",
+          "next_step": "各家族完成 L5 替换"
+        },
+        {
+          "priority": "P1",
+          "queue": "hotel",
+          "label": "Hotel",
+          "count": 1,
+          "completion": "0/1 (0%)",
+          "next_step": "各家族完成 L5 替换"
+        },
+        {
+          "priority": "P1",
+          "queue": "transport",
+          "label": "Transport",
+          "count": 1,
+          "completion": "0/1 (0%)",
+          "next_step": "各家族完成 L5 替换"
+        },
+        {
+          "priority": "P2",
+          "queue": "provider_listing",
+          "label": "Provider Listing",
+          "count": 10,
+          "completion": "0/10 (0%)",
+          "next_step": "逐项替换"
+        },
+        {
+          "priority": "P2",
+          "queue": "acquisition_listing",
+          "label": "Acquisition Listing",
+          "count": 10,
+          "completion": "0/10 (0%)",
+          "next_step": "逐项替换"
+        }
+      ],
+      "wave_progress": {
+        "live": 7,
+        "total": 33,
+        "pending": 26,
+        "rate_pct": 21,
+        "display": "7/33 (21%)"
+      },
+      "milestone": {
+        "label": "CMS Operation Wave 1",
+        "subtitle": "33 项里程碑 · Wave 1 全部完成后启动下一波",
+        "item_total": 33,
+        "rows": [
+          {
+            "priority": "P0",
+            "queue": "destination_ambient",
+            "label": "Destination Ambient",
+            "total": 10,
+            "live": 7,
+            "completion": "7/10 (70%)"
+          },
+          {
+            "priority": "P1",
+            "queue": "poi",
+            "label": "POI",
+            "total": 1,
+            "live": 0,
+            "completion": "0/1 (0%)"
+          },
+          {
+            "priority": "P1",
+            "queue": "hotel",
+            "label": "Hotel",
+            "total": 1,
+            "live": 0,
+            "completion": "0/1 (0%)"
+          },
+          {
+            "priority": "P1",
+            "queue": "transport",
+            "label": "Transport",
+            "total": 1,
+            "live": 0,
+            "completion": "0/1 (0%)"
+          },
+          {
+            "priority": "P2",
+            "queue": "provider_listing",
+            "label": "Provider Listing",
+            "total": 10,
+            "live": 0,
+            "completion": "0/10 (0%)"
+          },
+          {
+            "priority": "P2",
+            "queue": "acquisition_listing",
+            "label": "Acquisition Listing",
+            "total": 10,
+            "live": 0,
+            "completion": "0/10 (0%)"
+          }
+        ],
+        "totals": {
+          "label": "CMS Wave 1",
+          "live": 7,
+          "total": 33,
+          "pending": 26,
+          "rate_pct": 21,
+          "display": "7/33 (21%)"
+        }
+      },
+      "blocked": [
+        {
+          "label": "ES Ambient",
+          "matrix_id": "DA-ES-HOME",
+          "ops_priority": "P0",
+          "pipeline_stage": "draft",
+          "waiting": "Waiting Upload"
+        },
+        {
+          "label": "AE Ambient",
+          "matrix_id": "DA-AE-HOME",
+          "ops_priority": "P0",
+          "pipeline_stage": "draft",
+          "waiting": "Waiting Upload"
+        },
+        {
+          "label": "CN Ambient",
+          "matrix_id": "DA-CN-HOME",
+          "ops_priority": "P0",
+          "pipeline_stage": "draft",
+          "waiting": "Waiting Upload"
+        },
+        {
+          "label": "POI",
+          "scan_id": "VIS-POI-FAMILY",
+          "ops_priority": "P1",
+          "waiting": "Waiting Upload"
+        },
+        {
+          "label": "Hotel",
+          "scan_id": "VIS-HOTEL-FAMILY",
+          "ops_priority": "P1",
+          "waiting": "Waiting Upload"
+        },
+        {
+          "label": "Transport",
+          "scan_id": "VIS-TRANSPORT-FAMILY",
+          "ops_priority": "P1",
+          "waiting": "Waiting Upload"
+        },
+        {
+          "label": "Provider Listing #1",
+          "scan_id": "VIS-MKT-provider-db1ab8d0-8215-4647-ae2a-74e5f2a35b0d",
+          "listing_id": "db1ab8d0-8215-4647-ae2a-74e5f2a35b0d",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Provider Listing #2",
+          "scan_id": "VIS-MKT-provider-4a62be85-92aa-4423-9136-9b26e47924f6",
+          "listing_id": "4a62be85-92aa-4423-9136-9b26e47924f6",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Provider Listing #3",
+          "scan_id": "VIS-MKT-provider-4151ab89-4a88-427b-9f34-eb4fbe01a196",
+          "listing_id": "4151ab89-4a88-427b-9f34-eb4fbe01a196",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Provider Listing #4",
+          "scan_id": "VIS-MKT-provider-8ccff008-23d6-4028-a6b4-65ac68e6eea7",
+          "listing_id": "8ccff008-23d6-4028-a6b4-65ac68e6eea7",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Provider Listing #5",
+          "scan_id": "VIS-MKT-provider-fe0533d3-305a-474a-b473-df4f4b7ea713",
+          "listing_id": "fe0533d3-305a-474a-b473-df4f4b7ea713",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Provider Listing #6",
+          "scan_id": "VIS-MKT-provider-b2d9f022-0653-4400-826c-91042ea8b3b8",
+          "listing_id": "b2d9f022-0653-4400-826c-91042ea8b3b8",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Provider Listing #7",
+          "scan_id": "VIS-MKT-provider-fc552d6f-81c4-4e1b-bdaa-1fb9245ab8a4",
+          "listing_id": "fc552d6f-81c4-4e1b-bdaa-1fb9245ab8a4",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Provider Listing #8",
+          "scan_id": "VIS-MKT-provider-1c0103f3-4dac-4c2b-93f4-8a8d6c276266",
+          "listing_id": "1c0103f3-4dac-4c2b-93f4-8a8d6c276266",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Provider Listing #9",
+          "scan_id": "VIS-MKT-provider-80784772-af41-4d21-8faa-24dea081d0e6",
+          "listing_id": "80784772-af41-4d21-8faa-24dea081d0e6",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Provider Listing #10",
+          "scan_id": "VIS-MKT-provider-c6f938af-4fb6-4059-bcac-5dd3e2015655",
+          "listing_id": "c6f938af-4fb6-4059-bcac-5dd3e2015655",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Acquisition Listing #1",
+          "scan_id": "VIS-MKT-acquisition-d9ece4dc-7b9d-4928-9d4d-c6b314292b8b",
+          "listing_id": "d9ece4dc-7b9d-4928-9d4d-c6b314292b8b",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Acquisition Listing #2",
+          "scan_id": "VIS-MKT-acquisition-4f677a25-a73c-4a14-8e1f-3c25640e5a4c",
+          "listing_id": "4f677a25-a73c-4a14-8e1f-3c25640e5a4c",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Acquisition Listing #3",
+          "scan_id": "VIS-MKT-acquisition-7ecec219-7981-454c-84c7-e30cd01b815a",
+          "listing_id": "7ecec219-7981-454c-84c7-e30cd01b815a",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Acquisition Listing #4",
+          "scan_id": "VIS-MKT-acquisition-5c497be1-a4dc-4103-b16b-8021e357b08c",
+          "listing_id": "5c497be1-a4dc-4103-b16b-8021e357b08c",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Acquisition Listing #5",
+          "scan_id": "VIS-MKT-acquisition-28a1d88a-a2ba-4ec6-9243-074ab846c590",
+          "listing_id": "28a1d88a-a2ba-4ec6-9243-074ab846c590",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Acquisition Listing #6",
+          "scan_id": "VIS-MKT-acquisition-6876ca7c-195e-40d8-b766-2787f2da9cf3",
+          "listing_id": "6876ca7c-195e-40d8-b766-2787f2da9cf3",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Acquisition Listing #7",
+          "scan_id": "VIS-MKT-acquisition-83b7cb80-c17d-494e-9cd3-48cdd1b96940",
+          "listing_id": "83b7cb80-c17d-494e-9cd3-48cdd1b96940",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Acquisition Listing #8",
+          "scan_id": "VIS-MKT-acquisition-62173ab8-b657-4b8c-9654-6dbac09b3ced",
+          "listing_id": "62173ab8-b657-4b8c-9654-6dbac09b3ced",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Acquisition Listing #9",
+          "scan_id": "VIS-MKT-acquisition-a110921b-af3b-49a0-923c-52f201e9134e",
+          "listing_id": "a110921b-af3b-49a0-923c-52f201e9134e",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        },
+        {
+          "label": "Acquisition Listing #10",
+          "scan_id": "VIS-MKT-acquisition-c3a45398-9677-4cf4-879b-011d1f1323b1",
+          "listing_id": "c3a45398-9677-4cf4-879b-011d1f1323b1",
+          "ops_priority": "P2",
+          "waiting": "Waiting Review"
+        }
+      ],
+      "daily_headline": {
+        "overall": "7/33 (21%)",
+        "p0_ambient": "7/10 (70%)",
+        "next": "ES Ambient"
+      },
+      "tracking_only_note": "Guide Listing (OCS) · Discover Listing (API) — 跟踪即可，不纳入 CMS 闭环"
+    },
+    "next_single_asset": {
+      "scan_id": "VIS-DA-AE-HOME",
+      "matrix_id": "DA-AE-HOME",
+      "current_source": "unsplash_fallback",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "l5_status": "REVIEW_REQUIRED",
+      "modify_entry": "/admin/content/landing-ambient"
+    }
+  },
+  "ops_priority": {
+    "P0": {
+      "label": "首页第一印象 · Wave 1",
+      "description": "Destination Ambient · 十国完成后首页质感明显提升",
+      "queues": [
+        "destination_ambient"
+      ]
+    },
+    "P1": {
+      "label": "业务展示 · CMS POI / Hotel / Transport",
+      "description": "定制旅行 · 行程详情直接受益",
+      "queues": [
+        "poi",
+        "hotel",
+        "transport"
+      ]
+    },
+    "P2": {
+      "label": "运营内容 · Market Listing Covers",
+      "description": "按来源分子队列 · 避免 Banner 混排",
+      "queues": [
+        "provider_listing",
+        "acquisition_listing",
+        "guide_listing",
+        "discover_listing",
+        "video"
+      ]
+    }
+  },
+  "queue_pending_total": 45,
+  "cms_queue_pending_total": 26,
+  "queues": {
+    "destination_ambient": [
+      {
+        "scan_id": "VIS-DA-AE-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-AE-HOME",
+        "matrix_id": "DA-AE-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "unsplash_fallback",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Region Review Required",
+        "url": null,
+        "flags": {
+          "is_placeholder": false,
+          "is_unsplash": true,
+          "is_pexels": false,
+          "is_old_external": true,
+          "region_review_required": true
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-DA-AU-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-AU-HOME",
+        "matrix_id": "DA-AU-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-community-media.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-CN-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-CN-HOME",
+        "matrix_id": "DA-CN-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "unsplash_fallback",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Region Review Required",
+        "url": null,
+        "flags": {
+          "is_placeholder": false,
+          "is_unsplash": true,
+          "is_pexels": false,
+          "is_old_external": true,
+          "region_review_required": true
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-DA-ES-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-ES-HOME",
+        "matrix_id": "DA-ES-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "unsplash_fallback",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Region Review Required",
+        "url": null,
+        "flags": {
+          "is_placeholder": false,
+          "is_unsplash": true,
+          "is_pexels": false,
+          "is_old_external": true,
+          "region_review_required": true
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-DA-FR-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-FR-HOME",
+        "matrix_id": "DA-FR-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-JP-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-JP-HOME",
+        "matrix_id": "DA-JP-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-community-media.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-KR-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-KR-HOME",
+        "matrix_id": "DA-KR-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-community-media.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-SG-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-SG-HOME",
+        "matrix_id": "DA-SG-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-TH-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-TH-HOME",
+        "matrix_id": "DA-TH-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-US-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-US-HOME",
+        "matrix_id": "DA-US-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-community-media.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      }
+    ],
+    "poi": [
+      {
+        "scan_id": "VIS-POI-FAMILY",
+        "ownership_id": "dest-poi-images",
+        "inventory_id": "IMG-FAM-POI-CITY",
+        "ops_priority": "P1",
+        "page_entry": {
+          "route": "/ · /itinerary/new · /escrow/[id]",
+          "page_module": "POI family · no published images",
+          "modify_entry": "/admin/content/poi-images"
+        },
+        "owner": "CMS",
+        "current_source": "placeholder",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": null,
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": true,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      }
+    ],
+    "hotel": [
+      {
+        "scan_id": "VIS-HOTEL-FAMILY",
+        "ownership_id": "hotel-transport-stock",
+        "inventory_id": "IMG-FAM-HOTEL",
+        "ops_priority": "P1",
+        "page_entry": {
+          "route": "market/itinerary/escrow adapters",
+          "page_module": "Hotel tier stock · empty",
+          "modify_entry": "/admin/content/hotel-tiers"
+        },
+        "owner": "CMS",
+        "current_source": "placeholder",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": null,
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": true,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      }
+    ],
+    "transport": [
+      {
+        "scan_id": "VIS-TRANSPORT-FAMILY",
+        "ownership_id": "hotel-transport-stock",
+        "inventory_id": "IMG-FAM-TRANSPORT",
+        "ops_priority": "P1",
+        "page_entry": {
+          "route": "market/itinerary/escrow adapters",
+          "page_module": "Transport stock · empty",
+          "modify_entry": "/admin/content/transport"
+        },
+        "owner": "CMS",
+        "current_source": "placeholder",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": null,
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": true,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      }
+    ],
+    "provider_listing": [
+      {
+        "scan_id": "VIS-MKT-provider-1c0103f3-4dac-4c2b-93f4-8a8d6c276266",
+        "ownership_id": "market-provider-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/provider",
+          "page_module": "商家橱窗 Listing",
+          "modify_entry": "MerchantShowcaseStudio · /admin/content"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-provider-4151ab89-4a88-427b-9f34-eb4fbe01a196",
+        "ownership_id": "market-provider-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/provider",
+          "page_module": "商家橱窗 Listing",
+          "modify_entry": "MerchantShowcaseStudio · /admin/content"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-provider-4a62be85-92aa-4423-9136-9b26e47924f6",
+        "ownership_id": "market-provider-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/provider",
+          "page_module": "商家橱窗 Listing",
+          "modify_entry": "MerchantShowcaseStudio · /admin/content"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-provider-80784772-af41-4d21-8faa-24dea081d0e6",
+        "ownership_id": "market-provider-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/provider",
+          "page_module": "商家橱窗 Listing",
+          "modify_entry": "MerchantShowcaseStudio · /admin/content"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-provider-8ccff008-23d6-4028-a6b4-65ac68e6eea7",
+        "ownership_id": "market-provider-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/provider",
+          "page_module": "商家橱窗 Listing",
+          "modify_entry": "MerchantShowcaseStudio · /admin/content"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-provider-b2d9f022-0653-4400-826c-91042ea8b3b8",
+        "ownership_id": "market-provider-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/provider",
+          "page_module": "商家橱窗 Listing",
+          "modify_entry": "MerchantShowcaseStudio · /admin/content"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-provider-c6f938af-4fb6-4059-bcac-5dd3e2015655",
+        "ownership_id": "market-provider-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/provider",
+          "page_module": "商家橱窗 Listing",
+          "modify_entry": "MerchantShowcaseStudio · /admin/content"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-provider-db1ab8d0-8215-4647-ae2a-74e5f2a35b0d",
+        "ownership_id": "market-provider-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/provider",
+          "page_module": "商家橱窗 Listing",
+          "modify_entry": "MerchantShowcaseStudio · /admin/content"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-provider-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-provider-fc552d6f-81c4-4e1b-bdaa-1fb9245ab8a4",
+        "ownership_id": "market-provider-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/provider",
+          "page_module": "商家橱窗 Listing",
+          "modify_entry": "MerchantShowcaseStudio · /admin/content"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-provider-fe0533d3-305a-474a-b473-df4f4b7ea713",
+        "ownership_id": "market-provider-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/provider",
+          "page_module": "商家橱窗 Listing",
+          "modify_entry": "MerchantShowcaseStudio · /admin/content"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      }
+    ],
+    "acquisition_listing": [
+      {
+        "scan_id": "VIS-MKT-acquisition-28a1d88a-a2ba-4ec6-9243-074ab846c590",
+        "ownership_id": "market-acquisition-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/acquisition",
+          "page_module": "收购 Listing",
+          "modify_entry": "AcquisitionCarryStudio"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-paris-art-acquisition-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-acquisition-4f677a25-a73c-4a14-8e1f-3c25640e5a4c",
+        "ownership_id": "market-acquisition-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/acquisition",
+          "page_module": "收购 Listing",
+          "modify_entry": "AcquisitionCarryStudio"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-acquisition-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-acquisition-5c497be1-a4dc-4103-b16b-8021e357b08c",
+        "ownership_id": "market-acquisition-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/acquisition",
+          "page_module": "收购 Listing",
+          "modify_entry": "AcquisitionCarryStudio"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-acquisition-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-acquisition-62173ab8-b657-4b8c-9654-6dbac09b3ced",
+        "ownership_id": "market-acquisition-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/acquisition",
+          "page_module": "收购 Listing",
+          "modify_entry": "AcquisitionCarryStudio"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-acquisition-6876ca7c-195e-40d8-b766-2787f2da9cf3",
+        "ownership_id": "market-acquisition-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/acquisition",
+          "page_module": "收购 Listing",
+          "modify_entry": "AcquisitionCarryStudio"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-acquisition-7ecec219-7981-454c-84c7-e30cd01b815a",
+        "ownership_id": "market-acquisition-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/acquisition",
+          "page_module": "收购 Listing",
+          "modify_entry": "AcquisitionCarryStudio"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-acquisition-83b7cb80-c17d-494e-9cd3-48cdd1b96940",
+        "ownership_id": "market-acquisition-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/acquisition",
+          "page_module": "收购 Listing",
+          "modify_entry": "AcquisitionCarryStudio"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-acquisition-a110921b-af3b-49a0-923c-52f201e9134e",
+        "ownership_id": "market-acquisition-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/acquisition",
+          "page_module": "收购 Listing",
+          "modify_entry": "AcquisitionCarryStudio"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-acquisition-c3a45398-9677-4cf4-879b-011d1f1323b1",
+        "ownership_id": "market-acquisition-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/acquisition",
+          "page_module": "收购 Listing",
+          "modify_entry": "AcquisitionCarryStudio"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      },
+      {
+        "scan_id": "VIS-MKT-acquisition-d9ece4dc-7b9d-4928-9d4d-c6b314292b8b",
+        "ownership_id": "market-acquisition-listing",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market/acquisition",
+          "page_module": "收购 Listing",
+          "modify_entry": "AcquisitionCarryStudio"
+        },
+        "owner": "CMS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-acquisition-cover.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      }
+    ],
+    "guide_listing": [
+      {
+        "scan_id": "VIS-GUIDE-2f51212f-6ac0-445e-bf94-8338738b2de3",
+        "ownership_id": "market-guide-avatar",
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market",
+          "page_module": "向导卡头像",
+          "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+        },
+        "owner": "OCS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-guide-avatar.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-GUIDE-519d9067-f2b2-49aa-9f76-8665cb24e85b",
+        "ownership_id": "market-guide-avatar",
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market",
+          "page_module": "向导卡头像",
+          "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+        },
+        "owner": "OCS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-seoul-food-guide-avatar.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-GUIDE-692a940e-1d25-452d-83f8-5b37f9141f60",
+        "ownership_id": "market-guide-avatar",
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market",
+          "page_module": "向导卡头像",
+          "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+        },
+        "owner": "OCS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-GUIDE-b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+        "ownership_id": "market-guide-avatar",
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market",
+          "page_module": "向导卡头像",
+          "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+        },
+        "owner": "OCS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-GUIDE-c5d963f9-e679-43a6-9b84-5f7073a51109",
+        "ownership_id": "market-guide-avatar",
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market",
+          "page_module": "向导卡头像",
+          "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+        },
+        "owner": "OCS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-guide-avatar.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-GUIDE-cd69b54b-6407-4a34-90c6-f36c0c658dd7",
+        "ownership_id": "market-guide-avatar",
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market",
+          "page_module": "向导卡头像",
+          "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+        },
+        "owner": "OCS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-guide-avatar.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-GUIDE-da75b617-64bf-4338-a5b2-daf32921d695",
+        "ownership_id": "market-guide-avatar",
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market",
+          "page_module": "向导卡头像",
+          "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+        },
+        "owner": "OCS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-guide-avatar.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-GUIDE-dddf81f0-28b7-4aba-b744-70026d9fb148",
+        "ownership_id": "market-guide-avatar",
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market",
+          "page_module": "向导卡头像",
+          "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+        },
+        "owner": "OCS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-guide-avatar.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-GUIDE-e551bed7-f455-4102-9fa3-b791a68e06d5",
+        "ownership_id": "market-guide-avatar",
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market",
+          "page_module": "向导卡头像",
+          "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+        },
+        "owner": "OCS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-sydney-coast-guide-avatar.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-GUIDE-ea732e91-f0f3-42da-b4ae-1a1f5f0f592c",
+        "ownership_id": "market-guide-avatar",
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market",
+          "page_module": "向导卡头像",
+          "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+        },
+        "owner": "OCS",
+        "current_source": "catalog_partial",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/api/v1/uploads/community-posts/ocs-singapore-family-guide-avatar.jpg",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      }
+    ],
+    "discover_listing": [
+      {
+        "scan_id": "VIS-DISCOVER-a7b65b40-9631-40fc-b68f-ce2b40495744",
+        "ownership_id": "market-order-cover",
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/market",
+          "page_module": "订单卡封面",
+          "modify_entry": "Backend discover seed · marketMediaFallback.ts"
+        },
+        "owner": "API",
+        "current_source": "old_external",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80",
+        "flags": {
+          "is_unsplash": true,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": true,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      }
+    ],
+    "video": [
+      {
+        "scan_id": "VIS-TT-VIDEO-FAMILY",
+        "ownership_id": "traveltrust-video",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/ · /traveltrust",
+          "page_module": "品牌视频 / Poster",
+          "modify_entry": "deploy media · Media Platform (future)"
+        },
+        "owner": "Media",
+        "current_source": "media_platform",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": "/media/traveltrust/roles/",
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      }
+    ]
+  },
+  "todays_review": [
+    {
+      "scan_id": "VIS-DA-ES-HOME",
+      "matrix_id": "DA-ES-HOME",
+      "country_iso": "ES",
+      "label": "ES Ambient",
+      "operational_action": "Region Review Required",
+      "ops_priority": "P0",
+      "modify_entry": "/admin/content/landing-ambient"
+    },
+    {
+      "scan_id": "VIS-DA-AE-HOME",
+      "matrix_id": "DA-AE-HOME",
+      "country_iso": "AE",
+      "label": "AE Ambient",
+      "operational_action": "Region Review Required",
+      "ops_priority": "P0",
+      "modify_entry": "/admin/content/landing-ambient"
+    },
+    {
+      "scan_id": "VIS-DA-CN-HOME",
+      "matrix_id": "DA-CN-HOME",
+      "country_iso": "CN",
+      "label": "CN Ambient",
+      "operational_action": "Region Review Required",
+      "ops_priority": "P0",
+      "modify_entry": "/admin/content/landing-ambient"
+    }
+  ],
+  "cms_operation_wave_1": {
+    "id": "wave_1",
+    "label": "CMS Operation Wave 1",
+    "closed_loop_queues": [
+      "destination_ambient",
+      "poi",
+      "hotel",
+      "transport",
+      "provider_listing",
+      "acquisition_listing"
+    ],
+    "tracking_only": [
+      {
+        "queue": "guide_listing",
+        "owner": "OCS",
+        "note": "跟踪 · 不纳入 CMS 闭环"
+      },
+      {
+        "queue": "discover_listing",
+        "owner": "API",
+        "note": "跟踪 · 不纳入 CMS 闭环"
+      }
+    ],
+    "phases": [
+      {
+        "priority": "P0",
+        "queues": [
+          "destination_ambient"
+        ],
+        "label": "Destination Ambient · 10 国",
+        "next_step": "逐国完成 JP→KR→TH→SG→FR→US→AU→ES→AE→CN"
+      },
+      {
+        "priority": "P1",
+        "queues": [
+          "poi",
+          "hotel",
+          "transport"
+        ],
+        "label": "POI · Hotel · Transport",
+        "next_step": "各家族完成 L5 替换"
+      },
+      {
+        "priority": "P2",
+        "queues": [
+          "provider_listing",
+          "acquisition_listing"
+        ],
+        "label": "Provider · Acquisition Listing",
+        "next_step": "逐项替换"
+      }
+    ],
+    "current_phase": {
+      "priority": "P0",
+      "label": "Destination Ambient · 10 国",
+      "next_step": "逐国完成 JP→KR→TH→SG→FR→US→AU→ES→AE→CN",
+      "next_asset": {
+        "matrix_id": "DA-ES-HOME",
+        "country_iso": "ES",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "complete": false
+    },
+    "queue_completion": {
+      "destination_ambient": {
+        "label": "Destination Ambient",
+        "priority": "P0",
+        "live": 7,
+        "total": 10,
+        "pending": 3,
+        "rate_pct": 70,
+        "display": "7/10 (70%)"
+      },
+      "poi": {
+        "label": "POI",
+        "priority": "P1",
+        "live": 0,
+        "total": 1,
+        "pending": 1,
+        "rate_pct": 0,
+        "display": "0/1 (0%)"
+      },
+      "hotel": {
+        "label": "Hotel",
+        "priority": "P1",
+        "live": 0,
+        "total": 1,
+        "pending": 1,
+        "rate_pct": 0,
+        "display": "0/1 (0%)"
+      },
+      "transport": {
+        "label": "Transport",
+        "priority": "P1",
+        "live": 0,
+        "total": 1,
+        "pending": 1,
+        "rate_pct": 0,
+        "display": "0/1 (0%)"
+      },
+      "provider_listing": {
+        "label": "Provider Listing",
+        "priority": "P2",
+        "live": 0,
+        "total": 10,
+        "pending": 10,
+        "rate_pct": 0,
+        "display": "0/10 (0%)"
+      },
+      "acquisition_listing": {
+        "label": "Acquisition Listing",
+        "priority": "P2",
+        "live": 0,
+        "total": 10,
+        "pending": 10,
+        "rate_pct": 0,
+        "display": "0/10 (0%)"
+      }
+    },
+    "work_plan": [
+      {
+        "priority": "P0",
+        "queue": "destination_ambient",
+        "label": "Destination Ambient",
+        "count": 10,
+        "completion": "7/10 (70%)",
+        "next_step": "逐国完成 JP→KR→TH→SG→FR→US→AU→ES→AE→CN"
+      },
+      {
+        "priority": "P1",
+        "queue": "poi",
+        "label": "POI",
+        "count": 1,
+        "completion": "0/1 (0%)",
+        "next_step": "各家族完成 L5 替换"
+      },
+      {
+        "priority": "P1",
+        "queue": "hotel",
+        "label": "Hotel",
+        "count": 1,
+        "completion": "0/1 (0%)",
+        "next_step": "各家族完成 L5 替换"
+      },
+      {
+        "priority": "P1",
+        "queue": "transport",
+        "label": "Transport",
+        "count": 1,
+        "completion": "0/1 (0%)",
+        "next_step": "各家族完成 L5 替换"
+      },
+      {
+        "priority": "P2",
+        "queue": "provider_listing",
+        "label": "Provider Listing",
+        "count": 10,
+        "completion": "0/10 (0%)",
+        "next_step": "逐项替换"
+      },
+      {
+        "priority": "P2",
+        "queue": "acquisition_listing",
+        "label": "Acquisition Listing",
+        "count": 10,
+        "completion": "0/10 (0%)",
+        "next_step": "逐项替换"
+      }
+    ],
+    "wave_progress": {
+      "live": 7,
+      "total": 33,
+      "pending": 26,
+      "rate_pct": 21,
+      "display": "7/33 (21%)"
+    },
+    "milestone": {
+      "label": "CMS Operation Wave 1",
+      "subtitle": "33 项里程碑 · Wave 1 全部完成后启动下一波",
+      "item_total": 33,
+      "rows": [
+        {
+          "priority": "P0",
+          "queue": "destination_ambient",
+          "label": "Destination Ambient",
+          "total": 10,
+          "live": 7,
+          "completion": "7/10 (70%)"
+        },
+        {
+          "priority": "P1",
+          "queue": "poi",
+          "label": "POI",
+          "total": 1,
+          "live": 0,
+          "completion": "0/1 (0%)"
+        },
+        {
+          "priority": "P1",
+          "queue": "hotel",
+          "label": "Hotel",
+          "total": 1,
+          "live": 0,
+          "completion": "0/1 (0%)"
+        },
+        {
+          "priority": "P1",
+          "queue": "transport",
+          "label": "Transport",
+          "total": 1,
+          "live": 0,
+          "completion": "0/1 (0%)"
+        },
+        {
+          "priority": "P2",
+          "queue": "provider_listing",
+          "label": "Provider Listing",
+          "total": 10,
+          "live": 0,
+          "completion": "0/10 (0%)"
+        },
+        {
+          "priority": "P2",
+          "queue": "acquisition_listing",
+          "label": "Acquisition Listing",
+          "total": 10,
+          "live": 0,
+          "completion": "0/10 (0%)"
+        }
+      ],
+      "totals": {
+        "label": "CMS Wave 1",
+        "live": 7,
+        "total": 33,
+        "pending": 26,
+        "rate_pct": 21,
+        "display": "7/33 (21%)"
+      }
+    },
+    "blocked": [
+      {
+        "label": "ES Ambient",
+        "matrix_id": "DA-ES-HOME",
+        "ops_priority": "P0",
+        "pipeline_stage": "draft",
+        "waiting": "Waiting Upload"
+      },
+      {
+        "label": "AE Ambient",
+        "matrix_id": "DA-AE-HOME",
+        "ops_priority": "P0",
+        "pipeline_stage": "draft",
+        "waiting": "Waiting Upload"
+      },
+      {
+        "label": "CN Ambient",
+        "matrix_id": "DA-CN-HOME",
+        "ops_priority": "P0",
+        "pipeline_stage": "draft",
+        "waiting": "Waiting Upload"
+      },
+      {
+        "label": "POI",
+        "scan_id": "VIS-POI-FAMILY",
+        "ops_priority": "P1",
+        "waiting": "Waiting Upload"
+      },
+      {
+        "label": "Hotel",
+        "scan_id": "VIS-HOTEL-FAMILY",
+        "ops_priority": "P1",
+        "waiting": "Waiting Upload"
+      },
+      {
+        "label": "Transport",
+        "scan_id": "VIS-TRANSPORT-FAMILY",
+        "ops_priority": "P1",
+        "waiting": "Waiting Upload"
+      },
+      {
+        "label": "Provider Listing #1",
+        "scan_id": "VIS-MKT-provider-db1ab8d0-8215-4647-ae2a-74e5f2a35b0d",
+        "listing_id": "db1ab8d0-8215-4647-ae2a-74e5f2a35b0d",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Provider Listing #2",
+        "scan_id": "VIS-MKT-provider-4a62be85-92aa-4423-9136-9b26e47924f6",
+        "listing_id": "4a62be85-92aa-4423-9136-9b26e47924f6",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Provider Listing #3",
+        "scan_id": "VIS-MKT-provider-4151ab89-4a88-427b-9f34-eb4fbe01a196",
+        "listing_id": "4151ab89-4a88-427b-9f34-eb4fbe01a196",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Provider Listing #4",
+        "scan_id": "VIS-MKT-provider-8ccff008-23d6-4028-a6b4-65ac68e6eea7",
+        "listing_id": "8ccff008-23d6-4028-a6b4-65ac68e6eea7",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Provider Listing #5",
+        "scan_id": "VIS-MKT-provider-fe0533d3-305a-474a-b473-df4f4b7ea713",
+        "listing_id": "fe0533d3-305a-474a-b473-df4f4b7ea713",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Provider Listing #6",
+        "scan_id": "VIS-MKT-provider-b2d9f022-0653-4400-826c-91042ea8b3b8",
+        "listing_id": "b2d9f022-0653-4400-826c-91042ea8b3b8",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Provider Listing #7",
+        "scan_id": "VIS-MKT-provider-fc552d6f-81c4-4e1b-bdaa-1fb9245ab8a4",
+        "listing_id": "fc552d6f-81c4-4e1b-bdaa-1fb9245ab8a4",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Provider Listing #8",
+        "scan_id": "VIS-MKT-provider-1c0103f3-4dac-4c2b-93f4-8a8d6c276266",
+        "listing_id": "1c0103f3-4dac-4c2b-93f4-8a8d6c276266",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Provider Listing #9",
+        "scan_id": "VIS-MKT-provider-80784772-af41-4d21-8faa-24dea081d0e6",
+        "listing_id": "80784772-af41-4d21-8faa-24dea081d0e6",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Provider Listing #10",
+        "scan_id": "VIS-MKT-provider-c6f938af-4fb6-4059-bcac-5dd3e2015655",
+        "listing_id": "c6f938af-4fb6-4059-bcac-5dd3e2015655",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Acquisition Listing #1",
+        "scan_id": "VIS-MKT-acquisition-d9ece4dc-7b9d-4928-9d4d-c6b314292b8b",
+        "listing_id": "d9ece4dc-7b9d-4928-9d4d-c6b314292b8b",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Acquisition Listing #2",
+        "scan_id": "VIS-MKT-acquisition-4f677a25-a73c-4a14-8e1f-3c25640e5a4c",
+        "listing_id": "4f677a25-a73c-4a14-8e1f-3c25640e5a4c",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Acquisition Listing #3",
+        "scan_id": "VIS-MKT-acquisition-7ecec219-7981-454c-84c7-e30cd01b815a",
+        "listing_id": "7ecec219-7981-454c-84c7-e30cd01b815a",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Acquisition Listing #4",
+        "scan_id": "VIS-MKT-acquisition-5c497be1-a4dc-4103-b16b-8021e357b08c",
+        "listing_id": "5c497be1-a4dc-4103-b16b-8021e357b08c",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Acquisition Listing #5",
+        "scan_id": "VIS-MKT-acquisition-28a1d88a-a2ba-4ec6-9243-074ab846c590",
+        "listing_id": "28a1d88a-a2ba-4ec6-9243-074ab846c590",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Acquisition Listing #6",
+        "scan_id": "VIS-MKT-acquisition-6876ca7c-195e-40d8-b766-2787f2da9cf3",
+        "listing_id": "6876ca7c-195e-40d8-b766-2787f2da9cf3",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Acquisition Listing #7",
+        "scan_id": "VIS-MKT-acquisition-83b7cb80-c17d-494e-9cd3-48cdd1b96940",
+        "listing_id": "83b7cb80-c17d-494e-9cd3-48cdd1b96940",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Acquisition Listing #8",
+        "scan_id": "VIS-MKT-acquisition-62173ab8-b657-4b8c-9654-6dbac09b3ced",
+        "listing_id": "62173ab8-b657-4b8c-9654-6dbac09b3ced",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Acquisition Listing #9",
+        "scan_id": "VIS-MKT-acquisition-a110921b-af3b-49a0-923c-52f201e9134e",
+        "listing_id": "a110921b-af3b-49a0-923c-52f201e9134e",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      },
+      {
+        "label": "Acquisition Listing #10",
+        "scan_id": "VIS-MKT-acquisition-c3a45398-9677-4cf4-879b-011d1f1323b1",
+        "listing_id": "c3a45398-9677-4cf4-879b-011d1f1323b1",
+        "ops_priority": "P2",
+        "waiting": "Waiting Review"
+      }
+    ],
+    "daily_headline": {
+      "overall": "7/33 (21%)",
+      "p0_ambient": "7/10 (70%)",
+      "next": "ES Ambient"
+    },
+    "tracking_only_note": "Guide Listing (OCS) · Discover Listing (API) — 跟踪即可，不纳入 CMS 闭环"
+  },
+  "ownership_modules": [
+    {
+      "ownership_id": "home-destination-ambient",
+      "page_module": "首页国家背景 · Destination Ambient",
+      "route": "/",
+      "owner": "CMS",
+      "image_owner": "CMS landing_ambient · ① fallback Unsplash TS",
+      "modify_entry": "/admin/content/landing-ambient",
+      "current_status": "draft",
+      "business_criticality": "P0",
+      "cms_queue_hint": "destination_ambient",
+      "ops_priority": "P0"
+    },
+    {
+      "ownership_id": "home-itinerary-preview",
+      "page_module": "创新行程预览卡",
+      "route": "/",
+      "owner": "API",
+      "image_owner": "API daily_itinerary images · ambient until unlock",
+      "modify_entry": "Backend itineraries mock · locales",
+      "current_status": "live",
+      "business_criticality": "P0",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "market-order-cover",
+      "page_module": "订单卡封面",
+      "route": "/market",
+      "owner": "API",
+      "image_owner": "API image · Unsplash fallback",
+      "modify_entry": "Backend discover seed · marketMediaFallback.ts",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P0",
+      "cms_queue_hint": "discover_listing",
+      "ops_priority": "P2"
+    },
+    {
+      "ownership_id": "market-provider-listing",
+      "page_module": "商家橱窗 Listing",
+      "route": "/market/provider",
+      "owner": "CMS",
+      "image_owner": "PG payload · demo Unsplash",
+      "modify_entry": "MerchantShowcaseStudio · /admin/content",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P1",
+      "cms_queue_hint": "provider_listing",
+      "ops_priority": "P2"
+    },
+    {
+      "ownership_id": "market-acquisition-listing",
+      "page_module": "收购 Listing",
+      "route": "/market/acquisition",
+      "owner": "CMS",
+      "image_owner": "PG payload · demo Unsplash",
+      "modify_entry": "AcquisitionCarryStudio",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P1",
+      "cms_queue_hint": "acquisition_listing",
+      "ops_priority": "P2"
+    },
+    {
+      "ownership_id": "itinerary-new",
+      "page_module": "独立行程创建",
+      "route": "/itinerary/new",
+      "owner": "API",
+      "image_owner": "API itinerary images",
+      "modify_entry": "Backend mock · /admin/official/itinerary-templates",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P1",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "community-main",
+      "page_module": "Community 主 Feed",
+      "route": "/community",
+      "owner": "API",
+      "image_owner": "UGC uploads · media multipart",
+      "modify_entry": "PublishDrawer · /admin/community",
+      "current_status": "live",
+      "business_criticality": "P0",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "community-explore",
+      "page_module": "Explore",
+      "route": "/community/explore",
+      "owner": "API",
+      "image_owner": "Feed thumbs + dest blocks",
+      "modify_entry": "CMS geo backend · frozen UI",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P0",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "community-detail-media",
+      "page_module": "Post / User 媒体",
+      "route": "/community/post/[id] · /community/user/[id]",
+      "owner": "API",
+      "image_owner": "API media URLs",
+      "modify_entry": "User publish · /admin/community",
+      "current_status": "live",
+      "business_criticality": "P0",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "guide-workbench",
+      "page_module": "向导工作台",
+      "route": "/guide",
+      "owner": "API",
+      "image_owner": "Profile preview API",
+      "modify_entry": "/guide/* operator UI",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P1",
+      "cms_queue_hint": "guide_listing",
+      "ops_priority": "P2"
+    },
+    {
+      "ownership_id": "dest-ambient-all-countries",
+      "page_module": "十国 Destination Ambient",
+      "route": "/ (country selection)",
+      "owner": "CMS",
+      "image_owner": "CMS landing_ambient · Unsplash fallback",
+      "modify_entry": "/admin/content/landing-ambient",
+      "current_status": "draft",
+      "business_criticality": "P0",
+      "cms_queue_hint": "destination_ambient",
+      "ops_priority": "P0"
+    },
+    {
+      "ownership_id": "dest-poi-images",
+      "page_module": "行程/POI 配图",
+      "route": "/ · /itinerary/new · /escrow/[id]",
+      "owner": "CMS",
+      "image_owner": "CMS poi_hero · API fallback",
+      "modify_entry": "/admin/content/poi-images · pois",
+      "current_status": "not_started",
+      "business_criticality": "P1",
+      "cms_queue_hint": "poi",
+      "ops_priority": "P1"
+    },
+    {
+      "ownership_id": "traveltrust-page",
+      "page_module": "/traveltrust 品牌页",
+      "route": "/traveltrust",
+      "owner": "API",
+      "image_owner": "page-brief media keys · cinematic static",
+      "modify_entry": "locales · env deploy (UI frozen)",
+      "current_status": "frozen",
+      "business_criticality": "P2",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "traveltrust-video",
+      "page_module": "品牌视频 / Poster",
+      "route": "/ · /traveltrust",
+      "owner": "Media",
+      "image_owner": "public/media/landing static",
+      "modify_entry": "deploy media · Media Platform (future)",
+      "current_status": "not_started",
+      "business_criticality": "P2",
+      "cms_queue_hint": "video",
+      "ops_priority": "P2"
+    },
+    {
+      "ownership_id": "did-rank-boards",
+      "page_module": "DID Rank 各榜",
+      "route": "/did-rank",
+      "owner": "API",
+      "image_owner": "API rank avatars",
+      "modify_entry": "Backend rank compute",
+      "current_status": "live",
+      "business_criticality": "P2",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "did-rank-trust",
+      "page_module": "Trust 深链",
+      "route": "/did-rank → /community/user/[id]",
+      "owner": "API",
+      "image_owner": "Community avatars",
+      "modify_entry": "Backend · community profile",
+      "current_status": "live",
+      "business_criticality": "P2",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "escrow-order",
+      "page_module": "Escrow 订单页",
+      "route": "/escrow/[id]",
+      "owner": "API",
+      "image_owner": "Order/itinerary images",
+      "modify_entry": "Backend orders",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P0",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "provider-register",
+      "page_module": "商家入驻",
+      "route": "/provider/register",
+      "owner": "API",
+      "image_owner": "KYC uploads",
+      "modify_entry": "/provider/register · /admin/provider-applications",
+      "current_status": "frozen",
+      "business_criticality": "P0",
+      "cms_queue_hint": "provider_listing",
+      "ops_priority": "P2"
+    },
+    {
+      "ownership_id": "hotel-transport-stock",
+      "page_module": "酒店/交通库存图",
+      "route": "market/itinerary/escrow adapters",
+      "owner": "CMS",
+      "image_owner": "CMS hotel_tier_stock · transport_stock",
+      "modify_entry": "/admin/content/hotel-tiers · transport-region-rules",
+      "current_status": "not_started",
+      "business_criticality": "P1",
+      "cms_queue_hint": "hotel",
+      "ops_priority": "P1"
+    },
+    {
+      "ownership_id": "admin-cms-hub",
+      "page_module": "CMS Admin",
+      "route": "/admin/content/*",
+      "owner": "CMS",
+      "image_owner": "CMS media assets",
+      "modify_entry": "/admin/content/*",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P1",
+      "cms_queue_hint": "destination_ambient",
+      "ops_priority": "P0"
+    },
+    {
+      "ownership_id": "admin-community-mod",
+      "page_module": "Community 审核",
+      "route": "/admin/community/*",
+      "owner": "API",
+      "image_owner": "UGC refs",
+      "modify_entry": "/admin/community/*",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P1",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    }
+  ],
+  "visual_findings": [
+    {
+      "scan_id": "VIS-DA-JP-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-JP-HOME",
+      "matrix_id": "DA-JP-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "JP",
+      "country_label": "JP Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-community-media.jpg",
+      "probe": {
+        "http": 200,
+        "catalog_items": 1
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "catalog live · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only"
+    },
+    {
+      "scan_id": "VIS-DA-KR-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-KR-HOME",
+      "matrix_id": "DA-KR-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "KR",
+      "country_label": "KR Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-community-media.jpg",
+      "probe": {
+        "http": 200,
+        "catalog_items": 1
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "catalog live · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only"
+    },
+    {
+      "scan_id": "VIS-DA-TH-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-TH-HOME",
+      "matrix_id": "DA-TH-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "TH",
+      "country_label": "TH Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg",
+      "probe": {
+        "http": 200,
+        "catalog_items": 1
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "catalog live · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only"
+    },
+    {
+      "scan_id": "VIS-DA-SG-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-SG-HOME",
+      "matrix_id": "DA-SG-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "SG",
+      "country_label": "SG Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg",
+      "probe": {
+        "http": 200,
+        "catalog_items": 1
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "catalog live · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only"
+    },
+    {
+      "scan_id": "VIS-DA-FR-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-FR-HOME",
+      "matrix_id": "DA-FR-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "FR",
+      "country_label": "FR Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "probe": {
+        "http": 200,
+        "catalog_items": 1
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "catalog live · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only"
+    },
+    {
+      "scan_id": "VIS-DA-US-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-US-HOME",
+      "matrix_id": "DA-US-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "US",
+      "country_label": "US Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-community-media.jpg",
+      "probe": {
+        "http": 200,
+        "catalog_items": 1
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "catalog live · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only"
+    },
+    {
+      "scan_id": "VIS-DA-AU-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-AU-HOME",
+      "matrix_id": "DA-AU-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "AU",
+      "country_label": "AU Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-community-media.jpg",
+      "probe": {
+        "http": 200,
+        "catalog_items": 1
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "catalog live · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only"
+    },
+    {
+      "scan_id": "VIS-DA-ES-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-ES-HOME",
+      "matrix_id": "DA-ES-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "ES",
+      "country_label": "ES Ambient",
+      "url": null,
+      "probe": {
+        "http": 200,
+        "catalog_items": 0
+      },
+      "current_source": "unsplash_fallback",
+      "flags": {
+        "is_placeholder": false,
+        "is_unsplash": true,
+        "is_pexels": false,
+        "is_old_external": true,
+        "region_review_required": true
+      },
+      "asset_lifecycle": "draft",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Region Review Required"
+    },
+    {
+      "scan_id": "VIS-DA-AE-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-AE-HOME",
+      "matrix_id": "DA-AE-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "AE",
+      "country_label": "AE Ambient",
+      "url": null,
+      "probe": {
+        "http": 200,
+        "catalog_items": 0
+      },
+      "current_source": "unsplash_fallback",
+      "flags": {
+        "is_placeholder": false,
+        "is_unsplash": true,
+        "is_pexels": false,
+        "is_old_external": true,
+        "region_review_required": true
+      },
+      "asset_lifecycle": "draft",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Region Review Required"
+    },
+    {
+      "scan_id": "VIS-DA-CN-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-CN-HOME",
+      "matrix_id": "DA-CN-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "CN",
+      "country_label": "CN Ambient",
+      "url": null,
+      "probe": {
+        "http": 200,
+        "catalog_items": 0
+      },
+      "current_source": "unsplash_fallback",
+      "flags": {
+        "is_placeholder": false,
+        "is_unsplash": true,
+        "is_pexels": false,
+        "is_old_external": true,
+        "region_review_required": true
+      },
+      "asset_lifecycle": "draft",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Region Review Required"
+    },
+    {
+      "scan_id": "VIS-POI-FAMILY",
+      "ownership_id": "dest-poi-images",
+      "inventory_id": "IMG-FAM-POI-CITY",
+      "page_entry": {
+        "route": "/ · /itinerary/new · /escrow/[id]",
+        "page_module": "POI family · no published images",
+        "modify_entry": "/admin/content/poi-images"
+      },
+      "owner": "CMS",
+      "cms_queue": "poi",
+      "ops_priority": "P1",
+      "asset_kind": "poi_hero",
+      "url": null,
+      "current_source": "placeholder",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": true,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "probe": {
+        "http": 200,
+        "catalog_items": 0
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-HOTEL-FAMILY",
+      "ownership_id": "hotel-transport-stock",
+      "inventory_id": "IMG-FAM-HOTEL",
+      "page_entry": {
+        "route": "market/itinerary/escrow adapters",
+        "page_module": "Hotel tier stock · empty",
+        "modify_entry": "/admin/content/hotel-tiers"
+      },
+      "owner": "CMS",
+      "cms_queue": "hotel",
+      "ops_priority": "P1",
+      "asset_kind": "hotel_tier_stock",
+      "url": null,
+      "current_source": "placeholder",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": true,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "probe": {
+        "http": 200,
+        "catalog_items": 0
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-TRANSPORT-FAMILY",
+      "ownership_id": "hotel-transport-stock",
+      "inventory_id": "IMG-FAM-TRANSPORT",
+      "page_entry": {
+        "route": "market/itinerary/escrow adapters",
+        "page_module": "Transport stock · empty",
+        "modify_entry": "/admin/content/transport"
+      },
+      "owner": "CMS",
+      "cms_queue": "transport",
+      "ops_priority": "P1",
+      "asset_kind": "transport_stock",
+      "url": null,
+      "current_source": "placeholder",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": true,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "probe": {
+        "http": 200,
+        "catalog_items": 0
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-provider-db1ab8d0-8215-4647-ae2a-74e5f2a35b0d",
+      "ownership_id": "market-provider-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/provider",
+        "page_module": "商家橱窗 Listing",
+        "modify_entry": "MerchantShowcaseStudio · /admin/content"
+      },
+      "owner": "CMS",
+      "cms_queue": "provider_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "provider",
+      "url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-provider-cover.jpg",
+      "listing_id": "db1ab8d0-8215-4647-ae2a-74e5f2a35b0d",
+      "probe": {
+        "http": 200,
+        "segment": "provider"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-provider-4a62be85-92aa-4423-9136-9b26e47924f6",
+      "ownership_id": "market-provider-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/provider",
+        "page_module": "商家橱窗 Listing",
+        "modify_entry": "MerchantShowcaseStudio · /admin/content"
+      },
+      "owner": "CMS",
+      "cms_queue": "provider_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "provider",
+      "url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg",
+      "listing_id": "4a62be85-92aa-4423-9136-9b26e47924f6",
+      "probe": {
+        "http": 200,
+        "segment": "provider"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-provider-4151ab89-4a88-427b-9f34-eb4fbe01a196",
+      "ownership_id": "market-provider-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/provider",
+        "page_module": "商家橱窗 Listing",
+        "modify_entry": "MerchantShowcaseStudio · /admin/content"
+      },
+      "owner": "CMS",
+      "cms_queue": "provider_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "provider",
+      "url": "/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg",
+      "listing_id": "4151ab89-4a88-427b-9f34-eb4fbe01a196",
+      "probe": {
+        "http": 200,
+        "segment": "provider"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-provider-8ccff008-23d6-4028-a6b4-65ac68e6eea7",
+      "ownership_id": "market-provider-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/provider",
+        "page_module": "商家橱窗 Listing",
+        "modify_entry": "MerchantShowcaseStudio · /admin/content"
+      },
+      "owner": "CMS",
+      "cms_queue": "provider_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "provider",
+      "url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg",
+      "listing_id": "8ccff008-23d6-4028-a6b4-65ac68e6eea7",
+      "probe": {
+        "http": 200,
+        "segment": "provider"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-provider-fe0533d3-305a-474a-b473-df4f4b7ea713",
+      "ownership_id": "market-provider-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/provider",
+        "page_module": "商家橱窗 Listing",
+        "modify_entry": "MerchantShowcaseStudio · /admin/content"
+      },
+      "owner": "CMS",
+      "cms_queue": "provider_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "provider",
+      "url": "/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "listing_id": "fe0533d3-305a-474a-b473-df4f4b7ea713",
+      "probe": {
+        "http": 200,
+        "segment": "provider"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-provider-b2d9f022-0653-4400-826c-91042ea8b3b8",
+      "ownership_id": "market-provider-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/provider",
+        "page_module": "商家橱窗 Listing",
+        "modify_entry": "MerchantShowcaseStudio · /admin/content"
+      },
+      "owner": "CMS",
+      "cms_queue": "provider_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "provider",
+      "url": "/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg",
+      "listing_id": "b2d9f022-0653-4400-826c-91042ea8b3b8",
+      "probe": {
+        "http": 200,
+        "segment": "provider"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-provider-fc552d6f-81c4-4e1b-bdaa-1fb9245ab8a4",
+      "ownership_id": "market-provider-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/provider",
+        "page_module": "商家橱窗 Listing",
+        "modify_entry": "MerchantShowcaseStudio · /admin/content"
+      },
+      "owner": "CMS",
+      "cms_queue": "provider_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "provider",
+      "url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg",
+      "listing_id": "fc552d6f-81c4-4e1b-bdaa-1fb9245ab8a4",
+      "probe": {
+        "http": 200,
+        "segment": "provider"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-provider-1c0103f3-4dac-4c2b-93f4-8a8d6c276266",
+      "ownership_id": "market-provider-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/provider",
+        "page_module": "商家橱窗 Listing",
+        "modify_entry": "MerchantShowcaseStudio · /admin/content"
+      },
+      "owner": "CMS",
+      "cms_queue": "provider_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "provider",
+      "url": "/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg",
+      "listing_id": "1c0103f3-4dac-4c2b-93f4-8a8d6c276266",
+      "probe": {
+        "http": 200,
+        "segment": "provider"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-provider-80784772-af41-4d21-8faa-24dea081d0e6",
+      "ownership_id": "market-provider-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/provider",
+        "page_module": "商家橱窗 Listing",
+        "modify_entry": "MerchantShowcaseStudio · /admin/content"
+      },
+      "owner": "CMS",
+      "cms_queue": "provider_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "provider",
+      "url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg",
+      "listing_id": "80784772-af41-4d21-8faa-24dea081d0e6",
+      "probe": {
+        "http": 200,
+        "segment": "provider"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-provider-c6f938af-4fb6-4059-bcac-5dd3e2015655",
+      "ownership_id": "market-provider-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/provider",
+        "page_module": "商家橱窗 Listing",
+        "modify_entry": "MerchantShowcaseStudio · /admin/content"
+      },
+      "owner": "CMS",
+      "cms_queue": "provider_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "provider",
+      "url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg",
+      "listing_id": "c6f938af-4fb6-4059-bcac-5dd3e2015655",
+      "probe": {
+        "http": 200,
+        "segment": "provider"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-acquisition-d9ece4dc-7b9d-4928-9d4d-c6b314292b8b",
+      "ownership_id": "market-acquisition-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/acquisition",
+        "page_module": "收购 Listing",
+        "modify_entry": "AcquisitionCarryStudio"
+      },
+      "owner": "CMS",
+      "cms_queue": "acquisition_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "acquisition",
+      "url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-acquisition-cover.jpg",
+      "listing_id": "d9ece4dc-7b9d-4928-9d4d-c6b314292b8b",
+      "probe": {
+        "http": 200,
+        "segment": "acquisition"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-acquisition-4f677a25-a73c-4a14-8e1f-3c25640e5a4c",
+      "ownership_id": "market-acquisition-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/acquisition",
+        "page_module": "收购 Listing",
+        "modify_entry": "AcquisitionCarryStudio"
+      },
+      "owner": "CMS",
+      "cms_queue": "acquisition_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "acquisition",
+      "url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-acquisition-cover.jpg",
+      "listing_id": "4f677a25-a73c-4a14-8e1f-3c25640e5a4c",
+      "probe": {
+        "http": 200,
+        "segment": "acquisition"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-acquisition-7ecec219-7981-454c-84c7-e30cd01b815a",
+      "ownership_id": "market-acquisition-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/acquisition",
+        "page_module": "收购 Listing",
+        "modify_entry": "AcquisitionCarryStudio"
+      },
+      "owner": "CMS",
+      "cms_queue": "acquisition_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "acquisition",
+      "url": "/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg",
+      "listing_id": "7ecec219-7981-454c-84c7-e30cd01b815a",
+      "probe": {
+        "http": 200,
+        "segment": "acquisition"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-acquisition-5c497be1-a4dc-4103-b16b-8021e357b08c",
+      "ownership_id": "market-acquisition-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/acquisition",
+        "page_module": "收购 Listing",
+        "modify_entry": "AcquisitionCarryStudio"
+      },
+      "owner": "CMS",
+      "cms_queue": "acquisition_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "acquisition",
+      "url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-acquisition-cover.jpg",
+      "listing_id": "5c497be1-a4dc-4103-b16b-8021e357b08c",
+      "probe": {
+        "http": 200,
+        "segment": "acquisition"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-acquisition-28a1d88a-a2ba-4ec6-9243-074ab846c590",
+      "ownership_id": "market-acquisition-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/acquisition",
+        "page_module": "收购 Listing",
+        "modify_entry": "AcquisitionCarryStudio"
+      },
+      "owner": "CMS",
+      "cms_queue": "acquisition_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "acquisition",
+      "url": "/api/v1/uploads/community-posts/ocs-paris-art-acquisition-cover.jpg",
+      "listing_id": "28a1d88a-a2ba-4ec6-9243-074ab846c590",
+      "probe": {
+        "http": 200,
+        "segment": "acquisition"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-acquisition-6876ca7c-195e-40d8-b766-2787f2da9cf3",
+      "ownership_id": "market-acquisition-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/acquisition",
+        "page_module": "收购 Listing",
+        "modify_entry": "AcquisitionCarryStudio"
+      },
+      "owner": "CMS",
+      "cms_queue": "acquisition_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "acquisition",
+      "url": "/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg",
+      "listing_id": "6876ca7c-195e-40d8-b766-2787f2da9cf3",
+      "probe": {
+        "http": 200,
+        "segment": "acquisition"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-acquisition-83b7cb80-c17d-494e-9cd3-48cdd1b96940",
+      "ownership_id": "market-acquisition-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/acquisition",
+        "page_module": "收购 Listing",
+        "modify_entry": "AcquisitionCarryStudio"
+      },
+      "owner": "CMS",
+      "cms_queue": "acquisition_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "acquisition",
+      "url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg",
+      "listing_id": "83b7cb80-c17d-494e-9cd3-48cdd1b96940",
+      "probe": {
+        "http": 200,
+        "segment": "acquisition"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-acquisition-62173ab8-b657-4b8c-9654-6dbac09b3ced",
+      "ownership_id": "market-acquisition-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/acquisition",
+        "page_module": "收购 Listing",
+        "modify_entry": "AcquisitionCarryStudio"
+      },
+      "owner": "CMS",
+      "cms_queue": "acquisition_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "acquisition",
+      "url": "/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg",
+      "listing_id": "62173ab8-b657-4b8c-9654-6dbac09b3ced",
+      "probe": {
+        "http": 200,
+        "segment": "acquisition"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-acquisition-a110921b-af3b-49a0-923c-52f201e9134e",
+      "ownership_id": "market-acquisition-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/acquisition",
+        "page_module": "收购 Listing",
+        "modify_entry": "AcquisitionCarryStudio"
+      },
+      "owner": "CMS",
+      "cms_queue": "acquisition_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "acquisition",
+      "url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg",
+      "listing_id": "a110921b-af3b-49a0-923c-52f201e9134e",
+      "probe": {
+        "http": 200,
+        "segment": "acquisition"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-MKT-acquisition-c3a45398-9677-4cf4-879b-011d1f1323b1",
+      "ownership_id": "market-acquisition-listing",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/market/acquisition",
+        "page_module": "收购 Listing",
+        "modify_entry": "AcquisitionCarryStudio"
+      },
+      "owner": "CMS",
+      "cms_queue": "acquisition_listing",
+      "ops_priority": "P2",
+      "asset_kind": "listing_cover",
+      "listing_segment": "acquisition",
+      "url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg",
+      "listing_id": "c3a45398-9677-4cf4-879b-011d1f1323b1",
+      "probe": {
+        "http": 200,
+        "segment": "acquisition"
+      },
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-GUIDE-cd69b54b-6407-4a34-90c6-f36c0c658dd7",
+      "ownership_id": "market-guide-avatar",
+      "page_entry": {
+        "route": "/market",
+        "page_module": "向导卡头像",
+        "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+      },
+      "owner": "OCS",
+      "cms_queue": "guide_listing",
+      "ops_priority": "P2",
+      "asset_kind": "guide_listing_cover",
+      "url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-guide-avatar.jpg",
+      "probe": {
+        "http": 200
+      },
+      "needs_cms_l5_workflow": false,
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-GUIDE-dddf81f0-28b7-4aba-b744-70026d9fb148",
+      "ownership_id": "market-guide-avatar",
+      "page_entry": {
+        "route": "/market",
+        "page_module": "向导卡头像",
+        "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+      },
+      "owner": "OCS",
+      "cms_queue": "guide_listing",
+      "ops_priority": "P2",
+      "asset_kind": "guide_listing_cover",
+      "url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-guide-avatar.jpg",
+      "probe": {
+        "http": 200
+      },
+      "needs_cms_l5_workflow": false,
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-GUIDE-e551bed7-f455-4102-9fa3-b791a68e06d5",
+      "ownership_id": "market-guide-avatar",
+      "page_entry": {
+        "route": "/market",
+        "page_module": "向导卡头像",
+        "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+      },
+      "owner": "OCS",
+      "cms_queue": "guide_listing",
+      "ops_priority": "P2",
+      "asset_kind": "guide_listing_cover",
+      "url": "/api/v1/uploads/community-posts/ocs-sydney-coast-guide-avatar.jpg",
+      "probe": {
+        "http": 200
+      },
+      "needs_cms_l5_workflow": false,
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-GUIDE-c5d963f9-e679-43a6-9b84-5f7073a51109",
+      "ownership_id": "market-guide-avatar",
+      "page_entry": {
+        "route": "/market",
+        "page_module": "向导卡头像",
+        "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+      },
+      "owner": "OCS",
+      "cms_queue": "guide_listing",
+      "ops_priority": "P2",
+      "asset_kind": "guide_listing_cover",
+      "url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-guide-avatar.jpg",
+      "probe": {
+        "http": 200
+      },
+      "needs_cms_l5_workflow": false,
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-GUIDE-692a940e-1d25-452d-83f8-5b37f9141f60",
+      "ownership_id": "market-guide-avatar",
+      "page_entry": {
+        "route": "/market",
+        "page_module": "向导卡头像",
+        "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+      },
+      "owner": "OCS",
+      "cms_queue": "guide_listing",
+      "ops_priority": "P2",
+      "asset_kind": "guide_listing_cover",
+      "url": "/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "probe": {
+        "http": 200
+      },
+      "needs_cms_l5_workflow": false,
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-GUIDE-ea732e91-f0f3-42da-b4ae-1a1f5f0f592c",
+      "ownership_id": "market-guide-avatar",
+      "page_entry": {
+        "route": "/market",
+        "page_module": "向导卡头像",
+        "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+      },
+      "owner": "OCS",
+      "cms_queue": "guide_listing",
+      "ops_priority": "P2",
+      "asset_kind": "guide_listing_cover",
+      "url": "/api/v1/uploads/community-posts/ocs-singapore-family-guide-avatar.jpg",
+      "probe": {
+        "http": 200
+      },
+      "needs_cms_l5_workflow": false,
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-GUIDE-da75b617-64bf-4338-a5b2-daf32921d695",
+      "ownership_id": "market-guide-avatar",
+      "page_entry": {
+        "route": "/market",
+        "page_module": "向导卡头像",
+        "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+      },
+      "owner": "OCS",
+      "cms_queue": "guide_listing",
+      "ops_priority": "P2",
+      "asset_kind": "guide_listing_cover",
+      "url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-guide-avatar.jpg",
+      "probe": {
+        "http": 200
+      },
+      "needs_cms_l5_workflow": false,
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-GUIDE-519d9067-f2b2-49aa-9f76-8665cb24e85b",
+      "ownership_id": "market-guide-avatar",
+      "page_entry": {
+        "route": "/market",
+        "page_module": "向导卡头像",
+        "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+      },
+      "owner": "OCS",
+      "cms_queue": "guide_listing",
+      "ops_priority": "P2",
+      "asset_kind": "guide_listing_cover",
+      "url": "/api/v1/uploads/community-posts/ocs-seoul-food-guide-avatar.jpg",
+      "probe": {
+        "http": 200
+      },
+      "needs_cms_l5_workflow": false,
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-GUIDE-2f51212f-6ac0-445e-bf94-8338738b2de3",
+      "ownership_id": "market-guide-avatar",
+      "page_entry": {
+        "route": "/market",
+        "page_module": "向导卡头像",
+        "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+      },
+      "owner": "OCS",
+      "cms_queue": "guide_listing",
+      "ops_priority": "P2",
+      "asset_kind": "guide_listing_cover",
+      "url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-guide-avatar.jpg",
+      "probe": {
+        "http": 200
+      },
+      "needs_cms_l5_workflow": false,
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-GUIDE-b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+      "ownership_id": "market-guide-avatar",
+      "page_entry": {
+        "route": "/market",
+        "page_module": "向导卡头像",
+        "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+      },
+      "owner": "OCS",
+      "cms_queue": "guide_listing",
+      "ops_priority": "P2",
+      "asset_kind": "guide_listing_cover",
+      "url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg",
+      "probe": {
+        "http": 200
+      },
+      "needs_cms_l5_workflow": false,
+      "current_source": "catalog_partial",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-DISCOVER-a7b65b40-9631-40fc-b68f-ce2b40495744",
+      "ownership_id": "market-order-cover",
+      "page_entry": {
+        "route": "/market",
+        "page_module": "订单卡封面",
+        "modify_entry": "Backend discover seed · marketMediaFallback.ts"
+      },
+      "owner": "API",
+      "cms_queue": "discover_listing",
+      "ops_priority": "P2",
+      "asset_kind": "discover_listing_cover",
+      "url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80",
+      "probe": {
+        "http": 200
+      },
+      "needs_cms_l5_workflow": false,
+      "current_source": "old_external",
+      "flags": {
+        "is_unsplash": true,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": true,
+        "region_review_required": false
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-TT-VIDEO-FAMILY",
+      "ownership_id": "traveltrust-video",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/ · /traveltrust",
+        "page_module": "品牌视频 / Poster",
+        "modify_entry": "deploy media · Media Platform (future)"
+      },
+      "owner": "Media",
+      "cms_queue": "video",
+      "ops_priority": "P2",
+      "asset_kind": "brand_video",
+      "url": "/media/traveltrust/roles/",
+      "current_source": "media_platform",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "probe": {
+        "http": 200,
+        "static_refs": [
+          "/media/traveltrust/roles/",
+          "NEXT_PUBLIC_TRAVELTRUST_ROLE_VIDEO_TRAVELER=env",
+          "NEXT_PUBLIC_TRAVELTRUST_ROLE_VIDEO_GUIDE=env",
+          "NEXT_PUBLIC_TRAVELTRUST_ROLE_VIDEO_MERCHANT=env",
+          "NEXT_PUBLIC_TRAVELTRUST_ROLE_VIDEO_ACQUISITION=env",
+          "NEXT_PUBLIC_TRAVELTRUST_ROLE_VIDEO_REGION_STEWARD=env"
+        ]
+      },
+      "needs_cms_l5_workflow": false,
+      "l5_compliant": false,
+      "workflow": [],
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    }
+  ],
+  "excluded_ocs": [
+    {
+      "ownership_id": "home-hero-ocs",
+      "page_module": "Home Hero / Campaign Highlights",
+      "route": "/",
+      "owner": "OPS",
+      "image_owner": "OCS",
+      "modify_entry": "/admin/official/public-operations · /admin/official/cold-start",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "home-featured-ocs",
+      "page_module": "Featured / 冷启动展示条",
+      "route": "/",
+      "owner": "OPS",
+      "image_owner": "OCS campaign item covers",
+      "modify_entry": "/admin/official/public-operations",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "market-guide-avatar",
+      "page_module": "向导卡头像",
+      "route": "/market",
+      "owner": "OCS",
+      "image_owner": "OCS seed URLs · API avatar_url",
+      "modify_entry": "/admin/official/guides · OCS manifest (frozen)",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "market-ocs-feed",
+      "page_module": "Market Feed 冷启动",
+      "route": "/market",
+      "owner": "OPS",
+      "image_owner": "OCS market_feed surface",
+      "modify_entry": "/admin/official/public-operations",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "community-feed-ocs-promo",
+      "page_module": "Feed OCS 推广条",
+      "route": "/community",
+      "owner": "OPS",
+      "image_owner": "OCS community_feed surface",
+      "modify_entry": "/admin/official/public-operations",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "guides-list-avatar",
+      "page_module": "向导列表",
+      "route": "/guides",
+      "owner": "OCS",
+      "image_owner": "OCS URLs · API avatar",
+      "modify_entry": "/admin/official/guides (frozen)",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "guide-detail",
+      "page_module": "向导详情",
+      "route": "/guides/[id]",
+      "owner": "OCS",
+      "image_owner": "OCS + credential URLs",
+      "modify_entry": "/me/identities/guide/settings · /admin/guides",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "official-guide-community",
+      "page_module": "官方向导 Community 贴",
+      "route": "/community?official_guide=",
+      "owner": "OCS",
+      "image_owner": "OCS manifest cover",
+      "modify_entry": "/admin/official/guides",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "auth-login",
+      "page_module": "登录",
+      "route": "/auth/login",
+      "owner": "API",
+      "image_owner": "N/A (UI frozen)",
+      "modify_entry": "locales · backend auth (AUTH-LOGIN-UI-FREEZE)",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "auth-register",
+      "page_module": "注册",
+      "route": "/auth/register",
+      "owner": "API",
+      "image_owner": "N/A (UI frozen)",
+      "modify_entry": "locales · backend auth",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "admin-public-ops",
+      "page_module": "Public Operations",
+      "route": "/admin/official/public-operations",
+      "owner": "OPS",
+      "image_owner": "OCS previews",
+      "modify_entry": "/admin/official/public-operations",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "admin-ocs-cold-start",
+      "page_module": "OCS Cold Start",
+      "route": "/admin/official/cold-start",
+      "owner": "OCS",
+      "image_owner": "OCS manifest refs",
+      "modify_entry": "/admin/official/cold-start (frozen)",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    }
+  ],
+  "reference_non_cms": [
+    {
+      "ownership_id": "market-order-cover",
+      "page_entry": {
+        "route": "/market",
+        "page_module": "订单卡封面",
+        "modify_entry": "Backend discover seed · marketMediaFallback.ts"
+      },
+      "owner": "API",
+      "image_owner": "API image · Unsplash fallback",
+      "scan_note": "API/runtime reference · tracked in P2 subqueues where applicable",
+      "excluded_from_cms_queue": true
+    },
+    {
+      "ownership_id": "itinerary-new",
+      "page_entry": {
+        "route": "/itinerary/new",
+        "page_module": "独立行程创建",
+        "modify_entry": "Backend mock · /admin/official/itinerary-templates"
+      },
+      "owner": "API",
+      "image_owner": "API itinerary images",
+      "scan_note": "API/runtime reference · tracked in P2 subqueues where applicable",
+      "excluded_from_cms_queue": true
+    },
+    {
+      "ownership_id": "did-rank-boards",
+      "page_entry": {
+        "route": "/did-rank",
+        "page_module": "DID Rank 各榜",
+        "modify_entry": "Backend rank compute"
+      },
+      "owner": "API",
+      "image_owner": "API rank avatars",
+      "scan_note": "API/runtime reference · tracked in P2 subqueues where applicable",
+      "excluded_from_cms_queue": true
+    },
+    {
+      "ownership_id": "traveltrust-page",
+      "page_entry": {
+        "route": "/traveltrust",
+        "page_module": "/traveltrust 品牌页",
+        "modify_entry": "locales · env deploy (UI frozen)"
+      },
+      "owner": "API",
+      "image_owner": "page-brief media keys · cinematic static",
+      "scan_note": "API/runtime reference · tracked in P2 subqueues where applicable",
+      "excluded_from_cms_queue": true
+    },
+    {
+      "ownership_id": "home-itinerary-preview",
+      "page_entry": {
+        "route": "/",
+        "page_module": "创新行程预览卡",
+        "modify_entry": "Backend itineraries mock · locales"
+      },
+      "owner": "API",
+      "image_owner": "API daily_itinerary images · ambient until unlock",
+      "scan_note": "API/runtime reference · tracked in P2 subqueues where applicable",
+      "excluded_from_cms_queue": true
+    }
+  ],
+  "correct_flow_reminder": [
+    "one_by_one_upload",
+    "no_batch_replace",
+    "no_ocs_fallback",
+    "manual_l5_all_checks_before_live"
+  ],
+  "TT_CMS_L5_VISUAL_SCAN": "COMPLETE",
+  "TT_CMS_L5_VISUAL_NEEDS": 26,
+  "TT_CMS_L5_VISUAL_CMS_SCOPE": 33,
+  "honest_boundary": "Read-only staging probe + ownership cross-ref · manual L5 per asset before Live · ② staging ≠ ③ Production GO"
+}

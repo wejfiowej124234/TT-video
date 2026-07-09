@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T124730Z",
+  "chains_compared": ["tokyo-photo", "kyoto-culture"],
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "differentiation": {
+    "theme": { "tokyo-photo": "城市摄影·现代都市", "kyoto-culture": "茶道·和服·传统工艺", "distinct": true },
+    "color_palette": { "tokyo": "暖金/霓虹/商业明亮", "kyoto": "低饱和禅意/木质暖/和纸灰 cream", "distinct": true },
+    "landmarks": { "tokyo": "浅草/台场/涩谷/晴空塔", "kyoto": "祇园/茶室/和纸工艺(无现代天际线主图)", "distinct": true },
+    "acquisition_slot": { "tokyo": "相机镜头店内", "kyoto": "和纸漆器工艺", "distinct": true },
+    "guide_slot": { "tokyo": "持相机 Ken 男性", "kyoto": "和服 Yuki 女性茶道", "distinct": true },
+    "provider_slot": { "tokyo": "情侣外景旅拍", "kyoto": "茶室室内包场", "distinct": true },
+    "atmosphere": { "tokyo": "都市摄影活力", "kyoto": "文化静穆", "distinct": true },
+    "homogenization_risk": false
+  },
+  "note": "两城 JP 同国但主题/色调/业务表达明显区分，无同质化。"
+}

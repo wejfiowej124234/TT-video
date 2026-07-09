@@ -1,0 +1,1243 @@
+{
+  "verdict": "CONDITIONAL",
+  "recorded_at": "2026-06-07T04:53:55.029311+00:00",
+  "targets": {
+    "api": "https://tt-api-staging.fly.dev",
+    "admin_email": "tourist@test.com"
+  },
+  "meta_git_sha": "bc5a939cd89c624be7c128b551306da177bf6016",
+  "summary": {
+    "p0": 0,
+    "p1": 7,
+    "p2": 11,
+    "write_actions": 31,
+    "probed": 31,
+    "issues": 18
+  },
+  "write_matrix": [
+    {
+      "id": "W01",
+      "domain": "用户治理",
+      "method": "POST",
+      "path": "/api/v1/admin/users/00000000-0000-4000-8000-000000000010/role-change-request",
+      "permission": "admin.users.write",
+      "ui": "/admin/users",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 400,
+      "admin_note": "{\"status\":\"missing_idempotency_key\",\"error\":\"missing_idempotency_key\",\"message\":\"missing_idempotency_key\",\"required_head",
+      "gate": "PASS",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W02",
+      "domain": "用户治理",
+      "method": "PUT",
+      "path": "/api/v1/admin/users/00000000-0000-4000-8000-000000000010/console-role",
+      "permission": "admin.users.write",
+      "ui": "/admin/permissions",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 415,
+      "admin_note": "Expected request with `Content-Type: application/json`",
+      "gate": "PARTIAL",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W03",
+      "domain": "用户治理",
+      "method": "POST",
+      "path": "/api/v1/admin/users/00000000-0000-4000-8000-000000000010/console-role-change-request",
+      "permission": "admin.users.write",
+      "ui": "/admin/permissions",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 415,
+      "admin_note": "Expected request with `Content-Type: application/json`",
+      "gate": "PARTIAL",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W04",
+      "domain": "收购门闸",
+      "method": "PATCH",
+      "path": "/api/v1/admin/users/00000000-0000-4000-8000-000000000010/acquisition-publish-suspend",
+      "permission": "admin.acquisition.suspend",
+      "ui": "/admin/users",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 415,
+      "admin_note": "Expected request with `Content-Type: application/json`",
+      "gate": "PARTIAL",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W05",
+      "domain": "向导审核",
+      "method": "PATCH",
+      "path": "/api/v1/admin/guides/00000000-0000-4000-8000-000000000010",
+      "permission": "admin.users.write",
+      "ui": "/admin/guides",
+      "l5_ui": "NO",
+      "export": false,
+      "admin_http": 415,
+      "admin_note": "Expected request with `Content-Type: application/json`",
+      "gate": "PARTIAL"
+    },
+    {
+      "id": "W06",
+      "domain": "入驻审核",
+      "method": "PATCH",
+      "path": "/api/v1/admin/users/00000000-0000-4000-8000-000000000010/provider-application-review",
+      "permission": "admin.onboarding.provider_review",
+      "ui": "/admin/provider-applications",
+      "l5_ui": "NO",
+      "export": false,
+      "admin_http": 415,
+      "admin_note": "Expected request with `Content-Type: application/json`",
+      "gate": "PARTIAL"
+    },
+    {
+      "id": "W07",
+      "domain": "入驻审核",
+      "method": "PATCH",
+      "path": "/api/v1/admin/users/00000000-0000-4000-8000-000000000010/steward-application-review",
+      "permission": "admin.onboarding.steward_review",
+      "ui": "/admin/steward-applications",
+      "l5_ui": "NO",
+      "export": false,
+      "admin_http": 415,
+      "admin_note": "Expected request with `Content-Type: application/json`",
+      "gate": "PARTIAL"
+    },
+    {
+      "id": "W08",
+      "domain": "入驻审核",
+      "method": "PATCH",
+      "path": "/api/v1/admin/onboarding/entitlements/00000000-0000-4000-8000-0000000000ad",
+      "permission": "admin.onboarding.write",
+      "ui": "/admin/onboarding/entitlements",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 415,
+      "admin_note": "Expected request with `Content-Type: application/json`",
+      "gate": "PARTIAL",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W09",
+      "domain": "入驻审核",
+      "method": "POST",
+      "path": "/api/v1/admin/onboarding/entitlements/00000000-0000-4000-8000-0000000000ad/revoke",
+      "permission": "admin.onboarding.write",
+      "ui": "/admin/onboarding/entitlements",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 415,
+      "admin_note": "Expected request with `Content-Type: application/json`",
+      "gate": "PARTIAL",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W10",
+      "domain": "入驻审核",
+      "method": "POST",
+      "path": "/api/v1/admin/onboarding/entitlements/00000000-0000-4000-8000-0000000000ad/financial-reversal",
+      "permission": "admin.onboarding.write",
+      "ui": "/admin/onboarding/entitlements",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 415,
+      "admin_note": "Expected request with `Content-Type: application/json`",
+      "gate": "PARTIAL",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W11",
+      "domain": "审批链",
+      "method": "POST",
+      "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/approve",
+      "permission": "admin.approve",
+      "ui": "/admin/approvals",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 400,
+      "admin_note": "{\"status\":\"missing_idempotency_key\",\"error\":\"missing_idempotency_key\",\"message\":\"missing_idempotency_key\",\"required_head",
+      "gate": "PASS",
+      "idempotency_probe": "404/404",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W12",
+      "domain": "审批链",
+      "method": "POST",
+      "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/reject",
+      "permission": "admin.approve",
+      "ui": "/admin/approvals",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 404,
+      "admin_note": "{\"error\":\"approval_request_not_found\",\"message\":\"approval_request_not_found\"}",
+      "gate": "PASS",
+      "idempotency_probe": "404/404",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W13",
+      "domain": "社区治理",
+      "method": "POST",
+      "path": "/api/v1/admin/community/penalties",
+      "permission": "admin.community.moderate",
+      "ui": "/admin/community/penalties",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 400,
+      "admin_note": "{\"status\":\"missing_idempotency_key\",\"error\":\"missing_idempotency_key\",\"message\":\"missing_idempotency_key\",\"required_head",
+      "gate": "PASS",
+      "idempotency_probe": "422/422",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W14",
+      "domain": "社区治理",
+      "method": "PATCH",
+      "path": "/api/v1/admin/community/moderation/00000000-0000-4000-8000-0000000000ad",
+      "permission": "admin.community.moderate",
+      "ui": "/admin/community/reports",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 400,
+      "admin_note": "{\"status\":\"missing_idempotency_key\",\"error\":\"missing_idempotency_key\",\"message\":\"missing_idempotency_key\",\"required_head",
+      "gate": "PASS",
+      "idempotency_probe": "400/400",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W15",
+      "domain": "社区治理",
+      "method": "POST",
+      "path": "/api/v1/admin/community/appeals/00000000-0000-4000-8000-0000000000a1/review",
+      "permission": "admin.community.super",
+      "ui": "/admin/community/appeals/review",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 400,
+      "admin_note": "{\"status\":\"missing_idempotency_key\",\"error\":\"missing_idempotency_key\",\"message\":\"missing_idempotency_key\",\"required_head",
+      "gate": "PASS",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W16",
+      "domain": "社区治理",
+      "method": "PATCH",
+      "path": "/api/v1/admin/community/comments/00000000-0000-4000-8000-0000000000c1",
+      "permission": "admin.community.moderate",
+      "ui": "/admin/community/comments/visibility",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 400,
+      "admin_note": "{\"status\":\"missing_idempotency_key\",\"error\":\"missing_idempotency_key\",\"message\":\"missing_idempotency_key\",\"required_head",
+      "gate": "PASS",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W17",
+      "domain": "社区治理",
+      "method": "PATCH",
+      "path": "/api/v1/admin/community/abuse-policy",
+      "permission": "admin.community.super",
+      "ui": "/admin/community/abuse-policy",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 400,
+      "admin_note": "{\"status\":\"missing_idempotency_key\",\"error\":\"missing_idempotency_key\",\"message\":\"missing_idempotency_key\",\"required_head",
+      "gate": "PASS",
+      "idempotency_probe": "400/400",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W18",
+      "domain": "社区治理",
+      "method": "PATCH",
+      "path": "/api/v1/admin/community/reports/00000000-0000-0000-0000-000000000002",
+      "permission": "admin.community.moderate",
+      "ui": "/admin/community/reports",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 404,
+      "admin_note": "",
+      "gate": "DRIFT",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W19",
+      "domain": "平台配置",
+      "method": "POST",
+      "path": "/api/v1/admin/flags/00000000-0000-0000-0000-000000000099/publish",
+      "permission": "admin.platform.publish",
+      "ui": "/admin/flags",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 400,
+      "admin_note": "{\"status\":\"missing_idempotency_key\",\"error\":\"missing_idempotency_key\",\"message\":\"missing_idempotency_key\",\"required_head",
+      "gate": "PASS",
+      "idempotency_probe": "404/404",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W20",
+      "domain": "平台配置",
+      "method": "POST",
+      "path": "/api/v1/admin/policies/00000000-0000-4000-8000-0000000000p1/publish",
+      "permission": "admin.platform.publish",
+      "ui": "/admin/policies",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 400,
+      "admin_note": "{\"status\":\"missing_idempotency_key\",\"error\":\"missing_idempotency_key\",\"message\":\"missing_idempotency_key\",\"required_head",
+      "gate": "PASS",
+      "idempotency_probe": "400/400",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W21",
+      "domain": "平台配置",
+      "method": "POST",
+      "path": "/api/v1/admin/tenants/scopes/00000000-0000-4000-8000-0000000000t1/publish",
+      "permission": "admin.platform.publish",
+      "ui": "/admin/tenants/scopes",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 400,
+      "admin_note": "{\"status\":\"missing_idempotency_key\",\"error\":\"missing_idempotency_key\",\"message\":\"missing_idempotency_key\",\"required_head",
+      "gate": "PASS",
+      "idempotency_probe": "400/400",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W22",
+      "domain": "平台配置",
+      "method": "POST",
+      "path": "/api/v1/admin/scheduler/jobs/smoke_probe_job/rerun",
+      "permission": "admin.approve",
+      "ui": "/admin/scheduler/jobs",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 400,
+      "admin_note": "{\"status\":\"missing_idempotency_key\",\"error\":\"missing_idempotency_key\",\"message\":\"missing_idempotency_key\",\"required_head",
+      "gate": "PASS",
+      "idempotency_probe": "200/200",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W23",
+      "domain": "合规",
+      "method": "POST",
+      "path": "/api/v1/admin/compliance/data-requests/00000000-0000-0000-0000-000000000003/update",
+      "permission": "admin.approve",
+      "ui": "/admin/compliance/requests",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 400,
+      "admin_note": "{\"status\":\"missing_idempotency_key\",\"error\":\"missing_idempotency_key\",\"message\":\"missing_idempotency_key\",\"required_head",
+      "gate": "PASS",
+      "idempotency_probe": "404/404",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W24",
+      "domain": "治理",
+      "method": "PATCH",
+      "path": "/api/v1/admin/trust-growth/control",
+      "permission": "admin.trust_growth.write",
+      "ui": "/admin/trust-growth",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 200,
+      "admin_note": "{\"ok\":true,\"control\":{\"weights_frozen\":false,\"force_control_only\":false,\"variant_weight_caps\":{}},\"runtime\":{\"autopilot_",
+      "gate": "WARN",
+      "idempotency_probe": "200/200",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W25",
+      "domain": "治理",
+      "method": "POST",
+      "path": "/api/v1/admin/trust-growth/rollback-control",
+      "permission": "admin.trust_growth.write",
+      "ui": "/admin/trust-growth",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 200,
+      "admin_note": "{\"ok\":true,\"control\":{\"weights_frozen\":false,\"force_control_only\":true,\"variant_weight_caps\":{}},\"runtime\":{\"autopilot_g",
+      "gate": "WARN",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W26",
+      "domain": "安全",
+      "method": "PATCH",
+      "path": "/api/v1/admin/security/2fa-policy",
+      "permission": "admin.approve",
+      "ui": "/admin/permissions",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 200,
+      "admin_note": "{\"status\":\"ok\",\"policy\":{\"enforced\":false,\"implementation_note\":\"phase_01_prep_not_enforced\",\"required_console_roles\":[\"",
+      "gate": "WARN",
+      "idempotency_probe": "200/200",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W27",
+      "domain": "安全",
+      "method": "POST",
+      "path": "/api/v1/admin/security/totp/enroll",
+      "permission": "admin.read",
+      "ui": "/admin/permissions",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 200,
+      "admin_note": "{\"status\":\"ok\",\"secret_base32\":\"V7KYHZAZULYH6QXWCWSEUERJOAUDVHD4\",\"otpauth_uri\":\"otpauth://totp/TravelTrust:admin?secret",
+      "gate": "WARN",
+      "l5_match": "OK"
+    },
+    {
+      "id": "W28",
+      "domain": "安全",
+      "method": "POST",
+      "path": "/api/v1/admin/security/totp/verify",
+      "permission": "admin.read",
+      "ui": "/admin/permissions",
+      "l5_ui": "YES",
+      "export": false,
+      "admin_http": 400,
+      "admin_note": "{\"error\":\"admin_totp_invalid_code\",\"message\":\"admin_totp_invalid_code\"}",
+      "gate": "PASS",
+      "idempotency_probe": "400/400",
+      "l5_match": "OK"
+    },
+    {
+      "id": "E01",
+      "domain": "导出",
+      "method": "GET",
+      "path": "/api/v1/admin/finance/summary/export",
+      "permission": "admin.finance.read",
+      "ui": "/admin/finance",
+      "l5_ui": "NO",
+      "export": true,
+      "admin_http": 200,
+      "admin_note": "export,kind,finance_summary_v2\nmeta,generated_at,2026-06-07T04:53:46.372225758+00:00\nmeta,source,chain_off\nmeta,db_order",
+      "gate": "WARN"
+    },
+    {
+      "id": "E02",
+      "domain": "导出",
+      "method": "GET",
+      "path": "/api/v1/admin/indexer/reconcile-reports/export",
+      "permission": "admin.read",
+      "ui": "/admin/indexer/reconcile-reports",
+      "l5_ui": "NO",
+      "export": true,
+      "admin_http": 200,
+      "admin_note": "id,report_type,chain_id,created_at,issues_total,projection_reconcile_clean,orders_with_escrow,projection_rows_chain,matc",
+      "gate": "WARN"
+    },
+    {
+      "id": "E03",
+      "domain": "导出",
+      "method": "GET",
+      "path": "/api/v1/admin/region-vault/forwarded-events/export",
+      "permission": "admin.finance.read",
+      "ui": "/admin/region-vault",
+      "l5_ui": "NO",
+      "export": true,
+      "admin_http": 200,
+      "admin_note": "chain_id,block_number,log_index,block_hash,tx_hash,vault_address,token_address,to_address,amount_u256_hex,inserted_at,id",
+      "gate": "WARN"
+    }
+  ],
+  "audit_matrix": [
+    {
+      "file": "crates/api/src/routes/admin/admin_acquisition_suspend_http.rs",
+      "audit_call": "PASS"
+    },
+    {
+      "file": "crates/api/src/routes/admin/admin_compliance_http/update.rs",
+      "audit_call": "PASS"
+    },
+    {
+      "file": "crates/api/src/routes/admin/admin_onboarding/entitlements_write.rs",
+      "audit_call": "PASS"
+    },
+    {
+      "file": "crates/api/src/routes/admin/admin_community/moderation_patch.rs",
+      "audit_call": "PASS"
+    },
+    {
+      "file": "crates/api/src/routes/admin/admin_community/policy_mutations.rs",
+      "audit_call": "PASS"
+    },
+    {
+      "file": "crates/api/src/routes/admin/trust_growth_obs.rs",
+      "audit_call": "PASS"
+    },
+    {
+      "file": "crates/api/src/routes/admin/admin_rbac.rs",
+      "audit_call": "PASS"
+    },
+    {
+      "file": "crates/api/src/routes/admin/admin_jobs_scheduler.rs",
+      "audit_call": "PASS"
+    },
+    {
+      "file": "crates/api/src/routes/admin/admin_provider_application_http.rs",
+      "audit_call": "PASS"
+    },
+    {
+      "file": "crates/api/src/routes/admin/admin_steward_application_http.rs",
+      "audit_call": "PASS"
+    },
+    {
+      "action": "W01",
+      "expected_audit_action": "admin.users.role_change_request",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W02",
+      "expected_audit_action": "admin.users.console_role",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W03",
+      "expected_audit_action": "admin.users.console_role_change_request",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W04",
+      "expected_audit_action": "admin.acquisition_publish_suspend",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W05",
+      "expected_audit_action": "admin.guides.registration_patch",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W06",
+      "expected_audit_action": "admin.provider_application_review",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W07",
+      "expected_audit_action": "admin.steward_application_review",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W08",
+      "expected_audit_action": "admin.onboarding.entitlement_patch",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W09",
+      "expected_audit_action": "admin.onboarding.entitlement_revoke",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W10",
+      "expected_audit_action": "admin.onboarding.financial_reversal",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W11",
+      "expected_audit_action": "admin.approvals.approve",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W12",
+      "expected_audit_action": "admin.approvals.reject",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W13",
+      "expected_audit_action": "admin.community.penalties.create",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W14",
+      "expected_audit_action": "admin.community.moderation.update",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W15",
+      "expected_audit_action": "admin.community.appeals.review",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W16",
+      "expected_audit_action": "admin.community.comments.visibility",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W17",
+      "expected_audit_action": "admin.community.abuse_policy.patch",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W19",
+      "expected_audit_action": "admin.flags.publish",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W20",
+      "expected_audit_action": "admin.policies.publish",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W21",
+      "expected_audit_action": "admin.tenants.scopes.publish",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W22",
+      "expected_audit_action": "admin.scheduler.jobs.rerun",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W23",
+      "expected_audit_action": "admin.compliance.data_requests.update",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W24",
+      "expected_audit_action": "trust_growth_control_patch",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W25",
+      "expected_audit_action": "trust_growth_rollback",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "W26",
+      "expected_audit_action": "admin.security.2fa_policy",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "E01",
+      "expected_audit_action": "admin.finance.summary.export",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "E02",
+      "expected_audit_action": "admin.indexer.reconcile_reports.export",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    },
+    {
+      "action": "E03",
+      "expected_audit_action": "admin.region_vault_forwarded.export",
+      "runtime_verified": "SKIP",
+      "note": "占位探针不触发 200；静态 handler 审计在 AUDIT_WRITE_FILES"
+    }
+  ],
+  "rbac_matrix": [
+    {
+      "action": "W01",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W01",
+      "actor": "旅行者",
+      "http": 400,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W02",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W02",
+      "actor": "旅行者",
+      "http": 415,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W03",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W03",
+      "actor": "旅行者",
+      "http": 415,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W04",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W04",
+      "actor": "旅行者",
+      "http": 415,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W05",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W05",
+      "actor": "旅行者",
+      "http": 415,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W06",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W06",
+      "actor": "旅行者",
+      "http": 415,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W07",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W07",
+      "actor": "旅行者",
+      "http": 415,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W08",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W08",
+      "actor": "旅行者",
+      "http": 415,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W09",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W09",
+      "actor": "旅行者",
+      "http": 415,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W10",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W10",
+      "actor": "旅行者",
+      "http": 415,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W11",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W11",
+      "actor": "旅行者",
+      "http": 400,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W12",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W12",
+      "actor": "旅行者",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W13",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W13",
+      "actor": "旅行者",
+      "http": 400,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W14",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W14",
+      "actor": "旅行者",
+      "http": 400,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W15",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W15",
+      "actor": "旅行者",
+      "http": 400,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W16",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W16",
+      "actor": "旅行者",
+      "http": 400,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W17",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W17",
+      "actor": "旅行者",
+      "http": 400,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W18",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W18",
+      "actor": "旅行者",
+      "http": 404,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W19",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W19",
+      "actor": "旅行者",
+      "http": 400,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W20",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W20",
+      "actor": "旅行者",
+      "http": 400,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W21",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W21",
+      "actor": "旅行者",
+      "http": 400,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W22",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W22",
+      "actor": "旅行者",
+      "http": 400,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W23",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W23",
+      "actor": "旅行者",
+      "http": 400,
+      "verdict": "FAIL"
+    },
+    {
+      "action": "W24",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W24",
+      "actor": "旅行者",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W25",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W25",
+      "actor": "旅行者",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W26",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W26",
+      "actor": "旅行者",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W27",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W27",
+      "actor": "旅行者",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W28",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "W28",
+      "actor": "旅行者",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "action": "E01",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "E01",
+      "actor": "旅行者",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "action": "E02",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "E02",
+      "actor": "旅行者",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "action": "E03",
+      "actor": "匿名",
+      "http": 401,
+      "verdict": "PASS"
+    },
+    {
+      "action": "E03",
+      "actor": "旅行者",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "action": "SESSION",
+      "actor": "logout后admin",
+      "http": 400,
+      "verdict": "FAIL"
+    }
+  ],
+  "issues": [
+    {
+      "id": "AMWA-2-001",
+      "category": "路由漂移",
+      "action_id": "W18",
+      "route": "/api/v1/admin/community/reports/:id",
+      "priority": "P2",
+      "title": "ROUTE_DENY_MATRIX 有 reports PATCH 但 router 未挂载",
+      "observation": "UI 使用 community/moderation PATCH",
+      "human_impact": "权限矩阵与真路由不一致"
+    },
+    {
+      "id": "AMWA-2-002",
+      "category": "RBAC边界",
+      "action_id": "W02",
+      "route": "/api/v1/admin/users/00000000-0000-4000-8000-000000000010/console-role",
+      "priority": "P2",
+      "title": "旅行者非预期 HTTP 415",
+      "observation": "Expected request with `Content-Type: application/json`",
+      "human_impact": "门闸语义不清"
+    },
+    {
+      "id": "AMWA-2-003",
+      "category": "RBAC边界",
+      "action_id": "W03",
+      "route": "/api/v1/admin/users/00000000-0000-4000-8000-000000000010/console-role-change-request",
+      "priority": "P2",
+      "title": "旅行者非预期 HTTP 415",
+      "observation": "Expected request with `Content-Type: application/json`",
+      "human_impact": "门闸语义不清"
+    },
+    {
+      "id": "AMWA-2-004",
+      "category": "RBAC边界",
+      "action_id": "W04",
+      "route": "/api/v1/admin/users/00000000-0000-4000-8000-000000000010/acquisition-publish-suspend",
+      "priority": "P2",
+      "title": "旅行者非预期 HTTP 415",
+      "observation": "Expected request with `Content-Type: application/json`",
+      "human_impact": "门闸语义不清"
+    },
+    {
+      "id": "AMWA-2-005",
+      "category": "RBAC边界",
+      "action_id": "W05",
+      "route": "/api/v1/admin/guides/00000000-0000-4000-8000-000000000010",
+      "priority": "P2",
+      "title": "旅行者非预期 HTTP 415",
+      "observation": "Expected request with `Content-Type: application/json`",
+      "human_impact": "门闸语义不清"
+    },
+    {
+      "id": "AMWA-2-006",
+      "category": "RBAC边界",
+      "action_id": "W06",
+      "route": "/api/v1/admin/users/00000000-0000-4000-8000-000000000010/provider-application-review",
+      "priority": "P2",
+      "title": "旅行者非预期 HTTP 415",
+      "observation": "Expected request with `Content-Type: application/json`",
+      "human_impact": "门闸语义不清"
+    },
+    {
+      "id": "AMWA-2-007",
+      "category": "RBAC边界",
+      "action_id": "W07",
+      "route": "/api/v1/admin/users/00000000-0000-4000-8000-000000000010/steward-application-review",
+      "priority": "P2",
+      "title": "旅行者非预期 HTTP 415",
+      "observation": "Expected request with `Content-Type: application/json`",
+      "human_impact": "门闸语义不清"
+    },
+    {
+      "id": "AMWA-2-008",
+      "category": "RBAC边界",
+      "action_id": "W08",
+      "route": "/api/v1/admin/onboarding/entitlements/00000000-0000-4000-8000-0000000000ad",
+      "priority": "P2",
+      "title": "旅行者非预期 HTTP 415",
+      "observation": "Expected request with `Content-Type: application/json`",
+      "human_impact": "门闸语义不清"
+    },
+    {
+      "id": "AMWA-2-009",
+      "category": "RBAC边界",
+      "action_id": "W09",
+      "route": "/api/v1/admin/onboarding/entitlements/00000000-0000-4000-8000-0000000000ad/revoke",
+      "priority": "P2",
+      "title": "旅行者非预期 HTTP 415",
+      "observation": "Expected request with `Content-Type: application/json`",
+      "human_impact": "门闸语义不清"
+    },
+    {
+      "id": "AMWA-2-010",
+      "category": "RBAC边界",
+      "action_id": "W10",
+      "route": "/api/v1/admin/onboarding/entitlements/00000000-0000-4000-8000-0000000000ad/financial-reversal",
+      "priority": "P2",
+      "title": "旅行者非预期 HTTP 415",
+      "observation": "Expected request with `Content-Type: application/json`",
+      "human_impact": "门闸语义不清"
+    },
+    {
+      "id": "AMWA-2-011",
+      "category": "路由漂移",
+      "action_id": "W18",
+      "route": "/api/v1/admin/community/reports/00000000-0000-0000-0000-000000000002",
+      "priority": "P2",
+      "title": "reports PATCH 404（未挂载）",
+      "observation": "",
+      "human_impact": "矩阵登记路由不存在"
+    },
+    {
+      "id": "AMWA-1-012",
+      "category": "异常流程",
+      "action_id": "W24",
+      "route": "/api/v1/admin/trust-growth/control",
+      "priority": "P1",
+      "title": "探针占位写成功 200",
+      "observation": "{\"ok\":true,\"control\":{\"weights_frozen\":false,\"force_control_only\":false,\"variant_weight_caps\":{}},\"runtime\":{\"autopilot_",
+      "human_impact": "staging 可能真写入"
+    },
+    {
+      "id": "AMWA-1-013",
+      "category": "异常流程",
+      "action_id": "W25",
+      "route": "/api/v1/admin/trust-growth/rollback-control",
+      "priority": "P1",
+      "title": "探针占位写成功 200",
+      "observation": "{\"ok\":true,\"control\":{\"weights_frozen\":false,\"force_control_only\":true,\"variant_weight_caps\":{}},\"runtime\":{\"autopilot_g",
+      "human_impact": "staging 可能真写入"
+    },
+    {
+      "id": "AMWA-1-014",
+      "category": "异常流程",
+      "action_id": "W26",
+      "route": "/api/v1/admin/security/2fa-policy",
+      "priority": "P1",
+      "title": "探针占位写成功 200",
+      "observation": "{\"status\":\"ok\",\"policy\":{\"enforced\":false,\"implementation_note\":\"phase_01_prep_not_enforced\",\"required_console_roles\":[\"",
+      "human_impact": "staging 可能真写入"
+    },
+    {
+      "id": "AMWA-1-015",
+      "category": "异常流程",
+      "action_id": "W27",
+      "route": "/api/v1/admin/security/totp/enroll",
+      "priority": "P1",
+      "title": "探针占位写成功 200",
+      "observation": "{\"status\":\"ok\",\"secret_base32\":\"V7KYHZAZULYH6QXWCWSEUERJOAUDVHD4\",\"otpauth_uri\":\"otpauth://totp/TravelTrust:admin?secret",
+      "human_impact": "staging 可能真写入"
+    },
+    {
+      "id": "AMWA-1-016",
+      "category": "异常流程",
+      "action_id": "E01",
+      "route": "/api/v1/admin/finance/summary/export",
+      "priority": "P1",
+      "title": "探针占位写成功 200",
+      "observation": "export,kind,finance_summary_v2\nmeta,generated_at,2026-06-07T04:53:46.372225758+00:00\nmeta,source,chain_off\nmeta,db_order",
+      "human_impact": "staging 可能真写入"
+    },
+    {
+      "id": "AMWA-1-017",
+      "category": "异常流程",
+      "action_id": "E02",
+      "route": "/api/v1/admin/indexer/reconcile-reports/export",
+      "priority": "P1",
+      "title": "探针占位写成功 200",
+      "observation": "id,report_type,chain_id,created_at,issues_total,projection_reconcile_clean,orders_with_escrow,projection_rows_chain,matc",
+      "human_impact": "staging 可能真写入"
+    },
+    {
+      "id": "AMWA-1-018",
+      "category": "异常流程",
+      "action_id": "E03",
+      "route": "/api/v1/admin/region-vault/forwarded-events/export",
+      "priority": "P1",
+      "title": "探针占位写成功 200",
+      "observation": "chain_id,block_number,log_index,block_hash,tx_hash,vault_address,token_address,to_address,amount_u256_hex,inserted_at,id",
+      "human_impact": "staging 可能真写入"
+    }
+  ],
+  "categories": [
+    "RBAC边界",
+    "API门闸",
+    "二次确认",
+    "幂等性",
+    "审计日志",
+    "路由漂移",
+    "会话恢复",
+    "异常流程",
+    "边界条件"
+  ]
+}

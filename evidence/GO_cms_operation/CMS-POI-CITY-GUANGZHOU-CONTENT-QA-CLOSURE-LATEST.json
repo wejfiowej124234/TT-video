@@ -1,0 +1,138 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-07T05:13:00.187Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "广州",
+    "city_en": "Guangzhou",
+    "poi_count": 10
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "JP + KR + TH + US Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "cross_region_remediated": "all_8_execution_plus_geo",
+  "checks": {
+    "assets_locked_8_8": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-CN-271-ATR",
+      "poi": "广州塔",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-07T04:26:54.691Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-272-ATR",
+      "poi": "陈家祠",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "locked_at_utc": "2026-07-07T04:31:55.473Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-273-ATR",
+      "poi": "沙面",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "locked_at_utc": "2026-07-07T04:36:56.613Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-274-ATR",
+      "poi": "长隆",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "locked_at_utc": "2026-07-07T04:41:57.645Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-275-ATR",
+      "poi": "白云山",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-07T04:46:58.806Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-276-FOOD",
+      "poi": "早茶",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-07T04:51:59.991Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-277-FOOD",
+      "poi": "烧鹅",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "locked_at_utc": "2026-07-07T04:57:00.984Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-278-FOOD",
+      "poi": "煲仔饭",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "locked_at_utc": "2026-07-07T05:02:01.999Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-279-FOOD",
+      "poi": "糖水",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "locked_at_utc": "2026-07-07T05:07:02.988Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-280-FOOD",
+      "poi": "肠粉",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-07T05:12:04.035Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 10
+  },
+  "TT_CMS_POI_CITY_GUANGZHOU_CONTENT_QA": "CLOSED"
+}

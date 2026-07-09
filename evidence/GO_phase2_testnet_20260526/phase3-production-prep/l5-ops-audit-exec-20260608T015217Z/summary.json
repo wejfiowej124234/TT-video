@@ -1,0 +1,18 @@
+{
+  "kind": "traveltrust.l5_operations_deep_audit_execution.v1",
+  "recorded_utc": "20260608T015217Z",
+  "verdict": "OPERATIONS_L5_AUDIT_HOLD",
+  "audit_matrix_verdict": "OPERATIONS_L5_AUDIT_HOLD",
+  "enterprise_score": 75,
+  "baseline_status": "PLANNED",
+  "p0_hold_count": 5,
+  "execution_sprint": "156",
+  "baseline_refs": [
+    "120",
+    "133",
+    "145",
+    "146",
+    "150",
+    "155"
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "traveltrust.p2fc_long_term_drift_scan.v1",
+  "wall_clock": {
+    "ratio_series": [
+      5.206,
+      5.208,
+      5.218,
+      5.218
+    ],
+    "ratio_slope_per_snapshot": 0.004,
+    "eta_hours_series": [
+      372.1,
+      372.1,
+      372.7,
+      372.7
+    ],
+    "overhead_slope_per_snapshot": 0.2,
+    "growth_verdict": "stable"
+  },
+  "indexer_parse": {
+    "rate_series": [
+      0.031,
+      0.03,
+      0.029,
+      0.029
+    ],
+    "slope_per_snapshot": -0.000667,
+    "log_half_windows": {
+      "first_half_parse_rate": 0.0,
+      "second_half_parse_rate": 0.0588,
+      "half_window_slope": 0.0588,
+      "trend": "rising",
+      "verdict": "stable"
+    },
+    "decline_verdict": "stable"
+  },
+  "meta_propagation": {
+    "sample_count": 21,
+    "dominant_chain": "408>503>exec_ok",
+    "cluster_density": 1.0,
+    "transition_count": 0,
+    "cluster_window_count": 0,
+    "verdict": "stable_cluster"
+  },
+  "backlog_hotspots": [
+    {
+      "subsystem": "SYS_OTHER",
+      "title": "SYS_OTHER",
+      "file_count": 74,
+      "total_delta": 9613,
+      "gates": [
+        "ESCROW_CHAIN",
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "subsystem": "SYS_E2E",
+      "title": "E2E / 烟测（非镜像关键路径）",
+      "file_count": 80,
+      "total_delta": 4342,
+      "gates": [
+        "ESCROW_CHAIN"
+      ]
+    },
+    {
+      "subsystem": "SYS_FRONTEND_OTHER",
+      "title": "SYS_FRONTEND_OTHER",
+      "file_count": 13,
+      "total_delta": 335,
+      "gates": [
+        "ESCROW_CHAIN",
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "subsystem": "SYS_API_ROUTES",
+      "title": "API 路由域",
+      "file_count": 1,
+      "total_delta": 195,
+      "gates": [
+        "ESCROW_CHAIN"
+      ]
+    },
+    {
+      "subsystem": "SYS_META_G02",
+      "title": "G02 /meta 验收链",
+      "file_count": 3,
+      "total_delta": 23,
+      "gates": [
+        "G01_WEB",
+        "G02_META",
+        "SOAK_EXEC"
+      ]
+    }
+  ],
+  "drift_signals": [
+    {
+      "id": "DRIFT_HOTSPOT_SYS_OTHER",
+      "severity": "medium",
+      "note": "backlog hotspot SYS_OTHER Δ9613 gates=['ESCROW_CHAIN', 'LOW_SURFACE']"
+    },
+    {
+      "id": "DRIFT_HOTSPOT_SYS_E2E",
+      "severity": "medium",
+      "note": "backlog hotspot E2E / 烟测（非镜像关键路径） Δ4342 gates=['ESCROW_CHAIN']"
+    },
+    {
+      "id": "DRIFT_HOTSPOT_SYS_FRONTEND_OTHER",
+      "severity": "medium",
+      "note": "backlog hotspot SYS_FRONTEND_OTHER Δ335 gates=['ESCROW_CHAIN', 'LOW_SURFACE']"
+    }
+  ],
+  "drift_signal_count": 3
+}

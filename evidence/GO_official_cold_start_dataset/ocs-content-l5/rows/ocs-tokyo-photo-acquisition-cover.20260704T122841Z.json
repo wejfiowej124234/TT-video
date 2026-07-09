@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_verify.v1",
+  "stamp_utc": "20260704T122841Z",
+  "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+  "row": {
+    "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+    "chain_id": "tokyo-photo",
+    "city": "东京",
+    "slot": "acquisition-cover",
+    "surface": "Acquisition",
+    "scene": "相机镜头/限定器材 · 店内陈列或包装 · 非天际线",
+    "copy_label": "东京限定镜头代购 · 悬赏",
+    "asset_status": "verified",
+    "review_status": "pass"
+  },
+  "checks": [
+    {
+      "id": "media_exists",
+      "pass": true,
+      "detail": "D:\\TravelTrust-V1.1\\data\\official-cold-start\\media\\ocs-tokyo-photo-acquisition-cover.jpg"
+    },
+    {
+      "id": "jpeg_magic",
+      "pass": true,
+      "detail": "ok"
+    },
+    {
+      "id": "min_size_16kb",
+      "pass": true,
+      "detail": "71791 bytes"
+    },
+    {
+      "id": "matrix_asset_status",
+      "pass": true,
+      "detail": "verified"
+    },
+    {
+      "id": "matrix_review_pass",
+      "pass": true,
+      "detail": "pass"
+    }
+  ],
+  "TT_OCS_CONTENT_L5_ROW_VERIFY": "PASS",
+  "gates_manual": {
+    "G2_copy_alignment": "pending_human",
+    "G3_slot_differentiation": "pending_human",
+    "G9_content_authenticity": "pending_human",
+    "G10_content_diversity": "pending_human"
+  }
+}

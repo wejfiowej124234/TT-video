@@ -1,0 +1,110 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-05T14:37:48.385Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "京都",
+    "city_en": "Kyoto",
+    "poi_count": 7
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "Osaka Golden Template",
+  "cross_region_remediated": [
+    "汤豆腐"
+  ],
+  "checks": {
+    "assets_locked_7_7": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-JP-026-ATR",
+      "poi": "伏见稻荷",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-kyoto-culture-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T14:03:41.579Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-027-ATR",
+      "poi": "清水寺",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-kyoto-culture-community-media.jpg",
+      "locked_at_utc": "2026-07-05T14:08:42.483Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-028-ATR",
+      "poi": "金阁寺",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-kyoto-culture-community-cover.jpg",
+      "locked_at_utc": "2026-07-05T14:13:43.881Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-029-ATR",
+      "poi": "祇园",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-kyoto-culture-provider-cover.jpg",
+      "locked_at_utc": "2026-07-05T14:18:44.612Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-030-FOOD",
+      "poi": "怀石料理",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-kyoto-culture-acquisition-cover.jpg",
+      "locked_at_utc": "2026-07-05T14:23:46.937Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-031-FOOD",
+      "poi": "抹茶甜品",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-kyoto-culture-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-05T14:27:53.045Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-032-FOOD",
+      "poi": "汤豆腐",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-kyoto-yudofu-community-cover.jpg",
+      "locked_at_utc": "2026-07-05T14:32:53.253Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 7
+  },
+  "TT_CMS_POI_CITY_KYOTO_CONTENT_QA": "CLOSED"
+}

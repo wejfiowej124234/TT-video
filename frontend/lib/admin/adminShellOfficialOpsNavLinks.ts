@@ -12,4 +12,9 @@ export const ADMIN_SHELL_OFFICIAL_OPS_NAV_LINKS: readonly AdminShellNavLinkDef[]
   },
   { href: "/admin/official/guides", labelKey: "admin_shell_nav_official_guides", permission: ADMIN_PERM.OFFICIAL_READ },
   { href: "/admin/official/cold-start", labelKey: "admin_shell_nav_official_cold_start", permission: ADMIN_PERM.OFFICIAL_READ },
+  {
+    href: "/admin/official/public-operations",
+    labelKey: "admin_shell_nav_official_public_operations",
+    permission: ADMIN_PERM.OFFICIAL_READ,
+  },
 ] as const;

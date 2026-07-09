@@ -1,0 +1,252 @@
+# Phase ③ Production Deployment Prerequisite Review (V1)
+#
+# TravelTrust Phase ③ Deployment Prerequisite Review
+# — 进入 Phase ③ Mainnet Production Deployment 之前的最后一道系统级 Gate。
+# 不通过不得进入 Web3 Freeze（Freeze 紧随其后，Package 在 Freeze 之后）。
+#
+# Pipeline:
+#   Phase ② Exit Review PASS
+#     → Phase ③ Deployment Prerequisite Review (本 Gate)
+#     → Web3 Freeze
+#     → Mainnet Deployment Package
+#     → Phase ③ Production Deployment (Mainnet)
+#     → Mainnet Validation
+
+schema: traveltrust.phase3_deployment_prerequisite_review.v1
+version: 1
+effective_utc: "2026-07-08"
+display_name: Phase ③ Production Deployment Prerequisite Review
+short_name: Phase ③ Deployment Prerequisite Review
+machine_key: TT_PHASE3_DEPLOYMENT_PREREQUISITE_REVIEW
+governance_root: registry/production-governance-principles.v1.yaml
+governance_version: production_release_governance_v1
+
+position:
+  after: PHASE2_EXIT_REVIEW_PASS
+  before: WEB3_FREEZE
+  blocks: [web3_freeze, mainnet_deployment_package, phase_3_mainnet_broadcast]
+
+prerequisite:
+  phase2_exit_review: PHASE2_EXIT_REVIEW_PASS
+
+exit_verdict: PHASE3_DEPLOYMENT_PREREQUISITE_REVIEW_PASS
+exit_verdict_in_progress: PHASE3_DEPLOYMENT_PREREQUISITE_REVIEW_IN_PROGRESS
+exit_verdict_blocked: PHASE3_DEPLOYMENT_PREREQUISITE_REVIEW_BLOCKED
+
+orchestrator: scripts/dev/run-phase3-deployment-prerequisite-review.cjs
+gate: scripts/gates/check-phase3-deployment-prerequisite-review-gate.sh
+runbook: docs/runbook/PHASE3-DEPLOYMENT-PREREQUISITE-REVIEW-V1.md
+evidence_root: evidence/GO_production_readiness/phase3-deployment-prerequisite-review
+
+discipline:
+  no_new_review_categories: true
+  total_reviews: 10
+  completion_model: Review → Sub Checks → Evidence → PASS
+  note: Review PASS only when ALL sub_checks PASS; each review emits machine_key e.g. TT_R06_PROTOCOL_CONSISTENCY_PASS
+  timelock_wait_closure:
+    updated_utc: "2026-07-08"
+    governance_freeze: GOVERNANCE_FREEZE_ACTIVE
+    governance_principles: registry/production-governance-principles.v1.yaml
+    principle_1: PG-P1
+    governance_freeze_ssot: registry/governance-freeze.v1.yaml
+    status_refresh: scripts/dev/refresh-governance-status.cjs
+    machine_state: 88/88 sub-checks PASS · 9 deferred · 0 blockers
+    gate_blocked_until: PHASE2_EXIT_REVIEW_PASS
+    deferred_sub_checks:
+      cert_timelock: [R01-SC-01, R01-SC-04, R03-SC-08, R09-SC-06, R09-SC-11, R10-SC-02, R10-SC-07]
+      web3_freeze: [R08-SC-07, R08-SC-08]
+    honest_non_blocking:
+      - WEB3-SYS-P1-004 Primary Market FE route NOT STARTED (Phase ② scope)
+      - WEB3_PROTOCOL_GRADE_IN_PROGRESS P1 cert/PM items until Cert #12
+      - WEB3_MAINNET_PRODUCTION_BLOCKED until Shadow Launch + scope selection
+  production_readiness_book:
+    orchestrator: scripts/dev/gen-production-readiness-book.cjs
+    evidence: evidence/GO_production_readiness/production-readiness-book/PRODUCTION-READINESS-BOOK-LATEST.md
+    executive_summary: evidence/GO_production_readiness/production-readiness-book/PRODUCTION-READINESS-EXECUTIVE-SUMMARY-LATEST.md
+    deployment_readiness_matrix: evidence/GO_production_readiness/production-readiness-book/DEPLOYMENT-READINESS-MATRIX-LATEST.md
+    owner_mainnet_checklist: evidence/GO_production_readiness/production-readiness-book/OWNER-MAINNET-DEPLOY-CHECKLIST-LATEST.md
+    four_gate_ssot: registry/production-go-four-gate-framework.v1.yaml
+    not_a_gate: true
+
+review_pass_verdicts:
+  REVIEW-01: TT_R01_BUSINESS_LOGIC_PASS
+  REVIEW-02: TT_R02_PROTOCOL_STATE_MACHINE_PASS
+  REVIEW-03: TT_R03_ROLE_LIFECYCLE_PASS
+  REVIEW-04: TT_R04_FUND_LIFECYCLE_PASS
+  REVIEW-05: TT_R05_PERMISSION_SECURITY_PASS
+  REVIEW-06: TT_R06_PROTOCOL_CONSISTENCY_PASS
+  REVIEW-07: TT_R07_UPGRADEABLE_ARCHITECTURE_PASS
+  REVIEW-08: TT_R08_DEPLOYMENT_DRY_RUN_PASS
+  REVIEW-09: TT_R09_DISASTER_RECOVERY_PASS
+  REVIEW-10: TT_R10_MAINNET_READINESS_PASS
+
+reviews:
+  - id: REVIEW-01
+    name: Web3 全业务逻辑审计
+    short: Business Logic Review
+    machine_key: TT_R01_BUSINESS_LOGIC
+    goal: 确认所有 Web3 业务规则已经闭环
+    sub_checks:
+      - { id: R01-SC-01, name: TTG Lifecycle }
+      - { id: R01-SC-02, name: Escrow Lifecycle }
+      - { id: R01-SC-03, name: Settlement }
+      - { id: R01-SC-04, name: Treasury }
+      - { id: R01-SC-05, name: CountryPool }
+      - { id: R01-SC-06, name: Identity }
+      - { id: R01-SC-07, name: Steward }
+      - { id: R01-SC-08, name: Emergency }
+      - { id: R01-SC-09, name: Recovery }
+      - { id: R01-SC-10, name: Business Logic Audit Doc }
+    exit_criteria: 全部 sub_checks PASS → TT_R01_BUSINESS_LOGIC_PASS
+
+  - id: REVIEW-02
+    name: 协议状态机审计
+    short: Protocol State Machine Review
+    machine_key: TT_R02_PROTOCOL_STATE_MACHINE
+    goal: 验证所有状态转换是否合法
+    sub_checks:
+      - { id: R02-SC-01, name: State Machine SSOT }
+      - { id: R02-SC-02, name: Order / Escrow projection }
+      - { id: R02-SC-03, name: Governance Proposal }
+      - { id: R02-SC-04, name: Treasury states }
+      - { id: R02-SC-05, name: Staking states }
+      - { id: R02-SC-06, name: CountryPool states }
+      - { id: R02-SC-07, name: Identity / Role machines }
+      - { id: R02-SC-08, name: Timeout / Recovery paths }
+      - { id: R02-SC-09, name: Protocol-Grade P0 clear }
+    exit_criteria: TT_R02_PROTOCOL_STATE_MACHINE_PASS
+
+  - id: REVIEW-03
+    name: 六角色全生命周期验证
+    short: Role Lifecycle Review
+    machine_key: TT_R03_ROLE_LIFECYCLE
+    goal: 六角色完整闭环
+    sub_checks:
+      - { id: R03-SC-01, name: Traveler }
+      - { id: R03-SC-02, name: Guide }
+      - { id: R03-SC-03, name: Merchant }
+      - { id: R03-SC-04, name: Region Steward }
+      - { id: R03-SC-05, name: TTG Holder }
+      - { id: R03-SC-06, name: Admin }
+      - { id: R03-SC-07, name: User Journey Audit }
+      - { id: R03-SC-08, name: Cert walkthrough evidence }
+    exit_criteria: TT_R03_ROLE_LIFECYCLE_PASS
+
+  - id: REVIEW-04
+    name: 资金生命周期审计
+    short: Fund Lifecycle Review
+    machine_key: TT_R04_FUND_LIFECYCLE
+    goal: Every token accounted for
+    sub_checks:
+      - { id: R04-SC-01, name: Fund-flow SSOT }
+      - { id: R04-SC-02, name: Traveler → Escrow }
+      - { id: R04-SC-03, name: Escrow → Guide / FeeRouter }
+      - { id: R04-SC-04, name: Treasury path }
+      - { id: R04-SC-05, name: CountryPool path }
+      - { id: R04-SC-06, name: Steward / Claim }
+      - { id: R04-SC-07, name: No duplicate / dead funds }
+      - { id: R04-SC-08, name: Economic arbitrage evidence }
+    exit_criteria: TT_R04_FUND_LIFECYCLE_PASS
+
+  - id: REVIEW-05
+    name: 权限与安全边界审计
+    short: Permission & Security Review
+    machine_key: TT_R05_PERMISSION_SECURITY
+    sub_checks:
+      - { id: R05-SC-01, name: Contract Modifier }
+      - { id: R05-SC-02, name: API RBAC }
+      - { id: R05-SC-03, name: Frontend Gate }
+      - { id: R05-SC-04, name: Registry Permission }
+      - { id: R05-SC-05, name: Dashboard Permission }
+      - { id: R05-SC-06, name: Evidence Permission }
+      - { id: R05-SC-07, name: Attack Surface matrix }
+      - { id: R05-SC-08, name: Protocol-Grade P0 clear }
+    exit_criteria: TT_R05_PERMISSION_SECURITY_PASS
+
+  - id: REVIEW-06
+    name: 协议一致性审计
+    short: Protocol Consistency Review
+    machine_key: TT_R06_PROTOCOL_CONSISTENCY
+    priority: true
+    sub_checks:
+      - { id: R06-SC-01, name: Registry ↔ Contracts }
+      - { id: R06-SC-02, name: Registry ↔ ABI }
+      - { id: R06-SC-03, name: Registry ↔ API }
+      - { id: R06-SC-04, name: Registry ↔ Frontend }
+      - { id: R06-SC-05, name: Registry ↔ Dashboard }
+      - { id: R06-SC-06, name: Registry ↔ Master Map }
+      - { id: R06-SC-07, name: Registry ↔ Evidence }
+      - { id: R06-SC-08, name: Registry ↔ Deployment Package }
+      - { id: R06-SC-09, name: Registry ↔ Environment }
+      - { id: R06-SC-10, name: Registry ↔ Runtime }
+    exit_criteria: TT_R06_PROTOCOL_CONSISTENCY_PASS
+
+  - id: REVIEW-07
+    name: Upgradeable Architecture Review
+    short: Upgradeable Architecture Review
+    machine_key: TT_R07_UPGRADEABLE_ARCHITECTURE
+    sub_checks:
+      - { id: R07-SC-01, name: Proxy architecture }
+      - { id: R07-SC-02, name: Storage Layout tests }
+      - { id: R07-SC-03, name: initialize / initializer }
+      - { id: R07-SC-04, name: upgradeTo path }
+      - { id: R07-SC-05, name: Timelock }
+      - { id: R07-SC-06, name: Proxy Admin }
+      - { id: R07-SC-07, name: G24 baseline }
+    exit_criteria: TT_R07_UPGRADEABLE_ARCHITECTURE_PASS
+
+  - id: REVIEW-08
+    name: Deployment Dry Run Review
+    short: Deployment Dry Run Review
+    machine_key: TT_R08_DEPLOYMENT_DRY_RUN
+    sub_checks:
+      - { id: R08-SC-01, name: Deployment Package registry }
+      - { id: R08-SC-02, name: Wave scripts present }
+      - { id: R08-SC-03, name: ABI in package scope }
+      - { id: R08-SC-04, name: Constructor / Verify path }
+      - { id: R08-SC-05, name: Registry in package }
+      - { id: R08-SC-06, name: Rollback manifest }
+      - { id: R08-SC-07, name: Manifest generated }
+      - { id: R08-SC-08, name: Web3 Freeze prerequisite, deferred: true }
+    exit_criteria: TT_R08_DEPLOYMENT_DRY_RUN_PASS
+
+  - id: REVIEW-09
+    name: Disaster Recovery Review
+    short: Disaster Recovery Review
+    machine_key: TT_R09_DISASTER_RECOVERY
+    sub_checks:
+      - { id: R09-SC-01, name: RPC Down / Failover }
+      - { id: R09-SC-02, name: Indexer Restart }
+      - { id: R09-SC-03, name: Backend Restart }
+      - { id: R09-SC-04, name: Database Recovery }
+      - { id: R09-SC-05, name: Contract Pause }
+      - { id: R09-SC-06, name: Resume }
+      - { id: R09-SC-07, name: Rollback plan }
+      - { id: R09-SC-08, name: Treasury Pause }
+      - { id: R09-SC-09, name: Emergency Upgrade }
+      - { id: R09-SC-10, name: Trigger Matrix }
+      - { id: R09-SC-11, name: Cert #10–11 DR/GORP }
+      - { id: R09-SC-12, name: D14 Incident DR audit }
+    exit_criteria: TT_R09_DISASTER_RECOVERY_PASS
+
+  - id: REVIEW-10
+    name: Mainnet Readiness Review
+    short: Mainnet Readiness Review
+    machine_key: TT_R10_MAINNET_READINESS
+    sub_checks:
+      - { id: R10-SC-01, name: Phase ② sub-tracks }
+      - { id: R10-SC-02, name: Exit Review PASS }
+      - { id: R10-SC-03, name: Evidence completeness }
+      - { id: R10-SC-04, name: Third-party Audit R-01 }
+      - { id: R10-SC-05, name: Shadow Launch }
+      - { id: R10-SC-06, name: G0–G6 precheck }
+      - { id: R10-SC-07, name: Mainnet readiness P0=0 }
+      - { id: R10-SC-08, name: Owner Sign-off }
+    deferred_post_prerequisite:
+      - Web3 Freeze PASS
+      - Deployment Package PASS
+      - Registry Snapshot PASS
+      - TT_MAINNET_PRODUCTION_READY final
+    exit_criteria: TT_R10_MAINNET_READINESS_PASS
+
+next_on_pass: run-web3-freeze.cjs → generate-mainnet-deployment-package.cjs → Phase ③ Wave deployment

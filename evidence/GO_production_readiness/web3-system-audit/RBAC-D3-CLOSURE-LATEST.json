@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.rbac_d3_closure.v1",
+  "recorded_utc": "2026-07-08T14:05:32.875Z",
+  "verdict": "RBAC_D3_PRODUCTION_BOUNDARY_CLOSED",
+  "findings": {
+    "D3-F01_permission_ssot_sync": "CLOSED",
+    "D3-F04_adm_u01_staging_matrix": "CLOSED"
+  },
+  "permission_parity": {
+    "rust_count": 29,
+    "yaml_count": 29,
+    "ts_count": 29,
+    "only_rust": [],
+    "only_yaml": [],
+    "only_ts": []
+  },
+  "security_audit": {
+    "d3_verdict": null,
+    "d3_findings": [],
+    "security_audit_log_tail": "TT_P2FC_WEB3_SYSTEM_SECURITY_AUDIT: WARN D1=WARN D2=WARN D3=WARN D4=WARN p0_iso=NOT_CONFIRMED adm_u01_prep=BLOCKED spof=8 high=2 out=D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/web3-system-security-audit/20260708T140532Z\r\nTT_P2FC_P0_RBAC_BYPASS_ISOLATION: NOT_CONFIRMED\r\n"
+  },
+  "adm_u01_evidence": [
+    "evidence/GO_staging_admin_rbac_matrix/adm_u01_localfirst_9979b35e_20260630/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/adm_u01_localfirst_9979b35e_retry_20260630/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/adm_u01_localfirst_retest2_20260630/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/adm_u01_localfirst_retest3_20260630/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/adm_u01_localfirst_retest_20260630/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/adm_u01_priority_2026-06-30T020749Z/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/adm_u01_state_b_fix_20260630T020256Z/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/latest/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/rbac-retry-20260615T003959Z/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/run_20260603T130350Z/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/run_20260603_adm_u01_v3/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/run_20260613T_p0_clear_v11/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/run_20260613T_p0_clear_v12/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/run_20260613T_p0_clear_v13/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/run_20260630T150451Z/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/run_20260630T153909Z/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/run_20260630T155708Z/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/run_20260701T092450Z/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/run_adm_u01_close_20260603/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/run_graduation_20260615T000928Z/report.json",
+    "evidence/GO_staging_admin_rbac_matrix/run_local_first_3a8549ba/report.json",
+    "evidence/GO_production_operations_enablement/20260708T045839Z/adm-u01/report.json",
+    "evidence/GO_production_operations_enablement/20260708T050338Z/adm-u01/report.json"
+  ],
+  "staging_matrix_registry_go": true,
+  "discipline": {
+    "governance_contracts_modified": false,
+    "timelock_touched": false,
+    "note": "RBAC registry + FE permission SSOT + evidence only"
+  },
+  "references": [
+    "registry/admin-rbac-permissions.v1.yaml",
+    "frontend/lib/admin/adminPermissionIds.ts",
+    "crates/api/src/routes/admin/admin_rbac.rs",
+    "scripts/gates/run-admin-rbac-staging-matrix.py"
+  ]
+}

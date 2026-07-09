@@ -1,0 +1,83 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T153530Z",
+  "filename": "ocs-nyc-skyline-official-guide-cover.jpg",
+  "chain_id": "nyc-skyline",
+  "city": "纽约",
+  "country_code": "US",
+  "slot": "official-guide-cover",
+  "surface": "Official Guide",
+  "copy_label": "纽约天际线摄影官方路线",
+  "manifest_copy": {
+    "official_guide.title": "纽约天际线摄影官方路线",
+    "official_guide.destination": "纽约",
+    "official_guide.body": "一日内覆盖经典机位与最佳光线时段，附交通建议。",
+    "official_guide.tags": [
+      "纽约",
+      "摄影",
+      "官方精选"
+    ]
+  },
+  "content_safety_pre_check": {
+    "pass": true
+  },
+  "post_generation_quality_check": {
+    "pass": true,
+    "bytes": 132606
+  },
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG 132606 bytes。"
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "大桥+曼哈顿天际线宽幅与一日摄影路线 100% 对齐。"
+    },
+    "G3_slot_differentiation": {
+      "pass": true
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "纽约 US-only。"
+    },
+    "G5_brand_visual": {
+      "pass": true
+    },
+    "G6_commercial_platform": {
+      "pass": true
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true
+    },
+    "G8_evidence_matrix": {
+      "pass": true
+    },
+    "G9_content_authenticity": {
+      "pass": true
+    },
+    "G10_content_diversity": {
+      "pass": true
+    }
+  },
+  "official_guide_destination_review": {
+    "pass": true,
+    "wide_route_narrative": true
+  },
+  "destination_experience_review": {
+    "pass": true
+  },
+  "surface_boundary_review": {
+    "pass": true
+  },
+  "visual_sequence_review": {
+    "pass": true
+  },
+  "country_consistency": {
+    "pass": true
+  },
+  "regression_prior_39_rows": {
+    "pass": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T16:14:34Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "首尔",
+    "city_en": "Seoul",
+    "matrix_ids": [
+      "PH-KR-064-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-KR-064-ATR",
+      "legacy_value": "景福宫",
+      "poi_id": "4ab6b040-1a0b-4f49-8c3c-7be5c837c64b",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "hero_file": "ocs-seoul-food-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-064-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

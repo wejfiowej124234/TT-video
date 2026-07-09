@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.pi3_003_owner_stripe_live_checklist.v1",
+  "recorded_at": "2026-07-08T06:58:00Z",
+  "status": "WAITING_OWNER_CREDENTIALS",
+  "execution_state": "PI3-003_PAUSED",
+  "prerequisite": {
+    "OCS_PRODUCTION_PARITY_AUDIT": "PASS",
+    "TT_PRODUCTION_STRIPE_LIVE": "NOT_STARTED"
+  },
+  "discipline": [
+    "No fake sk_live_* or whsec_*",
+    "No fly secrets set until Owner provides real Live credentials",
+    "No product code changes for PI3-003",
+    "Test mode keys (sk_test_*) forbidden on production (G-1)"
+  ],
+  "scope_ssot": {
+    "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+    "stripe_mode": "live",
+    "docs": [
+      "docs/runbook/PRODUCTION-STRIPE-ENV-MATRIX-SEPOLIA-SCOPE.md",
+      "docs/handbook/engineering/153-PI3-003-Stripe-Live-Production-Webhook-Report.md"
+    ]
+  },
+  "current_prod_state": {
+    "api_base_interim": "https://tt-api-prod.fly.dev",
+    "webhook_url_interim": "https://tt-api-prod.fly.dev/api/v1/hooks/stripe/onboarding",
+    "fly_app": "tt-api-prod",
+    "fly_secrets_present": ["TRAVELTRUST_ONBOARDING_STRIPE_ENABLED"],
+    "fly_secrets_missing": ["TRAVELTRUST_STRIPE_SECRET_KEY", "TRAVELTRUST_STRIPE_WEBHOOK_SECRET"],
+    "local_env_file": "scripts/dev/.env.production.local",
+    "local_stripe_keys": "empty",
+    "local_onboarding_stripe_enabled": "0"
+  },
+  "env_variable_mapping": {
+    "api_tt-api-prod": [
+      {
+        "name": "TRAVELTRUST_STRIPE_SECRET_KEY",
+        "value": "sk_live_*",
+        "stripe_dashboard": "Developers → API keys → Live mode → Secret key",
+        "stored_in": [".env.production.local", "Fly tt-api-prod secret"]
+      },
+      {
+        "name": "TRAVELTRUST_STRIPE_WEBHOOK_SECRET",
+        "value": "whsec_*",
+        "stripe_dashboard": "Developers → Webhooks → Live endpoint → Signing secret",
+        "stored_in": [".env.production.local", "Fly tt-api-prod secret"]
+      },
+      {
+        "name": "TRAVELTRUST_ONBOARDING_STRIPE_ENABLED",
+        "value": "1",
+        "stored_in": [".env.production.local", "Fly tt-api-prod secret"]
+      },
+      {
+        "name": "PUBLIC_API_BASE_URL",
+        "value": "https://tt-api-prod.fly.dev (interim) or https://api.<brand-domain> (151)",
+        "used_for": "Webhook URL registration"
+      }
+    ],
+    "frontend_tt-web-prod": [
+      {
+        "name": "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+        "value": "pk_live_*",
+        "stripe_dashboard": "Developers → API keys → Live mode → Publishable key",
+        "stored_in": "deploy/fly/tt-web-prod/build.env.local"
+      }
+    ]
+  },
+  "webhook_spec": {
+    "url_interim": "https://tt-api-prod.fly.dev/api/v1/hooks/stripe/onboarding",
+    "events": [
+      "payment_intent.succeeded",
+      "checkout.session.completed",
+      "charge.refunded",
+      "charge.dispute.funds_withdrawn"
+    ],
+    "flow": "payment_intent.succeeded → webhook → DB paid → escrow"
+  },
+  "resume_trigger": "Owner confirms sk_live and whsec in .env.production.local (do not paste keys in chat)",
+  "resume_command": "bash scripts/dev/run-pi3-003-stripe-live-production-closure.sh"
+}

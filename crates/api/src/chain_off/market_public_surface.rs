@@ -205,7 +205,37 @@ pub fn is_dev_guide_bio(bio: Option<&str>) -> bool {
         return false;
     };
     let b = b.to_lowercase();
-    b.contains("测试向导") || b.contains("用于联调") || b.contains("test guide")
+    b.contains("测试向导")
+        || b.contains("用于联调")
+        || b.contains("test guide")
+        || b.contains("trust-gate e2e")
+        || b.contains("多重身份演示")
+}
+
+fn is_trust_gate_e2e_local_email(email: &str) -> bool {
+    email.trim().to_lowercase().ends_with("@trustgate-e2e.local")
+}
+
+/// 公众 **`GET /api/v1/guides` 列表**排除（与 DDG `f0e0b101-` · 测试账号同源）。
+/// 不用于 **`GET /api/v1/guides/:id`** — E2E 深链仍可读。
+pub fn should_exclude_guide_from_public_list(g: &GuideRow, store: &ChainOffStore) -> bool {
+    if crate::chain_off::trust_gate_e2e_seed::is_trust_gate_seeded_guide_id(g.id) {
+        return true;
+    }
+    if is_dev_guide_bio(g.bio.as_deref()) {
+        return true;
+    }
+    if let Some(u) = store.users.get(&g.user_id) {
+        if is_dev_catalog_email(&u.email) || is_trust_gate_e2e_local_email(&u.email) {
+            return true;
+        }
+    }
+    if public_catalog_surface_filter_enabled()
+        && should_hide_guide_from_public_catalog(g, store)
+    {
+        return true;
+    }
+    false
 }
 
 /// 公众 catalog 排序：featured DESC · display_priority DESC · 时间 DESC · id DESC
@@ -557,8 +587,33 @@ mod tests {
     fn dev_guide_bio_heuristic() {
         assert!(is_dev_guide_bio(Some("测试向导账号，用于联调")));
         assert!(is_dev_guide_bio(Some("Local test guide profile")));
+        assert!(is_dev_guide_bio(Some("trust-gate e2e")));
+        assert!(is_dev_guide_bio(Some("多重身份演示 · 向导轨")));
         assert!(!is_dev_guide_bio(Some("Kyoto cultural walking tours")));
         assert!(!is_dev_guide_bio(None));
+    }
+
+    #[test]
+    fn should_exclude_trust_gate_fixture_from_public_list() {
+        use crate::chain_off::trust_gate_e2e_seed::is_trust_gate_seeded_guide_id;
+        let tg_id =
+            uuid::Uuid::parse_str("f0e0b101-0001-4001-8001-000000000001").expect("tg guide uuid");
+        assert!(is_trust_gate_seeded_guide_id(tg_id));
+        let mut store = ChainOffStore::default();
+        let g = GuideRow {
+            id: tg_id,
+            user_id: uuid::Uuid::new_v4(),
+            bio: Some("trust-gate e2e".into()),
+            ..guide_with_types(&["walking"])
+        };
+        assert!(should_exclude_guide_from_public_list(&g, &store));
+        let prod = GuideRow {
+            id: uuid::Uuid::new_v4(),
+            user_id: uuid::Uuid::new_v4(),
+            bio: Some("西湖、灵隐与龙井茶乡深度讲解".into()),
+            ..guide_with_types(&["walking"])
+        };
+        assert!(!should_exclude_guide_from_public_list(&prod, &store));
     }
 
     #[test]

@@ -1,0 +1,56 @@
+{
+  "schema": "traveltrust.rc_runtime_convergence_closure.v1",
+  "phase": "RC Runtime Convergence",
+  "status": "FROZEN_CLOSED",
+  "frozen_at": "2026-07-04T11:13:00Z",
+  "registry": "registry/staging-rc-runtime-convergence.v1.yaml",
+  "runbook": "docs/runbook/TT-STAGING-RC-RUNTIME-CONVERGENCE.md",
+  "machine_keys": {
+    "TT_RC_RUNTIME_CONVERGENCE": "CLOSED",
+    "TT_RC_RELEASE_READY": "YES",
+    "TT_RC_RUNTIME_DRIFT": "0",
+    "TT_RC_DEPLOYMENT_DRIFT": "0",
+    "TT_RC_MEDIA_DRIFT": "0",
+    "TT_RC_PRESENTATION_DRIFT": "0",
+    "TT_RC_DATA_DRIFT": "0",
+    "TT_RC_CATALOG_DRIFT": "0",
+    "TT_RC_REGRESSION": "0",
+    "TT_RC_BASELINE": "PASS",
+    "TT_RC_AUDIT": "PASS",
+    "TT_STAGING_RC_BASELINE_AUDIT": "PASS"
+  },
+  "closed_items": [
+    {
+      "id": "RC-A-001",
+      "evidence": "evidence/GO_staging_rc_runtime_convergence/RC-A-001-closed-20260704T110900Z.json"
+    }
+  ],
+  "open_items_at_closure": [],
+  "downstream_tracks": {
+    "production_preparation": [
+      {
+        "id": "PP-D-001",
+        "migrated_from": "RC-D-001",
+        "title": "Web /api/meta/build returns HTML not JSON"
+      }
+    ],
+    "l5_polish": [
+      {
+        "id": "L5-G-001",
+        "migrated_from": "RC-G-001",
+        "slice": "RC-A11Y-POLISH",
+        "title": "WCAG AA contrast on chips metadata buttons"
+      }
+    ]
+  },
+  "post_closure_policy": {
+    "forbidden": [
+      "reopen_rc_runtime_convergence_phase",
+      "register_new_rc_class_issues",
+      "expand_rc_bucket_taxonomy"
+    ],
+    "regression_routing": "Baseline full-surface audit only; do not reopen RC convergence track"
+  },
+  "next_phase": "production_preparation",
+  "honest_boundary": "RC Runtime Convergence CLOSED on Staging RC (phase 2). Not Production GO (phase 3)."
+}

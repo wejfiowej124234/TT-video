@@ -41,7 +41,7 @@ echo "TT_GOVERNANCE_CERT_07: START stamp=${STAMP} phase=②"
 
 bash "$ROOT/scripts/dev/enter-ttg-cert-7-execute.sh"
 
-ETA="$(cat "$HAT_R1_ROOT"/EXECUTE_EARLIEST_UNIX.txt" | tr -d '\r\n')"
+ETA="$(cat "$HAT_R1_ROOT/EXECUTE_EARLIEST_UNIX.txt" | tr -d '\r\n')"
 NOW="$(date +%s)"
 
 if [[ "$TRY_EXECUTE" -eq 1 || "$FINALIZE" -eq 1 ]]; then

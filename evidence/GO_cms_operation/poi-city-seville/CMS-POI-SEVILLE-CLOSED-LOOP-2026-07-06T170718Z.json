@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T17:07:18Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "ES",
+    "city_zh": "塞维利亚",
+    "city_en": "Seville",
+    "matrix_ids": [
+      "PH-ES-210-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-ES-210-ATR",
+      "legacy_value": "西班牙广场",
+      "poi_id": "df4b5f45-e05a-4f7c-b473-54ce3f446355",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-210-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

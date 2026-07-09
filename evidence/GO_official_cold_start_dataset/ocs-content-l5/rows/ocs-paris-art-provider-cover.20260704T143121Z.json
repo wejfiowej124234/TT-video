@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_verify.v1",
+  "stamp_utc": "20260704T143121Z",
+  "filename": "ocs-paris-art-provider-cover.jpg",
+  "row": {
+    "filename": "ocs-paris-art-provider-cover.jpg",
+    "chain_id": "paris-art",
+    "city": "巴黎",
+    "slot": "provider-cover",
+    "surface": "Provider",
+    "scene": "小团免排队入馆 · 馆内名画前讲解",
+    "copy_label": "巴黎博物馆免排队 · 小团",
+    "asset_status": "verified",
+    "review_status": "pass"
+  },
+  "checks": [
+    {
+      "id": "media_exists",
+      "pass": true,
+      "detail": "D:\\TravelTrust-V1.1\\data\\official-cold-start\\media\\ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "id": "jpeg_magic",
+      "pass": true,
+      "detail": "ok"
+    },
+    {
+      "id": "min_size_16kb",
+      "pass": false,
+      "detail": "5428 bytes"
+    },
+    {
+      "id": "matrix_asset_status",
+      "pass": true,
+      "detail": "verified"
+    },
+    {
+      "id": "matrix_review_pass",
+      "pass": true,
+      "detail": "pass"
+    }
+  ],
+  "TT_OCS_CONTENT_L5_ROW_VERIFY": "FAIL",
+  "gates_manual": {
+    "G2_copy_alignment": "pending_human",
+    "G3_slot_differentiation": "pending_human",
+    "G9_content_authenticity": "pending_human",
+    "G10_content_diversity": "pending_human"
+  }
+}

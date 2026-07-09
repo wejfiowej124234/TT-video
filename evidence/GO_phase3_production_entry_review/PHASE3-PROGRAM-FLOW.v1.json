@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.phase3_program_flow.v2",
+  "effective_at_utc": "2026-06-30T10:21:21Z",
+  "frozen_runtime_baseline": "evidence/GO_phase3_production_entry_review/FROZEN-RUNTIME-BASELINE.v1.json",
+  "diagram_ascii": "Phase\u2460\n        \u2502\n        \u25bc\nPhase\u2461\n        \u2502\n        \u25bc\nRuntime Baseline\n        \u2502\n        \u2502  Frozen  (@ d5aa447f)\n        \u25bc\nRuntime Consistency\n        \u2502\n        \u2502  Archived\n        \u25bc\nPhase\u2462 Production Entry Review\n        \u2502\n        \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Repository Hygiene\n        \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Production Entry Review\n        \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Manual Validation\n        \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 Mainnet Preparation\n        \u2502\n        \u25bc\nProduction GO\n\nLegacy (off path forever)\n  TN-P1-009 \u00b7 TN-P1-010",
+  "baseline_mutation_chain": [
+    "RUNTIME_CODE_OR_CONFIG_CHANGE",
+    "S5_DEPLOY",
+    "S6_VALIDATION",
+    "BASELINE_RECORD_UPDATE"
+  ],
+  "classification_quick_ref": {
+    "readme_evidence_runbook_docs": "no baseline change",
+    "runtime_config_deploy_api_web": "baseline update via S5\u2192S6 chain only",
+    "mainnet": "Phase\u2462 only"
+  },
+  "legacy_off_path": {
+    "items": [
+      "TN-P1-009",
+      "TN-P1-010"
+    ],
+    "participates_in_main_flow": false
+  },
+  "machine_keys": {
+    "TT_RUNTIME_BASELINE_FROZEN_ASSET": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+    "TT_RUNTIME_BASELINE_MUTATION": "FORBIDDEN_UNLESS_S5_S6_CHAIN",
+    "TT_LOCAL_STAGING_RUNTIME_CONSISTENCY": "ARCHIVED",
+    "TT_PHASE3_PROGRAM_FLOW": "ACTIVE"
+  }
+}

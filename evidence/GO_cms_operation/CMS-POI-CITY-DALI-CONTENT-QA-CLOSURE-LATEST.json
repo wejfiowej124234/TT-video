@@ -1,0 +1,138 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-07T11:30:15.090Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "大理",
+    "city_en": "Dali",
+    "poi_count": 10
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "JP + KR + TH + US Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "cross_region_remediated": "all_8_execution_plus_geo",
+  "checks": {
+    "assets_locked_8_8": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-CN-261-ATR",
+      "poi": "洱海",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-07T11:04:28.813Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-262-ATR",
+      "poi": "古城",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "locked_at_utc": "2026-07-07T11:05:27.330Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-263-ATR",
+      "poi": "崇圣寺",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "locked_at_utc": "2026-07-07T11:09:22.155Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-264-ATR",
+      "poi": "双廊",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "locked_at_utc": "2026-07-07T11:10:28.157Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-265-ATR",
+      "poi": "喜洲",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-07T11:14:23.188Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-266-FOOD",
+      "poi": "乳扇",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-07T11:15:30.209Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-267-FOOD",
+      "poi": "饵块",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "locked_at_utc": "2026-07-07T11:19:24.294Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-268-FOOD",
+      "poi": "酸辣鱼",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "locked_at_utc": "2026-07-07T11:20:31.266Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-269-FOOD",
+      "poi": "白族三道茶",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "locked_at_utc": "2026-07-07T11:24:24.893Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-CN-270-FOOD",
+      "poi": "喜洲粑粑",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-07T11:25:31.672Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "PASS",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 10
+  },
+  "TT_CMS_POI_CITY_DALI_CONTENT_QA": "CLOSED"
+}

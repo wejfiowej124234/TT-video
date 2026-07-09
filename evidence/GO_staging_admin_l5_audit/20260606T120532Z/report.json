@@ -1,0 +1,246 @@
+{
+  "stamp": "20260606T120532Z",
+  "git_sha": "4a9ab0db8de399868f14e12b5eaf72b4b5f5ace1",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "audit_email": "tourist@test.com",
+  "login_role": "super_admin",
+  "browser_verdict": "SKIP",
+  "probe_count": 24,
+  "fail_count": 14,
+  "p0_blockers": [
+    {
+      "id": "capabilities",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/capabilities",
+      "http": 401,
+      "time_s": 0.897836,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "orders_list",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/orders?limit=20",
+      "http": 401,
+      "time_s": 0.888989,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "approvals_list",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/approvals?limit=20",
+      "http": 401,
+      "time_s": 0.797956,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "fe_proxy_capabilities",
+      "url": "https://tt-web-staging.fly.dev/api/v1/admin/capabilities",
+      "http": 401,
+      "time_s": 0.865428,
+      "kind": "fe_proxy"
+    }
+  ],
+  "probes": [
+    {
+      "id": "capabilities",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/capabilities",
+      "http": 401,
+      "time_s": 0.897836,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "home_overview",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/metrics/home-overview",
+      "http": 401,
+      "time_s": 1.041083,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "orders_list",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/orders?limit=20",
+      "http": 401,
+      "time_s": 0.888989,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "users_list",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/users?limit=20",
+      "http": 401,
+      "time_s": 0.985864,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "guides_list",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/guides?limit=20",
+      "http": 401,
+      "time_s": 0.876258,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "disputes_list",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/disputes?limit=20",
+      "http": 401,
+      "time_s": 1.058003,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "approvals_list",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/approvals?limit=20",
+      "http": 401,
+      "time_s": 0.797956,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "audit_logs",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/audit-logs?limit=20",
+      "http": 401,
+      "time_s": 0.845765,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "finance_summary",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/finance/summary",
+      "http": 401,
+      "time_s": 0.79696,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "rbac_matrix",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/rbac/route-matrix",
+      "http": 401,
+      "time_s": 0.822004,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "2fa_policy",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/security/2fa-policy",
+      "http": 401,
+      "time_s": 0.936362,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "community_reports",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/community/reports?limit=20",
+      "http": 401,
+      "time_s": 0.885919,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "provider_apps",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/provider-applications?limit=20",
+      "http": 401,
+      "time_s": 1.245365,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "steward_apps",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/steward-applications?limit=20",
+      "http": 401,
+      "time_s": 1.965518,
+      "error": "login_required",
+      "body_snip": "{\"error\":\"login_required\",\"message\":\"login_required\"}",
+      "kind": "api"
+    },
+    {
+      "id": "capabilities_no_auth",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/capabilities",
+      "http": 401,
+      "time_s": 0.822751,
+      "error": "unauthorized",
+      "body_snip": "{\"error\":\"unauthorized\",\"message\":\"unauthorized\",\"detail\":\"需登录：请提供 X-User-Id 或 Authorization\"}",
+      "kind": "api"
+    },
+    {
+      "id": "fe_middleware_no_cookie",
+      "url": "https://tt-web-staging.fly.dev/admin",
+      "http": 307,
+      "redirect": "https://tt-web-staging.fly.dev/auth/login?returnUrl=%2Fadmin",
+      "kind": "fe_middleware",
+      "cookie": null
+    },
+    {
+      "id": "fe_middleware_uid_only",
+      "url": "https://tt-web-staging.fly.dev/admin",
+      "http": 307,
+      "redirect": "https://tt-web-staging.fly.dev/auth/login?returnUrl=%2Fadmin",
+      "kind": "fe_middleware",
+      "cookie": "traveltrust_user_id=stale-uid-only"
+    },
+    {
+      "id": "fe_middleware_uid_and_ok",
+      "url": "https://tt-web-staging.fly.dev/admin",
+      "http": 200,
+      "redirect": null,
+      "kind": "fe_middleware",
+      "cookie": "traveltrust_user_id=stale-uid-only; traveltrust_session_ok=1"
+    },
+    {
+      "id": "fe_admin",
+      "url": "https://tt-web-staging.fly.dev/admin",
+      "http": 307,
+      "kind": "fe_shell"
+    },
+    {
+      "id": "fe_admin_orders",
+      "url": "https://tt-web-staging.fly.dev/admin/orders",
+      "http": 307,
+      "kind": "fe_shell"
+    },
+    {
+      "id": "fe_admin_users",
+      "url": "https://tt-web-staging.fly.dev/admin/users",
+      "http": 307,
+      "kind": "fe_shell"
+    },
+    {
+      "id": "fe_admin_permissions",
+      "url": "https://tt-web-staging.fly.dev/admin/permissions",
+      "http": 307,
+      "kind": "fe_shell"
+    },
+    {
+      "id": "fe_admin_approvals",
+      "url": "https://tt-web-staging.fly.dev/admin/approvals",
+      "http": 307,
+      "kind": "fe_shell"
+    },
+    {
+      "id": "fe_proxy_capabilities",
+      "url": "https://tt-web-staging.fly.dev/api/v1/admin/capabilities",
+      "http": 401,
+      "time_s": 0.865428,
+      "kind": "fe_proxy"
+    }
+  ],
+  "verdict": "FAIL_P0"
+}

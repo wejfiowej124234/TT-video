@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_review.v1",
+  "stamp_utc": "20260704T123430Z",
+  "chain_id": "tokyo-photo",
+  "city": "东京",
+  "country_code": "JP",
+  "slots_completed": 5,
+  "slots_total": 6,
+  "TT_TOKYO_PHOTO_CHAIN_REVIEW": "PASS",
+  "chain_consistency": {
+    "all_surfaces_tokyo_theme": true,
+    "no_foreign_city_landmarks": true,
+    "copy_image_100pct_aligned": true,
+    "no_composition_subject_tone_duplication": true,
+    "no_business_semantics_error": true,
+    "brand_consistency": true
+  },
+  "narrative_continuity": {
+    "pass": true,
+    "summary": "5/6 形成完整东京摄影用户旅程：认识向导 Ken → 预订旅拍 → 器材悬赏 → 官方路线攻略 → 社区街景分享日志；Feed 封面(涩谷)与路线正文(浅草→晴空塔)互补——正文讲路线、封面呈现都市摄影生活瞬间。",
+    "geo_thread": "浅草/隅田川/晴空塔(Row1/4/正文) + 台场(Row2) + 涩谷(Row5) 覆盖 guide bio 所述机位区域。"
+  },
+  "surfaces": [
+    { "row": 1, "filename": "ocs-tokyo-photo-guide-avatar.jpg", "surface": "Guide", "scene": "浅草雷门肖像", "verified": true },
+    { "row": 2, "filename": "ocs-tokyo-photo-provider-cover.jpg", "surface": "Provider", "scene": "台场情侣旅拍", "verified": true },
+    { "row": 3, "filename": "ocs-tokyo-photo-acquisition-cover.jpg", "surface": "Acquisition", "scene": "镜头店内陈列", "verified": true },
+    { "row": 4, "filename": "ocs-tokyo-photo-official-guide-cover.jpg", "surface": "Official Guide", "scene": "浅草→晴空塔河景路线", "verified": true },
+    { "row": 5, "filename": "ocs-tokyo-photo-community-cover.jpg", "surface": "Community Cover", "scene": "涩谷十字路口街景瞬间", "verified": true }
+  ],
+  "regression_check": { "pass": true, "notes": "Row5 新增未导致 Row1–4 回归。" },
+  "pending_slots": ["ocs-tokyo-photo-community-media.jpg"],
+  "gate_to_row6": "PASS — 本行 PASS 且 Chain 5/6 无回归"
+}

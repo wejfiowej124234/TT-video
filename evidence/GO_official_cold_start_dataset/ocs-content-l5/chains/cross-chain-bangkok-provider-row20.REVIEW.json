@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T134330Z",
+  "row": 20,
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "provider_comparison": {
+    "tokyo-photo": "台场半日旅拍",
+    "kyoto-culture": "私享茶室",
+    "seoul-food": "夜市美食团",
+    "bangkok-temple": "湄南河 sunset 游船晚宴",
+    "distinct": true
+  }
+}

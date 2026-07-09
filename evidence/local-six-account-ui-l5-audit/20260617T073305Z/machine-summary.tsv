@@ -1,0 +1,17 @@
+PASS|P0-01-admin-rbac
+PASS|P0-02-growth
+PASS|P0-03-steward-onboarding
+PASS|P0-04-dispute
+PASS|P0-05-governance-proposals
+PASS|P0-06-escrow-chain-b
+PASS|escrow-chain-a-gd-l5
+PASS|acquisition-pd009
+PASS|governance-doc-smoke
+FAIL|playwright-steward-workbench-full-l5
+PASS|playwright-guide-workbench-full-l5
+PASS|playwright-provider-workbench-full-l5
+PASS|playwright-governance-proposals-full-l5
+PASS|playwright-orders-list-to-escrow
+PASS|playwright-93-matrix-path-did-rank-boards
+FAIL|playwright-b469-guides-drawer-booking-convergence
+PASS|escrow-ui-bilateral

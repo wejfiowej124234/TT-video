@@ -1,13 +1,21 @@
 /**
  * Production UI guards for chain-off-only developer surfaces (`POST …/orders/:id/mock-pay` on `/pay`,
- * and the escrow REST `confirm-completion` shortcut wired beside EIP-712 intents).
+ * mock TTG swap on `/traveltrust`, and the escrow REST `confirm-completion` shortcut).
  *
- * - **`NODE_ENV=production`**：`NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI` 必须为 **`"1"`** 才展示；与 **95 F-010**、根 `.env.example` 叙述一致。
- * - **非 production**：默认可见；仍须 **GET /meta** `orders.order_mock_pay_enabled === true` 且后端未拒绝（见 `readOrderMockPayEnabledFromMeta`）。
+ * **Opt-in only (all environments):** `NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI=1`.
+ * Staging/production Dockerfiles default **`0`**; local engineering may set **`1`** in `.env.local`.
+ * Runtime still requires **GET /meta** `orders.order_mock_pay_enabled === true` where applicable.
  */
 export function allowChainOffMockPayUi(): boolean {
-  if (process.env.NODE_ENV === "production") {
-    return process.env.NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI === "1";
-  }
-  return true;
+  return process.env.NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI === "1";
+}
+
+/** Public governance hub: hide Admin console deep links unless explicitly enabled for local ops. */
+export function allowGovernanceOpsAdminNavLinks(): boolean {
+  return process.env.NEXT_PUBLIC_TRAVELTRUST_ALLOW_GOVERNANCE_OPS_ADMIN_LINKS === "1";
+}
+
+/** `/traveltrust` L5 spacing debug chrome — opt-in only; `?tt_spacing=1` always mounts when present. */
+export function allowTravelTrustSpacingDebugChrome(): boolean {
+  return process.env.NEXT_PUBLIC_TRAVELTRUST_ALLOW_TRAVELTRUST_SPACING_DEBUG === "1";
 }

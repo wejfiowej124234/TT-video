@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.top50_ux.v1",
+  "count": 1,
+  "findings": [
+    {
+      "id": "PGX-SEED-001",
+      "domain": "DOMAIN-CX",
+      "dim": "CX-06",
+      "label": "Publish Hub multi-entry cognitive load",
+      "suggested_verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "Four+ paths to publish — PF-04 overlap"
+    }
+  ]
+}

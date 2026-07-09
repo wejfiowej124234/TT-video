@@ -1,0 +1,54 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_aggregate.v1",
+  "stamp_utc": "20260704T125936Z",
+  "matrix_rows_reviewed": 11,
+  "matrix_rows_total": 60,
+  "TT_DESTINATION_AUTHENTICITY_AGGREGATE": "PASS",
+  "rows": [
+    {
+      "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-tokyo-photo-provider-cover.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-tokyo-photo-official-guide-cover.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-tokyo-photo-community-cover.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-tokyo-photo-community-media.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-kyoto-culture-guide-avatar.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-kyoto-culture-provider-cover.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-kyoto-culture-acquisition-cover.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-kyoto-culture-official-guide-cover.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-kyoto-culture-community-cover.jpg",
+      "pass": true
+    }
+  ],
+  "policy": "建筑/街景/服饰/语言/交通/自然/饮食/商业/文化元素须全部属于当前城市与国家；禁止跨国家/文化/城市混用。"
+}

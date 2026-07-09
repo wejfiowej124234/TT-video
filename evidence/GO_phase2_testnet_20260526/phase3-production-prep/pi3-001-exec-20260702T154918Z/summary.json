@@ -1,0 +1,10 @@
+{
+  "kind": "traveltrust.pi3_001_fly_pg_backup_disaster_recovery_execution.v1",
+  "recorded_utc": "20260702T154918Z",
+  "verdict": "PI3-001_HOLD",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "execution_sprint": "152",
+  "b475_status": "PLANNED",
+  "staging_drill_ready": true,
+  "prod_drill_ready": false
+}

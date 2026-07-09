@@ -1,0 +1,7 @@
+{
+  "proposal_id": "1",
+  "queue_tx": "0xcfd052923a0188b732c505520d9c99773697e4e7b57181d55ce28b416776d2a2",
+  "timelock_delay_seconds": "172800",
+  "execute_earliest_unix": "1781765044",
+  "honest_boundary": "Phase B after 48h"
+}

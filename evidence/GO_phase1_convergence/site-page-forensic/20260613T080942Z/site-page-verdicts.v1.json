@@ -1,0 +1,1718 @@
+{
+  "schema": "traveltrust.site_page_verdicts.v1",
+  "summary": {
+    "KEEP": 84,
+    "REFACTOR": 107,
+    "MERGE": 3
+  },
+  "clusters": [
+    {
+      "cluster": "profile-edit",
+      "routes": [
+        "/guide/profile",
+        "/me/settings/profile"
+      ],
+      "verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "Duplicate traveler profile edit surfaces (RC-01)"
+    },
+    {
+      "cluster": "publish-entry",
+      "routes": [
+        "/me/publish",
+        "/provider",
+        "/me/identities"
+      ],
+      "verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "Publish / merchant / identity hub entry proliferation (RC-01)"
+    },
+    {
+      "cluster": "settings-hub",
+      "routes": [
+        "/me/settings",
+        "/me/settings/profile",
+        "/me/settings/trust",
+        "/me/settings/privacy"
+      ],
+      "verdict": "KEEP",
+      "severity": "P1",
+      "rationale": "Settings hub sub-routes — consolidate nav not pages (REFACTOR nav only)"
+    },
+    {
+      "cluster": "admin-surface",
+      "routes_prefix": "/admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)"
+    }
+  ],
+  "pages": [
+    {
+      "route": "/home",
+      "file": "frontend/app/(home)/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/admin/alerts/incidents/[id]",
+      "file": "frontend/app/admin/alerts/incidents/[id]/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/alerts/incidents",
+      "file": "frontend/app/admin/alerts/incidents/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/api-versions",
+      "file": "frontend/app/admin/api-versions/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/approvals/[id]",
+      "file": "frontend/app/admin/approvals/[id]/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/approvals",
+      "file": "frontend/app/admin/approvals/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/audit/logs/[id]",
+      "file": "frontend/app/admin/audit/logs/[id]/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/audit/operations",
+      "file": "frontend/app/admin/audit/operations/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/audit",
+      "file": "frontend/app/admin/audit/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/auth-audit-events",
+      "file": "frontend/app/admin/auth-audit-events/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/community/abuse-policy",
+      "file": "frontend/app/admin/community/abuse-policy/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/community/appeals",
+      "file": "frontend/app/admin/community/appeals/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/community/appeals/review",
+      "file": "frontend/app/admin/community/appeals/review/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/community/comments/visibility",
+      "file": "frontend/app/admin/community/comments/visibility/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/community/moderation/cases",
+      "file": "frontend/app/admin/community/moderation/cases/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/community/penalties",
+      "file": "frontend/app/admin/community/penalties/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/community/policy-change-logs",
+      "file": "frontend/app/admin/community/policy-change-logs/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/community/ranking/snapshots",
+      "file": "frontend/app/admin/community/ranking/snapshots/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/community/reports",
+      "file": "frontend/app/admin/community/reports/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/community/risk-signals",
+      "file": "frontend/app/admin/community/risk-signals/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/compliance",
+      "file": "frontend/app/admin/compliance/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/compliance/requests/[requestId]/events",
+      "file": "frontend/app/admin/compliance/requests/[requestId]/events/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/compliance/requests/[requestId]/update",
+      "file": "frontend/app/admin/compliance/requests/[requestId]/update/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/compliance/requests",
+      "file": "frontend/app/admin/compliance/requests/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/config",
+      "file": "frontend/app/admin/config/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/config/releases/[id]",
+      "file": "frontend/app/admin/config/releases/[id]/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/config/releases",
+      "file": "frontend/app/admin/config/releases/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/catalog-dashboard",
+      "file": "frontend/app/admin/content/catalog-dashboard/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/cities",
+      "file": "frontend/app/admin/content/cities/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/countries",
+      "file": "frontend/app/admin/content/countries/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/country-market",
+      "file": "frontend/app/admin/content/country-market/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/geo-validation",
+      "file": "frontend/app/admin/content/geo-validation/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/hotel-tiers",
+      "file": "frontend/app/admin/content/hotel-tiers/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/import-operations",
+      "file": "frontend/app/admin/content/import-operations/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/intercity-routes",
+      "file": "frontend/app/admin/content/intercity-routes/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/landing-ambient",
+      "file": "frontend/app/admin/content/landing-ambient/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/media-assets",
+      "file": "frontend/app/admin/content/media-assets/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content",
+      "file": "frontend/app/admin/content/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/poi-images/batches/[id]",
+      "file": "frontend/app/admin/content/poi-images/batches/[id]/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/poi-images",
+      "file": "frontend/app/admin/content/poi-images/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/pois",
+      "file": "frontend/app/admin/content/pois/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/pricing",
+      "file": "frontend/app/admin/content/pricing/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/publish-queue",
+      "file": "frontend/app/admin/content/publish-queue/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/revisions/compare",
+      "file": "frontend/app/admin/content/revisions/compare/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/revisions",
+      "file": "frontend/app/admin/content/revisions/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/content/transport-region-rules",
+      "file": "frontend/app/admin/content/transport-region-rules/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/conversion-analytics",
+      "file": "frontend/app/admin/conversion-analytics/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/cross-check",
+      "file": "frontend/app/admin/cross-check/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/disputes/[id]",
+      "file": "frontend/app/admin/disputes/[id]/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/disputes",
+      "file": "frontend/app/admin/disputes/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/drift-summary",
+      "file": "frontend/app/admin/drift-summary/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/fee-router",
+      "file": "frontend/app/admin/fee-router/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/finance",
+      "file": "frontend/app/admin/finance/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/finance-reconciliation",
+      "file": "frontend/app/admin/finance-reconciliation/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/finance-suite",
+      "file": "frontend/app/admin/finance-suite/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/flags",
+      "file": "frontend/app/admin/flags/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/governance/execution-uat",
+      "file": "frontend/app/admin/governance/execution-uat/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/growth/airdrop-campaigns",
+      "file": "frontend/app/admin/growth/airdrop-campaigns/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/growth/analytics",
+      "file": "frontend/app/admin/growth/analytics/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/growth/anti-fraud",
+      "file": "frontend/app/admin/growth/anti-fraud/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/growth/early-bird",
+      "file": "frontend/app/admin/growth/early-bird/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/growth/kol-center",
+      "file": "frontend/app/admin/growth/kol-center/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/growth",
+      "file": "frontend/app/admin/growth/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/growth/referral-codes",
+      "file": "frontend/app/admin/growth/referral-codes/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/growth/reward-ledger",
+      "file": "frontend/app/admin/growth/reward-ledger/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/guide-applications",
+      "file": "frontend/app/admin/guide-applications/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/guides/[id]",
+      "file": "frontend/app/admin/guides/[id]/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/guides",
+      "file": "frontend/app/admin/guides/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/inbox",
+      "file": "frontend/app/admin/inbox/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/indexer",
+      "file": "frontend/app/admin/indexer/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/indexer/reconcile/[id]",
+      "file": "frontend/app/admin/indexer/reconcile/[id]/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/indexer/reconcile-reports",
+      "file": "frontend/app/admin/indexer/reconcile-reports/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/internal-tools/audits",
+      "file": "frontend/app/admin/internal-tools/audits/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/jobs",
+      "file": "frontend/app/admin/jobs/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/lifecycle",
+      "file": "frontend/app/admin/lifecycle/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/media/access-logs",
+      "file": "frontend/app/admin/media/access-logs/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/media/signed-url-tokens",
+      "file": "frontend/app/admin/media/signed-url-tokens/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/observability",
+      "file": "frontend/app/admin/observability/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/official/accounts",
+      "file": "frontend/app/admin/official/accounts/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/official/cold-start",
+      "file": "frontend/app/admin/official/cold-start/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/official/guides",
+      "file": "frontend/app/admin/official/guides/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/official/itinerary-templates",
+      "file": "frontend/app/admin/official/itinerary-templates/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/official",
+      "file": "frontend/app/admin/official/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/onboarding/compliance-audit",
+      "file": "frontend/app/admin/onboarding/compliance-audit/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/onboarding/entitlements/[id]",
+      "file": "frontend/app/admin/onboarding/entitlements/[id]/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/onboarding/entitlements",
+      "file": "frontend/app/admin/onboarding/entitlements/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/onboarding",
+      "file": "frontend/app/admin/onboarding/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/onboarding/payment-events",
+      "file": "frontend/app/admin/onboarding/payment-events/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/onboarding/webhook-jobs",
+      "file": "frontend/app/admin/onboarding/webhook-jobs/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/operator-guide",
+      "file": "frontend/app/admin/operator-guide/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/orders/[id]",
+      "file": "frontend/app/admin/orders/[id]/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/orders",
+      "file": "frontend/app/admin/orders/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin",
+      "file": "frontend/app/admin/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/permissions",
+      "file": "frontend/app/admin/permissions/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/policies",
+      "file": "frontend/app/admin/policies/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/provider-applications",
+      "file": "frontend/app/admin/provider-applications/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/region-share/reconcile",
+      "file": "frontend/app/admin/region-share/reconcile/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/region-vault",
+      "file": "frontend/app/admin/region-vault/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/reviews/[id]",
+      "file": "frontend/app/admin/reviews/[id]/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/reviews",
+      "file": "frontend/app/admin/reviews/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/scheduler/jobs",
+      "file": "frontend/app/admin/scheduler/jobs/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/schema",
+      "file": "frontend/app/admin/schema/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/secrets/metadata",
+      "file": "frontend/app/admin/secrets/metadata/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/steward-applications",
+      "file": "frontend/app/admin/steward-applications/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/tenants/scopes",
+      "file": "frontend/app/admin/tenants/scopes/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/trust-growth",
+      "file": "frontend/app/admin/trust-growth/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/users/[id]",
+      "file": "frontend/app/admin/users/[id]/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/admin/users",
+      "file": "frontend/app/admin/users/page.tsx",
+      "module": "admin",
+      "verdict": "REFACTOR",
+      "severity": "P0",
+      "rationale": "Admin RBAC boundary — permission guard audit (RC-03)",
+      "cluster": "admin-surface"
+    },
+    {
+      "route": "/auth/forgot-password",
+      "file": "frontend/app/auth/forgot-password/page.tsx",
+      "module": "auth",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/auth/login",
+      "file": "frontend/app/auth/login/page.tsx",
+      "module": "auth",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/auth/register",
+      "file": "frontend/app/auth/register/page.tsx",
+      "module": "auth",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/auth/reset-password",
+      "file": "frontend/app/auth/reset-password/page.tsx",
+      "module": "auth",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/auth/verify-email",
+      "file": "frontend/app/auth/verify-email/page.tsx",
+      "module": "auth",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/activity",
+      "file": "frontend/app/community/activity/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/explore",
+      "file": "frontend/app/community/explore/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/feedback",
+      "file": "frontend/app/community/feedback/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/friends",
+      "file": "frontend/app/community/friends/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/guidelines",
+      "file": "frontend/app/community/guidelines/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/me/collects",
+      "file": "frontend/app/community/me/collects/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/me/likes",
+      "file": "frontend/app/community/me/likes/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/me",
+      "file": "frontend/app/community/me/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/me/posts",
+      "file": "frontend/app/community/me/posts/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/me/reports/[id]",
+      "file": "frontend/app/community/me/reports/[id]/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/me/reports",
+      "file": "frontend/app/community/me/reports/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/messages/[id]",
+      "file": "frontend/app/community/messages/[id]/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/messages",
+      "file": "frontend/app/community/messages/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community",
+      "file": "frontend/app/community/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/post/[id]",
+      "file": "frontend/app/community/post/[id]/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/topic/[tag]",
+      "file": "frontend/app/community/topic/[tag]/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/tt",
+      "file": "frontend/app/community/tt/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/community/user/[id]",
+      "file": "frontend/app/community/user/[id]/page.tsx",
+      "module": "community",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/did-rank",
+      "file": "frontend/app/did-rank/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/discover",
+      "file": "frontend/app/discover/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/disputes/[id]",
+      "file": "frontend/app/disputes/[id]/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/disputes",
+      "file": "frontend/app/disputes/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/escrow/[id]/chain",
+      "file": "frontend/app/escrow/[id]/chain/page.tsx",
+      "module": "orders",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/escrow/[id]",
+      "file": "frontend/app/escrow/[id]/page.tsx",
+      "module": "orders",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/escrow/[id]/proof",
+      "file": "frontend/app/escrow/[id]/proof/page.tsx",
+      "module": "orders",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/escrow/[id]/rate",
+      "file": "frontend/app/escrow/[id]/rate/page.tsx",
+      "module": "orders",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/governance/delegate",
+      "file": "frontend/app/governance/delegate/page.tsx",
+      "module": "governance",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/governance/distribution-accruals/[id]",
+      "file": "frontend/app/governance/distribution-accruals/[id]/page.tsx",
+      "module": "governance",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/governance/distribution-accruals",
+      "file": "frontend/app/governance/distribution-accruals/page.tsx",
+      "module": "governance",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/governance/distribution-claim",
+      "file": "frontend/app/governance/distribution-claim/page.tsx",
+      "module": "governance",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/governance/fee-routes",
+      "file": "frontend/app/governance/fee-routes/page.tsx",
+      "module": "governance",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/governance",
+      "file": "frontend/app/governance/page.tsx",
+      "module": "governance",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/governance/params",
+      "file": "frontend/app/governance/params/page.tsx",
+      "module": "governance",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/governance/proposals/[id]",
+      "file": "frontend/app/governance/proposals/[id]/page.tsx",
+      "module": "governance",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/governance/proposals/new",
+      "file": "frontend/app/governance/proposals/new/page.tsx",
+      "module": "governance",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/governance/proposals",
+      "file": "frontend/app/governance/proposals/page.tsx",
+      "module": "governance",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/governance/vault-forwards",
+      "file": "frontend/app/governance/vault-forwards/page.tsx",
+      "module": "governance",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/guide",
+      "file": "frontend/app/guide/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/guide/register",
+      "file": "frontend/app/guide/register/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/guides/[id]",
+      "file": "frontend/app/guides/[id]/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/guides",
+      "file": "frontend/app/guides/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/help",
+      "file": "frontend/app/help/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/itinerary/new",
+      "file": "frontend/app/itinerary/new/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/market/acquisition/[id]",
+      "file": "frontend/app/market/acquisition/[id]/page.tsx",
+      "module": "market",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/market/acquisition",
+      "file": "frontend/app/market/acquisition/page.tsx",
+      "module": "market",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/market",
+      "file": "frontend/app/market/page.tsx",
+      "module": "market",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/market/provider",
+      "file": "frontend/app/market/provider/page.tsx",
+      "module": "market",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/market/provider/showcase/[id]",
+      "file": "frontend/app/market/provider/showcase/[id]/page.tsx",
+      "module": "market",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/me/identities/acquisition/settings",
+      "file": "frontend/app/me/identities/acquisition/settings/page.tsx",
+      "module": "identities",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/me/identities/guide/settings",
+      "file": "frontend/app/me/identities/guide/settings/page.tsx",
+      "module": "identities",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/me/identities/merchant/settings",
+      "file": "frontend/app/me/identities/merchant/settings/page.tsx",
+      "module": "identities",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/me/identities",
+      "file": "frontend/app/me/identities/page.tsx",
+      "module": "identities",
+      "verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "Publish / merchant / identity hub entry proliferation (RC-01)",
+      "cluster": "publish-entry"
+    },
+    {
+      "route": "/me/identities/region-steward/settings",
+      "file": "frontend/app/me/identities/region-steward/settings/page.tsx",
+      "module": "identities",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/me/onboarding",
+      "file": "frontend/app/me/onboarding/page.tsx",
+      "module": "account",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/me",
+      "file": "frontend/app/me/page.tsx",
+      "module": "account",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/me/password",
+      "file": "frontend/app/me/password/page.tsx",
+      "module": "account",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/me/publish",
+      "file": "frontend/app/me/publish/page.tsx",
+      "module": "publish_hub",
+      "verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "Publish / merchant / identity hub entry proliferation (RC-01)",
+      "cluster": "publish-entry"
+    },
+    {
+      "route": "/me/referrals",
+      "file": "frontend/app/me/referrals/page.tsx",
+      "module": "account",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/me/security",
+      "file": "frontend/app/me/security/page.tsx",
+      "module": "account",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/me/settings/data",
+      "file": "frontend/app/me/settings/data/page.tsx",
+      "module": "settings",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/me/settings/language",
+      "file": "frontend/app/me/settings/language/page.tsx",
+      "module": "settings",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/me/settings/notifications-prefs",
+      "file": "frontend/app/me/settings/notifications-prefs/page.tsx",
+      "module": "settings",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/me/settings",
+      "file": "frontend/app/me/settings/page.tsx",
+      "module": "settings",
+      "verdict": "KEEP",
+      "severity": "P1",
+      "rationale": "Settings hub sub-routes — consolidate nav not pages (REFACTOR nav only)",
+      "cluster": "settings-hub"
+    },
+    {
+      "route": "/me/settings/privacy",
+      "file": "frontend/app/me/settings/privacy/page.tsx",
+      "module": "settings",
+      "verdict": "KEEP",
+      "severity": "P1",
+      "rationale": "Settings hub sub-routes — consolidate nav not pages (REFACTOR nav only)",
+      "cluster": "settings-hub"
+    },
+    {
+      "route": "/me/settings/profile",
+      "file": "frontend/app/me/settings/profile/page.tsx",
+      "module": "settings",
+      "verdict": "KEEP",
+      "severity": "P1",
+      "rationale": "Settings hub sub-routes — consolidate nav not pages (REFACTOR nav only)",
+      "cluster": "settings-hub"
+    },
+    {
+      "route": "/me/settings/trust",
+      "file": "frontend/app/me/settings/trust/page.tsx",
+      "module": "settings",
+      "verdict": "KEEP",
+      "severity": "P1",
+      "rationale": "Settings hub sub-routes — consolidate nav not pages (REFACTOR nav only)",
+      "cluster": "settings-hub"
+    },
+    {
+      "route": "/network",
+      "file": "frontend/app/network/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/orders/[id]",
+      "file": "frontend/app/orders/[id]/page.tsx",
+      "module": "orders",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/orders/new",
+      "file": "frontend/app/orders/new/page.tsx",
+      "module": "orders",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/orders",
+      "file": "frontend/app/orders/page.tsx",
+      "module": "orders",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/pay",
+      "file": "frontend/app/pay/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/privacy",
+      "file": "frontend/app/privacy/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/provider",
+      "file": "frontend/app/provider/page.tsx",
+      "module": "workbench",
+      "verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "Publish / merchant / identity hub entry proliferation (RC-01)",
+      "cluster": "publish-entry"
+    },
+    {
+      "route": "/provider/register",
+      "file": "frontend/app/provider/register/page.tsx",
+      "module": "workbench",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/staking",
+      "file": "frontend/app/staking/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/steward/register",
+      "file": "frontend/app/steward/register/page.tsx",
+      "module": "governance",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/terms/community-guidelines",
+      "file": "frontend/app/terms/community-guidelines/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/terms",
+      "file": "frontend/app/terms/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/traveltrust/announcements",
+      "file": "frontend/app/traveltrust/announcements/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/traveltrust",
+      "file": "frontend/app/traveltrust/page.tsx",
+      "module": "five_main",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    },
+    {
+      "route": "/trust",
+      "file": "frontend/app/trust/page.tsx",
+      "module": "other",
+      "verdict": "KEEP",
+      "severity": "P2",
+      "rationale": "Default KEEP pending cluster rules"
+    }
+  ]
+}

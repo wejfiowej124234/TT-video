@@ -228,7 +228,7 @@ RC Freeze closes **product readiness validation**. Production cutover follows **
 2. **Secrets** — \`scripts/dev/.env.production.example\` → Fly secrets (no mock-pay flags on prod unless explicitly waived)
 3. **Domain / TLS** — production DNS · CORS patch (\`patch-tt-api-prod-cors.sh\`)
 4. **CDN / assets** — G3 production CDN VERIFIED (not staging evidence)
-5. **Stripe Live** — PI3-003
+5. **Web3 USDC Escrow Payment** — G3-02 · PAY-W01..W16
 6. **Runtime parity** — \`GET /meta\` on prod matches RC registry expectations (no \`P3_CHAIN_OFF\` mock-pay on prod by default)
 7. **Owner sign-off** — \`production-go-decision-package.json\` countersigned
 

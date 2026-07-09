@@ -1,0 +1,8 @@
+status: PASS
+last_run: 20260606T101421Z
+api_base: https://tt-api-staging.fly.dev
+release_gate: GO
+environment.name: staging
+note: R-003 wide-matrix staging GO; validate --require-go exit 0
+phase: ② testnet closing gap
+artifacts: run.log report.json

@@ -71,6 +71,7 @@ export const ADMIN_RECENT_PATH_TITLE_KEYS: Record<string, string> = {
   "/admin/disputes": "admin_disputes_title",
   "/admin/users": "admin_users_title",
   "/admin/finance-suite": "admin_shell_nav_finance_suite",
+  "/admin/vacancy-ledger": "admin_shell_nav_vacancy_ledger_ops",
   "/admin/onboarding": "admin_onboarding_hub_title",
   "/admin/permissions": "admin_permissions_title",
   "/admin/inbox": "admin_unified_inbox_title",

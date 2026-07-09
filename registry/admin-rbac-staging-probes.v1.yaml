@@ -1,6 +1,6 @@
-# ADM-U01 · Phase ② staging 六角色 API deny/pass 探针（与 admin_rbac.rs 权限包对拍）
-# 消费方：scripts/gates/run-admin-rbac-staging-matrix.py
-# ① 本地对照：scripts/dev/smoke-admin-rbac-matrix-local.sh（非本文件验收出口）
+# ADM-U01 · Phase ② Admin Console Personas · RBAC Staging 矩阵
+# Identity SSOT: docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md §0.1 (Staging Persona)
+# Admin 最高原则 §10.0: Permission Matrix, not fixed accounts
 
 version: adm-u01-staging-2026-06-03
 matrix_version: admin-rbac-v4-cms-ops-growth-2026-06-07

@@ -1,0 +1,108 @@
+# Phase①/② Final Convergence Review · SSOT
+# Runbook: docs/runbook/TT-PHASE12-FINAL-CONVERGENCE-REVIEW.md
+# One-shot graduation gate — NOT a recurring audit type
+
+schema: traveltrust.phase12_final_convergence.v1
+version: 1
+effective_utc: "2026-07-02"
+
+machine_keys:
+  TT_PHASE12_FINAL_CONVERGENCE: CLOSED
+  TT_FULL_TEST_ACCOUNT_E2E: CLOSED
+  TT_PHASE_1_LOCAL: CLOSED
+  TT_PHASE_2_TESTNET_STAGING: CLOSED
+  TT_CURRENT_MAINLINE: PI3,PRODUCTION_READINESS,MAINNET,PRODUCTION_GO
+  TT_PRODUCT_CAPABILITY: ENTERPRISE_COMPLETE
+  TT_RELEASE_DECISION: NO_GO
+
+rerun_policy:
+  status: CLOSED_UNLESS_TOUCHED
+  evidence_reuse: registry/evidence-reuse-policy.v1.yaml#gates/PHASE12_FINAL_CONVERGENCE
+
+placement:
+  after: all_product_audits_pass
+  before: PI3-001
+  one_time: true
+  recurring: false
+
+# Source audits (read-only synthesis — do NOT add dimensions)
+source_audits:
+  - id: FUNCTIONAL_AUDIT
+    registry: registry/admin-functional-usability-audit.v1.yaml
+    evidence: evidence/GO_admin_platform_40_complete/20260701T180425Z
+    staging: evidence/GO_staging_admin_final_validation_walkthrough/20260702T003523Z
+  - id: ENTERPRISE_CAPABILITY_AUDIT
+    registry: registry/enterprise-capability-audit.v1.yaml
+    doc: docs/runbook/TT-ENTERPRISE-CAPABILITY-AUDIT-20260702.md
+  - id: FRONTEND_API_CONSISTENCY
+    registry: registry/frontend-api-consistency-audit.v1.yaml
+    evidence: evidence/GO_frontend_api_consistency_audit/staging_browser_20260702T021003Z
+  - id: DISPLAY_DATA_GOVERNANCE
+    registry: registry/display-data-governance.v1.yaml
+    evidence: evidence/GO_display_data_governance/
+  - id: BUSINESS_MANUAL_UAT
+    runbook: docs/runbook/TT-BUSINESS-MANUAL-UAT.md
+    signoff: evidence/manual-uat/signoff/BUSINESS-MANUAL-UAT-SIGNOFF-20260702T011941Z.md
+  - id: PHASE1_LOCAL
+    evidence: frontend/evidence/GO_local_phase1/
+    gate: evidence/COMPLEXITY_CONVERGENCE/GATE-P1-01/phase1.closed.json
+  - id: PHASE2_TESTNET
+    signoff: evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260701T002252Z.md
+    alignment: evidence/enterprise_alignment_audit/20260701T012102Z
+
+ledger_classifications:
+  - PRODUCT_DEFECT
+  - TEST_AUTOMATION_ISSUE
+  - PRODUCTION_BLOCKER
+  - EXPECTED_DIFFERENCE
+  - ENHANCEMENT
+
+expected_difference_policy: docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md
+
+scripts:
+  review: scripts/dev/run-phase12-final-convergence-review.sh
+  ledger: scripts/dev/gen-phase12-final-convergence-ledger.cjs
+  gate: scripts/gates/check-phase12-final-convergence-ssot.sh
+
+evidence_root: evidence/GO_phase12_final_convergence
+
+latest_run:
+  stamp: "20260702T023014Z"
+  ledger: evidence/GO_phase12_final_convergence/20260702T023014Z/convergence-ledger.json
+  signoff: evidence/manual-uat/signoff/PHASE12-FINAL-CONVERGENCE-SIGNOFF-20260702T023014Z.md
+  supplementary_production_release_review:
+    status: CLOSED
+    stamp: "20260702T084419Z"
+    evidence: evidence/GO_production_release_review/20260702T084419Z/
+    signoff: evidence/manual-uat/signoff/PRODUCTION-RELEASE-REVIEW-SIGNOFF-20260702T084419Z.md
+    staging_web_deploy: deployment-01KWGKFG7QR75Y71S3QAC7QBEN
+    domains_pass: 12
+    product_defects_open: 0
+  supplementary_full_test_account_e2e:
+    status: CLOSED
+    stamp: "20260702T100329Z"
+    evidence: evidence/GO_full_test_account_e2e/20260702T100329Z/
+    signoff: evidence/manual-uat/signoff/FTAE-SIGNOFF-20260702T100329Z.md
+    supplement: evidence/manual-uat/signoff/PHASE12-FTAE-SUPPLEMENT-20260702T100329Z.md
+    accounts_pass: 6
+    product_defects_open: 0
+    test_automation_issues_open: 0
+
+phase_closure:
+  phase_1_local: CLOSED
+  phase_2_testnet_staging: CLOSED
+  product_defects_open: 0
+  test_automation_issues_open: 0
+  production_blockers_phase12_open: 0
+
+mainline_queue:
+  - PI3-001
+  - PI3-002
+  - PI3-003
+  - PI3-004
+  - PI3-005
+  - PI3-006
+  - PRODUCTION_BUSINESS_MANUAL_UAT
+  - PRODUCTION_GO
+
+release_pipeline: registry/release-pipeline.v1.yaml

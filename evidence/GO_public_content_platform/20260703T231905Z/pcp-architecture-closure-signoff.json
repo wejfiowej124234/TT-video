@@ -1,0 +1,94 @@
+{
+  "validation": "PCP_ARCHITECTURE_CLOSURE",
+  "stamp": "20260703T231905Z",
+  "overall": "PASS",
+  "TT_PCP_ARCHITECTURE": "FROZEN",
+  "TT_PCP_ARCHITECTURE_CLOSURE": "COMPLETE",
+  "TT_PCP_PHASE_2": "NOT_STARTED",
+  "program_rhythm": [
+    "Phase 1 COMPLETE",
+    "Architecture Closure (FROZEN)",
+    "Production Readiness (next gate)",
+    "Phase 2 (Owner gate)"
+  ],
+  "closure_documents": [
+    "docs/runbook/PCP-ARCHITECTURE-FINAL.md",
+    "docs/runbook/PCP-MIGRATION-HISTORY.md",
+    "docs/runbook/PCP-PLATFORM-CAPABILITY-MATRIX.md",
+    "docs/runbook/PCP-DEVELOPER-GUIDE.md"
+  ],
+  "platform_split": {
+    "platform_a": [
+      "Identity",
+      "Wallet",
+      "On-chain Governance",
+      "Settlement",
+      "RBAC"
+    ],
+    "platform_b": [
+      "PCP Governance",
+      "Builder",
+      "Public Content",
+      "Evidence"
+    ]
+  },
+  "sign_off_allowed": true,
+  "sign_off_note": "Architecture Closure complete — PCP architecture FROZEN; do not start Phase 2 without Owner sign-off",
+  "checks": [
+    {
+      "id": "doc_architecture_final",
+      "label": "docs/runbook/PCP-ARCHITECTURE-FINAL.md",
+      "status": "PASS",
+      "detail": "contains \"TT_PCP_ARCHITECTURE: FROZEN\""
+    },
+    {
+      "id": "doc_migration_history",
+      "label": "docs/runbook/PCP-MIGRATION-HISTORY.md",
+      "status": "PASS",
+      "detail": "contains \"Architecture Closure\""
+    },
+    {
+      "id": "doc_capability_matrix",
+      "label": "docs/runbook/PCP-PLATFORM-CAPABILITY-MATRIX.md",
+      "status": "PASS",
+      "detail": "contains \"Capability Matrix\""
+    },
+    {
+      "id": "doc_developer_guide",
+      "label": "docs/runbook/PCP-DEVELOPER-GUIDE.md",
+      "status": "PASS",
+      "detail": "contains \"Builder Contract\""
+    },
+    {
+      "id": "prereq_phase1_freeze",
+      "label": "TT_PCP_PHASE_1_FREEZE: COMPLETE",
+      "status": "PASS",
+      "detail": "Run validate-pcp-phase1-freeze-regression.cjs first"
+    },
+    {
+      "id": "prereq_phase2_not_started",
+      "label": "TT_PCP_PHASE_2: NOT_STARTED",
+      "status": "PASS",
+      "detail": "Phase 2 must remain NOT_STARTED at closure"
+    },
+    {
+      "id": "freeze_regression",
+      "label": "validate-pcp-phase1-freeze-regression.cjs",
+      "status": "PASS",
+      "detail": "7/7 stable"
+    }
+  ],
+  "ssot_stamp": {
+    "registry": "D:\\TravelTrust-V1.1\\registry\\public-content-platform.v1.yaml",
+    "runbook": "D:\\TravelTrust-V1.1\\docs\\runbook\\TT-PUBLIC-CONTENT-PLATFORM.md",
+    "evidence": {
+      "architecture_closure": "evidence/GO_public_content_platform/20260703T231905Z/pcp-architecture-closure-signoff.json",
+      "closure_docs": [
+        "docs/runbook/PCP-ARCHITECTURE-FINAL.md",
+        "docs/runbook/PCP-MIGRATION-HISTORY.md",
+        "docs/runbook/PCP-PLATFORM-CAPABILITY-MATRIX.md",
+        "docs/runbook/PCP-DEVELOPER-GUIDE.md"
+      ]
+    }
+  }
+}

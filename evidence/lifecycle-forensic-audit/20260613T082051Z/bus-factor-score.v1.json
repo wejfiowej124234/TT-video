@@ -1,0 +1,6 @@
+{
+  "schema": "traveltrust.bus_factor_score.v1",
+  "score": 80,
+  "engineering_handbook_docs": 117,
+  "note": "Solo maintainer repo — target ≥60 before ③ with handoff runbook"
+}

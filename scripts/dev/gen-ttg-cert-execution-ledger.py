@@ -110,14 +110,14 @@ CERT_STEPS: dict[int, dict] = {
         "signoff_file": "PHASE-B-UNSTAKE-SIGNOFF.json",
     },
     10: {
-        "name": "Incident Tabletop",
+        "name": "Emergency Pause",
         "target_tier": "DR_DONE",
         "ids": ["CHK-DR-10", "CHK-CORE-18", "CHK-OPS-07"],
-        "evidence_subdir": "incidents/tabletop",
+        "evidence_subdir": "phase-b/emergency-pause",
         "signoff_file": "INCIDENT-TABLETOP-SIGNOFF.json",
     },
     11: {
-        "name": "Disaster Recovery Drill",
+        "name": "Emergency Unpause / DR Drill",
         "target_tier": "DR_DONE",
         "ids": [
             "CHK-DR-01",
@@ -136,11 +136,11 @@ CERT_STEPS: dict[int, dict] = {
             "CHK-UP-04",
             "CHK-DB-08",
         ],
-        "evidence_subdir": "drills",
+        "evidence_subdir": "phase-b/emergency-unpause",
         "signoff_file": "DR-DRILL-SIGNOFF.json",
     },
     12: {
-        "name": "GORP Signoff",
+        "name": "GORP / DR Replay",
         "target_tier": "OPS_DONE",
         "ids": [
             "CHK-OPS-01",
@@ -156,7 +156,7 @@ CERT_STEPS: dict[int, dict] = {
             "CHK-ID-12",
             "CHK-UP-05",
         ],
-        "evidence_subdir": "gorp-signoff",
+        "evidence_subdir": "phase-b/dr-replay",
         "signoff_file": "GORP-SIGNOFF.json",
     },
 }

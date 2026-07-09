@@ -1,0 +1,134 @@
+{
+  "schema": "traveltrust.per_recovery_verified_p0_2.v1",
+  "stamp_utc": "20260705T014000Z",
+  "phase": "Production Preparation · PER Item 2 · Recovery Verified",
+  "environment": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev",
+    "phase_note": "② staging recovery continuity · not ③ Production GO"
+  },
+  "prerequisite": {
+    "p0_1_ref": "evidence/GO_production_preparation/per-business-closed-loop/PER-BUSINESS-CLOSED-LOOP-P0-LATEST.json",
+    "TT_PER_BUSINESS_CLOSED_LOOP": "PASS",
+    "TT_PER_P0_1_OWNER_SIGNOFF": "SIGNED"
+  },
+  "per_track_item": "recovery",
+  "verification": [
+    {
+      "id": "prereq_p0_1_signed",
+      "title": "PER P0-1 owner sign-off prerequisite",
+      "expected_result": "TT_PER_BUSINESS_CLOSED_LOOP=PASS · owner_sign_off=SIGNED",
+      "actual_result": "PASS · SIGNED",
+      "blockers": [],
+      "evidence_refs": [
+        "evidence/GO_production_preparation/per-business-closed-loop/PER-BUSINESS-CLOSED-LOOP-P0-LATEST.json"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "api_health",
+      "title": "API liveness /health",
+      "expected_result": "HTTP 200",
+      "actual_result": "http=200",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/health"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "api_ready",
+      "title": "API readiness /health/ready",
+      "expected_result": "HTTP 200 · ready for traffic",
+      "actual_result": "http=200",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/health/ready"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "meta_database",
+      "title": "Meta database_connected",
+      "expected_result": "GET /meta database_connected=true · /health/ready database=ok",
+      "actual_result": "meta=200 connected=true ready=200 ready_db=ok",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/meta",
+        "https://tt-api-staging.fly.dev/health/ready"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "business_continuity_discover",
+      "title": "P0-1 discover continuity",
+      "expected_result": "discover/orders non-empty after P0-1 restore",
+      "actual_result": "http=200 items=1",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/discover/orders"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "business_continuity_guides",
+      "title": "Public guides catalog",
+      "expected_result": "guides list non-empty",
+      "actual_result": "http=200 items=5",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/guides"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "business_continuity_community",
+      "title": "Community feed",
+      "expected_result": "community feed non-empty",
+      "actual_result": "http=200 posts=5",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/community/feed"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "web_market",
+      "title": "Web /market reachable",
+      "expected_result": "tt-web-staging /market HTTP 200",
+      "actual_result": "http=200",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-web-staging.fly.dev/market"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "restore_drill_baseline",
+      "title": "B-475 restore drill baseline on file",
+      "expected_result": "restore drill UTC recorded · status PASS or PLANNED",
+      "actual_result": "status=PASS last_restore_drill_utc=2026-07-02T16:50:04Z",
+      "blockers": [],
+      "evidence_refs": [
+        "evidence/b475_pg_backup_pitr_baseline/baseline_record.v1.json"
+      ],
+      "loop_result": "PASS"
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "pass": 9,
+    "fail": 0,
+    "blocking_items": []
+  },
+  "owner_sign_off": {
+    "status": "SIGNED",
+    "attestation": "Sebastian Ward · Solo maintainer · PER P0-2 Recovery Verified · ② Staging · not ③ Production GO",
+    "signed_at_utc": "2026-07-05T01:48:00Z",
+    "signer": "Sebastian Ward",
+    "phase": "Production Preparation · PER Item 2"
+  },
+  "TT_PER_RECOVERY_VERIFIED": "PASS",
+  "honest_boundary": "PASS = staging recovery continuity probes · ≠ full DR failover · ≠ Production GO",
+  "TT_PER_P0_2_OWNER_SIGNOFF": "SIGNED"
+}

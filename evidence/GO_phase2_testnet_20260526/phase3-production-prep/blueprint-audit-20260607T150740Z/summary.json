@@ -1,0 +1,19 @@
+{
+  "kind": "traveltrust.blueprint_101_102_compatibility_audit.v1",
+  "recorded_utc": "20260607T150740Z",
+  "cms_plane_verdict": "CMS_PLANE_HOLD",
+  "growth_plane_verdict": "GROWTH_PLANE_HOLD",
+  "catalog_ro_verdict": "CATALOG_RO_GO",
+  "platform_production_go": "PLATFORM_GO_BLOCKED_BY_PI3",
+  "pi3_blockers": [
+    "PI3-001",
+    "PI3-002",
+    "PI3-003",
+    "PI3-004",
+    "PI3-005",
+    "PI3-006"
+  ],
+  "blueprint_101_102_blocks_pi3": false,
+  "catalog_release_freeze": "CATALOG_RELEASE_FREEZE_GO",
+  "phase3_entry": "PHASE3_ENTRY_GO"
+}

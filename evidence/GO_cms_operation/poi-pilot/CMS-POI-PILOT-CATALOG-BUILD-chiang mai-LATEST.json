@@ -1,0 +1,64 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-06T04:59:08Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "TH",
+    "city_zh": "清迈",
+    "matrix_ids": [
+      "PH-TH-092-ATR",
+      "PH-TH-093-ATR",
+      "PH-TH-094-ATR",
+      "PH-TH-095-ATR",
+      "PH-TH-096-ATR",
+      "PH-TH-097-FOOD",
+      "PH-TH-098-FOOD",
+      "PH-TH-099-FOOD",
+      "PH-TH-100-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-chiang-mai-temple-community-media.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-TH-092-ATR",
+      "poi_id": "4377e152-41f0-4ee3-9f76-f021b9d5f520"
+    },
+    {
+      "matrix_id": "PH-TH-093-ATR",
+      "poi_id": "60fe079f-1f76-4f20-85e4-c353f5db9e29"
+    },
+    {
+      "matrix_id": "PH-TH-094-ATR",
+      "poi_id": "23e1949d-73fd-4961-adfe-e697ea3d79b6"
+    },
+    {
+      "matrix_id": "PH-TH-095-ATR",
+      "poi_id": "048293c6-5a87-4c35-98e7-7cc0c18884b7"
+    },
+    {
+      "matrix_id": "PH-TH-096-ATR",
+      "poi_id": "81a5edd4-0709-4990-ac64-13f2e1ea5447"
+    },
+    {
+      "matrix_id": "PH-TH-097-FOOD",
+      "poi_id": "e85f00d9-5184-446f-a0b5-cbfd88607184"
+    },
+    {
+      "matrix_id": "PH-TH-098-FOOD",
+      "poi_id": "fb203603-7df3-479a-a6ba-4222d5cd53f8"
+    },
+    {
+      "matrix_id": "PH-TH-099-FOOD",
+      "poi_id": "e4106e00-3557-49bf-b5df-33919dd47e58"
+    },
+    {
+      "matrix_id": "PH-TH-100-FOOD",
+      "poi_id": "9cbed55a-388f-4100-82e5-5b8ddc5847d1"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 9,
+    "expected": 9
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

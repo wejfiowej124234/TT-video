@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.cloud_soak_observe.v1",
+  "observed_at_utc": "2026-06-29T02:12:49.460Z",
+  "stamp": "20260629T020842Z",
+  "fly_app": "tt-soak-watcher-staging",
+  "ok_polls": 3541,
+  "fail_polls": 0,
+  "remaining_sec": 46740,
+  "expect_git_sha": "3bbedda776b2",
+  "completed_remote": false,
+  "detect_line": "TT_CLOUD_LAYER_ISSUE: CLEAR evidence=/d/TravelTrust-V1.1/evidence/CLOUD_LOCAL_HEALING_CI/issues/20260629T021235Z",
+  "policy": "state_a_readonly"
+}

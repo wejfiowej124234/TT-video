@@ -39,4 +39,10 @@ describe("governance hub page (C-GOV-001 · data_source / is_chain_ssot truth)",
     expect(src).toContain("governanceTreasuryErc20PoolRootChainSsot");
     expect(src).not.toContain("51-H2：治理池/奖励为占位数据");
   });
+
+  it("ops admin console links are opt-in only on public governance nav (PER CI-13)", () => {
+    const src = readFileSync(join(__dir, "../../components/governance/GovernanceOpsAdminLinks.tsx"), "utf8");
+    expect(src).toContain("allowGovernanceOpsAdminNavLinks");
+    expect(src).toContain("return null");
+  });
 });

@@ -1,0 +1,146 @@
+[
+  {
+    "id": "C2-LANDING",
+    "account": "C2",
+    "domain": "Itinerary",
+    "ui": "FAIL",
+    "api": "SKIP",
+    "parity": "SKIP",
+    "note": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /User menu|用户菜单/i })\nExpected: visible\nTimeout: 35000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 35000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /User menu|用户菜单/i })\u001b[22m\n"
+  },
+  {
+    "id": "C2-ORDERS",
+    "account": "C2",
+    "domain": "Orders",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "api=8 ui=7"
+  },
+  {
+    "id": "C2-MESSAGES",
+    "account": "C2",
+    "domain": "Messages",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "SKIP",
+    "note": "api=0 ui=0"
+  },
+  {
+    "id": "C2-ADMIN",
+    "account": "C2",
+    "domain": "Admin",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "admin shell + capabilities"
+  },
+  {
+    "id": "C3-WORKBENCH",
+    "account": "C3",
+    "domain": "Guide",
+    "ui": "FAIL",
+    "api": "SKIP",
+    "parity": "SKIP",
+    "note": "TimeoutError: page.waitForURL: Timeout 45000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================"
+  },
+  {
+    "id": "C3-MARKET",
+    "account": "C3",
+    "domain": "Guide Market",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "guide_id=650fbaff-1d9e-4677-b970-16be8fdd9d7b in catalog"
+  },
+  {
+    "id": "C3-GUIDE_ORDERS",
+    "account": "C3",
+    "domain": "Orders",
+    "ui": "SKIP",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "count=6"
+  },
+  {
+    "id": "C1-IDENTITIES",
+    "account": "C1",
+    "domain": "Identities",
+    "ui": "FAIL",
+    "api": "SKIP",
+    "parity": "SKIP",
+    "note": "TimeoutError: page.waitForURL: Timeout 45000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================"
+  },
+  {
+    "id": "C1-ACQUISITION",
+    "account": "C1",
+    "domain": "Acquisition",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "listings=9"
+  },
+  {
+    "id": "C1-GOVERNANCE",
+    "account": "C1",
+    "domain": "Governance",
+    "ui": "PASS",
+    "api": "SKIP",
+    "parity": "SKIP",
+    "note": "region workbench"
+  },
+  {
+    "id": "C4-PROVIDER",
+    "account": "C4",
+    "domain": "Provider",
+    "ui": "FAIL",
+    "api": "SKIP",
+    "parity": "SKIP",
+    "note": "TimeoutError: page.waitForURL: Timeout 45000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================"
+  },
+  {
+    "id": "C4-SETTINGS",
+    "account": "C4",
+    "domain": "Provider",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "public_listings=13"
+  },
+  {
+    "id": "E2-DID_RANK",
+    "account": "E2",
+    "domain": "DID Rank",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "boards_status=404"
+  },
+  {
+    "id": "E2-ACQ_BOARD",
+    "account": "E2",
+    "domain": "DID Rank",
+    "ui": "PASS",
+    "api": "SKIP",
+    "parity": "SKIP",
+    "note": "acquisition board"
+  },
+  {
+    "id": "PUB-PROVIDER",
+    "account": "PUBLIC",
+    "domain": "Provider",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "listings=13"
+  },
+  {
+    "id": "PUB-WEB3",
+    "account": "PUBLIC",
+    "domain": "Web3",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "chain_id=11155111"
+  }
+]

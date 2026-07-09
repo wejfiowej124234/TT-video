@@ -1,0 +1,29 @@
+{
+  "schema": "traveltrust.content_ownership_inventory_report.v1",
+  "stamp_utc": "20260705T030000Z",
+  "inventory_type": "read_only",
+  "not_governance": true,
+  "inventory_path": "data/catalog/content-ownership-inventory.v1.yaml",
+  "policy_ssot": "docs/runbook/TT-CONTENT-OWNERSHIP-POLICY.md",
+  "summary": {
+    "categories_checked": 9,
+    "pages_modules_checked": 36,
+    "image_consumption_points": 33,
+    "quick_lookup_entries": 0,
+    "ownership_planes": [
+      "OCS",
+      "CMS",
+      "PUBLIC_OPS",
+      "MEDIA_PLATFORM",
+      "API",
+      "RUNTIME",
+      "LOCALES",
+      "STATIC_TS"
+    ]
+  },
+  "completion_criterion": "Every entry defines business_domain, image_owner, copy_owner, data_owner, modify_entry",
+  "quick_lookup": [],
+  "TT_CONTENT_OWNERSHIP_INVENTORY": "COMPLETE",
+  "honest_boundary": "Inventory ≠ governance; does not replace TT-CONTENT-OWNERSHIP-POLICY",
+  "recommended_before": "PER Business Closed Loop"
+}

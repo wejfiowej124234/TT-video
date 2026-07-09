@@ -1,0 +1,213 @@
+{
+  "base_url": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "recorded_at": "2026-06-06T06:22:37.097Z",
+  "boundary": "staging UAT · bugfix only · not Production GO",
+  "findings": [
+    {
+      "domain": "首页",
+      "route": "/",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/traveltrust",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/did-rank",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/trust",
+      "status": "WARN",
+      "notes": [
+        "console.error×1: useDidRankData fetchRankData: TypeError: Failed to fetch\n    at ts (https://tt-web-staging.fly.dev/_next/static/chunks/19250-40277f9245a3dbc6.js:1:93121)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/did-rank/page-dde5e065ec"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/auth/login",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/auth/register",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me",
+      "status": "WARN",
+      "notes": [
+        "main shell not matched: /Profile|资料|Community|社区/i"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me/settings",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me/identities",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "市场",
+      "route": "/market",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "市场",
+      "route": "/market/acquisition",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/explore",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/messages",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/me",
+      "status": "WARN",
+      "notes": [
+        "main shell not matched: /Profile|资料|Me/i"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance/proposals",
+      "status": "WARN",
+      "notes": [
+        "console.error×1: Failed to load resource: the server responded with a status of 401 ()"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance/delegate",
+      "status": "WARN",
+      "notes": [
+        "console.error×2: Failed to load resource: the server responded with a status of 401 () | GovernanceProposalsPage fetch: Error: 401\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/governance/proposals/page-4f7eed3bdf1d0bb9.js:1:13546"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/staking",
+      "status": "WARN",
+      "notes": [
+        "console.error×2: Failed to load resource: the server responded with a status of 401 () | GovernanceDelegatePage getGovernanceDelegate: Error: login_required\n    at l (https://tt-web-staging.fly.dev/_next/static/chunks/95536-e7ffb197fba78aeb.js:1:2788)\n    at async H (https://tt-web-staging.fly.dev/_next/static/chunks/19250-4027"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin",
+      "status": "WARN",
+      "notes": [
+        "main shell not matched: /Admin|管理/i"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/orders",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/users",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/finance",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "跨域",
+      "route": "GET /meta (same-origin via Next)",
+      "status": "PASS",
+      "notes": [
+        "chain_id=11155111"
+      ]
+    },
+    {
+      "domain": "跨域",
+      "route": "OPTIONS /api/v1/governance/proposals (CORS)",
+      "status": "PASS",
+      "notes": [
+        "preflight ok"
+      ]
+    }
+  ],
+  "summary": {
+    "pass": 18,
+    "warn": 7,
+    "fail": 0
+  }
+}

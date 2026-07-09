@@ -144,17 +144,24 @@ async function assertUiMatchesApi(
 async function clearSubsiteCountryPrefs(page: import("@playwright/test").Page) {
   await page.evaluate(() => {
     localStorage.removeItem("tt_market_subsite_country_pref_provider");
+    localStorage.removeItem("tt_market_subsite_country_pref_provider_saved");
     localStorage.removeItem("tt_market_subsite_country_pref_acquisition");
+    localStorage.removeItem("tt_market_subsite_country_pref_acquisition_saved");
   });
 }
 
 async function setSubsiteCountryPref(page: import("@playwright/test").Page, subsite: Subsite, country: string) {
   await page.evaluate(
-    ({ key, value }) => {
+    ({ key, savedKey, value }) => {
       localStorage.setItem(key, value);
+      localStorage.setItem(savedKey, "1");
     },
     {
       key: subsite === "provider" ? "tt_market_subsite_country_pref_provider" : "tt_market_subsite_country_pref_acquisition",
+      savedKey:
+        subsite === "provider"
+          ? "tt_market_subsite_country_pref_provider_saved"
+          : "tt_market_subsite_country_pref_acquisition_saved",
       value: country,
     },
   );
@@ -231,6 +238,31 @@ test.describe(`Market Subsite Catalog Race ${TAG}`, () => {
       expect(after.uiIds.length).toBe(before.uiIds.length);
     });
 
+    test(`${subsite}: orphan localStorage jp without saved flag defaults to API all`, async ({ page, request }) => {
+      await page.evaluate(
+        ({ key, savedKey }) => {
+          localStorage.setItem(key, "jp");
+          localStorage.removeItem(savedKey);
+        },
+        {
+          key:
+            subsite === "provider"
+              ? "tt_market_subsite_country_pref_provider"
+              : "tt_market_subsite_country_pref_acquisition",
+          savedKey:
+            subsite === "provider"
+              ? "tt_market_subsite_country_pref_provider_saved"
+              : "tt_market_subsite_country_pref_acquisition_saved",
+        },
+      );
+      await gotoWeb(page, `${WEB}${path}`);
+      await page.waitForTimeout(1500);
+      const { apiIds } = await assertUiMatchesApi(page, request, subsite, "", "orphan-ls-jp", {
+        expectedCountry: "all",
+      });
+      expect(apiIds.length).toBe(EXPECTED_ALL);
+    });
+
     test(`${subsite}: localStorage jp hydration matches API jp`, async ({ page, request }) => {
       await setSubsiteCountryPref(page, subsite, "jp");
       await gotoWeb(page, `${WEB}${path}`);
@@ -245,4 +277,19 @@ test.describe(`Market Subsite Catalog Race ${TAG}`, () => {
       await expect(page).toHaveURL(/country=(jp|JP)/i, { timeout: 15_000 });
     });
   }
+
+  test("hub: default ALL browser-truth attrs @staging", async ({ page }) => {
+    test.skip(TARGET !== "staging", "hub attrs probe staging only");
+    await clearSubsiteCountryPrefs(page);
+    await page.evaluate(() => {
+      localStorage.setItem("tt_market_subsite_country_pref_provider", "jp");
+      localStorage.removeItem("tt_market_subsite_country_pref_provider_saved");
+    });
+    await gotoWeb(page, `${WEB}/market`);
+    await page.waitForTimeout(2500);
+    const main = page.locator('[data-testid="market-page"]');
+    await expect(main).toHaveAttribute("data-tt-market-country", "all");
+    await expect(main).toHaveAttribute("data-tt-market-orders-query", "limit=30");
+    await expect(main).toHaveAttribute("data-tt-market-guides-query", "limit=30");
+  });
 });

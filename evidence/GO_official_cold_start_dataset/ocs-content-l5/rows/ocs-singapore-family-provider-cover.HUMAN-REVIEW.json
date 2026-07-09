@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T142030Z",
+  "filename": "ocs-singapore-family-provider-cover.jpg",
+  "chain_id": "singapore-family",
+  "city": "新加坡",
+  "country_code": "SG",
+  "slot": "provider-cover",
+  "surface": "Provider",
+  "copy_label": "新加坡亲子通票 · 官方合作",
+  "manifest_copy": {
+    "provider.title": "新加坡亲子通票 · 官方合作",
+    "provider.category": "experience",
+    "provider.description": "含两大一小三处景点快速通道与中文导览。",
+    "provider.price_usdc": 268,
+    "provider.cover_url": "/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg"
+  },
+  "pre_generation_check": { "pass": true, "evidence": "ocs-singapore-family-provider-cover.PRE-GENERATION-CHECK.json" },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 83836 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "水族馆入口家庭合影+通票语义，与 title/description 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "亲子通票服务场景；非 Row25 向导肖像/未来 slot。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "新加坡 SG-only；现代乐园/水族馆语义。" },
+    "G5_brand_visual": { "pass": true, "notes": "清爽日间家庭友好；singapore-family chain 统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "Market Provider 封面可信家庭套票。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光自然。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "含 Global Regression 26/60。" },
+    "G9_content_authenticity": { "pass": true, "notes": "亲子通票语义正确；无他国元素/无水印。" },
+    "G10_content_diversity": { "pass": true, "notes": "水族馆家庭 vs 各城 Provider 明显不同。" }
+  },
+  "provider_business_identity_review": {
+    "pass": true,
+    "vs_tokyo_kyoto_seoul_bangkok": "亲子通票快速通道 · 独特新加坡家庭业态",
+    "vs_row25_guide": "服务场景 vs 人物肖像"
+  },
+  "destination_experience_review": {
+    "pass": true,
+    "notes": "家庭客群可感知「两大一小三景点」价值。"
+  },
+  "surface_boundary_review": { "pass": true, "not_guide_or_community": true },
+  "narrative_continuity": { "pass": true, "follows_row25_family_theme": true },
+  "regression_prior_25_rows": { "pass": true },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

@@ -1,0 +1,70 @@
+# Mainnet Deployment Package · Machine SSOT
+#
+# Generated ONLY after Web3 Freeze PASS.
+# MANIFEST/manifest.json = single deploy SSOT — NOT a testnet param swap.
+#
+#   node scripts/dev/generate-mainnet-deployment-package.cjs
+#   bash scripts/gates/check-mainnet-deployment-package-gate.sh
+
+schema: traveltrust.mainnet_deployment_package.v1
+version: 2
+effective_utc: "2026-07-08"
+machine_key: TT_MAINNET_DEPLOYMENT_PACKAGE
+governance_root: registry/production-governance-principles.v1.yaml
+governance_version: production_release_governance_v1
+
+prerequisite:
+  web3_freeze_verdict: WEB3_FREEZE_PASS
+  phase2_exit_review_verdict: PHASE2_EXIT_REVIEW_PASS
+  web3_freeze_gate: scripts/gates/check-web3-freeze-gate.sh
+
+anti_pattern_forbidden:
+  id: RULE-DEPLOY-001
+  title: No testnet-to-mainnet param swap
+  statement: >
+    FORBIDDEN to deploy mainnet by copying Sepolia RPC/chain_id/addresses.
+    MUST generate this Package from Web3 Freeze after Phase ② Production Validation PASS.
+
+# Package tree — single SSOT for deploy
+package_tree:
+  top_manifest: MANIFEST/manifest.json
+  registry_snapshot: registry-snapshot/
+  abi_snapshot: abi-snapshot/
+  contract_bytecode_hashes: contract-bytecode-hashes.json
+  deploy_scripts: deploy-scripts/
+  constructor_parameters: constructor-parameters.v1.yaml
+  wave_matrix: wave-deployment-matrix.v1.yaml
+  rollback_plan: runbook/MAINNET-ROLLBACK-V1.md
+  rpc_matrix: rpc-matrix.v1.yaml
+  evidence: evidence/
+  owner_signoff: owner-signoff/OWNER-SIGNOFF-TEMPLATE.md
+  env_template: env/mainnet.env.template
+
+generator: scripts/dev/generate-mainnet-deployment-package.cjs
+gate: scripts/gates/check-mainnet-deployment-package-gate.sh
+evidence_root: evidence/GO_production_readiness/mainnet-deployment-package
+runbook: docs/runbook/MAINNET-DEPLOYMENT-PACKAGE-V1.md
+
+verdict_pass: MAINNET_DEPLOYMENT_PACKAGE_GENERATED
+
+# Timelock wait window — prep WITHOUT Web3 Freeze (does not change any Gate)
+pre_freeze_prep:
+  verdict: MAINNET_DEPLOYMENT_PACKAGE_PREP_COMPLETE
+  status: PREP_NOT_GENERATED
+  gate_impact: NONE
+  generator: scripts/dev/prepare-mainnet-deployment-package-prep.cjs
+  template_root: docs/runbook/templates/mainnet-package/
+  evidence_latest: evidence/GO_production_readiness/mainnet-deployment-package/MAINNET-DEPLOYMENT-PACKAGE-PREP-LATEST.json
+  components:
+    wave_1_escrow_factory: wave-1-escrow-factory/ESCROW-FACTORY-WAVE1-MAINNET-PREP.md
+    mainnet_deployment_runbook: runbook/MAINNET-DEPLOYMENT-EXECUTION-V1.md
+    owner_signoff_package: owner-signoff/OWNER-SIGNOFF-PACKAGE.md
+    deployment_manifest_template: MANIFEST/manifest.template.json
+    contract_verify_package: verify/CONTRACT-VERIFY-PACKAGE.md
+    explorer_verify_package: verify/EXPLORER-VERIFY-PACKAGE.md
+    rollback_package: rollback/MAINNET-ROLLBACK-PREP-V1.md
+    emergency_recovery_package: emergency-recovery/EMERGENCY-RECOVERY-PREP-V1.md
+  note: >
+    Prep during Cert #8→#12 Timelock. Final SSOT remains MANIFEST/manifest.json
+    after WEB3_FREEZE_PASS via generate-mainnet-deployment-package.cjs.
+    EscrowFactory V1 FORBIDDEN on mainnet — Wave 1 target is EscrowFactoryV2.

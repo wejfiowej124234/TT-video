@@ -1,0 +1,39 @@
+{
+  "step": "post_activation_closeout",
+  "result": "PASS",
+  "timestampUtc": "2026-07-09T06:30:00Z",
+  "milestones": {
+    "VACANCY_LEDGER_V1_SEPOLIA_RUNTIME_ACTIVE": "PASS",
+    "VACANCY_DEPLOYMENT_READINESS": "PASS",
+    "WEB3_VACANCY_INDEXER_RECONCILE": "PASS",
+    "LIVE_RECONCILE": "PASS"
+  },
+  "runtime": {
+    "network": "sepolia",
+    "jurisdiction": "DE",
+    "status": "ACTIVE",
+    "liveReconcileMode": "LIVE_V1",
+    "rpcUsed": "https://ethereum-sepolia-rpc.publicnode.com"
+  },
+  "vacancyLedgerV1Status": {
+    "protocol": "COMPLETE",
+    "deployment": "DEPLOYED",
+    "runtime": "ACTIVE",
+    "indexer": "LIVE_READY",
+    "mainnet": "NOT_STARTED"
+  },
+  "envApplied": {
+    "VACANCY_RECONCILE_LIVE": "1",
+    "file": "scripts/dev/.env.phase2-chain-deploy.local"
+  },
+  "cleanupRegister": "docs/spec/governance-token/TRAVELTRUST-WEB3-VACANCY-W7-POST-ACTIVATION-CLEANUP-v1.md",
+  "cleanupItems": [
+    "W7-CLEANUP-01",
+    "W7-CLEANUP-02",
+    "W7-CLEANUP-03"
+  ],
+  "evidenceLogs": [
+    "W7-08-live-reconcile-gate.log",
+    "W7-09-deployment-readiness-gate.log"
+  ]
+}

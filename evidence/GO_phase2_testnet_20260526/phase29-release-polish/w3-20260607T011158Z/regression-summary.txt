@@ -1,0 +1,11 @@
+phase29_w3_regression: PASS
+stamp: 20260607T011158Z
+
+L0: PASS (ci-local-delivery-minimum.sh exit 0)
+L1: PASS (run-admin-l5-green.mjs exit 0)
+L2: PASS (local-staging-parity 20260607T011053Z)
+COM: PASS (run-community-l5-green.sh exit 0)
+
+items: RP-003, RP-015
+S5: DEFERRED (user fly auth login)
+Deep Gate G04: DEFERRED (user post-deploy)

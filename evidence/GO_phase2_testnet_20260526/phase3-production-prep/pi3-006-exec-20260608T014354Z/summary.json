@@ -1,0 +1,17 @@
+{
+  "kind": "traveltrust.pi3_006_go_live_production_cutover_execution.v1",
+  "recorded_utc": "20260608T014354Z",
+  "verdict": "PI3-006_HOLD",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "execution_sprint": "155",
+  "pi3_006_baseline_status": "PLANNED",
+  "p0_twelve_items_closed": 0,
+  "m00_signed": false,
+  "production_go_decision": "NO_GO",
+  "go_live_sections_program": "COMPLETE",
+  "cutover_runbook": "docs/runbook/PRODUCTION-CUTOVER-RUNBOOK-SEPOLIA-SCOPE.md",
+  "pi3_151_152_153_154_ref": "execution HOLD until Owner prod cutover",
+  "g5_gate": "PI3-006 GO + P0 12/12",
+  "g6_gate": "run-m00-final-release-audit.sh BLOCKER=0 on prod",
+  "g7_gate": "M-00 PRODUCTION_GO_DECISION: GO"
+}

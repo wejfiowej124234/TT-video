@@ -93,17 +93,17 @@ function LandingFooter() {
             </ul>
           </div>
           <div className="col-span-2 sm:col-span-1">
-            <h3 className={TT_MARKETING_HOME_FOOTER_HEADING}>{t("footer_col_tech")}</h3>
+            <h3 className={TT_MARKETING_HOME_FOOTER_HEADING}>{t("footer_col_trust")}</h3>
             <TrustInfraWall tone="dark" align="start" />
             <ul className="mt-3 space-y-1">
               <li>
-                <Link href="/governance/fee-routes" className={TT_MARKETING_HOME_FOOTER_LINK}>
-                  {t("footer_link_governance_fee_routes")}
+                <Link href="/trust" className={TT_MARKETING_HOME_FOOTER_LINK}>
+                  {t("footer_link_trust_center")}
                 </Link>
               </li>
               <li>
-                <Link href="/traveltrust#fee-router" className={TT_MARKETING_HOME_FOOTER_LINK}>
-                  {t("traveltrust_link_feeRouter")}
+                <Link href="/governance" className={TT_MARKETING_HOME_FOOTER_LINK}>
+                  {t("footer_link_governance_portal")}
                 </Link>
               </li>
             </ul>

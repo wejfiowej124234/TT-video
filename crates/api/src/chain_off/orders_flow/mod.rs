@@ -5,7 +5,8 @@ mod accept_cancel_pay_complete;
 mod dispute_bilateral_rating;
 
 pub use accept_cancel_pay_complete::{
-    order_accept_impl, order_cancel_impl, order_confirm_completion_impl, order_mock_pay_impl,
+    order_accept_impl, order_cancel_impl, order_confirm_completion_impl,
+    order_confirm_service_completion_impl, order_mock_pay_impl,
 };
 pub use dispute_bilateral_rating::{
     order_confirm_bilateral_impl, order_confirm_rating_impl, order_open_dispute_impl,

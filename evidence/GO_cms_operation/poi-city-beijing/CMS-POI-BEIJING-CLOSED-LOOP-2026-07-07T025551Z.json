@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T02:55:51Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "北京",
+    "city_en": "Beijing",
+    "matrix_ids": [
+      "PH-CN-246-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-246-FOOD",
+      "legacy_value": "全聚德烤鸭",
+      "poi_id": "df70d7e9-1ce8-4f93-8e8f-86b6130805ea",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-246-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

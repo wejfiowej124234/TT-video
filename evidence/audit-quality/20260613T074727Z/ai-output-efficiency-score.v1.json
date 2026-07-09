@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.ai_output_efficiency_score.v1",
+  "score": 89,
+  "checklist_lines": 9954,
+  "unified_output": true,
+  "root_cause_compression": "10→6"
+}

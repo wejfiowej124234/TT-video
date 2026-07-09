@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.governance-manual-p1.v1",
+  "phase": "phase2_testnet_closing_gap_g3",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "last_run": "20260606T095405Z",
+  "cases": {
+    "C-GOV-004": "PASS",
+    "C-GOV-005": "PASS",
+    "C-GOV-010": "N/A"
+  },
+  "release_gate": "PASS"
+}

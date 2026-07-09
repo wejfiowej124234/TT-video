@@ -64,6 +64,13 @@ export {
   createDefaultLandingAmbientResolveDeps,
   type LandingAmbientResolveDeps,
 } from "./resolveLandingAmbient";
+export {
+  resolveCityHero,
+  resolveCityHeroUrl,
+  createDefaultCityHeroResolveDeps,
+  fallbackKeyForCountryIso,
+  type CityHeroResolveDeps,
+} from "./resolveCityHero";
 export { useLandingAmbientUrl } from "./useLandingAmbientUrl";
 export {
   useCatalogCountryOptions,

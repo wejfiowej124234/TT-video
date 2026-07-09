@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T151100Z",
+  "filename": "ocs-sydney-coast-community-media.jpg",
+  "row": 48,
+  "chain_id": "sydney-coast",
+  "country_code": "AU",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "no_quality_regression_acknowledged": true,
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "brand_logos",
+      "celebrity_portraits",
+      "copyrighted_artworks",
+      "commercial_ad_posters",
+      "recognizable_faces",
+      "watermarks",
+      "ai_artifacts"
+    ],
+    "safe_expression": "步道俯瞰海湾 · 下午侧光 · 无人物正面 · 环境叙事详情"
+  },
+  "cover_media_complement_plan": {
+    "pass": true,
+    "row47_community_cover": {
+      "role": "Feed 缩略 · 第一眼吸引",
+      "scene_locked": "海滩浪花+远景泳者剪影 · 夏日明亮 · 水平海面"
+    },
+    "row48_community_media": {
+      "role": "详情主图 · 环境叙事与沉浸",
+      "scene_locked": "步道俯瞰海湾 · 下午侧光 · elevated overlook"
+    },
+    "forbidden_overlap": [
+      "同机位",
+      "同主体(海滩浪花)",
+      "同构图(水平海面)",
+      "同光线(正午夏日)",
+      "同情绪(活力泳者)"
+    ],
+    "complement_confirmed": true
+  },
+  "checks": {
+    "manifest_full_field_alignment": {
+      "pass": true,
+      "notes": "body_markdown/tags 邦迪-Coogee 徒步潮汐 · community_post.media_urls"
+    },
+    "destination_authenticity_9dim_plan": {
+      "pass": true,
+      "notes": "Bondi-Coogee 步道俯瞰 · 悬崖海湾 · 下午侧光 · AU-only"
+    },
+    "country_consistency_au_only": {
+      "pass": true,
+      "notes": "禁 NYC/Paris/SG/Tokyo/Kyoto/Seoul/Bangkok 元素"
+    },
+    "community_authenticity_plan": {
+      "pass": true,
+      "notes": "详情沉浸 · UGC 旅行日志 · 非广告"
+    },
+    "surface_boundary_plan": {
+      "pass": true,
+      "notes": "Community Media · 非 Cover/Official/Guide/Provider/Acquisition"
+    },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row47": "elevated trail overlook vs beach wave Feed",
+      "vs_row46": " intimate bay overlook vs epic wide hero",
+      "vs_row43_45": "环境详情 vs 肖像/皮划艇/静物"
+    },
+    "brand_consistency_plan": { "pass": true },
+    "consumer_experience_plan": {
+      "pass": true,
+      "notes": "Cover 吸引→Media 沉浸徒步环境"
+    },
+    "cross_chain_community_plan": { "pass": true },
+    "global_consistency_plan": { "pass": true },
+    "global_regression_plan": { "pass": true },
+    "nine_class_framework_frozen": true
+  }
+}

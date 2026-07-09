@@ -1,0 +1,3 @@
+traveler_order_id=4b26fc6a-bb1d-4df8-83f3-c0906d5e35a4
+guide_bind=OK guide=rov-w1-guide-20260608T044959Z@rov-cohort.invalid
+merchant_onboarding=OK email=rov-w1-2-20260608T044959Z@rov-cohort.invalid

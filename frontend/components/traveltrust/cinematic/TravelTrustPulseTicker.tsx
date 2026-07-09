@@ -4,8 +4,9 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
+import { useTraveltrustPulseAnnouncements } from "@/lib/hooks/useTraveltrustCmsAnnouncements";
+import { traveltrustAnnouncementListText } from "@/lib/traveltrustCmsAnnouncements";
 import {
-  TRAVELTRUST_NETWORK_ANNOUNCEMENTS,
   traveltrustAnnouncementPageHref,
   type TravelTrustAnnouncement,
 } from "@/lib/traveltrustNetworkAnnouncements";
@@ -21,10 +22,13 @@ import {
 const KIND_STYLE: Record<TravelTrustAnnouncement["kind"], string> = TT_PULSE_KIND_L5;
 
 function TickerItem({ item, inline = false }: { item: TravelTrustAnnouncement; inline?: boolean }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const reduceMotion = useReducedMotion();
   const label = t(`traveltrust_pulse_kind_${item.kind}`);
-  const bodyText = t(item.messageKey);
+  const bodyText =
+    "cmsCopy" in item && item.cmsCopy
+      ? traveltrustAnnouncementListText(item as import("@/lib/traveltrustCmsAnnouncements").TravelTrustAnnouncementDisplay, locale)
+      : t(item.messageKey);
   const target = traveltrustAnnouncementPageHref(item.id);
   const body = (
     <>
@@ -35,7 +39,6 @@ function TickerItem({ item, inline = false }: { item: TravelTrustAnnouncement; i
         ·
       </span>
       <span className={TT_PULSE_TICKER_L5.itemBodyClass}>{bodyText}</span>
-      <span className={TT_PULSE_TICKER_L5.itemDateClass}>{item.at}</span>
     </>
   );
 
@@ -75,19 +78,21 @@ type Props = {
   variant?: PulseVariant;
 };
 
-/** Web3 数字公告栏 — 项目进度 / 活动 / 治理（电影页顶 HUD） */
+/** Web3 数字公告栏 — 产品 / 信任 / 社区 / 活动（用户转化向） */
 export function TravelTrustPulseTicker({ variant = "section" }: Props) {
   const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
   const inline = variant === "inline";
   const useStaticInline = inline && (reduceMotion || TT_PULSE_TICKER_L5.inlineUsesStaticScroll);
   const inlineScrollMode = useStaticInline ? "static" : "marquee";
+  const { items: pulseItems } = useTraveltrustPulseAnnouncements();
+  const visibleAnnouncements = pulseItems;
   const items = useMemo(
     () =>
       useStaticInline || reduceMotion
-        ? [...TRAVELTRUST_NETWORK_ANNOUNCEMENTS]
-        : [...TRAVELTRUST_NETWORK_ANNOUNCEMENTS, ...TRAVELTRUST_NETWORK_ANNOUNCEMENTS],
-    [useStaticInline, reduceMotion],
+        ? visibleAnnouncements
+        : [...visibleAnnouncements, ...visibleAnnouncements],
+    [useStaticInline, reduceMotion, visibleAnnouncements],
   );
   const [marqueePaused, setMarqueePaused] = useState(false);
   const marqueeDuration = inline ? TT_PULSE_TICKER_L5.inlineMarqueeDuration : TT_PULSE_TICKER_L5.marqueeDuration;
@@ -166,7 +171,7 @@ export function TravelTrustPulseTicker({ variant = "section" }: Props) {
         >
           {reduceMotion ? (
             <ul className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:gap-3">
-              {TRAVELTRUST_NETWORK_ANNOUNCEMENTS.map((item) => (
+              {visibleAnnouncements.map((item) => (
                 <li key={item.id}>
                   <TickerItem item={item} />
                 </li>

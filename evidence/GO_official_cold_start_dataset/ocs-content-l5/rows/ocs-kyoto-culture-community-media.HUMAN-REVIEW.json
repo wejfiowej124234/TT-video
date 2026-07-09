@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T130130Z",
+  "filename": "ocs-kyoto-culture-community-media.jpg",
+  "chain_id": "kyoto-culture",
+  "city": "京都",
+  "country_code": "JP",
+  "slot": "community-media",
+  "surface": "Community Media",
+  "manifest_copy": {
+    "community_post.destination_slug": "kyoto",
+    "community_post.destination_label": "京都",
+    "community_post.tags": ["京都", "文化", "官方旅行日志"],
+    "community_post.body_markdown": "祇园晨雾中的茶道体验与岚山竹林午后——官方文化路线两日记录。"
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 133702 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "岚山竹林午后+行人与 body 双主题日志 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "竹林小径行人 lifestyle；非 Row10 空镜史诗宽幅/Row11 奉茶 close-up/Row7-9。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "京都同 chain。" },
+    "G5_brand_visual": { "pass": true, "notes": "青绿午后柔光；kyoto 品牌统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "Community 详情主图真实。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光自然。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "全层 Evidence 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "岚山竹林地标；② AI 素材。" },
+    "G10_content_diversity": { "pass": true, "notes": "完成 kyoto 6/6 场景覆盖。" }
+  },
+  "destination_experience_review": {
+    "pass": true,
+    "authentic_kyoto_travel_experience": true,
+    "user_value": true,
+    "commercial_appeal": true,
+    "city_character": true,
+    "community_scene_fit": true,
+    "notes": "旅行者漫步岚山竹林，体现正文「岚山竹林午后」；与 Feed 封面茶道瞬间形成详情叙事互补。"
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

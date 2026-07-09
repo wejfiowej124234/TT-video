@@ -1,0 +1,106 @@
+{
+  "schema": "traveltrust.per_decision_review_pack.v1",
+  "stamp_utc": "20260705T014800ZDR",
+  "phase": "Production Preparation · PER Decision Review",
+  "per_track_frozen_order": [
+    "business_closed_loop",
+    "recovery",
+    "rollback",
+    "monitoring",
+    "production_configuration"
+  ],
+  "items": [
+    {
+      "id": "p0-1",
+      "title": "Business Closed Loop",
+      "pass_key": "TT_PER_BUSINESS_CLOSED_LOOP",
+      "pass": true,
+      "owner_sign_off": "SIGNED",
+      "signed_at_utc": "2026-07-05T01:38:00Z",
+      "stamp_utc": "20260705T013500Z",
+      "evidence_latest": "evidence/GO_production_preparation/per-business-closed-loop/D:\\TravelTrust-V1.1\\evidence\\GO_production_preparation\\per-business-closed-loop\\PER-BUSINESS-CLOSED-LOOP-P0-LATEST.json",
+      "summary": {
+        "p0_total": 17,
+        "pass": 15,
+        "pass_expected_difference": 2,
+        "fail": 0,
+        "blocking_items": []
+      }
+    },
+    {
+      "id": "p0-2",
+      "title": "Recovery Verified",
+      "pass_key": "TT_PER_RECOVERY_VERIFIED",
+      "pass": true,
+      "owner_sign_off": "SIGNED",
+      "signed_at_utc": "2026-07-05T01:48:00Z",
+      "stamp_utc": "20260705T014000Z",
+      "evidence_latest": "evidence/GO_production_preparation/per-recovery-verified/D:\\TravelTrust-V1.1\\evidence\\GO_production_preparation\\per-recovery-verified\\PER-RECOVERY-VERIFIED-P0-2-LATEST.json",
+      "summary": {
+        "total": 9,
+        "pass": 9,
+        "fail": 0,
+        "blocking_items": []
+      }
+    },
+    {
+      "id": "p0-3",
+      "title": "Rollback Verified",
+      "pass_key": "TT_PER_ROLLBACK_VERIFIED",
+      "pass": true,
+      "owner_sign_off": "SIGNED",
+      "signed_at_utc": "2026-07-05T01:49:00Z",
+      "stamp_utc": "20260705T014800ZP3",
+      "evidence_latest": "evidence/GO_production_preparation/per-rollback-verified/D:\\TravelTrust-V1.1\\evidence\\GO_production_preparation\\per-rollback-verified\\PER-ROLLBACK-VERIFIED-P0-3-LATEST.json",
+      "summary": {
+        "total": 5,
+        "pass": 5,
+        "fail": 0,
+        "blocking_items": []
+      }
+    },
+    {
+      "id": "p0-4",
+      "title": "Monitoring Verified",
+      "pass_key": "TT_PER_MONITORING_VERIFIED",
+      "pass": true,
+      "owner_sign_off": "SIGNED",
+      "signed_at_utc": "2026-07-05T01:50:00Z",
+      "stamp_utc": "20260705T014800ZP4",
+      "evidence_latest": "evidence/GO_production_preparation/per-monitoring-verified/D:\\TravelTrust-V1.1\\evidence\\GO_production_preparation\\per-monitoring-verified\\PER-MONITORING-VERIFIED-P0-4-LATEST.json",
+      "summary": {
+        "total": 6,
+        "pass": 6,
+        "fail": 0,
+        "blocking_items": []
+      }
+    },
+    {
+      "id": "p0-5",
+      "title": "Production Configuration Verified",
+      "pass_key": "TT_PER_PRODUCTION_CONFIGURATION_VERIFIED",
+      "pass": true,
+      "owner_sign_off": "SIGNED",
+      "signed_at_utc": "2026-07-05T01:51:00Z",
+      "stamp_utc": "20260705T014800ZP5",
+      "evidence_latest": "evidence/GO_production_preparation/per-production-configuration-verified/D:\\TravelTrust-V1.1\\evidence\\GO_production_preparation\\per-production-configuration-verified\\PER-PRODUCTION-CONFIGURATION-VERIFIED-P0-5-LATEST.json",
+      "summary": {
+        "total": 6,
+        "pass": 6,
+        "fail": 0,
+        "blocking_items": []
+      }
+    }
+  ],
+  "blockers": [],
+  "owner_sign_off": {
+    "status": "SIGNED",
+    "attestation": "Sebastian Ward · Solo maintainer · PER Production Preparation five-item track complete · Decision Review ready · ② Staging evidence · not ③ Production GO · CMS Operation resumes Priority 2",
+    "signed_at_utc": "2026-07-05T01:52:00Z",
+    "signer": "Sebastian Ward"
+  },
+  "TT_PER_PRODUCTION_PREPARATION": "COMPLETE",
+  "TT_PER_DECISION_REVIEW": "READY",
+  "next_priority": "CMS Operation Wave 1 (JP)",
+  "honest_boundary": "PER COMPLETE = five frozen items signed on ② staging · ≠ Production GO · CMS parallel track resumes"
+}

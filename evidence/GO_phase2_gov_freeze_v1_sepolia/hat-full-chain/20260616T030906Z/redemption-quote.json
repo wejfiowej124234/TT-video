@@ -1,0 +1,1 @@
+{"status":"ok","jurisdiction_id":"CN","machine_code":"country_pool_redemption","subscription_lock_months":24,"redemption_window_days_per_quarter":15,"redemption_max_nav_pct_bps":1000,"nav_redemption_non_principal":true,"note":"Target NAV pro-rata redemption; not principal guarantee (fund-flow-ssot §4).","meta":{"implementation_status":"redemption_quote_doc_ssot"}}

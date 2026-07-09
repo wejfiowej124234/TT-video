@@ -16,6 +16,7 @@ import {
   marketDetailDrawerSubtle,
 } from "@/components/market/marketDetailDrawerClasses";
 import { isMarketGuideMockShowcaseId } from "@/lib/marketMockData";
+import { formatGuideHourlyRateLabel } from "@/lib/marketDisplayCopy";
 import { trackMarketEvent } from "@/lib/analytics";
 import { communityMediaNextImageUnoptimized } from "@/lib/communityMediaClientUrl";
 
@@ -178,14 +179,7 @@ export function GuideDetailDrawerDetailPanel({
             <div>
               <p className={`${marketDetailDrawerSubtle} mb-0.5`}>{t("guide_detail_price")}</p>
               <p className="text-body font-semibold text-ref-sun/90">
-                {t("guide_detail_perHour")
-                  .replace("{{amount}}", String(shellGuide.hourly_rate))
-                  .replace(
-                    "{{currency}}",
-                    typeof shellGuide.hourly_currency === "string" && shellGuide.hourly_currency.trim()
-                      ? shellGuide.hourly_currency.trim()
-                      : t("market_guide_hourly_currency_unspecified"),
-                  )}
+                {formatGuideHourlyRateLabel(shellGuide, t)}
               </p>
               {(shellGuide.priceRange?.guideFeePerDay != null || shellGuide.priceRange?.carFeePerDay != null) && (
                 <p className="text-meta text-slate-400 mt-1">

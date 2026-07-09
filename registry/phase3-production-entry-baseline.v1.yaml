@@ -1,0 +1,119 @@
+# Phase③ Production Entry Baseline · machine SSOT
+schema: traveltrust.phase3_production_entry_baseline.v1
+version: 1
+frozen_utc: "2026-07-09T08:00:00Z"
+entry_item: P3-01
+p3_02_evidence:
+  status: PASS
+  verdict: VACANCY_PRODUCTION_ENTRY_RECONCILE
+  verified_utc: "2026-07-09T08:16:21Z"
+  closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/P3-02-CLOSEOUT.md
+  reconcile_json: docs/spec/governance-token/evidence/phase3-production-entry-baseline/P3-02-VACANCY-RECONCILE.json
+  rpc_used: https://sepolia.drpc.org
+  latest_block: "11235127"
+human_doc: docs/spec/governance-token/PHASE3-PRODUCTION-ENTRY-BASELINE-v1.md
+
+phase25_closeout:
+  pr1: docs/spec/governance-token/evidence/phase2-web3-hardening-pr1/PR1-CLOSEOUT.md
+  pr2: docs/spec/governance-token/evidence/phase2-web3-hardening-pr2/PR2-CLOSEOUT.md
+  status: CLOSED
+
+gates_frozen:
+  WEB3_FULL_ALIGNMENT_GATE: PASS
+  PHASE2_5_WEB3_HARDENING_READY: PASS
+  TT_PHASE2_WEB3_RUNTIME_READY: PASS
+  WEB3_ENV_CATALOG_GATE: PASS
+  VACANCY_DEPLOYMENT_READINESS: PASS
+  WEB3_VACANCY_INDEXER_RECONCILE: PASS
+  deferred:
+    ABI-002: DEPLOYMENT_PREPARATION_READY
+
+public_disclosure:
+  route: /governance/params
+  status: ALIGNED
+  closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PUBLIC-DISCLOSURE-SYNC-CLOSEOUT.md
+  treasury_naming: Global Treasury = P4Cap DAO Treasury (first mention disambiguated)
+  fundraise_total: demoted_to_planning_reference
+
+sepolia_addresses:
+  GOVERNANCE_TREASURY_P4CAP_ADDRESS: "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+  LEGACY_TREASURY_ADDRESS: "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be"
+  TIMELOCK_ADDRESS: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+  GOVERNOR_ADDRESS: "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+  COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS: "0x738D2c133d5F90c13eE9907386136471E1f330f5"
+  COUNTRY_POOL_STEWARD_PATH_VAULT_ADDRESS: "0xaB6c15Ebcae78606E0AE5663d831E09e05af32FA"
+  UNALLOCATED_STEWARD_PATH_VAULT_ADDRESS: "0xb7d0Ea9579F80B2090195d49a44941d5546554E9"
+
+registry_frozen:
+  - registry/web3-final-alignment-matrix.v2.yaml
+  - registry/env-key-catalog-web3.v1.yaml
+  - registry/traveltrust-web3-protocol-master-matrix.v1.yaml
+  - registry/protocol-convergence-deployments.v1.yaml
+
+owner_review:
+  O-01_phase25_evidence: PENDING
+  O-02_public_params_aligned: PENDING
+  O-03_escrow_v2_deferred: PENDING
+  O-04_phase3_scope_approval: PENDING
+
+p3_03_mainnet_address_planning:
+  status: PASS
+  verdict: MAINNET_ADDRESS_PLANNING_READY
+  verified_utc: "2026-07-09T08:30:00Z"
+  human_doc: docs/spec/governance-token/MAINNET-ADDRESS-PLANNING-v1.md
+  machine_registry: registry/mainnet-address-registry.v1.yaml
+  closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/P3-03-MAINNET-ADDRESS-PLANNING-CLOSEOUT.md
+  gate: scripts/gates/check-mainnet-address-planning-gate.sh
+  gate_log: docs/spec/governance-token/evidence/phase3-production-entry-baseline/P3-03-GATE-RESULT.log
+
+p3_04_mainnet_deployment_plan:
+  status: PASS
+  verdict: MAINNET_DEPLOYMENT_PLAN_READY
+  verified_utc: "2026-07-09T08:35:00Z"
+  human_doc: docs/spec/governance-token/MAINNET-DEPLOYMENT-PLAN-v1.md
+  machine_plan: registry/mainnet-deployment-plan.v1.yaml
+  closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/P3-04-DEPLOYMENT-PLAN-CLOSEOUT.md
+  gate: scripts/gates/check-mainnet-deployment-plan-gate.sh
+  gate_log: docs/spec/governance-token/evidence/phase3-production-entry-baseline/P3-04-GATE-RESULT.log
+  dry_run: scripts/dev/run-mainnet-deployment-plan-dry-run.cjs
+  dry_run_evidence: docs/spec/governance-token/evidence/phase3-production-entry-baseline/P3-04-DRY-RUN.json
+  abi_002_status: DEPLOYMENT_PREPARATION_READY
+
+home_public_disclosure_alignment:
+  status: PASS
+  verdict: HOME_PUBLIC_DISCLOSURE_ALIGNED
+  verified_utc: "2026-07-09T08:45:00Z"
+  registry: registry/traveltrust-public-disclosure.v1.yaml
+  closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/HOME-PUBLIC-DISCLOSURE-ALIGNMENT-CLOSEOUT.md
+  gate: scripts/gates/check-home-public-disclosure-alignment-gate.sh
+  gate_log: docs/spec/governance-token/evidence/phase3-production-entry-baseline/HOME-PUBLIC-DISCLOSURE-GATE-RESULT.log
+
+public_surface_audit:
+  status: PASS
+  verdict: PUBLIC_SURFACE_AUDIT_PASS
+  verified_utc: "2026-07-09T09:00:00Z"
+  registry: registry/traveltrust-public-surface-audit.v1.yaml
+  closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PUBLIC-SURFACE-AUDIT-CLOSEOUT.md
+  gate: scripts/gates/check-public-surface-audit-gate.sh
+  surfaces_audited: 10
+  blocks_p3_05_until: acknowledged
+
+announcement_lane_governance:
+  status: PASS
+  verdict: ANNOUNCEMENT_LANE_GOVERNANCE_FROZEN
+  verified_utc: "2026-07-09T10:00:00Z"
+  registry: registry/traveltrust-announcement-lane-governance.v1.yaml
+  ts_mirror: frontend/lib/traveltrustAnnouncementLaneGovernance.ts
+  closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/ANNOUNCEMENT-LANE-GOVERNANCE-CLOSEOUT.md
+  gate: scripts/gates/check-announcement-lane-governance-gate.sh
+  blocks_p3_05_until: acknowledged
+
+next_entry_items:
+  - P3-05_security_review_refresh
+  - P3-06_mainnet_ops_runbook
+  - P3-07_mainnet_dry_run_gate_scaffold
+  - P3-08_owner_signoff
+
+p3_02_complete: true
+p3_03_complete: true
+p3_04_complete: true

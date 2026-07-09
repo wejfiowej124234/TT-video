@@ -1,0 +1,840 @@
+{
+  "schema": "traveltrust.cms_l5_content_gap_report.v1",
+  "stamp_utc": "20260705T041221Z",
+  "phase": "② staging",
+  "ssot": [
+    "runtime_dom",
+    "catalog_api",
+    "market_listings_api"
+  ],
+  "excluded": [
+    "matrix",
+    "registry",
+    "runbook",
+    "evidence_json"
+  ],
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "catalog_inventory_counts": {
+    "countries": 0,
+    "landing_ambient": 0,
+    "poi_images": 0,
+    "hotel_tiers": 0,
+    "transport": 0,
+    "city_hero": 0,
+    "banner": 0,
+    "video_poster": 0,
+    "provider_listings": 0,
+    "acquisition_listings": 0
+  },
+  "pages_audited": [
+    {
+      "page_path": "/",
+      "http": "error:page.goto: net::ERR_CONNECTION_CLOSED at https://tt-web-staging.fly.dev/\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=中国",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"chrome-error://chromewebdata/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=日本",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=韩国",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=新加坡",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=泰国",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=阿联酋",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=美国",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=澳大利亚",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=法国",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=西班牙",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/market",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/market\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/market\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/market/provider",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/market/provider\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/market\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/market/provider\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/market/acquisition",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/market/acquisition\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/market/provider\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/market/acquisition\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/traveltrust",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/traveltrust\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/market/acquisition\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/traveltrust\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/community",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/community\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/traveltrust\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/community\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    }
+  ],
+  "family_reports": {
+    "destination_ambient": {
+      "priority": "P0",
+      "total_assets": 10,
+      "cms_taken_over": 0,
+      "runtime_cms_effective": 0,
+      "l5_pass": 0,
+      "unmigrated": 10,
+      "text_image_mismatch": 0,
+      "country_errors": 0,
+      "city_errors": 0,
+      "suggest_replace": 10,
+      "cms_takeover_pct": 0,
+      "runtime_cms_pct": 0,
+      "l5_pass_pct": 0,
+      "text_consistency_pct": 100,
+      "geo_consistency_pct": 100,
+      "status": "OPEN"
+    },
+    "city_hero": {
+      "priority": "P1",
+      "total_assets": 0,
+      "cms_taken_over": 0,
+      "runtime_cms_effective": 0,
+      "l5_pass": 0,
+      "unmigrated": 0,
+      "text_image_mismatch": 0,
+      "country_errors": 0,
+      "city_errors": 0,
+      "suggest_replace": 0,
+      "cms_takeover_pct": 0,
+      "runtime_cms_pct": 0,
+      "l5_pass_pct": 0,
+      "text_consistency_pct": 0,
+      "geo_consistency_pct": 0,
+      "status": "NOT_SEEN"
+    },
+    "poi": {
+      "priority": "P0",
+      "total_assets": 0,
+      "cms_taken_over": 0,
+      "runtime_cms_effective": 0,
+      "l5_pass": 0,
+      "unmigrated": 0,
+      "text_image_mismatch": 0,
+      "country_errors": 0,
+      "city_errors": 0,
+      "suggest_replace": 0,
+      "cms_takeover_pct": 0,
+      "runtime_cms_pct": 0,
+      "l5_pass_pct": 0,
+      "text_consistency_pct": 0,
+      "geo_consistency_pct": 0,
+      "status": "NOT_SEEN"
+    },
+    "food": {
+      "priority": "P0",
+      "total_assets": 0,
+      "cms_taken_over": 0,
+      "runtime_cms_effective": 0,
+      "l5_pass": 0,
+      "unmigrated": 0,
+      "text_image_mismatch": 0,
+      "country_errors": 0,
+      "city_errors": 0,
+      "suggest_replace": 0,
+      "cms_takeover_pct": 0,
+      "runtime_cms_pct": 0,
+      "l5_pass_pct": 0,
+      "text_consistency_pct": 0,
+      "geo_consistency_pct": 0,
+      "status": "NOT_SEEN"
+    },
+    "hotel": {
+      "priority": "P1",
+      "total_assets": 0,
+      "cms_taken_over": 0,
+      "runtime_cms_effective": 0,
+      "l5_pass": 0,
+      "unmigrated": 0,
+      "text_image_mismatch": 0,
+      "country_errors": 0,
+      "city_errors": 0,
+      "suggest_replace": 0,
+      "cms_takeover_pct": 0,
+      "runtime_cms_pct": 0,
+      "l5_pass_pct": 0,
+      "text_consistency_pct": 0,
+      "geo_consistency_pct": 0,
+      "status": "NOT_SEEN"
+    },
+    "transport": {
+      "priority": "P1",
+      "total_assets": 0,
+      "cms_taken_over": 0,
+      "runtime_cms_effective": 0,
+      "l5_pass": 0,
+      "unmigrated": 0,
+      "text_image_mismatch": 0,
+      "country_errors": 0,
+      "city_errors": 0,
+      "suggest_replace": 0,
+      "cms_takeover_pct": 0,
+      "runtime_cms_pct": 0,
+      "l5_pass_pct": 0,
+      "text_consistency_pct": 0,
+      "geo_consistency_pct": 0,
+      "status": "NOT_SEEN"
+    },
+    "provider_listing": {
+      "priority": "P1",
+      "total_assets": 0,
+      "cms_taken_over": 0,
+      "runtime_cms_effective": 0,
+      "l5_pass": 0,
+      "unmigrated": 0,
+      "text_image_mismatch": 0,
+      "country_errors": 0,
+      "city_errors": 0,
+      "suggest_replace": 0,
+      "cms_takeover_pct": 0,
+      "runtime_cms_pct": 0,
+      "l5_pass_pct": 0,
+      "text_consistency_pct": 0,
+      "geo_consistency_pct": 0,
+      "status": "NOT_SEEN"
+    },
+    "acquisition_listing": {
+      "priority": "P1",
+      "total_assets": 0,
+      "cms_taken_over": 0,
+      "runtime_cms_effective": 0,
+      "l5_pass": 0,
+      "unmigrated": 0,
+      "text_image_mismatch": 0,
+      "country_errors": 0,
+      "city_errors": 0,
+      "suggest_replace": 0,
+      "cms_takeover_pct": 0,
+      "runtime_cms_pct": 0,
+      "l5_pass_pct": 0,
+      "text_consistency_pct": 0,
+      "geo_consistency_pct": 0,
+      "status": "NOT_SEEN"
+    },
+    "banner": {
+      "priority": "P2",
+      "total_assets": 0,
+      "cms_taken_over": 0,
+      "runtime_cms_effective": 0,
+      "l5_pass": 0,
+      "unmigrated": 0,
+      "text_image_mismatch": 0,
+      "country_errors": 0,
+      "city_errors": 0,
+      "suggest_replace": 0,
+      "cms_takeover_pct": 0,
+      "runtime_cms_pct": 0,
+      "l5_pass_pct": 0,
+      "text_consistency_pct": 0,
+      "geo_consistency_pct": 0,
+      "status": "NOT_SEEN"
+    },
+    "video_poster": {
+      "priority": "P2",
+      "total_assets": 0,
+      "cms_taken_over": 0,
+      "runtime_cms_effective": 0,
+      "l5_pass": 0,
+      "unmigrated": 0,
+      "text_image_mismatch": 0,
+      "country_errors": 0,
+      "city_errors": 0,
+      "suggest_replace": 0,
+      "cms_takeover_pct": 0,
+      "runtime_cms_pct": 0,
+      "l5_pass_pct": 0,
+      "text_consistency_pct": 0,
+      "geo_consistency_pct": 0,
+      "status": "NOT_SEEN"
+    }
+  },
+  "summary": {
+    "cms_takeover_pct": 0,
+    "runtime_cms_pct": 0,
+    "l5_pass_pct": 0,
+    "text_consistency_pct": 100,
+    "geo_consistency_pct": 100
+  },
+  "assets": [
+    {
+      "asset_family": "destination_ambient",
+      "slot_id": "ambient-CN",
+      "page_path": "/?country=中国",
+      "country_iso": "CN",
+      "country_zh": "中国",
+      "context_text": "中国 国家背景",
+      "catalog": {
+        "catalog_has_data": false,
+        "catalog_published": false,
+        "catalog_url": null,
+        "version": null
+      },
+      "runtime_url": null,
+      "runtime_source": "none",
+      "cms_jurisdiction": true,
+      "catalog_has_data": false,
+      "catalog_published": false,
+      "catalog_url": null,
+      "runtime_source_lane": "none",
+      "runtime_reads_cms_catalog": false,
+      "still_ocs": false,
+      "still_unsplash": false,
+      "still_pexels": false,
+      "still_placeholder": true,
+      "still_ts_fallback": false,
+      "still_external": false,
+      "legacy_unmigrated": true,
+      "runtime_cms_mismatch": false,
+      "l5_compliant": false,
+      "l5_issues": [
+        "Runtime 未渲染该资产位"
+      ],
+      "country_error": false,
+      "city_error": false,
+      "text_image_mismatch": false,
+      "suggest_replace": true,
+      "priority": "P0",
+      "suggested_action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+    },
+    {
+      "asset_family": "destination_ambient",
+      "slot_id": "ambient-JP",
+      "page_path": "/?country=日本",
+      "country_iso": "JP",
+      "country_zh": "日本",
+      "context_text": "日本 国家背景",
+      "catalog": {
+        "catalog_has_data": false,
+        "catalog_published": false,
+        "catalog_url": null,
+        "version": null
+      },
+      "runtime_url": null,
+      "runtime_source": "none",
+      "cms_jurisdiction": true,
+      "catalog_has_data": false,
+      "catalog_published": false,
+      "catalog_url": null,
+      "runtime_source_lane": "none",
+      "runtime_reads_cms_catalog": false,
+      "still_ocs": false,
+      "still_unsplash": false,
+      "still_pexels": false,
+      "still_placeholder": true,
+      "still_ts_fallback": false,
+      "still_external": false,
+      "legacy_unmigrated": true,
+      "runtime_cms_mismatch": false,
+      "l5_compliant": false,
+      "l5_issues": [
+        "Runtime 未渲染该资产位"
+      ],
+      "country_error": false,
+      "city_error": false,
+      "text_image_mismatch": false,
+      "suggest_replace": true,
+      "priority": "P0",
+      "suggested_action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+    },
+    {
+      "asset_family": "destination_ambient",
+      "slot_id": "ambient-KR",
+      "page_path": "/?country=韩国",
+      "country_iso": "KR",
+      "country_zh": "韩国",
+      "context_text": "韩国 国家背景",
+      "catalog": {
+        "catalog_has_data": false,
+        "catalog_published": false,
+        "catalog_url": null,
+        "version": null
+      },
+      "runtime_url": null,
+      "runtime_source": "none",
+      "cms_jurisdiction": true,
+      "catalog_has_data": false,
+      "catalog_published": false,
+      "catalog_url": null,
+      "runtime_source_lane": "none",
+      "runtime_reads_cms_catalog": false,
+      "still_ocs": false,
+      "still_unsplash": false,
+      "still_pexels": false,
+      "still_placeholder": true,
+      "still_ts_fallback": false,
+      "still_external": false,
+      "legacy_unmigrated": true,
+      "runtime_cms_mismatch": false,
+      "l5_compliant": false,
+      "l5_issues": [
+        "Runtime 未渲染该资产位"
+      ],
+      "country_error": false,
+      "city_error": false,
+      "text_image_mismatch": false,
+      "suggest_replace": true,
+      "priority": "P0",
+      "suggested_action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+    },
+    {
+      "asset_family": "destination_ambient",
+      "slot_id": "ambient-SG",
+      "page_path": "/?country=新加坡",
+      "country_iso": "SG",
+      "country_zh": "新加坡",
+      "context_text": "新加坡 国家背景",
+      "catalog": {
+        "catalog_has_data": false,
+        "catalog_published": false,
+        "catalog_url": null,
+        "version": null
+      },
+      "runtime_url": null,
+      "runtime_source": "none",
+      "cms_jurisdiction": true,
+      "catalog_has_data": false,
+      "catalog_published": false,
+      "catalog_url": null,
+      "runtime_source_lane": "none",
+      "runtime_reads_cms_catalog": false,
+      "still_ocs": false,
+      "still_unsplash": false,
+      "still_pexels": false,
+      "still_placeholder": true,
+      "still_ts_fallback": false,
+      "still_external": false,
+      "legacy_unmigrated": true,
+      "runtime_cms_mismatch": false,
+      "l5_compliant": false,
+      "l5_issues": [
+        "Runtime 未渲染该资产位"
+      ],
+      "country_error": false,
+      "city_error": false,
+      "text_image_mismatch": false,
+      "suggest_replace": true,
+      "priority": "P0",
+      "suggested_action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+    },
+    {
+      "asset_family": "destination_ambient",
+      "slot_id": "ambient-TH",
+      "page_path": "/?country=泰国",
+      "country_iso": "TH",
+      "country_zh": "泰国",
+      "context_text": "泰国 国家背景",
+      "catalog": {
+        "catalog_has_data": false,
+        "catalog_published": false,
+        "catalog_url": null,
+        "version": null
+      },
+      "runtime_url": null,
+      "runtime_source": "none",
+      "cms_jurisdiction": true,
+      "catalog_has_data": false,
+      "catalog_published": false,
+      "catalog_url": null,
+      "runtime_source_lane": "none",
+      "runtime_reads_cms_catalog": false,
+      "still_ocs": false,
+      "still_unsplash": false,
+      "still_pexels": false,
+      "still_placeholder": true,
+      "still_ts_fallback": false,
+      "still_external": false,
+      "legacy_unmigrated": true,
+      "runtime_cms_mismatch": false,
+      "l5_compliant": false,
+      "l5_issues": [
+        "Runtime 未渲染该资产位"
+      ],
+      "country_error": false,
+      "city_error": false,
+      "text_image_mismatch": false,
+      "suggest_replace": true,
+      "priority": "P0",
+      "suggested_action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+    },
+    {
+      "asset_family": "destination_ambient",
+      "slot_id": "ambient-AE",
+      "page_path": "/?country=阿联酋",
+      "country_iso": "AE",
+      "country_zh": "阿联酋",
+      "context_text": "阿联酋 国家背景",
+      "catalog": {
+        "catalog_has_data": false,
+        "catalog_published": false,
+        "catalog_url": null,
+        "version": null
+      },
+      "runtime_url": null,
+      "runtime_source": "none",
+      "cms_jurisdiction": true,
+      "catalog_has_data": false,
+      "catalog_published": false,
+      "catalog_url": null,
+      "runtime_source_lane": "none",
+      "runtime_reads_cms_catalog": false,
+      "still_ocs": false,
+      "still_unsplash": false,
+      "still_pexels": false,
+      "still_placeholder": true,
+      "still_ts_fallback": false,
+      "still_external": false,
+      "legacy_unmigrated": true,
+      "runtime_cms_mismatch": false,
+      "l5_compliant": false,
+      "l5_issues": [
+        "Runtime 未渲染该资产位"
+      ],
+      "country_error": false,
+      "city_error": false,
+      "text_image_mismatch": false,
+      "suggest_replace": true,
+      "priority": "P0",
+      "suggested_action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+    },
+    {
+      "asset_family": "destination_ambient",
+      "slot_id": "ambient-US",
+      "page_path": "/?country=美国",
+      "country_iso": "US",
+      "country_zh": "美国",
+      "context_text": "美国 国家背景",
+      "catalog": {
+        "catalog_has_data": false,
+        "catalog_published": false,
+        "catalog_url": null,
+        "version": null
+      },
+      "runtime_url": null,
+      "runtime_source": "none",
+      "cms_jurisdiction": true,
+      "catalog_has_data": false,
+      "catalog_published": false,
+      "catalog_url": null,
+      "runtime_source_lane": "none",
+      "runtime_reads_cms_catalog": false,
+      "still_ocs": false,
+      "still_unsplash": false,
+      "still_pexels": false,
+      "still_placeholder": true,
+      "still_ts_fallback": false,
+      "still_external": false,
+      "legacy_unmigrated": true,
+      "runtime_cms_mismatch": false,
+      "l5_compliant": false,
+      "l5_issues": [
+        "Runtime 未渲染该资产位"
+      ],
+      "country_error": false,
+      "city_error": false,
+      "text_image_mismatch": false,
+      "suggest_replace": true,
+      "priority": "P0",
+      "suggested_action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+    },
+    {
+      "asset_family": "destination_ambient",
+      "slot_id": "ambient-AU",
+      "page_path": "/?country=澳大利亚",
+      "country_iso": "AU",
+      "country_zh": "澳大利亚",
+      "context_text": "澳大利亚 国家背景",
+      "catalog": {
+        "catalog_has_data": false,
+        "catalog_published": false,
+        "catalog_url": null,
+        "version": null
+      },
+      "runtime_url": null,
+      "runtime_source": "none",
+      "cms_jurisdiction": true,
+      "catalog_has_data": false,
+      "catalog_published": false,
+      "catalog_url": null,
+      "runtime_source_lane": "none",
+      "runtime_reads_cms_catalog": false,
+      "still_ocs": false,
+      "still_unsplash": false,
+      "still_pexels": false,
+      "still_placeholder": true,
+      "still_ts_fallback": false,
+      "still_external": false,
+      "legacy_unmigrated": true,
+      "runtime_cms_mismatch": false,
+      "l5_compliant": false,
+      "l5_issues": [
+        "Runtime 未渲染该资产位"
+      ],
+      "country_error": false,
+      "city_error": false,
+      "text_image_mismatch": false,
+      "suggest_replace": true,
+      "priority": "P0",
+      "suggested_action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+    },
+    {
+      "asset_family": "destination_ambient",
+      "slot_id": "ambient-FR",
+      "page_path": "/?country=法国",
+      "country_iso": "FR",
+      "country_zh": "法国",
+      "context_text": "法国 国家背景",
+      "catalog": {
+        "catalog_has_data": false,
+        "catalog_published": false,
+        "catalog_url": null,
+        "version": null
+      },
+      "runtime_url": null,
+      "runtime_source": "none",
+      "cms_jurisdiction": true,
+      "catalog_has_data": false,
+      "catalog_published": false,
+      "catalog_url": null,
+      "runtime_source_lane": "none",
+      "runtime_reads_cms_catalog": false,
+      "still_ocs": false,
+      "still_unsplash": false,
+      "still_pexels": false,
+      "still_placeholder": true,
+      "still_ts_fallback": false,
+      "still_external": false,
+      "legacy_unmigrated": true,
+      "runtime_cms_mismatch": false,
+      "l5_compliant": false,
+      "l5_issues": [
+        "Runtime 未渲染该资产位"
+      ],
+      "country_error": false,
+      "city_error": false,
+      "text_image_mismatch": false,
+      "suggest_replace": true,
+      "priority": "P0",
+      "suggested_action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+    },
+    {
+      "asset_family": "destination_ambient",
+      "slot_id": "ambient-ES",
+      "page_path": "/?country=西班牙",
+      "country_iso": "ES",
+      "country_zh": "西班牙",
+      "context_text": "西班牙 国家背景",
+      "catalog": {
+        "catalog_has_data": false,
+        "catalog_published": false,
+        "catalog_url": null,
+        "version": null
+      },
+      "runtime_url": null,
+      "runtime_source": "none",
+      "cms_jurisdiction": true,
+      "catalog_has_data": false,
+      "catalog_published": false,
+      "catalog_url": null,
+      "runtime_source_lane": "none",
+      "runtime_reads_cms_catalog": false,
+      "still_ocs": false,
+      "still_unsplash": false,
+      "still_pexels": false,
+      "still_placeholder": true,
+      "still_ts_fallback": false,
+      "still_external": false,
+      "legacy_unmigrated": true,
+      "runtime_cms_mismatch": false,
+      "l5_compliant": false,
+      "l5_issues": [
+        "Runtime 未渲染该资产位"
+      ],
+      "country_error": false,
+      "city_error": false,
+      "text_image_mismatch": false,
+      "suggest_replace": true,
+      "priority": "P0",
+      "suggested_action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+    }
+  ],
+  "remediation": {
+    "P0": [
+      {
+        "family": "destination_ambient",
+        "page": "/?country=中国",
+        "slot": "ambient-CN",
+        "runtime_source": "none",
+        "catalog_published": false,
+        "runtime_reads_catalog": false,
+        "issues": [
+          "Runtime 未渲染该资产位"
+        ],
+        "action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+      },
+      {
+        "family": "destination_ambient",
+        "page": "/?country=日本",
+        "slot": "ambient-JP",
+        "runtime_source": "none",
+        "catalog_published": false,
+        "runtime_reads_catalog": false,
+        "issues": [
+          "Runtime 未渲染该资产位"
+        ],
+        "action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+      },
+      {
+        "family": "destination_ambient",
+        "page": "/?country=韩国",
+        "slot": "ambient-KR",
+        "runtime_source": "none",
+        "catalog_published": false,
+        "runtime_reads_catalog": false,
+        "issues": [
+          "Runtime 未渲染该资产位"
+        ],
+        "action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+      },
+      {
+        "family": "destination_ambient",
+        "page": "/?country=新加坡",
+        "slot": "ambient-SG",
+        "runtime_source": "none",
+        "catalog_published": false,
+        "runtime_reads_catalog": false,
+        "issues": [
+          "Runtime 未渲染该资产位"
+        ],
+        "action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+      },
+      {
+        "family": "destination_ambient",
+        "page": "/?country=泰国",
+        "slot": "ambient-TH",
+        "runtime_source": "none",
+        "catalog_published": false,
+        "runtime_reads_catalog": false,
+        "issues": [
+          "Runtime 未渲染该资产位"
+        ],
+        "action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+      },
+      {
+        "family": "destination_ambient",
+        "page": "/?country=阿联酋",
+        "slot": "ambient-AE",
+        "runtime_source": "none",
+        "catalog_published": false,
+        "runtime_reads_catalog": false,
+        "issues": [
+          "Runtime 未渲染该资产位"
+        ],
+        "action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+      },
+      {
+        "family": "destination_ambient",
+        "page": "/?country=美国",
+        "slot": "ambient-US",
+        "runtime_source": "none",
+        "catalog_published": false,
+        "runtime_reads_catalog": false,
+        "issues": [
+          "Runtime 未渲染该资产位"
+        ],
+        "action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+      },
+      {
+        "family": "destination_ambient",
+        "page": "/?country=澳大利亚",
+        "slot": "ambient-AU",
+        "runtime_source": "none",
+        "catalog_published": false,
+        "runtime_reads_catalog": false,
+        "issues": [
+          "Runtime 未渲染该资产位"
+        ],
+        "action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+      },
+      {
+        "family": "destination_ambient",
+        "page": "/?country=法国",
+        "slot": "ambient-FR",
+        "runtime_source": "none",
+        "catalog_published": false,
+        "runtime_reads_catalog": false,
+        "issues": [
+          "Runtime 未渲染该资产位"
+        ],
+        "action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+      },
+      {
+        "family": "destination_ambient",
+        "page": "/?country=西班牙",
+        "slot": "ambient-ES",
+        "runtime_source": "none",
+        "catalog_published": false,
+        "runtime_reads_catalog": false,
+        "issues": [
+          "Runtime 未渲染该资产位"
+        ],
+        "action": "P0 · landing_ambient publish 已有 · 接 Runtime catalog 消费"
+      }
+    ],
+    "P1": [],
+    "P2": []
+  },
+  "completion_targets": {
+    "cms_takeover_pct": 100,
+    "runtime_cms_pct": 100,
+    "l5_pass_pct": 100,
+    "text_consistency_pct": 100,
+    "geo_consistency_pct": 100,
+    "legacy_sources_allowed": [
+      "ocs_by_explicit_design_only"
+    ]
+  },
+  "TT_CMS_CONTENT_AUDIT": "GAPS_OPEN"
+}

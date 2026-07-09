@@ -1,0 +1,1283 @@
+[
+  {
+    "probe_id": "core.capabilities",
+    "domain": "workbench",
+    "role": "SuperAdmin",
+    "method": "GET",
+    "path": "/api/v1/admin/capabilities",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "core.capabilities",
+    "domain": "workbench",
+    "role": "Ops",
+    "method": "GET",
+    "path": "/api/v1/admin/capabilities",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "core.capabilities",
+    "domain": "workbench",
+    "role": "CS",
+    "method": "GET",
+    "path": "/api/v1/admin/capabilities",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "core.capabilities",
+    "domain": "workbench",
+    "role": "Risk",
+    "method": "GET",
+    "path": "/api/v1/admin/capabilities",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "core.capabilities",
+    "domain": "workbench",
+    "role": "Finance",
+    "method": "GET",
+    "path": "/api/v1/admin/capabilities",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "core.capabilities",
+    "domain": "workbench",
+    "role": "Auditor",
+    "method": "GET",
+    "path": "/api/v1/admin/capabilities",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "core.route_matrix",
+    "domain": "workbench",
+    "role": "SuperAdmin",
+    "method": "GET",
+    "path": "/api/v1/admin/rbac/route-matrix",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "core.route_matrix",
+    "domain": "workbench",
+    "role": "Ops",
+    "method": "GET",
+    "path": "/api/v1/admin/rbac/route-matrix",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "core.route_matrix",
+    "domain": "workbench",
+    "role": "CS",
+    "method": "GET",
+    "path": "/api/v1/admin/rbac/route-matrix",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "core.route_matrix",
+    "domain": "workbench",
+    "role": "Risk",
+    "method": "GET",
+    "path": "/api/v1/admin/rbac/route-matrix",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "core.route_matrix",
+    "domain": "workbench",
+    "role": "Finance",
+    "method": "GET",
+    "path": "/api/v1/admin/rbac/route-matrix",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "core.route_matrix",
+    "domain": "workbench",
+    "role": "Auditor",
+    "method": "GET",
+    "path": "/api/v1/admin/rbac/route-matrix",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "onboarding.provider_applications_list",
+    "domain": "onboarding",
+    "role": "SuperAdmin",
+    "method": "GET",
+    "path": "/api/v1/admin/provider-applications?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "onboarding.provider_applications_list",
+    "domain": "onboarding",
+    "role": "Ops",
+    "method": "GET",
+    "path": "/api/v1/admin/provider-applications?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "onboarding.provider_applications_list",
+    "domain": "onboarding",
+    "role": "CS",
+    "method": "GET",
+    "path": "/api/v1/admin/provider-applications?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "onboarding.provider_applications_list",
+    "domain": "onboarding",
+    "role": "Risk",
+    "method": "GET",
+    "path": "/api/v1/admin/provider-applications?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "onboarding.provider_applications_list",
+    "domain": "onboarding",
+    "role": "Finance",
+    "method": "GET",
+    "path": "/api/v1/admin/provider-applications?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "onboarding.provider_applications_list",
+    "domain": "onboarding",
+    "role": "Auditor",
+    "method": "GET",
+    "path": "/api/v1/admin/provider-applications?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "onboarding.entitlements_list",
+    "domain": "onboarding",
+    "role": "SuperAdmin",
+    "method": "GET",
+    "path": "/api/v1/admin/onboarding/entitlements?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "onboarding.entitlements_list",
+    "domain": "onboarding",
+    "role": "Ops",
+    "method": "GET",
+    "path": "/api/v1/admin/onboarding/entitlements?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "onboarding.entitlements_list",
+    "domain": "onboarding",
+    "role": "CS",
+    "method": "GET",
+    "path": "/api/v1/admin/onboarding/entitlements?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "onboarding.entitlements_list",
+    "domain": "onboarding",
+    "role": "Risk",
+    "method": "GET",
+    "path": "/api/v1/admin/onboarding/entitlements?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "onboarding.entitlements_list",
+    "domain": "onboarding",
+    "role": "Finance",
+    "method": "GET",
+    "path": "/api/v1/admin/onboarding/entitlements?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "onboarding.entitlements_list",
+    "domain": "onboarding",
+    "role": "Auditor",
+    "method": "GET",
+    "path": "/api/v1/admin/onboarding/entitlements?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.users_list",
+    "domain": "operations",
+    "role": "SuperAdmin",
+    "method": "GET",
+    "path": "/api/v1/admin/users?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.users_list",
+    "domain": "operations",
+    "role": "Ops",
+    "method": "GET",
+    "path": "/api/v1/admin/users?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.users_list",
+    "domain": "operations",
+    "role": "CS",
+    "method": "GET",
+    "path": "/api/v1/admin/users?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.users_list",
+    "domain": "operations",
+    "role": "Risk",
+    "method": "GET",
+    "path": "/api/v1/admin/users?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.users_list",
+    "domain": "operations",
+    "role": "Finance",
+    "method": "GET",
+    "path": "/api/v1/admin/users?limit=1",
+    "http": 403,
+    "expected": [
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.users_list",
+    "domain": "operations",
+    "role": "Auditor",
+    "method": "GET",
+    "path": "/api/v1/admin/users?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.orders_list",
+    "domain": "operations",
+    "role": "SuperAdmin",
+    "method": "GET",
+    "path": "/api/v1/admin/orders?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.orders_list",
+    "domain": "operations",
+    "role": "Ops",
+    "method": "GET",
+    "path": "/api/v1/admin/orders?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.orders_list",
+    "domain": "operations",
+    "role": "CS",
+    "method": "GET",
+    "path": "/api/v1/admin/orders?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.orders_list",
+    "domain": "operations",
+    "role": "Risk",
+    "method": "GET",
+    "path": "/api/v1/admin/orders?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.orders_list",
+    "domain": "operations",
+    "role": "Finance",
+    "method": "GET",
+    "path": "/api/v1/admin/orders?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.orders_list",
+    "domain": "operations",
+    "role": "Auditor",
+    "method": "GET",
+    "path": "/api/v1/admin/orders?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.disputes_list",
+    "domain": "operations",
+    "role": "SuperAdmin",
+    "method": "GET",
+    "path": "/api/v1/admin/disputes?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.disputes_list",
+    "domain": "operations",
+    "role": "Ops",
+    "method": "GET",
+    "path": "/api/v1/admin/disputes?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.disputes_list",
+    "domain": "operations",
+    "role": "CS",
+    "method": "GET",
+    "path": "/api/v1/admin/disputes?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.disputes_list",
+    "domain": "operations",
+    "role": "Risk",
+    "method": "GET",
+    "path": "/api/v1/admin/disputes?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.disputes_list",
+    "domain": "operations",
+    "role": "Finance",
+    "method": "GET",
+    "path": "/api/v1/admin/disputes?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "ops.disputes_list",
+    "domain": "operations",
+    "role": "Auditor",
+    "method": "GET",
+    "path": "/api/v1/admin/disputes?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "community.reports_list",
+    "domain": "community",
+    "role": "SuperAdmin",
+    "method": "GET",
+    "path": "/api/v1/admin/community/reports?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "community.reports_list",
+    "domain": "community",
+    "role": "Ops",
+    "method": "GET",
+    "path": "/api/v1/admin/community/reports?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "community.reports_list",
+    "domain": "community",
+    "role": "CS",
+    "method": "GET",
+    "path": "/api/v1/admin/community/reports?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "community.reports_list",
+    "domain": "community",
+    "role": "Risk",
+    "method": "GET",
+    "path": "/api/v1/admin/community/reports?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "community.reports_list",
+    "domain": "community",
+    "role": "Finance",
+    "method": "GET",
+    "path": "/api/v1/admin/community/reports?limit=1",
+    "http": 403,
+    "expected": [
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "community.reports_list",
+    "domain": "community",
+    "role": "Auditor",
+    "method": "GET",
+    "path": "/api/v1/admin/community/reports?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "community.penalties_post",
+    "domain": "community",
+    "role": "SuperAdmin",
+    "method": "POST",
+    "path": "/api/v1/admin/community/penalties",
+    "http": 400,
+    "expected": [
+      200,
+      201,
+      400,
+      404,
+      422
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "community.penalties_post",
+    "domain": "community",
+    "role": "Ops",
+    "method": "POST",
+    "path": "/api/v1/admin/community/penalties",
+    "http": 400,
+    "expected": [
+      200,
+      201,
+      400,
+      404,
+      422
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "community.penalties_post",
+    "domain": "community",
+    "role": "CS",
+    "method": "POST",
+    "path": "/api/v1/admin/community/penalties",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "community.penalties_post",
+    "domain": "community",
+    "role": "Risk",
+    "method": "POST",
+    "path": "/api/v1/admin/community/penalties",
+    "http": 400,
+    "expected": [
+      200,
+      201,
+      400,
+      404,
+      422
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "community.penalties_post",
+    "domain": "community",
+    "role": "Finance",
+    "method": "POST",
+    "path": "/api/v1/admin/community/penalties",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "community.penalties_post",
+    "domain": "community",
+    "role": "Auditor",
+    "method": "POST",
+    "path": "/api/v1/admin/community/penalties",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "finance.summary",
+    "domain": "finance",
+    "role": "SuperAdmin",
+    "method": "GET",
+    "path": "/api/v1/admin/finance/summary",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "finance.summary",
+    "domain": "finance",
+    "role": "Ops",
+    "method": "GET",
+    "path": "/api/v1/admin/finance/summary",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "finance.summary",
+    "domain": "finance",
+    "role": "CS",
+    "method": "GET",
+    "path": "/api/v1/admin/finance/summary",
+    "http": 403,
+    "expected": [
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "finance.summary",
+    "domain": "finance",
+    "role": "Risk",
+    "method": "GET",
+    "path": "/api/v1/admin/finance/summary",
+    "http": 403,
+    "expected": [
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "finance.summary",
+    "domain": "finance",
+    "role": "Finance",
+    "method": "GET",
+    "path": "/api/v1/admin/finance/summary",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "finance.summary",
+    "domain": "finance",
+    "role": "Auditor",
+    "method": "GET",
+    "path": "/api/v1/admin/finance/summary",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "finance.fee_router",
+    "domain": "finance",
+    "role": "SuperAdmin",
+    "method": "GET",
+    "path": "/api/v1/admin/fee-router/routed-events?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "finance.fee_router",
+    "domain": "finance",
+    "role": "Ops",
+    "method": "GET",
+    "path": "/api/v1/admin/fee-router/routed-events?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "finance.fee_router",
+    "domain": "finance",
+    "role": "CS",
+    "method": "GET",
+    "path": "/api/v1/admin/fee-router/routed-events?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "finance.fee_router",
+    "domain": "finance",
+    "role": "Risk",
+    "method": "GET",
+    "path": "/api/v1/admin/fee-router/routed-events?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "finance.fee_router",
+    "domain": "finance",
+    "role": "Finance",
+    "method": "GET",
+    "path": "/api/v1/admin/fee-router/routed-events?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "finance.fee_router",
+    "domain": "finance",
+    "role": "Auditor",
+    "method": "GET",
+    "path": "/api/v1/admin/fee-router/routed-events?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "governance.trust_growth_patch",
+    "domain": "governance",
+    "role": "SuperAdmin",
+    "method": "PATCH",
+    "path": "/api/v1/admin/trust-growth/control",
+    "http": 200,
+    "expected": [
+      200,
+      400,
+      404,
+      422
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "governance.trust_growth_patch",
+    "domain": "governance",
+    "role": "Ops",
+    "method": "PATCH",
+    "path": "/api/v1/admin/trust-growth/control",
+    "http": 200,
+    "expected": [
+      200,
+      400,
+      404,
+      422
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "governance.trust_growth_patch",
+    "domain": "governance",
+    "role": "CS",
+    "method": "PATCH",
+    "path": "/api/v1/admin/trust-growth/control",
+    "http": 403,
+    "expected": [
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "governance.trust_growth_patch",
+    "domain": "governance",
+    "role": "Risk",
+    "method": "PATCH",
+    "path": "/api/v1/admin/trust-growth/control",
+    "http": 200,
+    "expected": [
+      200,
+      400,
+      404,
+      422
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "governance.trust_growth_patch",
+    "domain": "governance",
+    "role": "Finance",
+    "method": "PATCH",
+    "path": "/api/v1/admin/trust-growth/control",
+    "http": 403,
+    "expected": [
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "governance.trust_growth_patch",
+    "domain": "governance",
+    "role": "Auditor",
+    "method": "PATCH",
+    "path": "/api/v1/admin/trust-growth/control",
+    "http": 403,
+    "expected": [
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "governance.approve_post",
+    "domain": "governance",
+    "role": "SuperAdmin",
+    "method": "POST",
+    "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/approve",
+    "http": 400,
+    "expected": [
+      200,
+      400,
+      404,
+      422
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "governance.approve_post",
+    "domain": "governance",
+    "role": "Ops",
+    "method": "POST",
+    "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/approve",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "governance.approve_post",
+    "domain": "governance",
+    "role": "CS",
+    "method": "POST",
+    "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/approve",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "governance.approve_post",
+    "domain": "governance",
+    "role": "Risk",
+    "method": "POST",
+    "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/approve",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "governance.approve_post",
+    "domain": "governance",
+    "role": "Finance",
+    "method": "POST",
+    "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/approve",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "governance.approve_post",
+    "domain": "governance",
+    "role": "Auditor",
+    "method": "POST",
+    "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/approve",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.flags_list",
+    "domain": "more",
+    "role": "SuperAdmin",
+    "method": "GET",
+    "path": "/api/v1/admin/flags?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.flags_list",
+    "domain": "more",
+    "role": "Ops",
+    "method": "GET",
+    "path": "/api/v1/admin/flags?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.flags_list",
+    "domain": "more",
+    "role": "CS",
+    "method": "GET",
+    "path": "/api/v1/admin/flags?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.flags_list",
+    "domain": "more",
+    "role": "Risk",
+    "method": "GET",
+    "path": "/api/v1/admin/flags?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.flags_list",
+    "domain": "more",
+    "role": "Finance",
+    "method": "GET",
+    "path": "/api/v1/admin/flags?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.flags_list",
+    "domain": "more",
+    "role": "Auditor",
+    "method": "GET",
+    "path": "/api/v1/admin/flags?limit=1",
+    "http": 200,
+    "expected": [
+      200
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.flags_publish",
+    "domain": "more",
+    "role": "SuperAdmin",
+    "method": "POST",
+    "path": "/api/v1/admin/flags/00000000-0000-0000-0000-000000000099/publish",
+    "http": 400,
+    "expected": [
+      200,
+      400,
+      404,
+      422
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.flags_publish",
+    "domain": "more",
+    "role": "Ops",
+    "method": "POST",
+    "path": "/api/v1/admin/flags/00000000-0000-0000-0000-000000000099/publish",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.flags_publish",
+    "domain": "more",
+    "role": "CS",
+    "method": "POST",
+    "path": "/api/v1/admin/flags/00000000-0000-0000-0000-000000000099/publish",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.flags_publish",
+    "domain": "more",
+    "role": "Risk",
+    "method": "POST",
+    "path": "/api/v1/admin/flags/00000000-0000-0000-0000-000000000099/publish",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.flags_publish",
+    "domain": "more",
+    "role": "Finance",
+    "method": "POST",
+    "path": "/api/v1/admin/flags/00000000-0000-0000-0000-000000000099/publish",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.flags_publish",
+    "domain": "more",
+    "role": "Auditor",
+    "method": "POST",
+    "path": "/api/v1/admin/flags/00000000-0000-0000-0000-000000000099/publish",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.scheduler_rerun",
+    "domain": "more",
+    "role": "SuperAdmin",
+    "method": "POST",
+    "path": "/api/v1/admin/scheduler/jobs/smoke_probe_job/rerun",
+    "http": 400,
+    "expected": [
+      200,
+      400,
+      404,
+      422
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.scheduler_rerun",
+    "domain": "more",
+    "role": "Ops",
+    "method": "POST",
+    "path": "/api/v1/admin/scheduler/jobs/smoke_probe_job/rerun",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.scheduler_rerun",
+    "domain": "more",
+    "role": "CS",
+    "method": "POST",
+    "path": "/api/v1/admin/scheduler/jobs/smoke_probe_job/rerun",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.scheduler_rerun",
+    "domain": "more",
+    "role": "Risk",
+    "method": "POST",
+    "path": "/api/v1/admin/scheduler/jobs/smoke_probe_job/rerun",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.scheduler_rerun",
+    "domain": "more",
+    "role": "Finance",
+    "method": "POST",
+    "path": "/api/v1/admin/scheduler/jobs/smoke_probe_job/rerun",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "config.scheduler_rerun",
+    "domain": "more",
+    "role": "Auditor",
+    "method": "POST",
+    "path": "/api/v1/admin/scheduler/jobs/smoke_probe_job/rerun",
+    "http": 400,
+    "expected": [
+      400,
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "rbac.console_role_put",
+    "domain": "more",
+    "role": "SuperAdmin",
+    "method": "PUT",
+    "path": "/api/v1/admin/users/6385a95e-479b-44ee-bb41-83cd8e5319df/console-role",
+    "http": 200,
+    "expected": [
+      200,
+      400,
+      404,
+      422
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "rbac.console_role_put",
+    "domain": "more",
+    "role": "Ops",
+    "method": "PUT",
+    "path": "/api/v1/admin/users/6385a95e-479b-44ee-bb41-83cd8e5319df/console-role",
+    "http": 200,
+    "expected": [
+      200,
+      400,
+      404,
+      422
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "rbac.console_role_put",
+    "domain": "more",
+    "role": "CS",
+    "method": "PUT",
+    "path": "/api/v1/admin/users/6385a95e-479b-44ee-bb41-83cd8e5319df/console-role",
+    "http": 403,
+    "expected": [
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "rbac.console_role_put",
+    "domain": "more",
+    "role": "Risk",
+    "method": "PUT",
+    "path": "/api/v1/admin/users/6385a95e-479b-44ee-bb41-83cd8e5319df/console-role",
+    "http": 200,
+    "expected": [
+      200,
+      400,
+      404,
+      422
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "rbac.console_role_put",
+    "domain": "more",
+    "role": "Finance",
+    "method": "PUT",
+    "path": "/api/v1/admin/users/6385a95e-479b-44ee-bb41-83cd8e5319df/console-role",
+    "http": 403,
+    "expected": [
+      403
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "rbac.console_role_put",
+    "domain": "more",
+    "role": "Auditor",
+    "method": "PUT",
+    "path": "/api/v1/admin/users/6385a95e-479b-44ee-bb41-83cd8e5319df/console-role",
+    "http": 403,
+    "expected": [
+      403
+    ],
+    "status": "PASS"
+  }
+]

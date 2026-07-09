@@ -1,0 +1,26 @@
+{
+  "schema": "traveltrust.p2fc_mr12_blocker_watch_baseline.v1",
+  "recorded_at_utc": "2026-06-24T04:57:57.879Z",
+  "locked_strategy": "STRAT-A_PLUS_MR12",
+  "rejected_strategies": [
+    "STRAT-B_WAVE0_FIRST",
+    "STRAT-A_DEFAULT_NAIVE",
+    "STRAT-C_SPLIT_ITINERARIES_STANDALONE"
+  ],
+  "entrypoint": "scripts/ops/p2fc-post-soak-one-shot-execute.sh",
+  "mr_changes": [
+    "MR-01",
+    "MR-02"
+  ],
+  "execution_order": [
+    "TN-P1-010 independent (internal/indexer spine)",
+    "fly rollback snapshot capture",
+    "MR-01: meta-availability-hotfix.patch BEFORE backlog · MR-02: defer itineraries.rs from wave1 deploy surface",
+    "Wave1 tt-api-staging (MR-02 subset — no itineraries hub in first deploy)",
+    "Wave2 tt-web-staging (MR-01 web /meta timeout 130s)",
+    "p2fc-verify-staging-meta-availability.sh --strict (MR-01 REQUEST_TIMEOUT_SECS=120 live)",
+    "run-phase2-deep-release-gate.sh --require-meta-green",
+    "run-phase2-testnet-post-soak-graduation-closure.sh"
+  ],
+  "lock_status": "FROZEN"
+}

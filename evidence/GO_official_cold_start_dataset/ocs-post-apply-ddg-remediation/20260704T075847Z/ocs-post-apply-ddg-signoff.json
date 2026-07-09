@@ -1,0 +1,28 @@
+{
+  "schema": "traveltrust.ocs_post_apply_ddg.signoff.v1",
+  "stamp": "20260704T075847Z",
+  "environment": "staging",
+  "api": "https://tt-api-staging.fly.dev",
+  "prerequisite": "TT_OCS_SURFACE_EXPANSION:VERIFIED",
+  "machine_key": "TT_OCS_POST_APPLY_DDG",
+  "ddg_tiers": [
+    "FALSE_POSITIVE",
+    "EXPECTED_OFFICIAL",
+    "REAL_LEAK"
+  ],
+  "avatar_remediation": {
+    "patched": 10,
+    "total": 10
+  },
+  "ddg_verdict": "PASS",
+  "ddg_blocking": 0,
+  "ddg_advisory": 41,
+  "ocs_ddg_remediation_mode": true,
+  "ocs_state": "evidence/GO_official_cold_start_dataset/ocs-surface-expansion-staging/20260704T073209Z/state.json",
+  "recorded_at": "2026-07-04T07:59:14.853Z",
+  "verdict": "PASS",
+  "machine_keys": {
+    "TT_OCS_POST_APPLY_DDG": "PASS",
+    "TT_OCS_OFFICIAL_CONTENT_BASELINE": "READY"
+  }
+}

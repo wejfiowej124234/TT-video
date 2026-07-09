@@ -1,0 +1,257 @@
+{
+  "schema": "traveltrust.phase12_final_convergence_ledger.v1",
+  "stamp": "20260702T023014Z",
+  "generated_at_utc": "2026-07-02T02:31:14.989Z",
+  "scope": "Phase① Local + Phase② Testnet/Staging",
+  "ssot_only": true,
+  "no_new_audit_dimensions": true,
+  "evidence_refs": {
+    "functional_audit": {
+      "machine": "evidence/GO_admin_platform_40_complete/20260701T180425Z",
+      "staging_walkthrough": "evidence/GO_staging_admin_final_validation_walkthrough/20260702T003523Z",
+      "signoff": "evidence/manual-uat/signoff/PHASE2-ADMIN-FINAL-VALIDATION-SIGNOFF-20260702.md"
+    },
+    "enterprise_capability": {
+      "registry": "registry/enterprise-capability-audit.v1.yaml",
+      "doc": "docs/runbook/TT-ENTERPRISE-CAPABILITY-AUDIT-20260702.md"
+    },
+    "frontend_api_consistency": {
+      "staging_browser": "evidence/GO_frontend_api_consistency_audit/staging_browser_20260702T021003Z",
+      "signoff": "evidence/manual-uat/signoff/FRONTEND-API-CONSISTENCY-AUDIT-SIGNOFF-20260702T021250Z.md"
+    },
+    "display_data_governance": {
+      "local": "evidence/GO_display_data_governance/local_20260702T011832Z",
+      "staging": "evidence/GO_display_data_governance/staging_20260702T011854Z",
+      "signoff": "evidence/GO_display_data_governance/20260702T011941Z/SUMMARY.md"
+    },
+    "business_manual_uat": {
+      "signoff": "evidence/manual-uat/signoff/BUSINESS-MANUAL-UAT-SIGNOFF-20260702T011941Z.md"
+    },
+    "phase1_local": {
+      "site10": "frontend/evidence/GO_local_phase1/site10-p1-slices-recheck.latest.log",
+      "phase1_closed": "evidence/COMPLEXITY_CONVERGENCE/GATE-P1-01/phase1.closed.json"
+    },
+    "phase2_testnet": {
+      "signoff": "evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260701T002252Z.md",
+      "graduation": "evidence/GO_phase2_testnet_graduation/staging-db-direct-query-appendix-20260615T011135Z",
+      "staging_uat": "evidence/staging-uat-six-domains/latest",
+      "alignment": "evidence/enterprise_alignment_audit/20260701T012102Z"
+    }
+  },
+  "cross_review": [
+    {
+      "dimension": "Admin Functional Audit (40/40)",
+      "source": "evidence/GO_admin_platform_40_complete/20260701T180425Z",
+      "status": "PASS",
+      "note": "Machine PASS_MACHINE + registry admin-functional-usability-audit.v1.yaml"
+    },
+    {
+      "dimension": "Phase② Admin Final Validation (26/26)",
+      "source": "evidence/GO_staging_admin_final_validation_walkthrough/20260702T003523Z",
+      "status": "PASS",
+      "note": "Browser walkthrough + API probes"
+    },
+    {
+      "dimension": "Frontend ↔ API Consistency (API strict)",
+      "source": "evidence/GO_frontend_api_consistency_audit/staging_browser_20260702T021003Z",
+      "status": "PASS",
+      "note": "blocking=0 warnings=0"
+    },
+    {
+      "dimension": "Frontend ↔ API Consistency (Browser)",
+      "source": "evidence/GO_frontend_api_consistency_audit/staging_browser_20260702T021003Z",
+      "status": "PASS",
+      "note": "Playwright visual layer staging"
+    },
+    {
+      "dimension": "Display Data Governance",
+      "source": "evidence/GO_display_data_governance/local_20260702T011832Z + evidence/GO_display_data_governance/staging_20260702T011854Z",
+      "status": "PASS",
+      "note": "Local + Staging canonical/test policy"
+    },
+    {
+      "dimension": "Business Manual UAT",
+      "source": "evidence/manual-uat/signoff/BUSINESS-MANUAL-UAT-SIGNOFF-20260702T011941Z.md",
+      "status": "PASS",
+      "note": "Sign-off + API probes (local/staging)"
+    },
+    {
+      "dimension": "Phase① GATE-P1-01",
+      "source": "evidence/COMPLEXITY_CONVERGENCE/GATE-P1-01/phase1.closed.json",
+      "status": "PASS",
+      "note": "25/25 site10 + phase1.closed.json"
+    },
+    {
+      "dimension": "Phase② Testnet Signoff",
+      "source": "evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260701T002252Z.md",
+      "status": "CLOSED",
+      "note": "TESTNET-SIGNOFF + graduation evidence"
+    },
+    {
+      "dimension": "Enterprise Capability (Product track)",
+      "source": "docs/runbook/TT-ENTERPRISE-CAPABILITY-AUDIT-20260702.md",
+      "status": "ENTERPRISE_COMPLETE",
+      "note": "Seven-dimension product track COMPLETE per ECAP 2026-07-02"
+    },
+    {
+      "dimension": "Web3 (Sepolia testnet)",
+      "source": "registry/enterprise-capability-audit.v1.yaml",
+      "status": "COMPLETE_SEPOLIA",
+      "note": "BF-01..06 closed on test/staging; Mainnet = PI3-005"
+    }
+  ],
+  "summary": {
+    "product_defects_open": 0,
+    "production_blockers_phase12_open": 0,
+    "production_blockers_pi3_queued": 6,
+    "expected_differences_confirmed": 6,
+    "enhancements_deferred": 4,
+    "cross_review_pass": true
+  },
+  "ledger": {
+    "product_defects": [],
+    "production_blockers": [
+      {
+        "id": "PB-PI3-001",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Production Database / Backup",
+        "ecap": "ECAP-PI3-001",
+        "disposition": "PI3_MAINLINE",
+        "status": "QUEUED"
+      },
+      {
+        "id": "PB-PI3-002",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Domain / TLS / CDN",
+        "ecap": "ECAP-PI3-002",
+        "disposition": "PI3_MAINLINE",
+        "status": "QUEUED"
+      },
+      {
+        "id": "PB-PI3-003",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Stripe Live",
+        "ecap": "ECAP-PI3-003",
+        "disposition": "PI3_MAINLINE",
+        "status": "QUEUED"
+      },
+      {
+        "id": "PB-PI3-004",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Production Validation (R-002)",
+        "ecap": "ECAP-PI3-004",
+        "disposition": "PI3_MAINLINE",
+        "status": "QUEUED"
+      },
+      {
+        "id": "PB-PI3-005",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Mainnet",
+        "ecap": "ECAP-PI3-005",
+        "disposition": "PI3_MAINLINE",
+        "status": "QUEUED"
+      },
+      {
+        "id": "PB-PI3-006",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Go-Live Checklist",
+        "ecap": "ECAP-PI3-006",
+        "disposition": "PI3_MAINLINE",
+        "status": "QUEUED"
+      }
+    ],
+    "expected_differences": [
+      {
+        "id": "ED-001",
+        "classification": "EXPECTED_DIFFERENCE",
+        "item": "chain_id Local 31337 vs Staging 11155111",
+        "policy": "TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md §4",
+        "disposition": "CONFIRM_DESIGN",
+        "status": "CONFIRMED"
+      },
+      {
+        "id": "ED-002",
+        "classification": "EXPECTED_DIFFERENCE",
+        "item": "Contract addresses Anvil vs Sepolia",
+        "policy": "§4",
+        "disposition": "CONFIRM_DESIGN",
+        "status": "CONFIRMED"
+      },
+      {
+        "id": "ED-003",
+        "classification": "EXPECTED_DIFFERENCE",
+        "item": "API_BASE / WEB_BASE localhost vs *.fly.dev",
+        "policy": "§4",
+        "disposition": "CONFIRM_DESIGN",
+        "status": "CONFIRMED"
+      },
+      {
+        "id": "ED-004",
+        "classification": "EXPECTED_DIFFERENCE",
+        "item": "Git SHA LOCAL_AHEAD_UNDEPLOYED (pre-S5)",
+        "policy": "§4",
+        "disposition": "CONFIRM_DESIGN",
+        "status": "CONFIRMED"
+      },
+      {
+        "id": "ED-005",
+        "classification": "EXPECTED_DIFFERENCE",
+        "item": "E1 TrustGate accounts local-only",
+        "policy": "§4",
+        "disposition": "CONFIRM_DESIGN",
+        "status": "CONFIRMED"
+      },
+      {
+        "id": "ED-006",
+        "classification": "EXPECTED_DIFFERENCE",
+        "item": "Stripe sk_test on staging vs sk_live prod (PI3-003)",
+        "policy": "§4 + PI3-003",
+        "disposition": "CONFIRM_DESIGN",
+        "status": "CONFIRMED"
+      }
+    ],
+    "enhancements": [
+      {
+        "id": "ENH-001",
+        "classification": "ENHANCEMENT",
+        "item": "Official Ops 1.1+ post-GO features",
+        "disposition": "POST_GO_ROADMAP",
+        "status": "DEFERRED"
+      },
+      {
+        "id": "ENH-002",
+        "classification": "ENHANCEMENT",
+        "item": "CDN/HLS full production media pipeline (G7)",
+        "disposition": "PI3_OR_POST_GO",
+        "status": "DEFERRED"
+      },
+      {
+        "id": "ENH-003",
+        "classification": "ENHANCEMENT",
+        "item": "Admin SSO/RBAC production hardening (P8)",
+        "disposition": "PI3_OR_POST_GO",
+        "status": "DEFERRED"
+      },
+      {
+        "id": "ENH-004",
+        "classification": "ENHANCEMENT",
+        "item": "Dedicated prod domain branding",
+        "disposition": "PI3-002",
+        "status": "QUEUED"
+      }
+    ]
+  },
+  "phase_closure": {
+    "phase_1_local": "CLOSED",
+    "phase_2_testnet_staging": "CLOSED",
+    "mainline_switch": "PI3,PRODUCTION_READINESS,MAINNET,PRODUCTION_GO"
+  },
+  "machine_keys": {
+    "TT_PHASE12_FINAL_CONVERGENCE": "CLOSED",
+    "TT_PHASE_1_LOCAL": "CLOSED",
+    "TT_PHASE_2_TESTNET_STAGING": "CLOSED",
+    "TT_PRODUCT_CAPABILITY": "ENTERPRISE_COMPLETE",
+    "TT_CURRENT_MAINLINE": "PI3,PRODUCTION_READINESS,MAINNET,PRODUCTION_GO",
+    "TT_RELEASE_DECISION": "NO_GO"
+  }
+}

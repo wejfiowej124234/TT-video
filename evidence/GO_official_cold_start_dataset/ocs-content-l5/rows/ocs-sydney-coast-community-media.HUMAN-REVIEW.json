@@ -1,0 +1,61 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T151130Z",
+  "filename": "ocs-sydney-coast-community-media.jpg",
+  "chain_id": "sydney-coast",
+  "city": "悉尼",
+  "country_code": "AU",
+  "slot": "community-media",
+  "surface": "Community Media",
+  "copy_label": "邦迪到 Coogee 海岸步道——官方一日徒步与潮汐窗口记录。",
+  "manifest_copy": {
+    "community_post.body_markdown": "邦迪到 Coogee 海岸步道——官方一日徒步与潮汐窗口记录。",
+    "community_post.tags": ["悉尼", "海岸", "官方旅行日志"],
+    "community_post.media_urls": ["/api/v1/uploads/community-posts/ocs-sydney-coast-community-media.jpg"]
+  },
+  "pre_generation_check": { "pass": true, "evidence": "ocs-sydney-coast-community-media.PRE-GENERATION-CHECK.json" },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 218904 bytes · FF D8 · decodable · non-placeholder." },
+    "G2_copy_alignment": { "pass": true, "notes": "步道俯瞰海湾与徒步 body 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "详情环境叙事；非 Row47 Cover/非 Row46 Hero/非 Row43-45。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "悉尼 AU-only · 无他国元素。" },
+    "G5_brand_visual": { "pass": true, "notes": "下午侧光海岸纪实；TravelTrust L5 统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "Community 详情沉浸；非硬广。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰可读。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "九类专项 + Chain Final + 48/60 Milestone 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "Bondi-Coogee 步道语义正确；无水印/Logo/畸形。" },
+    "G10_content_diversity": { "pass": true, "notes": "vs 七城 Community Media 不同。" }
+  },
+  "community_authenticity_review": {
+    "pass": true,
+    "environment_narrative_complement": true,
+    "vs_row47_cover": {
+      "cover": "海滩浪花+泳者剪影 · Feed 缩略 · 夏日明亮 · 水平海面",
+      "media": "步道俯瞰海湾 · 详情沉浸 · 下午侧光 · elevated overlook",
+      "no_duplicate_camera": true,
+      "no_duplicate_subject": true,
+      "no_duplicate_mood": true
+    }
+  },
+  "consumer_experience_review": {
+    "pass": true,
+    "notes": "Cover 第一眼吸引→Media 徒步环境沉浸；用户感知同一海岸日志。"
+  },
+  "brand_consistency_review": { "pass": true, "no_brand_drift": true },
+  "surface_boundary_review": { "pass": true },
+  "visual_sequence_review": {
+    "pass": true,
+    "chain_six_slot_complete": true,
+    "vs_row47": "elevated overlook vs beach wave — 无连续相似"
+  },
+  "destination_experience_review": { "pass": true },
+  "post_generation_technical_check": {
+    "pass": true,
+    "jpeg_decodable": true,
+    "dimensions_640x480": true,
+    "size_gt_16kb": true,
+    "not_placeholder": true
+  },
+  "regression_closed_chains": { "pass": true, "notes": "前 47 行无漂移。" },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

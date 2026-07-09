@@ -154,8 +154,9 @@ pub(crate) async fn pool_ssot_parallel_chain_snapshot(state: &ApiMetaState) -> s
         .as_ref()
         .map(|s| s.trim().to_string())
         .filter(|s| !s.is_empty());
-    let treasury = std::env::var("GOVERNANCE_TREASURY_ADDRESS")
-        .ok()
+    let treasury = cc
+        .treasury_address
+        .as_ref()
         .map(|s| s.trim().to_string())
         .filter(|s| !s.is_empty());
 
@@ -187,7 +188,7 @@ pub(crate) async fn pool_ssot_parallel_chain_snapshot(state: &ApiMetaState) -> s
                         "native_balance_wei_hex": hex,
                         "read_status": "ok",
                         "method": "eth_getBalance(GovernanceTreasury)",
-                        "note": "B110-SSOT-03 parallel observation leg (GOVERNANCE_TREASURY_ADDRESS); not root treasury_pool* SSOT (GOVERNANCE_TREASURY_POOL_BALANCE_CHAIN_SSOT on GET …/governance/pool body)"
+                        "note": "B110-SSOT-03 parallel observation leg (GOVERNANCE_TREASURY_P4CAP_ADDRESS via ChainConfig); not root treasury_pool* SSOT (GOVERNANCE_TREASURY_POOL_BALANCE_CHAIN_SSOT on GET …/governance/pool body)"
                     }),
                     Err(_) => json!(null),
                 }

@@ -1,0 +1,39 @@
+{
+  "schema": "traveltrust.local_staging_runtime_consistency_closure.v1",
+  "closed_at_utc": "2026-06-30T10:12:57Z",
+  "phase": "\u2461 testnet runtime",
+  "verdict": "COMPLETE",
+  "runtime_baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "evidence": {
+    "deep_gate": "evidence/GO_phase2_testnet_20260526/deep-release-gate/20260630T093714Z/",
+    "h1": "evidence/GO_phase2_testnet_graduation/h1-human-acceptance/20260630T094242Z/",
+    "enterprise_audit": "evidence/GO_enterprise_audit/local-staging-consistency/20260630T100900Z/",
+    "alignment_audit": "evidence/GO_enterprise_audit/local-staging-consistency/20260630T100615Z/"
+  },
+  "closure_criteria_met": [
+    "API/Web git_sha match @ baseline",
+    "Deep gate G01-G08 GO @ baseline",
+    "HAT P0=0 P1=0 @ baseline",
+    "TT_LOCAL_FIRST_RUNTIME_DRIFT=NONE",
+    "check-staging-web-alignment 14 PASS"
+  ],
+  "explicitly_not_consistency": [
+    "repository_hygiene",
+    "legacy_tn_p1_009_010",
+    "production_entry_review",
+    "manual_validation"
+  ],
+  "policy": {
+    "no_future_work_as_consistency_fix": true,
+    "phase2_reopen": "FORBIDDEN",
+    "all_remaining_work_under": "phase3_production_entry_review"
+  },
+  "machine_keys": {
+    "TT_LOCAL_STAGING_RUNTIME_CONSISTENCY": "CLOSED",
+    "TT_LOCAL_FIRST_RUNTIME_DRIFT": "NONE",
+    "TT_PHASE2_CLOSED": "YES",
+    "TT_PHASE2_REOPEN": "NO"
+  }
+}

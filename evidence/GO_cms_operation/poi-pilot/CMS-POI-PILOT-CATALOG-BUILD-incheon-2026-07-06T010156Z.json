@@ -1,0 +1,49 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-06T01:01:56Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "KR",
+    "city_zh": "仁川",
+    "matrix_ids": [
+      "PH-KR-058-ATR",
+      "PH-KR-059-ATR",
+      "PH-KR-060-ATR",
+      "PH-KR-061-FOOD",
+      "PH-KR-062-FOOD",
+      "PH-KR-063-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-incheon-port-community-media.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-KR-058-ATR",
+      "poi_id": "5ad5627d-5aca-4621-909a-1ade4b35bf94"
+    },
+    {
+      "matrix_id": "PH-KR-059-ATR",
+      "poi_id": "e0f3b198-1eaf-4d8c-ba9a-c59a7a8a7671"
+    },
+    {
+      "matrix_id": "PH-KR-060-ATR",
+      "poi_id": "255fa186-190f-4030-a7de-65c4440a6e4b"
+    },
+    {
+      "matrix_id": "PH-KR-061-FOOD",
+      "poi_id": "0057d5da-7227-4e9a-b1d6-9f8470b58c4d"
+    },
+    {
+      "matrix_id": "PH-KR-062-FOOD",
+      "poi_id": "70e663e4-d099-4b7c-9f13-0a45cf3045d2"
+    },
+    {
+      "matrix_id": "PH-KR-063-FOOD",
+      "poi_id": "33eaf0fd-24c5-4a1d-a462-550096b0143e"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 6,
+    "expected": 6
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

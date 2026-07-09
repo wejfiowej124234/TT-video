@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.governance_control_matrix.v1",
+  "routes": [
+    "/admin/governance/execution-uat",
+    "/admin/steward-applications"
+  ]
+}

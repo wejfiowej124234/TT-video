@@ -1,0 +1,24 @@
+{
+  "schema": "traveltrust.ocs_content_l5_brand_consistency_review.v1",
+  "stamp_utc": "20260704T155000Z",
+  "rows_total": 60,
+  "TT_CONTENT_BRAND_CONSISTENCY": "PASS",
+  "pass_when": "G5_pass AND G9_pass AND G10_pass AND min_dimension_score_75",
+  "G5_brand_visual": {
+    "score": 92,
+    "pass": true,
+    "weight": 8
+  },
+  "G9_content_authenticity": {
+    "score": 91,
+    "pass": true,
+    "weight": 10
+  },
+  "G10_content_diversity": {
+    "score": 94,
+    "pass": true,
+    "weight": 10
+  },
+  "portfolio_evidence": "OCS-CONTENT-L5-CONTENT-PORTFOLIO-60of60.REVIEW.json",
+  "no_quality_regression": true
+}

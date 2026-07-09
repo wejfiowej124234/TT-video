@@ -1,0 +1,476 @@
+{
+  "schema": "traveltrust.payment_usdc_web3_deep_audit.v1",
+  "recorded_utc": "2026-07-08T07:52:25.702Z",
+  "stamp": "2026-07-08T07-52-20-029Z",
+  "run_dir": "evidence/GO_production_readiness/payment-deep-audit/audit-2026-07-08T07-52-20",
+  "ssot": {
+    "core_rail": "Web3 Escrow (USDC)",
+    "optional_rail": "Stripe Optional Fiat Onboarding (P1)",
+    "prod_forbidden": [
+      "P3_CHAIN_OFF=1 on prod",
+      "mock-pay on prod payment path"
+    ],
+    "architecture": "registry/payment-architecture-classification.v1.yaml"
+  },
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PAYMENT_RAIL_AUDIT_BLOCKERS_PRESENT",
+  "summary": {
+    "blockers_p0": 2,
+    "blockers_p1": 6,
+    "blockers_p2": 1,
+    "total_findings": 11,
+    "prod_mock_pay_ok": true,
+    "g3_02_evidence_pass": true
+  },
+  "dimensions": {
+    "runtime_prod": {
+      "http": 200,
+      "chain_id": "11155111",
+      "deployment_profile": "production",
+      "order_mock_pay_enabled": false,
+      "mock_pay_forbidden_ok": true
+    },
+    "i18n": {
+      "pay_mockPay_disabledNotice_missing": [
+        "frontend/locales/en.ts",
+        "frontend/locales/zh.ts"
+      ]
+    },
+    "order_currency": {
+      "usd_default_hits": [
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 54,
+          "snippet": "publish_hub_guide_hourly_line: \"Hourly {{rate}} USDC\","
+        },
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 237,
+          "snippet": "providerRegister_meta_description: \"Submit business credentials and shop profile; pay onboarding fee; USDC identity stake after approval.\","
+        },
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 297,
+          "snippet": "\"After submit, pay the onboarding fee in USDC to the official address (platform fee; generally non-refundable). After approval, lock ~1000 USDC identity stake ("
+        },
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 514,
+          "snippet": "staking_stake_connect: \"Connect your wallet to stake USDC in the guide pool.\","
+        },
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 523,
+          "snippet": "\"On-chain stake is {{current}} USDC, below minimum {{min}} USDC; add {{shortfall}} USDC more to accept orders.\","
+        },
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 528,
+          "snippet": "\"API records {{amount}} USDC, below minimum {{min}} USDC; add {{shortfall}} USDC more.\","
+        },
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 557,
+          "snippet": "staking_tx_confirm_title_approve: \"Authorize USDC spending\","
+        },
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 575,
+          "snippet": "staking_tx_cta_approve: \"Open wallet · Authorize USDC\","
+        }
+      ]
+    },
+    "chain_branding": {
+      "polygon_hits": [
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 1346,
+          "snippet": "didRank_badge_polygon: \"Polygon\","
+        },
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 5513,
+          "snippet": "order_onChainPill: \"Polygon · USDC · On-chain escrow\","
+        },
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 5526,
+          "snippet": "order_onChain: \"Polygon · On-chain escrow\","
+        },
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 9847,
+          "snippet": "auth_register_error_walletAddress: \"Please enter a valid wallet address (0x, 42 chars, e.g. Polygon)\","
+        },
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 10801,
+          "snippet": "landing_payment_note: \"Pay with USDC on Polygon\","
+        },
+        {
+          "file": "frontend/locales/en.ts",
+          "line": 10899,
+          "snippet": "trust_infra_polygon_title: \"Polygon chain\","
+        },
+        {
+          "file": "frontend/locales/zh.ts",
+          "line": 1286,
+          "snippet": "didRank_badge_polygon: \"Polygon\","
+        },
+        {
+          "file": "frontend/locales/zh.ts",
+          "line": 5393,
+          "snippet": "order_onChainPill: \"Polygon · USDC · 链上托管\","
+        },
+        {
+          "file": "frontend/locales/zh.ts",
+          "line": 5406,
+          "snippet": "order_onChain: \"Polygon · 链上托管\","
+        },
+        {
+          "file": "frontend/locales/zh.ts",
+          "line": 9576,
+          "snippet": "auth_register_error_walletAddress: \"请填写有效的钱包地址（0x 开头，42 位，如 Polygon 地址）\","
+        },
+        {
+          "file": "frontend/locales/zh.ts",
+          "line": 10504,
+          "snippet": "landing_payment_note: \"使用 USDC 在 Polygon 上支付\","
+        },
+        {
+          "file": "frontend/locales/zh.ts",
+          "line": 10599,
+          "snippet": "trust_infra_polygon_title: \"Polygon 链\","
+        }
+      ]
+    },
+    "docs_drift": {
+      "legacy_stripe_as_core": [
+        {
+          "file": "docs/runbook/PRODUCTION-READINESS-MASTER-GAP-REPORT.md",
+          "line": 249,
+          "snippet": "Wave 1.4  Stripe Live"
+        },
+        {
+          "file": "docs/runbook/PRODUCTION-READINESS-REPORT.md",
+          "line": 139,
+          "snippet": "| **BLOCKER** | 无 prod 域 · SEED off · P3_CHAIN_OFF off · Stripe live · Mainnet · R-002 prod · CDN/HLS |"
+        }
+      ]
+    },
+    "registry_sync": {
+      "PRM-WEB3-PAY-B001_planned": true,
+      "g3_02_pass_evidence": true
+    },
+    "api_tests": {
+      "mock_pay_it_hits": [
+        {
+          "file": "crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests/flows_esc.rs",
+          "line": 186,
+          "snippet": "/// **B-ESC-001**：接单 → **`mock-pay`** → **`escrowed`**；**`GET /orders/:id`** 再读一致。**不** cleanup。"
+        },
+        {
+          "file": "crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests/flows_esc.rs",
+          "line": 242,
+          "snippet": "/// **`mock-pay`→`escrowed`** → 向导 **`POST …/confirm-completion`** → **`completed`**（**`GET …/orders/:id`** 再读）。"
+        },
+        {
+          "file": "crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests/mod.rs",
+          "line": 3,
+          "snippet": "//! - **F-010**：向导接单后，在 **`P3_CHAIN_OFF=1`** 且未启用生产 mock 闸下，**`POST /api/v1/orders/:id/mock-pay`** → **`escrowed`**。"
+        },
+        {
+          "file": "crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests/tests_itn_esc_stack_a.rs",
+          "line": 44,
+          "snippet": "/// **93 · B-ESC-001** → **§8.2 · F-010**：**`mock-pay`**→**`escrowed`**（**`router::app`**）。"
+        },
+        {
+          "file": "crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests.rs",
+          "line": 3,
+          "snippet": "//! - **F-010**：向导接单后，在 **`P3_CHAIN_OFF=1`** 且未启用生产 mock 闸下，**`POST /api/v1/orders/:id/mock-pay`** → **`escrowed`**。"
+        },
+        {
+          "file": "crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests.rs",
+          "line": 359,
+          "snippet": "/// **B-ESC-001**：接单 → **`mock-pay`** → **`escrowed`**；**`GET /orders/:id`** 再读一致。**不** cleanup。"
+        },
+        {
+          "file": "crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests.rs",
+          "line": 415,
+          "snippet": "/// **`mock-pay`→`escrowed`** → 向导 **`POST …/confirm-completion`** → **`completed`**（**`GET …/orders/:id`** 再读）。"
+        },
+        {
+          "file": "crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests.rs",
+          "line": 1071,
+          "snippet": "/// **93 · B-ESC-001** → **§8.2 · F-010**：**`mock-pay`**→**`escrowed`**（**`router::app`**）。"
+        }
+      ]
+    },
+    "e2e": {
+      "mock_pay_specs": 144,
+      "sample": [
+        {
+          "file": "frontend/e2e/53-main-path.spec.ts",
+          "line": 5,
+          "snippet": "* 完整主路径（登录→创建行程→抢单→双边确认→mock-pay→评分）需后端 + 测试账号，见 53-E2E 文档。"
+        },
+        {
+          "file": "frontend/e2e/93-matrix-path-f1-f4.spec.ts",
+          "line": 9,
+          "snippet": "* 依赖：`traveltrust-api` + Postgres；**mock-pay 段**另须 **`P3_CHAIN_OFF=1`**。Playwright **setup-meta-chain** 在本地无合约时可设 **`PLAYWRIGHT_RELAX_META_CHAIN_GUARD=1`**。"
+        },
+        {
+          "file": "frontend/e2e/93-matrix-path-f1-f4.spec.ts",
+          "line": 53,
+          "snippet": "/** 全段补口：93 F1 要求「注册 **或** 登录」— 本文件在 mock-pay 主用例外单独覆盖 **注册 UI**。 */"
+        },
+        {
+          "file": "frontend/e2e/93-matrix-path-f1-f4.spec.ts",
+          "line": 91,
+          "snippet": "tag: \"@e2e-chain-off-mock-pay\","
+        },
+        {
+          "file": "frontend/e2e/93-matrix-path-f1-f4.spec.ts",
+          "line": 93,
+          "snippet": "test(\"F1 登录页 → F2 市场 → F3 托管页（已 mock-pay）→ F4 治理\", async ({ page, request }) => {"
+        },
+        {
+          "file": "frontend/e2e/93-matrix-path-f1-f4.spec.ts",
+          "line": 144,
+          "snippet": "const payRes = await request.post(`${API_BASE}/api/v1/orders/${orderId}/mock-pay`, {"
+        },
+        {
+          "file": "frontend/e2e/b463-browser-reviews-contract.spec.ts",
+          "line": 3,
+          "snippet": "* 依赖全栈：`SEED_TEST_ACCOUNTS`、`P3_CHAIN_OFF`（mock-pay），与 Epic F 同源 API 前置链。"
+        },
+        {
+          "file": "frontend/e2e/b463-browser-reviews-contract.spec.ts",
+          "line": 45,
+          "snippet": "/** chain_off：下单 → 接单 → mock-pay → confirm-completion → completed（资金终态后可链下评价） */"
+        }
+      ]
+    },
+    "dev_defaults": {
+      "force_chain_off": [
+        {
+          "file": "scripts/dev/start-api-with-seed.bat",
+          "line": 764,
+          "snippet": "echo     Local chain-off: force P3_CHAIN_OFF=1 + TRAVELTRUST_PUBLIC_CATALOG_SURFACE=1 [overrides .env TT ANVIL P3_CHAIN_OFF=0]"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed.bat",
+          "line": 766,
+          "snippet": "set \"TT_API_CHAIN_OFF_ENV=set P3_CHAIN_OFF=1 ^&^& !TT_CATALOG_ENV!\""
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 36,
+          "snippet": "| `scripts\\start-api-with-seed.bat` | 全栈默认仍 **mock-pay**（`P3_CHAIN_OFF=1`）；chain-on 时 Step 5 **不**覆盖根 `.env` 的 `P3_CHAIN_OFF=0` |"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 288,
+          "snippet": "| **③ 确认终版/付款** | 已绑向导后可更换（`PATCH` reassign）→ 确认方案 | 向导接单 → `/pay?orderId=`（本地须 **`P3_CHAIN_OFF=1`**） |"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 294,
+          "snippet": "**流程**：游客登录 → **①** 创建行程（无向导）→ 保存发布 → **②** Escrow「请选择向导」/ 市场 `bindGuideToOrder` → `PATCH` 绑定（可 **更换向导** reassign）→ **③** **确认最终方案** → 向导 **接单** 后 `/pay?orderId"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 299,
+          "snippet": "| `TRAVELTRUST_CHAIN_ON=1` | Step 5 **不**强制 `P3_CHAIN_OFF=1`；启用 Anvil align（Step **3b4**）+ forge ABI verify（**1b2**）+ Step **6c1** env↔meta；`dotenv` 读根 `.env` |"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 393,
+          "snippet": "| **Step 5** | 本地 **强制 `P3_CHAIN_OFF=1`** + **`TRAVELTRUST_PUBLIC_CATALOG_SURFACE=1`**（覆盖 `.env` Anvil 块里的 `P3_CHAIN_OFF=0`）；链上 E2E 用 **`TRAVELTRUST_CHAIN_ON=1`"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 458,
+          "snippet": "| **公众 catalog 过滤（企业级 · ①）** | **`TRAVELTRUST_PUBLIC_CATALOG_SURFACE=1`**（或 **`P3_CHAIN_OFF=1`** 默认开）：`GET /discover/orders` · `GET /guides`（含 `:id`）· `GET /mar"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 462,
+          "snippet": "| **默认全栈** | 未设时 **`P3_CHAIN_OFF=1`** → 公众读面过滤 **默认开**；验全链烟测仍用默认启动（可 `=0` 看全量） |"
+        },
+        {
+          "file": "scripts/dev/start-api-with-seed-README.md",
+          "line": 586,
+          "snippet": "| `TRAVELTRUST_MARKET_PUBLIC_SURFACE=1` | API 过滤内部向导 / 烟测 discover 行（**`P3_CHAIN_OFF=1` 且未设时默认等同**） |"
+        }
+      ]
+    },
+    "onboarding_stripe": {
+      "classification": "P1_FUTURE_FIAT_ONRAMP",
+      "note": "MeOnboarding Stripe fallback OK when USDC env unset; admin Stripe ledger = ops Phase 01"
+    },
+    "ssot_2026_07_08": {
+      "files_present": true,
+      "core_rail": "Web3 Escrow (USDC)"
+    }
+  },
+  "blockers": [
+    {
+      "priority": "P1",
+      "id": "PAY-AUD-P1-001",
+      "dimension": "UI/UX · 文案",
+      "title": "Missing locale key pay_mockPay_disabledNotice (broken /pay when mock-pay off)",
+      "paths": [
+        "frontend/app/pay/PayPagePrimaryCardMockPaySurfaces.tsx",
+        "frontend/locales/en.ts",
+        "frontend/locales/zh.ts"
+      ],
+      "fix": "Add en/zh strings directing users to escrow approve+deposit wallet flow",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P1",
+      "id": "PAY-AUD-P1-002",
+      "dimension": "订单 · UI/UX",
+      "title": "New order flow defaults to USD fiat label vs USDC settlement SSOT",
+      "paths": [
+        "frontend/locales/en.ts",
+        "frontend/locales/en.ts",
+        "frontend/locales/en.ts",
+        "frontend/locales/en.ts",
+        "frontend/locales/en.ts"
+      ],
+      "fix": "Default order display/settlement currency to USDC; align with defaultSettlementCurrency.ts",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P1",
+      "id": "PAY-AUD-P1-003",
+      "dimension": "文案 · UI/UX",
+      "title": "Hardcoded Polygon chain branding on Sepolia production scope",
+      "paths": [
+        "frontend/locales/en.ts",
+        "frontend/locales/zh.ts"
+      ],
+      "fix": "Drive chain label from GET /meta chain_id or neutral \"on-chain USDC escrow\"",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P0",
+      "id": "PAY-AUD-P0-002",
+      "dimension": "配置 · 测试证据 · SSOT",
+      "title": "Legacy runbook/spec still lists Stripe Live as Production BLOCKER or core payment",
+      "paths": [
+        "docs/runbook/PRODUCTION-READINESS-MASTER-GAP-REPORT.md"
+      ],
+      "fix": "Demote to P1 optional onboarding; reference payment-architecture-classification.v1.yaml",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P0",
+      "id": "PAY-AUD-P0-002",
+      "dimension": "配置 · 测试证据 · SSOT",
+      "title": "Legacy runbook/spec still lists Stripe Live as Production BLOCKER or core payment",
+      "paths": [
+        "docs/runbook/PRODUCTION-READINESS-REPORT.md"
+      ],
+      "fix": "Demote to P1 optional onboarding; reference payment-architecture-classification.v1.yaml",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P1",
+      "id": "PAY-AUD-P1-004",
+      "dimension": "配置 · 测试证据",
+      "title": "Matrix PRM-WEB3-PAY-B001 still PLANNED while G3-02 gate evidence shows PASS",
+      "paths": [
+        "registry/production-readiness-master-matrix.v1.yaml"
+      ],
+      "fix": "Close PRM-WEB3-PAY-B001 → CLOSED; sync machine keys in matrix v10",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P2",
+      "id": "PAY-AUD-P2-001",
+      "dimension": "配置",
+      "title": "PRM-STR-B001 tagged g3_domain G3-02 (Web3 payment domain) though Stripe is onboarding-only",
+      "paths": [
+        "registry/production-readiness-master-matrix.v1.yaml"
+      ],
+      "fix": "Move to onboarding extension domain; keep blocks_production_go: false",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P1",
+      "id": "PAY-AUD-P1-005",
+      "dimension": "测试证据",
+      "title": "HAT six-role matrix records trip pay acceptance via mock-pay not USDC escrow",
+      "paths": [
+        "registry/hat-six-role-matrix.v1.yaml"
+      ],
+      "fix": "Split pay cell: trip=USDC escrow (②+) vs mock-pay (① only) vs onboarding=Stripe/USDC",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P1",
+      "id": "PAY-AUD-P1-006",
+      "dimension": "托管 · 测试证据",
+      "title": "API integration tests document acquisition/order payment spine as mock-pay → escrowed",
+      "paths": [
+        "crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests/flows_esc.rs",
+        "crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests/mod.rs",
+        "crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests/tests_itn_esc_stack_a.rs",
+        "crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests.rs"
+      ],
+      "fix": "Add parallel USDC deposit IT path; label mock-pay tests as chain_off only",
+      "status": "OPEN"
+    },
+    {
+      "priority": "P2",
+      "id": "PAY-AUD-P2-002",
+      "dimension": "测试证据",
+      "title": "144 E2E references use mock-pay as payment spine (acceptable ①/② sandbox if tagged)",
+      "paths": [
+        "frontend/e2e/53-main-path.spec.ts",
+        "frontend/e2e/93-matrix-path-f1-f4.spec.ts"
+      ],
+      "fix": "Tag @e2e-chain-off-mock-pay vs @e2e-usdc-escrow; prod smoke must use wallet deposit only",
+      "status": "ACCEPTED_SANDBOX"
+    },
+    {
+      "priority": "P2",
+      "id": "PAY-AUD-P2-003",
+      "dimension": "配置 · 钱包",
+      "title": "Local seed stack forces P3_CHAIN_OFF=1 — de-facto mock-pay as default dev payment rail",
+      "paths": [
+        "scripts/dev/start-api-with-seed.bat",
+        "scripts/dev/start-api-with-seed.bat",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md",
+        "scripts/dev/start-api-with-seed-README.md"
+      ],
+      "fix": "Document USDC chain-on dev path; mock-pay = debug rail only (honest-boundary banner)",
+      "status": "ACCEPTED_DEV"
+    }
+  ],
+  "scan_roots": [
+    "frontend/app/pay",
+    "frontend/app/escrow",
+    "frontend/components/escrow",
+    "frontend/locales",
+    "frontend/e2e",
+    "crates/api/src/routes/orders",
+    "registry",
+    "docs/runbook",
+    "scripts/dev",
+    "deploy/fly"
+  ],
+  "discipline": {
+    "business_code_modified": false,
+    "audit_only": true
+  }
+}

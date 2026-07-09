@@ -1,0 +1,152 @@
+{
+  "schema": "traveltrust.p2fc_deploy_wave_rollback_plan.v1",
+  "generated_at_utc": "2026-06-24T05:25:56Z",
+  "freeze_sha_at_soak": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "local_HEAD": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "backlog_active": {
+    "schema": "traveltrust.local_deploy_backlog_active.v1",
+    "frozen_at_utc": "2026-06-24T01:38:52Z",
+    "stamp": "20260624T013808Z",
+    "dirty_path_count": 354,
+    "local_HEAD_at_freeze": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+    "staging_runtime_git_sha_at_freeze": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+    "apply_after": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+    "apply_script": "scripts/ops/p2fc-post-soak-deploy-backlog-and-graduate.sh",
+    "artifacts": {
+      "porcelain": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\20260624T013808Z\\dirty-paths.porcelain",
+      "diff_stat": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\20260624T013808Z\\diff-stat.txt",
+      "patch": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\20260624T013808Z\\deploy-backlog.patch"
+    },
+    "clean_summary": {
+      "dirty_before": 354,
+      "dirty_after": 104
+    },
+    "policy": "soak_inflight_no_staging_redeploy_until_completed",
+    "meta_availability_hotfix_patch": "evidence/GO_phase2_deploy_backlog/meta-availability-hotfix.patch",
+    "clean_note": "tracked backlog in deploy-backlog.patch (250 files); untracked ?? paths removed at clean — re-archive script now copies untracked for future runs"
+  },
+  "waves": [
+    {
+      "wave": 0,
+      "id": "meta-hotfix",
+      "apply": [
+        "meta-availability-hotfix.patch"
+      ],
+      "deploy": [],
+      "gates": [
+        "api/meta/build=200",
+        "optional api/meta after timeout bump"
+      ],
+      "rollback": "git apply -R meta-availability-hotfix.patch · no fly change until wave1",
+      "blocks": [
+        "G02",
+        "Graduation /meta"
+      ]
+    },
+    {
+      "wave": 1,
+      "id": "api-runtime",
+      "apply": [
+        "deploy-backlog.patch (crates/api/*)"
+      ],
+      "deploy": [
+        "tt-api-staging via phase2-staging-fly-deploy-and-sync.sh"
+      ],
+      "gates": [
+        "/health=200",
+        "/meta/build SHA=HEAD",
+        "REQUEST_TIMEOUT_SECS=120 in runtime"
+      ],
+      "rollback": "fly deploy --image <snapshot.apps.tt-api-staging.previous_image>",
+      "blocks": [
+        "TN-P1-010 compound read",
+        "indexer internal"
+      ]
+    },
+    {
+      "wave": 2,
+      "id": "web-runtime",
+      "apply": [
+        "deploy-backlog.patch (frontend/app|components)"
+      ],
+      "deploy": [
+        "tt-web-staging via deploy-tt-web-staging.sh"
+      ],
+      "gates": [
+        "web/meta=200",
+        "web/api SHA match HEAD"
+      ],
+      "rollback": "fly deploy --image <snapshot.apps.tt-web-staging.previous_image>",
+      "blocks": [
+        "G01 web_meta_rewrite_200"
+      ]
+    }
+  ],
+  "execution_order": [
+    {
+      "step": 1,
+      "track": "execution",
+      "action": "TN-P1-010 independent (internal spine · pre-deploy staging OK)"
+    },
+    {
+      "step": 2,
+      "track": "deploy",
+      "action": "capture fly rollback snapshot (read-only)"
+    },
+    {
+      "step": 3,
+      "track": "deploy",
+      "action": "apply backlog + hotfix patches to working tree"
+    },
+    {
+      "step": 4,
+      "track": "deploy",
+      "action": "Wave1 deploy tt-api-staging"
+    },
+    {
+      "step": 5,
+      "track": "deploy",
+      "action": "Wave2 deploy tt-web-staging"
+    },
+    {
+      "step": 6,
+      "track": "acceptance",
+      "action": "p2fc-verify-staging-meta-availability.sh --strict"
+    },
+    {
+      "step": 7,
+      "track": "acceptance",
+      "action": "Deep Gate G02 --require-meta-green"
+    },
+    {
+      "step": 8,
+      "track": "acceptance",
+      "action": "run-phase2-testnet-post-soak-graduation-closure.sh"
+    }
+  ],
+  "rollback_playbook": {
+    "api_failure_after_wave1": "fly deploy --image $(jq -r '.apps.\"tt-api-staging\".previous_image' fly-rollback-snapshot.json) -a tt-api-staging",
+    "web_failure_after_wave2": "fly deploy --image $(jq -r '.apps.\"tt-web-staging\".previous_image' fly-rollback-snapshot.json) -a tt-web-staging",
+    "patch_revert": "git apply -R evidence/GO_phase2_deploy_backlog/<stamp>/deploy-backlog.patch",
+    "meta_hotfix_revert": "git apply -R evidence/GO_phase2_deploy_backlog/meta-availability-hotfix.patch",
+    "reference_drill": "scripts/dev/run-phase3-fly-release-rollback-drill.sh --dry-run"
+  },
+  "fly_snapshot": {
+    "schema": "traveltrust.p2fc_fly_rollback_snapshot.v1",
+    "recorded_at_utc": "2026-06-24T05:25:52Z",
+    "apps": {
+      "tt-api-staging": {
+        "current_image": "registry.fly.io/tt-api-staging:deployment-01KVTGXEPBA7N4QWN7D73HH3ZA",
+        "previous_image": "registry.fly.io/tt-api-staging:deployment-01KV9MKPWVZN5WM6GAM5YS8XR3",
+        "version": 92
+      },
+      "tt-web-staging": {
+        "current_image": "registry.fly.io/tt-web-staging:deployment-01KVTHEXXFZF7F6DJJNJRXZEAG",
+        "previous_image": "registry.fly.io/tt-web-staging:deployment-01KV9MZN5GSP4FDMQBSD5TA5RS",
+        "version": 29
+      }
+    }
+  },
+  "order_issues": [],
+  "verdict": "PASS"
+}

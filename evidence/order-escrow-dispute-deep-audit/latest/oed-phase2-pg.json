@@ -1,0 +1,44 @@
+{
+  "artifact": "oed-phase2-pg-consistency",
+  "generated_at": "2026-06-08T09:33:20.182617+00:00",
+  "database_configured": true,
+  "pg_consistency_matrix": [
+    {
+      "probe_id": "pg.happy_order_status",
+      "check": "orders.status",
+      "target": "",
+      "pg_value": "\u2014",
+      "api_value": "\u2014",
+      "expected": "completed",
+      "status": "SKIP",
+      "notes": "trace missing"
+    },
+    {
+      "probe_id": "pg.dispute_order_status",
+      "check": "orders.status",
+      "target": "",
+      "pg_value": "\u2014",
+      "api_value": "\u2014",
+      "expected": "partially_refunded|refunded|slashed",
+      "status": "SKIP",
+      "notes": "trace missing"
+    },
+    {
+      "probe_id": "pg.auth_audit_events_readable",
+      "check": "auth_audit_events",
+      "target": "public.auth_audit_events",
+      "pg_value": "0",
+      "api_value": "\u2014",
+      "expected": "table readable",
+      "status": "PASS",
+      "notes": "\u76f4\u67e5\u6210\u529f\uff08\u884c\u6570\u4e0d\u9650\uff09"
+    }
+  ],
+  "issues": [],
+  "summary": {
+    "pg_pass": 1,
+    "pg_total": 1,
+    "p0": 0,
+    "p1": 0
+  }
+}

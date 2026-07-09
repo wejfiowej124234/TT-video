@@ -1,0 +1,65 @@
+# Enterprise Final Acceptance · SSOT (capstone synthesis)
+# Runbook: docs/runbook/TT-ENTERPRISE-FINAL-ACCEPTANCE-AUDIT.md
+
+schema: traveltrust.enterprise_final_acceptance.v1
+version: 1
+effective_utc: "2026-07-02"
+
+machine_keys:
+  TT_ENTERPRISE_FINAL_ACCEPTANCE: CLOSED
+  TT_FULL_TEST_ACCOUNT_E2E: CLOSED
+  TT_PRODUCT_CAPABILITY: ENTERPRISE_COMPLETE
+  TT_RELEASE_DECISION: NO_GO
+
+rerun_policy:
+  status: CLOSED_UNLESS_TOUCHED
+  evidence_reuse: registry/evidence-reuse-policy.v1.yaml#gates/RELEASE_CANDIDATE
+
+placement:
+  after: production_release_review
+  before: PI3_product_signoff
+  one_time_capstone: true
+  not_a_new_recurring_audit: true
+  respects_product_development_freeze: true
+
+scripts:
+  audit: scripts/dev/run-enterprise-final-acceptance-audit.sh
+  ledger: scripts/dev/gen-enterprise-acceptance-ledger.cjs
+
+evidence_root: evidence/GO_enterprise_final_acceptance
+
+latest_run:
+  stamp: "20260702T144513Z"
+  ledger: evidence/GO_enterprise_final_acceptance/20260702T144513Z/enterprise-acceptance-ledger.json
+  signoff: evidence/manual-uat/signoff/ENTERPRISE-FINAL-ACCEPTANCE-SIGNOFF-20260702T144513Z.md
+  staging_web_deploy: deployment-01KWH932M1RT388ZQ6QHQ8SK2A
+  staging_api_deploy: deployment-01KWH6XESXJG093YWFHRQC5NED
+  release_candidate_signoff: evidence/manual-uat/signoff/RELEASE-CANDIDATE-SIGNOFF-20260702T144513Z.md
+
+exit_criteria:
+  product_defects_open: 0
+  test_automation_issues_open: 0
+  all_domains_machine_pass: true
+  production_blockers_pi3_queued: true
+
+issue_classifications:
+  - PRODUCT_DEFECT
+  - TEST_AUTOMATION_ISSUE
+  - PRODUCTION_BLOCKER
+  - EXPECTED_DIFFERENCE
+  - ENHANCEMENT
+
+synthesizes:
+  - registry/phase12-final-convergence.v1.yaml
+  - registry/production-release-review.v1.yaml
+  - registry/frontend-api-consistency-audit.v1.yaml
+  - registry/full-test-account-e2e.v1.yaml
+
+supplementary_full_test_account_e2e:
+  status: CLOSED
+  stamp: "20260702T114733Z"
+  evidence: evidence/GO_full_test_account_e2e/20260702T114733Z/
+  signoff: evidence/manual-uat/signoff/FTAE-SIGNOFF-20260702T114733Z.md
+  accounts_pass: 6
+  product_defects_open: 0
+  test_automation_issues_open: 0

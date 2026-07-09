@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.p2ha_probe.v1",
+  "phase": "staging",
+  "recorded_at": "2026-06-30T03:17:51.545395+00:00",
+  "targets": {
+    "web": "https://tt-web-staging.fly.dev",
+    "api": "https://tt-api-staging.fly.dev"
+  },
+  "meta_git_sha": "fc9266ce94f18810420e720bb933946c086ce909",
+  "verdict": "PASS",
+  "roles": [
+    {
+      "role": "旅行者",
+      "verdict": "PASS",
+      "notes": "0 api fails"
+    },
+    {
+      "role": "向导",
+      "verdict": "PASS",
+      "notes": "0 api fails"
+    },
+    {
+      "role": "管理员",
+      "verdict": "PASS",
+      "notes": "0 api fails"
+    },
+    {
+      "role": "收购/运营",
+      "verdict": "PASS",
+      "notes": "0 api fails"
+    }
+  ],
+  "issues": [],
+  "summary": {
+    "p0": 0,
+    "p1": 0
+  }
+}

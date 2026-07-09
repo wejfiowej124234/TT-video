@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T131530Z",
+  "row": 14,
+  "filename": "ocs-seoul-food-provider-cover.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "provider_cover_comparison": {
+    "tokyo-photo": "台场半日旅拍 · 情侣外景摄影服务",
+    "kyoto-culture": "私享茶室 · 90 分钟茶道包场",
+    "seoul-food": "夜市 pojangmacha · 4 小时 5 站美食团长桌/排队",
+    "distinct_commercial_scenes": true,
+    "distinct_business_models": true
+  },
+  "homogenization_risk": false,
+  "regression_tokyo_kyoto": { "pass": true, "notes": "Tokyo/Kyoto provider covers unchanged; no brand drift." }
+}

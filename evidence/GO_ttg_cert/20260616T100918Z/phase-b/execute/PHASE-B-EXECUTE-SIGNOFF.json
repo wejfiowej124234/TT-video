@@ -1,0 +1,117 @@
+{
+  "acceptance_id": "TT_GOVERNANCE_CERT_07_EXECUTE",
+  "signoff_kind": "OPS-SIGNOFF",
+  "cert": 7,
+  "stamp_utc": "20260616T100918Z",
+  "signer": "Sebastian Ward",
+  "signed_at_utc": "2026-07-08T08:56:06Z",
+  "baseline_ssot": "docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md",
+  "hat_r1_execute_evidence": "evidence/GO_hat_r1_sepolia/20260616T063612Z/step-07-execute/",
+  "hat_r1_queue_evidence": "evidence/GO_hat_r1_sepolia/20260616T063612Z/step-06-queue/",
+  "four_ledger_evidence": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z",
+  "gorp_ssot": "docs/runbook/TTG-GOVERNANCE-OPERATIONAL-READINESS-PROGRAM.md",
+  "mtm_ssot": "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+  "mtm_ids": [
+    "CHK-CORE-07",
+    "CHK-FE-08",
+    "CHK-SC-01",
+    "CHK-SC-02",
+    "CHK-DR-01"
+  ],
+  "target_tier": "OPS_DONE",
+  "execute_chain": {
+    "queue_tx": "0xcfd052923a0188b732c505520d9c99773697e4e7b57181d55ce28b416776d2a2",
+    "execute_tx": "0x5ebb4046c1f00fb466d830d098ef0e272e55d0b466f6acad10f901ef3525f1ef",
+    "post_execute_state": "6",
+    "execute_earliest_unix": 1781765044,
+    "timelock_elapsed": true,
+    "no_force_execute": true
+  },
+  "verifications": {
+    "full_chain": "Governor queue → 48h delay → execute(uint256)",
+    "event_logs": "step-07 receipt + events archived",
+    "state_migration": "proposal state → 5 Executed",
+    "four_ledger_mapping": "V2_TL globalTreasury four-ledger PASS",
+    "recovery_paths": "GORP §3.1 Execute fail · §3.5 Timelock · CHK-DR-01 cognitive",
+    "post_execute_consistency": "on-chain state + hat-r1 db snapshot"
+  },
+  "roles_walked": [
+    "Timelock Executor (public)",
+    "Governor Queue→Execute",
+    "On-call · GORP §3.1"
+  ],
+  "recordings": [
+    "C-EX-01-governor-queue-execute.mp4",
+    "C-EX-02-state-four-ledger-consistency.mp4",
+    "C-EX-03-recovery-execute-ui.mp4",
+    "CERT7-EXECUTE-CHAIN-EVIDENCE.mp4"
+  ],
+  "screenshots": [
+    "role-execute-recovery.png",
+    "role-execute-state-consistency.png",
+    "role-execute-tx-receipt.png",
+    "role-execute-ui.png",
+    "role-four-ledger-mapping.png",
+    "role-governor-lifecycle.png"
+  ],
+  "machine_checks_verdict": "PASS",
+  "machine_checks": {
+    "cert6_prerequisite": {
+      "ok": true,
+      "path": "evidence/GO_ttg_cert/20260616T100918Z/phase-b/unpause/PHASE-B-UNPAUSE-SIGNOFF.json"
+    },
+    "timelock_elapsed": {
+      "ok": true,
+      "execute_earliest_unix": 1781765044,
+      "timelock_elapsed": true,
+      "remaining_seconds": 0,
+      "no_force_execute_env": true
+    },
+    "queue_chain": {
+      "ok": true,
+      "proposal_id": "1",
+      "queue_tx": "0xcfd052923a0188b732c505520d9c99773697e4e7b57181d55ce28b416776d2a2",
+      "timelock_delay_seconds": "172800",
+      "receipt_archived": true
+    },
+    "execute_evidence": {
+      "ok": true,
+      "execute_tx": "0x5ebb4046c1f00fb466d830d098ef0e272e55d0b466f6acad10f901ef3525f1ef",
+      "receipt_count": 1,
+      "events_count": 0,
+      "post_execute_state": "6",
+      "want_state": "6"
+    },
+    "four_ledger_mapping": {
+      "ok": true,
+      "verdict": "PASS",
+      "global_treasury_timelock_match": true,
+      "v2_timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    },
+    "gorp_execute_recovery": {
+      "ok": true,
+      "sections": {
+        "execute_fail_3_1": true,
+        "too_early": true,
+        "forbid_force": true,
+        "timelock_3_5": true,
+        "gorp_07": true,
+        "governor_sc": true
+      }
+    },
+    "live_wallet_gate": {
+      "ok": true,
+      "HAT_R1_LIVE_WALLET_OK": "1",
+      "HAT_R1_PHASE_B_PAUSED": "0",
+      "note": "Required at finalize; execute evidence proves wallet was used"
+    }
+  },
+  "verdict": "PASS",
+  "honest_boundary": "Cert #7 requires on-chain execute evidence ≠ Cert #8 Spend ≠ ③ GO",
+  "forbidden": [
+    "new features",
+    "govfreeze re-audit",
+    "ETA bypass",
+    "HAT_R1_FORCE_EXECUTE"
+  ]
+}

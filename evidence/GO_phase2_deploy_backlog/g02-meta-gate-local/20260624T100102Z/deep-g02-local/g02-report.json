@@ -1,0 +1,98 @@
+{
+  "schema": "traveltrust.g02_meta_contract_gate.v1",
+  "generated_at": "2026-06-24T10:02:33.595Z",
+  "api_base": "http://127.0.0.1:8080",
+  "web_base": "http://localhost:3012",
+  "gate": {
+    "id": "G02_META_CONTRACT",
+    "title": "/meta contract (staging subset)",
+    "staging_only": true,
+    "verdict": "PASS",
+    "checks": [
+      {
+        "gate_id": "G02_META_CONTRACT",
+        "check_id": "service",
+        "title": "meta.service = traveltrust-api",
+        "verdict": "PASS",
+        "severity": "P0",
+        "detail": "traveltrust-api"
+      },
+      {
+        "gate_id": "G02_META_CONTRACT",
+        "check_id": "build_top_keys",
+        "title": "build.build_top_keys length = 5 (730)",
+        "verdict": "PASS",
+        "severity": "P0",
+        "detail": "5"
+      },
+      {
+        "gate_id": "G02_META_CONTRACT",
+        "check_id": "build_git_sha",
+        "title": "build.git_sha is non-empty string",
+        "verdict": "PASS",
+        "severity": "P0",
+        "detail": "unknown"
+      },
+      {
+        "gate_id": "G02_META_CONTRACT",
+        "check_id": "chain_id",
+        "title": "chain.chain_id = 11155111 (Sepolia) or local Anvil when G02_ALLOW_LOCAL_CHAIN_ID=1",
+        "verdict": "PASS",
+        "severity": "P0",
+        "detail": "31337"
+      },
+      {
+        "gate_id": "G02_META_CONTRACT",
+        "check_id": "dual_write",
+        "title": "dual_write.failure_policy valid + strict_db_write_any boolean",
+        "verdict": "PASS",
+        "severity": "P0",
+        "detail": "policy=log_only strict_db_write_any=False"
+      },
+      {
+        "gate_id": "G02_META_CONTRACT",
+        "check_id": "indexer_checkpoint",
+        "title": "indexer.checkpoint source + numeric block/log_index",
+        "verdict": "PASS",
+        "severity": "P0",
+        "detail": "{\"block_number\": 0, \"log_index\": 0, \"source\": \"runtime\", \"rule\": \"\\u4e0e orders chain_sync.checkpoint\\u3001metrics trave"
+      },
+      {
+        "gate_id": "G02_META_CONTRACT",
+        "check_id": "meta_top_keys_728",
+        "title": "meta_top_keys length = 37",
+        "verdict": "PASS",
+        "severity": "P0",
+        "detail": "37"
+      },
+      {
+        "gate_id": "G02_META_CONTRACT",
+        "check_id": "database_top_keys_760",
+        "title": "database.database_top_keys length = 4",
+        "verdict": "PASS",
+        "severity": "P0",
+        "detail": "['connected', 'rule', 'database_top_keys', 'database_top_keys_contract_760']"
+      },
+      {
+        "gate_id": "G02_META_CONTRACT",
+        "check_id": "governance_top_keys_807",
+        "title": "governance.governance_top_keys length = 10",
+        "verdict": "PASS",
+        "severity": "P0",
+        "detail": "10"
+      },
+      {
+        "gate_id": "G02_META_CONTRACT",
+        "check_id": "product_roles_748",
+        "title": "product_roles.users_role_stored includes guide/provider",
+        "verdict": "PASS",
+        "severity": "P0",
+        "detail": "['admin', 'arbitrator', 'guide', 'provider', 'region_steward', 'super_admin', 'tourist', 'traveler']"
+      }
+    ],
+    "notes": "",
+    "p0_fail": 0,
+    "p1_fail": 0
+  },
+  "verdict": "PASS"
+}

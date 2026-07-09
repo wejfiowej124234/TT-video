@@ -1,0 +1,120 @@
+{
+  "schema": "traveltrust.project_dashboard.v3",
+  "title": "TravelTrust Project Dashboard",
+  "recorded_utc": "2026-07-08T13:57:37.154Z",
+  "discipline": "Status-only — no progress percentages. Update after each Cert/UAT/evidence item.",
+  "layers": {
+    "layer_1_executive": {
+      "phase_1": {
+        "id": 1,
+        "name": "Development",
+        "status": "PASS"
+      },
+      "phase_2": {
+        "id": 2,
+        "name": "Production Validation",
+        "status": "IN_PROGRESS"
+      },
+      "phase_3_prerequisite_review": {
+        "id": "3PRE",
+        "name": "Phase ③ Deployment Prerequisite Review",
+        "short": "Prerequisite Review",
+        "status": "NOT_STARTED",
+        "pass": false,
+        "reviews": "10/10",
+        "sub_checks": "88/88 sub-checks",
+        "r06": "10/10",
+        "note": "Preview only — requires Phase ②-F Exit Review PASS to gate Web3 Freeze"
+      },
+      "phase_3": {
+        "id": 3,
+        "name": "Production Deployment",
+        "status": "NOT_STARTED"
+      }
+    },
+    "layer_2_sub_tracks": [
+      {
+        "id": "2A",
+        "label": "②-A Website & Product",
+        "status": "PASS",
+        "drag": false
+      },
+      {
+        "id": "2B",
+        "label": "②-B Admin",
+        "status": "PASS",
+        "drag": false
+      },
+      {
+        "id": "2C",
+        "label": "②-C CMS / COS / Data",
+        "status": "PASS",
+        "drag": true
+      },
+      {
+        "id": "2D",
+        "label": "②-D Web3",
+        "status": "PASS",
+        "drag": false
+      },
+      {
+        "id": "2E",
+        "label": "②-E Security",
+        "status": "PASS",
+        "drag": false
+      },
+      {
+        "id": "2F",
+        "label": "②-F Exit Review",
+        "status": "IN_PROGRESS",
+        "drag": false
+      }
+    ],
+    "layer_3_today": {
+      "today": "2026-07-08",
+      "current_focus": "②-C CMS / COS / Data",
+      "mission": "Data Governance / CMS / COS",
+      "task": "G6 Cover/CDN — provider & acquisition OCS bindings",
+      "blocked_by": null,
+      "waiting_reason": null,
+      "eta": null,
+      "next": "②-D Cert #8 (after Timelock)",
+      "owner": "Junxi"
+    },
+    "layer_4_blockers": {
+      "P0": {
+        "count": 0,
+        "items": []
+      },
+      "P1": {
+        "count": 3,
+        "items": [
+          {
+            "id": "PG-P1-003",
+            "title": "TTG Cert 7/12 — governance lifecycle incomplete"
+          },
+          {
+            "id": "PG-P1-007",
+            "title": "Mainnet deployment drill not executed (0/12)"
+          },
+          {
+            "id": "PG-P1-008",
+            "title": "DR/GORP Cert evidence incomplete"
+          }
+        ]
+      },
+      "P2": {
+        "count": 0,
+        "items": []
+      }
+    },
+    "layer_5_real_metrics": {
+      "open_p0": 0,
+      "open_p1": 3,
+      "open_p2": 0,
+      "open_cert": 5,
+      "open_evidence": 3
+    }
+  },
+  "drag_track": "②-C CMS / COS / Data"
+}

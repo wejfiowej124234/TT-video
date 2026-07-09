@@ -1,0 +1,12 @@
+traveler_order_id=8512b8e6-41bf-4476-9d7e-c9ac43355516
+guide_bind=OK guide=rov-w1-guide-20260608T092157Z@rov-cohort.invalid
+merchant_onboarding=OK email=rov-w1-2-closure-20260608T092200Z@rov-cohort.invalid
+ops_get /api/v1/admin/growth/analytics/overview -> HTTP 200
+ops_get /api/v1/admin/content/entities?limit=5 -> HTTP 404
+ops_get /api/v1/admin/official/accounts?limit=5 -> HTTP 200
+traveler_order_id=6324a993-6b47-4bf1-aef0-35ac63b607f3
+guide_bind=OK guide=rov-w1-guide-20260608T092220Z@rov-cohort.invalid
+merchant_onboarding=OK email=rov-w1-2-20260608T092220Z@rov-cohort.invalid
+ops_get /api/v1/admin/growth/analytics/overview -> HTTP 200
+ops_get /api/v1/admin/content/entities?limit=5 -> HTTP 404
+ops_get /api/v1/admin/official/accounts?limit=5 -> HTTP 200

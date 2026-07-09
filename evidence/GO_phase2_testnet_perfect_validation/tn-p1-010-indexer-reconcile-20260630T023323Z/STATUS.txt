@@ -1,0 +1,5 @@
+status: PASS
+phase: ②
+artifact: TN-P1-010 indexer reconcile
+at: 20260630T023323Z
+release_gate: GO

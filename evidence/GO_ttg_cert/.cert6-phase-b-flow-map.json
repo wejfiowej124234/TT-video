@@ -1,0 +1,68 @@
+{
+  "schema": "traveltrust.phase-b-unpause-flow-map.v1",
+  "phase": "②",
+  "baseline": "GovFreeze V2 · HAT-R1 Phase A PASS",
+  "chain_id": 11155111,
+  "phase_a_handoff": {
+    "steps": [
+      "proposal-create",
+      "vote",
+      "queue"
+    ],
+    "governor": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+    "v2_timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+    "execute_earliest_unix": 1781765044,
+    "evidence": "evidence/GO_hat_r1_sepolia/20260616T063612Z"
+  },
+  "unpause_gate": {
+    "env": "HAT_R1_PHASE_B_PAUSED=0",
+    "owner_actions": [
+      "human UAT + Cert #1–#5 signoff",
+      "four-ledger PASS + Enterprise HAT L9",
+      "export HAT_R1_PHASE_B_PAUSED=0",
+      "run-hat-r1-phase-b-when-ready.sh"
+    ],
+    "script": "scripts/dev/run-hat-r1-phase-b-when-ready.sh"
+  },
+  "phase_b_sequence": [
+    {
+      "cert": 7,
+      "step": "Execute",
+      "mtm": "CHK-CORE-07",
+      "timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    },
+    {
+      "cert": 8,
+      "step": "Treasury Spend",
+      "mtm": "CHK-CORE-08",
+      "requires": "Execute PASS"
+    },
+    {
+      "cert": 9,
+      "step": "Unstake",
+      "mtm": "CHK-CORE-10",
+      "requires": "Treasury Spend PASS"
+    }
+  ],
+  "dual_timelock": {
+    "governance_path": {
+      "use": "P4 · params · Execute",
+      "timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    },
+    "operations_path": {
+      "use": "NetProfit epoch · CP batches",
+      "timelock": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
+    },
+    "recovery_ssot": "GORP §3.1 · §3.5 · RB-G-09"
+  },
+  "eta_validation": {
+    "source": "evidence/GO_hat_r1_sepolia/20260616T063612Z/EXECUTE_EARLIEST_UNIX.txt",
+    "too_early_action": "GORP §3.1 step 2 — wait · no force execute"
+  },
+  "recovery": {
+    "too_early": "WAIT until EXECUTE_EARLIEST_UNIX",
+    "call_failed": "GORP §3.1 — eth_call simulate · new schedule",
+    "timelock_mixed": "GORP §3.5 — stop · RB-G-09",
+    "enterprise_hat_blocked": "TT_GOVERNANCE_ENTERPRISE_HAT_OK=1 + L9 signoff"
+  }
+}

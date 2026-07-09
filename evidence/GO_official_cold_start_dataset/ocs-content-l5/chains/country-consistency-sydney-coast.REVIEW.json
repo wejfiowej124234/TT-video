@@ -1,0 +1,28 @@
+{
+  "schema": "traveltrust.ocs_content_l5_country_consistency_review.v1",
+  "stamp_utc": "20260704T150100Z",
+  "chain_id": "sydney-coast",
+  "city": "悉尼",
+  "country_code": "AU",
+  "country_label": "澳大利亚",
+  "theme_locked": "海岸徒步 · 邦迪 · Coogee · 海港",
+  "TT_COUNTRY_CONSISTENCY_REVIEW": "PASS",
+  "isolation_rules": {
+    "no_japan_elements": true,
+    "no_korea_elements": true,
+    "no_thailand_elements": true,
+    "no_china_elements": true,
+    "no_us_nyc_elements": true,
+    "no_france_paris_elements": true,
+    "no_singapore_elements": true,
+    "no_other_country_landmarks": true,
+    "au_coastal_outdoor_visual_language": true
+  },
+  "future_slots_require": [
+    "provider: 海港皮划艇半日",
+    "acquisition: 手工冲浪板 craft",
+    "official_guide: 邦迪-Coogee 海岸步道宽幅",
+    "community: 海滩浪花 + 步道俯瞰海湾"
+  ],
+  "gate_sydney_chain_completion": "6/6 must maintain AU-only coastal visual language"
+}

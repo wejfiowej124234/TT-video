@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust.trust_health.v1",
+  "ssot": [
+    "GET /me.trust",
+    "acquisition_publish_gate.rs",
+    "docs/spec/artifacts/acquisition-publish-trust-rules.v1.md"
+  ]
+}

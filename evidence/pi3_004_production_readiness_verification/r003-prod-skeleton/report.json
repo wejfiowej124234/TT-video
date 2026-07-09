@@ -1,0 +1,133 @@
+{
+  "schema_version": "1",
+  "run_id": "PI3_004_R003_PRODUCTION_20260702T171226Z",
+  "title": "PI3-004 R-003 Production full-site regression (Sepolia scope skeleton)",
+  "executor": "pi3-004-execution@traveltrust.local",
+  "reviewer": "",
+  "started_at": "2026-07-02T17:12:26Z",
+  "finished_at": "2026-07-02T17:12:26Z",
+  "environment": {
+    "name": "production",
+    "database": "enabled",
+    "chain_mode": "testnet",
+    "auth_mode": "cookie",
+    "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+    "chain_id": 11155111,
+    "prod_api_base": "https://tt-api-prod.fly.dev",
+    "prod_web_base": "https://tt-web-prod.fly.dev"
+  },
+  "release_gate": "NO_GO",
+  "release_gate_reason": "PI3-004 skeleton \u2014 Owner must execute R-003 production A+B + six-domain UAT; then update case statuses per 93 \u00a77.1",
+  "cases": [
+    {
+      "id": "D1-DISCOVER-MKT",
+      "category": "discover",
+      "status": "NOT_RUN",
+      "blocker": true,
+      "notes": "D1-DISCOVER-MKT \u00b7 PI3-004 Owner run on production env"
+    },
+    {
+      "id": "D2-GUIDE-ESCROW",
+      "category": "guide",
+      "status": "NOT_RUN",
+      "blocker": true,
+      "notes": "D2-GUIDE-ESCROW \u00b7 PI3-004 Owner run on production env"
+    },
+    {
+      "id": "D3-ORDERS-MSG",
+      "category": "orders",
+      "status": "NOT_RUN",
+      "blocker": true,
+      "notes": "D3-ORDERS-MSG \u00b7 PI3-004 Owner run on production env"
+    },
+    {
+      "id": "D4-GOV-STAKE",
+      "category": "governance",
+      "status": "NOT_RUN",
+      "blocker": true,
+      "notes": "D4-GOV-STAKE \u00b7 PI3-004 Owner run on production env"
+    },
+    {
+      "id": "D5-ME-PROFILE",
+      "category": "me",
+      "status": "NOT_RUN",
+      "blocker": true,
+      "notes": "D5-ME-PROFILE \u00b7 PI3-004 Owner run on production env"
+    },
+    {
+      "id": "D6-COMMUNITY-UGC",
+      "category": "community",
+      "status": "NOT_RUN",
+      "blocker": true,
+      "notes": "D6-COMMUNITY-UGC \u00b7 PI3-004 Owner run on production env"
+    },
+    {
+      "id": "OPS-CMS-145-FREEZE",
+      "category": "admin",
+      "status": "NOT_RUN",
+      "blocker": false,
+      "notes": "OPS-CMS-145-FREEZE \u00b7 PI3-004 Owner run on production env"
+    },
+    {
+      "id": "OPS-OFFICIAL-145-FREEZE",
+      "category": "admin",
+      "status": "NOT_RUN",
+      "blocker": false,
+      "notes": "OPS-OFFICIAL-145-FREEZE \u00b7 PI3-004 Owner run on production env"
+    },
+    {
+      "id": "OPS-GROWTH-133-FREEZE",
+      "category": "admin",
+      "status": "NOT_RUN",
+      "blocker": false,
+      "notes": "OPS-GROWTH-133-FREEZE \u00b7 PI3-004 Owner run on production env"
+    },
+    {
+      "id": "OPS-CATALOG-120-FREEZE",
+      "category": "catalog",
+      "status": "NOT_RUN",
+      "blocker": false,
+      "notes": "OPS-CATALOG-120-FREEZE \u00b7 PI3-004 Owner run on production env"
+    },
+    {
+      "id": "OPS-CATALOG-146-OPTIN",
+      "category": "catalog",
+      "status": "NOT_RUN",
+      "blocker": false,
+      "notes": "OPS-CATALOG-146-OPTIN \u00b7 PI3-004 Owner run on production env"
+    },
+    {
+      "id": "OPS-COLDSTART-150-CONSUMER",
+      "category": "official",
+      "status": "NOT_RUN",
+      "blocker": false,
+      "notes": "OPS-COLDSTART-150-CONSUMER \u00b7 PI3-004 Owner run on production env"
+    },
+    {
+      "id": "R003-A-ENV-001",
+      "category": "auth",
+      "status": "NOT_RUN",
+      "blocker": true,
+      "notes": "R003-A-ENV-001 \u00b7 PI3-004 Owner run on production env"
+    },
+    {
+      "id": "R003-B-MKT-001",
+      "category": "market",
+      "status": "NOT_RUN",
+      "blocker": true,
+      "notes": "R003-B-MKT-001 \u00b7 PI3-004 Owner run on production env"
+    }
+  ],
+  "summary": {
+    "PASS": 0,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 14
+  },
+  "pi3_004": {
+    "kind": "traveltrust.pi3_004_production_report_skeleton.v1",
+    "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+    "not_production_go": true
+  }
+}

@@ -1,0 +1,371 @@
+{
+  "schema": "traveltrust.staging_rc_baseline.public_surface_audit.v1",
+  "recorded_at": "2026-07-04T09:50:23.740Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "ocs_state": "D:\\TravelTrust-V1.1\\evidence\\GO_official_cold_start_dataset\\ocs-surface-expansion-staging\\20260704T073209Z\\state.json",
+  "registry": "registry/staging-rc-baseline.v1.yaml",
+  "ssot_chain": [
+    "RELEASE-CANDIDATE",
+    "dataset.v1.json",
+    "assets.v1.json",
+    "governed_public_views"
+  ],
+  "machine_keys": {
+    "TT_STAGING_RC_BASELINE_AUDIT": "PASS",
+    "TT_STAGING_RC_BASELINE": "READY"
+  },
+  "checklist": [
+    {
+      "n": 1,
+      "domain": "baseline",
+      "surface": "ACTIVE.json",
+      "check": "TT_STAGING_RC_BASELINE READY",
+      "status": "PASS",
+      "detail": "20260704T094720Z",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 2,
+      "domain": "market",
+      "surface": "provider",
+      "check": "count=10 OCS",
+      "status": "PASS",
+      "detail": "count=10",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 3,
+      "domain": "market",
+      "surface": "provider",
+      "check": "ocs_only",
+      "status": "PASS",
+      "detail": "extras=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 4,
+      "domain": "market",
+      "surface": "provider",
+      "check": "no_smoke",
+      "status": "PASS",
+      "detail": "smoke=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 5,
+      "domain": "market",
+      "surface": "provider",
+      "check": "no_legacy_media",
+      "status": "PASS",
+      "detail": "leak=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 6,
+      "domain": "market",
+      "surface": "provider",
+      "check": "no_duplicate_titles",
+      "status": "PASS",
+      "detail": "dups=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 7,
+      "domain": "market",
+      "surface": "acquisition",
+      "check": "count=10 OCS",
+      "status": "PASS",
+      "detail": "count=10",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 8,
+      "domain": "market",
+      "surface": "acquisition",
+      "check": "ocs_only",
+      "status": "PASS",
+      "detail": "extras=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 9,
+      "domain": "market",
+      "surface": "acquisition",
+      "check": "no_smoke",
+      "status": "PASS",
+      "detail": "smoke=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 10,
+      "domain": "guides",
+      "surface": "public_catalog",
+      "check": "count=10 OCS",
+      "status": "PASS",
+      "detail": "count=10",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 11,
+      "domain": "guides",
+      "surface": "public_catalog",
+      "check": "ocs_only",
+      "status": "PASS",
+      "detail": "non_ocs=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 12,
+      "domain": "guides",
+      "surface": "public_catalog",
+      "check": "no_duplicate_cities",
+      "status": "PASS",
+      "detail": "dups=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 13,
+      "domain": "guides",
+      "surface": "public_catalog",
+      "check": "no_smoke",
+      "status": "PASS",
+      "detail": "smoke=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 14,
+      "domain": "itinerary",
+      "surface": "discover_orders",
+      "check": "no_smoke_leak",
+      "status": "PASS",
+      "detail": "public_count=1",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 15,
+      "domain": "itinerary",
+      "surface": "discover_orders",
+      "check": "no_test_origin",
+      "status": "PASS",
+      "detail": "test=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 16,
+      "domain": "community",
+      "surface": "feed",
+      "check": "count=10 OCS",
+      "status": "PASS",
+      "detail": "count=10",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 17,
+      "domain": "community",
+      "surface": "feed",
+      "check": "ocs_only",
+      "status": "PASS",
+      "detail": "non_ocs=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 18,
+      "domain": "community",
+      "surface": "feed",
+      "check": "no_corridor_smoke",
+      "status": "PASS",
+      "detail": "corridor=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 19,
+      "domain": "community",
+      "surface": "feed",
+      "check": "ocs_asset_covers",
+      "status": "PASS",
+      "detail": "bad=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 20,
+      "domain": "community",
+      "surface": "explore",
+      "check": "catalog=api-aggregate-v1",
+      "status": "PASS",
+      "detail": "catalog=api-aggregate-v1",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 21,
+      "domain": "community",
+      "surface": "hot",
+      "check": "ocs_subset_of_feed",
+      "status": "PASS",
+      "detail": "non_ocs=0",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 22,
+      "domain": "campaign",
+      "surface": "home_hero",
+      "check": "HTTP 200",
+      "status": "PASS",
+      "detail": "status=200",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 23,
+      "domain": "campaign",
+      "surface": "home_hero",
+      "check": "resolved_items",
+      "status": "PASS",
+      "detail": "items=3",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 24,
+      "domain": "campaign",
+      "surface": "market_feed",
+      "check": "HTTP 200",
+      "status": "PASS",
+      "detail": "status=200",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 25,
+      "domain": "campaign",
+      "surface": "market_feed",
+      "check": "resolved_items",
+      "status": "PASS",
+      "detail": "items=3",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 26,
+      "domain": "campaign",
+      "surface": "community_feed",
+      "check": "HTTP 200",
+      "status": "PASS",
+      "detail": "status=200",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 27,
+      "domain": "campaign",
+      "surface": "community_feed",
+      "check": "resolved_items",
+      "status": "PASS",
+      "detail": "items=5",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 28,
+      "domain": "admin",
+      "surface": "queue_guides",
+      "check": "no_unauthorized_published",
+      "status": "PASS",
+      "detail": "bad=0 pub=10",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 29,
+      "domain": "admin",
+      "surface": "queue_market_listings",
+      "check": "no_unauthorized_published",
+      "status": "PASS",
+      "detail": "bad=0 pub=20",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 30,
+      "domain": "admin",
+      "surface": "queue_community_posts",
+      "check": "no_unauthorized_published",
+      "status": "PASS",
+      "detail": "bad=0 pub=10",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 31,
+      "domain": "admin",
+      "surface": "queue_orders",
+      "check": "no_unauthorized_published",
+      "status": "PASS",
+      "detail": "bad=0 pub=12",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 32,
+      "domain": "asset",
+      "surface": "community_cover",
+      "check": "API HEAD 200",
+      "status": "PASS",
+      "detail": "code=200",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 33,
+      "domain": "asset",
+      "surface": "community_cover",
+      "check": "WEB rewrite HEAD 200",
+      "status": "PASS",
+      "detail": "code=200",
+      "phase": "②",
+      "incomplete_at": "—"
+    },
+    {
+      "n": 34,
+      "domain": "api",
+      "surface": "meta/build",
+      "check": "staging_profile",
+      "status": "PASS",
+      "detail": "profile=staging",
+      "phase": "②",
+      "incomplete_at": "—"
+    }
+  ],
+  "failures": [],
+  "passes": [
+    "all_checks"
+  ],
+  "summary": {
+    "total": 34,
+    "pass": 34,
+    "fail": 0
+  },
+  "honest_boundary": "Audit PASS on Staging ≠ Production GO",
+  "remediation": "bash scripts/dev/run-staging-rc-baseline-final-alignment.sh"
+}

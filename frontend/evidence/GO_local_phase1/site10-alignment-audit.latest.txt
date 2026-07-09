@@ -1,0 +1,42 @@
+Site10 Alignment Audit · 2026-06-25T23:49:45Z (UTC)
+Track: 22-key denoised oracle (NOT 846/844 full matrix truth source)
+SSOT: docs/runbook/ENTERPRISE-SITE-10-L5-MATRIX.md §1.4.0 · §1.4.2
+
+=== Precondition · G2/G3 + precheck ===
+  [✅] G2/G3 convergence acceptance
+  [❌] parse run_complete (grep run_complete: True in /d/TravelTrust-V1.1/frontend/evidence/GO_local_phase1/site10-r22b-denoised-regression-parse.txt)
+  [❌] manifest RED=0 (grep still RED in manifest: 0 in /d/TravelTrust-V1.1/frontend/evidence/GO_local_phase1/site10-r22b-denoised-regression-parse.txt)
+  [✅] S3 local parity (precheck)
+  [✅] S1 staging alignment FAIL=0
+
+=== Exit 1 · 代码真源一致 ===
+  [✅] async pg seed helper → /d/TravelTrust-V1.1/frontend/e2e/helpers/seedPaidMarketEntitlements.ts
+  [✅] seedPaidMarketEntitlements: no sync docker exec
+  [❌] 22-key manifest missing: /d/TravelTrust-V1.1/frontend/evidence/GO_local_phase1/site10-r22-true-regression-manifest.txt
+  [✅] denoised parse script → /d/TravelTrust-V1.1/scripts/dev/parse-site10-denoised-regression.py
+
+=== Exit 2 · 文档真源一致 ===
+  [❌] GO_local_phase1 README §7h (grep 7h · G2G3 in /d/TravelTrust-V1.1/frontend/evidence/GO_local_phase1/README.md)
+  [✅] ENTERPRISE-SITE-10 §1.4.0 denoised track
+  [❌] phase2 staging precheck missing: /d/TravelTrust-V1.1/frontend/evidence/GO_local_phase1/site10-phase2-staging-precheck.latest.txt
+
+=== Exit 3 · 脚本真源一致 ===
+  [✅] denoised matrix runner → /d/TravelTrust-V1.1/scripts/dev/run-site10-r22b-denoised-regression-matrix.sh
+  [✅] matrix script 846 boundary
+  [✅] parity gate script → /d/TravelTrust-V1.1/scripts/dev/run-phase2-local-staging-parity-gate.sh
+
+=== Exit 4 · G2/G3 引用一致（22-key · 非 846 冒充） ===
+  [❌] gates file G2/G3 denoised OK (grep denoised 22-key regression matrix: OK in /d/TravelTrust-V1.1/frontend/evidence/GO_local_phase1/site10-r22b-gates.txt)
+  [✅] evidence chain documents 846 boundary
+
+=== Exit 5 · SSOT 无冲突（阶段 · 禁止假完成） ===
+  [✅] phase discipline in acceptance
+  [❌] extra WARN register (non-blocking) missing: /d/TravelTrust-V1.1/frontend/evidence/GO_local_phase1/site10-r22b-extra-warn-register.txt
+
+=== Exit 6 · 历史口径已归档 ===
+  [❌] r22b tier attribution missing: /d/TravelTrust-V1.1/frontend/evidence/GO_local_phase1/site10-r22b-vs-r21-tier-attribution.txt
+  [❌] Run4 closure note in attribution (grep Run4 收敛签字 in /d/TravelTrust-V1.1/frontend/evidence/GO_local_phase1/site10-r22b-vs-r21-tier-attribution.txt)
+  [✅] Run4 stdout archive → /d/TravelTrust-V1.1/frontend/evidence/GO_local_phase1/site10-r22b-denoised-regression-run4.stdout.log
+
+=== Summary ===
+pass=13 fail=9

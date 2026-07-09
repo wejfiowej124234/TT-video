@@ -1,0 +1,38 @@
+# Dashboard shared config · Machine SSOT
+#
+# Owner · ETA · cert task labels for Current Focus (Layer 3)
+
+schema: traveltrust.dashboard_config.v1
+version: 1
+effective_utc: "2026-07-08"
+
+default_owner: Junxi
+
+cert_tasks:
+  8: { label: 'Cert #8 Treasury Spend Execute', mission: 'Governance Lifecycle', blocked_by: 'Timelock ETA' }
+  9: { label: 'Cert #9 Unstake', mission: 'Identity Stake Lifecycle', blocked_by: null }
+  10: { label: 'Cert #10 Emergency Pause', mission: 'Emergency Ops', blocked_by: null }
+  11: { label: 'Cert #11 Emergency Unpause', mission: 'Emergency Ops', blocked_by: null }
+  12: { label: 'Cert #12 DR Replay', mission: 'Recovery Drill', blocked_by: null }
+
+burndown_weights:
+  p0_days_each: 2
+  p1_days_each: 1.5
+  p2_days_each: 0.5
+  open_evidence_days_each: 0.75
+  open_cert_days_each: 1
+  open_deployment_days_each: 1.25
+
+dashboards:
+  project:
+    script: scripts/dev/run-phase-dashboard.cjs
+    evidence: evidence/GO_production_readiness/phase-dashboard/
+    layers: [executive, sub_tracks, current_focus, blockers, completion_rates, burndown]
+  web3:
+    script: scripts/dev/run-web3-dashboard.cjs
+    evidence: evidence/GO_production_readiness/web3-dashboard/
+  operations:
+    script: scripts/dev/run-operations-dashboard.cjs
+    evidence: evidence/GO_production_readiness/operations-dashboard/
+  all:
+    script: scripts/dev/run-all-dashboards.cjs

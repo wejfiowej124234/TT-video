@@ -1,0 +1,77 @@
+{
+  "schema": "traveltrust.doa_audit_registry.v1",
+  "domain": "DOMAIN-Z",
+  "created_at": "2026-06-13T07:12:46.871950+00:00",
+  "verdict_vocabulary": [
+    "KEEP",
+    "UPDATE",
+    "DEPRECATE",
+    "REMOVE"
+  ],
+  "findings": [
+    {
+      "id": "DOA-SEED-001",
+      "doa": "DOA-01",
+      "artifact": "README local dev ports",
+      "drift": "README vs start-api-with-seed-README port narrative",
+      "suggested_verdict": "UPDATE",
+      "severity": "P1"
+    },
+    {
+      "id": "DOA-SEED-002",
+      "doa": "DOA-12",
+      "artifact": "ABI contracts/abi vs frontend/dapp/abis",
+      "drift": "Run check-55-s13 after forge changes",
+      "suggested_verdict": "KEEP",
+      "severity": "P0"
+    },
+    {
+      "id": "DOA-SEED-003",
+      "doa": "DOA-10",
+      "artifact": "04 routes vs Axum mount",
+      "drift": "run-check-04-routes is SSOT gate",
+      "suggested_verdict": "KEEP",
+      "severity": "P0"
+    },
+    {
+      "id": "DOA-SEED-004",
+      "doa": "DOA-03",
+      "artifact": "registry/spec-path-dependencies.v1.yaml",
+      "drift": "Must sync with docs/spec-path-dependency-migration-inventory.md",
+      "suggested_verdict": "UPDATE",
+      "severity": "P0"
+    }
+  ],
+  "doa_dimensions": [
+    "DOA-01",
+    "DOA-02",
+    "DOA-03",
+    "DOA-04",
+    "DOA-05",
+    "DOA-06",
+    "DOA-07",
+    "DOA-08",
+    "DOA-09",
+    "DOA-10",
+    "DOA-11",
+    "DOA-12",
+    "DOA-13",
+    "DOA-14",
+    "DOA-15",
+    "DOA-16",
+    "DOA-17",
+    "DOA-18",
+    "DOA-19",
+    "DOA-20"
+  ],
+  "artifacts": [
+    "ssot-drift-report.v1.json",
+    "script-drift-report.v1.json",
+    "api-abi-compatibility-report.v1.json",
+    "database-schema-alignment-report.v1.json",
+    "admin-capability-matrix.v1.json",
+    "environment-consistency-report.v1.json",
+    "documentation-health-score.v1.json",
+    "OPERATIONAL-READINESS-REPORT.md"
+  ]
+}

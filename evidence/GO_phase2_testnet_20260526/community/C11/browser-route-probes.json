@@ -1,0 +1,97 @@
+{
+  "ok": true,
+  "total": 18,
+  "passed": 18,
+  "routes": [
+    {
+      "id": "feed",
+      "path": "/community",
+      "ok": true
+    },
+    {
+      "id": "tt",
+      "path": "/community/tt",
+      "ok": true
+    },
+    {
+      "id": "explore",
+      "path": "/community/explore",
+      "ok": true
+    },
+    {
+      "id": "activity",
+      "path": "/community/activity",
+      "ok": true
+    },
+    {
+      "id": "friends",
+      "path": "/community/friends",
+      "ok": true
+    },
+    {
+      "id": "messages",
+      "path": "/community/messages",
+      "ok": true
+    },
+    {
+      "id": "messages-thread",
+      "path": "/community/messages/00000000-0000-4000-8000-000000000001",
+      "ok": true
+    },
+    {
+      "id": "me",
+      "path": "/community/me",
+      "ok": true
+    },
+    {
+      "id": "me-posts",
+      "path": "/community/me/posts",
+      "ok": true
+    },
+    {
+      "id": "me-collects",
+      "path": "/community/me/collects",
+      "ok": true
+    },
+    {
+      "id": "me-reports",
+      "path": "/community/me/reports",
+      "ok": true
+    },
+    {
+      "id": "me-report-ticket",
+      "path": "/community/me/reports/00000000-0000-4000-8000-000000000001",
+      "ok": true
+    },
+    {
+      "id": "user-profile",
+      "path": "/community/user/00000000-0000-4000-8000-000000000001",
+      "ok": true
+    },
+    {
+      "id": "topic",
+      "path": "/community/topic/%E6%97%85%E8%A1%8C",
+      "ok": true
+    },
+    {
+      "id": "feedback",
+      "path": "/community/feedback",
+      "ok": true
+    },
+    {
+      "id": "guidelines",
+      "path": "/community/guidelines",
+      "ok": true
+    },
+    {
+      "id": "post-deeplink",
+      "path": "/community/post/00000000-0000-4000-8000-000000000099",
+      "ok": true
+    },
+    {
+      "id": "me-likes",
+      "path": "/community/me/likes",
+      "ok": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_verify.v1",
+  "stamp_utc": "20260704T132501Z",
+  "filename": "ocs-seoul-food-official-guide-cover.jpg",
+  "row": {
+    "filename": "ocs-seoul-food-official-guide-cover.jpg",
+    "chain_id": "seoul-food",
+    "city": "首尔",
+    "slot": "official-guide-cover",
+    "surface": "Official Guide",
+    "scene": "明洞街景到广藏市场 · 48h 美食地图封面",
+    "copy_label": "首尔 48 小时美食地图",
+    "asset_status": "verified",
+    "review_status": "pass"
+  },
+  "checks": [
+    {
+      "id": "media_exists",
+      "pass": true,
+      "detail": "D:\\TravelTrust-V1.1\\data\\official-cold-start\\media\\ocs-seoul-food-official-guide-cover.jpg"
+    },
+    {
+      "id": "jpeg_magic",
+      "pass": true,
+      "detail": "ok"
+    },
+    {
+      "id": "min_size_16kb",
+      "pass": true,
+      "detail": "151652 bytes"
+    },
+    {
+      "id": "matrix_asset_status",
+      "pass": true,
+      "detail": "verified"
+    },
+    {
+      "id": "matrix_review_pass",
+      "pass": true,
+      "detail": "pass"
+    }
+  ],
+  "TT_OCS_CONTENT_L5_ROW_VERIFY": "PASS",
+  "gates_manual": {
+    "G2_copy_alignment": "pending_human",
+    "G3_slot_differentiation": "pending_human",
+    "G9_content_authenticity": "pending_human",
+    "G10_content_diversity": "pending_human"
+  }
+}

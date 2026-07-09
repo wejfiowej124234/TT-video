@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T02:16:40Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "TH",
+    "city_zh": "曼谷",
+    "city_en": "Bangkok",
+    "matrix_ids": [
+      "PH-TH-076-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-TH-076-ATR",
+      "legacy_value": "考山路",
+      "poi_id": "24df827e-457b-41fa-914d-0fe84e18ff7b",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg",
+      "hero_file": "ocs-bangkok-temple-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-076-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

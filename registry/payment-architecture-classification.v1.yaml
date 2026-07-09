@@ -1,0 +1,70 @@
+# TravelTrust Payment Architecture Classification · Global SSOT
+#
+# Core payment = Web3 Escrow (USDC). Stripe = Optional Fiat Onboarding (future extension).
+# Applies to: PI3 · Production GO · Runbook · Registry · Gate · Evidence · Decision Package
+
+schema: traveltrust.payment_architecture_classification.v1
+version: 1
+effective_utc: "2026-07-08"
+
+core_payment:
+  label: Web3 Escrow (USDC)
+  asset: USDC/USDT ERC-20 stablecoin
+  flow:
+    - Wallet connect
+    - USDC approve
+    - Escrow.deposit
+    - Chain events
+    - Indexer sync
+    - Order state machine
+    - Release
+    - FeeRouter distribute
+    - Settlement ledger projection
+  scopes: [travel_orders, marketplace_merchant, acquisition_close_deal, bilateral_agreement]
+  production_p0: true
+  g3_domain: G3-02
+  machine_key: TT_WEB3_PAYMENT_PRODUCTION_READINESS
+  matrix_gap: PRM-WEB3-PAY-B001
+  checklist: registry/production-payment-readiness-checklist.v1.yaml
+  master_go_live_checklist: registry/production-usdc-go-live-master-checklist.v1.yaml
+  gate: scripts/check-web3-payment-production-readiness.sh
+  runbook: docs/runbook/PRODUCTION-PAYMENT-READINESS-WEB3-USDC.md
+
+optional_fiat_onboarding:
+  label: Optional Fiat Onboarding (future extension)
+  providers: [stripe]
+  scope: onboarding_admission_fee_optional_bypass
+  default_path: USDC → OnboardingFeeReceiver
+  production_p0: false
+  classification: P1_FUTURE_FIAT_ONRAMP
+  pi3_ref: PI3-003
+  blocks_production_go: false
+  when_required: TRAVELTRUST_ONBOARDING_STRIPE_ENABLED=1
+  ssot:
+    - docs/runbook/PRODUCTION-STRIPE-ENV-MATRIX-SEPOLIA-SCOPE.md
+    - docs/handbook/engineering/153-PI3-003-Stripe-Live-Production-Webhook-Report.md
+  gate: scripts/check-pi3-003-stripe-live-production-webhook-execution.sh
+  note: >
+    NOT Production Payment. Future credit-card-buy-USDC or fiat top-up modules
+    may use Stripe or other PSP as independent on-ramp — never core Web3 transaction rail.
+
+forbidden_misclassification:
+  - "Payment = Stripe"
+  - "Stripe Live blocks Production GO (Web3-only scope)"
+  - "PI3-003 as core trip/market payment gate"
+  - "mock-pay on production"
+  - "stripe_in_layer_2_web3_gate"
+  - "usdc_only_in_scattered_pi3_without_four_gate"
+
+four_gate_framework: registry/production-go-four-gate-framework.v1.yaml
+four_gate_layer_for_core_payment: L2_WEB3
+four_gate_payment_subset_only: G3-02
+entire_web3_system_gate:
+  machine_key: TT_WEB3_SYSTEM_PRODUCTION_READY
+  registry: registry/web3-system-production-gate.v1.yaml
+  layering: registry/web3-gate-layering.v1.yaml
+
+governance_treasury_boundary:
+  independent_from_order_escrow: true
+  components: [Governor, Timelock, Treasury, TTG, Staking pools]
+  ssot: docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md

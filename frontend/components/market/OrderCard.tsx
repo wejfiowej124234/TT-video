@@ -16,6 +16,8 @@ import { isOrderPublishedToDiscover } from "@/lib/isAssignedGuideId";
 import { isOwnPublishedOpenListing, marketOrderHasAssignedGuide } from "@/lib/marketBindOrderList";
 import { useViewerUserId } from "@/lib/useViewerUserId";
 import { CONSUMER_TRIP_CURRENCY_LOCALE_KEY } from "@/lib/escrowOrderAmountSsot";
+import { MarketDisplayTestBadge } from "@/components/market/MarketDisplayTestBadge";
+import { shouldShowMarketOrderDisplayTestLabel } from "@/lib/marketDisplayTestLabel";
 import { TT_MARKETING_BTN_MARKET_PRIMARY, TT_MARKETING_MARKET_DARK_PATH, TT_MARKETING_MARKET_L5_LIST_CARD_FRAME, TT_MARKETING_MARKET_L5_LIST_CARD_INNER } from "@/lib/marketingUi";
 
 /** P29 订单卡片：行程照片 + 收藏 + 抢订单/查看行程；28 玻璃态 + Web3 徽章 */
@@ -72,6 +74,7 @@ export default memo(function OrderCard({
   /** 与 OrderDetailDrawer 接单 CTA 同源：created/open 可在市场抢单 */
   const isOpenMarket = statusRaw === "created" || statusRaw === "open";
   const isDevDemoOrder = isMarketDevVarietyOrderId(item.id);
+  const showTestLabel = shouldShowMarketOrderDisplayTestLabel(item);
   const ownTouristId = useViewerUserId();
   const isOwnPublishedListing = isOwnPublishedOpenListing(item, ownTouristId);
   const isOwnBindingOrder =
@@ -165,6 +168,7 @@ export default memo(function OrderCard({
           coverFooterExtra={
             glass ? (
               <div className="flex flex-wrap items-center gap-1.5">
+                {showTestLabel ? <MarketDisplayTestBadge glass /> : null}
                 {isOwnBindingOrder ? (
                   <span className={p.cardCoverChip}>
                     {guideAssignedOnBind
@@ -202,9 +206,12 @@ export default memo(function OrderCard({
 
       <div className={contentClass} onClick={stopCardBubble}>
         <div>
-          <h3 id={`order-title-${item.id}`} className={titleClass}>
-            {dest}
-            {!glass && days ? ` · ${days}` : ""}
+          <h3 id={`order-title-${item.id}`} className={`${titleClass} flex flex-wrap items-center gap-2`}>
+            <span className="min-w-0">
+              {dest}
+              {!glass && days ? ` · ${days}` : ""}
+            </span>
+            {!glass && showTestLabel ? <MarketDisplayTestBadge /> : null}
           </h3>
           <p className={subClass}>
             {isDevDemoOrder ? t("market_dev_demo_teaser") : null}

@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T14:54:27Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AU",
+    "city_zh": "黄金海岸",
+    "city_en": "Gold Coast",
+    "matrix_ids": [
+      "PH-AU-168-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AU-168-ATR",
+      "legacy_value": "冲浪者天堂",
+      "poi_id": "2cd31918-d5f6-4ee9-89eb-3feb9336e920",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-168-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

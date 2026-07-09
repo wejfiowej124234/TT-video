@@ -21,6 +21,7 @@ mkdir -p "$OUT"
 exec > >(tee -a "$OUT/audit.log") 2>&1
 
 fail_blockers=0
+prod_only_blockers=0
 warn_count=0
 pass_count=0
 
@@ -32,6 +33,13 @@ record() {
     WARN) warn_count=$((warn_count + 1)) ;;
     BLOCKER|FAIL) fail_blockers=$((fail_blockers + 1)) ;;
   esac
+}
+
+# Production-exclusive documentary blockers — do not count toward convergence gate
+record_prod_only() {
+  local id="$1" detail="$2"
+  echo "AUDIT ${id}: BLOCKER-PROD — ${detail}"
+  prod_only_blockers=$((prod_only_blockers + 1))
 }
 
 echo "== phase3 production go audit · ${STAMP} =="
@@ -63,11 +71,25 @@ else
 fi
 
 if command -v fly >/dev/null 2>&1 && fly auth whoami >/dev/null 2>&1; then
-  fly postgres backup list -a "${FLY_STAGING_PG_APP:-tt-traveltrust-staging}" 2>&1 | tee "$OUT/fly-backup-list.txt" || true
-  if grep -qi "no backups\|not enabled\|unsupported" "$OUT/fly-backup-list.txt" 2>/dev/null; then
-    record "P3-FLY-BACKUP-ENABLED" WARN "Fly managed backups not enabled on staging PG (prod must enable)"
+  # shellcheck source=scripts/dev/lib/fly-mpg-pg.sh
+  source "$ROOT/scripts/dev/lib/fly-mpg-pg.sh" 2>/dev/null || true
+  prod_pg="${FLY_PROD_PG_APP:-tt-traveltrust-prod}"
+  prod_kind="$(fly_pg_backend_kind "$prod_pg" 2>/dev/null || echo missing)"
+  if [[ "$prod_kind" == "mpg" ]]; then
+    cid="$(fly_mpg_cluster_id_for_name "$prod_pg")"
+    fly_mpg_backup_list "$cid" 2>&1 | tee "$OUT/fly-prod-mpg-backup-list.txt" || true
+    if grep -qiE "completed|full|incr" "$OUT/fly-prod-mpg-backup-list.txt" 2>/dev/null; then
+      record "P3-FLY-BACKUP-ENABLED" PASS "Fly MPG backups listed on ${prod_pg}"
+    else
+      record "P3-FLY-BACKUP-ENABLED" WARN "Fly MPG backup list empty on ${prod_pg}"
+    fi
   else
-    record "P3-FLY-BACKUP-ENABLED" PASS "Fly backup list returned data"
+    fly postgres backup list -a "${FLY_STAGING_PG_APP:-tt-traveltrust-staging}" 2>&1 | tee "$OUT/fly-backup-list.txt" || true
+    if grep -qi "no backups\|not enabled\|unsupported" "$OUT/fly-backup-list.txt" 2>/dev/null; then
+      record "P3-FLY-BACKUP-ENABLED" WARN "Fly managed backups not enabled on staging PG (prod must enable)"
+    else
+      record "P3-FLY-BACKUP-ENABLED" PASS "Fly backup list returned data"
+    fi
   fi
 else
   record "P3-FLY-BACKUP-ENABLED" WARN "fly CLI/auth unavailable — backup list skipped"
@@ -86,7 +108,7 @@ for host in "${API_BASE#https://}" "${WEB_BASE#https://}"; do
   fi
 done
 if [[ "$WEB_BASE" == *".fly.dev"* ]]; then
-  record "P3-PROD-DOMAIN" BLOCKER "No dedicated production domain — *.fly.dev staging only"
+  record_prod_only "P3-PROD-DOMAIN" "No dedicated production domain — *.fly.dev staging only"
 else
   record "P3-PROD-DOMAIN" PASS "Custom production web host configured"
 fi
@@ -138,13 +160,77 @@ else
   record "P3-INTERNAL-EXPOSURE" WARN "internal probe HTTP ${internal_code}"
 fi
 
-# Production-only blockers (documentary — no prod host yet)
-record "P3-PROD-SEED-OFF" BLOCKER "Production must set SEED_TEST_ACCOUNTS=0 (staging may keep seed)"
-record "P3-PROD-P3-CHAIN-OFF" BLOCKER "Production must unset P3_CHAIN_OFF / mock-pay"
-record "P3-STRIPE-LIVE" BLOCKER "Stripe live / PSP production instance not configured"
-record "P3-MAINNET-G0-G6" BLOCKER "Mainnet G0–G6+SL not GO (go-live §9)"
-record "P3-FULL-93-R002" BLOCKER "Full-site R-002 report.json GO not evidenced for production"
-record "P3-PROD-CDN-HLS" BLOCKER "Production CDN/HLS (P3-COM-1) NOT STARTED"
+is_prod_target=false
+[[ "$API_BASE" == *"-prod"* || "$API_BASE" == *"tt-api-prod"* ]] && is_prod_target=true
+
+# Production-only blockers (documentary when not yet on prod host)
+if [[ "$is_prod_target" == true ]]; then
+  seed_env=""
+  if command -v fly >/dev/null 2>&1 && fly auth whoami >/dev/null 2>&1; then
+    seed_env="$(fly ssh console -a tt-api-prod -C 'printenv SEED_TEST_ACCOUNTS' 2>/dev/null | tr -d '\r' | head -1 || true)"
+  fi
+  if [[ "$seed_env" == "0" ]]; then
+    record "P3-PROD-SEED-OFF" PASS "Production SEED_TEST_ACCOUNTS=0 (fly env)"
+  else
+    record_prod_only "P3-PROD-SEED-OFF" "Production must set SEED_TEST_ACCOUNTS=0 (fly env=${seed_env:-unset})"
+  fi
+  p3_off="$(python -c "import json,sys; m=json.load(open(sys.argv[1],encoding='utf-8')); ch=m.get('chain') or {}; print(ch.get('p3_chain_off'))" "$meta_json" 2>/dev/null || echo unknown)"
+  if [[ "$p3_off" == "False" || "$p3_off" == "None" || -z "$p3_off" ]]; then
+    record "P3-PROD-P3-CHAIN-OFF" PASS "Production P3_CHAIN_OFF unset/false (meta)"
+  else
+    record_prod_only "P3-PROD-P3-CHAIN-OFF" "Production must unset P3_CHAIN_OFF / mock-pay"
+  fi
+else
+  record_prod_only "P3-PROD-SEED-OFF" "Production must set SEED_TEST_ACCOUNTS=0 (staging may keep seed)"
+  record_prod_only "P3-PROD-P3-CHAIN-OFF" "Production must unset P3_CHAIN_OFF / mock-pay"
+fi
+
+record_prod_only "P3-STRIPE-LIVE" "Stripe live / PSP production instance not configured (PI3-003 WAITING_OWNER_STRIPE until sk_live_*)"
+record_prod_only "P3-MAINNET-G0-G6" "Mainnet G0–G6+SL not GO — PI3-005 scope decision pending"
+record_prod_only "P3-PI3-005-006" "PI3-005 Mainnet scope + PI3-006 Go-Live cutover not executed"
+
+latest_r003="$(ls -d "$ROOT/evidence/pi3_004_production_readiness_verification"/r003-production-* 2>/dev/null | sort | tail -1 || true)"
+if [[ -n "$latest_r003" && -f "${latest_r003}/report.json" ]]; then
+  prg="$(python -c "import json,sys; print(json.load(open(sys.argv[1],encoding='utf-8')).get('release_gate',''))" "${latest_r003}/report.json")"
+  if [[ "$prg" == "GO" ]]; then
+    record "P3-FULL-93-R002" PASS "R-003 production report.json release_gate=GO"
+  elif [[ "$prg" == "PARTIAL_GO" && "$is_prod_target" == true ]]; then
+    record "P3-FULL-93-R002" WARN "R-003 production PARTIAL_GO (interim infra · B-domain data OPEN)"
+  else
+    record_prod_only "P3-FULL-93-R002" "Full-site R-002 report.json GO not evidenced for production (last=${prg})"
+  fi
+else
+  record_prod_only "P3-FULL-93-R002" "Full-site R-002 report.json GO not evidenced for production"
+fi
+record_prod_only "P3-PROD-CDN-HLS" "Production CDN/HLS (P3-COM-1) NOT STARTED"
+
+# --- SSOT convergence (non-prod gate) ---
+PREP_MD="$ROOT/docs/runbook/PHASE3-PRODUCTION-PREPARATION.md"
+CANON_SIGNOFF="$ROOT/evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260701T002252Z.md"
+if grep -q 'PHASE3_PRODUCTION_CONVERGENCE: CLOSED' "$PREP_MD" \
+  && grep -q 'PHASE3_OPS_VALIDATION: CLOSED' "$PREP_MD" \
+  && grep -q 'TT_TESTNET_SIGNOFF: CLOSED' "$PREP_MD"; then
+  record "P3-SSOT-RUNBOOK" PASS "PHASE3-PRODUCTION-PREPARATION keys aligned"
+else
+  record "P3-SSOT-RUNBOOK" BLOCKER "Runbook machine keys stale vs SSOT"
+fi
+if [[ -f "$CANON_SIGNOFF" ]] && grep -q 'TT_TESTNET_SIGNOFF: CLOSED' "$CANON_SIGNOFF"; then
+  record "P3-SSOT-SIGNOFF" PASS "Canonical testnet sign-off CLOSED"
+else
+  record "P3-SSOT-SIGNOFF" BLOCKER "Canonical testnet sign-off missing or OPEN"
+fi
+stale_ok=0
+for stale in \
+  "$ROOT/evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260630T154900Z.md" \
+  "$ROOT/evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260630T163100Z.md"; do
+  [[ -f "$stale" ]] || continue
+  grep -qi 'SUPERSEDED BY' "$stale" && stale_ok=$((stale_ok + 1)) || true
+done
+if [[ "$stale_ok" -ge 2 ]] || [[ ! -f "$ROOT/evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260630T154900Z.md" ]]; then
+  record "P3-SSOT-STALE-SIGNOFF" PASS "Historical sign-offs SUPERSEDED or absent"
+else
+  record "P3-SSOT-STALE-SIGNOFF" BLOCKER "Stale sign-offs missing SUPERSEDED BY header"
+fi
 
 # --- 5 · P0 prep chain (merchant / rollback) ---
 p0_status="$ROOT/evidence/GO_phase2_testnet_20260526/phase3-production-prep/STATUS.txt"
@@ -155,12 +241,22 @@ else
 fi
 
 # --- Verdict ---
-if [[ "$fail_blockers" -eq 0 ]]; then
+total_blockers=$((fail_blockers + prod_only_blockers))
+if [[ "$fail_blockers" -eq 0 && "$prod_only_blockers" -eq 0 ]]; then
   verdict="GO"
   verdict_reason="All audited checks PASS — still requires M-00 / go-live §0–§11 human sign-off"
+elif [[ "$fail_blockers" -eq 0 ]]; then
+  verdict="NO_GO"
+  verdict_reason="0 non-prod BLOCKER · ${prod_only_blockers} production-only BLOCKER(s) · ${warn_count} WARN · ${pass_count} PASS"
 else
   verdict="NO_GO"
-  verdict_reason="${fail_blockers} BLOCKER(s) · ${warn_count} WARN · ${pass_count} PASS"
+  verdict_reason="${fail_blockers} non-prod BLOCKER(s) · ${prod_only_blockers} production-only · ${warn_count} WARN · ${pass_count} PASS"
+fi
+
+if [[ "$fail_blockers" -eq 0 ]]; then
+  convergence_gate="PASS"
+else
+  convergence_gate="FAIL"
 fi
 
 cat > "$OUT/go_no_go.json" <<EOF
@@ -174,29 +270,44 @@ cat > "$OUT/go_no_go.json" <<EOF
   "counts": {
     "pass": ${pass_count},
     "warn": ${warn_count},
-    "blocker": ${fail_blockers}
+    "blocker_non_production": ${fail_blockers},
+    "blocker_production_only": ${prod_only_blockers},
+    "blocker_total": ${total_blockers}
   },
+  "convergence_gate": "${convergence_gate}",
+  "non_production_blockers": ${fail_blockers},
+  "production_only_blockers": ${prod_only_blockers},
   "verdict": "${verdict}",
   "verdict_reason": "${verdict_reason}",
-  "honest_boundary": "staging proxy checks ≠ Production GO · PI-3 P0 must close · M-00 unsigned",
+  "honest_boundary": "staging proxy checks ≠ Production GO · PI-3 P0 must close · M-00 unsigned · production_only blockers expected until prod cutover",
   "ssot": [
     "docs/runbook/PHASE3-PRODUCTION-PREPARATION.md",
     "docs/go-live-checklist.md",
-    "evidence/GO_phase2_testnet_20260526/phase3-production-prep/issues-phase3-production.md"
+    "evidence/GO_phase2_testnet_20260526/phase3-production-prep/issues-phase3-production.md",
+    "evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260701T002252Z.md"
   ]
 }
 EOF
 
 cat > "$OUT/STATUS.txt" <<EOF
 TT_PHASE3_PRODUCTION_GO_AUDIT: ${verdict}
+TT_PHASE3_CONVERGENCE_GATE: ${convergence_gate}
 at=${STAMP}
 pass=${pass_count}
 warn=${warn_count}
-blocker=${fail_blockers}
+blocker_non_production=${fail_blockers}
+blocker_production_only=${prod_only_blockers}
 reason=${verdict_reason}
 EOF
 
 echo ""
 echo "TT_PHASE3_PRODUCTION_GO_AUDIT: ${verdict}"
+echo "TT_PHASE3_CONVERGENCE_GATE: ${convergence_gate} (non_production_blockers=${fail_blockers})"
 echo "Evidence: ${OUT}"
-[[ "$verdict" == "GO" ]] && exit 0 || exit 2
+if [[ "$verdict" == "GO" ]]; then
+  exit 0
+elif [[ "$convergence_gate" == "PASS" && "${PHASE3_CONVERGENCE_RERUN:-0}" == "1" ]]; then
+  exit 0
+else
+  exit 2
+fi

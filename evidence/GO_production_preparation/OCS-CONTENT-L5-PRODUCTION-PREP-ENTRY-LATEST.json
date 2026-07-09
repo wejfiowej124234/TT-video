@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.ocs_content_l5_production_prep_entry.v1",
+  "stamp_utc": "20260704T155800Z",
+  "phase": "Production Preparation entry",
+  "prerequisite": {
+    "TT_OCS_CONTENT_L5": "CLOSED",
+    "closure_evidence": "evidence/GO_official_cold_start_dataset/ocs-content-l5/20260704T155000Z/OCS-CONTENT-L5-CLOSED.json"
+  },
+  "staging_target": "https://tt-api-staging.fly.dev",
+  "asset_baseline": {
+    "stamp": "20260704T155800Z",
+    "evidence_dir": "evidence/GO_official_cold_start_dataset/ocs-official-asset-baseline/20260704T155800Z",
+    "rebootstrap_real_content_l5_media": true,
+    "verify_pass": true,
+    "staging_bytes_match_local": true,
+    "exit_code": 0,
+    "supersedes_placeholder_baseline": "evidence/GO_official_cold_start_dataset/ocs-official-asset-baseline/20260704T085638Z",
+    "note": "Staging serves Content L5 real JPEG bytes"
+  },
+  "production_preparation": {
+    "status": "IN_PROGRESS",
+    "track": "ocs_staging_asset_rebootstrap_post_content_l5"
+  },
+  "machine_keys": {
+    "TT_OCS_CONTENT_L5": "CLOSED",
+    "TT_OCS_OFFICIAL_ASSET_BASELINE_V1": "VERIFIED",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "honest_boundary": "Production Preparation entry（② staging 真图 rebootstrap）≠ ③ Production GO · G6 blind UAT 仍属后续 ② 验收"
+}

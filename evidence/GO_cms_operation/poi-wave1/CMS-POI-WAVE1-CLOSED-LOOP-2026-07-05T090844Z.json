@@ -1,0 +1,105 @@
+{
+  "schema": "traveltrust.cms_poi_wave1_closed_loop.v1",
+  "recorded_at": "2026-07-05T09:08:44Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "wave": {
+    "id": "POI-WAVE-1-PILOT",
+    "city_zh": "东京",
+    "country_iso": "JP",
+    "matrix_ids": [
+      "PH-JP-009-ATR",
+      "PH-JP-010-ATR",
+      "PH-JP-011-ATR",
+      "PH-JP-012-ATR",
+      "PH-JP-013-ATR",
+      "PH-JP-014-FOOD",
+      "PH-JP-015-FOOD",
+      "PH-JP-016-FOOD",
+      "PH-JP-017-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-JP-009-ATR",
+      "legacy_value": "浅草寺",
+      "poi_id": "9daee02b-ea66-4327-b9b9-3bb913dd9fb7",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "hero_file": "ocs-tokyo-photo-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-009-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-010-ATR",
+      "legacy_value": "东京塔",
+      "poi_id": "0799bb32-7f2d-4f27-b936-ef8d7ec06621",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-community-media.jpg",
+      "hero_file": "ocs-tokyo-photo-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-010-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-011-ATR",
+      "legacy_value": "新宿",
+      "poi_id": "3e61c79f-43e2-46b1-b27e-bb9823ffd04a",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-community-cover.jpg",
+      "hero_file": "ocs-tokyo-photo-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-011-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-012-ATR",
+      "legacy_value": "涩谷",
+      "poi_id": "f4eff331-fbcd-4990-b083-85cdf91f2cf6",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg",
+      "hero_file": "ocs-tokyo-photo-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-012-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-013-ATR",
+      "legacy_value": "上野公园",
+      "poi_id": "1d339e96-f082-429e-9a80-1e20b1bade8d",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg",
+      "hero_file": "ocs-tokyo-photo-acquisition-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-013-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-014-FOOD",
+      "legacy_value": "寿司",
+      "poi_id": "706f45eb-72a3-4e59-b75d-7ca3ba3df21b",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-community-media.jpg",
+      "hero_file": "ocs-seoul-food-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-014-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-015-FOOD",
+      "legacy_value": "拉面",
+      "poi_id": "99277ce0-9907-46cb-90f9-43ae36c45ca1",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-community-media.jpg",
+      "hero_file": "ocs-kyoto-culture-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-015-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-016-FOOD",
+      "legacy_value": "天妇罗",
+      "poi_id": "80408978-966d-4867-8512-9a6bfd46fa0e",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-community-cover.jpg",
+      "hero_file": "ocs-kyoto-culture-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-016-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-017-FOOD",
+      "legacy_value": "居酒屋",
+      "poi_id": "314bfa9f-ec48-4a8d-8cb2-90489a1ed180",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg",
+      "hero_file": "ocs-tokyo-photo-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-017-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_WAVE1_CLOSED_LOOP": "PASS"
+}

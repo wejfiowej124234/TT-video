@@ -20,6 +20,9 @@ const FIX_FILES = [
   'frontend/components/market/MarketSubsiteFilterBar.tsx',
   'frontend/components/market/MarketSubsiteMasonry.tsx',
   'frontend/e2e/market-subsite-catalog-race-regression.spec.ts',
+  'frontend/lib/marketSubsiteFilters.ts',
+  'frontend/lib/marketHubBrowserTruth.ts',
+  'frontend/app/market/MarketPageClient.tsx',
 ];
 
 const EXPECTED = {
@@ -69,6 +72,9 @@ async function apiCounts(base) {
 function readFixMarkers() {
   const hook = fs.readFileSync(path.join(ROOT, FIX_FILES[0]), 'utf8');
   const masonry = fs.readFileSync(path.join(ROOT, FIX_FILES[2]), 'utf8');
+  const filters = fs.readFileSync(path.join(ROOT, FIX_FILES[4]), 'utf8');
+  const hubTruth = fs.readFileSync(path.join(ROOT, FIX_FILES[5]), 'utf8');
+  const hubPage = fs.readFileSync(path.join(ROOT, FIX_FILES[6]), 'utf8');
   return {
     epoch_guard: hook.includes('listingsFetchGeneration') && hook.includes('B-061'),
     layout_hydration: hook.includes('useLayoutEffect') && hook.includes('useEffectiveSubsiteCountry'),
@@ -78,9 +84,17 @@ function readFixMarkers() {
       (masonry.match(/data-listing-id=\{item\.listingId\}/g) || []).length === 1,
     e2e_dedupe: fs.readFileSync(path.join(ROOT, FIX_FILES[3]), 'utf8').includes('[...new Set(raw)]'),
     e2e_dual_target: fs.readFileSync(path.join(ROOT, FIX_FILES[3]), 'utf8').includes('MARKET_SUBSITE_RACE_TARGET'),
-    sync_effective_country: hook.includes('resolveEffectiveSubsiteCountry') || fs.readFileSync(path.join(ROOT, 'frontend/lib/marketSubsiteFilters.ts'), 'utf8').includes('resolveEffectiveSubsiteCountry'),
+    sync_effective_country: hook.includes('resolveEffectiveSubsiteCountry') || filters.includes('resolveEffectiveSubsiteCountry'),
+    explicit_save_flag: filters.includes('MARKET_SUBSITE_COUNTRY_SAVED_STORAGE') && filters.includes('hasExplicitSubsiteCountryPref'),
     browser_truth_attrs: fs.readFileSync(path.join(ROOT, 'frontend/components/market/MarketStandaloneBusinessPage.tsx'), 'utf8').includes('data-tt-subsite-country'),
+    subsite_listings_query_attr: fs.readFileSync(path.join(ROOT, 'frontend/components/market/MarketStandaloneBusinessPage.tsx'), 'utf8').includes('data-tt-subsite-listings-query'),
     e2e_browser_truth: fs.readFileSync(path.join(ROOT, FIX_FILES[3]), 'utf8').includes('data-tt-subsite-list-count'),
+    e2e_orphan_ls: fs.readFileSync(path.join(ROOT, FIX_FILES[3]), 'utf8').includes('orphan localStorage'),
+    hub_browser_truth_attrs:
+      hubPage.includes('data-tt-market-country') &&
+      hubPage.includes('data-tt-market-orders-query') &&
+      hubPage.includes('data-tt-market-guides-query'),
+    hub_query_builder: hubTruth.includes('buildMarketHubDiscoverOrdersQuery') && hubTruth.includes('buildMarketHubGuidesQuery'),
   };
 }
 

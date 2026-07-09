@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T145630Z",
+  "filename": "ocs-nyc-skyline-community-cover.jpg",
+  "row": 41,
+  "chain_id": "nyc-skyline",
+  "country_code": "US",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "brand_logos",
+      "celebrity_portraits",
+      "commercial_ad_posters",
+      "recognizable_faces"
+    ],
+    "safe_expression": "布鲁克林大桥钢索仰拍细节 · Feed 纪实 · 无人物正面/无广告"
+  },
+  "checks": {
+    "manifest_alignment": { "pass": true, "notes": "body_markdown 布鲁克林大桥到帝国大厦摄影路线 · tags 纽约/摄影/官方旅行日志" },
+    "destination_authenticity_9dim": { "pass": true, "notes": "Brooklyn Bridge 钢索+石塔仰拍 · 冷调都市" },
+    "country_consistency_us": { "pass": true, "notes": "US-only · 禁 JP/KR/TH/FR/SG 元素" },
+    "community_authenticity_plan": { "pass": true, "notes": "UGC 分享感 · 非广告海报" },
+    "surface_boundary_plan": { "pass": true, "notes": "非 Official 宽幅/Guide/Provider/Acquisition" },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row40": "钢索细节仰拍 vs Official 曼哈顿宽幅 Hero",
+      "vs_row38": "桥面细节 vs 观景台剪影 Provider",
+      "vs_row37": "建筑细节 vs 向导肖像"
+    },
+    "cross_chain_community_plan": { "pass": true, "notes": "vs 六城 Community Cover 构图各异" },
+    "nine_class_framework_frozen": true
+  }
+}

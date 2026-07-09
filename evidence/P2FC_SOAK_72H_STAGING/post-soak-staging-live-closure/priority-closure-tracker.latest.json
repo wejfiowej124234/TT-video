@@ -1,0 +1,88 @@
+{
+  "schema": "traveltrust.p2fc_priority_closure_tracker.v1",
+  "generated_at_utc": "2026-06-30T02:50:52Z",
+  "phase": "②",
+  "no_go_claim_without_runtime": true,
+  "next_blocked_step": null,
+  "steps": [
+    {
+      "id": "S0_SOAK",
+      "title": "Soak 72h → COMPLETED.json",
+      "status": "PASS",
+      "machine_line": "TT_P2FC_SOAK: COMPLETED",
+      "live_evidence": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\COMPLETED.json",
+      "blocked_by": null,
+      "complete": true
+    },
+    {
+      "id": "S1_MR12",
+      "title": "MR12 one-shot execute",
+      "status": "PASS",
+      "machine_line": "TT_P2FC_POST_SOAK_ONE_SHOT: PASS",
+      "live_evidence": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-one-shot\\one-shot.log",
+      "blocked_by": null,
+      "complete": true
+    },
+    {
+      "id": "S2_ADM_U01",
+      "title": "ADM-U01 Live six-role RBAC matrix",
+      "status": "PASS",
+      "machine_line": "ADM-U01 release_gate=GO",
+      "live_evidence": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-staging-live-closure\\adm-u01-live\\report.json",
+      "blocked_by": null,
+      "complete": true
+    },
+    {
+      "id": "S3_P0_RUNTIME",
+      "title": "P0 RBAC bypass runtime verification",
+      "status": "PASS",
+      "machine_line": "TT_P2FC_P0_RBAC_BYPASS_RUNTIME: CONFIRMED",
+      "live_evidence": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-staging-live-closure\\p0-rbac-bypass-runtime\\latest.json",
+      "blocked_by": null,
+      "complete": true
+    },
+    {
+      "id": "S4_BLOCKERS",
+      "title": "B1–B4 blockers cleared (live checkpoint)",
+      "status": "PASS",
+      "machine_line": "open_blocker_count=0",
+      "live_evidence": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-staging-live-closure\\staging-live-closure.latest.json",
+      "blocked_by": null,
+      "complete": true
+    },
+    {
+      "id": "S5_ADM_U02",
+      "title": "ADM-U02 staging 2FA/approval live",
+      "status": "PASS",
+      "machine_line": "TT_ADM_U02_STAGING_EVIDENCE: PASS",
+      "live_evidence": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-staging-live-closure\\adm-u02-live\\report.json",
+      "blocked_by": null,
+      "complete": true
+    },
+    {
+      "id": "S6_D3",
+      "title": "D3 FAIL items cleared (live evidence merge)",
+      "status": "PASS",
+      "machine_line": "D3 verdict=PASS",
+      "live_evidence": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-staging-live-closure\\web3-live-risk-convergence.latest.json",
+      "blocked_by": null,
+      "complete": true
+    },
+    {
+      "id": "S7_D124",
+      "title": "D1/D2/D4 WARN/OPEN risk convergence",
+      "status": "PASS",
+      "machine_line": "D124 open_warn_count=0",
+      "live_evidence": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-staging-live-closure\\web3-live-risk-convergence.latest.json",
+      "blocked_by": null,
+      "complete": true
+    }
+  ],
+  "runtime_adjudication": {
+    "admin_go_ssot": "TT_ADMIN_STAGING_GO_CLAIM",
+    "claim_allowed": true,
+    "parent_ssot": "TT_LIVE_CLOSURE_CHAIN_VERDICT"
+  },
+  "overall": "PASS",
+  "honest_boundary": "prep/static ≠ live GO · production_go always separate ③ gate"
+}

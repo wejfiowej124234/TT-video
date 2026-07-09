@@ -1,0 +1,28 @@
+{
+  "program": "TTG_CERT_EXECUTION",
+  "phase": "②",
+  "active_cert": 8,
+  "cert7_signoff_optional": true,
+  "hat_r1_execute": "evidence/GO_hat_r1_sepolia/20260616T063612Z/step-07-execute/tx-execute.json",
+  "cert8": {
+    "cert": 8,
+    "name": "Treasury Spend",
+    "target_tier": "OPS_DONE",
+    "mtm_ids": [
+      "CHK-CORE-08",
+      "CHK-CORE-14",
+      "CHK-FN-02",
+      "CHK-SC-04"
+    ],
+    "requires": [
+      "Cert #7 execute on-chain",
+      "HAT_R1_LIVE_WALLET_OK=1",
+      "HAT_R1_PHASE_B_PAUSED=0",
+      "Treasury propose→vote→queue (+ execute after 2nd Timelock)"
+    ],
+    "chain_script": "scripts/dev/run-cert8-hat-r1-treasury-evidence.sh",
+    "evidence_subdir": "phase-b/treasury-spend",
+    "signoff_file": "PHASE-B-TREASURY-SPEND-SIGNOFF.json"
+  },
+  "prepared_at_utc": "2026-07-08T13:02:09Z"
+}

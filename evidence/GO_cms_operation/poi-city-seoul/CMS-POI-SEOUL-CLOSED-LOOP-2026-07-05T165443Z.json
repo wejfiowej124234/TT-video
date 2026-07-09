@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T16:54:43Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "首尔",
+    "city_en": "Seoul",
+    "matrix_ids": [
+      "PH-KR-072-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-KR-072-FOOD",
+      "legacy_value": "参鸡汤",
+      "poi_id": "7eb793b6-52cc-42c8-88f7-2d64ec2c9361",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-community-cover.jpg",
+      "hero_file": "ocs-seoul-food-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-072-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

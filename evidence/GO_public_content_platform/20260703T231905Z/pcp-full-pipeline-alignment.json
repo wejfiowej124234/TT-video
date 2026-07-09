@@ -1,0 +1,412 @@
+{
+  "audit": "TT_PCP_FULL_PIPELINE_ALIGNMENT",
+  "stamp": "20260703T231905Z",
+  "pipeline_standard": "Database → PCP Governance → Public Engine Builder → Public API → Frontend",
+  "phase_0_5_sign_off": "COMPLETE",
+  "local_api": "http://127.0.0.1:8080",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "architecture_compliance": "PASS",
+  "pipeline": [
+    {
+      "domain": "community",
+      "layer": "database",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "community_posts table + migration",
+      "ref": null
+    },
+    {
+      "domain": "community",
+      "layer": "governance",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "governed_community_posts_v1 SQL view (P2)",
+      "ref": null
+    },
+    {
+      "domain": "community",
+      "layer": "builder",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "FeedBuilder · pcp/feed_builder.rs",
+      "ref": null
+    },
+    {
+      "domain": "community",
+      "layer": "public_api",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "feed · detail · profile · explore · tag stats",
+      "ref": null
+    },
+    {
+      "domain": "community",
+      "layer": "frontend",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "community routes consume /api/v1/community/*",
+      "ref": null
+    },
+    {
+      "domain": "market",
+      "layer": "database",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "guides · market_listings · discover_orders",
+      "ref": null
+    },
+    {
+      "domain": "market",
+      "layer": "governance",
+      "phase1": "FAIL",
+      "phase2": "PENDING",
+      "note": "governed_market_* SQL views (P2)",
+      "ref": null
+    },
+    {
+      "domain": "market",
+      "layer": "builder",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "MarketBuilder · pcp/market_builder.rs",
+      "ref": null
+    },
+    {
+      "domain": "market",
+      "layer": "public_api",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "GET /guides · /discover/orders · market listings",
+      "ref": null
+    },
+    {
+      "domain": "market",
+      "layer": "frontend",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "guides · market hub · subsites",
+      "ref": null
+    },
+    {
+      "domain": "provider",
+      "layer": "database",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "market_listings variant=provider",
+      "ref": null
+    },
+    {
+      "domain": "provider",
+      "layer": "governance",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "shared governed_market_listings_v1",
+      "ref": null
+    },
+    {
+      "domain": "provider",
+      "layer": "builder",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "MarketBuilder · pcp/market_builder.rs",
+      "ref": null
+    },
+    {
+      "domain": "provider",
+      "layer": "public_api",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "GET /market/provider/listings",
+      "ref": null
+    },
+    {
+      "domain": "provider",
+      "layer": "frontend",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "/market/provider",
+      "ref": null
+    },
+    {
+      "domain": "acquisition",
+      "layer": "database",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "market_listings variant=acquisition",
+      "ref": null
+    },
+    {
+      "domain": "acquisition",
+      "layer": "governance",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "shared governed_market_listings_v1",
+      "ref": null
+    },
+    {
+      "domain": "acquisition",
+      "layer": "builder",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "MarketBuilder · pcp/market_builder.rs",
+      "ref": null
+    },
+    {
+      "domain": "acquisition",
+      "layer": "public_api",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "GET /market/acquisition/listings",
+      "ref": null
+    },
+    {
+      "domain": "acquisition",
+      "layer": "frontend",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "/market/acquisition",
+      "ref": null
+    },
+    {
+      "domain": "official_guide",
+      "layer": "database",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "guides + OCS bootstrap",
+      "ref": null
+    },
+    {
+      "domain": "official_guide",
+      "layer": "governance",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "governed_market_guides_v1 + OCS tier",
+      "ref": null
+    },
+    {
+      "domain": "official_guide",
+      "layer": "builder",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "MarketBuilder · GET /guides",
+      "ref": null
+    },
+    {
+      "domain": "official_guide",
+      "layer": "public_api",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "GET /api/v1/guides",
+      "ref": null
+    },
+    {
+      "domain": "official_guide",
+      "layer": "frontend",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "/guides",
+      "ref": null
+    },
+    {
+      "domain": "campaign",
+      "layer": "database",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "ops_cold_start_campaigns + items",
+      "ref": null
+    },
+    {
+      "domain": "campaign",
+      "layer": "governance",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "governed_campaign_surfaces_v1 + governed_campaign_items_v1",
+      "ref": null
+    },
+    {
+      "domain": "campaign",
+      "layer": "builder",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "CampaignBuilder · pcp/campaign_builder.rs",
+      "ref": null
+    },
+    {
+      "domain": "campaign",
+      "layer": "public_api",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "GET /official/cold-start/surfaces/*",
+      "ref": null
+    },
+    {
+      "domain": "campaign",
+      "layer": "frontend",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "homepage · market cold-start surfaces",
+      "ref": null
+    },
+    {
+      "domain": "admin_public_content_center",
+      "layer": "database",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "display_* columns on entities",
+      "ref": null
+    },
+    {
+      "domain": "admin_public_content_center",
+      "layer": "governance",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "Public Ops write console",
+      "ref": null
+    },
+    {
+      "domain": "admin_public_content_center",
+      "layer": "builder",
+      "phase1": "PARTIAL",
+      "phase2": "PARTIAL",
+      "note": "N/A — governance write layer",
+      "ref": null
+    },
+    {
+      "domain": "admin_public_content_center",
+      "layer": "public_api",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "/admin/official/public-operations/*",
+      "ref": null
+    },
+    {
+      "domain": "admin_public_content_center",
+      "layer": "frontend",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "/admin/official/public-operations",
+      "ref": null
+    },
+    {
+      "domain": "ddg",
+      "layer": "governance",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "registry/display-data-governance.v1.yaml → PCP cross-ref",
+      "ref": null
+    },
+    {
+      "domain": "ddg",
+      "layer": "evidence_registry_runbook",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "SSOT + runbook pointers",
+      "ref": null
+    },
+    {
+      "domain": "ocs",
+      "layer": "governance",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "registry/official-cold-start-dataset.v1.yaml → PCP cross-ref",
+      "ref": null
+    },
+    {
+      "domain": "ocs",
+      "layer": "evidence_registry_runbook",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "SSOT + runbook pointers",
+      "ref": null
+    },
+    {
+      "domain": "sopcp",
+      "layer": "governance",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "registry/single-official-public-catalog-policy.v1.yaml → PCP cross-ref",
+      "ref": null
+    },
+    {
+      "domain": "sopcp",
+      "layer": "evidence_registry_runbook",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "SSOT + runbook pointers",
+      "ref": null
+    },
+    {
+      "domain": "ocip",
+      "layer": "governance",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "registry/official-catalog-identity-policy.v1.yaml → PCP cross-ref",
+      "ref": null
+    },
+    {
+      "domain": "ocip",
+      "layer": "evidence_registry_runbook",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "SSOT + runbook pointers",
+      "ref": null
+    },
+    {
+      "domain": "evidence_registry_runbook",
+      "layer": "governance",
+      "phase1": "PASS",
+      "phase2": "PASS",
+      "note": "PCP SSOT + audit scripts",
+      "ref": null
+    },
+    {
+      "domain": "_runtime",
+      "layer": "phase1_local",
+      "phase1": "SKIPPED",
+      "phase2": "SKIPPED",
+      "note": "Local API not running — static-only Phase ①",
+      "ref": null
+    },
+    {
+      "domain": "_runtime",
+      "layer": "phase2_staging",
+      "phase1": "SKIPPED",
+      "phase2": "PARTIAL",
+      "note": "Staging runtime probes",
+      "ref": null
+    }
+  ],
+  "gaps": [
+    {
+      "severity": "NON_BLOCKING",
+      "domain": "market",
+      "layer": "governance",
+      "id": "MKT-GOV-001",
+      "note": "Market governed views incomplete on static scan",
+      "fix": "Verify migration 20260704110000 + market_catalog reads",
+      "classification": "DRIFT"
+    }
+  ],
+  "fix_order": [
+    {
+      "priority": 1,
+      "severity": "NON_BLOCKING",
+      "id": "MKT-GOV-001",
+      "action": "Verify migration 20260704110000 + market_catalog reads"
+    }
+  ],
+  "summary": {
+    "blocking": 0,
+    "non_blocking": 1,
+    "pipeline_rows": 46
+  },
+  "verdict": {
+    "architecture_compliance": "PASS",
+    "phase1_local": "PASS",
+    "phase1_local_runtime": "SKIPPED",
+    "phase2_staging": "PARTIAL",
+    "overall": "PASS",
+    "sign_off_allowed": true,
+    "note": "TT_PCP_PHASE_0_5 COMPLETE — Staging Community governance loop PASS"
+  }
+}

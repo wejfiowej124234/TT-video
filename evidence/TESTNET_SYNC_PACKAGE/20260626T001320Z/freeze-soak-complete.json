@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.testnet_sync_package_freeze_soak.v1",
+  "completed_at_utc": "2026-06-26T00:13:27.312Z",
+  "git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "manual_verify_pass": true,
+  "soak_policy": "P2FC_SOAK_SUPERSEDE=1 read_only_no_redeploy"
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.phase2-testnet-full-sync.v1",
+  "stamp_utc": "20260617T011403Z",
+  "mode": "full",
+  "phase1_ssot": "frontend/evidence/GO_local_phase1/acceptance.latest.log",
+  "local_git_sha": "6c22eb56d34fdf68336afbaf55994daba0d84d5a",
+  "api_staging_git_sha": "6c22eb56d34fdf68336afbaf55994daba0d84d5a",
+  "web_staging_git_sha": "unknown",
+  "sha_match_api": "yes",
+  "next_after_pass": [
+    "bash scripts/dev/run-phase-b-daily-maintenance.sh",
+    "TL#1: bash scripts/dev/run-phase-b-post-timelock-wave1.sh",
+    "TN-P1-009 soak · TN-P1-010 indexer · CERT human"
+  ]
+}

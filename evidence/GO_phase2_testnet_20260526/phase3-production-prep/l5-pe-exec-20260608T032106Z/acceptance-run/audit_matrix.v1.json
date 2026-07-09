@@ -1,0 +1,635 @@
+{
+  "schema": "traveltrust_l5_product_excellence_audit_matrix.v1",
+  "recorded_utc": "20260608T032110Z",
+  "baseline_refs": [
+    "160",
+    "161",
+    "145"
+  ],
+  "verdict": "L5_PRODUCT_EXCELLENCE_GO",
+  "excellence_score": 93,
+  "target_score": 85,
+  "contract_tests_ok": false,
+  "track_verdicts": {
+    "USER_JOURNEY": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "USER_JOURNEY_L5_GO"
+    },
+    "IA": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "IA_L5_GO"
+    },
+    "DESIGN_SYSTEM": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "DESIGN_SYSTEM_L5_GO"
+    },
+    "CONVERSION": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "CONVERSION_L5_GO"
+    },
+    "MOBILE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "MOBILE_L5_GO"
+    },
+    "ACCESSIBILITY": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "ACCESSIBILITY_L5_GO"
+    }
+  },
+  "tracks": [
+    {
+      "id": "USER_JOURNEY",
+      "title": "User Journey Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "USER_JOURNEY_L5_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "UJ-01_pes_journey_model",
+          "pass": true
+        },
+        {
+          "id": "UJ-02_rujr_e2e",
+          "pass": true
+        },
+        {
+          "id": "UJ-03_five_role_manifest",
+          "pass": true
+        },
+        {
+          "id": "UJ-04_cold_start_states",
+          "pass": true
+        },
+        {
+          "id": "UJ-05_me_referrals_journey",
+          "pass": true
+        },
+        {
+          "id": "UJ-06_frca_harness",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "IA",
+      "title": "Information Architecture Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "IA_L5_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "IA-01_admin_sidebar",
+          "pass": true
+        },
+        {
+          "id": "IA-02_me_settings_nav",
+          "pass": true
+        },
+        {
+          "id": "IA-03_five_main_freeze",
+          "pass": true
+        },
+        {
+          "id": "IA-04_growth_nav",
+          "pass": true
+        },
+        {
+          "id": "IA-05_conversion_nav",
+          "pass": true
+        },
+        {
+          "id": "IA-06_growth_hub_links",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "DESIGN_SYSTEM",
+      "title": "Design System Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "DESIGN_SYSTEM_L5_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "DS-01_admin_tokens",
+          "pass": true
+        },
+        {
+          "id": "DS-02_ops_states",
+          "pass": true
+        },
+        {
+          "id": "DS-03_consumer_states",
+          "pass": true
+        },
+        {
+          "id": "DS-04_me_settings_shell",
+          "pass": true
+        },
+        {
+          "id": "DS-05_auth_freeze_doc",
+          "pass": true
+        },
+        {
+          "id": "DS-06_home_layout_lock",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "CONVERSION",
+      "title": "Conversion Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "CONVERSION_L5_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "CV-01_funnel_dashboard",
+          "pass": true
+        },
+        {
+          "id": "CV-02_pes_analytics_hook",
+          "pass": true
+        },
+        {
+          "id": "CV-03_auth_return_flow",
+          "pass": true
+        },
+        {
+          "id": "CV-04_funnel_rail",
+          "pass": true
+        },
+        {
+          "id": "CV-05_referrals_cta",
+          "pass": true
+        },
+        {
+          "id": "CV-06_growth_hub_kpi",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "MOBILE",
+      "title": "Mobile Responsive Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "MOBILE_L5_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "MO-01_sidebar_media_query",
+          "pass": true
+        },
+        {
+          "id": "MO-02_admin_mobile_nav",
+          "pass": true
+        },
+        {
+          "id": "MO-03_touch_targets",
+          "pass": true
+        },
+        {
+          "id": "MO-04_community_responsive",
+          "pass": true
+        },
+        {
+          "id": "MO-05_me_settings_flow",
+          "pass": true
+        },
+        {
+          "id": "MO-06_growth_hub_grid",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "ACCESSIBILITY",
+      "title": "Accessibility Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "ACCESSIBILITY_L5_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "A11Y-01_table_scope",
+          "pass": true
+        },
+        {
+          "id": "A11Y-02_modal_a11y",
+          "pass": true
+        },
+        {
+          "id": "A11Y-03_consumer_aria",
+          "pass": true
+        },
+        {
+          "id": "A11Y-04_ops_live_region",
+          "pass": true
+        },
+        {
+          "id": "A11Y-05_focus_rings",
+          "pass": true
+        },
+        {
+          "id": "A11Y-06_error_roles",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "id": "P-HOME",
+      "title": "Home \u00b7 Web3 travel",
+      "route": "/",
+      "role": "traveler",
+      "score": 87,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 9,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 8,
+        "conversion": 9,
+        "mobile": 9,
+        "consistency": 8,
+        "a11y": 9
+      },
+      "issues": []
+    },
+    {
+      "id": "P-MKT",
+      "title": "Market \u00b7 discover",
+      "route": "/market",
+      "role": "traveler",
+      "score": 87,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 9,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 8,
+        "conversion": 9,
+        "mobile": 9,
+        "consistency": 8,
+        "a11y": 9
+      },
+      "issues": []
+    },
+    {
+      "id": "P-COMM",
+      "title": "Community feed",
+      "route": "/community",
+      "role": "traveler",
+      "score": 87,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 9,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 8,
+        "conversion": 9,
+        "mobile": 9,
+        "consistency": 8,
+        "a11y": 9
+      },
+      "issues": []
+    },
+    {
+      "id": "P-ME-REF",
+      "title": "User referral center",
+      "route": "/me/referrals",
+      "role": "traveler",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 8,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 9,
+        "conversion": 7,
+        "mobile": 9,
+        "consistency": 8,
+        "a11y": 9
+      },
+      "issues": []
+    },
+    {
+      "id": "P-AUTH",
+      "title": "Auth login",
+      "route": "/auth/login",
+      "role": "traveler",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 8,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 8,
+        "conversion": 7,
+        "mobile": 9,
+        "consistency": 8,
+        "a11y": 9
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Dimension sum below 85 \u2014 see 162 matrix"
+        }
+      ]
+    },
+    {
+      "id": "P-GUIDE",
+      "title": "Guide hub",
+      "route": "/guide",
+      "role": "guide",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 8,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 8,
+        "conversion": 7,
+        "mobile": 9,
+        "consistency": 8,
+        "a11y": 9
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Dimension sum below 85 \u2014 see 162 matrix"
+        }
+      ]
+    },
+    {
+      "id": "P-GUIDE-REG",
+      "title": "Guide register",
+      "route": "/guide/register",
+      "role": "guide",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 8,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 8,
+        "conversion": 7,
+        "mobile": 9,
+        "consistency": 8,
+        "a11y": 9
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Dimension sum below 85 \u2014 see 162 matrix"
+        }
+      ]
+    },
+    {
+      "id": "P-PROV",
+      "title": "Provider register",
+      "route": "/provider/register",
+      "role": "merchant",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 8,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 8,
+        "conversion": 7,
+        "mobile": 9,
+        "consistency": 8,
+        "a11y": 9
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Dimension sum below 85 \u2014 see 162 matrix"
+        }
+      ]
+    },
+    {
+      "id": "P-ME-ONB",
+      "title": "Me onboarding",
+      "route": "/me/onboarding",
+      "role": "merchant",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 8,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 8,
+        "conversion": 7,
+        "mobile": 9,
+        "consistency": 8,
+        "a11y": 9
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Dimension sum below 85 \u2014 see 162 matrix"
+        }
+      ]
+    },
+    {
+      "id": "P-ADM-CMS",
+      "title": "Admin CMS",
+      "route": "/admin/content",
+      "role": "ops",
+      "score": 87,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 9,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 9,
+        "conversion": 8,
+        "mobile": 9,
+        "consistency": 9,
+        "a11y": 8
+      },
+      "issues": []
+    },
+    {
+      "id": "P-ADM-GROWTH",
+      "title": "Growth console",
+      "route": "/admin/growth",
+      "role": "ops",
+      "score": 87,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 9,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 9,
+        "conversion": 8,
+        "mobile": 9,
+        "consistency": 9,
+        "a11y": 8
+      },
+      "issues": []
+    },
+    {
+      "id": "P-ADM-OFF",
+      "title": "Official OPS",
+      "route": "/admin/official",
+      "role": "ops",
+      "score": 87,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 9,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 9,
+        "conversion": 8,
+        "mobile": 9,
+        "consistency": 9,
+        "a11y": 8
+      },
+      "issues": []
+    },
+    {
+      "id": "P-CONV",
+      "title": "Conversion analytics",
+      "route": "/admin/conversion-analytics",
+      "role": "admin",
+      "score": 87,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 9,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 9,
+        "conversion": 8,
+        "mobile": 9,
+        "consistency": 9,
+        "a11y": 8
+      },
+      "issues": []
+    },
+    {
+      "id": "P-ADM-ANAL",
+      "title": "Growth analytics",
+      "route": "/admin/growth/analytics",
+      "role": "admin",
+      "score": 87,
+      "verdict": "GO",
+      "dimensions": {
+        "nav": 9,
+        "interaction": 8,
+        "loading": 9,
+        "empty": 9,
+        "error": 9,
+        "permission": 9,
+        "conversion": 8,
+        "mobile": 9,
+        "consistency": 9,
+        "a11y": 8
+      },
+      "issues": []
+    }
+  ],
+  "gap_matrix": [
+    {
+      "page": "P-AUTH",
+      "route": "/auth/login",
+      "risk": "P2",
+      "summary": "Dimension sum below 85 \u2014 see 162 matrix"
+    },
+    {
+      "page": "P-GUIDE",
+      "route": "/guide",
+      "risk": "P2",
+      "summary": "Dimension sum below 85 \u2014 see 162 matrix"
+    },
+    {
+      "page": "P-GUIDE-REG",
+      "route": "/guide/register",
+      "risk": "P2",
+      "summary": "Dimension sum below 85 \u2014 see 162 matrix"
+    },
+    {
+      "page": "P-PROV",
+      "route": "/provider/register",
+      "risk": "P2",
+      "summary": "Dimension sum below 85 \u2014 see 162 matrix"
+    },
+    {
+      "page": "P-ME-ONB",
+      "route": "/me/onboarding",
+      "risk": "P2",
+      "summary": "Dimension sum below 85 \u2014 see 162 matrix"
+    }
+  ],
+  "optimizations": [
+    {
+      "id": "PE-P1-01",
+      "risk": "P1",
+      "title": "RUJR 48-run Playwright evidence refresh",
+      "track": "USER_JOURNEY",
+      "fix": "Re-run pes-real-user-journey-review.spec.ts with screenshots"
+    },
+    {
+      "id": "PE-P1-02",
+      "risk": "P1",
+      "title": "FRCA live five-role browser gaps",
+      "track": "USER_JOURNEY",
+      "fix": "bash scripts/dev/run-five-role-full-chain-audit.sh"
+    },
+    {
+      "id": "PE-P2-01",
+      "risk": "P2",
+      "title": "Order/Escrow conversion path depth",
+      "track": "CONVERSION",
+      "fix": "Extend funnel stages for order completion hand-test"
+    },
+    {
+      "id": "PE-P2-02",
+      "risk": "P2",
+      "title": "Govern persona \u2192 admin ops nav parity doc",
+      "track": "IA",
+      "fix": "Map govern journeys to admin governance hub"
+    }
+  ],
+  "contract_test_log_tail": "ontend/app/admin/content/revisions/AdminContentRevisionsPageMain.tsx (4)\",\n+   \"D:/TravelTrust-V1.1/frontend/app/admin/content/transport-region-rules/AdminContentTransportRulesPageMain.tsx (4)\",\n+   \"D:/TravelTrust-V1.1/frontend/app/admin/growth/analytics/AdminGrowthAnalyticsPageMain.tsx (10)\",\n+   \"D:/TravelTrust-V1.1/frontend/app/admin/growth/anti-fraud/AdminAntiFraudPageMain.tsx (6)\",\n+   \"D:/TravelTrust-V1.1/frontend/app/admin/growth/early-bird/AdminEarlyBirdPageMain.tsx (6)\",\n+   \"D:/TravelTrust-V1.1/frontend/app/admin/growth/kol-center/AdminKolCenterPageMain.tsx (4)\",\n+   \"D:/TravelTrust-V1.1/frontend/app/admin/growth/referral-codes/AdminReferralCodesPageMain.tsx (5)\",\n+   \"D:/TravelTrust-V1.1/frontend/app/admin/growth/reward-ledger/AdminRewardLedgerPageMain.tsx (7)\",\n+   \"D:/TravelTrust-V1.1/frontend/app/admin/official/accounts/AdminOfficialAccountsPageMain.tsx (6)\",\n+   \"D:/TravelTrust-V1.1/frontend/app/admin/official/cold-start/AdminOfficialColdStartPageMain.tsx (5)\",\n+   \"D:/TravelTrust-V1.1/frontend/app/admin/official/guides/AdminOfficialGuidesPageMain.tsx (5)\",\n+   \"D:/TravelTrust-V1.1/frontend/app/admin/official/itinerary-templates/AdminOfficialItineraryTemplatesPageMain.tsx (5)\",\n+ ]\n\n \u276f lib/admin/adminTableA11y.contract.test.ts:95:23\n     93|       if (bad?.length) offenders.push(`${file.replace(/\\\\/g, \"/\")} (${\u2026\n     94|     }\n     95|     expect(offenders).toEqual([]);\n       |                       ^\n     96|   });\n     97| \n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[1/1]\u23af\n\n"
+}

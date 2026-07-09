@@ -1,0 +1,97 @@
+{
+  "changes": [
+    {
+      "id": "MR-01",
+      "priority": 1,
+      "change": "Apply + deploy meta-availability-hotfix.patch only (Wave0)",
+      "artifacts": [
+        "evidence/GO_phase2_deploy_backlog/meta-availability-hotfix.patch",
+        "deploy/fly/tt-api-staging/fly.toml REQUEST_TIMEOUT_SECS=120",
+        "frontend/app/meta/route.ts META_ROUTE_FETCH_TIMEOUT_MS=130000"
+      ],
+      "addresses_fc": [
+        "FC-01_TIMEOUT_MISMATCH"
+      ],
+      "success_uplift_est": "+25% meta_availability phase",
+      "deploy_scope": "tt-api-staging + tt-web-staging (hotfix files only)"
+    },
+    {
+      "id": "MR-02",
+      "priority": 2,
+      "change": "Defer itineraries.rs from initial wave1 deploy",
+      "artifacts": [
+        "crates/api/src/routes/itineraries.rs"
+      ],
+      "addresses_fc": [
+        "FC-02_ITINERARIES_HUB",
+        "FC-03_LARGE_DIFF_BLOB"
+      ],
+      "success_uplift_est": "+27% wave1_api_deploy phase",
+      "deploy_scope": "wave1 subset without Δ195 hub"
+    },
+    {
+      "id": "MR-03",
+      "priority": 3,
+      "change": "Capture fly-rollback-snapshot immediately pre-wave1",
+      "artifacts": [
+        "post-soak-one-shot/fly-rollback-snapshot.json"
+      ],
+      "addresses_fc": [
+        "FC-02_ITINERARIES_HUB",
+        "FC-03_LARGE_DIFF_BLOB"
+      ],
+      "success_uplift_est": "recovery not success — limits blast radius",
+      "deploy_scope": "read-only preflight (already in one-shot step 2)"
+    },
+    {
+      "id": "MR-04",
+      "priority": 4,
+      "change": "Verify REQUEST_TIMEOUT_SECS live before meta --strict",
+      "artifacts": [
+        "curl tt-api-staging /meta/build + /meta probe"
+      ],
+      "addresses_fc": [
+        "FC-01_TIMEOUT_MISMATCH"
+      ],
+      "success_uplift_est": "+15% g02_deep_gate conditional on meta",
+      "deploy_scope": "read-only gate between step 5 and 6"
+    }
+  ],
+  "recommended_core": [
+    {
+      "id": "MR-01",
+      "priority": 1,
+      "change": "Apply + deploy meta-availability-hotfix.patch only (Wave0)",
+      "artifacts": [
+        "evidence/GO_phase2_deploy_backlog/meta-availability-hotfix.patch",
+        "deploy/fly/tt-api-staging/fly.toml REQUEST_TIMEOUT_SECS=120",
+        "frontend/app/meta/route.ts META_ROUTE_FETCH_TIMEOUT_MS=130000"
+      ],
+      "addresses_fc": [
+        "FC-01_TIMEOUT_MISMATCH"
+      ],
+      "success_uplift_est": "+25% meta_availability phase",
+      "deploy_scope": "tt-api-staging + tt-web-staging (hotfix files only)"
+    },
+    {
+      "id": "MR-02",
+      "priority": 2,
+      "change": "Defer itineraries.rs from initial wave1 deploy",
+      "artifacts": [
+        "crates/api/src/routes/itineraries.rs"
+      ],
+      "addresses_fc": [
+        "FC-02_ITINERARIES_HUB",
+        "FC-03_LARGE_DIFF_BLOB"
+      ],
+      "success_uplift_est": "+27% wave1_api_deploy phase",
+      "deploy_scope": "wave1 subset without Δ195 hub"
+    }
+  ],
+  "combined_addresses": [
+    "FC-01_TIMEOUT_MISMATCH",
+    "FC-02_ITINERARIES_HUB",
+    "FC-03_LARGE_DIFF_BLOB"
+  ],
+  "note": "MR-01+MR-02 = smallest deploy surface for Wave1→G02→Graduation pass"
+}

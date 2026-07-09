@@ -1,0 +1,130 @@
+{
+  "schema": "traveltrust.cms_city_hero_wave1_tokyo_implementation_plan_evidence.v1",
+  "recorded_at_utc": "2026-07-07T12:43:36.987Z",
+  "version": "1.0.0",
+  "status": "PLAN_ONLY",
+  "TT_CMS_CITY_HERO_WAVE1_TOKYO_IMPLEMENTATION_PLAN": "PLAN_COMPLETE",
+  "TT_CMS_CITY_HERO_WAVE1_TOKYO": "PENDING_IMPLEMENTATION",
+  "acceptance_key_note": "TT_CMS_CITY_HERO_WAVE1_TOKYO: PASS only after WP0–WP6 implementation + verify",
+  "upstream": {
+    "contract_review": "PASS",
+    "runtime_contract": "data/catalog/city-hero-runtime-contract.v1.yaml",
+    "plan_yaml": "data/catalog/city-hero-wave1-tokyo-implementation-plan.v1.yaml",
+    "runbook": "docs/runbook/TT-CMS-CITY-HERO-WAVE1-TOKYO-IMPLEMENTATION-PLAN.md"
+  },
+  "wave1_scope": {
+    "matrix_id": "CH-JP-TOKYO-001",
+    "asset_key": "city_hero_tokyo",
+    "fallback_key": "hero_japan",
+    "city_slug": "tokyo",
+    "country_iso": "JP"
+  },
+  "work_packages": [
+    {
+      "id": "WP0",
+      "status": "PLANNED",
+      "implementation": "NOT_STARTED"
+    },
+    {
+      "id": "WP1",
+      "status": "PLANNED",
+      "implementation": "NOT_STARTED"
+    },
+    {
+      "id": "WP2",
+      "status": "PLANNED",
+      "implementation": "NOT_STARTED"
+    },
+    {
+      "id": "WP3",
+      "status": "PLANNED",
+      "implementation": "NOT_STARTED"
+    },
+    {
+      "id": "WP4",
+      "status": "PLANNED",
+      "implementation": "NOT_STARTED"
+    },
+    {
+      "id": "WP5",
+      "status": "PLANNED",
+      "implementation": "NOT_STARTED"
+    },
+    {
+      "id": "WP6",
+      "status": "PLANNED",
+      "implementation": "NOT_STARTED"
+    }
+  ],
+  "implementation_targets": {
+    "admin_allowlist": [
+      "crates/api/src/db/catalog_ops_admin.rs"
+    ],
+    "api": [
+      "crates/api/src/routes/catalog/handlers.rs",
+      "crates/api/src/db/catalog.rs"
+    ],
+    "db_migration": [
+      "crates/api/migrations/*_cms_city_hero_asset_kind.sql"
+    ],
+    "catalog_binding": {
+      "asset_kind": "city_hero",
+      "stock_pool_key": "city_hero_tokyo",
+      "country_iso": "JP",
+      "city_slug": "tokyo"
+    },
+    "runtime": [
+      "frontend/lib/catalogApi/resolveCityHero.ts",
+      "frontend/lib/catalogApi/useCityHeroUrl.ts"
+    ],
+    "consumers": {
+      "home": "frontend/components/landing/LandingHomeAmbientBackdrop.tsx",
+      "travel": "frontend/components/traveltrust/cinematic/TravelTrustPageCinematicCanvas.tsx"
+    },
+    "verify": "scripts/dev/run-cms-content-l5-city-hero-verify.cjs",
+    "evidence_paths": {
+      "row": "evidence/GO_cms_content_l5/city-hero/rows/CH-JP-TOKYO-001.EVIDENCE.json",
+      "latest": "evidence/GO_cms_operation/city-hero/CMS-CITY-HERO-VERIFY-LATEST.json",
+      "closure": "evidence/GO_cms_operation/city-hero/CMS-CITY-HERO-WAVE1-TOKYO-CLOSURE-LATEST.json"
+    }
+  },
+  "evidence_schema": {
+    "family_verify": "traveltrust.cms_p1_family_verify.v1",
+    "row_key": "TT_CMS_CITY_HERO_ROW_VERIFY",
+    "wave1_key": "TT_CMS_CITY_HERO_WAVE1_TOKYO"
+  },
+  "p1_gates_wave1": [
+    "catalog_ready",
+    "runtime_ready",
+    "consumer_ready",
+    "verify_pass",
+    "evidence_pass",
+    "l5_pass"
+  ],
+  "staging_baseline": {
+    "city_hero_jp_tokyo": {
+      "ok": true,
+      "status": 200,
+      "count": 0
+    },
+    "landing_ambient_jp": {
+      "ok": true,
+      "status": 200,
+      "count": 1
+    }
+  },
+  "untouched": [
+    "registry",
+    "ownership_matrix",
+    "p1_standard",
+    "brief",
+    "matrix",
+    "runtime_contract",
+    "admin_code",
+    "api_code",
+    "runtime_code",
+    "frontend_code",
+    "asset_upload"
+  ],
+  "next_step": "Execute WP0 → WP6 per runbook · Ops publish tokyo asset · verify → TT_CMS_CITY_HERO_WAVE1_TOKYO: PASS"
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "traveltrust_b480_prod_fault_injection_acceptance.v1",
+  "topology": {
+    "lb_base": "http://127.0.0.1:8080",
+    "note": "多节点 / 限流 / 熔断在 LB 与 API 侧；故障注入见 TT-B480。"
+  },
+  "segments": [
+    {
+      "segment_id": "normal",
+      "started_at": "2026-06-08T07:10:04.226178+00:00",
+      "ended_at": "2026-06-08T07:10:16.320030+00:00",
+      "duration_sec": 12.094,
+      "requests": {
+        "total": 1250,
+        "ok_2xx": 1250,
+        "r429": 0,
+        "r5xx": 0,
+        "other_err": 0
+      },
+      "http_error_ratio": 0.0,
+      "ratio_429": 0.0,
+      "ratio_5xx": 0.0,
+      "peak_utilization_ratio": null,
+      "pool_acquire_timeout_delta": null
+    },
+    {
+      "segment_id": "fault_db_latency",
+      "started_at": "2026-06-08T07:10:16.564544+00:00",
+      "ended_at": "2026-06-08T07:10:28.682579+00:00",
+      "duration_sec": 12.118,
+      "requests": {
+        "total": 1219,
+        "ok_2xx": 1219,
+        "r429": 0,
+        "r5xx": 0,
+        "other_err": 0
+      },
+      "http_error_ratio": 0.0,
+      "ratio_429": 0.0,
+      "ratio_5xx": 0.0,
+      "peak_utilization_ratio": null,
+      "pool_acquire_timeout_delta": null
+    },
+    {
+      "segment_id": "recovery",
+      "started_at": "2026-06-08T07:10:30.909939+00:00",
+      "ended_at": "2026-06-08T07:10:42.960873+00:00",
+      "duration_sec": 12.051,
+      "requests": {
+        "total": 1310,
+        "ok_2xx": 1310,
+        "r429": 0,
+        "r5xx": 0,
+        "other_err": 0
+      },
+      "http_error_ratio": 0.0,
+      "ratio_429": 0.0,
+      "ratio_5xx": 0.0,
+      "peak_utilization_ratio": null,
+      "pool_acquire_timeout_delta": null
+    }
+  ],
+  "aggregate": {
+    "recovery_time_sec": 2.22736,
+    "fault_segments_observed": [
+      "fault_db_latency"
+    ]
+  },
+  "gate_file": "config/b480_prod_fault_slo_gate.v1.json",
+  "verdict": "PASS",
+  "fail_reasons": []
+}

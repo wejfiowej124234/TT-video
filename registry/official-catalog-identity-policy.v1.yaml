@@ -1,0 +1,173 @@
+# Official Catalog Identity Policy (OCIP) · SSOT
+# Runbook: docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md#official-catalog-identity-policy
+# Companion: registry/single-official-public-catalog-policy.v1.yaml (SOPCP)
+
+schema: traveltrust.official_catalog_identity_policy.v1
+version: 1
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_OFFICIAL_CATALOG_IDENTITY_POLICY: ENFORCED
+  TT_CANONICAL_IDENTITY_IMMUTABLE: true
+
+public_content_platform:
+  registry: registry/public-content-platform.v1.yaml
+  runbook: docs/runbook/TT-PUBLIC-CONTENT-PLATFORM.md
+  pcp_role: PCP Governance · Canonical Identity Policy
+  note: Subsumed under PCP — policy ENFORCED unchanged
+
+# ── Enterprise layer stack ────────────────────────────────────────────
+#
+#   Official Dataset (OCS manifest)
+#        ↓
+#   Canonical Identity (immutable keys + UUIDs)
+#        ↓
+#   Mutable Content (bio · price · media · tags)
+#        ↓
+#   Public Catalog (SOPCP — one visible baseline)
+#
+# NOT: Official Dataset → Create New → Create New → Create New
+
+companion_policies:
+  public_catalog: registry/single-official-public-catalog-policy.v1.yaml
+  dataset: registry/official-cold-start-dataset.v1.yaml
+
+canonical_identity:
+  immutable: true
+  description: >
+    Once OCS apply assigns a runtime UUID to a canonical logical key, that UUID is the
+    permanent identity for Campaign · Community · Orders · Reviews · Admin links.
+    Operations mutate content fields only — never re-INSERT a replacement entity for the same chain.
+
+  logical_keys:
+    source: data/official-cold-start/dataset.v1.json
+    chain_id: chains[].id
+    examples: [tokyo-photo, kyoto-culture, seoul-night]
+    guide_slug: chains[].guide.slug
+    provider_slug: chains[].provider.slug
+    acquisition_slug: chains[].acquisition.slug
+    campaign_id: campaigns[].id
+    ops_account_slug: ops_accounts[].slug
+
+  state_map_keys:
+    source: evidence/GO_official_cold_start_dataset/<UTC>/state.json
+    patterns:
+      guide: "guide:{chain_id}"
+      provider_listing: "provider:{chain_id}"
+      acquisition_listing: "acquisition:{chain_id}"
+      official_guide: "official_guide:{chain_id}"
+      campaign: "{campaign_id}"
+      ops_account: "{ops_slug}"
+    example_tokyo:
+      chain_id: tokyo-photo
+      guide_slug: tokyo-photo-guide
+      provider_slug: tokyo-photo-studio
+      acquisition_slug: tokyo-lens-bounty
+      state_keys:
+        - guide:tokyo-photo
+        - provider:tokyo-photo
+        - acquisition:tokyo-photo
+        - official_guide:tokyo-photo
+
+  runtime_uuid:
+    assigned_at: first_successful_ocs_apply
+    stored_in: state.json
+    rule: never_change_without_migration
+    downstream_refs:
+      - campaigns.item_ref_id
+      - orders.guide_id
+      - reviews.target_id
+      - community_posts
+      - admin_public_operations_publish_queue
+      - cold_start_surfaces
+
+mutable_content:
+  description: Fields operations may update on the SAME canonical UUID
+  guides:
+    - bio
+    - public_title
+    - avatar_url
+    - hourly_rate
+    - languages
+    - service_types
+    - tags
+    - display_priority
+    - featured
+    - video_url
+  provider_listings:
+    - payload.title
+    - payload.description
+    - payload.price_usdc
+    - payload.cover_url
+    - payload.media
+    - display_priority
+    - featured
+  acquisition_listings:
+    - payload.title
+    - payload.description
+    - payload.bounty_min_usdc
+    - payload.bounty_max_usdc
+    - payload.cover_url
+    - display_priority
+  official_guides:
+    - title
+    - body
+    - cover_url
+    - tags
+    - destination
+  campaigns:
+    - name
+    - surfaces
+    - item_sort_order
+    - schedule
+  note: Changing mutable fields does NOT require new UUID or re-apply of the chain
+
+immutable_identity_fields:
+  description: Must not change for an established OCS chain without formal migration
+  - runtime_uuid
+  - chain_id
+  - manifest_slug_per_entity_type
+  - ocs_account_email_slug
+  - city_country_chain_anchor
+  - state_map_key
+
+forbidden_operations:
+  - insert_second_guide_for_same_chain_id
+  - insert_second_provider_for_same_chain_id
+  - insert_second_acquisition_for_same_chain_id
+  - replace_uuid_in_state_json_without_migration
+  - publish_parallel_city_chain_alongside_ocs
+  - rerun_ocs_orchestrator_that_creates_new_uuids_when_state_key_exists
+
+orchestrator_contract:
+  script: scripts/dev/run-official-cold-start-dataset.cjs
+  idempotency: state_map_key_hit_skip_create
+  on_rerun: reuse_existing_uuid_from_state_json
+  align_with: CLOSED_UNLESS_TOUCHED
+
+operational_playbook:
+  correct:
+    - "PATCH guide profile · rates · avatar for guide:tokyo-photo UUID"
+    - "PATCH market listing payload for provider:tokyo-photo UUID"
+    - "Update campaign copy while item_ref_id unchanged"
+  incorrect:
+    - "POST /guides new row for 东京 because bio changed"
+    - "Delete tokyo guide and create 东京摄影师2 with new UUID"
+    - "Re-run OCS apply to regenerate all entities on routine release"
+
+audit:
+  script: scripts/dev/audit-official-catalog-identity.cjs
+  workflow: registry/traveltrust-operations-workflow.v1.yaml#cross_domain_entity_flows.guide_provider_acquisition
+  checks:
+    - state_json_uuid_still_live_on_api
+    - no_orphan_state_keys
+    - campaign_items_resolve_to_state_uuids
+    - public_catalog_uuids_subset_of_state_ocs
+  does_not_require: new_entity_creation
+
+latest_staging_audit:
+  stamp: "20260703T054700Z"
+  verdict: PASS
+  evidence:
+    json: evidence/GO_official_cold_start_dataset/20260703T044855Z/official-catalog-identity-audit.json
+  signoff: evidence/manual-uat/signoff/OFFICIAL-CATALOG-IDENTITY-POLICY-SIGNOFF-20260703T054700Z.md

@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_aggregate.v1",
+  "stamp_utc": "20260704T131530Z",
+  "matrix_rows_reviewed": 14,
+  "TT_DESTINATION_AUTHENTICITY_AGGREGATE": "PASS",
+  "country_isolation": { "JP": 12, "KR": 2 },
+  "gate_to_row15": "PASS"
+}

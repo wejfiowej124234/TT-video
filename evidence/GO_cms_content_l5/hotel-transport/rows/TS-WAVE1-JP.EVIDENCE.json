@@ -1,0 +1,48 @@
+{
+  "schema": "traveltrust.cms_phase1_single_asset_evidence.v1",
+  "product_name": "Transport Stock",
+  "matrix_id": "TS-WAVE1-JP",
+  "scaffolded_at_utc": "2026-07-05T09:21:22Z",
+  "step_1_brief_review": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "reviewed_at_utc": "2026-07-05T09:21:22Z"
+  },
+  "step_2_designer_upload": {
+    "status": "COMPLETE",
+    "catalog_asset_id": "39b163a6-62a1-4034-9bb6-56ec9d1e9740",
+    "uploaded_at_utc": "2026-07-05T09:21:22Z",
+    "notes": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg"
+  },
+  "step_3_cms_review": {
+    "status": "COMPLETE",
+    "gates": {
+      "cms_review": "PASS",
+      "destination_authenticity": "PASS",
+      "brand_consistency": "PASS"
+    }
+  },
+  "step_4_catalog_publish": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "published_at_utc": "2026-07-05T09:21:22Z"
+  },
+  "step_5_verify": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "verified_at_utc": "2026-07-05T09:21:22Z"
+  },
+  "step_6_evidence": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "completed_at_utc": "2026-07-05T09:21:22Z"
+  },
+  "matrix_snapshot": {
+    "matrix_row_status": "pass",
+    "asset_lifecycle": "live",
+    "current_source": "catalog_api",
+    "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg"
+  },
+  "TT_CMS_HOTEL_TRANSPORT_ROW_VERIFY": "PASS",
+  "TT_CMS_PHASE1_SINGLE_ASSET_ROW": "COMPLETE"
+}

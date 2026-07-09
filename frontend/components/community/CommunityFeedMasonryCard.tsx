@@ -8,7 +8,6 @@ import type { CommunityFeedCardAuthorFollow } from "@/components/community/Commu
 import { communityCardLinkFocus } from "@/lib/communityA11yFocus";
 import { useCommunityFeedCardVideoAutoplay } from "@/components/community/CommunityFeedVideoAutoplayContext";
 import {
-  communityFeedMasonryImageIsTiny,
   communityFeedMasonryPrimeVideoPreviewFrame,
 } from "@/components/community/communityFeedMasonryMediaDisplay";
 import {
@@ -27,6 +26,8 @@ import { CommunityFeedMasonryMediaFallback } from "@/components/community/Commun
 import { CommunityFeedMasonryAdBadge } from "@/components/community/CommunityFeedMasonryAdBadge";
 import { communityFeedMasonryCardViewModel } from "@/components/community/communityFeedMasonryCardViewModel";
 import { communityFeedSocialCountFormat } from "@/components/community/communityFeedSocialCountFormat";
+import { l5CardMediaGradientShellClass } from "@/lib/l5CardMediaPlaceholder";
+import { useL5CardMediaThumbReveal } from "@/lib/useL5CardMediaThumbReveal";
 
 export type CommunityFeedMasonryCardProps = {
   post: CommunityPost;
@@ -83,22 +84,31 @@ export function CommunityFeedMasonryCard({
   const [mediaLoaded, setMediaLoaded] = useState(false);
   const [mediaError, setMediaError] = useState(false);
   const [mediaRetryKey, setMediaRetryKey] = useState(0);
-  const [thumbIsTiny, setThumbIsTiny] = useState(false);
+  const thumbReveal = useL5CardMediaThumbReveal(thumbSrc);
 
   const handleMediaRetry = () => {
-    setMediaError(false);
-    setMediaLoaded(false);
+    if (isVideoPost) {
+      setMediaError(false);
+      setMediaLoaded(false);
+    } else {
+      thumbReveal.resetForRetry();
+    }
     setMediaRetryKey((k) => k + 1);
   };
+
+  const imageMediaLoaded = isVideoPost ? mediaLoaded : thumbReveal.mediaLoaded;
+  const imageMediaError = isVideoPost ? mediaError : thumbReveal.mediaError;
+  const imageThumbIsTiny = isVideoPost ? false : thumbReveal.thumbIsTiny;
 
   const hasRenderableMedia = Boolean(videoSrc || thumbSrc);
   const showEmptyMediaFallback = !isTextOnly && !hasRenderableMedia;
 
   useEffect(() => {
-    setMediaLoaded(false);
-    setMediaError(false);
-    setThumbIsTiny(false);
-  }, [post.id, videoSrc, thumbSrc]);
+    if (isVideoPost) {
+      setMediaLoaded(false);
+      setMediaError(false);
+    }
+  }, [post.id, videoSrc, isVideoPost]);
 
   useEffect(() => {
     if (!videoSrc || mediaLoaded || mediaError) return;
@@ -171,8 +181,9 @@ export function CommunityFeedMasonryCard({
 
   const showShimmer =
     !isTextOnly &&
-    !mediaError &&
-    !mediaLoaded &&
+    !imageMediaError &&
+    !imageThumbIsTiny &&
+    !imageMediaLoaded &&
     hasRenderableMedia &&
     !showEmptyMediaFallback &&
     !isVideoPost;
@@ -211,25 +222,40 @@ export function CommunityFeedMasonryCard({
               <CommunityFeedMasonryMediaFallback t={t} isVideo postType={post.type} loading />
             ) : null}
 
-            {mediaError && !isTextOnly ? (
+            {imageMediaError && !isTextOnly ? (
               <CommunityFeedMasonryMediaFallback
                 t={t}
                 isVideo={isVideoPost}
                 postType={post.type}
                 onRetry={handleMediaRetry}
+                fallbackSeed={post.id}
+              />
+            ) : null}
+
+            {imageThumbIsTiny && !imageMediaError && !isTextOnly ? (
+              <CommunityFeedMasonryMediaFallback
+                t={t}
+                isVideo={isVideoPost}
+                postType={post.type}
+                fallbackSeed={post.id}
               />
             ) : null}
 
             {showEmptyMediaFallback ? (
-              <CommunityFeedMasonryMediaFallback t={t} isVideo={isVideoPost} postType={post.type} />
+              <CommunityFeedMasonryMediaFallback
+                t={t}
+                isVideo={isVideoPost}
+                postType={post.type}
+                fallbackSeed={post.id}
+              />
             ) : null}
 
-            {!mediaError && !showEmptyMediaFallback && (
+            {!imageMediaError && !imageThumbIsTiny && !showEmptyMediaFallback && (
               <div
                 className={`${TT_COMMUNITY_FEED_ACTION.masonryCardMediaInner} ${TT_COMMUNITY_FEED_L5.masonryMediaReveal} ${
                   showVideoLoading ? "opacity-0" : ""
                 }`}
-                data-media-loaded={mediaLoaded || isTextOnly ? "true" : "false"}
+                data-media-loaded={imageMediaLoaded || isTextOnly ? "true" : "false"}
               >
                 {videoSrc ? (
                   <>
@@ -265,25 +291,26 @@ export function CommunityFeedMasonryCard({
                     ) : null}
                   </>
                 ) : thumbSrc ? (
-                  // eslint-disable-next-line @next/next/no-img-element -- 上传/MinIO 直链；1×1 烟测图须原生 onLoad naturalWidth
-                  <img
-                    key={`${post.id}-img-${mediaRetryKey}`}
-                    src={thumbSrc}
-                    alt={displayTitle.slice(0, 40)}
-                    className={`absolute inset-0 h-full w-full ${
-                      thumbIsTiny ? "object-contain bg-ink-950/95 p-6" : "object-cover"
-                    }`}
-                    loading="lazy"
-                    decoding="async"
-                    onLoad={(e) => {
-                      const img = e.currentTarget;
-                      setThumbIsTiny(
-                        communityFeedMasonryImageIsTiny(img.naturalWidth, img.naturalHeight),
-                      );
-                      setMediaLoaded(true);
-                    }}
-                    onError={() => setMediaError(true)}
-                  />
+                  <>
+                    <div
+                      aria-hidden
+                      className={`absolute inset-0 ${l5CardMediaGradientShellClass(post.id)}`}
+                    />
+                    {/* eslint-disable-next-line @next/next/no-img-element -- tiny 烟测图须 native onLoad naturalWidth */}
+                    <img
+                      key={`${post.id}-img-${mediaRetryKey}`}
+                      ref={thumbReveal.imgRef}
+                      src={thumbReveal.displaySrc}
+                      alt={displayTitle.slice(0, 40)}
+                      className={`absolute inset-0 h-full w-full object-cover motion-safe:transition-opacity motion-safe:duration-200 ${
+                        thumbReveal.mediaLoaded ? "opacity-100" : "opacity-0"
+                      }`}
+                      loading="lazy"
+                      decoding="async"
+                      onLoad={thumbReveal.onLoad}
+                      onError={thumbReveal.onError}
+                    />
+                  </>
                 ) : isTextOnly ? (
                   <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-ink-900 via-ink-800/95 to-ink-800/80 p-3">
                     <span className="mb-1 text-[0.65rem] font-medium text-ref-sun">
@@ -305,14 +332,14 @@ export function CommunityFeedMasonryCard({
               <span className={TT_COMMUNITY_FEED_L5.masonryShowcaseBadge}>{t("community_feed_showcase_badge")}</span>
             ) : null}
 
-            {vm.location && !mediaError && !isTextOnly && !showEmptyMediaFallback ? (
+            {vm.location && !imageMediaError && !isTextOnly && !showEmptyMediaFallback ? (
               <CommunityFeedMasonryLocationPill
                 location={vm.location}
                 approxHint={t("community_feed_distance_approx_hint")}
               />
             ) : null}
 
-            {!vm.location && !isTextOnly && !mediaError && !showEmptyMediaFallback ? (
+            {!vm.location && !isTextOnly && !imageMediaError && !showEmptyMediaFallback ? (
               <div className={TT_COMMUNITY_FEED_ACTION.masonryMediaOverlay} aria-hidden />
             ) : null}
 

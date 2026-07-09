@@ -1,0 +1,14 @@
+{
+  "baseline_id": "GOV-FREEZE-V2-CLEAN-BASELINE",
+  "stamp_utc": "20260616T042337Z",
+  "verdict": "PASS",
+  "v2_extra_checks": 6,
+  "addresses": {
+    "timelock": "0x462c2351971707A8CEEb3ce789F268B8326C76a0",
+    "governor": "0xd5225bA81Af40600c9802d20888898193861f161",
+    "treasury_p4_cap": "0xFA0796236aa350342Ee71853c1d5593F48e55090",
+    "primary_market": "0xC77F717C1C98d460e006266ecb20D870D05CB5C1",
+    "seat_registry": "0x87c77986C7de47131D02A6407308b974324cc6Dc",
+    "stake_pool_proxy": "0xBf1F5B8c5b8A1cFC8E4458Eb43C1a0ab24012806"
+  }
+}

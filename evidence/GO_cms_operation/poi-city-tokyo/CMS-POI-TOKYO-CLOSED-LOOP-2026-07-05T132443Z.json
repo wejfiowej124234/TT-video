@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T13:24:43Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "东京",
+    "city_en": "Tokyo",
+    "matrix_ids": [
+      "PH-JP-012-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-JP-012-ATR",
+      "legacy_value": "涩谷",
+      "poi_id": "f4eff331-fbcd-4990-b083-85cdf91f2cf6",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg",
+      "hero_file": "ocs-tokyo-photo-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-012-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

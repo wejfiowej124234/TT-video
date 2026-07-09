@@ -1,0 +1,10 @@
+{
+  "verdict": "PASS",
+  "probes": [
+    {
+      "probe_id": "pg.skip",
+      "status": "PASS",
+      "notes": "skipped"
+    }
+  ]
+}

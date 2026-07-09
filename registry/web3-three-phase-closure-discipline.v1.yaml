@@ -1,0 +1,138 @@
+# Web3 Three-Phase Closure Discipline · Machine SSOT
+#
+# Web3-specific pipeline nested under Phase ②-D (Web3 Lifecycle Validation).
+# Phase ② TOTAL name: Staging / Sepolia Production Validation
+#   → registry/phase2-staging-sepolia-production-validation.v1.yaml
+#
+# Pipeline after Phase ②-F Exit Review:
+#   Phase ③ Deployment Prerequisite Review → Web3 Freeze → Mainnet Deployment Package → Phase ③ → Mainnet Validation
+
+schema: traveltrust.web3_three_phase_closure_discipline.v1
+version: 4
+effective_utc: "2026-07-08"
+machine_key: TT_WEB3_THREE_PHASE_CLOSURE
+
+phase_2_parent:
+  name: Staging / Sepolia Production Validation
+  ssot: registry/phase2-staging-sepolia-production-validation.v1.yaml
+  runbook: docs/runbook/PHASE2-STAGING-SEPOLIA-PRODUCTION-VALIDATION-V1.md
+  orchestrator: scripts/dev/run-phase2-production-validation.cjs
+  sub_tracks: [2A, 2B, 2C, 2D, 2E, 2F]
+  web3_sub_track: 2D
+
+current_active_phases: [1, 2]
+current_production_scope: PRODUCTION_SCOPE_SEPOLIA
+current_production_chain_id: "11155111"
+phase3_mainnet_authorized: false
+
+phase_discipline:
+  phase_1_development:
+    allowed: [development, new_features, bug_fixes]
+  phase_2_staging_sepolia_production_validation:
+    allowed: [validation, bug_fixes, evidence, security, uat, protocol_alignment]
+    forbidden: [new_features, mainnet_broadcast]
+    note: Full surface validation — website · admin · data · UAT · Web3 (②-D) · security
+  phase_3_production_deployment:
+    allowed: [deploy_from_package, validate, rollback, production_ops]
+    forbidden: [new_features, development]
+
+anti_patterns_forbidden:
+  - id: RULE-DEPLOY-001
+    statement: FORBIDDEN — Sepolia param swap to mainnet without Exit Review + Web3 Freeze + Package
+  - id: RULE-PH2-001
+    statement: Every mainnet Web3 feature MUST have Sepolia on-chain E2E evidence (②-D)
+  - id: RULE-FREEZE-001
+    statement: Post-freeze Registry/ABI/Contract changes invalidate Package
+
+phase_1_development:
+  id: 1
+  name: Development
+  chain_ids: ["31337"]
+  status: IN_PROGRESS
+  next_stage: phase_2_staging_sepolia_production_validation
+
+phase_2_staging_sepolia_production_validation:
+  id: 2
+  name: Staging / Sepolia Production Validation
+  chain_ids: ["11155111"]
+  production_scope: PRODUCTION_SCOPE_SEPOLIA
+  status: IN_PROGRESS
+  ssot: registry/phase2-staging-sepolia-production-validation.v1.yaml
+  sub_tracks:
+    2A: { name: Website & Product UAT }
+    2B: { name: Admin / Operations UAT }
+    2C: { name: Data Governance / CMS / COS Validation }
+    2D:
+      name: Web3 Lifecycle Validation
+      ssot: registry/sepolia-full-web3-lifecycle-validation.v1.yaml
+      orchestrator: scripts/dev/run-sepolia-full-web3-lifecycle-validation.cjs
+    2E: { name: Security / RBAC / Monitoring }
+    2F:
+      name: Exit Review
+      orchestrator: scripts/dev/run-phase2-exit-review.cjs
+      gate: scripts/gates/check-phase2-exit-review-gate.sh
+  exit_verdict: PHASE2_STAGING_SEPOLIA_PRODUCTION_VALIDATION_PASS
+  next_stage: phase3_deployment_prerequisite_review
+
+phase3_deployment_prerequisite_review:
+  id: 2.55
+  name: Phase ③ Production Deployment Prerequisite Review
+  display_name: Phase ③ Deployment Prerequisite Review
+  ssot: registry/phase3-deployment-prerequisite-review.v1.yaml
+  runbook: docs/runbook/PHASE3-DEPLOYMENT-PREREQUISITE-REVIEW-V1.md
+  orchestrator: scripts/dev/run-phase3-deployment-prerequisite-review.cjs
+  gate: scripts/gates/check-phase3-deployment-prerequisite-review-gate.sh
+  prerequisite: PHASE2_EXIT_REVIEW_PASS
+  exit_verdict: PHASE3_DEPLOYMENT_PREREQUISITE_REVIEW_PASS
+  reviews_total: 10
+  next_stage: web3_freeze
+
+web3_freeze:
+  id: 2.6
+  name: Web3 Freeze
+  ssot: registry/web3-freeze.v1.yaml
+  orchestrator: scripts/dev/run-web3-freeze.cjs
+  gate: scripts/gates/check-web3-freeze-gate.sh
+  prerequisite: PHASE3_DEPLOYMENT_PREREQUISITE_REVIEW_PASS
+  also_requires: PHASE2_EXIT_REVIEW_PASS
+  next_stage: mainnet_deployment_package
+
+mainnet_deployment_package:
+  id: 2.75
+  name: Mainnet Deployment Package
+  ssot: registry/mainnet-deployment-package.v1.yaml
+  generator: scripts/dev/generate-mainnet-deployment-package.cjs
+  gate: scripts/gates/check-mainnet-deployment-package-gate.sh
+  top_manifest: MANIFEST/manifest.json
+  next_stage: phase_3_production_deployment_mainnet
+
+phase_3_production_deployment_mainnet:
+  id: 3
+  name: Production Deployment (Mainnet)
+  chain_ids: ["1"]
+  status: NOT_STARTED
+  gates_before_broadcast:
+    - scripts/gates/check-phase2-exit-review-gate.sh
+    - scripts/gates/check-phase3-deployment-prerequisite-review-gate.sh
+    - scripts/gates/check-web3-freeze-gate.sh
+    - scripts/gates/check-mainnet-deployment-package-gate.sh
+
+mainnet_validation:
+  id: 4
+  name: Mainnet Validation
+  runbook: docs/runbook/MAINNET-VALIDATION-V1.md
+
+orchestrator: scripts/dev/run-web3-phase12-closure.cjs
+phase2_master_orchestrator: scripts/dev/run-phase2-production-validation.cjs
+phase_dashboard: scripts/dev/run-phase-dashboard.cjs
+phase2d_orchestrator: scripts/dev/run-sepolia-full-web3-lifecycle-validation.cjs
+exit_review_orchestrator: scripts/dev/run-phase2-exit-review.cjs
+phase3_prerequisite_review_orchestrator: scripts/dev/run-phase3-deployment-prerequisite-review.cjs
+phase3_prerequisite_review_gate: scripts/gates/check-phase3-deployment-prerequisite-review-gate.sh
+web3_freeze_orchestrator: scripts/dev/run-web3-freeze.cjs
+package_generator: scripts/dev/generate-mainnet-deployment-package.cjs
+phase_boundary_gate: scripts/gates/check-web3-phase-boundary.sh
+phase2d_gate: scripts/gates/check-phase2-mainnet-feature-evidence-gate.sh
+phase2f_exit_gate: scripts/gates/check-phase2-exit-review-gate.sh
+web3_freeze_gate: scripts/gates/check-web3-freeze-gate.sh
+mainnet_package_gate: scripts/gates/check-mainnet-deployment-package-gate.sh

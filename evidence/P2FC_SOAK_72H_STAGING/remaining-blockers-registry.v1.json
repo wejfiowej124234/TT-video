@@ -1,0 +1,214 @@
+{
+  "schema": "traveltrust.phase2_remaining_blockers_registry.v1",
+  "standard": "TT-PHASE2-TESTNET-CLOSURE-GOVERNANCE-STANDARD",
+  "review": "L5-Enterprise-Graduation-Readiness-Review",
+  "parity_standard": "TT-FULL-SYSTEM-MULTI-DIMENSION-AUDIT-CHECKLIST (Phase① closure governance parity)",
+  "at": "20260614T081312Z",
+  "phase": "② testnet",
+  "pre_graduation_verdict": "PRE_GRADUATION_CLEAR",
+  "tt_testnet_graduation": "OPEN",
+  "tt_phase2_l5_composite_score": "NOT_ELIGIBLE",
+  "honest_boundary": "② graduation CLOSED ≠ ③ Production GO",
+  "machine_evidence_dir": "evidence/GO_phase2_testnet_graduation/20260614T081312Z",
+  "gates_attestation": {
+    "G01": {
+      "status": "PASS",
+      "value": 0,
+      "target": 0
+    },
+    "G02": {
+      "status": "PASS",
+      "value": 0,
+      "target": 0
+    },
+    "G03": {
+      "status": "PASS",
+      "value": 100,
+      "target": 100
+    },
+    "G04": {
+      "status": "PASS",
+      "value": true,
+      "target": true
+    },
+    "G05": {
+      "status": "BLOCKED_SOAK",
+      "value": 3,
+      "target": 0,
+      "note": "3× A6 soak cells only"
+    },
+    "G06": {
+      "status": "BLOCKED_SOAK",
+      "value": false,
+      "target": true
+    },
+    "G07": {
+      "status": "PASS",
+      "value": {
+        "compound": true,
+        "missing": 0
+      }
+    },
+    "G08": {
+      "status": "BLOCKED_SOAK",
+      "value": {
+        "missing_coverage": 0,
+        "evidence_gap": 0,
+        "full_closure_pct": 88,
+        "surface_pct": 100
+      },
+      "note": "full_closure 88% → 100% when soak COMPLETED; non-soak gaps=0"
+    },
+    "G09": {
+      "status": "PENDING",
+      "note": "OWNER-SIGNOFF.md after G-01～G-08 AND"
+    }
+  },
+  "blocking_items": [
+    {
+      "id": "BLK-SOAK-001",
+      "domain": "Reliability",
+      "gate": "G-05/G-06",
+      "artifact": "TN-P1-009",
+      "dimension": "A6",
+      "severity": "P1",
+      "status": "INFLIGHT",
+      "note": "P2FC 72h soak · job-20260614T070154Z · ETA ~2026-06-17T07:01Z",
+      "close_when": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+      "blocks_graduation": true
+    },
+    {
+      "id": "BLK-SOAK-002",
+      "domain": "G04 Orders",
+      "gate": "G04",
+      "artifact": "TN-P1-009",
+      "dimension": "A6",
+      "severity": "P1",
+      "status": "INFLIGHT",
+      "blocks_graduation": true,
+      "duplicate_of": "BLK-SOAK-001"
+    },
+    {
+      "id": "BLK-SOAK-003",
+      "domain": "G06 Escrow",
+      "gate": "G06",
+      "artifact": "TN-P1-009",
+      "dimension": "A6",
+      "severity": "P1",
+      "status": "INFLIGHT",
+      "blocks_graduation": true,
+      "duplicate_of": "BLK-SOAK-001"
+    },
+    {
+      "id": "BLK-SOAK-004",
+      "domain": "G11 Stripe PSP",
+      "gate": "G11",
+      "artifact": "TN-P1-009",
+      "dimension": "A6",
+      "severity": "P1",
+      "status": "INFLIGHT",
+      "blocks_graduation": true,
+      "duplicate_of": "BLK-SOAK-001"
+    }
+  ],
+  "non_soak_blockers": [],
+  "soak_deferred_tracks": [
+    {
+      "id": "D1",
+      "status": "PARTIAL",
+      "gaps": [
+        "TN-P1-009: P2FC 72h soak · COMPLETED.json missing"
+      ]
+    },
+    {
+      "id": "D12",
+      "status": "PARTIAL",
+      "gaps": [
+        "TN-P1-009: P2FC soak not started"
+      ]
+    },
+    {
+      "id": "D15",
+      "status": "PARTIAL",
+      "gaps": [
+        "P2FC 72h COMPLETED missing (ops-day soak)"
+      ]
+    }
+  ],
+  "defer_phase3_non_blocking": [
+    {
+      "id": "DEFER-G08-A1",
+      "domain": "G08 Steward",
+      "status": "DEFER_③",
+      "note": "live Sepolia stake / TTG approve · fork write PASS · matrix blocking=false"
+    }
+  ],
+  "domain_clearance": {
+    "functionality": {
+      "status": "CLEAR",
+      "note": "D1 burn-down + D9 lifecycle + P2Exec · non-soak PASS"
+    },
+    "permissions_rbac": {
+      "status": "CLEAR",
+      "note": "D2/D3/D8 · ADM-U01/U02 · HAT 34+ combos"
+    },
+    "governance": {
+      "status": "CLEAR",
+      "note": "D21–D23 100% · D10 admin/governance surfaces"
+    },
+    "finance_psp_escrow": {
+      "status": "CLEAR",
+      "note": "D11 · TN-P1-005/006 · reconcile compound_pass"
+    },
+    "indexer_projection": {
+      "status": "CLEAR",
+      "note": "G-07 · TN-P1-010 closed · missing_projection=0"
+    },
+    "operations_admin": {
+      "status": "CLEAR",
+      "note": "D10 CMS/Growth/Official via D6 admin surfaces + ADM evidence"
+    },
+    "ui_ux_surface": {
+      "status": "CLEAR",
+      "note": "D6/D24 · 52/52 · surface 100% · staging UI real-user sprint on file"
+    },
+    "human_acceptance": {
+      "status": "CLEAR",
+      "note": "phase2-human-acceptance-staging-sprint OK marker"
+    },
+    "exception_recovery": {
+      "status": "SOAK_DEFERRED",
+      "note": "D12 PARTIAL until COMPLETED · D5 replay PASS · TN-P1-010 closed"
+    },
+    "monitoring_alerts": {
+      "status": "CLEAR",
+      "note": "D18 PASS · P2FC soak health polling active"
+    },
+    "evidence_chain": {
+      "status": "CLEAR",
+      "note": "D7 PASS · manifest · TN-P1-001～010 anchors · evidence_gap=0"
+    }
+  },
+  "reliability_closure": {
+    "TN_P1_010": "CLOSED",
+    "D6_52_surface": "CLOSED",
+    "TN_P1_009": "INFLIGHT",
+    "indexer_reconcile": "PASS"
+  },
+  "graduation_package": {
+    "manifest": "evidence/P2FC_SOAK_72H_STAGING/phase2-graduation-package-manifest.v1.json",
+    "post_soak_script": "scripts/dev/run-phase2-testnet-post-soak-graduation-closure.sh",
+    "phase3_backlog": "evidence/P2FC_SOAK_72H_STAGING/phase3-production-readiness-backlog.v1.json",
+    "production_blockers": "evidence/P2FC_SOAK_72H_STAGING/production-blocker-registry.v1.json"
+  },
+  "owner_signoff": {
+    "status": "NOT_STARTED",
+    "template": "docs/runbook/evidence-templates/PHASE2-TESTNET-OWNER-SIGNOFF-SOLO.md"
+  },
+  "post_soak_actions": [
+    "Wait COMPLETED.json (do not kill soak)",
+    "bash scripts/dev/run-phase2-testnet-post-soak-graduation-closure.sh",
+    "Verify TT_TESTNET_GRADUATION:CLOSED + TT_PHASE2_L5_COMPOSITE_SCORE: 10"
+  ],
+  "grep_verdict": "TT_L5_ENTERPRISE_PRE_GRADUATION: PRE_GRADUATION_CLEAR 20260614T081312Z"
+}

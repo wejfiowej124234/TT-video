@@ -18,6 +18,10 @@ import {
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { mapOrderWriteError } from "@/lib/mapOrderWriteError";
 import { deriveGovernanceExecutionReadiness } from "@/lib/governanceExecutionReadiness";
+import {
+  resolveGovernanceProposalDisplayBody,
+  resolveGovernanceProposalDisplayTitle,
+} from "@/lib/governance/governanceStarterProposalDisplay";
 import { hasClientSession, voteCountFromApi } from "./governanceProposalDetailPageModel";
 
 export function useGovernanceProposalDetailPage() {
@@ -140,11 +144,16 @@ export function useGovernanceProposalDetailPage() {
   }, [onChainGovernorKind, proposalId, retryTick]);
 
   const proposal = data?.proposal;
-  const title =
-    typeof proposal?.title === "string" && proposal.title.trim()
-      ? proposal.title
-      : t("governance_proposals_item_untitled");
-  const body = typeof proposal?.body === "string" ? proposal.body : "";
+  const title = resolveGovernanceProposalDisplayTitle(
+    proposalId,
+    typeof proposal?.title === "string" ? proposal.title : undefined,
+    t,
+  );
+  const body = resolveGovernanceProposalDisplayBody(
+    proposalId,
+    typeof proposal?.body === "string" ? proposal.body : undefined,
+    t,
+  );
   const status = typeof proposal?.status === "string" ? proposal.status : "—";
   const counts = data?.vote_counts ?? {};
   const yes = voteCountFromApi(counts.yes);

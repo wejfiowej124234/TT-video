@@ -1,0 +1,51 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T152100Z",
+  "filename": "ocs-barcelona-arch-acquisition-cover.jpg",
+  "row": 51,
+  "chain_id": "barcelona-arch",
+  "country_code": "ES",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "no_quality_regression_acknowledged": true,
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "brand_logos",
+      "celebrity_portraits",
+      "recognizable_trademarks",
+      "facade_panorama"
+    ],
+    "safe_expression": "手工马赛克瓷砖 craft 静物 · 高迪彩 · 非全景"
+  },
+  "checks": {
+    "manifest_full_field_alignment": {
+      "pass": true,
+      "notes": "巴塞罗那马赛克瓷砖 · 收购 · 手工装饰件 · 尺寸重量"
+    },
+    "destination_authenticity_9dim_plan": {
+      "pass": true,
+      "notes": "trencadis 马赛克 craft · 巴塞罗那建筑纪念品"
+    },
+    "country_consistency_es_only": { "pass": true },
+    "acquisition_product_identity_plan": {
+      "pass": true,
+      "vs_tokyo": "马赛克 vs 镜头",
+      "vs_kyoto": "高迪彩 craft vs 和纸",
+      "vs_seoul": "马赛克 vs 韩零食",
+      "vs_bangkok": "马赛克 vs 泰丝",
+      "vs_singapore": "马赛克 vs 礼盒",
+      "vs_paris": "瓷砖 craft vs 艺术海报",
+      "vs_nyc": "马赛克 vs 黑胶",
+      "vs_sydney": "马赛克 vs 冲浪板",
+      "vs_row49_50": "产品静物 vs 肖像/小团"
+    },
+    "surface_boundary_plan": { "pass": true },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row49": "craft 静物 vs 向导肖像",
+      "vs_row50": "瓷砖特写 vs 桂尔公园小团"
+    },
+    "nine_class_framework_frozen": true
+  }
+}

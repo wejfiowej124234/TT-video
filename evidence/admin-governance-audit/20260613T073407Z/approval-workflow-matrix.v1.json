@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.approval_workflow_matrix.v1",
+  "routes": [
+    "/admin/approvals",
+    "/admin/approvals/[id]"
+  ]
+}

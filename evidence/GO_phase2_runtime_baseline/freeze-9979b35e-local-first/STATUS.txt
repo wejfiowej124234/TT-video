@@ -1,0 +1,8 @@
+phase: ② testnet runtime baseline
+runtime_staging_sha: 9979b35efe562e8dd200e9f1a1e17fcc8182d170
+graduation_frozen_sha: fc9266ce94f18810420e720bb933946c086ce909
+soak_baseline_sha: 3bbedda776b2cf2666efaac055ce9e13d98127b7
+runtime_drift: LOCAL_FIRST_INTENTIONAL
+baseline_frozen: true
+at: 20260630T051014Z
+immutable: soak + graduation + final_ha evidence unchanged

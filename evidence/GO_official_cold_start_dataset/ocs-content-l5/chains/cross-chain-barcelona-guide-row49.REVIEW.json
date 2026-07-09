@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T151530Z",
+  "trigger_row": 49,
+  "trigger_filename": "ocs-barcelona-arch-guide-avatar.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "new_country_chain_es": true,
+  "guide_comparison_distinct": true,
+  "no_quality_regression_prior_48": true
+}

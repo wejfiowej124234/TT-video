@@ -1,0 +1,6 @@
+{
+  "schema": "traveltrust.executive_efficiency.v1",
+  "governance_efficiency": 85,
+  "audit_efficiency": 100,
+  "ai_output_efficiency": 89
+}

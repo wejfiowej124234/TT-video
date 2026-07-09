@@ -118,7 +118,9 @@ cast_call() {
 }
 FR="${FEE_ROUTER_ADDRESS:-}"
 RV="${REGION_VAULT_ADDRESS:-}"
-GT="${TREASURY_ADDRESS:-${GOVERNANCE_TREASURY_ADDRESS:-}}"
+# FeeRouter globalOps leg → legacy GovernanceTreasury (not P4Cap)
+LEGACY_GT="${LEGACY_TREASURY_ADDRESS:-}"
+P4CAP_GT="${GOVERNANCE_TREASURY_P4CAP_ADDRESS:-${TREASURY_P4_CAP_ADDRESS:-}}"
 RSV="${RESERVE_VAULT_ADDRESS:-}"
 EF="${ESCROW_FACTORY_ADDRESS:-}"
 GIS="${GUIDE_STAKING_POOL_ADDRESS:-${GUIDE_STAKING_ADDRESS:-}}"
@@ -126,7 +128,8 @@ PIS="${PROVIDER_STAKING_POOL_ADDRESS:-${STAKING_PROVIDER_ADDRESS:-}}"
 
 [[ -n "$FR" && "$FR" != *"..."* ]] || fail "FEE_ROUTER_ADDRESS unset (broadcast first or use --from-log)"
 [[ -n "$RV" && "$RV" != *"..."* ]] || fail "REGION_VAULT_ADDRESS unset"
-[[ -n "$GT" && "$GT" != *"..."* ]] || fail "TREASURY_ADDRESS unset"
+[[ -n "$LEGACY_GT" && "$LEGACY_GT" != *"..."* ]] || fail "LEGACY_TREASURY_ADDRESS unset (FeeRouter globalOps / legacy GovernanceTreasury)"
+[[ -n "$P4CAP_GT" && "$P4CAP_GT" != *"..."* ]] || fail "GOVERNANCE_TREASURY_P4CAP_ADDRESS unset"
 [[ -n "$RSV" && "$RSV" != *"..."* ]] || fail "RESERVE_VAULT_ADDRESS unset"
 
 _eq() {
@@ -137,13 +140,14 @@ _eq() {
 
 _eq "FeeRouter.owner" "$(cast_call "$FR" "owner()(address)")" "$TIMELOCK"
 _eq "RegionVault.owner" "$(cast_call "$RV" "owner()(address)")" "$TIMELOCK"
-_eq "Treasury.owner" "$(cast_call "$GT" "owner()(address)")" "$TIMELOCK"
-_eq "Treasury.spender" "$(cast_call "$GT" "spender()(address)")" "$TIMELOCK"
+_eq "Treasury.owner" "$(cast_call "$LEGACY_GT" "owner()(address)")" "$TIMELOCK"
+_eq "Treasury.spender" "$(cast_call "$LEGACY_GT" "spender()(address)")" "$TIMELOCK"
 _eq "ReserveVault.timelock" "$(cast_call "$RSV" "timelock()(address)")" "$TIMELOCK"
 _eq "FeeRouter.countryBucket" "$(cast_call "$FR" "countryBucket()(address)")" "$RV"
 _eq "FeeRouter.globalStakers" "$(cast_call "$FR" "globalStakers()(address)")" "$GIS"
 _eq "FeeRouter.globalReserve" "$(cast_call "$FR" "globalReserve()(address)")" "$RSV"
-_eq "FeeRouter.globalOps" "$(cast_call "$FR" "globalOps()(address)")" "$GT"
+_eq "FeeRouter.globalOps" "$(cast_call "$FR" "globalOps()(address)")" "$LEGACY_GT"
+pass "GovernanceTreasuryP4Cap configured $P4CAP_GT (not FeeRouter globalOps leg)"
 
 _allow() {
   local target="$1" name="$2"

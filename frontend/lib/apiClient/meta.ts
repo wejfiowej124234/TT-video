@@ -139,6 +139,7 @@ export const CHAIN_CONTRACTS_META_TOP_KEYS = [
   "treasury_address",
   "registry_address",
   "escrow_factory_address",
+  "escrow_factory_v2_address",
   "region_steward_stake_pool_address",
   "rule",
   "chain_contracts_top_keys",

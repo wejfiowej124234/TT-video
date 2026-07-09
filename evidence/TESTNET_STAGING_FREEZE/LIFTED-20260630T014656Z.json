@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.testnet_staging_freeze_lift.v1",
+  "lifted_at_utc": "2026-06-30T01:46:57Z",
+  "stamp": "20260630T014656Z",
+  "reason": "TESTNET_SYNC_PACKAGE overlay @ 3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "previous_active": {
+    "schema": "traveltrust.testnet_staging_freeze.v1",
+    "frozen_at": "2026-06-26T00:13:20Z",
+    "stamp": "20260626T001320Z",
+    "git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+    "reason": "TESTNET_SYNC_PACKAGE manual verify PASS · GATE-P1-01 baseline · overlay @ HEAD",
+    "policy": "no_redeploy_no_restart_no_migrations_no_config_changes",
+    "staging_api": "https://tt-api-staging.fly.dev",
+    "staging_web": "https://tt-web-staging.fly.dev",
+    "override_env": "TESTNET_FREEZE_OVERRIDE=1",
+    "audit_evidence": "D:/TravelTrust-V1.1/evidence/GO_phase2_baseline_consistency_audit/20260626T000751Z",
+    "next_gate": "TL#1 Wave 1 (Cert #7 finalize + Cert #8 queue)"
+  },
+  "deploy_policy": "TESTNET_FREEZE_OVERRIDE=1 required for staging deploy until re-engage",
+  "next_gate": "final candidate validation → engage-testnet-staging-baseline-freeze.sh → fresh 72h soak"
+}

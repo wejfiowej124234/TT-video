@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.doa_database_schema_alignment.v1",
+  "migrations_sql_count": 116,
+  "migrations_dir": "crates/api/migrations",
+  "gates": [
+    "sqlx migrate run",
+    "ensure-api-db-migrations.ps1"
+  ]
+}

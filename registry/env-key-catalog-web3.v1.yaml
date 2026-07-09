@@ -1,0 +1,75 @@
+# Web3 env key catalog — deployment truth SSOT (Phase②.5 PR-2)
+# Human: docs/runbook/WEB3-TREASURY-ENV-KEYS-OPERATOR-GUIDE.md
+# Gate: bash scripts/gates/check-web3-env-catalog-gate.sh
+schema: traveltrust.web3_env_key_catalog.v1
+version: 2
+effective_utc: "2026-07-09"
+phase2_5_pr2: RESOLVED
+
+treasury_keys:
+  active:
+    - key: GOVERNANCE_TREASURY_P4CAP_ADDRESS
+      registry_key: treasury_p4_cap_address
+      contract: GovernanceTreasuryP4Cap
+      sepolia: "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+      meta_key: treasury_address
+      role: DAO treasury · Primary Market sink · Timelock spend
+      aliases:
+        - TREASURY_P4_CAP_ADDRESS
+  legacy_fund_stack:
+    - key: LEGACY_TREASURY_ADDRESS
+      registry_key: legacy_treasury_address
+      contract: GovernanceTreasury
+      sepolia: "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be"
+      role: FeeRouter globalOps leg · pre-P4Cap fund stack
+      status: LEGACY
+  deprecated:
+    - key: TREASURY_ADDRESS
+      status: forbidden_in_new_env
+      migrate_to:
+        governance: GOVERNANCE_TREASURY_P4CAP_ADDRESS
+        fee_router_ops: LEGACY_TREASURY_ADDRESS
+      allowlist_paths:
+        - contracts/script/ConfigureFundStackTimelockViaSafe.s.sol
+        - contracts/script/SepoliaProposeTreasurySpend.s.sol
+        - .env.example
+        - registry/protocol-convergence-deployments.v1.yaml
+        - docs/runbook/TT-PHASE2-SEPOLIA-DEPLOYED-SPINE-SUMMARY.md
+    - key: GOVERNANCE_TREASURY_ADDRESS
+      status: forbidden_in_new_env
+      migrate_to:
+        governance: GOVERNANCE_TREASURY_P4CAP_ADDRESS
+      note: Uncatalogued duplicate — removed from API/scripts in PR-1
+
+vacancy_keys:
+  - key: UNALLOCATED_STEWARD_PATH_VAULT_ADDRESS
+    aliases: [COUNTRY_POOL_UNALLOCATED_STEWARD_VAULT_ADDRESS]
+    registry_key: country_pool_unallocated_steward_vault_address
+    sepolia_v1_active: "0xb7d0Ea9579F80B2090195d49a44941d5546554E9"
+    sepolia_qf01_legacy: "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0"
+  - key: COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS
+    registry_key: country_pool_net_profit_ledger_address
+    sepolia_v1_active: "0x738D2c133d5F90c13eE9907386136471E1f330f5"
+    sepolia_qf01_legacy: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+  - key: COUNTRY_POOL_STEWARD_PATH_VAULT_ADDRESS
+    registry_key: country_pool_steward_path_vault_address
+    sepolia_v1_active: "0xaB6c15Ebcae78606E0AE5663d831E09e05af32FA"
+    sepolia_qf01_legacy: "0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb"
+
+phase2_env_files:
+  canonical: scripts/dev/.env.phase2-chain-deploy.local
+  example: scripts/dev/.env.phase2-chain-deploy.local.example
+  staging: scripts/dev/.env.staging-onboarding.local
+
+required_active_in_phase2:
+  - GOVERNANCE_TREASURY_P4CAP_ADDRESS
+  - LEGACY_TREASURY_ADDRESS
+
+forbidden_active_patterns:
+  - '^TREASURY_ADDRESS=0x'
+  - '^GOVERNANCE_TREASURY_ADDRESS=0x'
+
+allowed_treasury_address_comment_only:
+  - .env.example
+  - scripts/dev/.env.phase2-chain-deploy.local.example
+  - docs/

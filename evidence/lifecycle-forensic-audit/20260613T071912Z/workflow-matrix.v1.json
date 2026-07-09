@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.workflow_matrix.v1",
+  "flows": [
+    "register→login→market→escrow",
+    "provider onboarding→workbench",
+    "acquisition bond→listing",
+    "steward/governance",
+    "publish hub",
+    "orders center",
+    "settings center"
+  ]
+}

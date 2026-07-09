@@ -1,0 +1,166 @@
+{
+  "schema": "traveltrust.ftae_probes.v1",
+  "api": "https://tt-api-staging.fly.dev",
+  "recorded_at": "2026-07-02T11:47:52.709Z",
+  "verdict": "PASS",
+  "summary": {
+    "pass": 22,
+    "fail": 0
+  },
+  "results": [
+    {
+      "id": "C2-LOGIN",
+      "account": "C2",
+      "layer": "api",
+      "status": "PASS",
+      "note": "token ok"
+    },
+    {
+      "id": "C2-ME",
+      "account": "C2",
+      "layer": "db-proxy",
+      "status": "PASS",
+      "note": "user_id=2760d445-cbf4-47d0-9461-fcba3db0516f"
+    },
+    {
+      "id": "C2-ORDERS",
+      "account": "C2",
+      "layer": "db-proxy",
+      "status": "PASS",
+      "note": "count=8"
+    },
+    {
+      "id": "C2-CONVERSATIONS",
+      "account": "C2",
+      "layer": "db-proxy",
+      "status": "PASS",
+      "note": "count=0"
+    },
+    {
+      "id": "C2-ADMIN",
+      "account": "C2",
+      "layer": "api",
+      "status": "PASS",
+      "note": "capabilities ok"
+    },
+    {
+      "id": "C2-GOVERNANCE",
+      "account": "C2",
+      "layer": "api",
+      "status": "PASS",
+      "note": "proposals=3"
+    },
+    {
+      "id": "C3-LOGIN",
+      "account": "C3",
+      "layer": "api",
+      "status": "PASS",
+      "note": "token ok"
+    },
+    {
+      "id": "C3-ME",
+      "account": "C3",
+      "layer": "db-proxy",
+      "status": "PASS",
+      "note": "user_id=4b389c45-bfca-4f3a-a897-42cf95c91a6e"
+    },
+    {
+      "id": "C3-GUIDE_PROFILE",
+      "account": "C3",
+      "layer": "db-proxy",
+      "status": "PASS",
+      "note": "guide_id=650fbaff-1d9e-4677-b970-16be8fdd9d7b"
+    },
+    {
+      "id": "C3-MARKET_VISIBLE",
+      "account": "C3",
+      "layer": "db-proxy",
+      "status": "PASS",
+      "note": "in guides catalog"
+    },
+    {
+      "id": "C3-GUIDE_ORDERS",
+      "account": "C3",
+      "layer": "db-proxy",
+      "status": "PASS",
+      "note": "count=6"
+    },
+    {
+      "id": "C1-LOGIN",
+      "account": "C1",
+      "layer": "api",
+      "status": "PASS",
+      "note": "token ok"
+    },
+    {
+      "id": "C1-ME",
+      "account": "C1",
+      "layer": "db-proxy",
+      "status": "PASS",
+      "note": "user_id=cf1e4c30-34b8-40b6-b747-474cf24517c3"
+    },
+    {
+      "id": "C1-ACQUISITION_LISTINGS",
+      "account": "C1",
+      "layer": "api",
+      "status": "PASS",
+      "note": "count=9"
+    },
+    {
+      "id": "C1-IDENTITIES",
+      "account": "C1",
+      "layer": "db-proxy",
+      "status": "PASS",
+      "note": "identities=0"
+    },
+    {
+      "id": "C4-LOGIN",
+      "account": "C4",
+      "layer": "api",
+      "status": "PASS",
+      "note": "token ok"
+    },
+    {
+      "id": "C4-ME",
+      "account": "C4",
+      "layer": "db-proxy",
+      "status": "PASS",
+      "note": "user_id=fe929c0c-c52d-4f3b-bee8-31d2685766ec"
+    },
+    {
+      "id": "C4-PROVIDER_LISTINGS",
+      "account": "C4",
+      "layer": "api",
+      "status": "PASS",
+      "note": "count=13"
+    },
+    {
+      "id": "C4-MERCHANT_ME",
+      "account": "C4",
+      "layer": "db-proxy",
+      "status": "PASS",
+      "note": "me ok"
+    },
+    {
+      "id": "E2-LOGIN",
+      "account": "E2",
+      "layer": "api",
+      "status": "PASS",
+      "note": "token ok"
+    },
+    {
+      "id": "E2-ME",
+      "account": "E2",
+      "layer": "db-proxy",
+      "status": "PASS",
+      "note": "user_id=00000000-0000-4000-8000-000000000101"
+    },
+    {
+      "id": "E2-DID_RANK",
+      "account": "E2",
+      "layer": "api",
+      "status": "PASS",
+      "note": "status=404"
+    }
+  ]
+}

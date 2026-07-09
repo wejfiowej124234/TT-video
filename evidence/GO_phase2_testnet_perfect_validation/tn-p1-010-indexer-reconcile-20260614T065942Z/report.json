@@ -1,0 +1,12 @@
+{
+  "schema": "tn_p1_010_indexer_reconcile_staging.v1",
+  "stamp": "20260614T065942Z",
+  "phase": "② testnet",
+  "remediation": "R1_pre_bootstrap_backfill_11027290_11027450",
+  "reconcile_compound_pass": true,
+  "missing_projection": 0,
+  "projection_reconcile_clean": true,
+  "release_gate": "GO",
+  "selector_fix": "chain/mod.rs escrowOf+status ABI selectors",
+  "honest_boundary": "Targeted backfill + single replay/reconcile · no infinite tick · ≠ ③ mainnet"
+}

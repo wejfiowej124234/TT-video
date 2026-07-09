@@ -214,9 +214,14 @@ fi
 ok "mock-pay → escrowed (① sandbox)"
 
 complete_resp="$(curl_json POST "${API_BASE}/api/v1/orders/${ORDER_ID}/confirm-completion" "{}" "$GUIDE_TOKEN")"
-[[ "${complete_resp%%|*}" == "200" ]] || fail "confirm-completion HTTP ${complete_resp%%|*} body=${complete_resp#*|}"
-[[ "$(json_nested "${complete_resp#*|}" "order.status")" == "completed" ]] || fail "expected completed"
-ok "guide confirm-completion → completed"
+[[ "${complete_resp%%|*}" == "200" ]] || fail "guide confirm-completion HTTP ${complete_resp%%|*} body=${complete_resp#*|}"
+[[ "$(json_nested "${complete_resp#*|}" "order.sub_status")" == "service_completion_pending" ]] || fail "expected service_completion_pending after guide confirm"
+ok "guide confirm-completion → service_completion_pending"
+
+tourist_complete_resp="$(curl_json POST "${API_BASE}/api/v1/orders/${ORDER_ID}/confirm-completion" "{}" "$TOURIST_TOKEN")"
+[[ "${tourist_complete_resp%%|*}" == "200" ]] || fail "tourist confirm-completion HTTP ${tourist_complete_resp%%|*} body=${tourist_complete_resp#*|}"
+[[ "$(json_nested "${tourist_complete_resp#*|}" "order.status")" == "completed" ]] || fail "expected completed after bilateral confirm"
+ok "tourist confirm-completion → completed"
 
 REVIEW_IDEM="$(idem_key)"
 REVIEW_TMP="$(mktemp)"

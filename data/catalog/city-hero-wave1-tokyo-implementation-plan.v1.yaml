@@ -1,0 +1,280 @@
+# City Hero · Wave 1 东京 · Implementation Plan V1
+#
+# 上级 SSOT（只读 · 不得修改）:
+#   docs/runbook/TT-CMS-P1-CONTENT-FAMILY-STANDARD.md (FROZEN v1.1.0)
+#   data/catalog/city-hero-brief.v1.yaml
+#   data/catalog/city-hero-matrix.v1.yaml
+#   data/catalog/city-hero-runtime-contract.v1.yaml (REVIEW_PASS)
+#
+# 本文档：实现规划真源 · 当前 **PLAN_ONLY** · 不含代码变更
+
+schema: traveltrust.cms_city_hero_wave1_tokyo_implementation_plan.v1
+version: 1
+effective_utc: "2026-07-07"
+machine_key: TT_CMS_CITY_HERO_WAVE1_TOKYO_IMPLEMENTATION_PLAN
+status: PLAN_ONLY
+phase: IMPLEMENTATION_PLANNING
+
+upstream:
+  contract_review: evidence/GO_cms_operation/CMS-CITY-HERO-RUNTIME-CONTRACT-REVIEW-LATEST.json
+  runtime_contract: data/catalog/city-hero-runtime-contract.v1.yaml
+  brief: data/catalog/city-hero-brief.v1.yaml
+  matrix: data/catalog/city-hero-matrix.v1.yaml
+  p1_standard: docs/runbook/TT-CMS-P1-CONTENT-FAMILY-STANDARD.md
+
+forbidden_in_plan_phase:
+  - admin_code_change
+  - api_code_change
+  - runtime_resolver_code_change
+  - frontend_code_change
+  - asset_upload
+  - registry_update
+  - ownership_matrix_update
+  - p1_standard_update
+  - brief_matrix_contract_update
+
+wave1_scope:
+  matrix_id: CH-JP-TOKYO-001
+  country_iso: JP
+  country_zh: 日本
+  city_zh: 东京
+  city_en: Tokyo
+  city_slug: tokyo
+  asset_key: city_hero_tokyo
+  fallback_key: hero_japan
+  fallback_read: landing_ambient · country_iso=JP
+  pilot_wave: WAVE_1
+  scale_rule: 不得批量其他 37 城 · Wave 2 首尔后再规模化
+
+acceptance_key:
+  wave1_complete: TT_CMS_CITY_HERO_WAVE1_TOKYO
+  wave1_value: PASS
+  row_verify: TT_CMS_CITY_HERO_ROW_VERIFY
+  closure_evidence: evidence/GO_cms_operation/city-hero/CMS-CITY-HERO-WAVE1-TOKYO-CLOSURE-LATEST.json
+
+# ── Work Packages（实现顺序 · 规划目标文件） ───────────────────────
+
+work_packages:
+  - id: WP0
+    name: db_migration
+    title: DB · asset_kind CHECK 扩展
+    depends_on: []
+    blocks: [WP1, WP2]
+    planned_changes:
+      - path: crates/api/migrations/YYYYMMDDHHMMSS_cms_city_hero_asset_kind.sql
+        action: ALTER CHECK on catalog_media_assets.asset_kind ADD city_hero
+    notes: >-
+      当前 migration CHECK 仅 poi_hero|landing_ambient|hotel_tier_stock|transport_stock|generic
+      · 须新 migration · 不得改历史 migration
+
+  - id: WP1
+    name: admin_allowlist
+    title: Admin · city_hero allowlist
+    depends_on: [WP0]
+    blocks: [WP3]
+    planned_changes:
+      - path: crates/api/src/db/catalog_ops_admin.rs
+        action: insert city_hero into create/patch allowlist arrays (~L400, ~L650)
+      - path: crates/api/src/routes/admin/admin_catalog_ops_http.rs
+        action: OpenAPI/doc comment if asset_kind enum documented
+      - path: frontend/app/admin/content/catalog-dashboard/
+        action: optional filter chip city_hero (follow landing_ambient pattern)
+    admin_binding:
+      asset_kind: city_hero
+      stock_pool_key: city_hero_tokyo
+      country_id: catalog_countries JP
+      city_id: catalog_cities slug=tokyo
+      publish_status: published
+      source_type: upload
+    ops_note: Admin UI 存在即可 · Wave 1 可经 Admin API 或现有 media CRUD 发布单行
+
+  - id: WP2
+    name: api_read
+    title: API · asset_kind=city_hero + city_slug 查询
+    depends_on: [WP0]
+    blocks: [WP4, WP5]
+    planned_changes:
+      - path: crates/api/src/routes/catalog/handlers.rs
+        action: MediaQuery + city_slug Option<String>
+      - path: crates/api/src/db/catalog.rs
+        action: list_catalog_media(pool, kind, iso, city_slug) join catalog_cities
+      - path: crates/api/src/db/catalog.rs
+        action: CatalogMediaRow + stock_pool_key, city_slug (optional response)
+      - path: frontend/lib/catalogApi/client.ts
+        action: fetchCatalogMedia opts.citySlug
+    api_contract:
+      method: GET
+      path: /api/v1/catalog/media
+      query:
+        asset_kind: city_hero
+        country_iso: JP
+        city_slug: tokyo
+      success_criteria:
+        - count >= 1 when tokyo row published
+        - items[0].url non-empty
+        - stock_pool_key or license.usage equals city_hero_tokyo
+        - city_slug=tokyo returns tokyo only (not osaka/fukuoka)
+
+  - id: WP3
+    name: catalog_publish
+    title: Catalog · media 绑定（Ops · 非本规划执行）
+    depends_on: [WP1, WP2]
+    blocks: [WP4, WP5, WP6]
+    binding:
+      asset_key: city_hero_tokyo
+      bind_via: stock_pool_key
+      alt_bind: license.usage
+      required_fields:
+        asset_kind: city_hero
+        country_iso: JP
+        city_slug: tokyo
+        url: live CDN · non-stock
+        publish_status: published
+      technical_minimum:
+        min_width_px: 1920
+        min_height_px: 1080
+        min_bytes: 16384
+        formats: [JPEG, WebP]
+    ops_only: true
+
+  - id: WP4
+    name: runtime_resolver
+    title: Runtime · resolveCityHero
+    depends_on: [WP2]
+    blocks: [WP5]
+    planned_changes:
+      - path: frontend/lib/catalogApi/resolveCityHero.ts
+        action: new · mirror resolveLandingAmbient.ts
+      - path: frontend/lib/catalogApi/types.ts
+        action: extend CatalogResolveSource catalog-api-fallback · result fields
+      - path: frontend/lib/catalogApi/index.ts
+        action: export resolveCityHeroUrl
+      - path: frontend/lib/catalogApi/resolveCityHero.test.ts
+        action: unit tests primary/fallback/ts paths
+    resolver_logic:
+      input: { country_iso, city_slug, country_zh? }
+      step_1:
+        call: GET media asset_kind=city_hero country_iso city_slug
+        success: { source: catalog-api, asset_key, fallback_used: false }
+      step_2:
+        call: GET media asset_kind=landing_ambient country_iso
+        map: fallback_key hero_japan
+        success: { source: catalog-api-fallback, fallback_key, fallback_used: true }
+      step_3:
+        call: TS static
+        success: { source: ts, must_not_count_as_l5_pass: true }
+    enabled_flag: NEXT_PUBLIC_CATALOG_API_ENABLED=1
+
+  - id: WP5
+    name: consumer_wiring
+    title: Consumer · Home + Travel
+    depends_on: [WP4]
+    blocks: [WP6]
+    planned_changes:
+      - path: frontend/components/landing/LandingHomeAmbientBackdrop.tsx
+        action: when city selected · resolveCityHero before/along landing_ambient
+      - path: frontend/lib/catalogApi/useCityHeroUrl.ts
+        action: hook · hydration-safe like useLandingAmbientUrl
+      - path: frontend/components/traveltrust/cinematic/TravelTrustPageCinematicCanvas.tsx
+        action: city-context blocks call resolveCityHero
+      - path: frontend/app/(home)/homeMarketing.contract.test.ts
+        action: contract asserts city hero resolution path
+    consumers:
+      home:
+        route: /
+        trigger: user selects country + city on landing hero form
+        min_wave1: consumer_home probe PASS on staging
+      travel:
+        route: /traveltrust
+        trigger: destination/city narrative with city context
+        min_wave1: consumer_travel PASS or SKIP with documented reason
+
+  - id: WP6
+    name: verify_evidence
+    title: Verify script + Evidence + Wave closure
+    depends_on: [WP3, WP5]
+    blocks: []
+    planned_changes:
+      - path: scripts/dev/run-cms-content-l5-city-hero-verify.cjs
+        action: new · pattern from run-cms-content-l5-destination-ambient-verify.cjs
+      - path: scripts/dev/lib/cms-city-hero.cjs
+        action: shared matrix parse · slug helpers
+    verify_invoke: node scripts/dev/run-cms-content-l5-city-hero-verify.cjs --matrix-id CH-JP-TOKYO-001
+    probes:
+      catalog: media count>=1 · asset_key match
+      api: HEAD >=16KB · jpeg/webp
+      decode: >=1920x1080
+      l5: no unsplash|pexels · country_iso=JP
+      fallback_drill: absent city row → landing_ambient JP · fallback_used=true
+      consumer_home: catalog-api source on staging
+      consumer_travel: PASS or SKIP
+    evidence_outputs:
+      row: evidence/GO_cms_content_l5/city-hero/rows/CH-JP-TOKYO-001.EVIDENCE.json
+      latest: evidence/GO_cms_operation/city-hero/CMS-CITY-HERO-VERIFY-LATEST.json
+      closure: evidence/GO_cms_operation/city-hero/CMS-CITY-HERO-WAVE1-TOKYO-CLOSURE-LATEST.json
+
+# ── P1 六门 · Wave 1 映射 ───────────────────────────────────────────
+
+p1_exit_gates_wave1:
+  catalog_ready:
+    gate: Catalog Ready
+    wave1_criteria: tokyo row published · revision logged
+  runtime_ready:
+    gate: Runtime Ready
+    wave1_criteria: GET media city_hero+JP+tokyo returns live url
+  consumer_ready:
+    gate: Consumer Ready
+    wave1_criteria: Home sees catalog-api · Travel documented
+  verify_pass:
+    gate: Verify PASS
+    wave1_criteria: verify script exit 0 · TT_CMS_CITY_HERO_ROW_VERIFY=PASS
+  evidence_pass:
+    gate: Evidence PASS
+    wave1_criteria: row + latest + closure JSON exist
+  l5_pass:
+    gate: L5 PASS
+    wave1_criteria: no external stock on live path · ts_fallback not PASS
+
+wave1_must_not:
+  - batch_other_37_cities
+  - registry_frozen_on_wave1_alone
+  - count_ts_fallback_as_pass
+  - modify_p0_poi_hero_evidence
+
+# ── Evidence Schema（实现后产出 · 规划引用 Contract） ───────────────
+
+evidence_schema:
+  family_verify:
+    schema: traveltrust.cms_p1_family_verify.v1
+    machine_keys:
+      row: TT_CMS_CITY_HERO_ROW_VERIFY
+      wave1: TT_CMS_CITY_HERO_WAVE1_TOKYO
+    city_hero_fields:
+      matrix_id: CH-JP-TOKYO-001
+      asset_key: city_hero_tokyo
+      fallback_key: hero_japan
+      country_iso: JP
+      city_slug: tokyo
+      catalog_url: string | null
+      fallback_url: string | null
+      fallback_used: boolean
+      source: catalog-api | catalog-api-fallback | ts
+      checks:
+        catalog: PASS | FAIL
+        api: PASS | FAIL
+        decode: PASS | FAIL
+        l5: PASS | FAIL
+        fallback_drill: PASS | FAIL | SKIP
+        consumer_home: PASS | FAIL | SKIP
+        consumer_travel: PASS | FAIL | SKIP
+
+closure_schema:
+  schema: traveltrust.cms_city_hero_wave1_closure.v1
+  required:
+    TT_CMS_CITY_HERO_WAVE1_TOKYO: PASS
+    TT_CMS_CITY_HERO_ROW_VERIFY: PASS
+    matrix_id: CH-JP-TOKYO-001
+    p1_gates: all PASS for wave1 scope
+
+evidence_script: scripts/dev/run-cms-city-hero-wave1-tokyo-implementation-plan.cjs
+latest_plan_evidence: evidence/GO_cms_operation/city-hero/CMS-CITY-HERO-WAVE1-TOKYO-IMPLEMENTATION-PLAN-LATEST.json

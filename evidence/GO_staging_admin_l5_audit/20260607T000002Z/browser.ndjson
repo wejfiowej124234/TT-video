@@ -1,0 +1,4 @@
+{"id":"fe_invalid_cookie_redirect","ok":true,"detail":null,"ts":"2026-06-07T00:01:00.417Z"}
+{"id":"fe_capabilities_401_session_clear","ok":true,"detail":"redirect=https://tt-web-staging.fly.dev/auth/login?returnUrl=%2Fadmin","ts":"2026-06-07T00:01:06.552Z"}
+{"id":"fe_orders_nav_no_pending","ok":true,"detail":null,"ts":"2026-06-07T00:01:27.868Z"}
+{"id":"fe_home_inbox_cta_nav","ok":true,"detail":"/admin/inbox","ts":"2026-06-07T00:01:48.211Z"}

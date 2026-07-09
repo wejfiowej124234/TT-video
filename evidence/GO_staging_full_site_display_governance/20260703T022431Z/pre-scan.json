@@ -1,0 +1,125 @@
+{
+  "schema": "traveltrust.staging_full_site_display_governance.v1",
+  "api": "https://tt-api-staging.fly.dev",
+  "recorded_at": "2026-07-03T02:24:42.219Z",
+  "verdict": "PASS",
+  "surfaces": {
+    "provider": {
+      "surface": "provider",
+      "public_count": 1,
+      "leaks": 0
+    },
+    "acquisition": {
+      "surface": "acquisition",
+      "public_count": 0,
+      "leaks": 0
+    },
+    "guides": {
+      "surface": "guides",
+      "public_count": 5,
+      "leaks": 0
+    },
+    "discover": {
+      "surface": "discover",
+      "public_count": 1,
+      "leaks": 0
+    },
+    "community": {
+      "surface": "community",
+      "public_count": 77,
+      "leaks": 0
+    },
+    "admin_guides": {
+      "entity_type": "guides",
+      "queue_total": 56,
+      "published": 5,
+      "smoke_published": 0,
+      "nonprod_published": 1
+    },
+    "admin_orders": {
+      "entity_type": "orders",
+      "queue_total": 64,
+      "published": 12,
+      "smoke_published": 0,
+      "nonprod_published": 0
+    },
+    "admin_market_listings": {
+      "entity_type": "market_listings",
+      "queue_total": 62,
+      "published": 1,
+      "smoke_published": 0,
+      "nonprod_published": 0
+    },
+    "admin_community_posts": {
+      "entity_type": "community_posts",
+      "queue_total": 82,
+      "published": 81,
+      "smoke_published": 0,
+      "nonprod_published": 0
+    },
+    "admin_stats": {
+      "status": "ok",
+      "filter_enabled": true,
+      "data_origin_counts": {
+        "guides": {
+          "demo": 17,
+          "production": 35,
+          "test": 4,
+          "total": 56
+        },
+        "orders": {
+          "production": 12,
+          "test": 52,
+          "total": 64
+        },
+        "market_listings": {
+          "demo": 19,
+          "production": 1,
+          "test": 42,
+          "total": 62
+        },
+        "market_listings_by_variant": {
+          "provider": {
+            "demo": 18,
+            "production": 1,
+            "test": 13,
+            "total": 32
+          },
+          "acquisition": {
+            "demo": 1,
+            "test": 29,
+            "total": 30
+          }
+        },
+        "community_posts": {
+          "production": 81,
+          "test": 1,
+          "total": 82
+        }
+      },
+      "policy": {
+        "show_test_data": false,
+        "blocked_origins": [
+          "SMOKE"
+        ],
+        "updated_at": "2026-07-02T00:35:29.850727Z",
+        "updated_by": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+      }
+    },
+    "cms_publish_queue": {
+      "total": 0,
+      "draft": 0
+    },
+    "official_guides_admin": {
+      "total": 0
+    }
+  },
+  "issue_counts": {
+    "PRODUCT_DATA_DEFECT": 0,
+    "TEST_DATA_LEAKAGE": 0,
+    "EXPECTED_DIFFERENCE": 0,
+    "POST_GO_ENHANCEMENT": 0
+  },
+  "issues": [],
+  "c3_guide_id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b"
+}

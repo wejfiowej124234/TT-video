@@ -17,35 +17,48 @@ describe("communityMediaAbsoluteUrlForRender", () => {
     );
   });
 
-  it("strips Git Bash MSYS path prefix before apiUrl", async () => {
+  it("strips Git Bash MSYS path prefix before render", async () => {
     vi.resetModules();
     const { communityMediaAbsoluteUrlForRender, normalizePersistedCommunityMediaPath } = await import(
       "./communityMediaClientUrl"
     );
-    const { apiUrl } = await import("./api");
     const polluted =
       "C:/Program Files/Git/api/v1/uploads/community-posts/55a9b570-e5f2-42a2-9337-8b6f00e9d9b2.png";
     const clean = "/api/v1/uploads/community-posts/55a9b570-e5f2-42a2-9337-8b6f00e9d9b2.png";
     expect(normalizePersistedCommunityMediaPath(polluted)).toBe(clean);
-    expect(communityMediaAbsoluteUrlForRender(polluted)).toBe(apiUrl(clean));
+    expect(communityMediaAbsoluteUrlForRender(polluted)).toBe(clean);
   });
 
-  it("prefixes site-relative API paths with apiUrl (same module as fetch)", async () => {
-    vi.resetModules();
-    const mod = await import("./communityMediaClientUrl");
-    const { communityMediaAbsoluteUrlForRender } = mod;
-    const { apiUrl } = await import("./api");
-    const rel = "/api/v1/uploads/community-posts/00000000-0000-4000-8000-000000000099.mp4";
-    expect(communityMediaAbsoluteUrlForRender(rel)).toBe(apiUrl(rel));
-  });
-
-  it("normalizes double-slash API/auth paths before apiUrl", async () => {
+  it("prefixes site-relative API paths with apiUrl in SSR (no window)", async () => {
     vi.resetModules();
     const { communityMediaAbsoluteUrlForRender } = await import("./communityMediaClientUrl");
     const { apiUrl } = await import("./api");
+    const rel = "/api/v1/uploads/community-posts/00000000-0000-4000-8000-000000000099.mp4";
+    const saved = globalThis.window;
+    // @ts-expect-error vitest · simulate SSR
+    delete globalThis.window;
+    expect(communityMediaAbsoluteUrlForRender(rel)).toBe(apiUrl(rel));
+    globalThis.window = saved;
+  });
+
+  it("keeps same-origin /api uploads in browser (Guide cover parity · ② staging web rewrite)", async () => {
+    vi.resetModules();
+    const { communityMediaAbsoluteUrlForRender } = await import("./communityMediaClientUrl");
+    const rel = "/api/v1/uploads/community-posts/ocs-dubai-luxury-community-cover.jpg";
+    expect(communityMediaAbsoluteUrlForRender(rel)).toBe(rel);
+    expect(
+      communityMediaAbsoluteUrlForRender(
+        "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-community-cover.jpg",
+      ),
+    ).toBe(rel);
+  });
+
+  it("normalizes double-slash API/auth paths for browser rewrite", async () => {
+    vi.resetModules();
+    const { communityMediaAbsoluteUrlForRender } = await import("./communityMediaClientUrl");
     const doubled = "//api/v1/uploads/community-posts/x.mp4";
-    expect(communityMediaAbsoluteUrlForRender(doubled)).toBe(apiUrl("/api/v1/uploads/community-posts/x.mp4"));
-    expect(communityMediaAbsoluteUrlForRender("//auth/session")).toBe(apiUrl("/auth/session"));
+    expect(communityMediaAbsoluteUrlForRender(doubled)).toBe("/api/v1/uploads/community-posts/x.mp4");
+    expect(communityMediaAbsoluteUrlForRender("//auth/session")).toBe("/auth/session");
   });
 
   it("resolves protocol-relative CDN URLs to absolute http(s)", async () => {
@@ -55,13 +68,12 @@ describe("communityMediaAbsoluteUrlForRender", () => {
     expect(out).toMatch(/^https?:\/\/cdn\.example\.com\/a\.jpg$/);
   });
 
-  it("prefixes api/ and auth/ without leading slash via apiUrl", async () => {
+  it("prefixes api/ and auth/ without leading slash via browser rewrite", async () => {
     vi.resetModules();
     const { communityMediaAbsoluteUrlForRender } = await import("./communityMediaClientUrl");
-    const { apiUrl } = await import("./api");
     const rel = "api/v1/uploads/community-posts/x.webp";
-    expect(communityMediaAbsoluteUrlForRender(rel)).toBe(apiUrl("/api/v1/uploads/community-posts/x.webp"));
-    expect(communityMediaAbsoluteUrlForRender("auth/session")).toBe(apiUrl("/auth/session"));
+    expect(communityMediaAbsoluteUrlForRender(rel)).toBe("/api/v1/uploads/community-posts/x.webp");
+    expect(communityMediaAbsoluteUrlForRender("auth/session")).toBe("/auth/session");
   });
 
   it("keeps root-relative web app paths on the same origin (split-host parity with outbound)", async () => {
@@ -83,12 +95,11 @@ describe("outboundUrlFromPersisted", () => {
   it("resolves API and auth paths like communityMediaAbsoluteUrlForRender", async () => {
     vi.resetModules();
     const { outboundUrlFromPersisted } = await import("./communityMediaClientUrl");
-    const { apiUrl } = await import("./api");
     const rel = "/api/v1/uploads/x/y.pdf";
-    expect(outboundUrlFromPersisted(rel)).toBe(apiUrl(rel));
-    expect(outboundUrlFromPersisted("//api/v1/z")).toBe(apiUrl("/api/v1/z"));
-    expect(outboundUrlFromPersisted("api/v1/uploads/a.mp4")).toBe(apiUrl("/api/v1/uploads/a.mp4"));
-    expect(outboundUrlFromPersisted("/auth/session")).toBe(apiUrl("/auth/session"));
+    expect(outboundUrlFromPersisted(rel)).toBe(rel);
+    expect(outboundUrlFromPersisted("//api/v1/z")).toBe("/api/v1/z");
+    expect(outboundUrlFromPersisted("api/v1/uploads/a.mp4")).toBe("/api/v1/uploads/a.mp4");
+    expect(outboundUrlFromPersisted("/auth/session")).toBe("/auth/session");
   });
 
   it("passes through absolute http(s) and mailto", async () => {
@@ -111,7 +122,7 @@ describe("outboundUrlFromPersisted", () => {
     expect(outboundUrlFromPersisted(appRoute)).toBe(appRoute);
     expect(communityMediaAbsoluteUrlForRender(appRoute)).toBe(appRoute);
     expect(outboundUrlFromPersisted(appRoute)).toBe(communityMediaAbsoluteUrlForRender(appRoute));
-    expect(communityMediaAbsoluteUrlForRender("/auth/session")).toBe(apiUrl("/auth/session"));
+    expect(communityMediaAbsoluteUrlForRender("/auth/session")).toBe("/auth/session");
   });
 });
 

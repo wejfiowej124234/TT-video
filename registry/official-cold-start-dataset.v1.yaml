@@ -1,0 +1,642 @@
+# Official Cold Start Dataset (OCS) · SSOT
+# Runbook: docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md
+# Orchestrator: scripts/dev/run-official-cold-start-dataset.cjs
+
+schema: traveltrust.official_cold_start_dataset.v1
+version: 1
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_OFFICIAL_COLD_START_DATASET: CLOSED
+  TT_OFFICIAL_COLD_START_RERUN_POLICY: CLOSED_UNLESS_TOUCHED
+  TT_OFFICIAL_COLD_START_RUNBOOK: docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md
+  TT_OFFICIAL_COLD_START_MANIFEST: data/official-cold-start/dataset.v1.json
+  TT_OCS_OFFICIAL_ASSETS_MANIFEST: data/official-cold-start/assets.v1.json
+  TT_OCS_OFFICIAL_ASSET_BASELINE: V1
+
+principles:
+  - no_smoke_demo_probe_multi_demo_content
+  - no_direct_sql_insert_for_public_catalog
+  - all_publish_via_admin_public_operations
+  - data_origin_production_at_publish
+  - public_catalog_only_compliant
+  - ddg_fe_api_ml_dg_safe
+  - reusable_staging_and_production_baseline
+  - single_official_public_catalog_policy
+  - official_catalog_identity_immutable
+  - operations_workflow_lifecycle
+  - ocs_surface_expansion_not_separate_products
+  - single_public_surface_manifest_ssot
+
+# ── OCS 唯一真源 · Surface Expansion（非 Community Phase · 非独立冷启动）────────
+
+ocs_architecture:
+  single_source: Official Cold Start (OCS)
+  expansion_label: OCS Surface Expansion
+  alias: [Official Surface Expansion]
+  forbidden_naming:
+    - Community Cold Start
+    - community-cold-start manifest
+    - TT Community Cold Start Campaign
+    - Phase 1.5 Community Surface
+    - Community Admin
+  consumption_surfaces:
+    home: [home_hero, home_feed]
+    market: [provider, guide, acquisition, market_feed, market_provider, market_acquisition]
+    community: [community_feed, community_featured, community_explore, official_profile]
+    destination: [destination_hub]
+    campaign: [campaign_banner, landing_promo]
+    guide: [official_guide, guide_catalog]
+  unified_campaign:
+    name: Official Cold Start Campaign
+    surfaces:
+      - home_hero
+      - home_feed
+      - market_feed
+      - market_provider
+      - market_acquisition
+      - community_feed
+      - community_featured
+      - campaign_banner
+      - landing_promo
+    note: One campaign · many surfaces — not per-surface products
+
+single_public_surface_manifest_principle:
+  rule: >
+    Any Public Surface MUST NOT have an independent official content source.
+    All official content MUST originate from the OCS Manifest
+    (data/official-cold-start/dataset.v1.json + state.json).
+  surfaces:
+    - home
+    - community
+    - market
+    - explore
+    - destination_hub
+    - campaign
+    - guide
+    - provider
+  forbidden_independent_sources:
+    - community seed scripts as ②③ public path
+    - community showcase env
+    - community cold start manifest
+    - parallel official dataset files
+
+community_feed_policy:
+  sole_source: Official Cold Start Dataset
+  manifest_item: chains[].community_post
+  orchestrator: scripts/dev/run-official-cold-start-dataset.cjs
+  forbidden:
+    - Community Seed
+    - Community Showcase
+    - Community Cold Start
+    - community-cold-start.v1.json
+    - TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE on staging/prod
+    - seed_community_public_showcase.rs as public catalog path
+    - frontend communityShowcase production fallback
+  admin_model: Official Operations · Community Surface tab — not Community Admin product
+
+official_identity:
+  model: Official Account per chain region (manifest-driven slug)
+  unified_across: [official_guide, community_post, provider, acquisition, campaign_item]
+  orchestrator_chain_order:
+    - Official Identity (ops_accounts)
+    - Guide
+    - Provider
+    - Acquisition
+    - Official Guide
+    - Community Post
+    - Campaign
+  profile_consistency: Community profile · Guide · Market listing share same author_account where manifest binds
+
+surface_expansion:
+  role: Extend OCS manifest items to additional Public Surfaces — no Platform/Registry/Builder
+  destination_hub:
+    current: destination_count aggregate
+    target: destination_hub
+    aggregates_per_destination_slug: [official_guide, community_post, provider, acquisition, campaign]
+    example_tokyo: [Guide, Community, Provider, Campaign]
+    reuse: [web_explore, future_mobile_app]
+  manifest_only:
+    fields: [canonical_key, destination_slug, priority, surfaces, post_type, body_markdown, tags, cover_url, media_urls, author_account_slug]
+    rule: Ops edits manifest — no code change for copy/surface/priority/cities
+
+manifest_extension:
+  ssot_file: data/official-cold-start/dataset.v1.json
+  assets_manifest: data/official-cold-start/assets.v1.json
+  forbidden_second_manifest: true
+  items:
+    - guide
+    - provider
+    - acquisition
+    - official_guide
+    - community_post
+    - campaign_item_refs
+  community_surfaces:
+    feed: { surface: community_feed, source: chains[].community_post }
+    featured: { surface: community_featured, source: chains[].community_post, selector: priority_or_manifest_surfaces }
+    explore: { mode: destination_hub, key: destination_slug }
+
+operations_admin:
+  hub: /admin/official
+  product_name: Admin Official
+  modules:
+    - Guide
+    - Provider
+    - Market
+    - Campaign
+    - Community Surface
+  community_surface:
+    status: ocs_surface_expansion
+    path: /admin/official/public-operations
+    entity_types: [community_posts, guide_posts, market_listings, guides, campaigns]
+    note: Community is a publish Surface under Official Ops — not a separate admin product
+
+staging_verification:
+  label: OCS Surface Expansion · Staging operational acceptance
+  machine_key: TT_OCS_SURFACE_EXPANSION
+  official_asset_baseline:
+    version: V1
+    machine_key: TT_OCS_OFFICIAL_ASSET_BASELINE
+    assets_manifest: data/official-cold-start/assets.v1.json
+    generate: scripts/dev/generate-ocs-official-media-assets.cjs
+    bootstrap: scripts/dev/bootstrap-ocs-official-assets.cjs
+    verify: scripts/dev/verify-ocs-official-assets.cjs
+    shell: scripts/dev/run-ocs-official-asset-baseline.sh
+    bind_remediation: scripts/dev/remediate-ocs-official-media-bindings-staging.cjs
+    docker_bundle: data/official-cold-start/media → data/community_post_media
+  publish_gate_dimensions:
+    - METADATA
+    - ASSET
+    - GOVERNANCE
+    - SURFACE
+    - VERIFICATION
+  publish_gate_rule: all five dimensions PASS before publish
+  status_machine:
+    current: VERIFIED
+    allowed: [IMPLEMENTING, READY_FOR_STAGING_VERIFICATION, VERIFIED]
+    verified_only_when: all_10_acceptance_pass_and_independent_staging_signoff
+  defaults:
+    ocs_strict_legacy_media: "1"
+  shell: scripts/dev/run-ocs-surface-expansion-staging.sh
+  validator: scripts/dev/validate-ocs-surface-expansion-staging.cjs
+  evidence_root: evidence/GO_official_cold_start_dataset/ocs-surface-expansion-staging
+  independent_staging_evidence: true
+  forbidden_substitution: [local_evidence, phase1_closed_evidence_without_rerun]
+  execution_order:
+    - deploy_api_web_staging
+    - mark_READY_FOR_STAGING_VERIFICATION
+    - run_official_cold_start_dataset_on_staging
+    - validate_10_acceptance_checks
+    - ddg_post_scan
+    - write_signoff_only_if_VERIFIED
+  destination_hub_round1:
+    no_new_aggregate_api: true
+    verify_only: [manifest destination_slug, post destination field, explore api-aggregate-v1]
+    full_hub_deferred: post_g3
+  required_acceptance_count: 11
+  acceptance_checks:
+    - id: OCS_MANIFEST
+      label: 10 community_post from orchestrator not seed/SQL
+    - id: OCS_SINGLE_SOURCE
+      label: Feed official content only from OCS manifest state map
+    - id: OFFICIAL_IDENTITY
+      label: author_account_slug binds Official Account
+    - id: PUBLIC_OPERATIONS
+      label: Publish Unpublish Priority Featured Surface
+    - id: SURFACE_CONSISTENCY
+      label: Manifest surfaces priority campaign refs match Public Operations
+    - id: COMMUNITY_FEED
+      label: governed path zero leakage OCS visible
+    - id: CAMPAIGN
+      label: community_post item_ref without second source
+    - id: DESTINATION
+      label: destination_slug explore tokyo kyoto no Hub API
+    - id: REVERSE_GOVERNANCE
+      label: Unpublish hides Feed Explore Campaign
+    - id: MEDIA
+      label: OCS_STRICT_LEGACY_MEDIA=1 no Showcase Sample Legacy URLs
+    - id: ASSET_VERIFICATION
+      label: Official Asset Baseline V1 HEAD 200 MIME Content-Length decodable
+
+official_asset_baseline_v1:
+  version: V1
+  status: ACTIVE
+  machine_key: TT_OCS_OFFICIAL_ASSET_BASELINE
+  assets_manifest: data/official-cold-start/assets.v1.json
+  media_root: data/official-cold-start/media
+  public_serve: GET /api/v1/uploads/community-posts/:name
+  entity_coverage: [guide, provider, acquisition, official_guide, community_post, campaign]
+  scripts:
+    generate: scripts/dev/generate-ocs-official-media-assets.cjs
+    bootstrap: scripts/dev/bootstrap-ocs-official-assets.cjs
+    verify: scripts/dev/verify-ocs-official-assets.cjs
+    orchestrate: scripts/dev/run-ocs-official-asset-baseline.sh
+  publish_gate:
+    dimensions: [METADATA, ASSET, GOVERNANCE, SURFACE, VERIFICATION]
+    rule: all PASS before publish — no 404 placeholder legacy URLs on published official content
+  staging_verified:
+    machine_key: TT_OCS_OFFICIAL_ASSET_BASELINE_V1
+    status: VERIFIED
+    environment: staging
+    evidence: evidence/GO_official_cold_start_dataset/ocs-official-asset-baseline/20260704T155800Z
+    delivery: 60/60
+    bootstrap_mode: fly_deploy_docker_copy
+    content_l5_real_media: true
+    bytes_parity: scripts/dev/check-ocs-staging-media-bytes-parity.cjs
+    supersedes: evidence/GO_official_cold_start_dataset/ocs-official-asset-baseline/20260704T085638Z
+    note: Content L5 真图 60/60 · staging HTTP bytes match local · post OCS L5 CLOSED rebootstrap
+
+ocs_content_l5:
+  machine_key: TT_OCS_CONTENT_L5
+  status: CLOSED
+  closed_utc: "20260704T155000Z"
+  ready_machine_key: TT_OCS_CONTENT_L5_READY
+  ready_status: "YES"
+  execution_status: CLOSED
+  execution_open: evidence/GO_official_cold_start_dataset/ocs-content-l5/OCS-CONTENT-L5-EXECUTION-OPEN-20260704T121500Z.json
+  execution_closed: evidence/GO_official_cold_start_dataset/ocs-content-l5/OCS-CONTENT-L5-EXECUTION-CLOSED-20260704T155000Z.json
+  closure_evidence: evidence/GO_official_cold_start_dataset/ocs-content-l5/20260704T155000Z/OCS-CONTENT-L5-CLOSED.json
+  l5_score: 93.5
+  motto: Content First, Code Frozen
+  content_brief: data/official-cold-start/content-brief.v1.yaml
+  production_matrix: data/official-cold-start/content-production-matrix.v1.yaml
+  runbook: docs/runbook/TT-OCS-CONTENT-L5.md
+  registry: registry/ocs-content-l5.v1.yaml
+  evidence_root: evidence/GO_official_cold_start_dataset/ocs-content-l5/
+  phase_open: evidence/GO_official_cold_start_dataset/ocs-content-l5/OCS-CONTENT-L5-PHASE-OPEN-20260704T120000Z.json
+  blocks: [production_go]
+  production_prep_entry: evidence/GO_production_preparation/OCS-CONTENT-L5-PRODUCTION-PREP-ENTRY-LATEST.json
+  closure_keys:
+    - TT_OCS_CONTENT_L5: CLOSED
+    - TT_OCS_CONTENT_L5_READY: "YES"
+    - TT_CONTENT_PRODUCTION_MATRIX: PASS
+    - TT_CONTENT_BRAND_CONSISTENCY: PASS
+  gates: G1-G10
+  matrix_rows: 60
+  matrix_verified: 60
+  production_cdn:
+    prep_machine_key: TT_G3_PRODUCTION_CDN_PREP
+    prep_status: READY
+    verified_machine_key: TT_G3_PRODUCTION_CDN_VERIFIED
+    verified_status: PLANNED
+    registry: registry/g3-production-cdn-official-assets.v1.json
+    runbook: docs/runbook/TT-G3-PRODUCTION-CDN-OFFICIAL-ASSETS.md
+    prep_script: scripts/dev/run-g3-production-cdn-prep.sh
+    honest_boundary: Staging VERIFIED ≠ Production CDN VERIFIED
+
+staging_rc_ssot_alignment:
+  machine_key: TT_STAGING_RC_SSOT_ALIGNMENT
+  parity_key: TT_STAGING_RC_SSOT_PARITY
+  registry: registry/staging-rc-ssot-alignment.v1.yaml
+  runbook: docs/runbook/TT-STAGING-RC-SSOT-ALIGNMENT-CLEANUP.md
+  orchestrator: scripts/dev/run-staging-rc-ssot-alignment-cleanup.sh
+  validator: scripts/dev/validate-staging-rc-ssot-parity.cjs
+  evidence_root: evidence/GO_staging_rc_ssot_alignment
+  release_candidate: evidence/manual-uat/signoff/RELEASE-CANDIDATE-SIGNOFF-20260702T144513Z.md
+  corridor_smoke_lib: scripts/dev/lib/staging-corridor-smoke.cjs
+  expected_feed: 10
+  expected_guides: 10
+  expected_market_provider: 10
+  expected_market_acquisition: 10
+  baseline_orchestrator: scripts/dev/run-staging-rc-baseline-final-alignment.sh
+  baseline_evidence_root: evidence/GO_staging_rc_baseline
+  baseline_machine_key: TT_STAGING_RC_BASELINE
+  baseline_registry: registry/staging-rc-baseline.v1.yaml
+  baseline_runbook: docs/runbook/TT-STAGING-RC-BASELINE-ENFORCEMENT.md
+  baseline_enforce: scripts/dev/run-staging-rc-baseline-enforcement-check.sh
+  baseline_gate: scripts/dev/lib/staging-rc-baseline-gate.sh
+  no_new_features: true
+
+production_release_prep:
+  machine_key: TT_PRODUCTION_RELEASE_PREP
+  status: READY
+  registry: registry/production-release-prep.v1.yaml
+  runbook: docs/runbook/TT-PRODUCTION-RELEASE-PREP.md
+  master_script: scripts/dev/run-phase12-production-release-prep.sh
+  production_go:
+    prep_key: TT_PRODUCTION_GO_PREP
+    prep_status: READY
+    verdict_key: TT_PRODUCTION_GO
+    verdict: NO_GO
+  phase3_cutover: DEFERRED
+  note: 发布等一下 — prep complete not release GO
+
+post_apply_ddg_remediation:
+  label: OCS Post-Apply DDG Remediation
+  machine_key: TT_OCS_POST_APPLY_DDG
+  scope: OCS Surface Expansion 收尾
+  not_a_g_phase: true
+  not_new_platform_capability: true
+  prerequisite: TT_OCS_SURFACE_EXPANSION VERIFIED
+  g3_official_content_baseline_gate: true
+  status_machine:
+    current: PASS
+    allowed: [IMPLEMENTING, READY_FOR_REMEDIATION, PASS]
+  shell: scripts/dev/run-ocs-post-apply-ddg-remediation.sh
+  avatar_remediator: scripts/dev/remediate-ocs-official-avatars-staging.cjs
+  ddg_audit: scripts/dev/staging-full-site-display-governance-audit.cjs
+  evidence_root: evidence/GO_official_cold_start_dataset/ocs-post-apply-ddg-remediation
+  ddg_tier_policy:
+    FALSE_POSITIVE: Official Identity @ocs.traveltrust.app — not leakage
+    EXPECTED_OFFICIAL: OCS CDN Official Avatar Official Cover — allowed
+    REAL_LEAK: Unsplash Showcase Demo Seed sample hosts — blocking in production
+  goals:
+    - official_avatar_ocs_upload_cdn
+    - ddg_heuristics_official_vs_test
+    - staging_full_site_ddg_pass
+    - independent_ddg_evidence
+  remediation_mode:
+    env: OCS_DDG_REMEDIATION_MODE=1
+    note: >-
+      OCS 收尾闸：guides/community/admin 零 blocking。
+      market listing legacy Unsplash → 见 market_media_ddg_remediation（非 OCS 名下）
+  market_media_ddg_remediation: registry/market-media-ddg-remediation.v1.yaml
+  g3_entry_chain:
+    - TT_OCS_SURFACE_EXPANSION VERIFIED
+    - TT_OCS_POST_APPLY_DDG PASS
+    - Official Content Baseline V1 READY
+    - G3-01 Production Network PLANNED
+
+official_content_baseline:
+  version: V1
+  status: READY
+  machine_key: TT_OCS_OFFICIAL_CONTENT_BASELINE
+  version_bump_rule: V1 → V1.1 → V2 on content expansion — never mutate READY in place
+  production_go_pins: Official Content Baseline V1
+  registry_ref: registry/production-readiness-program.v1.yaml#official_content_baseline
+
+official_catalog_identity_policy: registry/official-catalog-identity-policy.v1.yaml
+single_official_public_catalog_policy: registry/single-official-public-catalog-policy.v1.yaml
+operations_platform: registry/traveltrust-operations-platform.v1.yaml
+operations_workflow: registry/traveltrust-operations-workflow.v1.yaml
+
+public_content_platform:
+  registry: registry/public-content-platform.v1.yaml
+  runbook: docs/runbook/TT-PUBLIC-CONTENT-PLATFORM.md
+  pcp_role: PCP Governance · Official Tier Bootstrap
+  gate_status: CLOSED
+  note: Subsumed under PCP — CLOSED_UNLESS_TOUCHED unchanged
+
+email_domain: ocs.traveltrust.app
+password_env: TT_OCS_ACCOUNT_PASSWORD
+default_password: "OcsBaseline2026!"
+
+orchestrator:
+  script: scripts/dev/run-official-cold-start-dataset.cjs
+  shell: scripts/dev/run-official-cold-start-dataset.sh
+  admin_email: tourist@test.com
+  identity_contract:
+    policy: registry/official-catalog-identity-policy.v1.yaml
+    idempotency: reuse_uuid_when_state_map_key_exists
+    forbidden: create_new_uuid_for_existing_canonical_key
+  phases:
+    - id: official_ops_accounts
+      count: 5
+    - id: showcase_guides
+      count: 10
+    - id: showcase_providers
+      count: 10
+    - id: showcase_acquisitions
+      count: 10
+    - id: official_guides
+      count: 10
+    - id: cold_start_campaigns
+      count: 10
+      unified_campaign_name: Official Cold Start Campaign
+      note: Phase 1 · 10 surface bundles in DB; Phase 1.5 consolidates naming under one OCS campaign SSOT
+    - id: ocs_surface_expansion
+      count: 10
+      manifest_item: community_post
+      status: ocs_surface_expansion
+      replaces: [community_engagement split manifest, community cold start products]
+      note: chain.community_post via existing orchestrator — Community Feed OCS-only
+    - id: community_engagement
+      count: 100
+      status: superseded_by_ocs_surface_expansion
+    - id: historical_orders
+      count: 20
+      status: deferred_post_mvp
+
+governance:
+  replaces: [TRAVELTRUST_MARKET_PUBLIC_SHOWCASE env seed for staging ops, smoke/demo cold start]
+  does_not_replace: [test account registry C1-C4 for Admin/联调 login]
+  staging_public_guides_policy:
+    count: 10
+    source: ocs_only
+    no_duplicate_cities: true
+    no_test_label_on_public: true
+    align_script: scripts/dev/align-ocs-staging-guides-public-catalog.cjs
+    catalog_align_evidence: evidence/GO_official_cold_start_dataset/20260703T044855Z/guides-catalog-align.json
+    catalog_align_utc: "2026-07-03T05:35:00Z"
+  single_official_public_catalog_policy:
+    registry: registry/single-official-public-catalog-policy.v1.yaml
+    alias: [SOB, SOPCP]
+    scope: public_catalog_only
+    not_in_scope: database_row_deletion
+    policy_summary: >
+      Each Public Surface shows one Official Production Dataset (OCS).
+      DB may retain Archive, Draft, Test, Demo, Smoke, Historical, Canonical — hidden from catalog.
+    surfaces: [guides, provider, acquisition, official_guides, campaigns, community_feed, community_featured, community_explore]
+    audit: scripts/dev/audit-single-official-baseline.cjs
+    align: scripts/dev/align-single-official-baseline-staging.cjs
+    operational_rule: mutate_ocs_in_place_no_parallel_city_chains
+    identity_policy: registry/official-catalog-identity-policy.v1.yaml
+    expected_difference_registry: registry/display-data-governance.v1.yaml#test_data_policy
+  audit_after_apply:
+    - scripts/dev/staging-full-site-display-governance-audit.cjs
+    - scripts/dev/market-listings-display-governance-audit.cjs
+
+evidence_root: evidence/GO_official_cold_start_dataset
+
+status: CLOSED
+phase: 1
+closed_utc: "2026-07-03T05:15:00Z"
+rerun_policy: CLOSED_UNLESS_TOUCHED
+baseline_role: production_official_content_baseline
+
+# 官方运营基线永久冻结：无触发条件不得重新 apply / 重新生成。
+# SSOT 触发清单：registry/evidence-reuse-policy.v1.yaml#gates/OFFICIAL_COLD_START_DATASET
+rerun_triggers_summary:
+  - manifest_modification
+  - campaign_structure_modification
+  - official_account_model_modification
+  - public_surface_modification
+  - data_origin_modification
+  - official_ops_api_modification
+
+closed_unless_touched:
+  default_action: REUSE_EXISTING_EVIDENCE
+  orchestrator: scripts/dev/run-official-cold-start-dataset.sh
+  validation: scripts/dev/validate-official-cold-start-dataset.cjs
+  l5_audit: scripts/dev/audit-official-cold-start-dataset-l5.cjs
+  baseline_readiness_audit: scripts/dev/audit-official-cold-start-baseline-readiness.cjs
+  on_reexecute_also_run:
+    - scripts/dev/staging-full-site-display-governance-audit.cjs
+  note: >
+    Do not re-run apply or regenerate OCS entities on routine releases.
+    Re-run only when rerun_when_paths_change matches since latest_staging_apply.stamp,
+    or Rule 3 incident override invalidates the baseline.
+
+acceptance_metrics:
+  coverage:
+    ops_accounts: "5/5"
+    chains_complete: "10/10"
+    campaigns: "10/10"
+  surface_coverage:
+    guides_public_min: 10
+    provider_public_min: 1
+    acquisition_public_min: 1
+    cold_start_home: home_hero
+    campaigns_deployed_min: 1
+    community_feed_min: 10
+    community_featured_min: 3
+    destination_hub_chains_min: 10
+
+latest_staging_apply:
+  stamp: "20260703T044855Z"
+  api: https://tt-api-staging.fly.dev
+  api_deployment: deployment-01KWK533SGKGS5PBAVB6NMTKN0
+  web: https://tt-web-staging.fly.dev
+  orchestrator_verdict: complete
+  validation:
+    script: scripts/dev/validate-official-cold-start-dataset.cjs
+    verdict: PASS
+    coverage_chains: "10/10"
+    coverage_ops: "5/5"
+    coverage_campaigns: "10/10"
+    surfaces:
+      guides_production: 10
+      guides_public_ocs_only: true
+      provider_public: 10
+      acquisition_public: 10
+      campaigns_deployed: 10
+  catalog_align:
+    script: scripts/dev/align-ocs-staging-guides-public-catalog.cjs
+    utc: "2026-07-03T05:35:00Z"
+    public_guides: 10
+    duplicate_cities: 0
+    unpublish_count: 5
+    root_cause: "legacy canonical showcase + C3 SEED_GUIDE_PUBLIC_MARKET leak"
+    remediation: "unpublish non-OCS + fly secret TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=0"
+  single_official_public_catalog_policy:
+    stamp: "20260703T053800Z"
+    registry: registry/single-official-public-catalog-policy.v1.yaml
+    scope: public_catalog_only
+    verdict: PASS
+    surfaces:
+      guides_public: 10
+      provider_public: 10
+      acquisition_public: 10
+      official_guides_admin: 10
+      campaigns_deployed: 10
+    duplicate_inventory_remediated:
+      - id: 0f0749b5-beab-443b-bb4a-36a71b152214
+        surface: provider
+        classification: LEGACY_PRODUCTION
+        action: unpublish
+      - id: 650fbaff-1d9e-4677-b970-16be8fdd9d7b
+        surface: guides
+        classification: TEST_SEED
+        action: unpublish_and_seed_guide_public_market_0
+      - ids: "00000000-0000-4000-8000-000000000311–314"
+        surface: guides
+        classification: CANONICAL_SHOWCASE
+        action: unpublish
+    evidence:
+      audit_json: evidence/GO_official_cold_start_dataset/20260703T044855Z/single-official-baseline-audit.json
+      align_json: evidence/GO_official_cold_start_dataset/20260703T044855Z/single-official-baseline-align.json
+      report: evidence/GO_official_cold_start_dataset/20260703T044855Z/SINGLE-OFFICIAL-BASELINE-AUDIT-REPORT.md
+    signoff: evidence/manual-uat/signoff/SINGLE-OFFICIAL-PUBLIC-CATALOG-POLICY-SIGNOFF-20260703T054500Z.md
+  official_catalog_identity:
+    stamp: "20260703T054700Z"
+    registry: registry/official-catalog-identity-policy.v1.yaml
+    audit: scripts/dev/audit-official-catalog-identity.cjs
+    verdict: PASS
+    canonical_entities: 50
+    blocking: 0
+    enhancement_campaign_item_refs: 9
+    evidence:
+      json: evidence/GO_official_cold_start_dataset/20260703T044855Z/official-catalog-identity-audit.json
+    signoff: evidence/manual-uat/signoff/OFFICIAL-CATALOG-IDENTITY-POLICY-SIGNOFF-20260703T054700Z.md
+  ddg_post_apply:
+    script: scripts/dev/staging-full-site-display-governance-audit.cjs
+    verdict: PASS
+    PRODUCT_DATA_DEFECT: 0
+    TEST_DATA_LEAKAGE: 0
+    evidence: evidence/GO_official_cold_start_dataset/20260703T044855Z/fs-dg-post.json
+  signoff: evidence/manual-uat/signoff/OCS-PHASE1-SIGNOFF-20260703T044855Z.md
+
+local_staging_mirror:
+  stamp: "20260703T075355Z"
+  objective: local_fully_mirrors_staging_official_ops_baseline
+  method:
+    script: scripts/dev/start-api-local-staging-db-mirror.sh
+    closure: scripts/dev/close-local-staging-ops-alignment.sh
+    database: staging_postgres_via_fly_proxy_15432
+    deployment_profile: staging_mirror
+    seed_guide_public_market: 0
+  alignment_audit:
+    script: scripts/dev/audit-operations-platform-local-staging-alignment.cjs
+    verdict:
+      phase2_staging_ops_baseline: PASS
+      phase2_local_staging_alignment: PASS
+      blocking_count: 0
+    evidence: evidence/GO_operations_platform_alignment/20260703T075355Z/alignment-audit.json
+  runbook: docs/runbook/TT-TRAVELTRUST-OPERATIONS-PLATFORM.md#local--staging-官方运营基线镜像phase-②
+  signoff: evidence/manual-uat/signoff/LOCAL-STAGING-OPS-PLATFORM-ALIGNMENT-SIGNOFF-20260703T075355Z.md
+  governance_gates:
+    evidence_reuse_policy: ENFORCED
+    policy: CLOSED_UNLESS_TOUCHED
+    RC: CLOSED
+    DDG: CLOSED
+    OCS: CLOSED
+    mode: Evidence Reused
+    note: Gates passed; no rerun triggers matched — strategy enforced, not re-executed
+
+l5_enterprise_audit:
+  stamp: "20260703T051500Z"
+  script: scripts/dev/audit-official-cold-start-dataset-l5.cjs
+  verdict: PASS
+  tier: L5_ENTERPRISE_BASELINE
+  score: "120/120"
+  percent: 100
+  baseline_recommendation: APPROVED_AS_STAGING_OFFICIAL_COLD_START_BASELINE
+  blocking_issues: 0
+  post_go_enhancements: 4
+  evidence:
+    json: evidence/GO_official_cold_start_dataset/20260703T044855Z/ocs-l5-enterprise-audit.json
+    report: evidence/GO_official_cold_start_dataset/20260703T044855Z/OCS-L5-ENTERPRISE-AUDIT-REPORT.md
+  signoff: evidence/manual-uat/signoff/OCS-L5-ENTERPRISE-AUDIT-SIGNOFF-20260703T051500Z.md
+  rc_ddg_reopen: false
+  governance_reused:
+    release_candidate: evidence/manual-uat/signoff/RELEASE-CANDIDATE-SIGNOFF-20260702T144513Z.md
+    staging_full_site_ddg: evidence/GO_staging_full_site_display_governance/20260703T033727Z/
+    fe_api_err_vmarket: reuse_ddg_pipeline_20260703T033727Z
+
+baseline_readiness_audit:
+  stamp: "20260703T052100Z"
+  script: scripts/dev/audit-official-cold-start-baseline-readiness.cjs
+  audit_type: Enterprise_L5_Readiness_Official_Cold_Start_Baseline
+  verdict: PASS
+  tier: L5_ENTERPRISE_READINESS
+  score: "100/100"
+  issue_summary:
+    blocking: 0
+    major: 0
+    minor: 5
+    enhancement: 4
+  rulings:
+    official_cold_start_baseline_met: true
+    enterprise_ops_baseline_mvp_scope: true
+    phase1_freeze_recommended: true
+    closed_unless_touched: true
+    production_cold_start_baseline: APPROVED_AFTER_STAGING_PARITY_APPLY_AND_PI3
+    official_ops_11_met: false
+  evidence:
+    json: evidence/GO_official_cold_start_dataset/20260703T044855Z/ocs-baseline-readiness-audit.json
+    report: evidence/GO_official_cold_start_dataset/20260703T044855Z/OCS-ENTERPRISE-L5-READINESS-AUDIT-REPORT.md
+  signoff: evidence/manual-uat/signoff/OCS-BASELINE-READINESS-SIGNOFF-20260703T052100Z.md
+
+api_patches_for_ocs:
+  - auth_login PG fallback for official account emails (chain_off/auth.rs)
+  - POST /api/v1/admin/official/accounts/:id/bootstrap-market for merchant/acquisition prereqs

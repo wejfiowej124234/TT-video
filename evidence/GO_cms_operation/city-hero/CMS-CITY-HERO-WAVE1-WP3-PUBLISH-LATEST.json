@@ -1,0 +1,58 @@
+{
+  "schema": "traveltrust.cms_city_hero_wave1_wp3_publish_evidence.v1",
+  "recorded_at_utc": "2026-07-07T13:13:05.554Z",
+  "work_package": "WP3",
+  "TT_CMS_CITY_HERO_WAVE1_WP3": "PASS",
+  "TT_CMS_CITY_HERO_WAVE1_TOKYO": "PENDING_IMPLEMENTATION",
+  "upstream_wp2": "PASS",
+  "matrix_id": "CH-JP-TOKYO-001",
+  "asset_key": "city_hero_tokyo",
+  "fallback_key": "hero_japan",
+  "catalog_api_probe": {
+    "verdict": "PASS",
+    "http_status": 200,
+    "count": 1,
+    "row": {
+      "asset_kind": "city_hero",
+      "city_slug": "tokyo",
+      "asset_key": "city_hero_tokyo",
+      "country_iso": "JP",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/city-hero-tokyo-v1.jpg"
+    },
+    "query": "http://127.0.0.1:8081/api/v1/catalog/media?asset_kind=city_hero&country_iso=JP&city_slug=tokyo"
+  },
+  "db_published_row": {
+    "id": "91d1bdbe-dcd6-4513-9512-83cb7efea493",
+    "asset_kind": "city_hero",
+    "publish_status": "published",
+    "stock_pool_key": "city_hero_tokyo",
+    "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/city-hero-tokyo-v1.jpg",
+    "country_iso": "JP",
+    "city_slug": "tokyo"
+  },
+  "acceptance_checks": {
+    "asset_kind": true,
+    "city_slug": true,
+    "asset_key": true,
+    "status_published": true,
+    "country_jp": true,
+    "fallback_key_preserved": true,
+    "url_live": true
+  },
+  "scope": {
+    "ops_only": true,
+    "untouched": [
+      "resolver",
+      "home",
+      "travel",
+      "frontend",
+      "registry",
+      "matrix",
+      "p1_standard",
+      "api_code"
+    ]
+  },
+  "wp6_workspace_test_reminder": "Before WP6: run full cargo test -p traveltrust-api after workspace E0063 (OrderRow/GuideRow) is cleared · not a City Hero defect",
+  "staging_deploy_note": "Staging Admin may return invalid_asset_kind until WP0–WP2 deploy · local publish + local API verify is Wave 1 pilot path",
+  "next_step": "WP4 Runtime resolver"
+}

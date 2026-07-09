@@ -1,0 +1,34 @@
+{
+  "accounts": {
+    "official": {
+      "id": "d6f7d115-33a1-4750-98df-8680df616653",
+      "user_id": "264146e2-b47c-4b9a-973b-51ba51c03048",
+      "email": "official@ocs.traveltrust.app"
+    },
+    "asia": {
+      "id": "b3fd28cf-b071-40ff-8dda-10791ac43207",
+      "user_id": "0bef1b7e-7f63-40ea-abb5-2aac9caf4425",
+      "email": "asia@ocs.traveltrust.app"
+    },
+    "japan": {
+      "id": "ab1b8202-588d-4b0d-8622-f896c6fa1860",
+      "user_id": "f8ba5a00-bfb1-4c8d-a85c-3c483a7869f7",
+      "email": "japan@ocs.traveltrust.app"
+    },
+    "europe": {
+      "id": "ca086698-ab46-4064-84b4-72db038a54e3",
+      "user_id": "2a47fb36-739a-4955-bb17-b8bccd92b0b7",
+      "email": "europe@ocs.traveltrust.app"
+    },
+    "support": {
+      "id": "c1126869-4557-4f01-a81d-ae34a3f7a482",
+      "user_id": "1c3a40e2-d0a1-4825-9e70-f227c83542c7",
+      "email": "support@ocs.traveltrust.app"
+    }
+  },
+  "guides": {},
+  "listings": {},
+  "official_guides": {},
+  "community_posts": {},
+  "campaigns": {}
+}

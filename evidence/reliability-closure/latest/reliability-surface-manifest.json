@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.reliability_surface_manifest.v1",
+  "surfaces": [
+    {
+      "id": "A-P09",
+      "role": "admin",
+      "path": "/admin/governance/execution-uat",
+      "action": "admin_governance_read",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "admin_governance_execution_uat_shell_visible",
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    }
+  ],
+  "grep_anchor": "TT_TN_P1_D6_RELIABILITY_SURFACE_EVIDENCE: PASS",
+  "human_uat_all_pass": true,
+  "exception_path_all_pass": true
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "traveltrust.enterprise_local_staging_consistency_audit.v1",
+  "stamp_utc": "20260630T100900Z",
+  "phase2_closed": true,
+  "phase2_reopen": "NO",
+  "runtime_baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "git_head": "422aadb9f7685c125b4f9ada83bfbb3396d881a8",
+  "counts": {
+    "p0": 0,
+    "p1": 7,
+    "p2": 4,
+    "risk_info": 8
+  },
+  "verdict": {
+    "staging_internal_consistent": true,
+    "runtime_drift": false,
+    "local_first_alignment": "NOT_100_PERCENT_ALIGNED",
+    "production_go": "NO"
+  },
+  "machine_keys": {
+    "TT_ENTERPRISE_LOCAL_STAGING_AUDIT": "COMPLETE",
+    "TT_LOCAL_FIRST_RUNTIME_DRIFT": "NONE",
+    "TT_PHASE2_CLOSED": "YES"
+  },
+  "upstream_evidence": [
+    "evidence/GO_enterprise_audit/local-staging-consistency/20260630T100536Z",
+    "evidence/GO_enterprise_audit/local-staging-consistency/20260630T100615Z"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_regression_review.v1",
+  "stamp_utc": "20260704T150330Z",
+  "progress": "44/60",
+  "trigger_filename": "ocs-sydney-coast-provider-cover.jpg",
+  "TT_GLOBAL_REGRESSION_REVIEW": "PASS",
+  "no_quality_regression": true
+}

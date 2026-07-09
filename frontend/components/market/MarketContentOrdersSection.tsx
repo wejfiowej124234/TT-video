@@ -11,6 +11,7 @@ import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 
 const D = TT_MARKETING_MARKET_DARK_PATH;
 import { MARKET_TRAVEL_SHOWCASE_ORDERS } from "@/lib/marketMockData";
+import { marketPublicShowcaseFallbackEnabled } from "@/lib/marketPublicDisplayGate";
 import { resolveMarketOrderForDetail } from "./marketContentModel";
 
 type View = "split" | "orders" | "guides";
@@ -66,7 +67,7 @@ export function MarketContentOrdersSection({
       <h2 id={marketOrdersHeadingId} className="text-body font-semibold text-white mb-3 drop-shadow-market-section">
         {t("market_orders_heading")}
       </h2>
-      {showOrders && filteredOrders.length === 0 && !loadingOrders && !hasFilters ? (
+      {showOrders && filteredOrders.length === 0 && !loadingOrders && !hasFilters && marketPublicShowcaseFallbackEnabled() ? (
         <div
           className={D.marketGlassInsetPanelShowcase}
           role="region"

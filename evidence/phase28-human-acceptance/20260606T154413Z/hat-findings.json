@@ -1,0 +1,543 @@
+{
+  "phase": "②.8 Human Acceptance Test",
+  "recorded_at": "2026-06-06T15:47:27.714511+00:00",
+  "targets": {
+    "web": "https://tt-web-staging.fly.dev",
+    "api": "https://tt-api-staging.fly.dev"
+  },
+  "meta_git_sha": "96c739e104054fbc26efd6ec9abad25cba309c90",
+  "verdict": "CONDITIONAL",
+  "summary": {
+    "p0": 0,
+    "p1": 8,
+    "p2": 1,
+    "flows_pass": 51,
+    "flows_fail": 2,
+    "flows_partial": 6,
+    "flows_blocked": 1
+  },
+  "issues": [
+    {
+      "id": "HAT-P1-001",
+      "role": "旅行者",
+      "area": "消息",
+      "route": "/api/v1/messages?limit=5",
+      "priority": "P1",
+      "title": "/api/v1/messages?limit=5 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/messages?limit=5"
+    },
+    {
+      "id": "HAT-P1-002",
+      "role": "旅行者",
+      "area": "身份",
+      "route": "/api/v1/me/trust",
+      "priority": "P1",
+      "title": "/api/v1/me/trust 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/me/trust"
+    },
+    {
+      "id": "HAT-P1-003",
+      "role": "管理员",
+      "area": "页面内容",
+      "route": "/admin/users",
+      "priority": "P1",
+      "title": "关键文案/结构缺失",
+      "observation": "未匹配: User|用户",
+      "human_impact": "用户可能看到空壳或错误布局",
+      "repro": ""
+    },
+    {
+      "id": "HAT-P1-004",
+      "role": "管理员",
+      "area": "页面内容",
+      "route": "/admin/finance",
+      "priority": "P1",
+      "title": "关键文案/结构缺失",
+      "observation": "未匹配: finance|财务|Finance",
+      "human_impact": "用户可能看到空壳或错误布局",
+      "repro": ""
+    },
+    {
+      "id": "HAT-P1-005",
+      "role": "管理员",
+      "area": "页面内容",
+      "route": "/admin/disputes",
+      "priority": "P1",
+      "title": "关键文案/结构缺失",
+      "observation": "未匹配: Dispute|争议",
+      "human_impact": "用户可能看到空壳或错误布局",
+      "repro": ""
+    },
+    {
+      "id": "HAT-P1-006",
+      "role": "管理员",
+      "area": "页面内容",
+      "route": "/admin/community/reports",
+      "priority": "P1",
+      "title": "关键文案/结构缺失",
+      "observation": "未匹配: Report|举报",
+      "human_impact": "用户可能看到空壳或错误布局",
+      "repro": ""
+    },
+    {
+      "id": "HAT-P1-007",
+      "role": "管理员",
+      "area": "页面内容",
+      "route": "/admin/inbox",
+      "priority": "P1",
+      "title": "关键文案/结构缺失",
+      "observation": "未匹配: Inbox|收件",
+      "human_impact": "用户可能看到空壳或错误布局",
+      "repro": ""
+    },
+    {
+      "id": "HAT-P1-008",
+      "role": "管理员",
+      "area": "页面内容",
+      "route": "/admin/permissions",
+      "priority": "P1",
+      "title": "关键文案/结构缺失",
+      "observation": "未匹配: Permission|权限|RBAC",
+      "human_impact": "用户可能看到空壳或错误布局",
+      "repro": ""
+    },
+    {
+      "id": "HAT-P2-009",
+      "role": "商家",
+      "area": "测试账号",
+      "route": "/provider/register",
+      "priority": "P2",
+      "title": "Staging 无预置商家测试账号",
+      "observation": "仅 tourist/guide 种子；商家须完整注册+审核链",
+      "human_impact": "QA 无法一键切换商家角色，延长验收周期",
+      "repro": "docs/测试账号与本地联调.md 仅列 tourist/guide"
+    }
+  ],
+  "flows": [
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/market",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/auth/login",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/auth/register",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/community",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/governance",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/did-rank",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/disputes",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "身份",
+      "step": "GET /me",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "市场",
+      "step": "discover orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "订单",
+      "step": "my orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "社区",
+      "step": "feed",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "社区",
+      "step": "media capabilities",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "社区",
+      "step": "explore destinations",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "治理",
+      "step": "proposals",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "治理",
+      "step": "delegate",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "消息",
+      "step": "inbox",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "旅行者",
+      "flow": "身份",
+      "step": "identities trust",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/me/settings",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/me/identities",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/market/acquisition",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/community/explore",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/community/messages",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/governance/proposals",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/governance/delegate",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/staking",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/users",
+      "status": "PARTIAL",
+      "notes": "missing 1 patterns"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/finance",
+      "status": "PARTIAL",
+      "notes": "missing 1 patterns"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/disputes",
+      "status": "PARTIAL",
+      "notes": "missing 1 patterns"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/community/reports",
+      "status": "PARTIAL",
+      "notes": "missing 1 patterns"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/community/moderation/cases",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/provider-applications",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/inbox",
+      "status": "PARTIAL",
+      "notes": "missing 1 patterns"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/permissions",
+      "status": "PARTIAL",
+      "notes": "missing 1 patterns"
+    },
+    {
+      "role": "管理员",
+      "flow": "Admin 壳层",
+      "step": "capabilities",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "订单台账",
+      "step": "orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "用户台账",
+      "step": "users",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "财务",
+      "step": "finance overview",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "举报队列",
+      "step": "reports",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "争议队列",
+      "step": "disputes",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "商家申请",
+      "step": "provider apps",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "治理",
+      "flow": "协议参考",
+      "step": "protocol-ref",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "治理",
+      "flow": "奖励池",
+      "step": "rewards",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "治理",
+      "flow": "投票权",
+      "step": "voting power",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "治理",
+      "flow": "提案列表",
+      "step": "proposals",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "治理",
+      "flow": "委托状态",
+      "step": "delegate",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "治理",
+      "flow": "页面浏览",
+      "step": "/governance/distribution-claim",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "治理",
+      "flow": "页面浏览",
+      "step": "/governance/fee-routes",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "向导",
+      "flow": "页面浏览",
+      "step": "/guide",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "向导",
+      "flow": "向导资料",
+      "step": "GET /me guide",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "向导",
+      "flow": "接单",
+      "step": "guide orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "向导",
+      "flow": "向导身份",
+      "step": "me.guide",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "商家",
+      "flow": "页面浏览",
+      "step": "/auth/register?role=provider",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "商家",
+      "flow": "页面浏览",
+      "step": "/provider/register",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "商家",
+      "flow": "页面浏览",
+      "step": "/market/provider",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "商家",
+      "flow": "页面浏览",
+      "step": "/me/onboarding",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "商家",
+      "flow": "商家登录",
+      "step": "provider-did-rank-demo",
+      "status": "BLOCKED",
+      "notes": "无种子商家账号；须自注册走 /provider/register"
+    }
+  ],
+  "boundary": "Human-visible staging acceptance · not Production GO · independent of six-domain UAT pass/fail"
+}

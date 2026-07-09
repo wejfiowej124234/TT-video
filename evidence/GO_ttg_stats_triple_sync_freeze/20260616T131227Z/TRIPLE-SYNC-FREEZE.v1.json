@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.ttg-stats-triple-sync-freeze.v1",
+  "stamp_utc": "20260616T131227Z",
+  "frozen": true,
+  "phase": "②",
+  "mode": "CERT_ONLY",
+  "mtm_key": "TTG_GOV_MTM: ROWS=146 DEV=92 TN=45 HUMAN=9 OPS=0 DR=0",
+  "closure_key": "TTG_GOV_FINAL_CLOSURE: MODE=CERT_ONLY DEV=100 TN=45 HUMAN=9 OPS=0 DR=0 ENT=60 CERT_QUEUE=1/12",
+  "repo_align": "TT_REPO_ALIGN: ACTIVE=31 LEGACY=17 DELETE_CANDIDATE=0 P0_ROUTE_DRIFT=0 P1_DOC_NARRATIVE=0 P1_ADDRESS_DRIFT=0 P2_DEAD_CODE=0 P2_SUPERSEDED_DOC=0 P3_EVIDENCE_STALE=0 stamp=20260616T131228Z",
+  "tier_counts": {
+    "DEV": 92,
+    "TN": 45,
+    "HUMAN": 9,
+    "OPS": 0,
+    "DR": 0
+  },
+  "cert_queue": "1/12",
+  "enterprise_ent": 60,
+  "follow_on": "Cert #2 Multi Identity only"
+}

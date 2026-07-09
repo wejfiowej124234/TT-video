@@ -1,0 +1,280 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_exit_check.v1",
+  "recorded_at_utc": "2026-07-05T11:53:34.526Z",
+  "city": {
+    "city_zh": "大阪",
+    "city_en": "Osaka",
+    "country_iso": "JP"
+  },
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "checks": [
+    {
+      "id": "assets_locked_8_8",
+      "label": "8/8 Asset 全部 LOCKED · 无 Unlock",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-JP-001-ATR",
+          "poi": "大阪城",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-002-ATR",
+          "poi": "道顿堀",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-003-ATR",
+          "poi": "环球影城",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-004-ATR",
+          "poi": "心斋桥",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-005-FOOD",
+          "poi": "章鱼烧",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-006-FOOD",
+          "poi": "大阪烧",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-007-FOOD",
+          "poi": "河豚",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-008-FOOD",
+          "poi": "串炸",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "six_dimensions_pass",
+      "label": "六维全部 PASS（City Runtime = Gate 4 同源 · 非 national）",
+      "pass": true,
+      "runtime_scope": "city_consumer_runtime",
+      "city_snapshot": {
+        "execution": "PASS",
+        "cms_ownership": "PASS",
+        "runtime_consumer": "PASS",
+        "geo_matching": "PASS",
+        "content_accuracy": "PASS",
+        "l5_quality": "PASS",
+        "content_qa_closed": true
+      },
+      "issues": []
+    },
+    {
+      "id": "catalog_api_osaka",
+      "label": "Catalog API 8/8 与 LOCK 一致",
+      "pass": true,
+      "rows": [
+        {
+          "poi": "大阪城",
+          "expected": "ocs-osaka-castle-official-guide-cover.jpg",
+          "catalog": "ocs-osaka-castle-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "道顿堀",
+          "expected": "ocs-osaka-dotonbori-official-guide-cover.jpg",
+          "catalog": "ocs-osaka-dotonbori-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "环球影城",
+          "expected": "ocs-osaka-usj-official-guide-cover.jpg",
+          "catalog": "ocs-osaka-usj-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "心斋桥",
+          "expected": "ocs-osaka-shinsaibashi-official-guide-cover.jpg",
+          "catalog": "ocs-osaka-shinsaibashi-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "章鱼烧",
+          "expected": "ocs-osaka-takoyaki-community-cover.jpg",
+          "catalog": "ocs-osaka-takoyaki-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "大阪烧",
+          "expected": "ocs-osaka-okonomiyaki-guide-avatar.jpg",
+          "catalog": "ocs-osaka-okonomiyaki-guide-avatar.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "河豚",
+          "expected": "ocs-osaka-fugu-acquisition-cover.jpg",
+          "catalog": "ocs-osaka-fugu-acquisition-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "串炸",
+          "expected": "ocs-osaka-kushikatsu-provider-cover.jpg",
+          "catalog": "ocs-osaka-kushikatsu-provider-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "consumer_runtime_cms",
+      "label": "Consumer Runtime 实际页面读取 CMS（非仅 Verify）",
+      "pass": true,
+      "staging_catalog_opt_in": null,
+      "catalog_api_requests": 4,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/osaka/osaka-poi-runtime-20260705T115334Z.png",
+      "rows": [
+        {
+          "poi": "大阪城",
+          "expected_fn": "ocs-osaka-castle-official-guide-cover.jpg",
+          "runtime_fn": "ocs-osaka-castle-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-osaka-castle-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "道顿堀",
+          "expected_fn": "ocs-osaka-dotonbori-official-guide-cover.jpg",
+          "runtime_fn": "ocs-osaka-dotonbori-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-osaka-dotonbori-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "环球影城",
+          "expected_fn": "ocs-osaka-usj-official-guide-cover.jpg",
+          "runtime_fn": "ocs-osaka-usj-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-osaka-usj-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "心斋桥",
+          "expected_fn": "ocs-osaka-shinsaibashi-official-guide-cover.jpg",
+          "runtime_fn": "ocs-osaka-shinsaibashi-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-osaka-shinsaibashi-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "章鱼烧",
+          "expected_fn": "ocs-osaka-takoyaki-community-cover.jpg",
+          "runtime_fn": "ocs-osaka-takoyaki-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-osaka-takoyaki-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "大阪烧",
+          "expected_fn": "ocs-osaka-okonomiyaki-guide-avatar.jpg",
+          "runtime_fn": "ocs-osaka-okonomiyaki-guide-avatar.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-osaka-okonomiyaki-guide-avatar.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "河豚",
+          "expected_fn": "ocs-osaka-fugu-acquisition-cover.jpg",
+          "runtime_fn": "ocs-osaka-fugu-acquisition-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-osaka-fugu-acquisition-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "串炸",
+          "expected_fn": "ocs-osaka-kushikatsu-provider-cover.jpg",
+          "runtime_fn": "ocs-osaka-kushikatsu-provider-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-osaka-kushikatsu-provider-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "visual_screenshot",
+      "label": "页面截图/DOM · 无旧图/错图/Fallback",
+      "pass": true,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/osaka/osaka-poi-runtime-20260705T115334Z.png",
+      "issues": []
+    },
+    {
+      "id": "no_backlog_unlock",
+      "label": "无 Open Backlog · 无 Unlock",
+      "pass": true,
+      "issues": []
+    }
+  ],
+  "all_pass": true,
+  "verdict": "GOLDEN_TEMPLATE_READY",
+  "TT_CMS_POI_CITY_OSAKA_GOLDEN_TEMPLATE": "YES",
+  "TT_CMS_POI_CITY_OSAKA_CONTENT_QA": "CLOSED",
+  "runtime_tiers": {
+    "city": {
+      "tier": "city_consumer_runtime",
+      "gate_2_equals_gate_4": true,
+      "consumer_surface": "/market → Custom Itinerary → 日本 → 大阪 → POI preview"
+    },
+    "country": {
+      "tier": "national_runtime",
+      "when": "TT_CMS_JP_COUNTRY: CLOSED",
+      "not_veto_city_golden_template": true
+    },
+    "workflow": [
+      "City CLOSED",
+      "City Content QA CLOSED",
+      "Golden Template (City)",
+      "复制到本国其它城市",
+      "Country Runtime 全站验收",
+      "Country CLOSED"
+    ]
+  },
+  "blockers": [],
+  "next_when_pass": "复制同一模板至札幌 · 不修改大阪 · 不新增规则",
+  "next_when_fail": "修复 Blocker · 不得进入札幌 · 不得 Unlock 除非真实错误"
+}

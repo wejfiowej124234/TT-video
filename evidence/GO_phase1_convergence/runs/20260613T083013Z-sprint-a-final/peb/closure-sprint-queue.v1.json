@@ -1,0 +1,289 @@
+{
+  "schema": "traveltrust.closure_sprint_queue.v1",
+  "Sprint-A": {
+    "label": "P0 / NOW",
+    "items": [
+      {
+        "id": "AG-SEED-001",
+        "domain": "AG",
+        "severity": "P0",
+        "title": "Admin route permission guard coverage",
+        "verdict": "REFACTOR",
+        "queue": "NOW",
+        "age_days": 18,
+        "status": "CLOSED"
+      },
+      {
+        "id": "AG-SEED-002",
+        "domain": "AG",
+        "severity": "P0",
+        "title": "Dangerous action audit trail",
+        "verdict": "KEEP",
+        "queue": "NOW",
+        "age_days": 4,
+        "status": "CLOSED"
+      },
+      {
+        "id": "DOA-SEED-002",
+        "domain": "DOA",
+        "severity": "P0",
+        "title": "ABI alignment gate SSOT",
+        "verdict": "KEEP",
+        "queue": "NOW",
+        "age_days": 5,
+        "status": "CLOSED"
+      },
+      {
+        "id": "DOA-SEED-003",
+        "domain": "DOA",
+        "severity": "P0",
+        "title": "04 routes vs Axum mount",
+        "verdict": "KEEP",
+        "queue": "NOW",
+        "age_days": 3,
+        "status": "CLOSED"
+      },
+      {
+        "id": "DOA-SEED-004",
+        "domain": "DOA",
+        "severity": "P0",
+        "title": "spec-path-dependencies registry sync",
+        "verdict": "UPDATE",
+        "queue": "NOW",
+        "age_days": 14,
+        "status": "CLOSED"
+      },
+      {
+        "id": "LFC-CA-002",
+        "domain": "CA",
+        "severity": "P0",
+        "title": "API spine single entry SSOT",
+        "verdict": "KEEP",
+        "queue": "NOW",
+        "age_days": 2,
+        "status": "CLOSED"
+      },
+      {
+        "id": "LFC-UXA-002",
+        "domain": "UXA",
+        "severity": "P0",
+        "title": "Five-main route UI freeze compliance",
+        "verdict": "KEEP",
+        "queue": "NOW",
+        "age_days": 1,
+        "status": "CLOSED"
+      },
+      {
+        "id": "PF-SEED-001",
+        "domain": "PF",
+        "severity": "P0",
+        "title": "Duplicate profile edit surfaces",
+        "verdict": "MERGE",
+        "queue": "NOW",
+        "age_days": 45,
+        "status": "CLOSED"
+      },
+      {
+        "id": "PF-SEED-002",
+        "domain": "PF",
+        "severity": "P0",
+        "title": "Merchant listing dual surfaces",
+        "verdict": "MERGE",
+        "queue": "NOW",
+        "age_days": 38,
+        "status": "CLOSED"
+      },
+      {
+        "id": "PF-SEED-003",
+        "domain": "PF",
+        "severity": "P0",
+        "title": "Publish Hub nav proliferation",
+        "verdict": "MERGE",
+        "queue": "NOW",
+        "age_days": 30,
+        "status": "CLOSED"
+      },
+      {
+        "id": "PGX-CX-001",
+        "domain": "CX",
+        "severity": "P0",
+        "title": "Traveler CUJ unlock→escrow continuity",
+        "verdict": "KEEP",
+        "queue": "NOW",
+        "age_days": 2,
+        "status": "CLOSED"
+      }
+    ],
+    "root_causes": [
+      {
+        "id": "RC-01",
+        "title": "Navigation / IA duplication (PF · CX · UXA)",
+        "domains": [
+          "PF",
+          "CX",
+          "UXA"
+        ],
+        "finding_ids": [
+          "PF-SEED-001",
+          "PF-SEED-002",
+          "PF-SEED-003"
+        ],
+        "verdict": "MERGE",
+        "queue": "NOW",
+        "impact_score": 24,
+        "readiness_delta": 8,
+        "complexity_delta": -12,
+        "redundancy_delta": -15
+      },
+      {
+        "id": "RC-02",
+        "title": "Runbook ↔ scripts / spec-path drift (DOA)",
+        "domains": [
+          "DOA"
+        ],
+        "finding_ids": [
+          "DOA-SEED-001",
+          "DOA-SEED-004"
+        ],
+        "verdict": "UPDATE",
+        "queue": "NOW",
+        "impact_score": 18,
+        "readiness_delta": 6,
+        "complexity_delta": -5,
+        "redundancy_delta": -3
+      },
+      {
+        "id": "RC-03",
+        "title": "Admin governance boundary (AG · PGX-ADMIN)",
+        "domains": [
+          "AG",
+          "CX"
+        ],
+        "finding_ids": [
+          "AG-SEED-001",
+          "AG-SEED-003"
+        ],
+        "verdict": "REFACTOR",
+        "queue": "NOW",
+        "impact_score": 16,
+        "readiness_delta": 5,
+        "complexity_delta": -8,
+        "redundancy_delta": -6
+      },
+      {
+        "id": "RC-04",
+        "title": "Architecture SSOT spine (CA · API)",
+        "domains": [
+          "CA"
+        ],
+        "finding_ids": [
+          "LFC-CA-001",
+          "LFC-CA-002"
+        ],
+        "verdict": "KEEP",
+        "queue": "NOW",
+        "impact_score": 10,
+        "readiness_delta": 2,
+        "complexity_delta": -2,
+        "redundancy_delta": 0
+      },
+      {
+        "id": "RC-05",
+        "title": "L5 freeze compliance (UXA · five-main)",
+        "domains": [
+          "UXA"
+        ],
+        "finding_ids": [
+          "LFC-UXA-001",
+          "LFC-UXA-002"
+        ],
+        "verdict": "KEEP",
+        "queue": "NOW",
+        "impact_score": 8,
+        "readiness_delta": 2,
+        "complexity_delta": -1,
+        "redundancy_delta": 0
+      }
+    ]
+  },
+  "Sprint-B": {
+    "label": "P1 / NEXT",
+    "items": [
+      {
+        "id": "AG-SEED-003",
+        "domain": "AG",
+        "severity": "P1",
+        "title": "RBAC boundary matrix drift",
+        "verdict": "UPDATE",
+        "queue": "NEXT",
+        "age_days": 22,
+        "status": "CLOSED"
+      },
+      {
+        "id": "DOA-SEED-001",
+        "domain": "DOA",
+        "severity": "P1",
+        "title": "README port narrative drift",
+        "verdict": "UPDATE",
+        "queue": "NEXT",
+        "age_days": 21,
+        "status": "CLOSED"
+      },
+      {
+        "id": "LFC-CA-001",
+        "domain": "CA",
+        "severity": "P1",
+        "title": "Module boundary doc vs crate graph",
+        "verdict": "UPDATE",
+        "queue": "NEXT",
+        "age_days": 28,
+        "status": "CLOSED"
+      },
+      {
+        "id": "LFC-UXA-001",
+        "domain": "UXA",
+        "severity": "P1",
+        "title": "L5 spacing on settings hub",
+        "verdict": "KEEP",
+        "queue": "LATER",
+        "age_days": 40,
+        "status": "OPEN"
+      },
+      {
+        "id": "PF-SEED-004",
+        "domain": "PF",
+        "severity": "P1",
+        "title": "archive/ui-v1 retire backlog",
+        "verdict": "RETIRE",
+        "queue": "NEXT",
+        "age_days": 60,
+        "status": "OPEN"
+      },
+      {
+        "id": "PGX-CX-002",
+        "domain": "CX",
+        "severity": "P1",
+        "title": "Market debounce UX consistency",
+        "verdict": "KEEP",
+        "queue": "NEXT",
+        "age_days": 12,
+        "status": "OPEN"
+      }
+    ]
+  },
+  "Sprint-C": {
+    "label": "P2-P3 / LATER",
+    "items": [
+      {
+        "id": "LFC-UXA-001",
+        "domain": "UXA",
+        "severity": "P1",
+        "title": "L5 spacing on settings hub",
+        "verdict": "KEEP",
+        "queue": "LATER",
+        "age_days": 40,
+        "status": "OPEN"
+      }
+    ]
+  }
+}

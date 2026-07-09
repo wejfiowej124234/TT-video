@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T12:50:01Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "札幌",
+    "city_en": "Sapporo",
+    "matrix_ids": [
+      "PH-JP-041-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-JP-041-FOOD",
+      "legacy_value": "海鲜",
+      "poi_id": "de70452d-d488-4a25-94bd-b9b2b3f02cba",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sapporo-seafood-provider-cover.jpg",
+      "hero_file": "ocs-sapporo-seafood-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-041-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

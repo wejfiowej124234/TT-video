@@ -1,0 +1,294 @@
+{
+  "schema": "traveltrust.cms_phase1_single_asset_evidence.v1",
+  "template_version": "1.0.0",
+  "template_runbook": "docs/runbook/TT-CMS-PHASE1-SINGLE-ASSET-TEMPLATE.md",
+  "phase_discipline": "① local → ② staging → ③ production",
+  "forbidden_shortcuts": [
+    "upload_direct_to_live",
+    "skip_review",
+    "skip_verify",
+    "batch_upload_then_accept",
+    "mark_pass_without_evidence"
+  ],
+  "matrix_id": "DA-JP-HOME",
+  "product_name": "Destination Ambient",
+  "country_iso": "JP",
+  "execution_order": 1,
+  "step_1_brief_review": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "draft",
+    "gate": "brief_review",
+    "gate_result": "PASS",
+    "checks": {
+      "destination": "JP · 富士山·河口湖镜面或神社山景",
+      "business_theme": "tokyo-photo OCS chain · Destination Ambient home",
+      "brand_tone": "cms-content-brief destination_ambient",
+      "composition": "home surface hero ambient",
+      "lighting": "natural daylight per brief prefer",
+      "forbidden_elements_clear": true
+    },
+    "reviewer": "CMS Operation Owner",
+    "reviewed_at_utc": "2026-07-05T02:43:00Z",
+    "notes": "Brief aligned with matrix row DA-JP-HOME"
+  },
+  "step_2_designer_upload": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "review",
+    "catalog_asset_id": "3570bab5-6641-4c5a-bec1-c1c92583417a",
+    "upload_format": "image/jpeg",
+    "dimensions": "OCS tokyo-photo community-media",
+    "byte_size": 113315,
+    "uploaded_by": "CMS Operation via Admin media-assets",
+    "uploaded_at_utc": "2026-07-05T02:43:00Z",
+    "notes": "Single asset upload · OCS owned URL on staging"
+  },
+  "step_3_cms_review": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "approved",
+    "gates": {
+      "cms_review": "PASS",
+      "destination_authenticity": "PASS",
+      "brand_consistency": "PASS"
+    },
+    "dimensions_reviewed": [
+      "image_quality",
+      "destination_authenticity",
+      "brand_consistency",
+      "wcag_visual",
+      "consumer_experience",
+      "composition",
+      "color",
+      "destination_ambient_l5"
+    ],
+    "reviewer": "CMS Operation Owner",
+    "reviewed_at_utc": "2026-07-05T02:43:00Z",
+    "notes": "JP authenticity · no foreign landmark · owned asset"
+  },
+  "step_4_catalog_publish": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "published",
+    "gate": "catalog_publish",
+    "gate_result": "PASS",
+    "admin_route": "/admin/content/landing-ambient",
+    "catalog_asset_kind_legacy": "landing_ambient",
+    "published_by": "tourist@test.com",
+    "published_at_utc": "2026-07-05T02:43:00Z",
+    "revision": {
+      "revision_number": 4,
+      "revision_label": "v1",
+      "rollback_target_revision": 1
+    },
+    "notes": "PATCH landing-ambient + media-assets publish + country publish on staging"
+  },
+  "step_5_verify": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "live",
+    "gate": "verify",
+    "gate_result": "PASS",
+    "script": "scripts/dev/run-cms-content-l5-destination-ambient-verify.cjs",
+    "api_base": "https://tt-api-staging.fly.dev",
+    "checks": [
+      {
+        "id": "asset_lifecycle_live",
+        "pass": true,
+        "detail": "live"
+      },
+      {
+        "id": "matrix_row_status_pass",
+        "pass": true,
+        "detail": "pass"
+      },
+      {
+        "id": "consumer_not_ts_fallback",
+        "pass": true,
+        "detail": "catalog_api"
+      },
+      {
+        "id": "asset_version_revision_number",
+        "pass": true,
+        "detail": "4"
+      },
+      {
+        "id": "asset_version_rollback_target",
+        "pass": true,
+        "detail": "1"
+      },
+      {
+        "id": "execution_gate_brief_review",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_cms_review",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_destination_authenticity",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_brand_consistency",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_catalog_publish",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_verify",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "catalog_api_url",
+        "pass": true,
+        "detail": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-community-media.jpg"
+      },
+      {
+        "id": "public_http_200",
+        "pass": true,
+        "detail": "200"
+      },
+      {
+        "id": "public_min_bytes_16kb",
+        "pass": true,
+        "detail": "113315B"
+      },
+      {
+        "id": "public_mime_image",
+        "pass": true,
+        "detail": "image/jpeg"
+      },
+      {
+        "id": "no_production_external_host",
+        "pass": true,
+        "detail": "owned or catalog url"
+      }
+    ],
+    "verified_at_utc": "2026-07-05T02:43:29.716Z"
+  },
+  "step_6_evidence": {
+    "status": "COMPLETE",
+    "gate": "evidence_complete",
+    "gate_result": "PASS",
+    "sections_present": {
+      "review": true,
+      "publish": true,
+      "revision": true,
+      "verify": true,
+      "matrix": true
+    },
+    "completed_at_utc": "2026-07-05T02:43:00Z"
+  },
+  "matrix_snapshot": {
+    "matrix_row_status": "pass",
+    "asset_lifecycle": "live",
+    "current_source": "catalog_api",
+    "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-community-media.jpg",
+    "country_zh": "日本",
+    "scene": "富士山·河口湖镜面或神社山景",
+    "copy_label": "日本·Destination Ambient",
+    "surface": "home",
+    "matrix_id": "DA-JP-HOME",
+    "execution_order": "1",
+    "country_iso": "JP",
+    "execution_gates": {
+      "brief_review": "PASS",
+      "cms_review": "PASS",
+      "destination_authenticity": "PASS",
+      "brand_consistency": "PASS",
+      "catalog_publish": "PASS",
+      "verify": "PASS",
+      "evidence_complete": "PASS"
+    },
+    "catalog_asset_id": "3570bab5-6641-4c5a-bec1-c1c92583417a",
+    "asset_version": {
+      "revision_number": "4",
+      "revision_label": "v1",
+      "rollback_target_revision": "1"
+    }
+  },
+  "change_record": {
+    "change_type": "initial_publish",
+    "change_reason": "DA-JP-HOME Wave 1 pilot closed loop",
+    "previous_revision": null,
+    "new_revision": 4,
+    "approved_by": "CMS Operation Owner"
+  },
+  "definition_of_done": {
+    "brief_review_pass": true,
+    "cms_review_pass": true,
+    "destination_authenticity_pass": true,
+    "brand_consistency_pass": true,
+    "catalog_publish_pass": true,
+    "verify_pass": true,
+    "evidence_complete": true,
+    "matrix_row_pass": true,
+    "asset_lifecycle_live": true
+  },
+  "TT_CMS_DESTINATION_AMBIENT_ROW_VERIFY": "PASS",
+  "TT_CMS_PHASE1_SINGLE_ASSET_ROW": "COMPLETE",
+  "scaffolded_at_utc": "2026-07-05T02:43:00Z",
+  "dod_checked_at_utc": "2026-07-05T02:43:29.763Z",
+  "dod_checks": [
+    {
+      "id": "execution_gate_brief_review",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_cms_review",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_destination_authenticity",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_brand_consistency",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_catalog_publish",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_verify",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_evidence_complete",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "matrix_row_status_pass",
+      "pass": true,
+      "detail": "pass"
+    },
+    {
+      "id": "asset_lifecycle_live",
+      "pass": true,
+      "detail": "live"
+    },
+    {
+      "id": "evidence_file_exists",
+      "pass": true,
+      "detail": "D:/TravelTrust-V1.1/evidence/GO_cms_content_l5/destination-ambient/rows/DA-JP-HOME.EVIDENCE.json"
+    },
+    {
+      "id": "evidence_row_verify_pass",
+      "pass": true,
+      "detail": "PASS"
+    }
+  ]
+}

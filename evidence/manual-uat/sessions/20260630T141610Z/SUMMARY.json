@@ -1,0 +1,233 @@
+{
+  "session_id": "S-20260630T141610Z",
+  "session_stamp": "20260630T141610Z",
+  "phase": "\u2460-local",
+  "track": "manual-uat-c1e2",
+  "commit": "987bc260",
+  "started_utc": "2026-06-30T14:21:53Z",
+  "manual_test": {
+    "pass": 0,
+    "fail": 0,
+    "blocked": 0,
+    "total": 27
+  },
+  "api_prep_pass": 21,
+  "checklist_items": [
+    {
+      "id": "C1-1",
+      "persona": "C1",
+      "title": "\u767b\u5f55\u6210\u529f",
+      "path": "/auth/login",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C1-2",
+      "persona": "C1",
+      "title": "\u591a\u8eab\u4efd Hub",
+      "path": "/me/identities",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C1-3",
+      "persona": "C1",
+      "title": "Publish Hub",
+      "path": "/me/publish",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C1-4",
+      "persona": "C1",
+      "title": "\u4e3b\u7406\u4eba\u5de5\u4f5c\u53f0",
+      "path": "/governance?view=region",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C1-5",
+      "persona": "C1",
+      "title": "\u6536\u8d2d\u5b50\u7ad9",
+      "path": "/market/acquisition",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C1-6",
+      "persona": "C1",
+      "title": "\u672c\u8d26\u53f7\u901a\u7528",
+      "path": "\u00a70",
+      "ui_status": "PENDING",
+      "api_prep": "PENDING_HUMAN"
+    },
+    {
+      "id": "C2-1",
+      "persona": "C2",
+      "title": "\u767b\u5f55\u6210\u529f",
+      "path": "/auth/login",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C2-2",
+      "persona": "C2",
+      "title": "\u9996\u9875 Landing",
+      "path": "/",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C2-3",
+      "persona": "C2",
+      "title": "\u5e02\u573a\u4e3b\u7ad9",
+      "path": "/market",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C2-4",
+      "persona": "C2",
+      "title": "\u793e\u533a Feed",
+      "path": "/community",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C2-5",
+      "persona": "C2",
+      "title": "\u8ba2\u5355\u5217\u8868",
+      "path": "/orders",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C2-6",
+      "persona": "C2",
+      "title": "Admin \u5165\u53e3",
+      "path": "/admin",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C2-7",
+      "persona": "C2",
+      "title": "\u672c\u8d26\u53f7\u901a\u7528",
+      "path": "\u00a70",
+      "ui_status": "PENDING",
+      "api_prep": "PENDING_HUMAN"
+    },
+    {
+      "id": "C3-1",
+      "persona": "C3",
+      "title": "\u767b\u5f55\u6210\u529f",
+      "path": "/auth/login",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C3-2",
+      "persona": "C3",
+      "title": "\u5411\u5bfc\u5de5\u4f5c\u53f0",
+      "path": "/guide",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C3-3",
+      "persona": "C3",
+      "title": "\u5e02\u573a\u9009\u5411\u5bfc",
+      "path": "/market?view=guides",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C3-4",
+      "persona": "C3",
+      "title": "\u672c\u8d26\u53f7\u901a\u7528",
+      "path": "\u00a70",
+      "ui_status": "PENDING",
+      "api_prep": "PENDING_HUMAN"
+    },
+    {
+      "id": "C4-1",
+      "persona": "C4",
+      "title": "\u767b\u5f55\u6210\u529f",
+      "path": "/auth/login",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C4-2",
+      "persona": "C4",
+      "title": "\u5546\u5bb6\u5de5\u4f5c\u53f0",
+      "path": "/provider",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C4-3",
+      "persona": "C4",
+      "title": "\u5546\u5bb6\u8eab\u4efd\u8bbe\u7f6e",
+      "path": "/me/identities/merchant/settings",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "C4-4",
+      "persona": "C4",
+      "title": "\u672c\u8d26\u53f7\u901a\u7528",
+      "path": "\u00a70",
+      "ui_status": "PENDING",
+      "api_prep": "PENDING_HUMAN"
+    },
+    {
+      "id": "E1-1",
+      "persona": "E1",
+      "title": "\u65c5\u884c\u8005\u8ba2\u5355\u5165\u53e3",
+      "path": "/orders",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "E1-2",
+      "persona": "E1",
+      "title": "\u94fe A \u5411\u5bfc\u5de5\u4f5c\u53f0",
+      "path": "/guide",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "E1-3",
+      "persona": "E1",
+      "title": "\u672c\u8d70\u5eca\u901a\u7528",
+      "path": "\u00a70",
+      "ui_status": "PENDING",
+      "api_prep": "PENDING_HUMAN"
+    },
+    {
+      "id": "E2-1",
+      "persona": "E2",
+      "title": "DID \u699c\u4e3b\u9875",
+      "path": "/did-rank",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "E2-2",
+      "persona": "E2",
+      "title": "\u6536\u8d2d\u526f\u699c",
+      "path": "/did-rank?board=acquisition",
+      "ui_status": "PENDING",
+      "api_prep": "API_ROUTE_PREP_PASS"
+    },
+    {
+      "id": "E2-3",
+      "persona": "E2",
+      "title": "\u672c\u8d26\u53f7\u901a\u7528",
+      "path": "\u00a70",
+      "ui_status": "PENDING",
+      "api_prep": "PENDING_HUMAN"
+    }
+  ]
+}

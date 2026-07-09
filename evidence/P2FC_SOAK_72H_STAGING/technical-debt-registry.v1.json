@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust.reliability_freeze_technical_debt_registry.v1",
+  "phase_scope": "② freeze · ③ prep backlog",
+  "updated_at": "2026-06-14T08:02:52.570Z",
+  "do_not_address_during_soak": [
+    {
+      "id": "TD-02-BURN-DOWN-DOC",
+      "note": "TESTNET-PERFECT-VALIDATION-REPORT still lists TN-P1-009/010 OPEN; reconcile at graduation audit with machine gates",
+      "action": "post-COMPLETED doc sync only"
+    },
+    {
+      "id": "TD-P2FC-ATTEST-GREP",
+      "note": "p2fc-soak-attest.sh grep -c multiline edge on Windows",
+      "action": "optional fix post-graduation"
+    },
+    {
+      "id": "TD-PHASE1-AI-INDEX",
+      "note": "AI task card stash mirror debt per PHASE2-REPOSITORY-STATUS",
+      "action": "Phase ① maintenance"
+    },
+    {
+      "id": "TD-FEE-ROUTER-DIST",
+      "note": "TN-P1-006 FeeRouter.distribute deferred without B407_OWNER_PK",
+      "action": "③ mainnet scope"
+    },
+    {
+      "id": "TD-LIVE-SEPOLIA-STAKE",
+      "note": "G08 steward live Sepolia stake deferred; fork write PASS",
+      "action": "③ or Owner-only broadcast"
+    }
+  ],
+  "p1_defer_not_blocking_m00": [
+    "PI3-007 CDN/HLS",
+    "PI3-008 Admin SSO",
+    "PI3-009 Monitoring prod",
+    "PI3-010 FE CI lint/tsc"
+  ],
+  "freeze_rules": [
+    "no new features",
+    "no architecture change",
+    "no audit standard expansion",
+    "no rerun closed TN-P1/D6"
+  ]
+}

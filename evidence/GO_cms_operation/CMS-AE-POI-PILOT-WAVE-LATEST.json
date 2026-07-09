@@ -1,0 +1,341 @@
+{
+  "schema": "traveltrust.cms_ae_poi_pilot_wave.v1",
+  "stamp_utc": "2026-07-07T020227Z",
+  "advancement_rule": "Scope → Country → City → POI · acceptance = City CLOSED → Country Runtime",
+  "ops_hierarchy": [
+    "asset_family",
+    "country",
+    "city",
+    "asset"
+  ],
+  "acceptance_unit": "city",
+  "template_countries": [
+    "JP",
+    "KR",
+    "TH",
+    "SG",
+    "FR",
+    "US",
+    "AU",
+    "ES"
+  ],
+  "jp_country_closed_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+  "kr_country_closed_ssot": "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+  "th_country_closed_ssot": "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+  "sg_country_closed_ssot": "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json",
+  "fr_country_closed_ssot": "evidence/GO_cms_operation/CMS-FR-COUNTRY-CLOSURE-LATEST.json",
+  "us_country_closed_ssot": "evidence/GO_cms_operation/CMS-US-COUNTRY-CLOSURE-LATEST.json",
+  "au_country_closed_ssot": "evidence/GO_cms_operation/CMS-AU-COUNTRY-CLOSURE-LATEST.json",
+  "active_wave": "POI-WAVE-9-AE-PILOT",
+  "active_catalog_build": null,
+  "waves": [
+    {
+      "wave_id": "POI-WAVE-9-AE-PILOT",
+      "label": "Pilot · ES · 阿布扎比",
+      "country_iso": "AE",
+      "country_zh": "阿联酋",
+      "cities": [
+        "阿布扎比"
+      ],
+      "acceptance_unit": "city",
+      "acceptance_target": "阿布扎比 CLOSED",
+      "purpose": "Catalog Build → per-POI Review → Live · JP/KR/TH/SG/FR/US/AU Golden Template 复制 · pilot done when 阿布扎比 CLOSED",
+      "forbidden": [
+        "bulk_ingest_es_all",
+        "skip_pilot_before_next_city",
+        "accept_by_poi_count"
+      ],
+      "template_countries": [
+        "JP",
+        "KR",
+        "TH",
+        "SG",
+        "FR",
+        "US",
+        "AU"
+      ],
+      "template_closure": [
+        "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-FR-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-US-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-AU-COUNTRY-CLOSURE-LATEST.json"
+      ],
+      "status": "ACTIVE",
+      "catalog_build": true,
+      "matrix_ids": [
+        "PH-AE-216-ATR",
+        "PH-AE-217-ATR",
+        "PH-AE-218-ATR",
+        "PH-AE-219-ATR",
+        "PH-AE-220-FOOD",
+        "PH-AE-221-FOOD",
+        "PH-AE-222-FOOD",
+        "PH-AE-223-FOOD"
+      ],
+      "poi_count": 8,
+      "by_city": [
+        {
+          "city_zh": "阿布扎比",
+          "acceptance_unit": "city",
+          "acceptance_target": "阿布扎比 CLOSED",
+          "poi_count": 8,
+          "matrix_ids": [
+            "PH-AE-216-ATR",
+            "PH-AE-217-ATR",
+            "PH-AE-218-ATR",
+            "PH-AE-219-ATR",
+            "PH-AE-220-FOOD",
+            "PH-AE-221-FOOD",
+            "PH-AE-222-FOOD",
+            "PH-AE-223-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "谢赫扎耶德清真寺",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AE-216-ATR"
+            },
+            {
+              "legacy_value": "卢浮宫阿布扎比",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AE-217-ATR"
+            },
+            {
+              "legacy_value": "法拉利世界",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AE-218-ATR"
+            },
+            {
+              "legacy_value": "滨海大道",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AE-219-ATR"
+            },
+            {
+              "legacy_value": "鹰嘴豆泥",
+              "poi_type": "food",
+              "matrix_id": "PH-AE-220-FOOD"
+            },
+            {
+              "legacy_value": "海鲜饭",
+              "poi_type": "food",
+              "matrix_id": "PH-AE-221-FOOD"
+            },
+            {
+              "legacy_value": "骆驼奶",
+              "poi_type": "food",
+              "matrix_id": "PH-AE-222-FOOD"
+            },
+            {
+              "legacy_value": "烤肉拼盘",
+              "poi_type": "food",
+              "matrix_id": "PH-AE-223-FOOD"
+            }
+          ]
+        },
+        {
+          "city_zh": "迪拜",
+          "acceptance_unit": "city",
+          "acceptance_target": "迪拜 CLOSED",
+          "poi_count": 9,
+          "matrix_ids": [
+            "PH-AE-224-ATR",
+            "PH-AE-225-ATR",
+            "PH-AE-226-ATR",
+            "PH-AE-227-ATR",
+            "PH-AE-228-ATR",
+            "PH-AE-229-FOOD",
+            "PH-AE-230-FOOD",
+            "PH-AE-231-FOOD",
+            "PH-AE-232-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "哈利法塔",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AE-224-ATR"
+            },
+            {
+              "legacy_value": "迪拜购物中心",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AE-225-ATR"
+            },
+            {
+              "legacy_value": "棕榈岛",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AE-226-ATR"
+            },
+            {
+              "legacy_value": "阿法迪历史区",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AE-227-ATR"
+            },
+            {
+              "legacy_value": "沙漠冲沙",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AE-228-ATR"
+            },
+            {
+              "legacy_value": "阿拉伯烤肉",
+              "poi_type": "food",
+              "matrix_id": "PH-AE-229-FOOD"
+            },
+            {
+              "legacy_value": "沙威玛",
+              "poi_type": "food",
+              "matrix_id": "PH-AE-230-FOOD"
+            },
+            {
+              "legacy_value": "椰枣甜品",
+              "poi_type": "food",
+              "matrix_id": "PH-AE-231-FOOD"
+            },
+            {
+              "legacy_value": "阿拉伯咖啡",
+              "poi_type": "food",
+              "matrix_id": "PH-AE-232-FOOD"
+            }
+          ]
+        },
+        {
+          "city_zh": "沙迦",
+          "acceptance_unit": "city",
+          "acceptance_target": "沙迦 CLOSED",
+          "poi_count": 7,
+          "matrix_ids": [
+            "PH-AE-233-ATR",
+            "PH-AE-234-ATR",
+            "PH-AE-235-ATR",
+            "PH-AE-236-FOOD",
+            "PH-AE-237-FOOD",
+            "PH-AE-238-FOOD",
+            "PH-AE-239-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "遗产区",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AE-233-ATR"
+            },
+            {
+              "legacy_value": "蓝色市场",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AE-234-ATR"
+            },
+            {
+              "legacy_value": "艺术博物馆",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AE-235-ATR"
+            },
+            {
+              "legacy_value": "中东烤肉",
+              "poi_type": "food",
+              "matrix_id": "PH-AE-236-FOOD"
+            },
+            {
+              "legacy_value": "库斯库斯",
+              "poi_type": "food",
+              "matrix_id": "PH-AE-237-FOOD"
+            },
+            {
+              "legacy_value": "薄荷茶",
+              "poi_type": "food",
+              "matrix_id": "PH-AE-238-FOOD"
+            },
+            {
+              "legacy_value": "炸蚕豆",
+              "poi_type": "food",
+              "matrix_id": "PH-AE-239-FOOD"
+            }
+          ]
+        }
+      ],
+      "first_matrix_id": "PH-AE-216-ATR",
+      "first_poi": {
+        "city_zh": "阿布扎比",
+        "legacy_value": "谢赫扎耶德清真寺",
+        "matrix_id": "PH-AE-216-ATR"
+      },
+      "es_country_total": 24,
+      "es_cities": [
+        "阿布扎比",
+        "迪拜",
+        "沙迦"
+      ]
+    }
+  ],
+  "ae_denominator": {
+    "country_iso": "AE",
+    "cities": [
+      "阿布扎比",
+      "迪拜",
+      "沙迦"
+    ],
+    "poi_total": 24,
+    "abu_dhabi_pilot": 8
+  },
+  "roadmap": [
+    {
+      "stage": "jp_country",
+      "status": "CLOSED",
+      "ssot": "CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "kr_country",
+      "status": "CLOSED",
+      "ssot": "CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "th_country",
+      "status": "CLOSED",
+      "ssot": "CMS-TH-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "sg_country",
+      "status": "CLOSED",
+      "ssot": "CMS-SG-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "fr_country",
+      "status": "CLOSED",
+      "ssot": "CMS-FR-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "us_country",
+      "status": "CLOSED",
+      "ssot": "CMS-US-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "au_country",
+      "status": "CLOSED",
+      "ssot": "CMS-AU-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "ae_scope",
+      "status": "LOCKED"
+    },
+    {
+      "stage": "catalog_build",
+      "status": "ACTIVE",
+      "city": "阿布扎比",
+      "acceptance": "阿布扎比 CLOSED"
+    },
+    {
+      "stage": "ae_abu_dhabi_execution",
+      "status": "ACTIVE"
+    },
+    {
+      "stage": "ae_country_runtime",
+      "status": "NOT_STARTED",
+      "when": "TT_CMS_AE_COUNTRY: CLOSED"
+    }
+  ],
+  "abu_dhabi_closed": true,
+  "TT_CMS_POI_CITY_ABU_DHABI": "CLOSED",
+  "dubai_closed": true,
+  "TT_CMS_POI_CITY_DUBAI": "CLOSED",
+  "sharjah_closed": true,
+  "TT_CMS_POI_CITY_SHARJAH": "CLOSED"
+}

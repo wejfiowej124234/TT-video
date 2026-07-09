@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T07:46:58Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "FR",
+    "city_zh": "巴黎",
+    "city_en": "Paris",
+    "matrix_ids": [
+      "PH-FR-111-ATR",
+      "PH-FR-112-ATR",
+      "PH-FR-113-ATR",
+      "PH-FR-114-ATR",
+      "PH-FR-115-FOOD",
+      "PH-FR-116-FOOD",
+      "PH-FR-117-FOOD",
+      "PH-FR-118-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-FR-111-ATR",
+      "legacy_value": "埃菲尔铁塔",
+      "poi_id": "d628093b-e1b4-4060-a71b-3de4995c9bbe",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-111-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-FR-112-ATR",
+      "legacy_value": "卢浮宫",
+      "poi_id": "e0b22bc1-5ec7-475e-9844-aef2a2b39ffa",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-112-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-FR-113-ATR",
+      "legacy_value": "凯旋门",
+      "poi_id": "0da83f9d-fae6-428d-894a-1cbbb8b32f05",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-113-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-FR-114-ATR",
+      "legacy_value": "圣母院",
+      "poi_id": "b0e4abf6-4cc8-4c1c-863d-1f855ca27f7e",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-114-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-FR-115-FOOD",
+      "legacy_value": "法餐",
+      "poi_id": "d2ce8d00-b66b-4903-a1e1-ffc7cd44ea1f",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-115-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-FR-116-FOOD",
+      "legacy_value": "可丽饼",
+      "poi_id": "47ab5611-a7b3-4b96-b6a3-6dbdf65b233e",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-116-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-FR-117-FOOD",
+      "legacy_value": "马卡龙",
+      "poi_id": "2af18915-d2e0-4ef7-820c-46316b1663f9",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-117-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-FR-118-FOOD",
+      "legacy_value": "咖啡厅",
+      "poi_id": "1cf399fe-ff8d-4175-87a4-2d90e9e54f20",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-118-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

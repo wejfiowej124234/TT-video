@@ -1,0 +1,146 @@
+[
+  {
+    "id": "C2-LANDING",
+    "account": "C2",
+    "domain": "Itinerary",
+    "ui": "PASS",
+    "api": "SKIP",
+    "parity": "SKIP",
+    "note": "hero form visible"
+  },
+  {
+    "id": "C2-ORDERS",
+    "account": "C2",
+    "domain": "Orders",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "api=8 ui=7"
+  },
+  {
+    "id": "C2-MESSAGES",
+    "account": "C2",
+    "domain": "Messages",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "SKIP",
+    "note": "api=0 ui=0"
+  },
+  {
+    "id": "C2-ADMIN",
+    "account": "C2",
+    "domain": "Admin",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "admin shell + capabilities"
+  },
+  {
+    "id": "C3-WORKBENCH",
+    "account": "C3",
+    "domain": "Guide",
+    "ui": "PASS",
+    "api": "SKIP",
+    "parity": "SKIP",
+    "note": "guide shell"
+  },
+  {
+    "id": "C3-MARKET",
+    "account": "C3",
+    "domain": "Guide Market",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "guide_id=650fbaff-1d9e-4677-b970-16be8fdd9d7b in catalog"
+  },
+  {
+    "id": "C3-GUIDE_ORDERS",
+    "account": "C3",
+    "domain": "Orders",
+    "ui": "SKIP",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "count=6"
+  },
+  {
+    "id": "C1-IDENTITIES",
+    "account": "C1",
+    "domain": "Identities",
+    "ui": "PASS",
+    "api": "SKIP",
+    "parity": "SKIP",
+    "note": "hub heading"
+  },
+  {
+    "id": "C1-ACQUISITION",
+    "account": "C1",
+    "domain": "Acquisition",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "listings=0"
+  },
+  {
+    "id": "C1-GOVERNANCE",
+    "account": "C1",
+    "domain": "Governance",
+    "ui": "PASS",
+    "api": "SKIP",
+    "parity": "SKIP",
+    "note": "region workbench"
+  },
+  {
+    "id": "C4-PROVIDER",
+    "account": "C4",
+    "domain": "Provider",
+    "ui": "PASS",
+    "api": "SKIP",
+    "parity": "SKIP",
+    "note": "workbench"
+  },
+  {
+    "id": "C4-SETTINGS",
+    "account": "C4",
+    "domain": "Provider",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "public_listings=13"
+  },
+  {
+    "id": "E2-DID_RANK",
+    "account": "E2",
+    "domain": "DID Rank",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "boards_status=404"
+  },
+  {
+    "id": "E2-ACQ_BOARD",
+    "account": "E2",
+    "domain": "DID Rank",
+    "ui": "PASS",
+    "api": "SKIP",
+    "parity": "SKIP",
+    "note": "acquisition board"
+  },
+  {
+    "id": "PUB-PROVIDER",
+    "account": "PUBLIC",
+    "domain": "Provider",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "listings=0"
+  },
+  {
+    "id": "PUB-WEB3",
+    "account": "PUBLIC",
+    "domain": "Web3",
+    "ui": "PASS",
+    "api": "PASS",
+    "parity": "PASS",
+    "note": "chain_id=11155111"
+  }
+]

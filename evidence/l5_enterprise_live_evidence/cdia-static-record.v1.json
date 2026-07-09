@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust_l5_cdia_static_record.v1",
+  "recordedUtc": "2026-06-08T03:32:28Z",
+  "mode": "static",
+  "harness": "scripts/dev/cross-domain-integration-audit.py",
+  "registry": "registry/cross-domain-integration-audit-probes.v1.yaml",
+  "status": "BASELINE_CAPTURED"
+}

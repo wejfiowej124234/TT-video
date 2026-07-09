@@ -1,0 +1,6 @@
+status: PREP_PASS
+last_run: 20260606T004330Z
+api_base: https://tt-api-staging.fly.dev
+note: C4 staging MP4 PASS + C5 staging image delivery PASS; production CDN/HLS edge pending (③ gate)
+phase: ② testnet closing gap
+ssot: community/C4 STATUS.txt community/C5 STATUS.txt

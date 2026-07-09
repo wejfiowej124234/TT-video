@@ -45,7 +45,8 @@ describe("admin permissions page", () => {
     expect(src).toContain("router.refresh");
     expect(src).toContain("AdminPermissions2faPolicyPanel");
     expect(src).toContain("ADMIN_STEP_MARKER_CLASS");
-    expect(src).toContain("ADMIN_2FA_POLICY_ACTIVE_BADGE_CLASS");
+    expect(src).toContain("data-tt-admin-2fa-policy-roles");
+    expect(src).toContain("required_console_roles");
     expect(src).not.toContain("bg-amber-100");
     expect(src).toContain("AdminPermissionsTotpPanel");
     expect(src).toContain("AdminListFetchError");

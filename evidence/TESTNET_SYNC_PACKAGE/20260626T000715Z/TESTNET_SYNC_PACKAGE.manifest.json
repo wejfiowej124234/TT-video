@@ -1,0 +1,43 @@
+{
+  "schema": "traveltrust.testnet_sync_package.v1",
+  "generated_at_utc": "2026-06-26T00:07:26Z",
+  "baseline": {
+    "gate_p1_01": "GATE-P1-01",
+    "site10_25_25": true,
+    "phase1_closed": true,
+    "policy": "no_full_gate_rerun · no_testnet_rebuild · no_db_reset",
+    "sync_baseline_git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7"
+  },
+  "deploy": {
+    "mode": "overlay",
+    "policy": "overwrite_fly_deploy · forward_migrations_only · preserve_staging_data",
+    "targets": {
+      "api": "tt-api-staging.fly.dev",
+      "web": "tt-web-staging.fly.dev"
+    }
+  },
+  "alignment_axes": [
+    "ssot_registry_and_meta",
+    "contract_abi_registry",
+    "db_migrations_forward",
+    "feature_flags_fly_secrets",
+    "route_manifest_04_3_4"
+  ],
+  "parity": {
+    "status": "pending"
+  },
+  "zero_drift": false,
+  "manual_verify": {
+    "booking_core": "traveler→guide→order→escrow→completion @ staging",
+    "itinerary": "country→city→booking @ staging",
+    "gate_env": "TESTNET_MANUAL_VERIFY_PASS=1"
+  },
+  "freeze_soak": {
+    "freeze": "engage-testnet-staging-baseline-freeze.sh @ HEAD",
+    "soak": "P2FC_SOAK_SUPERSEDE=1 p2fc-launch-staging-soak-72h.sh",
+    "forbidden": [
+      "run-site10-p1-slices-recheck-sequential.sh",
+      "testnet_db_reset"
+    ]
+  }
+}

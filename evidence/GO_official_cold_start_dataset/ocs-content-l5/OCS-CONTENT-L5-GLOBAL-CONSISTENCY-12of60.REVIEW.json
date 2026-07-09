@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_consistency_review.v1",
+  "stamp_utc": "20260704T130130Z",
+  "matrix_rows_reviewed": 12,
+  "TT_GLOBAL_CONSISTENCY_REVIEW": "PASS",
+  "chains_closed": 2,
+  "gate_to_row13": "PASS"
+}

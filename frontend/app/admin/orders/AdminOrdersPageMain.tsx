@@ -222,6 +222,9 @@ export function AdminOrdersPageMain() {
                 <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
                   {t("admin_orders_colParties")}
                 </th>
+                <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
+                  {t("admin_col_data_origin")}
+                </th>
                 <AdminSortableTh
                   label={t("admin_orders_colCreated")}
                   ariaSort={ariaSort("created_at")}
@@ -265,6 +268,7 @@ export function AdminOrdersPageMain() {
                         {t("admin_orders_party_guide")}: {shortAdminId(o.guide_id) || t("admin_em_dash")}
                       </p>
                     </td>
+                    <td className="px-4 py-3 font-mono text-meta text-ink-700">{o.data_origin ?? t("admin_em_dash")}</td>
                     <td className={`px-4 py-3 ${ADMIN_TABLE_TD_TIMESTAMP_CLASS}`}>
                       {o.created_at ? new Date(o.created_at).toLocaleString() : t("admin_em_dash")}
                     </td>

@@ -1,0 +1,139 @@
+# TravelTrust · Enterprise SSOT Alignment · SSOT
+# Human: evidence/GO_enterprise_ssot_alignment/<stamp>/ENTERPRISE-SSOT-ALIGNMENT-REPORT.md
+# Audit: scripts/dev/audit-enterprise-ssot-alignment.cjs
+
+schema: traveltrust.enterprise_ssot_alignment.v1
+version: 1
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_ENTERPRISE_SSOT_ALIGNMENT: ENFORCED
+  TT_ALIGNMENT_BOUNDARY: ENFORCED
+  TT_PUBLIC_CONTENT_PLATFORM: NORTH_STAR
+
+public_content_platform:
+  registry: registry/public-content-platform.v1.yaml
+  runbook: docs/runbook/TT-PUBLIC-CONTENT-PLATFORM.md
+  status: ESTABLISHED
+  established_utc: "2026-07-04"
+  evidence: evidence/GO_public_content_platform/20260704T010000Z/pcp-establishment.json
+  note: >
+    PCP North Star: Market/Community/Campaign use PCP Governance — no per-domain governance fork.
+    DDG is a PCP Governance sub-capability. CLOSED_UNLESS_TOUCHED for Phase ② gates — establishment did not reopen any gate.
+
+boundary:
+  allowed:
+    - governance
+    - config
+    - docs
+    - scripts
+    - non_prod_metadata
+  forbidden:
+    - new_business_features
+    - reopen_RC_DDG_OCS
+    - modify_frozen_official_ops_baseline
+    - production_data_mutation
+  policy: CLOSED_UNLESS_TOUCHED
+
+governance_layers:
+  north_star: registry/public-content-platform.v1.yaml
+  product: registry/executive-dashboard.v1.yaml
+  operations: registry/traveltrust-operations-platform.v1.yaml
+  data_governance:
+    PCP: registry/public-content-platform.v1.yaml
+    DDG: registry/display-data-governance.v1.yaml
+    OCS: registry/official-cold-start-dataset.v1.yaml
+    SOPCP: registry/single-official-public-catalog-policy.v1.yaml
+    OCIP: registry/official-catalog-identity-policy.v1.yaml
+  pi3:
+    media_infrastructure: registry/pi3-media-infrastructure.v1.yaml
+    catalog_asset_migration: registry/catalog-asset-migration.v1.yaml
+    acceptance_gate: registry/media-cdn-production-acceptance.v1.yaml
+  accounts_rbac:
+    test_accounts: registry/test-accounts-business-immutable.v1.yaml
+    admin_rbac: registry/admin-rbac-route-matrix.v1.yaml
+  workflow: registry/traveltrust-operations-workflow.v1.yaml
+  ledger: registry/open-issues.v1.yaml
+
+acceptance_decoupling_principle: >
+  Media Infrastructure acceptance validates media service capability only — not catalog asset sources.
+  Catalog Asset Migration acceptance validates asset source, copyright, and operational content only —
+  it does not re-validate media infrastructure.
+
+# Configuration Alignment ≠ Runtime Validation (ENFORCED — do not conflate)
+alignment_dimensions:
+  configuration_alignment:
+    id: CONFIGURATION_ALIGNMENT
+    question: Registry · Runbook · 配置 · 治理是否一致？
+    validates: [registry, runbook, governance, scripts, env_templates, open_issues_ledger]
+    does_not_require: [local_api_running, staging_api_running]
+    pass_means: SSOT and docs are consistent; blocking_count=0 on config/registry drift
+    pass_does_not_mean: Local or staging runtime was exercised at audit time
+  runtime_validation:
+    phase1_local:
+      id: PHASE1_LOCAL_RUNTIME_VALIDATION
+      question: Local API 是否启动且运行态与 SSOT 一致？
+      requires: local_api_running
+      states: [PASS, FAIL, SKIPPED, NOT_RUN]
+      skipped_is_valid: true
+      note: >
+        CONFIGURATION_ALIGNMENT PASS + PHASE1_LOCAL_RUNTIME_VALIDATION SKIPPED is valid.
+        SKIPPED does NOT invalidate Enterprise SSOT when config alignment passes.
+    phase2_staging:
+      id: PHASE2_STAGING_RUNTIME_VALIDATION
+      question: Staging API 运行态是否与 SSOT 一致？
+      requires: staging_api_reachable
+
+program_phase_summary:
+  phase1_local:
+    product_development: CLOSED
+    data_governance: CLOSED
+    enterprise_governance: CLOSED
+    ssot_configuration_alignment: PASS
+    runtime_validation: on_demand_reverify
+  phase2_staging:
+    staging: CLOSED
+    ocs: CLOSED
+    workflow: CLOSED
+    operations: CLOSED
+    enterprise_alignment: PASS
+  phase3_pi3_active:
+    - brand_domain_dns_tls
+    - cloudflare_r2_cdn
+    - stripe_live
+    - security
+    - observability
+    - performance
+    - production_browser_uat
+    - go_live
+
+audit:
+  script: scripts/dev/audit-enterprise-ssot-alignment.cjs
+  ops_alignment: scripts/dev/audit-operations-platform-local-staging-alignment.cjs
+  policy: docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md
+
+pass_criteria:
+  blocking_count: 0
+  CONFIGURATION_ALIGNMENT: PASS
+  PHASE2_STAGING_RUNTIME_VALIDATION: PASS
+  ENTERPRISE_SSOT_ALIGNMENT: PASS
+  note: >
+    PHASE1_LOCAL_RUNTIME_VALIDATION may be SKIPPED when Local API is not running.
+    CONFIGURATION_ALIGNMENT PASS does not imply Local Runtime was validated.
+  legacy_aliases:
+    PHASE1_LOCAL_ALIGNMENT: CONFIGURATION_ALIGNMENT
+    PHASE2_STAGING_ALIGNMENT: PHASE2_STAGING_RUNTIME_VALIDATION
+
+latest_run:
+  stamp: "20260703T154232Z"
+  evidence: evidence/GO_enterprise_ssot_alignment/20260703T154232Z/
+  report: evidence/GO_enterprise_ssot_alignment/20260703T154232Z/ENTERPRISE-SSOT-ALIGNMENT-REPORT.md
+  signoff: evidence/manual-uat/signoff/ENTERPRISE-SSOT-ALIGNMENT-SIGNOFF-20260703T153509Z.md
+  ops_platform_alignment: evidence/GO_enterprise_ssot_alignment/20260703T153509Z/ops-platform-alignment.json
+  verdict:
+    CONFIGURATION_ALIGNMENT: PASS
+    PHASE1_LOCAL_RUNTIME_VALIDATION: SKIPPED
+    PHASE2_STAGING_RUNTIME_VALIDATION: PASS
+    ENTERPRISE_SSOT_ALIGNMENT: PASS
+    blocking_count: 0
+    note: CONFIGURATION_ALIGNMENT PASS does not imply Local API was running

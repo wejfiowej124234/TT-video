@@ -1,0 +1,2754 @@
+{
+  "schema": "traveltrust.cms_poi_city_ops.v1",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "asset_family": "poi",
+  "hierarchy": [
+    "asset_family",
+    "country",
+    "city",
+    "poi"
+  ],
+  "acceptance_unit": "city",
+  "city_status_enum": [
+    "NOT_STARTED",
+    "ACTIVE",
+    "CLOSED"
+  ],
+  "advancement_rule": "Scope → Country → City → POI · City CLOSED = all POIs Live",
+  "full_scope": {
+    "poi_total": 330,
+    "cities_total": 38,
+    "countries_total": 10
+  },
+  "summary": {
+    "countries_closed": 0,
+    "countries_active": 1,
+    "cities_closed": 0,
+    "cities_active": 1,
+    "poi_live": 0,
+    "poi_total": 330,
+    "poi_completion": "0/330",
+    "asset_family_closed_when": "330/330 poi live · all cities CLOSED"
+  },
+  "active_city": {
+    "country_iso": "JP",
+    "city_zh": "东京"
+  },
+  "active_country": {
+    "country_iso": "JP",
+    "country_zh": "日本"
+  },
+  "pilot_acceptance": {
+    "unit": "city",
+    "target": "东京 CLOSED",
+    "note": "Pilot validated when active city CLOSED · not \"9 POIs complete\""
+  },
+  "countries": [
+    {
+      "country_iso": "JP",
+      "country_zh": "日本",
+      "status": "ACTIVE",
+      "display": "▶ ACTIVE",
+      "cities_total": 5,
+      "cities_closed": 0,
+      "cities_active": 1,
+      "poi_total": 41,
+      "poi_live": 0,
+      "completion": "0/5 cities",
+      "closed_when": "all cities CLOSED",
+      "cities": [
+        {
+          "city_key": "JP-大阪",
+          "city_zh": "大阪",
+          "country_iso": "JP",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-JP-001-ATR",
+              "legacy_value": "大阪城",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-002-ATR",
+              "legacy_value": "道顿堀",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-003-ATR",
+              "legacy_value": "环球影城",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-004-ATR",
+              "legacy_value": "心斋桥",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-005-FOOD",
+              "legacy_value": "章鱼烧",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-006-FOOD",
+              "legacy_value": "大阪烧",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-007-FOOD",
+              "legacy_value": "河豚",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-008-FOOD",
+              "legacy_value": "串炸",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "JP-东京",
+          "city_zh": "东京",
+          "country_iso": "JP",
+          "status": "ACTIVE",
+          "display": "▶ ACTIVE",
+          "acceptance_unit": "city_closed",
+          "poi_total": 9,
+          "poi_live": 0,
+          "poi_pending": 9,
+          "completion": "0/9",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-JP-009-ATR",
+              "legacy_value": "浅草寺",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-010-ATR",
+              "legacy_value": "东京塔",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-011-ATR",
+              "legacy_value": "新宿",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-012-ATR",
+              "legacy_value": "涩谷",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-013-ATR",
+              "legacy_value": "上野公园",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-014-FOOD",
+              "legacy_value": "寿司",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-015-FOOD",
+              "legacy_value": "拉面",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-016-FOOD",
+              "legacy_value": "天妇罗",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-017-FOOD",
+              "legacy_value": "居酒屋",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "JP-福冈",
+          "city_zh": "福冈",
+          "country_iso": "JP",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-JP-018-ATR",
+              "legacy_value": "博多",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-019-ATR",
+              "legacy_value": "太宰府",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-020-ATR",
+              "legacy_value": "能古岛",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-021-ATR",
+              "legacy_value": "屋台",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-022-FOOD",
+              "legacy_value": "豚骨拉面",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-023-FOOD",
+              "legacy_value": "明太子",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-024-FOOD",
+              "legacy_value": "水炊锅",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-025-FOOD",
+              "legacy_value": "屋台",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "JP-京都",
+          "city_zh": "京都",
+          "country_iso": "JP",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 7,
+          "poi_live": 0,
+          "poi_pending": 7,
+          "completion": "0/7",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-JP-026-ATR",
+              "legacy_value": "伏见稻荷",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-027-ATR",
+              "legacy_value": "清水寺",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-028-ATR",
+              "legacy_value": "金阁寺",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-029-ATR",
+              "legacy_value": "祇园",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-030-FOOD",
+              "legacy_value": "怀石料理",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-031-FOOD",
+              "legacy_value": "抹茶甜品",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-032-FOOD",
+              "legacy_value": "汤豆腐",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "JP-札幌",
+          "city_zh": "札幌",
+          "country_iso": "JP",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 9,
+          "poi_live": 0,
+          "poi_pending": 9,
+          "completion": "0/9",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-JP-033-ATR",
+              "legacy_value": "大通公园",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-034-ATR",
+              "legacy_value": "时计台",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-035-ATR",
+              "legacy_value": "羊之丘",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-036-ATR",
+              "legacy_value": "白色恋人工厂",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-037-ATR",
+              "legacy_value": "藻岩山",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-038-FOOD",
+              "legacy_value": "味噌拉面",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-039-FOOD",
+              "legacy_value": "成吉思汗",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-040-FOOD",
+              "legacy_value": "汤咖喱",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-JP-041-FOOD",
+              "legacy_value": "海鲜",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country_iso": "KR",
+      "country_zh": "韩国",
+      "status": "NOT_STARTED",
+      "display": "NOT_STARTED",
+      "cities_total": 4,
+      "cities_closed": 0,
+      "cities_active": 0,
+      "poi_total": 31,
+      "poi_live": 0,
+      "completion": "0/4 cities",
+      "closed_when": "all cities CLOSED",
+      "cities": [
+        {
+          "city_key": "KR-釜山",
+          "city_zh": "釜山",
+          "country_iso": "KR",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-KR-042-ATR",
+              "legacy_value": "海云台",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-043-ATR",
+              "legacy_value": "甘川文化村",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-044-ATR",
+              "legacy_value": "札嘎其市场",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-045-ATR",
+              "legacy_value": "广安里大桥",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-046-FOOD",
+              "legacy_value": "猪肉汤饭",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-047-FOOD",
+              "legacy_value": "生鱼片",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-048-FOOD",
+              "legacy_value": "鱼饼",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-049-FOOD",
+              "legacy_value": "小麦面",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "KR-济州",
+          "city_zh": "济州",
+          "country_iso": "KR",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-KR-050-ATR",
+              "legacy_value": "城山日出峰",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-051-ATR",
+              "legacy_value": "涉地可支",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-052-ATR",
+              "legacy_value": "汉拿山",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-053-ATR",
+              "legacy_value": "橘子园",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-054-FOOD",
+              "legacy_value": "黑猪肉",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-055-FOOD",
+              "legacy_value": "海鲜面",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-056-FOOD",
+              "legacy_value": "橘子甜品",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-057-FOOD",
+              "legacy_value": "鲍鱼粥",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "KR-仁川",
+          "city_zh": "仁川",
+          "country_iso": "KR",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 6,
+          "poi_live": 0,
+          "poi_pending": 6,
+          "completion": "0/6",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-KR-058-ATR",
+              "legacy_value": "中华街",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-059-ATR",
+              "legacy_value": "月尾岛",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-060-ATR",
+              "legacy_value": "松岛新城",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-061-FOOD",
+              "legacy_value": "炸酱面",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-062-FOOD",
+              "legacy_value": "海鲜",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-063-FOOD",
+              "legacy_value": "辣炒年糕",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "KR-首尔",
+          "city_zh": "首尔",
+          "country_iso": "KR",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 9,
+          "poi_live": 0,
+          "poi_pending": 9,
+          "completion": "0/9",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-KR-064-ATR",
+              "legacy_value": "景福宫",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-065-ATR",
+              "legacy_value": "北村韩屋村",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-066-ATR",
+              "legacy_value": "明洞",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-067-ATR",
+              "legacy_value": "N首尔塔",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-068-ATR",
+              "legacy_value": "汉江公园",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-069-FOOD",
+              "legacy_value": "韩式烤肉",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-070-FOOD",
+              "legacy_value": "拌饭",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-071-FOOD",
+              "legacy_value": "炸鸡",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-KR-072-FOOD",
+              "legacy_value": "参鸡汤",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country_iso": "TH",
+      "country_zh": "泰国",
+      "status": "NOT_STARTED",
+      "display": "NOT_STARTED",
+      "cities_total": 3,
+      "cities_closed": 0,
+      "cities_active": 0,
+      "poi_total": 28,
+      "poi_live": 0,
+      "completion": "0/3 cities",
+      "closed_when": "all cities CLOSED",
+      "cities": [
+        {
+          "city_key": "TH-曼谷",
+          "city_zh": "曼谷",
+          "country_iso": "TH",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 10,
+          "poi_live": 0,
+          "poi_pending": 10,
+          "completion": "0/10",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-TH-073-ATR",
+              "legacy_value": "大皇宫",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-074-ATR",
+              "legacy_value": "卧佛寺",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-075-ATR",
+              "legacy_value": "郑王庙",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-076-ATR",
+              "legacy_value": "考山路",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-077-ATR",
+              "legacy_value": "水上市场",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-078-FOOD",
+              "legacy_value": "冬阴功",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-079-FOOD",
+              "legacy_value": "泰式炒河粉",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-080-FOOD",
+              "legacy_value": "芒果糯米饭",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-081-FOOD",
+              "legacy_value": "青木瓜沙拉",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-082-FOOD",
+              "legacy_value": "泰式奶茶",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "TH-普吉",
+          "city_zh": "普吉",
+          "country_iso": "TH",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 9,
+          "poi_live": 0,
+          "poi_pending": 9,
+          "completion": "0/9",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-TH-083-ATR",
+              "legacy_value": "芭东海滩",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-084-ATR",
+              "legacy_value": "攀牙湾",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-085-ATR",
+              "legacy_value": "皮皮岛",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-086-ATR",
+              "legacy_value": "大佛",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-087-ATR",
+              "legacy_value": "老镇",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-088-FOOD",
+              "legacy_value": "海鲜",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-089-FOOD",
+              "legacy_value": "冬阴功",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-090-FOOD",
+              "legacy_value": "菠萝饭",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-091-FOOD",
+              "legacy_value": "泰式烧烤",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "TH-清迈",
+          "city_zh": "清迈",
+          "country_iso": "TH",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 9,
+          "poi_live": 0,
+          "poi_pending": 9,
+          "completion": "0/9",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-TH-092-ATR",
+              "legacy_value": "古城",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-093-ATR",
+              "legacy_value": "素贴山",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-094-ATR",
+              "legacy_value": "宁曼路",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-095-ATR",
+              "legacy_value": "大象营",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-096-ATR",
+              "legacy_value": "周日夜市",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-097-FOOD",
+              "legacy_value": "泰北咖喱面",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-098-FOOD",
+              "legacy_value": "香肠",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-099-FOOD",
+              "legacy_value": "芒果饭",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-TH-100-FOOD",
+              "legacy_value": "咖啡",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country_iso": "SG",
+      "country_zh": "新加坡",
+      "status": "NOT_STARTED",
+      "display": "NOT_STARTED",
+      "cities_total": 1,
+      "cities_closed": 0,
+      "cities_active": 0,
+      "poi_total": 10,
+      "poi_live": 0,
+      "completion": "0/1 cities",
+      "closed_when": "all cities CLOSED",
+      "cities": [
+        {
+          "city_key": "SG-新加坡",
+          "city_zh": "新加坡",
+          "country_iso": "SG",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 10,
+          "poi_live": 0,
+          "poi_pending": 10,
+          "completion": "0/10",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-SG-101-ATR",
+              "legacy_value": "滨海湾",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-SG-102-ATR",
+              "legacy_value": "圣淘沙",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-SG-103-ATR",
+              "legacy_value": "牛车水",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-SG-104-ATR",
+              "legacy_value": "小印度",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-SG-105-ATR",
+              "legacy_value": "动物园",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-SG-106-FOOD",
+              "legacy_value": "海南鸡饭",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-SG-107-FOOD",
+              "legacy_value": "肉骨茶",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-SG-108-FOOD",
+              "legacy_value": "辣椒螃蟹",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-SG-109-FOOD",
+              "legacy_value": "叻沙",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-SG-110-FOOD",
+              "legacy_value": "椰浆饭",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country_iso": "FR",
+      "country_zh": "法国",
+      "status": "NOT_STARTED",
+      "display": "NOT_STARTED",
+      "cities_total": 3,
+      "cities_closed": 0,
+      "cities_active": 0,
+      "poi_total": 24,
+      "poi_live": 0,
+      "completion": "0/3 cities",
+      "closed_when": "all cities CLOSED",
+      "cities": [
+        {
+          "city_key": "FR-巴黎",
+          "city_zh": "巴黎",
+          "country_iso": "FR",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-FR-111-ATR",
+              "legacy_value": "埃菲尔铁塔",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-112-ATR",
+              "legacy_value": "卢浮宫",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-113-ATR",
+              "legacy_value": "凯旋门",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-114-ATR",
+              "legacy_value": "圣母院",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-115-FOOD",
+              "legacy_value": "法餐",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-116-FOOD",
+              "legacy_value": "可丽饼",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-117-FOOD",
+              "legacy_value": "马卡龙",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-118-FOOD",
+              "legacy_value": "咖啡厅",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "FR-里昂",
+          "city_zh": "里昂",
+          "country_iso": "FR",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-FR-119-ATR",
+              "legacy_value": "富维耶",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-120-ATR",
+              "legacy_value": "老城",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-121-ATR",
+              "legacy_value": "壁画",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-122-ATR",
+              "legacy_value": "金头公园",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-123-FOOD",
+              "legacy_value": "里昂菜",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-124-FOOD",
+              "legacy_value": "猪肠",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-125-FOOD",
+              "legacy_value": "可丽饼",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-126-FOOD",
+              "legacy_value": "红酒",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "FR-尼斯",
+          "city_zh": "尼斯",
+          "country_iso": "FR",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-FR-127-ATR",
+              "legacy_value": "天使湾",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-128-ATR",
+              "legacy_value": "老城",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-129-ATR",
+              "legacy_value": "埃兹",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-130-ATR",
+              "legacy_value": "马蒂斯博物馆",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-131-FOOD",
+              "legacy_value": "尼斯沙拉",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-132-FOOD",
+              "legacy_value": "索卡",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-133-FOOD",
+              "legacy_value": "海鲜",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-FR-134-FOOD",
+              "legacy_value": "玫瑰酒",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country_iso": "US",
+      "country_zh": "美国",
+      "status": "NOT_STARTED",
+      "display": "NOT_STARTED",
+      "cities_total": 4,
+      "cities_closed": 0,
+      "cities_active": 0,
+      "poi_total": 33,
+      "poi_live": 0,
+      "completion": "0/4 cities",
+      "closed_when": "all cities CLOSED",
+      "cities": [
+        {
+          "city_key": "US-旧金山",
+          "city_zh": "旧金山",
+          "country_iso": "US",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-US-135-ATR",
+              "legacy_value": "金门大桥",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-136-ATR",
+              "legacy_value": "渔人码头",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-137-ATR",
+              "legacy_value": "缆车",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-138-ATR",
+              "legacy_value": "九曲花街",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-139-FOOD",
+              "legacy_value": "酸面包",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-140-FOOD",
+              "legacy_value": "螃蟹",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-141-FOOD",
+              "legacy_value": "Mission卷饼",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-142-FOOD",
+              "legacy_value": "咖啡",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "US-拉斯维加斯",
+          "city_zh": "拉斯维加斯",
+          "country_iso": "US",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 7,
+          "poi_live": 0,
+          "poi_pending": 7,
+          "completion": "0/7",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-US-143-ATR",
+              "legacy_value": "大道",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-144-ATR",
+              "legacy_value": "百乐宫喷泉",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-145-ATR",
+              "legacy_value": "大峡谷",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-146-ATR",
+              "legacy_value": "秀",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-147-FOOD",
+              "legacy_value": "自助餐",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-148-FOOD",
+              "legacy_value": "牛排",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-149-FOOD",
+              "legacy_value": "buffet",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "US-洛杉矶",
+          "city_zh": "洛杉矶",
+          "country_iso": "US",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-US-150-ATR",
+              "legacy_value": "好莱坞",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-151-ATR",
+              "legacy_value": "环球影城",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-152-ATR",
+              "legacy_value": "圣莫尼卡",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-153-ATR",
+              "legacy_value": "盖蒂",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-154-FOOD",
+              "legacy_value": "In-N-Out",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-155-FOOD",
+              "legacy_value": "墨西哥菜",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-156-FOOD",
+              "legacy_value": "韩餐",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-157-FOOD",
+              "legacy_value": "健康轻食",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "US-纽约",
+          "city_zh": "纽约",
+          "country_iso": "US",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 10,
+          "poi_live": 0,
+          "poi_pending": 10,
+          "completion": "0/10",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-US-158-ATR",
+              "legacy_value": "自由女神",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-159-ATR",
+              "legacy_value": "时代广场",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-160-ATR",
+              "legacy_value": "中央公园",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-161-ATR",
+              "legacy_value": "大都会",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-162-ATR",
+              "legacy_value": "帝国大厦",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-163-FOOD",
+              "legacy_value": "披萨",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-164-FOOD",
+              "legacy_value": "热狗",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-165-FOOD",
+              "legacy_value": "贝果",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-166-FOOD",
+              "legacy_value": "牛排",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-US-167-FOOD",
+              "legacy_value": "brunch",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country_iso": "AU",
+      "country_zh": "澳大利亚",
+      "status": "NOT_STARTED",
+      "display": "NOT_STARTED",
+      "cities_total": 3,
+      "cities_closed": 0,
+      "cities_active": 0,
+      "poi_total": 24,
+      "poi_live": 0,
+      "completion": "0/3 cities",
+      "closed_when": "all cities CLOSED",
+      "cities": [
+        {
+          "city_key": "AU-黄金海岸",
+          "city_zh": "黄金海岸",
+          "country_iso": "AU",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-AU-168-ATR",
+              "legacy_value": "冲浪者天堂",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-169-ATR",
+              "legacy_value": "梦幻世界",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-170-ATR",
+              "legacy_value": "可伦宾",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-171-ATR",
+              "legacy_value": "Q1",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-172-FOOD",
+              "legacy_value": "海鲜",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-173-FOOD",
+              "legacy_value": "牛排",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-174-FOOD",
+              "legacy_value": "brunch",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-175-FOOD",
+              "legacy_value": "咖啡",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "AU-墨尔本",
+          "city_zh": "墨尔本",
+          "country_iso": "AU",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-AU-176-ATR",
+              "legacy_value": "联邦广场",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-177-ATR",
+              "legacy_value": "大洋路",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-178-ATR",
+              "legacy_value": "涂鸦巷",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-179-ATR",
+              "legacy_value": "菲利普岛",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-180-FOOD",
+              "legacy_value": "brunch",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-181-FOOD",
+              "legacy_value": "咖啡",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-182-FOOD",
+              "legacy_value": "多元料理",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-183-FOOD",
+              "legacy_value": "海鲜",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "AU-悉尼",
+          "city_zh": "悉尼",
+          "country_iso": "AU",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-AU-184-ATR",
+              "legacy_value": "歌剧院",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-185-ATR",
+              "legacy_value": "海港大桥",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-186-ATR",
+              "legacy_value": "邦迪海滩",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-187-ATR",
+              "legacy_value": "岩石区",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-188-FOOD",
+              "legacy_value": "海鲜",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-189-FOOD",
+              "legacy_value": "brunch",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-190-FOOD",
+              "legacy_value": "咖啡",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AU-191-FOOD",
+              "legacy_value": "牛排",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country_iso": "ES",
+      "country_zh": "西班牙",
+      "status": "NOT_STARTED",
+      "display": "NOT_STARTED",
+      "cities_total": 3,
+      "cities_closed": 0,
+      "cities_active": 0,
+      "poi_total": 24,
+      "poi_live": 0,
+      "completion": "0/3 cities",
+      "closed_when": "all cities CLOSED",
+      "cities": [
+        {
+          "city_key": "ES-巴塞罗那",
+          "city_zh": "巴塞罗那",
+          "country_iso": "ES",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-ES-192-ATR",
+              "legacy_value": "圣家堂",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-193-ATR",
+              "legacy_value": "古埃尔公园",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-194-ATR",
+              "legacy_value": "兰布拉",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-195-ATR",
+              "legacy_value": "米拉之家",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-196-FOOD",
+              "legacy_value": "海鲜饭",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-197-FOOD",
+              "legacy_value": "tapas",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-198-FOOD",
+              "legacy_value": "伊比利亚火腿",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-199-FOOD",
+              "legacy_value": "桑格利亚",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "ES-马德里",
+          "city_zh": "马德里",
+          "country_iso": "ES",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-ES-200-ATR",
+              "legacy_value": "王宫",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-201-ATR",
+              "legacy_value": "普拉多",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-202-ATR",
+              "legacy_value": "太阳门",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-203-ATR",
+              "legacy_value": "丽池公园",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-204-FOOD",
+              "legacy_value": "火腿",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-205-FOOD",
+              "legacy_value": "tapas",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-206-FOOD",
+              "legacy_value": "海鲜饭",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-207-FOOD",
+              "legacy_value": "巧克力油条",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "ES-塞维利亚",
+          "city_zh": "塞维利亚",
+          "country_iso": "ES",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-ES-208-ATR",
+              "legacy_value": "王宫",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-209-ATR",
+              "legacy_value": "大教堂",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-210-ATR",
+              "legacy_value": "西班牙广场",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-211-ATR",
+              "legacy_value": "弗拉明戈",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-212-FOOD",
+              "legacy_value": "tapas",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-213-FOOD",
+              "legacy_value": "伊比利亚火腿",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-214-FOOD",
+              "legacy_value": "橙子",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-ES-215-FOOD",
+              "legacy_value": "雪莉酒",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country_iso": "AE",
+      "country_zh": "阿联酋",
+      "status": "NOT_STARTED",
+      "display": "NOT_STARTED",
+      "cities_total": 3,
+      "cities_closed": 0,
+      "cities_active": 0,
+      "poi_total": 24,
+      "poi_live": 0,
+      "completion": "0/3 cities",
+      "closed_when": "all cities CLOSED",
+      "cities": [
+        {
+          "city_key": "AE-阿布扎比",
+          "city_zh": "阿布扎比",
+          "country_iso": "AE",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 8,
+          "poi_live": 0,
+          "poi_pending": 8,
+          "completion": "0/8",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-AE-216-ATR",
+              "legacy_value": "谢赫扎耶德清真寺",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-217-ATR",
+              "legacy_value": "卢浮宫阿布扎比",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-218-ATR",
+              "legacy_value": "法拉利世界",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-219-ATR",
+              "legacy_value": "滨海大道",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-220-FOOD",
+              "legacy_value": "鹰嘴豆泥",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-221-FOOD",
+              "legacy_value": "海鲜饭",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-222-FOOD",
+              "legacy_value": "骆驼奶",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-223-FOOD",
+              "legacy_value": "烤肉拼盘",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "AE-迪拜",
+          "city_zh": "迪拜",
+          "country_iso": "AE",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 9,
+          "poi_live": 0,
+          "poi_pending": 9,
+          "completion": "0/9",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-AE-224-ATR",
+              "legacy_value": "哈利法塔",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-225-ATR",
+              "legacy_value": "迪拜购物中心",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-226-ATR",
+              "legacy_value": "棕榈岛",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-227-ATR",
+              "legacy_value": "阿法迪历史区",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-228-ATR",
+              "legacy_value": "沙漠冲沙",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-229-FOOD",
+              "legacy_value": "阿拉伯烤肉",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-230-FOOD",
+              "legacy_value": "沙威玛",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-231-FOOD",
+              "legacy_value": "椰枣甜品",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-232-FOOD",
+              "legacy_value": "阿拉伯咖啡",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "AE-沙迦",
+          "city_zh": "沙迦",
+          "country_iso": "AE",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 7,
+          "poi_live": 0,
+          "poi_pending": 7,
+          "completion": "0/7",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-AE-233-ATR",
+              "legacy_value": "遗产区",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-234-ATR",
+              "legacy_value": "蓝色市场",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-235-ATR",
+              "legacy_value": "艺术博物馆",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-236-FOOD",
+              "legacy_value": "中东烤肉",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-237-FOOD",
+              "legacy_value": "库斯库斯",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-238-FOOD",
+              "legacy_value": "薄荷茶",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-AE-239-FOOD",
+              "legacy_value": "炸蚕豆",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "country_iso": "CN",
+      "country_zh": "中国",
+      "status": "NOT_STARTED",
+      "display": "NOT_STARTED",
+      "cities_total": 9,
+      "cities_closed": 0,
+      "cities_active": 0,
+      "poi_total": 91,
+      "poi_live": 0,
+      "completion": "0/9 cities",
+      "closed_when": "all cities CLOSED",
+      "cities": [
+        {
+          "city_key": "CN-北京",
+          "city_zh": "北京",
+          "country_iso": "CN",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 11,
+          "poi_live": 0,
+          "poi_pending": 11,
+          "completion": "0/11",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-CN-240-ATR",
+              "legacy_value": "故宫",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-241-ATR",
+              "legacy_value": "长城",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-242-ATR",
+              "legacy_value": "颐和园",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-243-ATR",
+              "legacy_value": "天坛",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-244-ATR",
+              "legacy_value": "圆明园",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-245-ATR",
+              "legacy_value": "南锣鼓巷",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-246-FOOD",
+              "legacy_value": "全聚德烤鸭",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-247-FOOD",
+              "legacy_value": "东来顺涮肉",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-248-FOOD",
+              "legacy_value": "卤煮火烧",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-249-FOOD",
+              "legacy_value": "豆汁焦圈",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-250-FOOD",
+              "legacy_value": "炸酱面",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "CN-成都",
+          "city_zh": "成都",
+          "country_iso": "CN",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 10,
+          "poi_live": 0,
+          "poi_pending": 10,
+          "completion": "0/10",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-CN-251-ATR",
+              "legacy_value": "宽窄巷子",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-252-ATR",
+              "legacy_value": "大熊猫基地",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-253-ATR",
+              "legacy_value": "锦里",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-254-ATR",
+              "legacy_value": "都江堰",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-255-ATR",
+              "legacy_value": "武侯祠",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-256-FOOD",
+              "legacy_value": "火锅",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-257-FOOD",
+              "legacy_value": "串串",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-258-FOOD",
+              "legacy_value": "担担面",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-259-FOOD",
+              "legacy_value": "龙抄手",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-260-FOOD",
+              "legacy_value": "兔头",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "CN-大理",
+          "city_zh": "大理",
+          "country_iso": "CN",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 10,
+          "poi_live": 0,
+          "poi_pending": 10,
+          "completion": "0/10",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-CN-261-ATR",
+              "legacy_value": "洱海",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-262-ATR",
+              "legacy_value": "古城",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-263-ATR",
+              "legacy_value": "崇圣寺",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-264-ATR",
+              "legacy_value": "双廊",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-265-ATR",
+              "legacy_value": "喜洲",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-266-FOOD",
+              "legacy_value": "乳扇",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-267-FOOD",
+              "legacy_value": "饵块",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-268-FOOD",
+              "legacy_value": "酸辣鱼",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-269-FOOD",
+              "legacy_value": "白族三道茶",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-270-FOOD",
+              "legacy_value": "喜洲粑粑",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "CN-广州",
+          "city_zh": "广州",
+          "country_iso": "CN",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 10,
+          "poi_live": 0,
+          "poi_pending": 10,
+          "completion": "0/10",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-CN-271-ATR",
+              "legacy_value": "广州塔",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-272-ATR",
+              "legacy_value": "陈家祠",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-273-ATR",
+              "legacy_value": "沙面",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-274-ATR",
+              "legacy_value": "长隆",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-275-ATR",
+              "legacy_value": "白云山",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-276-FOOD",
+              "legacy_value": "早茶",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-277-FOOD",
+              "legacy_value": "烧鹅",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-278-FOOD",
+              "legacy_value": "煲仔饭",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-279-FOOD",
+              "legacy_value": "糖水",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-280-FOOD",
+              "legacy_value": "肠粉",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "CN-杭州",
+          "city_zh": "杭州",
+          "country_iso": "CN",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 10,
+          "poi_live": 0,
+          "poi_pending": 10,
+          "completion": "0/10",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-CN-281-ATR",
+              "legacy_value": "西湖",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-282-ATR",
+              "legacy_value": "灵隐寺",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-283-ATR",
+              "legacy_value": "雷峰塔",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-284-ATR",
+              "legacy_value": "西溪湿地",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-285-ATR",
+              "legacy_value": "宋城",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-286-FOOD",
+              "legacy_value": "西湖醋鱼",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-287-FOOD",
+              "legacy_value": "龙井虾仁",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-288-FOOD",
+              "legacy_value": "片儿川",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-289-FOOD",
+              "legacy_value": "知味观",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-290-FOOD",
+              "legacy_value": "楼外楼",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "CN-青岛",
+          "city_zh": "青岛",
+          "country_iso": "CN",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 10,
+          "poi_live": 0,
+          "poi_pending": 10,
+          "completion": "0/10",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-CN-291-ATR",
+              "legacy_value": "栈桥",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-292-ATR",
+              "legacy_value": "八大关",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-293-ATR",
+              "legacy_value": "崂山",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-294-ATR",
+              "legacy_value": "啤酒博物馆",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-295-ATR",
+              "legacy_value": "金沙滩",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-296-FOOD",
+              "legacy_value": "海鲜",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-297-FOOD",
+              "legacy_value": "啤酒",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-298-FOOD",
+              "legacy_value": "蛤蜊",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-299-FOOD",
+              "legacy_value": "鲅鱼水饺",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-300-FOOD",
+              "legacy_value": "烧烤",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "CN-厦门",
+          "city_zh": "厦门",
+          "country_iso": "CN",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 10,
+          "poi_live": 0,
+          "poi_pending": 10,
+          "completion": "0/10",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-CN-301-ATR",
+              "legacy_value": "鼓浪屿",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-302-ATR",
+              "legacy_value": "南普陀",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-303-ATR",
+              "legacy_value": "曾厝垵",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-304-ATR",
+              "legacy_value": "环岛路",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-305-ATR",
+              "legacy_value": "土楼",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-306-FOOD",
+              "legacy_value": "沙茶面",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-307-FOOD",
+              "legacy_value": "海蛎煎",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-308-FOOD",
+              "legacy_value": "花生汤",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-309-FOOD",
+              "legacy_value": "馅饼",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-310-FOOD",
+              "legacy_value": "土笋冻",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "CN-上海",
+          "city_zh": "上海",
+          "country_iso": "CN",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 10,
+          "poi_live": 0,
+          "poi_pending": 10,
+          "completion": "0/10",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-CN-311-ATR",
+              "legacy_value": "外滩",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-312-ATR",
+              "legacy_value": "东方明珠",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-313-ATR",
+              "legacy_value": "豫园",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-314-ATR",
+              "legacy_value": "田子坊",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-315-ATR",
+              "legacy_value": "迪士尼",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-316-FOOD",
+              "legacy_value": "小笼包",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-317-FOOD",
+              "legacy_value": "生煎",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-318-FOOD",
+              "legacy_value": "本帮菜",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-319-FOOD",
+              "legacy_value": "南翔馒头",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-320-FOOD",
+              "legacy_value": "蟹粉面",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        },
+        {
+          "city_key": "CN-西安",
+          "city_zh": "西安",
+          "country_iso": "CN",
+          "status": "NOT_STARTED",
+          "display": "WAITING",
+          "acceptance_unit": "city_closed",
+          "poi_total": 10,
+          "poi_live": 0,
+          "poi_pending": 10,
+          "completion": "0/10",
+          "closed_when": "all POIs Review → Publish → Verify → Evidence → Live",
+          "pois": [
+            {
+              "matrix_id": "PH-CN-321-ATR",
+              "legacy_value": "兵马俑",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-322-ATR",
+              "legacy_value": "大雁塔",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-323-ATR",
+              "legacy_value": "城墙",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-324-ATR",
+              "legacy_value": "回民街",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-325-ATR",
+              "legacy_value": "华清池",
+              "poi_type": "attraction",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-326-FOOD",
+              "legacy_value": "肉夹馍",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-327-FOOD",
+              "legacy_value": "羊肉泡馍",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-328-FOOD",
+              "legacy_value": "凉皮",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-329-FOOD",
+              "legacy_value": "biangbiang面",
+              "poi_type": "food",
+              "live": false
+            },
+            {
+              "matrix_id": "PH-CN-330-FOOD",
+              "legacy_value": "回民街小吃",
+              "poi_type": "food",
+              "live": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "matrix_ssot": "data/catalog/poi-hero-matrix.v1.yaml",
+  "TT_CMS_POI_CITY_OPS": "ACTIVE",
+  "TT_CMS_POI_ACTIVE_CITY": "JP · 东京",
+  "TT_CMS_POI_ACCEPTANCE_UNIT": "city"
+}

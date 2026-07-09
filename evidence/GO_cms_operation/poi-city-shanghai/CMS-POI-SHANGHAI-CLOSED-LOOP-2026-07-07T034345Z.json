@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T03:43:45Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "上海",
+    "city_en": "Shanghai",
+    "matrix_ids": [
+      "PH-CN-314-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-314-ATR",
+      "legacy_value": "田子坊",
+      "poi_id": "482ed1b3-b55d-4cf0-ab27-a06f01bfe1f0",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-314-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

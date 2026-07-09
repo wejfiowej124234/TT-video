@@ -73,17 +73,14 @@ pub async fn get_governance_pool(State(state): State<ApiMetaState>) -> impl Into
             if rpc.is_empty() {
                 return None;
             }
-            let treasury = match std::env::var("GOVERNANCE_TREASURY_ADDRESS")
-                .ok()
-                .map(|s| s.trim().to_string())
-                .filter(|s| !s.is_empty())
-            {
-                Some(t) => t,
-                None => return None,
-            };
+            let treasury = cc
+                .treasury_address
+                .as_ref()
+                .map(|s| s.trim())
+                .filter(|s| !s.is_empty())?;
             balance_read::ssot_read_governance_treasury_native_balance_wei_hex(
                 rpc,
-                treasury.as_str(),
+                treasury,
             )
             .await
             .ok()
@@ -100,14 +97,11 @@ pub async fn get_governance_pool(State(state): State<ApiMetaState>) -> impl Into
             if rpc.is_empty() {
                 return None;
             }
-            let treasury = match std::env::var("GOVERNANCE_TREASURY_ADDRESS")
-                .ok()
-                .map(|s| s.trim().to_string())
-                .filter(|s| !s.is_empty())
-            {
-                Some(t) => t,
-                None => return None,
-            };
+            let treasury = cc
+                .treasury_address
+                .as_ref()
+                .map(|s| s.trim())
+                .filter(|s| !s.is_empty())?;
             let token = match std::env::var("GOVERNANCE_TREASURY_SSOT_TOKEN_ADDRESS")
                 .ok()
                 .map(|s| s.trim().to_string())
@@ -118,7 +112,7 @@ pub async fn get_governance_pool(State(state): State<ApiMetaState>) -> impl Into
             };
             balance_read::ssot_read_governance_treasury_erc20_balance_hex(
                 rpc,
-                treasury.as_str(),
+                treasury,
                 token.as_str(),
             )
             .await

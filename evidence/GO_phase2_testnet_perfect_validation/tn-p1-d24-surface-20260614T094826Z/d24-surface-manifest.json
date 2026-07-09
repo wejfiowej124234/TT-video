@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.d24_surface_staging_manifest.v1",
+  "surfaces": [
+    {
+      "id": "T-P11",
+      "role": "traveler",
+      "route": "/community",
+      "action": "community_feed",
+      "status": "PASS",
+      "exception_path_verified": true,
+      "human_uat": "PASS",
+      "notes": [
+        "happy_path_feed_shell_visible",
+        "exception_path_explore_subroute_ok"
+      ]
+    },
+    {
+      "id": "M-P07",
+      "role": "merchant",
+      "route": "/me/settings",
+      "action": "wallet_connect",
+      "status": "PASS",
+      "exception_path_verified": true,
+      "human_uat": "PASS",
+      "notes": [
+        "settings_hub_wallet_nav_visible",
+        "wallet_security_corridor_reachable"
+      ]
+    }
+  ],
+  "grep_anchor": "TT_TN_P1_D24_SURFACE_EVIDENCE: PASS",
+  "surface_ids": [
+    "T-P11",
+    "M-P07"
+  ]
+}

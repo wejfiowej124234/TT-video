@@ -1,0 +1,11 @@
+{
+  "chain": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa",
+  "api_ledger_env": "",
+  "global_treasury": "0x904a6C4c6Aab698AfBF08EC6151D317c393520cC",
+  "govfreeze_v2_timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+  "global_treasury_timelock_match": true,
+  "page_bps_ok": true,
+  "split_observed": true,
+  "blockers": [],
+  "verdict": "PASS"
+}

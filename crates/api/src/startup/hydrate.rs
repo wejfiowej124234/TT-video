@@ -82,6 +82,13 @@ pub async fn hydrate_from_db(
                 rejection_codes: g.rejection_codes,
                 rejection_message: g.rejection_message,
                 data_origin: g.data_origin.clone(),
+                display_status: g.display_status.clone(),
+                display_origin: g.display_origin.clone(),
+                featured: g.featured,
+                display_priority: g.display_priority,
+                display_surfaces: g.display_surfaces.clone(),
+                display_start_at: g.display_start_at,
+                display_end_at: g.display_end_at,
                 created_at: g.created_at,
                 updated_at: g.updated_at,
             };

@@ -1,0 +1,314 @@
+{
+  "schema": "traveltrust.staging_community_feed_sql_purge.v1",
+  "recorded_at": "2026-07-04T09:15:31.260Z",
+  "ocs_post_ids": [
+    "236ac307-9528-4a8f-8671-ce79c56bed54",
+    "2441f1c7-4ed1-4cab-bfce-fe7b3c082666",
+    "6099293b-a895-4f67-a7d2-d3b409039f63",
+    "489787cb-2290-47d0-b684-c795a137e682",
+    "48a4aab3-c5d7-4c8d-a745-1752b5ee7ec5",
+    "c9178c1a-f280-4f24-8107-621d51ee4037",
+    "870e4872-96ba-4abc-8779-f5eb4a113e7d",
+    "83b1afc3-6aa4-42f1-ae83-a9b4f19d2dcf",
+    "82c660e2-3094-465c-b414-f8911067dfba",
+    "60dbee57-9175-4a50-8e07-433583716c9d"
+  ],
+  "dry_run": true,
+  "actions": [
+    {
+      "id": "e034beca-c227-4d2a-bc6b-d3178691e84e",
+      "body": "c3-moderation-staging-1780911240",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "7fed7aab-ec6b-4f16-8630-a4cd4d73435b",
+      "body": "c3-moderation-staging-1780910067",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "1837f52c-2187-44ea-87b8-1a6dc93ae91a",
+      "body": "c3-moderation-staging-1780903677",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "cc8fd3fc-8968-4c37-bb29-9b038237e342",
+      "body": "c3-moderation-staging-1780902733",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "97aba488-d4c2-43d6-857b-7639a13b8fb5",
+      "body": "c12-did-interlink-1780705175",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "521643b1-5b59-4d6c-840b-d7698f586700",
+      "body": "c12-did-interlink-1780705032",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "08954b0f-4e56-4a45-a42c-c98a3a914f08",
+      "body": "c12-did-interlink-1780704986",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "81b7f816-4bd0-41b5-b03d-24de28c366b1",
+      "body": "c10-spam-1780703661",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "db66e77b-6743-45ed-9014-bcd9bdd4e17c",
+      "body": "c10-journey-photo-1780703661",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "7f6ec7ec-9297-47d3-86e5-e972edb6ef22",
+      "body": "c10-journey-text-1780703661",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "b4261ac3-a2f6-4e86-b86d-c3e6c3380aaa",
+      "body": "c10-spam-1780675791",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "96005e90-3367-42c7-9705-dfb50285ab52",
+      "body": "c10-journey-photo-1780675791",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "1ff2c963-a3e2-4358-8132-919f9b05cf89",
+      "body": "c10-journey-text-1780675791",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "7b7a30cd-f214-4608-b766-50fff22c7ea5",
+      "body": "c10-spam-1780675131",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "7f17b6aa-942e-40e3-aec2-5d9c570ee304",
+      "body": "c10-journey-photo-1780675131",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "ad4a002f-46e3-4846-9435-e6fd601d0354",
+      "body": "c10-journey-text-1780675131",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "7d73e3eb-a2fd-4595-9c45-a7bd8ce0a983",
+      "body": "c10-spam-1780674416",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "39f3f1e1-8211-449c-95ed-ed7e9410b446",
+      "body": "c10-journey-photo-1780674416",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "b2069389-9a14-424d-b3fc-af325eb186fe",
+      "body": "c10-journey-text-1780674416",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "f60e44e1-b39c-4703-8c51-c9866ee182c6",
+      "body": "c10-spam-1780674099",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "5fd8d463-b80f-4a96-9320-b1e9434ce3a6",
+      "body": "c10-journey-photo-1780674099",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "ba462f9a-ac98-41ba-95a7-b9e030e17a0c",
+      "body": "c10-journey-text-1780674099",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "8e6e5acf-3eab-4cf1-adca-cb2730d59f61",
+      "body": "c10-journey-photo-1780673661",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "f8889f76-eb72-4702-b101-47a6d39533a6",
+      "body": "c10-journey-text-1780673661",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "a33d4e21-ce0b-4456-95f5-a05cebf68d55",
+      "body": "c10-spam-1780673520",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "5bb3ccfb-9e66-4daa-96a8-1488c16d5668",
+      "body": "c10-journey-video-1780673520",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "2c0c049f-0642-4815-8c68-e098098a22b9",
+      "body": "c10-journey-photo-1780673520",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "b13caee8-ad6e-4ac7-8e8a-78ae6c4e5bde",
+      "body": "c10-journey-text-1780673520",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "158694b7-9d39-41cc-bc80-81224f396642",
+      "body": "c10-spam-1780673138",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "f1442a87-da32-40e6-91a1-c2ba5a7185fe",
+      "body": "c10-journey-video-1780673138",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "14a0df77-cb03-40e0-8c89-899621febb2c",
+      "body": "c10-journey-photo-1780673138",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "118ceb9b-0905-45cb-85eb-014e46591e15",
+      "body": "c10-journey-text-1780673138",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "b354c775-5031-4f47-bbb2-5f54a0f2a218",
+      "body": "c10-spam-1780672922",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "bfc3ba0a-2d8b-4f86-afc5-8f2439384e05",
+      "body": "c10-journey-video-1780672922",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "f0d916cb-733c-4fae-8059-4a914b3fb8bb",
+      "body": "c10-journey-photo-1780672922",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "056772d1-0d34-42dd-83a5-86ef72d3ac3f",
+      "body": "c10-journey-text-1780672922",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "cd7a82eb-96ea-4335-8630-098378df8bdf",
+      "body": "c6-staging-social-1780670465",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "c81364dd-767f-43cd-8211-9c7a29a145ae",
+      "body": "c6-staging-social-1780670252",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "d2eab794-1d34-4a4a-8f72-e4a0c0c07ba2",
+      "body": "c5-staging-image-delivery-1780669955",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "59271b9b-2ac3-4d16-a6c2-8a4932a797d1",
+      "body": "c5-staging-image-delivery-1780669922",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "9e159a87-c123-4901-ad42-55fa3841846f",
+      "body": "c5-staging-image-delivery-1780669896",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "84c9111f-bfc7-4024-9e95-71425ac7fdb8",
+      "body": "c5-staging-image-delivery-1780669869",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "f7674571-aab4-4248-af5a-18d4e5bb8fd5",
+      "body": "c5-staging-image-delivery-1780669836",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "46e0b56b-5a88-42ac-80fc-3514d1a51f03",
+      "body": "tt-phase2-c4-playback-62f884e0",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "cbb8cc82-1552-4e4c-a718-10503c3bb287",
+      "body": "tt-phase2-c4-playback-f24cb160",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "68b28439-8ef6-4919-b0d6-a1c92d688406",
+      "body": "tt-phase2-c4-playback-e364643f",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "11f13d29-20c8-4bd6-957e-46171c98cee6",
+      "body": "tt-phase2-c4-playback-e17ccc49",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "54e29584-cb85-4f06-b764-d4d045684e7b",
+      "body": "tt-phase2-c4-playback-357048ab",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "4aac83e7-9b76-4278-8d6b-858b540aaf6a",
+      "body": "tt-phase2-c4-playback-2f70c40f",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "efeadaae-bbcd-4954-aa24-c4475e894339",
+      "body": "tt-phase2-c4-playback-a97f9816",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "d57e4659-0862-4081-8a1b-d2caacce83d3",
+      "body": "tt-phase2-c4-playback-ad43ea5c",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "a1f42ead-1477-4273-9c8e-4c19ef8801f0",
+      "body": "tt-phase2-c4-playback-8fb82234",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "04a5ba4c-1a68-4b98-ab44-cb715f3f0c49",
+      "body": "tt-phase2-c4-playback-1780665978",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "19b1f6f7-b44c-4cc1-8409-7daaa36276b3",
+      "body": "tt-phase2-c4-playback-1780665686",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "8ec13c17-a438-441a-b6ee-34d57114a728",
+      "body": "c4-staging-video-playback-1780665483",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "22f91e4e-6400-4a1f-960b-1ecd96f161ee",
+      "body": "c4-staging-video-playback-1780665171",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "ff696387-71fc-48d4-aec0-2fb1339ff11e",
+      "body": "c4-staging-video-playback-1780665144",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "e96330b7-4f21-4006-9a9e-f0eb6d1bc2a3",
+      "body": "c4-staging-video-playback-1780664805",
+      "reason": "not_in_ocs_ssot"
+    },
+    {
+      "id": "1af653cc-b205-4862-9ec1-cae8c0449f9e",
+      "body": "c3-moderation-staging-1780664232",
+      "reason": "not_in_ocs_ssot"
+    }
+  ]
+}

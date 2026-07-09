@@ -1,0 +1,1 @@
+WARN: pg_dump failed — continuing with psql read-only drill only

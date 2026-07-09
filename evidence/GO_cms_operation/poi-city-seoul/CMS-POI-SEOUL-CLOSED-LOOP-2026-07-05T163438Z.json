@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T16:34:38Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "首尔",
+    "city_en": "Seoul",
+    "matrix_ids": [
+      "PH-KR-068-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-KR-068-ATR",
+      "legacy_value": "汉江公园",
+      "poi_id": "9c0d43dd-19f9-4296-b651-a65a53b2bcc0",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg",
+      "hero_file": "ocs-seoul-food-acquisition-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-068-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

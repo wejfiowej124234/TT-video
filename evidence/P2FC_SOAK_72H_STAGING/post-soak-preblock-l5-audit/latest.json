@@ -1,0 +1,305 @@
+{
+  "schema": "traveltrust.p2fc_post_soak_preblock_full_l5_audit.v1",
+  "generated_at_utc": "2026-06-29T01:03:13Z",
+  "phase": "②",
+  "soak_completed": false,
+  "backlog_stamp": "20260624T013808Z",
+  "backlog_files": 180,
+  "read_only": true,
+  "no_deploy": true,
+  "no_restart": true,
+  "no_strategy_change": true,
+  "execution_strategy_locked": "STRAT-A_PLUS_MR12",
+  "wave1_surface_audit": {
+    "wave": 1,
+    "domains": [
+      {
+        "id": "W1_ITINERARIES",
+        "title": "itineraries hub (API)",
+        "file_count": 1,
+        "total_delta": 195,
+        "severity": "critical",
+        "files": [
+          {
+            "path": "crates/api/src/routes/itineraries.rs",
+            "delta": 195
+          }
+        ],
+        "mr02_defer": true,
+        "post_soak_note": "MR-02: defer from wave1 first deploy — follow-up wave or isolated deploy"
+      },
+      {
+        "id": "W1_MARKET",
+        "title": "market consumer",
+        "file_count": 19,
+        "total_delta": 937,
+        "severity": "high",
+        "files": [
+          {
+            "path": "frontend/e2e/market-subsite-shared.ts",
+            "delta": 240
+          },
+          {
+            "path": "frontend/components/market/useMarketPage.ts",
+            "delta": 119
+          },
+          {
+            "path": "frontend/e2e/market-deep-link.spec.ts",
+            "delta": 118
+          },
+          {
+            "path": "frontend/e2e/helpers/marketSeedGuideCard.ts",
+            "delta": 95
+          },
+          {
+            "path": "frontend/e2e/market-subsite-studios.body.ts",
+            "delta": 81
+          },
+          {
+            "path": ".../market/marketStandaloneBusinessPageUtils.ts",
+            "delta": 50
+          },
+          {
+            "path": ".../market/useMarketPageOrderGuideDeepLinks.ts",
+            "delta": 43
+          },
+          {
+            "path": "frontend/e2e/helpers/marketStudioOpen.ts",
+            "delta": 41
+          },
+          {
+            "path": ".../e2e/market-subsite-community-gates.body.ts",
+            "delta": 34
+          },
+          {
+            "path": ".../market/MerchantShowcaseStudioModal.tsx",
+            "delta": 30
+          },
+          {
+            "path": ".../market/AcquisitionCarryStudioModal.tsx",
+            "delta": 26
+          },
+          {
+            "path": ".../e2e/market-custom-itinerary-catalog-ui.spec.ts",
+            "delta": 22
+          }
+        ],
+        "mr02_defer": false,
+        "post_soak_note": null
+      },
+      {
+        "id": "W1_ESCROW",
+        "title": "escrow / orders",
+        "file_count": 4,
+        "total_delta": 329,
+        "severity": "high",
+        "files": [
+          {
+            "path": "frontend/e2e/trust-gate-escrow.spec.ts",
+            "delta": 281
+          },
+          {
+            "path": "frontend/e2e/orders-list-to-escrow.spec.ts",
+            "delta": 44
+          },
+          {
+            "path": ".../e2e/escrow-bilateral-experience-l5.spec.ts",
+            "delta": 2
+          },
+          {
+            "path": ".../e2e/escrow-p03-p04-itinerary-first.spec.ts",
+            "delta": 2
+          }
+        ],
+        "mr02_defer": false,
+        "post_soak_note": null
+      },
+      {
+        "id": "W1_GUIDE",
+        "title": "guide / provider media",
+        "file_count": 0,
+        "total_delta": 0,
+        "severity": "none",
+        "files": [],
+        "mr02_defer": false,
+        "post_soak_note": null
+      }
+    ],
+    "cross_domain_risk": true,
+    "verdict": "WARN"
+  },
+  "tn_p1_010_dependency_chain": {
+    "scripts_ready": true,
+    "meta_coupling": "none (internal/indexer spine)",
+    "dependency_hits": [
+      {
+        "id": "TN_DEP_DB",
+        "title": "API DB / indexer read surface",
+        "files": [
+          {
+            "path": "crates/api/src/db/mod.rs",
+            "delta": 2
+          }
+        ],
+        "file_count": 1
+      },
+      {
+        "id": "TN_DEP_ROUTES",
+        "title": "compound route reads",
+        "files": [
+          {
+            "path": "crates/api/src/routes/health_meta/handlers.rs",
+            "delta": 2
+          },
+          {
+            "path": "crates/api/src/routes/itineraries.rs",
+            "delta": 195
+          }
+        ],
+        "file_count": 2
+      },
+      {
+        "id": "TN_DEP_MW",
+        "title": "middleware timeout (meta coupling)",
+        "files": [
+          {
+            "path": "crates/api/src/middleware/mod.rs",
+            "delta": 12
+          }
+        ],
+        "file_count": 1
+      }
+    ],
+    "graduation_gate": {
+      "pass": false,
+      "state": "no",
+      "note": "soak COMPLETED.json missing",
+      "freeze_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7"
+    },
+    "blockers": [
+      {
+        "id": "TN-B02",
+        "severity": "high",
+        "clear_phase": "post-soak-execute",
+        "note": "db/mod.rs in backlog — reconcile after COMPLETED via internal spine"
+      },
+      {
+        "id": "TN-B03",
+        "severity": "high",
+        "clear_phase": "post-soak-execute",
+        "note": "compound DB + itineraries delta — run TN-P1-010 step-1 before wave1 deploy"
+      },
+      {
+        "id": "TN-B04",
+        "severity": "medium",
+        "clear_phase": "defer-soak",
+        "note": "await COMPLETED.json then run p2fc-run-tn-p1-010-independent.sh"
+      }
+    ],
+    "verdict": "WARN"
+  },
+  "graduation_g01_g08_preconditions": {
+    "gates": [
+      {
+        "gate": "G-01",
+        "label": "Open P0 = 0",
+        "pass": true,
+        "status": "✅ 完成",
+        "clear_phase": "—"
+      },
+      {
+        "gate": "G-02",
+        "label": "Open P1 = 0",
+        "pass": true,
+        "status": "✅ 完成",
+        "clear_phase": "—"
+      },
+      {
+        "gate": "G-03",
+        "label": "Readiness ≥ 100",
+        "pass": true,
+        "status": "✅ 完成",
+        "clear_phase": "—"
+      },
+      {
+        "gate": "G-04",
+        "label": "Perfect validation GO",
+        "pass": true,
+        "status": "✅ 完成",
+        "clear_phase": "—"
+      },
+      {
+        "gate": "G-05",
+        "label": "blocking_open = 0",
+        "pass": false,
+        "status": "❌ 未完成",
+        "clear_phase": "defer-soak"
+      },
+      {
+        "gate": "G-06",
+        "label": "P2FC COMPLETED.json",
+        "pass": false,
+        "status": "❌ 未完成",
+        "clear_phase": "defer-soak"
+      },
+      {
+        "gate": "G-07",
+        "label": "indexer compound + TN-P1-010 @ freeze SHA",
+        "pass": false,
+        "status": "❌ 未完成",
+        "clear_phase": "post-soak-execute"
+      },
+      {
+        "gate": "G-08",
+        "label": "D1–D24 + surface 100%",
+        "pass": false,
+        "status": "❌ 未完成",
+        "clear_phase": "defer-soak"
+      }
+    ],
+    "checks": {
+      "G01_open_p0": true,
+      "G02_open_p1": true,
+      "G03_readiness": true,
+      "G04_perfect_validation": true,
+      "G05_blocking_open": false,
+      "G06_soak": false,
+      "G07_indexer": false,
+      "G08_deep_surface": false
+    },
+    "clearable_now_count": 4,
+    "post_soak_deferred_count": 4,
+    "preblock_actions": [],
+    "verdict": "PASS",
+    "honest_boundary": "G06/G05/G08 partial PASS only after COMPLETED + post-soak execute chain"
+  },
+  "graduation_matrix_ref": "D:/TravelTrust-V1.1/evidence/GO_phase2_testnet_graduation/20260625T235101Z/graduation-matrix.v1.json",
+  "post_soak_blockers": [
+    {
+      "id": "TN-B02",
+      "severity": "high",
+      "clear_phase": "post-soak-execute",
+      "note": "db/mod.rs in backlog — reconcile after COMPLETED via internal spine"
+    },
+    {
+      "id": "TN-B03",
+      "severity": "high",
+      "clear_phase": "post-soak-execute",
+      "note": "compound DB + itineraries delta — run TN-P1-010 step-1 before wave1 deploy"
+    },
+    {
+      "id": "TN-B04",
+      "severity": "medium",
+      "clear_phase": "defer-soak",
+      "note": "await COMPLETED.json then run p2fc-run-tn-p1-010-independent.sh"
+    },
+    {
+      "id": "W1-B01",
+      "severity": "high",
+      "clear_phase": "post-soak-execute",
+      "note": "itineraries hub Δ195 — apply MR-02 defer in wave1"
+    }
+  ],
+  "clear_now_blockers": [],
+  "verdict": "WARN"
+}

@@ -6,7 +6,7 @@
 schema: traveltrust.executive_dashboard.v1
 version: 3
 effective_utc: "2026-07-03"
-updated_utc: "2026-07-03T09:30:00Z"
+updated_utc: "2026-07-03T15:45:00Z"
 
 machine_keys:
   TT_EXECUTIVE_DASHBOARD: docs/runbook/TT-TRAVELTRUST-EXECUTIVE-DASHBOARD.md
@@ -62,6 +62,7 @@ release_readiness:
     operations: COMPLETE
     governance: COMPLETE
     alignment: COMPLETE
+    enterprise_alignment_ref: enterprise_alignment.overall_enterprise_alignment.status
   production:
     infrastructure: INTERIM_GO
     validation: INTERIM_GO
@@ -88,11 +89,19 @@ release_readiness:
       blocks_final_go: true
       note: interim *.fly.dev closed — brand domain owner live pending
     - id: PI3-003
-      label: Stripe Live + production webhook
+      label: Optional Fiat Onboarding (Stripe · P1)
       status: WAITING_OWNER
       pi3_item_status: WAITING_OWNER_STRIPE
       owner_live: OPEN
+      blocks_final_go: false
+      classification: P1_FUTURE_FIAT_ONRAMP
+      note: NOT core Production Payment — onboarding optional bypass
+    - id: G3-02-WEB3-PAYMENT
+      label: Web3 USDC Escrow Payment Production Verification
+      status: NOT_STARTED
+      machine_key: TT_WEB3_PAYMENT_PRODUCTION_READINESS
       blocks_final_go: true
+      classification: P0_CORE_PAYMENT
     - id: PI3-004
       label: Production Validation / Browser UAT
       status: INTERIM_GO
@@ -125,14 +134,49 @@ release_readiness:
       status: OPTIONAL
       blocks_sepolia_production_go: false
 
+enterprise_alignment:
+  registry: registry/enterprise-ssot-alignment.v1.yaml
+  runbook: docs/runbook/TT-ENTERPRISE-SSOT-ALIGNMENT.md
+  audit_script: scripts/dev/audit-enterprise-ssot-alignment.cjs
+  latest_stamp: "20260703T154232Z"
+  evidence: evidence/GO_enterprise_ssot_alignment/20260703T154232Z/
+  naming_rule: >
+    CONFIGURATION_ALIGNMENT PASS does not imply Local Runtime was validated.
+    See alignment_dimensions in enterprise-ssot-alignment registry.
+  tree:
+    - id: configuration_alignment
+      label: Configuration Alignment
+      status: PASS
+      validates: Registry · Runbook · config · governance SSOT
+      does_not_validate: Local API running
+    - id: local_runtime_validation
+      label: Local Runtime Validation
+      status: SKIPPED
+      valid_states: [PASS, SKIPPED, FAIL, NOT_RUN]
+      note: Local API not running at last audit — SKIPPED is valid; does not block Overall PASS
+      on_demand: LOCAL_API=http://127.0.0.1:8080 node scripts/dev/audit-enterprise-ssot-alignment.cjs
+    - id: staging_runtime_validation
+      label: Staging Runtime Validation
+      status: PASS
+      validates: Staging /health/ready · media capabilities · no loca.lt in payloads
+    - id: overall_enterprise_alignment
+      label: Overall Enterprise Alignment
+      status: PASS
+      requires: [configuration_alignment PASS, staging_runtime_validation PASS]
+      local_runtime_optional: true
+
 remaining_work:
+  - priority: P0
+    gate: G3-02-WEB3-PAYMENT
+    work: Web3 USDC Escrow payment prod verification (PAY-W01..W16)
+    status: NOT_STARTED
   - priority: P0
     gate: PI3-002
     work: Brand domain / DNS / TLS (owner live → CLOSED)
     status: INTERIM_GO
-  - priority: P0
+  - priority: P1
     gate: PI3-003
-    work: Stripe Live keys + prod webhook
+    work: Optional Fiat Onboarding — Stripe keys + prod webhook (onboarding only)
     status: WAITING_OWNER
   - priority: P0
     gate: PI3-004
@@ -166,7 +210,7 @@ roadmap:
       - { id: product, status: COMPLETE }
       - { id: operations, status: COMPLETE }
       - { id: governance, status: COMPLETE }
-      - { id: alignment, status: COMPLETE }
+      - { id: alignment, status: COMPLETE, detail: enterprise_alignment.overall_enterprise_alignment }
   active_track:
     label: PI3 · Production Engineering
     flow:
@@ -182,9 +226,35 @@ open_issues:
   registry: registry/open-issues.v1.yaml
   runbook: docs/runbook/TT-OPEN-ISSUES-REGISTRY.md
   rollup:
-    open_count: 1
+    open_count: 4
     blocking_open_count: 0
   summary:
+    - id: PI3-MEDIA-R2-CDN-FINAL
+      pi3_track: PI3-MEDIA-INFRASTRUCTURE
+      category: Production Infrastructure
+      severity: MEDIUM
+      blocking: false
+      target_gate: PI3_PRODUCTION_INFRASTRUCTURE
+      status: WAITING_OWNER_CF
+      runbook: docs/runbook/TT-PI3-MEDIA-R2-CDN-FINAL-OWNER-CHECKLIST.md
+      acceptance_gate: MEDIA_CDN_PRODUCTION_ACCEPTANCE
+    - id: MEDIA_CDN_PRODUCTION_ACCEPTANCE
+      category: Production Validation
+      severity: MEDIUM
+      blocking: false
+      target_gate: PI3_PRODUCTION_INFRASTRUCTURE
+      status: PENDING
+      runbook: docs/runbook/TT-MEDIA-CDN-PRODUCTION-ACCEPTANCE-GATE.md
+      blocks_closure_of: PI3-MEDIA-R2-CDN-FINAL
+    - id: PI3-CATALOG-ASSET-MIGRATION
+      pi3_track: PI3-CATALOG-ASSET-MIGRATION
+      category: Catalog Operations
+      severity: LOW
+      blocking: false
+      target_gate: PI3_PRODUCTION_INFRASTRUCTURE
+      status: DEFERRED
+      runbook: docs/runbook/TT-PI3-CATALOG-ASSET-MIGRATION.md
+      blocks_media_infra_close: false
     - id: CI-BUILD-20260703-V49-OOM
       category: Build Infrastructure
       severity: LOW
@@ -209,9 +279,17 @@ rows:
     indicator: green
 
   - id: alignment
-    label: Alignment
-    status: COMPLETE
+    label: Enterprise Alignment
+    status: PASS
     indicator: green
+    registry: registry/enterprise-ssot-alignment.v1.yaml
+    runbook: docs/runbook/TT-ENTERPRISE-SSOT-ALIGNMENT.md
+    note: Configuration PASS ≠ Local Runtime running
+    breakdown:
+      configuration_alignment: PASS
+      local_runtime_validation: SKIPPED
+      staging_runtime_validation: PASS
+      overall_enterprise_alignment: PASS
 
   - id: production_infrastructure
     label: Production Infrastructure
@@ -264,6 +342,8 @@ pointers:
   gate_consistency_signoff: evidence/manual-uat/signoff/EXECUTIVE-DASHBOARD-GATE-SEMANTICS-SIGNOFF-20260703T093000Z.md
   open_issues_registry: registry/open-issues.v1.yaml
   open_issues_runbook: docs/runbook/TT-OPEN-ISSUES-REGISTRY.md
+  enterprise_ssot_alignment: registry/enterprise-ssot-alignment.v1.yaml
+  enterprise_ssot_runbook: docs/runbook/TT-ENTERPRISE-SSOT-ALIGNMENT.md
   pi3_registry: registry/phase3-production-infrastructure.v1.yaml
   release_pipeline: registry/release-pipeline.v1.yaml
 

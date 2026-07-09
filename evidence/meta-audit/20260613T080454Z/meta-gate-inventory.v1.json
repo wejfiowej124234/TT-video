@@ -1,0 +1,40 @@
+{
+  "schema": "traveltrust.meta_gate_inventory.v1",
+  "gates": [
+    {
+      "gate": "run-full-system-audit-master-gate.sh",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "gate": "run-product-forensic-audit-gate.sh",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "gate": "run-doa-audit-gate.sh",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "gate": "run-lifecycle-forensic-audit-gate.sh",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "gate": "run-platform-governance-audit-gate.sh",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "gate": "run-admin-governance-audit-gate.sh",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "gate": "run-meta-audit-gate.sh",
+      "exists": true,
+      "verdict": "KEEP"
+    }
+  ]
+}

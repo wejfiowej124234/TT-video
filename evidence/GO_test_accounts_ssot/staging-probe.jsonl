@@ -1,0 +1,23 @@
+{"id":"C1-1","layer":"api_login","email":"multi-demo@test.com","status":"PASS"}
+{"id":"C2-1","layer":"api_login","email":"tourist@test.com","status":"PASS"}
+{"id":"C3-1","layer":"api_login","email":"guide@test.com","status":"PASS"}
+{"id":"C4-1","layer":"api_login","email":"merchant@test.com","status":"PASS"}
+{"id":"E2-1","layer":"api_login","email":"provider-did-rank-demo@test.com","status":"PASS"}
+{"id":"E1-2","layer":"api_login","status":"SKIP","reason":"E1 TrustGate Local-only (staging_excluded per immutable registry)"}
+{"id":"C1-2","layer":"fe_route","path":"/me/identities","http":200,"status":"PASS"}
+{"id":"C1-3","layer":"fe_route","path":"/me/publish","http":200,"status":"PASS"}
+{"id":"C1-4","layer":"fe_route","path":"/governance?view=region","http":200,"status":"PASS"}
+{"id":"C1-5","layer":"fe_route","path":"/market/acquisition","http":200,"status":"PASS"}
+{"id":"C2-2","layer":"fe_route","path":"/","http":200,"status":"PASS"}
+{"id":"C2-3","layer":"fe_route","path":"/market","http":200,"status":"PASS"}
+{"id":"C2-4","layer":"fe_route","path":"/community","http":200,"status":"PASS"}
+{"id":"C2-5","layer":"fe_route","path":"/orders","http":200,"status":"PASS"}
+{"id":"C2-6","layer":"fe_route","path":"/admin","http":307,"status":"PASS"}
+{"id":"C3-2","layer":"fe_route","path":"/guide","http":200,"status":"PASS"}
+{"id":"C3-3","layer":"fe_route","path":"/market?view=guides","http":200,"status":"PASS"}
+{"id":"C4-2","layer":"fe_route","path":"/provider","http":200,"status":"PASS"}
+{"id":"C4-3","layer":"fe_route","path":"/me/identities/merchant/settings","http":200,"status":"PASS"}
+{"id":"E1-1","layer":"fe_route","path":"/orders","http":200,"status":"PASS"}
+{"id":"E1-2","layer":"fe_route","path":"/guide","http":200,"status":"PASS"}
+{"id":"E2-1","layer":"fe_route","path":"/did-rank","http":200,"status":"PASS"}
+{"id":"E2-2","layer":"fe_route","path":"/did-rank?board=acquisition","http":200,"status":"PASS"}

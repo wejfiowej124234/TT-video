@@ -1,0 +1,70 @@
+{
+  "schema": "traveltrust.cms_l5_visual_gap_report.v1",
+  "stamp_utc": "20260705T035121Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "title": "CMS L5 Visual Gap Report",
+  "ssot": "runtime_dom_only",
+  "excluded_from_judgement": [
+    "matrix",
+    "inventory",
+    "registry",
+    "runbook",
+    "evidence_json"
+  ],
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "pages_audited": [
+    {
+      "page_path": "/",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": "error:page.goto: net::ERR_CONNECTION_CLOSED at https://tt-web-staging.fly.dev/\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"networkidle\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/market",
+      "url": "https://tt-web-staging.fly.dev/market",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/market\" is interrupted by another navigation to \"chrome-error://chromewebdata/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/market\", waiting until \"networkidle\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/market/provider",
+      "url": "https://tt-web-staging.fly.dev/market/provider",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/market/provider\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/market\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/market/provider\", waiting until \"networkidle\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/market/acquisition",
+      "url": "https://tt-web-staging.fly.dev/market/acquisition",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/market/acquisition\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/market/provider\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/market/acquisition\", waiting until \"networkidle\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/traveltrust",
+      "url": "https://tt-web-staging.fly.dev/traveltrust",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/traveltrust\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/market/acquisition\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/traveltrust\", waiting until \"networkidle\"\n",
+      "runtime_images": 0
+    }
+  ],
+  "summary": {
+    "total_runtime_assets": 0,
+    "l5_compliant": 0,
+    "gaps": 0,
+    "gap_pct": 0,
+    "by_asset_family": {},
+    "by_page": {},
+    "family_stats": {},
+    "p0_gaps": 0,
+    "p1_gaps": 0,
+    "p2_gaps": 0
+  },
+  "assets": [],
+  "gaps": [],
+  "completion_gate": {
+    "all_runtime_assets_l5": true,
+    "target": "Need Review 0 · Need Replace 0 · Need Publish 0 · Need Verify 0 · Need Evidence 0"
+  },
+  "TT_CMS_L5_VISUAL_GAP_REPORT": "PASS",
+  "TT_CMS_L5_RUNTIME_GAPS": 0
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_narrative_plan.v1",
+  "stamp_utc": "20260704T152000Z",
+  "chain_id": "nyc-skyline",
+  "city": "纽约",
+  "country_code": "US",
+  "theme": "天际线 · 布鲁克林大桥 · 帝国大厦",
+  "six_slot_plan": [
+    {
+      "row": 37,
+      "slot": "guide-avatar",
+      "scene": "Alex photography guide @ Brooklyn Bridge"
+    },
+    {
+      "row": 38,
+      "slot": "provider-cover",
+      "scene": "Observation deck ticket rooftop silhouettes"
+    },
+    {
+      "row": 39,
+      "slot": "acquisition-cover",
+      "scene": "Vinyl records still life"
+    },
+    {
+      "row": 40,
+      "slot": "official-guide-cover",
+      "scene": "Manhattan skyline wide photo route"
+    },
+    {
+      "row": 41,
+      "slot": "community-cover",
+      "scene": "Bridge cable detail Feed"
+    },
+    {
+      "row": 42,
+      "slot": "community-media",
+      "scene": "Street upward shot or night skyline detail"
+    }
+  ],
+  "TT_NARRATIVE_PLANNING": "PASS"
+}

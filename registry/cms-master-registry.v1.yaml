@@ -1,0 +1,103 @@
+# TravelTrust CMS Master Registry · Solo Founder v2
+schema: traveltrust.cms_master_registry.v2
+effective_utc: "2026-07-07"
+columns: [module, status, business_critical, l5, cms, next]
+modules:
+  - id: poi_content_qa
+    module: "POI Content QA"
+    status: Frozen
+    business_critical: "P0"
+    l5_pass: true
+    plane: CMS
+    next: "无"
+  - id: destination_ambient
+    module: "Destination Ambient"
+    status: Frozen
+    business_critical: "P0"
+    l5_pass: true
+    plane: CMS
+    next: "无"
+  - id: destination_ambient_hero
+    module: "Hero Assets"
+    status: Frozen
+    business_critical: "P0"
+    l5_pass: true
+    plane: CMS
+    next: "无"
+  - id: city_hero
+    module: "City Hero"
+    status: Pilot
+    business_critical: "P1"
+    l5_pass: false
+    plane: CMS
+    next: "Pilot Architecture Validated · WP5 暂停 · 无 L5/Consumer/Ops 矩阵"
+  - id: hotel
+    module: "Hotel"
+    status: Pilot
+    business_critical: "P1"
+    l5_pass: false
+    plane: CMS
+    next: "Discovery Complete · Brief+Matrix+Boundary · 等待实现决策"
+  - id: transport
+    module: "Transport"
+    status: Backlog
+    business_critical: "P1"
+    l5_pass: false
+    plane: CMS
+    next: "P1 后续 · 按 Standard 规模化"
+  - id: listings
+    module: "Listings"
+    status: Backlog
+    business_critical: "P1"
+    l5_pass: false
+    plane: CMS
+    next: "P1 后续 · 按 Standard 规划结构"
+  - id: banner
+    module: "Banner"
+    status: Backlog
+    business_critical: "P2"
+    l5_pass: false
+    plane: CMS
+    next: "上线后"
+  - id: video_poster
+    module: "Video Poster"
+    status: Backlog
+    business_critical: "P2"
+    l5_pass: false
+    plane: CMS
+    next: "上线后"
+  - id: seo_metadata
+    module: "SEO"
+    status: Backlog
+    business_critical: "P2"
+    l5_pass: false
+    plane: CMS
+    next: "上线后"
+  - id: country_city_copy
+    module: "i18n Copy"
+    status: Backlog
+    business_critical: "P2"
+    l5_pass: false
+    plane: CMS
+    next: "上线后"
+  - id: official_guides
+    module: "Official Guides"
+    status: Registry
+    business_critical: "—"
+    l5_pass: false
+    plane: OCS
+    next: "无"
+  - id: community_official
+    module: "Community"
+    status: Registry
+    business_critical: "—"
+    l5_pass: false
+    plane: OCS
+    next: "无"
+  - id: governance_cms
+    module: "Governance"
+    status: Registry
+    business_critical: "—"
+    l5_pass: false
+    plane: NON_CONTENT
+    next: "无"

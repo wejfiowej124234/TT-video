@@ -1,0 +1,32 @@
+{
+  "audit_id": "gov-freeze-v1-governance-ui-local",
+  "phase": "\u2460",
+  "routes": [
+    "/governance",
+    "/governance/params",
+    "/governance/proposals",
+    "/governance/delegate",
+    "/governance/distribution-claim",
+    "/governance/distribution-accruals",
+    "/governance/fee-routes",
+    "/governance/vault-forwards",
+    "/governance/steward-region-workbench"
+  ],
+  "vitest_suites": [
+    "governanceHubPage.contract",
+    "governanceParamsPage.contract",
+    "governanceParamsTtgTokenomicsFreeze",
+    "governanceParamsTreasuryPolicy",
+    "governanceParamsGlobalTreasuryUsagePolicy",
+    "countryPoolFundraiseGovernanceV1",
+    "stewardWorkbench.contract",
+    "governanceParamsPageL5FullClosure.contract",
+    "governanceProposalsL5",
+    "ttgExchange (Primary Market quote)",
+    "protocolSsot.v1.contract",
+    "distributionClaimPage.contract",
+    "distributionAccrualsPages.contract",
+    "p5-4GovernanceRoutes.smoke"
+  ],
+  "verdict": "PASS"
+}

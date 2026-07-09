@@ -1,0 +1,129 @@
+{
+  "schema": "traveltrust.phase_dashboard.v1",
+  "title": "TravelTrust Phase Dashboard",
+  "recorded_utc": "2026-07-08T11:45:26.389Z",
+  "stamp": "2026-07-08T11-45-26",
+  "refreshed": true,
+  "discipline": "Complete ②-A…②-F validation + evidence before Freeze · Package · Phase ③",
+  "phases": {
+    "phase_1": {
+      "id": 1,
+      "name": "Development",
+      "pct": 100,
+      "status": "PASS",
+      "checks": [
+        {
+          "id": "LAYER-A",
+          "pass": true
+        },
+        {
+          "id": "LAYER-B",
+          "pass": true
+        },
+        {
+          "id": "ESCROW-V2-FORGE",
+          "pass": true
+        },
+        {
+          "id": "ESCROW-SETTLEMENT-DESIGN",
+          "pass": true
+        }
+      ]
+    },
+    "phase_2": {
+      "id": 2,
+      "name": "Staging / Sepolia Production Validation",
+      "pct": 61,
+      "core_pct": 62,
+      "status": "IN_PROGRESS",
+      "sub_tracks": [
+        {
+          "id": "2A",
+          "name": "Website & Product UAT",
+          "pct": 95,
+          "status": "IN_PROGRESS",
+          "pass": false,
+          "detail": "Surface registry + UI/UX + multi-identity UAT signoff pending"
+        },
+        {
+          "id": "2B",
+          "name": "Admin / Operations UAT",
+          "pct": 68,
+          "status": "IN_PROGRESS",
+          "pass": false,
+          "detail": "Admin console · moderation · ops UAT evidence pending"
+        },
+        {
+          "id": "2C",
+          "name": "Data Governance / CMS / COS",
+          "pct": 45,
+          "status": "TARGET",
+          "pass": false,
+          "detail": "CMS/COS/data governance Sepolia validation not recorded"
+        },
+        {
+          "id": "2D",
+          "name": "Web3 Lifecycle Validation",
+          "pct": 35,
+          "status": "IN_PROGRESS",
+          "pass": false,
+          "detail": "SEPOLIA_FULL_WEB3_LIFECYCLE_IN_PROGRESS · domains 5/10 · cert 0/12",
+          "domains_pct": 50,
+          "cert_signed": 0,
+          "cert_total": 12
+        },
+        {
+          "id": "2E",
+          "name": "Security / RBAC / Monitoring",
+          "pct": 65,
+          "status": "IN_PROGRESS",
+          "pass": false,
+          "detail": "Protocol-Grade P0=0 · RBAC=RBAC_D3_PRODUCTION_BOUNDARY_CLOSED"
+        },
+        {
+          "id": "2F",
+          "name": "Exit Review",
+          "pct": 60,
+          "status": "PHASE2_EXIT_REVIEW_IN_PROGRESS",
+          "pass": false,
+          "detail": "PHASE2_EXIT_REVIEW_IN_PROGRESS"
+        }
+      ]
+    },
+    "phase_3": {
+      "id": 3,
+      "name": "Production Deployment (Mainnet)",
+      "pct": 0,
+      "status": "NOT_STARTED",
+      "detail": "Blocked until ②-F Exit Review + Freeze + Package"
+    }
+  },
+  "blockers": {
+    "P0": 0,
+    "P1": 7,
+    "cert": "0/12",
+    "cert_signed": 0,
+    "cert_total": 12,
+    "web3_pct": 35,
+    "uat_pct": 82,
+    "system_closure": "WEB3_SYSTEM_CLOSURE_BLOCKED",
+    "protocol_audit": "WEB3_PROTOCOL_GRADE_IN_PROGRESS",
+    "escrow_settlement": "ESCROW_SETTLEMENT_MODEL_ALIGNED",
+    "exit_review": "PHASE2_EXIT_REVIEW_IN_PROGRESS",
+    "sepolia_lifecycle": "SEPOLIA_FULL_WEB3_LIFECYCLE_IN_PROGRESS"
+  },
+  "current_focus": {
+    "current_focus": "②-D Web3 Lifecycle Validation",
+    "sub_track": "2D",
+    "next": "Cert #8 on Sepolia (treasury spend)",
+    "rationale": "Lowest core sub-track progress (35%)"
+  },
+  "commands": {
+    "dashboard": "node scripts/dev/run-phase-dashboard.cjs",
+    "refresh": "node scripts/dev/run-phase-dashboard.cjs --refresh",
+    "phase2_master": "node scripts/dev/run-phase2-production-validation.cjs",
+    "web3_2d": "node scripts/dev/run-sepolia-full-web3-lifecycle-validation.cjs",
+    "exit_review_2f": "node scripts/dev/run-phase2-exit-review.cjs"
+  },
+  "ssot": "registry/phase-dashboard.v1.yaml"
+}

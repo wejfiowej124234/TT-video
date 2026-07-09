@@ -1,0 +1,825 @@
+{
+  "schema": "traveltrust.ocs_g6_staging_public_uat_blind_review.v1",
+  "stamp_utc": "20260704T160500Z",
+  "phase": "② Production Preparation · G6 Staging Public UAT",
+  "method": "Official Content Library Blind Review",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "cities": 10,
+  "surfaces_per_city": 6,
+  "total_cells": 60,
+  "blind_review_rules": {
+    "no_manifest_during_blind": true,
+    "manifest_cross_check_after": true,
+    "frozen": [
+      "runtime",
+      "api",
+      "db",
+      "ssot",
+      "registry",
+      "runbook",
+      "ocs_content_l5",
+      "content_assets"
+    ]
+  },
+  "checklist_dimensions": {
+    "G2_copy_alignment": {
+      "pass": true
+    },
+    "G4_city_authenticity": {
+      "pass": true
+    },
+    "G3_surface_differentiation": {
+      "pass": true
+    },
+    "G6_commercial_perception": {
+      "pass": false
+    },
+    "G6_real_photos_no_placeholder": {
+      "pass": true
+    },
+    "G9_content_authenticity": {
+      "pass": false
+    },
+    "G10_diversity": {
+      "pass": true
+    }
+  },
+  "findings": {
+    "critical": [
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "tokyo-photo",
+        "surface": "guide-avatar",
+        "filename": "ocs-tokyo-photo-guide-avatar.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "tokyo-photo",
+        "surface": "provider-cover",
+        "filename": "ocs-tokyo-photo-provider-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "tokyo-photo",
+        "surface": "acquisition-cover",
+        "filename": "ocs-tokyo-photo-acquisition-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "tokyo-photo",
+        "surface": "community-cover",
+        "filename": "ocs-tokyo-photo-community-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "tokyo-photo",
+        "surface": "community-media",
+        "filename": "ocs-tokyo-photo-community-media.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "kyoto-culture",
+        "surface": "guide-avatar",
+        "filename": "ocs-kyoto-culture-guide-avatar.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "kyoto-culture",
+        "surface": "provider-cover",
+        "filename": "ocs-kyoto-culture-provider-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "kyoto-culture",
+        "surface": "acquisition-cover",
+        "filename": "ocs-kyoto-culture-acquisition-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "kyoto-culture",
+        "surface": "community-cover",
+        "filename": "ocs-kyoto-culture-community-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "kyoto-culture",
+        "surface": "community-media",
+        "filename": "ocs-kyoto-culture-community-media.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "seoul-food",
+        "surface": "guide-avatar",
+        "filename": "ocs-seoul-food-guide-avatar.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "seoul-food",
+        "surface": "provider-cover",
+        "filename": "ocs-seoul-food-provider-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "seoul-food",
+        "surface": "acquisition-cover",
+        "filename": "ocs-seoul-food-acquisition-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "seoul-food",
+        "surface": "community-cover",
+        "filename": "ocs-seoul-food-community-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "seoul-food",
+        "surface": "community-media",
+        "filename": "ocs-seoul-food-community-media.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "bangkok-temple",
+        "surface": "guide-avatar",
+        "filename": "ocs-bangkok-temple-guide-avatar.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "bangkok-temple",
+        "surface": "provider-cover",
+        "filename": "ocs-bangkok-temple-provider-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "bangkok-temple",
+        "surface": "acquisition-cover",
+        "filename": "ocs-bangkok-temple-acquisition-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "bangkok-temple",
+        "surface": "community-cover",
+        "filename": "ocs-bangkok-temple-community-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "bangkok-temple",
+        "surface": "community-media",
+        "filename": "ocs-bangkok-temple-community-media.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "singapore-family",
+        "surface": "guide-avatar",
+        "filename": "ocs-singapore-family-guide-avatar.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "singapore-family",
+        "surface": "provider-cover",
+        "filename": "ocs-singapore-family-provider-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "singapore-family",
+        "surface": "acquisition-cover",
+        "filename": "ocs-singapore-family-acquisition-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "singapore-family",
+        "surface": "community-cover",
+        "filename": "ocs-singapore-family-community-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "singapore-family",
+        "surface": "community-media",
+        "filename": "ocs-singapore-family-community-media.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "paris-art",
+        "surface": "guide-avatar",
+        "filename": "ocs-paris-art-guide-avatar.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "paris-art",
+        "surface": "provider-cover",
+        "filename": "ocs-paris-art-provider-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "paris-art",
+        "surface": "acquisition-cover",
+        "filename": "ocs-paris-art-acquisition-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "paris-art",
+        "surface": "community-cover",
+        "filename": "ocs-paris-art-community-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "paris-art",
+        "surface": "community-media",
+        "filename": "ocs-paris-art-community-media.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "nyc-skyline",
+        "surface": "guide-avatar",
+        "filename": "ocs-nyc-skyline-guide-avatar.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "nyc-skyline",
+        "surface": "provider-cover",
+        "filename": "ocs-nyc-skyline-provider-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "nyc-skyline",
+        "surface": "acquisition-cover",
+        "filename": "ocs-nyc-skyline-acquisition-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "nyc-skyline",
+        "surface": "community-cover",
+        "filename": "ocs-nyc-skyline-community-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "nyc-skyline",
+        "surface": "community-media",
+        "filename": "ocs-nyc-skyline-community-media.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "sydney-coast",
+        "surface": "guide-avatar",
+        "filename": "ocs-sydney-coast-guide-avatar.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "sydney-coast",
+        "surface": "provider-cover",
+        "filename": "ocs-sydney-coast-provider-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "sydney-coast",
+        "surface": "acquisition-cover",
+        "filename": "ocs-sydney-coast-acquisition-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "sydney-coast",
+        "surface": "community-cover",
+        "filename": "ocs-sydney-coast-community-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "sydney-coast",
+        "surface": "community-media",
+        "filename": "ocs-sydney-coast-community-media.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "barcelona-arch",
+        "surface": "guide-avatar",
+        "filename": "ocs-barcelona-arch-guide-avatar.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "barcelona-arch",
+        "surface": "provider-cover",
+        "filename": "ocs-barcelona-arch-provider-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "barcelona-arch",
+        "surface": "acquisition-cover",
+        "filename": "ocs-barcelona-arch-acquisition-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "barcelona-arch",
+        "surface": "community-cover",
+        "filename": "ocs-barcelona-arch-community-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "barcelona-arch",
+        "surface": "community-media",
+        "filename": "ocs-barcelona-arch-community-media.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "dubai-luxury",
+        "surface": "guide-avatar",
+        "filename": "ocs-dubai-luxury-guide-avatar.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "dubai-luxury",
+        "surface": "provider-cover",
+        "filename": "ocs-dubai-luxury-provider-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "dubai-luxury",
+        "surface": "acquisition-cover",
+        "filename": "ocs-dubai-luxury-acquisition-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "dubai-luxury",
+        "surface": "community-cover",
+        "filename": "ocs-dubai-luxury-community-cover.jpg"
+      },
+      {
+        "severity": "Critical",
+        "code": "G6_ASSET_HTTP",
+        "message": "Asset HTTP 0",
+        "chain_id": "dubai-luxury",
+        "surface": "community-media",
+        "filename": "ocs-dubai-luxury-community-media.jpg"
+      }
+    ],
+    "major": [
+      {
+        "severity": "Major",
+        "code": "G6_OFFICIAL_GUIDE_MISSING",
+        "message": "No official guide row for 东京",
+        "chain_id": "tokyo-photo",
+        "surface": "official-guide-cover"
+      },
+      {
+        "severity": "Major",
+        "code": "G6_OFFICIAL_GUIDE_MISSING",
+        "message": "No official guide row for 京都",
+        "chain_id": "kyoto-culture",
+        "surface": "official-guide-cover"
+      },
+      {
+        "severity": "Major",
+        "code": "G6_OFFICIAL_GUIDE_MISSING",
+        "message": "No official guide row for 首尔",
+        "chain_id": "seoul-food",
+        "surface": "official-guide-cover"
+      },
+      {
+        "severity": "Major",
+        "code": "G6_OFFICIAL_GUIDE_MISSING",
+        "message": "No official guide row for 曼谷",
+        "chain_id": "bangkok-temple",
+        "surface": "official-guide-cover"
+      },
+      {
+        "severity": "Major",
+        "code": "G6_OFFICIAL_GUIDE_MISSING",
+        "message": "No official guide row for 新加坡",
+        "chain_id": "singapore-family",
+        "surface": "official-guide-cover"
+      },
+      {
+        "severity": "Major",
+        "code": "G6_OFFICIAL_GUIDE_MISSING",
+        "message": "No official guide row for 巴黎",
+        "chain_id": "paris-art",
+        "surface": "official-guide-cover"
+      },
+      {
+        "severity": "Major",
+        "code": "G6_OFFICIAL_GUIDE_MISSING",
+        "message": "No official guide row for 纽约",
+        "chain_id": "nyc-skyline",
+        "surface": "official-guide-cover"
+      },
+      {
+        "severity": "Major",
+        "code": "G6_OFFICIAL_GUIDE_MISSING",
+        "message": "No official guide row for 悉尼",
+        "chain_id": "sydney-coast",
+        "surface": "official-guide-cover"
+      },
+      {
+        "severity": "Major",
+        "code": "G6_OFFICIAL_GUIDE_MISSING",
+        "message": "No official guide row for 巴塞罗那",
+        "chain_id": "barcelona-arch",
+        "surface": "official-guide-cover"
+      },
+      {
+        "severity": "Major",
+        "code": "G6_OFFICIAL_GUIDE_MISSING",
+        "message": "No official guide row for 迪拜",
+        "chain_id": "dubai-luxury",
+        "surface": "official-guide-cover"
+      }
+    ],
+    "minor": [],
+    "total": 60
+  },
+  "blind_matrix": {
+    "tokyo-photo": {
+      "guide-avatar": {
+        "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-tokyo-photo-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "东京旅拍写真 · 半日套餐",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "东京限定镜头代购 · 悬赏",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-tokyo-photo-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-tokyo-photo-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    },
+    "kyoto-culture": {
+      "guide-avatar": {
+        "filename": "ocs-kyoto-culture-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-kyoto-culture-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "京都茶道体验 · 私享包场",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-kyoto-culture-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "京都手工和纸 · 收购",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-kyoto-culture-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-kyoto-culture-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    },
+    "seoul-food": {
+      "guide-avatar": {
+        "filename": "ocs-seoul-food-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-seoul-food-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "首尔深夜美食团 · 4 小时",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-seoul-food-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "韩国限定零食礼包 · 悬赏",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-seoul-food-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-seoul-food-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    },
+    "bangkok-temple": {
+      "guide-avatar": {
+        "filename": "ocs-bangkok-temple-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-bangkok-temple-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "湄南河 sunset 游船 · 含晚餐",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-bangkok-temple-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "泰国手工丝绸 · 收购",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-bangkok-temple-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-bangkok-temple-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    },
+    "singapore-family": {
+      "guide-avatar": {
+        "filename": "ocs-singapore-family-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-singapore-family-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "新加坡亲子通票 · 官方合作",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-singapore-family-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "新加坡设计周边 · 悬赏",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-singapore-family-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-singapore-family-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    },
+    "paris-art": {
+      "guide-avatar": {
+        "filename": "ocs-paris-art-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-paris-art-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "巴黎博物馆免排队 · 小团",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-paris-art-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "巴黎中古海报 · 收购",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-paris-art-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-paris-art-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    },
+    "nyc-skyline": {
+      "guide-avatar": {
+        "filename": "ocs-nyc-skyline-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-nyc-skyline-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "纽约观景台联票 · 官方合作",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-nyc-skyline-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "纽约独立黑胶 · 悬赏",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-nyc-skyline-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-nyc-skyline-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    },
+    "sydney-coast": {
+      "guide-avatar": {
+        "filename": "ocs-sydney-coast-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-sydney-coast-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "悉尼海港皮划艇 · 半日",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-sydney-coast-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "澳洲手工冲浪板 · 收购",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-sydney-coast-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-sydney-coast-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    },
+    "barcelona-arch": {
+      "guide-avatar": {
+        "filename": "ocs-barcelona-arch-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-barcelona-arch-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "高迪三件套联票 · 含导览",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-barcelona-arch-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "巴塞罗那马赛克瓷砖 · 收购",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-barcelona-arch-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-barcelona-arch-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    },
+    "dubai-luxury": {
+      "guide-avatar": {
+        "filename": "ocs-dubai-luxury-guide-avatar.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "provider-cover": {
+        "filename": "ocs-dubai-luxury-provider-cover.jpg",
+        "bytes": 0,
+        "public_title": "迪拜沙漠豪华 Safari · 含晚宴",
+        "blind_pass": false
+      },
+      "acquisition-cover": {
+        "filename": "ocs-dubai-luxury-acquisition-cover.jpg",
+        "bytes": 0,
+        "public_title": "迪拜定制香氛 · 悬赏",
+        "blind_pass": false
+      },
+      "community-cover": {
+        "filename": "ocs-dubai-luxury-community-cover.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      },
+      "community-media": {
+        "filename": "ocs-dubai-luxury-community-media.jpg",
+        "bytes": 0,
+        "blind_pass": false
+      }
+    }
+  },
+  "manifest_cross_check": {
+    "performed": true,
+    "matrix_source": "content-production-matrix.v1.yaml"
+  },
+  "TT_G6_STAGING_PUBLIC_UAT_BLIND_REVIEW": "FAIL",
+  "TT_G6_COMMERCIAL_PERCEPTION": "FAIL",
+  "honest_boundary": "G6 Staging UAT PASS ≠ Production GO · browser WCAG/mobile pass recorded separately when run"
+}

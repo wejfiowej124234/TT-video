@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T04:54:49Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "TH",
+    "city_zh": "清迈",
+    "city_en": "Chiang Mai",
+    "matrix_ids": [
+      "PH-TH-092-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-TH-092-ATR",
+      "legacy_value": "古城",
+      "poi_id": "4377e152-41f0-4ee3-9f76-f021b9d5f520",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-chiang-mai-temple-official-guide-cover.jpg",
+      "hero_file": "ocs-chiang-mai-temple-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-092-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

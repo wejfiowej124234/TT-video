@@ -1,0 +1,231 @@
+# Production Payment Readiness Checklist · Web3 USDC Native (G3-02 SSOT)
+#
+# Payment = Web3 Escrow (USDC) — NOT Stripe.
+# Stripe = Optional Fiat Onboarding (future extension) · PAY-S01 · P1 · not core.
+#
+# Human runbook: docs/runbook/PRODUCTION-PAYMENT-READINESS-WEB3-USDC.md
+# Gate: scripts/check-web3-payment-production-readiness.sh
+# Machine key: TT_WEB3_PAYMENT_PRODUCTION_READINESS
+# Architecture SSOT: registry/payment-architecture-classification.v1.yaml
+
+schema: traveltrust.production_payment_readiness_checklist.v2
+version: 2
+effective_utc: "2026-07-08"
+machine_key: TT_WEB3_PAYMENT_PRODUCTION_READINESS
+g3_domain: G3-02
+production_scope: PRODUCTION_SCOPE_SEPOLIA
+chain_id: 11155111
+
+architecture_truth:
+  core_rail:
+    label: Web3 Escrow (USDC)
+    flow: Wallet → approve → deposit → Escrow → events → Indexer → order → release → FeeRouter → Settlement → Ledger
+  not_core_rail:
+    stripe:
+      label: Optional Fiat Onboarding (future extension)
+      classification: P1_FUTURE_FIAT_ONRAMP
+      pi3_ref: PI3-003
+      blocks_production_go: false
+  mock_pay:
+    gate: P3_CHAIN_OFF=1
+    production: FORBIDDEN
+
+ssot_refs:
+  payment_architecture: registry/payment-architecture-classification.v1.yaml
+  order_state_machine: crates/core/src/escrow.rs
+  payment_path: docs/runbook/TT-B435-USER-WALLET-ESCROW-FEEROUTER-PAYMENT-PATH-001.md
+  chain_architecture: docs/runbook/TT-CHAIN-ARCHITECTURE-AUDITABLE-SPEC.md
+  market_escrow: docs/spec/94-自由市场-商家橱窗与旅行收购-链上托管技术规格.md
+  scope_decision: docs/handbook/engineering/148-PI3-005-Production-Scope-Decision-Report.md
+  gov_freeze_sepolia: docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md
+  fundstack_spine: registry/protocol-convergence-deployments.v1.yaml
+
+prod_contracts_sepolia:
+  SETTLEMENT_TOKEN_ADDRESS: "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
+  ESCROW_FACTORY_ADDRESS: "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
+  FEE_ROUTER_ADDRESS: "0x81A8009210c5215100564c6E4123F672c4459306"
+  REGISTRY_ADDRESS: "0xc50913e154f850583D0afbE9158a75E0e2167AAb"
+  GOVERNOR_ADDRESS: "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+  GUIDE_STAKING_ADDRESS: "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f"
+  REGION_VAULT_ADDRESS: "0x2Ea061d50393c09af2f607Ee9f89679642A3a65B"
+  CHAIN_ID: 11155111
+
+contract_parity_required:
+  keys:
+    - SETTLEMENT_TOKEN_ADDRESS
+    - ESCROW_FACTORY_ADDRESS
+    - FEE_ROUTER_ADDRESS
+    - REGISTRY_ADDRESS
+    - GOVERNOR_ADDRESS
+    - GUIDE_STAKING_ADDRESS
+    - REGION_VAULT_ADDRESS
+  sources:
+    - tt-api-prod Fly secrets
+    - tt-web-prod build.env.local
+    - GET /meta
+    - registry prod_contracts_sepolia
+
+checklist:
+  - id: PAY-W01
+    category: wallet
+    title: Wallet connect · sign · address bind · session
+    verification:
+      - User wallet connects on prod FE
+      - Signed session or on-chain address bound to user account
+      - Order can be created with valid guide/listing binding
+    evidence: evidence/GO_production_readiness/G3-02/wallet/
+
+  - id: PAY-W02
+    category: approve
+    title: USDC approve to Escrow
+    verification:
+      - Settlement token configured (prod env + FE parity)
+      - User approve(tx) succeeds or fails with documented UX
+      - Allowance visible on-chain before deposit
+    evidence: evidence/GO_production_readiness/G3-02/approve/
+
+  - id: PAY-W03
+    category: deposit
+    title: Escrow.deposit on production Sepolia
+    verification:
+      - Escrow.deposit(tx) with order-bound escrow address
+      - Tx hash recorded · confirmations meet policy
+      - Gas estimation / insufficient balance paths documented
+    evidence: evidence/GO_production_readiness/G3-02/deposit/
+
+  - id: PAY-W04
+    category: escrow
+    title: Escrow custody + contract parity
+    verification:
+      - Escrow contract holds deposited USDC
+      - Order bound to correct escrow_address
+      - platformFeeRecipient == FEE_ROUTER_ADDRESS
+      - EscrowFactory / FeeRouter / Registry / Governor / Treasury addresses match registry across API · FE · /meta
+    evidence: evidence/GO_production_readiness/G3-02/escrow/
+
+  - id: PAY-W05
+    category: indexer
+    title: Indexer · event ingestion
+    verification:
+      - Indexer tick processes Deposited / Paid / Released events
+      - Events mapped to order_id / escrow_address
+      - No silent drop of chain events
+    evidence: evidence/GO_production_readiness/G3-02/indexer/
+
+  - id: PAY-W06
+    category: order_state
+    title: Order state machine sync (API ↔ chain)
+    verification:
+      - accepted → escrowed via indexer/reconcile (NOT mock-pay)
+      - State matches crates/core/src/escrow.rs transitions
+      - Payment window TTL enforced before deposit
+    forbidden_on_prod: POST /api/v1/orders/:id/mock-pay
+    evidence: evidence/GO_production_readiness/G3-02/order-state/
+
+  - id: PAY-W07
+    category: release
+    title: Escrow release · completion path
+    verification:
+      - Release tx succeeds after trip/service completion criteria
+      - escrowed → completed state transition
+      - On-chain release event matches order terms
+    evidence: evidence/GO_production_readiness/G3-02/release/
+
+  - id: PAY-W08
+    category: feerouter
+    title: FeeRouter platform fee distribution
+    verification:
+      - Release routes platform fee to FeeRouter
+      - FeeRouter.distribute matches governance split SSOT
+      - On-chain balances / events match expected recipients
+    evidence: evidence/GO_production_readiness/G3-02/feerouter/
+
+  - id: PAY-W09
+    category: settlement
+    title: Settlement projection + order completion
+    verification:
+      - Guide/provider/acquisition settlement amounts match order terms
+      - Settlement ledger rows match on-chain release outcome
+      - Country pool / governance ledgers unaffected unless in scope
+    evidence: evidence/GO_production_readiness/G3-02/settlement/
+
+  - id: PAY-W10
+    category: ledger
+    title: Ledger reconciliation (chain → indexer → DB → order → settlement → FeeRouter → ledger)
+    verification:
+      - End-to-end amount parity across full projection chain
+      - No drift between Escrow balance · order totals · settlement rows · fee splits
+      - Reconciliation report or scripted parity check PASS
+    evidence: evidence/GO_production_readiness/G3-02/ledger/
+
+  - id: PAY-W11
+    category: event_replay
+    title: Event replay · missed block recovery
+    verification:
+      - Simulate or document missed block / indexer lag
+      - Re-scan / replay restores correct order status
+      - Idempotent reconcile — no duplicate state transitions
+    evidence: evidence/GO_production_readiness/G3-02/event-replay/
+
+  - id: PAY-W12
+    category: rpc_failover
+    title: RPC failover · primary + backup
+    verification:
+      - Primary RPC configured on prod
+      - Backup RPC configured and probed
+      - RPC outage recovery runbook exists · indexer resumes after failover
+    evidence: evidence/GO_production_readiness/G3-02/rpc-failover/
+
+  - id: PAY-W13
+    category: explorer
+    title: Explorer UX · tx proof per order
+    verification:
+      - Each paid order exposes TxHash + explorer link + block + confirmations
+      - User-facing payment hub shows on-chain proof
+      - Sepolia explorer URLs correct for prod scope
+    evidence: evidence/GO_production_readiness/G3-02/explorer/
+
+  - id: PAY-W14
+    category: multi_wallet
+    title: Multi-wallet connect · disconnect · reconnect
+    verification:
+      - MetaMask connect / disconnect / reconnect
+      - WalletConnect connect / disconnect / reconnect
+      - Coinbase Wallet if supported — or documented N/A with fallback
+      - Session recovery after page refresh
+    evidence: evidence/GO_production_readiness/G3-02/multi-wallet/
+
+  - id: PAY-W15
+    category: security
+    title: Payment security · scope · mock-pay ban
+    verification:
+      - P3_CHAIN_OFF unset or 0 on prod
+      - CHAIN_ID=11155111 enforced
+      - PRODUCTION_SCOPE_SEPOLIA disclosed — not Mainnet claim
+      - No test PSP / mock-pay on prod payment path
+    evidence: evidence/GO_production_readiness/G3-02/security/
+
+  - id: PAY-W16
+    category: recovery
+    title: Gas · pending · revert · cancel · dispute recovery
+    verification:
+      - Insufficient gas / USDC balance UX
+      - approve failure handling
+      - tx Pending · Replace · Revert paths documented and probed
+      - Cancel before deposit · dispute/refund · failed deposit recovery
+    evidence: evidence/GO_production_readiness/G3-02/recovery/
+
+stripe_onboarding_extension:
+  id: PAY-S01
+  label: Optional Fiat Onboarding (future extension)
+  classification: P1_FUTURE_FIAT_ONRAMP
+  title: Stripe Live onboarding PSP (optional · NOT Production Payment)
+  blocks_g3_02_verified: false
+  blocks_production_go: false
+  when_required: TRAVELTRUST_ONBOARDING_STRIPE_ENABLED=1
+  ssot: docs/runbook/PRODUCTION-STRIPE-ENV-MATRIX-SEPOLIA-SCOPE.md
+  gate: scripts/check-pi3-003-stripe-live-production-webhook-execution.sh
+
+gate_verdict_enum: [NOT_STARTED, IN_PROGRESS, PASS, FAIL]
+matrix_gap: PRM-WEB3-PAY-B001
+checklist_count: 16

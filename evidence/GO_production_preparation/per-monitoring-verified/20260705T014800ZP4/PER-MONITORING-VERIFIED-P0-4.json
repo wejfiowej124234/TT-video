@@ -1,0 +1,100 @@
+{
+  "schema": "traveltrust.per_monitoring_verified_p0_4.v1",
+  "stamp_utc": "20260705T014800ZP4",
+  "phase": "Production Preparation · PER Item 4 · Monitoring Verified",
+  "environment": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev",
+    "phase_note": "② staging observability · not ③ on-call GO"
+  },
+  "prerequisite": {
+    "p0_3_ref": "evidence/GO_production_preparation/per-rollback-verified/PER-ROLLBACK-VERIFIED-P0-3-LATEST.json",
+    "TT_PER_ROLLBACK_VERIFIED": "PASS",
+    "TT_PER_P0_3_OWNER_SIGNOFF": "SIGNED"
+  },
+  "per_track_item": "monitoring",
+  "verification": [
+    {
+      "id": "prereq_p0_3_signed",
+      "title": "PER P0-3 owner sign-off prerequisite",
+      "expected_result": "TT_PER_ROLLBACK_VERIFIED=PASS · owner_sign_off=SIGNED",
+      "actual_result": "PASS · SIGNED",
+      "blockers": [],
+      "evidence_refs": [
+        "evidence/GO_production_preparation/per-rollback-verified/PER-ROLLBACK-VERIFIED-P0-3-LATEST.json"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "metrics_endpoint",
+      "title": "Prometheus /metrics",
+      "expected_result": "HTTP 200 · traveltrust_api_info · http_requests_total",
+      "actual_result": "http=200 bytes=3010",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/metrics"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "health_liveness",
+      "title": "/health liveness",
+      "expected_result": "HTTP 200",
+      "actual_result": "http=200",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/health"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "health_ready",
+      "title": "/health/ready readiness",
+      "expected_result": "HTTP 200 · database ok",
+      "actual_result": "http=200 database=ok",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/health/ready"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "meta_observability",
+      "title": "/meta indexer + database signals",
+      "expected_result": "meta has indexer · database_connected · rate_limits",
+      "actual_result": "indexer=true db=true rate_limits=true",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/meta"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "web_reachable",
+      "title": "tt-web-staging /market",
+      "expected_result": "HTTP 200",
+      "actual_result": "http=200",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-web-staging.fly.dev/market"
+      ],
+      "loop_result": "PASS"
+    }
+  ],
+  "summary": {
+    "total": 6,
+    "pass": 6,
+    "fail": 0,
+    "blocking_items": []
+  },
+  "owner_sign_off": {
+    "status": "SIGNED",
+    "attestation": "Sebastian Ward · Solo maintainer · PER P0-4 Monitoring Verified · ② Staging · not ③ Production GO",
+    "signed_at_utc": "2026-07-05T01:50:00Z",
+    "signer": "Sebastian Ward",
+    "phase": "Production Preparation · PER Item 4"
+  },
+  "TT_PER_MONITORING_VERIFIED": "PASS",
+  "honest_boundary": "PASS = staging metrics/health/meta probes · ≠ G3-04 Production on-call GO",
+  "TT_PER_P0_4_OWNER_SIGNOFF": "SIGNED"
+}

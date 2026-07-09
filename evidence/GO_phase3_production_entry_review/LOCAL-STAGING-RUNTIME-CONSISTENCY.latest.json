@@ -1,0 +1,7 @@
+{
+  "pointer": "LOCAL-STAGING-RUNTIME-CONSISTENCY-ARCHIVED.v1.json",
+  "verdict": "ARCHIVED",
+  "verdict_alias": "CLOSED",
+  "archived_at_utc": "2026-06-30T10:17:21Z",
+  "runtime_baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6"
+}

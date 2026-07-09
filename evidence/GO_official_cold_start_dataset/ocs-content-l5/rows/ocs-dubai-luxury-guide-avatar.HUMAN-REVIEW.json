@@ -1,0 +1,45 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T153530Z",
+  "filename": "ocs-dubai-luxury-guide-avatar.jpg",
+  "chain_id": "dubai-luxury",
+  "city": "迪拜",
+  "country_code": "AE",
+  "slot": "guide-avatar",
+  "surface": "Guide",
+  "copy_label": "迪拜沙漠向导·Omar",
+  "manifest_copy": {
+    "guide.nickname": "迪拜沙漠向导·Omar",
+    "guide.bio": "沙漠冲沙、老城黄金市集与哈利法塔观景路线。",
+    "guide.languages": ["ar", "en"],
+    "guide.service_types": ["culture", "adventure"],
+    "chain.tags": ["奢华", "沙漠"]
+  },
+  "pre_generation_check": { "pass": true, "evidence": "ocs-dubai-luxury-guide-avatar.PRE-GENERATION-CHECK.json" },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 56250 bytes · decodable · non-placeholder." },
+    "G2_copy_alignment": { "pass": true, "notes": "Omar 沙漠 luxury camp · 与 nickname/bio 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "向导肖像；未来 5 slot 已规划。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "迪拜 AE-only · 沙漠 luxury 语义。" },
+    "G5_brand_visual": { "pass": true, "notes": "金+沙漠暖；TravelTrust L5 统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "真实 luxury 向导；非广告模特。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰曝光自然。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "预检查+Country+Guide Identity+Cross-Chain+chain 1/6 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "沙漠 camp 语义正确；无水印/Logo/畸形。" },
+    "G10_content_diversity": { "pass": true, "notes": "新 AE chain 首行；与九城全局区分。" }
+  },
+  "guide_identity_diversity_review": {
+    "pass": true,
+    "vs_prior_nine_guides": "Omar 阿男沙漠 luxury vs 九城均区分"
+  },
+  "consumer_experience": { "pass": true, "real_guide_not_model": true },
+  "regression_prior_54_rows": { "pass": true, "notes": "前 54 行无漂移。" },
+  "post_generation_technical_check": {
+    "pass": true,
+    "jpeg_decodable": true,
+    "dimensions_640x480": true,
+    "size_gt_16kb": true,
+    "not_placeholder": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

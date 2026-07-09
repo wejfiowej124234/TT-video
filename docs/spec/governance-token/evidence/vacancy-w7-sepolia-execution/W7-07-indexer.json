@@ -1,0 +1,6 @@
+{
+  "step": "indexer",
+  "result": "PASS",
+  "VACANCY_RECONCILE_LIVE": "1",
+  "note": "set in runtime env for live reconcile"
+}

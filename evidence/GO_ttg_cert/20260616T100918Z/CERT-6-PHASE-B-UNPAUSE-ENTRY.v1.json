@@ -1,0 +1,24 @@
+{
+  "program": "TTG_CERT_EXECUTION",
+  "phase": "②",
+  "active_cert": 6,
+  "cert5_signoff": "evidence/GO_ttg_cert/20260616T100918Z/walkthrough/finance/FINANCE-WALKTHROUGH-SIGNOFF.json",
+  "hat_r1_phase_a": "evidence/GO_hat_r1_sepolia/20260616T063612Z",
+  "cert6": {
+    "cert": 6,
+    "name": "Phase B unpause",
+    "target_tier": "OPS_DONE",
+    "mtm_ids": [
+      "CHK-OPS-11",
+      "CHK-BASE-05",
+      "CHK-CORE-04",
+      "CHK-CORE-05",
+      "CHK-CORE-06"
+    ],
+    "unpause_env": "HAT_R1_PHASE_B_PAUSED=0",
+    "gorp": "GORP-07 · run-hat-r1-phase-b-when-ready.sh",
+    "evidence_subdir": "phase-b/unpause",
+    "signoff_file": "PHASE-B-UNPAUSE-SIGNOFF.json"
+  },
+  "prepared_at_utc": "2026-06-16T15:11:17Z"
+}

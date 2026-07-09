@@ -1,0 +1,84 @@
+{
+  "validation": "PCP_PHASE_1_CAMPAIGN_BATCH_2",
+  "stamp": "20260703T232924Z",
+  "sequence": [
+    "local_architecture",
+    "local_static_campaign_batch",
+    "staging_campaign_routes",
+    "evidence"
+  ],
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "migration": "20260704120000_governed_campaign_surfaces_v1.sql",
+  "builder": "crates/api/src/pcp/campaign_builder.rs",
+  "domains": [
+    "campaign"
+  ],
+  "overall": "PASS",
+  "batch_2_sign_off": true,
+  "batch_2_note": "Campaign batch 2 PASS — run Phase 1 final sign-off audit for TT_PCP_PHASE_1: COMPLETE",
+  "checks": [
+    {
+      "id": "architecture_compliance",
+      "label": "TT_PCP_ARCHITECTURE_COMPLIANCE (local)",
+      "status": "PASS",
+      "detail": "Architecture compliance PASS"
+    },
+    {
+      "id": "local_migration",
+      "label": "Migration 20260704120000 governed_campaign_surfaces_v1",
+      "status": "PASS",
+      "detail": "crates/api/migrations/20260704120000_governed_campaign_surfaces_v1.sql"
+    },
+    {
+      "id": "campaign_builder_static",
+      "label": "pcp/campaign_builder.rs re-exports governed views (no inline governance)",
+      "status": "PASS",
+      "detail": "CampaignBuilder reads governed_campaign_* only"
+    },
+    {
+      "id": "campaign_catalog_static",
+      "label": "db/campaign_catalog.rs reads governed_campaign_* views",
+      "status": "PASS",
+      "detail": "Both governed views referenced"
+    },
+    {
+      "id": "consumer_delegate",
+      "label": "ops_cold_start consumer delegates to governed catalog (no raw campaign table reads)",
+      "status": "PASS",
+      "detail": "Consumer thin delegate to campaign_catalog"
+    },
+    {
+      "id": "staging_health",
+      "label": "Staging /health/ready",
+      "status": "PASS",
+      "detail": "database=ok"
+    },
+    {
+      "id": "staging_home_hero",
+      "label": "GET /api/v1/official/cold-start/surfaces/home_hero",
+      "status": "PASS",
+      "detail": "HTTP 200 · campaign=present"
+    },
+    {
+      "id": "staging_market_feed",
+      "label": "GET /api/v1/official/cold-start/surfaces/market_feed",
+      "status": "PASS",
+      "detail": "HTTP 200 · campaign=present"
+    },
+    {
+      "id": "staging_community_feed",
+      "label": "GET /api/v1/official/cold-start/surfaces/community_feed",
+      "status": "PASS",
+      "detail": "HTTP 200 · campaign=present"
+    }
+  ],
+  "summary": {
+    "pass": 9,
+    "fail": 0,
+    "skipped": 0
+  },
+  "prerequisites": {
+    "architecture_compliance": true,
+    "static_campaign_batch": true
+  }
+}

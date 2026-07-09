@@ -1,0 +1,256 @@
+# RC Runtime Convergence · Release Candidate 运行态收敛（② → Production Preparation 前最后一阶）
+# Human: docs/runbook/TT-STAGING-RC-RUNTIME-CONVERGENCE.md
+# Parent: registry/staging-rc-baseline.v1.yaml
+
+schema: traveltrust.staging_rc_runtime_convergence.v1
+version: 1
+effective_utc: "2026-07-04"
+frozen_utc: "2026-07-04T11:13:00Z"
+
+phase_name: RC Runtime Convergence
+phase_position: after_release_candidate_complete_before_production_preparation
+phase_status: FROZEN_CLOSED
+
+machine_key: TT_RC_RUNTIME_CONVERGENCE
+required_status: CLOSED
+
+# 写死 · 阶段已关闭 — 禁止重新打开 RC 收敛轨；后续仅两条主线
+post_closure_policy:
+  status: FROZEN
+  forbidden:
+    - reopen_rc_runtime_convergence_phase
+    - register_new_rc_class_issues
+    - expand_rc_bucket_taxonomy
+    - ad_hoc_rc_a001_style_convergence_sprints
+  downstream_tracks_only:
+    production_preparation:
+      id: PP
+      scope: 工程增强 · fingerprint · deploy hygiene · RC-D-001 等
+      examples: [RC-D-001]
+    l5_polish:
+      id: L5
+      scope: 体验优化 · a11y · 视觉 · copy · RC-G-001 等
+      examples: [RC-G-001]
+  regression_routing: >-
+    若 Staging 公开展示面再出现 Drift，按 Regression 处置（Bucket H 语义保留于 Baseline audit），
+    不得以此重开 RC Runtime Convergence 阶段或新增 RC 类 OPEN 项。
+  ssot_chain_ref: registry/staging-rc-baseline.v1.yaml#ssot_chain
+
+parent_baseline:
+  machine_key: TT_STAGING_RC_BASELINE
+  registry: registry/staging-rc-baseline.v1.yaml
+  prerequisite_keys:
+    TT_STAGING_RC_BASELINE: READY
+    TT_STAGING_RC_BASELINE_ENFORCEMENT: ENFORCED
+    TT_STAGING_RC_SSOT_PARITY: ALIGNED
+    TT_STAGING_RC_BASELINE_AUDIT: PASS
+
+# 写死：所有 Staging RC 剩余问题只能进入下列八桶之一（禁止「发现一处修一处」无分类）
+bucket_policy:
+  rule: >-
+    任何 Bug / Drift / 截图 / Evidence 必须先归类到 Bucket A–H，再定 Root Cause 与修复链；
+    禁止无 Bucket 标签的 ad-hoc 修复；禁止 Evidence 后直接修（跳过分类与 Fix Chain）。
+  ssot_traceability: >-
+    所有 Bucket 的 OPEN/CLOSED 状态必须追溯到同一 SSOT 链（dataset → assets → OCS state →
+    governed public views → Baseline ACTIVE → audit evidence）；禁止各 Bucket 维护平行状态表。
+  ssot_chain_ref: registry/staging-rc-baseline.v1.yaml#ssot_chain
+  issue_lifecycle:
+    - issue_id
+    - evidence
+    - bucket
+    - severity
+    - root_cause
+    - fix_chain
+    - verification
+    - release_impact
+    - closed
+  review_workflow:
+    - submit_evidence
+    - classify_bucket_and_priority
+    - state_root_cause
+    - prescribe_fix_chain
+    - re_audit_until_pass
+    - state_release_impact
+
+buckets:
+  A:
+    id: runtime_drift
+    label: Runtime Drift
+    examples:
+      - api_web_payload_mismatch
+      - staging_vs_ssot_row_drift
+      - meta_profile_mismatch
+    machine_key: TT_RC_RUNTIME_DRIFT
+    target: "0"
+  B:
+    id: media_chain
+    label: Media Chain
+    examples:
+      - white_image
+      - head_404
+      - unsplash_placeholder_leak
+      - rewrite_broken
+    machine_key: TT_RC_MEDIA_DRIFT
+    target: "0"
+  C:
+    id: presentation
+    label: Presentation
+    examples:
+      - technical_field_visible
+      - duplicate_title_city
+      - chip_metadata_copy
+      - contrast_typography_button
+    machine_key: TT_RC_PRESENTATION_DRIFT
+    target: "0"
+  D:
+    id: deployment
+    label: Deployment
+    examples:
+      - stale_web_bundle
+      - edge_cache
+      - volume_not_synced
+      - build_fingerprint_unreadable
+    machine_key: TT_RC_DEPLOYMENT_DRIFT
+    target: "0"
+  E:
+    id: data_governance
+    label: Data Governance
+    examples:
+      - smoke_corridor_leak
+      - legacy_unpublished_rows
+      - discover_non_ocs
+      - duplicate_public_rows
+    machine_key: TT_RC_DATA_DRIFT
+    target: "0"
+  F:
+    id: catalog
+    label: Catalog
+    examples:
+      - ocs_id_missing
+      - cover_url_not_in_payload
+      - avatar_not_bound
+      - asset_manifest_gap
+    machine_key: TT_RC_CATALOG_DRIFT
+    target: "0"
+  G:
+    id: l5_experience
+    label: L5 Experience
+    examples:
+      - ops_copy_quality
+      - brand_visual_polish
+      - hero_imagery_quality
+    machine_key: TT_RC_L5_DRIFT
+    blocking_for_rc_data: false
+    slice_id: RC-A11Y-POLISH
+  H:
+    id: regression
+    label: Regression
+    examples:
+      - post_fix_surface_regression
+      - gate_regression
+      - audit_check_regression
+    machine_key: TT_RC_REGRESSION
+    target: "0"
+
+convergence_matrix:
+  # 百分比 = 该维机读闸 + 最近一次 audit 覆盖；100% = 无 OPEN blocking item
+  api_drift: { current_pct: 100, target_pct: 100, bucket: A }
+  web_drift: { current_pct: 100, target_pct: 100, bucket: A }
+  asset_chain: { current_pct: 100, target_pct: 100, bucket: B }
+  public_surface: { current_pct: 100, target_pct: 100, bucket: E }
+  runtime_alignment: { current_pct: 100, target_pct: 100, bucket: A }
+  deployment_consistency: { current_pct: 100, target_pct: 100, bucket: D }
+  presentation_layer: { current_pct: 100, target_pct: 100, bucket: C }
+  l5_visual_quality: { current_pct: 100, target_pct: 100, bucket: G, blocking: false, routed_to: L5_POLISH }
+
+release_ready_keys:
+  TT_RC_RUNTIME_DRIFT: "0"
+  TT_RC_DEPLOYMENT_DRIFT: "0"
+  TT_RC_MEDIA_DRIFT: "0"
+  TT_RC_PRESENTATION_DRIFT: "0"
+  TT_RC_DATA_DRIFT: "0"
+  TT_RC_CATALOG_DRIFT: "0"
+  TT_RC_REGRESSION: "0"
+  TT_RC_BASELINE: PASS
+  TT_RC_AUDIT: PASS
+  TT_RC_RELEASE_READY: "YES"
+  requires_all:
+    - TT_STAGING_RC_BASELINE: READY
+    - TT_STAGING_RC_BASELINE_ENFORCEMENT: ENFORCED
+    - TT_STAGING_RC_SSOT_PARITY: ALIGNED
+    - TT_STAGING_RC_BASELINE_AUDIT: PASS
+    - TT_RC_RUNTIME_DRIFT: "0"
+    - TT_RC_DEPLOYMENT_DRIFT: "0"
+    - TT_RC_MEDIA_DRIFT: "0"
+    - TT_RC_PRESENTATION_DRIFT: "0"
+    - TT_RC_DATA_DRIFT: "0"
+    - TT_RC_CATALOG_DRIFT: "0"
+    - TT_RC_REGRESSION: "0"
+  non_blocking_allowed:
+    - bucket: G
+      slice: RC-A11Y-POLISH
+      note: WCAG contrast / UI polish — L5 体验，非 RC 数据治理阻塞
+
+closed_items:
+  - id: RC-A-001
+    bucket: B
+    severity: P0
+    status: closed
+    closed_at: "2026-07-04T11:09:00Z"
+    title: Community browser media render + OCS asset bytes
+    evidence: evidence/GO_staging_rc_runtime_convergence/RC-A-001-closed-20260704T110900Z.json
+    verification: Community Media Render PASS · 640x480 · TT_RC_MEDIA_DRIFT=0
+    release_impact: RC
+
+open_items: []
+
+downstream_tracks:
+  production_preparation:
+    - id: PP-D-001
+      migrated_from: RC-D-001
+      status: closed
+      closed_at: "2026-07-04T11:40:00Z"
+      title: Web /api/meta/build returns HTML not JSON
+      fix_chain: [web_route_fix, redeploy_web, fingerprint_audit]
+      evidence: evidence/GO_production_preparation/PP-D-001-closed-20260704T114000Z.json
+  l5_polish:
+    - id: L5-G-001
+      migrated_from: RC-G-001
+      slice: RC-A11Y-POLISH
+      title: WCAG AA contrast on chips metadata buttons
+
+closure_signoff:
+  closed_at: "2026-07-04T11:13:00Z"
+  evidence:
+    - evidence/GO_staging_rc_runtime_convergence/RC-A-001-closed-20260704T110900Z.json
+    - evidence/GO_staging_rc_runtime_convergence/RC-RUNTIME-CONVERGENCE-FROZEN-20260704T111300Z.json
+  final_keys:
+    TT_RC_RUNTIME_CONVERGENCE: CLOSED
+    TT_RC_RELEASE_READY: "YES"
+    TT_STAGING_RC_BASELINE_AUDIT: PASS
+  next_phase: production_preparation
+
+drift_status:
+  TT_RC_RUNTIME_CONVERGENCE: CLOSED
+  TT_RC_MEDIA_DRIFT: "0"
+  TT_RC_DEPLOYMENT_DRIFT: "0"
+  TT_RC_RUNTIME_DRIFT: "0"
+  TT_RC_DATA_DRIFT: "0"
+  TT_RC_CATALOG_DRIFT: "0"
+  TT_RC_PRESENTATION_DRIFT: "0"
+  TT_RC_REGRESSION: "0"
+  TT_RC_BASELINE: PASS
+  TT_RC_AUDIT: PASS
+  TT_RC_RELEASE_READY: "YES"
+
+audit_commands:
+  full: bash scripts/dev/run-staging-rc-baseline-full-surface-audit.sh
+  enforce: bash scripts/dev/run-staging-rc-baseline-enforcement-check.sh
+  align: STAGING_RC_BASELINE_ALIGNING=1 bash scripts/dev/run-staging-rc-ssot-alignment-cleanup.sh
+
+evidence_root: evidence/GO_staging_rc_runtime_convergence/
+
+honest_boundary: >-
+  RC Runtime Convergence 已于 2026-07-04 正式 FROZEN/CLOSED；不等于 ③ Production GO。
+  后续工作仅允许 Production Preparation（工程增强）或 L5 Polish（体验优化）两条主线；
+  禁止重开 RC 收敛阶段或登记新的 RC 类 OPEN 项。Staging 再漂移走 Baseline Regression audit，不重开 RC 轨。

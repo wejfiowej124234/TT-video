@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T03:33:43Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "上海",
+    "city_en": "Shanghai",
+    "matrix_ids": [
+      "PH-CN-312-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-312-ATR",
+      "legacy_value": "东方明珠",
+      "poi_id": "6b1d43b4-1d31-4727-bb5b-6b9995776721",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-312-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

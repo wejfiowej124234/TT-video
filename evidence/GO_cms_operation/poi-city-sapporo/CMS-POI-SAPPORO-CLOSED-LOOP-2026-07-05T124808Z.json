@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T12:48:08Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "札幌",
+    "city_en": "Sapporo",
+    "matrix_ids": [
+      "PH-JP-040-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-JP-040-FOOD",
+      "legacy_value": "汤咖喱",
+      "poi_id": "30501de9-3494-4e4b-a013-65f86bd08282",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sapporo-soup-curry-community-cover.jpg",
+      "hero_file": "ocs-sapporo-soup-curry-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-040-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

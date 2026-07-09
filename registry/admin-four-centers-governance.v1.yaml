@@ -1,0 +1,161 @@
+# Admin Four Centers Governance · 四大中心治理原则（永久冻结）
+
+# SSOT: docs/runbook/TT-ADMIN-THREE-CENTERS-ARCHITECTURE.md §A · §B · §C
+# Delivery entry: docs/runbook/TT-DELIVERY-DECISION-POLICY.md §1
+# Effective: 2026-07-01
+# Status: PERMANENT_FROZEN — governance closed-loop
+
+governance_version: v1.2.0
+status: PERMANENT_FROZEN
+governance_closed_loop: true
+architecture_model: FOUR_CENTERS
+architecture_ssot: docs/runbook/TT-ADMIN-THREE-CENTERS-ARCHITECTURE.md
+delivery_policy: docs/runbook/TT-DELIVERY-DECISION-POLICY.md
+three_dimension_ssot: docs/runbook/TT-TRAVELTRUST-THREE-DIMENSION-STATUS-SSOT.md
+
+machine_keys:
+  TT_ADMIN_FOUR_CENTERS: FROZEN
+  TT_ADMIN_GOVERNANCE_PRINCIPLES: EIGHT_PERMANENT
+  TT_ADMIN_GOVERNANCE_CLOSED_LOOP: true
+  TT_ADMIN_ROUTING_DISCIPLINE: FIVE_STEP
+  TT_ADMIN_NO_NEW_ADMIN_MODULES: true
+  TT_DEVELOPMENT_WORK_TYPES: BUG,FEATURE
+  TT_FEATURE_CLASSIFICATION_REQUIRED: true
+  TT_FEATURE_SSOT_REQUIRED: true
+  TT_STATUS_MODEL: THREE_DIMENSION
+
+# Single legal path for all requirements (Owner · 2026-07-01)
+legal_requirement_path:
+  - requirement
+  - bug_or_feature
+  - feature_branch:
+      - classify_center
+      - classify_module
+      - determine_feature_level
+      - write_or_update_ssot
+      - delivery_gate
+      - development
+      - evidence
+      - freeze
+  - bug_branch:
+      - fix
+      - evidence
+
+development_discipline:
+  work_types:
+    - id: bug
+      allows_direct_fix: true
+      subtypes:
+        - BUG
+        - Security
+        - Incident
+        - Production_Hotfix
+      post_fix:
+        - evidence
+    - id: feature
+      allows_direct_fix: false
+      classification_required:
+        - center
+        - module
+        - feature_level
+      ssot_required_before_development: true
+      entry_flow:
+        - requirement
+        - bug_or_feature
+        - classify_center
+        - classify_module
+        - determine_feature_level
+        - write_or_update_ssot
+        - delivery_decision_gate
+        - start_development
+        - evidence
+        - freeze
+
+ssot_discipline:
+  principle: P8
+  rule: Feature must have SSOT defined before development
+  prevents:
+    - document_after_implementation
+    - duplicate_conflicting_docs
+    - ai_developing_from_stale_docs
+    - multiple_implementation_versions
+
+centers:
+  - id: user_management
+    label: User Management
+    type: business
+  - id: content_center
+    label: Content Center
+    type: business
+  - id: official_ops
+    label: Official Ops
+    type: business
+  - id: platform_center
+    label: Platform Center
+    type: platform
+
+forbidden_center_names:
+  - Marketing Center
+  - Showcase Center
+  - Display Center
+  - Media Center
+  - Cold Start Center
+
+principles:
+  - id: P1
+    key: ONLY_FOUR_CENTERS
+    summary: 后台永远只有四个中心
+    status: ACTIVE
+  - id: P2
+    key: ONE_FUNCTION_ONE_CENTER
+    summary: 一个功能只能属于一个中心
+    status: ACTIVE
+  - id: P3
+    key: ONE_ENTITY_ONE_OWNER
+    summary: 一个实体只有一个 Owner（按职责域）
+    status: ACTIVE
+  - id: P4
+    key: PLATFORM_NO_BUSINESS
+    summary: Platform Center 永远不能承担业务
+    status: ACTIVE
+  - id: P5
+    key: OFFICIAL_OPS_OPS_ONLY
+    summary: Official Ops 只做运营，不做内容
+    status: ACTIVE
+  - id: P6
+    key: FEATURE_INDEPENDENT_OF_ARCHITECTURE
+    summary: Feature Level 永远独立于 Architecture
+    status: ACTIVE
+  - id: P7
+    key: CLASSIFY_BEFORE_IMPLEMENT
+    summary: Feature 必须先归类（中心·模块·Level），未经归类不得实现
+    status: ACTIVE
+  - id: P8
+    key: SSOT_BEFORE_DEVELOP
+    summary: Feature 必须先有 SSOT，未经 SSOT 定义不得进入开发
+    status: ACTIVE
+
+feature_classification_examples:
+  - requirement: 增加 Featured
+    center: official_ops
+    module: public_operations
+    feature_level: STANDARD
+    ssot: docs/runbook/TT-OFFICIAL-OPS-PUBLIC-OPERATIONS-SSOT.md
+  - requirement: 增加背景图上传
+    center: content_center
+    module: landing
+    feature_level: STANDARD
+    ssot: docs/handbook/engineering/101-CMS与内容运营中心实施蓝图.md
+  - requirement: 增加 Feature Flag
+    center: platform_center
+    module: feature_flags
+    feature_level: STANDARD
+    ssot: TBD per feature registry
+
+examples:
+  poi_images: content_center
+  featured: official_ops
+  guide_review: user_management
+  backup: platform_center
+  guide_identity: user_management
+  guide_display_recommendation: official_ops

@@ -1,0 +1,49 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_final_review.v1",
+  "stamp_utc": "20260704T151530Z",
+  "chain_id": "paris-art",
+  "city": "巴黎",
+  "country_code": "FR",
+  "country_label": "法国",
+  "theme_locked": "博物馆 · 卢浮宫 · 奥赛 · 艺术",
+  "slots_completed": 6,
+  "slots_total": 6,
+  "TT_PARIS_ART_CHAIN": "CLOSED",
+  "paris_chain_content_score": {
+    "value": 93,
+    "scale": "0-100",
+    "pass_threshold": 85,
+    "result": "PASS"
+  },
+  "chain_narrative_continuity_review": {
+    "result": "PASS",
+    "TT_CHAIN_NARRATIVE_CONTINUITY": "PASS",
+    "surface_arc": "Guide(Claire) → Provider(博物馆小团) → Acquisition(中古海报) → Official Guide(卢浮宫金字塔) → Community Cover(展厅透视) → Community Media(奥赛钟面)",
+    "theme_coherence": "博物馆 · 卢浮宫 · 奥赛 · 艺术",
+    "narrative_gaps": false
+  },
+  "visual_diversity_review": {
+    "result": "PASS",
+    "cover_media_complement": {
+      "community_cover": "展厅透视 Feed",
+      "community_media": "奥赛钟面内景",
+      "distinct": true
+    }
+  },
+  "consumer_experience_review": {
+    "result": "PASS",
+    "TT_CONSUMER_EXPERIENCE": "PASS",
+    "feed_to_detail_continuity": true
+  },
+  "full_regression_36_rows": {
+    "pass": true,
+    "paris_art_6": "closed"
+  },
+  "production_readiness": {
+    "paris_art_chain": "CLOSED",
+    "matrix_progress": "36/60 verified+pass",
+    "chains_closed": 6,
+    "next_matrix_row": 37,
+    "next_chain_id": "nyc-skyline"
+  }
+}

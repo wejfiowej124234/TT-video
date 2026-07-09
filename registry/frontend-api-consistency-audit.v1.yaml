@@ -133,6 +133,28 @@ market_subsite_race_fix:
     api_transient_non_ok: Fixed
   verdict: CLOSED
 
+market_default_filter_audit:
+  stamp: "20260703T125300Z"
+  status: CLOSED
+  classification: Market Default Filter State Audit
+  extends: market_subsite_race_fix
+  not_data_governance: true
+  governance_gates: { OCS: CLOSED, DDG: CLOSED, SOPCP: CLOSED, evidence_reuse: ENFORCED }
+  evidence: evidence/GO_market_default_filter_audit/20260703T125300Z/default-filter-audit-closure.json
+  signoff: evidence/manual-uat/signoff/MARKET-DEFAULT-FILTER-AUDIT-SIGNOFF-20260703T125300Z.md
+  root_cause: Default Filter State — orphan localStorage without explicit user save
+  default_rule: URL → explicit user save → ALL
+  hub_browser_truth_attrs_non_blocking: [data-tt-market-country, data-tt-market-orders-query, data-tt-market-guides-query]
+  subsite_browser_truth_attrs: [data-tt-subsite-country, data-tt-subsite-list-count, data-tt-subsite-listings-query]
+  blocking_count: 0
+  market_runtime:
+    api_truth: PASS
+    frontend_runtime: PASS
+    browser_runtime: PASS
+    source_truth: PASS
+    evidence: CLOSED
+  verdict: CLOSED
+
 browser_layer:
   playwright: frontend/e2e/frontend-api-consistency-audit.spec.ts
   record_script: scripts/dev/record-frontend-api-consistency-audit-staging.sh

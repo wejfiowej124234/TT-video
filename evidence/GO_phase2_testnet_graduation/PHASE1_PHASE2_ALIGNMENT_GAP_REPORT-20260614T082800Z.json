@@ -1,0 +1,185 @@
+{
+  "schema": "traveltrust.phase1_phase2_alignment_gap_report.v1",
+  "at": "20260614T082800Z",
+  "phase": "② testnet",
+  "mode": "Reliability Freeze · audit-only",
+  "standards": [
+    "docs/runbook/TT-FULL-SYSTEM-MULTI-DIMENSION-AUDIT-CHECKLIST.md",
+    "docs/runbook/TT-PHASE2-TESTNET-CLOSURE-GOVERNANCE-STANDARD.md"
+  ],
+  "pre_graduation_verdict": "MISALIGNED_WORKING_TREE",
+  "summary": {
+    "local_head": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+    "staging_git_sha": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+    "head_staging_sha_match": true,
+    "git_modified": 278,
+    "git_untracked": 1799,
+    "staging_web_alignment_fail": "0",
+    "blocking_alignment_gaps": 4,
+    "total_gaps": 10
+  },
+  "aligned_items": [
+    "HEAD git_sha = staging /meta git_sha",
+    "check-staging-web-alignment PASS (CORS/Sepolia/NEXT_PUBLIC)",
+    "CMS/Growth/Admin API parity PASS"
+  ],
+  "gaps": [
+    {
+      "id": "ALIGN-001",
+      "severity": "Critical",
+      "domain": "Version / Deploy",
+      "title": "Working tree ≠ deployed staging commit",
+      "observation": "278 modified + 1799 untracked files vs HEAD 5ab1f8ba2229; staging /meta git_sha matches HEAD only.",
+      "impact": "Local disk \"latest\" is not reproducible on staging via standard Fly deploy from HEAD; risk of historical snapshot drift vs developer working copy.",
+      "fix": "Post–Reliability-Freeze: commit or stash intentional delta; S5 deploy API+Web from single commit; re-run alignment gate.",
+      "blocks_testnet_truth": true
+    },
+    {
+      "id": "ALIGN-002",
+      "severity": "Critical",
+      "domain": "Indexer / RPC",
+      "title": "TN-P1-010 selector fix uncommitted (HEAD vs working tree)",
+      "observation": "HEAD SELECTOR_ESCROW_OF=[0x87,0x90,0x6b,0x1e] vs working [0x83,0xa2,0x65,0xa7]; HEAD STATUS=[0x66,0x01,0xcb,0x31] vs working [0x20,0x0d,0x2e,0xd2]. Evidence TN-P1-010 CLOSED; staging reconcile compound_pass may pass via log path.",
+      "impact": "Git HEAD still carries wrong eth_call selectors; redeploy from HEAD without commit would regress indexer RPC reads.",
+      "fix": "Commit selector fix to HEAD; after freeze: redeploy tt-api-staging; re-run TN-P1-010 reconcile evidence (do not re-run closed soak/D6).",
+      "blocks_testnet_truth": true
+    },
+    {
+      "id": "ALIGN-003",
+      "severity": "High",
+      "domain": "Database / Migrations",
+      "title": "Untracked SQL migrations on disk",
+      "observation": "10 migration files untracked (CMS/Growth/guides/…); staging API parity PASS suggests DB may be ahead of git.",
+      "impact": "Schema provenance not in VCS; fresh deploy/migrate from git-only clone would miss tables.",
+      "fix": "Add migrations to git in dedicated commit; document staging migrate stamp in G2 evidence.",
+      "blocks_testnet_truth": true
+    },
+    {
+      "id": "ALIGN-004a",
+      "severity": "High",
+      "domain": "Config / Meta",
+      "title": "/meta missing governance_votes_token_address",
+      "observation": "Registry governance_token_address=0xac2e29ac7089e4863c21daf232cf8bbb025d91ca; staging /meta returns null.",
+      "impact": "FE meta guard / governance vote panels may lack on-chain token address; observability drift.",
+      "fix": "Set GOVERNANCE_VOTES_TOKEN_ADDRESS (+ expose in ChainConfig meta); redeploy API; verify /meta.",
+      "blocks_testnet_truth": false
+    },
+    {
+      "id": "ALIGN-004b",
+      "severity": "High",
+      "domain": "Config / Meta",
+      "title": "/meta missing staking_address",
+      "observation": "Registry region_steward_stake_pool_address=0x16f914f3d50f7aa02665589e715f94ca3b7ab47c; staging /meta returns null.",
+      "impact": "FE meta guard / governance vote panels may lack on-chain token address; observability drift.",
+      "fix": "Set GOVERNANCE_VOTES_TOKEN_ADDRESS (+ expose in ChainConfig meta); redeploy API; verify /meta.",
+      "blocks_testnet_truth": false
+    },
+    {
+      "id": "ALIGN-005",
+      "severity": "Medium",
+      "domain": "Observability",
+      "title": "/meta build.deployed_at null",
+      "observation": "TRAVELTRUST_DEPLOYED_AT not injected on tt-api-staging.",
+      "impact": "D18 deploy discipline / rollback audit weaker.",
+      "fix": "Set TRAVELTRUST_DEPLOYED_AT on Fly release; optional build-arg at deploy.",
+      "blocks_testnet_truth": false
+    },
+    {
+      "id": "ALIGN-006",
+      "severity": "Medium",
+      "domain": "Finance / PSP",
+      "title": "Stripe test mode not surfaced in /meta",
+      "observation": "check-staging-web-alignment WARN; TN-P1-005 evidence on file.",
+      "impact": "PSP mode not machine-readable from meta; manual Fly secret verification required.",
+      "fix": "Ensure TRAVELTRUST_ONBOARDING_STRIPE_ENABLED=1 + sk_test_* on Fly; extend meta onboarding block if needed.",
+      "blocks_testnet_truth": false
+    },
+    {
+      "id": "ALIGN-007",
+      "severity": "Medium",
+      "domain": "Indexer",
+      "title": "Uncommitted indexer.rs delta vs HEAD",
+      "observation": " 1 file changed, 162 insertions(+), 8 deletions(-)",
+      "impact": "Local indexer behavior may differ from staging until committed and deployed.",
+      "fix": "Commit with TN-P1-010 bundle or split PR post-freeze.",
+      "blocks_testnet_truth": true
+    },
+    {
+      "id": "ALIGN-009",
+      "severity": "Low",
+      "domain": "Reliability / Graduation",
+      "title": "TN-P1-009 P2FC 72h soak INFLIGHT",
+      "observation": "Not a local↔staging skew; wall-clock graduation gate.",
+      "impact": "TT_TESTNET_GRADUATION remains OPEN until COMPLETED.json.",
+      "fix": "Wait soak; post-soak graduation closure only.",
+      "blocks_testnet_truth": false,
+      "graduation_only": true
+    },
+    {
+      "id": "ALIGN-010",
+      "severity": "Low",
+      "domain": "Governance / Chain",
+      "title": "G08 live Sepolia stake DEFER_③",
+      "observation": "Matrix DEFER_③ · fork write PASS; intentional phase boundary.",
+      "impact": "None for ② alignment if documented.",
+      "fix": "Phase ③ mainnet / live TTG approve track.",
+      "blocks_testnet_truth": false,
+      "defer_phase3": true
+    }
+  ],
+  "remaining_blockers_registry": [
+    {
+      "id": "ALIGN-001",
+      "severity": "Critical",
+      "domain": "Version / Deploy",
+      "title": "Working tree ≠ deployed staging commit",
+      "observation": "278 modified + 1799 untracked files vs HEAD 5ab1f8ba2229; staging /meta git_sha matches HEAD only.",
+      "impact": "Local disk \"latest\" is not reproducible on staging via standard Fly deploy from HEAD; risk of historical snapshot drift vs developer working copy.",
+      "fix": "Post–Reliability-Freeze: commit or stash intentional delta; S5 deploy API+Web from single commit; re-run alignment gate.",
+      "blocks_testnet_truth": true
+    },
+    {
+      "id": "ALIGN-002",
+      "severity": "Critical",
+      "domain": "Indexer / RPC",
+      "title": "TN-P1-010 selector fix uncommitted (HEAD vs working tree)",
+      "observation": "HEAD SELECTOR_ESCROW_OF=[0x87,0x90,0x6b,0x1e] vs working [0x83,0xa2,0x65,0xa7]; HEAD STATUS=[0x66,0x01,0xcb,0x31] vs working [0x20,0x0d,0x2e,0xd2]. Evidence TN-P1-010 CLOSED; staging reconcile compound_pass may pass via log path.",
+      "impact": "Git HEAD still carries wrong eth_call selectors; redeploy from HEAD without commit would regress indexer RPC reads.",
+      "fix": "Commit selector fix to HEAD; after freeze: redeploy tt-api-staging; re-run TN-P1-010 reconcile evidence (do not re-run closed soak/D6).",
+      "blocks_testnet_truth": true
+    },
+    {
+      "id": "ALIGN-003",
+      "severity": "High",
+      "domain": "Database / Migrations",
+      "title": "Untracked SQL migrations on disk",
+      "observation": "10 migration files untracked (CMS/Growth/guides/…); staging API parity PASS suggests DB may be ahead of git.",
+      "impact": "Schema provenance not in VCS; fresh deploy/migrate from git-only clone would miss tables.",
+      "fix": "Add migrations to git in dedicated commit; document staging migrate stamp in G2 evidence.",
+      "blocks_testnet_truth": true
+    },
+    {
+      "id": "ALIGN-007",
+      "severity": "Medium",
+      "domain": "Indexer",
+      "title": "Uncommitted indexer.rs delta vs HEAD",
+      "observation": " 1 file changed, 162 insertions(+), 8 deletions(-)",
+      "impact": "Local indexer behavior may differ from staging until committed and deployed.",
+      "fix": "Commit with TN-P1-010 bundle or split PR post-freeze.",
+      "blocks_testnet_truth": true
+    },
+    {
+      "id": "ALIGN-009",
+      "severity": "Low",
+      "domain": "Reliability / Graduation",
+      "title": "TN-P1-009 P2FC 72h soak INFLIGHT",
+      "observation": "Not a local↔staging skew; wall-clock graduation gate.",
+      "impact": "TT_TESTNET_GRADUATION remains OPEN until COMPLETED.json.",
+      "fix": "Wait soak; post-soak graduation closure only.",
+      "blocks_testnet_truth": false,
+      "graduation_only": true
+    }
+  ],
+  "honest_boundary": "Staging reflects committed HEAD, not uncommitted working tree. ② alignment ≠ ③ Production GO.",
+  "grep_verdict": "TT_PHASE1_PHASE2_ALIGNMENT: MISALIGNED_WORKING_TREE 20260614T082800Z"
+}

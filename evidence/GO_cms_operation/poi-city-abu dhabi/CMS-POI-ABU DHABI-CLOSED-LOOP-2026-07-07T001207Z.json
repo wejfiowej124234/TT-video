@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T00:12:07Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AE",
+    "city_zh": "阿布扎比",
+    "city_en": "Abu Dhabi",
+    "matrix_ids": [
+      "PH-AE-222-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AE-222-FOOD",
+      "legacy_value": "骆驼奶",
+      "poi_id": "7e8a5ce0-2790-4a20-ac3f-76a70822657a",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-222-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

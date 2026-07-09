@@ -1,0 +1,274 @@
+{
+  "schema": "traveltrust.cms_runtime_visual_gap_report.v2",
+  "stamp_utc": "20260705T085615Z",
+  "layer": "CMS_OPERATION",
+  "phase": "② staging",
+  "title": "CMS Runtime Visual Gap Report",
+  "ssot": "runtime_dom_only",
+  "ambient_runtime_wiring_ssot": "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+  "destination_ambient_ssot_closed": false,
+  "audit_ssot": {
+    "unified_live_criteria": {
+      "destination_ambient": {
+        "ssot": "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+        "producer": "scripts/dev/run-cms-ambient-runtime-wiring-audit.cjs",
+        "live_when": "catalog_published && runtime_reads_cms_catalog && !still_unsplash && l5_compliant (per-country row in ambient wiring evidence)",
+        "family_board_closed_when": "TT_CMS_AMBIENT_RUNTIME_WIRING === PASS && pass_count >= 10"
+      },
+      "other_families": {
+        "note": "POI · Hotel · Transport · Listing — per-asset CMS Publish + Runtime catalog consumption (pending Wave 1 closure)"
+      }
+    },
+    "destination_ambient_runtime": {
+      "ssot": "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+      "loaded": false,
+      "verdict": null,
+      "pass_count": 0,
+      "total": 10,
+      "is_closed": false,
+      "stamp_utc": null
+    }
+  },
+  "acceptance_standard": "Runtime 为唯一验收标准 · L5（视觉质量）与 CMS Ownership（归属）分列判定 · Destination Ambient Runtime/Live 以 CMS-AMBIENT-RUNTIME-WIRING-LATEST.json 为唯一真源",
+  "excluded_from_judgement": [
+    "matrix",
+    "inventory",
+    "registry",
+    "runbook",
+    "evidence_json"
+  ],
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "pages_audited": [
+    {
+      "page_path": "/",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": "error:page.goto: net::ERR_CONNECTION_CLOSED at https://tt-web-staging.fly.dev/\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=中国",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"chrome-error://chromewebdata/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=日本",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=韩国",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=新加坡",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=泰国",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=阿联酋",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=美国",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=澳大利亚",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=法国",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/?country=西班牙",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/market",
+      "url": "https://tt-web-staging.fly.dev/market",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/market\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/market\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/market/provider",
+      "url": "https://tt-web-staging.fly.dev/market/provider",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/market/provider\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/market\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/market/provider\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/market/acquisition",
+      "url": "https://tt-web-staging.fly.dev/market/acquisition",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/market/acquisition\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/market/provider\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/market/acquisition\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/traveltrust",
+      "url": "https://tt-web-staging.fly.dev/traveltrust",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/traveltrust\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/market/acquisition\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/traveltrust\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    },
+    {
+      "page_path": "/community",
+      "url": "https://tt-web-staging.fly.dev/community",
+      "http": "error:page.goto: Navigation to \"https://tt-web-staging.fly.dev/community\" is interrupted by another navigation to \"https://tt-web-staging.fly.dev/traveltrust\"\nCall log:\n  - navigating to \"https://tt-web-staging.fly.dev/community\", waiting until \"domcontentloaded\"\n",
+      "runtime_images": 0
+    }
+  ],
+  "summary": {
+    "acceptance_standard": "Runtime 为唯一验收标准 · L5（视觉质量）与 CMS Ownership（归属）分列判定 · Destination Ambient Runtime/Live 以 CMS-AMBIENT-RUNTIME-WIRING-LATEST.json 为唯一真源",
+    "ops_asset_families": [
+      "destination_ambient",
+      "poi",
+      "hotel",
+      "transport",
+      "provider_listing",
+      "acquisition_listing",
+      "banner",
+      "video_poster"
+    ],
+    "family_board": {
+      "destination_ambient": {
+        "priority": "P0",
+        "runtime_seen": false,
+        "l5": "NOT_SEEN",
+        "cms_ownership": "NOT_SEEN",
+        "catalog_wiring_gap": false,
+        "progress_pct": 0,
+        "progress_bar": "□□□□□□□□□□",
+        "blocker": "Consumer 面无 Runtime 图或未审计到"
+      },
+      "poi": {
+        "priority": "P0",
+        "runtime_seen": false,
+        "l5": "NOT_SEEN",
+        "cms_ownership": "NOT_SEEN",
+        "catalog_wiring_gap": false,
+        "progress_pct": 0,
+        "progress_bar": "□□□□□□□□□□",
+        "blocker": "Consumer 面无 Runtime 图或未审计到"
+      },
+      "hotel": {
+        "priority": "P1",
+        "runtime_seen": false,
+        "l5": "NOT_SEEN",
+        "cms_ownership": "NOT_SEEN",
+        "catalog_wiring_gap": false,
+        "progress_pct": 0,
+        "progress_bar": "□□□□□□□□□□",
+        "blocker": "Consumer 面无 Runtime 图或未审计到"
+      },
+      "transport": {
+        "priority": "P1",
+        "runtime_seen": false,
+        "l5": "NOT_SEEN",
+        "cms_ownership": "NOT_SEEN",
+        "catalog_wiring_gap": false,
+        "progress_pct": 0,
+        "progress_bar": "□□□□□□□□□□",
+        "blocker": "Consumer 面无 Runtime 图或未审计到"
+      },
+      "provider_listing": {
+        "priority": "P1",
+        "runtime_seen": false,
+        "l5": "NOT_SEEN",
+        "cms_ownership": "NOT_SEEN",
+        "catalog_wiring_gap": false,
+        "progress_pct": 0,
+        "progress_bar": "□□□□□□□□□□",
+        "blocker": "Consumer 面无 Runtime 图或未审计到"
+      },
+      "acquisition_listing": {
+        "priority": "P1",
+        "runtime_seen": false,
+        "l5": "NOT_SEEN",
+        "cms_ownership": "NOT_SEEN",
+        "catalog_wiring_gap": false,
+        "progress_pct": 0,
+        "progress_bar": "□□□□□□□□□□",
+        "blocker": "Consumer 面无 Runtime 图或未审计到"
+      },
+      "banner": {
+        "priority": "P2",
+        "runtime_seen": false,
+        "l5": "NOT_SEEN",
+        "cms_ownership": "NOT_SEEN",
+        "catalog_wiring_gap": false,
+        "progress_pct": 0,
+        "progress_bar": "□□□□□□□□□□",
+        "blocker": "Consumer 面无 Runtime 图或未审计到"
+      },
+      "video_poster": {
+        "priority": "P2",
+        "runtime_seen": false,
+        "l5": "NOT_SEEN",
+        "cms_ownership": "NOT_SEEN",
+        "catalog_wiring_gap": false,
+        "progress_pct": 0,
+        "progress_bar": "□□□□□□□□□□",
+        "blocker": "Consumer 面无 Runtime 图或未审计到"
+      }
+    },
+    "l5_gaps_open": false,
+    "cms_ownership_gaps_open": false,
+    "catalog_wiring_gaps_open": false,
+    "p0_blocker": null,
+    "l5_gap_families": [],
+    "cms_gap_families": [],
+    "audit_ssot": {
+      "unified_live_criteria": {
+        "destination_ambient": {
+          "ssot": "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+          "producer": "scripts/dev/run-cms-ambient-runtime-wiring-audit.cjs",
+          "live_when": "catalog_published && runtime_reads_cms_catalog && !still_unsplash && l5_compliant (per-country row in ambient wiring evidence)",
+          "family_board_closed_when": "TT_CMS_AMBIENT_RUNTIME_WIRING === PASS && pass_count >= 10"
+        },
+        "other_families": {
+          "note": "POI · Hotel · Transport · Listing — per-asset CMS Publish + Runtime catalog consumption (pending Wave 1 closure)"
+        }
+      },
+      "destination_ambient_runtime": {
+        "ssot": "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+        "loaded": false,
+        "verdict": null,
+        "pass_count": 0,
+        "total": 10,
+        "is_closed": false,
+        "stamp_utc": null
+      }
+    }
+  },
+  "assets": [],
+  "l5_gaps": [],
+  "cms_ownership_gaps": [],
+  "completion_gate": {
+    "all_families_l5_closed": true,
+    "all_families_cms_ownership_closed": true,
+    "catalog_wiring_closed": true
+  },
+  "TT_CMS_RUNTIME_L5": "CLOSED",
+  "TT_CMS_RUNTIME_OWNERSHIP": "CLOSED",
+  "TT_CMS_CATALOG_WIRING": "OK"
+}

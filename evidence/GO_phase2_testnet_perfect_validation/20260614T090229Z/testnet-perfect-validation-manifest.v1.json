@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.testnet_perfect_validation_manifest.v1",
+  "at": "20260614T090229Z",
+  "phase": "\u2461",
+  "open_p0": 0,
+  "open_p1": 0,
+  "readiness": 100,
+  "tn_p1_closed": [
+    "001",
+    "002",
+    "003",
+    "004",
+    "005",
+    "006",
+    "007",
+    "008",
+    "010"
+  ],
+  "tn_p1_inflight": [
+    "009"
+  ],
+  "anchors": {
+    "d6": "tn-p1-d6-reliability-surface-20260614T073334Z",
+    "tn010": "tn-p1-010-indexer-reconcile-20260614T065942Z",
+    "soak": "P2FC_SOAK_72H_STAGING/GRADUATION-PAUSED-FREEZE-LIFT-FIRST.json"
+  },
+  "deployed_git_sha": "0d8d09702a368c254db2893617df4439344fe582",
+  "freeze_lift": {
+    "reconciled_at": "20260614T090229Z",
+    "verdict": "RECONCILED"
+  }
+}

@@ -1,0 +1,309 @@
+{
+  "schema": "traveltrust.p2fc_web3_system_security_audit.v1",
+  "generated_at_utc": "2026-06-24T05:12:48Z",
+  "phase": "②",
+  "read_only": true,
+  "no_deploy": true,
+  "no_restart": true,
+  "no_strategy_change": true,
+  "soak_completed": false,
+  "domains": {
+    "D1_contract_upgradeability": {
+      "domain": "D1_contract_upgradeability",
+      "title": "智能合约可升级性与漏洞分析",
+      "findings": [
+        {
+          "id": "D1-F01",
+          "severity": "info",
+          "note": "Proxy upgrade gated by admin slot (expected = Timelock)"
+        },
+        {
+          "id": "D1-F02",
+          "severity": "medium",
+          "note": "Deploy scripts may expose bare implementation paths — formal baseline must use Proxy",
+          "artifacts": [
+            "contracts/script/ConfigureFundStackTimelockViaSafe.s.sol",
+            "contracts/script/ConfigureGovernanceTimelockViaSafe.s.sol",
+            "contracts/script/Deploy.s.sol",
+            "contracts/script/DeployCountryPoolNetProfitStack.s.sol",
+            "contracts/script/DeployCountryPoolRedemptionEpochV0.s.sol",
+            "contracts/script/DeployFundStackUnderTimelock.s.sol",
+            "contracts/script/DeployGovernanceStack.s.sol",
+            "contracts/script/DeployP51CountryLedger.s.sol"
+          ]
+        },
+        {
+          "id": "D1-F03",
+          "severity": "info",
+          "note": "Proxy architecture tests present",
+          "artifact": "TtgGovFreezeV1ProxyArchitecture.t.sol"
+        },
+        {
+          "id": "D1-F04",
+          "severity": "high",
+          "note": "delegatecall/upgradeToAndCall surfaces — timelock delay is primary mitigation",
+          "files": [
+            "contracts/src/GovernanceTreasuryP4Cap.sol",
+            "contracts/src/TtgPrimaryMarketV1.sol",
+            "contracts/src/upgrade/TimelockUpgradeableProxy.sol"
+          ]
+        }
+      ],
+      "single_point_controls": [
+        {
+          "id": "SPOF-D1-01",
+          "control": "Timelock admin on all Governable Shell proxies",
+          "bypass_vector": "direct EOA admin if mis-deployed without proxy",
+          "mr12_relation": "post-soak fly deploy must not swap proxy admin off timelock"
+        },
+        {
+          "id": "SPOF-D1-02",
+          "control": "upgradeTo only via timelock schedule+execute",
+          "bypass_vector": "emergency script --broadcast without timelock (Owner-only · forbidden in soak)",
+          "mr12_relation": "MR12 one-shot is API/Web deploy — on-chain upgrade is separate Owner gate"
+        }
+      ],
+      "verdict": "WARN"
+    },
+    "D2_governance_attack_surface": {
+      "domain": "D2_governance_attack_surface",
+      "title": "治理币治理逻辑与攻击面分析",
+      "findings": [
+        {
+          "id": "D2-F01",
+          "severity": "info",
+          "note": "Timelock delay frozen: 48 hours"
+        },
+        {
+          "id": "D2-F02",
+          "severity": "info",
+          "note": "Per-address voting cap in TtgGovFreezeConstants (400 bps)"
+        },
+        {
+          "id": "D2-F03",
+          "severity": "medium",
+          "note": "Review Governor privileged modifiers — manual follow-up"
+        }
+      ],
+      "attack_surface_matrix": [
+        {
+          "vector": "flash-loan vote",
+          "mitigation": "GovernanceVotesToken + snapshot / delay",
+          "residual": "medium"
+        },
+        {
+          "vector": "seat concentration",
+          "mitigation": "TtgSeatConcentrationRegistry + MAX_ACTIVE_SEATS",
+          "residual": "medium"
+        },
+        {
+          "vector": "treasury P4 cap bypass",
+          "mitigation": "GovernanceTreasuryP4Cap + GOV-01 3000 bps",
+          "residual": "low"
+        },
+        {
+          "vector": "governance param drift",
+          "mitigation": "TTG-TOKENOMICS-FREEZE-V1 constants",
+          "residual": "low"
+        }
+      ],
+      "single_point_controls": [
+        {
+          "id": "SPOF-D2-01",
+          "control": "Timelock 48h on governance execution",
+          "bypass_vector": "compromised timelock proposer / canceller keys",
+          "mr12_relation": "MR12 does not mutate on-chain gov — no bypass via one-shot"
+        },
+        {
+          "id": "SPOF-D2-02",
+          "control": "Seat concentration registry",
+          "bypass_vector": "sybil across entities if off-chain KYC weak",
+          "mr12_relation": "off-chain admin cannot override on-chain seat limits"
+        }
+      ],
+      "verdict": "WARN"
+    },
+    "D3_admin_rbac_chain": {
+      "domain": "D3_admin_rbac_chain",
+      "title": "管理员系统 RBAC 权限链路验证",
+      "permission_counts": {
+        "rust": 28,
+        "yaml": 28,
+        "typescript": 28
+      },
+      "findings": [
+        {
+          "id": "D3-F01",
+          "severity": "info",
+          "note": "Rust/YAML/TS permission IDs aligned"
+        },
+        {
+          "id": "D3-F02",
+          "severity": "high",
+          "note": "Direct console-role write bypass path exists when env enabled",
+          "artifacts": [
+            "crates/api/src/routes/admin/admin_rbac.rs"
+          ],
+          "bypass": "PUT /console-role without approval workflow"
+        },
+        {
+          "id": "D3-F04",
+          "severity": "high",
+          "note": "Phase ② staging RBAC matrix GO not started — ADM-U01 deferred"
+        }
+      ],
+      "single_point_controls": [
+        {
+          "id": "SPOF-D3-01",
+          "control": "require_admin_actor on mutating routes",
+          "bypass_vector": "UI-only gate without API deny",
+          "mr12_relation": "post-soak backlog admin routes must preserve API enforcement"
+        },
+        {
+          "id": "SPOF-D3-02",
+          "control": "SuperAdmin admin.approve + 2FA",
+          "bypass_vector": "TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT=1 on staging",
+          "mr12_relation": "MR12 deploy must not enable direct-role env in fly secrets"
+        }
+      ],
+      "verdict": "FAIL"
+    },
+    "D4_ui_api_chain_consistency": {
+      "domain": "D4_ui_api_chain_consistency",
+      "title": "UI/API/链上三层权限一致性校验",
+      "layers": [
+        {
+          "layer": "UI",
+          "ssot": "frontend/lib/admin/adminPermissionIds.ts + AdminConsoleActorGate",
+          "enforcement": "advisory_navigation + RSC gate",
+          "note": "UI freeze docs state API is real boundary"
+        },
+        {
+          "layer": "API",
+          "ssot": "crates/api/src/routes/admin/admin_rbac.rs",
+          "enforcement": "require_admin_actor + console_role bundles",
+          "matrix_version": "admin-rbac-v4-cms-ops-growth-2026-06-07"
+        },
+        {
+          "layer": "Chain",
+          "ssot": "TravelTrustGovernor + Timelock + on-chain TTG",
+          "enforcement": "wallet-signed txs · timelock delay",
+          "api_read_projection": 3
+        }
+      ],
+      "findings": [
+        {
+          "id": "D4-F01",
+          "severity": "medium",
+          "note": "Admin RBAC (CeFi ops) ≠ on-chain governance roles — intentional split",
+          "gap": "SuperAdmin API role does not map 1:1 to on-chain proposer"
+        },
+        {
+          "id": "D4-F02",
+          "severity": "info",
+          "note": "Governance UI routes exist — chain wallet is authority for vote/stake"
+        },
+        {
+          "id": "D4-F03",
+          "severity": "medium",
+          "note": "16 UI permission checks — must mirror API deny matrix",
+          "sample": [
+            "frontend/components/admin/AdminActorCapabilityStrip.tsx",
+            "frontend/components/admin/AdminCommandPalette.tsx",
+            "frontend/components/admin/AdminFinanceSuiteHubDepthSection.tsx",
+            "frontend/components/admin/AdminHomeCardSearch.tsx",
+            "frontend/components/admin/AdminHomeClient.tsx"
+          ]
+        }
+      ],
+      "single_point_controls": [
+        {
+          "id": "SPOF-D4-01",
+          "control": "API deny matrix ADM-U01",
+          "bypass_vector": "direct API call skipping UI",
+          "mr12_relation": "unchanged by MR12 unless backlog touches admin_rbac.rs"
+        },
+        {
+          "id": "SPOF-D4-02",
+          "control": "On-chain timelock for governance writes",
+          "bypass_vector": "API governance projection write without wallet",
+          "mr12_relation": "indexer/API projection read-only for proposals in soak"
+        }
+      ],
+      "verdict": "WARN"
+    }
+  },
+  "mr12_governance_isolation": {
+    "mr12_lock_status": "FROZEN",
+    "cross_domain_risks": [
+      {
+        "id": "MR12-X03",
+        "severity": "info",
+        "note": "MR12 scopes post-soak API/Web deploy only — on-chain upgrade/governance is orthogonal Owner gate",
+        "isolation": true
+      },
+      {
+        "id": "MR12-X04",
+        "severity": "medium",
+        "note": "Single-point: fly secrets / env injection during one-shot could enable RBAC bypass env vars",
+        "mitigation": "verify fly.toml + secrets exclude ADMIN_CONSOLE_ROLE_DIRECT in post-soak checklist"
+      }
+    ],
+    "mr12_bypass_via_one_shot": false,
+    "verdict": "WARN"
+  },
+  "single_point_control_register": [
+    {
+      "id": "SPOF-D1-01",
+      "control": "Timelock admin on all Governable Shell proxies",
+      "bypass_vector": "direct EOA admin if mis-deployed without proxy",
+      "mr12_relation": "post-soak fly deploy must not swap proxy admin off timelock"
+    },
+    {
+      "id": "SPOF-D1-02",
+      "control": "upgradeTo only via timelock schedule+execute",
+      "bypass_vector": "emergency script --broadcast without timelock (Owner-only · forbidden in soak)",
+      "mr12_relation": "MR12 one-shot is API/Web deploy — on-chain upgrade is separate Owner gate"
+    },
+    {
+      "id": "SPOF-D2-01",
+      "control": "Timelock 48h on governance execution",
+      "bypass_vector": "compromised timelock proposer / canceller keys",
+      "mr12_relation": "MR12 does not mutate on-chain gov — no bypass via one-shot"
+    },
+    {
+      "id": "SPOF-D2-02",
+      "control": "Seat concentration registry",
+      "bypass_vector": "sybil across entities if off-chain KYC weak",
+      "mr12_relation": "off-chain admin cannot override on-chain seat limits"
+    },
+    {
+      "id": "SPOF-D3-01",
+      "control": "require_admin_actor on mutating routes",
+      "bypass_vector": "UI-only gate without API deny",
+      "mr12_relation": "post-soak backlog admin routes must preserve API enforcement"
+    },
+    {
+      "id": "SPOF-D3-02",
+      "control": "SuperAdmin admin.approve + 2FA",
+      "bypass_vector": "TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT=1 on staging",
+      "mr12_relation": "MR12 deploy must not enable direct-role env in fly secrets"
+    },
+    {
+      "id": "SPOF-D4-01",
+      "control": "API deny matrix ADM-U01",
+      "bypass_vector": "direct API call skipping UI",
+      "mr12_relation": "unchanged by MR12 unless backlog touches admin_rbac.rs"
+    },
+    {
+      "id": "SPOF-D4-02",
+      "control": "On-chain timelock for governance writes",
+      "bypass_vector": "API governance projection write without wallet",
+      "mr12_relation": "indexer/API projection read-only for proposals in soak"
+    }
+  ],
+  "spof_count": 8,
+  "high_finding_count": 3,
+  "verdict": "WARN",
+  "honest_boundary": "static/read-only audit during soak · ② staging RBAC/on-chain GO are separate gates · ≠ ③ Production"
+}

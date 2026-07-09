@@ -1,0 +1,8 @@
+phase: ② testnet C2 (upload security)
+status: PASS
+last_run: 20260605T125440Z
+api_base: https://tt-api-staging.fly.dev
+security_it: security-it-20260605T125440Z.log
+staging_upload_e2e: staging-upload-e2e-20260605T125440Z.log
+log: run-20260605T125440Z.log
+note: C2 slot PASS only — NOT Phase ② GO / NOT C3-C12 GO

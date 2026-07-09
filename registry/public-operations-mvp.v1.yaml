@@ -1,0 +1,70 @@
+# Public Operations MVP registry (v1.0)
+# SSOT: docs/runbook/TT-OFFICIAL-OPS-PUBLIC-OPERATIONS-SSOT.md
+
+module: public_operations
+plane: official_ops
+status: MVP_COMPLETE
+version: v1.0
+frozen: true
+dev_frozen: true
+defer_until: PRODUCTION_GO
+active_program: PHASE3_PRODUCTION_READINESS
+active_program_doc: docs/runbook/PHASE3-PRODUCTION-PREPARATION.md
+phase0_1: PASS
+feature_level: MVP
+feature_level_next: STANDARD
+admin_route: /admin/official/public-operations
+ssot_doc: docs/runbook/TT-OFFICIAL-OPS-PUBLIC-OPERATIONS-SSOT.md
+capability_matrix: docs/runbook/TT-OFFICIAL-OPS-CAPABILITY-MATRIX.md
+capability_matrix_registry: registry/official-ops-capability-matrix.v1.yaml
+domain_registry: registry/official-ops-domain.v1.yaml
+official_ops_domain_status: STABLE
+official_ops_domain_version: "1.0"
+manual_uat: docs/runbook/TT-MARKET-DISPLAY-DATA-MANUAL-UAT.md
+gate: scripts/gates/check-official-ops-public-operations-ssot.sh
+evidence_root: evidence/GO_official_ops_public_operations
+
+public_content_platform:
+  registry: registry/public-content-platform.v1.yaml
+  runbook: docs/runbook/TT-PUBLIC-CONTENT-PLATFORM.md
+  pcp_role: PCP Governance · Operations Gate · Public Content Center v0
+  gate_status: MVP_COMPLETE
+  note: Subsumed under PCP — MVP frozen unchanged
+
+completion:
+  mvp_scope_percent: 100
+  full_vision_percent: 40
+  full_vision_matrix_calculated_percent: 38
+  gap_classification: ROADMAP_NOT_DEFECT
+  mvp_scope_definition: "Phase 0+1 · Statistics · data_origin · TEST labels · staging/prod mock off"
+  full_vision_definition: "Publish · Featured · Priority · Surface · Schedule · Campaign merge · Production Policy"
+  notes: |
+    MVP 100% = 约定范围内已闭合，可宣称 MVP_COMPLETE。
+    全愿景 ~40% = 路线图完成度（矩阵精算 38%），非缺陷、不挡 Production GO。
+
+development_policy: |
+  Do not implement STANDARD+ feature levels before Production GO.
+  Focus engineering on Production Readiness Review and release blockers only.
+  Post-GO evolution: Feature Level STANDARD → ADVANCED → ENTERPRISE (see three-dimension-status registry).
+
+scope_included:
+  - smoke_identity_p2_c3_bio_restore
+  - market_test_label_on_cards
+  - staging_prod_market_mock_disabled
+  - admin_statistics_readonly
+  - data_origin_admin_list_columns
+  - data_origin_public_guide_list_cards
+
+scope_deferred_post_production_go:
+  phase2:
+    - display_origin_migration
+    - market_public_surface_display_fields
+    - admin_show_test_data_policy_ui
+  phase3:
+    - publish_unpublish_write_console
+    - cold_start_campaign_tab_merge
+  phase4:
+    - production_policy_hardening
+    - remove_env_public_seeds
+
+three_dimension_status: registry/traveltrust-three-dimension-status.v1.yaml

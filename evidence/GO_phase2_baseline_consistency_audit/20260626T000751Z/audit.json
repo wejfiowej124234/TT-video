@@ -1,0 +1,298 @@
+{
+  "schema": "traveltrust.phase2_baseline_consistency_audit.v1",
+  "stamp_utc": "20260626T000751Z",
+  "ssot_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "git_head": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "api_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "api_sha_probe": "meta",
+  "web_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "sha_hard_match": true,
+  "diff_count": 13,
+  "risk_count": 17,
+  "diffs": [
+    {
+      "domain": "DeepGate/G03_FIVE_ROLE_LOGIN",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "HTTP 408 {}",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G03_FIVE_ROLE_LOGIN",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "HTTP 200",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G03_FIVE_ROLE_LOGIN",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "HTTP 200 token=yes",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G03_FIVE_ROLE_LOGIN",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "HTTP 200 token=yes",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G03_FIVE_ROLE_LOGIN",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "[]",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G03_FIVE_ROLE_LOGIN",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "HTTP 200 token=yes",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G03_FIVE_ROLE_LOGIN",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "HTTP 200 token=yes",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G03_FIVE_ROLE_LOGIN",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "HTTP 200",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G03_FIVE_ROLE_LOGIN",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "HTTP 200 token=yes",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G03_FIVE_ROLE_LOGIN",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "HTTP 200",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G08_HAT_PREREQ",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "api=https://tt-api-staging.fly.dev web=https://tt-web-staging.fly.dev",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G08_HAT_PREREQ",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "upstream_fail=True",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G08_HAT_PREREQ",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "S6,HAT,PHASE3",
+      "severity": "DIFF",
+      "note": ""
+    }
+  ],
+  "risks": [
+    {
+      "domain": "SHA/工作区",
+      "item": "deploy-path 未提交改动",
+      "local_ssot": "clean @ 3bbedda776b2",
+      "staging_or_remote": "152 paths dirty",
+      "severity": "RISK",
+      "note": "staging 镜像已部署 committed tree；工作区漂移不影响已部署 SHA，但下次 deploy 会带入"
+    },
+    {
+      "domain": "DeepGate/G01_API_WEB_SHA",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "HTTP 408 · deferred (meta observability-only; post-soak deploy required)",
+      "severity": "WARN",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G01_API_WEB_SHA",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "HTTP 503 · deferred (meta observability-only; post-soak deploy required)",
+      "severity": "WARN",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G01_API_WEB_SHA",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+      "severity": "WARN",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G01_API_WEB_SHA",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "api=520abf396cce7baf3dcf39f71c1e77769e0086d8 web=(unreachable) · deferred (meta observability-only; post-soak deploy required)",
+      "severity": "WARN",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G01_API_WEB_SHA",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "/meta/build HTTP 200 sha=520abf396cce7baf3dcf39f71c1e77769e0086d8",
+      "severity": "WARN",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G01_API_WEB_SHA",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "api=520abf396cce7baf3dcf39f71c1e77769e0086d8 expect=520abf396cce7baf3dcf39f71c1e77769e0086d8",
+      "severity": "WARN",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G02_META_CONTRACT",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "HTTP 408 · deferred (meta observability-only; post-soak deploy required)",
+      "severity": "WARN",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G02_META_CONTRACT",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "/meta/build HTTP 200",
+      "severity": "WARN",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G06_SEED_CONSISTENCY",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "None",
+      "severity": "WARN",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G06_SEED_CONSISTENCY",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "{\"traveler\": \"2760d445-cbf4-47d0-9461-fcba3db0516f\", \"guide\": \"4b389c45-bfca-4f3a-a897-42cf95c91a6e\"}",
+      "severity": "WARN",
+      "note": ""
+    },
+    {
+      "domain": "DeepGate/G06_SEED_CONSISTENCY",
+      "item": "?",
+      "local_ssot": "PASS expected",
+      "staging_or_remote": "HTTP 200 keys=['status', 'user', 'guide', 'trust', 'stats', 'identity_slots']",
+      "severity": "WARN",
+      "note": ""
+    },
+    {
+      "domain": "Phase② 剩余闸",
+      "item": "TN-P1-009",
+      "local_ssot": "OPEN",
+      "staging_or_remote": "—",
+      "severity": "RISK",
+      "note": "P2FC 72h soak 未 COMPLETED"
+    },
+    {
+      "domain": "Phase② 剩余闸",
+      "item": "TN-P1-010",
+      "local_ssot": "OPEN",
+      "staging_or_remote": "—",
+      "severity": "RISK",
+      "note": "Indexer deep reconcile OPEN"
+    },
+    {
+      "domain": "Phase② 剩余闸",
+      "item": "CERT-7..9",
+      "local_ssot": "OPEN",
+      "staging_or_remote": "—",
+      "severity": "RISK",
+      "note": "Timelock/钱包闸 · Wave 1 未执行"
+    },
+    {
+      "domain": "Phase② 剩余闸",
+      "item": "TESTNET_STAGING_FREEZE",
+      "local_ssot": "OPEN",
+      "staging_or_remote": "—",
+      "severity": "RISK",
+      "note": "已 LIFTED · SHA sync 后 staging 可再 deploy"
+    },
+    {
+      "domain": "Phase② 剩余闸",
+      "item": "1057+ untracked docs",
+      "local_ssot": "OPEN",
+      "staging_or_remote": "—",
+      "severity": "RISK",
+      "note": "未纳入 SSOT commit · 不影响 staging 运行 SHA"
+    }
+  ],
+  "deep_gate": {
+    "path": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_testnet_20260526\\deep-release-gate\\latest-report.json",
+    "release_gate": "NO_GO",
+    "gates": [
+      {
+        "id": "G01_API_WEB_SHA",
+        "verdict": "WARN"
+      },
+      {
+        "id": "G02_META_CONTRACT",
+        "verdict": "WARN"
+      },
+      {
+        "id": "G03_FIVE_ROLE_LOGIN",
+        "verdict": "FAIL"
+      },
+      {
+        "id": "G04_ADMIN_RBAC",
+        "verdict": "PASS"
+      },
+      {
+        "id": "G05_DB_MIGRATE_ZERO",
+        "verdict": "PASS"
+      },
+      {
+        "id": "G06_SEED_CONSISTENCY",
+        "verdict": "WARN"
+      },
+      {
+        "id": "G07_STAGING_ENV",
+        "verdict": "PASS"
+      },
+      {
+        "id": "G08_HAT_PREREQ",
+        "verdict": "FAIL"
+      }
+    ]
+  },
+  "local_migrations": {
+    "latest": "20260613120000",
+    "count": 116
+  }
+}

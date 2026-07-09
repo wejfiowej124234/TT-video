@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.ocs_content_l5_country_consistency_review.v1",
+  "stamp_utc": "20260704T153500Z",
+  "chain_id": "dubai-luxury",
+  "city": "迪拜",
+  "country_code": "AE",
+  "country_label": "阿联酋",
+  "theme_locked": "沙漠 Safari · 哈利法塔 · luxury 都市",
+  "TT_COUNTRY_CONSISTENCY_REVIEW": "PASS",
+  "isolation_rules": {
+    "no_japan_elements": true,
+    "no_korea_elements": true,
+    "no_thailand_elements": true,
+    "no_china_elements": true,
+    "no_us_elements": true,
+    "no_france_paris_elements": true,
+    "no_singapore_elements": true,
+    "no_australia_elements": true,
+    "no_spain_barcelona_elements": true,
+    "no_other_country_landmarks": true,
+    "ae_desert_luxury_visual_language": true
+  },
+  "future_slots_require": [
+    "provider: 沙漠豪华 Safari 晚宴",
+    "acquisition: 定制香氛 luxury",
+    "official_guide: 哈利法塔+沙漠两日宽幅",
+    "community: 冲沙 SUV + 塔夜景"
+  ],
+  "gate_dubai_chain_completion": "6/6 must maintain AE-only luxury visual language"
+}

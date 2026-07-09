@@ -1,0 +1,14 @@
+{
+  "gaps": [
+    {
+      "id": "FRCA-GAP-001",
+      "role": "旅行者",
+      "category": "错误提示缺失",
+      "priority": "P1",
+      "title": "顶栏用户菜单不可见",
+      "observation": "community 无 data-tt-header-user-menu",
+      "human_impact": "真人无法打开账户菜单完成退出"
+    }
+  ],
+  "recorded_at": "2026-06-07T04:16:08.803Z"
+}

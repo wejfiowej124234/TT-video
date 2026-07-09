@@ -1,0 +1,74 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T151530Z",
+  "filename": "ocs-paris-art-community-media.jpg",
+  "chain_id": "paris-art",
+  "city": "巴黎",
+  "country_code": "FR",
+  "slot": "community-media",
+  "surface": "Community Media",
+  "copy_label": "卢浮宫到奥赛的两日艺术之旅——官方预约窗口与休息点记录。",
+  "cover_media_complementarity": {
+    "pass": true,
+    "row35_cover": "展厅透视走廊 Feed",
+    "row36_media": "奥赛钟面内景详情",
+    "feed_detail_pair": true
+  },
+  "post_generation_quality_check": {
+    "pass": true,
+    "bytes": 143327
+  },
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG 143327 bytes。"
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "奥赛钟面支撑 body 卢浮宫到奥赛两日艺术之旅。"
+    },
+    "G3_slot_differentiation": {
+      "pass": true,
+      "notes": "钟面内景；非 Row35 Cover/非 Row31-34。"
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "巴黎 FR-only · 奥赛语义。"
+    },
+    "G5_brand_visual": {
+      "pass": true,
+      "notes": "自然博物馆光；chain 统一。"
+    },
+    "G6_commercial_platform": {
+      "pass": true,
+      "notes": "详情主图可信。"
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true,
+      "notes": "清晰。"
+    },
+    "G8_evidence_matrix": {
+      "pass": true,
+      "notes": "Chain Final + Milestone 36/60。"
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "notes": "建筑钟面无馆藏名画。"
+    },
+    "G10_content_diversity": {
+      "pass": true,
+      "notes": "paris 6/6 完成。"
+    }
+  },
+  "community_authenticity_review": {
+    "pass": true,
+    "environment_narrative": true
+  },
+  "destination_experience_review": {
+    "pass": true
+  },
+  "regression_prior_35_rows": {
+    "pass": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

@@ -1,0 +1,13 @@
+{
+  "feature_ids": ["F-OO-14", "F-OO-15", "F-OO-16", "F-OO-17", "F-OO-18", "F-OO-19"],
+  "gate": "G-L5-PUB",
+  "status": "PASS",
+  "campaign_kinds": ["homepage", "market", "community", "festival", "holiday", "regional"],
+  "admin_route": "/admin/official/public-operations?tab=campaign",
+  "admin_api": "/api/v1/admin/official/public-operations/campaigns",
+  "public_api": "/api/v1/official/cold-start/surfaces/{surface}?campaign_kind=",
+  "migration": "20260702180000_public_operations_campaign_center.sql",
+  "audit": "TT-ADMIN-FUNCTIONAL-USABILITY-AUDIT-20260701.md",
+  "capability_complete": true,
+  "date": "2026-07-01"
+}

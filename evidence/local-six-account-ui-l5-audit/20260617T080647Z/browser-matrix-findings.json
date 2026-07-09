@@ -1,0 +1,166 @@
+{
+  "phase": "① local",
+  "stamp": "20260617T080647Z",
+  "disclaimer": "① local UI L5 audit — NOT ② Graduation GO",
+  "rows": [
+    {
+      "account_id": "C1",
+      "email": "multi-demo@test.com",
+      "path": "/me/identities",
+      "label": "identities-hub",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\C1-identities-hub.png"
+    },
+    {
+      "account_id": "C1",
+      "email": "multi-demo@test.com",
+      "path": "/me/publish",
+      "label": "publish-hub",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\C1-publish-hub.png"
+    },
+    {
+      "account_id": "C1",
+      "email": "multi-demo@test.com",
+      "path": "/governance?view=region",
+      "label": "steward-workbench",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\C1-steward-workbench.png"
+    },
+    {
+      "account_id": "C1",
+      "email": "multi-demo@test.com",
+      "path": "/market/acquisition",
+      "label": "acquisition-subsite",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\C1-acquisition-subsite.png"
+    },
+    {
+      "account_id": "C2",
+      "email": "tourist@test.com",
+      "path": "/",
+      "label": "home-landing",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\C2-home-landing.png"
+    },
+    {
+      "account_id": "C2",
+      "email": "tourist@test.com",
+      "path": "/market",
+      "label": "market-main",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\C2-market-main.png"
+    },
+    {
+      "account_id": "C2",
+      "email": "tourist@test.com",
+      "path": "/community",
+      "label": "community-feed",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\C2-community-feed.png"
+    },
+    {
+      "account_id": "C2",
+      "email": "tourist@test.com",
+      "path": "/orders",
+      "label": "orders-list",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\C2-orders-list.png"
+    },
+    {
+      "account_id": "C2",
+      "email": "tourist@test.com",
+      "path": "/admin",
+      "label": "admin-hub-superadmin",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\C2-admin-hub-superadmin.png"
+    },
+    {
+      "account_id": "C3",
+      "email": "guide@test.com",
+      "path": "/guide",
+      "label": "guide-workbench",
+      "verdict": "PASS",
+      "note": "ui-login corridor",
+      "screenshot": "local-six-account-ui-l5-audit/20260617T080647Z/screenshots/C3-guide-workbench.png"
+    },
+    {
+      "account_id": "C3",
+      "email": "guide@test.com",
+      "path": "/market?view=guides",
+      "label": "market-guides",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\C3-market-guides.png"
+    },
+    {
+      "account_id": "C4",
+      "email": "merchant@test.com",
+      "path": "/provider",
+      "label": "provider-workbench",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\C4-provider-workbench.png"
+    },
+    {
+      "account_id": "C4",
+      "email": "merchant@test.com",
+      "path": "/me/identities/merchant/settings",
+      "label": "merchant-settings",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\C4-merchant-settings.png"
+    },
+    {
+      "account_id": "E2",
+      "email": "public",
+      "path": "/did-rank",
+      "label": "did-rank-main",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\E2-did-rank-main.png"
+    },
+    {
+      "account_id": "E2",
+      "email": "public",
+      "path": "/did-rank?board=acquisition",
+      "label": "did-rank-acquisition-board",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\E2-did-rank-acquisition-board.png"
+    },
+    {
+      "account_id": "E1",
+      "email": "tourist@test.com",
+      "path": "/orders",
+      "label": "chain-a-orders-entry",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\E1-chain-a-orders-entry.png"
+    },
+    {
+      "account_id": "E1",
+      "email": "tg_guide_main@trustgate-e2e.local",
+      "path": "/guide",
+      "label": "chain-a-guide-workbench",
+      "verdict": "PASS",
+      "note": "route loaded",
+      "screenshot": "D:\\TravelTrust-V1.1\\evidence\\local-six-account-ui-l5-audit\\20260617T080647Z\\screenshots\\E1-chain-a-guide-workbench.png"
+    }
+  ],
+  "counts": {
+    "pass": 17,
+    "warn": 0,
+    "fail": 0,
+    "skip": 0
+  }
+}

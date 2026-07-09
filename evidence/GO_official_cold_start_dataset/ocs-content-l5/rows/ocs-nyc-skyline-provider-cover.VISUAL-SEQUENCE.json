@@ -1,0 +1,66 @@
+{
+  "schema": "traveltrust.ocs_content_l5_visual_sequence_review.v1",
+  "stamp_utc": "20260704T144656Z",
+  "filename": "ocs-nyc-skyline-provider-cover.jpg",
+  "chain_id": "nyc-skyline",
+  "slot": "provider-cover",
+  "prior_chain_slots": [
+    {
+      "slot": "guide-avatar",
+      "filename": "ocs-nyc-skyline-guide-avatar.jpg"
+    }
+  ],
+  "visual_sequence_checklist": {
+    "no_adjacent_similar_composition_in_chain": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-nyc-skyline-provider-cover.jpg vs 37 prior verified + chain slots guide-avatar — sequence distinct."
+    },
+    "no_tone_rhythm_collision_with_prior_row": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-nyc-skyline-provider-cover.jpg vs 37 prior verified + chain slots guide-avatar — sequence distinct."
+    },
+    "no_subject_focal_repeat_vs_recent_rows": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-nyc-skyline-provider-cover.jpg vs 37 prior verified + chain slots guide-avatar — sequence distinct."
+    },
+    "no_camera_angle_mirror_with_same_chain_slots": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-nyc-skyline-provider-cover.jpg vs 37 prior verified + chain slots guide-avatar — sequence distinct."
+    },
+    "feed_browse_sequence_distinct": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-nyc-skyline-provider-cover.jpg vs 37 prior verified + chain slots guide-avatar — sequence distinct."
+    },
+    "visual_weight_variation_ok": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-nyc-skyline-provider-cover.jpg vs 37 prior verified + chain slots guide-avatar — sequence distinct."
+    },
+    "light_mood_not_duplicate_prior_slot": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-nyc-skyline-provider-cover.jpg vs 37 prior verified + chain slots guide-avatar — sequence distinct."
+    },
+    "cross_surface_chain_sequence_ok": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-nyc-skyline-provider-cover.jpg vs 37 prior verified + chain slots guide-avatar — sequence distinct."
+    },
+    "portfolio_browse_no_template_run": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-nyc-skyline-provider-cover.jpg vs 37 prior verified + chain slots guide-avatar — sequence distinct."
+    },
+    "no_quality_regression_on_sequence": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-nyc-skyline-provider-cover.jpg vs 37 prior verified + chain slots guide-avatar — sequence distinct."
+    }
+  },
+  "TT_VISUAL_SEQUENCE_REVIEW": "PASS"
+}

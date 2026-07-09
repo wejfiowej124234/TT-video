@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.lifecycle_top20_merge.v1",
+  "candidates": [
+    {
+      "id": "LFC-SEED-006",
+      "domain": "DOMAIN-X",
+      "dim": "PF-04",
+      "object": "function",
+      "label": "Publish Hub multi-entry",
+      "suggested_verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "PF-04 duplicate surfaces — see product-forensic-registry"
+    }
+  ]
+}

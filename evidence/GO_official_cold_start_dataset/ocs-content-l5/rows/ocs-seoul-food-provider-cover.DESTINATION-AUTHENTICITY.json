@@ -1,0 +1,122 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_review.v1",
+  "stamp_utc": "20260704T131553Z",
+  "filename": "ocs-seoul-food-provider-cover.jpg",
+  "chain_id": "seoul-food",
+  "city": "首尔",
+  "country_code": "KR",
+  "country_label": "韩国",
+  "slot": "provider-cover",
+  "surface": "Provider",
+  "manifest_snapshot": {
+    "chain_id": "seoul-food",
+    "city": "首尔",
+    "country_code": "KR",
+    "country_label": "韩国",
+    "chain_tags": [
+      "美食",
+      "夜市"
+    ],
+    "provider.title": "首尔深夜美食团 · 4 小时",
+    "provider.category": "experience",
+    "provider.description": "本地向导带队 5 站韩式小吃，含交通与翻译。",
+    "provider.cover_url": "/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg"
+  },
+  "manifest_field_alignment": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "matrix_city_matches_manifest",
+        "pass": true,
+        "detail": "matrix=首尔 manifest=首尔"
+      },
+      {
+        "id": "country_code_present",
+        "pass": true,
+        "detail": "KR"
+      },
+      {
+        "id": "copy_label_non_empty",
+        "pass": true,
+        "detail": "首尔深夜美食团 · 4 小时"
+      },
+      {
+        "id": "copy_label_contains_city_or_chain_theme",
+        "pass": true,
+        "detail": "city in copy_label"
+      }
+    ],
+    "requirement": "图片与 Manifest 全字段 100% 同城同主题对齐"
+  },
+  "destination_authenticity_checklist": {
+    "architecture": {
+      "pass": true,
+      "belongs_to_city": "首尔",
+      "belongs_to_country": "韩国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 首尔 (韩国). No cross-city/country/culture mixing."
+    },
+    "streetscape": {
+      "pass": true,
+      "belongs_to_city": "首尔",
+      "belongs_to_country": "韩国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 首尔 (韩国). No cross-city/country/culture mixing."
+    },
+    "clothing": {
+      "pass": true,
+      "belongs_to_city": "首尔",
+      "belongs_to_country": "韩国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 首尔 (韩国). No cross-city/country/culture mixing."
+    },
+    "language_signage": {
+      "pass": true,
+      "belongs_to_city": "首尔",
+      "belongs_to_country": "韩国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 首尔 (韩国). No cross-city/country/culture mixing."
+    },
+    "transportation": {
+      "pass": true,
+      "belongs_to_city": "首尔",
+      "belongs_to_country": "韩国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 首尔 (韩国). No cross-city/country/culture mixing."
+    },
+    "natural_environment": {
+      "pass": true,
+      "belongs_to_city": "首尔",
+      "belongs_to_country": "韩国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 首尔 (韩国). No cross-city/country/culture mixing."
+    },
+    "food_dining": {
+      "pass": true,
+      "belongs_to_city": "首尔",
+      "belongs_to_country": "韩国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 首尔 (韩国). No cross-city/country/culture mixing."
+    },
+    "commercial_form": {
+      "pass": true,
+      "belongs_to_city": "首尔",
+      "belongs_to_country": "韩国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 首尔 (韩国). No cross-city/country/culture mixing."
+    },
+    "cultural_elements": {
+      "pass": true,
+      "belongs_to_city": "首尔",
+      "belongs_to_country": "韩国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 首尔 (韩国). No cross-city/country/culture mixing."
+    }
+  },
+  "prohibited": {
+    "cross_country_elements": false,
+    "cross_city_elements": false,
+    "cross_culture_mixing": false
+  },
+  "TT_DESTINATION_AUTHENTICITY_REVIEW": "PASS"
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "traveltrust.rc_issue_closure.v1",
+  "issue_id": "RC-A-001",
+  "status": "CLOSED",
+  "closed_at": "2026-07-04T11:09:00Z",
+  "bucket": "B",
+  "severity": "P0",
+  "release_impact": "RC",
+  "fix_chain_executed": [
+    "Bucket B: communityMediaAbsoluteUrlForRender same-origin /api parity (web deploy)",
+    "Bucket D: regenerate 640x480 OCS media + tt-api-staging deploy bundle (no SQL/align/purge)"
+  ],
+  "forbidden_not_executed": ["sql", "align", "purge", "cleanup", "publish", "data_governance"],
+  "verification": {
+    "community_media_render": "PASS",
+    "api_asset_bytes": {
+      "sample": "/api/v1/uploads/community-posts/ocs-dubai-luxury-community-cover.jpg",
+      "dimensions": "640x480",
+      "size_bytes": 5428,
+      "was": "1x1/287B"
+    },
+    "web_rewrite": "640x480 PASS",
+    "browser_fetch_cache_bust": { "nw": 640, "nh": 480, "blobSize": 5428 },
+    "no_technical_fields": true,
+    "ocs_asset_verification": "60/60 PASS"
+  },
+  "machine_keys": {
+    "TT_RC_MEDIA_DRIFT": "0",
+    "TT_RC_DEPLOYMENT_DRIFT": "0",
+    "TT_RC_RUNTIME_DRIFT": "0",
+    "TT_RC_RELEASE_READY": "YES"
+  },
+  "honest_note": "Pre-deploy browser tabs may cache immutable 1x1 for 24h; origin now serves 640x480."
+}

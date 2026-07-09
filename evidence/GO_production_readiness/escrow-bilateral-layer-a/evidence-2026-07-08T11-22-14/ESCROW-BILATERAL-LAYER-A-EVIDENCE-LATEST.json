@@ -1,0 +1,63 @@
+{
+  "verdict": "LAYER_A_EVIDENCE_PARTIAL",
+  "stamp": "2026-07-08T11-22-14",
+  "decision": "B3 EscrowV2 + FactoryV2",
+  "model": "Bilateral Confirmation Settlement Model",
+  "checks": [
+    {
+      "name": "migration_service_completion_columns",
+      "pass": true,
+      "detail": "orders.service_tourist_confirmed + service_guide_confirmed"
+    },
+    {
+      "name": "api_confirm_service_completion_route",
+      "pass": true,
+      "detail": "POST /api/v1/orders/:id/confirm-service-completion"
+    },
+    {
+      "name": "api_bilateral_service_completion_impl",
+      "pass": true,
+      "detail": "Bilateral Escrowed → pending → Completed"
+    },
+    {
+      "name": "frontend_release_gate_service_completion",
+      "pass": true,
+      "detail": "Release gated on service completion, not rating"
+    },
+    {
+      "name": "frontend_api_client_service_completion",
+      "pass": true,
+      "detail": "orderConfirmServiceCompletion client"
+    },
+    {
+      "name": "layer_b_escrow_v2_contract",
+      "pass": true,
+      "detail": "EscrowV2.sol present"
+    },
+    {
+      "name": "layer_b_factory_v2_contract",
+      "pass": true,
+      "detail": "EscrowFactoryV2.sol present"
+    },
+    {
+      "name": "odr_b3_selected",
+      "pass": true,
+      "detail": "Owner Decision Record selects B3"
+    },
+    {
+      "name": "rust_bilateral_api_test",
+      "pass": false,
+      "detail": "exit 101"
+    }
+  ],
+  "commands": [
+    {
+      "label": "cargo_test_bilateral",
+      "ok": false,
+      "status": 101,
+      "stdout": "",
+      "stderr": "vice_tourist_confirmed`\n\nerror[E0063]: missing fields `service_guide_confirmed` and `service_tourist_confirmed` in initializer of `chain_off::OrderRow`\n   --> crates\\api\\src\\routes\\orders\\tests\\suite.rs:343:33\n    |\n343 |     let mk = |cid: Option<i64>| OrderRow {\n    |                                 ^^^^^^^^ missing `service_guide_confirmed` and `service_tourist_confirmed`\n\nerror[E0063]: missing fields `service_guide_confirmed` and `service_tourist_confirmed` in initializer of `chain_off::OrderRow`\n   --> crates\\api\\src\\routes\\orders\\tests\\suite.rs:484:33\n    |\n484 |     let mk = |cid: Option<i64>| OrderRow {\n    |                                 ^^^^^^^^ missing `service_guide_confirmed` and `service_tourist_confirmed`\n\nerror[E0063]: missing fields `service_guide_confirmed` and `service_tourist_confirmed` in initializer of `chain_off::OrderRow`\n   --> crates\\api\\src\\routes\\orders\\tests\\suite.rs:596:9\n    |\n596 |         OrderRow {\n    |         ^^^^^^^^ missing `service_guide_confirmed` and `service_tourist_confirmed`\n\nerror[E0063]: missing fields `service_guide_confirmed` and `service_tourist_confirmed` in initializer of `chain_off::OrderRow`\n   --> crates\\api\\src\\routes\\orders\\tests\\suite.rs:704:9\n    |\n704 |         OrderRow {\n    |         ^^^^^^^^ missing `service_guide_confirmed` and `service_tourist_confirmed`\n\nerror[E0063]: missing fields `service_guide_confirmed` and `service_tourist_confirmed` in initializer of `chain_off::OrderRow`\n   --> crates\\api\\src\\routes\\orders\\tests\\suite.rs:885:13\n    |\n885 |             OrderRow {\n    |             ^^^^^^^^ missing `service_guide_confirmed` and `service_tourist_confirmed`\n\nSome errors have detailed explanations: E0063, E0282, E0425, E0432, E0560, E0609.\nFor more information about an error, try `rustc --explain E0063`.\nwarning: `traveltrust-api` (bin \"traveltrust-api\" test) generated 5 warnings\nerror: could not compile `traveltrust-api` (bin \"traveltrust-api\" test) due to 85 previous errors; 5 warnings emitted\n"
+    }
+  ],
+  "v1_mainnet": "FORBIDDEN — testnet legacy only"
+}

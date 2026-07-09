@@ -1,0 +1,48 @@
+{
+  "schema": "t_gov_01_staging_probe.v1",
+  "phase": "\u2461 testnet",
+  "api": "https://tt-api-staging.fly.dev",
+  "probes": [
+    {
+      "probe": "/meta",
+      "http": 200,
+      "pass": true,
+      "kind": "public_read"
+    },
+    {
+      "probe": "/api/v1/governance/proposals?limit=5",
+      "http": 401,
+      "pass": false,
+      "kind": "public_read"
+    },
+    {
+      "probe": "/api/v1/governance/proposals?mine=1",
+      "http": 401,
+      "pass": false,
+      "kind": "public_read"
+    },
+    {
+      "probe": "/api/v1/governance/proposals?mine=1",
+      "http": 200,
+      "pass": true,
+      "kind": "steward_auth_read",
+      "role": "multi-demo"
+    },
+    {
+      "probe": "/api/v1/me/publish-summary",
+      "http": 200,
+      "pass": true,
+      "kind": "steward_auth_read",
+      "role": "multi-demo"
+    }
+  ],
+  "governance_contracts_in_meta": {
+    "governance_token_address": "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+  },
+  "manual_p1": {
+    "status": "PENDING",
+    "note": "Sepolia wallet vote/claim not executed in this session \u2014 API read plane only"
+  },
+  "api_read_pass": false,
+  "release_gate": "FAIL"
+}

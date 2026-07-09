@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.staging_rc_ssot_alignment.signoff.v1",
+  "stamp": "20260704T093600Z",
+  "environment": "staging",
+  "recorded_at": "2026-07-04T09:38:24Z",
+  "verdict": "ALIGNED",
+  "machine_keys": {
+    "TT_STAGING_RC_SSOT_PARITY": "ALIGNED",
+    "TT_PRODUCTION_GO": "NO_GO",
+    "TT_G3_PRODUCTION_CDN_VERIFIED": "PLANNED"
+  },
+  "ssot": {
+    "dataset": "data/official-cold-start/dataset.v1.json",
+    "assets": "data/official-cold-start/assets.v1.json",
+    "registry": "registry/official-cold-start-dataset.v1.yaml",
+    "release_candidate": "evidence/manual-uat/signoff/RELEASE-CANDIDATE-SIGNOFF-20260702T144513Z.md",
+    "ocs_state": "evidence/GO_staging_rc_ssot_alignment/20260704T091605Z/ocs-asset-baseline/state.json"
+  },
+  "steps": [
+    "purge_smoke_display_data",
+    "align_guides_ocs_only",
+    "align_community_feed_ocs_only",
+    "align_market_ocs_only",
+    "sql_purge_non_ocs_posts",
+    "regenerate_640x480_media",
+    "ocs_asset_baseline_bootstrap",
+    "optional_fly_deploy_restart",
+    "parity_validate"
+  ],
+  "honest_boundary": "Staging scrubbed to OCS SSOT + RC boundaries — not Production GO — not publish",
+  "forbidden_claims": ["Production GO", "Release published", "G3 CDN VERIFIED"]
+}

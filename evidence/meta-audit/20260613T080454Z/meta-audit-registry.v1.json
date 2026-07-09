@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.meta_audit_registry.v1",
+  "domain": "DOMAIN-MA",
+  "created_at": "2026-06-13T08:04:54.533933+00:00",
+  "layers": [
+    "L1_FOUNDATION",
+    "L2_PRODUCT_EXPERIENCE",
+    "L3_BUSINESS_OPERATIONS",
+    "L4_PLATFORM_GOVERNANCE",
+    "L5_LIFECYCLE_GOVERNANCE",
+    "L6_UPGRADE_GATES"
+  ],
+  "risk_weights": {
+    "P0": 4,
+    "P1": 2,
+    "P2": 1,
+    "P3": 0.5
+  },
+  "verdict_vocabulary": [
+    "KEEP",
+    "MERGE",
+    "RETIRE",
+    "REFACTOR",
+    "UPDATE",
+    "DEPRECATE",
+    "REMOVE"
+  ],
+  "execution_queue": {
+    "NOW": [],
+    "NEXT": [],
+    "LATER": []
+  },
+  "findings": [
+    {
+      "id": "MA-SEED-001",
+      "layer": "L6_UPGRADE_GATES",
+      "dim": "MA-04",
+      "severity": "P1",
+      "verdict": "KEEP",
+      "title": "U12 row count vs MASTER bundles",
+      "execution_queue": "NOW",
+      "rationale": "MASTER chains 6 domain gates — align U12-12 narrative"
+    },
+    {
+      "id": "MA-SEED-002",
+      "layer": "L4_PLATFORM_GOVERNANCE",
+      "dim": "MA-17",
+      "severity": "P1",
+      "verdict": "MERGE",
+      "title": "ADMIN overlap PGX vs AG",
+      "execution_queue": "NEXT",
+      "rationale": "§25 PGX-ADMIN vs §28 AG — reader dedup in Layer map"
+    },
+    {
+      "id": "MA-SEED-003",
+      "layer": "L1_FOUNDATION",
+      "dim": "MA-03",
+      "severity": "P0",
+      "verdict": "KEEP",
+      "title": "P0 weight in §2 dimension table",
+      "execution_queue": "NOW",
+      "rationale": "P0 drives U12-3 and MASTER NO-GO"
+    }
+  ],
+  "artifacts": [
+    "layer-architecture.v1.json",
+    "risk-weight-matrix.v1.json",
+    "unified-finding-model.v1.json",
+    "unified-verdict-model.v1.json",
+    "execution-queue.v1.json",
+    "phase1-readiness-score.v1.json",
+    "phase2-readiness-score.v1.json",
+    "top-blockers.v1.json",
+    "audit-coverage-heat-map.v1.json",
+    "governance-efficiency-score.v1.json",
+    "meta-gate-inventory.v1.json",
+    "checklist-structure-report.v1.json",
+    "EXECUTIVE-SUMMARY-TEMPLATE.md"
+  ]
+}

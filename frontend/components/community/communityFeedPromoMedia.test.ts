@@ -94,21 +94,44 @@ describe("communityFeedPromoMedia", () => {
     ).toHaveLength(2);
   });
 
-  it("promo preview prefers showcase only so user UGC stays in masonry", () => {
-    const userVideo = post({ id: "real-111", type: "video", content: "111", is_video: true });
-    const showcase = post({
-      id: "tt-showcase-post-001",
-      content: "祇园",
-      media_url: "https://cdn.example.test/show.jpg",
-    });
-    const posts = [userVideo, showcase];
-    expect(pickCommunityFeedPromoPreviewPost(posts)?.id).toBe("tt-showcase-post-001");
-    expect(
-      communityFeedMasonryPostsExcludingPromoPreview(posts, {
-        showPromoSlots: true,
-        previewPost: pickCommunityFeedPromoPreviewPost(posts),
-      }).map((p) => p.id),
-    ).toEqual(["real-111"]);
-    expect(pickCommunityFeedPromoPreviewPost([userVideo])?.id).toBeUndefined();
+  it("promo preview prefers showcase in local dev when both present", () => {
+    const prev = process.env.NODE_ENV;
+    process.env.NODE_ENV = "development";
+    process.env.NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_SHOWCASE = "1";
+    process.env.NEXT_PUBLIC_TRAVELTRUST_DEPLOY_PROFILE = "";
+    try {
+      const userVideo = post({ id: "real-111", type: "video", content: "111", is_video: true });
+      const showcase = post({
+        id: "tt-showcase-post-001",
+        content: "祇园",
+        media_url: "https://cdn.example.test/show.jpg",
+      });
+      const posts = [userVideo, showcase];
+      expect(pickCommunityFeedPromoPreviewPost(posts)?.id).toBe("tt-showcase-post-001");
+      expect(
+        communityFeedMasonryPostsExcludingPromoPreview(posts, {
+          showPromoSlots: true,
+          previewPost: pickCommunityFeedPromoPreviewPost(posts),
+        }).map((p) => p.id),
+      ).toEqual(["real-111"]);
+    } finally {
+      process.env.NODE_ENV = prev;
+    }
+  });
+
+  it("promo preview uses governed post in production profile", () => {
+    const prev = process.env.NODE_ENV;
+    process.env.NODE_ENV = "production";
+    try {
+      const userVideo = post({ id: "real-111", type: "video", content: "111", is_video: true });
+      const showcase = post({
+        id: "tt-showcase-post-001",
+        content: "祇园",
+        media_url: "https://cdn.example.test/show.jpg",
+      });
+      expect(pickCommunityFeedPromoPreviewPost([userVideo, showcase])?.id).toBe("real-111");
+    } finally {
+      process.env.NODE_ENV = prev;
+    }
   });
 });

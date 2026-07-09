@@ -1,0 +1,49 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T123830Z",
+  "filename": "ocs-tokyo-photo-community-media.jpg",
+  "chain_id": "tokyo-photo",
+  "city": "东京",
+  "country_code": "JP",
+  "slot": "community-media",
+  "surface": "Community Media",
+  "manifest_copy": {
+    "community_post.destination_slug": "tokyo",
+    "community_post.destination_label": "东京",
+    "community_post.post_type": "photo",
+    "community_post.tags": ["东京", "摄影", "官方旅行日志"],
+    "community_post.body_markdown": "清晨从浅草寺出发，沿隅田川步行至晴空塔——官方摄影路线一日实录，附机位与时间窗口建议。",
+    "community_post.media_urls": ["/api/v1/uploads/community-posts/ocs-tokyo-photo-community-media.jpg"]
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "score": 95, "notes": "640x480 JPEG 113315 bytes。" },
+    "G2_copy_alignment": { "pass": true, "score": 94, "notes": "隅田川步道→晴空塔日落，与正文路线日志 100% 语义对齐。" },
+    "G3_slot_differentiation": { "pass": true, "score": 93, "notes": "行人背影+河滨步道日落；区别于 Row4 史诗宽幅/Row5 涩谷/Row1–3。" },
+    "G4_cross_surface_city": { "pass": true, "score": 96, "notes": "东京同 chain；无他国元素。" },
+    "G5_brand_visual": { "pass": true, "score": 92, "notes": "黄金时刻纪实；品牌统一。" },
+    "G6_commercial_platform": { "pass": true, "score": 91, "notes": "Community 详情主图观感真实。" },
+    "G7_wcag_visual_quality": { "pass": true, "score": 93, "notes": "清晰、曝光均衡、无低清块。" },
+    "G8_evidence_matrix": { "pass": true, "score": 95, "notes": "Evidence 归档完整。" },
+    "G9_content_authenticity": { "pass": true, "score": 90, "notes": "地标正确；手脸自然；无水印/Logo；② AI 素材。" },
+    "G10_content_diversity": { "pass": true, "score": 94, "notes": "河滨日落 slot 完成 chain 6/6 场景覆盖。" }
+  },
+  "consumer_experience_review": {
+    "pass": true,
+    "authentic_share_feel": true,
+    "not_staged_ad": true,
+    "not_duplicate_community_cover": true,
+    "not_duplicate_official_guide": true
+  },
+  "brand_review": {
+    "pass": true,
+    "brand_style_unified": true,
+    "city_culture_accurate": true,
+    "business_semantics_correct": true,
+    "no_ai_defects": true,
+    "no_watermark_logo_copyright": true,
+    "no_foreign_elements": true,
+    "no_duplicate_composition": true,
+    "no_heavy_filter_lowres_text_errors": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

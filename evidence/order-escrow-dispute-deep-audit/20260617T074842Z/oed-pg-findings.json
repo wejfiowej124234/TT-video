@@ -1,0 +1,36 @@
+{
+  "verdict": "PASS",
+  "probes": [
+    {
+      "probe_id": "pg.happy_order_status",
+      "check": "orders.status",
+      "target": "5d17b896-2dfa-4dc9-9ed2-bfbab7bff271",
+      "pg_value": "",
+      "expected": "completed",
+      "status": "WARN"
+    },
+    {
+      "probe_id": "pg.dispute_order_status",
+      "check": "orders.status",
+      "target": "dc335913-4350-4adc-86ba-160bff355dbd",
+      "pg_value": "",
+      "expected": "refunded|partially_refunded",
+      "status": "PASS"
+    },
+    {
+      "probe_id": "pg.dispute_resolved",
+      "check": "disputes.status",
+      "target": "303344fd-af0c-450f-b177-f5b2a3a98919",
+      "pg_value": "",
+      "expected": "resolved",
+      "status": "PASS"
+    },
+    {
+      "probe_id": "pg.auth_audit_events_readable",
+      "check": "auth_audit_events",
+      "pg_value": "0",
+      "expected": "readable",
+      "status": "WARN"
+    }
+  ]
+}

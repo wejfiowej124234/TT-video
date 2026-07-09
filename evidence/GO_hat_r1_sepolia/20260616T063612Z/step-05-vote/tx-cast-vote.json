@@ -1,0 +1,7 @@
+{
+  "step": "step-05-vote",
+  "label": "cast-vote",
+  "tx_hash": "0x2e82af804d06ab159a248f6bcab4a807b34c19823b3a055a66adfe57f330b446",
+  "recorded_at": "2026-06-16T06:48:00Z",
+  "source": "forge-broadcast-backfill"
+}

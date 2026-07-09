@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.p2fc_graduation_risk_preconvergence.v2",
+  "generated_at_utc": "2026-06-25T01:33:42Z",
+  "convergence_score": 65,
+  "convergence_max": 100,
+  "soak_exec_chain_stable": false,
+  "meta_propagation_preclassified": true,
+  "indexer_parse_risk_acknowledged": true,
+  "new_risks_since_prior_snapshot": [],
+  "must_close_post_soak": [
+    {
+      "id": "PC-01",
+      "gate": "G02",
+      "action": "wave-0 meta hotfix + --strict meta verify"
+    },
+    {
+      "id": "PC-02",
+      "gate": "TN-P1-010",
+      "action": "internal/indexer-* spine — not GET /meta parse"
+    },
+    {
+      "id": "PC-03",
+      "gate": "SOAK_72H",
+      "action": "await ok_polls=4320 — wall ETA ~390.4h"
+    },
+    {
+      "id": "PC-BL-HR_ITINERARIES_HUB",
+      "gate": "WAVE-1",
+      "action": "itineraries.rs hub change — impacts market/escrow/guide consumer paths"
+    }
+  ],
+  "honest_boundary": "pre-convergence score ≠ Graduation CLOSED — post-soak one-shot still required",
+  "duration_convergence": "converged",
+  "converged_dimensions": 4,
+  "matrix_ready": false
+}

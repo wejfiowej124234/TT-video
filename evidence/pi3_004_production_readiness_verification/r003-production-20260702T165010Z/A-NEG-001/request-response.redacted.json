@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://tt-api-prod.fly.dev/auth/login",
+    "body": {
+      "email": "r003.prod.interim@traveltrust.test",
+      "password": "[REDACTED]"
+    }
+  },
+  "response": {
+    "http_status": 400,
+    "body": {
+      "status": "missing_idempotency_key",
+      "error": "missing_idempotency_key",
+      "message": "missing_idempotency_key",
+      "required_header": "Idempotency-Key",
+      "also_accepted": "X-Idempotency-Key",
+      "rule": "写请求必须提供幂等键；Admin 高危写接口为强制项。否则网络重试/并发会造成重复入队/重复链上尝试，产生资损风险"
+    }
+  }
+}

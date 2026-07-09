@@ -1,0 +1,132 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-05T13:54:48.601Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "东京",
+    "city_en": "Tokyo",
+    "poi_count": 9
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "Osaka Golden Template",
+  "cross_region_remediated": [
+    "寿司",
+    "拉面",
+    "天妇罗"
+  ],
+  "checks": {
+    "assets_locked_9_9": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-JP-009-ATR",
+      "poi": "浅草寺",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-tokyo-photo-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T13:09:46.713Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-010-ATR",
+      "poi": "东京塔",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-tokyo-photo-community-media.jpg",
+      "locked_at_utc": "2026-07-05T13:14:46.848Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-011-ATR",
+      "poi": "新宿",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-tokyo-photo-community-cover.jpg",
+      "locked_at_utc": "2026-07-05T13:19:48.417Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-012-ATR",
+      "poi": "涩谷",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-tokyo-photo-provider-cover.jpg",
+      "locked_at_utc": "2026-07-05T13:24:49.056Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-013-ATR",
+      "poi": "上野公园",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-tokyo-photo-acquisition-cover.jpg",
+      "locked_at_utc": "2026-07-05T13:29:51.467Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-014-FOOD",
+      "poi": "寿司",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-tokyo-sushi-community-cover.jpg",
+      "locked_at_utc": "2026-07-05T13:34:50.828Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-015-FOOD",
+      "poi": "拉面",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-tokyo-ramen-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-05T13:39:51.318Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-016-FOOD",
+      "poi": "天妇罗",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-tokyo-tempura-provider-cover.jpg",
+      "locked_at_utc": "2026-07-05T13:44:52.565Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-017-FOOD",
+      "poi": "居酒屋",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-tokyo-photo-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-05T13:49:54.887Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 9
+  },
+  "TT_CMS_POI_CITY_TOKYO_CONTENT_QA": "CLOSED"
+}

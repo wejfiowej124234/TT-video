@@ -1,0 +1,5 @@
+status: PASS
+phase: ②
+artifact: TN-P1-003 PD-009 Acquisition
+at: 20260614T034501Z
+release_gate: GO

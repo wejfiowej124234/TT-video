@@ -1,0 +1,63 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T150500Z",
+  "filename": "ocs-paris-art-official-guide-cover.jpg",
+  "row": 34,
+  "chain_id": "paris-art",
+  "country_code": "FR",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "copyrighted_paintings",
+      "gallery_interior_artworks",
+      "celebrity_portraits",
+      "brand_logos",
+      "readable_posters"
+    ],
+    "safe_expression": "卢浮宫金字塔 dusk 建筑外观宽幅 · 无馆藏名画复刻"
+  },
+  "checks": {
+    "manifest_alignment": {
+      "pass": true,
+      "notes": "title/body/tags 巴黎艺术博物馆两日官方指南"
+    },
+    "destination_authenticity_9dim": {
+      "pass": true
+    },
+    "country_consistency_fr": {
+      "pass": true
+    },
+    "official_guide_destination_plan": {
+      "pass": true,
+      "vs_tokyo": "艺术博物馆 vs 摄影路线",
+      "vs_kyoto": "博物馆 vs 文化慢游",
+      "vs_seoul": "艺术 vs 美食地图",
+      "vs_bangkok": "卢浮宫 vs 寺庙河景",
+      "vs_singapore": "艺术 vs 亲子周末",
+      "wide_route_narrative": true
+    },
+    "cross_chain_official_guide_plan": {
+      "pass": true
+    },
+    "surface_boundary_plan": {
+      "pass": true,
+      "official_guide_only": true
+    },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row33": "史诗宽幅 vs 海报静物"
+    },
+    "brand_consistency_plan": {
+      "pass": true
+    },
+    "consumer_experience_plan": {
+      "pass": true
+    },
+    "business_authenticity": {
+      "pass": true
+    },
+    "nine_class_framework_frozen": true
+  }
+}

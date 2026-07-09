@@ -1,0 +1,499 @@
+{
+  "ui_matrix": [
+    {
+      "route": "/admin",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/inbox",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/operator-guide",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/provider-applications",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/steward-applications",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/approvals",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/onboarding",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/onboarding/entitlements",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/onboarding/payment-events",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/onboarding/webhook-jobs",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/onboarding/compliance-audit",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/permissions",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/users",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/guides",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/orders",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/disputes",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/reviews",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/trust-growth",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/cross-check",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/drift-summary",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/finance-reconciliation",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/finance-suite",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/region-vault",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/fee-router",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/finance",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/indexer",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/indexer/reconcile-reports",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/observability",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/audit",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/audit/operations",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/auth-audit-events",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/alerts/incidents",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/schema",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/api-versions",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/jobs",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/scheduler/jobs",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/lifecycle",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/policies",
+      "ui_reach": "FAIL",
+      "shell": "redirect_login",
+      "error_surface": "login",
+      "note": "https://tt-web-staging.fly.dev/auth/login?returnUrl=%2Fadmin%2Fpolicies"
+    },
+    {
+      "route": "/admin/internal-tools/audits",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/config",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/config/releases",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/flags",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/secrets/metadata",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/tenants/scopes",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/compliance",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/compliance/requests",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/reports",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/appeals",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/appeals/review",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/moderation/cases",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/risk-signals",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/policy-change-logs",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/ranking/snapshots",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/penalties",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/comments/visibility",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/abuse-policy",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/media/access-logs",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/media/signed-url-tokens",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/orders/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/disputes/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/users/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/guides/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/reviews/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/approvals/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/audit/logs/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/indexer/reconcile/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/config/releases/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/alerts/incidents/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/onboarding/entitlements/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    }
+  ],
+  "gaps": [
+    {
+      "id": "AFDA-UI--admin-policies",
+      "category": "UI可达性",
+      "priority": "P0",
+      "route": "/admin/policies",
+      "title": "管理员被重定向到登录页",
+      "observation": "https://tt-web-staging.fly.dev/auth/login?returnUrl=%2Fadmin%2Fpolicies",
+      "human_impact": "可见≠可用：路由存在但会话门闸拒绝"
+    }
+  ],
+  "recorded_at": "2026-06-07T04:47:41.353Z"
+}

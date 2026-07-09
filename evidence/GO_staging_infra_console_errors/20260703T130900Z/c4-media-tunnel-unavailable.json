@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.open_issue_evidence.v1",
+  "issue_id": "C4-MEDIA-TUNNEL-UNAVAILABLE",
+  "stamp": "20260703T130900Z",
+  "status": "OPEN",
+  "category": "Production Infrastructure",
+  "severity": "MEDIUM",
+  "blocking": false,
+  "target_gate": "PI3_PRODUCTION_INFRASTRUCTURE",
+  "not_market_runtime": true,
+  "not_ocs_ddg_sopcp_reopen": true,
+  "symptom": "Browser Console MP4 GET 503 from *.loca.lt/traveltrust-community-media/",
+  "probe": {
+    "url": "https://thirty-dryers-give.loca.lt/traveltrust-community-media/",
+    "http_status": 503,
+    "header": "x-localtunnel-status: Tunnel Unavailable"
+  },
+  "root_cause": "Fly staging COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL points at ephemeral localtunnel → local MinIO :19000; tunnel not running",
+  "mitigation_short": "Restart MinIO + localtunnel; update Fly secrets; long-term migrate R2/S3/CDN",
+  "runbook": "docs/runbook/TT-C4-MEDIA-TUNNEL-UNAVAILABLE.md",
+  "reference": "docs/runbook/TT-PHASE2-C4-STAGING-EVIDENCE.md"
+}

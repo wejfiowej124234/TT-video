@@ -1,0 +1,13 @@
+{
+  "list": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "items": []
+    }
+  },
+  "detail": {
+    "http_status": 0,
+    "body": {}
+  }
+}

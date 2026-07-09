@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.pf_workflow_matrix.v1",
+  "items": [
+    {
+      "id": "WF-merchant-publish",
+      "name": "发布商家 listing",
+      "pf": "PF-06",
+      "steps_local_est": "TBD",
+      "target_steps": 5
+    },
+    {
+      "id": "WF-guide-onboard",
+      "name": "开通向导",
+      "pf": "PF-10",
+      "steps_local_est": "TBD",
+      "target_steps": 5
+    },
+    {
+      "id": "WF-steward-register",
+      "name": "主理人 steward register",
+      "pf": "PF-10",
+      "steps_local_est": "TBD",
+      "target_steps": 5
+    },
+    {
+      "id": "WF-traveler-order",
+      "name": "下单→escrow",
+      "pf": "PF-06",
+      "steps_local_est": "see TT-9625",
+      "target_steps": 6
+    }
+  ]
+}

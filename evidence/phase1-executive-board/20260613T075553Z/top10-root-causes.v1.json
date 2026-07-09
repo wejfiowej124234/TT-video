@@ -1,0 +1,110 @@
+{
+  "schema": "traveltrust.executive_top10_root_causes.v1",
+  "root_causes": [
+    {
+      "id": "RC-01",
+      "title": "Navigation / IA duplication (PF · CX · UXA)",
+      "domains": [
+        "PF",
+        "CX",
+        "UXA"
+      ],
+      "finding_ids": [
+        "PF-SEED-001",
+        "PF-SEED-002",
+        "PF-SEED-003"
+      ],
+      "verdict": "MERGE",
+      "queue": "NOW",
+      "impact_score": 24,
+      "readiness_delta": 8,
+      "complexity_delta": -12,
+      "redundancy_delta": -15
+    },
+    {
+      "id": "RC-02",
+      "title": "Runbook ↔ scripts / spec-path drift (DOA)",
+      "domains": [
+        "DOA"
+      ],
+      "finding_ids": [
+        "DOA-SEED-001",
+        "DOA-SEED-004"
+      ],
+      "verdict": "UPDATE",
+      "queue": "NOW",
+      "impact_score": 18,
+      "readiness_delta": 6,
+      "complexity_delta": -5,
+      "redundancy_delta": -3
+    },
+    {
+      "id": "RC-03",
+      "title": "Admin governance boundary (AG · PGX-ADMIN)",
+      "domains": [
+        "AG",
+        "CX"
+      ],
+      "finding_ids": [
+        "AG-SEED-001",
+        "AG-SEED-003"
+      ],
+      "verdict": "REFACTOR",
+      "queue": "NOW",
+      "impact_score": 16,
+      "readiness_delta": 5,
+      "complexity_delta": -8,
+      "redundancy_delta": -6
+    },
+    {
+      "id": "RC-04",
+      "title": "Architecture SSOT spine (CA · API)",
+      "domains": [
+        "CA"
+      ],
+      "finding_ids": [
+        "LFC-CA-001",
+        "LFC-CA-002"
+      ],
+      "verdict": "KEEP",
+      "queue": "NOW",
+      "impact_score": 10,
+      "readiness_delta": 2,
+      "complexity_delta": -2,
+      "redundancy_delta": 0
+    },
+    {
+      "id": "RC-05",
+      "title": "L5 freeze compliance (UXA · five-main)",
+      "domains": [
+        "UXA"
+      ],
+      "finding_ids": [
+        "LFC-UXA-001",
+        "LFC-UXA-002"
+      ],
+      "verdict": "KEEP",
+      "queue": "NOW",
+      "impact_score": 8,
+      "readiness_delta": 2,
+      "complexity_delta": -1,
+      "redundancy_delta": 0
+    },
+    {
+      "id": "RC-06",
+      "title": "Retire archived UI tree (PF)",
+      "domains": [
+        "PF"
+      ],
+      "finding_ids": [
+        "PF-SEED-004"
+      ],
+      "verdict": "RETIRE",
+      "queue": "NEXT",
+      "impact_score": 6,
+      "readiness_delta": 3,
+      "complexity_delta": -10,
+      "redundancy_delta": -8
+    }
+  ]
+}

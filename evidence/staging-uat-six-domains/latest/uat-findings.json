@@ -1,0 +1,208 @@
+{
+  "base_url": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "recorded_at": "2026-06-06T04:45:02.913Z",
+  "boundary": "staging UAT · bugfix only · not Production GO",
+  "findings": [
+    {
+      "domain": "首页",
+      "route": "/",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/traveltrust",
+      "status": "WARN",
+      "notes": [
+        "console.error×1: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/did-rank",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/trust",
+      "status": "WARN",
+      "notes": [
+        "console.error×1: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/auth/login",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/auth/register",
+      "status": "WARN",
+      "notes": [
+        "console.error×1: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me",
+      "status": "WARN",
+      "notes": [
+        "main shell not matched: /Profile|资料|Community|社区/i",
+        "console.error×1: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me/settings",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me/identities",
+      "status": "WARN",
+      "notes": [
+        "console.error×1: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "市场",
+      "route": "/market",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "市场",
+      "route": "/market/acquisition",
+      "status": "WARN",
+      "notes": [
+        "console.error×3: useMarketPage getDiscoverOrders: TypeError: Failed to fetch\n    at h (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:81659)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/93130-2cd9e640970b32bc.js: | useMarketPage getGuides: TypeError: Failed to fetch\n    at s (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:79391)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/93130-2cd9e640970b32bc.js:1:70552\n | MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/explore",
+      "status": "WARN",
+      "notes": [
+        "console.error×1: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/messages",
+      "status": "WARN",
+      "notes": [
+        "console.error×1: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/me",
+      "status": "WARN",
+      "notes": [
+        "main shell not matched: /Profile|资料|Me/i",
+        "console.error×1: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance",
+      "status": "PASS",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance/proposals",
+      "status": "WARN",
+      "notes": [
+        "console.error×2: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817 | GovernancePage: TypeError: Failed to fetch\n    at h (https://tt-web-staging.fly.dev/_next/static/chunks/95536-e7ffb197fba78aeb.js:1:11037)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/governance/page-4df361bbb4c318ff.js:1:9"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance/delegate",
+      "status": "WARN",
+      "notes": [
+        "console.error×4: Access to fetch at 'https://tt-api-staging.fly.dev/api/v1/governance/proposals' from origin 'https://tt-web-staging.fly.dev' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. | Failed to load resource: net::ERR_FAILED | GovernanceProposalsPage fetch: TypeError: Failed to fetch\n    at h (https://tt-web-staging.fly.dev/_next/static/chunks/95536-e7ffb197fba78aeb.js:1:11037)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/governance/proposals/pag | MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/staking",
+      "status": "WARN",
+      "notes": [
+        "console.error×2: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817 | GovernanceDelegatePage getGovernanceDelegate: TypeError: Failed to fetch\n    at H (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:90314)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/governanc"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin",
+      "status": "WARN",
+      "notes": [
+        "main shell not matched: /Admin|管理/i",
+        "console.error×1: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/orders",
+      "status": "WARN",
+      "notes": [
+        "console.error×1: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/users",
+      "status": "WARN",
+      "notes": [
+        "console.error×1: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/finance",
+      "status": "WARN",
+      "notes": [
+        "console.error×1: MetaProvider getMeta: TypeError: Failed to fetch\n    at a (https://tt-web-staging.fly.dev/_next/static/chunks/19250-0cc5b955f0fdc829.js:1:78362)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/layout-9c33ccce7ac0c064.js:1:2817"
+      ]
+    },
+    {
+      "domain": "跨域",
+      "route": "GET /meta (browser)",
+      "status": "PASS",
+      "notes": [
+        "chain_id=11155111"
+      ]
+    }
+  ],
+  "summary": {
+    "pass": 8,
+    "warn": 16,
+    "fail": 0
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.admin_role_responsibility_matrix.v1",
+  "business_subjects": [
+    "Traveler",
+    "Guide",
+    "Merchant",
+    "Acquisition",
+    "Steward",
+    "Admin"
+  ],
+  "admin_roles": [
+    "Super Admin",
+    "Operations Admin",
+    "Content Admin",
+    "Governance Admin",
+    "Support Admin",
+    "Risk Admin",
+    "Finance Admin"
+  ],
+  "note": "Hand-fill responsibility columns in registry"
+}

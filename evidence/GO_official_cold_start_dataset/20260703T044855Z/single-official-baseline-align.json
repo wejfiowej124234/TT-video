@@ -1,0 +1,27 @@
+{
+  "schema": "traveltrust.single_official_baseline_align.v1",
+  "recorded_at": "2026-07-03T05:39:40.667Z",
+  "dry_run": false,
+  "unpublish": [
+    {
+      "entity_type": "market_listings",
+      "id": "0f0749b5-beab-443b-bb4a-36a71b152214",
+      "label": "西溪印象城 · 旅拍写真套餐 · provider",
+      "reason": "LEGACY_PRODUCTION",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "before": {
+    "publish_queue_guides": 10,
+    "publish_queue_market_listings": 21
+  },
+  "after": {
+    "guides_public": 10,
+    "provider_public": 10,
+    "acquisition_public": 10,
+    "publish_queue_guides": 10,
+    "publish_queue_listings": 21,
+    "publish_queue_market_listings": 20
+  }
+}

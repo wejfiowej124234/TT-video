@@ -1,0 +1,26 @@
+{
+  "schema": "phase2_sepolia_fundstack_broadcast.v1",
+  "timestamp_utc": "20260605T084821Z",
+  "chain_id": 11155111,
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "timelock_address": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+  "broadcast": true,
+  "onchain_execution": "ONCHAIN EXECUTION COMPLETE & SUCCESSFUL",
+  "addresses": {
+    "fund_stack_token_address": "0x241948bE49a778490c8A4Ae8D98b7537fE001f63",
+    "escrow_factory_address": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+    "fee_router_address": "0x81A8009210c5215100564c6E4123F672c4459306",
+    "region_vault_address": "0x2Ea061d50393c09af2f607Ee9f89679642A3a65B",
+    "treasury_address": "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be",
+    "reserve_vault_address": "0xbC541FAf26e139eF1f0AC22b52c4b4F85FFF7855",
+    "guide_staking_pool_address": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f",
+    "provider_staking_pool_address": "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075",
+    "registry_address": "0xc50913e154f850583D0afbE9158a75E0e2167AAb"
+  },
+  "on_chain_verify": {
+    "command": "CHAIN_RPC_URL=https://1rpc.io/sepolia bash scripts/dev/phase2-sepolia-fundstack-verify-bindings.sh",
+    "exit": 0,
+    "timestamp_utc": "20260605T085659Z",
+    "checks_passed": 16
+  }
+}

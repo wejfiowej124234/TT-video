@@ -1,0 +1,514 @@
+{
+  "schema": "traveltrust.operations_platform_alignment_audit.v2",
+  "stamp": "20260703T070500Z",
+  "recorded_at": "2026-07-03T06:56:54.849Z",
+  "scope": {
+    "in": [
+      "operations_platform_six_domains",
+      "operations_workflow_fsm",
+      "OCS_SOPCP_OCIP",
+      "public_catalog_policy",
+      "rbac_admin_public_ops",
+      "registry_runbook_evidence"
+    ],
+    "out": [
+      "RC_reopen",
+      "DDG_reopen",
+      "OCS_rerun"
+    ]
+  },
+  "apis": {
+    "local": "http://127.0.0.1:8080",
+    "staging": "https://tt-api-staging.fly.dev"
+  },
+  "sections": {
+    "model_alignment": {
+      "registry": {
+        "principle": "Local and Staging share repo SSOT — registry identical by definition",
+        "files": {
+          "registry/traveltrust-operations-platform.v1.yaml": {
+            "exists": true,
+            "sha16": "d4dc883bd4b111c3"
+          },
+          "registry/traveltrust-operations-workflow.v1.yaml": {
+            "exists": true,
+            "sha16": "90ffc325d1193366"
+          },
+          "registry/single-official-public-catalog-policy.v1.yaml": {
+            "exists": true,
+            "sha16": "186bc31c7ee79858"
+          },
+          "registry/official-catalog-identity-policy.v1.yaml": {
+            "exists": true,
+            "sha16": "d3aa4cc3f7de4b8b"
+          },
+          "registry/official-cold-start-dataset.v1.yaml": {
+            "exists": true,
+            "sha16": "ed510c07a2fa63ef"
+          },
+          "registry/display-data-governance.v1.yaml": {
+            "exists": true,
+            "sha16": "bb23b89b0deca2b2"
+          }
+        },
+        "operations_platform_version": "v2",
+        "operations_workflow_version": "v1",
+        "ocs_status": "CLOSED_UNLESS_TOUCHED"
+      },
+      "six_domains_local": {
+        "content_operations": {
+          "ui_route": "/admin/content/countries",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/content/countries?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "catalog_operations": {
+          "ui_route": "/admin/official/public-operations",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/official/public-operations/publish-queue?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "campaign_operations": {
+          "ui_route": "/admin/official/cold-start",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/official/public-operations/campaigns?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "moderation_operations": {
+          "ui_route": "/admin/community/reports",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/community/reports?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "business_operations": {
+          "ui_route": "/admin/disputes",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/disputes?limit=1",
+              "status": 200,
+              "ok": true
+            },
+            {
+              "route": "/api/v1/admin/orders?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "analytics_growth": {
+          "ui_route": "/admin/growth",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/growth/analytics/overview?window_days=7",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        }
+      },
+      "six_domains_staging": {
+        "content_operations": {
+          "ui_route": "/admin/content/countries",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/content/countries?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "catalog_operations": {
+          "ui_route": "/admin/official/public-operations",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/official/public-operations/publish-queue?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "campaign_operations": {
+          "ui_route": "/admin/official/cold-start",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/official/public-operations/campaigns?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "moderation_operations": {
+          "ui_route": "/admin/community/reports",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/community/reports?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "business_operations": {
+          "ui_route": "/admin/disputes",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/disputes?limit=1",
+              "status": 200,
+              "ok": true
+            },
+            {
+              "route": "/api/v1/admin/orders?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "analytics_growth": {
+          "ui_route": "/admin/growth",
+          "verdict": "FAIL",
+          "routes": [
+            {
+              "route": "/api/v1/admin/growth/analytics/overview?window_days=7",
+              "status": 404,
+              "ok": false
+            }
+          ]
+        }
+      }
+    },
+    "behavior_alignment": {
+      "workflow_fsm_local": {
+        "content_draft_to_publish_blocked": false,
+        "catalog_hidden_featured_blocked": true,
+        "verdict": "FAIL"
+      },
+      "workflow_fsm_staging": {
+        "content_draft_to_publish_blocked": true,
+        "catalog_hidden_featured_blocked": true,
+        "verdict": "PASS"
+      },
+      "workflow_validation_evidence": {
+        "stamp": "20260703T064100Z",
+        "verdict": "PASS",
+        "domains": {
+          "content_operations": "PASS",
+          "catalog_operations": "PASS",
+          "campaign_operations": "PASS",
+          "moderation_operations": "PASS",
+          "business_operations": "PASS"
+        }
+      }
+    },
+    "data_alignment": {
+      "sopcp_local": {
+        "verdict": "FAIL",
+        "ocs_on_public": 0,
+        "ocs_expected": 10,
+        "non_ocs_count": 7,
+        "duplicate_cities": [
+          {
+            "city": "杭州",
+            "count": 4
+          }
+        ]
+      },
+      "sopcp_staging": {
+        "verdict": "PASS",
+        "ocs_on_public": 10,
+        "ocs_expected": 10,
+        "non_ocs_count": 0,
+        "duplicate_cities": []
+      },
+      "ocip_local": {
+        "checked": 5,
+        "found": 0,
+        "missing": [
+          "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+          "2f51212f-6ac0-445e-bf94-8338738b2de3",
+          "519d9067-f2b2-49aa-9f76-8665cb24e85b",
+          "da75b617-64bf-4338-a5b2-daf32921d695",
+          "ea732e91-f0f3-42da-b4ae-1a1f5f0f592c"
+        ],
+        "verdict": "FAIL"
+      },
+      "ocip_staging": {
+        "checked": 5,
+        "found": 5,
+        "missing": [],
+        "verdict": "PASS"
+      },
+      "public_catalog_local": {
+        "guides_public_count": 7,
+        "cities_public": [
+          "上海",
+          "京都",
+          "北京",
+          "杭州"
+        ],
+        "duplicate_cities_public": [
+          {
+            "city": "杭州",
+            "count": 4
+          }
+        ],
+        "data_origin_breakdown": {
+          "test": 2,
+          "production": 5
+        },
+        "ocs_on_public": 0,
+        "ocs_expected": 10,
+        "non_ocs_public": [
+          {
+            "id": "274ab21a-eb69-4b2c-8821-cbddd7ac63d4",
+            "city": "杭州",
+            "data_origin": "test",
+            "kind": "smoke"
+          },
+          {
+            "id": "d45162a0-f9f2-4030-93a1-82003a9753ac",
+            "city": "杭州",
+            "data_origin": "test",
+            "kind": "smoke"
+          },
+          {
+            "id": "f0e0b101-0001-4001-8001-000000000002",
+            "city": "杭州",
+            "data_origin": "production",
+            "kind": "canonical_showcase"
+          },
+          {
+            "id": "f0e0b101-0001-4001-8001-000000000001",
+            "city": "杭州",
+            "data_origin": "production",
+            "kind": "canonical_showcase"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000313",
+            "city": "京都",
+            "data_origin": "production",
+            "kind": "canonical_showcase"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000312",
+            "city": "上海",
+            "data_origin": "production",
+            "kind": "canonical_showcase"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000311",
+            "city": "北京",
+            "data_origin": "production",
+            "kind": "canonical_showcase"
+          }
+        ],
+        "publish_queue_sample": [
+          {
+            "id": "d45162a0-f9f2-4030-93a1-82003a9753ac",
+            "display_status": "published",
+            "featured": false,
+            "display_surfaces": []
+          },
+          {
+            "id": "2a50c8e5-46f6-4680-b944-d533aaca1b80",
+            "display_status": "hidden",
+            "featured": false,
+            "display_surfaces": []
+          },
+          {
+            "id": "a11d1542-0368-4efd-87a2-e3729a1e2860",
+            "display_status": "hidden",
+            "featured": false,
+            "display_surfaces": []
+          }
+        ],
+        "provider_public_count": 2,
+        "acquisition_public_count": 1,
+        "ocs_provider_on_public": 0,
+        "ocs_acquisition_on_public": 0
+      },
+      "public_catalog_staging": {
+        "guides_public_count": 10,
+        "cities_public": [
+          "东京",
+          "京都",
+          "巴塞罗那",
+          "巴黎",
+          "悉尼",
+          "新加坡",
+          "曼谷",
+          "纽约",
+          "迪拜",
+          "首尔"
+        ],
+        "duplicate_cities_public": [],
+        "data_origin_breakdown": {
+          "production": 10
+        },
+        "ocs_on_public": 10,
+        "ocs_expected": 10,
+        "non_ocs_public": [],
+        "publish_queue_sample": [
+          {
+            "id": "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+            "display_status": "published",
+            "featured": false,
+            "display_surfaces": [
+              "market_feed",
+              "market_provider"
+            ]
+          },
+          {
+            "id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+            "display_status": "hidden",
+            "featured": false,
+            "display_surfaces": []
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000311",
+            "display_status": "hidden",
+            "featured": false,
+            "display_surfaces": []
+          }
+        ],
+        "provider_public_count": 10,
+        "acquisition_public_count": 10,
+        "ocs_provider_on_public": 10,
+        "ocs_acquisition_on_public": 10
+      }
+    },
+    "runtime_alignment": {
+      "meta_local": {
+        "status": 401,
+        "freeze_active": null,
+        "deployment_profile": null
+      },
+      "meta_staging": {
+        "status": 401,
+        "freeze_active": null,
+        "deployment_profile": null
+      },
+      "public_ops_policy_local": {
+        "show_test_data": false,
+        "blocked_origins": [
+          "SMOKE"
+        ],
+        "updated_at": "2026-07-01T16:55:43.069394Z",
+        "updated_by": null
+      },
+      "public_ops_policy_staging": {
+        "show_test_data": false,
+        "blocked_origins": [
+          "SMOKE"
+        ],
+        "updated_at": "2026-07-02T00:35:29.850727Z",
+        "updated_by": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+      },
+      "evidence": {
+        "workflow_validation_staging": {
+          "stamp": "20260703T064100Z",
+          "verdict": "PASS",
+          "domains": {
+            "content_operations": "PASS",
+            "catalog_operations": "PASS",
+            "campaign_operations": "PASS",
+            "moderation_operations": "PASS",
+            "business_operations": "PASS"
+          }
+        },
+        "ocs_state": "evidence/GO_official_cold_start_dataset/20260703T044855Z/state.json",
+        "ocs_stamp": "20260703T044855Z"
+      }
+    }
+  },
+  "differences": [
+    {
+      "category": "behavior",
+      "id": "fsm_content_draft_publish",
+      "local": false,
+      "staging": true,
+      "classification": "Blocking",
+      "note": "Content workflow must reject draft→published on both envs",
+      "fix": "Restart local API with current traveltrust-api binary (post-FSM deploy)"
+    },
+    {
+      "category": "model",
+      "id": "six_domain_analytics_growth",
+      "local": "PASS",
+      "staging": "FAIL",
+      "classification": "Expected Difference",
+      "note": "Growth routes omitted on staging when complexity_convergence freeze is active",
+      "fix": null
+    },
+    {
+      "category": "data",
+      "id": "sopcp_ocs_public_catalog",
+      "local": {
+        "verdict": "FAIL",
+        "ocs": 0,
+        "non_ocs": 7
+      },
+      "staging": {
+        "verdict": "PASS",
+        "ocs": 10,
+        "non_ocs": 0
+      },
+      "classification": "Blocking",
+      "note": "SOPCP: Public Catalog = OCS only (10 guides, no duplicates)",
+      "fix": "Run scripts/dev/align-single-official-baseline-staging.cjs on local (API=http://127.0.0.1:8080) or re-apply OCS"
+    },
+    {
+      "category": "data",
+      "id": "public_guides_count",
+      "local": 7,
+      "staging": 10,
+      "classification": "Blocking",
+      "note": "Public guide count drift",
+      "fix": "Align local to OCS baseline"
+    },
+    {
+      "category": "data",
+      "id": "campaigns_deployed",
+      "local": 0,
+      "staging": 10,
+      "classification": "Minor",
+      "note": "Campaign deployment count may differ in dev",
+      "fix": "Optional: deploy OCS campaigns on local"
+    }
+  ],
+  "verdict": {
+    "phase2_staging_ops_baseline": "PASS",
+    "phase2_local_staging_alignment": "FAIL",
+    "blocking_count": 3,
+    "major_count": 0,
+    "minor_count": 1,
+    "expected_count": 1,
+    "staging_authoritative": true,
+    "note": "Blocking gaps prevent shared operations baseline — fix local before PI3."
+  }
+}

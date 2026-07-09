@@ -1,0 +1,89 @@
+{
+  "schema": "traveltrust.per_rollback_verified_p0_3.v1",
+  "stamp_utc": "20260705T014800ZP3",
+  "phase": "Production Preparation · PER Item 3 · Rollback Verified",
+  "environment": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev",
+    "phase_note": "② staging rollback loop · not ③ Production GO"
+  },
+  "prerequisite": {
+    "p0_2_ref": "evidence/GO_production_preparation/per-recovery-verified/PER-RECOVERY-VERIFIED-P0-2-LATEST.json",
+    "TT_PER_RECOVERY_VERIFIED": "PASS",
+    "TT_PER_P0_2_OWNER_SIGNOFF": "SIGNED"
+  },
+  "per_track_item": "rollback",
+  "verification": [
+    {
+      "id": "prereq_p0_2_signed",
+      "title": "PER P0-2 owner sign-off prerequisite",
+      "expected_result": "TT_PER_RECOVERY_VERIFIED=PASS · owner_sign_off=SIGNED",
+      "actual_result": "PASS · SIGNED",
+      "blockers": [],
+      "evidence_refs": [
+        "evidence/GO_production_preparation/per-recovery-verified/PER-RECOVERY-VERIFIED-P0-2-LATEST.json"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "rollback_unpublish",
+      "title": "Admin unpublish rollback path",
+      "expected_result": "unpublish 2xx · post hidden from feed + detail",
+      "actual_result": "unpub=200 feed_hidden=true detail_hidden=true",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/admin/official/public-operations/entities/community_posts/60dbee57-9175-4a50-8e07-433583716c9d/unpublish"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "rollback_restore",
+      "title": "Admin publish restore after rollback",
+      "expected_result": "publish 2xx · post back in feed",
+      "actual_result": "pub=200 feed_restored=true",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/admin/official/public-operations/entities/community_posts/60dbee57-9175-4a50-8e07-433583716c9d/publish"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "discover_continuity",
+      "title": "Discover continuity after rollback probe",
+      "expected_result": "discover/orders still non-empty",
+      "actual_result": "items=1",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/discover/orders"
+      ],
+      "loop_result": "PASS"
+    },
+    {
+      "id": "web_market",
+      "title": "Web /market still 200",
+      "expected_result": "HTTP 200",
+      "actual_result": "http=200",
+      "blockers": [],
+      "evidence_refs": [
+        "https://tt-web-staging.fly.dev/market"
+      ],
+      "loop_result": "PASS"
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "pass": 5,
+    "fail": 0,
+    "blocking_items": []
+  },
+  "owner_sign_off": {
+    "status": "SIGNED",
+    "attestation": "Sebastian Ward · Solo maintainer · PER P0-3 Rollback Verified · ② Staging · not ③ Production GO",
+    "signed_at_utc": "2026-07-05T01:49:00Z",
+    "signer": "Sebastian Ward",
+    "phase": "Production Preparation · PER Item 3"
+  },
+  "TT_PER_ROLLBACK_VERIFIED": "PASS",
+  "honest_boundary": "PASS = staging Admin unpublish/publish restore loop · ≠ Production GO",
+  "TT_PER_P0_3_OWNER_SIGNOFF": "SIGNED"
+}

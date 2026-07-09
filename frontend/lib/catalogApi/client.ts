@@ -109,14 +109,24 @@ export function fetchCatalogIntercityRoutes(fromCity: string, toCity: string) {
   );
 }
 
-export function fetchCatalogMedia(opts?: { assetKind?: string; countryIso?: string }) {
+export function fetchCatalogMedia(opts?: {
+  assetKind?: string;
+  countryIso?: string;
+  citySlug?: string;
+}) {
   const params = new URLSearchParams();
   if (opts?.assetKind) params.set("asset_kind", opts.assetKind);
   if (opts?.countryIso) params.set("country_iso", opts.countryIso);
+  if (opts?.citySlug) params.set("city_slug", opts.citySlug);
   const q = params.toString();
-  return catalogGet<{ url: string; asset_kind: string; country_iso?: string | null }>(
-    `/api/v1/catalog/media${q ? `?${q}` : ""}`,
-  );
+  return catalogGet<{
+    url: string;
+    asset_kind: string;
+    country_iso?: string | null;
+    city_slug?: string | null;
+    stock_pool_key?: string | null;
+    asset_key?: string | null;
+  }>(`/api/v1/catalog/media${q ? `?${q}` : ""}`);
 }
 
 export function fetchCatalogHotelTiers() {

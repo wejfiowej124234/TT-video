@@ -1,0 +1,11 @@
+{
+  "step": "step-08-treasury-proposal",
+  "layers": [
+    "page_ui",
+    "wallet_tx",
+    "chain_events",
+    "api_response",
+    "db_state"
+  ],
+  "required": true
+}

@@ -1,4 +1,4 @@
-//! P07 重复提交 / 并发风险锚：第二次 `POST …/confirm-completion`（已是 **Completed**）→ **409** `invalid_state`，**`current=completed`**（**TT-P07-DUPLICATE-CONFIRM-COMPLETION-E2E-001** / **B-440**）。
+//! P07 双边 service completion：须 Traveler + Guide 各确认一次；对已 Completed 订单 → **409**。
 
 use axum::body::Body;
 use axum::http::{Request, StatusCode};
@@ -52,36 +52,18 @@ fn chain_off_state_escrowed_order(
         },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
-    store.orders.insert(
-        order_id,
-        OrderRow {
-            id: order_id,
-            tourist_id,
-            guide_id: guide_row_id,
-            amount: "100".to_string(),
-            currency: "USD".to_string(),
-            escrow_address: None,
-            state: OrderState::Escrowed,
-            created_at: now,
-            accepted_at: Some(now),
-            escrowed_at: Some(now),
-            completed_at: None,
-            dispute_deadline_at: None,
-            auto_complete_at: None,
-            updated_at: now,
-            start_date: None,
-            end_date: None,
-            sub_status: None,
-            tourist_confirmed: None,
-            guide_confirmed: None,
-            rating_tourist_confirmed: None,
-            rating_guide_confirmed: None,
-            chain_id: None,
-            data_origin: "production".into(),
-        order_kind: None,
-        market_listing_id: None,
-        },
-    );
+    let mut order = OrderRow::default();
+    order.id = order_id;
+    order.tourist_id = tourist_id;
+    order.guide_id = guide_row_id;
+    order.amount = "100".to_string();
+    order.currency = "USD".to_string();
+    order.state = OrderState::Escrowed;
+    order.created_at = now;
+    order.accepted_at = Some(now);
+    order.escrowed_at = Some(now);
+    order.updated_at = now;
+    store.orders.insert(order_id, order);
     ChainOffState {
         store: Arc::new(RwLock::new(store)),
         config: ChainOffConfig::default(),
@@ -89,17 +71,17 @@ fn chain_off_state_escrowed_order(
     }
 }
 
-fn post_confirm_completion_req(order_id: Uuid, guide_user_id: Uuid) -> Request<Body> {
+fn post_confirm_service_completion_req(order_id: Uuid, user_id: Uuid) -> Request<Body> {
     Request::builder()
         .method("POST")
-        .uri(format!("/api/v1/orders/{order_id}/confirm-completion"))
-        .header("X-User-Id", guide_user_id.to_string())
+        .uri(format!("/api/v1/orders/{order_id}/confirm-service-completion"))
+        .header("X-User-Id", user_id.to_string())
         .body(Body::empty())
         .unwrap()
 }
 
 #[tokio::test]
-async fn post_confirm_completion_twice_second_returns_409_invalid_state_completed() {
+async fn post_confirm_service_completion_bilateral_then_duplicate_409() {
     let tourist = Uuid::new_v4();
     let guide = Uuid::new_v4();
     let order_id = Uuid::parse_str("00000000-0000-4000-8000-0000000000b8").unwrap();
@@ -107,25 +89,36 @@ async fn post_confirm_completion_twice_second_returns_409_invalid_state_complete
         tourist, guide, order_id,
     ))));
 
-    let res_ok = app
+    let res_guide = app
         .clone()
-        .oneshot(post_confirm_completion_req(order_id, guide))
+        .oneshot(post_confirm_service_completion_req(order_id, guide))
         .await
         .unwrap();
-    assert_eq!(res_ok.status(), StatusCode::OK);
-    let ok_body = res_ok.into_body().collect().await.unwrap().to_bytes();
-    let ok_json: serde_json::Value = serde_json::from_slice(&ok_body).unwrap();
-    assert_eq!(ok_json["status"], "ok");
-    assert_eq!(ok_json["order"]["status"], "completed");
+    assert_eq!(res_guide.status(), StatusCode::OK);
+    let guide_body = res_guide.into_body().collect().await.unwrap().to_bytes();
+    let guide_json: serde_json::Value = serde_json::from_slice(&guide_body).unwrap();
+    assert_eq!(guide_json["status"], "ok");
+    assert_eq!(guide_json["order"]["status"], "escrowed");
+    assert_eq!(guide_json["order"]["sub_status"], "service_completion_pending");
+
+    let res_tourist = app
+        .clone()
+        .oneshot(post_confirm_service_completion_req(order_id, tourist))
+        .await
+        .unwrap();
+    assert_eq!(res_tourist.status(), StatusCode::OK);
+    let tourist_body = res_tourist.into_body().collect().await.unwrap().to_bytes();
+    let tourist_json: serde_json::Value = serde_json::from_slice(&tourist_body).unwrap();
+    assert_eq!(tourist_json["order"]["status"], "completed");
+    assert_eq!(tourist_json["order"]["sub_status"], "service_completion_confirmed");
 
     let res_dup = app
-        .oneshot(post_confirm_completion_req(order_id, guide))
+        .oneshot(post_confirm_service_completion_req(order_id, guide))
         .await
         .unwrap();
     assert_eq!(res_dup.status(), StatusCode::CONFLICT);
     let bytes = res_dup.into_body().collect().await.unwrap().to_bytes();
     let v: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
     assert_eq!(v["error"], "invalid_state");
-    assert_eq!(v["message"], "invalid_state");
     assert_eq!(v["current"], "completed");
 }

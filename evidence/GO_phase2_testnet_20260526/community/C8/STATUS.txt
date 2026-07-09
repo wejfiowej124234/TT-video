@@ -1,0 +1,8 @@
+phase: ② testnet C8 (runbook / monitoring / ops)
+status: PASS
+last_run: 20260605T145342Z
+api_base: https://tt-api-staging.fly.dev
+runbook: runbook.md
+monitoring_check: monitoring-check-20260605T145342Z.log
+log: run-20260605T145342Z.log
+note: C8 slot PASS only — NOT Phase ② GO / NOT C9-C12 GO / NOT Production GO

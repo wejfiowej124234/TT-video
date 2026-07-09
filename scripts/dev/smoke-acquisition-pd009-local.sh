@@ -264,4 +264,5 @@ fi
 echo ""
 echo "smoke-acquisition-pd009-local: ALL PASSED (① local · not ②③ GO)"
 echo "  listing_id=$LISTING_ID order_id=$ORDER_ID"
-echo "  escrow: http://localhost:3000/escrow/${ORDER_ID} (if frontend up)"
+FRONTEND_PORT="${FRONTEND_PORT:-3012}"
+echo "  escrow: http://localhost:${FRONTEND_PORT}/escrow/${ORDER_ID} (if frontend up)"

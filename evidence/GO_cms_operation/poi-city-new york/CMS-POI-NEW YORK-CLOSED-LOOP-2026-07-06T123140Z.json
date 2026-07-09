@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T12:31:40Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "US",
+    "city_zh": "纽约",
+    "city_en": "New York",
+    "matrix_ids": [
+      "PH-US-166-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-US-166-FOOD",
+      "legacy_value": "牛排",
+      "poi_id": "43bffdd2-73d7-4ff0-87ba-d9602d9eeaea",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-166-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

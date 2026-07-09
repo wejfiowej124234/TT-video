@@ -37,6 +37,10 @@ done
 mkdir -p "$OUT"
 LOG="$OUT/run.log"
 
+# shellcheck source=../ops/lib/deploy-governance-phase3-guard.sh
+source "$ROOT/scripts/ops/lib/deploy-governance-phase3-guard.sh"
+deploy_governance_phase3_assert_s6_allowed "$ROOT" "$EXPECT_SHA"
+
 REPO_ROOT="$ROOT"
 # shellcheck source=scripts/dev/lib/staging-adm-u01-env.sh
 source "$ROOT/scripts/dev/lib/staging-adm-u01-env.sh"

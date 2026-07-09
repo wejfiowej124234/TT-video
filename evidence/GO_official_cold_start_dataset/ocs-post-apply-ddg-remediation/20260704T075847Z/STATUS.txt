@@ -1,0 +1,8 @@
+TT_OCS_POST_APPLY_DDG: PASS
+TT_OCS_OFFICIAL_CONTENT_BASELINE: READY
+environment: staging
+at=20260704T075847Z
+api=https://tt-api-staging.fly.dev
+signoff=ocs-post-apply-ddg-signoff.json
+evidence=evidence/GO_official_cold_start_dataset/ocs-post-apply-ddg-remediation/20260704T075847Z
+note=OCS Surface Expansion 收尾 · DDG PASS · G3 Official Content Baseline input ready

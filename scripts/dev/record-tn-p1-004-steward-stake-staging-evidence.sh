@@ -37,17 +37,29 @@ merge_env() {
 
 merge_env "$ROOT/.env"
 merge_env "$ROOT/scripts/dev/.env.staging-onboarding.local"
+
+# Staging /meta SSOT（覆盖 LEGACY 默认池/TTG 地址）
+meta_contracts="$(curl --noproxy "*" -sS --max-time 45 "${STAGING_API}/meta" | node -e "
+let s='';process.stdin.on('data',d=>s+=d);process.stdin.on('end',()=>{
+  const m=JSON.parse(s); const c=m.chain?.contracts||{};
+  process.stdout.write(JSON.stringify({pool:c.region_steward_stake_pool_address,ttg:c.governance_token_address}));
+});")"
+POOL_META="$(node -e "const j=JSON.parse(process.argv[1]);process.stdout.write(j.pool||'');" "$meta_contracts")"
+TTG_META="$(node -e "const j=JSON.parse(process.argv[1]);process.stdout.write(j.ttg||'');" "$meta_contracts")"
 merge_env "$ROOT/scripts/dev/.env.phase2-chain-deploy.local"
+
+POOL="${REGION_STEWARD_STAKE_POOL_ADDRESS:-0x16F914f3D50f7Aa02665589e715F94CA3b7Ab47c}"
+TTG="${STEWARD_TTG_ADDRESS:-${GOVERNANCE_TOKEN_ADDRESS:-0xaC2E29AC7089e4863C21dAF232cF8bbb025d91ca}}"  # LEGACY TTG fallback
+[[ -n "$POOL_META" ]] && POOL="$POOL_META"
+[[ -n "$TTG_META" ]] && TTG="$TTG_META"
+export REGION_STEWARD_STAKE_POOL_ADDRESS="$POOL"
+export GOVERNANCE_TOKEN_ADDRESS="$TTG"
+export STEWARD_TTG_ADDRESS="$TTG"
 
 export CHAIN_RPC_URL="$RPC"
 export STAGING_API_BASE="$STAGING_API"
 export NO_PROXY="${NO_PROXY:+$NO_PROXY,}tt-api-staging.fly.dev,.fly.dev,localhost,127.0.0.1,publicnode.com"
 
-POOL="${REGION_STEWARD_STAKE_POOL_ADDRESS:-0x16F914f3D50f7Aa02665589e715F94CA3b7Ab47c}"
-TTG="${STEWARD_TTG_ADDRESS:-${GOVERNANCE_TOKEN_ADDRESS:-0xaC2E29AC7089e4863C21dAF232cF8bbb025d91ca}}"  # LEGACY TTG fallback
-export REGION_STEWARD_STAKE_POOL_ADDRESS="$POOL"
-export GOVERNANCE_TOKEN_ADDRESS="$TTG"
-export STEWARD_TTG_ADDRESS="$TTG"
 export CHAIN_ID="${CHAIN_ID:-11155111}"
 
 exec > >(tee -a "$RUN_LOG") 2>&1
@@ -57,10 +69,22 @@ echo "api=${STAGING_API} rpc=${RPC}"
 
 echo ""
 echo "== Step 0: live Sepolia preflight =="
-CID="$(cast chain-id --rpc-url "$RPC" | tr -d '\r\n')"
+CID="$(cast chain-id --rpc-url "$RPC" 2>/dev/null | tr -d '\r\n' || true)"
+if [[ "$CID" != "11155111" ]]; then
+  CID="$(curl --noproxy "*" -sS --max-time 45 -X POST "$RPC" \
+    -H "Content-Type: application/json" \
+    -d '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}' \
+    | node -e "let s='';process.stdin.on('data',d=>s+=d);process.stdin.on('end',()=>{const j=JSON.parse(s);process.stdout.write(parseInt(j.result||'0x0',16).toString())})")"
+fi
 [[ "$CID" == "11155111" ]] || { echo "FAIL chain_id $CID" >&2; exit 2; }
-POOL_CODE="$(cast code "$POOL" --rpc-url "$RPC" | tr -d ' \n')"
-[[ -n "$POOL_CODE" && "$POOL_CODE" != "0x" ]] || { echo "FAIL no pool code" >&2; exit 2; }
+POOL_CODE="$(cast code "$POOL" --rpc-url "$RPC" 2>/dev/null | tr -d ' \n' || true)"
+if [[ -z "$POOL_CODE" || "$POOL_CODE" == "0x" ]]; then
+  POOL_CODE="$(curl --noproxy "*" -sS --max-time 45 -X POST "$RPC" \
+    -H "Content-Type: application/json" \
+    -d "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getCode\",\"params\":[\"${POOL}\",\"latest\"],\"id\":1}" \
+    | node -e "let s='';process.stdin.on('data',d=>s+=d);process.stdin.on('end',()=>{process.stdout.write(JSON.parse(s).result||'')})")"
+fi
+[[ -n "$POOL_CODE" && "$POOL_CODE" != "0x" ]] || { echo "FAIL no pool code at $POOL" >&2; exit 2; }
 VER="$(cast call "$POOL" "version()(string)" --rpc-url "$RPC" | tr -d '"')"
 MIN_CN="$(cast call "$POOL" "minStakeAmount(bytes2)(uint256)" 0x434e --rpc-url "$RPC" | awk '{print $1}')"
 DELAY="$(cast call "$POOL" "releaseDelaySeconds()(uint256)" --rpc-url "$RPC" | awk '{print $1}')"
@@ -80,8 +104,12 @@ echo ""
 echo "== Step 2: staging API stake-quote + stake-status =="
 # shellcheck source=scripts/dev/lib/phase2-web3-p2-003-b407-lib.sh
 source "$ROOT/scripts/dev/lib/phase2-web3-p2-003-b407-lib.sh"
-p2b407_preflight_chain_keys >/dev/null
-STAKER="${P2B407_TRAVELER_ADDR}"
+p2b407_load_env
+_staker_pk="$(p2b407_normalize_hex_pk "${STEWARD_STAKER_PK:-${B407_TRAVELER_PK:-${PRIVATE_KEY:-}}}")"
+p2b407_check_pk_decodable "STEWARD_STAKER_PK (or B407_TRAVELER_PK / PRIVATE_KEY)" "$_staker_pk" || exit 2
+export STEWARD_STAKER_PK="$_staker_pk"
+STAKER="$(cast wallet address --private-key "$_staker_pk" | tr -d '\r\n')"
+unset _staker_pk
 
 QUOTE="$(curl --noproxy "*" -sS "${STAGING_API}/api/v1/steward/stake-quote?jurisdictions=CN")"
 echo "$QUOTE" | tee "$EVID/stake-quote.json"

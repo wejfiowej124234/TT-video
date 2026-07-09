@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T13:56:11Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AU",
+    "city_zh": "悉尼",
+    "city_en": "Sydney",
+    "matrix_ids": [
+      "PH-AU-184-ATR",
+      "PH-AU-185-ATR",
+      "PH-AU-186-ATR",
+      "PH-AU-187-ATR",
+      "PH-AU-188-FOOD",
+      "PH-AU-189-FOOD",
+      "PH-AU-190-FOOD",
+      "PH-AU-191-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AU-184-ATR",
+      "legacy_value": "歌剧院",
+      "poi_id": "50aef5d0-e400-4b1d-bccb-08c21ae3824c",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-184-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AU-185-ATR",
+      "legacy_value": "海港大桥",
+      "poi_id": "a84575cc-e7de-4e7b-b1c6-faacf9dbb951",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-185-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AU-186-ATR",
+      "legacy_value": "邦迪海滩",
+      "poi_id": "629c53fc-8fdd-423e-8083-46f40bfb9ae9",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-186-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AU-187-ATR",
+      "legacy_value": "岩石区",
+      "poi_id": "f61c8d1c-5e9e-41fe-81cc-1e9639217993",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-187-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AU-188-FOOD",
+      "legacy_value": "海鲜",
+      "poi_id": "06f2e6b9-01ec-471a-8a97-35c6753829bf",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-188-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AU-189-FOOD",
+      "legacy_value": "brunch",
+      "poi_id": "76255c98-909a-4930-a3c0-80d3b811f054",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-189-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AU-190-FOOD",
+      "legacy_value": "咖啡",
+      "poi_id": "062adc80-cb81-45fc-bb49-8443f80e7c0b",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-190-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AU-191-FOOD",
+      "legacy_value": "牛排",
+      "poi_id": "4fc690de-b1de-45ec-b980-fd4ca118eefd",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-191-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

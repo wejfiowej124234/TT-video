@@ -1,0 +1,94 @@
+{
+  "request_chain": [
+    {
+      "note": "同一会话第二次 GET /me",
+      "headers": {
+        "Authorization": "Bearer tts_[REDACTED]"
+      }
+    }
+  ],
+  "response": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "user": {
+        "id": "d87243c2-92b6-4d04-a1bc-5989c2eb47f7",
+        "email": "r003.prod.interim2@traveltrust.test",
+        "role": "traveler",
+        "role_traveltrust": "traveler",
+        "kyc_status": "none",
+        "nickname": null,
+        "avatar_url": null,
+        "default_wallet_address": null,
+        "email_verified_at": "2026-07-02T16:54:36.481916513+00:00",
+        "settings_preferences": null,
+        "created_at": "2026-07-02T16:54:36.481916513+00:00"
+      },
+      "guide": null,
+      "trust": {
+        "kyc_status": "none",
+        "wallet_linked": false,
+        "guide_registration_status": null,
+        "identity_status": "active",
+        "risk_level": "low",
+        "risk_basis": "open_disputes_as_party:0",
+        "risk_reason_codes": [],
+        "recommended_actions": [],
+        "rule": "90 §6 Partial：identity_status 由 kyc_status + guide.status 推导；risk_level 由未决争议（status=open）且订单参与方为当前用户计数推导；risk_reason_codes/recommended_actions 为同源规则版；非 100 风控引擎终态",
+        "reputation": {
+          "rule_version": "me_reputation_summary_v2",
+          "as_guide": null,
+          "as_reviewer": {
+            "reviews_written_count": 0,
+            "sum_review_weights": -0.0
+          },
+          "note": "weighted guide reputation applies when role=guide",
+          "formula": "sum_review_weights = sum(weight) for reviews you authored; each weight from traveltrust_core::ReviewWeight at submit (order amount × your account age factors)"
+        },
+        "acquisition_trust_score": 500,
+        "acquisition_publish_eligible": false,
+        "acquisition_publish_bond_waived": false,
+        "acquisition_publish_bond_active": false,
+        "acquisition_listings_published_24h": 0,
+        "acquisition_publish_suspended": false,
+        "acquisition_fulfillment_bond_active": false
+      },
+      "stats": {
+        "orders_total": 0,
+        "total_spent": -0.0,
+        "reviews_count": 0,
+        "acquisition_orders_as_owner": 0,
+        "acquisition_orders_as_carrier": 0,
+        "acquisition_in_progress_count": 0,
+        "acquisition_listings_published_24h": 0
+      },
+      "identity_slots": [
+        {
+          "id": "traveler",
+          "state": "active",
+          "stake_display": null
+        },
+        {
+          "id": "guide",
+          "state": "inactive",
+          "stake_display": null
+        },
+        {
+          "id": "acquisition",
+          "state": "inactive",
+          "stake_display": null
+        },
+        {
+          "id": "merchant",
+          "state": "inactive",
+          "stake_display": null
+        },
+        {
+          "id": "region_steward",
+          "state": "inactive",
+          "stake_display": null
+        }
+      ]
+    }
+  }
+}

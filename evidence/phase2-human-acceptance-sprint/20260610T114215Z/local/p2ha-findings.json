@@ -1,0 +1,435 @@
+{
+  "sprint": "PHASE2-HUMAN-ACCEPTANCE-SPRINT",
+  "phase": "local",
+  "phase_label": "① 本地",
+  "recorded_at": "2026-06-10T11:42:25.920571+00:00",
+  "targets": {
+    "web": "http://127.0.0.1:3012",
+    "api": "http://127.0.0.1:8080"
+  },
+  "meta_git_sha": "unknown",
+  "verdict": "PASS",
+  "role_matrix": {
+    "旅行者": "PASS",
+    "向导": "PASS",
+    "管理员": "PASS",
+    "收购/运营": "PASS"
+  },
+  "roles_required": [
+    "旅行者",
+    "向导",
+    "管理员",
+    "收购/运营"
+  ],
+  "summary": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 0,
+    "flows_pass": 57,
+    "flows_fail": 0,
+    "flows_partial": 0
+  },
+  "issues": [],
+  "flows": [
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/market",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/auth/login",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/community",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "身份",
+      "step": "GET /me",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "市场",
+      "step": "discover orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "订单",
+      "step": "my orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "社区",
+      "step": "feed",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/me/settings",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/escrow/demo-order-id",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/orders",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/users",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/finance",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/disputes",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/community/reports",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/inbox",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/permissions",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "Admin 壳层",
+      "step": "capabilities",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "订单台账",
+      "step": "orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "用户台账",
+      "step": "users",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "财务",
+      "step": "home-overview",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "举报队列",
+      "step": "reports",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "RBAC",
+      "step": "route-matrix",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "2FA 状态",
+      "step": "totp/status",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/me/identities",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/market/acquisition",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/did-rank",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/did-rank?board=acquisition",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "信任",
+      "step": "GET /me trust",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "收购目录",
+      "step": "acquisition listings",
+      "status": "PASS",
+      "notes": "HTTP 401"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/admin/operator-guide",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/admin/content/countries",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/admin/growth",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/admin/official",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/admin/community/reports",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "countries?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "publish-queue?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "detail?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "geo-validation",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "referral-codes?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "reward-ledger?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "overview",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "stages?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "airdrop-campaigns?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "rules?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "scan-runs?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "accounts?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "guides?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "itinerary-templates?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "campaigns?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "launches?limit=50",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "向导",
+      "flow": "页面浏览",
+      "step": "/guide",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "向导",
+      "flow": "向导资料",
+      "step": "GET /me",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "向导",
+      "flow": "接单",
+      "step": "guide orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "向导",
+      "flow": "向导身份",
+      "step": "me.guide",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    }
+  ],
+  "boundary": "Human-visible acceptance · ①/② only · not Phase ③ Production GO"
+}

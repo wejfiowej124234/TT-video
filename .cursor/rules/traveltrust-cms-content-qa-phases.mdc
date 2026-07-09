@@ -1,0 +1,73 @@
+---
+description: CMS 三阶段铁规则 · Execution ≠ Content QA · 国家复制顺序
+alwaysApply: true
+---
+
+# CMS 三阶段 · Content QA 铁规则
+
+## 阶段划分（禁止混轨）
+
+| 阶段 | 名称 | 状态 | Agent 行为 |
+|------|------|------|------------|
+| **①** | **CMS 系统** | **FROZEN · 已完成** | **禁止**再投入 Catalog / Runtime Wiring / Ownership / Matrix / Daily Board / Pipeline 架构 |
+| **②** | **Execution** | **基本完成** | Ambient + JP 东京/大阪/京都/札幌 已证 Review→Publish→Verify→Evidence→Live · **禁止因 Execution 重复劳动** |
+| **③** | **Content QA** | **ACTIVE** | 证明**用户看到的是否 L5** · 检查**内容** · **不叫 Audit** |
+
+## 国家推进顺序（写死）
+
+```
+Execution → Content QA → Country CLOSED → 下一国家
+```
+
+**禁止：** Execution → 下一国家（跳过 Content QA）
+
+**日本 SSOT：** `node scripts/dev/run-cms-japan-content-qa.cjs` → `CMS-JAPAN-CONTENT-QA-LATEST.json`
+
+**韩国/他国：** 复制日本 QA 模板 · 须 `TT_CMS_JP_COUNTRY: CLOSED` 后才启动
+
+## Content QA 六维（分表 · 禁止单一 FAIL）
+
+Execution · CMS Ownership · Runtime Consumer · Geo Matching · **Content Accuracy** · L5 Quality
+
+**Execution CLOSED ≠ Content QA CLOSED ≠ Country CLOSED**
+
+## Runtime 双层（写死 · 互不否决）
+
+| 层级 | 范围 | 何时验 | 键 |
+|------|------|--------|-----|
+| **City Runtime** | 该城 Consumer（Custom Itinerary → 国 → 城 → POI） | City Content QA / Golden Template | Gate 2 = Gate 4 同源 |
+| **Country Runtime** | 全站 POI Consumer（首页/市场/Listing/搜索…） | **仅** Country CLOSED | L5 Visual Gap POI 族 |
+
+**禁止：** 用 Country Runtime OPEN 否决 City Golden Template
+
+**推进链：** City CLOSED → City Content QA CLOSED → **Golden Template（City）** → 复制本国它城 → Country Runtime 全站 → **Country CLOSED**
+
+**SSOT：** `CMS-CONTENT-QA-STANDARD-FROZEN.v1.json` · `runtime_tiers`
+
+## Content Accuracy（图文/城市/国家一致）
+
+Geo · Culture · Landmark · Food · Hotel · Transport · Season（可选）
+
+Backlog **须逐项 POI**（Geo ❌ Culture ❌ …）· **禁止**只写「8 issues」
+
+## Remediation 优先级（日本）
+
+1. 大阪 → 2. 札幌 → 3. 东京 → 4. 京都 → 5. 福冈 Execution → 6. Runtime QA → **JP Country CLOSED**
+
+## 一张图只换一次 · LOCK（写死）
+
+```
+Review → Replace(1×) → Publish → Verify → 六维 QA 全 PASS → LOCK
+```
+
+**Asset 状态仅两种：** `OPEN` | `LOCKED`
+
+**LOCK 后禁止：** 更漂亮的图 · AI 推荐更好的图 · 重新进入流程
+
+**唯一解锁：** 真实错误（国家错 / 城市错 / 版权）+ `--unlock-real-error`
+
+**SSOT：** `evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json` · `CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json`
+
+**单 POI 命令：** `node scripts/dev/run-cms-content-qa-poi-remediation.cjs --city-zh 大阪 --poi 大阪城`
+
+**禁止 bulk：** 不得一次替换整城

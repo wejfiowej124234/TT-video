@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.ocs_content_l5_surface_boundary_review.v1",
+  "stamp_utc": "20260704T151409Z",
+  "filename": "ocs-sydney-coast-community-media.jpg",
+  "chain_id": "sydney-coast",
+  "slot": "community-media",
+  "surface": "Community Media",
+  "surface_boundary_checklist": {
+    "community_detail_only_no_guide_portrait": {
+      "pass": true,
+      "policy": "Surface Boundary：每行素材仅表达所属 Surface 业务语义；禁止 Guide/Provider/Acquisition/Official Guide/Community 职责混用。",
+      "notes": "Community Media boundary OK for ocs-sydney-coast-community-media.jpg"
+    },
+    "community_detail_only_no_provider_service": {
+      "pass": true,
+      "policy": "Surface Boundary：每行素材仅表达所属 Surface 业务语义；禁止 Guide/Provider/Acquisition/Official Guide/Community 职责混用。",
+      "notes": "Community Media boundary OK for ocs-sydney-coast-community-media.jpg"
+    },
+    "community_detail_only_no_acquisition_product": {
+      "pass": true,
+      "policy": "Surface Boundary：每行素材仅表达所属 Surface 业务语义；禁止 Guide/Provider/Acquisition/Official Guide/Community 职责混用。",
+      "notes": "Community Media boundary OK for ocs-sydney-coast-community-media.jpg"
+    },
+    "community_detail_only_no_official_route_poster": {
+      "pass": true,
+      "policy": "Surface Boundary：每行素材仅表达所属 Surface 业务语义；禁止 Guide/Provider/Acquisition/Official Guide/Community 职责混用。",
+      "notes": "Community Media boundary OK for ocs-sydney-coast-community-media.jpg"
+    }
+  },
+  "TT_SURFACE_BOUNDARY_REVIEW": "PASS"
+}

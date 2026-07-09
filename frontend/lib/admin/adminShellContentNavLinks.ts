@@ -33,6 +33,26 @@ export const ADMIN_SHELL_CONTENT_NAV_LINKS: readonly AdminShellNavLinkDef[] = [
     permission: ADMIN_PERM.CONTENT_READ,
   },
   {
+    href: "/admin/content/translation",
+    labelKey: "admin_shell_nav_content_translation",
+    permission: ADMIN_PERM.CONTENT_READ,
+  },
+  {
+    href: "/admin/content/seo",
+    labelKey: "admin_shell_nav_content_seo",
+    permission: ADMIN_PERM.CONTENT_READ,
+  },
+  {
+    href: "/admin/content/announcements",
+    labelKey: "admin_shell_nav_content_announcements",
+    permission: ADMIN_PERM.CONTENT_READ,
+  },
+  {
+    href: "/admin/content/roadmap",
+    labelKey: "admin_shell_nav_content_roadmap",
+    permission: ADMIN_PERM.CONTENT_READ,
+  },
+  {
     href: "/admin/content/landing-ambient",
     labelKey: "admin_shell_nav_content_landing_ambient",
     permission: ADMIN_PERM.CONTENT_READ,

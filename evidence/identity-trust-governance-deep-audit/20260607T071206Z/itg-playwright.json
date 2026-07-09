@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "exit_code": 1,
+  "ui_corridor_matrix": [
+    {
+      "probe_id": "ui.did_rank",
+      "spec": "93-matrix-path-did-rank-boards.spec.ts / f007-f010-f032",
+      "step": "DID rank API (phase\u2460 surrogate)",
+      "status": "PASS"
+    },
+    {
+      "probe_id": "ui.f032",
+      "spec": "93-matrix-path-did-rank-boards.spec.ts / f007-f010-f032",
+      "step": "F-032 trust-growth config (phase\u2460 surrogate)",
+      "status": "PASS"
+    },
+    {
+      "probe_id": "ui.f007",
+      "spec": "93-matrix-path-did-rank-boards.spec.ts / f007-f010-f032",
+      "step": "F-007 profile avatar",
+      "status": "FAIL"
+    }
+  ]
+}

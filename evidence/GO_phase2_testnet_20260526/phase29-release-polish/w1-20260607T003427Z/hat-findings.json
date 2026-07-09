@@ -1,0 +1,50 @@
+{
+  "phase": "②.8 Human Acceptance Test",
+  "recorded_at": "2026-06-07T00:35:11.973Z",
+  "targets": {
+    "web": "http://127.0.0.1:3012"
+  },
+  "verdict": "PASS",
+  "summary": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 0,
+    "admin_p1": 0,
+    "flows_pass": 4,
+    "flows_fail": 0,
+    "flows_partial": 0,
+    "flows_blocked": 0
+  },
+  "issues": [],
+  "flows": [
+    {
+      "role": "旅行者",
+      "flow": "登录表单",
+      "step": "/auth/login",
+      "status": "PASS",
+      "notes": "email+password+submit visible"
+    },
+    {
+      "role": "旅行者",
+      "flow": "注册",
+      "step": "/auth/register",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "旅行者",
+      "flow": "首页",
+      "step": "/",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "旅行者",
+      "flow": "市场",
+      "step": "/market",
+      "status": "PASS",
+      "notes": ""
+    }
+  ],
+  "boundary": "Human-visible HAT · browser + API probe · not Production GO"
+}

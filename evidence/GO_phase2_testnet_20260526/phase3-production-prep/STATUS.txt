@@ -1,0 +1,9 @@
+TT_PHASE3_PRODUCTION_PREP_P0: OK
+at=20260701T101131Z
+p0_chain=evidence/GO_phase2_testnet_20260526/phase3-production-prep/p0-chain-20260701T101131Z
+merchant: OK
+db_drill: OK
+rollback_drill: OK
+adm_u02=evidence/GO_staging_admin_adm_u02/run_20260701T100804Z
+TT_PHASE3_PRODUCTION_CONVERGENCE: CLOSED
+convergence=20260701T004341Z

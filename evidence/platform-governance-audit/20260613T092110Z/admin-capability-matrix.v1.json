@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.admin_capability_matrix.v1",
+  "admin_page_tsx_count": 107,
+  "ssot": "GET /api/v1/admin/rbac/route-matrix",
+  "ui": "frontend/lib/admin/adminShellSidebarModel.ts",
+  "smoke": "scripts/dev/smoke-admin-rbac-matrix-local.sh"
+}

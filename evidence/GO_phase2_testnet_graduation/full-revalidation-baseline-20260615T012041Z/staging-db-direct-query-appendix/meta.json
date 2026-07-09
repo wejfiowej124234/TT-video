@@ -1,0 +1,11 @@
+{
+  "stamp": "20260615T012058Z",
+  "phase": "② testnet",
+  "baseline_git_sha": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+  "api": "https://tt-api-staging.fly.dev",
+  "fe": "https://tt-web-staging.fly.dev",
+  "psql_client": "docker postgres:16-alpine (native psql absent on host)",
+  "fly_proxy_port": "15432",
+  "honest_boundary": "appendix only · no application code change · AQ-004 hygiene optional",
+  "marker": "TT_STAGING_DB_DIRECT_QUERY_APPENDIX: PASS"
+}

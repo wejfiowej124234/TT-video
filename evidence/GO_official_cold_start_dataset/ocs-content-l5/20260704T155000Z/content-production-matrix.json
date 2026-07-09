@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.ocs_content_production_matrix_closure.v1",
+  "stamp_utc": "20260704T155000Z",
+  "source_yaml": "data/official-cold-start/content-production-matrix.v1.yaml",
+  "rows_total": 60,
+  "rows_verified_pass": 60,
+  "chains_closed": 10,
+  "dimensions": {
+    "G1_real_assets": {
+      "score": 95,
+      "pass": true,
+      "weight": 12
+    },
+    "G2_copy_alignment": {
+      "score": 94,
+      "pass": true,
+      "weight": 12
+    },
+    "G3_slot_differentiation": {
+      "score": 94,
+      "pass": true,
+      "weight": 12
+    },
+    "G4_cross_surface_city": {
+      "score": 96,
+      "pass": true,
+      "weight": 8
+    },
+    "G5_brand_visual": {
+      "score": 92,
+      "pass": true,
+      "weight": 8
+    },
+    "G6_commercial_perception": {
+      "score": 91,
+      "pass": true,
+      "weight": 12,
+      "note": "60/60 row human G6 pass · live staging blind UAT spotcheck deferred to ②"
+    },
+    "G7_wcag_visual": {
+      "score": 93,
+      "pass": true,
+      "weight": 8
+    },
+    "G8_evidence_matrix": {
+      "score": 96,
+      "pass": true,
+      "weight": 8
+    },
+    "G9_content_authenticity": {
+      "score": 91,
+      "pass": true,
+      "weight": 10
+    },
+    "G10_content_diversity": {
+      "score": 94,
+      "pass": true,
+      "weight": 10
+    }
+  },
+  "l5_score": {
+    "weighted": 93.5,
+    "min_total": 85,
+    "min_per_dimension": 75,
+    "pass": true
+  },
+  "machine_keys": {
+    "TT_OCS_CONTENT_L5": "CLOSED",
+    "TT_OCS_CONTENT_L5_EXECUTION": "CLOSED",
+    "TT_OCS_CONTENT_L5_READY": "YES",
+    "TT_CONTENT_PRODUCTION_MATRIX": "PASS",
+    "TT_CONTENT_BRAND_CONSISTENCY": "PASS"
+  },
+  "upstream_evidence": [
+    "OCS-CONTENT-L5-FINAL-PRODUCTION-CONTENT-AUDIT-60of60.REVIEW.json",
+    "OCS-CONTENT-L5-OFFICIAL-CONTENT-LIBRARY-MILESTONE-60of60.REVIEW.json",
+    "OCS-CONTENT-L5-CONTENT-PORTFOLIO-60of60.REVIEW.json",
+    "OCS-CONTENT-L5-VISUAL-SEQUENCE-60of60.REVIEW.json"
+  ]
+}

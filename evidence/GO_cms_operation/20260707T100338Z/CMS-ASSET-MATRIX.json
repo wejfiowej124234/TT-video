@@ -1,0 +1,993 @@
+{
+  "schema": "traveltrust.cms_asset_matrix_report.v1",
+  "stamp_utc": "20260707T100338Z",
+  "layer": "CMS_OPERATION",
+  "role": "operations_workbench",
+  "not_governance": true,
+  "matrix_path": "data/catalog/cms-asset-matrix.v1.yaml",
+  "matrix_schema": "traveltrust.cms_asset_matrix.v1",
+  "probe_api": "https://tt-api-staging.fly.dev",
+  "probe_skipped": false,
+  "source_alignment": {
+    "label": "Source Alignment",
+    "aligned": 6,
+    "total": 8,
+    "display": "6 / 8",
+    "pct": 75
+  },
+  "content_health_score": {
+    "ssot": "source_alignment",
+    "label": "75%",
+    "status": "IN_PROGRESS",
+    "display": "6 / 8",
+    "pct": 75,
+    "aligned": 6,
+    "total": 8
+  },
+  "destination_ambient": {
+    "wave_order": [
+      "JP",
+      "KR",
+      "TH",
+      "SG",
+      "FR",
+      "US",
+      "AU",
+      "ES",
+      "AE",
+      "CN"
+    ],
+    "live": 10,
+    "total": 10,
+    "display": "10/10",
+    "pipeline": {
+      "stages": [
+        "draft",
+        "review",
+        "approved",
+        "published",
+        "verified",
+        "live"
+      ],
+      "counts": {
+        "draft": 0,
+        "review": 0,
+        "approved": 0,
+        "published": 0,
+        "verified": 0,
+        "live": 10
+      },
+      "by_stage": {
+        "draft": [],
+        "review": [],
+        "approved": [],
+        "published": [],
+        "verified": [],
+        "live": [
+          {
+            "matrix_id": "DA-JP-HOME",
+            "country_iso": "JP",
+            "asset_lifecycle": "live"
+          },
+          {
+            "matrix_id": "DA-KR-HOME",
+            "country_iso": "KR",
+            "asset_lifecycle": "live"
+          },
+          {
+            "matrix_id": "DA-TH-HOME",
+            "country_iso": "TH",
+            "asset_lifecycle": "live"
+          },
+          {
+            "matrix_id": "DA-SG-HOME",
+            "country_iso": "SG",
+            "asset_lifecycle": "live"
+          },
+          {
+            "matrix_id": "DA-FR-HOME",
+            "country_iso": "FR",
+            "asset_lifecycle": "live"
+          },
+          {
+            "matrix_id": "DA-US-HOME",
+            "country_iso": "US",
+            "asset_lifecycle": "live"
+          },
+          {
+            "matrix_id": "DA-AU-HOME",
+            "country_iso": "AU",
+            "asset_lifecycle": "live"
+          },
+          {
+            "matrix_id": "DA-ES-HOME",
+            "country_iso": "ES",
+            "asset_lifecycle": "live"
+          },
+          {
+            "matrix_id": "DA-AE-HOME",
+            "country_iso": "AE",
+            "asset_lifecycle": "live"
+          },
+          {
+            "matrix_id": "DA-CN-HOME",
+            "country_iso": "CN",
+            "asset_lifecycle": "live"
+          }
+        ]
+      }
+    },
+    "ops_board": {
+      "live": [
+        "JP",
+        "KR",
+        "TH",
+        "SG",
+        "FR",
+        "US",
+        "AU",
+        "ES",
+        "AE",
+        "CN"
+      ],
+      "review": [],
+      "approved": [],
+      "published": [],
+      "verified": [],
+      "draft": []
+    },
+    "active_phase": {
+      "id": "phase_4",
+      "label": "POI → Hotel → Transport → Video",
+      "country_iso": null,
+      "matrix_id": null,
+      "status": "READY"
+    },
+    "verify_failures": [],
+    "rollback_needed": [
+      {
+        "matrix_id": "DA-JP-HOME",
+        "country_iso": "JP",
+        "rollback_target_revision": "1"
+      },
+      {
+        "matrix_id": "DA-KR-HOME",
+        "country_iso": "KR",
+        "rollback_target_revision": "1"
+      },
+      {
+        "matrix_id": "DA-TH-HOME",
+        "country_iso": "TH",
+        "rollback_target_revision": "1"
+      },
+      {
+        "matrix_id": "DA-SG-HOME",
+        "country_iso": "SG",
+        "rollback_target_revision": "1"
+      },
+      {
+        "matrix_id": "DA-FR-HOME",
+        "country_iso": "FR",
+        "rollback_target_revision": "1"
+      },
+      {
+        "matrix_id": "DA-US-HOME",
+        "country_iso": "US",
+        "rollback_target_revision": "1"
+      },
+      {
+        "matrix_id": "DA-AU-HOME",
+        "country_iso": "AU",
+        "rollback_target_revision": "1"
+      },
+      {
+        "matrix_id": "DA-ES-HOME",
+        "country_iso": "ES",
+        "rollback_target_revision": "1"
+      },
+      {
+        "matrix_id": "DA-AE-HOME",
+        "country_iso": "AE",
+        "rollback_target_revision": "1"
+      },
+      {
+        "matrix_id": "DA-CN-HOME",
+        "country_iso": "CN",
+        "rollback_target_revision": "1"
+      }
+    ],
+    "new_live_assets_today": 0,
+    "evidence_dir": "D:\\TravelTrust-V1.1\\evidence\\GO_cms_content_l5\\destination-ambient\\rows"
+  },
+  "daily_ops_board": {
+    "role": "operations_daily_summary",
+    "not_governance": true,
+    "ssot_chain": "asset_matrix → health_score | daily_ops_board (kpi + todays_tasks)",
+    "todays_tasks": {
+      "ssot": "asset_matrix",
+      "not_governance": true,
+      "projection_only": true,
+      "work_country_iso": "CN",
+      "work_matrix_id": "DA-CN-HOME",
+      "work_pipeline_stage": "live",
+      "today_checklist": [
+        {
+          "id": "upload",
+          "label": "DA-CN-HOME Upload",
+          "done": true,
+          "mark": "✓",
+          "display": "✓ DA-CN-HOME Upload"
+        },
+        {
+          "id": "publish",
+          "label": "Publish",
+          "done": true,
+          "mark": "✓",
+          "display": "✓ Publish"
+        },
+        {
+          "id": "verify",
+          "label": "Verify",
+          "done": true,
+          "mark": "✓",
+          "display": "✓ Verify"
+        },
+        {
+          "id": "evidence",
+          "label": "Evidence",
+          "done": true,
+          "mark": "✓",
+          "display": "✓ Evidence"
+        }
+      ],
+      "summary_table": [
+        {
+          "task": "CN Ambient Upload",
+          "status": "✓",
+          "done": true
+        },
+        {
+          "task": "CN Verify",
+          "status": "✓",
+          "done": true
+        },
+        {
+          "task": "CN Live",
+          "status": "✓",
+          "done": true
+        }
+      ],
+      "all_loop_done": true,
+      "next_after_complete": null
+    },
+    "daily_metrics": {
+      "date_utc": "2026-07-07",
+      "live_assets": 10,
+      "live_assets_display": "10/10",
+      "live_countries": [
+        "JP",
+        "KR",
+        "TH",
+        "SG",
+        "FR",
+        "US",
+        "AU",
+        "ES",
+        "AE",
+        "CN"
+      ],
+      "source_alignment_pct": 75,
+      "source_alignment_display": "6 / 8",
+      "source_alignment_aligned": 6,
+      "verify_fail": 0,
+      "rollback": 10,
+      "pending_review": 0,
+      "pending_publish": 0
+    },
+    "daily_report": {
+      "role": "operations_daily_report",
+      "not_governance": true,
+      "ssot": "asset_matrix_pack",
+      "date_utc": "2026-07-07",
+      "yesterday_date_utc": "2026-07-06",
+      "table": [
+        {
+          "metric": "Live Assets",
+          "today": 10,
+          "yesterday": 10,
+          "change": "—"
+        },
+        {
+          "metric": "Source Alignment",
+          "today": "75%",
+          "yesterday": "75%",
+          "change": "—"
+        },
+        {
+          "metric": "Verify Fail",
+          "today": 0,
+          "yesterday": 0,
+          "change": "—"
+        },
+        {
+          "metric": "Rollback",
+          "today": 10,
+          "yesterday": 10,
+          "change": "—"
+        },
+        {
+          "metric": "Pending Review",
+          "today": 0,
+          "yesterday": 0,
+          "change": "—"
+        },
+        {
+          "metric": "Pending Publish",
+          "today": 0,
+          "yesterday": 0,
+          "change": "—"
+        }
+      ],
+      "long_term_kpi": {
+        "content_completion": {
+          "label": "Source Alignment",
+          "current": "6 / 8",
+          "target": "8 / 8"
+        },
+        "live_assets": {
+          "label": "Live Assets",
+          "current": 10,
+          "cumulative": [
+            "JP",
+            "KR",
+            "TH",
+            "SG",
+            "FR",
+            "US",
+            "AU",
+            "ES",
+            "AE",
+            "CN"
+          ],
+          "display": "10/10"
+        },
+        "verify": {
+          "label": "Verify Failed",
+          "current": 0,
+          "target": 0
+        }
+      }
+    },
+    "daily_questions": {
+      "new_live_assets_today": 0,
+      "source_alignment": {
+        "current": "6 / 8",
+        "current_pct": 75,
+        "previous": "6 / 8",
+        "previous_pct": 75
+      },
+      "verify_failure_count": 0,
+      "rollback_needed_count": 10
+    },
+    "lifecycle_pipeline": [
+      "draft",
+      "review",
+      "approved",
+      "published",
+      "verified",
+      "live"
+    ],
+    "active_phase": {
+      "id": "phase_4",
+      "label": "POI → Hotel → Transport → Video",
+      "country_iso": null,
+      "matrix_id": null,
+      "status": "READY"
+    },
+    "destination_ambient_live": "10/10"
+  },
+  "daily_report": {
+    "role": "operations_daily_report",
+    "not_governance": true,
+    "ssot": "asset_matrix_pack",
+    "date_utc": "2026-07-07",
+    "yesterday_date_utc": "2026-07-06",
+    "table": [
+      {
+        "metric": "Live Assets",
+        "today": 10,
+        "yesterday": 10,
+        "change": "—"
+      },
+      {
+        "metric": "Source Alignment",
+        "today": "75%",
+        "yesterday": "75%",
+        "change": "—"
+      },
+      {
+        "metric": "Verify Fail",
+        "today": 0,
+        "yesterday": 0,
+        "change": "—"
+      },
+      {
+        "metric": "Rollback",
+        "today": 10,
+        "yesterday": 10,
+        "change": "—"
+      },
+      {
+        "metric": "Pending Review",
+        "today": 0,
+        "yesterday": 0,
+        "change": "—"
+      },
+      {
+        "metric": "Pending Publish",
+        "today": 0,
+        "yesterday": 0,
+        "change": "—"
+      }
+    ],
+    "long_term_kpi": {
+      "content_completion": {
+        "label": "Source Alignment",
+        "current": "6 / 8",
+        "target": "8 / 8"
+      },
+      "live_assets": {
+        "label": "Live Assets",
+        "current": 10,
+        "cumulative": [
+          "JP",
+          "KR",
+          "TH",
+          "SG",
+          "FR",
+          "US",
+          "AU",
+          "ES",
+          "AE",
+          "CN"
+        ],
+        "display": "10/10"
+      },
+      "verify": {
+        "label": "Verify Failed",
+        "current": 0,
+        "target": 0
+      }
+    }
+  },
+  "todays_tasks": {
+    "ssot": "asset_matrix",
+    "not_governance": true,
+    "projection_only": true,
+    "work_country_iso": "CN",
+    "work_matrix_id": "DA-CN-HOME",
+    "work_pipeline_stage": "live",
+    "today_checklist": [
+      {
+        "id": "upload",
+        "label": "DA-CN-HOME Upload",
+        "done": true,
+        "mark": "✓",
+        "display": "✓ DA-CN-HOME Upload"
+      },
+      {
+        "id": "publish",
+        "label": "Publish",
+        "done": true,
+        "mark": "✓",
+        "display": "✓ Publish"
+      },
+      {
+        "id": "verify",
+        "label": "Verify",
+        "done": true,
+        "mark": "✓",
+        "display": "✓ Verify"
+      },
+      {
+        "id": "evidence",
+        "label": "Evidence",
+        "done": true,
+        "mark": "✓",
+        "display": "✓ Evidence"
+      }
+    ],
+    "summary_table": [
+      {
+        "task": "CN Ambient Upload",
+        "status": "✓",
+        "done": true
+      },
+      {
+        "task": "CN Verify",
+        "status": "✓",
+        "done": true
+      },
+      {
+        "task": "CN Live",
+        "status": "✓",
+        "done": true
+      }
+    ],
+    "all_loop_done": true,
+    "next_after_complete": null
+  },
+  "ssot_hierarchy": {
+    "ssot": "asset_matrix_pack",
+    "projections": [
+      "health_score",
+      "daily_ops_board"
+    ],
+    "rule": "update asset matrix only · projections follow automatically"
+  },
+  "operations_kpi": {
+    "source_alignment": {
+      "label": "Source Alignment",
+      "aligned": 6,
+      "total": 8,
+      "display": "6 / 8",
+      "pct": 75
+    },
+    "content_health_score": {
+      "ssot": "source_alignment",
+      "label": "75%",
+      "status": "IN_PROGRESS",
+      "display": "6 / 8",
+      "pct": 75,
+      "aligned": 6,
+      "total": 8
+    }
+  },
+  "operational_pipeline": {
+    "mode": "operations_not_engineering",
+    "asset_lifecycle": [
+      "draft",
+      "review",
+      "approved",
+      "published",
+      "verified",
+      "live"
+    ],
+    "loop": [
+      "upload",
+      "publish",
+      "verify",
+      "evidence",
+      "asset_matrix_pack",
+      "health_score"
+    ],
+    "phases": {
+      "phase_1": {
+        "country": "JP",
+        "matrix_id": "DA-JP-HOME",
+        "goal": "Source Alignment 3/8 → 4/8"
+      },
+      "phase_2": {
+        "country": "KR",
+        "matrix_id": "DA-KR-HOME",
+        "goal": "replicate pipeline"
+      },
+      "phase_3": {
+        "countries": [
+          "TH",
+          "SG",
+          "FR",
+          "US",
+          "AU",
+          "ES",
+          "AE",
+          "CN"
+        ],
+        "goal": "same loop no process change"
+      },
+      "phase_4": {
+        "assets": [
+          "poi",
+          "hotel",
+          "transport",
+          "video"
+        ],
+        "goal": "same loop"
+      }
+    },
+    "active_phase": {
+      "id": "phase_4",
+      "label": "POI → Hotel → Transport → Video",
+      "country_iso": null,
+      "matrix_id": null,
+      "status": "READY"
+    }
+  },
+  "operator_table": [
+    {
+      "page_module": "首页 Ambient",
+      "current_source": "catalog",
+      "target_source": "catalog",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/landing-ambient"
+    },
+    {
+      "page_module": "POI",
+      "current_source": "placeholder",
+      "target_source": "catalog",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/poi-images"
+    },
+    {
+      "page_module": "Hotel",
+      "current_source": "catalog",
+      "target_source": "catalog",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/hotel-tiers"
+    },
+    {
+      "page_module": "Transport",
+      "current_source": "catalog",
+      "target_source": "catalog",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/transport"
+    },
+    {
+      "page_module": "首页 Hero",
+      "current_source": "official_cold_start",
+      "target_source": "official_cold_start",
+      "owner": "OCS / OPS",
+      "modify_entry": "不修改"
+    },
+    {
+      "page_module": "Market Guide",
+      "current_source": "official_cold_start",
+      "target_source": "official_cold_start",
+      "owner": "OCS",
+      "modify_entry": "不修改"
+    },
+    {
+      "page_module": "Community Official",
+      "current_source": "official_cold_start",
+      "target_source": "official_cold_start",
+      "owner": "OCS",
+      "modify_entry": "不修改"
+    },
+    {
+      "page_module": "TravelTrust Video",
+      "current_source": "placeholder",
+      "target_source": "media_platform",
+      "owner": "Media",
+      "modify_entry": "后续"
+    }
+  ],
+  "summary": {
+    "rows": 8,
+    "cms_operable": 4,
+    "ocs_frozen": 3,
+    "source_aligned": 6,
+    "source_alignment": {
+      "label": "Source Alignment",
+      "aligned": 6,
+      "total": 8,
+      "display": "6 / 8",
+      "pct": 75
+    },
+    "by_current_source": {
+      "catalog": 3,
+      "catalog_partial": 0,
+      "unsplash_fallback": 0,
+      "official_cold_start": 3,
+      "placeholder": 2
+    },
+    "wave_1_jp_ambient": {
+      "matrix_id": "DA-JP-HOME",
+      "current_source": "catalog",
+      "row_current_source": "catalog",
+      "target_source": "catalog",
+      "jp_catalog_live": true,
+      "countries_catalog_live": 10
+    }
+  },
+  "rows": [
+    {
+      "id": "home_destination_ambient",
+      "page_module": "首页 Ambient",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/landing-ambient",
+      "modify_entry_label": "/admin/content/landing-ambient",
+      "cms_operable": true,
+      "current_source": "catalog",
+      "declared_current_source": "unsplash_fallback",
+      "target_source": "catalog",
+      "source_aligned": true,
+      "asset_kind": "landing_ambient",
+      "wave": 1,
+      "matrix_ref": "DA-JP-HOME",
+      "probe": "catalog_media_by_country",
+      "live_current_source": "catalog",
+      "probe_detail": {
+        "source": "catalog",
+        "live_countries": 10,
+        "total_countries": 10,
+        "by_country": {
+          "JP": {
+            "http": 200,
+            "live": true,
+            "items": 1
+          },
+          "KR": {
+            "http": 200,
+            "live": true,
+            "items": 1
+          },
+          "TH": {
+            "http": 200,
+            "live": true,
+            "items": 1
+          },
+          "SG": {
+            "http": 200,
+            "live": true,
+            "items": 1
+          },
+          "FR": {
+            "http": 200,
+            "live": true,
+            "items": 1
+          },
+          "US": {
+            "http": 200,
+            "live": true,
+            "items": 1
+          },
+          "AU": {
+            "http": 200,
+            "live": true,
+            "items": 1
+          },
+          "ES": {
+            "http": 200,
+            "live": true,
+            "items": 1
+          },
+          "AE": {
+            "http": 200,
+            "live": true,
+            "items": 1
+          },
+          "CN": {
+            "http": 200,
+            "live": true,
+            "items": 1
+          }
+        }
+      },
+      "wave_1_jp": {
+        "http": 200,
+        "live": true,
+        "items": 1
+      }
+    },
+    {
+      "id": "poi_images",
+      "page_module": "POI",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/poi-images",
+      "modify_entry_label": "/admin/content/poi-images",
+      "cms_operable": true,
+      "current_source": "placeholder",
+      "declared_current_source": "placeholder",
+      "target_source": "catalog",
+      "source_aligned": false,
+      "asset_kind": "poi_hero",
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "catalog_media_global",
+      "live_current_source": "placeholder",
+      "probe_detail": {
+        "source": "placeholder",
+        "http": 200,
+        "items": 0
+      }
+    },
+    {
+      "id": "hotel_images",
+      "page_module": "Hotel",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/hotel-tiers",
+      "modify_entry_label": "/admin/content/hotel-tiers",
+      "cms_operable": true,
+      "current_source": "catalog",
+      "declared_current_source": "placeholder",
+      "target_source": "catalog",
+      "source_aligned": true,
+      "asset_kind": "hotel_tier_stock",
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "catalog_media_global",
+      "live_current_source": "catalog",
+      "probe_detail": {
+        "source": "catalog",
+        "http": 200,
+        "items": 1
+      }
+    },
+    {
+      "id": "transport_images",
+      "page_module": "Transport",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/transport",
+      "modify_entry_label": "/admin/content/transport",
+      "cms_operable": true,
+      "current_source": "catalog",
+      "declared_current_source": "placeholder",
+      "target_source": "catalog",
+      "source_aligned": true,
+      "asset_kind": "transport_stock",
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "catalog_media_global",
+      "live_current_source": "catalog",
+      "probe_detail": {
+        "source": "catalog",
+        "http": 200,
+        "items": 1
+      }
+    },
+    {
+      "id": "home_hero",
+      "page_module": "首页 Hero",
+      "owner": "OCS / OPS",
+      "modify_entry": "do_not_modify",
+      "modify_entry_label": "不修改",
+      "cms_operable": false,
+      "current_source": "official_cold_start",
+      "declared_current_source": "official_cold_start",
+      "target_source": "official_cold_start",
+      "source_aligned": true,
+      "asset_kind": null,
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "ocs_surface_home_hero",
+      "live_current_source": "official_cold_start",
+      "probe_detail": {
+        "source": "official_cold_start",
+        "http": 200,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "market_guide_avatar",
+      "page_module": "Market Guide",
+      "owner": "OCS",
+      "modify_entry": "do_not_modify",
+      "modify_entry_label": "不修改",
+      "cms_operable": false,
+      "current_source": "official_cold_start",
+      "declared_current_source": "official_cold_start",
+      "target_source": "official_cold_start",
+      "source_aligned": true,
+      "asset_kind": null,
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "ocs_guides_list",
+      "live_current_source": "official_cold_start",
+      "probe_detail": {
+        "source": "official_cold_start",
+        "http": 200,
+        "guides": 5
+      }
+    },
+    {
+      "id": "community_official",
+      "page_module": "Community Official",
+      "owner": "OCS",
+      "modify_entry": "do_not_modify",
+      "modify_entry_label": "不修改",
+      "cms_operable": false,
+      "current_source": "official_cold_start",
+      "declared_current_source": "official_cold_start",
+      "target_source": "official_cold_start",
+      "source_aligned": true,
+      "asset_kind": null,
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "ocs_community_feed",
+      "live_current_source": "official_cold_start",
+      "probe_detail": {
+        "source": "official_cold_start",
+        "http": 200,
+        "posts": 5
+      }
+    },
+    {
+      "id": "traveltrust_video",
+      "page_module": "TravelTrust Video",
+      "owner": "Media",
+      "modify_entry": "later",
+      "modify_entry_label": "后续",
+      "cms_operable": false,
+      "current_source": "placeholder",
+      "declared_current_source": "placeholder",
+      "target_source": "media_platform",
+      "source_aligned": false,
+      "asset_kind": null,
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "none",
+      "live_current_source": "placeholder",
+      "probe_skipped": true
+    }
+  ],
+  "wave_1": {
+    "matrix_id": "DA-JP-HOME",
+    "status": "READY_TO_START",
+    "operational_loop": [
+      "upload",
+      "publish",
+      "verify",
+      "evidence",
+      "asset_matrix_pack",
+      "health_score"
+    ]
+  },
+  "cms_operation": {
+    "phase": "CMS_OPERATION",
+    "mode": "operations_pipeline",
+    "priority_1": "destination_ambient_10_countries",
+    "country_wave_order": [
+      "JP",
+      "KR",
+      "TH",
+      "SG",
+      "FR",
+      "US",
+      "AU",
+      "ES",
+      "AE",
+      "CN"
+    ],
+    "priority_2": [
+      "poi",
+      "hotel",
+      "transport",
+      "video"
+    ],
+    "operational_loop": [
+      "upload",
+      "publish",
+      "verify",
+      "evidence",
+      "asset_matrix_pack",
+      "health_score"
+    ],
+    "refresh_script": "scripts/dev/run-cms-ops-refresh.cjs",
+    "daily_board_script": "scripts/dev/run-cms-daily-ops-board.cjs",
+    "forbidden": [
+      "new_registry",
+      "new_runbook",
+      "new_review",
+      "new_matrix",
+      "new_policy"
+    ]
+  },
+  "wave_1_next_action": null,
+  "related_ssot": {
+    "destination_ambient_matrix": "data/catalog/destination-ambient-matrix.v1.yaml",
+    "health_score_script": "scripts/dev/run-cms-content-health-score.cjs",
+    "health_score_role": "passthrough_from_this_pack",
+    "phase1_dod_script": "scripts/dev/run-cms-phase1-single-asset-dod.cjs --matrix-id DA-JP-HOME"
+  },
+  "TT_CMS_ASSET_MATRIX": "COMPLETE",
+  "TT_CMS_SOURCE_ALIGNMENT": "6 / 8",
+  "TT_CMS_SOURCE_ALIGNMENT_PCT": 75,
+  "TT_CMS_CONTENT_HEALTH_SCORE": "75%",
+  "TT_CMS_CONTENT_HEALTH_STATUS": "IN_PROGRESS",
+  "TT_CMS_DAILY_NEW_LIVE": 0,
+  "TT_CMS_VERIFY_FAILURES": 0,
+  "TT_CMS_ROLLBACK_NEEDED": 10,
+  "TT_CMS_PIPELINE_PHASE": "phase_4",
+  "TT_CMS_WAVE_1": "IN_PROGRESS_OR_DONE",
+  "honest_boundary": "Ops workbench only · ② staging probe ≠ ③ Production GO · OCS rows intentionally do_not_modify"
+}

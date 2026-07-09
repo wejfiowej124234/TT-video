@@ -1,0 +1,36 @@
+{
+  "verdict": "FAIL",
+  "probes": [
+    {
+      "probe_id": "pg.happy_order_status",
+      "check": "orders.status",
+      "target": "a7f2af65-6a3a-41ff-8d8e-f029dcd075f3",
+      "pg_value": "",
+      "expected": "completed",
+      "status": "WARN"
+    },
+    {
+      "probe_id": "pg.dispute_order_status",
+      "check": "orders.status",
+      "target": "58611338-d0e0-4d47-a02e-96e0f5862455",
+      "pg_value": "",
+      "expected": "refunded|partially_refunded",
+      "status": "FAIL"
+    },
+    {
+      "probe_id": "pg.dispute_resolved",
+      "check": "disputes.status",
+      "target": "fed9a672-89aa-493e-8c5e-9fb3ff320cbd",
+      "pg_value": "",
+      "expected": "resolved",
+      "status": "FAIL"
+    },
+    {
+      "probe_id": "pg.auth_audit_events_readable",
+      "check": "auth_audit_events",
+      "pg_value": "0",
+      "expected": "readable",
+      "status": "WARN"
+    }
+  ]
+}

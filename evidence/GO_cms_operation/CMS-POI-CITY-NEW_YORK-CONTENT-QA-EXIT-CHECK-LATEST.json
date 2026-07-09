@@ -1,0 +1,339 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_exit_check.v1",
+  "recorded_at_utc": "2026-07-06T12:40:17.504Z",
+  "city": {
+    "city_zh": "纽约",
+    "city_en": "New York",
+    "country_iso": "US",
+    "poi_count": 10
+  },
+  "replicated_from": "JP + KR + TH + SG + FR Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "checks": [
+    {
+      "id": "assets_locked_10_10",
+      "label": "10/10 Asset 全部 LOCKED · 无 Unlock",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-US-158-ATR",
+          "poi": "自由女神",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-US-159-ATR",
+          "poi": "时代广场",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-US-160-ATR",
+          "poi": "中央公园",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-US-161-ATR",
+          "poi": "大都会",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-US-162-ATR",
+          "poi": "帝国大厦",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-US-163-FOOD",
+          "poi": "披萨",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-US-164-FOOD",
+          "poi": "热狗",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-US-165-FOOD",
+          "poi": "贝果",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-US-166-FOOD",
+          "poi": "牛排",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-US-167-FOOD",
+          "poi": "brunch",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "six_dimensions_pass",
+      "label": "六维全部 PASS（City Runtime = Gate 4 同源 · 非 national）",
+      "pass": true,
+      "runtime_scope": "city_consumer_runtime",
+      "city_snapshot": {
+        "execution": "PASS",
+        "cms_ownership": "PASS",
+        "runtime_consumer": "PASS",
+        "geo_matching": "PASS",
+        "content_accuracy": "PASS",
+        "l5_quality": "PASS",
+        "content_qa_closed": true
+      },
+      "issues": []
+    },
+    {
+      "id": "catalog_api_new_york",
+      "label": "Catalog API 10/10 与 LOCK 一致",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-US-158-ATR",
+          "poi": "自由女神",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-US-159-ATR",
+          "poi": "时代广场",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-US-160-ATR",
+          "poi": "中央公园",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-US-161-ATR",
+          "poi": "大都会",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-US-162-ATR",
+          "poi": "帝国大厦",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-US-163-FOOD",
+          "poi": "披萨",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-US-164-FOOD",
+          "poi": "热狗",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-US-165-FOOD",
+          "poi": "贝果",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-US-166-FOOD",
+          "poi": "牛排",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-US-167-FOOD",
+          "poi": "brunch",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "image_source": "payload",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "consumer_runtime_cms",
+      "label": "Consumer Runtime 实际页面读取 CMS（非仅 Verify）",
+      "pass": true,
+      "catalog_api_requests": 4,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/new-york/new-york-poi-runtime-20260706T124017Z.png",
+      "rows": [
+        {
+          "matrix_id": "PH-US-158-ATR",
+          "poi": "自由女神",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-US-159-ATR",
+          "poi": "时代广场",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-US-160-ATR",
+          "poi": "中央公园",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-US-161-ATR",
+          "poi": "大都会",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-US-162-ATR",
+          "poi": "帝国大厦",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-US-163-FOOD",
+          "poi": "披萨",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-US-164-FOOD",
+          "poi": "热狗",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-US-165-FOOD",
+          "poi": "贝果",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-US-166-FOOD",
+          "poi": "牛排",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-US-167-FOOD",
+          "poi": "brunch",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        }
+      ],
+      "issues": [],
+      "probe_attempt": 1
+    },
+    {
+      "id": "visual_screenshot",
+      "label": "页面截图/DOM · 无旧图/错图/Fallback",
+      "pass": true,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/new-york/new-york-poi-runtime-20260706T124017Z.png",
+      "issues": []
+    },
+    {
+      "id": "no_backlog_unlock",
+      "label": "无 Open Backlog · 无 Unlock",
+      "pass": true,
+      "issues": []
+    }
+  ],
+  "all_pass": true,
+  "city_runtime_pass_count": 10,
+  "city_runtime_required": 10,
+  "verdict": "CONTENT_QA_EXIT_PASS",
+  "TT_CMS_POI_CITY_NEW_YORK_CONTENT_QA": "CLOSED",
+  "TT_CMS_POI_CITY_NEW_YORK_CONTENT_QA_EXIT": "PASS",
+  "runtime_tiers": {
+    "city": {
+      "tier": "city_consumer_runtime",
+      "gate_2_equals_gate_4": true
+    },
+    "country": {
+      "tier": "national_runtime",
+      "when": "TT_CMS_US_COUNTRY: CLOSED",
+      "not_in_scope": true
+    }
+  },
+  "blockers": []
+}

@@ -1,6 +1,6 @@
 use uuid::Uuid;
 
-use super::prefix::is_trust_gate_seeded_order_id;
+use super::prefix::{is_trust_gate_seeded_guide_id, is_trust_gate_seeded_order_id};
 
 /// 与 `seed_trust_gate_e2e_fixtures` 内全部 `o_*` / `o_risk_*` 订单 UUID **逐字一致**。
 #[test]
@@ -37,4 +37,26 @@ fn fixture_order_ids_match_pg_upsert_prefix_gate() {
             "order {s} must match is_trust_gate_seeded_order_id or PG upsert skips it → possible evidence_receipts FK WARN"
         );
     }
+}
+
+/// 与 `TrustGateFixtureIds::gr_*` 向导 UUID **逐字一致**。
+#[test]
+fn fixture_guide_ids_match_public_list_exclusion_gate() {
+    const IDS: &[&str] = &[
+        "f0e0b101-0001-4001-8001-000000000001",
+        "f0e0b101-0001-4001-8001-000000000002",
+        "f0e0b101-0001-4001-8001-000000000003",
+        "f0e0b101-0001-4001-8001-000000000010",
+        "f0e0b101-0001-4001-8001-00000000001a",
+    ];
+    for s in IDS {
+        let id = Uuid::parse_str(s).expect("fixture guide uuid");
+        assert!(
+            is_trust_gate_seeded_guide_id(id),
+            "guide {s} must match is_trust_gate_seeded_guide_id or public GET /guides list leaks trust-gate fixtures"
+        );
+    }
+    assert!(!is_trust_gate_seeded_guide_id(
+        Uuid::parse_str("b2222222-2222-4222-8222-222222220001").unwrap()
+    ));
 }

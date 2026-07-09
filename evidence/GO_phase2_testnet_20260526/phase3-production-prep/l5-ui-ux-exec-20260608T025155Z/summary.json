@@ -1,0 +1,14 @@
+{
+  "kind": "traveltrust.l5_ui_ux_enterprise_acceptance_execution.v1",
+  "recorded_utc": "20260608T025155Z",
+  "verdict": "UI_UX_L5_HOLD",
+  "audit_matrix_verdict": "UI_UX_L5_HOLD",
+  "ui_ux_score": 70,
+  "p0_issue_count": 3,
+  "target_score": 85,
+  "baseline_refs": [
+    "145",
+    "150",
+    "157"
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "schema": "traveltrust.cms_kr_country_closure.v1",
+  "recorded_at_utc": "2026-07-06T01:35:47.353Z",
+  "phase": "② staging",
+  "layer": "CONTENT_QA",
+  "country": {
+    "country_iso": "KR",
+    "country_zh": "韩国",
+    "city_count": 4,
+    "poi_total": 31
+  },
+  "jp_lock_guard": {
+    "required": 41,
+    "unchanged": true
+  },
+  "next_country": "BLOCKED",
+  "production_go": "BLOCKED",
+  "workflow": "Execution → Content QA → Country Runtime → Country CLOSED",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "runtime_audit_ssot": "evidence/GO_cms_operation/CMS-KR-COUNTRY-RUNTIME-AUDIT-LATEST.json",
+  "korea_content_qa_ssot": "evidence/GO_cms_operation/CMS-KOREA-CONTENT-QA-LATEST.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "runtime_tier": "national_runtime",
+  "consumer_surfaces": [
+    "home_korea",
+    "market",
+    "market_itinerary_kr",
+    "market_provider",
+    "market_acquisition",
+    "traveltrust",
+    "community"
+  ],
+  "city_summary": [
+    {
+      "city_zh": "首尔",
+      "city_en": "Seoul",
+      "poi_count": 9,
+      "execution": "PASS",
+      "content_qa_closed": true,
+      "runtime_consumer": "PASS",
+      "geo_matching": "PASS",
+      "content_accuracy": "PASS",
+      "l5_quality": "PASS",
+      "locked": "9/9",
+      "exit_runtime": "9/9",
+      "live_runtime": "9/9",
+      "catalog_runtime": "9/9"
+    },
+    {
+      "city_zh": "釜山",
+      "city_en": "Busan",
+      "poi_count": 8,
+      "execution": "PASS",
+      "content_qa_closed": true,
+      "runtime_consumer": "PASS",
+      "geo_matching": "PASS",
+      "content_accuracy": "PASS",
+      "l5_quality": "PASS",
+      "locked": "8/8",
+      "exit_runtime": "8/8",
+      "live_runtime": "8/8",
+      "catalog_runtime": "8/8"
+    },
+    {
+      "city_zh": "济州",
+      "city_en": "Jeju",
+      "poi_count": 8,
+      "execution": "PASS",
+      "content_qa_closed": true,
+      "runtime_consumer": "PASS",
+      "geo_matching": "PASS",
+      "content_accuracy": "PASS",
+      "l5_quality": "PASS",
+      "locked": "8/8",
+      "exit_runtime": "8/8",
+      "live_runtime": "8/8",
+      "catalog_runtime": "8/8"
+    },
+    {
+      "city_zh": "仁川",
+      "city_en": "Incheon",
+      "poi_count": 6,
+      "execution": "PASS",
+      "content_qa_closed": true,
+      "runtime_consumer": "PASS",
+      "geo_matching": "PASS",
+      "content_accuracy": "PASS",
+      "l5_quality": "PASS",
+      "locked": "6/6",
+      "exit_runtime": "6/6",
+      "live_runtime": "6/6",
+      "catalog_runtime": "6/6"
+    }
+  ],
+  "country_criteria": [
+    {
+      "id": "all_city_execution_closed",
+      "label": "所有 City Execution CLOSED",
+      "key": "all_city_execution_closed",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "content_accuracy_100",
+      "label": "Content Accuracy = 100%",
+      "key": "content_accuracy_100",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "runtime_consumer_cms",
+      "label": "Runtime Consumer = CMS",
+      "key": "runtime_consumer_cms",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "geo_matching_100",
+      "label": "Geo Matching = 100%",
+      "key": "geo_matching_100",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "l5_visual_pass",
+      "label": "L5 Visual = PASS",
+      "key": "l5_visual_pass",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "cross_region_images_0",
+      "label": "Cross-region Images = 0",
+      "key": "cross_region_images_0",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "unsplash_0",
+      "label": "Unsplash = 0（CMS 管辖 POI 范围）",
+      "key": "unsplash_0",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "ocs_runtime_0",
+      "label": "OCS Runtime = 0（CMS 管辖 POI 范围）",
+      "key": "ocs_runtime_0",
+      "pass": true,
+      "verdict": "PASS"
+    }
+  ],
+  "country_runtime_consumer": {
+    "verdict": "PASS",
+    "reason": "Korea Country Runtime audit PASS · 四城 Consumer + Catalog + Ambient",
+    "tier": "national_runtime",
+    "ssot": "evidence/GO_cms_operation/CMS-KR-COUNTRY-RUNTIME-AUDIT-LATEST.json",
+    "poi_runtime": "31/31"
+  },
+  "checks": {
+    "four_city_execution_closed": true,
+    "four_city_content_qa_closed": true,
+    "four_city_exit_checks": true,
+    "kr_lock_registry_unchanged": true,
+    "jp_lock_registry_unchanged": true,
+    "kr_country_runtime_pass": true,
+    "content_accuracy_100": true,
+    "cross_region_0": true
+  },
+  "TT_CMS_KR_COUNTRY": "CLOSED",
+  "TT_CMS_KR_CONTENT_QA": "CLOSED",
+  "verdict": "KR_COUNTRY_CLOSED"
+}

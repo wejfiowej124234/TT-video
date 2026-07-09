@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.ocs_content_l5_provider_business_identity_aggregate.v1",
+  "stamp_utc": "20260704T131553Z",
+  "provider_covers_reviewed": 3,
+  "TT_PROVIDER_BUSINESS_IDENTITY_AGGREGATE": "PASS",
+  "rows": [
+    {
+      "filename": "ocs-tokyo-photo-provider-cover.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-kyoto-culture-provider-cover.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-seoul-food-provider-cover.jpg",
+      "pass": true
+    }
+  ],
+  "policy": "不同城市 Provider 不得呈现同一商业空间/装修风格/经营模式或高度相似品牌气质；须体现当地特色业态与服务体验。"
+}

@@ -1,0 +1,123 @@
+{
+  "env": "staging",
+  "api": "https://tt-api-staging.fly.dev",
+  "c3_id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+  "unpublish": [],
+  "publish": [],
+  "market": {
+    "Hangzhou": {
+      "total": 3,
+      "production": 1,
+      "test": 2,
+      "c3_visible": true,
+      "ids": [
+        {
+          "id": "b09112a2-f7d4-408c-87fb-7a55e617f19a",
+          "origin": "test",
+          "bio": "多重身份演示 · 向导轨"
+        },
+        {
+          "id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+          "origin": "test",
+          "bio": "测试向导账号，用于联调"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000314",
+          "origin": "production",
+          "bio": "西湖、灵隐与龙井茶乡深度讲解，持证双语向导。"
+        }
+      ]
+    },
+    "Beijing": {
+      "total": 1,
+      "production": 1,
+      "test": 0,
+      "c3_visible": false,
+      "ids": [
+        {
+          "id": "00000000-0000-4000-8000-000000000311",
+          "origin": "production",
+          "bio": "10 年北京地接，故宫、长城与胡同深度讲解，持证双语向导。"
+        }
+      ]
+    },
+    "Shanghai": {
+      "total": 1,
+      "production": 1,
+      "test": 0,
+      "c3_visible": false,
+      "ids": [
+        {
+          "id": "00000000-0000-4000-8000-000000000312",
+          "origin": "production",
+          "bio": "外滩、豫园与法租界美食路线，擅长城市故事与摄影点位。"
+        }
+      ]
+    },
+    "Kyoto": {
+      "total": 1,
+      "production": 1,
+      "test": 0,
+      "c3_visible": false,
+      "ids": [
+        {
+          "id": "00000000-0000-4000-8000-000000000313",
+          "origin": "production",
+          "bio": "Kyoto temples, tea districts, and season"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "status": "ok",
+    "filter_enabled": true,
+    "data_origin_counts": {
+      "guides": {
+        "demo": 17,
+        "production": 35,
+        "test": 4,
+        "total": 56
+      },
+      "orders": {
+        "production": 12,
+        "test": 52,
+        "total": 64
+      },
+      "market_listings": {
+        "demo": 19,
+        "production": 1,
+        "test": 42,
+        "total": 62
+      },
+      "market_listings_by_variant": {
+        "provider": {
+          "demo": 18,
+          "production": 1,
+          "test": 13,
+          "total": 32
+        },
+        "acquisition": {
+          "demo": 1,
+          "test": 29,
+          "total": 30
+        }
+      },
+      "community_posts": {
+        "production": 81,
+        "test": 1,
+        "total": 82
+      }
+    },
+    "policy": {
+      "show_test_data": false,
+      "blocked_origins": [
+        "SMOKE"
+      ],
+      "updated_at": "2026-07-02T00:35:29.850727Z",
+      "updated_by": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+    }
+  },
+  "pass": true,
+  "discover_public_leaks": 0,
+  "community_public_leaks": 0
+}

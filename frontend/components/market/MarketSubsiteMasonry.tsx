@@ -97,6 +97,7 @@ function MarketSubsiteMasonry({
                   className="object-cover motion-safe:transition motion-safe:duration-300 motion-safe:group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                   sizes="(max-width: 640px) 100vw, 50vw"
                   priority={itemIdx < 2}
+                  fallbackSeed={item.listingId}
                 />
                 <div className={D.cardCoverScrim} aria-hidden />
                 {item.pill ? (

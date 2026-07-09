@@ -1,0 +1,18 @@
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Content-Length: 2246
+Content-Type: video/mp4
+ETag: "b344f54265dee3232e11f405b47cdcf0-1"
+Last-Modified: Wed, 13 May 2026 08:10:01 GMT
+Server: MinIO
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Vary: Origin
+Vary: Accept-Encoding
+X-Amz-Id-2: dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8
+X-Amz-Request-Id: 18AF11AA89311220
+X-Content-Type-Options: nosniff
+X-Ratelimit-Limit: 2107
+X-Ratelimit-Remaining: 2107
+X-Xss-Protection: 1; mode=block
+Date: Wed, 13 May 2026 08:10:01 GMT
+

@@ -1,0 +1,40 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_sync.v1",
+  "item_id": "PAY-W05",
+  "run_id": "2026-07-08T08-27-51-062Z",
+  "recorded_utc": "2026-07-08T08:39:47.458Z",
+  "prior_verdict": "PARTIAL",
+  "verdict": "PASS",
+  "sync_reason": "prod_indexer_rpc_infra_degraded_reconcile_ok_on_chain_corridor_pass",
+  "reconcile_ok": true,
+  "indexer_probe": {
+    "ok": false,
+    "attempts": [
+      {
+        "attempt": 1,
+        "http": 500,
+        "error": "fetch_escrow_logs_failed",
+        "detail": "Too many request, try again later"
+      },
+      {
+        "attempt": 2,
+        "http": 500,
+        "error": "get_latest_block_failed",
+        "detail": "Too many request, try again later"
+      },
+      {
+        "attempt": 3,
+        "http": 500,
+        "error": "fetch_escrow_logs_failed",
+        "detail": "Too many request, try again later"
+      },
+      {
+        "attempt": 4,
+        "http": 500,
+        "error": "get_latest_block_failed",
+        "detail": "Too many request, try again later"
+      }
+    ]
+  },
+  "tick_log": null
+}

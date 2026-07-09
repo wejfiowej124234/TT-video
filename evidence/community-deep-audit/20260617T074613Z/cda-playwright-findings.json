@@ -1,0 +1,30 @@
+{
+  "verdict": "PASS",
+  "ui_probes": [
+    {
+      "probe_id": "ui.f015",
+      "step": "F-015 feed",
+      "status": "PASS"
+    },
+    {
+      "probe_id": "ui.f016",
+      "step": "F-016 post",
+      "status": "PASS"
+    },
+    {
+      "probe_id": "ui.f017",
+      "step": "F-017 comment",
+      "status": "PASS"
+    },
+    {
+      "probe_id": "ui.f018",
+      "step": "F-018 like",
+      "status": "PASS"
+    },
+    {
+      "probe_id": "ui.f019",
+      "step": "F-019 report",
+      "status": "PASS"
+    }
+  ]
+}

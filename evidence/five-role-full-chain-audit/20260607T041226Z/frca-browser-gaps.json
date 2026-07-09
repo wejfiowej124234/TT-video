@@ -1,0 +1,14 @@
+{
+  "gaps": [
+    {
+      "id": "FRCA-GAP-001",
+      "role": "旅行者",
+      "category": "错误提示缺失",
+      "priority": "P1",
+      "title": "顶栏未找到退出按钮",
+      "observation": "community 壳层无 logout CTA",
+      "human_impact": "真人可能无法完成退出闭环"
+    }
+  ],
+  "recorded_at": "2026-06-07T04:13:46.552Z"
+}

@@ -7,12 +7,14 @@
 schema: traveltrust.production_readiness_master_matrix.v1
 version: 1
 effective_utc: "2026-07-04"
-updated_utc: "2026-07-04T06:12:18Z"
+updated_utc: "2026-07-08T07:55:00Z"
 review_id: PRM-GAP-REVIEW-20260704
 runtime_truth_review_id: RT-AUDIT-20260704
 
 machine_keys:
-  TT_WAVE2_FORMAL_ACCEPTANCE: READY
+  TT_G2_RETROSPECTIVE: COMPLETE
+  TT_PRODUCTION_READINESS_MASTER_REALITY_AUDIT: PASS
+  TT_WAVE2_FORMAL_ACCEPTANCE: COMPLETE
   TT_G1_REALITY_VERIFICATION: NOT_STARTED
   TT_G2_REALITY_VERIFICATION: COMPLETE
   TT_G3_REALITY_VERIFICATION: NOT_STARTED
@@ -30,9 +32,19 @@ machine_keys:
   TT_PRODUCTION_READINESS_MASTER_GAP_REVIEW: COMPLETE
   TT_PRODUCTION_READINESS_PROGRAM: ACTIVE
   TT_PRODUCTION_GO: NO_GO
+  TT_PRODUCTION_RETROSPECTIVE: NOT_STARTED
   TT_PRODUCTION_READINESS_G1_GATE: PASS
-  TT_PRODUCTION_READINESS_G2_GATE: IN_PROGRESS
+  TT_PRODUCTION_READINESS_G2_GATE: PASS
   TT_PRODUCTION_READINESS_G3_GATE: NOT_STARTED
+  TT_WEB3_PAYMENT_PRODUCTION_READINESS: WEB3_PAYMENT_PRODUCTION_PASS
+  TT_WEB3_PAYMENT_PRODUCTION_READY: WEB3_PAYMENT_PRODUCTION_PASS
+  TT_WEB3_SYSTEM_PRODUCTION_READY: WEB3_SYSTEM_PRODUCTION_IN_PROGRESS
+  TT_PRODUCTION_GO_CLOSURE_SEQUENCE: ACTIVE
+  TT_PRODUCTION_GO_FOUR_GATE_FRAMEWORK: ACTIVE
+  TT_PRODUCTION_BUSINESS_READY: PASS
+  TT_PRODUCTION_WEB3_READY: IN_PROGRESS
+  TT_PRODUCTION_INFRASTRUCTURE_READY: IN_PROGRESS
+  TT_PRODUCTION_OPERATIONS_READY: IN_PROGRESS
   TT_PCP_ARCHITECTURE: FROZEN
   TT_PCP_PHASE_2: NOT_STARTED
   TT_COMMUNITY_PRODUCTION_READY_G1_DOMAIN: PASS
@@ -62,15 +74,21 @@ go_gates:
   G2:
     label: Production Hardening
     wave: "2"
-    status: IN_PROGRESS
+    status: PASS
     open_blockers: 0
     domains: [security, performance, monitoring]
   G3:
     label: Production Cutover
     wave: "3"
-    status: NOT_STARTED
-    open_blockers: 0
-    domains: [stripe_live, domain_cdn, disaster_recovery, deployment]
+    status: READY
+    planned_domains: 6
+    planned_g3_gaps: 5
+    g3_vocabulary: [PLANNED, IMPLEMENTING, VERIFIED, CLOSED]
+    g3_forbidden_vocabulary: [Drift, Reality Gap, Runtime Gap, Platform Gap, OPEN, REOPEN, IN_PROGRESS, BLOCKED]
+    g3_domains_ssot: registry/g3-production-domains.v1.json
+    master_reality_audit: CLOSED
+    active_domain: G3-01
+    domains: [g3_01_production_network, g3_02_payment, g3_03_disaster_recovery, g3_04_monitoring, g3_05_production_cutover, g3_06_production_evidence]
 
 owner_default: Sebastian Ward
 
@@ -132,7 +150,15 @@ classification_ladder:
   - ENHANCEMENT
 
 workflow:
-  release_train_layers:
+  g3_domain_steps:
+    - Implementation
+    - Reality Verification
+    - Evidence Integrity
+    - Formal Acceptance
+    - VERIFIED
+    - Matrix CLOSED
+  g3_status_machine: [PLANNED, IMPLEMENTING, VERIFIED, CLOSED]
+  release_train_layers_pre_g3:
     - Reality Audit
     - Reality Gap Report
     - Reality Fix
@@ -285,17 +311,52 @@ domains:
     ssot_runbook: docs/runbook/PRODUCTION-OPS-RUNBOOK.md
     pi3_ref: PI3-002
 
-  - id: stripe_live
-    label: Stripe Live
+  - id: web3_escrow_payment
+    label: Web3 USDC Escrow Payment
     go_gate: G3
+    g3_domain: G3-02
     status: GREEN
     blocking_count: 0
     owner: Sebastian Ward
     evidence:
-      - docs/runbook/PRODUCTION-READINESS-REPORT.md#pi3-003
-      - docs/go-live-checklist.md
-    ssot_runbook: docs/go-live-checklist.md
+      - docs/runbook/PRODUCTION-PAYMENT-READINESS-WEB3-USDC.md
+      - docs/runbook/G3-02-WEB3-PAYMENT-PRODUCTION-EXECUTION.md
+      - registry/production-payment-readiness-checklist.v1.yaml
+    ssot_runbook: docs/runbook/PRODUCTION-PAYMENT-READINESS-WEB3-USDC.md
+    gate_script: scripts/check-web3-payment-production-readiness.sh
+    machine_key: TT_WEB3_PAYMENT_PRODUCTION_READY
+    machine_key_alias: TT_WEB3_PAYMENT_PRODUCTION_READINESS
+    note: Payment Rail subset M25 — does NOT close Entire Web3 System gate
+
+  - id: web3_system_production
+    label: Entire Web3 System Production
+    go_gate: GATE-2
+    status: YELLOW
+    blocking_count: 1
+    owner: Sebastian Ward
+    evidence:
+      - registry/web3-system-production-gate.v1.yaml
+      - registry/web3-gate-layering.v1.yaml
+      - docs/runbook/WEB3-SYSTEM-PRODUCTION-RUNTIME-WIRING.md
+    ssot_runbook: docs/runbook/WEB3-GATE-LAYERING.md
+    gate_script: scripts/dev/run-web3-system-deep-audit.cjs
+    machine_key: TT_WEB3_SYSTEM_PRODUCTION_READY
+    note: M01-M24 full stack · Production GO requires this gate PASS
+
+  - id: stripe_live
+    label: Stripe Live (Onboarding Fiat · Optional)
+    go_gate: G3
+    status: GREEN
+    blocking_count: 0
+    owner: Sebastian Ward
+    classification: P1_FUTURE_FIAT_ONRAMP
+    blocks_production_go: false
+    evidence:
+      - docs/runbook/PRODUCTION-STRIPE-ENV-MATRIX-SEPOLIA-SCOPE.md
+      - docs/handbook/engineering/153-PI3-003-Stripe-Live-Production-Webhook-Report.md
+    ssot_runbook: docs/runbook/PRODUCTION-STRIPE-ENV-MATRIX-SEPOLIA-SCOPE.md
     pi3_ref: PI3-003
+    note: Onboarding admission fee optional bypass only — NOT core trip/market payment
 
   - id: disaster_recovery
     label: Disaster Recovery
@@ -614,13 +675,11 @@ gaps:
   - id: PRM-MVAL-B004
     domain: manual_validation
     go_gate: G3
+    g3_domain: G3-05
     classification: BLOCKER
     title: R-002 / R-003 staging full-matrix not signed for prod gate
-    status: CLOSED
-    owner: Sebastian Ward
-    source: PI3-004
-    pi3_ref: PI3-004
-    closure: R-003 prod first full run · report.json GO · validate-regression-report.py
+    status: PLANNED
+    closure: G3-05 VERIFIED + Formal Acceptance
 
   - id: PRM-PER-B001
     domain: performance
@@ -638,13 +697,11 @@ gaps:
   - id: PRM-DOM-B001
     domain: domain_cdn
     go_gate: G3
+    g3_domain: G3-01
     classification: BLOCKER
     title: No dedicated production domain / TLS / locked CORS (PI3-002)
-    status: CLOSED
-    owner: Sebastian Ward
-    source: PI3-002
-    pi3_ref: PI3-002
-    closure: app.<domain> + api.<domain> · Fly certs · CORS_ORIGINS locked
+    status: PLANNED
+    closure: G3-01 VERIFIED + Formal Acceptance
 
   - id: PRM-DOM-D001
     domain: domain_cdn
@@ -655,38 +712,68 @@ gaps:
     source: PRODUCTION-READINESS-REPORT
     closure: Scope decision + CDN cutover or documented defer with Owner sign-off
 
+  - id: PRM-WEB3-PAY-B001
+    domain: web3_escrow_payment
+    go_gate: G3
+    g3_domain: G3-02
+    classification: BLOCKER
+    title: Web3 USDC Escrow production verification (wallet → deposit → escrow → settlement)
+    status: CLOSED
+    owner: Sebastian Ward
+    source: PRODUCTION-PAYMENT-READINESS-WEB3-USDC
+    closed_evidence: evidence/GO_production_readiness/G3-02/WEB3-PAYMENT-PRODUCTION-READINESS-LATEST.json
+    closure: G3-02 VERIFIED + TT_WEB3_PAYMENT_PRODUCTION_READINESS=WEB3_PAYMENT_PRODUCTION_PASS
+
+  - id: PRM-WEB3-SYS-B001
+    domain: web3_system_production
+    go_gate: GATE-2
+    classification: BLOCKER
+    title: Entire Web3 System production readiness (M01-M24 · not payment rail only)
+    status: OPEN
+    owner: Sebastian Ward
+    source: WEB3-GATE-LAYERING 2026-07-08
+    machine_key: TT_WEB3_SYSTEM_PRODUCTION_READY
+    open_items:
+      - g3_02_evidence_drift
+      - ttg_cert_6_of_12_signoffs
+      - rbac_d3_partial
+    closed_items:
+      - prod_meta_contracts_10_of_10
+      - timelock_governance_token_treasury_steward_wired
+    evidence: evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-DEEP-AUDIT-LATEST.json
+    runbook: docs/runbook/WEB3-SYSTEM-PRODUCTION-RUNTIME-WIRING.md
+    blocks_production_go: true
+
   - id: PRM-STR-B001
     domain: stripe_live
     go_gate: G3
-    classification: BLOCKER
-    title: Stripe Live PSP + production webhook not configured (PI3-003)
-    status: CLOSED
+    g3_domain: PI3-003-OPTIONAL
+    classification: ENHANCEMENT
+    title: Stripe Live onboarding PSP optional (PI3-003) — future fiat on-ramp, not core payment
+    status: DEFERRED
     owner: Sebastian Ward
-    source: PI3-003
-    pi3_ref: PI3-003
-    closure: sk_live · webhook URL · one live smoke transaction evidence
+    source: G3-02 architecture correction 2026-07-08
+    blocks_production_go: false
+    closure: PI3-003 PASS when TRAVELTRUST_ONBOARDING_STRIPE_ENABLED=1 explicitly required
+    superseded_by: PRM-WEB3-PAY-B001
 
   - id: PRM-DR-B001
     domain: disaster_recovery
     go_gate: G3
+    g3_domain: G3-03
     classification: BLOCKER
     title: B-475 baseline status=PLANNED (not PASS)
-    status: CLOSED
-    owner: Sebastian Ward
-    source: PI3-001
-    pi3_ref: PI3-001
-    closure: registry/baseline_record.v1.json status=PASS
+    status: PLANNED
+    closure: G3-03 VERIFIED + Formal Acceptance
 
   - id: PRM-DR-B002
     domain: disaster_recovery
     go_gate: G3
+    g3_domain: G3-03
     classification: BLOCKER
     title: Production Fly Postgres backup plan not enabled
-    status: CLOSED
-    owner: Sebastian Ward
-    source: PI3-001
-    pi3_ref: PI3-001
-    closure: tt-traveltrust-prod backup enabled · restore drill on prod plan
+    status: PLANNED
+    closure: G3-03 VERIFIED + Formal Acceptance
 
   - id: PRM-MON-B001
     domain: monitoring
@@ -716,6 +803,17 @@ gaps:
     owner: Sebastian Ward
     disposition: CONFIRM_DESIGN
     evidence: docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md
+
+  - id: PRM-STR-E002
+    domain: stripe_live
+    classification: ENHANCEMENT
+    title: Stripe Live onboarding webhook (PI3-003) — optional P1 fiat on-ramp extension
+    status: DEFERRED
+    owner: Sebastian Ward
+    disposition: POST_GO_OR_ON_DEMAND
+    blocks_production_go: false
+    evidence: docs/runbook/PRODUCTION-STRIPE-ENV-MATRIX-SEPOLIA-SCOPE.md
+    note: Default onboarding remains USDC → OnboardingFeeReceiver
 
   - id: PRM-STR-E001
     domain: stripe_live
@@ -913,9 +1011,10 @@ closure_plan:
     - wave: "3"
       go_gate: G3
       title: Production Cutover + Go Live
-      domains: [stripe_live, domain_cdn, disaster_recovery, deployment]
+      g3_domains_ssot: registry/g3-production-domains.v1.json
+      domains: [g3_01_production_network, g3_02_payment, g3_03_disaster_recovery, g3_04_monitoring, g3_05_production_cutover, g3_06_production_evidence]
       gaps:
-        - PRM-STR-B001
+        - PRM-WEB3-PAY-B001
         - PRM-DOM-B001
         - PRM-DR-B001
         - PRM-DR-B002

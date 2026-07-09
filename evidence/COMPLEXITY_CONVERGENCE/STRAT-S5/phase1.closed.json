@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust.complexity_convergence_item_close.v1",
+  "item_id": "STRAT-S5",
+  "phase": "phase1",
+  "closed_at_utc": "2026-06-24T10:23:03Z",
+  "git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "gate": "bash"
+}

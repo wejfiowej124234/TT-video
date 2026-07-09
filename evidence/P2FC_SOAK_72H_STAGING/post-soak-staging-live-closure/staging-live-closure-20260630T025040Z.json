@@ -1,0 +1,51 @@
+{
+  "schema": "traveltrust.p2fc_post_soak_staging_live_closure.v1",
+  "generated_at_utc": "2026-06-30T02:50:40Z",
+  "phase": "②",
+  "soak_completed": true,
+  "prep_is_not_go": true,
+  "prep_status": "BLOCKED",
+  "mr12_one_shot_pass": true,
+  "adm_u01_live_go": true,
+  "adm_u02_live_go": true,
+  "p0_runtime_confirmed": true,
+  "admin_go_ssot": "TT_ADMIN_STAGING_GO_CLAIM",
+  "admin_go_claim_allowed": true,
+  "admin_go_claim_gate_allowed": true,
+  "admin_go_sequence": "Soak COMPLETED → MR12 PASS → ADM-U01 live GO → P0 runtime CONFIRMED → then Admin GO",
+  "blockers": [
+    {
+      "id": "B1_TN_P1_010",
+      "status": "cleared",
+      "live_evidence": "checkpoint.tn_p1_010=PASS",
+      "note": "TN-P1-010 independent + indexer backfill"
+    },
+    {
+      "id": "B2_W1_ITINERARIES_HUB",
+      "status": "cleared",
+      "live_evidence": "checkpoint.wave1_api_deploy=PASS",
+      "note": "Wave1 API deploy · itineraries hub delta may need follow-up MR"
+    },
+    {
+      "id": "B3_G06_G08",
+      "status": "cleared",
+      "live_evidence": "g02=PASS meta=PASS graduation=PASS",
+      "note": "G02 deep gate + /meta strict + graduation closure"
+    },
+    {
+      "id": "B4_DB_COMPOUND",
+      "status": "cleared",
+      "live_evidence": "checkpoint.tn_p1_010=PASS (compound with B1)",
+      "note": "db/mod.rs + itineraries compound — cleared with TN-P1-010 pass"
+    }
+  ],
+  "open_blocker_count": 0,
+  "verdict": "PASS",
+  "live_evidence_roots": {
+    "one_shot_checkpoint": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-one-shot\\checkpoint.json",
+    "adm_u01": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-staging-live-closure\\adm-u01-live",
+    "adm_u02": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-staging-live-closure\\adm-u02-live",
+    "p0_runtime": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-staging-live-closure\\p0-rbac-bypass-runtime\\latest.json"
+  },
+  "honest_boundary": "prep READY ≠ GO · only staging live report.json + runtime P0 + checkpoint PASS count"
+}

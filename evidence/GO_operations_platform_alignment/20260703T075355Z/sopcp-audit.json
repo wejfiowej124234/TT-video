@@ -1,0 +1,78 @@
+{
+  "schema": "traveltrust.single_official_public_catalog_audit.v1",
+  "policy": "single_official_public_catalog_policy",
+  "policy_registry": "registry/single-official-public-catalog-policy.v1.yaml",
+  "alias": [
+    "SOB",
+    "SOPCP"
+  ],
+  "stamp": "20260703T075504Z",
+  "recorded_at": "2026-07-03T07:55:49.328Z",
+  "api": "http://127.0.0.1:8080",
+  "state_path": "D:/TravelTrust-V1.1/evidence/GO_official_cold_start_dataset/20260703T044855Z/state.json",
+  "verdict": "PASS",
+  "scope": {
+    "in_scope": "public_catalog_consumer_and_published_admin_surfaces",
+    "out_of_scope": "database_total_entity_count",
+    "db_retention": "archive_draft_test_demo_smoke_historical_may_remain_unpublished"
+  },
+  "expected_difference": {
+    "c3_on_public_guides": false,
+    "note": "Post-OCS staging: C3 retained for login/联调 only; not on public catalog (TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=0)"
+  },
+  "surfaces": {
+    "guides": {
+      "public_count": 10,
+      "ocs_expected": 10,
+      "extras": [],
+      "missing": []
+    },
+    "provider": {
+      "public_count": 10,
+      "ocs_expected": 10,
+      "extras": [],
+      "missing": []
+    },
+    "acquisition": {
+      "public_count": 10,
+      "ocs_expected": 10,
+      "extras": [],
+      "missing": []
+    },
+    "official_guides": {
+      "public_count": 10,
+      "ocs_expected": 10,
+      "extras": [],
+      "missing": []
+    },
+    "campaigns": {
+      "public_count": 10,
+      "ocs_expected": 10,
+      "extras": [],
+      "missing": []
+    }
+  },
+  "publish_queue": {
+    "guides": {
+      "published": 10,
+      "non_ocs": []
+    },
+    "market_listings": {
+      "published": 20,
+      "non_ocs": []
+    }
+  },
+  "cold_start_home_hero": {
+    "status": 200,
+    "ok": true
+  },
+  "duplicate_inventory": [],
+  "issues": [],
+  "remediation_plan": [],
+  "summary": {
+    "blocking": 0,
+    "major": 0,
+    "duplicate_groups": 0,
+    "remediation_actions": 0
+  }
+}

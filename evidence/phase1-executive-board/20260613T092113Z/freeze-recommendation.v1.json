@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.freeze_recommendation.v1",
+  "recommendation": "GO",
+  "band": "FREEZE_CANDIDATE",
+  "score": 90,
+  "phase2_review_allowed": true
+}

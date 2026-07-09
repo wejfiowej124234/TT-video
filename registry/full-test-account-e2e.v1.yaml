@@ -1,0 +1,65 @@
+# Full Test Account E2E · SSOT
+# Runbook: docs/runbook/TT-FULL-TEST-ACCOUNT-E2E.md
+# All business seed accounts (C1–C4, E2) · UI + API + DB-proxy parity on staging
+
+schema: traveltrust.full_test_account_e2e.v1
+version: 1
+effective_utc: "2026-07-02"
+
+machine_keys:
+  TT_FULL_TEST_ACCOUNT_E2E: CLOSED
+  TT_RELEASE_DECISION: NO_GO
+
+rerun_policy:
+  status: CLOSED_UNLESS_TOUCHED
+  evidence_reuse: registry/evidence-reuse-policy.v1.yaml#gates/RELEASE_CANDIDATE
+
+placement:
+  after: enterprise_final_acceptance
+  before: PI3_product_signoff
+  respects_product_development_freeze: true
+  not_a_new_recurring_audit: true
+  capstone_validation: true
+
+test_accounts:
+  registry: registry/test-accounts-business-immutable.v1.yaml
+  staging_probe_ids: [C1, C2, C3, C4, E2]
+  staging_excluded_ids: [E1]
+
+scripts:
+  orchestrator: scripts/dev/run-full-test-account-e2e-validation.sh
+  api_probes: scripts/dev/full-test-account-e2e-probes.cjs
+  browser: frontend/e2e/full-test-account-e2e-staging.spec.ts
+  ledger: scripts/dev/gen-full-test-account-e2e-ledger.cjs
+
+evidence_root: evidence/GO_full_test_account_e2e
+
+latest_run:
+  stamp: "20260702T114733Z"
+  ledger: evidence/GO_full_test_account_e2e/20260702T114733Z/ftae-ledger.json
+  signoff: evidence/manual-uat/signoff/FTAE-SIGNOFF-20260702T114733Z.md
+  accounts_pass: 6
+  accounts_total: 6
+  probe_checks_pass: 22
+  browser_checks_pass: 16
+  product_defects_open: 0
+  test_automation_issues_open: 0
+
+exit_criteria:
+  all_accounts_pass: true
+  product_defects_open: 0
+  test_automation_issues_open: 0
+  api_db_proxy_pass: true
+  browser_ui_api_parity_pass: true
+
+issue_classifications:
+  - PRODUCT_DEFECT
+  - TEST_AUTOMATION_ISSUE
+  - PRODUCTION_BLOCKER
+  - EXPECTED_DIFFERENCE
+  - ENHANCEMENT
+
+synthesizes:
+  - registry/production-release-review.v1.yaml
+  - registry/enterprise-final-acceptance.v1.yaml
+  - registry/test-accounts-business-immutable.v1.yaml

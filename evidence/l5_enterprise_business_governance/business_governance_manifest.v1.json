@@ -1,0 +1,51 @@
+{
+  "schema": "traveltrust_l5_enterprise_business_governance_manifest.v1",
+  "recorded_utc": "20260608T000000Z",
+  "baseline_refs": ["164", "133", "124", "102"],
+  "roles": ["traveler", "guide", "merchant", "ops", "admin"],
+  "domain_modules": {
+    "D-GROWTH": {
+      "title": "Growth · Referral · Early Bird · Airdrop · KOL",
+      "risk": "P1",
+      "modules": ["referral", "early_bird", "airdrop", "kol", "reward_ledger"]
+    },
+    "D-TOKEN": {
+      "title": "Tokenomics · TTG · Fee Pool · Distribution",
+      "risk": "P1",
+      "modules": ["governance_token", "fee_router", "investor_distribution", "accruals"]
+    },
+    "D-GOV": {
+      "title": "DAO · Timelock · Multisig · Proposals",
+      "risk": "P1",
+      "modules": ["governance_hub", "proposals", "delegate", "timelock", "safe"]
+    },
+    "D-REGION": {
+      "title": "RegionShare · Country Market · Regional Operator",
+      "risk": "P2",
+      "modules": ["region_steward", "country_ledger", "vault_forwards"]
+    },
+    "D-DEFENSE": {
+      "title": "Anti-Fraud · Sybil · Rate Limits",
+      "risk": "P1",
+      "modules": ["anti_fraud", "referral_rate_limit", "freeze_unfreeze"]
+    },
+    "D-INVESTOR": {
+      "title": "Investor · Data Room · Pitch · IC",
+      "risk": "P2",
+      "modules": ["executive_summary", "dataroom", "pitch_deck", "lp_pack"]
+    }
+  },
+  "role_chains": {
+    "traveler": ["/me/referrals", "referral_bind", "early_bird_rank"],
+    "guide": ["/guide", "staking", "referral"],
+    "merchant": ["/provider/register", "/me/onboarding", "identity"],
+    "ops": ["/admin/growth", "/admin/content", "/admin/official"],
+    "admin": ["/admin/conversion-analytics", "governance_ops", "finance_governance"]
+  },
+  "open_backlog": [
+    { "id": "BG-P1-01", "risk": "P1", "summary": "链上 GOV 空投 / Mainnet tx" },
+    { "id": "BG-P1-02", "risk": "P1", "summary": "自动 fraud-scan 引擎" },
+    { "id": "BG-P2-01", "risk": "P2", "summary": "RegionShare live reconcile" },
+    { "id": "BG-P2-02", "risk": "P2", "summary": "投资人 IC 模拟 live" }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.staging_rc_baseline.enforcement.v1",
+  "recorded_at": "2026-07-04T10:11:21.146Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "ocs_state": "D:\\TravelTrust-V1.1\\evidence\\GO_official_cold_start_dataset\\ocs-surface-expansion-staging\\20260704T073209Z\\state.json",
+  "registry": "registry/staging-rc-baseline.v1.yaml",
+  "verdict": "ENFORCED",
+  "machine_keys": {
+    "TT_STAGING_RC_BASELINE": "READY",
+    "TT_STAGING_RC_SSOT_PARITY": "ALIGNED"
+  },
+  "expected": {
+    "community_feed": 10,
+    "public_guides": 10,
+    "market_provider": 10,
+    "market_acquisition": 10,
+    "official_guides_published": 10,
+    "campaigns_deployed": 10,
+    "corridor_smoke": 0,
+    "official_assets": 60,
+    "ocs_listings": 20,
+    "ocs_guides": 10,
+    "ocs_posts": 10,
+    "ocs_official_guides": 10,
+    "ocs_campaigns": 10
+  },
+  "unified_baseline": "scripts/dev/lib/staging-rc-public-surface-unified.cjs",
+  "passes": [
+    "active_pointer_ready",
+    "ssot_parity",
+    "feed_no_smoke",
+    "destinations_api_aggregate",
+    "admin_queue_clean",
+    "admin_official_campaign_clean"
+  ],
+  "failures": [],
+  "forbidden": [
+    "historical_smoke_on_public_surfaces",
+    "non_ocs_catalog_rows",
+    "legacy_volume_media_404",
+    "new_business_features"
+  ],
+  "allowed_only": [
+    "deployment_sync",
+    "production_cutover_prep",
+    "baseline_realignment"
+  ],
+  "honest_boundary": "ENFORCED on Staging ≠ Production GO"
+}

@@ -1,0 +1,10 @@
+{
+  "provider": {
+    "status": "skipped",
+    "reason": "already_published"
+  },
+  "acquisition": {
+    "status": 400,
+    "id": null
+  }
+}

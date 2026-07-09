@@ -1,0 +1,5 @@
+step: S07-payment-sandbox
+status: PASS
+api: https://tt-api-staging.fly.dev
+at: 2026-06-26T00:13:01Z
+note: 支付沙箱 mock-pay

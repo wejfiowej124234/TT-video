@@ -1,0 +1,857 @@
+{
+  "schema": "traveltrust.p2fc_execution_path_rehearsal.v1",
+  "trigger": "COMPLETED.json",
+  "entrypoint": "scripts/ops/p2fc-post-soak-one-shot-execute.sh",
+  "exec_path_timeline": [
+    {
+      "step": 0,
+      "phase": "completed_trigger",
+      "label": "COMPLETED.json",
+      "offset_min": 0
+    },
+    {
+      "step": 1,
+      "phase": "tn_p1_010",
+      "label": "TN-P1-010 independent",
+      "offset_min": 8
+    },
+    {
+      "step": 2,
+      "phase": "rollback_snapshot",
+      "label": "fly rollback snapshot",
+      "offset_min": 10
+    },
+    {
+      "step": 3,
+      "phase": "apply_patches",
+      "label": "apply backlog + meta hotfix",
+      "offset_min": 12
+    },
+    {
+      "step": 4,
+      "phase": "wave1_api_deploy",
+      "label": "Wave1 tt-api-staging deploy",
+      "offset_min": 28
+    },
+    {
+      "step": 5,
+      "phase": "wave2_web_deploy",
+      "label": "Wave2 tt-web-staging deploy",
+      "offset_min": 42
+    },
+    {
+      "step": 6,
+      "phase": "meta_availability",
+      "label": "meta strict gate",
+      "offset_min": 45
+    },
+    {
+      "step": 7,
+      "phase": "g02_deep_gate",
+      "label": "Deep Gate --require-meta-green",
+      "offset_min": 55
+    },
+    {
+      "step": 8,
+      "phase": "graduation",
+      "label": "Graduation closure",
+      "offset_min": 65
+    }
+  ],
+  "fc_analyses": [
+    {
+      "id": "FC-01_TIMEOUT_MISMATCH",
+      "severity": "critical",
+      "category": "config_drift",
+      "current_state": "staging REQUEST_TIMEOUT_SECS=30 (live)",
+      "future_state_required": "120 API + 130s web proxy after wave-0",
+      "fails_at": "step-6 meta_availability --strict",
+      "not_failing_now_because": "observability_only policy defers acceptance",
+      "pre_convergence": "wave-0 hotfix in meta-availability-hotfix.patch — apply before strict gate",
+      "primary_fail_step": 6,
+      "primary_fail_phase": "meta_availability",
+      "time_to_failure_min_from_completed": 45,
+      "dependency_chain": [
+        {
+          "id": "DEP-01-A",
+          "kind": "config",
+          "artifact": "staging live REQUEST_TIMEOUT_SECS=30",
+          "blocks": "GET /meta completes"
+        },
+        {
+          "id": "DEP-01-B",
+          "kind": "patch",
+          "artifact": "meta-availability-hotfix.patch",
+          "provides": "fly.toml REQUEST_TIMEOUT_SECS=120"
+        },
+        {
+          "id": "DEP-01-C",
+          "kind": "patch",
+          "artifact": "frontend/app/meta/route.ts",
+          "provides": "META_ROUTE_FETCH_TIMEOUT_MS=130000"
+        },
+        {
+          "id": "DEP-01-D",
+          "kind": "deploy",
+          "artifact": "wave1_api + wave2_web",
+          "required_for": "runtime env + proxy live"
+        },
+        {
+          "id": "DEP-01-E",
+          "kind": "gate",
+          "artifact": "p2fc-verify-staging-meta-availability.sh --strict",
+          "consumes": "api/web /meta 200"
+        }
+      ],
+      "upstream_triggers": [
+        "COMPLETED.json",
+        "apply_patches",
+        "wave1_api_deploy",
+        "wave2_web_deploy"
+      ],
+      "downstream_blocked": [
+        "g02_deep_gate",
+        "graduation",
+        "TT_TESTNET_GRADUATION:CLOSED"
+      ],
+      "propagation_path": [
+        {
+          "step": 0,
+          "phase": "completed_trigger",
+          "label": "COMPLETED.json",
+          "offset_min": 0,
+          "fc_id": "FC-01_TIMEOUT_MISMATCH",
+          "status": "pass_expected"
+        },
+        {
+          "step": 1,
+          "phase": "tn_p1_010",
+          "label": "TN-P1-010 independent",
+          "offset_min": 8,
+          "fc_id": "FC-01_TIMEOUT_MISMATCH",
+          "status": "pass_expected"
+        },
+        {
+          "step": 2,
+          "phase": "rollback_snapshot",
+          "label": "fly rollback snapshot",
+          "offset_min": 10,
+          "fc_id": "FC-01_TIMEOUT_MISMATCH",
+          "status": "pass_expected"
+        },
+        {
+          "step": 3,
+          "phase": "apply_patches",
+          "label": "apply backlog + meta hotfix",
+          "offset_min": 12,
+          "fc_id": "FC-01_TIMEOUT_MISMATCH",
+          "status": "pass_expected"
+        },
+        {
+          "step": 4,
+          "phase": "wave1_api_deploy",
+          "label": "Wave1 tt-api-staging deploy",
+          "offset_min": 28,
+          "fc_id": "FC-01_TIMEOUT_MISMATCH",
+          "status": "pass_expected"
+        },
+        {
+          "step": 5,
+          "phase": "wave2_web_deploy",
+          "label": "Wave2 tt-web-staging deploy",
+          "offset_min": 42,
+          "fc_id": "FC-01_TIMEOUT_MISMATCH",
+          "status": "pass_expected"
+        },
+        {
+          "step": 6,
+          "phase": "meta_availability",
+          "label": "meta strict gate",
+          "offset_min": 45,
+          "fc_id": "FC-01_TIMEOUT_MISMATCH",
+          "status": "fail"
+        }
+      ],
+      "recovery_strategies": [
+        {
+          "id": "REC-01-A",
+          "when": "step-3 apply_patches reject",
+          "action": "git apply --3way hotfix; resolve middleware/mod.rs + fly.toml hunks",
+          "rollback": "abort; do not deploy; soak evidence preserved"
+        },
+        {
+          "id": "REC-01-B",
+          "when": "step-6 meta strict 408",
+          "action": "verify fly secrets/env REQUEST_TIMEOUT_SECS=120 on tt-api-staging; redeploy API only",
+          "rollback": "p2fc_rollback_fly_app tt-api-staging previous_image"
+        },
+        {
+          "id": "REC-01-C",
+          "when": "step-6 web /meta 503",
+          "action": "confirm wave2 deployed route.ts 130s; curl api/meta then web/meta",
+          "rollback": "p2fc_rollback_fly_app tt-web-staging previous_image"
+        }
+      ],
+      "forecast_alignment": {
+        "step": 6,
+        "phase": "meta_availability",
+        "failure_mode": "G02 strict /meta still 408 — 30s legacy vs 120s hotfix not live",
+        "likelihood": "high",
+        "trigger": "p2fc-verify-staging-meta-availability.sh --strict",
+        "why": "staging REQUEST_TIMEOUT_SECS=30 until wave-0 deploy; GET /meta >30s → 408",
+        "precheck": "warn",
+        "mitigation": "confirm fly.toml REQUEST_TIMEOUT_SECS=120 + web META_ROUTE_FETCH_TIMEOUT_MS=130000 deployed before strict gate"
+      }
+    },
+    {
+      "id": "FC-02_ITINERARIES_HUB",
+      "severity": "high",
+      "category": "backlog_blast",
+      "current_state": "itineraries.rs hub change — impacts market/escrow/guide consumer paths",
+      "future_state_required": "wave-1 deploy without consumer regression",
+      "fails_at": "step-4 wave1_api_deploy or post-deploy market/escrow",
+      "not_failing_now_because": "soak freeze — staging still on pre-backlog build",
+      "pre_convergence": "blast-radius review + rollback snapshot",
+      "primary_fail_step": 4,
+      "primary_fail_phase": "wave1_api_deploy",
+      "time_to_failure_min_from_completed": 28,
+      "dependency_chain": [
+        {
+          "id": "DEP-02-A",
+          "kind": "code",
+          "artifact": "crates/api/src/routes/itineraries.rs",
+          "delta": 195
+        },
+        {
+          "id": "DEP-02-B",
+          "kind": "consumer",
+          "artifact": "/market · /escrow · /guide routes",
+          "depends_on": "itineraries API"
+        },
+        {
+          "id": "DEP-02-C",
+          "kind": "deploy",
+          "artifact": "wave1_api_deploy compile+health",
+          "required_for": "tt-api-staging boot"
+        },
+        {
+          "id": "DEP-02-D",
+          "kind": "gate",
+          "artifact": "health=200 post wave1",
+          "blocks_if": "compile OOM / runtime panic"
+        }
+      ],
+      "upstream_triggers": [
+        "COMPLETED.json",
+        "apply_patches",
+        "deploy-backlog.patch"
+      ],
+      "downstream_blocked": [
+        "meta_availability",
+        "g02_deep_gate",
+        "graduation",
+        "consumer market/escrow"
+      ],
+      "propagation_path": [
+        {
+          "step": 0,
+          "phase": "completed_trigger",
+          "label": "COMPLETED.json",
+          "offset_min": 0,
+          "fc_id": "FC-02_ITINERARIES_HUB",
+          "status": "pass_expected"
+        },
+        {
+          "step": 1,
+          "phase": "tn_p1_010",
+          "label": "TN-P1-010 independent",
+          "offset_min": 8,
+          "fc_id": "FC-02_ITINERARIES_HUB",
+          "status": "pass_expected"
+        },
+        {
+          "step": 2,
+          "phase": "rollback_snapshot",
+          "label": "fly rollback snapshot",
+          "offset_min": 10,
+          "fc_id": "FC-02_ITINERARIES_HUB",
+          "status": "pass_expected"
+        },
+        {
+          "step": 3,
+          "phase": "apply_patches",
+          "label": "apply backlog + meta hotfix",
+          "offset_min": 12,
+          "fc_id": "FC-02_ITINERARIES_HUB",
+          "status": "pass_expected"
+        },
+        {
+          "step": 4,
+          "phase": "wave1_api_deploy",
+          "label": "Wave1 tt-api-staging deploy",
+          "offset_min": 28,
+          "fc_id": "FC-02_ITINERARIES_HUB",
+          "status": "fail"
+        }
+      ],
+      "recovery_strategies": [
+        {
+          "id": "REC-02-A",
+          "when": "step-4 fly deploy OOM/timeout",
+          "action": "rollback API image; split wave1 — deploy hotfix-only subset first",
+          "rollback": "fly-rollback-snapshot.json previous_image tt-api-staging"
+        },
+        {
+          "id": "REC-02-B",
+          "when": "step-4 health≠200 post deploy",
+          "action": "fly logs tt-api-staging; isolate itineraries.rs; local cargo test -p traveltrust-api",
+          "rollback": "immediate API rollback before wave2"
+        },
+        {
+          "id": "REC-02-C",
+          "when": "post-deploy consumer regression",
+          "action": "smoke-web3-itinerary-l5-local as pre-check before COMPLETED if time permits",
+          "rollback": "wave-rollback-plan wave-1 revert"
+        }
+      ],
+      "forecast_alignment": {
+        "step": 4,
+        "phase": "wave1_api_deploy",
+        "failure_mode": "API deploy OOM / compile timeout / health≠200",
+        "likelihood": "high",
+        "trigger": "p2fc_deploy_api_wave tt-api-staging",
+        "why": "itineraries.rs Δ195 + L1 API backlog",
+        "precheck": "warn",
+        "mitigation": "fly rollback previous_image from fly-rollback-snapshot.json"
+      }
+    },
+    {
+      "id": "FC-03_LARGE_DIFF_BLOB",
+      "severity": "medium",
+      "category": "backlog_blast",
+      "current_state": "42 files with delta≥50 — review blast radius before wave-1",
+      "future_state_required": "controlled wave-1/2 deploy",
+      "fails_at": "step-4/5 deploy OOM or runtime error",
+      "not_failing_now_because": "backlog not applied",
+      "pre_convergence": "wave plan + fly rollback",
+      "primary_fail_step": 4,
+      "primary_fail_phase": "wave1_api_deploy",
+      "time_to_failure_min_from_completed": 28,
+      "dependency_chain": [
+        {
+          "id": "DEP-03-A",
+          "kind": "patch",
+          "artifact": "deploy-backlog.patch",
+          "file_count": "~180",
+          "large_delta_count": 42
+        },
+        {
+          "id": "DEP-03-B",
+          "kind": "compound",
+          "artifact": "FC-02 itineraries hub",
+          "amplifies": "wave1 compile surface"
+        },
+        {
+          "id": "DEP-03-C",
+          "kind": "deploy",
+          "artifact": "wave1+wave2 sequential",
+          "required_for": "full backlog live"
+        },
+        {
+          "id": "DEP-03-D",
+          "kind": "gate",
+          "artifact": "fly deploy exit + health",
+          "blocks_if": "OOM / build fail"
+        }
+      ],
+      "upstream_triggers": [
+        "COMPLETED.json",
+        "apply_patches",
+        "FC-02_ITINERARIES_HUB"
+      ],
+      "downstream_blocked": [
+        "wave2_web_deploy",
+        "meta_availability",
+        "graduation"
+      ],
+      "propagation_path": [
+        {
+          "step": 0,
+          "phase": "completed_trigger",
+          "label": "COMPLETED.json",
+          "offset_min": 0,
+          "fc_id": "FC-03_LARGE_DIFF_BLOB",
+          "status": "pass_expected"
+        },
+        {
+          "step": 1,
+          "phase": "tn_p1_010",
+          "label": "TN-P1-010 independent",
+          "offset_min": 8,
+          "fc_id": "FC-03_LARGE_DIFF_BLOB",
+          "status": "pass_expected"
+        },
+        {
+          "step": 2,
+          "phase": "rollback_snapshot",
+          "label": "fly rollback snapshot",
+          "offset_min": 10,
+          "fc_id": "FC-03_LARGE_DIFF_BLOB",
+          "status": "pass_expected"
+        },
+        {
+          "step": 3,
+          "phase": "apply_patches",
+          "label": "apply backlog + meta hotfix",
+          "offset_min": 12,
+          "fc_id": "FC-03_LARGE_DIFF_BLOB",
+          "status": "pass_expected"
+        },
+        {
+          "step": 4,
+          "phase": "wave1_api_deploy",
+          "label": "Wave1 tt-api-staging deploy",
+          "offset_min": 28,
+          "fc_id": "FC-03_LARGE_DIFF_BLOB",
+          "status": "fail"
+        }
+      ],
+      "recovery_strategies": [
+        {
+          "id": "REC-03-A",
+          "when": "step-3 patch apply slow/conflict",
+          "action": "apply hotfix first per wave plan; --3way backlog hunks",
+          "rollback": "git apply -R; stay on pre-backlog tree"
+        },
+        {
+          "id": "REC-03-B",
+          "when": "step-4/5 OOM",
+          "action": "wave split: L0 hotfix → L1 API subset → L2 web; defer L3 e2e assets",
+          "rollback": "both apps previous_image from snapshot"
+        },
+        {
+          "id": "REC-03-C",
+          "when": "step-7 G02 non-meta fail",
+          "action": "do not conflate with FC-03; meta green first then isolate G03/G08",
+          "rollback": "checkpoint.json phase trace"
+        }
+      ],
+      "forecast_alignment": {
+        "step": 4,
+        "phase": "wave1_api_deploy",
+        "failure_mode": "API deploy OOM / compile timeout / health≠200",
+        "likelihood": "high",
+        "trigger": "p2fc_deploy_api_wave tt-api-staging",
+        "why": "itineraries.rs Δ195 + L1 API backlog",
+        "precheck": "warn",
+        "mitigation": "fly rollback previous_image from fly-rollback-snapshot.json"
+      }
+    }
+  ],
+  "time_to_failure_order": [
+    {
+      "offset_min": 28,
+      "fc_id": "FC-02_ITINERARIES_HUB",
+      "phase": "wave1_api_deploy",
+      "severity": "high"
+    },
+    {
+      "offset_min": 28,
+      "fc_id": "FC-03_LARGE_DIFF_BLOB",
+      "phase": "wave1_api_deploy",
+      "severity": "medium"
+    },
+    {
+      "offset_min": 45,
+      "fc_id": "FC-01_TIMEOUT_MISMATCH",
+      "phase": "meta_availability",
+      "severity": "critical"
+    }
+  ],
+  "first_failure_fc": "FC-02_ITINERARIES_HUB",
+  "first_failure_offset_min": 28,
+  "propagation_graph": {
+    "nodes": [
+      {
+        "step": 0,
+        "phase": "completed_trigger",
+        "label": "COMPLETED.json",
+        "offset_min": 0,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 1,
+        "phase": "tn_p1_010",
+        "label": "TN-P1-010 independent",
+        "offset_min": 8,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 2,
+        "phase": "rollback_snapshot",
+        "label": "fly rollback snapshot",
+        "offset_min": 10,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 3,
+        "phase": "apply_patches",
+        "label": "apply backlog + meta hotfix",
+        "offset_min": 12,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 4,
+        "phase": "wave1_api_deploy",
+        "label": "Wave1 tt-api-staging deploy",
+        "offset_min": 28,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 5,
+        "phase": "wave2_web_deploy",
+        "label": "Wave2 tt-web-staging deploy",
+        "offset_min": 42,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 6,
+        "phase": "meta_availability",
+        "label": "meta strict gate",
+        "offset_min": 45,
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "role": "timeline"
+      },
+      {
+        "step": 0,
+        "phase": "completed_trigger",
+        "label": "COMPLETED.json",
+        "offset_min": 0,
+        "fc_id": "FC-02_ITINERARIES_HUB",
+        "role": "timeline"
+      },
+      {
+        "step": 1,
+        "phase": "tn_p1_010",
+        "label": "TN-P1-010 independent",
+        "offset_min": 8,
+        "fc_id": "FC-02_ITINERARIES_HUB",
+        "role": "timeline"
+      },
+      {
+        "step": 2,
+        "phase": "rollback_snapshot",
+        "label": "fly rollback snapshot",
+        "offset_min": 10,
+        "fc_id": "FC-02_ITINERARIES_HUB",
+        "role": "timeline"
+      },
+      {
+        "step": 3,
+        "phase": "apply_patches",
+        "label": "apply backlog + meta hotfix",
+        "offset_min": 12,
+        "fc_id": "FC-02_ITINERARIES_HUB",
+        "role": "timeline"
+      },
+      {
+        "step": 4,
+        "phase": "wave1_api_deploy",
+        "label": "Wave1 tt-api-staging deploy",
+        "offset_min": 28,
+        "fc_id": "FC-02_ITINERARIES_HUB",
+        "role": "timeline"
+      },
+      {
+        "step": 0,
+        "phase": "completed_trigger",
+        "label": "COMPLETED.json",
+        "offset_min": 0,
+        "fc_id": "FC-03_LARGE_DIFF_BLOB",
+        "role": "timeline"
+      },
+      {
+        "step": 1,
+        "phase": "tn_p1_010",
+        "label": "TN-P1-010 independent",
+        "offset_min": 8,
+        "fc_id": "FC-03_LARGE_DIFF_BLOB",
+        "role": "timeline"
+      },
+      {
+        "step": 2,
+        "phase": "rollback_snapshot",
+        "label": "fly rollback snapshot",
+        "offset_min": 10,
+        "fc_id": "FC-03_LARGE_DIFF_BLOB",
+        "role": "timeline"
+      },
+      {
+        "step": 3,
+        "phase": "apply_patches",
+        "label": "apply backlog + meta hotfix",
+        "offset_min": 12,
+        "fc_id": "FC-03_LARGE_DIFF_BLOB",
+        "role": "timeline"
+      },
+      {
+        "step": 4,
+        "phase": "wave1_api_deploy",
+        "label": "Wave1 tt-api-staging deploy",
+        "offset_min": 28,
+        "fc_id": "FC-03_LARGE_DIFF_BLOB",
+        "role": "timeline"
+      }
+    ],
+    "edges": [
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:completed_trigger",
+        "to": "FC-01_TIMEOUT_MISMATCH:tn_p1_010",
+        "relation": "sequential_exec",
+        "elapsed_min": 8
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:tn_p1_010",
+        "to": "FC-01_TIMEOUT_MISMATCH:rollback_snapshot",
+        "relation": "sequential_exec",
+        "elapsed_min": 2
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:rollback_snapshot",
+        "to": "FC-01_TIMEOUT_MISMATCH:apply_patches",
+        "relation": "sequential_exec",
+        "elapsed_min": 2
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:apply_patches",
+        "to": "FC-01_TIMEOUT_MISMATCH:wave1_api_deploy",
+        "relation": "sequential_exec",
+        "elapsed_min": 16
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:wave1_api_deploy",
+        "to": "FC-01_TIMEOUT_MISMATCH:wave2_web_deploy",
+        "relation": "sequential_exec",
+        "elapsed_min": 14
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:wave2_web_deploy",
+        "to": "FC-01_TIMEOUT_MISMATCH:meta_availability",
+        "relation": "sequential_exec",
+        "elapsed_min": 3
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:dep:DEP-01-A",
+        "to": "FC-01_TIMEOUT_MISMATCH:meta_availability",
+        "relation": "depends_on",
+        "kind": "config"
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:dep:DEP-01-B",
+        "to": "FC-01_TIMEOUT_MISMATCH:meta_availability",
+        "relation": "depends_on",
+        "kind": "patch"
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:dep:DEP-01-C",
+        "to": "FC-01_TIMEOUT_MISMATCH:meta_availability",
+        "relation": "depends_on",
+        "kind": "patch"
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:dep:DEP-01-D",
+        "to": "FC-01_TIMEOUT_MISMATCH:meta_availability",
+        "relation": "depends_on",
+        "kind": "deploy"
+      },
+      {
+        "from": "FC-01_TIMEOUT_MISMATCH:dep:DEP-01-E",
+        "to": "FC-01_TIMEOUT_MISMATCH:meta_availability",
+        "relation": "depends_on",
+        "kind": "gate"
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:apply_patches",
+        "to": "FC-01_TIMEOUT_MISMATCH:apply_patches",
+        "relation": "patch_order_risk",
+        "note": "hotfix must succeed in step-3 for step-6"
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:completed_trigger",
+        "to": "FC-02_ITINERARIES_HUB:tn_p1_010",
+        "relation": "sequential_exec",
+        "elapsed_min": 8
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:tn_p1_010",
+        "to": "FC-02_ITINERARIES_HUB:rollback_snapshot",
+        "relation": "sequential_exec",
+        "elapsed_min": 2
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:rollback_snapshot",
+        "to": "FC-02_ITINERARIES_HUB:apply_patches",
+        "relation": "sequential_exec",
+        "elapsed_min": 2
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:apply_patches",
+        "to": "FC-02_ITINERARIES_HUB:wave1_api_deploy",
+        "relation": "sequential_exec",
+        "elapsed_min": 16
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:dep:DEP-02-A",
+        "to": "FC-02_ITINERARIES_HUB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "code"
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:dep:DEP-02-B",
+        "to": "FC-02_ITINERARIES_HUB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "consumer"
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:dep:DEP-02-C",
+        "to": "FC-02_ITINERARIES_HUB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "deploy"
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:dep:DEP-02-D",
+        "to": "FC-02_ITINERARIES_HUB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "gate"
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:completed_trigger",
+        "to": "FC-03_LARGE_DIFF_BLOB:tn_p1_010",
+        "relation": "sequential_exec",
+        "elapsed_min": 8
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:tn_p1_010",
+        "to": "FC-03_LARGE_DIFF_BLOB:rollback_snapshot",
+        "relation": "sequential_exec",
+        "elapsed_min": 2
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:rollback_snapshot",
+        "to": "FC-03_LARGE_DIFF_BLOB:apply_patches",
+        "relation": "sequential_exec",
+        "elapsed_min": 2
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:apply_patches",
+        "to": "FC-03_LARGE_DIFF_BLOB:wave1_api_deploy",
+        "relation": "sequential_exec",
+        "elapsed_min": 16
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:dep:DEP-03-A",
+        "to": "FC-03_LARGE_DIFF_BLOB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "patch"
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:dep:DEP-03-B",
+        "to": "FC-03_LARGE_DIFF_BLOB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "compound"
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:dep:DEP-03-C",
+        "to": "FC-03_LARGE_DIFF_BLOB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "deploy"
+      },
+      {
+        "from": "FC-03_LARGE_DIFF_BLOB:dep:DEP-03-D",
+        "to": "FC-03_LARGE_DIFF_BLOB:wave1_api_deploy",
+        "relation": "depends_on",
+        "kind": "gate"
+      },
+      {
+        "from": "FC-02_ITINERARIES_HUB:wave1_api_deploy",
+        "to": "FC-03_LARGE_DIFF_BLOB:wave1_api_deploy",
+        "relation": "amplifies"
+      }
+    ]
+  },
+  "recovery_strategy_map": {
+    "FC-01_TIMEOUT_MISMATCH": [
+      {
+        "id": "REC-01-A",
+        "when": "step-3 apply_patches reject",
+        "action": "git apply --3way hotfix; resolve middleware/mod.rs + fly.toml hunks",
+        "rollback": "abort; do not deploy; soak evidence preserved"
+      },
+      {
+        "id": "REC-01-B",
+        "when": "step-6 meta strict 408",
+        "action": "verify fly secrets/env REQUEST_TIMEOUT_SECS=120 on tt-api-staging; redeploy API only",
+        "rollback": "p2fc_rollback_fly_app tt-api-staging previous_image"
+      },
+      {
+        "id": "REC-01-C",
+        "when": "step-6 web /meta 503",
+        "action": "confirm wave2 deployed route.ts 130s; curl api/meta then web/meta",
+        "rollback": "p2fc_rollback_fly_app tt-web-staging previous_image"
+      }
+    ],
+    "FC-02_ITINERARIES_HUB": [
+      {
+        "id": "REC-02-A",
+        "when": "step-4 fly deploy OOM/timeout",
+        "action": "rollback API image; split wave1 — deploy hotfix-only subset first",
+        "rollback": "fly-rollback-snapshot.json previous_image tt-api-staging"
+      },
+      {
+        "id": "REC-02-B",
+        "when": "step-4 health≠200 post deploy",
+        "action": "fly logs tt-api-staging; isolate itineraries.rs; local cargo test -p traveltrust-api",
+        "rollback": "immediate API rollback before wave2"
+      },
+      {
+        "id": "REC-02-C",
+        "when": "post-deploy consumer regression",
+        "action": "smoke-web3-itinerary-l5-local as pre-check before COMPLETED if time permits",
+        "rollback": "wave-rollback-plan wave-1 revert"
+      }
+    ],
+    "FC-03_LARGE_DIFF_BLOB": [
+      {
+        "id": "REC-03-A",
+        "when": "step-3 patch apply slow/conflict",
+        "action": "apply hotfix first per wave plan; --3way backlog hunks",
+        "rollback": "git apply -R; stay on pre-backlog tree"
+      },
+      {
+        "id": "REC-03-B",
+        "when": "step-4/5 OOM",
+        "action": "wave split: L0 hotfix → L1 API subset → L2 web; defer L3 e2e assets",
+        "rollback": "both apps previous_image from snapshot"
+      },
+      {
+        "id": "REC-03-C",
+        "when": "step-7 G02 non-meta fail",
+        "action": "do not conflate with FC-03; meta green first then isolate G03/G08",
+        "rollback": "checkpoint.json phase trace"
+      }
+    ]
+  },
+  "cross_fc_notes": [
+    "FC-02/03 likely surface at T+28min (wave1) before FC-01 at T+45min (meta strict) if wave1 passes",
+    "FC-01 is critical path blocker for Graduation even if wave1/2 succeed",
+    "FC-03 amplifies FC-02 at same phase — recovery REC-03-B splits waves"
+  ],
+  "rehearsal_converged": true,
+  "honest_boundary": "execution-path rehearsal only — no deploy until COMPLETED.json"
+}

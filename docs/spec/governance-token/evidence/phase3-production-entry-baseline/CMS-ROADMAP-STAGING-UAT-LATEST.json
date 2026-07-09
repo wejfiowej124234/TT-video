@@ -1,0 +1,57 @@
+{
+  "schema": "traveltrust.cms_roadmap_staging_uat.v1",
+  "phase": "②_staging_uat",
+  "api": "http://127.0.0.1:8080",
+  "generated_utc": "2026-07-09T14:20:56.663Z",
+  "slug": "roadmap-uat-1783606856663",
+  "steps": {
+    "preflight_public_unauthenticated": {
+      "status": "PASS",
+      "detail": "HTTP 200"
+    },
+    "public_section": {
+      "status": "PASS",
+      "detail": "product-roadmap"
+    },
+    "public_milestones": {
+      "status": "PASS",
+      "detail": "2 items"
+    },
+    "pulse_excludes_roadmap": {
+      "status": "PASS"
+    },
+    "announcements_excludes_roadmap": {
+      "status": "PASS"
+    },
+    "admin_login": {
+      "status": "PASS"
+    },
+    "pre_cleanup": {
+      "status": "PASS",
+      "detail": "no stale roadmap-uat-* rows"
+    },
+    "admin_section_read": {
+      "status": "PASS",
+      "detail": "2026"
+    },
+    "admin_create_milestone": {
+      "status": "PASS",
+      "detail": "ee517af4-ab55-42e7-b44d-90c2e142cb66"
+    },
+    "admin_submit_review": {
+      "status": "PASS"
+    },
+    "admin_publish": {
+      "status": "PASS"
+    },
+    "public_after_publish": {
+      "status": "PASS",
+      "detail": "planned"
+    },
+    "post_cleanup": {
+      "status": "PASS",
+      "detail": "archived 1 UAT milestone(s) incl. roadmap-uat-1783606856663"
+    }
+  },
+  "verdict": "PASS"
+}

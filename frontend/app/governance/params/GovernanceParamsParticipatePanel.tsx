@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { GOV_PARAMS_L5, GovernanceParamsL5Panel } from "@/lib/governance/governanceParamsPageL5";
+import { GovernanceParamsPanelHeader } from "./GovernanceParamsSectionBlock";
 import { useGovernanceParamsQuery } from "./GovernanceParamsQueryProvider";
 
 type Props = {
@@ -34,8 +35,7 @@ export function GovernanceParamsParticipatePanel({ t, className = "" }: Props) {
 
   return (
     <GovernanceParamsL5Panel className={className} data-tt-governance-params-participate="1">
-      <p className={GOV_PARAMS_L5.sectionHeading}>{t("governance_params_participate_title")}</p>
-      <p className={`mt-2 ${GOV_PARAMS_L5.metaNote}`}>{t("governance_params_participate_lead")}</p>
+      <GovernanceParamsPanelHeader title={t("governance_params_participate_title")} lead={t("governance_params_participate_lead")} />
       <ul className="mt-4 grid gap-3 sm:grid-cols-3" role="list">
         {links.map((link) => (
           <li key={link.href}>

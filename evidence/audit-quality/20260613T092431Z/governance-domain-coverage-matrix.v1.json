@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.qa2_domain_coverage.v1",
+  "primary_domains_locked": true,
+  "domains_audited": [
+    "AG",
+    "DOA",
+    "LFC",
+    "MA",
+    "PF",
+    "PGX",
+    "UXA"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T153900Z",
+  "filename": "ocs-dubai-luxury-provider-cover.jpg",
+  "row": 56,
+  "chain_id": "dubai-luxury",
+  "country_code": "AE",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "no_quality_regression_acknowledged": true,
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": ["brand_logos", "celebrity_portraits", "readable_trademarks"],
+    "safe_expression": "沙丘 sunset 豪华 Safari 晚宴餐桌 · 无正面人脸 · 无 Logo"
+  },
+  "checks": {
+    "manifest_full_field_alignment": {
+      "pass": true,
+      "notes": "迪拜沙漠豪华 Safari 含晚宴 · 私人 SUV 冲沙与传统晚宴"
+    },
+    "destination_authenticity_9dim_plan": {
+      "pass": true,
+      "notes": "沙漠 dunes sunset · luxury 晚宴 · AE 沙漠 Safari"
+    },
+    "country_consistency_ae_only": { "pass": true },
+    "provider_business_identity_plan": {
+      "pass": true,
+      "vs_closed_chains": "沙漠 Safari 晚宴 vs 九城 Provider 各异",
+      "vs_row55": "服务场景 vs Omar 向导肖像"
+    },
+    "surface_boundary_plan": { "pass": true },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row55": "sunset 晚宴 vs 沙漠 camp 肖像"
+    },
+    "nine_class_framework_frozen": true
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.p2fc_fly_rollback_snapshot.v1",
+  "recorded_at_utc": "2026-06-26T00:03:59.950Z",
+  "apps": {
+    "tt-api-staging": {
+      "current_image": "registry.fly.io/tt-api-staging:deployment-01KVWJKTE19BHC82DQ11CFPYEN",
+      "previous_image": "registry.fly.io/tt-api-staging:deployment-01KVWGX2QEQZBC16EQGNNDDMG5",
+      "version": 102
+    },
+    "tt-web-staging": {
+      "current_image": "registry.fly.io/tt-web-staging:deployment-01KVWJXK2PCVZVS52MQHQ4Z1E4",
+      "previous_image": "registry.fly.io/tt-web-staging:deployment-01KVWHA5M0JFR6CWR4YZ7SRZK4",
+      "version": 31
+    }
+  }
+}

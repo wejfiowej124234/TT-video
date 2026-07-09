@@ -1,0 +1,82 @@
+{
+  "schema": "traveltrust.cms_hotel_brief_evidence.v1",
+  "recorded_at_utc": "2026-07-07T13:32:25.050Z",
+  "phase": "DISCOVERY_COMPLETE",
+  "TT_CMS_HOTEL_BRIEF": "DESIGN_SSOT",
+  "TT_CMS_HOTEL_MATRIX": "SCOPE_LOCKED",
+  "goal_one_liner": "Hotel 为 Market / 行程预算提供全球一致的 3 档 tier 库存图与展示元数据，由 CMS 独立发布；不承载 listing、不定价、不写订单。",
+  "brief_ssot": "data/catalog/hotel-brief.v1.yaml",
+  "matrix_ssot": "data/catalog/hotel-matrix.v1.yaml",
+  "asset_kind": "hotel_tier_stock",
+  "stats": {
+    "tiers": 3,
+    "geography": "global",
+    "matrix_pass": 0,
+    "asset_lifecycle_draft": 3,
+    "pilot_wave_1": "HT-TIER-COMFORT-001",
+    "pilot_wave_2": "HT-TIER-ECONOMY-001",
+    "pilot_wave_3": "HT-TIER-LUXURY-001"
+  },
+  "dual_read": {
+    "primary": "GET /api/v1/catalog/hotel-tiers",
+    "secondary": "GET /api/v1/catalog/media?asset_kind=hotel_tier_stock"
+  },
+  "consumer_pages": {
+    "Market": true,
+    "Escrow": true,
+    "Home": false,
+    "Travel": false,
+    "Guide": false
+  },
+  "validation_errors": [],
+  "rows": [
+    {
+      "matrix_id": "HT-TIER-ECONOMY-001\r",
+      "tier_code": "tier_economy",
+      "display_en": "Economy",
+      "sort_order": 0,
+      "multiplier": 1,
+      "submit_label_zh": "经济型酒店（约3星）",
+      "stock_pool_key": "tier_economy",
+      "consumer": "Market",
+      "asset_lifecycle": "draft",
+      "matrix_row_status": "pending",
+      "pilot_wave": "WAVE_2"
+    },
+    {
+      "matrix_id": "HT-TIER-COMFORT-001\r",
+      "tier_code": "tier_comfort",
+      "display_en": "Comfort",
+      "sort_order": 1,
+      "multiplier": 1.25,
+      "submit_label_zh": "舒适型酒店（约4星）",
+      "stock_pool_key": "tier_comfort",
+      "consumer": "Market",
+      "asset_lifecycle": "draft",
+      "matrix_row_status": "pending",
+      "pilot_wave": "WAVE_1"
+    },
+    {
+      "matrix_id": "HT-TIER-LUXURY-001\r",
+      "tier_code": "tier_luxury",
+      "display_en": "Luxury",
+      "sort_order": 2,
+      "multiplier": 1.5,
+      "submit_label_zh": "豪华型酒店（约5星）",
+      "stock_pool_key": "tier_luxury",
+      "consumer": "Market",
+      "asset_lifecycle": "draft",
+      "matrix_row_status": "pending",
+      "pilot_wave": "WAVE_3"
+    }
+  ],
+  "forbidden_until_implementation": [
+    "wp0_migration",
+    "admin_ui",
+    "api",
+    "runtime",
+    "frontend",
+    "upload",
+    "catalog_publish_ops"
+  ]
+}

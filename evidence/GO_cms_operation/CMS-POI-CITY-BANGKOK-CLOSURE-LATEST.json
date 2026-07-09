@@ -1,0 +1,150 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-06T034054Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "TH",
+    "country_zh": "泰国",
+    "city_zh": "曼谷",
+    "city_en": "Bangkok"
+  },
+  "poi_count": 10,
+  "matrix_ids": [
+    "PH-TH-073-ATR",
+    "PH-TH-074-ATR",
+    "PH-TH-075-ATR",
+    "PH-TH-076-ATR",
+    "PH-TH-077-ATR",
+    "PH-TH-078-FOOD",
+    "PH-TH-079-FOOD",
+    "PH-TH-080-FOOD",
+    "PH-TH-081-FOOD",
+    "PH-TH-082-FOOD"
+  ],
+  "pois": [
+    "大皇宫",
+    "卧佛寺",
+    "郑王庙",
+    "考山路",
+    "水上市场",
+    "冬阴功",
+    "泰式炒河粉",
+    "芒果糯米饭",
+    "青木瓜沙拉",
+    "泰式奶茶"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-TH-073-ATR",
+      "legacy_value": "大皇宫",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-074-ATR",
+      "legacy_value": "卧佛寺",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-075-ATR",
+      "legacy_value": "郑王庙",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-076-ATR",
+      "legacy_value": "考山路",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-077-ATR",
+      "legacy_value": "水上市场",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-078-FOOD",
+      "legacy_value": "冬阴功",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-079-FOOD",
+      "legacy_value": "泰式炒河粉",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-080-FOOD",
+      "legacy_value": "芒果糯米饭",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-081-FOOD",
+      "legacy_value": "青木瓜沙拉",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-082-FOOD",
+      "legacy_value": "泰式奶茶",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-073-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-074-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-075-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-076-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-077-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-078-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-079-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-080-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-081-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-082-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=TH&city=%E6%9B%BC%E8%B0%B7&limit=50",
+    "http": 200,
+    "count": 10
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-bangkok/CMS-POI-BANGKOK-CLOSED-LOOP-LATEST.json",
+  "next_city": {
+    "country_iso": "TH",
+    "city_zh": "普吉",
+    "city_en": "Phuket"
+  },
+  "closure_keys": {
+    "TT_CMS_POI_CITY_BANGKOK": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": "TH · 普吉"
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_BANGKOK": "CLOSED"
+}

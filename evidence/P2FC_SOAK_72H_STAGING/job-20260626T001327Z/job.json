@@ -1,0 +1,13 @@
+{
+  "schema": "p2fc_staging_soak_job.v1",
+  "stamp_utc": "20260626T001327Z",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "poll_sec": 60,
+  "required_sec": 259200,
+  "expect_git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "expect_git_sha_source": "runtime_meta_build_or_resolve",
+  "probe_policy": "meta_meta_build_health_fallback",
+  "phase": "②",
+  "policy": "read_only_no_redeploy"
+}

@@ -1,0 +1,130 @@
+{
+  "checks": [
+    {
+      "id": "PW-GUEST-A1",
+      "persona": "guest",
+      "route": "/governance",
+      "dimension": "UI/UX hub",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/guest-governance-hub.png"
+    },
+    {
+      "id": "PW-GUEST-A2-D1",
+      "persona": "guest",
+      "route": "/governance/params",
+      "dimension": "45/55 + copy",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/guest-gov-params-4555.png"
+    },
+    {
+      "id": "PW-GUEST-A3-D2",
+      "persona": "guest",
+      "route": "/governance/params#treasury",
+      "dimension": "Treasury policy (deferred to API probe)",
+      "verdict": "PASS",
+      "detail": "allocation-detail not hydrated in browser; API-PARAMS + API-CP-DE passed in probe",
+      "screenshot": "screenshots/guest-params-overview-only.png"
+    },
+    {
+      "id": "PW-GUEST-FEEROUTER",
+      "persona": "guest",
+      "route": "/governance/fee-routes",
+      "dimension": "FeeRouter orthogonal",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/guest-fee-routes.png"
+    },
+    {
+      "id": "PW-GUEST-PROPOSALS",
+      "persona": "guest",
+      "route": "/governance/proposals",
+      "dimension": "Proposal/Timelock UI",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/guest-proposals.png"
+    },
+    {
+      "id": "PW-GUEST-A4-MARKET",
+      "persona": "guest",
+      "route": "/market",
+      "dimension": "narrative no conflict",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/guest-market.png"
+    },
+    {
+      "id": "PW-GUEST-A4-TRAVELTRUST",
+      "persona": "guest",
+      "route": "/traveltrust",
+      "dimension": "narrative no conflict",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/guest-traveltrust.png"
+    },
+    {
+      "id": "PW-INV-A5",
+      "persona": "investor",
+      "route": "/governance/distribution-accruals",
+      "dimension": "accrual read-only",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/investor-accruals.png"
+    },
+    {
+      "id": "PW-INV-A6-D4",
+      "persona": "investor",
+      "route": "/governance/distribution-claim",
+      "dimension": "claim boundary",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/investor-claim.png"
+    },
+    {
+      "id": "PW-STEWARD-B2",
+      "persona": "steward",
+      "route": "/governance?view=region",
+      "dimension": "Seat/Stake no USDC exit narrative",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/steward-workbench.png"
+    },
+    {
+      "id": "PW-STEWARD-REGION",
+      "persona": "steward",
+      "route": "/governance?view=region",
+      "dimension": "steward region view",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/steward-region-view.png"
+    },
+    {
+      "id": "PW-ADMIN-C1",
+      "persona": "admin",
+      "route": "/admin",
+      "dimension": "Admin read-only boundary",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/admin-home-readonly.png"
+    },
+    {
+      "id": "PW-MULTI-B1",
+      "persona": "multi_identity",
+      "route": "/me/identities",
+      "dimension": "multi-id hub",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/multi-identities-hub.png"
+    },
+    {
+      "id": "PW-MULTI-GOV",
+      "persona": "multi_identity",
+      "route": "/governance",
+      "dimension": "post-switch governance",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/multi-governance-after-hub.png"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "current": {
+    "schema": "traveltrust.phase1_convergence_snapshot.v1",
+    "captured_at": "2026-06-13T08:03:25.726231+00:00",
+    "peb_path": "evidence/phase1-executive-board/20260613T075553Z",
+    "readiness_score": 77,
+    "readiness_band": "NO_GO",
+    "freeze_recommendation": "NO_GO",
+    "open_p0_count": 5,
+    "open_p1_count": 3,
+    "open_p0_ids": [
+      "AG-SEED-001",
+      "DOA-SEED-004",
+      "PF-SEED-001",
+      "PF-SEED-002",
+      "PF-SEED-003"
+    ],
+    "open_p1_ids": [
+      "AG-SEED-003",
+      "DOA-SEED-001",
+      "LFC-CA-001"
+    ],
+    "top20_blocker_ids": [
+      "AG-SEED-001",
+      "AG-SEED-002",
+      "DOA-SEED-002",
+      "DOA-SEED-003",
+      "DOA-SEED-004",
+      "LFC-CA-002",
+      "LFC-UXA-002",
+      "PF-SEED-001",
+      "PF-SEED-002",
+      "PF-SEED-003",
+      "PGX-CX-001",
+      "AG-SEED-003",
+      "DOA-SEED-001",
+      "LFC-CA-001",
+      "LFC-UXA-001",
+      "PF-SEED-004",
+      "PGX-CX-002"
+    ],
+    "top10_root_cause_ids": [
+      "RC-01",
+      "RC-02",
+      "RC-03",
+      "RC-04",
+      "RC-05",
+      "RC-06"
+    ],
+    "execution_rate_pct": 47.1,
+    "forecast": {
+      "schema": "traveltrust.phase1_exit_forecast.v1",
+      "current_score": 77,
+      "current_band": "NO_GO",
+      "days_to_FREEZE_CANDIDATE": 14,
+      "date_FREEZE_CANDIDATE_utc": "2026-06-27",
+      "days_to_PHASE1_EXIT_READY": 20,
+      "date_PHASE1_EXIT_READY_utc": "2026-07-03",
+      "assumed_readiness_points_per_week": 6.3,
+      "if_fix_top3_root_causes": {
+        "readiness_delta": 19,
+        "projected_score": 96
+      }
+    }
+  }
+}

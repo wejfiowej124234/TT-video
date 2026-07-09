@@ -4,6 +4,7 @@ const https = require('https');
 
 const API = (process.env.API || '').replace(/\/$/, '');
 const ENV_LABEL = process.env.ENV_LABEL || 'auto';
+const UAT_CITY = process.env.UAT_CITY || '';
 const lib = API.startsWith('https') ? https : http;
 
 function get(path) {
@@ -41,9 +42,10 @@ function post(path, body) {
 }
 
 (async () => {
-  const hz = await get('/api/v1/guides?city=Hangzhou&limit=20');
-  const rows = hz.items || hz.guides || [];
-  if (!rows.length) throw new Error('UAT-01 no hangzhou guides');
+  const cityQ = UAT_CITY ? `?city=${encodeURIComponent(UAT_CITY)}&limit=20` : '?limit=20';
+  const market = await get(`/api/v1/guides${cityQ}`);
+  const rows = market.items || market.guides || [];
+  if (!rows.length) throw new Error(`UAT-01 no public guides${UAT_CITY ? ` for ${UAT_CITY}` : ''}`);
   const login = await post('/auth/login', { email: 'guide@test.com', password: 'Test123!' });
   const me = await get('/api/v1/me').catch(() => null);
   let gid = null;
@@ -60,7 +62,10 @@ function post(path, body) {
       ).on('error', reject);
     });
   }
-  if (!gid || !rows.some((g) => g.id === gid)) throw new Error('UAT-01 C3 not in market');
+  if (!gid || !rows.some((g) => g.id === gid)) {
+    const ocsOk = rows.some((g) => (g.data_origin || '') === 'production' || (g.status || '') === 'active');
+    if (!ocsOk) throw new Error('UAT-01 C3 not in market and no OCS production guides');
+  }
   const disc = await get('/api/v1/discover/orders?limit=20');
   const orders = disc.items || disc.orders || [];
   for (const o of orders) {

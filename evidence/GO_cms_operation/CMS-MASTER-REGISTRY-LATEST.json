@@ -1,0 +1,207 @@
+{
+  "schema": "traveltrust.cms_master_registry.v2",
+  "variant": "solo_founder",
+  "version": "V2",
+  "status": "ACTIVE",
+  "baseline": "Ten Country CMS Content QA",
+  "owner": "Solo Founder",
+  "recorded_at_utc": "2026-07-07T13:32:25.099Z",
+  "last_updated": "2026-07-07",
+  "TT_CMS_MASTER_REGISTRY": "ACTIVE",
+  "governance_layers": {
+    "registry": {
+      "role": "现在是什么状态？",
+      "path": "CMS-MASTER-REGISTRY-LATEST.json"
+    },
+    "evidence": {
+      "role": "为什么是这个状态？",
+      "path": "evidence/GO_cms_operation/"
+    },
+    "script": {
+      "role": "怎么重新生成？",
+      "command": "node scripts/dev/run-cms-master-registry.cjs"
+    }
+  },
+  "columns": [
+    "module",
+    "status",
+    "business_critical",
+    "l5",
+    "cms",
+    "next"
+  ],
+  "status_enum": [
+    "Frozen",
+    "Pilot",
+    "Backlog",
+    "Registry"
+  ],
+  "stats": {
+    "cms_modules_total": 14,
+    "frozen_p0": 3,
+    "pilot_p1": 2,
+    "backlog": 6,
+    "registry_only": 3,
+    "l5_ready": 3,
+    "l5_scope": 11,
+    "cms_track_count": 11
+  },
+  "today_focus": {
+    "module": "Hotel",
+    "next": "Discovery Complete · 等待实现决策 · 不进入 WP0/Admin/API"
+  },
+  "p1_standard": {
+    "status": "FROZEN",
+    "version": "1.1.0",
+    "runbook": "docs/runbook/TT-CMS-P1-CONTENT-FAMILY-STANDARD.md",
+    "review": "CMS-P1-STANDARD-REVIEW-LATEST.json",
+    "evidence": "CMS-P1-CONTENT-FAMILY-STANDARD-LATEST.json"
+  },
+  "poi_track_frozen": {
+    "TT_CMS_TEN_COUNTRY_FINAL_CLOSURE": "CLOSED",
+    "total_poi_locked": 330,
+    "production_go": "BLOCKED"
+  },
+  "modules": [
+    {
+      "id": "poi_content_qa",
+      "module": "POI Content QA",
+      "status": "Frozen",
+      "business_critical": "P0",
+      "l5_pass": true,
+      "plane": "CMS",
+      "belongs_to_cms": true,
+      "next": "无"
+    },
+    {
+      "id": "destination_ambient",
+      "module": "Destination Ambient",
+      "status": "Frozen",
+      "business_critical": "P0",
+      "l5_pass": true,
+      "plane": "CMS",
+      "belongs_to_cms": true,
+      "next": "无"
+    },
+    {
+      "id": "destination_ambient_hero",
+      "module": "Hero Assets",
+      "status": "Frozen",
+      "business_critical": "P0",
+      "l5_pass": true,
+      "plane": "CMS",
+      "belongs_to_cms": true,
+      "next": "无"
+    },
+    {
+      "id": "city_hero",
+      "module": "City Hero",
+      "status": "Pilot",
+      "business_critical": "P1",
+      "l5_pass": false,
+      "plane": "CMS",
+      "belongs_to_cms": true,
+      "next": "Pilot Architecture Validated · WP5 暂停 · 无 L5/Consumer/Ops 矩阵"
+    },
+    {
+      "id": "hotel",
+      "module": "Hotel",
+      "status": "Pilot",
+      "business_critical": "P1",
+      "l5_pass": false,
+      "plane": "CMS",
+      "belongs_to_cms": true,
+      "next": "Discovery Complete · Brief+Matrix+Boundary · 等待实现决策"
+    },
+    {
+      "id": "transport",
+      "module": "Transport",
+      "status": "Backlog",
+      "business_critical": "P1",
+      "l5_pass": false,
+      "plane": "CMS",
+      "belongs_to_cms": true,
+      "next": "P1 后续 · 按 Standard 规模化"
+    },
+    {
+      "id": "listings",
+      "module": "Listings",
+      "status": "Backlog",
+      "business_critical": "P1",
+      "l5_pass": false,
+      "plane": "CMS",
+      "belongs_to_cms": true,
+      "next": "P1 后续 · 按 Standard 规划结构"
+    },
+    {
+      "id": "banner",
+      "module": "Banner",
+      "status": "Backlog",
+      "business_critical": "P2",
+      "l5_pass": false,
+      "plane": "CMS",
+      "belongs_to_cms": true,
+      "next": "上线后"
+    },
+    {
+      "id": "video_poster",
+      "module": "Video Poster",
+      "status": "Backlog",
+      "business_critical": "P2",
+      "l5_pass": false,
+      "plane": "CMS",
+      "belongs_to_cms": true,
+      "next": "上线后"
+    },
+    {
+      "id": "seo_metadata",
+      "module": "SEO",
+      "status": "Backlog",
+      "business_critical": "P2",
+      "l5_pass": false,
+      "plane": "CMS",
+      "belongs_to_cms": true,
+      "next": "上线后"
+    },
+    {
+      "id": "country_city_copy",
+      "module": "i18n Copy",
+      "status": "Backlog",
+      "business_critical": "P2",
+      "l5_pass": false,
+      "plane": "CMS",
+      "belongs_to_cms": true,
+      "next": "上线后"
+    },
+    {
+      "id": "official_guides",
+      "module": "Official Guides",
+      "status": "Registry",
+      "business_critical": "—",
+      "l5_pass": false,
+      "plane": "OCS",
+      "belongs_to_cms": false,
+      "next": "无"
+    },
+    {
+      "id": "community_official",
+      "module": "Community",
+      "status": "Registry",
+      "business_critical": "—",
+      "l5_pass": false,
+      "plane": "OCS",
+      "belongs_to_cms": false,
+      "next": "无"
+    },
+    {
+      "id": "governance_cms",
+      "module": "Governance",
+      "status": "Registry",
+      "business_critical": "—",
+      "l5_pass": false,
+      "plane": "NON_CONTENT",
+      "belongs_to_cms": false,
+      "next": "无"
+    }
+  ]
+}

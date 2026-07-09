@@ -1,0 +1,57 @@
+---
+description: 页面收口/冻结/验收问答 — 统一回复口径（清单 + 结论 + 三阶）
+alwaysApply: true
+---
+
+# 页面收口 · 冻结 · 验收 — 回复口径
+
+用户问某页/某域 **是否收口、是否冻结、完成度、未完成项** 时，**必须**用下列结构回复；**禁止**长散文、禁止跳阶、禁止用 ① 冒充 ②③。
+
+## 固定结构（按顺序）
+
+1. **阶段口径一行**：① 本地 → ② 测试网 → ③ 公网/生产（须顺序，禁止跳阶）
+2. **总表两行**：**有没有收口** · **有没有 UI 冻结**（各给 是/否 + 阶段）
+3. **清单表**（# | 清单项 | 状态 | 未完成应在哪阶）
+   - 状态只用：**✅ 完成** / **❌ 未完成**；已冻结写 **✅ 完成 · 已冻结**
+   - 「未完成应在哪阶」只填 **—** / **②** / **③** / **② / ③**
+4. **一句话结论表**（可选，多页对比时用）
+
+## 用词
+
+| 用户词 | 含义 |
+|--------|------|
+| 收口 | ① 产品 + 文档 + 机读（绿集/烟测）对该页声明 **ACTIVE** |
+| UI 冻结 | 禁止结构/视觉/layout token 回流；仅 bugfix · 数据链 · i18n · a11y |
+| 完成 | 当前问到的**阶段**内可验证目标已闭 |
+| 未完成 | 明确写 **留到 ② 或 ③**，不模糊 |
+
+## 诚实边界（必带一句或表内一行）
+
+- ① 绿 / 本地收口 **≠** ② staging GO **≠** ③ Production GO
+- ISS-007 / 窄切片 GO **不得**冒充全站矩阵 GO
+
+## 示例骨架
+
+```markdown
+**阶段口径：** ① → ② → ③
+
+| 项 | 结论 |
+|----|------|
+| **有没有收口** | 是/否（①） |
+| **有没有 UI 冻结** | 是/否 |
+
+| # | 清单项 | 状态 | 未完成应在哪阶 |
+|---|--------|------|----------------|
+| 1 | … | ✅/❌ | — / ② / ③ |
+
+**一句话结论：** …
+```
+
+## 真源（查表时优先）
+
+- **五主 ① 代码真源（企业级 · 冲突以 `frontend/` 为准）**：`frontend/evidence/GO_local_marketing_front_closure/FIVE-PAGES-ENTERPRISE-CODE-AUDIT-20260603.md`
+- 五主 UI 冻结：`frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md`
+- **`/` + `/market*` 数据链**：`frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md`
+- **`/did-rank`** · **`/community/*`**：`DID-RANK-PHASE1-FREEZE.md` · `COMMUNITY-PHASE1-FREEZE.md` · 各 `frontend/app/*/README.md`
+- Web3 总表：`frontend/evidence/GO_local_web3_pages_closure/WEB3-PAGES-PHASE1-INVENTORY.md`
+- 阶段闸：`docs/runbook/PHASE2-REPOSITORY-STATUS.md` · `AGENTS.md`

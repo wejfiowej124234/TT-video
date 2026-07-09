@@ -1,0 +1,51 @@
+# TravelTrust Dashboard System · Machine SSOT v2
+
+schema: traveltrust.dashboard_system.v2
+version: 2
+effective_utc: "2026-07-08"
+
+fixed_entry:
+  primary: node scripts/dev/dashboard.cjs
+  shell: bash scripts/dashboard.sh
+  refresh: node scripts/dev/dashboard.cjs --refresh
+
+principle: >
+  Status-only dashboards (PASS/IN_PROGRESS/BLOCKED/NOT_STARTED) plus real metrics
+  (Open P0/P1/Cert/Evidence). No progress percentages — they distort during Timelock waits.
+
+discipline: >
+  Stop expanding governance framework. Drive daily work from dashboards.
+  Refresh after each Cert, UAT, or evidence item. No new layers unless truly needed.
+
+dashboards:
+  project:
+    script: scripts/dev/run-phase-dashboard.cjs
+    evidence: evidence/GO_production_readiness/phase-dashboard/PROJECT-DASHBOARD-LATEST.md
+    displays: [status, real_metrics, today_focus, blockers_list]
+    no_percentages: true
+
+  web3:
+    script: scripts/dev/run-web3-dashboard.cjs
+    evidence: evidence/GO_production_readiness/web3-dashboard/WEB3-DASHBOARD-LATEST.md
+    features: [module_status, lifecycle_view, today_focus]
+    no_percentages: true
+
+  operations:
+    script: scripts/dev/run-operations-dashboard.cjs
+    evidence: evidence/GO_production_readiness/operations-dashboard/OPERATIONS-DASHBOARD-LATEST.md
+    features: [traveler_journey, guide_journey, merchant_journey, area_status]
+    no_percentages: true
+
+  deployment:
+    status: NOT_ACTIVE
+    activate: Phase ② end approaching Exit Review
+    ssot: registry/deployment-dashboard.v1.yaml
+    future_script: scripts/dev/run-deployment-dashboard.cjs
+
+status_enum: [PASS, IN_PROGRESS, BLOCKED, NOT_STARTED]
+
+real_metrics:
+  - open_p0
+  - open_p1
+  - open_cert
+  - open_evidence

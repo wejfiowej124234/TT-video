@@ -1,0 +1,5 @@
+status: PASS
+phase: ②
+artifact: TN-P1-004 Sepolia Stake
+at: 20260630T153904Z
+release_gate: GO

@@ -1,0 +1,49 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W04",
+  "recorded_utc": "2026-07-08T07:41:56.155Z",
+  "run_id": "2026-07-08T07-41-56-154Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PASS",
+  "summary": {
+    "verdict": "PASS",
+    "detail": "Escrow custody + contract parity"
+  },
+  "detail": "Escrow custody + contract parity",
+  "escrow_address": "0x04f7A01Dd16D159F0855b9d8BcfAd2E41eB2F8D1",
+  "platform_fee_recipient": "0x81A8009210c5215100564c6E4123F672c4459306",
+  "expected_fee_router": "0x81A8009210c5215100564c6E4123F672c4459306",
+  "parity": {
+    "registry": {
+      "SETTLEMENT_TOKEN_ADDRESS": "0x241948bE49a778490c8A4Ae8D98b7537fE001f63",
+      "ESCROW_FACTORY_ADDRESS": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+      "FEE_ROUTER_ADDRESS": "0x81A8009210c5215100564c6E4123F672c4459306",
+      "REGISTRY_ADDRESS": "0xc50913e154f850583D0afbE9158a75E0e2167AAb",
+      "GOVERNOR_ADDRESS": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+      "GUIDE_STAKING_ADDRESS": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f",
+      "REGION_VAULT_ADDRESS": "0x2Ea061d50393c09af2f607Ee9f89679642A3a65B",
+      "CHAIN_ID": 11155111
+    },
+    "api_meta": {
+      "escrow_factory_address": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+      "fee_router_address": "0x81A8009210c5215100564c6E4123F672c4459306",
+      "registry_address": "0xc50913e154f850583D0afbE9158a75E0e2167AAb",
+      "governor_address": "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+    },
+    "tt_web_prod_build": {
+      "NEXT_PUBLIC_API_BASE_URL": "https://tt-api-prod.fly.dev",
+      "NEXT_PUBLIC_SITE_URL": "https://tt-web-prod.fly.dev",
+      "NEXT_PUBLIC_CHAIN_ID": "11155111",
+      "NEXT_PUBLIC_RPC_URL": "https://sepolia.drpc.org",
+      "NEXT_PUBLIC_ESCROW_FACTORY_ADDRESS": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+      "NEXT_PUBLIC_FEE_ROUTER_ADDRESS": "0x81A8009210c5215100564c6E4123F672c4459306",
+      "NEXT_PUBLIC_GOVERNOR_ADDRESS": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+      "NEXT_PUBLIC_REGISTRY_ADDRESS": "0xc50913e154f850583D0afbE9158a75E0e2167AAb",
+      "NEXT_PUBLIC_GUIDE_STAKING_ADDRESS": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f",
+      "NEXT_PUBLIC_STAKING_PROVIDER_ADDRESS": "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075"
+    },
+    "settlement_token_fe_present": false
+  },
+  "escrow_status_before_deposit": "1"
+}

@@ -33,8 +33,8 @@ Official Cold Start Dataset (OCS) CLOSED · CLOSED_UNLESS_TOUCHED
         │
         ▼
 Production Infrastructure (PI3)     IN_PROGRESS · Owner Live 待齐
-        │  P0: Domain/TLS · Stripe Live · Prod UAT final
-        │  P1: Security · Observability · Perf · Go-Live
+        │  P0: Domain/TLS · **Web3 USDC prod smoke (G3-02)** · Prod UAT final
+        │  P1: Security · Observability · Perf · Go-Live · **Stripe onboarding optional**
         │  P2: Mainnet（可选 · 不挡 Sepolia GO）
         ▼
 Production GO                       NO_GO
@@ -47,7 +47,7 @@ Production GO                       NO_GO
 | RC | `RELEASE_CANDIDATE` | `CLOSED_UNLESS_TOUCHED` | **CLOSED (Evidence Reused)** | 产品候选发布审查 |
 | DDG | `STAGING_FULL_SITE_DDG` | `CLOSED_UNLESS_TOUCHED` | **CLOSED (Evidence Reused)** | 展示数据治理 |
 | **OCS** | `TT_OFFICIAL_COLD_START_DATASET` | **`CLOSED_UNLESS_TOUCHED`** | **CLOSED (Evidence Reused)** | **官方运营冷启动基线** |
-| PI3 | `PRODUCTION_INFRASTRUCTURE` | 每次发布必闭 | IN_PROGRESS | 品牌域名 · Stripe Live · Mainnet |
+| PI3 | `PRODUCTION_INFRASTRUCTURE` | 每次发布必闭 | IN_PROGRESS | 品牌域名 · L3 infra · **Web3 USDC (G3-02 PASS)** |
 | GO | `PRODUCTION_GO` | 每次发布必闭 | PENDING (NO_GO) | Release Decision |
 
 **OCS 重跑触发（仅当路径变更或 Rule 3）：** manifest · Campaign 结构 · Official Account 模型 · Public Surface · `data_origin` · Official Ops API。详见 `registry/evidence-reuse-policy.v1.yaml#gates/OFFICIAL_COLD_START_DATASET`。

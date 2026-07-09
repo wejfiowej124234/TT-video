@@ -1,0 +1,28 @@
+{
+  "schema": "traveltrust.p2fc_pre_accept_convergence.v1",
+  "recorded_at_utc": "2026-06-24T05:31:26.413Z",
+  "soak_attest": "INFLIGHT|job=D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/job-20260624T011124Z pid=123095 alive=1 ok_polls=92 fail_polls=1 elapsed_sec~=5520 remaining_sec~=253680 required_sec=259200 expect=520abf396cce… live=520abf396cce… probe=meta_build sha_aligned=yes",
+  "soak_completed": false,
+  "checks": {
+    "backlog_layer_review": true,
+    "meta_503_rca": true,
+    "meta_observability_exec_chain": true,
+    "hotfix_patch_present": true,
+    "tn_p1_010_scripts_ready": true,
+    "fly_toml_request_timeout": true,
+    "local_g02": "skipped"
+  },
+  "post_soak_one_shot": [
+    "bash scripts/ops/p2fc-post-soak-one-shot-execute.sh --watch",
+    "bash scripts/ops/p2fc-verify-staging-meta-availability.sh --strict",
+    "PHASE2_REQUIRE_META_GREEN=1 bash scripts/dev/run-phase2-deep-release-gate.sh --require-meta-green",
+    "bash scripts/dev/run-phase2-testnet-post-soak-graduation-closure.sh"
+  ],
+  "artifacts": {
+    "layer_review": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-one-shot\\pre-accept\\layer-review\\layer-review.json",
+    "meta_rca": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-one-shot\\pre-accept\\meta-rca.json",
+    "log": "D:\\TravelTrust-V1.1\\evidence\\P2FC_SOAK_72H_STAGING\\post-soak-one-shot\\pre-accept\\pre-accept.log"
+  },
+  "blockers": [],
+  "verdict": "PASS"
+}

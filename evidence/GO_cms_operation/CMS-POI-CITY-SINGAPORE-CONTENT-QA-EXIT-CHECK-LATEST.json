@@ -1,0 +1,339 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_exit_check.v1",
+  "recorded_at_utc": "2026-07-06T06:48:43.354Z",
+  "city": {
+    "city_zh": "新加坡",
+    "city_en": "Singapore",
+    "country_iso": "SG",
+    "poi_count": 10
+  },
+  "replicated_from": "JP + KR + TH Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "checks": [
+    {
+      "id": "assets_locked_10_10",
+      "label": "10/10 Asset 全部 LOCKED · 无 Unlock",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-SG-101-ATR",
+          "poi": "滨海湾",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-SG-102-ATR",
+          "poi": "圣淘沙",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-SG-103-ATR",
+          "poi": "牛车水",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-SG-104-ATR",
+          "poi": "小印度",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-SG-105-ATR",
+          "poi": "动物园",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-SG-106-FOOD",
+          "poi": "海南鸡饭",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-SG-107-FOOD",
+          "poi": "肉骨茶",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-SG-108-FOOD",
+          "poi": "辣椒螃蟹",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-SG-109-FOOD",
+          "poi": "叻沙",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-SG-110-FOOD",
+          "poi": "椰浆饭",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "six_dimensions_pass",
+      "label": "六维全部 PASS（City Runtime = Gate 4 同源 · 非 national）",
+      "pass": true,
+      "runtime_scope": "city_consumer_runtime",
+      "city_snapshot": {
+        "execution": "PASS",
+        "cms_ownership": "PASS",
+        "runtime_consumer": "PASS",
+        "geo_matching": "PASS",
+        "content_accuracy": "PASS",
+        "l5_quality": "PASS",
+        "content_qa_closed": true
+      },
+      "issues": []
+    },
+    {
+      "id": "catalog_api_singapore",
+      "label": "Catalog API 10/10 与 LOCK 一致",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-SG-101-ATR",
+          "poi": "滨海湾",
+          "expected": "ocs-singapore-family-official-guide-cover.jpg",
+          "catalog": "ocs-singapore-family-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-SG-102-ATR",
+          "poi": "圣淘沙",
+          "expected": "ocs-singapore-family-community-media.jpg",
+          "catalog": "ocs-singapore-family-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-SG-103-ATR",
+          "poi": "牛车水",
+          "expected": "ocs-singapore-family-community-cover.jpg",
+          "catalog": "ocs-singapore-family-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-SG-104-ATR",
+          "poi": "小印度",
+          "expected": "ocs-singapore-family-provider-cover.jpg",
+          "catalog": "ocs-singapore-family-provider-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-SG-105-ATR",
+          "poi": "动物园",
+          "expected": "ocs-singapore-family-acquisition-cover.jpg",
+          "catalog": "ocs-singapore-family-acquisition-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-SG-106-FOOD",
+          "poi": "海南鸡饭",
+          "expected": "ocs-singapore-family-guide-avatar.jpg",
+          "catalog": "ocs-singapore-family-guide-avatar.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-SG-107-FOOD",
+          "poi": "肉骨茶",
+          "expected": "ocs-singapore-family-official-guide-cover.jpg",
+          "catalog": "ocs-singapore-family-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-SG-108-FOOD",
+          "poi": "辣椒螃蟹",
+          "expected": "ocs-singapore-family-community-media.jpg",
+          "catalog": "ocs-singapore-family-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-SG-109-FOOD",
+          "poi": "叻沙",
+          "expected": "ocs-singapore-family-community-cover.jpg",
+          "catalog": "ocs-singapore-family-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-SG-110-FOOD",
+          "poi": "椰浆饭",
+          "expected": "ocs-singapore-family-community-media.jpg",
+          "catalog": "ocs-singapore-family-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "consumer_runtime_cms",
+      "label": "Consumer Runtime 实际页面读取 CMS（非仅 Verify）",
+      "pass": true,
+      "catalog_api_requests": 4,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/singapore/singapore-poi-runtime-20260706T064843Z.png",
+      "rows": [
+        {
+          "matrix_id": "PH-SG-101-ATR",
+          "poi": "滨海湾",
+          "expected_fn": "ocs-singapore-family-official-guide-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-SG-102-ATR",
+          "poi": "圣淘沙",
+          "expected_fn": "ocs-singapore-family-community-media.jpg",
+          "runtime_fn": "ocs-singapore-family-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-SG-103-ATR",
+          "poi": "牛车水",
+          "expected_fn": "ocs-singapore-family-community-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-SG-104-ATR",
+          "poi": "小印度",
+          "expected_fn": "ocs-singapore-family-provider-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-provider-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-SG-105-ATR",
+          "poi": "动物园",
+          "expected_fn": "ocs-singapore-family-acquisition-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-acquisition-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-SG-106-FOOD",
+          "poi": "海南鸡饭",
+          "expected_fn": "ocs-singapore-family-guide-avatar.jpg",
+          "runtime_fn": "ocs-singapore-family-guide-avatar.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-guide-avatar.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-SG-107-FOOD",
+          "poi": "肉骨茶",
+          "expected_fn": "ocs-singapore-family-official-guide-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-SG-108-FOOD",
+          "poi": "辣椒螃蟹",
+          "expected_fn": "ocs-singapore-family-community-media.jpg",
+          "runtime_fn": "ocs-singapore-family-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-SG-109-FOOD",
+          "poi": "叻沙",
+          "expected_fn": "ocs-singapore-family-community-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-SG-110-FOOD",
+          "poi": "椰浆饭",
+          "expected_fn": "ocs-singapore-family-community-media.jpg",
+          "runtime_fn": "ocs-singapore-family-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        }
+      ],
+      "issues": [],
+      "probe_attempt": 2
+    },
+    {
+      "id": "visual_screenshot",
+      "label": "页面截图/DOM · 无旧图/错图/Fallback",
+      "pass": true,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/singapore/singapore-poi-runtime-20260706T064843Z.png",
+      "issues": []
+    },
+    {
+      "id": "no_backlog_unlock",
+      "label": "无 Open Backlog · 无 Unlock",
+      "pass": true,
+      "issues": []
+    }
+  ],
+  "all_pass": true,
+  "city_runtime_pass_count": 10,
+  "city_runtime_required": 10,
+  "verdict": "CONTENT_QA_EXIT_PASS",
+  "TT_CMS_POI_CITY_SINGAPORE_CONTENT_QA": "CLOSED",
+  "TT_CMS_POI_CITY_SINGAPORE_CONTENT_QA_EXIT": "PASS",
+  "runtime_tiers": {
+    "city": {
+      "tier": "city_consumer_runtime",
+      "gate_2_equals_gate_4": true
+    },
+    "country": {
+      "tier": "national_runtime",
+      "when": "TT_CMS_SG_COUNTRY: CLOSED",
+      "not_in_scope": true
+    }
+  },
+  "blockers": []
+}

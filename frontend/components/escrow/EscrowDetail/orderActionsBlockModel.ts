@@ -51,8 +51,7 @@ export function deriveOrderActionFlags(input: {
 }): OrderActionDerived {
   const canAccept = input.stateNorm === "created";
   const canCancel = input.stateNorm === "created" || input.stateNorm === "accepted";
-  const canConfirmCompletion =
-    input.stateNorm === "accepted" || input.stateNorm === "escrowed" || input.stateNorm === "funded";
+  const canConfirmCompletion = input.stateNorm === "escrowed" || input.stateNorm === "funded";
   const canChainOffDispute =
     !input.hasEscrow &&
     (input.stateNorm === "accepted" || input.stateNorm === "escrowed" || input.stateNorm === "funded");

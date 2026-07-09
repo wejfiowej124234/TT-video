@@ -1,0 +1,8 @@
+{
+  "schema": "pra_local_dr_drill.v1",
+  "at": "2026-06-08T05:22:29Z",
+  "mode": "local_docker_pg_dump",
+  "pg_dump_ok": true,
+  "users_count": "1780",
+  "notes": "Logical schema dump + read-only count; not full PITR restore"
+}

@@ -1,0 +1,99 @@
+# Payment · USDC Web3 Deep Audit — Blockers & Fix Priority
+
+**Recorded:** 2026-07-08T07:52:25.702Z  
+**Verdict:** `PAYMENT_RAIL_AUDIT_BLOCKERS_PRESENT`  
+**SSOT:** Web3 Escrow (USDC) · Stripe = Stripe Optional Fiat Onboarding (P1)
+
+## Summary
+
+| Priority | Open |
+|----------|------|
+| P0 | 2 |
+| P1 | 6 |
+| P2 | 1 |
+
+Prod mock-pay forbidden: **OK** · G3-02 evidence pass: **yes**
+
+## Architecture truth (2026-07-08)
+
+```text
+Core: Wallet → USDC approve → Escrow.deposit → Indexer → Order → Release → FeeRouter → Settlement → Ledger
+Optional: Stripe = onboarding fiat only (P1) · mock-pay = ① local / ② sandbox only · forbidden on prod
+```
+
+## Blocker list
+
+| Priority | ID | Dimension | Title | Fix |
+|----------|-----|-----------|-------|-----|
+| P1 | PAY-AUD-P1-001 | UI/UX · 文案 | Missing locale key pay_mockPay_disabledNotice (broken /pay when mock-pay off) | Add en/zh strings directing users to escrow approve+deposit wallet flow |
+| P1 | PAY-AUD-P1-002 | 订单 · UI/UX | New order flow defaults to USD fiat label vs USDC settlement SSOT | Default order display/settlement currency to USDC; align with defaultSettlementCurrency.ts |
+| P1 | PAY-AUD-P1-003 | 文案 · UI/UX | Hardcoded Polygon chain branding on Sepolia production scope | Drive chain label from GET /meta chain_id or neutral "on-chain USDC escrow" |
+| P0 | PAY-AUD-P0-002 | 配置 · 测试证据 · SSOT | Legacy runbook/spec still lists Stripe Live as Production BLOCKER or core payment | Demote to P1 optional onboarding; reference payment-architecture-classification.v1.yaml |
+| P0 | PAY-AUD-P0-002 | 配置 · 测试证据 · SSOT | Legacy runbook/spec still lists Stripe Live as Production BLOCKER or core payment | Demote to P1 optional onboarding; reference payment-architecture-classification.v1.yaml |
+| P1 | PAY-AUD-P1-004 | 配置 · 测试证据 | Matrix PRM-WEB3-PAY-B001 still PLANNED while G3-02 gate evidence shows PASS | Close PRM-WEB3-PAY-B001 → CLOSED; sync machine keys in matrix v10 |
+| P2 | PAY-AUD-P2-001 | 配置 | PRM-STR-B001 tagged g3_domain G3-02 (Web3 payment domain) though Stripe is onboarding-only | Move to onboarding extension domain; keep blocks_production_go: false |
+| P1 | PAY-AUD-P1-005 | 测试证据 | HAT six-role matrix records trip pay acceptance via mock-pay not USDC escrow | Split pay cell: trip=USDC escrow (②+) vs mock-pay (① only) vs onboarding=Stripe/USDC |
+| P1 | PAY-AUD-P1-006 | 托管 · 测试证据 | API integration tests document acquisition/order payment spine as mock-pay → escrowed | Add parallel USDC deposit IT path; label mock-pay tests as chain_off only |
+| P2 | PAY-AUD-P2-002 | 测试证据 | 144 E2E references use mock-pay as payment spine (acceptable ①/② sandbox if tagged) | Tag @e2e-chain-off-mock-pay vs @e2e-usdc-escrow; prod smoke must use wallet deposit only |
+| P2 | PAY-AUD-P2-003 | 配置 · 钱包 | Local seed stack forces P3_CHAIN_OFF=1 — de-facto mock-pay as default dev payment rail | Document USDC chain-on dev path; mock-pay = debug rail only (honest-boundary banner) |
+
+## Paths
+
+### PAY-AUD-P1-001 · Missing locale key pay_mockPay_disabledNotice (broken /pay when mock-pay off)
+
+- **Priority:** P1 · **Status:** OPEN
+- **Paths:** `frontend/app/pay/PayPagePrimaryCardMockPaySurfaces.tsx`, `frontend/locales/en.ts`, `frontend/locales/zh.ts`
+
+### PAY-AUD-P1-002 · New order flow defaults to USD fiat label vs USDC settlement SSOT
+
+- **Priority:** P1 · **Status:** OPEN
+- **Paths:** `frontend/locales/en.ts`, `frontend/locales/en.ts`, `frontend/locales/en.ts`, `frontend/locales/en.ts`, `frontend/locales/en.ts`
+
+### PAY-AUD-P1-003 · Hardcoded Polygon chain branding on Sepolia production scope
+
+- **Priority:** P1 · **Status:** OPEN
+- **Paths:** `frontend/locales/en.ts`, `frontend/locales/zh.ts`
+
+### PAY-AUD-P0-002 · Legacy runbook/spec still lists Stripe Live as Production BLOCKER or core payment
+
+- **Priority:** P0 · **Status:** OPEN
+- **Paths:** `docs/runbook/PRODUCTION-READINESS-MASTER-GAP-REPORT.md`
+
+### PAY-AUD-P0-002 · Legacy runbook/spec still lists Stripe Live as Production BLOCKER or core payment
+
+- **Priority:** P0 · **Status:** OPEN
+- **Paths:** `docs/runbook/PRODUCTION-READINESS-REPORT.md`
+
+### PAY-AUD-P1-004 · Matrix PRM-WEB3-PAY-B001 still PLANNED while G3-02 gate evidence shows PASS
+
+- **Priority:** P1 · **Status:** OPEN
+- **Paths:** `registry/production-readiness-master-matrix.v1.yaml`
+
+### PAY-AUD-P2-001 · PRM-STR-B001 tagged g3_domain G3-02 (Web3 payment domain) though Stripe is onboarding-only
+
+- **Priority:** P2 · **Status:** OPEN
+- **Paths:** `registry/production-readiness-master-matrix.v1.yaml`
+
+### PAY-AUD-P1-005 · HAT six-role matrix records trip pay acceptance via mock-pay not USDC escrow
+
+- **Priority:** P1 · **Status:** OPEN
+- **Paths:** `registry/hat-six-role-matrix.v1.yaml`
+
+### PAY-AUD-P1-006 · API integration tests document acquisition/order payment spine as mock-pay → escrowed
+
+- **Priority:** P1 · **Status:** OPEN
+- **Paths:** `crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests/flows_esc.rs`, `crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests/mod.rs`, `crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests/tests_itn_esc_stack_a.rs`, `crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests.rs`
+
+### PAY-AUD-P2-002 · 144 E2E references use mock-pay as payment spine (acceptable ①/② sandbox if tagged)
+
+- **Priority:** P2 · **Status:** ACCEPTED_SANDBOX
+- **Paths:** `frontend/e2e/53-main-path.spec.ts`, `frontend/e2e/93-matrix-path-f1-f4.spec.ts`
+
+### PAY-AUD-P2-003 · Local seed stack forces P3_CHAIN_OFF=1 — de-facto mock-pay as default dev payment rail
+
+- **Priority:** P2 · **Status:** ACCEPTED_DEV
+- **Paths:** `scripts/dev/start-api-with-seed.bat`, `scripts/dev/start-api-with-seed.bat`, `scripts/dev/start-api-with-seed-README.md`, `scripts/dev/start-api-with-seed-README.md`, `scripts/dev/start-api-with-seed-README.md`, `scripts/dev/start-api-with-seed-README.md`, `scripts/dev/start-api-with-seed-README.md`, `scripts/dev/start-api-with-seed-README.md`, `scripts/dev/start-api-with-seed-README.md`, `scripts/dev/start-api-with-seed-README.md`
+
+---
+
+*Generated by scripts/dev/run-payment-usdc-web3-deep-audit.cjs*

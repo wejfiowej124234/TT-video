@@ -1,0 +1,35 @@
+{
+  "schema": "phase2_sepolia_redemption_epoch_broadcast.v1",
+  "timestamp_utc": "20260605T093325Z",
+  "chain_id": 11155111,
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "timelock_address": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+  "broadcast": true,
+  "addresses": {
+    "country_pool_redemption_epoch_cn_address": "0x712050e4b1517C3f3ab39B32Cabb70CC0E1C0829",
+    "redemption_asset_address": "0x4825693A7B333B8b2b73ad5632C60A9b7cAa51F9"
+  },
+  "transactions": {
+    "mock_erc20_redemption_asset": "0x858783a33de76d6504670fa81b6dcfdbe29815d4268dccef6b1a5479d57b3ba5",
+    "country_pool_redemption_epoch_v0": "0x88bfbd9ba028df7e7b7c5b02936924dbaa96410f8173d96afc1bf348b53ea11e"
+  },
+  "redemption_rules": {
+    "jurisdiction": "CN",
+    "max_nav_pct_bps": 1000,
+    "window_seconds": 1296000,
+    "version": "country_pool_redemption_epoch_v0"
+  },
+  "verify": {
+    "script": "scripts/dev/phase2-sepolia-redemption-epoch-verify-bindings.sh",
+    "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
+    "result": "OK",
+    "verified_at_utc": "2026-06-05T09:45Z"
+  },
+  "quote_parity": {
+    "script": "scripts/gates/check-protocol-quote-parity.sh",
+    "result": "OK"
+  },
+  "forge_log": "forge-broadcast-20260605T093325Z.log",
+  "broadcast_json": "contracts/broadcast/DeployCountryPoolRedemptionEpochV0.s.sol/11155111/run-latest.json",
+  "ssot": "docs/runbook/TT-PHASE2-REDEMPTION-EPOCH-SEPOLIA-BROADCAST-CHECKLIST.md"
+}

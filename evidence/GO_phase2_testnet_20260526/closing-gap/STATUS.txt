@@ -1,0 +1,14 @@
+phase: ② testnet closing gap (full-site · post Community C1-C12)
+tt_phase2_go_verdict: PHASE2_GO_READY
+community_c1_c12_pass: 12/12
+closing_gap_pass: 7/7
+last_refresh: 20260611T123917Z
+gap_g1_r003: PASS
+gap_g2_report_json: PASS
+gap_g3_c_gov: PASS
+gap_g4_stripe_g4: PASS
+gap_g5_onboarding_smoke: PASS
+gap_g6_sepolia_stake: PASS
+gap_g7_cdn_hls_prep: PREP_PASS
+ssot: docs/runbook/PHASE2-CLOSING-GAP.md
+note: PHASE2_GO_READY ≠ Phase ③ Production GO

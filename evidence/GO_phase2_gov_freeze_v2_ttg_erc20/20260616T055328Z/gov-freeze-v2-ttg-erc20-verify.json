@@ -1,0 +1,9 @@
+{
+  "stamp_utc": "20260616T055328Z",
+  "verdict": "PASS",
+  "checks": 5,
+  "governance_token": "0x2837ea0c50e27d59b88af617abbb231a040062c5",
+  "stake_pool": "0x3a89378bfad12d1028707dd37055294854c8784e",
+  "primary_market": "0x7af15f98622b9282298ca3070a698ca4a96a4016",
+  "governor": "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+}

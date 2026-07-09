@@ -1,0 +1,40 @@
+{
+  "schema": "traveltrust_l5_enterprise_acceptance_baseline.v1",
+  "status": "PASS",
+  "baseline_refs": [
+    "157",
+    "160",
+    "158"
+  ],
+  "last_audit_matrix_path": "evidence/l5_enterprise_acceptance/audit_matrix.v1.json",
+  "audit_verdict": "L5_ENTERPRISE_ACCEPTANCE_GO",
+  "enterprise_score": 100,
+  "track_verdicts": {
+    "UX_P1_P2": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "UX_P1_P2_GO"
+    },
+    "DATA_INTEGRITY": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "DATA_INTEGRITY_GO"
+    },
+    "RBAC_SECURITY": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "RBAC_SECURITY_GO"
+    },
+    "PERFORMANCE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "PERFORMANCE_GO"
+    },
+    "HUMAN_ACCEPTANCE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "HUMAN_ACCEPTANCE_GO"
+    }
+  },
+  "last_audit_run_utc": "20260608T030946Z"
+}

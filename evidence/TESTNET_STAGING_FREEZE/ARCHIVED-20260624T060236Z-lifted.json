@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.testnet_staging_freeze.v1",
+  "frozen_at": "2026-06-24T01:09:47Z",
+  "stamp": "20260624T010744Z",
+  "git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "reason": "Phase② runtime SHA metadata sync · no redeploy · S5 deployed HEAD aligned",
+  "policy": "no_redeploy_no_restart_no_migrations_no_config_changes",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "override_env": "TESTNET_FREEZE_OVERRIDE=1",
+  "audit_evidence": "evidence/GO_phase2_baseline_consistency_audit/full-diff-20260624T010127Z",
+  "next_gate": "P2FC 72h soak · TN-P1-009 · post-S5 deploy SHA alignment",
+  "metadata_sync": {
+    "synced_at_utc": "2026-06-24T01:09:47Z",
+    "previous_git_sha": null,
+    "local_HEAD": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+    "staging_live_git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+    "probe_source": "meta_build",
+    "no_redeploy": true
+  }
+}

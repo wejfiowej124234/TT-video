@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust.phase2_freeze_monitor.v1",
+  "mode": "FREEZE_MONITOR_ONLY",
+  "baseline_sha": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+  "frozen_at": "2026-06-15T02:30:00Z",
+  "constraints": ["no_new_features", "no_business_changes", "no_rerun_passed_gates"],
+  "soak_job": "job-20260615T015345Z",
+  "soak_started_at": "2026-06-15T01:53:47.229Z",
+  "soak_required_sec": 259200,
+  "soak_eta_utc": "2026-06-18T01:53:47Z",
+  "completed_json": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+  "on_complete": "bash scripts/dev/run-phase2-testnet-post-soak-graduation-closure.sh",
+  "watcher_log": "evidence/P2FC_SOAK_72H_STAGING/post-soak-graduation-watcher.log"
+}

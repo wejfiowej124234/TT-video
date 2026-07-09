@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T125030Z",
+  "filename": "ocs-kyoto-culture-official-guide-cover.jpg",
+  "chain_id": "kyoto-culture",
+  "city": "京都",
+  "country_code": "JP",
+  "slot": "official-guide-cover",
+  "surface": "Official Guide",
+  "copy_label": "京都文化两日慢游 · 官方攻略",
+  "manifest_copy": {
+    "official_guide.title": "京都文化两日慢游 · 官方攻略",
+    "official_guide.destination": "京都",
+    "official_guide.body": "清水寺、伏见稻荷与岚山竹林的最佳游览顺序与预约提示。",
+    "official_guide.tags": ["京都", "文化", "官方攻略"],
+    "official_guide.cover_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg"
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 147626 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "岚山竹林宽幅路线与 title/body/destination/tags 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "史诗竹林宽幅；区别于 Row7 肖像/Row8 茶室/Row9 和纸静物/未来茶道瞬间。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "京都同 chain；无东京/他国。" },
+    "G5_brand_visual": { "pass": true, "notes": "青绿+暖光；kyoto chain 品牌统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "Official Guide 封面观感。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光均衡、色彩自然。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "全层 Evidence 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "岚山竹林地标正确；无水印/Logo；② AI 素材。" },
+    "G10_content_diversity": { "pass": true, "notes": "路线宽幅 landscape slot。" }
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

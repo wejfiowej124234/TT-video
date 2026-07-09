@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.production_preparation_closure.v1",
+  "id": "PP-D-001",
+  "migrated_from": "RC-D-001",
+  "status": "CLOSED",
+  "closed_at": "2026-07-04T11:40:00Z",
+  "track": "production_preparation",
+  "title": "Web /api/meta/build returns HTML not JSON",
+  "root_cause": "Next rewrites had /meta/build but not /api/meta/build; deploy fingerprint curl hit Next 404 HTML",
+  "fix": {
+    "file": "frontend/next.config.js",
+    "rewrite": "/api/meta/build -> ${API}/meta/build"
+  },
+  "verification": {
+    "staging_web": "https://tt-web-staging.fly.dev/api/meta/build",
+    "content_type": "application/json",
+    "git_sha": "9b90696d5ff18f7e095f427f48d2f6e193b304d9",
+    "deployment_profile": "staging"
+  },
+  "honest_boundary": "Staging web fingerprint route fixed; not Production GO"
+}

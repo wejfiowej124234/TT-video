@@ -1,0 +1,106 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-06T010454Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "KR",
+    "country_zh": "韩国",
+    "city_zh": "仁川",
+    "city_en": "Incheon"
+  },
+  "poi_count": 6,
+  "matrix_ids": [
+    "PH-KR-058-ATR",
+    "PH-KR-059-ATR",
+    "PH-KR-060-ATR",
+    "PH-KR-061-FOOD",
+    "PH-KR-062-FOOD",
+    "PH-KR-063-FOOD"
+  ],
+  "pois": [
+    "中华街",
+    "月尾岛",
+    "松岛新城",
+    "炸酱面",
+    "海鲜",
+    "辣炒年糕"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-KR-058-ATR",
+      "legacy_value": "中华街",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-incheon-port-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-KR-059-ATR",
+      "legacy_value": "月尾岛",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-incheon-port-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-KR-060-ATR",
+      "legacy_value": "松岛新城",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-incheon-port-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-KR-061-FOOD",
+      "legacy_value": "炸酱面",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-incheon-port-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-KR-062-FOOD",
+      "legacy_value": "海鲜",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-incheon-port-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-KR-063-FOOD",
+      "legacy_value": "辣炒年糕",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-incheon-port-community-media.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-058-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-059-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-060-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-061-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-062-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-063-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=KR&city=%E4%BB%81%E5%B7%9D&limit=50",
+    "http": 200,
+    "count": 6
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-incheon/CMS-POI-INCHEON-CLOSED-LOOP-LATEST.json",
+  "next_city": null,
+  "closure_keys": {
+    "TT_CMS_POI_CITY_INCHEON": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": null
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_INCHEON": "CLOSED"
+}

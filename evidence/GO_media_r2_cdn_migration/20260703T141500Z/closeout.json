@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.pi3_media_r2_cdn_staging_closeout.v1",
+  "stamp": "20260703T141500Z",
+  "issue_id": "PI3-MEDIA-PERSISTENT-STAGING",
+  "status": "CLOSED",
+  "renamed_from": "PI3-MEDIA-R2-CDN-STAGING",
+  "follow_up_issue": "PI3-MEDIA-R2-CDN-FINAL",
+  "follow_up_status": "WAITING_OWNER_CF",
+  "staging_off_loca_lt": true,
+  "fly_community_media_public_base": "https://traveltrust-community-media.fly.storage.tigris.dev",
+  "interim_storage": "Fly Tigris S3-compatible public bucket",
+  "market_runtime": "CLOSED",
+  "governance": {
+    "OCS": "CLOSED",
+    "DDG": "CLOSED",
+    "SOPCP": "CLOSED",
+    "market_default_filter": "CLOSED"
+  },
+  "blocking_count": 0,
+  "verdict": "Phase② staging off loca.lt · persistent public S3 · no loca.lt in API payloads · NOT Cloudflare R2"
+}

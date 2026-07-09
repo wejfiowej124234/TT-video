@@ -1,0 +1,17 @@
+{
+  "kind": "traveltrust.pi3_002_domain_tls_cdn_cors_execution.v1",
+  "recorded_utc": "20260608T024047Z",
+  "verdict": "PI3-002_HOLD",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "chain_id": 11155111,
+  "execution_sprint": "151",
+  "prod_domain_configured": false,
+  "prod_tls_health_ok": false,
+  "prod_cors_preflight_ok": false,
+  "prod_alignment_ok": false,
+  "cdn_hls": "NOT_STARTED",
+  "catalog_freeze": "CATALOG_RELEASE_FREEZE_GO",
+  "operations_freeze": "OPERATIONS_PLATFORM_GO",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev"
+}

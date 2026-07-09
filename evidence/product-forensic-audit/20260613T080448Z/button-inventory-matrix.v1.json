@@ -1,0 +1,2505 @@
+{
+  "schema": "traveltrust.pf_button_inventory.v1",
+  "items": [
+    {
+      "file": "frontend/app/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/loading.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/loading.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/not-found.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/(home)/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/(home)/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/(home)/loading.tsx",
+      "label_hint": "landing_hero_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/(home)/page.tsx",
+      "label_hint": "landing_hero_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/loading.tsx",
+      "label_hint": "community_tab_feed",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/did-rank/DidRankPageInner.tsx",
+      "label_hint": "didRank_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/did-rank/error.tsx",
+      "label_hint": "didRank_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/did-rank/error.tsx",
+      "label_hint": "didRank_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/did-rank/loading.tsx",
+      "label_hint": "didRank_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/discover/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/discover/error.tsx",
+      "label_hint": "header_market",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/discover/loading.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/discover/page.tsx",
+      "label_hint": "discover_page_a11y",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/disputes/DisputesListPageMain.tsx",
+      "label_hint": "disputes_arbitratorBannerTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/disputes/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/disputes/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/disputes/loading.tsx",
+      "label_hint": "disputes_listTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/loading.tsx",
+      "label_hint": "escrow_detailAria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/error.tsx",
+      "label_hint": "governance_backHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/error.tsx",
+      "label_hint": "governance_error_adminOpsNav_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/GovernanceHubPageMain.tsx",
+      "label_hint": "governance_pool_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/GovernanceHubPageMain.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/GovernanceHubPoolSection.tsx",
+      "label_hint": "governance_country_pool_root_section_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/GovernanceHubPoolSection.tsx",
+      "label_hint": "governance_treasury_native_root_section_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/GovernanceHubPoolSection.tsx",
+      "label_hint": "governance_treasury_erc20_root_section_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/loading.tsx",
+      "label_hint": "governance_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/GuideDashboardPageMain.tsx",
+      "label_hint": "guide_dashboard_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/GuideDashboardPageMain.tsx",
+      "label_hint": "guide_dashboard_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/GuideDashboardPageMain.tsx",
+      "label_hint": "guide_dashboard_not_guide_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/loading.tsx",
+      "label_hint": "guides_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/page.tsx",
+      "label_hint": "guides_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/page.tsx",
+      "label_hint": "guides_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/page.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/page.tsx",
+      "label_hint": "guides_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/page.tsx",
+      "label_hint": "guides_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/help/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/help/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/help/loading.tsx",
+      "label_hint": "help_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/itinerary/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/itinerary/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/market/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/market/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/market/loading.tsx",
+      "label_hint": "market_hero_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/market/MarketPageClient.tsx",
+      "label_hint": "market_hero_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/network/loading.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersListActiveFiltersBar.tsx",
+      "label_hint": "orders_list_active_filters_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersListActiveFiltersBar.tsx",
+      "label_hint": "orders_list_clear_filter_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersListActiveFiltersBar.tsx",
+      "label_hint": "orders_list_search_clear_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersListCardItem.tsx",
+      "label_hint": "escrow_deleteOrder",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersListCards.tsx",
+      "label_hint": "orders_myOrders",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersListInteractionHint.tsx",
+      "label_hint": "orders_list_help_toggle_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersListLoadMoreSection.tsx",
+      "label_hint": "common_loadingMore",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersListPageMain.tsx",
+      "label_hint": "orders_myOrders",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersListSearchBar.tsx",
+      "label_hint": "orders_list_search_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersListSearchBar.tsx",
+      "label_hint": "orders_list_search_pending",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersListSearchBar.tsx",
+      "label_hint": "orders_list_search_clear_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersPageLoadingView.tsx",
+      "label_hint": "orders_myOrders",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersPageLoadingView.tsx",
+      "label_hint": "orders_myOrders",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/OrdersPageLoadingView.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/page.tsx",
+      "label_hint": "orders_myOrders",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/pay/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/pay/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/pay/PayPageMain.tsx",
+      "label_hint": "pay_pageTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/pay/PayPageOrdersBreadcrumb.tsx",
+      "label_hint": "pay_ordersBreadcrumb_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/pay/PayPagePrimaryCardOrderLoadError.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/privacy/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/privacy/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/privacy/loading.tsx",
+      "label_hint": "privacy_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/staking/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/staking/error.tsx",
+      "label_hint": "staking_guide_scope_backWorkbench",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/staking/loading.tsx",
+      "label_hint": "staking_pageTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/terms/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/terms/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/terms/loading.tsx",
+      "label_hint": "terms_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/traveltrust/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/traveltrust/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/traveltrust/loading.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/trust/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/trust/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/trust/loading.tsx",
+      "label_hint": "trust_page_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/terms/community-guidelines/loading.tsx",
+      "label_hint": "community_guidelines",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/steward/register/StewardRegisterMainForm.tsx",
+      "label_hint": "{submitting ? (",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/steward/register/StewardRegisterPendingPanel.tsx",
+      "label_hint": "stewardRegister_pendingTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/provider/register/ProviderRegisterMainForm.tsx",
+      "label_hint": "{submitLabel}",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/provider/register/ProviderRegisterPendingPanel.tsx",
+      "label_hint": "providerRegister_pendingTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/provider/register/ProviderRegisterRejectedGate.tsx",
+      "label_hint": "providerRegister_rejectedTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/new/loading.tsx",
+      "label_hint": "orders_createTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/new/OrdersNewPageMain.tsx",
+      "label_hint": "orders_created",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/new/OrdersNewPageMain.tsx",
+      "label_hint": "orders_createTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/new/OrdersNewPageMain.tsx",
+      "label_hint": "orders_selected_guide_region",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/orders/new/OrdersNewPageMain.tsx",
+      "label_hint": "orders_guides",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/identities/page.tsx",
+      "label_hint": "me_identities_capabilities_grid_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/identities/page.tsx",
+      "label_hint": "me_identities_operator_grid_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/identities/page.tsx",
+      "label_hint": "me_identities_footer_nav_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/onboarding/loading.tsx",
+      "label_hint": "me_onboarding_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/onboarding/MeOnboardingEntitlementsSection.tsx",
+      "label_hint": "me_onboarding_entitlementsListAria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/onboarding/MeOnboardingRolePick.tsx",
+      "label_hint": "{t(labelKey)}",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/password/loading.tsx",
+      "label_hint": "mePassword_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/publish/error.tsx",
+      "label_hint": "publish_hub_error_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/publish/loading.tsx",
+      "label_hint": "publish_hub_loading_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/publish/PublishHubPageMain.tsx",
+      "label_hint": "publish_hub_filter_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/publish/PublishHubPageMain.tsx",
+      "label_hint": "publish_hub_cross_nav_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/security/MeSecurityNotificationsSection.tsx",
+      "label_hint": "me_security_page_aria_notif_status",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/security/MeSecurityNotificationsSection.tsx",
+      "label_hint": "me_security_page_aria_event_type",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/security/MeSecurityNotificationsSection.tsx",
+      "label_hint": "me_security_page_aria_notif_limit",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/settings/loading.tsx",
+      "label_hint": "me_settings_pageTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/me/settings/privacy/page.tsx",
+      "label_hint": "me_settings_section_privacy",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/market/acquisition/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/market/acquisition/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/market/provider/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/market/provider/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/market/provider/showcase/[id]/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/market/provider/showcase/[id]/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/market/acquisition/[id]/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/market/acquisition/[id]/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/itinerary/new/ItineraryNewPageMain.tsx",
+      "label_hint": "itin_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/itinerary/new/loading.tsx",
+      "label_hint": "itin_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/itinerary/new/page.tsx",
+      "label_hint": "itin_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/[id]/GuideDetailPageErrorView.tsx",
+      "label_hint": "guideDetail_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/[id]/GuideDetailPageErrorView.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/[id]/GuideDetailPageLoaded.tsx",
+      "label_hint": "guide_detail_breadcrumb_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/[id]/GuideDetailPageLoaded.tsx",
+      "label_hint": "guide_detail_hero_signals_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/[id]/GuideDetailPageLoaded.tsx",
+      "label_hint": "guideDetail_amountPlaceholder",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/[id]/GuideDetailPageLoadingView.tsx",
+      "label_hint": "guideDetail_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/[id]/GuideDetailPageNotFoundView.tsx",
+      "label_hint": "guideDetail_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guides/[id]/loading.tsx",
+      "label_hint": "guideDetail_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/register/GuideRegisterAlreadyGuidePanel.tsx",
+      "label_hint": "guideRegister_alreadyGuideTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/register/GuideRegisterChipGroup.tsx",
+      "label_hint": "{opt.label}",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/register/GuideRegisterDonePanel.tsx",
+      "label_hint": "guideRegister_doneMessage",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/register/GuideRegisterMainForm.tsx",
+      "label_hint": "guideRegister_stepNavAria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/register/GuideRegisterPageMain.tsx",
+      "label_hint": "guideRegister_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/register/GuideRegisterPageMain.tsx",
+      "label_hint": "guideRegister_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/register/GuideRegisterPageMain.tsx",
+      "label_hint": "guide_register_relatedNav_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/register/GuideRegisterPendingPanel.tsx",
+      "label_hint": "guideRegister_pendingTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/register/GuideRegisterRejectedGate.tsx",
+      "label_hint": "guideRegister_rejectedTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/register/GuideRegisterSuspendedPanel.tsx",
+      "label_hint": "guideRegister_suspendedTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/guide/register/loading.tsx",
+      "label_hint": "guideRegister_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/delegate/GovernanceDelegatePageMain.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/delegate/GovernanceDelegatePageMain.tsx",
+      "label_hint": "governance_delegate_current",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/delegate/GovernanceDelegatePageMain.tsx",
+      "label_hint": "governance_delegate_receipt_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/delegate/GovernanceDelegatePageMain.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/delegate/loading.tsx",
+      "label_hint": "governance_delegate_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/delegate/page.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/delegate/page.tsx",
+      "label_hint": "governance_delegate_current",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/delegate/page.tsx",
+      "label_hint": "governance_delegate_receipt_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/delegate/page.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/distribution-accruals/GovernanceDistributionAccrualsPageMain.tsx",
+      "label_hint": "governance_distribution_accruals_view_detail",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/distribution-accruals/GovernanceDistributionAccrualsPageMain.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/distribution-accruals/page.tsx",
+      "label_hint": "governance_distribution_accruals_view_detail",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/distribution-accruals/page.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/distribution-claim/GovernanceDistributionClaimPageMain.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/distribution-claim/loading.tsx",
+      "label_hint": "governance_claim_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/distribution-claim/page.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/fee-routes/GovernanceFeeRoutesLoadMoreSection.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/fee-routes/GovernanceFeeRoutesLoadMoreSection.tsx",
+      "label_hint": "common_closeAlert",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/fee-routes/GovernanceFeeRoutesPageFooterNav.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/fee-routes/GovernanceFeeRoutesPageMain.tsx",
+      "label_hint": "governance_fee_routes_wiring_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/fee-routes/GovernanceFeeRoutesPageMain.tsx",
+      "label_hint": "governance_fee_routes_filter_group",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/fee-routes/loading.tsx",
+      "label_hint": "governance_fee_routes_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/fee-routes/page.tsx",
+      "label_hint": "governance_fee_routes_wiring_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/fee-routes/page.tsx",
+      "label_hint": "governance_fee_routes_filter_group",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/fee-routes/page.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/fee-routes/page.tsx",
+      "label_hint": "common_closeAlert",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/fee-routes/page.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/params/GovernanceParamsPageFooterNav.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/params/GovernanceParamsPageFooterNav.tsx",
+      "label_hint": "governance_subpage_relatedNav_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/params/GovernanceParamsPageMain.tsx",
+      "label_hint": "governance_params_data_scope_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/proposals/GovernanceProposalsPageMain.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/proposals/GovernanceProposalsPageMain.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/proposals/GovernanceProposalsPageMain.tsx",
+      "label_hint": "governance_subpage_relatedNav_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/proposals/loading.tsx",
+      "label_hint": "governance_proposals_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/vault-forwards/GovernanceVaultForwardsPageMain.tsx",
+      "label_hint": "governance_vault_forwards_wiring_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/vault-forwards/GovernanceVaultForwardsPageMain.tsx",
+      "label_hint": "governance_fee_routes_filter_group",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/vault-forwards/GovernanceVaultForwardsPageMain.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/vault-forwards/GovernanceVaultForwardsPageMain.tsx",
+      "label_hint": "common_closeAlert",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/vault-forwards/GovernanceVaultForwardsPageMain.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/vault-forwards/loading.tsx",
+      "label_hint": "governance_vault_forwards_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/vault-forwards/page.tsx",
+      "label_hint": "governance_vault_forwards_wiring_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/vault-forwards/page.tsx",
+      "label_hint": "governance_fee_routes_filter_group",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/vault-forwards/page.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/vault-forwards/page.tsx",
+      "label_hint": "common_closeAlert",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/vault-forwards/page.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/proposals/new/GovernanceProposalCreatePageMain.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/proposals/[id]/GovernanceProposalDetailLoadedArticle.tsx",
+      "label_hint": "governance_proposals_card_vote_bar_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/proposals/[id]/GovernanceProposalDetailPageMain.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/proposals/[id]/GovernanceProposalDetailPageMain.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/proposals/[id]/loading.tsx",
+      "label_hint": "governance_proposal_detail_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/distribution-accruals/[id]/GovernanceDistributionAccrualDetailPageMain.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/distribution-accruals/[id]/loading.tsx",
+      "label_hint": "governance_distribution_accruals_detail_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/governance/distribution-accruals/[id]/page.tsx",
+      "label_hint": "governance_nav_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/[id]/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/[id]/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/[id]/chain/EscrowChainPageMain.tsx",
+      "label_hint": "escrow_chain_page_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/[id]/proof/EscrowProofPageMain.tsx",
+      "label_hint": "escrow_proof_page_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/[id]/rate/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/[id]/rate/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/[id]/rate/EscrowRatePageEmptyIdView.tsx",
+      "label_hint": "rate_pageTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/[id]/rate/EscrowRatePageLoadErrorView.tsx",
+      "label_hint": "rate_pageTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/[id]/rate/EscrowRatePageMain.tsx",
+      "label_hint": "rate_uploadTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/[id]/rate/EscrowRatePageMain.tsx",
+      "label_hint": "rate_uploadInput_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/[id]/rate/EscrowRatePageMain.tsx",
+      "label_hint": "escrow_reviews",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/escrow/[id]/rate/EscrowRatePageMain.tsx",
+      "label_hint": "rate_confirmCta",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/disputes/[id]/DisputeDetailPageErrorView.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/disputes/[id]/DisputeDetailTraceableSection.tsx",
+      "label_hint": "dispute_copyTxHash",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/disputes/[id]/error.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/disputes/[id]/error.tsx",
+      "label_hint": "common_backToHome",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/activity/loading.tsx",
+      "label_hint": "community_activity_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/activity/page.tsx",
+      "label_hint": "community_activity_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/explore/CommunityExplorePageAuthorsSection.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/explore/CommunityExplorePageAuthorsSection.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/explore/CommunityExplorePageAuthorsSection.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/explore/CommunityExplorePageHeader.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/explore/CommunityExplorePageMain.tsx",
+      "label_hint": "community_explore_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/explore/CommunityExplorePageMasonrySection.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/explore/CommunityExplorePageMasonrySection.tsx",
+      "label_hint": "community_explore_load_more",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/explore/loading.tsx",
+      "label_hint": "community_explore_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/CommunityFeedbackListPanel.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/CommunityFeedbackListPanel.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/CommunityFeedbackListPanel.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/CommunityFeedbackListPanel.tsx",
+      "label_hint": "community_feedback_post",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/CommunityFeedbackPageMain.tsx",
+      "label_hint": "community_feedback_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/CommunityFeedbackPostModal.tsx",
+      "label_hint": "community_feedback_upload_photo",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/CommunityFeedbackPostModal.tsx",
+      "label_hint": "community_feedback_upload_video",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/CommunityFeedbackPostModal.tsx",
+      "label_hint": "common_close",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/loading.tsx",
+      "label_hint": "community_feedback_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/page.tsx",
+      "label_hint": "community_feedback_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/page.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/page.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/page.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/page.tsx",
+      "label_hint": "community_feedback_post",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/page.tsx",
+      "label_hint": "community_feedback_upload_photo",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/page.tsx",
+      "label_hint": "community_feedback_upload_video",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/feedback/page.tsx",
+      "label_hint": "common_close",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/CommunityFriendsMainTabs.tsx",
+      "label_hint": "{t(keyLabel)}",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/CommunityFriendsPageInner.tsx",
+      "label_hint": "community_tab_friends",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/CommunityFriendsPageInner.tsx",
+      "label_hint": "community_tab_friends",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/CommunityFriendsPageInner.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/CommunityFriendsRelationsPanel.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/CommunityFriendsRequestsPanel.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/CommunityFriendsRequestsPanel.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/FriendsRequestsEmptyPanel.tsx",
+      "label_hint": "community_requests_empty",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/loading.tsx",
+      "label_hint": "community_tab_friends",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/page.tsx",
+      "label_hint": "community_requests_empty",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/page.tsx",
+      "label_hint": "community_tab_friends",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/page.tsx",
+      "label_hint": "community_tab_friends",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/page.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/page.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/page.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/friends/page.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/loading.tsx",
+      "label_hint": "me_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/CommunityMessagesConversationsSection.tsx",
+      "label_hint": "community_conversations",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/CommunityMessagesConversationsSection.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/CommunityMessagesConversationsSection.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/CommunityMessagesPageMain.tsx",
+      "label_hint": "community_tab_messages",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/CommunityMessagesPageMain.tsx",
+      "label_hint": "community_messages_tabs_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/CommunityMessagesPageMain.tsx",
+      "label_hint": "community_share_cancel",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/CommunityMessagesPageMain.tsx",
+      "label_hint": "community_pull_to_refresh",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/loading.tsx",
+      "label_hint": "community_tab_messages",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/MessagesDmEmptyPanel.tsx",
+      "label_hint": "community_messages_empty",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/tt/loading.tsx",
+      "label_hint": "community_tt_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/user/[id]/CommunityUserPageAlertsSection.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/user/[id]/CommunityUserPageMain.tsx",
+      "label_hint": "community_user_main_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/user/[id]/CommunityUserPageNotFoundView.tsx",
+      "label_hint": "community_user_not_found",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/user/[id]/CommunityUserPostsFeedSection.tsx",
+      "label_hint": "community_me_my_posts",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/user/[id]/CommunityUserPostsFeedSection.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/user/[id]/CommunityUserPostsVisibilityNav.tsx",
+      "label_hint": "community_me_posts_filters_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/user/[id]/CommunityUserPostsVisibilityNav.tsx",
+      "label_hint": "{t(labelKey)}",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/user/[id]/loading.tsx",
+      "label_hint": "community_user_main_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/topic/[tag]/loading.tsx",
+      "label_hint": "community_topic_page_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/post/[id]/loading.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/[id]/CommunityConversationPageComposer.tsx",
+      "label_hint": "common_closeAlert",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/[id]/CommunityConversationPageComposer.tsx",
+      "label_hint": "common_closeAlert",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/[id]/CommunityConversationPageComposer.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/[id]/CommunityConversationPageHeader.tsx",
+      "label_hint": "community_back_to_list",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/[id]/CommunityConversationPageMain.tsx",
+      "label_hint": "community_conversation_not_found",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/[id]/CommunityConversationPageMain.tsx",
+      "label_hint": "community_conversation_thread_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/[id]/CommunityConversationPageThreadPanel.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/[id]/CommunityConversationPageThreadPanel.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/messages/[id]/loading.tsx",
+      "label_hint": "community_conversation_thread_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/collects/CommunityMeCollectsPageMain.tsx",
+      "label_hint": "community_me_my_collects",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/collects/CommunityMeCollectsPageMain.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/collects/CommunityMeCollectsPageMain.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/collects/loading.tsx",
+      "label_hint": "community_me_my_collects",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/collects/MeCollectsEmptyPanel.tsx",
+      "label_hint": "community_collects_empty",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/likes/CommunityMeLikesPageMain.tsx",
+      "label_hint": "community_me_likes_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/likes/CommunityMeLikesPageMain.tsx",
+      "label_hint": "common_retry",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/likes/CommunityMeLikesPageMain.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/likes/loading.tsx",
+      "label_hint": "community_me_likes_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/likes/MeLikesEmptyPanel.tsx",
+      "label_hint": "community_me_likes_empty",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/posts/CommunityMePostsGrid.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/posts/CommunityMePostsGrid.tsx",
+      "label_hint": "{t(\"common_retry\")}",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/posts/CommunityMePostsPageMain.tsx",
+      "label_hint": "community_me_my_posts",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/posts/loading.tsx",
+      "label_hint": "community_me_my_posts",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/posts/MePostsEmptyPanel.tsx",
+      "label_hint": "community_empty",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/reports/CommunityMeReportsPageMain.tsx",
+      "label_hint": "community_me_my_reports",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/reports/CommunityMeReportsPageMain.tsx",
+      "label_hint": "community_me_my_reports",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/reports/loading.tsx",
+      "label_hint": "community_me_my_reports",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/reports/MeReportsEmptyPanel.tsx",
+      "label_hint": "community_report_list_empty",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/reports/[id]/loading.tsx",
+      "label_hint": "community_report_ticket_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/reports/[id]/page.tsx",
+      "label_hint": "community_report_ticket_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/reports/[id]/page.tsx",
+      "label_hint": "community_report_ticket_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/reports/[id]/page.tsx",
+      "label_hint": "community_report_ticket_login_required",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/community/me/reports/[id]/page.tsx",
+      "label_hint": "community_report_ticket_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/auth/login/page.tsx",
+      "label_hint": "{loading ? (",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/auth/login/page.tsx",
+      "label_hint": "auth_login_footerNav_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/auth/login/page.tsx",
+      "label_hint": "auth_login_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/auth/register/RegisterGuideForm.tsx",
+      "label_hint": "auth_register_guide",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/api-versions/AdminApiVersionsFiltersCard.tsx",
+      "label_hint": "admin_api_versions_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/api-versions/AdminApiVersionsTableSection.tsx",
+      "label_hint": "admin_api_versions_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/approvals/AdminApprovalsFiltersCard.tsx",
+      "label_hint": "admin_approvals_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/approvals/AdminApprovalsInboxStrip.tsx",
+      "label_hint": "admin_approvals_inbox_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/approvals/AdminApprovalsQuickFilters.tsx",
+      "label_hint": "admin_approvals_quick_filters_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/approvals/AdminApprovalsQuickFilters.tsx",
+      "label_hint": "{t(labelKey)}",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/approvals/AdminApprovalsTableSection.tsx",
+      "label_hint": "admin_approvals_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/approvals/AdminApprovalsTableSection.tsx",
+      "label_hint": "admin_approvals_select_all_pending",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/approvals/AdminApprovalsTableSection.tsx",
+      "label_hint": "admin_approvals_select_row",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/audit/AdminAuditFiltersBlock.tsx",
+      "label_hint": "admin_audit_list_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/audit/AdminAuditTableSection.tsx",
+      "label_hint": "admin_audit_list_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/audit/AdminAuditTableSection.tsx",
+      "label_hint": "admin_audit_filterByAction_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/audit/AdminAuditTableSection.tsx",
+      "label_hint": "admin_audit_filterByResourceType_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/audit/AdminAuditTableSection.tsx",
+      "label_hint": "admin_audit_filterByActor_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/auth-audit-events/AdminAuthAuditEventsPageMain.tsx",
+      "label_hint": "admin_auth_audit_events_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/auth-audit-events/AdminAuthAuditEventsPageMain.tsx",
+      "label_hint": "admin_auth_audit_events_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/config/AdminConfigHubPageMain.tsx",
+      "label_hint": "admin_config_hub_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/conversion-analytics/AdminConversionAnalyticsPageMain.tsx",
+      "label_hint": "pes3_admin_related_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/cross-check/AdminCrossCheckPageMain.tsx",
+      "label_hint": "admin_cross_check_slots_jump_nav_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/disputes/AdminDisputeDetailTimeline.tsx",
+      "label_hint": "admin_dispute_timeline_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/disputes/AdminDisputesPageMain.tsx",
+      "label_hint": "admin_disputes_filters_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/disputes/AdminDisputesPageMain.tsx",
+      "label_hint": "admin_disputes_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/fee-router/AdminFeeRouterPageMain.tsx",
+      "label_hint": "admin_fee_router_summary_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/fee-router/AdminFeeRouterPageMain.tsx",
+      "label_hint": "admin_fee_router_events_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/finance/AdminFinancePageHeader.tsx",
+      "label_hint": "admin_finance_export_csv_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/finance/AdminFinancePageHeader.tsx",
+      "label_hint": "admin_finance_export_csv_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/finance/AdminFinancePageMain.tsx",
+      "label_hint": "admin_finance_export_csv_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/finance/AdminFinancePageMain.tsx",
+      "label_hint": "admin_finance_export_csv_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/finance/AdminFinancePageMain.tsx",
+      "label_hint": "admin_finance_summary_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/finance-reconciliation/AdminFinanceReconciliationNavSection.tsx",
+      "label_hint": "admin_finance_reconciliation_nav_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/flags/AdminFlagsFilterCard.tsx",
+      "label_hint": "admin_flags_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/flags/AdminFlagsListSection.tsx",
+      "label_hint": "admin_flags_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/growth/AdminGrowthHubMain.tsx",
+      "label_hint": "admin_growth_hub_kpi_title",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/guide-applications/AdminGuideApplicationsPageMain.tsx",
+      "label_hint": "admin_guide_list_refresh",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/guides/AdminGuidesPageMain.tsx",
+      "label_hint": "admin_guides_filters_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/guides/AdminGuidesPageMain.tsx",
+      "label_hint": "admin_guides_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/AdminIndexerHealthPanel.tsx",
+      "label_hint": "admin_indexer_health_panel_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/AdminIndexerHealthPanel.tsx",
+      "label_hint": "admin_indexer_reconcile_sectionTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/AdminIndexerHealthPanel.tsx",
+      "label_hint": "admin_indexer_last_reconcile_open",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/AdminIndexerHealthPanel.tsx",
+      "label_hint": "admin_indexer_reconcile_sectionTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/AdminIndexerReconcileJumpSection.tsx",
+      "label_hint": "admin_indexer_reconcile_sectionTitle",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/jobs/AdminJobsPageMain.tsx",
+      "label_hint": "admin_jobs_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/jobs/AdminJobsPageMain.tsx",
+      "label_hint": "admin_jobs_summary_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/jobs/AdminJobsPageMain.tsx",
+      "label_hint": "admin_jobs_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/lifecycle/AdminLifecycleFiltersBlock.tsx",
+      "label_hint": "admin_lifecycle_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/lifecycle/AdminLifecycleTableSection.tsx",
+      "label_hint": "admin_lifecycle_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/observability/AdminObservabilityOverviewSection.tsx",
+      "label_hint": "admin_observability_overview_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/observability/AdminObservabilityOverviewSection.tsx",
+      "label_hint": "admin_observability_linkIndexer",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/orders/AdminOrdersPageMain.tsx",
+      "label_hint": "admin_orders_filters_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/orders/AdminOrdersPageMain.tsx",
+      "label_hint": "admin_orders_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/permissions/AdminConsoleRoleShellPreview.tsx",
+      "label_hint": "admin_permissions_shell_preview_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/permissions/AdminConsoleRoleShellPreview.tsx",
+      "label_hint": "admin_permissions_shell_preview_quick_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/permissions/AdminConsoleRoleShellPreview.tsx",
+      "label_hint": ") : null}",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/permissions/AdminPermissions2faPolicyPanel.tsx",
+      "label_hint": "admin_permissions_2fa_steps_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/permissions/AdminPermissionsPageMain.tsx",
+      "label_hint": "admin_permissions_assign_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/permissions/AdminPermissionsPageMain.tsx",
+      "label_hint": "admin_permissions_my_grants_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/permissions/AdminPermissionsPageMain.tsx",
+      "label_hint": "admin_permissions_matrix_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/permissions/AdminPermissionsTotpPanel.tsx",
+      "label_hint": "admin_permissions_totp_steps_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/policies/AdminPoliciesFilterCard.tsx",
+      "label_hint": "admin_policies_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/policies/AdminPoliciesListSection.tsx",
+      "label_hint": "admin_policies_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/provider-applications/AdminProviderApplicationsPageMain.tsx",
+      "label_hint": "admin_provider_list_refresh",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/region-vault/AdminRegionVaultPageMain.tsx",
+      "label_hint": "admin_region_vault_summary_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/region-vault/AdminRegionVaultPageMain.tsx",
+      "label_hint": "admin_region_vault_events_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/reviews/AdminReviewsFiltersCard.tsx",
+      "label_hint": "admin_reviews_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/reviews/AdminReviewsTableSection.tsx",
+      "label_hint": "admin_reviews_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/schema/AdminSchemaPageMain.tsx",
+      "label_hint": "admin_schema_migrations_panel_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/steward-applications/AdminStewardApplicationsPageMain.tsx",
+      "label_hint": "admin_steward_list_refresh",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/trust-growth/AdminTrustGrowthAlertsSection.tsx",
+      "label_hint": "admin_trust_growth_section_alerts",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/trust-growth/AdminTrustGrowthKpiSection.tsx",
+      "label_hint": "admin_trust_growth_section_kpi",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/trust-growth/AdminTrustGrowthMetricsSection.tsx",
+      "label_hint": "admin_trust_growth_section_metrics",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/trust-growth/AdminTrustGrowthThresholdsSection.tsx",
+      "label_hint": "admin_trust_growth_section_thresholds",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/trust-growth/AdminTrustGrowthTimelineSection.tsx",
+      "label_hint": "admin_trust_growth_section_timeline",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/users/AdminUsersDataSection.tsx",
+      "label_hint": "admin_users_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/users/AdminUsersFiltersCard.tsx",
+      "label_hint": "admin_users_filters_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/users/[id]/AdminUserDetailPageMain.tsx",
+      "label_hint": "admin_user_detail_panel_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/tenants/scopes/AdminTenantScopesFilterCard.tsx",
+      "label_hint": "admin_tenant_scopes_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/tenants/scopes/AdminTenantScopesListSection.tsx",
+      "label_hint": "admin_tenant_scopes_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/secrets/metadata/AdminSecretsMetadataFiltersCard.tsx",
+      "label_hint": "admin_secrets_meta_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/secrets/metadata/AdminSecretsMetadataTableSection.tsx",
+      "label_hint": "admin_secrets_meta_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/scheduler/jobs/AdminSchedulerJobsFiltersCard.tsx",
+      "label_hint": "admin_scheduler_jobs_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/scheduler/jobs/AdminSchedulerJobsTableSection.tsx",
+      "label_hint": "admin_scheduler_jobs_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/reviews/[id]/AdminReviewDetailPageMain.tsx",
+      "label_hint": "admin_review_detail_panel_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/orders/[id]/AdminOrderDetailPageMain.tsx",
+      "label_hint": "admin_order_detail_panel_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/media/access-logs/AdminMediaAccessLogsFiltersCard.tsx",
+      "label_hint": "admin_media_access_logs_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/media/access-logs/AdminMediaAccessLogsTableSection.tsx",
+      "label_hint": "admin_media_access_logs_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/media/signed-url-tokens/AdminMediaSignedUrlTokensFiltersCard.tsx",
+      "label_hint": "admin_media_signed_url_tokens_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/media/signed-url-tokens/AdminMediaSignedUrlTokensTableSection.tsx",
+      "label_hint": "admin_media_signed_url_tokens_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/internal-tools/audits/AdminInternalToolAuditsFiltersBlock.tsx",
+      "label_hint": "admin_tool_audits_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/internal-tools/audits/AdminInternalToolAuditsTableSection.tsx",
+      "label_hint": "admin_tool_audits_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/reconcile-reports/ReconcileReportsExportToolbar.tsx",
+      "label_hint": "admin_indexer_reconcile_reports_export_csv_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/reconcile-reports/ReconcileReportsExportToolbar.tsx",
+      "label_hint": "admin_indexer_reconcile_reports_export_json_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/reconcile-reports/ReconcileReportsExportToolbar.tsx",
+      "label_hint": "admin_indexer_reconcile_reports_export_all_csv_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/reconcile-reports/ReconcileReportsExportToolbar.tsx",
+      "label_hint": "admin_indexer_reconcile_reports_export_all_json_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/reconcile-reports/ReconcileReportsFilterCard.tsx",
+      "label_hint": "admin_indexer_reconcile_reports_filters_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/reconcile-reports/ReconcileReportsTableSection.tsx",
+      "label_hint": "admin_indexer_reconcile_reports_page_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/reconcile-reports/ReconcileReportsTableSection.tsx",
+      "label_hint": "admin_indexer_reconcile_reports_pagination_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/reconcile-reports/ReconcileReportsTableSection.tsx",
+      "label_hint": "admin_indexer_reconcile_reports_per_page_label",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/indexer/reconcile/[id]/AdminIndexerReconcileReportPageMain.tsx",
+      "label_hint": "admin_indexer_reconcile_payload_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/guides/[id]/AdminGuideDetailPageMain.tsx",
+      "label_hint": "admin_guide_detail_panel_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/growth/analytics/AdminGrowthAnalyticsPageMain.tsx",
+      "label_hint": "admin_growth_analytics_presets_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/disputes/[id]/AdminDisputeDetailPageMain.tsx",
+      "label_hint": "admin_dispute_detail_panel_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/config/releases/AdminConfigReleasesFiltersCard.tsx",
+      "label_hint": "admin_config_releases_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/config/releases/AdminConfigReleasesTableSection.tsx",
+      "label_hint": "admin_config_releases_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/config/releases/[id]/AdminConfigReleaseDetailPageMain.tsx",
+      "label_hint": "admin_config_release_detail_section_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/compliance/requests/AdminComplianceRequestsFiltersBlock.tsx",
+      "label_hint": "admin_compliance_requests_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/compliance/requests/AdminComplianceRequestsTableSection.tsx",
+      "label_hint": "admin_compliance_requests_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/compliance/requests/[requestId]/events/AdminComplianceRequestEventsPageMain.tsx",
+      "label_hint": "admin_compliance_events_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/compliance/requests/[requestId]/events/AdminComplianceRequestEventsPageMain.tsx",
+      "label_hint": "admin_compliance_events_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/compliance/requests/[requestId]/update/AdminComplianceRequestUpdatePageMain.tsx",
+      "label_hint": "admin_compliance_update_form_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/abuse-policy/AdminCommunityAbusePolicyPageMain.tsx",
+      "label_hint": "admin_abuse_form_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/appeals/AdminCommunityAppealsPageMain.tsx",
+      "label_hint": "admin_appeals_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/appeals/AdminCommunityAppealsPageMain.tsx",
+      "label_hint": "admin_appeals_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/penalties/AdminCommunityPenaltiesFilterCard.tsx",
+      "label_hint": "admin_penalties_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/penalties/AdminCommunityPenaltiesListSection.tsx",
+      "label_hint": "admin_penalties_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/policy-change-logs/AdminCommunityPolicyChangeLogsPageMain.tsx",
+      "label_hint": "admin_policy_logs_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/policy-change-logs/AdminCommunityPolicyChangeLogsPageMain.tsx",
+      "label_hint": "admin_policy_logs_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/reports/AdminCommunityReportsFilterCard.tsx",
+      "label_hint": "admin_community_reports_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/reports/AdminCommunityReportsInboxStrip.tsx",
+      "label_hint": "admin_reports_inbox_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/reports/AdminCommunityReportsModerationWizard.tsx",
+      "label_hint": "admin_reports_wizard_nav_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/reports/AdminCommunityReportsTable.tsx",
+      "label_hint": "admin_community_reports_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/risk-signals/AdminCommunityRiskSignalsPageMain.tsx",
+      "label_hint": "admin_risk_signals_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/risk-signals/AdminCommunityRiskSignalsPageMain.tsx",
+      "label_hint": "admin_risk_signals_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/ranking/snapshots/AdminCommunityRankingSnapshotsPageMain.tsx",
+      "label_hint": "admin_rank_snapshots_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/ranking/snapshots/AdminCommunityRankingSnapshotsPageMain.tsx",
+      "label_hint": "admin_rank_snapshots_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/moderation/cases/AdminCommunityModerationCasesPageMain.tsx",
+      "label_hint": "admin_mod_cases_filters",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/moderation/cases/AdminCommunityModerationCasesPageMain.tsx",
+      "label_hint": "admin_mod_cases_table_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/comments/visibility/AdminCommunityCommentVisibilityPageMain.tsx",
+      "label_hint": "admin_comment_vis_form_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/community/appeals/review/AdminCommunityAppealReviewPageMain.tsx",
+      "label_hint": "admin_appeal_review_form_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/audit/operations/AdminAuditOperationsPageMain.tsx",
+      "label_hint": "admin_audit_ops_filters_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/audit/operations/AdminAuditOperationsPageMain.tsx",
+      "label_hint": "admin_audit_ops_panel_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/audit/operations/AdminAuditOperationsPageMain.tsx",
+      "label_hint": "admin_audit_ops_link_logs_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/audit/logs/[id]/AdminAuditLogDetailPageMain.tsx",
+      "label_hint": "admin_audit_detail_panel_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/approvals/[id]/AdminApprovalDetailPageMain.tsx",
+      "label_hint": "admin_approval_detail_panel_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/approvals/[id]/AdminApprovalDetailTimeline.tsx",
+      "label_hint": "admin_approval_timeline_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/alerts/incidents/AdminAlertIncidentsHubPageMain.tsx",
+      "label_hint": "admin_alert_incident_hub_panel_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/alerts/incidents/AdminAlertIncidentsHubPageMain.tsx",
+      "label_hint": "admin_alert_incident_open",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/app/admin/alerts/incidents/[id]/AdminAlertIncidentDetailPageMain.tsx",
+      "label_hint": "admin_alert_incident_detail_panel_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/Header.tsx",
+      "label_hint": "common_loading",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminAcquisitionPublishSuspendCard.tsx",
+      "label_hint": "admin_acquisition_suspend_sectionAria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminAdmU01LocalPrepPanel.tsx",
+      "label_hint": "admin_adm_u01_prep_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminAuditLimitPresets.tsx",
+      "label_hint": "admin_audit_limit_presets_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminAuditQuickFilters.tsx",
+      "label_hint": "admin_audit_presets_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminAuditQuickFilters.tsx",
+      "label_hint": "{t(labelKey)}",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminClipboardCopyButton.tsx",
+      "label_hint": "{t(labelKey)}",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminCommandPalette.tsx",
+      "label_hint": "admin_command_palette_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminCommunitySubnav.tsx",
+      "label_hint": "admin_community_subnav_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminConfigPlatformSubnav.tsx",
+      "label_hint": "admin_config_platform_subnav_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminConsoleRoleEffectiveStrip.tsx",
+      "label_hint": "admin_console_role_effective_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceAlertIncidentsDepthPanel.tsx",
+      "label_hint": "admin_fin_alert_incidents_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceAuditDepthPanel.tsx",
+      "label_hint": "admin_fin_audit_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceCrossCheckDepthPanel.tsx",
+      "label_hint": "admin_fin_cross_check_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceDepthModuleFallback.tsx",
+      "label_hint": "admin_fin_depth_fallback_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceDriftDepthPanel.tsx",
+      "label_hint": "admin_fin_drift_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceExportDepthPanel.tsx",
+      "label_hint": "admin_fin_export_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceFeeRouterDepthPanel.tsx",
+      "label_hint": "admin_fin_fee_router_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceIndexerDepthPanel.tsx",
+      "label_hint": "admin_fin_indexer_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceObservabilityDepthPanel.tsx",
+      "label_hint": "admin_fin_observability_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceReconcileReportsDepthPanel.tsx",
+      "label_hint": "admin_fin_reconcile_reports_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceReconciliationDepthPanel.tsx",
+      "label_hint": "admin_fin_reconciliation_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceRefundsDepthPanel.tsx",
+      "label_hint": "admin_fin_refunds_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceRegionVaultDepthPanel.tsx",
+      "label_hint": "admin_fin_vault_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceSettlementDepthPanel.tsx",
+      "label_hint": "admin_fin_settlement_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceSuitePartialChecklist.tsx",
+      "label_hint": "admin_fin_partial_checklist_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceTrustGrowthDepthPanel.tsx",
+      "label_hint": "admin_fin_trust_growth_depth_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminFinanceWorkflowCompactNav.tsx",
+      "label_hint": "admin_fin_workflow_compact_nav_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminGuideApplicationReviewCard.tsx",
+      "label_hint": "admin_guide_app_sectionAria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminHomeCardSearch.tsx",
+      "label_hint": "admin_home_search_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminHomeClient.tsx",
+      "label_hint": "admin_home_command_palette_hint",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminHomeClient.tsx",
+      "label_hint": "admin_home_command_palette_hint",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminHomeClient.tsx",
+      "label_hint": "admin_home_modules_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminHomeDomainHealthStrip.tsx",
+      "label_hint": "admin_home_domain_health_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminHomeFocusCompanion.tsx",
+      "label_hint": "admin_home_focus_companion_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminHomeInboxStrip.tsx",
+      "label_hint": "admin_home_inbox_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminHomeInboxStrip.tsx",
+      "label_hint": "admin_home_inbox_aria",
+      "verdict": "PENDING"
+    },
+    {
+      "file": "frontend/components/admin/AdminHomeKpiStrip.tsx",
+      "label_hint": "admin_home_kpi_aria",
+      "verdict": "PENDING"
+    }
+  ]
+}

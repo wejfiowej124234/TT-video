@@ -1,0 +1,12 @@
+{
+  "schema": "p2fc_staging_soak_completed.v1",
+  "completed_at": "2026-06-29T18:17:13.697Z",
+  "executor": "cloud",
+  "job_dir": "/data/soak/job",
+  "ok_polls": 4320,
+  "fail_polls": 0,
+  "required_sec": 259200,
+  "wall_start_unix": 1782434203,
+  "git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "honest_boundary": "72h wall-clock poll budget met · fail_polls=0 · Phase② gap ledger handoff · Phase③ Production GO requires independent GO gate"
+}

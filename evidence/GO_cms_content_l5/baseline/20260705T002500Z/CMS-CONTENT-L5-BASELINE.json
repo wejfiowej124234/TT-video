@@ -1,0 +1,109 @@
+{
+  "schema": "traveltrust.cms_content_l5_baseline.v1",
+  "stamp_utc": "20260705T002500Z",
+  "phase": "CMS Content L5 · Phase 0 Baseline",
+  "product_name": "Destination Ambient (first asset family)",
+  "lifecycle": [
+    "brief",
+    "asset_matrix",
+    "designer_upload",
+    "cms_review",
+    "catalog_publish",
+    "verify",
+    "evidence",
+    "matrix_pass"
+  ],
+  "asset_lifecycle_enum": [
+    "draft",
+    "review",
+    "approved",
+    "published",
+    "live",
+    "archived"
+  ],
+  "phase_1_country_order": [
+    "JP",
+    "KR",
+    "TH",
+    "SG",
+    "FR",
+    "US",
+    "AU",
+    "ES",
+    "AE",
+    "CN"
+  ],
+  "four_layer_ownership": {
+    "priority_a": "OCS Official Content",
+    "priority_b": "CMS Operational Content",
+    "priority_c": "Public Operations",
+    "priority_d": "Media Platform (architecture only)"
+  },
+  "artifacts": {
+    "brief": "data/catalog/cms-content-brief.v1.yaml",
+    "matrix": "data/catalog/destination-ambient-matrix.v1.yaml",
+    "registry": "registry/cms-content-l5.v1.yaml",
+    "runbook": "docs/runbook/TT-CMS-CONTENT-L5.md"
+  },
+  "matrix_summary": {
+    "rows": 10,
+    "asset_lifecycle_draft": 10,
+    "matrix_pass": 0,
+    "expected_phase0": "all 10 rows asset_lifecycle=draft until Phase 1"
+  },
+  "required_files": [
+    {
+      "path": "docs/runbook/TT-CMS-CONTENT-L5.md",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-CONTENT-OWNERSHIP-POLICY.md",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-MEDIA-PLATFORM-ARCHITECTURE.md",
+      "exists": true
+    },
+    {
+      "path": "data/catalog/cms-content-brief.v1.yaml",
+      "exists": true
+    },
+    {
+      "path": "data/catalog/destination-ambient-matrix.v1.yaml",
+      "exists": true
+    },
+    {
+      "path": "registry/cms-content-l5.v1.yaml",
+      "exists": true
+    },
+    {
+      "path": "scripts/dev/run-cms-content-l5-destination-ambient-verify.cjs",
+      "exists": true
+    },
+    {
+      "path": "scripts/dev/run-cms-content-l5-baseline-pack.cjs",
+      "exists": true
+    }
+  ],
+  "missing_files": [],
+  "ocs_parity": {
+    "image_quality": true,
+    "brand_consistency": true,
+    "country_authenticity": true,
+    "diversity": true,
+    "wcag": true,
+    "manifest": "OCS only",
+    "matrix": "CMS Asset Matrix",
+    "revision": "CMS required",
+    "publish": "CMS Publish"
+  },
+  "machine_keys": {
+    "TT_CMS_CONTENT_L5": "BASELINE_ESTABLISHED",
+    "TT_CMS_CONTENT_L5_EXECUTION": "NOT_STARTED",
+    "TT_CMS_CONTENT_L5_READY": "NO",
+    "TT_CMS_DESTINATION_AMBIENT_MATRIX": "ACTIVE"
+  },
+  "next_phase": "Phase 1 · per-row Admin Publish → verify → matrix review_status pass",
+  "honest_boundary": "Baseline ≠ 10/10 Destination Ambient CLOSED ≠ Production GO",
+  "TT_CMS_CONTENT_L5_BASELINE": "ESTABLISHED"
+}

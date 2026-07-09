@@ -1,0 +1,64 @@
+{
+  "schema": "traveltrust.phase12_audit_closure_policy.v1",
+  "effective_at_utc": "2026-06-30T10:34:40Z",
+  "summary": "Phase\u2460/\u2461/Runtime Consistency audits are final \u2014 do not regenerate.",
+  "audit_lifecycle": {
+    "phase1_local": {
+      "status": "COMPLETE",
+      "regenerate": false
+    },
+    "phase2_testnet": {
+      "status": "CLOSED",
+      "regenerate": false
+    },
+    "runtime_consistency": {
+      "status": "ARCHIVED",
+      "regenerate": false
+    }
+  },
+  "forbidden_new_audits": [
+    "Phase\u2460 Audit",
+    "Phase\u2461 Audit",
+    "Runtime Consistency Audit",
+    "enterprise local-staging consistency re-audit (without post-deploy chain)"
+  ],
+  "allowed_verification": [
+    "read-only live /meta SHA spot-check (no new audit artifact)",
+    "Phase\u2462 Production Entry Review tracks",
+    "Repository Hygiene alignment (not Runtime Consistency)"
+  ],
+  "fixed_response": {
+    "question_zh": "\u672c\u5730\u548c\u6d4b\u8bd5\u7f51\u4e00\u81f4\u4e86\u5417\uff1f",
+    "question_en": "Are local and testnet consistent?",
+    "answer_zh": "Runtime Consistency \u5df2\u4e8e d5aa447f Frozen Baseline \u5b8c\u6210\u5e76\u5f52\u6863\uff08ARCHIVED\uff09\u3002\u9664\u975e\u53d1\u751f\u65b0\u7684\u8fd0\u884c\u65f6\u4ee3\u7801/\u914d\u7f6e\u90e8\u7f72\u5e76\u5b8c\u6210 S5\u2192S6\uff0c\u5426\u5219\u4e0d\u518d\u91cd\u5ba1\u3002",
+    "answer_en": "Runtime Consistency was completed and archived (ARCHIVED) at Frozen Baseline d5aa447f. No re-audit unless new runtime/config is deployed and S5\u2192S6 completes with baseline update.",
+    "baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6"
+  },
+  "reaudit_only_when": [
+    "RUNTIME_CODE_OR_CONFIG_CHANGE",
+    "S5_DEPLOY",
+    "S6_VALIDATION_PASS",
+    "BASELINE_RECORD_UPDATE"
+  ],
+  "do_not_confuse_with_phase2_incomplete": [
+    "repository_hygiene",
+    "production_entry_review",
+    "manual_validation",
+    "mainnet_preparation",
+    "legacy_tn_p1_009_010",
+    "head_ahead_of_baseline"
+  ],
+  "final_evidence_pointers": {
+    "phase1": "frontend/evidence/GO_local_phase1/PHASE1-LOCAL-ENGINEERING-CLOSED-20260603.md",
+    "phase2_closed": "evidence/GO_phase2_testnet_graduation/PHASE2-CLOSED.latest.json",
+    "frozen_baseline": "evidence/GO_phase3_production_entry_review/FROZEN-RUNTIME-BASELINE.v1.json",
+    "runtime_archived": "evidence/GO_phase3_production_entry_review/LOCAL-STAGING-RUNTIME-CONSISTENCY-ARCHIVED.v1.json",
+    "phase12_enterprise_audit": "evidence/GO_enterprise_audit/phase12-evidence-audit/20260630T102500Z/"
+  },
+  "machine_keys": {
+    "TT_PHASE1_AUDIT_REGENERATE": "FORBIDDEN",
+    "TT_PHASE2_AUDIT_REGENERATE": "FORBIDDEN",
+    "TT_RUNTIME_CONSISTENCY_AUDIT_REGENERATE": "FORBIDDEN",
+    "TT_RUNTIME_CONSISTENCY_FIXED_ANSWER": "ACTIVE"
+  }
+}

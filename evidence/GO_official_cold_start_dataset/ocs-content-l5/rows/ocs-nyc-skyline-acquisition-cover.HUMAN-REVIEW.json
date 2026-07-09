@@ -1,0 +1,67 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T153030Z",
+  "filename": "ocs-nyc-skyline-acquisition-cover.jpg",
+  "chain_id": "nyc-skyline",
+  "city": "纽约",
+  "country_code": "US",
+  "slot": "acquisition-cover",
+  "surface": "Acquisition",
+  "copy_label": "纽约独立黑胶 · 悬赏",
+  "manifest_copy": {
+    "acquisition.title": "纽约独立黑胶 · 悬赏",
+    "acquisition.description": "求购布鲁克林独立厂牌黑胶，需封面完好。",
+    "acquisition.bounty_min_usdc": 70,
+    "acquisition.bounty_max_usdc": 280
+  },
+  "post_generation_quality_check": {
+    "pass": true
+  },
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG >16KB。"
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "黑胶封套静物与 title/description 对齐；非天际线。"
+    },
+    "G3_slot_differentiation": {
+      "pass": true
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "US 独立音乐 collectibles。"
+    },
+    "G5_brand_visual": {
+      "pass": true
+    },
+    "G6_commercial_platform": {
+      "pass": true
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true
+    },
+    "G8_evidence_matrix": {
+      "pass": true
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "notes": "无可识别专辑封面/Logo。"
+    },
+    "G10_content_diversity": {
+      "pass": true
+    }
+  },
+  "acquisition_product_identity_review": {
+    "pass": true
+  },
+  "surface_boundary_review": {
+    "pass": true,
+    "still_life_only": true
+  },
+  "regression_prior_38_rows": {
+    "pass": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

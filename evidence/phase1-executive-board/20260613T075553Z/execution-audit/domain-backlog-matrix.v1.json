@@ -1,0 +1,41 @@
+{
+  "schema": "traveltrust.domain_backlog_matrix.v1",
+  "matrix": [
+    {
+      "domain": "PF",
+      "open_count": 4,
+      "p0": 3,
+      "p1": 1
+    },
+    {
+      "domain": "AG",
+      "open_count": 2,
+      "p0": 1,
+      "p1": 1
+    },
+    {
+      "domain": "DOA",
+      "open_count": 2,
+      "p0": 1,
+      "p1": 1
+    },
+    {
+      "domain": "CA",
+      "open_count": 1,
+      "p0": 0,
+      "p1": 1
+    },
+    {
+      "domain": "UXA",
+      "open_count": 1,
+      "p0": 0,
+      "p1": 1
+    },
+    {
+      "domain": "CX",
+      "open_count": 1,
+      "p0": 0,
+      "p1": 1
+    }
+  ]
+}

@@ -14,6 +14,9 @@ export interface OrderRow {
   /** 53-S8 / GET order：评分材料双方确认，与 confirm-rating 对齐 */
   rating_tourist_confirmed?: boolean;
   rating_guide_confirmed?: boolean;
+  /** Layer A：行程服务完成双边确认（confirm-service-completion） */
+  service_tourist_confirmed?: boolean;
+  service_guide_confirmed?: boolean;
   amount?: string;
   currency?: string;
   escrow_address?: string | null;

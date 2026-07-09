@@ -8,9 +8,11 @@ import { GovernanceProposalsPageHeader } from "@/components/governance/Governanc
 import { formatCnyFdvBillions } from "@/lib/governance/ttgReferencePriceV1";
 import { countryPoolFundraiseTargetTotalCnyWan } from "@/lib/governance/countryPoolFundraiseGovernanceV1";
 import { applyGovernanceFundraiseTargetToRows } from "@/lib/governance/governanceParamsPhase1IndependentParamsModel";
+import { GOV_PARAMS_LAYOUT } from "@/lib/governance/governanceParamsPageL5Layout";
 import { GovernanceParamsFeeRouterTechnicalSection } from "./GovernanceParamsFeeRouterTechnicalSection";
 import { GovernanceParamsGlobalTreasuryUsageSection } from "./GovernanceParamsGlobalTreasuryUsageSection";
-import { GovernanceParamsTtgSupplyStructureSection } from "./GovernanceParamsTtgSupplyStructureSection";
+import { GovernanceParamsTtgAllocationUnifiedSection } from "./GovernanceParamsTtgAllocationUnifiedSection";
+import { GovernanceParamsPhaseContrastSection } from "./GovernanceParamsPhaseContrastSection";
 import { GovernanceParamsOverviewSection } from "./GovernanceParamsOverviewSection";
 import { GovernanceParamsPhase1CountriesTables } from "./GovernanceParamsPhase1CountriesTables";
 import { GovernanceParamsPhase1IndependentParamsDetails } from "./GovernanceParamsPhase1IndependentParamsDetails";
@@ -18,7 +20,7 @@ import { GovernanceParamsStewardContextPanel } from "./GovernanceParamsStewardCo
 import { GovernanceParamsGovFreezeRulesSection } from "./GovernanceParamsGovFreezeRulesSection";
 import { GovernanceParamsTreasuryPolicySection } from "./GovernanceParamsTreasuryPolicySection";
 import { GovernanceParamsTechnicalAppendixSection } from "./GovernanceParamsTechnicalAppendixSection";
-import { GovernanceParamsTtgBeyondCountriesSection } from "./GovernanceParamsTtgBeyondCountriesSection";
+import { GovernanceParamsPanelHeader } from "./GovernanceParamsSectionBlock";
 import { PROTOCOL_REF_CHECKSUM_DISPLAY_KEYS, protocolReferenceHasSubstance } from "@/lib/governanceParams84Readonly";
 import {
   GOV_PARAMS_L5,
@@ -54,8 +56,6 @@ function GovernanceParamsPageMainBody() {
   const diffSectionId = useId();
   const feeSplitSectionId = useId();
   const countriesSectionId = useId();
-  const globalPoolSectionId = useId();
-  const ttgGlobalUsageSectionId = useId();
   const diffTableCaptionId = useId();
   const protocolTableCaptionId = useId();
   const fundraiseTableCaptionId = useId();
@@ -66,6 +66,7 @@ function GovernanceParamsPageMainBody() {
     loading,
     error,
     data,
+    dataSource,
     pending,
     pendingErr,
     l1,
@@ -82,7 +83,9 @@ function GovernanceParamsPageMainBody() {
   );
 
   const phase1FundraiseTotalWan = countryPoolFundraiseTargetTotalCnyWan();
-  const showSectionNav = !loading && !error && data && protocolReferenceHasSubstance(data);
+  const hasSubstance = data != null && protocolReferenceHasSubstance(data);
+  const showSectionNav = !loading && hasSubstance;
+  const usingMirror = dataSource === "mirror";
 
   return (
     <GovernanceParamsL5Shell ariaLabelledBy={pageTitleId}>
@@ -92,53 +95,56 @@ function GovernanceParamsPageMainBody() {
         pageTitleId={pageTitleId}
         kicker={t("governance_params_l5_kicker")}
         title={t("governance_params_title")}
-        lead={t("governance_params_lead")}
+        lead={t("governance_params_lead_short")}
       />
 
       <GovernanceParamsStewardContextPanel t={t} className="mt-4" />
 
-      <GovernanceParamsOverviewSection t={t} className="mt-4" />
+      <GovernanceParamsOverviewSection
+        t={t}
+        className="mt-4"
+        mirrorBadge={usingMirror ? t("governance_params_status_mirror_badge") : undefined}
+      />
+
+      {usingMirror && error ? (
+        <div className={`${GOV_PARAMS_LAYOUT.panelGap} space-y-3`} data-tt-governance-params-mirror-fallback="1">
+          <ApiErrorAlert message={error} />
+          <GovernanceParamsRetryButton label={t("governance_params_retry_load")} onClick={retryAll} />
+        </div>
+      ) : null}
 
       {showSectionNav ? <GovernanceParamsSectionNav t={t} className="mt-6" /> : null}
 
-      {!loading && !error && data && protocolReferenceHasSubstance(data) ? (
-        <div id="gov-params-allocation-detail" className="scroll-mt-24">
-        <GovernanceParamsL5Panel className="mt-6" data-tt-governance-params-allocation-detail="1">
-          <h2 className={GOV_PARAMS_L5.sectionHeading}>{t("governance_params_allocation_detail_title")}</h2>
-          <p className={`mt-2 max-w-3xl ${GOV_PARAMS_L5.metaNote}`}>{t("governance_params_allocation_detail_lead")}</p>
+      {!loading && hasSubstance ? (
+        <div id="gov-params-allocation-detail" className="scroll-mt-24 space-y-6 mt-6">
+          <GovernanceParamsL5Panel data-tt-governance-params-allocation-treasury="1">
+            <GovernanceParamsPanelHeader
+              title={t("governance_params_allocation_panel_revenue_title")}
+              lead={t("governance_params_allocation_panel_revenue_lead")}
+            />
+            <GovernanceParamsGlobalTreasuryUsageSection t={t} className="mt-4" />
+          </GovernanceParamsL5Panel>
 
-          <h3 id={globalPoolSectionId} className={`mt-5 text-body font-semibold text-slate-100`}>
-            {t("governance_params_treasury_section_title")}
-          </h3>
-          <GovernanceParamsGlobalTreasuryUsageSection t={t} className="mt-2" />
+          <GovernanceParamsL5Panel data-tt-governance-params-allocation-governance="1">
+            <GovernanceParamsTreasuryPolicySection t={t} locale={locale} />
+          </GovernanceParamsL5Panel>
 
-          <GovernanceParamsTreasuryPolicySection t={t} locale={locale} className="mt-6 border-t border-white/10 pt-5" />
-
-          <h3 className="mt-6 border-t border-white/10 pt-5 text-body font-semibold text-slate-100">
-            {t("governance_params_tokenomics_freeze_section_title")}
-          </h3>
-          <GovernanceParamsGovFreezeRulesSection t={t} locale={locale} className="mt-2" />
-
-          <h3
-            id={ttgGlobalUsageSectionId}
-            className="mt-6 border-t border-white/10 pt-5 text-body font-semibold text-slate-100"
-          >
-            {t("governance_params_ttg_supply_section_title")}
-          </h3>
-          <GovernanceParamsTtgSupplyStructureSection t={t} locale={locale} className="mt-2" />
-
-          <h3 className="mt-6 border-t border-white/10 pt-5 text-body font-semibold text-slate-100">
-            {t("governance_params_ttg_global_usage_section_title")}
-          </h3>
-          <GovernanceParamsTtgBeyondCountriesSection t={t} className="mt-2" />
-        </GovernanceParamsL5Panel>
+          <GovernanceParamsL5Panel data-tt-governance-params-allocation-tokenomics="1">
+            <GovernanceParamsPanelHeader
+              title={t("governance_params_allocation_panel_token_title")}
+              lead={t("governance_params_allocation_panel_token_lead")}
+            />
+            <GovernanceParamsGovFreezeRulesSection t={t} locale={locale} className="mt-4" />
+            <GovernanceParamsTtgAllocationUnifiedSection t={t} locale={locale} className={GOV_PARAMS_LAYOUT.blockDivider} />
+            <GovernanceParamsPhaseContrastSection t={t} className={GOV_PARAMS_LAYOUT.blockDivider} />
+          </GovernanceParamsL5Panel>
         </div>
       ) : null}
 
       {loading ? (
         <GovernanceParamsL5Panel className="mt-6">
           <h2 id={countriesSectionId} className={GOV_PARAMS_L5.sectionHeading}>
-            {t("governance_params_phase1_countries")}
+            {t("governance_params_phase1_countries_short")}
           </h2>
           <div className={`mt-4 ${GOV_PARAMS_L5.loadingPanel}`}>
             <LoadingText />
@@ -146,38 +152,20 @@ function GovernanceParamsPageMainBody() {
         </GovernanceParamsL5Panel>
       ) : null}
 
-      {error ? (
-        <GovernanceParamsL5Panel className="mt-6">
-          <h2 id={countriesSectionId} className={GOV_PARAMS_L5.sectionHeading}>
-            {t("governance_params_phase1_countries")}
-          </h2>
-          <div className="mt-4 space-y-3">
-            <ApiErrorAlert message={error} />
-            <GovernanceParamsRetryButton label={t("governance_params_retry_load")} onClick={retryAll} />
-          </div>
-        </GovernanceParamsL5Panel>
-      ) : null}
-
-      {!loading && !error && data && !protocolReferenceHasSubstance(data) && (
-        <GovernanceParamsL5Panel className="mt-6">
-          <h2 id={countriesSectionId} className={GOV_PARAMS_L5.sectionHeading}>
-            {t("governance_params_phase1_countries")}
-          </h2>
-          <p className={`mt-3 ${GOV_PARAMS_L5.filterEmptyPanel}`} role="alert">
-            {t("governance_params_body_incomplete")}
-          </p>
-          <GovernanceParamsRetryButton label={t("governance_params_retry_load")} onClick={retryAll} className="mt-3" />
-        </GovernanceParamsL5Panel>
-      )}
-
-      {!loading && !error && data && protocolReferenceHasSubstance(data) && (
+      {!loading && hasSubstance ? (
         <>
           <div id="gov-params-countries" className="scroll-mt-24">
             <GovernanceParamsL5Panel className="mt-6">
-              <h2 id={countriesSectionId} className={GOV_PARAMS_L5.sectionHeading}>
-                {t("governance_params_phase1_countries")}
-              </h2>
-              <p className={`mt-2 max-w-3xl ${GOV_PARAMS_L5.metaNote}`}>{t("governance_params_phase1_lead")}</p>
+              <GovernanceParamsPanelHeader
+                title={t("governance_params_phase1_countries_short")}
+                lead={t("governance_params_phase1_lead_short")}
+              />
+              <p
+                className={`mt-3 rounded-[var(--radius-md)] border border-white/10 bg-slate-950/40 px-4 py-2.5 text-small text-slate-200`}
+                data-tt-governance-params-jurisdiction-summary="1"
+              >
+                {t("governance_params_phase1_jurisdiction_summary")}
+              </p>
               <GovernanceParamsPhase1CountriesTables
                 t={t}
                 locale={locale}
@@ -193,10 +181,9 @@ function GovernanceParamsPageMainBody() {
                   role="note"
                   data-tt-governance-params-valuation-anchor="1"
                 >
-                  {t("governance_params_valuation_anchor_note", {
+                  {t("governance_params_valuation_anchor_note_short", {
                     cny: data.valuation_anchor.reference_price_cny_per_ttg,
                     fdv: formatCnyFdvBillions(data.valuation_anchor.fdv_cny ?? 2_000_000_000, locale),
-                    id: data.valuation_anchor.id ?? "—",
                   })}
                 </p>
               ) : null}
@@ -215,6 +202,7 @@ function GovernanceParamsPageMainBody() {
               allMatch={allMatch}
               pending={pending}
               pendingErr={pendingErr}
+              pendingUnavailable={usingMirror}
               retryAll={retryAll}
               retryPending={retryPending}
             />
@@ -242,30 +230,33 @@ function GovernanceParamsPageMainBody() {
             ) : null}
           </GovernanceParamsTechnicalAppendixSection>
         </>
-      )}
+      ) : null}
+
+      {!loading && !hasSubstance ? (
+        <GovernanceParamsL5Panel className="mt-6">
+          <h2 id={countriesSectionId} className={GOV_PARAMS_L5.sectionHeading}>
+            {t("governance_params_phase1_countries_short")}
+          </h2>
+          <p className={`mt-3 ${GOV_PARAMS_L5.filterEmptyPanel}`} role="alert">
+            {t("governance_params_body_incomplete")}
+          </p>
+          <GovernanceParamsRetryButton label={t("governance_params_retry_load")} onClick={retryAll} className="mt-3" />
+        </GovernanceParamsL5Panel>
+      ) : null}
 
       <GovernanceParamsParticipatePanel t={t} className="mt-8" />
 
       <GovernanceParamsTechnicalDetails t={t} className="mt-4">
-        <p className={`${GOV_PARAMS_L5.mutedNote} mb-3`}>{t("governance_params_doc_notice")}</p>
-        <ul className="list-disc space-y-2 pl-5">
-          <li>{t("governance_params_data_scope_bullet_api")}</li>
-          <li>{t("governance_params_data_scope_bullet_not_sigma")}</li>
-          <li>{t("governance_params_data_scope_bullet_not_pool")}</li>
-        </ul>
+        <p className={`${GOV_PARAMS_L5.mutedNote} mb-3`}>{t("governance_params_doc_notice_short")}</p>
         {data?.doc_ref ? (
-          <p className={`mt-3 font-mono ${GOV_PARAMS_L5.metaNote}`}>
+          <p className={`font-mono ${GOV_PARAMS_L5.metaNote}`}>
             {data.doc_ref} · v{data.doc_version ?? dash}
+            {usingMirror ? ` · ${t("governance_params_mirror_source_tag")}` : ""}
           </p>
         ) : null}
         {pendingSource ? (
           <p className={`mt-2 ${GOV_PARAMS_L5.metaNote}`}>
             {t("governance_params_diff_source_hint", { source: pendingSource })}
-          </p>
-        ) : null}
-        {data?.note ? (
-          <p className={`mt-3 ${GOV_PARAMS_L5.metaNote}`} role="note">
-            {data.note}
           </p>
         ) : null}
       </GovernanceParamsTechnicalDetails>

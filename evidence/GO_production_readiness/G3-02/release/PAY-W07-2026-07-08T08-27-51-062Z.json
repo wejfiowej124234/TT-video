@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W07",
+  "recorded_utc": "2026-07-08T08:27:51.062Z",
+  "run_id": "2026-07-08T08-27-51-062Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PASS",
+  "summary": {
+    "verdict": "PASS",
+    "detail": "Escrow release after Funded"
+  },
+  "detail": "Escrow release after Funded",
+  "release_tx_hash": "0xdea475d2902c0e455693fb3d684bd5e51bc95e23d14a959e855a7d24cec22ab9",
+  "explorer": "https://sepolia.etherscan.io/tx/0xdea475d2902c0e455693fb3d684bd5e51bc95e23d14a959e855a7d24cec22ab9"
+}

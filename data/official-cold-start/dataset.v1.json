@@ -1,0 +1,956 @@
+{
+  "schema": "traveltrust.official_cold_start_dataset.v1",
+  "version": 1,
+  "email_domain": "ocs.traveltrust.app",
+  "ops_accounts": [
+    {
+      "slug": "official",
+      "display_label": "TravelTrust Official",
+      "account_kind": "community_author",
+      "nickname": "TravelTrust"
+    },
+    {
+      "slug": "asia",
+      "display_label": "TravelTrust Asia",
+      "account_kind": "community_author",
+      "nickname": "TT Asia"
+    },
+    {
+      "slug": "japan",
+      "display_label": "TravelTrust Japan",
+      "account_kind": "community_author",
+      "nickname": "TT Japan"
+    },
+    {
+      "slug": "europe",
+      "display_label": "TravelTrust Europe",
+      "account_kind": "community_author",
+      "nickname": "TT Europe"
+    },
+    {
+      "slug": "support",
+      "display_label": "TravelTrust Support",
+      "account_kind": "traveler",
+      "nickname": "TT Support"
+    }
+  ],
+  "official_cold_start_campaign": {
+    "id": "official-cold-start",
+    "name": "Official Cold Start Campaign",
+    "description": "Single OCS campaign · surfaces distribute home, market, and community",
+    "surfaces": [
+      "home_hero",
+      "home_feed",
+      "market_feed",
+      "market_provider",
+      "market_acquisition",
+      "community_feed",
+      "community_featured",
+      "campaign_banner",
+      "landing_promo"
+    ],
+    "phase_1_compat": "campaigns[] below are surface bundles until orchestrator v1.5 binds all refs to this campaign id"
+  },
+  "ocs_surface_expansion": {
+    "label": "OCS Surface Expansion",
+    "alias": "Official Surface Expansion",
+    "role": "Extend OCS manifest to Public Surfaces — not Community Cold Start",
+    "destination_hub": {
+      "aggregates": [
+        "official_guide",
+        "community_post",
+        "provider",
+        "acquisition",
+        "campaign"
+      ],
+      "key": "destination_slug"
+    },
+    "community_feed_sole_source": "official_cold_start_dataset",
+    "forbidden": [
+      "Community Seed",
+      "Community Showcase",
+      "Community Cold Start",
+      "community-cold-start.v1.json",
+      "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE on staging/prod"
+    ]
+  },
+  "chains": [
+    {
+      "id": "tokyo-photo",
+      "city": "东京",
+      "country_code": "JP",
+      "tags": [
+        "摄影",
+        "城市漫步"
+      ],
+      "guide": {
+        "slug": "tokyo-photo-guide",
+        "nickname": "东京摄影向导·Ken",
+        "bio": "十年东京街景与神社摄影路线，熟悉浅草、涩谷与台场最佳机位。",
+        "languages": [
+          "ja",
+          "zh",
+          "en"
+        ],
+        "service_types": [
+          "photography",
+          "walking"
+        ],
+        "stake_amount": "720",
+        "avatar_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg",
+        "price_hint_usdc": 180
+      },
+      "provider": {
+        "slug": "tokyo-photo-studio",
+        "title": "东京旅拍写真 · 半日套餐",
+        "category": "experience",
+        "description": "含摄影师、两处外景与 30 张精修，适合情侣与家庭纪念。",
+        "price_usdc": 299,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg"
+      },
+      "acquisition": {
+        "slug": "tokyo-lens-bounty",
+        "title": "东京限定镜头代购 · 悬赏",
+        "category": "collectibles",
+        "description": "求购日本本土限量镜头，需原包装与小票。",
+        "bounty_min_usdc": 120,
+        "bounty_max_usdc": 480,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg"
+      },
+      "official_guide": {
+        "title": "东京摄影一日路线 · 官方精选",
+        "destination": "东京",
+        "body": "从浅草寺到晴空塔，串联最佳拍摄时段与交通换乘，附官方推荐机位清单。",
+        "tags": [
+          "东京",
+          "摄影",
+          "官方精选"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg"
+      },
+      "community_post": {
+        "canonical_key": "ocs/tokyo-photo/community-v1",
+        "destination_slug": "tokyo",
+        "destination_label": "东京",
+        "post_type": "photo",
+        "priority": 100,
+        "surfaces": [
+          "community_feed",
+          "community_featured"
+        ],
+        "author_account_slug": "japan",
+        "tags": [
+          "东京",
+          "摄影",
+          "官方旅行日志"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-community-cover.jpg",
+        "media_urls": [
+          "/api/v1/uploads/community-posts/ocs-tokyo-photo-community-media.jpg"
+        ],
+        "body_markdown": "清晨从浅草寺出发，沿隅田川步行至晴空塔——官方摄影路线一日实录，附机位与时间窗口建议。"
+      }
+    },
+    {
+      "id": "kyoto-culture",
+      "city": "京都",
+      "country_code": "JP",
+      "tags": [
+        "文化",
+        "茶道"
+      ],
+      "guide": {
+        "slug": "kyoto-tea-guide",
+        "nickname": "京都茶道向导·Yuki",
+        "bio": "祇园与岚山文化讲解，专注茶道体验与和服街拍路线规划。",
+        "languages": [
+          "ja",
+          "en"
+        ],
+        "service_types": [
+          "culture",
+          "walking"
+        ],
+        "stake_amount": "680",
+        "avatar_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-guide-avatar.jpg",
+        "price_hint_usdc": 165
+      },
+      "provider": {
+        "slug": "kyoto-tea-experience",
+        "title": "京都茶道体验 · 私享包场",
+        "category": "experience",
+        "description": "传统茶室 90 分钟体验，含和果子与英文讲解。",
+        "price_usdc": 188,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg"
+      },
+      "acquisition": {
+        "slug": "kyoto-craft-bounty",
+        "title": "京都手工和纸 · 收购",
+        "category": "craft",
+        "description": "征集京都手工和纸与漆器小件，需来源说明。",
+        "bounty_min_usdc": 60,
+        "bounty_max_usdc": 260,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg"
+      },
+      "official_guide": {
+        "title": "京都文化两日慢游 · 官方攻略",
+        "destination": "京都",
+        "body": "清水寺、伏见稻荷与岚山竹林的最佳游览顺序与预约提示。",
+        "tags": [
+          "京都",
+          "文化",
+          "官方攻略"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg"
+      },
+      "community_post": {
+        "canonical_key": "ocs/kyoto-culture/community-v1",
+        "destination_slug": "kyoto",
+        "destination_label": "京都",
+        "post_type": "photo",
+        "priority": 99,
+        "surfaces": [
+          "community_feed",
+          "community_featured"
+        ],
+        "author_account_slug": "japan",
+        "tags": [
+          "京都",
+          "文化",
+          "官方旅行日志"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-community-cover.jpg",
+        "media_urls": [
+          "/api/v1/uploads/community-posts/ocs-kyoto-culture-community-media.jpg"
+        ],
+        "body_markdown": "祇园晨雾中的茶道体验与岚山竹林午后——官方文化路线两日记录。"
+      }
+    },
+    {
+      "id": "seoul-food",
+      "city": "首尔",
+      "country_code": "KR",
+      "tags": [
+        "美食",
+        "夜市"
+      ],
+      "guide": {
+        "slug": "seoul-food-guide",
+        "nickname": "首尔美食向导·Min",
+        "bio": "弘大、明洞与广藏市场深度美食路线，擅长韩餐与咖啡地图。",
+        "languages": [
+          "ko",
+          "zh",
+          "en"
+        ],
+        "service_types": [
+          "food",
+          "walking"
+        ],
+        "stake_amount": "650",
+        "avatar_url": "/api/v1/uploads/community-posts/ocs-seoul-food-guide-avatar.jpg",
+        "price_hint_usdc": 150
+      },
+      "provider": {
+        "slug": "seoul-food-tour",
+        "title": "首尔深夜美食团 · 4 小时",
+        "category": "experience",
+        "description": "本地向导带队 5 站韩式小吃，含交通与翻译。",
+        "price_usdc": 128,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg"
+      },
+      "acquisition": {
+        "slug": "seoul-snack-bounty",
+        "title": "韩国限定零食礼包 · 悬赏",
+        "category": "food",
+        "description": "求购当季限定零食组合，需保质期 60 天以上。",
+        "bounty_min_usdc": 40,
+        "bounty_max_usdc": 120,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg"
+      },
+      "official_guide": {
+        "title": "首尔 48 小时美食地图",
+        "destination": "首尔",
+        "body": "按区域划分的美食清单，含预约建议与人均预算参考。",
+        "tags": [
+          "首尔",
+          "美食",
+          "官方精选"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg"
+      },
+      "community_post": {
+        "canonical_key": "ocs/seoul-food/community-v1",
+        "destination_slug": "seoul",
+        "destination_label": "首尔",
+        "post_type": "photo",
+        "priority": 98,
+        "surfaces": [
+          "community_feed"
+        ],
+        "author_account_slug": "asia",
+        "tags": [
+          "首尔",
+          "美食",
+          "官方旅行日志"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-seoul-food-community-cover.jpg",
+        "media_urls": [
+          "/api/v1/uploads/community-posts/ocs-seoul-food-community-media.jpg"
+        ],
+        "body_markdown": "明洞到广藏市场的 48 小时美食巡礼——官方实测排队时间与人均预算。"
+      }
+    },
+    {
+      "id": "bangkok-temple",
+      "city": "曼谷",
+      "country_code": "TH",
+      "tags": [
+        "寺庙",
+        "河景"
+      ],
+      "guide": {
+        "slug": "bangkok-temple-guide",
+        "nickname": "曼谷文化向导·Arun",
+        "bio": "大皇宫、郑王庙与湄南河游船路线，提供泰英双语讲解。",
+        "languages": [
+          "th",
+          "en"
+        ],
+        "service_types": [
+          "culture",
+          "walking"
+        ],
+        "stake_amount": "580",
+        "avatar_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-guide-avatar.jpg",
+        "price_hint_usdc": 120
+      },
+      "provider": {
+        "slug": "bangkok-river-cruise",
+        "title": "湄南河 sunset 游船 · 含晚餐",
+        "category": "experience",
+        "description": "私人包船 2 小时，含泰式晚餐与酒店接送。",
+        "price_usdc": 220,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg"
+      },
+      "acquisition": {
+        "slug": "bangkok-silk-bounty",
+        "title": "泰国手工丝绸 · 收购",
+        "category": "craft",
+        "description": "征集手工丝绸围巾与桌旗，需工艺说明。",
+        "bounty_min_usdc": 50,
+        "bounty_max_usdc": 200,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg"
+      },
+      "official_guide": {
+        "title": "曼谷经典寺庙与河景一日",
+        "destination": "曼谷",
+        "body": "避开高峰的参观顺序与着装提醒，附官方推荐游船时段。",
+        "tags": [
+          "曼谷",
+          "寺庙",
+          "官方攻略"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg"
+      },
+      "community_post": {
+        "canonical_key": "ocs/bangkok-temple/community-v1",
+        "destination_slug": "bangkok",
+        "destination_label": "曼谷",
+        "post_type": "photo",
+        "priority": 97,
+        "surfaces": [
+          "community_feed"
+        ],
+        "author_account_slug": "asia",
+        "tags": [
+          "曼谷",
+          "寺庙",
+          "官方旅行日志"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-community-cover.jpg",
+        "media_urls": [
+          "/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg"
+        ],
+        "body_markdown": "黎明寺晨光与湄南河游船——官方寺庙一日路线实录与着装提醒。"
+      }
+    },
+    {
+      "id": "singapore-family",
+      "city": "新加坡",
+      "country_code": "SG",
+      "tags": [
+        "亲子",
+        "花园"
+      ],
+      "guide": {
+        "slug": "sg-family-guide",
+        "nickname": "新加坡亲子向导·Lee",
+        "bio": "滨海湾、动物园与圣淘沙亲子路线，熟悉推车友好动线。",
+        "languages": [
+          "en",
+          "zh"
+        ],
+        "service_types": [
+          "family",
+          "walking"
+        ],
+        "stake_amount": "700",
+        "avatar_url": "/api/v1/uploads/community-posts/ocs-singapore-family-guide-avatar.jpg",
+        "price_hint_usdc": 175
+      },
+      "provider": {
+        "slug": "sg-family-pass",
+        "title": "新加坡亲子通票 · 官方合作",
+        "category": "experience",
+        "description": "含两大一小三处景点快速通道与中文导览。",
+        "price_usdc": 268,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg"
+      },
+      "acquisition": {
+        "slug": "sg-design-bounty",
+        "title": "新加坡设计周边 · 悬赏",
+        "category": "collectibles",
+        "description": "求购本地设计师限量周边，需正品凭证。",
+        "bounty_min_usdc": 80,
+        "bounty_max_usdc": 320,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg"
+      },
+      "official_guide": {
+        "title": "新加坡亲子周末官方路线",
+        "destination": "新加坡",
+        "body": "适合 4–10 岁家庭的两天行程，含午休与室内备选方案。",
+        "tags": [
+          "新加坡",
+          "亲子",
+          "官方精选"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg"
+      },
+      "community_post": {
+        "canonical_key": "ocs/singapore-family/community-v1",
+        "destination_slug": "singapore",
+        "destination_label": "新加坡",
+        "post_type": "photo",
+        "priority": 96,
+        "surfaces": [
+          "community_feed",
+          "community_featured"
+        ],
+        "author_account_slug": "asia",
+        "tags": [
+          "新加坡",
+          "亲子",
+          "官方旅行日志"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-singapore-family-community-cover.jpg",
+        "media_urls": [
+          "/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg"
+        ],
+        "body_markdown": "滨海湾到圣淘沙的亲子周末——官方路线含午休与室内备选实测。"
+      }
+    },
+    {
+      "id": "paris-art",
+      "city": "巴黎",
+      "country_code": "FR",
+      "tags": [
+        "艺术",
+        "博物馆"
+      ],
+      "guide": {
+        "slug": "paris-art-guide",
+        "nickname": "巴黎艺术向导·Claire",
+        "bio": "卢浮宫、奥赛与玛黑区画廊讲解，擅长印象派专题路线。",
+        "languages": [
+          "fr",
+          "en",
+          "zh"
+        ],
+        "service_types": [
+          "culture",
+          "walking"
+        ],
+        "stake_amount": "820",
+        "avatar_url": "/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+        "price_hint_usdc": 210
+      },
+      "provider": {
+        "slug": "paris-museum-skip",
+        "title": "巴黎博物馆免排队 · 小团",
+        "category": "experience",
+        "description": "含卢浮宫预约与中文讲解，最多 6 人。",
+        "price_usdc": 320,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+      },
+      "acquisition": {
+        "slug": "paris-vintage-bounty",
+        "title": "巴黎中古海报 · 收购",
+        "category": "collectibles",
+        "description": "征集 1960–1990 艺术海报，需品相说明。",
+        "bounty_min_usdc": 100,
+        "bounty_max_usdc": 600,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-paris-art-acquisition-cover.jpg"
+      },
+      "official_guide": {
+        "title": "巴黎艺术博物馆两日官方指南",
+        "destination": "巴黎",
+        "body": "经典馆藏顺序与预约窗口，附官方推荐休息点。",
+        "tags": [
+          "巴黎",
+          "艺术",
+          "官方攻略"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+      },
+      "community_post": {
+        "canonical_key": "ocs/paris-art/community-v1",
+        "destination_slug": "paris",
+        "destination_label": "巴黎",
+        "post_type": "photo",
+        "priority": 95,
+        "surfaces": [
+          "community_feed"
+        ],
+        "author_account_slug": "europe",
+        "tags": [
+          "巴黎",
+          "艺术",
+          "官方旅行日志"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+        "media_urls": [
+          "/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+        ],
+        "body_markdown": "卢浮宫到奥赛的两日艺术之旅——官方预约窗口与休息点记录。"
+      }
+    },
+    {
+      "id": "nyc-skyline",
+      "city": "纽约",
+      "country_code": "US",
+      "tags": [
+        "天际线",
+        "摄影"
+      ],
+      "guide": {
+        "slug": "nyc-skyline-guide",
+        "nickname": "纽约天际线向导·Alex",
+        "bio": "布鲁克林大桥、DUMBO 与洛克菲勒观景台最佳拍摄时段。",
+        "languages": [
+          "en",
+          "zh"
+        ],
+        "service_types": [
+          "photography",
+          "walking"
+        ],
+        "stake_amount": "780",
+        "avatar_url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-guide-avatar.jpg",
+        "price_hint_usdc": 195
+      },
+      "provider": {
+        "slug": "nyc-rooftop-tour",
+        "title": "纽约观景台联票 · 官方合作",
+        "category": "experience",
+        "description": "含两处观景台与夜间导览，适合首次访客。",
+        "price_usdc": 245,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg"
+      },
+      "acquisition": {
+        "slug": "nyc-vinyl-bounty",
+        "title": "纽约独立黑胶 · 悬赏",
+        "category": "collectibles",
+        "description": "求购布鲁克林独立厂牌黑胶，需封面完好。",
+        "bounty_min_usdc": 70,
+        "bounty_max_usdc": 280,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-acquisition-cover.jpg"
+      },
+      "official_guide": {
+        "title": "纽约天际线摄影官方路线",
+        "destination": "纽约",
+        "body": "一日内覆盖经典机位与最佳光线时段，附交通建议。",
+        "tags": [
+          "纽约",
+          "摄影",
+          "官方精选"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-official-guide-cover.jpg"
+      },
+      "community_post": {
+        "canonical_key": "ocs/nyc-skyline/community-v1",
+        "destination_slug": "new-york",
+        "destination_label": "纽约",
+        "post_type": "photo",
+        "priority": 94,
+        "surfaces": [
+          "community_feed"
+        ],
+        "author_account_slug": "official",
+        "tags": [
+          "纽约",
+          "摄影",
+          "官方旅行日志"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-community-cover.jpg",
+        "media_urls": [
+          "/api/v1/uploads/community-posts/ocs-nyc-skyline-community-media.jpg"
+        ],
+        "body_markdown": "布鲁克林大桥到帝国大厦——官方天际线摄影一日路线与光线时段记录。"
+      }
+    },
+    {
+      "id": "sydney-coast",
+      "city": "悉尼",
+      "country_code": "AU",
+      "tags": [
+        "海岸",
+        "徒步"
+      ],
+      "guide": {
+        "slug": "sydney-coast-guide",
+        "nickname": "悉尼海岸向导·Mia",
+        "bio": "邦迪至 Coogee 海岸步道与歌剧院周边讲解。",
+        "languages": [
+          "en"
+        ],
+        "service_types": [
+          "walking",
+          "nature"
+        ],
+        "stake_amount": "690",
+        "avatar_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-guide-avatar.jpg",
+        "price_hint_usdc": 160
+      },
+      "provider": {
+        "slug": "sydney-coastal-kayak",
+        "title": "悉尼海港皮划艇 · 半日",
+        "category": "experience",
+        "description": "含装备、教练与海港安全简报。",
+        "price_usdc": 198,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg"
+      },
+      "acquisition": {
+        "slug": "sydney-surf-bounty",
+        "title": "澳洲手工冲浪板 · 收购",
+        "category": "sport",
+        "description": "征集小型手工冲浪板装饰件，需材质说明。",
+        "bounty_min_usdc": 90,
+        "bounty_max_usdc": 450,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg"
+      },
+      "official_guide": {
+        "title": "悉尼海岸一日官方徒步",
+        "destination": "悉尼",
+        "body": "经典海岸步道与补给点，附防晒与潮汐提示。",
+        "tags": [
+          "悉尼",
+          "海岸",
+          "官方攻略"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg"
+      },
+      "community_post": {
+        "canonical_key": "ocs/sydney-coast/community-v1",
+        "destination_slug": "sydney",
+        "destination_label": "悉尼",
+        "post_type": "photo",
+        "priority": 93,
+        "surfaces": [
+          "community_feed"
+        ],
+        "author_account_slug": "official",
+        "tags": [
+          "悉尼",
+          "海岸",
+          "官方旅行日志"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-community-cover.jpg",
+        "media_urls": [
+          "/api/v1/uploads/community-posts/ocs-sydney-coast-community-media.jpg"
+        ],
+        "body_markdown": "邦迪到 Coogee 海岸步道——官方一日徒步与潮汐窗口记录。"
+      }
+    },
+    {
+      "id": "barcelona-arch",
+      "city": "巴塞罗那",
+      "country_code": "ES",
+      "tags": [
+        "建筑",
+        "高迪"
+      ],
+      "guide": {
+        "slug": "bcn-arch-guide",
+        "nickname": "巴塞罗那建筑向导·Carlos",
+        "bio": "高迪建筑专题讲解，熟悉圣家堂与桂尔公园预约。",
+        "languages": [
+          "es",
+          "en",
+          "zh"
+        ],
+        "service_types": [
+          "culture",
+          "walking"
+        ],
+        "stake_amount": "710",
+        "avatar_url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-guide-avatar.jpg",
+        "price_hint_usdc": 170
+      },
+      "provider": {
+        "slug": "bcn-gaudi-tickets",
+        "title": "高迪三件套联票 · 含导览",
+        "category": "experience",
+        "description": "含圣家堂、巴特罗之家与桂尔公园预约。",
+        "price_usdc": 275,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg"
+      },
+      "acquisition": {
+        "slug": "bcn-tile-bounty",
+        "title": "巴塞罗那马赛克瓷砖 · 收购",
+        "category": "craft",
+        "description": "征集手工马赛克装饰件，需尺寸与重量。",
+        "bounty_min_usdc": 55,
+        "bounty_max_usdc": 240,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-acquisition-cover.jpg"
+      },
+      "official_guide": {
+        "title": "巴塞罗那高迪建筑官方一日",
+        "destination": "巴塞罗那",
+        "body": "预约顺序与排队策略，附官方推荐拍照点。",
+        "tags": [
+          "巴塞罗那",
+          "建筑",
+          "官方精选"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-official-guide-cover.jpg"
+      },
+      "community_post": {
+        "canonical_key": "ocs/barcelona-arch/community-v1",
+        "destination_slug": "barcelona",
+        "destination_label": "巴塞罗那",
+        "post_type": "photo",
+        "priority": 92,
+        "surfaces": [
+          "community_feed"
+        ],
+        "author_account_slug": "europe",
+        "tags": [
+          "巴塞罗那",
+          "建筑",
+          "官方旅行日志"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-community-cover.jpg",
+        "media_urls": [
+          "/api/v1/uploads/community-posts/ocs-barcelona-arch-community-media.jpg"
+        ],
+        "body_markdown": "圣家堂到桂尔公园——官方高迪建筑一日路线与预约策略实录。"
+      }
+    },
+    {
+      "id": "dubai-luxury",
+      "city": "迪拜",
+      "country_code": "AE",
+      "tags": [
+        "奢华",
+        "沙漠"
+      ],
+      "guide": {
+        "slug": "dubai-desert-guide",
+        "nickname": "迪拜沙漠向导·Omar",
+        "bio": "沙漠冲沙、老城黄金市集与哈利法塔观景路线。",
+        "languages": [
+          "ar",
+          "en"
+        ],
+        "service_types": [
+          "culture",
+          "adventure"
+        ],
+        "stake_amount": "760",
+        "avatar_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-guide-avatar.jpg",
+        "price_hint_usdc": 185
+      },
+      "provider": {
+        "slug": "dubai-desert-safari",
+        "title": "迪拜沙漠豪华 Safari · 含晚宴",
+        "category": "experience",
+        "description": "私人 SUV、沙丘冲沙与传统晚宴体验。",
+        "price_usdc": 388,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-provider-cover.jpg"
+      },
+      "acquisition": {
+        "slug": "dubai-perfume-bounty",
+        "title": "迪拜定制香氛 · 悬赏",
+        "category": "luxury",
+        "description": "求购本地调香师定制香氛礼盒，需成分清单。",
+        "bounty_min_usdc": 150,
+        "bounty_max_usdc": 520,
+        "cover_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-acquisition-cover.jpg"
+      },
+      "official_guide": {
+        "title": "迪拜沙漠与都市官方两日",
+        "destination": "迪拜",
+        "body": "沙漠活动与都市地标组合，附官方安全与着装建议。",
+        "tags": [
+          "迪拜",
+          "沙漠",
+          "官方攻略"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-official-guide-cover.jpg"
+      },
+      "community_post": {
+        "canonical_key": "ocs/dubai-luxury/community-v1",
+        "destination_slug": "dubai",
+        "destination_label": "迪拜",
+        "post_type": "photo",
+        "priority": 91,
+        "surfaces": [
+          "community_feed"
+        ],
+        "author_account_slug": "asia",
+        "tags": [
+          "迪拜",
+          "沙漠",
+          "官方旅行日志"
+        ],
+        "cover_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-community-cover.jpg",
+        "media_urls": [
+          "/api/v1/uploads/community-posts/ocs-dubai-luxury-community-media.jpg"
+        ],
+        "body_markdown": "沙漠冲沙与哈利法塔夜景——官方两日路线与安全着装建议实录。"
+      }
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "home-hero",
+      "name": "首页 Hero · 全球精选",
+      "kind": "homepage",
+      "surfaces": [
+        "home_hero"
+      ],
+      "item_refs": [
+        "guide:tokyo-photo",
+        "official_guide:tokyo-photo"
+      ]
+    },
+    {
+      "id": "hot-guides",
+      "name": "热门向导 · Home Feed",
+      "kind": "homepage",
+      "surfaces": [
+        "home_feed"
+      ],
+      "item_refs": [
+        "guide:kyoto-culture",
+        "guide:seoul-food",
+        "guide:paris-art"
+      ]
+    },
+    {
+      "id": "hot-providers",
+      "name": "热门商家 · Market",
+      "kind": "market",
+      "surfaces": [
+        "market_feed"
+      ],
+      "item_refs": [
+        "provider:tokyo-photo",
+        "provider:barcelona-arch",
+        "provider:dubai-luxury"
+      ]
+    },
+    {
+      "id": "hot-acquisition",
+      "name": "热门收购 · Acquisition",
+      "kind": "market",
+      "surfaces": [
+        "market_feed"
+      ],
+      "item_refs": [
+        "acquisition:tokyo-photo",
+        "acquisition:paris-art"
+      ]
+    },
+    {
+      "id": "official-picks",
+      "name": "Official Cold Start Campaign · Community Feed",
+      "kind": "community",
+      "surfaces": [
+        "community_feed",
+        "community_featured"
+      ],
+      "item_refs": [
+        "community_post:tokyo-photo",
+        "community_post:kyoto-culture",
+        "community_post:singapore-family",
+        "official_guide:tokyo-photo",
+        "official_guide:singapore-family"
+      ]
+    },
+    {
+      "id": "newcomer",
+      "name": "新人推荐 · 首页",
+      "kind": "homepage",
+      "surfaces": [
+        "home_feed"
+      ],
+      "item_refs": [
+        "guide:sydney-coast",
+        "guide:nyc-skyline"
+      ]
+    },
+    {
+      "id": "city-tokyo",
+      "name": "城市专题 · 东京",
+      "kind": "regional",
+      "surfaces": [
+        "home_hero",
+        "market_feed"
+      ],
+      "item_refs": [
+        "guide:tokyo-photo",
+        "provider:tokyo-photo",
+        "official_guide:tokyo-photo"
+      ]
+    },
+    {
+      "id": "summer",
+      "name": "暑期专题",
+      "kind": "holiday",
+      "surfaces": [
+        "landing_promo"
+      ],
+      "item_refs": [
+        "guide:bangkok-temple",
+        "provider:bangkok-temple"
+      ]
+    },
+    {
+      "id": "festival",
+      "name": "节日专题",
+      "kind": "festival",
+      "surfaces": [
+        "landing_promo"
+      ],
+      "item_refs": [
+        "guide:barcelona-arch",
+        "official_guide:barcelona-arch"
+      ]
+    },
+    {
+      "id": "weekly-picks",
+      "name": "本周精选 · Market Feed",
+      "kind": "market",
+      "surfaces": [
+        "market_feed"
+      ],
+      "item_refs": [
+        "provider:seoul-food",
+        "provider:paris-art",
+        "acquisition:seoul-food"
+      ]
+    }
+  ]
+}

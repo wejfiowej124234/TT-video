@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.staging_rc_baseline.full_audit.signoff.v1",
+  "stamp": "20260704T095013Z",
+  "environment": "staging",
+  "recorded_at": "2026-07-04T09:50:44Z",
+  "verdict": "PASS",
+  "machine_keys": {
+    "TT_STAGING_RC_BASELINE_AUDIT": "PASS",
+    "TT_STAGING_RC_BASELINE": "READY",
+    "TT_STAGING_RC_SSOT_PARITY": "ALIGNED"
+  },
+  "steps": {
+    "public_surface_audit_rc": 0,
+    "ssot_parity_rc": 0,
+    "baseline_enforcement_rc": 0,
+    "display_governance_rc": 0
+  },
+  "ssot_chain": "RC → dataset.v1.json → assets.v1.json → Public Surface",
+  "honest_boundary": "Audit PASS ≠ Production GO",
+  "remediation": "bash scripts/dev/run-staging-rc-baseline-final-alignment.sh"
+}

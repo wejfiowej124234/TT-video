@@ -37,10 +37,14 @@ mod admin_growth_ledger_http;
 mod admin_growth_early_bird_http;
 mod admin_growth_fraud_http;
 mod admin_country_market_http;
+mod admin_vacancy_ledger_http;
 mod admin_region_share_reconcile_http;
 mod admin_growth_airdrop_http;
 mod admin_growth_analytics_http;
 mod admin_content_http;
+mod admin_content_announcements_http;
+mod admin_content_roadmap_http;
+mod cms_announcement_lane_rbac;
 mod admin_poi_media_http;
 mod admin_catalog_ops_http;
 mod admin_catalog_revision_http;
@@ -745,7 +749,10 @@ pub fn router() -> Router<ApiMetaState> {
         .merge(admin_onboarding::router())
         .merge(trust_growth_obs::router())
         // PD-009 Phase①：收购发布 suspend 属 Booking Core · freeze 下仍挂载（与 ADM-U01 同源）
-        .merge(admin_acquisition_suspend_http::router());
+        .merge(admin_acquisition_suspend_http::router())
+        // CMS public surface admin（公告/路线图 · Production Entry）：public 路由常挂载 · admin CRUD 亦须 staging/content ops
+        .merge(admin_content_announcements_http::router())
+        .merge(admin_content_roadmap_http::router());
 
     if !crate::complexity_convergence::freeze_active() {
         r = r
@@ -755,6 +762,7 @@ pub fn router() -> Router<ApiMetaState> {
             .merge(admin_growth_early_bird_http::router())
             .merge(admin_growth_fraud_http::router())
             .merge(admin_country_market_http::router())
+            .merge(admin_vacancy_ledger_http::router())
             .merge(admin_region_share_reconcile_http::router())
             .merge(admin_growth_airdrop_http::router())
             .merge(admin_growth_analytics_http::router())
@@ -4936,6 +4944,12 @@ const ADMIN_AUDIT_ACTION_CODES: &[&str] = &[
     "admin.community.ranking_snapshots.read",
     "admin.community.reports.read",
     "admin.community.risk_signals.read",
+    "admin.content.announcement.archive",
+    "admin.content.announcement.create",
+    "admin.content.announcement.patch",
+    "admin.content.announcement.publish",
+    "admin.content.announcement.submit_review",
+    "admin.content.announcement.unpublish",
     "admin.compliance.data_request_events.read",
     "admin.compliance.data_requests.read",
     "admin.compliance.data_requests.update",

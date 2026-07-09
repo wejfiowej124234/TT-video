@@ -8,25 +8,42 @@ import { landingAmbientImageUrl } from "@/lib/landingAmbientByCountry";
 import { isCatalogApiEnabled } from "@/lib/catalogApi/client";
 import { resolveLandingAmbientUrl } from "@/lib/catalogApi/resolveLandingAmbient";
 
-export function useLandingAmbientUrl(country: string, emptyFallback?: string): string {
+export type LandingAmbientResolution = {
+  selectedCountry: string;
+  tsUrl: string;
+  catalogUrl: string | null;
+  runtimeUrl: string;
+};
+
+export function useLandingAmbientResolution(
+  country: string,
+  emptyFallback?: string,
+): LandingAmbientResolution {
+  const selectedCountry = country;
   const tsUrl = useMemo(() => {
     if (!country.trim()) return emptyFallback ?? landingAmbientImageUrl("");
     return landingAmbientImageUrl(country);
   }, [country, emptyFallback]);
 
-  const [url, setUrl] = useState(tsUrl);
+  const [catalogUrl, setCatalogUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    setUrl(tsUrl);
-    if (!isCatalogApiEnabled()) return;
+    setCatalogUrl(null);
+    if (!isCatalogApiEnabled() || !country.trim()) return;
     let cancelled = false;
     void resolveLandingAmbientUrl(country).then((r) => {
-      if (!cancelled) setUrl(r.data);
+      if (!cancelled && r.source === "catalog-api") setCatalogUrl(r.data);
     });
     return () => {
       cancelled = true;
     };
-  }, [country, tsUrl]);
+  }, [country]);
 
-  return url;
+  const runtimeUrl = catalogUrl ?? tsUrl;
+
+  return { selectedCountry, tsUrl, catalogUrl, runtimeUrl };
+}
+
+export function useLandingAmbientUrl(country: string, emptyFallback?: string): string {
+  return useLandingAmbientResolution(country, emptyFallback).runtimeUrl;
 }

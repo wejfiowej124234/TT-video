@@ -1,0 +1,14 @@
+HTTP/1.1 200 OK
+content-type: text/plain; charset=utf-8
+vary: origin, access-control-request-method, access-control-request-headers
+x-authority-source: db_projection
+x-request-id: dc96df28-0dcd-4fd1-95af-2da48dd36131
+x-message-id: 96c35c74-21a4-4fde-a59f-f1588c4cccd0
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+cache-control: no-store
+permissions-policy: geolocation=(), microphone=(), camera=()
+content-length: 2
+date: Wed, 13 May 2026 08:10:00 GMT
+

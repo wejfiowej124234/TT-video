@@ -313,6 +313,7 @@ export async function postAdminOfficialItineraryTemplatePublish(id: string) {
 export type AdminColdStartCampaignRow = {
   id: string;
   name: string;
+  campaign_kind?: string;
   status: string;
   surfaces?: string[];
   publish_status: string;
@@ -321,6 +322,20 @@ export type AdminColdStartCampaignRow = {
   rolled_back_at?: string | null;
   created_at?: string;
   updated_at?: string;
+};
+
+export type AdminPublicOpsCampaignRow = AdminColdStartCampaignRow;
+
+export type AdminPublicOpsCampaignPreview = {
+  campaign_id: string;
+  campaign_kind: string;
+  name: string;
+  surface: string;
+  surface_match: boolean;
+  deploy_status: string;
+  publish_status: string;
+  item_count: number;
+  items: AdminColdStartItemRow[];
 };
 
 export type AdminColdStartItemRow = {
@@ -410,6 +425,308 @@ export async function postAdminOfficialColdStartCampaignDeploy(id: string) {
 export async function postAdminOfficialColdStartCampaignRollback(id: string) {
   return adminOfficialFetch<{ item?: AdminColdStartCampaignRow }>(
     routes.adminOfficialColdStartCampaignRollback(id),
+    { method: "POST" },
+  );
+}
+
+export type AdminPublicOperationsOriginBucket = Record<string, number>;
+
+export type AdminPublicOperationsStatsRes = {
+  status?: string;
+  filter_enabled?: boolean;
+  data_origin_counts?: {
+    guides?: AdminPublicOperationsOriginBucket;
+    orders?: AdminPublicOperationsOriginBucket;
+    market_listings?: AdminPublicOperationsOriginBucket;
+    community_posts?: AdminPublicOperationsOriginBucket;
+    market_listings_by_variant?: {
+      provider?: AdminPublicOperationsOriginBucket;
+      acquisition?: AdminPublicOperationsOriginBucket;
+    };
+  };
+  error?: string;
+};
+
+export async function getAdminOfficialPublicOperationsStats() {
+  return adminOfficialFetch<AdminPublicOperationsStatsRes>(routes.adminOfficialPublicOperationsStats);
+}
+
+export type AdminPublicOpsDisplayRow = {
+  id: string;
+  entity_type: string;
+  label: string;
+  display_status: string;
+  display_origin: string;
+  data_origin: string;
+  featured: boolean;
+  display_priority: number;
+  display_surfaces: string[];
+  display_start_at?: string | null;
+  display_end_at?: string | null;
+  updated_at?: string;
+};
+
+export async function getAdminOfficialPublicOperationsPublishQueue(params?: {
+  entity_type?: string;
+  display_status?: string;
+  featured_only?: boolean;
+  limit?: number;
+}) {
+  const q = new URLSearchParams();
+  if (params?.entity_type) q.set("entity_type", params.entity_type);
+  if (params?.display_status) q.set("display_status", params.display_status);
+  if (params?.featured_only) q.set("featured_only", "true");
+  if (params?.limit) q.set("limit", String(params.limit));
+  const suffix = q.toString() ? `?${q}` : "";
+  return adminOfficialFetch<{ status?: string; entity_type?: string; items?: AdminPublicOpsDisplayRow[] }>(
+    `${routes.adminOfficialPublicOperationsPublishQueue}${suffix}`,
+  );
+}
+
+export async function patchAdminOfficialPublicOperationsFeatured(
+  entityType: string,
+  id: string,
+  featured: boolean,
+) {
+  return adminOfficialFetch<{ status?: string; item?: AdminPublicOpsDisplayRow }>(
+    routes.adminOfficialPublicOperationsEntityFeatured(entityType, id),
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ featured }),
+    },
+  );
+}
+
+export async function patchAdminOfficialPublicOperationsPriority(
+  entityType: string,
+  id: string,
+  displayPriority: number,
+) {
+  return adminOfficialFetch<{ status?: string; item?: AdminPublicOpsDisplayRow }>(
+    routes.adminOfficialPublicOperationsEntityPriority(entityType, id),
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ display_priority: displayPriority }),
+    },
+  );
+}
+
+export async function patchAdminOfficialPublicOperationsSurfaces(
+  entityType: string,
+  id: string,
+  displaySurfaces: string[],
+) {
+  return adminOfficialFetch<{ status?: string; item?: AdminPublicOpsDisplayRow }>(
+    routes.adminOfficialPublicOperationsEntitySurfaces(entityType, id),
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ display_surfaces: displaySurfaces }),
+    },
+  );
+}
+
+export async function patchAdminOfficialPublicOperationsSchedule(
+  entityType: string,
+  id: string,
+  schedule: { display_start_at?: string | null; display_end_at?: string | null },
+) {
+  return adminOfficialFetch<{ status?: string; item?: AdminPublicOpsDisplayRow }>(
+    routes.adminOfficialPublicOperationsEntitySchedule(entityType, id),
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(schedule),
+    },
+  );
+}
+
+export type AdminPublicOpsPreviewResult = {
+  entity_type: string;
+  entity_id: string;
+  surface: string;
+  as_of: string;
+  visible: boolean;
+  checks: {
+    display_status_published: boolean;
+    surface_match: boolean;
+    schedule_in_window: boolean;
+    policy_origin_allowed: boolean;
+  };
+  reasons_hidden: string[];
+  display: AdminPublicOpsDisplayRow;
+};
+
+export async function getAdminOfficialPublicOperationsPreview(
+  entityType: string,
+  id: string,
+  params?: { surface?: string; as_of?: string },
+) {
+  const q = new URLSearchParams();
+  if (params?.surface) q.set("surface", params.surface);
+  if (params?.as_of) q.set("as_of", params.as_of);
+  const suffix = q.toString() ? `?${q}` : "";
+  return adminOfficialFetch<{
+    status?: string;
+    preview?: AdminPublicOpsPreviewResult;
+    public_card?: unknown;
+    error?: string;
+  }>(`${routes.adminOfficialPublicOperationsEntityPreview(entityType, id)}${suffix}`);
+}
+
+export type AdminPublicOpsHistoryRow = {
+  id: string;
+  entity_type: string;
+  entity_id: string;
+  action: string;
+  actor_id?: string | null;
+  display_source?: string | null;
+  before_state?: unknown;
+  after_state?: unknown;
+  created_at?: string;
+};
+
+export async function getAdminOfficialPublicOperationsHistory(params?: {
+  entity_type?: string;
+  entity_id?: string;
+  action?: string;
+  limit?: number;
+}) {
+  const q = new URLSearchParams();
+  if (params?.entity_type) q.set("entity_type", params.entity_type);
+  if (params?.entity_id) q.set("entity_id", params.entity_id);
+  if (params?.action) q.set("action", params.action);
+  if (params?.limit) q.set("limit", String(params.limit));
+  const suffix = q.toString() ? `?${q}` : "";
+  return adminOfficialFetch<{ status?: string; items?: AdminPublicOpsHistoryRow[] }>(
+    `${routes.adminOfficialPublicOperationsHistory}${suffix}`,
+  );
+}
+
+export type AdminPublicOpsPolicy = {
+  show_test_data: boolean;
+  blocked_origins: string[];
+  updated_at?: string;
+  updated_by?: string | null;
+};
+
+export async function getAdminOfficialPublicOperationsPolicy() {
+  return adminOfficialFetch<{ status?: string; policy?: AdminPublicOpsPolicy }>(
+    routes.adminOfficialPublicOperationsPolicy,
+  );
+}
+
+export async function patchAdminOfficialPublicOperationsPolicy(body: {
+  show_test_data?: boolean;
+  blocked_origins?: string[];
+}) {
+  return adminOfficialFetch<{ status?: string; policy?: AdminPublicOpsPolicy; error?: string }>(
+    routes.adminOfficialPublicOperationsPolicy,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    },
+  );
+}
+
+export async function getAdminOfficialPublicOperationsCampaigns(params?: {
+  campaign_kind?: string;
+  publish_status?: string;
+  limit?: number;
+}) {
+  const q = new URLSearchParams();
+  if (params?.campaign_kind) q.set("campaign_kind", params.campaign_kind);
+  if (params?.publish_status) q.set("publish_status", params.publish_status);
+  if (params?.limit) q.set("limit", String(params.limit));
+  const suffix = q.toString() ? `?${q}` : "";
+  return adminOfficialFetch<{ status?: string; items?: AdminPublicOpsCampaignRow[]; count?: number }>(
+    `${routes.adminOfficialPublicOperationsCampaigns}${suffix}`,
+  );
+}
+
+export async function postAdminOfficialPublicOperationsCampaign(body: {
+  name: string;
+  campaign_kind: string;
+  surfaces?: string[];
+}) {
+  return adminOfficialFetch<{ status?: string; item?: AdminPublicOpsCampaignRow }>(
+    routes.adminOfficialPublicOperationsCampaigns,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    },
+  );
+}
+
+export async function postAdminOfficialPublicOperationsCampaignItem(
+  campaignId: string,
+  body: { item_type: string; item_ref_id: string; sort_order?: number },
+) {
+  return adminOfficialFetch<{ status?: string; item?: AdminColdStartItemRow }>(
+    routes.adminOfficialPublicOperationsCampaignItems(campaignId),
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    },
+  );
+}
+
+export async function postAdminOfficialPublicOperationsCampaignSubmitReview(id: string) {
+  return adminOfficialFetch<{ status?: string; item?: AdminPublicOpsCampaignRow }>(
+    routes.adminOfficialPublicOperationsCampaignSubmitReview(id),
+    { method: "POST" },
+  );
+}
+
+export async function postAdminOfficialPublicOperationsCampaignRequestDeploy(id: string, body?: { reason?: string }) {
+  return adminOfficialFetch<{ status?: string; approval_id?: string }>(
+    routes.adminOfficialPublicOperationsCampaignRequestDeploy(id),
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body ?? {}),
+    },
+  );
+}
+
+export async function postAdminOfficialPublicOperationsCampaignDeploy(id: string) {
+  return adminOfficialFetch<{ status?: string; item?: AdminPublicOpsCampaignRow }>(
+    routes.adminOfficialPublicOperationsCampaignDeploy(id),
+    { method: "POST" },
+  );
+}
+
+export async function postAdminOfficialPublicOperationsCampaignRollback(id: string) {
+  return adminOfficialFetch<{ status?: string; item?: AdminPublicOpsCampaignRow }>(
+    routes.adminOfficialPublicOperationsCampaignRollback(id),
+    { method: "POST" },
+  );
+}
+
+export async function getAdminOfficialPublicOperationsCampaignPreview(id: string, params?: { surface?: string }) {
+  const q = new URLSearchParams();
+  if (params?.surface) q.set("surface", params.surface);
+  const suffix = q.toString() ? `?${q}` : "";
+  return adminOfficialFetch<{ status?: string; preview?: AdminPublicOpsCampaignPreview }>(
+    `${routes.adminOfficialPublicOperationsCampaignPreview(id)}${suffix}`,
+  );
+}
+
+export async function postAdminOfficialPublicOperationsPublish(entityType: string, id: string) {
+  return adminOfficialFetch<{ status?: string; item?: AdminPublicOpsDisplayRow }>(
+    routes.adminOfficialPublicOperationsEntityPublish(entityType, id),
+    { method: "POST" },
+  );
+}
+
+export async function postAdminOfficialPublicOperationsUnpublish(entityType: string, id: string) {
+  return adminOfficialFetch<{ status?: string; item?: AdminPublicOpsDisplayRow }>(
+    routes.adminOfficialPublicOperationsEntityUnpublish(entityType, id),
     { method: "POST" },
   );
 }

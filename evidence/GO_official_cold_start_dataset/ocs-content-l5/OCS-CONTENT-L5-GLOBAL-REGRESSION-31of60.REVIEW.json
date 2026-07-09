@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_regression_review.v1",
+  "stamp_utc": "20260704T144530Z",
+  "trigger_row": 31,
+  "trigger_filename": "ocs-paris-art-guide-avatar.jpg",
+  "rows_reviewed": 31,
+  "chains_closed": 5,
+  "TT_GLOBAL_REGRESSION_REVIEW": "PASS",
+  "nine_class_all_pass": true,
+  "no_quality_regression": true,
+  "prior_rows_stable": true,
+  "gate_to_row32": "PASS"
+}

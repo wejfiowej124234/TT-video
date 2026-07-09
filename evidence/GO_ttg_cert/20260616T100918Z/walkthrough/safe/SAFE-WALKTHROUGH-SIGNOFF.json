@@ -1,0 +1,140 @@
+{
+  "acceptance_id": "TT_GOVERNANCE_CERT_04_SAFE_WALKTHROUGH",
+  "signoff_kind": "OPS-SIGNOFF",
+  "cert": 4,
+  "stamp_utc": "20260616T100918Z",
+  "signer": "Sebastian Ward",
+  "signed_at_utc": "2026-06-16T14:56:36Z",
+  "baseline_ssot": "docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md",
+  "gorp_ssot": "docs/runbook/TTG-GOVERNANCE-OPERATIONAL-READINESS-PROGRAM.md",
+  "mtm_ssot": "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+  "mtm_ids": [
+    "CHK-CORE-17",
+    "CHK-OPS-03",
+    "CHK-ID-10",
+    "CHK-SC-12"
+  ],
+  "target_tier": "OPS_DONE",
+  "roles_walked": [
+    "Safe Signer",
+    "Treasury Operator",
+    "Finance Operator"
+  ],
+  "verifications": {
+    "permission_boundaries": "Safe Signer multisig · Treasury Safe admin · Finance EOA funding only",
+    "approval_chain": "Safe N-of-M → Legacy TL schedule → executeAfter → public execute",
+    "fund_flows": "Governor→V2 TL treasury · Safe→Legacy TL CP batches · no Admin API spend",
+    "rejection_paths": "mixed TL batch · Admin POST · unallowlisted target · TooEarly execute",
+    "recovery_paths": "GORP §3.1 Execute fail · §3.2 Treasury mis-transfer · eth_call simulate",
+    "dual_timelock_matrix": "DUAL-TIMELOCK-OPS-MATRIX.v1.json (SC-12 / GORP-08 / RB-G-09)"
+  },
+  "recordings": [
+    "C-SAFE-01-safe-signer-multisig.mp4",
+    "C-SAFE-02-treasury-timelock-chain.mp4",
+    "C-SAFE-03-finance-boundaries-recovery.mp4"
+  ],
+  "screenshots": [
+    "role-dual-tl-matrix.png",
+    "role-finance-boundaries.png",
+    "role-recovery-paths.png",
+    "role-safe-signer-multisig.png",
+    "role-treasury-timelock-chain.png"
+  ],
+  "machine_checks_verdict": "PASS",
+  "machine_checks": {
+    "baseline_addresses": {
+      "ok": true,
+      "hits": {
+        "v2_timelock": true,
+        "de_ledger": true
+      }
+    },
+    "evidence_anchors": {
+      "ok": true,
+      "dirs": [
+        {
+          "anchor": "cutover_drill",
+          "path": "evidence/GO_tt_country_pool_revenue_enterprise_hat/cutover-drill/20260616T082259Z",
+          "exists": true
+        },
+        {
+          "anchor": "four_ledger",
+          "path": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z",
+          "exists": true
+        },
+        {
+          "anchor": "hat_r1_phase_a",
+          "path": "evidence/GO_hat_r1_sepolia/20260616T063612Z",
+          "exists": true
+        }
+      ],
+      "cutover_exec_logs": 8
+    },
+    "gorp_safe_timelock_treasury": {
+      "ok": true,
+      "s_steps": {
+        "S-01": true,
+        "S-02": true,
+        "S-03": true,
+        "S-04": true,
+        "S-05": true,
+        "S-06": true
+      },
+      "sections": {
+        "dual_timelock_2_2": true,
+        "treasury_2_4": true,
+        "finance_op_2_6": true,
+        "treasury_op_2_7": true,
+        "execute_fail_3_1": true,
+        "treasury_mis_3_2": true,
+        "gorp_06": true,
+        "gorp_08": true,
+        "rb_g_09": true,
+        "forbid_admin_api": true,
+        "chain_id_sepolia": true
+      }
+    },
+    "three_role_boundaries": {
+      "ok": true,
+      "roles": [
+        {
+          "role": "Safe Signer",
+          "allow": "N-of-M signature collection (S-04)",
+          "deny": "solo schedule without quorum · Admin API",
+          "ok": true
+        },
+        {
+          "role": "Treasury Operator",
+          "allow": "Safe calldata draft · Legacy TL schedule/execute coord (S-01～S-06)",
+          "deny": "mixed TL batch · unallowlisted target",
+          "ok": true
+        },
+        {
+          "role": "Finance Operator",
+          "allow": "fundingSource.approve · accrual · four-ledger reconcile",
+          "deny": "Timelock key · Admin POST spend · bypass Governor spend",
+          "ok": true
+        }
+      ]
+    },
+    "assert_govfreeze_baseline_only": {
+      "ok": true,
+      "skipped": false,
+      "exit_code": 0,
+      "stdout_tail": "GOV_FREEZE_V2_ACTIVE_BASELINE: OK ttg=0x2837ea0c50e27d59b88af617abbb231a040062c5 governor=0x847b00ddb6ffed71812abc358a407dad4b099fcb pool=0x3a89378bfad12d1028707dd37055294854c8784e",
+      "stderr_tail": ""
+    }
+  },
+  "evidence_anchors": [
+    "evidence/GO_tt_country_pool_revenue_enterprise_hat/cutover-drill/20260616T082259Z",
+    "evidence/GO_hat_r1_sepolia/20260616T063612Z",
+    "docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md"
+  ],
+  "verdict": "PASS",
+  "honest_boundary": "② Cert#4 Safe walkthrough ≠ 34/34 Ops ≠ Enterprise 100 ≠ ③ Production GO",
+  "forbidden": [
+    "new features",
+    "govfreeze re-audit",
+    "docs/spec expansion"
+  ]
+}

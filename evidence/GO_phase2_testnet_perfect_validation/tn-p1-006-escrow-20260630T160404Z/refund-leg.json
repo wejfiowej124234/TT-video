@@ -1,0 +1,7 @@
+{
+  "order_id": "3e0f9742-68df-457a-af45-d25f4cf15e59",
+  "escrow": "0xb40e766Ea991E812281aDd38143d8dF0C661d487",
+  "refund_tx": "0xec978ddc1bfa52fa321e85d06578d35cbf07c4ec776dad119960c8644f21c106",
+  "status": 4,
+  "honest_boundary": "on-chain refund leg without API order bind"
+}

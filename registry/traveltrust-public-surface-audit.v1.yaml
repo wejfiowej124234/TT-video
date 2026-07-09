@@ -1,0 +1,106 @@
+# TravelTrust Public Surface Audit · machine SSOT (all user-facing disclosure routes)
+#
+# Human closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PUBLIC-SURFACE-AUDIT-CLOSEOUT.md
+# Extends: registry/traveltrust-public-disclosure.v1.yaml
+# Gate: bash scripts/gates/check-public-surface-audit-gate.sh
+
+schema: traveltrust.public_surface_audit.v1
+version: 1
+effective_utc: "2026-07-09"
+machine_key: TT_PUBLIC_SURFACE_AUDIT
+verdict: PUBLIC_SURFACE_AUDIT_PASS
+verdict_status: PASS
+
+program_state:
+  phase: "① local disclosure alignment (not ② staging GO · not ③ mainnet GO)"
+  phase3_entry: ACTIVE
+  sepolia_web3_runtime: ACTIVE
+  mainnet_broadcast: NOT_STARTED
+  home_public_disclosure: PASS
+  governance_params_public_disclosure: PASS
+
+extends_disclosure_registry: registry/traveltrust-public-disclosure.v1.yaml
+
+forbidden_public_terms:
+  - Sepolia Preview
+  - Sepolia preview
+  - testnet preview
+  - 测试网预览
+  - Engineering Mock
+  - 待上线
+  - Opening Jul
+  - Round 1 Beta
+  - 51-F7; to follow
+  - 待后续实现
+  - escrow planning
+  - 链上托管规划
+  - 预计 7 月 15 日正式开放
+
+locale_scan_prefixes:
+  - traveltrust_tagline
+  - traveltrust_meta_
+  - traveltrust_roadmap_2026_
+  - traveltrust_liquidity_
+  - traveltrust_faq_
+  - traveltrust_legacy_faq_
+  - traveltrust_demo_disclosure
+  - traveltrust_hero_card_kicker
+  - traveltrust_cinematic_chapter_liquidity
+  - traveltrust_cinematic_sr_chapter_liquidity
+  - traveltrust_pulse_community_governance
+  - traveltrust_pulse_trust_escrow_core
+  - traveltrust_pulse_product_intro
+  - governance_desc
+  - governance_meta_
+  - governance_hub_
+  - governance_proposals_
+  - governance_params_web3
+  - staking_meta_
+  - staking_page
+  - trust_meta_
+  - p003_hub_intro
+
+surfaces:
+  - route: /
+    label: Homepage Pulse
+    status: ALIGNED
+    prior_closeout: HOME-PUBLIC-DISCLOSURE-ALIGNMENT-CLOSEOUT.md
+  - route: /traveltrust
+    label: Brand network page
+    status: ALIGNED
+    checks: [tagline, liquidity, faq, hero_disclosure, pulse_ticker]
+  - route: /traveltrust/announcements
+    label: Announcements + roadmap timeline
+    status: ALIGNED
+    ssot: frontend/lib/traveltrustCmsAnnouncements.ts + GET /api/v1/public/roadmap
+  - route: /governance
+    label: Governance hub
+    status: ALIGNED
+    checks: [no_preview_beta, params_pointer]
+  - route: /governance/params
+    label: Protocol parameters
+    status: ALIGNED
+    prior_closeout: PUBLIC-DISCLOSURE-SYNC-CLOSEOUT.md
+  - route: /governance/proposals
+    label: Governance proposals L5
+    status: ALIGNED
+    checks: [no_demo_placeholder, l5_disclaimer]
+  - route: /staking
+    label: Guide staking
+    status: ALIGNED
+    checks: [no_coming_soon, on_chain_panels]
+  - route: /trust
+    alias: /transparency
+    label: Trust / transparency hub
+    status: ALIGNED
+    checks: [runtime_verification, meta_copy]
+  - route: footer_roadmap
+    label: Footer + product-roadmap timeline
+    status: ALIGNED
+    ssot: GET /api/v1/public/roadmap (CMS) · fallback frontend/lib/traveltrustRoadmap2026.ts
+  - route: faq
+    label: Network FAQ strip
+    status: ALIGNED
+    checks: [no_testnet_preview, params_pointer]
+
+closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PUBLIC-SURFACE-AUDIT-CLOSEOUT.md

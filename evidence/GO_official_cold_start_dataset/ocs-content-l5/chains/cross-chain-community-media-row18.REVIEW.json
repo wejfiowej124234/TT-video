@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T133430Z",
+  "row": 18,
+  "filename": "ocs-seoul-food-community-media.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "community_media_comparison": {
+    "tokyo-photo": "隅田川步行/日落详情叙事",
+    "kyoto-culture": "岚山竹林行人",
+    "seoul-food": "广藏市场过道人群摊位纪实",
+    "distinct": true
+  }
+}

@@ -1,0 +1,295 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_exit_check.v1",
+  "recorded_at_utc": "2026-07-05T14:10:04.835Z",
+  "city": {
+    "city_zh": "东京",
+    "city_en": "Tokyo",
+    "country_iso": "JP",
+    "poi_count": 9
+  },
+  "replicated_from": "Osaka Golden Template",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "checks": [
+    {
+      "id": "assets_locked_9_9",
+      "label": "9/9 Asset 全部 LOCKED · 无 Unlock",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-JP-009-ATR",
+          "poi": "浅草寺",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-010-ATR",
+          "poi": "东京塔",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-011-ATR",
+          "poi": "新宿",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-012-ATR",
+          "poi": "涩谷",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-013-ATR",
+          "poi": "上野公园",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-014-FOOD",
+          "poi": "寿司",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-015-FOOD",
+          "poi": "拉面",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-016-FOOD",
+          "poi": "天妇罗",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-JP-017-FOOD",
+          "poi": "居酒屋",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "six_dimensions_pass",
+      "label": "六维全部 PASS（City Runtime = Gate 4 同源 · 非 national）",
+      "pass": true,
+      "runtime_scope": "city_consumer_runtime",
+      "city_snapshot": {
+        "execution": "PASS",
+        "cms_ownership": "PASS",
+        "runtime_consumer": "PASS",
+        "geo_matching": "PASS",
+        "content_accuracy": "PASS",
+        "l5_quality": "PASS",
+        "content_qa_closed": true
+      },
+      "issues": []
+    },
+    {
+      "id": "catalog_api_tokyo",
+      "label": "Catalog API 9/9 与 LOCK 一致",
+      "pass": true,
+      "rows": [
+        {
+          "poi": "浅草寺",
+          "expected": "ocs-tokyo-photo-official-guide-cover.jpg",
+          "catalog": "ocs-tokyo-photo-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "东京塔",
+          "expected": "ocs-tokyo-photo-community-media.jpg",
+          "catalog": "ocs-tokyo-photo-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "新宿",
+          "expected": "ocs-tokyo-photo-community-cover.jpg",
+          "catalog": "ocs-tokyo-photo-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "涩谷",
+          "expected": "ocs-tokyo-photo-provider-cover.jpg",
+          "catalog": "ocs-tokyo-photo-provider-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "上野公园",
+          "expected": "ocs-tokyo-photo-acquisition-cover.jpg",
+          "catalog": "ocs-tokyo-photo-acquisition-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "寿司",
+          "expected": "ocs-tokyo-sushi-community-cover.jpg",
+          "catalog": "ocs-tokyo-sushi-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "拉面",
+          "expected": "ocs-tokyo-ramen-guide-avatar.jpg",
+          "catalog": "ocs-tokyo-ramen-guide-avatar.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "天妇罗",
+          "expected": "ocs-tokyo-tempura-provider-cover.jpg",
+          "catalog": "ocs-tokyo-tempura-provider-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "poi": "居酒屋",
+          "expected": "ocs-tokyo-photo-guide-avatar.jpg",
+          "catalog": "ocs-tokyo-photo-guide-avatar.jpg",
+          "image_source": "payload",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "consumer_runtime_cms",
+      "label": "Consumer Runtime 实际页面读取 CMS（非仅 Verify）",
+      "pass": true,
+      "catalog_api_requests": 4,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/tokyo/tokyo-poi-runtime-20260705T141004Z.png",
+      "rows": [
+        {
+          "poi": "浅草寺",
+          "expected_fn": "ocs-tokyo-photo-official-guide-cover.jpg",
+          "runtime_fn": "ocs-tokyo-photo-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "东京塔",
+          "expected_fn": "ocs-tokyo-photo-community-media.jpg",
+          "runtime_fn": "ocs-tokyo-photo-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "新宿",
+          "expected_fn": "ocs-tokyo-photo-community-cover.jpg",
+          "runtime_fn": "ocs-tokyo-photo-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "涩谷",
+          "expected_fn": "ocs-tokyo-photo-provider-cover.jpg",
+          "runtime_fn": "ocs-tokyo-photo-provider-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "上野公园",
+          "expected_fn": "ocs-tokyo-photo-acquisition-cover.jpg",
+          "runtime_fn": "ocs-tokyo-photo-acquisition-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "寿司",
+          "expected_fn": "ocs-tokyo-sushi-community-cover.jpg",
+          "runtime_fn": "ocs-tokyo-sushi-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-sushi-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "拉面",
+          "expected_fn": "ocs-tokyo-ramen-guide-avatar.jpg",
+          "runtime_fn": "ocs-tokyo-ramen-guide-avatar.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-ramen-guide-avatar.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "天妇罗",
+          "expected_fn": "ocs-tokyo-tempura-provider-cover.jpg",
+          "runtime_fn": "ocs-tokyo-tempura-provider-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-tempura-provider-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "poi": "居酒屋",
+          "expected_fn": "ocs-tokyo-photo-guide-avatar.jpg",
+          "runtime_fn": "ocs-tokyo-photo-guide-avatar.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "visual_screenshot",
+      "label": "页面截图/DOM · 无旧图/错图/Fallback",
+      "pass": true,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/tokyo/tokyo-poi-runtime-20260705T141004Z.png",
+      "issues": []
+    },
+    {
+      "id": "no_backlog_unlock",
+      "label": "无 Open Backlog · 无 Unlock",
+      "pass": true,
+      "issues": []
+    }
+  ],
+  "all_pass": true,
+  "city_runtime_pass_count": 9,
+  "city_runtime_required": 9,
+  "verdict": "CONTENT_QA_EXIT_PASS",
+  "TT_CMS_POI_CITY_TOKYO_CONTENT_QA": "CLOSED",
+  "TT_CMS_POI_CITY_TOKYO_CONTENT_QA_EXIT": "PASS",
+  "runtime_tiers": {
+    "city": {
+      "tier": "city_consumer_runtime",
+      "gate_2_equals_gate_4": true
+    },
+    "country": {
+      "tier": "national_runtime",
+      "when": "TT_CMS_JP_COUNTRY: CLOSED",
+      "not_in_scope": true
+    }
+  },
+  "blockers": []
+}

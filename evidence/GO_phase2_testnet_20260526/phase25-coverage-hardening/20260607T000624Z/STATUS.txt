@@ -1,0 +1,12 @@
+phase: 2.5-coverage-hardening
+status: PASS
+last_run: 2026-06-07T00:09:11Z
+api_base: https://tt-api-staging.fly.dev
+slices_pass: 5/5
+note: hardening only · does not reopen PHASE2_GO_READY
+ssot: docs/runbook/PHASE2.5-COVERAGE-HARDENING.md
+ch_h01: PASS
+ch_h02: PASS
+ch_h03: PASS
+ch_h04: PASS
+ch_h05: PASS

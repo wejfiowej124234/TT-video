@@ -1,0 +1,100 @@
+{
+  "schema": "traveltrust.cert5-finance-three-role-matrix.v1",
+  "verdict": "PASS",
+  "phase": "②",
+  "baseline": "GovFreeze V2 Clean Baseline",
+  "roles": [
+    "Finance Operator",
+    "Treasury Operator",
+    "Auditor"
+  ],
+  "checks": {
+    "four_ledger_pass": {
+      "ok": true,
+      "verdict": "PASS",
+      "split_observed": true,
+      "page_bps_ok": true,
+      "global_treasury_timelock_match": true,
+      "path": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z/four-ledger-reconcile.json"
+    },
+    "evidence_anchors": {
+      "ok": true,
+      "dirs": [
+        {
+          "anchor": "four_ledger_dir",
+          "path": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z",
+          "exists": true
+        },
+        {
+          "anchor": "cutover_drill",
+          "path": "evidence/GO_tt_country_pool_revenue_enterprise_hat/cutover-drill/20260616T082259Z",
+          "exists": true
+        },
+        {
+          "anchor": "hat_r1",
+          "path": "evidence/GO_hat_r1_sepolia/20260616T063612Z",
+          "exists": true
+        }
+      ],
+      "cp_revenue_hat_report": true,
+      "split_4555_chain_read": true,
+      "cutover_split_log": true
+    },
+    "gorp_finance_walkthrough": {
+      "ok": true,
+      "w_f": {
+        "W-F1": true,
+        "W-F2": true,
+        "W-F3": true,
+        "W-F4": true,
+        "W-F5": true
+      },
+      "sections": {
+        "gorp_05": true,
+        "country_pool_2_5": true,
+        "treasury_2_4": true,
+        "finance_op_2_6": true,
+        "four_ledger_3_6": true,
+        "split_net_profit": true,
+        "funding_source": true,
+        "fee_router_orthogonal": true,
+        "distribution_accrual": true,
+        "forbid_admin_spend": true
+      },
+      "fee_router_ssot": {
+        "ok": true,
+        "ssot": "docs/spec/governance-token/TTG-GOVERNANCE-FULL-COVERAGE-CERTIFICATION-REPORT.md"
+      }
+    },
+    "three_role_boundaries": {
+      "ok": true,
+      "roles": [
+        {
+          "role": "Finance Operator",
+          "allow": "fundingSource approve/pull · accrual · four-ledger · distribution register read",
+          "deny": "Timelock key · Admin POST treasury · solo 45% to EOA",
+          "ok": true
+        },
+        {
+          "role": "Treasury Operator",
+          "allow": "Safe/Legacy TL batch · split execute coord · calldata archive",
+          "deny": "fundingSource custody · bypass Finance fund step",
+          "ok": true
+        },
+        {
+          "role": "Auditor",
+          "allow": "four-ledger read · distribution/accrual read · audit trail",
+          "deny": "fundingSource write · TL schedule · split batch",
+          "ok": true
+        }
+      ]
+    }
+  },
+  "finance_ops_flow_map": "evidence/GO_ttg_cert/.cert5-finance-flow-map.json",
+  "mtm_ids": [
+    "CHK-CORE-15",
+    "CHK-OPS-02",
+    "CHK-ID-09",
+    "CHK-FN-11"
+  ]
+}

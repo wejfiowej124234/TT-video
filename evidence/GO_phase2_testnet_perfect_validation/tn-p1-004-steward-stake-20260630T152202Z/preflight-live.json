@@ -1,0 +1,9 @@
+{
+  "chain_id": "11155111",
+  "pool": "0x3a89378bfad12d1028707dd37055294854c8784e",
+  "ttg": "0x2837ea0c50e27d59b88af617abbb231a040062c5",
+  "pool_version": "region_steward_stake_pool_v1",
+  "min_stake_cn": "400000000000000000000000",
+  "release_delay_seconds": "15552000",
+  "ttg_approve_on_live_chain": "ok"
+}

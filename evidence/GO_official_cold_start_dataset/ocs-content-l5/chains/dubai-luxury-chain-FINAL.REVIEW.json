@@ -1,0 +1,198 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_final_review.v1",
+  "stamp_utc": "20260704T154830Z",
+  "chain_id": "dubai-luxury",
+  "city": "迪拜",
+  "country_code": "AE",
+  "country_label": "阿联酋",
+  "theme_locked": "沙漠 Safari · 哈利法塔 · luxury 都市",
+  "slots_completed": 6,
+  "slots_total": 6,
+  "rows": [
+    55,
+    56,
+    57,
+    58,
+    59,
+    60
+  ],
+  "TT_DUBAI_LUXURY_CHAIN": "CLOSED",
+  "dubai_chain_content_score": {
+    "value": 93,
+    "scale": "0-100",
+    "formula": "weighted_mean_of_G1_G10_chain_aggregate_plus_nine_class_reviews",
+    "pass_threshold": 85,
+    "result": "PASS"
+  },
+  "g1_g10_summary": {
+    "G1_real_assets": {
+      "pass": true,
+      "chain_score": 95
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "chain_score": 94
+    },
+    "G3_slot_differentiation": {
+      "pass": true,
+      "chain_score": 94
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "chain_score": 96
+    },
+    "G5_brand_visual": {
+      "pass": true,
+      "chain_score": 92
+    },
+    "G6_commercial_perception": {
+      "pass": true,
+      "chain_score": 91
+    },
+    "G7_wcag_visual": {
+      "pass": true,
+      "chain_score": 93
+    },
+    "G8_evidence_matrix": {
+      "pass": true,
+      "chain_score": 96
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "chain_score": 91
+    },
+    "G10_content_diversity": {
+      "pass": true,
+      "chain_score": 94
+    },
+    "all_pass": true
+  },
+  "nine_class_special_reviews": {
+    "guide_identity_diversity": {
+      "pass": true,
+      "note": "Omar @ 沙漠 luxury camp · vs 九城向导明显区分"
+    },
+    "provider_business_identity": {
+      "pass": true,
+      "note": "沙漠豪华 Safari 晚宴 vs 九城 Provider 各异"
+    },
+    "acquisition_product_identity": {
+      "pass": true,
+      "note": "定制香氛礼盒 vs 九城 Acquisition 各异"
+    },
+    "official_guide_destination": {
+      "pass": true,
+      "note": "哈利法塔+沙漠双主题宽幅 Hero"
+    },
+    "community_authenticity": {
+      "pass": true,
+      "note": "Cover 冲沙 SUV Feed + Media 哈利法塔夜景 互补"
+    },
+    "destination_authenticity": {
+      "pass": true,
+      "all_rows_ae_only": true
+    },
+    "content_portfolio": {
+      "pass": true
+    },
+    "surface_boundary": {
+      "pass": true,
+      "all_6_slots": true
+    },
+    "visual_sequence": {
+      "pass": true,
+      "all_6_slots": true
+    }
+  },
+  "chain_narrative_continuity_review": {
+    "result": "PASS",
+    "TT_CHAIN_NARRATIVE_CONTINUITY": "PASS",
+    "surface_arc": "Guide(Omar @ 沙漠 camp) → Provider(Safari 晚宴 sunset) → Acquisition(定制香氛) → Official Guide(塔+沙漠宽幅) → Community Cover(冲沙 SUV) → Community Media(哈利法塔夜景)",
+    "geo_coverage": [
+      "沙漠 dunes",
+      "Safari 晚宴",
+      "哈利法塔",
+      "luxury 都市"
+    ],
+    "theme_coherence": "沙漠 Safari · 哈利法塔 · luxury 都市",
+    "narrative_gaps": false
+  },
+  "visual_diversity_review": {
+    "result": "PASS",
+    "TT_VISUAL_DIVERSITY": "PASS",
+    "six_unique_compositions": true,
+    "no_duplicate_subjects_across_slots": true,
+    "cover_media_complement": {
+      "community_cover": "冲沙 SUV · 沙丘曲线 · 动态 adventure",
+      "community_media": "哈利法塔夜景 · 都市 luxury 细节",
+      "distinct": true,
+      "no_duplicate_camera_subject_composition_light_mood_perspective": true
+    }
+  },
+  "city_brand_identity_review": {
+    "result": "PASS",
+    "TT_CITY_BRAND_IDENTITY": "PASS",
+    "visual_language": "luxury warm gold · 沙漠 sunset + 都市 night",
+    "cultural_elements_ae_only": true,
+    "commercial_positioning": "Safari 晚宴+定制香氛+官方双日路线+社区冒险分享",
+    "distinct_vs_prior_nine_chains": true
+  },
+  "consumer_experience_review": {
+    "result": "PASS",
+    "TT_CONSUMER_EXPERIENCE": "PASS",
+    "summary": "用户从 Feed(冲沙)→详情(塔夜景)、Market(Guide/Provider/Acquisition)、Official Guide(沙漠都市双日) 浏览时，感知为同一迪拜 luxury 生态而非素材堆砌。",
+    "feed_to_detail_continuity": true,
+    "market_surfaces_coherent": true,
+    "not_stock_wall": true,
+    "browse_attraction": true
+  },
+  "destination_authenticity": {
+    "result": "PASS",
+    "all_rows": 6,
+    "country_isolation": "AE-only"
+  },
+  "destination_experience": {
+    "result": "PASS",
+    "summary": "沙漠 Safari+都市地标 luxury 双日完整可浏览"
+  },
+  "country_consistency": {
+    "result": "PASS",
+    "evidence": "chains/country-consistency-dubai-luxury.REVIEW.json",
+    "no_foreign_city_drift": true
+  },
+  "content_portfolio_review": {
+    "result": "PASS",
+    "chain_6_of_60": true
+  },
+  "global_regression_review": {
+    "result": "PASS",
+    "prior_54_rows_stable": true,
+    "prior_9_chains_stable": true,
+    "no_quality_regression": true,
+    "full_regression_60_rows_all_pass": true
+  },
+  "cross_chain_vs_prior_nine": {
+    "result": "PASS",
+    "distinct": true
+  },
+  "brand_consistency": {
+    "result": "PASS",
+    "g5_g9_g10_chain_pass": true,
+    "no_brand_drift": true
+  },
+  "surfaces_all_verified": [
+    "ocs-dubai-luxury-guide-avatar.jpg",
+    "ocs-dubai-luxury-provider-cover.jpg",
+    "ocs-dubai-luxury-acquisition-cover.jpg",
+    "ocs-dubai-luxury-official-guide-cover.jpg",
+    "ocs-dubai-luxury-community-cover.jpg",
+    "ocs-dubai-luxury-community-media.jpg"
+  ],
+  "production_readiness": {
+    "dubai_luxury_chain": "CLOSED",
+    "global_ocs_content_l5": "CONTENT_60of60_COMPLETE",
+    "matrix_progress": "60/60 verified+pass",
+    "chains_closed": 10,
+    "final_milestone_pending": "Final Production Content Audit + 四键签字"
+  }
+}

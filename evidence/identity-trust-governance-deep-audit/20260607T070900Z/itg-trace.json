@@ -1,0 +1,15 @@
+{
+  "trust_moment": "itg-m-eba6e82f",
+  "trust_variant": "itg-v-eba6e82f",
+  "trust_generation": "177",
+  "proposal_id": "911919911919911919911919911919911919",
+  "governance_mode": "governance_proposals_projection",
+  "vote_mode": "on_chain",
+  "delegate_to": "1a9ef358-0b11-4ef7-b740-1267278abbf3",
+  "voter_token": "tts_9605acd6-15b4-4df6-90f2-32cbce21d230",
+  "voter_user_id": "027b924d-6bb7-47c3-897d-f9b7332e1966",
+  "delegatee_user_id": "1a9ef358-0b11-4ef7-b740-1267278abbf3",
+  "api_base": "http://127.0.0.1:8080",
+  "stamp": 1780816140,
+  "run_id": "eba6e82f"
+}

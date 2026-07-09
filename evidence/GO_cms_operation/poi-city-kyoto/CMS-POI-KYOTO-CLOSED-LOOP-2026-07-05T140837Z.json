@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T14:08:37Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "京都",
+    "city_en": "Kyoto",
+    "matrix_ids": [
+      "PH-JP-027-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-JP-027-ATR",
+      "legacy_value": "清水寺",
+      "poi_id": "cf0cfd93-37a1-4511-aa68-b9b9c00b687a",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-community-media.jpg",
+      "hero_file": "ocs-kyoto-culture-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-027-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

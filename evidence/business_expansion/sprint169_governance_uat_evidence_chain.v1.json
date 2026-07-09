@@ -1,0 +1,37 @@
+{
+  "schema": "traveltrust_sprint169_governance_uat_evidence_chain.v1",
+  "sprint": 169,
+  "scope": ["BE-DAO-01"],
+  "flow": ["Proposal", "Vote", "Queue", "TimelockDelay", "Execute"],
+  "sepolia_spine": {
+    "chain_id": 11155111,
+    "governance_token": "0xaC2E29AC7089e4863C21dAF232cF8bbb025d91ca",
+    "timelock": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+    "governor": "0xa79c8df5C225825f6d04a497043dB0F1995B55ae",
+    "treasury": "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be",
+    "ssot": "docs/runbook/TT-PHASE2-SEPOLIA-DEPLOYED-SPINE-SUMMARY.md"
+  },
+  "evidence_chain": [
+    { "step": "P1_Foundry_B089", "artifact": "docs/verification-evidence/governor-timelock-queue-execute-evidence.md", "command": "forge test --match-test test_COMP_B089_governor_full_cycle_propose_vote_queue_execute", "phase": "local", "status": "GO" },
+    { "step": "P1_B431_payload_align", "artifact": "docs/verification-evidence/B-431-gov-execute-chain-read-payload-align-ENTRY.md", "phase": "local", "status": "GO" },
+    { "step": "P2_Sepolia_deploy", "artifact": "TT-PHASE2-SEPOLIA-DEPLOYED-SPINE-SUMMARY.md", "phase": "testnet", "status": "GO" },
+    { "step": "P2_propose_vote", "artifact": "scripts/ops/b417-sepolia-propose-vote-succeeded.sh", "phase": "testnet", "status": "PARTIAL" },
+    { "step": "P3_preflight", "artifact": "scripts/ops/b417-sepolia-preflight.sh", "phase": "testnet", "status": "MISSING" },
+    { "step": "P3_queue", "artifact": "scripts/ops/b417-governor-queue-testnet.sh", "phase": "testnet", "status": "MISSING" },
+    { "step": "P3_timelock_delay_drill", "artifact": "live wait Timelock.delay() on Sepolia", "phase": "testnet", "status": "NOT_RUN" },
+    { "step": "P3_execute", "artifact": "scripts/ops/b417-governor-execute-testnet.sh", "phase": "testnet", "status": "PARTIAL" },
+    { "step": "P3_orchestration", "artifact": "scripts/ops/b417-run-onchain-evidence.sh", "phase": "testnet", "status": "MISSING" },
+    { "step": "P3_evidence_verify", "artifact": "scripts/ops/b417-evidence-pack-verify.sh", "phase": "testnet", "status": "MISSING" },
+    { "step": "P3_report", "artifact": "evidence/b417_governance_execution_runs/run_<UTC>/b417-governance-execution-report.json", "phase": "testnet", "status": "NOT_ENTERPRISE_SIGNED" }
+  ],
+  "live_sepolia_uat_pack": {
+    "enterprise_signed": false,
+    "execution_verdict": null,
+    "owner_sign_off": false
+  },
+  "b417_scripts_on_disk": 4,
+  "b417_scripts_documented_missing": 5,
+  "automation_pct": 48,
+  "enterprise_verdict": "BE_DAO_01_HOLD",
+  "blocking_gaps": ["P3_preflight", "P3_queue", "P3_orchestration", "P3_evidence_verify", "P3_timelock_delay_drill", "live_sepolia_uat_pack"]
+}

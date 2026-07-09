@@ -1,0 +1,226 @@
+{
+  "schema": "traveltrust.ocs_production_bootstrap.v1",
+  "stamp": "20260708T055601Z",
+  "recorded_at": "2026-07-08T06:51:57.748Z",
+  "api": "https://tt-api-prod.fly.dev",
+  "web": "https://tt-web-prod.fly.dev",
+  "policy": "Frozen OCS apply → Production (no manifest regeneration)",
+  "check1_manifest_frozen": true,
+  "check2_lineage_rows": 20,
+  "check3_parity": {
+    "targets": {
+      "countries": {
+        "actual": 10,
+        "target": 10,
+        "ok": true
+      },
+      "landing_ambient": {
+        "actual": 10,
+        "target": 10,
+        "ok": true
+      },
+      "cities": {
+        "actual": 38,
+        "target": 38,
+        "ok": true
+      },
+      "poi": {
+        "actual": 330,
+        "target": 234,
+        "ok": true,
+        "ssot_full": 330,
+        "ssot_ok": true
+      },
+      "guides": {
+        "actual": 10,
+        "target": 1,
+        "ok": true
+      },
+      "provider_listings": {
+        "actual": 10,
+        "target": 1,
+        "ok": true
+      },
+      "acquisition_listings": {
+        "actual": 10,
+        "target": 10,
+        "ok": true
+      },
+      "community_feed": {
+        "actual": 10,
+        "target": 3,
+        "ok": true
+      },
+      "campaign_home_hero": {
+        "actual": 1,
+        "target": 1,
+        "ok": true
+      },
+      "campaign_market_feed": {
+        "actual": 1,
+        "target": 1,
+        "ok": true
+      }
+    },
+    "web_probes": [
+      {
+        "route": "/",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "route": "/market",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "route": "/community",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "route": "/guides",
+        "status": 200,
+        "ok": true
+      }
+    ],
+    "asset_probe_sample": "5/5",
+    "ocs_validate_verdict": "PASS"
+  },
+  "machine_keys": {
+    "OCS_PRODUCTION_BOOTSTRAP": "PASS",
+    "OCS_PRODUCTION_PARITY_AUDIT": "PASS",
+    "OCS_PRODUCTION_CATALOG_PARITY": "PASS",
+    "TT_OCS_PROD_BOOTSTRAP": "PASS"
+  },
+  "checks": [
+    {
+      "id": "check1_manifest_frozen",
+      "status": "PASS",
+      "detail": "registry + dataset sha256 unchanged",
+      "pre": {
+        "registry_yaml": "eb3b7758bf6ad0d8a988d340b996f3bb98d9f2d2d8b76437b40014339500a082",
+        "dataset_json": "316f63270c8349a033247f2c6b171e88135e72b1732cabbbe76601f6d573964e"
+      },
+      "post": {
+        "registry_yaml": "eb3b7758bf6ad0d8a988d340b996f3bb98d9f2d2d8b76437b40014339500a082",
+        "dataset_json": "316f63270c8349a033247f2c6b171e88135e72b1732cabbbe76601f6d573964e"
+      }
+    },
+    {
+      "id": "asset_bootstrap",
+      "status": "SKIP",
+      "detail": "OCS_PROD_SKIP_ASSETS=1"
+    },
+    {
+      "id": "check1_manifest_post_apply",
+      "status": "PASS",
+      "detail": "post-apply manifest hash",
+      "hashes": {
+        "registry_yaml": "eb3b7758bf6ad0d8a988d340b996f3bb98d9f2d2d8b76437b40014339500a082",
+        "dataset_json": "316f63270c8349a033247f2c6b171e88135e72b1732cabbbe76601f6d573964e"
+      }
+    },
+    {
+      "id": "check2_lineage_traceable",
+      "status": "PASS",
+      "detail": "traceable chains 10/10",
+      "sample": [
+        {
+          "ocs_source_id": "tokyo-photo",
+          "guide": {
+            "guide_id": "17f3f0b1-4277-4180-872f-65704fb65531",
+            "ocs_source_id": "tokyo-photo",
+            "published_asset": "/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg",
+            "public_api": "https://tt-api-prod.fly.dev/api/v1/guides/17f3f0b1-4277-4180-872f-65704fb65531"
+          },
+          "provider_listing": {
+            "listing_id": "60a0fce4-ae59-48a6-a93c-bd39ce39a259",
+            "ocs_source_id": "tokyo-photo",
+            "published_asset": "/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg",
+            "public_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings/60a0fce4-ae59-48a6-a93c-bd39ce39a259",
+            "market_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings?limit=100"
+          },
+          "acquisition_listing": {
+            "listing_id": "de2e86d9-cb03-4d7c-a57c-3a776dec6a7b",
+            "ocs_source_id": "tokyo-photo",
+            "published_asset": "/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg",
+            "public_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings/de2e86d9-cb03-4d7c-a57c-3a776dec6a7b",
+            "market_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings?limit=100"
+          },
+          "official_guide": {
+            "post_id": "2e3c1b19-e5d4-4340-b03e-ed7e74ae1ebe",
+            "ocs_source_id": "tokyo-photo",
+            "published_asset": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+            "public_api": "https://tt-api-prod.fly.dev/api/v1/official/guides/2e3c1b19-e5d4-4340-b03e-ed7e74ae1ebe"
+          },
+          "community_post": {
+            "post_id": "9f66ae74-55b1-4429-b022-09b086a1080a",
+            "ocs_source_id": "tokyo-photo",
+            "published_asset": "/api/v1/uploads/community-posts/ocs-tokyo-photo-community-cover.jpg",
+            "public_api": "https://tt-api-prod.fly.dev/api/v1/community/posts/9f66ae74-55b1-4429-b022-09b086a1080a",
+            "feed_api": "https://tt-api-prod.fly.dev/api/v1/community/feed?limit=50"
+          }
+        },
+        {
+          "ocs_source_id": "kyoto-culture",
+          "guide": {
+            "guide_id": "8b417a00-128a-45ba-8fac-b25db6299f10",
+            "ocs_source_id": "kyoto-culture",
+            "published_asset": "/api/v1/uploads/community-posts/ocs-kyoto-culture-guide-avatar.jpg",
+            "public_api": "https://tt-api-prod.fly.dev/api/v1/guides/8b417a00-128a-45ba-8fac-b25db6299f10"
+          },
+          "provider_listing": {
+            "listing_id": "3b940f9a-b2ff-4309-8183-9cb467c5b544",
+            "ocs_source_id": "kyoto-culture",
+            "published_asset": "/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg",
+            "public_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings/3b940f9a-b2ff-4309-8183-9cb467c5b544",
+            "market_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings?limit=100"
+          },
+          "acquisition_listing": {
+            "listing_id": "46bd9fac-7209-4825-8727-922c0dcc5664",
+            "ocs_source_id": "kyoto-culture",
+            "published_asset": "/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg",
+            "public_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings/46bd9fac-7209-4825-8727-922c0dcc5664",
+            "market_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings?limit=100"
+          },
+          "official_guide": {
+            "post_id": "135e6fbe-188c-4653-acd3-db845f8e6fda",
+            "ocs_source_id": "kyoto-culture",
+            "published_asset": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+            "public_api": "https://tt-api-prod.fly.dev/api/v1/official/guides/135e6fbe-188c-4653-acd3-db845f8e6fda"
+          },
+          "community_post": {
+            "post_id": "30b94bc6-14a5-4eac-9c9a-7deaf4deb6a5",
+            "ocs_source_id": "kyoto-culture",
+            "published_asset": "/api/v1/uploads/community-posts/ocs-kyoto-culture-community-cover.jpg",
+            "public_api": "https://tt-api-prod.fly.dev/api/v1/community/posts/30b94bc6-14a5-4eac-9c9a-7deaf4deb6a5",
+            "feed_api": "https://tt-api-prod.fly.dev/api/v1/community/feed?limit=50"
+          }
+        }
+      ]
+    },
+    {
+      "id": "check3_ocs_validate",
+      "status": "PASS",
+      "detail": "PASS"
+    },
+    {
+      "id": "cms_destination_ambient",
+      "status": "SKIP",
+      "detail": "OCS_PROD_SKIP_CMS_AMBIENT=1"
+    }
+  ],
+  "admin_email_redacted": "adm-u01-***@traveltrust.prod",
+  "evidence_dir": "D:/TravelTrust-V1.1/evidence/GO_ocs_production_bootstrap/20260708T055601Z",
+  "next_steps": [
+    "③ Stripe Live",
+    "④ CDN/HLS",
+    "⑤ Domain/TLS",
+    "⑥ Monitoring",
+    "⑦ Backup/Rollback",
+    "⑧ CMS Full Ops UAT",
+    "⑨ Owner Signoff"
+  ],
+  "owner_signoff": "BLOCKED until OCS_PRODUCTION_PARITY_AUDIT=PASS"
+}

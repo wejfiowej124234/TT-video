@@ -1,0 +1,107 @@
+{
+  "schema": "traveltrust.cms_destination_ambient_hero_evidence.v1",
+  "matrix_id": "DA-HERO-JP-HOME",
+  "pipeline_matrix_id": "DA-JP-HOME",
+  "product_name": "Destination Ambient Hero",
+  "country_iso": "JP",
+  "landmark_zh": "富士山·河口湖",
+  "recorded_at_utc": "2026-07-05T09:58:06Z",
+  "closure_dimensions": {
+    "pipeline": "CLOSED",
+    "visual_l5": "CLOSED"
+  },
+  "step_1_brief_review": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "reviewed_at_utc": "2026-07-05T09:58:06Z"
+  },
+  "step_2_hero_production": {
+    "status": "COMPLETE",
+    "filename": "da-hero-jp-home-v1.jpg",
+    "source": "local_cache",
+    "decoded": {
+      "height": 2160,
+      "width": 3840
+    },
+    "tier": "PASS",
+    "bytes": 1346151
+  },
+  "step_3_cms_upload_review_publish": {
+    "status": "COMPLETE",
+    "catalog_asset_id": "3570bab5-6641-4c5a-bec1-c1c92583417a",
+    "catalog_country_id": "688bdff7-d6e4-45a6-bd48-ee2f99226f18",
+    "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-jp-home-v1.jpg"
+  },
+  "step_4_runtime_verify": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "checks": [
+      {
+        "id": "hero_lifecycle_live",
+        "pass": true,
+        "detail": "live"
+      },
+      {
+        "id": "visual_l5_closed",
+        "pass": true,
+        "detail": "CLOSED"
+      },
+      {
+        "id": "catalog_api_url",
+        "pass": true,
+        "detail": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-jp-home-v1.jpg"
+      },
+      {
+        "id": "catalog_hero_filename",
+        "pass": true,
+        "detail": "da-hero-jp-home-v1.jpg"
+      },
+      {
+        "id": "public_http_200",
+        "pass": true,
+        "detail": "200"
+      },
+      {
+        "id": "hero_decode_dimensions",
+        "pass": true,
+        "detail": "3840×2160"
+      },
+      {
+        "id": "hero_tier_pass",
+        "pass": true,
+        "detail": "PASS (Hero Recommended)"
+      },
+      {
+        "id": "hero_aspect_16_9",
+        "pass": true,
+        "detail": "16:9 ±2%"
+      },
+      {
+        "id": "hero_min_bytes_16kb",
+        "pass": true,
+        "detail": "1346151B"
+      },
+      {
+        "id": "no_production_external_host",
+        "pass": true,
+        "detail": "owned hero url"
+      }
+    ],
+    "tier": {
+      "tier": "PASS",
+      "min_width_px": 3840,
+      "min_height_px": 2160,
+      "label": "Hero Recommended",
+      "width": 3840,
+      "height": 2160
+    },
+    "verify_script": "scripts/dev/run-cms-content-l5-destination-ambient-verify.cjs",
+    "verified_at_utc": "2026-07-05T10:06:11.193Z"
+  },
+  "step_5_evidence": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "completed_at_utc": "2026-07-05T09:58:06Z"
+  },
+  "TT_CMS_DESTINATION_AMBIENT_HERO_ROW": "PASS"
+}

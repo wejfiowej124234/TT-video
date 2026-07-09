@@ -1,0 +1,32 @@
+{
+  "chain_id": "11155111",
+  "contracts": {
+    "guide_staking_address": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f",
+    "staking_provider_address": "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075",
+    "governor_address": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+    "timelock_address": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+    "governance_token_address": "0x2837ea0c50e27d59b88af617abbb231a040062c5",
+    "fee_router_address": "0x81A8009210c5215100564c6E4123F672c4459306",
+    "treasury_address": "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be",
+    "registry_address": "0xc50913e154f850583D0afbE9158a75E0e2167AAb",
+    "escrow_factory_address": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+    "region_steward_stake_pool_address": "0x3a89378bfad12d1028707dd37055294854c8784e",
+    "rule": "仅当 CHAIN_RPC_URL 等已加载 ChainConfig 时有值；guide_staking_address 与 STAKING_ADDRESS/GUIDE_STAKING_ADDRESS 同源；staking_provider_address 与 STAKING_PROVIDER_ADDRESS 同源；governance_token_address 与 GOVERNANCE_VOTES_TOKEN_ADDRESS/GOVERNANCE_TOKEN_ADDRESS 同源；registry_address/escrow_factory_address 与 REGISTRY_ADDRESS/ESCROW_FACTORY_ADDRESS 同源；region_steward_stake_pool_address 与 REGION_STEWARD_STAKE_POOL_ADDRESS 同源；FEE_ROUTER_ADDRESS 设后 indexer-tick 拉取 PlatformFeeRouted；GOVERNOR_ADDRESS 设后拉取 Governor 事件（B-089）；前端 NEXT_PUBLIC_* 须与部署一致；759 GET /meta chain.contracts 对象 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 与 CHAIN_CONTRACTS_META_TOP_KEYS 十三键顺序同源",
+    "chain_contracts_top_keys": [
+      "guide_staking_address",
+      "staking_provider_address",
+      "governor_address",
+      "timelock_address",
+      "governance_token_address",
+      "fee_router_address",
+      "treasury_address",
+      "registry_address",
+      "escrow_factory_address",
+      "region_steward_stake_pool_address",
+      "rule",
+      "chain_contracts_top_keys",
+      "chain_contracts_top_keys_contract_759"
+    ],
+    "chain_contracts_top_keys_contract_759": "**759**：**`chain_contracts_top_keys`** **与 **`CHAIN_CONTRACTS_META_TOP_KEYS`** **同源（顺序 `guide_staking_address`****→**`staking_provider_address`****→**`governor_address`****→**`timelock_address`****→**`governance_token_address`****→**`fee_router_address`****→**`treasury_address`****→**`registry_address`****→**`escrow_factory_address`****→**`region_steward_stake_pool_address`****→**`rule`****→**`chain_contracts_top_keys`****→**`chain_contracts_top_keys_contract_759`）"
+  }
+}

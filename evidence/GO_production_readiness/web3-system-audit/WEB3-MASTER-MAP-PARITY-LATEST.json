@@ -1,0 +1,1398 @@
+{
+  "schema": "traveltrust.web3_system_master_map_parity.v1",
+  "recorded_utc": "2026-07-08T14:02:57.632Z",
+  "master_map": "registry/web3-system-master-map.v1.yaml",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "summary": {
+    "modules_total": 25,
+    "strict_modules": 23,
+    "registered_only": 2,
+    "strict_pass": 23,
+    "strict_fail": 0
+  },
+  "chain": [
+    "Master Map modules",
+    "deploy_registry addresses",
+    "contract source files",
+    "prod /meta keys",
+    "evidence paths / signoffs"
+  ],
+  "verdict": "WEB3_MASTER_MAP_PARITY_PASS",
+  "failed_modules": [],
+  "modules": [
+    {
+      "id": "M01",
+      "name": "Smart Contracts",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract_source",
+          "name": "contracts/src/",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "evidence",
+          "name": "forge-test",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": true,
+            "matches": [
+              "contracts/test/"
+            ],
+            "path": "contracts/test/",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M02",
+      "name": "Upgradeability",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract_source",
+          "name": "contracts/src/upgrade/",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "contract_source",
+          "name": "contracts/script/DeployGovFreezeV2CleanBaseline.s.sol",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "contract",
+          "name": "TimelockUpgradeableProxy",
+          "ok": true,
+          "detail": "contracts/src/upgrade/TimelockUpgradeableProxy.sol"
+        },
+        {
+          "kind": "evidence",
+          "name": "G24",
+          "ok": true,
+          "detail": {
+            "required": true,
+            "found": true,
+            "matches": [
+              "registry/g24-p-upgrade-01-contract-posture.v1.yaml"
+            ],
+            "path": "registry/g24-p-upgrade-01-contract-posture.v1.yaml",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M03",
+      "name": "Storage Layout",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave2"
+      ],
+      "checks": [
+        {
+          "kind": "contract",
+          "name": "TtgPrimaryMarketV1",
+          "ok": true,
+          "detail": "contracts/src/TtgPrimaryMarketV1.sol"
+        },
+        {
+          "kind": "contract",
+          "name": "TtgSeatConcentrationRegistry",
+          "ok": true,
+          "detail": "contracts/src/TtgSeatConcentrationRegistry.sol"
+        },
+        {
+          "kind": "contract",
+          "name": "GovernanceTreasuryP4Cap",
+          "ok": true,
+          "detail": "contracts/src/GovernanceTreasuryP4Cap.sol"
+        },
+        {
+          "kind": "contract",
+          "name": "RegionStewardStakePool",
+          "ok": true,
+          "detail": "contracts/src/RegionStewardStakePool.sol"
+        },
+        {
+          "kind": "evidence",
+          "name": "proxy-arch-test",
+          "ok": true,
+          "detail": {
+            "required": true,
+            "found": true,
+            "matches": [
+              "contracts/test/TtgGovFreezeV1ProxyArchitecture.t.sol"
+            ],
+            "path": "contracts/test/TtgGovFreezeV1ProxyArchitecture.t.sol",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M04",
+      "name": "TTG Token",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave2"
+      ],
+      "checks": [
+        {
+          "kind": "contract",
+          "name": "GovernanceVotesToken",
+          "ok": true,
+          "detail": "contracts/src/GovernanceVotesToken.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "governance_token_address",
+          "ok": true,
+          "detail": "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+        },
+        {
+          "kind": "prod_meta",
+          "name": "governance_token_address",
+          "ok": true,
+          "detail": "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+        },
+        {
+          "kind": "meta_registry_match",
+          "name": "governance_token_address<->governance_token_address",
+          "ok": true,
+          "detail": {
+            "registry": "0x2837ea0c50e27d59b88af617abbb231a040062c5",
+            "meta": "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+          }
+        },
+        {
+          "kind": "registry_key",
+          "name": "governance_token_address",
+          "ok": true,
+          "detail": "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+        },
+        {
+          "kind": "prod_meta_key",
+          "name": "governance_token_address",
+          "ok": true,
+          "detail": "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+        },
+        {
+          "kind": "evidence",
+          "name": "tokenomics-freeze",
+          "ok": true,
+          "detail": {
+            "required": true,
+            "found": true,
+            "matches": [
+              "docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md"
+            ],
+            "path": "docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M05",
+      "name": "Primary Market",
+      "readiness_status": "DEFER",
+      "readiness_note": "Contract deployed · /primary-market UI deferred — docs/runbook/WEB3-PRIMARY-MARKET-DEFER-V1.md",
+      "deployment_wave": [
+        "wave2"
+      ],
+      "checks": [
+        {
+          "kind": "contract",
+          "name": "TtgPrimaryMarketV1",
+          "ok": true,
+          "detail": "contracts/src/TtgPrimaryMarketV1.sol"
+        },
+        {
+          "kind": "evidence",
+          "name": "primary-market-defer",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": true,
+            "matches": [
+              "docs/runbook/WEB3-PRIMARY-MARKET-DEFER-V1.md"
+            ],
+            "path": "docs/runbook/WEB3-PRIMARY-MARKET-DEFER-V1.md",
+            "glob": null
+          }
+        },
+        {
+          "kind": "evidence",
+          "name": "gov-freeze-v2",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": true,
+            "matches": [
+              "docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md"
+            ],
+            "path": "docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "registered_only"
+    },
+    {
+      "id": "M06",
+      "name": "Governance",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract",
+          "name": "TravelTrustGovernor",
+          "ok": true,
+          "detail": "contracts/src/TravelTrustGovernor.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "governor_address",
+          "ok": true,
+          "detail": "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+        },
+        {
+          "kind": "prod_meta",
+          "name": "governor_address",
+          "ok": true,
+          "detail": "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+        },
+        {
+          "kind": "meta_registry_match",
+          "name": "governor_address<->governor_address",
+          "ok": true,
+          "detail": {
+            "registry": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+            "meta": "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+          }
+        },
+        {
+          "kind": "registry_key",
+          "name": "governor_address",
+          "ok": true,
+          "detail": "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+        },
+        {
+          "kind": "prod_meta_key",
+          "name": "governor_address",
+          "ok": true,
+          "detail": "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+        },
+        {
+          "kind": "evidence",
+          "name": "cert-7-execute",
+          "ok": true,
+          "detail": {
+            "required": true,
+            "found": true,
+            "matches": [
+              "20260616T100918Z/phase-b/execute/PHASE-B-EXECUTE-SIGNOFF.json"
+            ],
+            "path": "evidence/GO_ttg_cert/",
+            "glob": "**/PHASE-B-EXECUTE-SIGNOFF.json"
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M07",
+      "name": "Timelock",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract",
+          "name": "GovernanceTimelock",
+          "ok": true,
+          "detail": "contracts/src/GovernanceTimelock.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "timelock_address",
+          "ok": true,
+          "detail": "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+        },
+        {
+          "kind": "prod_meta",
+          "name": "timelock_address",
+          "ok": true,
+          "detail": "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+        },
+        {
+          "kind": "meta_registry_match",
+          "name": "timelock_address<->timelock_address",
+          "ok": true,
+          "detail": {
+            "registry": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+            "meta": "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+          }
+        },
+        {
+          "kind": "registry_key",
+          "name": "timelock_address",
+          "ok": true,
+          "detail": "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+        },
+        {
+          "kind": "prod_meta_key",
+          "name": "timelock_address",
+          "ok": true,
+          "detail": "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+        },
+        {
+          "kind": "evidence",
+          "name": "cert-7-execute",
+          "ok": true,
+          "detail": {
+            "required": true,
+            "found": true,
+            "matches": [
+              "20260616T100918Z/phase-b/execute/PHASE-B-EXECUTE-SIGNOFF.json"
+            ],
+            "path": "evidence/GO_ttg_cert/",
+            "glob": "**/PHASE-B-EXECUTE-SIGNOFF.json"
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M08",
+      "name": "Treasury",
+      "readiness_status": "IN_PROGRESS",
+      "readiness_note": "Cert",
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract",
+          "name": "GovernanceTreasuryP4Cap",
+          "ok": true,
+          "detail": "contracts/src/GovernanceTreasuryP4Cap.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "treasury_p4_cap_address",
+          "ok": true,
+          "detail": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+        },
+        {
+          "kind": "prod_meta",
+          "name": "treasury_address",
+          "ok": true,
+          "detail": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+        },
+        {
+          "kind": "meta_registry_match",
+          "name": "treasury_address<->treasury_p4_cap_address",
+          "ok": true,
+          "detail": {
+            "registry": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2",
+            "meta": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+          }
+        },
+        {
+          "kind": "registry_key",
+          "name": "treasury_p4_cap_address",
+          "ok": true,
+          "detail": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+        },
+        {
+          "kind": "prod_meta_key",
+          "name": "treasury_address",
+          "ok": true,
+          "detail": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+        },
+        {
+          "kind": "evidence",
+          "name": "cert-8-treasury",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": false,
+            "matches": [],
+            "path": "evidence/GO_ttg_cert/",
+            "glob": "**/PHASE-B-TREASURY-SPEND-SIGNOFF.json"
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M09",
+      "name": "FeeRouter",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract",
+          "name": "FeeRouter",
+          "ok": true,
+          "detail": "contracts/src/FeeRouter.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "fee_router_address",
+          "ok": true,
+          "detail": "0x81A8009210c5215100564c6E4123F672c4459306"
+        },
+        {
+          "kind": "prod_meta",
+          "name": "fee_router_address",
+          "ok": true,
+          "detail": "0x81A8009210c5215100564c6E4123F672c4459306"
+        },
+        {
+          "kind": "meta_registry_match",
+          "name": "fee_router_address<->fee_router_address",
+          "ok": true,
+          "detail": {
+            "registry": "0x81A8009210c5215100564c6E4123F672c4459306",
+            "meta": "0x81A8009210c5215100564c6E4123F672c4459306"
+          }
+        },
+        {
+          "kind": "registry_key",
+          "name": "fee_router_address",
+          "ok": true,
+          "detail": "0x81A8009210c5215100564c6E4123F672c4459306"
+        },
+        {
+          "kind": "prod_meta_key",
+          "name": "fee_router_address",
+          "ok": true,
+          "detail": "0x81A8009210c5215100564c6E4123F672c4459306"
+        },
+        {
+          "kind": "evidence",
+          "name": "G3-02",
+          "ok": true,
+          "detail": {
+            "required": true,
+            "found": true,
+            "matches": [
+              "evidence/GO_production_readiness/G3-02/G3-02-EXECUTION-LATEST.json"
+            ],
+            "path": "evidence/GO_production_readiness/G3-02/G3-02-EXECUTION-LATEST.json",
+            "glob": null
+          }
+        },
+        {
+          "kind": "evidence_verdict",
+          "name": "G3-02",
+          "ok": true,
+          "detail": {
+            "expected": "WEB3_PAYMENT_PRODUCTION_PASS",
+            "actual": "WEB3_PAYMENT_PRODUCTION_PASS"
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M10",
+      "name": "Escrow",
+      "readiness_status": "PASS",
+      "readiness_note": "V1 factory active on Sepolia prod · V2 address pending broadcast (see EscrowFactoryV2 parity_registry)",
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract",
+          "name": "EscrowFactory",
+          "ok": true,
+          "detail": "contracts/src/EscrowFactory.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "escrow_factory_address",
+          "ok": true,
+          "detail": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
+        },
+        {
+          "kind": "prod_meta",
+          "name": "escrow_factory_address",
+          "ok": true,
+          "detail": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
+        },
+        {
+          "kind": "meta_registry_match",
+          "name": "escrow_factory_address<->escrow_factory_address",
+          "ok": true,
+          "detail": {
+            "registry": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+            "meta": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
+          }
+        },
+        {
+          "kind": "contract",
+          "name": "EscrowFactoryV2",
+          "ok": true,
+          "detail": "contracts/src/EscrowFactoryV2.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "escrow_factory_v2_address",
+          "ok": true,
+          "detail": {
+            "status": "pending_sepolia_broadcast",
+            "note": "EscrowFactoryV2 not on Sepolia prod registry or GET /meta yet — V1 factory is active runtime. Unblocks after Sepolia V2 broadcast + registry merge + API /meta wiring.\n"
+          }
+        },
+        {
+          "kind": "contract",
+          "name": "Escrow",
+          "ok": true,
+          "detail": "contracts/src/Escrow.sol"
+        },
+        {
+          "kind": "contract",
+          "name": "EscrowV2",
+          "ok": true,
+          "detail": "contracts/src/EscrowV2.sol"
+        },
+        {
+          "kind": "registry_key",
+          "name": "escrow_factory_address",
+          "ok": true,
+          "detail": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
+        },
+        {
+          "kind": "prod_meta_key",
+          "name": "escrow_factory_address",
+          "ok": true,
+          "detail": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
+        },
+        {
+          "kind": "evidence",
+          "name": "G3-02",
+          "ok": true,
+          "detail": {
+            "required": true,
+            "found": true,
+            "matches": [
+              "evidence/GO_production_readiness/G3-02/G3-02-EXECUTION-LATEST.json"
+            ],
+            "path": "evidence/GO_production_readiness/G3-02/G3-02-EXECUTION-LATEST.json",
+            "glob": null
+          }
+        },
+        {
+          "kind": "evidence_verdict",
+          "name": "G3-02",
+          "ok": true,
+          "detail": {
+            "expected": "WEB3_PAYMENT_PRODUCTION_PASS",
+            "actual": "WEB3_PAYMENT_PRODUCTION_PASS"
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M11",
+      "name": "Settlement",
+      "readiness_status": "PARTIAL",
+      "readiness_note": "DE pilot · Snapshot/Claim/Payout not Production-wide",
+      "deployment_wave": [
+        "wave2"
+      ],
+      "checks": [
+        {
+          "kind": "contract",
+          "name": "CountryPoolNetProfitLedger",
+          "ok": true,
+          "detail": "contracts/src/CountryPoolNetProfitLedger.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "country_pool_net_profit_ledger_address",
+          "ok": true,
+          "detail": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+        },
+        {
+          "kind": "contract",
+          "name": "StewardPathVault",
+          "ok": true,
+          "detail": "contracts/src/StewardPathVault.sol"
+        },
+        {
+          "kind": "contract",
+          "name": "UnallocatedStewardPathVault",
+          "ok": true,
+          "detail": "contracts/src/UnallocatedStewardPathVault.sol"
+        },
+        {
+          "kind": "registry_key",
+          "name": "country_pool_net_profit_ledger_address",
+          "ok": true,
+          "detail": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+        },
+        {
+          "kind": "evidence",
+          "name": "four-ledger",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": true,
+            "matches": [
+              "evidence/GO_tt_country_pool_revenue_enterprise_hat/"
+            ],
+            "path": "evidence/GO_tt_country_pool_revenue_enterprise_hat/",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M12",
+      "name": "Staking",
+      "readiness_status": "IN_PROGRESS",
+      "readiness_note": "Guide/Provider PASS · Steward Cert",
+      "deployment_wave": [
+        "wave2"
+      ],
+      "checks": [
+        {
+          "kind": "contract",
+          "name": "GuideIdentityStakingPool",
+          "ok": true,
+          "detail": "contracts/src/GuideIdentityStakingPool.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "guide_staking_pool",
+          "ok": true,
+          "detail": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f"
+        },
+        {
+          "kind": "prod_meta",
+          "name": "guide_staking_address",
+          "ok": true,
+          "detail": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f"
+        },
+        {
+          "kind": "meta_registry_match",
+          "name": "guide_staking_address<->guide_staking_pool",
+          "ok": true,
+          "detail": {
+            "registry": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f",
+            "meta": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f"
+          }
+        },
+        {
+          "kind": "contract",
+          "name": "ProviderIdentityStakingPool",
+          "ok": true,
+          "detail": "contracts/src/ProviderIdentityStakingPool.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "provider_staking_pool",
+          "ok": true,
+          "detail": "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075"
+        },
+        {
+          "kind": "prod_meta",
+          "name": "staking_provider_address",
+          "ok": true,
+          "detail": "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075"
+        },
+        {
+          "kind": "meta_registry_match",
+          "name": "staking_provider_address<->provider_staking_pool",
+          "ok": true,
+          "detail": {
+            "registry": "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075",
+            "meta": "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075"
+          }
+        },
+        {
+          "kind": "contract",
+          "name": "RegionStewardStakePool",
+          "ok": true,
+          "detail": "contracts/src/RegionStewardStakePool.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "region_steward_stake_pool_proxy_address",
+          "ok": true,
+          "detail": "0x3a89378bfad12d1028707dd37055294854c8784e"
+        },
+        {
+          "kind": "prod_meta",
+          "name": "region_steward_stake_pool_address",
+          "ok": true,
+          "detail": "0x3a89378bfad12d1028707dd37055294854c8784e"
+        },
+        {
+          "kind": "meta_registry_match",
+          "name": "region_steward_stake_pool_address<->region_steward_stake_pool_proxy_address",
+          "ok": true,
+          "detail": {
+            "registry": "0x3a89378bfad12d1028707dd37055294854c8784e",
+            "meta": "0x3a89378bfad12d1028707dd37055294854c8784e"
+          }
+        },
+        {
+          "kind": "registry_key",
+          "name": "region_steward_stake_pool_proxy_address",
+          "ok": true,
+          "detail": "0x3a89378bfad12d1028707dd37055294854c8784e"
+        },
+        {
+          "kind": "prod_meta_key",
+          "name": "guide_staking_address",
+          "ok": true,
+          "detail": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f"
+        },
+        {
+          "kind": "prod_meta_key",
+          "name": "staking_provider_address",
+          "ok": true,
+          "detail": "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075"
+        },
+        {
+          "kind": "prod_meta_key",
+          "name": "region_steward_stake_pool_address",
+          "ok": true,
+          "detail": "0x3a89378bfad12d1028707dd37055294854c8784e"
+        },
+        {
+          "kind": "evidence",
+          "name": "cert-2-walkthrough",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": true,
+            "matches": [
+              "20260616T100918Z/walkthrough/multi-identity/MULTI-IDENTITY-WALKTHROUGH-SIGNOFF.json"
+            ],
+            "path": "evidence/GO_ttg_cert/",
+            "glob": "**/MULTI-IDENTITY-WALKTHROUGH-SIGNOFF.json"
+          }
+        },
+        {
+          "kind": "evidence",
+          "name": "cert-9-unstake",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": false,
+            "matches": [],
+            "path": "evidence/GO_ttg_cert/",
+            "glob": "**/PHASE-B-UNSTAKE-SIGNOFF.json"
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M13",
+      "name": "Seat",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave2"
+      ],
+      "checks": [
+        {
+          "kind": "contract",
+          "name": "TtgSeatConcentrationRegistry",
+          "ok": true,
+          "detail": "contracts/src/TtgSeatConcentrationRegistry.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "seat_registry_address",
+          "ok": true,
+          "detail": "0xc99776e980d33f1857d5bb9a57b35ab7669aad1f"
+        },
+        {
+          "kind": "registry_key",
+          "name": "seat_registry_address",
+          "ok": true,
+          "detail": "0xc99776e980d33f1857d5bb9a57b35ab7669aad1f"
+        },
+        {
+          "kind": "evidence",
+          "name": "gov-freeze-v2",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": true,
+            "matches": [
+              "evidence/GO_phase2_gov_freeze_v2_clean_baseline/latest/"
+            ],
+            "path": "evidence/GO_phase2_gov_freeze_v2_clean_baseline/latest/",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M14",
+      "name": "Jurisdiction",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave2"
+      ],
+      "checks": [
+        {
+          "kind": "contract_source",
+          "name": "docs/spec/governance-token/protocol-ssot.v1.yaml",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "contract",
+          "name": "RegionStewardStakePool",
+          "ok": true,
+          "detail": "contracts/src/RegionStewardStakePool.sol"
+        },
+        {
+          "kind": "prod_meta_key",
+          "name": "region_steward_stake_pool_address",
+          "ok": true,
+          "detail": "0x3a89378bfad12d1028707dd37055294854c8784e"
+        },
+        {
+          "kind": "evidence",
+          "name": "stake-quote",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": true,
+            "matches": [
+              "scripts/dev/check-web3-system-production-meta-contracts.cjs"
+            ],
+            "path": "scripts/dev/check-web3-system-production-meta-contracts.cjs",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M15",
+      "name": "RBAC",
+      "readiness_status": "PASS",
+      "readiness_note": "D3-F01 SSOT sync closed · staging_admin_matrix GO registered · RBAC-D3-CLOSURE-LATEST",
+      "deployment_wave": [
+        "wave2"
+      ],
+      "checks": [
+        {
+          "kind": "contract_source",
+          "name": "registry/admin-rbac-permissions.v1.yaml",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "contract_source",
+          "name": "crates/api/src/routes/admin/admin_rbac.rs",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "evidence",
+          "name": "rbac-d3",
+          "ok": true,
+          "detail": {
+            "required": true,
+            "found": true,
+            "matches": [
+              "evidence/GO_production_readiness/web3-system-audit/RBAC-D3-CLOSURE-LATEST.json"
+            ],
+            "path": "evidence/GO_production_readiness/web3-system-audit/RBAC-D3-CLOSURE-LATEST.json",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M16",
+      "name": "Wallet",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract_source",
+          "name": "frontend/components/Providers.tsx",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "evidence",
+          "name": "cert-2-walkthrough",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": true,
+            "matches": [
+              "20260616T100918Z/walkthrough/multi-identity/MULTI-IDENTITY-WALKTHROUGH-SIGNOFF.json"
+            ],
+            "path": "evidence/GO_ttg_cert/",
+            "glob": "**/MULTI-IDENTITY-WALKTHROUGH-SIGNOFF.json"
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M17",
+      "name": "Indexer",
+      "readiness_status": "PARTIAL",
+      "readiness_note": "Escrow/FeeRouter ingest OK · RPC rate limits on archive eth_getLogs",
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract_source",
+          "name": "crates/api/src/chain/indexer.rs",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "evidence",
+          "name": "G3-02",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": true,
+            "matches": [
+              "evidence/GO_production_readiness/G3-02/G3-02-EXECUTION-LATEST.json"
+            ],
+            "path": "evidence/GO_production_readiness/G3-02/G3-02-EXECUTION-LATEST.json",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M18",
+      "name": "Ledger",
+      "readiness_status": "TARGET",
+      "readiness_note": "GAP-99-03 Snapshot/Claim · pilot ledger only",
+      "deployment_wave": [
+        "wave2"
+      ],
+      "checks": [
+        {
+          "kind": "contract",
+          "name": "CountryPoolLedgerV0",
+          "ok": true,
+          "detail": "contracts/src/CountryPoolLedgerV0.sol"
+        },
+        {
+          "kind": "contract",
+          "name": "RegionDistributionClaim",
+          "ok": true,
+          "detail": "contracts/src/RegionDistributionClaim.sol"
+        }
+      ],
+      "ok": true,
+      "check_mode": "registered_only"
+    },
+    {
+      "id": "M19",
+      "name": "Tokenomics",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract_source",
+          "name": "docs/spec/governance-token/protocol-ssot.v1.yaml",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "contract",
+          "name": "TtgGovFreezeConstants",
+          "ok": true,
+          "detail": "contracts/src/TtgGovFreezeConstants.sol"
+        },
+        {
+          "kind": "evidence",
+          "name": "tokenomics-freeze",
+          "ok": true,
+          "detail": {
+            "required": true,
+            "found": true,
+            "matches": [
+              "docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md"
+            ],
+            "path": "docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M20",
+      "name": "Frontend Web3 UX",
+      "readiness_status": "PARTIAL",
+      "readiness_note": "Primary Market route absent by design (DEFER)",
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract_source",
+          "name": "frontend/app/governance/",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "contract_source",
+          "name": "frontend/app/staking/",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "contract_source",
+          "name": "frontend/app/escrow/",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "contract_source",
+          "name": "frontend/app/pay/",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "evidence",
+          "name": "cert-1-human-uat",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": true,
+            "matches": [
+              "20260616T100918Z/human-uat/HUMAN-SCREEN-ACCEPTANCE-SIGNOFF.json"
+            ],
+            "path": "evidence/GO_ttg_cert/",
+            "glob": "**/HUMAN-SCREEN-ACCEPTANCE-SIGNOFF.json"
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M21",
+      "name": "Admin Web3",
+      "readiness_status": "PARTIAL",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave2"
+      ],
+      "checks": [
+        {
+          "kind": "contract_source",
+          "name": "frontend/app/admin/governance/",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "evidence",
+          "name": "cert-3-admin",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": true,
+            "matches": [
+              "20260616T100918Z/walkthrough/admin/ADMIN-WALKTHROUGH-SIGNOFF.json"
+            ],
+            "path": "evidence/GO_ttg_cert/",
+            "glob": "**/ADMIN-WALKTHROUGH-SIGNOFF.json"
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M22",
+      "name": "Registry",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract_source",
+          "name": "registry/protocol-convergence-deployments.v1.yaml",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "contract_source",
+          "name": "registry/web3-system-master-map.v1.yaml",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "evidence",
+          "name": "master-map",
+          "ok": true,
+          "detail": {
+            "required": true,
+            "found": true,
+            "matches": [
+              "registry/web3-system-master-map.v1.yaml"
+            ],
+            "path": "registry/web3-system-master-map.v1.yaml",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M23",
+      "name": "Evidence",
+      "readiness_status": "IN_PROGRESS",
+      "readiness_note": "TTG Cert 7/12 · WEB3_SYSTEM_CLOSURE blocked on P1",
+      "deployment_wave": [
+        "wave2"
+      ],
+      "checks": [
+        {
+          "kind": "contract_source",
+          "name": "evidence/GO_production_readiness/",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "contract_source",
+          "name": "evidence/GO_ttg_cert/",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "evidence",
+          "name": "ttg-cert-index",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": true,
+            "matches": [
+              "evidence/GO_production_readiness/web3-system-audit/TTG-CERT-EVIDENCE-INDEX-LATEST.json"
+            ],
+            "path": "evidence/GO_production_readiness/web3-system-audit/TTG-CERT-EVIDENCE-INDEX-LATEST.json",
+            "glob": null
+          }
+        },
+        {
+          "kind": "evidence",
+          "name": "web3-system-audit",
+          "ok": true,
+          "detail": {
+            "required": false,
+            "found": true,
+            "matches": [
+              "evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-DEEP-AUDIT-LATEST.json"
+            ],
+            "path": "evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-DEEP-AUDIT-LATEST.json",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M24",
+      "name": "Security",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract_source",
+          "name": "contracts/src/Escrow.sol",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "contract_source",
+          "name": "contracts/src/FeeRouter.sol",
+          "ok": true,
+          "detail": "exists"
+        },
+        {
+          "kind": "contract",
+          "name": "TimelockUpgradeableProxy",
+          "ok": true,
+          "detail": "contracts/src/upgrade/TimelockUpgradeableProxy.sol"
+        },
+        {
+          "kind": "evidence",
+          "name": "G24",
+          "ok": true,
+          "detail": {
+            "required": true,
+            "found": true,
+            "matches": [
+              "registry/g24-p-upgrade-01-contract-posture.v1.yaml"
+            ],
+            "path": "registry/g24-p-upgrade-01-contract-posture.v1.yaml",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    },
+    {
+      "id": "M25",
+      "name": "Payment Rail",
+      "readiness_status": "PASS",
+      "readiness_note": null,
+      "deployment_wave": [
+        "wave1"
+      ],
+      "checks": [
+        {
+          "kind": "contract",
+          "name": "RegionVault",
+          "ok": true,
+          "detail": "contracts/src/RegionVault.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "region_vault_address",
+          "ok": true,
+          "detail": "0x2Ea061d50393c09af2f607Ee9f89679642A3a65B"
+        },
+        {
+          "kind": "contract",
+          "name": "ReserveVault",
+          "ok": true,
+          "detail": "contracts/src/ReserveVault.sol"
+        },
+        {
+          "kind": "registry_address",
+          "name": "reserve_vault_address",
+          "ok": true,
+          "detail": "0xbC541FAf26e139eF1f0AC22b52c4b4F85FFF7855"
+        },
+        {
+          "kind": "evidence",
+          "name": "G3-02",
+          "ok": true,
+          "detail": {
+            "required": true,
+            "found": true,
+            "matches": [
+              "evidence/GO_production_readiness/G3-02/WEB3-PAYMENT-PRODUCTION-READINESS-LATEST.json"
+            ],
+            "path": "evidence/GO_production_readiness/G3-02/WEB3-PAYMENT-PRODUCTION-READINESS-LATEST.json",
+            "glob": null
+          }
+        },
+        {
+          "kind": "evidence_verdict",
+          "name": "G3-02",
+          "ok": true,
+          "detail": {
+            "expected": "WEB3_PAYMENT_PRODUCTION_PASS",
+            "actual": "WEB3_PAYMENT_PRODUCTION_PASS"
+          }
+        },
+        {
+          "kind": "evidence",
+          "name": "payment-audit",
+          "ok": true,
+          "detail": {
+            "required": true,
+            "found": true,
+            "matches": [
+              "evidence/GO_production_readiness/payment-deep-audit/PAYMENT-USDC-WEB3-DEEP-AUDIT-LATEST.json"
+            ],
+            "path": "evidence/GO_production_readiness/payment-deep-audit/PAYMENT-USDC-WEB3-DEEP-AUDIT-LATEST.json",
+            "glob": null
+          }
+        }
+      ],
+      "ok": true,
+      "check_mode": "strict"
+    }
+  ],
+  "discipline": {
+    "business_code_modified": false,
+    "audit_only": true
+  }
+}

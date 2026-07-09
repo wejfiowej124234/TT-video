@@ -1,0 +1,82 @@
+{
+  "review": "PCP_AUTHENTICITY_GAP_REGISTER",
+  "stamp": "20260703T232742Z",
+  "gaps": [
+    {
+      "classification": "DEFECT",
+      "domain": "community",
+      "id": "FE-community",
+      "note": "Frontend missing /api/v1/community",
+      "fix": "Verify frontend/app/community/me/page.tsx consumes public API",
+      "phase": "phase1"
+    },
+    {
+      "classification": "DEFECT",
+      "domain": "official_guide",
+      "id": "FE-official_guide",
+      "note": "Frontend missing /api/v1/guides",
+      "fix": "Verify frontend/app/guides/page.tsx consumes public API",
+      "phase": "phase1"
+    },
+    {
+      "classification": "DEFECT",
+      "domain": "provider",
+      "id": "FE-provider",
+      "note": "Frontend missing /market/provider",
+      "fix": "Verify frontend/app/market/provider/page.tsx consumes public API",
+      "phase": "phase1"
+    },
+    {
+      "classification": "DEFECT",
+      "domain": "acquisition",
+      "id": "FE-acquisition",
+      "note": "Frontend missing /market/acquisition",
+      "fix": "Verify frontend/app/market/acquisition/page.tsx consumes public API",
+      "phase": "phase1"
+    },
+    {
+      "classification": "DEFECT",
+      "domain": "admin_public_content_center",
+      "id": "FE-admin_public_content_center",
+      "note": "Frontend missing public-operations",
+      "fix": "Verify frontend/app/admin/official/public-operations/page.tsx consumes public API",
+      "phase": "phase1"
+    }
+  ],
+  "fix_order": [
+    {
+      "classification": "DEFECT",
+      "id": "FE-community",
+      "domain": "community",
+      "action": "Verify frontend/app/community/me/page.tsx consumes public API"
+    },
+    {
+      "classification": "DEFECT",
+      "id": "FE-official_guide",
+      "domain": "official_guide",
+      "action": "Verify frontend/app/guides/page.tsx consumes public API"
+    },
+    {
+      "classification": "DEFECT",
+      "id": "FE-provider",
+      "domain": "provider",
+      "action": "Verify frontend/app/market/provider/page.tsx consumes public API"
+    },
+    {
+      "classification": "DEFECT",
+      "id": "FE-acquisition",
+      "domain": "acquisition",
+      "action": "Verify frontend/app/market/acquisition/page.tsx consumes public API"
+    },
+    {
+      "classification": "DEFECT",
+      "id": "FE-admin_public_content_center",
+      "domain": "admin_public_content_center",
+      "action": "Verify frontend/app/admin/official/public-operations/page.tsx consumes public API"
+    }
+  ],
+  "totals": {
+    "blocker": 0,
+    "defect": 5
+  }
+}

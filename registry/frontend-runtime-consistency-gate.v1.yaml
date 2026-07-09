@@ -1,0 +1,122 @@
+# TravelTrust · Frontend Runtime Consistency Gate · SSOT
+# Runbook: docs/runbook/TT-FRONTEND-RUNTIME-CONSISTENCY-GATE.md
+# Orchestrator: scripts/dev/run-frontend-runtime-consistency-gate.sh
+#
+# Classification: frontend runtime state recovery + request race — NOT OCS / DDG / SOPCP.
+# Pipeline position: RC → DDG → OCS → FRONTEND_RUNTIME_CONSISTENCY → PI3 → GO
+
+schema: traveltrust.frontend_runtime_consistency_gate.v1
+version: 1
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_FRONTEND_RUNTIME_CONSISTENCY_GATE: ENFORCED
+  TT_FRONTEND_RUNTIME_CONSISTENCY_GATE_RUNBOOK: docs/runbook/TT-FRONTEND-RUNTIME-CONSISTENCY-GATE.md
+
+placement:
+  after: OFFICIAL_COLD_START_DATASET
+  before: PRODUCTION_INFRASTRUCTURE
+  every_release: true
+  governance_ladder_after: OFFICIAL_COLD_START_DATASET
+  governance_ladder_before: PRODUCTION_INFRASTRUCTURE
+
+classification:
+  id: FRONTEND_RUNTIME_CONSISTENCY
+  short: FRC
+  summary: >
+    Frontend runtime state recovery and request-race parity — API counts alone are insufficient.
+    Validates localStorage, URL query, hydration ordering, epoch guard, and browser UI=API parity
+    across Phase① local_mirror and Phase② staging.
+  not_data_governance: true
+  not_ocs: true
+  not_ddg: true
+  not_sopcp: true
+
+layer_stack:
+  - source_truth
+  - runtime_markers
+  - browser
+  - dual_environment
+
+dimensions:
+  source_truth:
+    description: API listing counts are authoritative baseline; UI must match on every scenario
+    checks:
+      - api_provider_all_equals_ui_all
+      - api_acquisition_all_equals_ui_all
+      - api_provider_jp_equals_ui_jp
+      - api_acquisition_jp_equals_ui_jp
+    expected:
+      provider_all: 10
+      acquisition_all: 10
+      provider_jp: 2
+      acquisition_jp: 0
+  runtime:
+    description: Static markers for hydration / race guards in shared frontend SSOT
+    checks:
+      - epoch_guard_B061
+      - useLayoutEffect_country_pref_hydration
+      - debounced_listings_refetch
+      - filterbar_no_duplicate_hydration
+      - masonry_single_data_listing_id
+      - e2e_data_listing_id_dedupe
+      - explicit_save_localStorage_flag
+      - hub_browser_truth_attrs_non_blocking
+    fix_files:
+      - frontend/components/market/useMarketStandaloneBusinessPage.ts
+      - frontend/components/market/MarketSubsiteFilterBar.tsx
+      - frontend/components/market/MarketSubsiteMasonry.tsx
+      - frontend/lib/marketSubsiteFilters.ts
+      - frontend/lib/marketHubBrowserTruth.ts
+      - frontend/app/market/MarketPageClient.tsx
+  browser:
+    description: Playwright probes — cannot pass on API-only audit
+    playwright: frontend/e2e/market-subsite-catalog-race-regression.spec.ts
+    scenarios:
+      - spa_first_entry
+      - hard_refresh
+      - browser_back
+      - tab_switch
+      - localStorage_country_pref_explicit_save
+      - orphan_localStorage_ignored
+      - url_country_all
+      - url_country_jp
+      - subnav_provider_acquisition_switch
+      - hub_default_all_browser_truth_attrs
+  dual_environment:
+    description: Both environments mandatory — local staging_mirror then staging web
+    phase1:
+      label: local_staging_mirror
+      web: http://127.0.0.1:3012
+      api: http://127.0.0.1:8080
+      playwright_tag: "@local_mirror"
+      api_start_script: scripts/dev/start-api-local-staging-db-mirror.sh
+    phase2:
+      label: staging
+      web: https://tt-web-staging.fly.dev
+      api: https://tt-api-staging.fly.dev
+      playwright_tag: "@staging"
+
+orchestrator:
+  script: scripts/dev/run-frontend-runtime-consistency-gate.sh
+  audit_script: scripts/dev/audit-frontend-runtime-consistency-gate.cjs
+  gate: scripts/gates/check-frontend-runtime-consistency-gate-ssot.sh
+
+baseline:
+  stamp: "20260703T101200Z"
+  status: CLOSED
+  git_commit: c741aae662eff99a74bde667956d463f3efef1f7
+  prior_incident_evidence: evidence/GO_market_subsite_frontend_race_fix/20260703T101200Z/
+  signoff: evidence/manual-uat/signoff/MARKET-SUBSITE-FRONTEND-RACE-FIX-SIGNOFF-20260703T101200Z.md
+  web_deploy:
+    app: tt-web-staging
+    release_version: 46
+    deployment_id: deployment-01KWKP3Q2SPJVRG70PZ7R3HZ2Z
+
+governance_gates:
+  OCS: CLOSED
+  DDG: CLOSED
+  SOPCP: CLOSED
+  evidence_reuse: ENFORCED
+
+verdict: CLOSED

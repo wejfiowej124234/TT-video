@@ -1,0 +1,354 @@
+ M crates/api/src/db/mod.rs
+ M crates/api/src/middleware/auth_pause_metrics/mod.rs
+ M crates/api/src/middleware/mod.rs
+ M crates/api/src/router.rs
+ M crates/api/src/routes/health_meta/handlers.rs
+ M crates/api/src/routes/itineraries.rs
+ M frontend/.i18n-coverage.json
+ M frontend/app/admin/growth/airdrop-campaigns/AdminAirdropCampaignsPageMain.tsx
+ M frontend/app/admin/growth/analytics/AdminGrowthAnalyticsPageMain.tsx
+ M frontend/app/admin/growth/early-bird/AdminEarlyBirdPageMain.tsx
+ M frontend/app/admin/growth/kol-center/AdminKolCenterPageMain.tsx
+ M frontend/app/admin/growth/referral-codes/AdminReferralCodesPageMain.tsx
+ M frontend/app/admin/growth/reward-ledger/AdminRewardLedgerPageMain.tsx
+ M frontend/app/admin/official/accounts/AdminOfficialAccountsPageMain.tsx
+ M frontend/app/admin/official/cold-start/AdminOfficialColdStartPageMain.tsx
+ M frontend/app/admin/official/guides/AdminOfficialGuidesPageMain.tsx
+ M frontend/app/admin/official/itinerary-templates/AdminOfficialItineraryTemplatesPageMain.tsx
+ M frontend/app/guides/page.tsx
+ M frontend/app/market/MarketPageClient.tsx
+ M frontend/app/meta/route.ts
+ M frontend/app/orders/OrdersListCardItem.tsx
+ M frontend/app/orders/OrdersListCards.tsx
+ M frontend/app/orders/useOrdersListPageCore.ts
+ M frontend/app/terms/community-guidelines/page.tsx
+ M frontend/components/admin/AdminMainBootGate.tsx
+ M frontend/components/admin/AdminNavContentTransition.tsx
+ M frontend/components/community/PublishDrawer/index.tsx
+ M frontend/components/community/useCommunityFeedPostDeepLink.ts
+ M frontend/components/header/HeaderUserMenu.tsx
+ M frontend/components/header/HeaderUserMenuNavLinks.tsx
+ M frontend/components/market/AcquisitionCarryStudioModal.tsx
+ M frontend/components/market/MarketStandaloneBusinessPage.tsx
+ M frontend/components/market/MerchantShowcaseStudioModal.tsx
+ M frontend/components/market/marketStandaloneBusinessPageUtils.test.ts
+ M frontend/components/market/marketStandaloneBusinessPageUtils.ts
+ M frontend/components/market/useMarketPage.ts
+ M frontend/components/market/useMarketPageOrderGuideDeepLinks.ts
+ M frontend/components/market/useMarketPageRouterSync.ts
+ M frontend/components/me/MeSettingsExtensionDocumentShell.tsx
+ M frontend/e2e/53-main-path.spec.ts
+ M frontend/e2e/93-matrix-admin-deep-batch.spec.ts
+ M frontend/e2e/93-matrix-admin-domain-batch.spec.ts
+ M frontend/e2e/93-matrix-enterprise-p1-batch.spec.ts
+ M frontend/e2e/93-matrix-path-community-feed-post.spec.ts
+ M frontend/e2e/93-matrix-path-did-rank-boards.spec.ts
+ M frontend/e2e/93-matrix-path-f1-f4.spec.ts
+ M frontend/e2e/93-matrix-path-p1-remediation.spec.ts
+ M frontend/e2e/96-17-header-identity-spine.spec.ts
+ M frontend/e2e/account-nav-header-ia.spec.ts
+ M frontend/e2e/admin-l5-staging-closure.spec.ts
+ M frontend/e2e/auth-forgot-password-api-happy.spec.ts
+ M frontend/e2e/auth-register-login-market-chain.spec.ts
+ M frontend/e2e/auth-reset-password-api-happy.spec.ts
+ M frontend/e2e/auth-reset-password-api.spec.ts
+ M frontend/e2e/auth-verify-email-api.spec.ts
+ M frontend/e2e/b468-market-discovery-full-ui-journey.spec.ts
+ M frontend/e2e/b469-guides-drawer-booking-convergence.spec.ts
+ M frontend/e2e/c-s1-admin-content-crud.spec.ts
+ M frontend/e2e/c-s2-poi-media-review-workflow.spec.ts
+ M frontend/e2e/c-s3-catalog-operations-admin.spec.ts
+ M frontend/e2e/c-s4-catalog-revision-import-operations.spec.ts
+ M frontend/e2e/c-s5-catalog-server-geo-validation-operations.spec.ts
+ M frontend/e2e/community-feed-discovery-geo.spec.ts
+ M frontend/e2e/community-feed-drawer-interaction-local.spec.ts
+ M frontend/e2e/community-feed-mobile-first-post.spec.ts
+ M frontend/e2e/community-friends-messages-flow.spec.ts
+ M frontend/e2e/community-me-data-state.spec.ts
+ M frontend/e2e/community-me-hub-tab-redirect-matrix.spec.ts
+ M frontend/e2e/community-me-l5-a-parity-closeout.spec.ts
+ M frontend/e2e/community-modals-interaction.spec.ts
+ M frontend/e2e/community-phase1-narrow-flows.spec.ts
+ M frontend/e2e/community-post-detail-collect-persist-after-reload.spec.ts
+ M frontend/e2e/community-post-detail-comment-sort.spec.ts
+ M frontend/e2e/community-post-detail-like-persist-after-reload.spec.ts
+ M frontend/e2e/community-post-detail-showcase-local.spec.ts
+ M frontend/e2e/community-publish-entry-diagnostic.spec.ts
+ M frontend/e2e/community-subroutes-data.spec.ts
+ M frontend/e2e/community-subroutes-l5-markers.spec.ts
+ M frontend/e2e/core-path.spec.ts
+ M frontend/e2e/e2e-a-01-cold-start-campaign-consumer.spec.ts
+ M frontend/e2e/escrow-bilateral-experience-l5.spec.ts
+ M frontend/e2e/escrow-p03-p04-itinerary-first.spec.ts
+ M frontend/e2e/f012-f013-f014-request.spec.ts
+ M frontend/e2e/f021-f022-f023-request.spec.ts
+ M frontend/e2e/f024-f025-f026-request.spec.ts
+ M frontend/e2e/f027-f028-f033-request.spec.ts
+ M frontend/e2e/f029-f030-f031-request.spec.ts
+ M frontend/e2e/g-s1-referral-minimum-loop.spec.ts
+ M frontend/e2e/g-s2-growth-ledger-observer.spec.ts
+ M frontend/e2e/g-s3-early-bird-multiplier.spec.ts
+ M frontend/e2e/g-s4-user-referral-center.spec.ts
+ M frontend/e2e/g-s5-admin-growth-fraud-reward-ops.spec.ts
+ M frontend/e2e/g-s6-airdrop-snapshot-reward-calc.spec.ts
+ M frontend/e2e/g-s7-growth-analytics-kol-readonly.spec.ts
+ M frontend/e2e/governance-params-full-l5.spec.ts
+ M frontend/e2e/governance-proposal-create-l5.spec.ts
+ M frontend/e2e/guide-register-l5.spec.ts
+ M frontend/e2e/guide-workbench-full-l5.spec.ts
+ M frontend/e2e/guide-workbench-inbox-l5.spec.ts
+ M frontend/e2e/helpers/accountNavSession.ts
+ M frontend/e2e/helpers/adminCapabilitiesSession.ts
+ M frontend/e2e/helpers/apiSession.ts
+ M frontend/e2e/helpers/communityFeedPostDeepLink.ts
+ M frontend/e2e/helpers/communityMeLegacyRedirects.ts
+ M frontend/e2e/helpers/communityMePageReady.ts
+ M frontend/e2e/helpers/communityShowcasePostDetail.ts
+ M frontend/e2e/helpers/communitySocialFlow.ts
+ M frontend/e2e/helpers/headerUserMenu.ts
+ M frontend/e2e/helpers/landingHomeForm.ts
+ M frontend/e2e/helpers/marketSeedGuideCard.ts
+ M frontend/e2e/helpers/marketStudioOpen.ts
+ M frontend/e2e/helpers/meIdentitiesHubMocks.ts
+ M frontend/e2e/helpers/meSettingsE2e.ts
+ M frontend/e2e/helpers/p0RealApiWaits.ts
+ M frontend/e2e/helpers/seedPaidMarketEntitlements.ts
+ M frontend/e2e/helpers/smoke-nav.ts
+ M frontend/e2e/helpers/traveltrustV6Ready.ts
+ M frontend/e2e/helpers/uiAuthControlledForms.ts
+ M frontend/e2e/home-landing-shell.spec.ts
+ M frontend/e2e/itinerary-52.spec.ts
+ M frontend/e2e/itinerary-date-as-source-corridor.spec.ts
+ M frontend/e2e/itinerary-first-main-chain-acceptance.spec.ts
+ M frontend/e2e/l5-a11y-live-scan.spec.ts
+ M frontend/e2e/market-custom-itinerary-catalog-ui.spec.ts
+ M frontend/e2e/market-deep-link.spec.ts
+ M frontend/e2e/market-subsite-community-gates.body.ts
+ M frontend/e2e/market-subsite-community-media.body.ts
+ M frontend/e2e/market-subsite-shared.ts
+ M frontend/e2e/market-subsite-studios.body.ts
+ M frontend/e2e/me-identities-core-hub.spec.ts
+ M frontend/e2e/me-onboarding-96-18-shell.spec.ts
+ M frontend/e2e/me-security-community-hub.spec.ts
+ M frontend/e2e/me-settings-l5-hub.spec.ts
+ M frontend/e2e/o-s1-official-accounts-management.spec.ts
+ M frontend/e2e/o-s2-official-guides-community-publishing.spec.ts
+ M frontend/e2e/o-s3-official-itinerary-templates.spec.ts
+ M frontend/e2e/o-s4-cold-start-campaigns-deployment-operations.spec.ts
+ M frontend/e2e/orders-list-filters-search.spec.ts
+ M frontend/e2e/orders-list-keyboard.spec.ts
+ M frontend/e2e/orders-list-to-escrow.spec.ts
+ M frontend/e2e/orders-list-to-pay.spec.ts
+ M frontend/e2e/p0-spine-real-api-public.spec.ts
+ M frontend/e2e/p0-spine-real-api-session.spec.ts
+ M frontend/e2e/p01-login-market-auth.spec.ts
+ M frontend/e2e/p02-tourist-order-create-list.spec.ts
+ M frontend/e2e/p03-tourist-guide-accept.spec.ts
+ M frontend/e2e/p04-bilateral-confirm.spec.ts
+ M frontend/e2e/pi1-community-browser-acceptance.spec.ts
+ M frontend/e2e/pi1-traveltrust-v6-browser-acceptance.spec.ts
+ M frontend/e2e/release-flow.spec.ts
+ M frontend/e2e/section10-5-login-community-feed.spec.ts
+ M frontend/e2e/smoke-admin-extended.spec.ts
+ M frontend/e2e/smoke-admin.spec.ts
+ M frontend/e2e/smoke-community.spec.ts
+ M frontend/e2e/smoke-governance.spec.ts
+ M frontend/e2e/smoke.spec.ts
+ M frontend/e2e/sprint168-country-market-admin.spec.ts
+ M frontend/e2e/steward-workbench-full-l5.spec.ts
+ M frontend/e2e/traveltrust-hero-visual-regression.spec.ts
+ M frontend/e2e/traveltrust-home-modular-visual-qa.probe.spec.ts
+ M frontend/e2e/trust-gate-escrow.spec.ts
+ M frontend/evidence/GO_local_hero_globe_a_closure/blue-block-dom-origin/baseline.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/blue-block-dom-origin/dom-origin-report.json
+ M frontend/evidence/GO_local_hero_globe_a_closure/blue-block-dom-origin/kill-try-1.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/dom-compositor-audit.json
+ M frontend/evidence/GO_local_hero_globe_a_closure/earth-realism-pass-a/hero-earth-realism-pass-a-desktop.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/hub-geo-pass-b/after-hero-hub-geo-pass-b-desktop.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/layer-kill-audit/00-baseline.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/layer-kill-audit/computed-audit.json
+ M frontend/evidence/GO_local_hero_globe_a_closure/layer-kill-audit/kill-canvas-hero-sky-cap.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/layer-kill-audit/kill-canvas-warm-band.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/layer-kill-audit/kill-equator-strip.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/layer-kill-audit/kill-globe-underlay-decor.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/layer-kill-audit/kill-hero-dom-sky-veil.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/layer-kill-audit/kill-hero-section.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/layer-kill-audit/kill-hero-sky-wash.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/layer-kill-audit/kill-hero-warm-backdrop.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/layer-kill-audit/kill-matrix.json
+ M frontend/evidence/GO_local_hero_globe_a_closure/layer-kill-audit/kill-page-cinematic-3d.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/layer-kill-audit/kill-viewport-ink.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p0-acceptance/hero-p0-hard-refresh.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p1-acceptance/01-desktop-hard-refresh-baseline.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p1-acceptance/02-desktop-cta-dock-hover.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p1-acceptance/03-desktop-compact-roster-hover.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p1-acceptance/04-desktop-canvas-pin-hover.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p1-acceptance/05-desktop-pin-click-to-start.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p1-acceptance/06-desktop-cta-click-to-start.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p1-acceptance/07-mobile-roster-chip-hover.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p1-acceptance/acceptance-report.json
+ M frontend/evidence/GO_local_hero_globe_a_closure/p2b-acceptance/01-deep-link-cn-match.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p2b-acceptance/02-hero-cta-to-start-plan.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p2b-acceptance/03-step-pill-to-escrow.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p2c-acceptance/01-theater-asia-match-guide.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p2c-acceptance/02-theater-escrow-merchant.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p3-acceptance/01-hero-p3-network-default.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/p3-acceptance/02-hero-p3-focus-cn.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/scene-debug-canvas-step-0.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/scene-debug-canvas-step-1.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/scene-debug-canvas-step-2.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/scene-debug-canvas-step-3.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/scene-debug-canvas-step-4.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/scene-debug-canvas-step-5.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/scene-debug-step-0.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/scene-debug-step-1.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/scene-debug-step-2.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/scene-debug-step-3.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/scene-debug-step-4.png
+ M frontend/evidence/GO_local_hero_globe_a_closure/scene-debug-step-5.png
+ M frontend/evidence/GO_local_phase1/PHASE1-LOCAL-ENGINEERING-CLOSED-20260603.md
+ M frontend/evidence/GO_local_phase1/README.md
+ M frontend/evidence/GO_local_site_theme_v1/G5-did-rank-guide-modal/guide-modal-desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/community/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/community/mobile-390x844.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/did-rank/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/did-rank/mobile-390x844.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/explore/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/feedback/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/friends/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/home/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/home/mobile-390x844.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/market-acquisition/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/market-provider/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/market/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/market/mobile-390x844.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/me/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/messages/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/POST-screenshots/tt/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/V2-hard-refresh-capture/01-market-hero-hub.png
+ M frontend/evidence/GO_local_site_theme_v1/V2-hard-refresh-capture/02-market-provider-title.png
+ M frontend/evidence/GO_local_site_theme_v1/V2-hard-refresh-capture/03-market-acquisition-title.png
+ M frontend/evidence/GO_local_site_theme_v1/V2-hard-refresh-capture/04-did-rank-header-tabs.png
+ M frontend/evidence/GO_local_site_theme_v1/V2-hard-refresh-capture/05-community-feed-tabs.png
+ M frontend/evidence/GO_local_site_theme_v1/V2-hard-refresh-capture/06-community-explore-h1.png
+ M frontend/evidence/GO_local_site_theme_v1/WAVE-B-screenshots/auth-login/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/WAVE-B-screenshots/guides/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/WAVE-B-screenshots/help/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/WAVE-B-screenshots/home/desktop-1280x800.png
+ M frontend/evidence/GO_local_site_theme_v1/WAVE-B-screenshots/traveltrust/desktop-1280x800.png
+ M frontend/evidence/l5-a11y-live-scan/scan-results.jsonl
+ M frontend/evidence/l5-a11y-live-scan/scan-summary.json
+ M frontend/evidence/pes-wave41-validation-20260607/journey-runs-batch-01.jsonl
+ M frontend/lib/admin/adminNavPerfL5.contract.test.ts
+ M frontend/lib/apiClient/marketSubsite/http.ts
+ M frontend/lib/marketingUi.ts
+ M frontend/lib/orders/ordersListL5.contract.test.ts
+ M frontend/lib/traveltrust/home/visualQaManifest.ts
+ M frontend/locales/en.ts
+ M frontend/playwright.config.ts
+ M frontend/scripts/run-dev-webserver-logged.mjs
+ M frontend/scripts/run-e2e-default.mjs
+?? frontend/app/governance/params/GovernanceParamsCountriesTableLegend.tsx
+?? frontend/app/governance/params/GovernanceParamsFeeRouterTechnicalSection.tsx
+?? frontend/app/governance/params/GovernanceParamsGlobalTreasuryUsageSection.tsx
+?? frontend/app/governance/params/GovernanceParamsGovFreezeRulesSection.tsx
+?? frontend/app/governance/params/GovernanceParamsOverviewSection.tsx
+?? frontend/app/governance/params/GovernanceParamsPhase1CountriesTables.tsx
+?? frontend/app/governance/params/GovernanceParamsPhase1IndependentParamsDetails.tsx
+?? frontend/app/governance/params/GovernanceParamsProfitFlowVisual.tsx
+?? frontend/app/governance/params/GovernanceParamsRulesAtAGlance.tsx
+?? frontend/app/governance/params/GovernanceParamsStewardContextPanel.tsx
+?? frontend/app/governance/params/GovernanceParamsTechnicalAppendixSection.tsx
+?? frontend/app/governance/params/GovernanceParamsTreasuryPolicySection.tsx
+?? frontend/app/governance/params/GovernanceParamsTtgBeyondCountriesSection.tsx
+?? frontend/app/governance/params/GovernanceParamsTtgSupplyStructureSection.tsx
+?? frontend/app/governance/params/useGovernanceParamsActiveSection.ts
+?? frontend/archive/governance/
+?? frontend/components/auth/AuthLoginGovernanceRemediationProgress.tsx
+?? frontend/e2e/ai-pre-human-uat-governance.spec.ts
+?? frontend/e2e/helpers/adminE2eSession.ts
+?? frontend/e2e/helpers/adminOfficialPagesE2e.ts
+?? frontend/e2e/helpers/adminSessionBootstrap.ts
+?? frontend/e2e/helpers/aiPreHumanUatResults.ts
+?? frontend/e2e/helpers/communityFeedSession.ts
+?? frontend/e2e/helpers/communityReportSubmit.ts
+?? frontend/e2e/helpers/gotoRaw.ts
+?? frontend/e2e/helpers/govTargetNotice.ts
+?? frontend/e2e/helpers/ordersCorridorSession.ts
+?? frontend/e2e/helpers/postDetailDrawerEngagement.ts
+?? frontend/e2e/helpers/registerEmailField.ts
+?? frontend/e2e/helpers/routeExecutionBarrier.ts
+?? frontend/e2e/helpers/skipIfChainOffAuthEmailStub.ts
+?? frontend/e2e/local-six-account-matrix-ui-l5-audit.spec.ts
+?? frontend/evidence/GO_local_phase1/PHASE1-FREEZE-SITE10-G2G3-DENOISED.md
+?? "frontend/evidence/GO_local_phase1/PHASE2-AWAIT-OWNER-SCOPE\342\221\241-MAIN-TRACK.md"
+?? frontend/evidence/GO_local_phase1/site10-alignment-audit.latest.txt
+?? frontend/evidence/GO_local_phase1/site10-bucket-convergence-r21.status.txt
+?? frontend/evidence/GO_local_phase1/site10-phase2-post-soak-track.watch.json
+?? frontend/evidence/GO_local_phase1/site10-phase2-smoke-settlement.watch.json
+?? frontend/evidence/GO_local_phase1/site10-phase2-staging-precheck.latest.txt
+?? frontend/evidence/GO_local_phase1/site10-r22-true-regression-manifest.txt
+?? frontend/evidence/GO_local_phase1/site10-r22b-denoised-regression-parse.txt
+?? frontend/evidence/GO_local_phase1/site10-r22b-extra-warn-register.txt
+?? frontend/evidence/GO_local_phase1/site10-r22b-gates.txt
+?? frontend/evidence/GO_local_phase1/site10-r22b-parse-full.txt
+?? frontend/evidence/GO_local_phase1/site10-r22b-parse.txt
+?? frontend/evidence/GO_local_phase1/site10-r22b-vs-r21-diff.txt
+?? frontend/evidence/GO_local_phase1/site10-r22b-vs-r21-tier-attribution.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun12-complete.status.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun12-gates.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun12-parse.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun13-complete.status.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun13-gates.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun13-parse.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun14-gates.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun14-parse.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun14-poll.status.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun15-gates.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun15-parse.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun16-gates.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun16-parse.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun17-gates.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun17-parse.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun18-gates.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun18-parse.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun19-gates.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun19-parse.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun20-gates.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun20-parse.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun20-poll.status.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun21-gates.txt
+?? frontend/evidence/GO_local_phase1/site10-rerun21-parse.txt
+?? frontend/evidence/pes-rujr-20260607/journey-runs.jsonl
+?? frontend/evidence/traveltrust-home-visual-qa/e2e-runs/
+?? frontend/lib/admin/adminNavTransitionState.test.ts
+?? frontend/lib/admin/adminNavTransitionState.ts
+?? frontend/lib/admin/adminSubpageRenderReady.test.ts
+?? frontend/lib/admin/adminSubpageRenderReady.ts
+?? frontend/lib/governance/countryPoolFundraiseGovernanceV1.test.ts
+?? frontend/lib/governance/countryPoolFundraiseGovernanceV1.ts
+?? frontend/lib/governance/governanceParamsGlobalPoolStakeWeights.test.ts
+?? frontend/lib/governance/governanceParamsGlobalPoolStakeWeights.ts
+?? frontend/lib/governance/governanceParamsGlobalTreasuryUsagePolicy.test.ts
+?? frontend/lib/governance/governanceParamsGlobalTreasuryUsagePolicy.ts
+?? frontend/lib/governance/governanceParamsPhase1FundraiseApply.ts
+?? frontend/lib/governance/governanceParamsPhase1IndependentParamsModel.test.ts
+?? frontend/lib/governance/governanceParamsPhase1IndependentParamsModel.ts
+?? frontend/lib/governance/governanceParamsTreasuryPolicy.test.ts
+?? frontend/lib/governance/governanceParamsTreasuryPolicy.ts
+?? frontend/lib/governance/governanceParamsTtgBeyondCountriesUsage.test.ts
+?? frontend/lib/governance/governanceParamsTtgBeyondCountriesUsage.ts
+?? frontend/lib/governance/governanceParamsTtgSupplyStructure.test.ts
+?? frontend/lib/governance/governanceParamsTtgSupplyStructure.ts
+?? frontend/lib/governance/governanceParamsTtgTokenomicsFreeze.test.ts
+?? frontend/lib/governance/governanceParamsTtgTokenomicsFreeze.ts
+?? frontend/lib/governance/governanceTokenRemediationProgress.ts
+?? frontend/lib/governance/ttgReferencePriceV1.test.ts
+?? frontend/lib/governance/ttgReferencePriceV1.ts
+?? frontend/lib/governance/ttgTokenomicsUiAlignment.contract.test.ts
+?? frontend/lib/marketGuideDeepLinkHydrate.ts
+?? frontend/lib/marketStandaloneCatalogCache.ts
+?? frontend/lib/orders/ordersListCardPrimaryRoute.ts
+?? frontend/scripts/parse-rerun5-failures.py
+?? registry/g24-p-upgrade-01-contract-posture.v1.yaml
+?? registry/ttg-governance-cert-gates.v1.yaml

@@ -2,6 +2,7 @@
 
 **Version:** 1.0.0 · **生效：** 2026-07-01  
 **前置：** [`TT-DISPLAY-DATA-GOVERNANCE.md`](TT-DISPLAY-DATA-GOVERNANCE.md) **PASS**  
+**互指：** [`TT-RELEASE-PIPELINE.md`](TT-RELEASE-PIPELINE.md) · **每次 Production 发布必跑**  
 **机读：** `TT_BUSINESS_MANUAL_UAT: PENDING | PASS | FAIL`
 
 ---
@@ -9,9 +10,11 @@
 ## 0 · 阶段定位
 
 ```text
+Product Capability Complete
+        ↓
 Display Data Governance (PASS)
         ↓
-Business Manual UAT   ← 本 Runbook
+Business Manual UAT   ← 本 Runbook（每次发布必跑）
         ↓
 PI3 → Production GO
 ```

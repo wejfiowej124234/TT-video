@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.cms_cn_city_triple_pass_report.v1",
+  "city_zh": "成都",
+  "recorded_at_utc": "2026-07-07T06:08:20.498Z",
+  "poi_locked": "10/10",
+  "TT_CMS_POI_CITY_CHENGDU": "CLOSED",
+  "TT_CMS_POI_CITY_CHENGDU_CONTENT_QA": "CLOSED",
+  "TT_CMS_POI_CITY_CHENGDU_CONTENT_QA_EXIT": "PASS"
+}

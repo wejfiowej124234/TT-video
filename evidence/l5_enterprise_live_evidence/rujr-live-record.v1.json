@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust_l5_rujr_live_record.v1",
+  "recordedUtc": "2026-06-08T03:32:28Z",
+  "rujrId": "pes-real-user-journey-review-20260607",
+  "totalRuns": 48,
+  "synthReport": "frontend/evidence/pes-rujr-20260607/rujr-report-synth.json",
+  "journeyRunsRef": "frontend/evidence/pes-wave41-validation-20260607/journey-runs.jsonl",
+  "captureMode": "synth-baseline"
+}

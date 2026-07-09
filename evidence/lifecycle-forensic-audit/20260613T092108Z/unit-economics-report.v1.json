@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.unit_economics_report.v1",
+  "fee_schedule_version": "fee_schedule_v1",
+  "ssot": "docs/spec/artifacts/onboarding-fee-schedule.v1.md",
+  "code": "crates/api/src/routes/onboarding/fee_schedule_v1.rs",
+  "note": "② USDC/Stripe test — ③ production PSP separate gate"
+}

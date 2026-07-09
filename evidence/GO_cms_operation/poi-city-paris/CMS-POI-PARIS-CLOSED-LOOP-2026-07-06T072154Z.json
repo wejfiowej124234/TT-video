@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T07:21:54Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "FR",
+    "city_zh": "巴黎",
+    "city_en": "Paris",
+    "matrix_ids": [
+      "PH-FR-111-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-FR-111-ATR",
+      "legacy_value": "埃菲尔铁塔",
+      "poi_id": "d628093b-e1b4-4060-a71b-3de4995c9bbe",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-111-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.ocs_content_l5_execution_open.v1",
+  "stamp_utc": "20260704T121500Z",
+  "motto": "Content First, Code Frozen",
+  "machine_keys": {
+    "TT_OCS_CONTENT_L5": "IN_PROGRESS",
+    "TT_OCS_CONTENT_L5_EXECUTION": "IN_PROGRESS",
+    "TT_OCS_CONTENT_L5_READY": "NO",
+    "TT_CONTENT_PRODUCTION_MATRIX": "IN_PROGRESS",
+    "TT_CONTENT_BRAND_CONSISTENCY": "PENDING"
+  },
+  "execution_mode": "row_by_row",
+  "discipline": "no_batch_skip",
+  "matrix_progress": { "verified_pass": 0, "total": 60 },
+  "closure_requires_all": [
+    "TT_OCS_CONTENT_L5=CLOSED",
+    "TT_OCS_CONTENT_L5_READY=YES",
+    "TT_CONTENT_PRODUCTION_MATRIX=PASS",
+    "TT_CONTENT_BRAND_CONSISTENCY=PASS"
+  ]
+}

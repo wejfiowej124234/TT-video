@@ -1,0 +1,116 @@
+{
+  "schema": "traveltrust.admin_governance_registry.v1",
+  "domain": "DOMAIN-AG",
+  "created_at": "2026-06-13T08:18:23.085836+00:00",
+  "verdict_vocabulary": [
+    "KEEP",
+    "MERGE",
+    "RETIRE",
+    "REFACTOR",
+    "UPDATE",
+    "DEPRECATE",
+    "REMOVE"
+  ],
+  "admin_role_taxonomy": [
+    "Super Admin",
+    "Operations Admin",
+    "Content Admin",
+    "Governance Admin",
+    "Support Admin",
+    "Risk Admin",
+    "Finance Admin"
+  ],
+  "business_subjects": [
+    "Traveler",
+    "Guide",
+    "Merchant",
+    "Acquisition",
+    "Steward",
+    "Admin"
+  ],
+  "findings": [
+    {
+      "id": "AG-SEED-001",
+      "dim": "AG-03",
+      "label": "RBAC permission count baseline",
+      "suggested_verdict": "KEEP",
+      "severity": "P0",
+      "rationale": "adminPermissionIds ↔ registry/admin-rbac-permissions.v1.yaml"
+    },
+    {
+      "id": "AG-SEED-002",
+      "dim": "AG-13",
+      "label": "Early bird + referral growth surfaces",
+      "suggested_verdict": "REFACTOR",
+      "severity": "P1",
+      "rationale": "Multiple growth admin pages — IA merge candidates"
+    },
+    {
+      "id": "AG-SEED-003",
+      "dim": "AG-19",
+      "label": "Admin sidebar group proliferation",
+      "suggested_verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "10+ shell groups — PF-08 overlap"
+    },
+    {
+      "id": "AG-SEED-004",
+      "dim": "AG-17",
+      "label": "Dangerous write permissions",
+      "suggested_verdict": "UPDATE",
+      "severity": "P0",
+      "rationale": "USERS_WRITE · DISPUTES_WRITE · GROWTH_PUBLISH need AMWA"
+    },
+    {
+      "id": "AG-SEED-005",
+      "dim": "AG-02",
+      "label": "Role taxonomy vs route-matrix",
+      "suggested_verdict": "UPDATE",
+      "severity": "P1",
+      "rationale": "Map Super/Ops/Content/Governance/Support/Risk/Finance to matrix"
+    }
+  ],
+  "doa_dimensions": [
+    "AG-01",
+    "AG-02",
+    "AG-03",
+    "AG-04",
+    "AG-05",
+    "AG-06",
+    "AG-07",
+    "AG-08",
+    "AG-09",
+    "AG-10",
+    "AG-11",
+    "AG-12",
+    "AG-13",
+    "AG-14",
+    "AG-15",
+    "AG-16",
+    "AG-17",
+    "AG-18",
+    "AG-19",
+    "AG-20"
+  ],
+  "artifacts": [
+    "EXECUTIVE-GOVERNANCE-HEALTH-REPORT.md",
+    "admin-accessibility-score.v1.json",
+    "admin-capability-matrix.v1.json",
+    "admin-complexity-score.v1.json",
+    "admin-efficiency-score.v1.json",
+    "admin-information-architecture-score.v1.json",
+    "admin-l5-design-score.v1.json",
+    "admin-mobile-audit.v1.json",
+    "admin-product-weight-report.v1.json",
+    "admin-role-responsibility-matrix.v1.json",
+    "admin-ux-score.v1.json",
+    "approval-workflow-matrix.v1.json",
+    "dangerous-action-matrix.v1.json",
+    "early-bird-incentive-matrix.v1.json",
+    "governance-control-matrix.v1.json",
+    "operations-workflow-matrix.v1.json",
+    "permission-escalation-report.v1.json",
+    "rbac-boundary-matrix.v1.json",
+    "risk-control-matrix.v1.json"
+  ]
+}

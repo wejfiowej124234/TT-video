@@ -1,0 +1,5 @@
+step: S07-rollback
+status: PASS
+api: https://tt-api-staging.fly.dev
+at: 2026-06-30T16:11:11Z
+note: mock-pay reject + anon probe

@@ -1,0 +1,100 @@
+{
+  "schema": "traveltrust.local_staging_full_alignment_audit.v1",
+  "audit_id": "LOCAL_STAGING_FULL_ALIGNMENT_AUDIT",
+  "stamp": "20260709T142000Z",
+  "recorded_at": "2026-07-09T14:20:58.414Z",
+  "verdict": "LOCAL_SSOT_READY",
+  "per_gate": "OPEN",
+  "blocking_count": 0,
+  "warn_count": 2,
+  "ssot": {
+    "local_is_sole_truth_for_per": true,
+    "baseline": [
+      "CMS",
+      "OCS",
+      "SSOT",
+      "Web3"
+    ],
+    "phase_honesty": "① local PER · staging env-diff only after one-shot deploy"
+  },
+  "git": {
+    "local_head": "4706266acf8ec8a92e5eb01b8d83257013cbd30a",
+    "staging_deployed_git_sha": "4706266acf8ec8a92e5eb01b8d83257013cbd30a",
+    "porcelain_lines": 2387,
+    "head_match": true
+  },
+  "runtime": {
+    "local_api_health": "200",
+    "local_web": "200",
+    "staging_web": "200",
+    "staging_web_alignment": "PASS"
+  },
+  "gates": {
+    "production_ui_hygiene": "PASS",
+    "public_surface_audit": "PASS"
+  },
+  "cms_staging_uat": {
+    "announcements": "PASS",
+    "roadmap": "PASS"
+  },
+  "api_parity": {
+    "count_drift_items": 0,
+    "detail": {
+      "local": {
+        "/api/v1/public/announcements?limit=5": {
+          "status": 200,
+          "count": 5
+        },
+        "/api/v1/public/roadmap": {
+          "status": 200,
+          "count": 2
+        },
+        "/api/v1/guides?limit=3": {
+          "status": 200,
+          "count": 3
+        }
+      },
+      "staging": {
+        "/api/v1/public/announcements?limit=5": {
+          "status": 200,
+          "count": 5
+        },
+        "/api/v1/public/roadmap": {
+          "status": 200,
+          "count": 2
+        },
+        "/api/v1/guides?limit=3": {
+          "status": 200,
+          "count": 3
+        }
+      },
+      "count_drift": []
+    }
+  },
+  "web_wave_a_markers": {
+    "staging_traveltrust": "mock-swap",
+    "local_traveltrust": "mock-swap"
+  },
+  "expected_differences": [
+    {
+      "id": "ENV-CHAIN",
+      "note": "local chain_id 31337 (Anvil) vs staging 11155111 (Sepolia)"
+    },
+    {
+      "id": "ENV-PROFILE",
+      "note": "deployment_profile local vs staging"
+    }
+  ],
+  "deferred_to_post_per_deploy": [
+    "staging web Wave A (mock-swap gate) until one-shot API+Web deploy"
+  ],
+  "next_steps_ordered": [
+    "Start local web (3012) if down",
+    "PER Round 1 on local only (record Confirmed / Verification Pending)",
+    "Local Wave fixes + gates green",
+    "Commit SSOT snapshot",
+    "One-shot deploy API + Web to staging",
+    "Re-run this audit — staging section = env-diff verification only"
+  ],
+  "machine_key": "TT_LOCAL_STAGING_ALIGNMENT: LOCAL_SSOT_READY"
+}

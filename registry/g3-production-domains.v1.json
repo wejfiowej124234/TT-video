@@ -1,0 +1,286 @@
+{
+  "schema": "traveltrust.g3_production_domains.v1",
+  "version": 3,
+  "effective_utc": "2026-07-08",
+  "human_runbook": "docs/runbook/G3-PRODUCTION-DOMAINS.md",
+  "principle": {
+    "en": "G3 work must answer: does this directly affect Production GO? If not, do not do it.",
+    "zh": "G3 所有工作必须回答：是否直接影响 Production GO？否则不做。"
+  },
+  "frozen_without_architecture_review": [
+    "platform",
+    "architecture",
+    "builder",
+    "registry",
+    "guard",
+    "runtime_identity",
+    "pcp",
+    "platform_capability"
+  ],
+  "no_new_categories": true,
+  "project_state": {
+    "effective_utc": "2026-07-04",
+    "platform": "COMPLETE",
+    "platform_governance": "FROZEN",
+    "g1_gate": "PASS",
+    "g2_gate": "PASS",
+    "master_reality_audit": "CLOSED",
+    "g3": "READY",
+    "production_go": "NO_GO"
+  },
+  "vocabulary": {
+    "g3_only": ["PLANNED", "IMPLEMENTING", "VERIFIED", "CLOSED"],
+    "forbidden_after_g3_entry": [
+      "Drift",
+      "DRIFT",
+      "Reality Gap",
+      "Runtime Gap",
+      "Platform Gap",
+      "OPEN",
+      "REOPEN",
+      "IN_PROGRESS",
+      "READY",
+      "BLOCKED",
+      "G3 基本完成",
+      "partially complete"
+    ],
+    "note": "One language for release from G3 onward — status machine only."
+  },
+  "domain_status_machine": {
+    "matrix_states": ["PLANNED", "IMPLEMENTING", "VERIFIED", "CLOSED"],
+    "flow": "PLANNED → IMPLEMENTING → VERIFIED → CLOSED"
+  },
+  "per_domain_steps": {
+    "identical_for_all_domains": true,
+    "sequence": [
+      "PLANNED",
+      "implementation",
+      "reality_verification",
+      "evidence_integrity",
+      "formal_acceptance",
+      "VERIFIED",
+      "matrix_closed"
+    ],
+    "do_not_vary_by_domain": true
+  },
+  "evidence_layout": {
+    "identical_for_all_domains": true,
+    "root_pattern": "evidence/GO_production_readiness/{domain_id}/",
+    "subdirs": ["implementation", "verification", "evidence", "formal"],
+    "signoff_file": "signoff.json"
+  },
+  "execution_discipline": {
+    "one_domain_at_a_time": true,
+    "immediate_verification_after_domain": true,
+    "do_not_batch_all_domains_before_verify": true,
+    "active_domain": "G3-01",
+    "progress_rule": "Each domain PLANNED → VERIFIED → CLOSED before starting next (except G3-06 packages prior VERIFIED domains)"
+  },
+  "g3_entry_prerequisites": {
+    "official_content_baseline_chain": [
+      "TT_OCS_SURFACE_EXPANSION:VERIFIED",
+      "TT_OCS_POST_APPLY_DDG:PASS",
+      "Official Content Baseline V1:READY"
+    ],
+    "content_governance_non_blocking_g3": {
+      "machine_key": "TT_CONTENT_GOVERNANCE_NON_BLOCKING_G3",
+      "rule": "Content/Data Governance must not block Production Infrastructure",
+      "program_ssot": "registry/production-readiness-program.v1.yaml"
+    },
+    "configuration_over_code": {
+      "machine_key": "TT_CONFIGURATION_CHANGES_OVER_CODE_CHANGES",
+      "rule": "Resolve via Fly/DNS/CDN/RPC/Web3 contract config/env before code in G3; Stripe only for optional onboarding fiat",
+      "program_ssot": "registry/production-readiness-program.v1.yaml"
+    },
+    "ccv_pre_implementation_gate": {
+      "machine_key": "TT_G3_CCV_PRE_IMPLEMENTATION_GATE",
+      "required_before": "g3_domain_implementation",
+      "dimensions": ["capability", "configuration", "verification"],
+      "dimension_status": ["VERIFIED", "PLANNED", "IMPLEMENTING"],
+      "formal_lane": "PLANNED",
+      "human_anchor": "docs/runbook/G3-PRODUCTION-DOMAINS.md#tt-g3-ccv-pre-implementation-gate"
+    },
+    "then_active_domain": "G3-01",
+    "note": "G3-01 must not start until Official Content Baseline V1 READY; Market Media DDG is Independent Track and does not block G3",
+    "runbooks": [
+      "docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md",
+      "scripts/dev/run-ocs-post-apply-ddg-remediation.sh"
+    ]
+  },
+  "verified_evidence_rule": {
+    "required_environment": "production",
+    "forbidden_substitution": [
+      "local_pass_as_production_verified",
+      "staging_pass_as_production_verified"
+    ],
+    "required_flow": [
+      "production_environment",
+      "reality_verification",
+      "evidence",
+      "formal_acceptance",
+      "VERIFIED"
+    ],
+    "rationale": "Prevent local PASS from becoming Production VERIFIED — same discipline as Runtime Truth / Reality Audit"
+  },
+  "verification_reuse": {
+    "do_not_invent_g3_specific_verification_products": true,
+    "reuse_only": [
+      "TT_G3_REALITY_VERIFICATION",
+      "TT_EVIDENCE_INTEGRITY_AUDIT",
+      "TT_WAVE3_FORMAL_ACCEPTANCE"
+    ],
+    "scripts": [
+      "bash scripts/dev/run-reality-verification.sh --gate G3 --domain <G3-0N>",
+      "bash scripts/dev/run-evidence-integrity-audit.sh G3"
+    ]
+  },
+  "domains": [
+    {
+      "id": "G3-01",
+      "status": "PLANNED",
+      "key": "production_network",
+      "label": "Production Network",
+      "topics": ["domain", "dns", "tls", "cdn", "waf", "cors"],
+      "matrix_domains": ["domain_cdn"],
+      "matrix_gaps": ["PRM-DOM-B001"],
+      "evidence_root": "evidence/GO_production_readiness/G3-01",
+      "runbook": "docs/runbook/G3-01-PRODUCTION-NETWORK.md",
+      "scope_frozen": true,
+      "scope_frozen_utc": "2026-07-04",
+      "admission_question": "Is this in G3-01 Scope?",
+      "in_scope": ["domain", "dns", "tls", "cdn", "waf", "cors"],
+      "out_of_scope": ["new_features", "ui", "business_logic", "api_changes", "platform", "registry", "builder"],
+      "checklist": "registry/g3-01-production-network-checklist.v1.json",
+      "execution_order": [
+        "freeze_scope",
+        "write_checklist",
+        "implement_checklist_items",
+        "reality_verification",
+        "evidence_integrity",
+        "formal_acceptance",
+        "VERIFIED",
+        "matrix_closed"
+      ]
+    },
+    {
+      "id": "G3-02",
+      "status": "PLANNED",
+      "key": "payment",
+      "label": "Web3 USDC Escrow Payment",
+      "topics": [
+        "web3_usdc",
+        "wallet",
+        "escrow",
+        "fee_router",
+        "settlement",
+        "indexer",
+        "chain_confirmation"
+      ],
+      "matrix_domains": ["web3_escrow_payment"],
+      "matrix_gaps": ["PRM-WEB3-PAY-B001"],
+      "evidence_root": "evidence/GO_production_readiness/G3-02",
+      "runbook": "docs/runbook/PRODUCTION-PAYMENT-READINESS-WEB3-USDC.md",
+      "execution_plan": "docs/runbook/G3-02-WEB3-PAYMENT-PRODUCTION-EXECUTION.md",
+      "checklist": "registry/production-payment-readiness-checklist.v1.yaml",
+      "gate_script": "scripts/check-web3-payment-production-readiness.sh",
+      "machine_key": "TT_WEB3_PAYMENT_PRODUCTION_READINESS",
+      "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+      "architecture_note": "Core trip/market/acquisition payment = USDC + Escrow + FeeRouter. NOT Stripe card checkout.",
+      "optional_extensions": [
+        {
+          "id": "PI3-003",
+          "classification": "P1_FUTURE_FIAT_ONRAMP",
+          "topics": ["stripe_live", "onboarding_webhook", "psp"],
+          "matrix_domains": ["stripe_live"],
+          "matrix_gaps": ["PRM-STR-E002"],
+          "blocks_g3_02_verified": false,
+          "blocks_production_go": false,
+          "when_required": "TRAVELTRUST_ONBOARDING_STRIPE_ENABLED=1"
+        }
+      ]
+    },
+    {
+      "id": "G3-03",
+      "status": "PLANNED",
+      "key": "disaster_recovery",
+      "label": "Disaster Recovery",
+      "topics": ["backup", "restore", "recovery_drill", "rpo", "rto"],
+      "matrix_domains": ["disaster_recovery"],
+      "matrix_gaps": ["PRM-DR-B001", "PRM-DR-B002"],
+      "evidence_root": "evidence/GO_production_readiness/G3-03"
+    },
+    {
+      "id": "G3-04",
+      "status": "PLANNED",
+      "key": "monitoring",
+      "label": "Monitoring",
+      "topics": ["metrics", "logs", "alert", "synthetic", "on_call"],
+      "matrix_domains": ["monitoring", "observability"],
+      "matrix_gaps": [],
+      "note": "G2 closed prod baseline probes; G3 verifies production alerting, on-call, synthetic at cutover",
+      "evidence_root": "evidence/GO_production_readiness/G3-04"
+    },
+    {
+      "id": "G3-05",
+      "status": "PLANNED",
+      "key": "production_cutover",
+      "label": "Production Cutover",
+      "topics": ["deployment", "rollback", "smoke", "rollout", "traffic_switch"],
+      "matrix_domains": ["deployment", "manual_validation"],
+      "matrix_gaps": ["PRM-MVAL-B004"],
+      "evidence_root": "evidence/GO_production_readiness/G3-05"
+    },
+    {
+      "id": "G3-06",
+      "status": "PLANNED",
+      "key": "production_evidence",
+      "label": "Production Evidence",
+      "topics": [
+        "go_decision_package",
+        "final_per",
+        "production_sign_off",
+        "launch_checklist",
+        "launch_approval"
+      ],
+      "matrix_domains": [],
+      "matrix_gaps": [],
+      "is_final_domain": true,
+      "evidence_root": "evidence/GO_production_readiness/G3-06",
+      "sole_production_go_authority": true
+    }
+  ],
+  "production_go_chain": {
+    "required_sequence": [
+      "G3-01 VERIFIED",
+      "G3-02 VERIFIED",
+      "G3-03 VERIFIED",
+      "G3-04 VERIFIED",
+      "G3-05 VERIFIED",
+      "G3-06 VERIFIED",
+      "Production GO Decision Package",
+      "TT_PRODUCTION_GO = GO"
+    ],
+    "forbidden_phrasing": ["G3 基本完成", "mostly done", "almost ready"]
+  },
+  "release_train": {
+    "per_domain": {
+      "enabled": true,
+      "sequence": [
+        "implementation",
+        "reality_verification",
+        "evidence_integrity",
+        "formal_acceptance",
+        "VERIFIED",
+        "matrix_closed"
+      ],
+      "do_not_wait_for_all_domains": true
+    },
+    "verification": "TT_G3_REALITY_VERIFICATION",
+    "integrity_audit": "TT_EVIDENCE_INTEGRITY_AUDIT",
+    "formal": "TT_WAVE3_FORMAL_ACCEPTANCE",
+    "gate": "TT_PRODUCTION_READINESS_G3_GATE",
+    "decision_package": "production-go-decision-package.v1.json",
+    "production_go": "TT_PRODUCTION_GO",
+    "post_go_retrospective": "TT_PRODUCTION_RETROSPECTIVE"
+  }
+}

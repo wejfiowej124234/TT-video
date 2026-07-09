@@ -1,0 +1,8 @@
+{"id":"T-ENV-01","status":"PASS","note":"HTTP 200"}
+{"id":"T-ENV-02","status":"PASS","note":"HTTP 200"}
+{"id":"T-ENV-03","status":"FAIL","note":"profile=''\r"}
+{"id":"T-ENV-04","status":"FAIL","note":"chain_id=None\r"}
+{"id":"T-CHAIN-01","status":"FAIL","note":"keys=0\r"}
+{"id":"T-CHAIN-02","status":"FAIL","note":"core trio\r"}
+{"id":"T-CHAIN-03","status":"FAIL","note":"gov/stake trio\r"}
+{"id":"T-ID-01","status":"PASS","note":"login gate HTTP 401"}

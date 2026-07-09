@@ -1,0 +1,47 @@
+{
+  "schema": "traveltrust.cms_content_qa_poi_lock.v1",
+  "matrix_id": "PH-CN-241-ATR",
+  "city_zh": "北京",
+  "poi": "长城",
+  "hero_file": "ocs-paris-art-community-media.jpg",
+  "locked_at_utc": "2026-07-07T02:30:50.743Z",
+  "content_qa": {
+    "matrix_id": "PH-CN-241-ATR",
+    "poi": "长城",
+    "hero_file": "ocs-paris-art-community-media.jpg",
+    "execution": {
+      "verdict": "PASS",
+      "note": "Phase② 已证 · 本轮 Publish+Verify 完成"
+    },
+    "cms_ownership": {
+      "verdict": "PASS",
+      "live": 1,
+      "total": 1,
+      "missing_matrix_ids": []
+    },
+    "runtime_consumer": {
+      "verdict": "PASS",
+      "reason": "Catalog Publish + Verify PASS · POI 级 Runtime 就绪",
+      "note": "国家级 POI Consumer 族仍 OPEN 时 · Country CLOSED 另验"
+    },
+    "geo_matching": {
+      "verdict": "PASS",
+      "issue_count": 0,
+      "total": 1,
+      "issues": []
+    },
+    "content_accuracy": {
+      "verdict": "PASS",
+      "issue_count": 0,
+      "total": 1,
+      "items": []
+    },
+    "l5_quality": {
+      "verdict": "PASS",
+      "reason": "Content Accuracy PASS · 无 placeholder/unsplash"
+    },
+    "all_pass": true
+  },
+  "TT_CMS_CONTENT_QA_ASSET": "LOCKED",
+  "registry": "D:\\TravelTrust-V1.1\\evidence\\GO_cms_operation\\CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json"
+}

@@ -1,0 +1,198 @@
+{
+  "schema": "traveltrust.production_go_closure_sequence_correction.v1",
+  "recorded_at": "2026-07-08T07:10:12.145Z",
+  "trigger": "Owner correction: core trip/market payment is USDC+Escrow, not Stripe card checkout",
+  "verdict": "STRIPE_RECLASSIFIED_ONBOARDING_ONLY",
+  "architecture_truth": {
+    "core_payment_rail": {
+      "asset": "USDC/USDT (ERC-20 stablecoin)",
+      "mechanism": "EscrowFactory → Escrow.deposit → release → FeeRouter",
+      "scopes": [
+        "travel orders",
+        "marketplace merchant deals",
+        "acquisition close_deal",
+        "bilateral agreement"
+      ],
+      "production_requirement": "P3_CHAIN_OFF=0 · real wallet approve/deposit · indexer reconcile · no mock-pay on prod",
+      "ssot": [
+        "docs/spec/94-自由市场-商家橱窗与旅行收购-链上托管技术规格.md",
+        "docs/runbook/TT-B435-USER-WALLET-ESCROW-FEEROUTER-PAYMENT-PATH-001.md",
+        "docs/runbook/TT-CHAIN-ARCHITECTURE-AUDITABLE-SPEC.md",
+        "crates/core/src/escrow.rs"
+      ]
+    },
+    "stripe_rail": {
+      "scope": "onboarding admission fee ONLY (optional B-track bypass)",
+      "not_used_for": [
+        "trip orders",
+        "marketplace listing payment",
+        "acquisition escrow",
+        "/pay hub",
+        "merchant checkout"
+      ],
+      "default_onboarding_path": "USDC → OnboardingFeeReceiver",
+      "production_priority": "P1_OPTIONAL (not P0 blocker for Web3-only GO scope)",
+      "ssot": [
+        "docs/spec/artifacts/onboarding-fee-schedule.v1.md",
+        "frontend/lib/onboarding/ONBOARDING-B-TRACK-USDC-SSOT.md",
+        "docs/handbook/engineering/153-PI3-003-Stripe-Live-Production-Webhook-Report.md"
+      ]
+    },
+    "mock_pay": {
+      "purpose": "P3_CHAIN_OFF=1 · API-only accepted→escrowed for ① local/staging state machine",
+      "validates": [
+        "order lifecycle",
+        "payment window TTL",
+        "trust gates",
+        "UI /pay hub"
+      ],
+      "does_not_validate": [
+        "chain tx",
+        "USDC allowance",
+        "indexer",
+        "FeeRouter",
+        "explorer proof"
+      ],
+      "production": "FORBIDDEN"
+    }
+  },
+  "why_stripe_was_p0_before": [
+    "148 PRODUCTION_SCOPE_SEPOLIA bundles Stripe Live (real fiat onboarding) with Sepolia Escrow — separate rails but same GO checklist",
+    "G3-02 domain key=payment but topics only stripe_live — misleading label",
+    "PRODUCTION-GO-DECISION-PACKAGE conflated mock-pay on prod with PI3-003 Stripe",
+    "Closure plan step ③ inserted Stripe immediately after OCS without Web3 payment verification step"
+  ],
+  "corrected_closure_sequence": [
+    {
+      "step": 1,
+      "id": "OCS",
+      "label": "OCS Bootstrap + Parity",
+      "status": "PASS",
+      "p0": true
+    },
+    {
+      "step": 2,
+      "id": "WEB3_PAYMENT_PROD",
+      "label": "Web3 USDC Payment Production Verification",
+      "status": "NOT_STARTED",
+      "p0": true,
+      "checks": [
+        "Wallet: connect · sign · address bind · order create",
+        "USDC: approve + transfer/deposit to Escrow · chain confirmation",
+        "Escrow state machine: created→accepted→funded/escrowed→completed→release",
+        "Settlement: FeeRouter distribute · ledger projection",
+        "Chain config: Sepolia CHAIN_ID=11155111 · contract addresses · ABI match · RPC · indexer · reorg/gas/failure recovery",
+        "Prod runtime: P3_CHAIN_OFF unset/0 · mock-pay disabled · GET /meta parity"
+      ],
+      "machine_key": "WEB3_PAYMENT_PRODUCTION_VERIFICATION"
+    },
+    {
+      "step": 3,
+      "id": "CDN_HLS",
+      "label": "CDN/HLS",
+      "status": "NOT_STARTED",
+      "p0": true
+    },
+    {
+      "step": 4,
+      "id": "DOMAIN_TLS",
+      "label": "Domain/TLS/CORS",
+      "status": "NOT_STARTED",
+      "p0": true
+    },
+    {
+      "step": 5,
+      "id": "MONITORING",
+      "label": "Monitoring",
+      "status": "NOT_STARTED",
+      "p0": true
+    },
+    {
+      "step": 6,
+      "id": "BACKUP_ROLLBACK",
+      "label": "Backup/Rollback drill",
+      "status": "NOT_STARTED",
+      "p0": true
+    },
+    {
+      "step": 7,
+      "id": "SECURITY_REVIEW",
+      "label": "Security Review",
+      "status": "NOT_STARTED",
+      "p0": true
+    },
+    {
+      "step": 8,
+      "id": "STRIPE_ONBOARDING_OPTIONAL",
+      "label": "Stripe Live onboarding PSP (optional)",
+      "status": "PAUSED_WAITING_OWNER",
+      "p0": false,
+      "p1": true,
+      "note": "Only if product enables TRAVELTRUST_ONBOARDING_STRIPE_ENABLED=1 for fiat onboarding bypass; USDC onboarding remains default",
+      "machine_key": "PI3-003_STRIPE_ONBOARDING"
+    },
+    {
+      "step": 9,
+      "id": "OWNER_SIGNOFF",
+      "label": "Owner Signoff → Production GO",
+      "status": "BLOCKED",
+      "p0": true
+    }
+  ],
+  "web3_verification_workpack": {
+    "prod_contracts_sepolia": {
+      "ESCROW_FACTORY_ADDRESS": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+      "FEE_ROUTER_ADDRESS": "0x81A8009210c5215100564c6E4123F672c4459306",
+      "REGISTRY_ADDRESS": "0xc50913e154f850583D0afbE9158a75E0e2167AAb",
+      "GOVERNOR_ADDRESS": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+      "GUIDE_STAKING_ADDRESS": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f",
+      "CHAIN_ID": 11155111
+    },
+    "suggested_scripts": [
+      "scripts/ops/sepolia-escrow-traveler-approve-deposit.example.sh",
+      "scripts/ops/b407-exec-chain-release-distribute.sh",
+      "scripts/dev/smoke-orders-pay-escrow-local.sh (adapt for prod Sepolia with P3_CHAIN_OFF=0)",
+      "GET /meta + prod FE build.env.local contract address parity",
+      "indexer tick + reconcile evidence on tt-api-prod"
+    ],
+    "evidence_target": "evidence/GO_production_readiness/G3-02-web3-payment/"
+  },
+  "files_to_reclassify": [
+    {
+      "path": "registry/g3-production-domains.v1.json",
+      "change": "Split/rename G3-02 payment → G3-02a web3_escrow_payment (P0) + G3-02b stripe_onboarding (P1)"
+    },
+    {
+      "path": "docs/runbook/G3-PRODUCTION-DOMAINS.md",
+      "change": "Explicit onboarding-only label for Stripe"
+    },
+    {
+      "path": "docs/runbook/PRODUCTION-GO-DECISION-PACKAGE.md",
+      "change": "Separate order mock-pay ban from PI3-003 Stripe"
+    },
+    {
+      "path": "registry/production-readiness-master-matrix.v1.yaml",
+      "change": "Add PRM-WEB3-PAY-B001; downgrade PRM-STR-B001 to P1"
+    },
+    {
+      "path": "scripts/dev/assemble-production-go-decision-package.cjs",
+      "change": "Closure steps: Web3 before Stripe optional"
+    },
+    {
+      "path": "scripts/dev/run-pi3-003-stripe-live-production-closure.sh",
+      "change": "Gate on explicit ONBOARDING_STRIPE product flag; not default P0"
+    }
+  ],
+  "immediate_actions": {
+    "pause": [
+      "PI3-003 Stripe Live closure until Owner opts into fiat onboarding"
+    ],
+    "next": [
+      "Define WEB3_PAYMENT_PRODUCTION_VERIFICATION runbook + prod Sepolia smoke"
+    ],
+    "do_not": [
+      "Treat Stripe Checkout as core marketplace payment",
+      "Use mock-pay on prod"
+    ]
+  }
+}

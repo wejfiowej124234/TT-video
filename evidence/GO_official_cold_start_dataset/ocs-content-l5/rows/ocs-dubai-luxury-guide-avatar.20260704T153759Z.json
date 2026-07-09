@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_verify.v1",
+  "stamp_utc": "20260704T153759Z",
+  "filename": "ocs-dubai-luxury-guide-avatar.jpg",
+  "row": {
+    "filename": "ocs-dubai-luxury-guide-avatar.jpg",
+    "chain_id": "dubai-luxury",
+    "city": "迪拜",
+    "slot": "guide-avatar",
+    "surface": "Guide",
+    "scene": "luxury 向导 · 沙漠 camp 或塔前 · 得体长袍/商务休闲",
+    "copy_label": "迪拜沙漠向导·Omar",
+    "asset_status": "verified",
+    "review_status": "pass"
+  },
+  "checks": [
+    {
+      "id": "media_exists",
+      "pass": true,
+      "detail": "D:\\TravelTrust-V1.1\\data\\official-cold-start\\media\\ocs-dubai-luxury-guide-avatar.jpg"
+    },
+    {
+      "id": "jpeg_magic",
+      "pass": true,
+      "detail": "ok"
+    },
+    {
+      "id": "min_size_16kb",
+      "pass": true,
+      "detail": "56250 bytes"
+    },
+    {
+      "id": "matrix_asset_status",
+      "pass": true,
+      "detail": "verified"
+    },
+    {
+      "id": "matrix_review_pass",
+      "pass": true,
+      "detail": "pass"
+    }
+  ],
+  "TT_OCS_CONTENT_L5_ROW_VERIFY": "PASS",
+  "gates_manual": {
+    "G2_copy_alignment": "pending_human",
+    "G3_slot_differentiation": "pending_human",
+    "G9_content_authenticity": "pending_human",
+    "G10_content_diversity": "pending_human"
+  }
+}

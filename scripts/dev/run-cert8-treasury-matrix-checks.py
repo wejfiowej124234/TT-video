@@ -11,9 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 
-import sys
-from pathlib import Path as _Path
-sys.path.insert(0, str(_Path(__file__).resolve().parents[1] / "lib"))
+sys.path.insert(0, str(ROOT / "scripts" / "dev" / "lib"))
 from hat_r1_resolve import resolve_hat_r1_evid_dir, hat_r1_rel_path, hat_r1_stamp
 HAT_DIR_PATH = resolve_hat_r1_evid_dir(ROOT)
 HAT_STAMP = hat_r1_stamp(HAT_DIR_PATH)
@@ -67,7 +65,7 @@ def check_treasury_execute() -> dict:
     if state_path.is_file():
         state_val = json.loads(state_path.read_text(encoding="utf-8")).get("state")
     return {
-        "ok": bool(data.get("tx_hash")) and state_val == "5",
+        "ok": bool(data.get("tx_hash")) and state_val == "6",
         "execute_tx": data.get("tx_hash"),
         "post_execute_state": state_val,
     }

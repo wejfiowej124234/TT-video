@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust.phase1_exit_forecast.v1",
+  "current_score": 90,
+  "current_band": "FREEZE_CANDIDATE",
+  "days_to_FREEZE_CANDIDATE": 0,
+  "date_FREEZE_CANDIDATE_utc": "2026-06-13",
+  "days_to_PHASE1_EXIT_READY": 5,
+  "date_PHASE1_EXIT_READY_utc": "2026-06-18",
+  "assumed_readiness_points_per_week": 6.3,
+  "if_fix_top3_root_causes": {
+    "readiness_delta": 19,
+    "projected_score": 100
+  }
+}

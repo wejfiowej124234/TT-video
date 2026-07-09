@@ -1,7 +1,12 @@
 "use client";
 
-import { memo, useEffect, useRef, useState } from "react";
-import { useLandingAmbientUrl } from "@/lib/catalogApi/useLandingAmbientUrl";
+import { memo, useEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { landingAmbientImageUrl } from "@/lib/landingAmbientByCountry";
+import {
+  landingAmbientCnRuntimeDataAttrs,
+  logLandingAmbientCnRuntimeProbe,
+} from "@/lib/catalogApi/landingAmbientCnDebug";
+import { useLandingAmbientResolution } from "@/lib/catalogApi/useLandingAmbientUrl";
 
 type Props = {
   /** 产品期国家中文名；空则 `AMBIENT_BG_HOME` 默认图 */
@@ -37,11 +42,15 @@ function AmbientPhotoLayer({
   kenBurns,
   kenBurnsPaused,
   fetchPriority,
+  imgRef,
+  onImgLoad,
 }: {
   src: string;
   kenBurns: boolean;
   kenBurnsPaused?: boolean;
   fetchPriority?: "high" | "low" | "auto";
+  imgRef?: RefObject<HTMLImageElement | null>;
+  onImgLoad?: (el: HTMLImageElement) => void;
 }) {
   return (
     <div className="absolute inset-0 overflow-hidden">
@@ -54,19 +63,21 @@ function AmbientPhotoLayer({
         }
       >
         <img
+          ref={imgRef}
           src={src}
           alt=""
           decoding="async"
           fetchPriority={fetchPriority}
           className="h-full w-full object-cover object-center"
           draggable={false}
+          onLoad={(e) => onImgLoad?.(e.currentTarget)}
         />
       </div>
     </div>
   );
 }
 
-/** 预加载 HD 图后再切换，避免新图未解码时 z 上层透明导致「点了没换」 */
+/** 预加载 HD 图后再切换 outgoing 层（主层 derived-first，不阻塞 catalog/tsUrl） */
 function preloadAmbientImage(url: string): Promise<void> {
   return new Promise((resolve) => {
     const img = new window.Image();
@@ -82,32 +93,47 @@ function preloadAmbientImage(url: string): Promise<void> {
 function LandingHomeAmbientBackdropInner({ country }: Props) {
   const reducedMotion = usePrefersReducedMotion();
   const pageVisible = usePageVisible();
-  const targetSrc = useLandingAmbientUrl(country);
-  const [shownSrc, setShownSrc] = useState(targetSrc);
+  const { selectedCountry, tsUrl, catalogUrl, runtimeUrl } = useLandingAmbientResolution(country);
+  const defaultHomeUrl = useMemo(() => landingAmbientImageUrl(""), []);
+
+  /** derived-first：已选国家 → catalog ?? tsUrl；空国家 → 仅 default fallback */
+  const displaySrc = selectedCountry.trim()
+    ? (catalogUrl ?? tsUrl)
+    : (catalogUrl ?? defaultHomeUrl);
+
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [imgCurrentSrc, setImgCurrentSrc] = useState("");
+  const prevDisplayRef = useRef(displaySrc);
   const [outgoingSrc, setOutgoingSrc] = useState<string | null>(null);
-  const shownRef = useRef(shownSrc);
-  shownRef.current = shownSrc;
 
   useEffect(() => {
-    if (targetSrc === shownRef.current) return;
-
-    let cancelled = false;
-    void preloadAmbientImage(targetSrc).then(() => {
-      if (cancelled || targetSrc === shownRef.current) return;
-      setOutgoingSrc(shownRef.current);
-      setShownSrc(targetSrc);
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [targetSrc]);
-
-  useEffect(() => {
-    if (!outgoingSrc) return;
+    if (displaySrc === prevDisplayRef.current) return;
+    const prev = prevDisplayRef.current;
+    prevDisplayRef.current = displaySrc;
+    setOutgoingSrc(prev);
+    void preloadAmbientImage(displaySrc);
     const t = window.setTimeout(() => setOutgoingSrc(null), 700);
     return () => window.clearTimeout(t);
-  }, [outgoingSrc]);
+  }, [displaySrc]);
+
+  useEffect(() => {
+    const probe = {
+      selectedCountry,
+      tsUrl,
+      runtimeUrl,
+      shownSrc: displaySrc,
+      imgCurrentSrc,
+    };
+    logLandingAmbientCnRuntimeProbe(probe);
+  }, [selectedCountry, tsUrl, runtimeUrl, displaySrc, imgCurrentSrc]);
+
+  const cnProbeAttrs = landingAmbientCnRuntimeDataAttrs({
+    selectedCountry,
+    tsUrl,
+    runtimeUrl,
+    shownSrc: displaySrc,
+    imgCurrentSrc,
+  });
 
   const kenBurns = !reducedMotion;
   const kenBurnsPaused = kenBurns && !pageVisible;
@@ -119,18 +145,23 @@ function LandingHomeAmbientBackdropInner({ country }: Props) {
       data-tt-home-ambient-phase="A"
       data-tt-home-ambient-l5="ken-burns"
       data-tt-home-ambient-motion={reducedMotion ? "off" : pageVisible ? "on" : "paused"}
-      data-tt-home-ambient-country={country.trim() || "default"}
-      data-tt-home-ambient-src={shownSrc}
+      data-tt-home-ambient-country={selectedCountry.trim() || "default"}
+      data-tt-home-ambient-src={displaySrc}
+      data-tt-home-ambient-ts-url={tsUrl}
+      data-tt-home-ambient-runtime-url={runtimeUrl}
+      {...cnProbeAttrs}
     >
       <div className="absolute inset-0 z-[1]">
         <AmbientPhotoLayer
-          src={shownSrc}
+          src={displaySrc}
           kenBurns={kenBurns}
           kenBurnsPaused={kenBurnsPaused}
           fetchPriority="high"
+          imgRef={imgRef}
+          onImgLoad={(el) => setImgCurrentSrc(el.currentSrc || el.src || "")}
         />
       </div>
-      {outgoingSrc && (
+      {outgoingSrc && outgoingSrc !== displaySrc && (
         <div className="absolute inset-0 z-[2] tt-home-ambient-crossfade-out" aria-hidden>
           <AmbientPhotoLayer src={outgoingSrc} kenBurns={false} />
         </div>

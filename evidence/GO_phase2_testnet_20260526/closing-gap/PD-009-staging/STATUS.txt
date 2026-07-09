@@ -1,0 +1,7 @@
+status: PASS
+last_run: 20260606T101421Z
+api_base: https://tt-api-staging.fly.dev
+note: PD-009 M16-M21 staging API chain; mock-pay P3_CHAIN_OFF=1; trust parity skipped (no local DATABASE_URL)
+phase: ② testnet closing gap
+artifacts: run.log
+ssot: docs/spec/artifacts/acquisition-publish-trust-rules.v1.md §8.2

@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.user_success.v1",
+  "first_success_path": "TT-9625 golden path",
+  "journeys": [
+    "register",
+    "market browse",
+    "escrow draft",
+    "identities hub"
+  ]
+}

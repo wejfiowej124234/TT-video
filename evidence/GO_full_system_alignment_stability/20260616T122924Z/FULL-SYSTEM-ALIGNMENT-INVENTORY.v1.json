@@ -1,0 +1,925 @@
+{
+  "schema": "traveltrust.full-system-alignment-inventory.v1",
+  "program_id": "TT_FULL_SYSTEM_ALIGNMENT_STABILITY_PROGRAM",
+  "stamp_utc": "20260616T122924Z",
+  "baseline": "GovFreeze V2 Clean Baseline",
+  "forbidden_rerun": [
+    "Tokenomics design",
+    "GovFreeze V2 assert",
+    "MTM 146 logic audit",
+    "Enterprise HAT re-audit"
+  ],
+  "counts": {
+    "ACTIVE": 62,
+    "LEGACY": 6,
+    "DELETE_CANDIDATE": 0,
+    "BROKEN": 0,
+    "NEEDS_FIX": 6
+  },
+  "fix_queue_counts": {
+    "P0": 0,
+    "P1": 6,
+    "P2": 0
+  },
+  "fix_queue": {
+    "P0": [],
+    "P1": [
+      {
+        "tier": "NEEDS_FIX",
+        "batch": 1,
+        "category": "route_alias_drift",
+        "id": "FE-GOV-STEWARD-ALIAS",
+        "path": "scripts/dev/capture-hat-r1-screenshots.mjs",
+        "summary": "脚本/e2e 引用 /governance/steward-region-workbench · 真入口 /governance?view=region（StewardRegionWorkbenchMain）",
+        "action": "统一 redirect 或改脚本为 /governance?view=region",
+        "priority": "P1"
+      },
+      {
+        "tier": "NEEDS_FIX",
+        "batch": 2,
+        "category": "governance_api_parity",
+        "id": "API-PARITY-params",
+        "path": "/api/v1/governance/params",
+        "summary": "FE=N BE=Y · /api/v1/governance/params",
+        "action": "补 BE handler 或 FE routes.ts",
+        "priority": "P1"
+      },
+      {
+        "tier": "NEEDS_FIX",
+        "batch": 2,
+        "category": "governance_api_parity",
+        "id": "API-PARITY-:id",
+        "path": "/api/v1/governance/proposal-status/:id",
+        "summary": "FE=N BE=Y · /api/v1/governance/proposal-status/:id",
+        "action": "补 BE handler 或 FE routes.ts",
+        "priority": "P1"
+      },
+      {
+        "tier": "NEEDS_FIX",
+        "batch": 2,
+        "category": "governance_api_parity",
+        "id": "API-PARITY-:jurisdiction",
+        "path": "/api/v1/governance/country-ledger/:jurisdiction",
+        "summary": "FE=N BE=Y · /api/v1/governance/country-ledger/:jurisdiction",
+        "action": "补 BE handler 或 FE routes.ts",
+        "priority": "P1"
+      },
+      {
+        "tier": "NEEDS_FIX",
+        "batch": 4,
+        "category": "registry_drift",
+        "id": "REG-LEGACY-NO-COMMENT",
+        "path": "registry/protocol-convergence-deployments.v1.yaml",
+        "summary": "registry 含 legacy 地址 0xd5225ba8… 无 LEGACY 注释",
+        "action": "添加 # LEGACY cutover 旁证",
+        "priority": "P1"
+      },
+      {
+        "tier": "NEEDS_FIX",
+        "batch": 6,
+        "category": "business_flow",
+        "id": "FLOW-STEWARD-WORKBENCH",
+        "path": "/governance?view=region",
+        "summary": "质押/Seat 工作台真入口 · 脚本 alias 漂移",
+        "action": "redirect 或更新 capture/e2e",
+        "priority": "P1"
+      }
+    ],
+    "P2": []
+  },
+  "batch9_probes": {
+    "local_api": {
+      "/health": {
+        "status": 200,
+        "ok": true
+      },
+      "/meta": {
+        "ok": false,
+        "error": "timed out"
+      },
+      "/api/v1/governance/protocol-reference": {
+        "status": 200,
+        "ok": true
+      }
+    },
+    "ai_probe": {
+      "check_id": "AI_PRE_HUMAN_UAT_PROBE",
+      "verdict": "PASS",
+      "fail_count": 0,
+      "skip_count": 0,
+      "checks": [
+        {
+          "id": "API-FL-REF",
+          "dimension": "four_ledger_reference",
+          "verdict": "PASS",
+          "detail": "four-ledger cached verdict=PASS"
+        },
+        {
+          "id": "API-PROTO",
+          "dimension": "api_read",
+          "verdict": "PASS",
+          "detail": "http=200",
+          "http": 200
+        },
+        {
+          "id": "API-PARAMS",
+          "dimension": "api_read",
+          "verdict": "PASS",
+          "detail": "http=200",
+          "http": 200
+        },
+        {
+          "id": "API-FEE-ROUTES",
+          "dimension": "api_read",
+          "verdict": "PASS",
+          "detail": "http=200",
+          "http": 200
+        },
+        {
+          "id": "API-PROPOSALS",
+          "dimension": "api_read",
+          "verdict": "PASS",
+          "detail": "http=200",
+          "http": 200
+        },
+        {
+          "id": "API-PM-QUOTE",
+          "dimension": "api_read",
+          "verdict": "PASS",
+          "detail": "http=200",
+          "http": 200
+        },
+        {
+          "id": "API-CP-DE",
+          "dimension": "country_ledger_4555",
+          "verdict": "PASS",
+          "detail": "http=200 has_4555=True",
+          "http": 200
+        },
+        {
+          "id": "API-ACCRUALS",
+          "dimension": "investor_accruals",
+          "verdict": "PASS",
+          "detail": "http=200 (404 acceptable empty)",
+          "http": 200
+        },
+        {
+          "id": "CHAIN-4555",
+          "dimension": "onchain_ledger_bps",
+          "verdict": "PASS",
+          "detail": "bpsStewardPath=4500 bpsGlobalTreasury=5500",
+          "rpc": true,
+          "ledger": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa",
+          "steward_bps": 4500,
+          "global_bps": 5500
+        }
+      ],
+      "honest_boundary": "read-only probes · not a substitute for Cert #1 human signoff"
+    },
+    "chain_read": {}
+  },
+  "fe_route_count": 194,
+  "items": [
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "frontend_routes",
+      "id": "FE-PAGES-DISCOVERED",
+      "path": "frontend/app/**/page.tsx",
+      "summary": "发现 194 条 App Router 页面",
+      "action": "SSOT 页面树",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "five_main",
+      "id": "FE-FIVE-_",
+      "path": "frontend/app/(home)",
+      "summary": "五主路由 /",
+      "action": "FIVE-MAIN 冻结",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "five_main",
+      "id": "FE-FIVE-_traveltrust",
+      "path": "frontend/app/traveltrust",
+      "summary": "五主路由 /traveltrust",
+      "action": "FIVE-MAIN 冻结",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "five_main",
+      "id": "FE-FIVE-_market",
+      "path": "frontend/app/market",
+      "summary": "五主路由 /market",
+      "action": "FIVE-MAIN 冻结",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "five_main",
+      "id": "FE-FIVE-_did-rank",
+      "path": "frontend/app/did-rank",
+      "summary": "五主路由 /did-rank",
+      "action": "FIVE-MAIN 冻结",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "five_main",
+      "id": "FE-FIVE-_community",
+      "path": "frontend/app/community",
+      "summary": "五主路由 /community",
+      "action": "FIVE-MAIN 冻结",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "governance_routes",
+      "id": "FE-GOV-governance",
+      "path": "frontend/app/governance",
+      "summary": "治理页 /governance",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "governance_routes",
+      "id": "FE-GOV-governance-params",
+      "path": "frontend/app/governance/params",
+      "summary": "治理页 /governance/params",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "governance_routes",
+      "id": "FE-GOV-governance-proposals",
+      "path": "frontend/app/governance/proposals",
+      "summary": "治理页 /governance/proposals",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "governance_routes",
+      "id": "FE-GOV-governance-proposals-new",
+      "path": "frontend/app/governance/proposals/new",
+      "summary": "治理页 /governance/proposals/new",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "governance_routes",
+      "id": "FE-GOV-governance-proposals-[id]",
+      "path": "frontend/app/governance/proposals/[id]",
+      "summary": "治理页 /governance/proposals/[id]",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "governance_routes",
+      "id": "FE-GOV-governance-delegate",
+      "path": "frontend/app/governance/delegate",
+      "summary": "治理页 /governance/delegate",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "governance_routes",
+      "id": "FE-GOV-governance-fee-routes",
+      "path": "frontend/app/governance/fee-routes",
+      "summary": "治理页 /governance/fee-routes",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "governance_routes",
+      "id": "FE-GOV-governance-vault-forwards",
+      "path": "frontend/app/governance/vault-forwards",
+      "summary": "治理页 /governance/vault-forwards",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "governance_routes",
+      "id": "FE-GOV-governance-distribution-accruals",
+      "path": "frontend/app/governance/distribution-accruals",
+      "summary": "治理页 /governance/distribution-accruals",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "governance_routes",
+      "id": "FE-GOV-governance-distribution-claim",
+      "path": "frontend/app/governance/distribution-claim",
+      "summary": "治理页 /governance/distribution-claim",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "NEEDS_FIX",
+      "batch": 1,
+      "category": "route_alias_drift",
+      "id": "FE-GOV-STEWARD-ALIAS",
+      "path": "scripts/dev/capture-hat-r1-screenshots.mjs",
+      "summary": "脚本/e2e 引用 /governance/steward-region-workbench · 真入口 /governance?view=region（StewardRegionWorkbenchMain）",
+      "action": "统一 redirect 或改脚本为 /governance?view=region",
+      "priority": "P1"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 1,
+      "category": "route_drift",
+      "id": "FE-ROUTE-PROPOSALS-NEW",
+      "path": "frontend/app/governance/proposals/new/page.tsx",
+      "summary": "提案创建 SSOT = /governance/proposals/new",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 2,
+      "category": "api_inventory",
+      "id": "FE-API-PATHS",
+      "path": "frontend/lib/api/routes.ts",
+      "summary": "FE 路径常量 135 条",
+      "action": "与 04 §三对拍",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 2,
+      "category": "api_inventory",
+      "id": "BE-ROUTES-RS",
+      "path": "crates/api/src/routes/**",
+      "summary": "BE 路由字面量 639 条",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-pool",
+      "path": "/api/v1/governance/pool",
+      "summary": "FE=Y BE=Y · /api/v1/governance/pool",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-rewards",
+      "path": "/api/v1/governance/rewards",
+      "summary": "FE=Y BE=Y · /api/v1/governance/rewards",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-fee-routes",
+      "path": "/api/v1/governance/fee-routes",
+      "summary": "FE=Y BE=Y · /api/v1/governance/fee-routes",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-vault-forwards",
+      "path": "/api/v1/governance/vault-forwards",
+      "summary": "FE=Y BE=Y · /api/v1/governance/vault-forwards",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-protocol-reference",
+      "path": "/api/v1/governance/protocol-reference",
+      "summary": "FE=Y BE=Y · /api/v1/governance/protocol-reference",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "NEEDS_FIX",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-params",
+      "path": "/api/v1/governance/params",
+      "summary": "FE=N BE=Y · /api/v1/governance/params",
+      "action": "补 BE handler 或 FE routes.ts",
+      "priority": "P1"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-proposals",
+      "path": "/api/v1/governance/proposals",
+      "summary": "FE=Y BE=Y · /api/v1/governance/proposals",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "NEEDS_FIX",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-:id",
+      "path": "/api/v1/governance/proposal-status/:id",
+      "summary": "FE=N BE=Y · /api/v1/governance/proposal-status/:id",
+      "action": "补 BE handler 或 FE routes.ts",
+      "priority": "P1"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-delegate",
+      "path": "/api/v1/governance/delegate",
+      "summary": "FE=Y BE=Y · /api/v1/governance/delegate",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-voting-power",
+      "path": "/api/v1/governance/voting-power",
+      "summary": "FE=Y BE=Y · /api/v1/governance/voting-power",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-investor-distributio",
+      "path": "/api/v1/governance/investor-distribution-accruals",
+      "summary": "FE=Y BE=Y · /api/v1/governance/investor-distribution-accruals",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "NEEDS_FIX",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-:jurisdiction",
+      "path": "/api/v1/governance/country-ledger/:jurisdiction",
+      "summary": "FE=N BE=Y · /api/v1/governance/country-ledger/:jurisdiction",
+      "action": "补 BE handler 或 FE routes.ts",
+      "priority": "P1"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-quote",
+      "path": "/api/v1/governance/ttg-exchange/quote",
+      "summary": "FE=Y BE=Y · /api/v1/governance/ttg-exchange/quote",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 2,
+      "category": "governance_api_parity",
+      "id": "API-PARITY-state-machines",
+      "path": "/api/v1/governance/state-machines",
+      "summary": "FE=Y BE=Y · /api/v1/governance/state-machines",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 3,
+      "category": "database",
+      "id": "DB-MIGRATIONS",
+      "path": "crates/api/migrations/",
+      "summary": "SQLx migrations · 116 files · 133 tables",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 3,
+      "category": "governance_table",
+      "id": "DB-TBL-governance_pool",
+      "path": "crates/api/migrations/*",
+      "summary": "治理表 governance_pool 存在",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 3,
+      "category": "governance_table",
+      "id": "DB-TBL-governance_reward_records",
+      "path": "crates/api/migrations/*",
+      "summary": "治理表 governance_reward_records 存在",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 3,
+      "category": "governance_table",
+      "id": "DB-TBL-governance_proposals_projection",
+      "path": "crates/api/migrations/*",
+      "summary": "治理表 governance_proposals_projection 存在",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 3,
+      "category": "governance_table",
+      "id": "DB-TBL-governance_mvp_proposals",
+      "path": "crates/api/migrations/*",
+      "summary": "治理表 governance_mvp_proposals 存在",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 3,
+      "category": "governance_table",
+      "id": "DB-TBL-governance_mvp_votes",
+      "path": "crates/api/migrations/*",
+      "summary": "治理表 governance_mvp_votes 存在",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 3,
+      "category": "governance_table",
+      "id": "DB-TBL-governance_mvp_delegations",
+      "path": "crates/api/migrations/*",
+      "summary": "治理表 governance_mvp_delegations 存在",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 3,
+      "category": "governance_table",
+      "id": "DB-TBL-investor_distribution_accruals",
+      "path": "crates/api/migrations/*",
+      "summary": "治理表 investor_distribution_accruals 存在",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 3,
+      "category": "governance_table",
+      "id": "DB-TBL-investor_distribution_accrual_lines",
+      "path": "crates/api/migrations/*",
+      "summary": "治理表 investor_distribution_accrual_lines 存在",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 3,
+      "category": "governance_table",
+      "id": "DB-TBL-p5_country_ledger_lines",
+      "path": "crates/api/migrations/*",
+      "summary": "治理表 p5_country_ledger_lines 存在",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 3,
+      "category": "governance_table",
+      "id": "DB-TBL-fee_router_routed_events",
+      "path": "crates/api/migrations/*",
+      "summary": "治理表 fee_router_routed_events 存在",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 3,
+      "category": "governance_table",
+      "id": "DB-TBL-region_vault_forwarded_events",
+      "path": "crates/api/migrations/*",
+      "summary": "治理表 region_vault_forwarded_events 存在",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 4,
+      "category": "baseline_env",
+      "id": "ENV-GOVFREEZE-V2",
+      "path": "scripts/dev/.env.phase2-chain-deploy.local",
+      "summary": "ACTIVE 地址 19 · LEGACY 8",
+      "action": "禁止替换 LEGACY 为 ACTIVE",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 4,
+      "category": "abi",
+      "id": "FE-GOV-ABI",
+      "path": "frontend/lib/governance/",
+      "summary": "治理 ABI 模块 4 个",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "NEEDS_FIX",
+      "batch": 4,
+      "category": "registry_drift",
+      "id": "REG-LEGACY-NO-COMMENT",
+      "path": "registry/protocol-convergence-deployments.v1.yaml",
+      "summary": "registry 含 legacy 地址 0xd5225ba8… 无 LEGACY 注释",
+      "action": "添加 # LEGACY cutover 旁证",
+      "priority": "P1"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 5,
+      "category": "admin",
+      "id": "ADM-PAGES",
+      "path": "frontend/app/admin/**",
+      "summary": "Admin 页面 107 条",
+      "action": "Cert #3 walkthrough",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 5,
+      "category": "admin_rbac",
+      "id": "ADM-RBAC-API",
+      "path": "crates/api/src/routes/admin/admin_rbac.rs",
+      "summary": "Admin RBAC route-matrix / capabilities",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 5,
+      "category": "multi_identity",
+      "id": "ID-HUB-PAGE",
+      "path": "frontend/app/me/identities/page.tsx",
+      "summary": "多重身份 Hub · ME-IDENTITIES-UI-FREEZE",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 6,
+      "category": "business_flow",
+      "id": "FLOW-AUTH",
+      "path": "/auth/login · /auth/register · /me",
+      "summary": "注册/登录 → 个人中心 · missing=none",
+      "action": "真人 UAT 待 Cert",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 6,
+      "category": "business_flow",
+      "id": "FLOW-IDENTITIES",
+      "path": "/me/identities",
+      "summary": "多重身份 Hub · missing=none",
+      "action": "真人 UAT 待 Cert",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 6,
+      "category": "business_flow",
+      "id": "FLOW-PROVIDER",
+      "path": "/provider/register · /auth/register",
+      "summary": "商家入驻 · missing=none",
+      "action": "真人 UAT 待 Cert",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 6,
+      "category": "business_flow",
+      "id": "FLOW-MARKET",
+      "path": "/market · /market/acquisition",
+      "summary": "自由市场 · 收购 · missing=none",
+      "action": "真人 UAT 待 Cert",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 6,
+      "category": "business_flow",
+      "id": "FLOW-GOV-PROPOSAL",
+      "path": "/governance/proposals · /governance/proposals/new",
+      "summary": "治理提案 · missing=none",
+      "action": "真人 UAT 待 Cert",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 6,
+      "category": "business_flow",
+      "id": "FLOW-GOV-CLAIM",
+      "path": "/governance/distribution-accruals · /governance/distribution-claim",
+      "summary": "收益 · Claim 边界 · missing=none",
+      "action": "真人 UAT 待 Cert",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 6,
+      "category": "business_flow",
+      "id": "FLOW-ESCROW",
+      "path": "/escrow/[id]",
+      "summary": "订单托管页 · missing=none",
+      "action": "真人 UAT 待 Cert",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 6,
+      "category": "business_flow",
+      "id": "FLOW-HOME",
+      "path": "/",
+      "summary": "首页 · missing=none",
+      "action": "真人 UAT 待 Cert",
+      "priority": "—"
+    },
+    {
+      "tier": "NEEDS_FIX",
+      "batch": 6,
+      "category": "business_flow",
+      "id": "FLOW-STEWARD-WORKBENCH",
+      "path": "/governance?view=region",
+      "summary": "质押/Seat 工作台真入口 · 脚本 alias 漂移",
+      "action": "redirect 或更新 capture/e2e",
+      "priority": "P1"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 7,
+      "category": "finance_ui",
+      "id": "FIN-UI-params",
+      "path": "frontend/appgovernance/params",
+      "summary": "Treasury/45-55 参数页",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 7,
+      "category": "finance_ui",
+      "id": "FIN-UI-distribution-accruals",
+      "path": "frontend/appgovernance/distribution-accruals",
+      "summary": "Accruals 只读",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 7,
+      "category": "finance_ui",
+      "id": "FIN-UI-distribution-claim",
+      "path": "frontend/appgovernance/distribution-claim",
+      "summary": "Claim 边界",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 7,
+      "category": "finance_ui",
+      "id": "FIN-UI-fee-routes",
+      "path": "frontend/appgovernance/fee-routes",
+      "summary": "FeeRouter 正交",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 7,
+      "category": "four_ledger",
+      "id": "EVID-FOUR-LEDGER",
+      "path": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z/four-ledger-reconcile.json",
+      "summary": "四账 reconcile · latest=20260616T084248Z · 只读引用不重跑",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "LEGACY",
+      "batch": 8,
+      "category": "no_rerun_script",
+      "id": "LEGACY-run-tt-governance-enterp",
+      "path": "scripts/dev/run-tt-governance-enterprise-hat-audit.sh",
+      "summary": "已通过治理逻辑 · 禁止本程序重审计",
+      "action": "只读引用",
+      "priority": "—"
+    },
+    {
+      "tier": "LEGACY",
+      "batch": 8,
+      "category": "no_rerun_script",
+      "id": "LEGACY-gen-ttg-governance-full-",
+      "path": "scripts/dev/gen-ttg-governance-full-coverage-matrix.py",
+      "summary": "已通过治理逻辑 · 禁止本程序重审计",
+      "action": "只读引用",
+      "priority": "—"
+    },
+    {
+      "tier": "LEGACY",
+      "batch": 8,
+      "category": "no_rerun_script",
+      "id": "LEGACY-run-g24-clean-baseline-0",
+      "path": "scripts/dev/run-g24-clean-baseline-01-root-cause-audit.sh",
+      "summary": "已通过治理逻辑 · 禁止本程序重审计",
+      "action": "只读引用",
+      "priority": "—"
+    },
+    {
+      "tier": "LEGACY",
+      "batch": 8,
+      "category": "no_rerun_script",
+      "id": "LEGACY-assert-gov-freeze-v2-act",
+      "path": "scripts/dev/assert-gov-freeze-v2-active-baseline-only.sh",
+      "summary": "已通过治理逻辑 · 禁止本程序重审计",
+      "action": "只读引用",
+      "priority": "—"
+    },
+    {
+      "tier": "LEGACY",
+      "batch": 8,
+      "category": "archive_tree",
+      "id": "ARCH-UI-V1",
+      "path": "frontend/archive/ui-v1",
+      "summary": "归档 UI v1 · 97 files",
+      "action": "禁止回流 runtime",
+      "priority": "—"
+    },
+    {
+      "tier": "LEGACY",
+      "batch": 8,
+      "category": "superseded_doc",
+      "id": "DOC-FULL-COVERAGE-MATRIX",
+      "path": "docs/spec/governance-token/TTG-GOVERNANCE-FULL-COVERAGE-MATRIX.md",
+      "summary": "834 行矩阵 · MTM 146 取代",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 9,
+      "category": "stability_probe",
+      "id": "PROBE-AI-PRE-UAT",
+      "path": "evidence/GO_ai_pre_human_uat/latest-stamp.txt",
+      "summary": "复用 AI 预验收 probe · 不重跑 GovFreeze assert",
+      "action": "—",
+      "priority": "—"
+    },
+    {
+      "tier": "ACTIVE",
+      "batch": 9,
+      "category": "stability_probe",
+      "id": "PROBE-LOCAL-API",
+      "path": "http://127.0.0.1:8080",
+      "summary": "本地 API 探针 · reachable=True",
+      "action": "—",
+      "priority": "—"
+    }
+  ],
+  "honest_boundary": "② alignment inventory ≠ ③ Production GO · BROKEN/NEEDS_FIX ≠ auto-fix"
+}

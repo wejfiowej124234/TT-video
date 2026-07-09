@@ -13,6 +13,12 @@ describe("adminShellContextForPath", () => {
     expect(adminShellContextForPath("/admin/content/countries")?.groupId).toBe("content");
     expect(adminShellContextForPath("/admin/official/cold-start")?.groupId).toBe("official_ops");
     expect(adminShellContextForPath("/admin/growth/analytics")?.groupId).toBe("growth");
+    expect(adminShellContextForPath("/admin/conversion-analytics")?.groupId).toBe("growth");
+    expect(adminShellContextForPath("/admin/alerts/incidents")?.groupId).toBe("finance");
+    expect(adminShellContextForPath("/admin/inbox")?.groupId).toBe("workspace");
+    expect(adminShellContextForPath("/admin/region-share/reconcile")?.groupId).toBe("finance");
+    expect(adminShellContextForPath("/admin/region-share")?.groupId).toBe("governance");
+    expect(adminShellContextForPath("/admin/guide-applications")?.groupId).toBe("onboarding");
     expect(adminShellContextForPath("/admin/config/releases")?.groupId).toBe("more");
   });
 

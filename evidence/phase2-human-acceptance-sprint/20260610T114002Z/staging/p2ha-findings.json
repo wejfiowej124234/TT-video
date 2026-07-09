@@ -1,0 +1,612 @@
+{
+  "sprint": "PHASE2-HUMAN-ACCEPTANCE-SPRINT",
+  "phase": "staging",
+  "phase_label": "② 测试网",
+  "recorded_at": "2026-06-10T11:43:13.127455+00:00",
+  "targets": {
+    "web": "https://tt-web-staging.fly.dev",
+    "api": "https://tt-api-staging.fly.dev"
+  },
+  "meta_git_sha": "bc5a939cd89c624be7c128b551306da177bf6016",
+  "verdict": "NO-GO",
+  "role_matrix": {
+    "旅行者": "PASS",
+    "向导": "PASS",
+    "管理员": "PASS",
+    "收购/运营": "FAIL"
+  },
+  "roles_required": [
+    "旅行者",
+    "向导",
+    "管理员",
+    "收购/运营"
+  ],
+  "summary": {
+    "p0": 16,
+    "p1": 0,
+    "p2": 0,
+    "flows_pass": 41,
+    "flows_fail": 16,
+    "flows_partial": 0
+  },
+  "issues": [
+    {
+      "id": "P2HA-P0-001",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/content/countries?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/content/countries?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/content/countries?limit=50"
+    },
+    {
+      "id": "P2HA-P0-002",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/content/publish-queue?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/content/publish-queue?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/content/publish-queue?limit=50"
+    },
+    {
+      "id": "P2HA-P0-003",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/content/revisions/detail?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/content/revisions/detail?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/content/revisions/detail?limit=50"
+    },
+    {
+      "id": "P2HA-P0-004",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/content/catalog/geo-validation",
+      "priority": "P0",
+      "title": "/api/v1/admin/content/catalog/geo-validation 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/content/catalog/geo-validation"
+    },
+    {
+      "id": "P2HA-P0-005",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/growth/referral-codes?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/growth/referral-codes?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/growth/referral-codes?limit=50"
+    },
+    {
+      "id": "P2HA-P0-006",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/growth/reward-ledger?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/growth/reward-ledger?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/growth/reward-ledger?limit=50"
+    },
+    {
+      "id": "P2HA-P0-007",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/growth/analytics/overview",
+      "priority": "P0",
+      "title": "/api/v1/admin/growth/analytics/overview 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/growth/analytics/overview"
+    },
+    {
+      "id": "P2HA-P0-008",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/growth/early-bird/stages?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/growth/early-bird/stages?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/growth/early-bird/stages?limit=50"
+    },
+    {
+      "id": "P2HA-P0-009",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/growth/airdrop-campaigns?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/growth/airdrop-campaigns?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/growth/airdrop-campaigns?limit=50"
+    },
+    {
+      "id": "P2HA-P0-010",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/growth/anti-fraud/rules?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/growth/anti-fraud/rules?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/growth/anti-fraud/rules?limit=50"
+    },
+    {
+      "id": "P2HA-P0-011",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/growth/anti-fraud/scan-runs?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/growth/anti-fraud/scan-runs?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/growth/anti-fraud/scan-runs?limit=50"
+    },
+    {
+      "id": "P2HA-P0-012",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/official/accounts?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/official/accounts?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/official/accounts?limit=50"
+    },
+    {
+      "id": "P2HA-P0-013",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/official/guides?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/official/guides?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/official/guides?limit=50"
+    },
+    {
+      "id": "P2HA-P0-014",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/official/itinerary-templates?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/official/itinerary-templates?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/official/itinerary-templates?limit=50"
+    },
+    {
+      "id": "P2HA-P0-015",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/official/cold-start/campaigns?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/official/cold-start/campaigns?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/official/cold-start/campaigns?limit=50"
+    },
+    {
+      "id": "P2HA-P0-016",
+      "role": "收购/运营",
+      "area": "Admin OPS",
+      "route": "/api/v1/admin/country-market/launches?limit=50",
+      "priority": "P0",
+      "title": "/api/v1/admin/country-market/launches?limit=50 请求失败 HTTP 404",
+      "observation": "",
+      "human_impact": "对应 UI 列表/表单/按钮无法加载或提交",
+      "repro": "GET /api/v1/admin/country-market/launches?limit=50"
+    }
+  ],
+  "flows": [
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/market",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/auth/login",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/community",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "身份",
+      "step": "GET /me",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "市场",
+      "step": "discover orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "订单",
+      "step": "my orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "社区",
+      "step": "feed",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/me/settings",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面浏览",
+      "step": "/escrow/demo-order-id",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/orders",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/users",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/finance",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/disputes",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/community/reports",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/inbox",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面浏览",
+      "step": "/admin/permissions",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "管理员",
+      "flow": "Admin 壳层",
+      "step": "capabilities",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "订单台账",
+      "step": "orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "用户台账",
+      "step": "users",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "财务",
+      "step": "home-overview",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "举报队列",
+      "step": "reports",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "RBAC",
+      "step": "route-matrix",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "管理员",
+      "flow": "2FA 状态",
+      "step": "totp/status",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/me/identities",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/market/acquisition",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/did-rank",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/did-rank?board=acquisition",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "信任",
+      "step": "GET /me trust",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "收购目录",
+      "step": "acquisition listings",
+      "status": "PASS",
+      "notes": "HTTP 401"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/admin/operator-guide",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/admin/content/countries",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/admin/growth",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/admin/official",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "页面浏览",
+      "step": "/admin/community/reports",
+      "status": "PASS",
+      "notes": "HTTP 200 · SPA shell"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "countries?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "publish-queue?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "detail?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "geo-validation",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "referral-codes?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "reward-ledger?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "overview",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "stages?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "airdrop-campaigns?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "rules?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "scan-runs?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "accounts?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "guides?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "itinerary-templates?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "campaigns?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "收购/运营",
+      "flow": "Admin OPS",
+      "step": "launches?limit=50",
+      "status": "FAIL",
+      "notes": "HTTP 404"
+    },
+    {
+      "role": "向导",
+      "flow": "页面浏览",
+      "step": "/guide",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "向导",
+      "flow": "向导资料",
+      "step": "GET /me",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "向导",
+      "flow": "接单",
+      "step": "guide orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "role": "向导",
+      "flow": "向导身份",
+      "step": "me.guide",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    }
+  ],
+  "boundary": "Human-visible acceptance · ①/② only · not Phase ③ Production GO"
+}

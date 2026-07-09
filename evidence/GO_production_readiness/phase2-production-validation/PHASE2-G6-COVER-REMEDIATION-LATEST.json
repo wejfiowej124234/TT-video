@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.phase2_g6_cover_remediation.v1",
+  "recorded_utc": "2026-07-08T12:59:15.496Z",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "ocs_state": "evidence/GO_official_cold_start_dataset/20260708T121151Z/state.json",
+  "steps": {
+    "assets": {
+      "ok": true,
+      "method": "http_probe_existing"
+    },
+    "media_bindings": {
+      "ok": false,
+      "status": 1,
+      "out": "error: database \"5432/tt_api_staging\" does not exist\n    at parseErrorMessage (D:\\TravelTrust-V1.1\\frontend\\node_modules\\pg-protocol\\dist\\parser.js:305:11)\n    at Parser.handlePacket (D:\\TravelTrust-V1.1\\frontend\\node_modules\\pg-protocol\\dist\\parser.js:143:27)\n    at Parser.parse (D:\\TravelTrust-V1.1\\frontend\\node_modules\\pg-protocol\\dist\\parser.js:37:38)\n    at Socket.<anonymous> (D:\\TravelTrust-V1.1\\frontend\\node_modules\\pg-protocol\\dist\\index.js:11:42)\n    at Socket.emit (node:events:518:28)\n    at addChunk (node:internal/streams/readable:561:12)\n    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)\n    at Readable.push (node:internal/streams/readable:392:5)\n    at TCP.onStreamRead (node:internal/stream_base_commons:189:23) {\n  length: 105,\n  severity: 'FATAL',\n  code: '3D000',\n  detail: undefined,\n  hint: undefined,\n  position: undefined,\n  internalPosition: undefined,\n  internalQuery: undefined,\n  where: undefined,\n  schema: undefined,\n  table: undefined,\n  column: undefined,\n  dataType: undefined,\n  constraint: undefined,\n  file: 'postinit.c',\n  line: '1032',\n  routine: 'InitPostgres'\n}"
+    },
+    "align-ocs-staging-guides-public-catalog.cjs": {
+      "ok": true,
+      "status": 0,
+      "out": "align-ocs-guides: published=10 ocs=10 unpublish=0 publish=0\nalign-ocs-guides: public_after=10 dup_cities=0"
+    },
+    "align-ocs-staging-market-catalog.cjs": {
+      "ok": true,
+      "status": 0,
+      "out": "align-ocs-market: published=20 ocs=20 unpublish=0 publish=0\nalign-ocs-market: provider=10 acquisition=10 extras=0"
+    },
+    "align-ocs-staging-community-feed.cjs": {
+      "ok": true,
+      "status": 0,
+      "out": "align-ocs-community-feed: published=10 ocs=10 unpublish=0\nalign-ocs-community-feed: OK"
+    },
+    "g6": {
+      "ok": true,
+      "status": 0,
+      "out": "TT_G6_STAGING_PUBLIC_UAT_BLIND_REVIEW: PASS\nTT_G6_FINDINGS: critical=0 major=0 minor=9\nTT_G6_EVIDENCE: D:/TravelTrust-V1.1/evidence/GO_production_preparation/g6-staging-public-uat/20260708T125941Z"
+    }
+  },
+  "signoff": "PHASE2_CMS_COS_VALIDATION_PASS"
+}

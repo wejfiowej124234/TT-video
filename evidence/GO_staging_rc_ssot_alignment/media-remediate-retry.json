@@ -1,0 +1,481 @@
+{
+  "schema": "traveltrust.ocs_official_media_bindings_remediation.v1",
+  "api": "https://tt-api-staging.fly.dev",
+  "state_path": "evidence/GO_official_cold_start_dataset/ocs-surface-expansion-staging/20260704T073209Z/state.json",
+  "recorded_at": "2026-07-04T10:35:16.548Z",
+  "http_patched": 10,
+  "sql_applied": 40,
+  "sql_pending": 0,
+  "results": [
+    {
+      "kind": "guide_avatar",
+      "chain": "tokyo-photo",
+      "guide_id": "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg",
+      "sql_hint": "UPDATE guides\n        SET avatar_url = '/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg',\n            updated_at = NOW()\n        WHERE id = 'b4d9ecf8-4762-4bc8-95f6-d1c339d2975b'::uuid;",
+      "note": "guide-profile PATCH rejects community-posts path — SQL bind",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "official_guide_cover",
+      "chain": "tokyo-photo",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "http": 200
+    },
+    {
+      "kind": "community_post_media",
+      "chain": "tokyo-photo",
+      "post_id": "236ac307-9528-4a8f-8671-ce79c56bed54",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-community-cover.jpg",
+      "sql_hint": "UPDATE community_posts\n        SET cover_url = '/api/v1/uploads/community-posts/ocs-tokyo-photo-community-cover.jpg',\n            media_urls = ARRAY['/api/v1/uploads/community-posts/ocs-tokyo-photo-community-media.jpg']::text[]\n        WHERE id = '236ac307-9528-4a8f-8671-ce79c56bed54'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL — no public PATCH for cover_url",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "provider_cover",
+      "chain": "tokyo-photo",
+      "listing_id": "c6f938af-4fb6-4059-bcac-5dd3e2015655",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = 'c6f938af-4fb6-4059-bcac-5dd3e2015655'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "acquisition_cover",
+      "chain": "tokyo-photo",
+      "listing_id": "c3a45398-9677-4cf4-879b-011d1f1323b1",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = 'c3a45398-9677-4cf4-879b-011d1f1323b1'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "guide_avatar",
+      "chain": "kyoto-culture",
+      "guide_id": "2f51212f-6ac0-445e-bf94-8338738b2de3",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-guide-avatar.jpg",
+      "sql_hint": "UPDATE guides\n        SET avatar_url = '/api/v1/uploads/community-posts/ocs-kyoto-culture-guide-avatar.jpg',\n            updated_at = NOW()\n        WHERE id = '2f51212f-6ac0-445e-bf94-8338738b2de3'::uuid;",
+      "note": "guide-profile PATCH rejects community-posts path — SQL bind",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "official_guide_cover",
+      "chain": "kyoto-culture",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "http": 200
+    },
+    {
+      "kind": "community_post_media",
+      "chain": "kyoto-culture",
+      "post_id": "2441f1c7-4ed1-4cab-bfce-fe7b3c082666",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-community-cover.jpg",
+      "sql_hint": "UPDATE community_posts\n        SET cover_url = '/api/v1/uploads/community-posts/ocs-kyoto-culture-community-cover.jpg',\n            media_urls = ARRAY['/api/v1/uploads/community-posts/ocs-kyoto-culture-community-media.jpg']::text[]\n        WHERE id = '2441f1c7-4ed1-4cab-bfce-fe7b3c082666'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL — no public PATCH for cover_url",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "provider_cover",
+      "chain": "kyoto-culture",
+      "listing_id": "80784772-af41-4d21-8faa-24dea081d0e6",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = '80784772-af41-4d21-8faa-24dea081d0e6'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "acquisition_cover",
+      "chain": "kyoto-culture",
+      "listing_id": "a110921b-af3b-49a0-923c-52f201e9134e",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = 'a110921b-af3b-49a0-923c-52f201e9134e'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "guide_avatar",
+      "chain": "seoul-food",
+      "guide_id": "519d9067-f2b2-49aa-9f76-8665cb24e85b",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-seoul-food-guide-avatar.jpg",
+      "sql_hint": "UPDATE guides\n        SET avatar_url = '/api/v1/uploads/community-posts/ocs-seoul-food-guide-avatar.jpg',\n            updated_at = NOW()\n        WHERE id = '519d9067-f2b2-49aa-9f76-8665cb24e85b'::uuid;",
+      "note": "guide-profile PATCH rejects community-posts path — SQL bind",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "official_guide_cover",
+      "chain": "seoul-food",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "http": 200
+    },
+    {
+      "kind": "community_post_media",
+      "chain": "seoul-food",
+      "post_id": "6099293b-a895-4f67-a7d2-d3b409039f63",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-seoul-food-community-cover.jpg",
+      "sql_hint": "UPDATE community_posts\n        SET cover_url = '/api/v1/uploads/community-posts/ocs-seoul-food-community-cover.jpg',\n            media_urls = ARRAY['/api/v1/uploads/community-posts/ocs-seoul-food-community-media.jpg']::text[]\n        WHERE id = '6099293b-a895-4f67-a7d2-d3b409039f63'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL — no public PATCH for cover_url",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "provider_cover",
+      "chain": "seoul-food",
+      "listing_id": "1c0103f3-4dac-4c2b-93f4-8a8d6c276266",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = '1c0103f3-4dac-4c2b-93f4-8a8d6c276266'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "acquisition_cover",
+      "chain": "seoul-food",
+      "listing_id": "62173ab8-b657-4b8c-9654-6dbac09b3ced",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = '62173ab8-b657-4b8c-9654-6dbac09b3ced'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "guide_avatar",
+      "chain": "bangkok-temple",
+      "guide_id": "da75b617-64bf-4338-a5b2-daf32921d695",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-guide-avatar.jpg",
+      "sql_hint": "UPDATE guides\n        SET avatar_url = '/api/v1/uploads/community-posts/ocs-bangkok-temple-guide-avatar.jpg',\n            updated_at = NOW()\n        WHERE id = 'da75b617-64bf-4338-a5b2-daf32921d695'::uuid;",
+      "note": "guide-profile PATCH rejects community-posts path — SQL bind",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "official_guide_cover",
+      "chain": "bangkok-temple",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+      "http": 200
+    },
+    {
+      "kind": "community_post_media",
+      "chain": "bangkok-temple",
+      "post_id": "489787cb-2290-47d0-b684-c795a137e682",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-community-cover.jpg",
+      "sql_hint": "UPDATE community_posts\n        SET cover_url = '/api/v1/uploads/community-posts/ocs-bangkok-temple-community-cover.jpg',\n            media_urls = ARRAY['/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg']::text[]\n        WHERE id = '489787cb-2290-47d0-b684-c795a137e682'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL — no public PATCH for cover_url",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "provider_cover",
+      "chain": "bangkok-temple",
+      "listing_id": "fc552d6f-81c4-4e1b-bdaa-1fb9245ab8a4",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = 'fc552d6f-81c4-4e1b-bdaa-1fb9245ab8a4'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "acquisition_cover",
+      "chain": "bangkok-temple",
+      "listing_id": "83b7cb80-c17d-494e-9cd3-48cdd1b96940",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = '83b7cb80-c17d-494e-9cd3-48cdd1b96940'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "guide_avatar",
+      "chain": "singapore-family",
+      "guide_id": "ea732e91-f0f3-42da-b4ae-1a1f5f0f592c",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-singapore-family-guide-avatar.jpg",
+      "sql_hint": "UPDATE guides\n        SET avatar_url = '/api/v1/uploads/community-posts/ocs-singapore-family-guide-avatar.jpg',\n            updated_at = NOW()\n        WHERE id = 'ea732e91-f0f3-42da-b4ae-1a1f5f0f592c'::uuid;",
+      "note": "guide-profile PATCH rejects community-posts path — SQL bind",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "official_guide_cover",
+      "chain": "singapore-family",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+      "http": 200
+    },
+    {
+      "kind": "community_post_media",
+      "chain": "singapore-family",
+      "post_id": "48a4aab3-c5d7-4c8d-a745-1752b5ee7ec5",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-singapore-family-community-cover.jpg",
+      "sql_hint": "UPDATE community_posts\n        SET cover_url = '/api/v1/uploads/community-posts/ocs-singapore-family-community-cover.jpg',\n            media_urls = ARRAY['/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg']::text[]\n        WHERE id = '48a4aab3-c5d7-4c8d-a745-1752b5ee7ec5'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL — no public PATCH for cover_url",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "provider_cover",
+      "chain": "singapore-family",
+      "listing_id": "b2d9f022-0653-4400-826c-91042ea8b3b8",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = 'b2d9f022-0653-4400-826c-91042ea8b3b8'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "acquisition_cover",
+      "chain": "singapore-family",
+      "listing_id": "6876ca7c-195e-40d8-b766-2787f2da9cf3",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = '6876ca7c-195e-40d8-b766-2787f2da9cf3'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "guide_avatar",
+      "chain": "paris-art",
+      "guide_id": "692a940e-1d25-452d-83f8-5b37f9141f60",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "sql_hint": "UPDATE guides\n        SET avatar_url = '/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg',\n            updated_at = NOW()\n        WHERE id = '692a940e-1d25-452d-83f8-5b37f9141f60'::uuid;",
+      "note": "guide-profile PATCH rejects community-posts path — SQL bind",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "official_guide_cover",
+      "chain": "paris-art",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "http": 200
+    },
+    {
+      "kind": "community_post_media",
+      "chain": "paris-art",
+      "post_id": "c9178c1a-f280-4f24-8107-621d51ee4037",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "sql_hint": "UPDATE community_posts\n        SET cover_url = '/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg',\n            media_urls = ARRAY['/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg']::text[]\n        WHERE id = 'c9178c1a-f280-4f24-8107-621d51ee4037'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL — no public PATCH for cover_url",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "provider_cover",
+      "chain": "paris-art",
+      "listing_id": "fe0533d3-305a-474a-b473-df4f4b7ea713",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = 'fe0533d3-305a-474a-b473-df4f4b7ea713'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "acquisition_cover",
+      "chain": "paris-art",
+      "listing_id": "28a1d88a-a2ba-4ec6-9243-074ab846c590",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-paris-art-acquisition-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-paris-art-acquisition-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-paris-art-acquisition-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = '28a1d88a-a2ba-4ec6-9243-074ab846c590'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "guide_avatar",
+      "chain": "nyc-skyline",
+      "guide_id": "c5d963f9-e679-43a6-9b84-5f7073a51109",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-guide-avatar.jpg",
+      "sql_hint": "UPDATE guides\n        SET avatar_url = '/api/v1/uploads/community-posts/ocs-nyc-skyline-guide-avatar.jpg',\n            updated_at = NOW()\n        WHERE id = 'c5d963f9-e679-43a6-9b84-5f7073a51109'::uuid;",
+      "note": "guide-profile PATCH rejects community-posts path — SQL bind",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "official_guide_cover",
+      "chain": "nyc-skyline",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-official-guide-cover.jpg",
+      "http": 200
+    },
+    {
+      "kind": "community_post_media",
+      "chain": "nyc-skyline",
+      "post_id": "870e4872-96ba-4abc-8779-f5eb4a113e7d",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-community-cover.jpg",
+      "sql_hint": "UPDATE community_posts\n        SET cover_url = '/api/v1/uploads/community-posts/ocs-nyc-skyline-community-cover.jpg',\n            media_urls = ARRAY['/api/v1/uploads/community-posts/ocs-nyc-skyline-community-media.jpg']::text[]\n        WHERE id = '870e4872-96ba-4abc-8779-f5eb4a113e7d'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL — no public PATCH for cover_url",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "provider_cover",
+      "chain": "nyc-skyline",
+      "listing_id": "8ccff008-23d6-4028-a6b4-65ac68e6eea7",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = '8ccff008-23d6-4028-a6b4-65ac68e6eea7'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "acquisition_cover",
+      "chain": "nyc-skyline",
+      "listing_id": "5c497be1-a4dc-4103-b16b-8021e357b08c",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-acquisition-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-nyc-skyline-acquisition-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-nyc-skyline-acquisition-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = '5c497be1-a4dc-4103-b16b-8021e357b08c'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "guide_avatar",
+      "chain": "sydney-coast",
+      "guide_id": "e551bed7-f455-4102-9fa3-b791a68e06d5",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-sydney-coast-guide-avatar.jpg",
+      "sql_hint": "UPDATE guides\n        SET avatar_url = '/api/v1/uploads/community-posts/ocs-sydney-coast-guide-avatar.jpg',\n            updated_at = NOW()\n        WHERE id = 'e551bed7-f455-4102-9fa3-b791a68e06d5'::uuid;",
+      "note": "guide-profile PATCH rejects community-posts path — SQL bind",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "official_guide_cover",
+      "chain": "sydney-coast",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg",
+      "http": 200
+    },
+    {
+      "kind": "community_post_media",
+      "chain": "sydney-coast",
+      "post_id": "83b1afc3-6aa4-42f1-ae83-a9b4f19d2dcf",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-sydney-coast-community-cover.jpg",
+      "sql_hint": "UPDATE community_posts\n        SET cover_url = '/api/v1/uploads/community-posts/ocs-sydney-coast-community-cover.jpg',\n            media_urls = ARRAY['/api/v1/uploads/community-posts/ocs-sydney-coast-community-media.jpg']::text[]\n        WHERE id = '83b1afc3-6aa4-42f1-ae83-a9b4f19d2dcf'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL — no public PATCH for cover_url",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "provider_cover",
+      "chain": "sydney-coast",
+      "listing_id": "4151ab89-4a88-427b-9f34-eb4fbe01a196",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = '4151ab89-4a88-427b-9f34-eb4fbe01a196'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "acquisition_cover",
+      "chain": "sydney-coast",
+      "listing_id": "7ecec219-7981-454c-84c7-e30cd01b815a",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = '7ecec219-7981-454c-84c7-e30cd01b815a'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "guide_avatar",
+      "chain": "barcelona-arch",
+      "guide_id": "dddf81f0-28b7-4aba-b744-70026d9fb148",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-guide-avatar.jpg",
+      "sql_hint": "UPDATE guides\n        SET avatar_url = '/api/v1/uploads/community-posts/ocs-barcelona-arch-guide-avatar.jpg',\n            updated_at = NOW()\n        WHERE id = 'dddf81f0-28b7-4aba-b744-70026d9fb148'::uuid;",
+      "note": "guide-profile PATCH rejects community-posts path — SQL bind",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "official_guide_cover",
+      "chain": "barcelona-arch",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-official-guide-cover.jpg",
+      "http": 200
+    },
+    {
+      "kind": "community_post_media",
+      "chain": "barcelona-arch",
+      "post_id": "82c660e2-3094-465c-b414-f8911067dfba",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-community-cover.jpg",
+      "sql_hint": "UPDATE community_posts\n        SET cover_url = '/api/v1/uploads/community-posts/ocs-barcelona-arch-community-cover.jpg',\n            media_urls = ARRAY['/api/v1/uploads/community-posts/ocs-barcelona-arch-community-media.jpg']::text[]\n        WHERE id = '82c660e2-3094-465c-b414-f8911067dfba'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL — no public PATCH for cover_url",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "provider_cover",
+      "chain": "barcelona-arch",
+      "listing_id": "4a62be85-92aa-4423-9136-9b26e47924f6",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = '4a62be85-92aa-4423-9136-9b26e47924f6'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "acquisition_cover",
+      "chain": "barcelona-arch",
+      "listing_id": "4f677a25-a73c-4a14-8e1f-3c25640e5a4c",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-acquisition-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-barcelona-arch-acquisition-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-barcelona-arch-acquisition-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = '4f677a25-a73c-4a14-8e1f-3c25640e5a4c'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "guide_avatar",
+      "chain": "dubai-luxury",
+      "guide_id": "cd69b54b-6407-4a34-90c6-f36c0c658dd7",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-guide-avatar.jpg",
+      "sql_hint": "UPDATE guides\n        SET avatar_url = '/api/v1/uploads/community-posts/ocs-dubai-luxury-guide-avatar.jpg',\n            updated_at = NOW()\n        WHERE id = 'cd69b54b-6407-4a34-90c6-f36c0c658dd7'::uuid;",
+      "note": "guide-profile PATCH rejects community-posts path — SQL bind",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "official_guide_cover",
+      "chain": "dubai-luxury",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-official-guide-cover.jpg",
+      "http": 200
+    },
+    {
+      "kind": "community_post_media",
+      "chain": "dubai-luxury",
+      "post_id": "60dbee57-9175-4a50-8e07-433583716c9d",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-community-cover.jpg",
+      "sql_hint": "UPDATE community_posts\n        SET cover_url = '/api/v1/uploads/community-posts/ocs-dubai-luxury-community-cover.jpg',\n            media_urls = ARRAY['/api/v1/uploads/community-posts/ocs-dubai-luxury-community-media.jpg']::text[]\n        WHERE id = '60dbee57-9175-4a50-8e07-433583716c9d'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL — no public PATCH for cover_url",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "provider_cover",
+      "chain": "dubai-luxury",
+      "listing_id": "db1ab8d0-8215-4647-ae2a-74e5f2a35b0d",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-provider-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-dubai-luxury-provider-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-dubai-luxury-provider-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = 'db1ab8d0-8215-4647-ae2a-74e5f2a35b0d'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    },
+    {
+      "kind": "acquisition_cover",
+      "chain": "dubai-luxury",
+      "listing_id": "d9ece4dc-7b9d-4928-9d4d-c6b314292b8b",
+      "ok": true,
+      "url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-acquisition-cover.jpg",
+      "sql_hint": "UPDATE market_listings\n          SET payload = payload\n              || jsonb_build_object('cover_url', '/api/v1/uploads/community-posts/ocs-dubai-luxury-acquisition-cover.jpg', 'videoUrl', '/api/v1/uploads/community-posts/ocs-dubai-luxury-acquisition-cover.jpg'),\n              updated_at = NOW()\n          WHERE id = 'd9ece4dc-7b9d-4928-9d4d-c6b314292b8b'::uuid;",
+      "note": "Apply via fly postgres / DATABASE_URL",
+      "applied": "DATABASE_URL"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T03:53:47Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "上海",
+    "city_en": "Shanghai",
+    "matrix_ids": [
+      "PH-CN-316-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-316-FOOD",
+      "legacy_value": "小笼包",
+      "poi_id": "f0a53a77-617e-4bcb-80e2-a290bfddbd40",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-316-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

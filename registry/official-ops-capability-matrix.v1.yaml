@@ -1,0 +1,105 @@
+# Official Ops + Content Center Capability Matrix (v1.1)
+# SSOT: docs/runbook/TT-OFFICIAL-OPS-CAPABILITY-MATRIX.md
+# Domain freeze: registry/official-ops-domain.v1.yaml
+
+matrix_version: v1.1.0
+domain_version: "1.0"
+domain_status: STABLE
+architecture: FROZEN
+dev_frozen: true
+feature_frozen: true
+defer_until: PRODUCTION_GO
+active_program: PHASE3_PRODUCTION_READINESS
+review_doc: docs/runbook/TT-OFFICIAL-OPS-CAPABILITY-MATRIX.md
+domain_registry: registry/official-ops-domain.v1.yaml
+public_operations_ssot: docs/runbook/TT-OFFICIAL-OPS-PUBLIC-OPERATIONS-SSOT.md
+gate: scripts/gates/check-official-ops-public-operations-ssot.sh
+
+maturity_layers:
+  layer1_positioning: COMPLETE
+  layer2_planes: COMPLETE
+  layer3_modules: COMPLETE
+  layer4_capability_matrix: COMPLETE
+
+overall_completion:
+  content_center_percent: 92
+  official_ops_ops_plane_percent: 95
+  public_operations_mvp: COMPLETE
+  public_operations_mvp_percent: 100
+  public_operations_full_vision_percent: 40
+  public_operations_full_vision_matrix_calculated_percent: 38
+  public_operations_vision_gap: ROADMAP_NOT_DEFECT
+  cold_start_percent: 100
+
+production_go:
+  official_ops_cms_blockers: none
+  suggested_pre_go:
+    - landing_ambient_admin_ui
+    - media_assets_admin_ui
+    - catalog_consumer_enabled_decision
+  deferred_post_go:
+    official_ops_1_1:
+      - phase2_display_model
+      - phase2_publish_featured_priority_surface
+    official_ops_1_2:
+      - phase3_campaign_merge_schedule
+    official_ops_2_0:
+      - phase4_production_policy
+
+feature_level_roadmap:
+  public_operations_current: MVP
+  public_operations_next: STANDARD
+  three_dimension_status: registry/traveltrust-three-dimension-status.v1.yaml
+
+admin_architecture:
+  model: FOUR_CENTERS
+  status: PERMANENT_FROZEN
+  ssot: docs/runbook/TT-ADMIN-THREE-CENTERS-ARCHITECTURE.md
+  governance_registry: registry/admin-four-centers-governance.v1.yaml
+  governance_principles: EIGHT_PERMANENT
+  governance_closed_loop: true
+  feature_ssot_required: true
+  business_centers:
+    - user_management
+    - content_center
+    - official_ops
+  platform_center: platform_center
+  centers_total: 4
+  routing_discipline: FIVE_STEP
+  no_new_admin_modules: true
+  no_scattered_backoffices: true
+
+official_ops_1_1_registered_scope:
+  doc: docs/runbook/TT-OFFICIAL-OPS-ENTERPRISE-ROADMAP.md
+  delivery_manifest: docs/runbook/TT-OFFICIAL-OPS-1.1-DELIVERY-MANIFEST.md
+  delivery_manifest_registry: registry/official-ops-1.1-delivery-manifest.v1.yaml
+  delivery_manifest_input: docs/runbook/TT-ADMIN-FUNCTIONAL-USABILITY-AUDIT-20260701.md
+  scope: FULL_ENTERPRISE_BACKOFFICE
+  timing: first_product_enhancement_post_production_go
+  strategy: single_completion_not_fragmented_versions
+  public_operations:
+    - publish_unpublish
+    - featured
+    - priority
+    - surface
+    - schedule
+    - statistics
+    - preview
+    - version_history
+    - test_policy
+  campaign_center:
+    - cold_start
+    - homepage_campaign
+    - market_campaign
+    - community_campaign
+    - festival_campaign
+    - holiday_campaign
+    - regional_campaign
+  content_center:
+    - landing_background
+    - media_assets
+    - poi_images
+    - translation
+    - seo
+    - publish_queue
+  must_have_vs_must_now: distinguished

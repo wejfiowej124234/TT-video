@@ -1,0 +1,29 @@
+{
+  "stamp": "20260701T180347Z",
+  "verdict": "PASS_MACHINE",
+  "verification": {
+    "stamp": "20260701T180425Z",
+    "verdict": "PASS_MACHINE",
+    "complete_40_40": true,
+    "gates": {
+      "mapping": "PASS",
+      "G_L5": "PASS",
+      "G_L5_PUB": "PASS",
+      "G_L5_RBAC": "PASS",
+      "G_L5_U02": "PASS",
+      "ADM_U01": "PASS",
+      "ADM_U02": "PASS"
+    },
+    "local_smoke": "PASS",
+    "staging": "WARN_P0_CLEAR",
+    "staging_detail": "run-admin-l5-staging-audit verdict=WARN_P0_CLEAR p0=0 fails=1 browser=SKIP",
+    "staging_evidence": "evidence/GO_staging_admin_l5_audit/20260701T180551Z",
+    "manual_next": [
+      "Local Admin walkthrough: /admin/official/public-operations (all tabs incl. Campaign)",
+      "Staging Admin walkthrough: same routes + deploy/rollback L5 confirm",
+      "TT-MARKET-DISPLAY-DATA-MANUAL-UAT.md public surface spot-check"
+    ],
+    "evidence_dir": "D:/TravelTrust-V1.1/evidence/GO_admin_platform_40_complete/20260701T180425Z"
+  },
+  "checklist": "D:/TravelTrust-V1.1/evidence/GO_admin_platform_staging_deploy/20260701T180347Z/STAGING-DEPLOY-ALIGNMENT-CHECKLIST.md"
+}

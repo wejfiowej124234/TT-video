@@ -1,0 +1,21 @@
+{
+  "schema": "phase2_sepolia_steward_pool_broadcast.v1",
+  "timestamp_utc": "20260605T090955Z",
+  "chain_id": 11155111,
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "timelock_address": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+  "steward_ttg_address": "0xaC2E29AC7089e4863C21dAF232cF8bbb025d91ca",
+  "broadcast": true,
+  "agent_proxy_ok_env": "TRAVELTRUST_PHASE2_SEPOLIA_BROADCAST_OK=1",
+  "addresses": {
+    "region_steward_stake_pool_address": "0x16f914f3d50f7aa02665589e715f94ca3b7ab47c"
+  },
+  "forge_log": "forge-broadcast-20260605T090955Z.log",
+  "broadcast_json": "contracts/broadcast/DeployRegionStewardStakePool.s.sol/11155111/run-latest.json",
+  "next_owner_actions": [
+    "Update scripts/dev/.env.phase2-chain-deploy.local REGION_STEWARD_STAKE_POOL_ADDRESS",
+    "Update registry/protocol-convergence-deployments.v1.yaml environments.sepolia.addresses.region_steward_stake_pool_address",
+    "Update root .env Sepolia section REGION_STEWARD_STAKE_POOL_ADDRESS"
+  ],
+  "ssot": "docs/runbook/TT-PHASE2-STEWARD-POOL-SEPOLIA-BROADCAST-CHECKLIST.md §5"
+}

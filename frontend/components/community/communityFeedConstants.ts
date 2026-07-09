@@ -47,7 +47,8 @@ export type RegionKey = (typeof REGION_KEYS)[number];
 export const FEED_PAGE_SIZE = 6;
 /** 乐观评论 id 前缀（`useCommunityFeedCommentSend` · `communityFeedMappersCounts` 同源） */
 export const COMMUNITY_COMMENT_OPTIMISTIC_ID_PREFIX = "comment-local-";
-export const TRAVEL_IMG = "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80";
+/** @deprecated Local demo only — do not use in production surfaces; use governed API media URLs. */
+export const TRAVEL_IMG = "";
 
 /** 31 §2.4：评论/详情内「约 TA 当向导」pill，与 Feed 卡片 `CommunityFeedCardContent` 一致；**37** **`min-h-[44px]`** */
 export const COMMUNITY_BOOK_GUIDE_CTA_CLASS = `${TT_COMMUNITY_PAGE_L5.pill} shrink-0 ${communityCardLinkFocus}`;

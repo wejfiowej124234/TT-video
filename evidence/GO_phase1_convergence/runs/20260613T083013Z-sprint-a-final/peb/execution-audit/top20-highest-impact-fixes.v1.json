@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.top20_impact_fixes.v1",
+  "fixes": [
+    {
+      "rank": 1,
+      "root_cause_id": "RC-05",
+      "title": "L5 freeze compliance (UXA · five-main)",
+      "findings_eliminated": 2,
+      "readiness_delta": 2,
+      "projected_score_after": 92
+    },
+    {
+      "rank": 2,
+      "root_cause_id": "RC-06",
+      "title": "Retire archived UI tree (PF)",
+      "findings_eliminated": 1,
+      "readiness_delta": 3,
+      "projected_score_after": 93
+    }
+  ]
+}

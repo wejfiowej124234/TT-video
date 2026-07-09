@@ -1,0 +1,10 @@
+TT_OCS_SURFACE_EXPANSION: VERIFIED
+environment: staging
+at=20260704T073209Z
+api=https://tt-api-staging.fly.dev
+manifest=data/official-cold-start/dataset.v1.json
+signoff=ocs-surface-expansion-signoff.json
+evidence=evidence/GO_official_cold_start_dataset/ocs-surface-expansion-staging/20260704T073209Z
+ocs_strict_legacy_media=1
+ddg_rc=1
+note=Independent staging evidence — 10/10 acceptance PASS

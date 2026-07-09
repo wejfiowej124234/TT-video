@@ -16,6 +16,7 @@ mod pg_sync;
 mod prefix;
 mod seed;
 
+pub use prefix::is_trust_gate_seeded_guide_id;
 pub use seed::seed_trust_gate_e2e_fixtures;
 
 #[cfg(test)]

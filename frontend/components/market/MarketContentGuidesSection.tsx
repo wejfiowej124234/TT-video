@@ -12,6 +12,7 @@ import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 
 const D = TT_MARKETING_MARKET_DARK_PATH;
 import { MARKET_GUIDE_SHOWCASE } from "@/lib/marketMockData";
+import { marketPublicShowcaseFallbackEnabled } from "@/lib/marketPublicDisplayGate";
 import { resolveMarketGuideForDetail } from "./marketContentModel";
 
 type View = "split" | "orders" | "guides";
@@ -68,7 +69,8 @@ export function MarketContentGuidesSection({
       !loadingGuides &&
       guides.length === 0 &&
       apiErrorGuides == null &&
-      !hasFilters ? (
+      !hasFilters &&
+      marketPublicShowcaseFallbackEnabled() ? (
         <div
           className={D.marketGlassInsetPanelShowcase}
           role="region"

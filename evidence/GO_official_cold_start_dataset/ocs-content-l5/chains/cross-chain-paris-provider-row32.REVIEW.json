@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T145500Z",
+  "trigger_row": 32,
+  "trigger_filename": "ocs-paris-art-provider-cover.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "provider_comparison": {
+    "tokyo-photo": "台场半日旅拍",
+    "kyoto-culture": "私享茶室",
+    "seoul-food": "夜市美食团",
+    "bangkok-temple": "湄南河 sunset 游船晚宴",
+    "singapore-family": "亲子通票",
+    "paris-art": "博物馆免排队小团 · 馆内讲解",
+    "distinct": true
+  },
+  "vs_row31_guide": "服务场景 vs 向导肖像",
+  "no_quality_regression_prior_31": true
+}

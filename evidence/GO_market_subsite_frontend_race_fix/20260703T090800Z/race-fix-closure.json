@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.market_subsite_frontend_race_fix.v1",
+  "stamp": "20260703T090800Z",
+  "classification": "Market Subsite Frontend Race Fix",
+  "not_data_governance": true,
+  "governance_gates": {
+    "OCS": "CLOSED",
+    "DDG": "CLOSED",
+    "SOPCP": "CLOSED",
+    "evidence_reuse": "ENFORCED"
+  },
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "web_deploy": {
+    "app": "tt-web-staging",
+    "release_version": "45",
+    "deployment_id": "deployment-01KWKHQBCBBDNG5DCM17WJ0QWK"
+  },
+  "api_baseline": {
+    "provider_all": 10,
+    "acquisition_all": 10,
+    "provider_jp": 2,
+    "acquisition_jp": 0
+  },
+  "fix_files": [
+    "frontend/components/market/useMarketStandaloneBusinessPage.ts",
+    "frontend/components/market/MarketSubsiteFilterBar.tsx"
+  ],
+  "regression": "frontend/e2e/market-subsite-catalog-race-regression.spec.ts",
+  "playwright": {
+    "pass": 8,
+    "fail": 0,
+    "note": "8/8 scenarios pass; acquisition hard refresh retried once after transient staging disconnect"
+  },
+  "verdict": "PASS"
+}

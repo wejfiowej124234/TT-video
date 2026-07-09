@@ -265,6 +265,13 @@ pub struct GuideRow {
     pub rejection_codes: Vec<String>,
     pub rejection_message: Option<String>,
     pub data_origin: String,
+    pub display_status: String,
+    pub display_origin: String,
+    pub featured: bool,
+    pub display_priority: i32,
+    pub display_surfaces: Vec<String>,
+    pub display_start_at: Option<DateTime<Utc>>,
+    pub display_end_at: Option<DateTime<Utc>>,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
 }
@@ -308,6 +315,7 @@ pub async fn list_guides(pool: &PgPool) -> Result<Vec<GuideRow>, sqlx::Error> {
             let languages = serde_json::from_value(r.languages).unwrap_or_default();
             let service_types = serde_json::from_value(r.service_types).unwrap_or_default();
             let rejection_codes = serde_json::from_value(r.rejection_codes).unwrap_or_default();
+            let data_origin = r.data_origin.clone();
             GuideRow {
                 id: r.id,
                 user_id: r.user_id,
@@ -329,7 +337,18 @@ pub async fn list_guides(pool: &PgPool) -> Result<Vec<GuideRow>, sqlx::Error> {
                 status: r.status,
                 rejection_codes,
                 rejection_message: r.rejection_message,
-                data_origin: r.data_origin,
+                data_origin: data_origin.clone(),
+                display_status: if data_origin == "production" {
+                    "published".into()
+                } else {
+                    "draft".into()
+                },
+                display_origin: "REAL".into(),
+                featured: false,
+                display_priority: 0,
+                display_surfaces: vec![],
+                display_start_at: None,
+                display_end_at: None,
                 created_at: r.created_at,
                 updated_at: r.updated_at,
             }

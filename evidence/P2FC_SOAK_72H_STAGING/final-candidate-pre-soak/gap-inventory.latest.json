@@ -1,0 +1,170 @@
+{
+  "schema": "traveltrust.p2fc_final_candidate_gap_inventory.v1",
+  "generated_at_utc": "2026-06-26T00:03:22Z",
+  "strategy": "STRAT-F_FINAL_CANDIDATE_PRE_SOAK",
+  "supersedes": "STRAT-A_PLUS_MR12 (soak-then-deploy on 520abf39)",
+  "policy": "fix_all_open → local → staging live → human acceptance → freeze → fresh 72h soak",
+  "ledger_ssot": "registry/complexity-convergence-fix-ledger.v1.yaml",
+  "ledger_doc_ssot": "docs/handbook/engineering/181-Complexity-Audit-Final-Candidate-Before-Soak.md",
+  "items": [
+    {
+      "id": "S1_MR12",
+      "phase": "fix_before_soak",
+      "category": "deploy_backlog",
+      "action": "Apply MR-01/MR-02 + backlog patch · TN-P1-010 · wave1/wave2 deploy to staging",
+      "gate": "TT_P2FC_FINAL_CANDIDATE_DEPLOY: PASS",
+      "status": "open"
+    },
+    {
+      "id": "S2_ADM_U01",
+      "phase": "fix_before_soak",
+      "category": "live_validation",
+      "action": "record-adm-u01-staging-evidence.sh persistent_host release_gate=GO",
+      "gate": "TT_ADM_U01_EVIDENCE: PASS",
+      "status": "open"
+    },
+    {
+      "id": "S3_P0_RUNTIME",
+      "phase": "fix_before_soak",
+      "category": "live_validation",
+      "action": "p2fc-verify-p0-rbac-bypass-runtime.sh CONFIRMED on staging",
+      "gate": "TT_P2FC_P0_RBAC_BYPASS_RUNTIME: CONFIRMED",
+      "status": "open"
+    },
+    {
+      "id": "S4_BLOCKERS",
+      "phase": "fix_before_soak",
+      "category": "blocker",
+      "action": "Clear B1–B4 via TN-P1-010 + wave1 deploy + G02/meta graduation checkpoint",
+      "gate": "open_blocker_count=0",
+      "status": "open"
+    },
+    {
+      "id": "S5_ADM_U02",
+      "phase": "fix_before_soak",
+      "category": "live_validation",
+      "action": "record-adm-u02-staging-evidence.sh release_gate=GO",
+      "gate": "TT_ADM_U02_STAGING_EVIDENCE: PASS",
+      "status": "open"
+    },
+    {
+      "id": "S6_D3",
+      "phase": "fix_before_soak",
+      "category": "security",
+      "action": "Live merge D3-F04 (ADM-U01 GO) + D3-F02 (P0 runtime)",
+      "gate": "D3 verdict=PASS",
+      "status": "open"
+    },
+    {
+      "id": "S7_D124",
+      "phase": "fix_before_soak",
+      "category": "security",
+      "action": "Converge D1/D2/D4 WARN/OPEN with live evidence",
+      "gate": "D124 open_warn_count=0",
+      "status": "open"
+    },
+    {
+      "id": "B1_TN_P1_010",
+      "phase": "fix_before_soak",
+      "category": "blocker_watch",
+      "action": "await COMPLETED.json",
+      "gate": "cleared",
+      "status": "open",
+      "ref": "TN-B04"
+    },
+    {
+      "id": "B2_W1_ITINERARIES_HUB",
+      "phase": "fix_before_soak",
+      "category": "blocker_watch",
+      "action": "MR-02 defer itineraries.rs from wave1 first deploy (Δ195 hub)",
+      "gate": "cleared",
+      "status": "open",
+      "ref": "W1-B01"
+    },
+    {
+      "id": "B3_G06_G08",
+      "phase": "fix_before_soak",
+      "category": "blocker_watch",
+      "action": "G06 soak · G07 TN+indexer · G08 deep surface — post one-shot chain",
+      "gate": "cleared",
+      "status": "open",
+      "ref": "G06-G08"
+    },
+    {
+      "id": "B4_DB_COMPOUND",
+      "phase": "fix_before_soak",
+      "category": "blocker_watch",
+      "action": "db/mod.rs + itineraries compound — TN-P1-010 before wave1",
+      "gate": "cleared",
+      "status": "open",
+      "ref": "TN-B02/B03"
+    },
+    {
+      "id": "D1-F02",
+      "phase": "fix_before_soak",
+      "category": "D1_contract_upgradeability",
+      "severity": "medium",
+      "action": "Deploy scripts may expose bare implementation paths — formal baseline must use Proxy",
+      "gate": "CLEARED or ACCEPTED with live evidence",
+      "status": "open"
+    },
+    {
+      "id": "D1-F04",
+      "phase": "fix_before_soak",
+      "category": "D1_contract_upgradeability",
+      "severity": "high",
+      "action": "delegatecall/upgradeToAndCall surfaces — timelock delay is primary mitigation",
+      "gate": "CLEARED or ACCEPTED with live evidence",
+      "status": "open"
+    },
+    {
+      "id": "D2-F03",
+      "phase": "fix_before_soak",
+      "category": "D2_governance_attack_surface",
+      "severity": "medium",
+      "action": "Review Governor privileged modifiers — manual follow-up",
+      "gate": "CLEARED or ACCEPTED with live evidence",
+      "status": "open"
+    },
+    {
+      "id": "D3-F02",
+      "phase": "fix_before_soak",
+      "category": "D3_admin_rbac_chain",
+      "severity": "high",
+      "action": "Direct console-role write bypass path exists when env enabled",
+      "gate": "CLEARED or ACCEPTED with live evidence",
+      "status": "open"
+    },
+    {
+      "id": "D3-F04",
+      "phase": "fix_before_soak",
+      "category": "D3_admin_rbac_chain",
+      "severity": "high",
+      "action": "Phase ② staging RBAC matrix GO not started — ADM-U01 deferred",
+      "gate": "CLEARED or ACCEPTED with live evidence",
+      "status": "open"
+    },
+    {
+      "id": "D4-F01",
+      "phase": "fix_before_soak",
+      "category": "D4_ui_api_chain_consistency",
+      "severity": "medium",
+      "action": "Admin RBAC (CeFi ops) ≠ on-chain governance roles — intentional split",
+      "gate": "CLEARED or ACCEPTED with live evidence",
+      "status": "open"
+    },
+    {
+      "id": "D4-F03",
+      "phase": "fix_before_soak",
+      "category": "D4_ui_api_chain_consistency",
+      "severity": "medium",
+      "action": "16 UI permission checks — must mirror API deny matrix",
+      "gate": "CLEARED or ACCEPTED with live evidence",
+      "status": "open"
+    }
+  ],
+  "open_count": 18,
+  "fix_before_soak_open": 18,
+  "freeze_candidate_sha": null,
+  "soak_relaunch_after": "engage-testnet-staging-baseline-freeze.sh + p2fc-launch-staging-soak-72h.sh P2FC_SOAK_SUPERSEDE=1"
+}

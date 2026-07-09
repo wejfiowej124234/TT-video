@@ -12,6 +12,7 @@ import {
   type ColdStartCampaignItem,
   type ColdStartSurfaceId,
 } from "@/lib/coldStartCampaign/types";
+import { coldStartCampaignItemLabel } from "@/lib/coldStartCampaign/coldStartCampaignItemLabel";
 import { useColdStartCampaignSurface } from "@/lib/coldStartCampaign/useColdStartCampaignSurface";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
@@ -33,17 +34,7 @@ function itemHref(item: ColdStartCampaignItem): string | null {
 }
 
 function itemLabel(item: ColdStartCampaignItem): string {
-  const r = item.resolved as Record<string, unknown>;
-  if (item.item_type === "official_account" && typeof r.display_label === "string") {
-    return r.display_label;
-  }
-  if (item.item_type === "itinerary_template" && typeof r.title === "string") {
-    return r.title;
-  }
-  if (item.item_type === "guide_post" && typeof r.title === "string") {
-    return r.title;
-  }
-  return item.item_type;
+  return coldStartCampaignItemLabel(item);
 }
 
 function itemMeta(item: ColdStartCampaignItem): string | null {
@@ -115,11 +106,11 @@ function ColdStartCampaignSurfaceSectionInner({
               const href = itemHref(item);
               const label = itemLabel(item);
               const meta = itemMeta(item);
-              const chipClass = `inline-flex max-w-full items-center gap-1 rounded-full border border-white/15 bg-white/8 px-2.5 py-1 text-meta text-slate-100 ${travelFocusRingOffset2Classes}`;
+              const chipClass = `inline-flex max-w-full items-center gap-1 rounded-full border border-ref-sun/30 bg-ink-900/85 px-2.5 py-1 text-meta text-slate-100 ${travelFocusRingOffset2Classes}`;
               const content = (
                 <>
                   <span className="truncate">{label}</span>
-                  {meta ? <span className="text-white/55">· {meta}</span> : null}
+                  {meta ? <span className="text-slate-300">· {meta}</span> : null}
                 </>
               );
               return (

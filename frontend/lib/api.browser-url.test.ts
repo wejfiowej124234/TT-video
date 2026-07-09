@@ -19,4 +19,13 @@ describe("apiUrl (browser, loopback base)", () => {
     expect(apiUrl(routes.guides)).toBe(`${o}/api/v1/guides`);
     expect(apiUrl(routes.auth.login)).toBe("http://localhost:8080/auth/login");
   });
+
+  it("corrects stale NEXT_PUBLIC_API_BASE_URL pointing at Next dev port", async () => {
+    vi.stubEnv("NEXT_PUBLIC_API_BASE_URL", "http://127.0.0.1:3012");
+    vi.resetModules();
+    const { apiUrl, routes } = await import("./api");
+    expect(apiUrl(routes.auth.seedTestAccounts)).toBe(
+      "http://localhost:8080/auth/seed-test-accounts",
+    );
+  });
 });

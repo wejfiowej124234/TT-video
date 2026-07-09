@@ -1,0 +1,88 @@
+{
+  "schema": "traveltrust.local_first_alignment_audit.v2",
+  "at": "20260630T075325Z",
+  "head": "042b320ce1c378296bcc74c78326e94674e1494c",
+  "staging_api_sha": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+  "staging_web_sha": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+  "local_first": {
+    "local_ahead_undeployed": true,
+    "runtime_drift": false,
+    "phase3_wip_isolated_count": 30
+  },
+  "verdict": "NOT_100_PERCENT_ALIGNED",
+  "tt_marker": "TT_LOCAL_FIRST_ALIGNMENT: NOT_100_PERCENT_ALIGNED",
+  "gaps": [
+    {
+      "id": "GAP-DEPLOY-SSOT",
+      "sev": "P1",
+      "count": 47,
+      "sample": [
+        "crates/api/src/complexity_convergence.rs",
+        "crates/api/src/db/community.rs",
+        "crates/api/src/db/guides.rs",
+        "crates/api/src/db/reviews.rs",
+        "crates/api/src/routes/admin/mod.rs",
+        "crates/api/src/routes/community/common.rs",
+        "crates/api/src/routes/community/community_feed_like_collect_db_api_tests/helpers.rs",
+        "crates/api/src/routes/community/community_feed_like_collect_db_api_tests/moderation_flow_pg.rs"
+      ],
+      "note": "Phase② deploy-path uncommitted — not staging runtime drift until S5 deploy"
+    },
+    {
+      "id": "GAP-PHASE3-WIP-ISOLATED",
+      "sev": "INFO",
+      "count": 30,
+      "note": "Phase③ WIP in worktree — must stay isolated from Phase② deploy"
+    },
+    {
+      "id": "GAP-WT-TRACKED",
+      "sev": "P1",
+      "count": 37,
+      "sample": [
+        "AGENTS.md",
+        "crates/api/src/complexity_convergence.rs",
+        "crates/api/src/db/community.rs",
+        "crates/api/src/db/guides.rs",
+        "crates/api/src/db/reviews.rs",
+        "crates/api/src/routes/admin/mod.rs",
+        "crates/api/src/routes/community/common.rs",
+        "crates/api/src/routes/community/community_feed_like_collect_db_api_tests/helpers.rs",
+        "crates/api/src/routes/community/community_feed_like_collect_db_api_tests/moderation_flow_pg.rs",
+        "crates/api/src/routes/community/community_feed_like_collect_db_api_tests/upload_media_pg.rs"
+      ],
+      "note": "scripts/docs tracked dirty — local convergence; ≠ staging runtime drift"
+    },
+    {
+      "id": "GAP-LOCAL-AHEAD-UNDEPLOYED",
+      "sev": "INFO",
+      "note": "head=042b320ce1c3 staging=9979b35efe56 — Local First; bring at S5 deploy only"
+    },
+    {
+      "id": "GAP-EVIDENCE-HISTORICAL",
+      "sev": "INFO",
+      "note": "TN-P1-010/D24/D6 historical gates · TN-P1-010: need post-soak TN-P1-010 @ freeze 8dcd304a (historical-only reports excluded)"
+    }
+  ],
+  "probes": {
+    "D6": true,
+    "D24": true,
+    "TN-P1-010": false,
+    "TN-P1-010_gate": {
+      "pass": false,
+      "state": "no",
+      "note": "need post-soak TN-P1-010 @ freeze 8dcd304a (historical-only reports excluded)",
+      "freeze_sha": "8dcd304afae1bafe5a4de738175e171256a9501e"
+    },
+    "DEEP_GATE": true,
+    "G04": true,
+    "ADM_U01": true,
+    "HAT": true
+  },
+  "wt": {
+    "porcelain_count": 834,
+    "closure_dirty": [],
+    "deploy_phase2_uncommitted": 47,
+    "deploy_phase3_isolated": 30,
+    "non_exempt_dirty": 219
+  }
+}

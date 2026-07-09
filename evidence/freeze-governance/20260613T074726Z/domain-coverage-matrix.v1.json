@@ -1,0 +1,109 @@
+{
+  "schema": "traveltrust.domain_coverage_matrix.v1",
+  "primary_domains_frozen": true,
+  "convergence_phase": true,
+  "coverage": [
+    {
+      "domain": "D01-D76",
+      "layer": "L1",
+      "status": "COMPLETE",
+      "gate": "run-full-system-audit-master-gate.sh"
+    },
+    {
+      "domain": "DX-01",
+      "layer": "L1",
+      "status": "ACTIVE",
+      "gate": null
+    },
+    {
+      "domain": "PF",
+      "layer": "L2",
+      "status": "COMPLETE",
+      "gate": "run-product-forensic-audit-gate.sh"
+    },
+    {
+      "domain": "DOA",
+      "layer": "L1",
+      "status": "COMPLETE",
+      "gate": "run-doa-audit-gate.sh"
+    },
+    {
+      "domain": "R",
+      "layer": "L5",
+      "status": "COMPLETE",
+      "gate": "run-lifecycle-forensic-audit-gate.sh"
+    },
+    {
+      "domain": "K",
+      "layer": "L5",
+      "status": "COMPLETE",
+      "gate": "run-lifecycle-forensic-audit-gate.sh"
+    },
+    {
+      "domain": "E",
+      "layer": "L5",
+      "status": "COMPLETE",
+      "gate": "run-lifecycle-forensic-audit-gate.sh"
+    },
+    {
+      "domain": "CA",
+      "layer": "L5",
+      "status": "COMPLETE",
+      "gate": "run-lifecycle-forensic-audit-gate.sh"
+    },
+    {
+      "domain": "UXA",
+      "layer": "L2",
+      "status": "COMPLETE",
+      "gate": "run-lifecycle-forensic-audit-gate.sh"
+    },
+    {
+      "domain": "CX",
+      "layer": "L3",
+      "status": "COMPLETE",
+      "gate": "run-platform-governance-audit-gate.sh"
+    },
+    {
+      "domain": "BA",
+      "layer": "L3",
+      "status": "COMPLETE",
+      "gate": "run-platform-governance-audit-gate.sh"
+    },
+    {
+      "domain": "OPS",
+      "layer": "L3",
+      "status": "COMPLETE",
+      "gate": "run-platform-governance-audit-gate.sh"
+    },
+    {
+      "domain": "TRUST",
+      "layer": "L3",
+      "status": "COMPLETE",
+      "gate": "run-platform-governance-audit-gate.sh"
+    },
+    {
+      "domain": "CS",
+      "layer": "L3",
+      "status": "COMPLETE",
+      "gate": "run-platform-governance-audit-gate.sh"
+    },
+    {
+      "domain": "ADMIN",
+      "layer": "L4",
+      "status": "COMPLETE",
+      "gate": "run-platform-governance-audit-gate.sh"
+    },
+    {
+      "domain": "AG",
+      "layer": "L4",
+      "status": "COMPLETE",
+      "gate": "run-admin-governance-audit-gate.sh"
+    },
+    {
+      "domain": "MA",
+      "layer": "L6",
+      "status": "COMPLETE",
+      "gate": "run-meta-audit-gate.sh"
+    }
+  ]
+}

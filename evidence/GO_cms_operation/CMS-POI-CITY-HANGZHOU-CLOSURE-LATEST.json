@@ -1,0 +1,150 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-07T065456Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "CN",
+    "country_zh": "中国",
+    "city_zh": "杭州",
+    "city_en": "Hangzhou"
+  },
+  "poi_count": 10,
+  "matrix_ids": [
+    "PH-CN-281-ATR",
+    "PH-CN-282-ATR",
+    "PH-CN-283-ATR",
+    "PH-CN-284-ATR",
+    "PH-CN-285-ATR",
+    "PH-CN-286-FOOD",
+    "PH-CN-287-FOOD",
+    "PH-CN-288-FOOD",
+    "PH-CN-289-FOOD",
+    "PH-CN-290-FOOD"
+  ],
+  "pois": [
+    "西湖",
+    "灵隐寺",
+    "雷峰塔",
+    "西溪湿地",
+    "宋城",
+    "西湖醋鱼",
+    "龙井虾仁",
+    "片儿川",
+    "知味观",
+    "楼外楼"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-CN-281-ATR",
+      "legacy_value": "西湖",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-282-ATR",
+      "legacy_value": "灵隐寺",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-283-ATR",
+      "legacy_value": "雷峰塔",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-284-ATR",
+      "legacy_value": "西溪湿地",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-285-ATR",
+      "legacy_value": "宋城",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-286-FOOD",
+      "legacy_value": "西湖醋鱼",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-287-FOOD",
+      "legacy_value": "龙井虾仁",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-288-FOOD",
+      "legacy_value": "片儿川",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-289-FOOD",
+      "legacy_value": "知味观",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-290-FOOD",
+      "legacy_value": "楼外楼",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-281-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-282-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-283-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-284-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-285-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-286-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-287-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-288-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-289-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-290-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=CN&city=%E6%9D%AD%E5%B7%9E&limit=50",
+    "http": 200,
+    "count": 10
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-hangzhou/CMS-POI-HANGZHOU-CLOSED-LOOP-LATEST.json",
+  "next_city": {
+    "country_iso": "CN",
+    "city_zh": "西安",
+    "city_en": "Xi'an"
+  },
+  "closure_keys": {
+    "TT_CMS_POI_CITY_HANGZHOU": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": "CN · 西安"
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_HANGZHOU": "CLOSED"
+}

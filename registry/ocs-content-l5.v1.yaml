@@ -1,0 +1,460 @@
+# Phase② OCS Content L5 · Content Engineering
+# Content First, Code Frozen · 与 Runtime / PP / Production GO 分线
+# Content Brief: data/official-cold-start/content-brief.v1.yaml
+# Production Matrix: data/official-cold-start/content-production-matrix.v1.yaml
+# Runbook: docs/runbook/TT-OCS-CONTENT-L5.md
+
+schema: traveltrust.ocs_content_l5.v1
+version: 1
+effective_utc: "2026-07-04"
+content_l5_version: 2.3.0
+
+machine_keys:
+  TT_OCS_CONTENT_L5: CLOSED
+  TT_OCS_CONTENT_L5_EXECUTION: CLOSED
+  TT_OCS_CONTENT_L5_READY: "YES"
+  TT_CONTENT_PRODUCTION_MATRIX: PASS
+  TT_CONTENT_BRAND_CONSISTENCY: PASS
+  TT_OCS_CONTENT_L5_CONTENT_BRIEF: data/official-cold-start/content-brief.v1.yaml
+  TT_OCS_CONTENT_L5_PRODUCTION_MATRIX: data/official-cold-start/content-production-matrix.v1.yaml
+  TT_OCS_CONTENT_L5_RUNBOOK: docs/runbook/TT-OCS-CONTENT-L5.md
+  TT_OCS_CONTENT_L5_EVIDENCE_ROOT: evidence/GO_official_cold_start_dataset/ocs-content-l5/
+
+content_first_code_frozen:
+  motto: Content First, Code Frozen
+  quality_over_speed: >-
+    宁可 60 张均达企业级标准，也不为赶进度降低任一张内容质量；
+    每张图直接影响 TravelTrust 品牌第一印象，质量优先于速度。
+  no_quality_regression: >-
+    新增任何一张图片都必须保证整体质量不下降（No Quality Regression）：
+    不仅当前行 PASS，还须让所有已完成行/城市继续保持 PASS；
+    若新增内容导致全局风格、品牌、真实性或多样性下降，须返工当前行，
+    禁止修改已完成内容去适配新图。
+  principle: >-
+    OCS Content L5 阶段禁止新增业务功能、禁止修改 Runtime、SSOT、API、DB、Catalog、Baseline、
+    前端媒体链及治理框架；所有工作仅允许发生在 Content Brief、Content Production Matrix、
+    dataset.v1.json、官方媒体资产（media/）及其对应验证 Evidence 中，以内容质量驱动阶段关闭。
+  frozen:
+    - runtime
+    - ssot_technical
+    - api
+    - db
+    - catalog
+    - staging_rc_baseline
+    - frontend_media_render_chain
+    - governance_framework
+  allowed_only:
+    - content-brief.v1.yaml
+    - content-production-matrix.v1.yaml
+    - dataset.v1.json_copy_within_chain
+    - data/official-cold-start/media/
+    - ocs_content_l5_evidence
+    - content_validation_scripts
+
+execution:
+  status: CLOSED
+  closed_utc: "20260704T155000Z"
+  closure_evidence: evidence/GO_official_cold_start_dataset/ocs-content-l5/20260704T155000Z/OCS-CONTENT-L5-CLOSED.json
+  l5_score: 93.5
+  mode: row_by_row
+  discipline: no_batch_skip
+  progress:
+    matrix_rows_total: 60
+    matrix_rows_verified: 60
+    matrix_rows_review_pass: 60
+    last_completed_row: ocs-dubai-luxury-community-media.jpg
+    chains_closed: 10
+    current_chain: dubai-luxury
+    current_chain_progress: "6/6 CLOSED"
+    next_matrix_row: null
+    last_milestone_review: evidence/GO_official_cold_start_dataset/ocs-content-l5/OCS-CONTENT-L5-OFFICIAL-CONTENT-LIBRARY-MILESTONE-60of60.REVIEW.json
+    final_production_content_audit: evidence/GO_official_cold_start_dataset/ocs-content-l5/OCS-CONTENT-L5-FINAL-PRODUCTION-CONTENT-AUDIT-60of60.REVIEW.json
+    brand_consistency_review: evidence/GO_official_cold_start_dataset/ocs-content-l5/OCS-CONTENT-L5-BRAND-CONSISTENCY-60of60.REVIEW.json
+    closure_bundle: evidence/GO_official_cold_start_dataset/ocs-content-l5/20260704T155000Z/
+  execution_discipline:
+    frozen_nine_class_framework: true
+    no_tenth_review_class: true
+    per_row: Row Review + G1-G10 + nine-class + Global Regression
+    per_city_chain_6_rows: City Chain Final Review
+    global_milestone_rows: [24, 36, 48, 60]
+    global_milestone_label: Global Official Content Library Milestone Review
+    optional_sample_regression_every_12_rows: true
+    final_60_of_60: Final Production Content Audit
+    generation_quality_gates:
+      content_safety_pre_check: Prompt 生成前审查，避免可识别名画/Logo/版权作品/名人肖像/未授权艺术品特写
+      post_generation_technical: 生成后确认 JPEG 可解码、640x480、>16KB、非占位图（Row32 教训）
+      business_semantic: 是否符合当前 Surface 职责（九类专项内执行，非第十类）
+      country_authenticity: FR/JP/KR 等国家元素隔离
+      global_regression: 新增行不得导致已完成行质量下降
+  destination_experience_review_policy: >-
+      每行 Community Media 及关键 Consumer Surface 须含 destination_experience_review，
+      评估是否真实体现目的地旅行体验、用户价值、商业吸引力与城市特色。
+  country_consistency_review_policy: >-
+      每个新 country/chain 首行（Guide Avatar）须输出 country-consistency-{chain_id}.REVIEW.json，
+      锁定该国文化主题在后续 6 Slot 及未来同国内容中统一，禁止与其他国家文化混用。
+  user_experience_review_policy: >-
+      每行 Community Cover/Media 及关键 Consumer Surface 须含 user_experience_review，
+      从 Feed 首屏吸引力/点击意愿/缩略图识别度等维度评估，避免技术合格但缺乏点击欲望。
+  cross_chain_review_policy: >-
+      每完成新 city chain 首行 Acquisition 或 chain 3/6 里程碑时，
+      与已 CLOSED chain 执行 cross-chain review，避免城市内容同质化。
+  global_consistency_review_policy: >-
+      每完成 10 行 Matrix（或每 city chain 里程碑）输出
+      OCS-CONTENT-L5-GLOBAL-CONSISTENCY-{N}of60.REVIEW.json，
+      检查重复/语义冲突/品牌漂移等全局风险。
+  global_regression_review_policy: >-
+      每完成新 Matrix 行（尤其 Provider/Guide 等身份敏感 slot）须输出
+      OCS-CONTENT-L5-GLOBAL-REGRESSION-{N}of60.REVIEW.json：
+      自动复核全部已完成行，检查人物撞脸、构图重复、色调同质化、城市辨识度、
+      商业定位、品牌一致性、Consumer Experience、六类专项审核是否仍 PASS；
+      新增行不得导致已完成内容回归（No Quality Regression）。
+  content_portfolio_review_policy: >-
+      第七类专项审核 Content Portfolio Review：每完成新 Matrix 行须把全部 verified 行
+      作为 Official Content Library 整体审核（10 项固定检查）；
+      脚本：run-ocs-content-l5-content-portfolio-review.cjs --visual-pass --trigger-filename <file>
+      输出 OCS-CONTENT-L5-CONTENT-PORTFOLIO-{N}of60.REVIEW.json；
+      仅 Portfolio PASS 且 No Quality Regression 才允许下一行。
+  surface_boundary_review_policy: >-
+      第八类专项审核 Surface Boundary Review：每行须确认素材仅表达所属 Surface 语义，
+      禁止 Guide/Provider/Acquisition/Official Guide/Community 职责混用；
+      脚本：run-ocs-content-l5-surface-boundary-review.cjs --filename <file> --visual-pass
+  visual_sequence_review_policy: >-
+      第九类专项审核 Visual Sequence Review（最终类 · 框架冻结为 9 类不再扩展）：
+      连续浏览全库时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；
+      脚本：run-ocs-content-l5-visual-sequence-review.cjs --filename <file> --visual-pass
+  nine_class_review_framework_frozen: true
+  destination_authenticity_review_policy: >-
+      每行在完成 G1–G10、Cross-Chain、Global Consistency 之后，必须执行
+      Destination Authenticity Review：核查建筑/街景/服饰/语言/交通/自然/饮食/商业/文化元素
+      全部属于当前城市与国家；禁止跨国家/文化/城市混用；并对照 Manifest 全字段 100% 对齐。
+      脚本：run-ocs-content-l5-destination-authenticity-review.cjs --filename <file> --visual-pass
+  guide_identity_diversity_review_policy: >-
+      所有 guide-avatar 行（及后续含真人主体的 portrait slot）须执行 Guide Identity Diversity Review：
+      不同城市 Guide 不得高度撞脸；年龄层/性别/发型/脸型/气质须有明显区别；
+      职业形象符合当地文化；连续浏览多城不会误认同一位向导。
+      脚本：run-ocs-content-l5-guide-identity-diversity-review.cjs --filename <file> --visual-pass
+  provider_business_identity_review_policy: >-
+      所有 provider-cover 行须执行 Provider Business Identity Review：
+      不同城市 Provider 不得呈现同一商业空间/装修风格/经营模式或高度相似品牌气质；
+      须体现当地特色业态与服务体验；连续浏览多城不会误认同一家商户。
+      脚本：run-ocs-content-l5-provider-business-identity-review.cjs --filename <file> --visual-pass
+  acquisition_product_identity_review_policy: >-
+      所有 acquisition-cover 行须执行 Acquisition Product Identity Review：
+      代购/悬赏商品须具明确本地特色与业务语义；不得与 Guide/Provider/Community/Official Guide
+      主体或场景混用；跨城 Acquisition 商品不得高度相似。
+      脚本：run-ocs-content-l5-acquisition-product-identity-review.cjs --filename <file> --visual-pass
+  official_guide_destination_review_framework: >-
+      official-guide-cover 行须执行 Official Guide Destination Review（框架已建立，Row 16 起判定）：
+      路线/地图封面语义、目的地表达、与其它 Surface 隔离。
+      脚本：run-ocs-content-l5-official-guide-destination-review.cjs --emit-framework | --filename <file> --visual-pass
+  community_authenticity_review_policy: >-
+      community-cover / community-media 须执行 Community Authenticity Review（Row 17 起正式判定）：
+      长期固定项含真实分享感、自然互动、Feed 可读性、情绪表达、UGC 非商业海报；
+      禁止与其它 Surface 语义混用；Cover 与 Media 须不同场景。
+      脚本：run-ocs-content-l5-community-authenticity-review.cjs --filename <file> --visual-pass
+  city_chain_final_review_policy: >-
+      每完成一个城市 6/6 verified+pass，输出 chains/{chain_id}-chain-FINAL.REVIEW.json
+      与 City Content Score；须含 Chain Narrative Continuity、Visual Diversity、
+      City Brand Identity、Consumer Experience 四闸；再进入下一城市 Matrix 行。
+  per_row_workflow:
+    - manifest_first_brief_and_matrix
+    - replace_media_binary
+    - sync_dataset_copy_if_needed
+    - row_verify_script
+    - destination_authenticity_review
+    - guide_identity_diversity_review
+    - provider_business_identity_review
+    - acquisition_product_identity_review
+    - update_matrix_status
+    - append_row_evidence
+  row_verify_script: scripts/dev/run-ocs-content-l5-row-verify.cjs
+  destination_authenticity_script: scripts/dev/run-ocs-content-l5-destination-authenticity-review.cjs
+  guide_identity_diversity_script: scripts/dev/run-ocs-content-l5-guide-identity-diversity-review.cjs
+  provider_business_identity_script: scripts/dev/run-ocs-content-l5-provider-business-identity-review.cjs
+  acquisition_product_identity_script: scripts/dev/run-ocs-content-l5-acquisition-product-identity-review.cjs
+  official_guide_destination_review_script: scripts/dev/run-ocs-content-l5-official-guide-destination-review.cjs
+  community_authenticity_review_script: scripts/dev/run-ocs-content-l5-community-authenticity-review.cjs
+  content_portfolio_review_script: scripts/dev/run-ocs-content-l5-content-portfolio-review.cjs
+  surface_boundary_review_script: scripts/dev/run-ocs-content-l5-surface-boundary-review.cjs
+  visual_sequence_review_script: scripts/dev/run-ocs-content-l5-visual-sequence-review.cjs
+  row_complete_script: scripts/dev/run-ocs-content-l5-row-complete.cjs
+  execution_open_evidence: evidence/GO_official_cold_start_dataset/ocs-content-l5/OCS-CONTENT-L5-EXECUTION-OPEN-20260704T121500Z.json
+
+chain_closures:
+  tokyo-photo:
+    machine_key: TT_TOKYO_PHOTO_CHAIN
+    status: CLOSED
+    closed_utc: "20260704T123830Z"
+    city: 东京
+    slots_verified: 6
+    final_review_evidence: evidence/GO_official_cold_start_dataset/ocs-content-l5/chains/tokyo-photo-chain-FINAL.REVIEW.json
+    tokyo_chain_content_score: 93.2
+  kyoto-culture:
+    machine_key: TT_KYOTO_CULTURE_CHAIN
+    status: CLOSED
+    closed_utc: "20260704T130130Z"
+    city: 京都
+    slots_verified: 6
+    final_review_evidence: evidence/GO_official_cold_start_dataset/ocs-content-l5/chains/kyoto-culture-chain-FINAL.REVIEW.json
+    kyoto_chain_content_score: 92.8
+  seoul-food:
+    machine_key: TT_SEOUL_FOOD_CHAIN
+    status: CLOSED
+    closed_utc: "20260704T133530Z"
+    city: 首尔
+    country_code: KR
+    slots_verified: 6
+    final_review_evidence: evidence/GO_official_cold_start_dataset/ocs-content-l5/chains/seoul-food-chain-FINAL.REVIEW.json
+    seoul_chain_content_score: 93.0
+  bangkok-temple:
+    machine_key: TT_BANGKOK_TEMPLE_CHAIN
+    status: CLOSED
+    closed_utc: "20260704T140230Z"
+    city: 曼谷
+    country_code: TH
+    slots_verified: 6
+    final_review_evidence: evidence/GO_official_cold_start_dataset/ocs-content-l5/chains/bangkok-temple-chain-FINAL.REVIEW.json
+    bangkok_chain_content_score: 92.9
+  singapore-family:
+    machine_key: TT_SINGAPORE_FAMILY_CHAIN
+    status: CLOSED
+    closed_utc: "20260704T144030Z"
+    city: 新加坡
+    country_code: SG
+    slots_verified: 6
+    final_review_evidence: evidence/GO_official_cold_start_dataset/ocs-content-l5/chains/singapore-family-chain-FINAL.REVIEW.json
+    singapore_chain_content_score: 93.1
+  paris-art:
+    machine_key: TT_PARIS_ART_CHAIN
+    status: CLOSED
+    closed_utc: "20260704T151530Z"
+    city: 巴黎
+    country_code: FR
+    slots_verified: 6
+    final_review_evidence: evidence/GO_official_cold_start_dataset/ocs-content-l5/chains/paris-art-chain-FINAL.REVIEW.json
+    paris_chain_content_score: 93.0
+  nyc-skyline:
+    machine_key: TT_NYC_SKYLINE_CHAIN
+    status: CLOSED
+    closed_utc: "20260704T145830Z"
+    city: 纽约
+    country_code: US
+    slots_verified: 6
+    final_review_evidence: evidence/GO_official_cold_start_dataset/ocs-content-l5/chains/nyc-skyline-chain-FINAL.REVIEW.json
+    nyc_chain_content_score: 93.0
+  sydney-coast:
+    machine_key: TT_SYDNEY_COAST_CHAIN
+    status: CLOSED
+    closed_utc: "20260704T151330Z"
+    city: 悉尼
+    country_code: AU
+    slots_verified: 6
+    final_review_evidence: evidence/GO_official_cold_start_dataset/ocs-content-l5/chains/sydney-coast-chain-FINAL.REVIEW.json
+    sydney_chain_content_score: 93.0
+  barcelona-arch:
+    machine_key: TT_BARCELONA_ARCH_CHAIN
+    status: CLOSED
+    closed_utc: "20260704T152830Z"
+    city: 巴塞罗那
+    country_code: ES
+    slots_verified: 6
+    final_review_evidence: evidence/GO_official_cold_start_dataset/ocs-content-l5/chains/barcelona-arch-chain-FINAL.REVIEW.json
+    barcelona_chain_content_score: 93.0
+  dubai-luxury:
+    machine_key: TT_DUBAI_LUXURY_CHAIN
+    status: CLOSED
+    closed_utc: "20260704T154830Z"
+    city: 迪拜
+    country_code: AE
+    slots_verified: 6
+    final_review_evidence: evidence/GO_official_cold_start_dataset/ocs-content-l5/chains/dubai-luxury-chain-FINAL.REVIEW.json
+    dubai_chain_content_score: 93.0
+
+phase_chain:
+  - id: phase2_runtime
+    label: Phase② Runtime Convergence
+    status: FROZEN_CLOSED
+    machine_key: TT_RC_RUNTIME_CONVERGENCE
+  - id: phase2_ocs_content_l5
+    label: Phase② OCS Content L5
+    status: CLOSED
+    closed_utc: "20260704T155000Z"
+    subphase: content_production_execution
+    blocks: [production_preparation_entry, production_go]
+  - id: production_preparation
+    label: Production Preparation
+    status: IN_PROGRESS
+    entered_utc: "20260704T155800Z"
+    entry_evidence: evidence/GO_production_preparation/OCS-CONTENT-L5-PRODUCTION-PREP-ENTRY-LATEST.json
+  - id: production_go
+    label: Production GO
+    status: PENDING
+
+manifest_first_discipline:
+  principle: Manifest First
+  order:
+    - update content-brief.v1.yaml
+    - sync content-production-matrix.v1.yaml row(s)
+    - sync dataset.v1.json copy within same chain
+    - replace media/{filename} binary
+    - row verify and evidence
+  forbidden:
+    - replace_staging_media_without_brief_update
+    - edit_dataset_copy_without_brief_alignment
+    - divergent_community_vs_provider_city_theme
+    - batch_skip_row_verification
+  runbook_anchor: docs/runbook/TT-OCS-CONTENT-L5.md#manifest-first
+
+frozen_during_content_l5:
+  - runtime_ssot
+  - staging_rc_baseline
+  - api_contract
+  - db_schema
+  - catalog_schema
+  - frontend_render_chain
+  - governance_chain
+  - official_ops_control_plane_architecture
+
+allowed_changes:
+  - replace media binaries under data/official-cold-start/media/
+  - copy edits within dataset.v1.json per chain (no schema change)
+  - content-brief.v1.yaml maintenance
+  - content-production-matrix.v1.yaml row status updates
+  - evidence and content validation scripts
+  - bootstrap deploy of replaced assets to staging
+
+forbidden:
+  - new_business_features
+  - data_model_changes
+  - frontend_media_chain_changes
+  - parallel_content_upload_via_admin_as_ocs_ssot
+  - claiming_runtime_go_as_content_l5_ready
+  - claiming_content_l5_as_production_go
+  - unsplash_or_placeholder_regeneration_via_generate_script_without_real_assets
+  - manifest_first_violations
+  - batch_matrix_close_without_per_row_evidence
+
+acceptance_gates:
+  - id: G1_real_assets
+    label: 60/60 真图素材
+    criterion: >-
+      全部 assets.v1.json 文件为真实摄影/设计素材；非 hash 纯色块；
+      verify-ocs-official-assets 60/60；单文件 >16KB 且可解码 JPEG；Production Matrix asset_status=verified
+    weight: 12
+  - id: G2_copy_alignment
+    label: 图文一致
+    criterion: >-
+      每 chain 抽检：copy_mapping / copy_label 与画面同城同主题；零「巴黎图+东京文案」
+    weight: 12
+  - id: G3_slot_differentiation
+    label: 6 Slot 差异化
+    criterion: >-
+      每 chain 6 张视觉可区分；违反 content-brief no_duplicate_with 为 FAIL
+    weight: 12
+  - id: G4_cross_surface_city
+    label: 跨 Surface 城市主题一致
+    criterion: >-
+      Community/Provider/Guide/Acquisition/Campaign refs 同城同主题；Campaign 继承 slot 不新增文件
+    weight: 8
+  - id: G5_brand_visual
+    label: 品牌视觉统一
+    criterion: >-
+      暖色旅行纪实；与 L5 深壳+ref-sun 协调；无 watermark/无关 stock
+    weight: 8
+    contributes_to: TT_CONTENT_BRAND_CONSISTENCY
+  - id: G6_commercial_perception
+    label: 真实商业平台观感
+    criterion: >-
+      Staging 公面 UAT：用户盲测「像真实产品」≥8/10 城；Reveal 正常；非色块墙
+    weight: 12
+  - id: G7_wcag_visual
+    label: WCAG 与视觉质量
+    criterion: >-
+      主体可辨；无图内大段文字；对比度/裁剪安全区满足 masonry 与 a11y alt 可读
+    weight: 8
+  - id: G8_evidence_matrix
+    label: Evidence + 评分矩阵归档
+    criterion: >-
+      Content Production Matrix 60 行全填；每行 row evidence；维度分归档
+    weight: 8
+  - id: G9_content_authenticity
+    label: Content Authenticity（内容真实性）
+    criterion: >-
+      每张图符合对应城市、场景、业务角色；禁止明显地理/角色错误、AI 明显失真、
+      版权风险素材、与品牌定位冲突画面；人工+矩阵 review_status=pass
+    weight: 10
+    contributes_to: TT_CONTENT_BRAND_CONSISTENCY
+  - id: G10_content_diversity
+    label: Content Diversity（一致性与多样性平衡）
+    criterion: >-
+      同 chain 6 Slot 覆盖不同场景类型（地标/街景/体验/产品/人物等）；
+      禁止仅换角度或色调造成视觉重复；跨 Surface 浏览有新鲜感且品牌统一
+    weight: 10
+    contributes_to: TT_CONTENT_BRAND_CONSISTENCY
+
+scoring:
+  content_production_matrix_file: data/official-cold-start/content-production-matrix.v1.yaml
+  dimensions:
+    - G1_real_assets
+    - G2_copy_alignment
+    - G3_slot_differentiation
+    - G4_cross_surface_city
+    - G5_brand_visual
+    - G6_commercial_perception
+    - G7_wcag_visual
+    - G8_evidence_matrix
+    - G9_content_authenticity
+    - G10_content_diversity
+  scale: 0-100 per dimension
+  l5_score:
+    formula: weighted_mean_of_dimensions
+    ready_threshold:
+      min_total: 85
+      min_per_dimension: 75
+      all_gates: PASS
+  brand_consistency:
+    machine_key: TT_CONTENT_BRAND_CONSISTENCY
+    pass_when: G5_pass AND G9_pass AND G10_pass AND min_dimension_score_75
+
+phase_closure:
+  required_machine_keys:
+    TT_OCS_CONTENT_L5: CLOSED
+    TT_OCS_CONTENT_L5_READY: "YES"
+    TT_CONTENT_PRODUCTION_MATRIX: PASS
+    TT_CONTENT_BRAND_CONSISTENCY: PASS
+  note: 四键同批成立 · 禁止仅以 TT_OCS_CONTENT_L5_READY 单键解闸 Production Preparation
+
+verification_commands:
+  per_row:
+    - node scripts/dev/run-ocs-content-l5-row-verify.cjs --filename <ocs-*.jpg>
+    - node scripts/dev/run-ocs-content-l5-destination-authenticity-review.cjs --filename <ocs-*.jpg> --visual-pass
+    - node scripts/dev/run-ocs-content-l5-row-complete.cjs --filename <ocs-*.jpg> --asset-status verified --review-status pass
+  content_alignment:
+    - node scripts/dev/validate-ocs-content-l5-brief.cjs
+    - node scripts/dev/generate-ocs-content-production-matrix.cjs --preserve-status
+    - node scripts/dev/validate-ocs-content-production-matrix.cjs
+  content_closure:
+    - node scripts/dev/validate-ocs-content-production-matrix.cjs --require-ready
+    - node scripts/dev/run-ocs-content-l5-closure-pack.cjs
+  production_prep_entry:
+    - bash scripts/dev/run-ocs-content-l5-production-prep-entry.sh
+    - node scripts/dev/check-ocs-staging-media-bytes-parity.cjs
+  asset_technical:
+    - bash scripts/dev/run-ocs-official-asset-baseline.sh
+    - node scripts/dev/verify-ocs-official-assets.cjs
+  staging_deploy:
+    - DEPLOYMENT_STATE=fix bash scripts/dev/phase2-staging-fly-deploy-and-sync.sh
+
+downstream_unblock:
+  when_all:
+    TT_OCS_CONTENT_L5: CLOSED
+    TT_OCS_CONTENT_L5_READY: "YES"
+    TT_CONTENT_PRODUCTION_MATRIX: PASS
+    TT_CONTENT_BRAND_CONSISTENCY: PASS
+  then:
+    - production_preparation: may_enter
+    - registry_update: staging-rc-baseline.v1.yaml lifecycle production_preparation
+
+honest_boundary: >-
+  ② OCS Content L5 CLOSED ≠ ③ Production GO；
+  Content First Code Frozen 不等于禁止 bootstrap/verify 脚本 — 仅禁止业务代码与 Runtime 变更。

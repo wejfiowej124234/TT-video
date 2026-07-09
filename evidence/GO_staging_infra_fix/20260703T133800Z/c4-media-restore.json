@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.staging_infra_c4_media_restore.v1",
+  "stamp": "20260703T133800Z",
+  "issue_id": "C4-MEDIA-TUNNEL-UNAVAILABLE",
+  "status": "CLOSED",
+  "tunnel_url": "https://sixty-foxes-grin.loca.lt",
+  "probes": { "minio_health_via_tunnel": 200 },
+  "blocking_count": 0
+}

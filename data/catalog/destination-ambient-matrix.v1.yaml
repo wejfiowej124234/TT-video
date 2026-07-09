@@ -1,0 +1,446 @@
+# CMS Content L5 · Destination Ambient Asset Matrix
+# Product: Destination Ambient · Catalog asset_kind (legacy): landing_ambient
+# Runbook: docs/runbook/TT-CMS-CONTENT-L5.md
+
+schema: traveltrust.cms_destination_ambient_matrix.v1
+version: 2
+effective_utc: "2026-07-05"
+machine_key: TT_CMS_DESTINATION_AMBIENT_MATRIX
+status: BASELINE
+brief_ssot: data/catalog/cms-content-brief.v1.yaml
+hero_upgrade_ssot: data/catalog/destination-ambient-hero-matrix.v1.yaml
+
+# 双维收口（禁止混读）
+closure_dimensions:
+  pipeline:
+    phase: "② Staging"
+    status: CLOSED
+    meaning: CMS→Catalog→Publish→Runtime→Browser→Evidence · Wave 1 接线
+  visual_l5:
+    phase: "② Hero Upgrade"
+    status: OPEN
+    meaning: 全屏 Hero 3840×2160 · 见 hero_upgrade_ssot · 当前 public_url 均为 640×480 OCS
+
+# Phase 1 执行顺序 · 与 OCS 国际城链顺序对齐（JP→…→AE）· CN 为产品国第 10 位
+phase_1_execution_order:
+  - { order: 1, matrix_id: DA-JP-HOME, country_iso: JP, ocs_chain_ref: tokyo-photo }
+  - { order: 2, matrix_id: DA-KR-HOME, country_iso: KR, ocs_chain_ref: seoul-food }
+  - { order: 3, matrix_id: DA-TH-HOME, country_iso: TH, ocs_chain_ref: bangkok-temple }
+  - { order: 4, matrix_id: DA-SG-HOME, country_iso: SG, ocs_chain_ref: singapore-family }
+  - { order: 5, matrix_id: DA-FR-HOME, country_iso: FR, ocs_chain_ref: paris-art }
+  - { order: 6, matrix_id: DA-US-HOME, country_iso: US, ocs_chain_ref: nyc-skyline }
+  - { order: 7, matrix_id: DA-AU-HOME, country_iso: AU, ocs_chain_ref: sydney-coast }
+  - { order: 8, matrix_id: DA-ES-HOME, country_iso: ES, ocs_chain_ref: barcelona-arch }
+  - { order: 9, matrix_id: DA-AE-HOME, country_iso: AE, ocs_chain_ref: dubai-luxury }
+  - { order: 10, matrix_id: DA-CN-HOME, country_iso: CN, ocs_chain_ref: product_country_only }
+
+phase_1_fixed_workflow:
+  - destination_ambient_brief
+  - asset_matrix
+  - designer_upload
+  - cms_review
+  - catalog_publish
+  - verify
+  - evidence
+  - matrix_pass
+  forbidden_shortcut: upload_direct_to_live
+
+phase_1_single_asset_template:
+  runbook: docs/runbook/TT-CMS-PHASE1-SINGLE-ASSET-TEMPLATE.md
+  evidence_schema: traveltrust.cms_phase1_single_asset_evidence.v1
+  evidence_template: data/catalog/templates/cms-phase1-single-asset-evidence.v1.json
+  scaffold_script: scripts/dev/scaffold-cms-phase1-single-asset-evidence.cjs
+  dod_script: scripts/dev/run-cms-phase1-single-asset-dod.cjs
+  execution_gate_enum: [PASS, FAIL]
+  steps:
+    - { id: step_1_brief_review, gate: brief_review, lifecycle_out: draft }
+    - { id: step_2_designer_upload, gate: null, lifecycle_out: review }
+    - { id: step_3_cms_review, gates: [cms_review, destination_authenticity, brand_consistency], lifecycle_out: approved }
+    - { id: step_4_catalog_publish, gate: catalog_publish, lifecycle_out: published }
+    - { id: step_5_verify, gate: verify, lifecycle_out: live }
+    - { id: step_6_evidence, gate: evidence_complete, lifecycle_out: live }
+  forbidden:
+    - upload_direct_to_live
+    - skip_review
+    - skip_verify
+    - batch_upload_then_accept
+    - mark_pass_without_evidence
+
+execution_gate_enum: [PASS, FAIL]
+
+# Phase 1 三波试点 · 禁止 10 国批量上传（Change Policy §4）
+phase_1_pilot_discipline:
+  change_policy: docs/runbook/TT-CMS-CHANGE-POLICY.md
+  wave_1:
+    matrix_ids: [DA-JP-HOME]
+    purpose: full single-row loop Draft to Live · validate process
+  wave_2:
+    matrix_ids: [DA-KR-HOME]
+    purpose: second country · confirm no process adjustment needed
+  wave_3_plus:
+    after: wave_1_and_wave_2_complete
+    order_from_execution: 3
+    matrix_ids: [DA-TH-HOME, DA-SG-HOME, DA-FR-HOME, DA-US-HOME, DA-AU-HOME, DA-ES-HOME, DA-AE-HOME, DA-CN-HOME]
+  forbidden:
+    - batch_upload_all_countries
+    - skip_wave_1_pilot
+    - skip_wave_2_validation
+
+content_health_score:
+  script: scripts/dev/run-cms-content-health-score.cjs
+  latest: evidence/GO_cms_content_l5/CMS-CONTENT-HEALTH-SCORE-LATEST.json
+  schema: traveltrust.cms_content_health_score.v2
+  governance_metrics: [live_assets, review_sla, verify_pass_rate, revision_rollback_success, evidence_completeness]
+  content_health_ops:
+    - live_assets
+    - pending_review
+    - published
+    - pending_publish
+    - rejected
+    - average_review_time_hours
+    - average_publish_time_hours
+    - revision_rollback_success
+    - last_publish
+    - last_verify
+    - ops_board
+
+asset_lifecycle_enum:
+  - draft
+  - review
+  - approved
+  - published
+  - live
+  - archived
+
+matrix_row_status_enum: [pending, pass, fail]
+
+row_status_enum:
+  current_source: [ts_unsplash_fallback, catalog_api, media_platform_cdn]
+
+summary:
+  total_rows: 10
+  matrix_pass: 10
+  asset_lifecycle_draft: 0
+  primary_surface: home
+
+rows:
+  - matrix_id: DA-JP-HOME
+    execution_order: 1
+    country_zh: 日本
+    country_iso: JP
+    surface: home
+    ocs_chain_ref: tokyo-photo
+    scene: 富士山·河口湖镜面或神社山景
+    copy_label: 日本·Destination Ambient
+    current_label: Catalog API
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 4
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T02:43:00Z"
+      rollback_target_revision: 1
+    catalog_country_id: 688bdff7-d6e4-45a6-bd48-ee2f99226f18
+    catalog_asset_id: 3570bab5-6641-4c5a-bec1-c1c92583417a
+    hero_matrix_id: DA-HERO-JP-HOME
+    hero_tier: PASS
+    hero_public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-jp-home-v1.jpg
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-jp-home-v1.jpg
+  - matrix_id: DA-KR-HOME
+    execution_order: 2
+    country_zh: 韩国
+    country_iso: KR
+    surface: home
+    ocs_chain_ref: seoul-food
+    scene: 景福宫或韩屋框景
+    copy_label: 韩国·Destination Ambient
+    current_label: Catalog API
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 4
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T02:50:00Z"
+      rollback_target_revision: 1
+    catalog_country_id: 94d6c500-d254-42c1-b764-5a66a04a7d82
+    catalog_asset_id: dc392331-0185-4f63-a4c1-32a640e88ab9
+    hero_matrix_id: DA-HERO-KR-HOME
+    hero_tier: PASS
+    hero_public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-kr-home-v1.jpg
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-kr-home-v1.jpg
+  - matrix_id: DA-TH-HOME
+    execution_order: 3
+    country_zh: 泰国
+    country_iso: TH
+    surface: home
+    ocs_chain_ref: bangkok-temple
+    scene: 海岛泻湖或曼谷文化地标
+    copy_label: 泰国·Destination Ambient
+    current_label: Catalog API
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 4
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T02:51:14Z"
+      rollback_target_revision: 1
+    catalog_country_id: fee29c3a-6105-419c-b107-89bfb2fb84d3
+    catalog_asset_id: 600e3b64-7c78-40fc-b3b0-3cb2b46957c2
+    hero_matrix_id: DA-HERO-TH-HOME
+    hero_tier: PASS
+    hero_public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-th-home-v1.jpg
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-th-home-v1.jpg
+  - matrix_id: DA-SG-HOME
+    execution_order: 4
+    country_zh: 新加坡
+    country_iso: SG
+    surface: home
+    ocs_chain_ref: singapore-family
+    scene: 滨海湾金沙 · Blue Hour
+    copy_label: 新加坡·Destination Ambient
+    current_label: Catalog API
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 4
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T02:51:14Z"
+      rollback_target_revision: 1
+    catalog_country_id: 3e859d80-ef57-4178-b5a3-ecbfe9165176
+    catalog_asset_id: 5f2a7382-5d96-458b-9839-55888a1281f8
+    hero_matrix_id: DA-HERO-SG-HOME
+    hero_tier: PASS
+    hero_public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-sg-home-v1.jpg
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-sg-home-v1.jpg
+  - matrix_id: DA-FR-HOME
+    execution_order: 5
+    country_zh: 法国
+    country_iso: FR
+    surface: home
+    ocs_chain_ref: paris-art
+    scene: 巴黎埃菲尔或塞纳河暮色
+    copy_label: 法国·Destination Ambient
+    current_label: Catalog API
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 4
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T02:53:23Z"
+      rollback_target_revision: 1
+    catalog_country_id: 56472ff6-0b73-40e5-a76f-7956df1a8fbe
+    catalog_asset_id: 5dfb76df-5ee9-46ea-8a37-569339eaa041
+    hero_matrix_id: DA-HERO-FR-HOME
+    hero_tier: PASS
+    hero_public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-fr-home-v1.jpg
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-fr-home-v1.jpg
+  - matrix_id: DA-US-HOME
+    execution_order: 6
+    country_zh: 美国
+    country_iso: US
+    surface: home
+    ocs_chain_ref: nyc-skyline
+    scene: 纽约曼哈顿或标志性天际
+    copy_label: 美国·Destination Ambient
+    current_label: Catalog API
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 4
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T02:53:23Z"
+      rollback_target_revision: 1
+    catalog_country_id: 0bde264b-6d84-4969-9979-9b67400a0f64
+    catalog_asset_id: 40b8789f-839b-4b01-aff2-c8ec3a003118
+    hero_matrix_id: DA-HERO-US-HOME
+    hero_tier: PASS
+    hero_public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-us-home-v1.jpg
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-us-home-v1.jpg
+  - matrix_id: DA-AU-HOME
+    execution_order: 7
+    country_zh: 澳大利亚
+    country_iso: AU
+    surface: home
+    ocs_chain_ref: sydney-coast
+    scene: 悉尼歌剧院港湾 · 晴天广角
+    copy_label: 澳大利亚·Destination Ambient
+    current_label: Catalog API
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 4
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T02:55:41Z"
+      rollback_target_revision: 1
+    catalog_country_id: 9ee09b52-47ab-4460-b9e5-887a57a999e9
+    catalog_asset_id: fdc946c0-7f63-4460-bcae-1f2bc5438e96
+    hero_matrix_id: DA-HERO-AU-HOME
+    hero_tier: PASS
+    hero_public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-au-home-v1.jpg
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-au-home-v1.jpg
+  - matrix_id: DA-ES-HOME
+    execution_order: 8
+    country_zh: 西班牙
+    country_iso: ES
+    surface: home
+    ocs_chain_ref: barcelona-arch
+    scene: 巴塞罗那高迪建筑或城市天际
+    copy_label: 西班牙·Destination Ambient
+    current_label: Catalog API
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 5
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T04:47:29Z"
+      rollback_target_revision: 1
+    catalog_country_id: f9263249-d603-4e7d-92f0-345117c393ca
+    catalog_asset_id: 7341191e-c64b-4f94-823e-649a24195ff2
+    hero_matrix_id: DA-HERO-ES-HOME
+    hero_tier: PASS
+    hero_public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-es-home-v1.jpg
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-es-home-v1.jpg
+  - matrix_id: DA-AE-HOME
+    execution_order: 9
+    country_zh: 阿联酋
+    country_iso: AE
+    surface: home
+    ocs_chain_ref: dubai-luxury
+    scene: 哈利法塔夜景或沙漠城市天际
+    copy_label: 阿联酋·Destination Ambient
+    current_label: Catalog API
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 4
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T02:55:41Z"
+      rollback_target_revision: 1
+    catalog_country_id: ebe363eb-25e8-45f5-bf3a-fc9b8a97e5f3
+    catalog_asset_id: 30064967-4c72-439a-82be-d04423dce53a
+    hero_matrix_id: DA-HERO-AE-HOME
+    hero_tier: PASS
+    hero_public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-ae-home-v1.jpg
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-ae-home-v1.jpg
+  - matrix_id: DA-CN-HOME
+    execution_order: 10
+    country_zh: 中国
+    country_iso: CN
+    surface: home
+    ocs_chain_ref: product_country_only
+    scene: 长城或同类山脊 · 暖色 foliage · 中低明度天空
+    copy_label: 中国·Destination Ambient
+    current_label: Catalog API
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 4
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T02:55:41Z"
+      rollback_target_revision: 1
+    catalog_country_id: 1674476d-850f-49b2-b696-de43473039a2
+    catalog_asset_id: bd26b886-87e0-489e-95e0-bc44b1545b92
+    hero_matrix_id: DA-HERO-CN-HOME
+    hero_tier: PASS
+    hero_public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-cn-home-v1.jpg
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-cn-home-v1.jpg

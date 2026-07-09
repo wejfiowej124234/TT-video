@@ -1,0 +1,67 @@
+{
+  "base": "http://127.0.0.1:3012",
+  "mode": "browser-acceptance",
+  "step": null,
+  "shots": [
+    {
+      "route": "/governance",
+      "ok": false,
+      "error": "TimeoutError: page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"http://127.0.0.1:3012/governance\", waiting until \"networkidle\"\n"
+    },
+    {
+      "route": "/governance/params#gov-params-tokenomics-freeze",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_ai_pre_human_uat\\20260616T114646Z\\screenshots-l1\\gov-params-freeze.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/params#gov-params-treasury-policy",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_ai_pre_human_uat\\20260616T114646Z\\screenshots-l1\\gov-params-treasury.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/params#gov-params-overview",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_ai_pre_human_uat\\20260616T114646Z\\screenshots-l1\\gov-params-overview.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/proposals",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_ai_pre_human_uat\\20260616T114646Z\\screenshots-l1\\governance-proposals.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/proposals/new",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_ai_pre_human_uat\\20260616T114646Z\\screenshots-l1\\governance-proposals-create.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/delegate",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_ai_pre_human_uat\\20260616T114646Z\\screenshots-l1\\governance-delegate.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/steward-region-workbench",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_ai_pre_human_uat\\20260616T114646Z\\screenshots-l1\\steward-workbench.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/distribution-claim",
+      "ok": false,
+      "error": "TimeoutError: page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"http://127.0.0.1:3012/governance/distribution-claim\", waiting until \"networkidle\"\n"
+    },
+    {
+      "route": "/governance/distribution-accruals",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_ai_pre_human_uat\\20260616T114646Z\\screenshots-l1\\distribution-accruals.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/fee-routes",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_ai_pre_human_uat\\20260616T114646Z\\screenshots-l1\\fee-routes.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/vault-forwards",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_ai_pre_human_uat\\20260616T114646Z\\screenshots-l1\\vault-forwards.png",
+      "ok": true
+    }
+  ]
+}

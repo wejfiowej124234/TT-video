@@ -1,0 +1,26 @@
+{
+  "schema": "traveltrust.top_closure_opportunities.v1",
+  "opportunities": [
+    {
+      "root_cause_id": "RC-05",
+      "title": "L5 freeze compliance (UXA · five-main)",
+      "findings_eliminated": 2,
+      "finding_ids": [
+        "LFC-UXA-001",
+        "LFC-UXA-002"
+      ],
+      "readiness_delta": 2,
+      "verdict": "KEEP"
+    },
+    {
+      "root_cause_id": "RC-06",
+      "title": "Retire archived UI tree (PF)",
+      "findings_eliminated": 1,
+      "finding_ids": [
+        "PF-SEED-004"
+      ],
+      "readiness_delta": 3,
+      "verdict": "RETIRE"
+    }
+  ]
+}

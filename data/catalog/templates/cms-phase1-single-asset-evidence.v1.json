@@ -1,0 +1,132 @@
+{
+  "schema": "traveltrust.cms_phase1_single_asset_evidence.v1",
+  "template_version": "1.0.0",
+  "template_runbook": "docs/runbook/TT-CMS-PHASE1-SINGLE-ASSET-TEMPLATE.md",
+  "phase_discipline": "① local → ② staging → ③ production",
+  "forbidden_shortcuts": [
+    "upload_direct_to_live",
+    "skip_review",
+    "skip_verify",
+    "batch_upload_then_accept",
+    "mark_pass_without_evidence"
+  ],
+  "matrix_id": "<MATRIX_ID>",
+  "product_name": "Destination Ambient",
+  "country_iso": "<ISO>",
+  "execution_order": null,
+  "step_1_brief_review": {
+    "status": "PENDING",
+    "asset_lifecycle_out": "draft",
+    "gate": "brief_review",
+    "gate_result": null,
+    "checks": {
+      "destination": null,
+      "business_theme": null,
+      "brand_tone": null,
+      "composition": null,
+      "lighting": null,
+      "forbidden_elements_clear": null
+    },
+    "reviewer": null,
+    "reviewed_at_utc": null,
+    "notes": null
+  },
+  "step_2_designer_upload": {
+    "status": "PENDING",
+    "asset_lifecycle_out": "review",
+    "catalog_asset_id": null,
+    "upload_format": null,
+    "dimensions": null,
+    "byte_size": null,
+    "uploaded_by": null,
+    "uploaded_at_utc": null,
+    "notes": null
+  },
+  "step_3_cms_review": {
+    "status": "PENDING",
+    "asset_lifecycle_out": "approved",
+    "gates": {
+      "cms_review": null,
+      "destination_authenticity": null,
+      "brand_consistency": null
+    },
+    "dimensions_reviewed": [
+      "image_quality",
+      "destination_authenticity",
+      "brand_consistency",
+      "wcag_visual",
+      "consumer_experience",
+      "composition",
+      "color",
+      "destination_ambient_l5"
+    ],
+    "reviewer": null,
+    "reviewed_at_utc": null,
+    "notes": null
+  },
+  "step_4_catalog_publish": {
+    "status": "PENDING",
+    "asset_lifecycle_out": "published",
+    "gate": "catalog_publish",
+    "gate_result": null,
+    "admin_route": "/admin/content/landing-ambient",
+    "catalog_asset_kind_legacy": "landing_ambient",
+    "published_by": null,
+    "published_at_utc": null,
+    "revision": {
+      "revision_number": null,
+      "revision_label": null,
+      "rollback_target_revision": null
+    },
+    "notes": null
+  },
+  "step_5_verify": {
+    "status": "PENDING",
+    "asset_lifecycle_out": "live",
+    "gate": "verify",
+    "gate_result": null,
+    "script": "scripts/dev/run-cms-content-l5-destination-ambient-verify.cjs",
+    "api_base": null,
+    "checks": [],
+    "verified_at_utc": null
+  },
+  "step_6_evidence": {
+    "status": "PENDING",
+    "gate": "evidence_complete",
+    "gate_result": null,
+    "sections_present": {
+      "review": false,
+      "publish": false,
+      "revision": false,
+      "verify": false,
+      "matrix": false
+    },
+    "completed_at_utc": null
+  },
+  "matrix_snapshot": {
+    "matrix_row_status": "pending",
+    "asset_lifecycle": "draft",
+    "current_source": null,
+    "public_url": null
+  },
+  "change_record": {
+    "change_type": "initial_publish",
+    "change_reason": null,
+    "previous_revision": null,
+    "new_revision": null,
+    "approved_by": null
+  },
+  "definition_of_done": {
+    "brief_review_pass": false,
+    "cms_review_pass": false,
+    "destination_authenticity_pass": false,
+    "brand_consistency_pass": false,
+    "catalog_publish_pass": false,
+    "verify_pass": false,
+    "evidence_complete": false,
+    "matrix_row_pass": false,
+    "asset_lifecycle_live": false
+  },
+  "TT_CMS_DESTINATION_AMBIENT_ROW_VERIFY": null,
+  "TT_CMS_PHASE1_SINGLE_ASSET_ROW": "NOT_STARTED"
+}

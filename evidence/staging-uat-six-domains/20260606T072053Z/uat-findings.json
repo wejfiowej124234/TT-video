@@ -1,0 +1,245 @@
+{
+  "base_url": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "recorded_at": "2026-06-06T07:27:19.039Z",
+  "boundary": "staging UAT · bugfix only · not Production GO",
+  "auth": {
+    "email": "tourist@test.com",
+    "user_id": "2760d445-cbf4-47d0-9461-fcba3db0516f",
+    "bearer_preflight": true,
+    "note": "Auth-gated routes probed with Bearer (tourist + promote_admin); public routes unauthenticated; 401/403 on public = P1 not P0"
+  },
+  "findings": [
+    {
+      "domain": "首页",
+      "route": "/",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/traveltrust",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/trust",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/did-rank",
+      "status": "WARN",
+      "auth_mode": "public",
+      "notes": [
+        "console.error×1: Failed to load resource: the server responded with a status of 404 ()"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/auth/login",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/auth/register",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me/settings",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me/identities",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "市场",
+      "route": "/market",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "市场",
+      "route": "/market/acquisition",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/explore",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/messages",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/me",
+      "status": "WARN",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "data-tt page shell not visible"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance/proposals",
+      "status": "WARN",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "data-tt page shell not visible",
+        "console.error×1: GovernancePage: TypeError: Failed to fetch\n    at w (https://tt-web-staging.fly.dev/_next/static/chunks/95536-b8450a1a7e1f77aa.js:1:11638)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/governance/page-4df361bbb4c318ff.js:1:9"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance/delegate",
+      "status": "WARN",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "data-tt page shell not visible"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/staking",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin",
+      "status": "WARN",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "data-tt page shell not visible"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/orders",
+      "status": "PASS",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/users",
+      "status": "WARN",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "console.error×2: [AdminHomeKpi.disputes] TypeError: Failed to fetch\n    at w (https://tt-web-staging.fly.dev/_next/static/chunks/95536-b8450a1a7e1f77aa.js:1:11638)\n    at l (https://tt-web-staging.fly.dev/_next/static/chunks/62741-f235888c2d79df54.js:1:260) | [AdminHomeInbox.steward] TypeError: Failed to fetch\n    at w (https://tt-web-staging.fly.dev/_next/static/chunks/95536-b8450a1a7e1f77aa.js:1:11638)\n    at l (https://tt-web-staging.fly.dev/_next/static/chunks/62741-f235888c2d79df54.js:1:260"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/finance",
+      "status": "WARN",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "console.error×3: [AdminHomeKpi.orders] TypeError: Failed to fetch\n    at w (https://tt-web-staging.fly.dev/_next/static/chunks/95536-b8450a1a7e1f77aa.js:1:11638)\n    at l (https://tt-web-staging.fly.dev/_next/static/chunks/62741-f235888c2d79df54.js:1:260)\n  | [AdminHomeInbox.provider] TypeError: Failed to fetch\n    at w (https://tt-web-staging.fly.dev/_next/static/chunks/95536-b8450a1a7e1f77aa.js:1:11638)\n    at l (https://tt-web-staging.fly.dev/_next/static/chunks/62741-f235888c2d79df54.js:1:26 | [AdminUsersPage] TypeError: Failed to fetch\n    at w (https://tt-web-staging.fly.dev/_next/static/chunks/95536-b8450a1a7e1f77aa.js:1:11638)\n    at l (https://tt-web-staging.fly.dev/_next/static/chunks/62741-f235888c2d79df54.js:1:260)\n    at"
+      ]
+    },
+    {
+      "domain": "跨域",
+      "route": "GET /meta (same-origin via Next)",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "chain_id=11155111"
+      ]
+    },
+    {
+      "domain": "跨域",
+      "route": "OPTIONS /api/v1/governance/proposals (CORS)",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "preflight ok"
+      ]
+    }
+  ],
+  "summary": {
+    "pass": 18,
+    "warn": 7,
+    "fail": 0
+  }
+}

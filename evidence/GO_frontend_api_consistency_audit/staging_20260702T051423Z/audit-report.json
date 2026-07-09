@@ -1,0 +1,108 @@
+{
+  "env": "staging",
+  "api": "https://tt-api-staging.fly.dev",
+  "utc": "2026-07-02T05:14:23.970Z",
+  "strict_warnings": true,
+  "surfaces": {
+    "S00_MOCK_POLICY": {
+      "note": "Staging/Prod web: marketPublicShowcaseFallbackEnabled=false (NODE_ENV=production)",
+      "market_mock_detail_env": "must be unset on deploy"
+    },
+    "S01_MARKET_GUIDES": {
+      "checks": [],
+      "api_count": 6
+    },
+    "S02_MARKET_DISCOVER": {
+      "api_count": 1
+    },
+    "S03_COMMUNITY": {
+      "feed_count": 50
+    },
+    "S04_GOVERNANCE": {
+      "api_count": 3
+    },
+    "S05_OFFICIAL": {
+      "surfaces": {
+        "homepage": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "market": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "community": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "festival": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "holiday": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "regional": {
+          "status": 200,
+          "has_campaign": false
+        }
+      }
+    },
+    "S06_CONTENT": {
+      "catalog_countries": 0,
+      "admin_pois": 0
+    },
+    "S07_USER_CENTER": {
+      "role": "super_admin",
+      "email": "tourist@test.com",
+      "stats_ok": true
+    },
+    "S08_ORDERS": {
+      "api_count": 8,
+      "page": {
+        "limit": 50,
+        "next_cursor": null,
+        "has_more": false
+      }
+    },
+    "S09_MESSAGES": {
+      "api_count": 0
+    },
+    "S10_ADMIN_PUBLIC_OPS": {
+      "admin_published_guides": 5,
+      "public_api_guides": 6,
+      "stats_total": 56
+    },
+    "S11_GUIDE_DETAIL": {
+      "checked": 5,
+      "missing_availability": []
+    },
+    "S12_MARKET_LISTINGS": {
+      "provider": {
+        "api_count": 13,
+        "detail_checked": 3,
+        "shared_placeholder_count": 13
+      },
+      "acquisition": {
+        "api_count": 9,
+        "detail_checked": 3,
+        "shared_placeholder_count": 9
+      }
+    },
+    "S13_ITINERARY": {
+      "catalog_countries": 0,
+      "catalog_status": 200,
+      "itineraries_status": 405,
+      "itineraries_count": 0
+    },
+    "S14_WEB3_META": {
+      "status": 200,
+      "chain_id": "11155111",
+      "has_contracts": true
+    }
+  },
+  "blocking": [],
+  "warnings": [],
+  "pass": true
+}

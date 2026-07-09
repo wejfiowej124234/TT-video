@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T154200Z",
+  "filename": "ocs-dubai-luxury-acquisition-cover.jpg",
+  "row": 57,
+  "chain_id": "dubai-luxury",
+  "country_code": "AE",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "no_quality_regression_acknowledged": true,
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": ["brand_logos", "celebrity_portraits", "readable_trademarks"],
+    "safe_expression": "定制香氛礼盒静物 · 无可读品牌 · 非塔全景"
+  },
+  "checks": {
+    "manifest_full_field_alignment": {
+      "pass": true,
+      "notes": "迪拜定制香氛悬赏 · 本地调香师礼盒 · 成分清单"
+    },
+    "destination_authenticity_9dim_plan": {
+      "pass": true,
+      "notes": "luxury 香氛小物 · AE 都市 luxury 生态 · 非沙漠晚宴"
+    },
+    "country_consistency_ae_only": { "pass": true },
+    "acquisition_product_identity_plan": {
+      "pass": true,
+      "vs_closed_chains": "香氛礼盒 vs 九城 Acquisition 各异",
+      "vs_row56": "产品静物 vs Safari 晚宴场景"
+    },
+    "surface_boundary_plan": { "pass": true },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row55_56": "香氛静物 vs Omar 肖像 vs 晚宴"
+    },
+    "nine_class_framework_frozen": true
+  }
+}

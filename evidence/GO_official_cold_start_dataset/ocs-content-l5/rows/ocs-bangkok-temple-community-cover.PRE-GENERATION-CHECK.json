@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T135830Z",
+  "filename": "ocs-bangkok-temple-community-cover.jpg",
+  "row": 23,
+  "chain_id": "bangkok-temple",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "checks": {
+    "manifest_alignment": { "pass": true },
+    "destination_authenticity_9dim": { "pass": true, "notes": "黎明寺尖塔晨光剪影" },
+    "country_consistency_th": { "pass": true },
+    "community_authenticity_plan": { "pass": true, "notes": "UGC 分享感 · 非广告海报" },
+    "surface_boundary_plan": { "pass": true, "notes": "非 Official 宽幅/Guide/Provider/Acquisition" },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row22": "尖塔剪影近中景 vs Official 河景宽幅路线",
+      "vs_row20": "晨光宁静 vs 日落晚宴甲板"
+    },
+    "cross_chain_community_plan": { "pass": true },
+    "nine_class_framework_frozen": true
+  }
+}

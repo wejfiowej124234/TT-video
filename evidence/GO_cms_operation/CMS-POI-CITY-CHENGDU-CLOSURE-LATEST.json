@@ -1,0 +1,150 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-07T060617Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "CN",
+    "country_zh": "中国",
+    "city_zh": "成都",
+    "city_en": "Chengdu"
+  },
+  "poi_count": 10,
+  "matrix_ids": [
+    "PH-CN-251-ATR",
+    "PH-CN-252-ATR",
+    "PH-CN-253-ATR",
+    "PH-CN-254-ATR",
+    "PH-CN-255-ATR",
+    "PH-CN-256-FOOD",
+    "PH-CN-257-FOOD",
+    "PH-CN-258-FOOD",
+    "PH-CN-259-FOOD",
+    "PH-CN-260-FOOD"
+  ],
+  "pois": [
+    "宽窄巷子",
+    "大熊猫基地",
+    "锦里",
+    "都江堰",
+    "武侯祠",
+    "火锅",
+    "串串",
+    "担担面",
+    "龙抄手",
+    "兔头"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-CN-251-ATR",
+      "legacy_value": "宽窄巷子",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-252-ATR",
+      "legacy_value": "大熊猫基地",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-253-ATR",
+      "legacy_value": "锦里",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-254-ATR",
+      "legacy_value": "都江堰",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-255-ATR",
+      "legacy_value": "武侯祠",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-256-FOOD",
+      "legacy_value": "火锅",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-257-FOOD",
+      "legacy_value": "串串",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-258-FOOD",
+      "legacy_value": "担担面",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-259-FOOD",
+      "legacy_value": "龙抄手",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-CN-260-FOOD",
+      "legacy_value": "兔头",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-251-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-252-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-253-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-254-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-255-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-256-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-257-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-258-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-259-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-260-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=CN&city=%E6%88%90%E9%83%BD&limit=50",
+    "http": 200,
+    "count": 10
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-chengdu/CMS-POI-CHENGDU-CLOSED-LOOP-LATEST.json",
+  "next_city": {
+    "country_iso": "CN",
+    "city_zh": "杭州",
+    "city_en": "Hangzhou"
+  },
+  "closure_keys": {
+    "TT_CMS_POI_CITY_CHENGDU": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": "CN · 杭州"
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_CHENGDU": "CLOSED"
+}

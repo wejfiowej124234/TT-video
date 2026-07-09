@@ -1,0 +1,7 @@
+status: PASS
+last_run: 20260606T101421Z
+chain: sepolia
+pool: 0x16F914f3D50f7Aa02665589e715F94CA3b7Ab47c
+note: smoke-steward-stake-testnet-readonly exit 0
+phase: ② testnet closing gap
+artifacts: readonly-smoke.latest.log

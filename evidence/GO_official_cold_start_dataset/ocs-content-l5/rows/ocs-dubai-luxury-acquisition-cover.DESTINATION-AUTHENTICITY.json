@@ -1,0 +1,122 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_review.v1",
+  "stamp_utc": "20260704T154409Z",
+  "filename": "ocs-dubai-luxury-acquisition-cover.jpg",
+  "chain_id": "dubai-luxury",
+  "city": "迪拜",
+  "country_code": "AE",
+  "country_label": "阿联酋",
+  "slot": "acquisition-cover",
+  "surface": "Acquisition",
+  "manifest_snapshot": {
+    "chain_id": "dubai-luxury",
+    "city": "迪拜",
+    "country_code": "AE",
+    "country_label": "阿联酋",
+    "chain_tags": [
+      "奢华",
+      "沙漠"
+    ],
+    "acquisition.title": "迪拜定制香氛 · 悬赏",
+    "acquisition.category": "luxury",
+    "acquisition.description": "求购本地调香师定制香氛礼盒，需成分清单。",
+    "acquisition.cover_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-acquisition-cover.jpg"
+  },
+  "manifest_field_alignment": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "matrix_city_matches_manifest",
+        "pass": true,
+        "detail": "matrix=迪拜 manifest=迪拜"
+      },
+      {
+        "id": "country_code_present",
+        "pass": true,
+        "detail": "AE"
+      },
+      {
+        "id": "copy_label_non_empty",
+        "pass": true,
+        "detail": "迪拜定制香氛 · 悬赏"
+      },
+      {
+        "id": "copy_label_contains_city_or_chain_theme",
+        "pass": true,
+        "detail": "city in copy_label"
+      }
+    ],
+    "requirement": "图片与 Manifest 全字段 100% 同城同主题对齐"
+  },
+  "destination_authenticity_checklist": {
+    "architecture": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "streetscape": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "clothing": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "language_signage": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "transportation": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "natural_environment": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "food_dining": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "commercial_form": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    },
+    "cultural_elements": {
+      "pass": true,
+      "belongs_to_city": "迪拜",
+      "belongs_to_country": "阿联酋",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 迪拜 (阿联酋). No cross-city/country/culture mixing."
+    }
+  },
+  "prohibited": {
+    "cross_country_elements": false,
+    "cross_city_elements": false,
+    "cross_culture_mixing": false
+  },
+  "TT_DESTINATION_AUTHENTICITY_REVIEW": "PASS"
+}

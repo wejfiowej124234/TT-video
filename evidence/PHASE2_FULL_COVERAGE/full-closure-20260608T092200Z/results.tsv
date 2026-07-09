@@ -1,0 +1,44 @@
+P2FC-P00-baseline-freeze	GO	12/12
+P2FC-T01-five-role-chain	GO	ok
+P2FC-T02-rov-wave1-pack	GO	ok
+P2FC-T03-rov-wave2-pack	GO	ok
+P2FC-T04-governance-gap	GO	ok
+TRACK-A-business	GO	track
+P2FC-E01-order-cancel	GO	ok
+P2FC-E02-duplicate-submit	GO	ok
+P2FC-E03-refund-webhook	GO	ok
+P2FC-E04-session-wallet-2fa	GO	ok
+P2FC-E05-network-interrupt	GO	ok
+P2FC-E06-cold-start-rollback	GO	ok
+TRACK-B-exceptions	GO	track
+P2FC-D01-cross-domain-pg	GO	ok
+P2FC-D01b-pg-matrix	GO	ok
+P2FC-D02-order-escrow-pg	GO	ok
+P2FC-D03-community-pg	GO	ok
+P2FC-D04-growth-funnel	GO	ok
+TRACK-C-consistency	GO	track
+P2FC-W01-web3-itinerary	GO	ok
+P2FC-W02-governance-uat	GO	ok
+P2FC-W03-community-deep	GO	ok
+P2FC-W04-community-moderation	GO	ok
+TRACK-D-web3-community	GO	track
+P2FC-B01-chrome	GO	chromium
+P2FC-B02-edge	GO	chromium
+P2FC-B03-firefox	GO	firefox
+P2FC-B04-safari	GO	webkit
+P2FC-M01-ios-safari	GO	mobile-safari
+P2FC-M02-android-chrome	GO	mobile-chrome
+TRACK-E-browser-mobile	GO	track
+P2FC-F01-deps-normal	GO	ok
+P2FC-F02-deps-fault	GO	ok
+P2FC-F02b-deps-recovery	GO	ok
+P2FC-F03-deps-finalize	GO	ok
+P2FC-F04-email-probe	GO	HTTP 200
+P2FC-F05-storage-probe	GO	HTTP 200
+P2FC-F06-cdn-probe	GO	HTTP 200
+P2FC-F07-payment-probe	GO	HTTP 200
+TRACK-F-fault-deps	GO	track
+P2FC-S01-soak-72h	FAIL	job=/d/TravelTrust-V1.1/evidence/P2FC_SOAK_72H/job-20260608T094544Z pid=95191 alive=1 ok_polls=1 fail_polls=0
+0 required_sec=259200 — await COMPLETED.json
+P2FC-S01-soak-72h	FAIL	health=000000 at 2026-06-08T12:08:57Z
+TRACK-G-soak	FAIL	track

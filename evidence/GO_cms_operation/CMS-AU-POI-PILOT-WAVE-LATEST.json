@@ -1,0 +1,231 @@
+{
+  "schema": "traveltrust.cms_au_poi_pilot_wave.v1",
+  "stamp_utc": "2026-07-06T152535Z",
+  "advancement_rule": "Scope → Country → City → POI · acceptance = City CLOSED → Country Runtime",
+  "ops_hierarchy": [
+    "asset_family",
+    "country",
+    "city",
+    "asset"
+  ],
+  "acceptance_unit": "city",
+  "template_countries": [
+    "JP",
+    "KR",
+    "TH",
+    "SG",
+    "FR",
+    "US"
+  ],
+  "jp_country_closed_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+  "kr_country_closed_ssot": "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+  "th_country_closed_ssot": "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+  "sg_country_closed_ssot": "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json",
+  "fr_country_closed_ssot": "evidence/GO_cms_operation/CMS-FR-COUNTRY-CLOSURE-LATEST.json",
+  "active_wave": "POI-WAVE-6-AU-PILOT",
+  "active_catalog_build": null,
+  "waves": [
+    {
+      "wave_id": "POI-WAVE-6-AU-PILOT",
+      "label": "Pilot · AU · 悉尼",
+      "country_iso": "AU",
+      "country_zh": "澳大利亚",
+      "cities": [
+        "悉尼"
+      ],
+      "acceptance_unit": "city",
+      "acceptance_target": "悉尼 CLOSED",
+      "purpose": "Catalog Build → per-POI Review → Live · JP/KR/TH/SG/FR Golden Template 复制 · pilot done when 悉尼 CLOSED",
+      "forbidden": [
+        "bulk_ingest_au_all",
+        "skip_pilot_before_next_city",
+        "accept_by_poi_count"
+      ],
+      "template_countries": [
+        "JP",
+        "KR",
+        "TH",
+        "SG",
+        "FR"
+      ],
+      "template_closure": [
+        "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-FR-COUNTRY-CLOSURE-LATEST.json"
+      ],
+      "status": "ACTIVE",
+      "catalog_build": true,
+      "matrix_ids": [
+        "PH-AU-184-ATR",
+        "PH-AU-185-ATR",
+        "PH-AU-186-ATR",
+        "PH-AU-187-ATR",
+        "PH-AU-188-FOOD",
+        "PH-AU-189-FOOD",
+        "PH-AU-190-FOOD",
+        "PH-AU-191-FOOD"
+      ],
+      "poi_count": 8,
+      "by_city": [
+        {
+          "city_zh": "悉尼",
+          "acceptance_unit": "city",
+          "acceptance_target": "悉尼 CLOSED",
+          "poi_count": 8,
+          "matrix_ids": [
+            "PH-AU-184-ATR",
+            "PH-AU-185-ATR",
+            "PH-AU-186-ATR",
+            "PH-AU-187-ATR",
+            "PH-AU-188-FOOD",
+            "PH-AU-189-FOOD",
+            "PH-AU-190-FOOD",
+            "PH-AU-191-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "歌剧院",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AU-184-ATR"
+            },
+            {
+              "legacy_value": "海港大桥",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AU-185-ATR"
+            },
+            {
+              "legacy_value": "邦迪海滩",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AU-186-ATR"
+            },
+            {
+              "legacy_value": "岩石区",
+              "poi_type": "attraction",
+              "matrix_id": "PH-AU-187-ATR"
+            },
+            {
+              "legacy_value": "海鲜",
+              "poi_type": "food",
+              "matrix_id": "PH-AU-188-FOOD"
+            },
+            {
+              "legacy_value": "brunch",
+              "poi_type": "food",
+              "matrix_id": "PH-AU-189-FOOD"
+            },
+            {
+              "legacy_value": "咖啡",
+              "poi_type": "food",
+              "matrix_id": "PH-AU-190-FOOD"
+            },
+            {
+              "legacy_value": "牛排",
+              "poi_type": "food",
+              "matrix_id": "PH-AU-191-FOOD"
+            }
+          ]
+        },
+        {
+          "city_zh": "拉斯维加斯",
+          "acceptance_unit": "city",
+          "acceptance_target": "拉斯维加斯 CLOSED",
+          "poi_count": 0,
+          "matrix_ids": [],
+          "pois": []
+        },
+        {
+          "city_zh": "洛杉矶",
+          "acceptance_unit": "city",
+          "acceptance_target": "洛杉矶 CLOSED",
+          "poi_count": 0,
+          "matrix_ids": [],
+          "pois": []
+        },
+        {
+          "city_zh": "纽约",
+          "acceptance_unit": "city",
+          "acceptance_target": "纽约 CLOSED",
+          "poi_count": 0,
+          "matrix_ids": [],
+          "pois": []
+        }
+      ],
+      "first_matrix_id": "PH-AU-184-ATR",
+      "first_poi": {
+        "city_zh": "悉尼",
+        "legacy_value": "歌剧院",
+        "matrix_id": "PH-AU-184-ATR"
+      },
+      "au_country_total": 24,
+      "au_cities": [
+        "黄金海岸",
+        "墨尔本",
+        "悉尼"
+      ]
+    }
+  ],
+  "au_denominator": {
+    "country_iso": "AU",
+    "cities": [
+      "黄金海岸",
+      "墨尔本",
+      "悉尼"
+    ],
+    "poi_total": 24,
+    "sydney_pilot": 8
+  },
+  "roadmap": [
+    {
+      "stage": "jp_country",
+      "status": "CLOSED",
+      "ssot": "CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "kr_country",
+      "status": "CLOSED",
+      "ssot": "CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "th_country",
+      "status": "CLOSED",
+      "ssot": "CMS-TH-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "sg_country",
+      "status": "CLOSED",
+      "ssot": "CMS-SG-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "fr_country",
+      "status": "CLOSED",
+      "ssot": "CMS-FR-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "au_scope",
+      "status": "LOCKED"
+    },
+    {
+      "stage": "catalog_build",
+      "status": "ACTIVE",
+      "city": "悉尼",
+      "acceptance": "悉尼 CLOSED"
+    },
+    {
+      "stage": "au_sydney_execution",
+      "status": "ACTIVE"
+    },
+    {
+      "stage": "au_country_runtime",
+      "status": "NOT_STARTED",
+      "when": "TT_CMS_AU_COUNTRY: CLOSED"
+    }
+  ],
+  "sydney_closed": true,
+  "TT_CMS_POI_CITY_SYDNEY": "CLOSED",
+  "melbourne_closed": true,
+  "TT_CMS_POI_CITY_MELBOURNE": "CLOSED",
+  "gold_coast_closed": true,
+  "TT_CMS_POI_CITY_GOLD_COAST": "CLOSED"
+}

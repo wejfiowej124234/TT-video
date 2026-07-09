@@ -1,0 +1,446 @@
+# Mainnet Address Registry · Planning SSOT (P3-03)
+#
+# Human: docs/spec/governance-token/MAINNET-ADDRESS-PLANNING-v1.md
+# Gate:  bash scripts/gates/check-mainnet-address-planning-gate.sh
+#
+# RULE-DEPLOY-001: Sepolia addresses are lineage reference ONLY — never copy as mainnet deploy.
+
+schema: traveltrust.mainnet_address_registry.v1
+version: 1
+planning_item: P3-03
+effective_utc: "2026-07-09"
+machine_key: TT_MAINNET_ADDRESS_REGISTRY
+verdict: MAINNET_ADDRESS_PLANNING_READY
+verdict_status: PASS
+
+network:
+  id: ethereum_mainnet
+  chain_id: 1
+  eip155: "eip155:1"
+  deploy_status: NOT_STARTED
+  broadcast_authorized: false
+
+address_status_enum:
+  - TBD
+  - PLANNED
+  - NOT_DEPLOYED
+  - EXTERNAL_REFERENCE
+  - FORBIDDEN
+
+anti_patterns:
+  - id: RULE-DEPLOY-001
+    forbidden: copy_sepolia_addresses_to_mainnet
+    ssot: registry/mainnet-deployment-package.v1.yaml
+  - id: RULE-ADDR-001
+    forbidden: placeholder_mainnet_addresses
+    note: All TravelTrust-deployed mainnet slots remain TBD until broadcast evidence fills them.
+
+sepolia_lineage_reference:
+  purpose: planning_lineage_only
+  baseline: gov_freeze_v2_clean_baseline
+  registry: registry/protocol-convergence-deployments.v1.yaml
+  p3_baseline: registry/phase3-production-entry-baseline.v1.yaml
+  note: >
+    Sepolia GovFreeze V2 + Vacancy V1 DE triplet validated under P3-02.
+    Mainnet deploy generates fresh addresses — see deployment_sequence.
+
+posture_ssot: registry/g24-p-upgrade-01-contract-posture.v1.yaml
+escrow_policy: registry/escrow-bilateral-mainnet-policy.v1.yaml
+env_catalog: registry/env-key-catalog-web3.v1.yaml
+
+# ── Address classification ────────────────────────────────────────────────────
+
+address_categories:
+  governance_controlled:
+    description: Timelock-administered governable shells and treasury actions
+    upgrade: proxy_or_timelock_owner
+  immutable_deployment:
+    description: Fresh-deploy instances — no logic upgrade surface (G23-04 / Vacancy V1)
+    upgrade: forbidden
+  operational:
+    description: Off-chain or EOA/multisig ops wallets — not user-facing contracts
+    upgrade: n/a
+  user_facing:
+    description: Contracts end users / integrators interact with directly
+    upgrade: varies
+  external_reference:
+    description: Third-party canonical tokens — not TravelTrust deploys
+    upgrade: n/a
+  forbidden_mainnet:
+    description: Explicitly blocked on mainnet per policy
+    upgrade: n/a
+
+# ── Contracts (all mainnet deploy slots = TBD until P3-04+ broadcast) ─────────
+
+contracts:
+  governance:
+    governance_votes_token:
+      contract: GovernanceVotesToken
+      source: contracts/src/GovernanceVotesToken.sol
+      category: governance_controlled
+      posture: PARAMETER_OWNER
+      address_status: TBD
+      address: TBD
+      env_keys: [GOVERNANCE_TOKEN_ADDRESS]
+      owner_planned: GovernanceTimelock
+      sepolia_lineage_key: governance_token_address
+
+    timelock:
+      contract: GovernanceTimelock
+      source: contracts/src/GovernanceTimelock.sol
+      category: governance_controlled
+      posture: CONTROLLER_NON_UPGRADEABLE
+      address_status: TBD
+      address: TBD
+      env_keys: [TIMELOCK_ADDRESS]
+      admin_planned: TIMELOCK_ADMIN_MULTISIG
+      delay_hours_planned: 48
+      note: Fresh deploy only — not a user-facing proxy address
+      sepolia_lineage_key: timelock_address
+
+    governor:
+      contract: TravelTrustGovernor
+      source: contracts/src/TravelTrustGovernor.sol
+      category: governance_controlled
+      posture: PROXY_REQUIRED
+      address_status: TBD
+      proxy_address: TBD
+      implementation_address: TBD
+      proxy_admin_planned: GovernanceTimelock
+      env_keys: [GOVERNOR_ADDRESS]
+      upgrade_path: Timelock.schedule → Timelock.execute → proxy.upgradeTo
+      sepolia_lineage_key: governor_address
+
+    treasury_p4cap:
+      contract: GovernanceTreasuryP4Cap
+      source: contracts/src/GovernanceTreasuryP4Cap.sol
+      category: governance_controlled
+      posture: PROXY_REQUIRED
+      address_status: TBD
+      proxy_address: TBD
+      implementation_address: TBD
+      proxy_admin_planned: GovernanceTimelock
+      env_keys: [GOVERNANCE_TREASURY_P4CAP_ADDRESS]
+      aliases: [TREASURY_P4_CAP_ADDRESS]
+      sepolia_lineage_key: treasury_p4_cap_address
+
+    primary_market:
+      contract: TtgPrimaryMarketV1
+      source: contracts/src/TtgPrimaryMarketV1.sol
+      category: governance_controlled
+      posture: PROXY_REQUIRED
+      address_status: TBD
+      proxy_address: TBD
+      implementation_address: TBD
+      proxy_admin_planned: GovernanceTimelock
+      env_keys: [PRIMARY_MARKET_ADDRESS]
+      sepolia_lineage_key: primary_market_address
+
+    seat_registry:
+      contract: TtgSeatConcentrationRegistry
+      source: contracts/src/TtgSeatConcentrationRegistry.sol
+      category: governance_controlled
+      posture: PROXY_REQUIRED
+      address_status: TBD
+      proxy_address: TBD
+      implementation_address: TBD
+      proxy_admin_planned: GovernanceTimelock
+      env_keys: [SEAT_REGISTRY_ADDRESS]
+      sepolia_lineage_key: seat_registry_address
+
+    region_steward_stake_pool:
+      contract: RegionStewardStakePool
+      source: contracts/src/RegionStewardStakePool.sol
+      category: governance_controlled
+      posture: PROXY_REQUIRED
+      address_status: TBD
+      proxy_address: TBD
+      implementation_address: TBD
+      proxy_admin_planned: GovernanceTimelock
+      env_keys: [REGION_STEWARD_STAKE_POOL_ADDRESS]
+      sepolia_lineage_key: region_steward_stake_pool_proxy_address
+
+  vaults_country_pool:
+    country_pool_net_profit_ledger:
+      contract: CountryPoolNetProfitLedger
+      source: contracts/src/CountryPoolNetProfitLedger.sol
+      category: immutable_deployment
+      posture: IMMUTABLE_EXEMPT
+      address_status: TBD
+      address: TBD
+      env_keys: [COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS]
+      owner_planned: GovernanceTimelock
+      jurisdiction_wave: per_jurisdiction
+      pilot_jurisdiction: DE
+      sepolia_lineage_key: country_pool_net_profit_ledger_address
+
+    steward_path_vault:
+      contract: StewardPathVault
+      source: contracts/src/StewardPathVault.sol
+      category: immutable_deployment
+      posture: IMMUTABLE_EXEMPT
+      address_status: TBD
+      address: TBD
+      env_keys: [COUNTRY_POOL_STEWARD_PATH_VAULT_ADDRESS]
+      owner_planned: GovernanceTimelock
+      jurisdiction_wave: per_jurisdiction
+      sepolia_lineage_key: country_pool_steward_path_vault_address
+
+    unallocated_steward_path_vault:
+      contract: UnallocatedStewardPathVault
+      source: contracts/src/vacancy/UnallocatedStewardPathVault.sol
+      category: immutable_deployment
+      posture: IMMUTABLE_EXEMPT
+      address_status: TBD
+      address: TBD
+      env_keys: [UNALLOCATED_STEWARD_PATH_VAULT_ADDRESS]
+      aliases: [COUNTRY_POOL_UNALLOCATED_STEWARD_VAULT_ADDRESS]
+      owner_planned: GovernanceTimelock
+      jurisdiction_wave: per_jurisdiction
+      vacancy_stack: Vacancy_V1
+      sepolia_lineage_key: country_pool_unallocated_steward_vault_address
+
+    country_pool_settlement_token:
+      contract: fund_stack_token
+      category: external_reference
+      address_status: PLANNED
+      address: TBD
+      env_keys: [COUNTRY_POOL_NET_PROFIT_SETTLEMENT_TOKEN_ADDRESS, FUND_STACK_TOKEN_ADDRESS]
+      note: Mainnet settlement asset selection — USDC canonical or dedicated token TBD at P3-04
+      sepolia_lineage_key: country_pool_net_profit_settlement_token_address
+
+  escrow:
+    escrow_factory_v1:
+      contract: EscrowFactory
+      source: contracts/src/EscrowFactory.sol
+      category: forbidden_mainnet
+      posture: FORBIDDEN
+      address_status: FORBIDDEN
+      address: null
+      mainnet_new_orders: FORBIDDEN
+      policy: registry/escrow-bilateral-mainnet-policy.v1.yaml
+
+    escrow_factory_v2:
+      contract: EscrowFactoryV2
+      source: contracts/src/EscrowFactoryV2.sol
+      deploy_script: contracts/script/DeployEscrowFactoryV2.s.sol
+      category: user_facing
+      posture: GUARDIAN_OWNED
+      address_status: TBD
+      address: TBD
+      env_keys:
+        - ESCROW_FACTORY_V2_ADDRESS
+        - NEXT_PUBLIC_ESCROW_FACTORY_V2_ADDRESS
+      guardian_planned: GovernanceTimelock
+      mainnet_path: REQUIRED
+      abi_002_status: DEPLOYMENT_PREPARATION_READY
+      preparation_artifacts:
+        - contracts/abi/EscrowV2.json
+        - contracts/abi/EscrowFactoryV2.json
+        - contracts/script/DeployEscrowFactoryV2.s.sol
+      note: P3-04 prep ready — address TBD until broadcast · not MAINNET_READY
+
+    fee_router:
+      contract: FeeRouter
+      source: contracts/src/FeeRouter.sol
+      category: governance_controlled
+      posture: OWNER_CONFIGURABLE
+      address_status: TBD
+      address: TBD
+      env_keys: [FEE_ROUTER_ADDRESS]
+      owner_planned: GovernanceTimelock
+      emergency: distributePaused via onlyOwner
+      sepolia_lineage_key: fee_router_address
+
+  fund_stack_legacy:
+    legacy_treasury:
+      contract: GovernanceTreasury
+      category: fund_stack_legacy
+      address_status: PLANNED
+      address: TBD
+      env_keys: [LEGACY_TREASURY_ADDRESS]
+      role: FeeRouter globalOps leg
+      note: May be omitted on mainnet if routing config points globalOps elsewhere
+      sepolia_lineage_key: legacy_treasury_address
+
+    region_vault:
+      contract: RegionVault
+      address_status: TBD
+      address: TBD
+      env_keys: [REGION_VAULT_ADDRESS]
+      sepolia_lineage_key: region_vault_address
+
+    reserve_vault:
+      contract: ReserveVault
+      address_status: TBD
+      address: TBD
+      env_keys: [RESERVE_VAULT_ADDRESS]
+      sepolia_lineage_key: reserve_vault_address
+
+  external_tokens:
+    usdc:
+      contract: IERC20
+      category: external_reference
+      address_status: EXTERNAL_REFERENCE
+      address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      env_keys: [USDC_ADDRESS, PAYMENT_TOKEN_ADDRESS]
+      note: Circle USDC on Ethereum mainnet — canonical third-party reference
+
+# ── Operational wallets (planned — no deploy in P3-03) ───────────────────────
+
+operational_wallets:
+  timelock_admin_multisig:
+    role: TIMELOCK_ADMIN_ADDRESS
+    category: operational
+    address_status: PLANNED
+    address: TBD
+    holder_planned: Gnosis_Safe_multisig
+    controls: [GovernanceTimelock.admin, schedule, cancel]
+    note: Created at mainnet deploy prep (P3-06) — not in P3-03
+
+  deployer_eoa:
+    role: broadcast_deployer
+    category: operational
+    address_status: PLANNED
+    address: TBD
+    note: Ephemeral deploy key — ownership transferred to Timelock after init
+
+  indexer_wallet:
+    role: chain_indexer_funding
+    category: operational
+    address_status: PLANNED
+    address: TBD
+
+  relayer_wallet:
+    role: meta_tx_relayer
+    category: operational
+    address_status: PLANNED
+    address: TBD
+
+  monitoring_wallet:
+    role: ops_alerting
+    category: operational
+    address_status: PLANNED
+    address: TBD
+
+# ── Permission model ──────────────────────────────────────────────────────────
+
+permission_model:
+  hierarchy:
+    - id: L0
+      role: TIMELOCK_ADMIN_MULTISIG
+      holder: TBD
+      powers: [timelock.schedule, timelock.cancel, timelock.execute_as_admin]
+    - id: L1
+      role: GovernanceTimelock
+      holder: TBD
+      powers:
+        - proxy.upgradeTo
+        - treasury.spend_via_governance
+        - fee_router.setRoutingConfig
+        - fee_router.setDistributePaused
+        - escrow_factory_v2.transferGuardianship
+        - immutable_contract.owner_actions
+    - id: L2
+      role: TravelTrustGovernor
+      holder: TBD
+      powers: [propose, vote, queue, execute_via_timelock]
+    - id: L3
+      role: TTG_holders
+      holder: token_delegates
+      powers: [vote_on_proposals]
+
+  emergency_roles:
+    fee_router_pause:
+      actor: FeeRouter.owner
+      planned_holder: GovernanceTimelock
+      scope: distributePaused only
+      not: fund_withdrawal_or_upgrade
+
+    escrow_factory_guardian:
+      actor: EscrowFactoryV2.guardian
+      planned_holder: GovernanceTimelock
+      scope: [transferGuardianship, factory_admin_ops]
+      not: user_escrow_release
+
+  forbidden_patterns:
+    - deployer_eoa_retains_proxy_admin
+    - bare_implementation_as_user_address
+    - escrow_v1_factory_on_mainnet
+    - timelock_as_upgradeable_proxy
+
+# ── Upgrade plan ──────────────────────────────────────────────────────────────
+
+upgrade_plan:
+  proxy_pattern: TimelockUpgradeableProxy
+  posture_ssot: registry/g24-p-upgrade-01-contract-posture.v1.yaml
+  governable_shells:
+    - TravelTrustGovernor
+    - GovernanceTreasuryP4Cap
+    - TtgPrimaryMarketV1
+    - TtgSeatConcentrationRegistry
+    - RegionStewardStakePool
+  upgrade_authority: GovernanceTimelock
+  upgrade_path: Governor_proposal → Timelock_delay → Timelock_execute → proxy.upgradeTo
+  timelock_delay_hours_planned: 48
+  timelock_controller: CONTROLLER_NON_UPGRADEABLE
+  immutable_exempt:
+    - CountryPoolNetProfitLedger
+    - StewardPathVault
+    - UnallocatedStewardPathVault
+  emergency_procedure:
+  - FeeRouter.setDistributePaused(true) via Timelock fast-track if pre-authorized
+  - Escrow instances remain user-controlled — factory pause is guardian-scoped
+  - No silent implementation swap on immutable core
+
+# ── Deployment sequence (planning — execution in P3-04+) ─────────────────────
+
+deployment_sequence:
+  - step: 1
+    action: deploy_implementations
+    scope: [governable_shell_implementations, FeeRouter, immutable_core_per_jurisdiction]
+    status: NOT_STARTED
+  - step: 2
+    action: deploy_proxies
+    scope: [TimelockUpgradeableProxy shells]
+    status: NOT_STARTED
+  - step: 3
+    action: initialize
+    scope: [proxy_storage_init, tokenomics_params_from_TTG_FREEZE]
+    status: NOT_STARTED
+  - step: 4
+    action: transfer_ownership
+    scope: [all_contracts_owner_to_Timelock, proxy_admin_to_Timelock]
+    status: NOT_STARTED
+  - step: 5
+    action: configure_roles
+    scope: [FeeRouter_routing, stake_pool_jurisdictions, escrow_factory_v2_guardian]
+    status: NOT_STARTED
+  - step: 6
+    action: verify
+    scope: [etherscan, bytecode_hash_manifest, cast_admin_implementation_checks]
+    status: NOT_STARTED
+  - step: 7
+    action: enable_production
+    scope: [registry_update, env_mainnet, api_meta, indexer_start]
+    status: NOT_STARTED
+    blocked_by:
+      - P3-04_escrow_v2_prep
+      - P3-05_security_review
+      - P3-06_ops_runbook
+      - P3-08_owner_signoff
+      - WEB3_FREEZE_PASS
+      - mainnet_cutover_authorized
+
+p3_03_scope_excluded:
+  - mainnet_broadcast
+  - gas_purchase
+  - real_multisig_creation
+  - contract_source_changes
+  - tokenomics_changes
+
+next_items:
+  - P3-05_security_review_refresh
+  - P3-06_mainnet_ops_runbook
+
+closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/P3-03-MAINNET-ADDRESS-PLANNING-CLOSEOUT.md

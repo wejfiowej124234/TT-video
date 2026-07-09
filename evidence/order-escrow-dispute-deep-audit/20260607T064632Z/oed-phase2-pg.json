@@ -1,0 +1,95 @@
+{
+  "artifact": "oed-phase2-pg-consistency",
+  "generated_at": "2026-06-07T06:46:49.218965+00:00",
+  "database_configured": true,
+  "pg_consistency_matrix": [
+    {
+      "probe_id": "pg.f024_guide_active",
+      "check": "guides.status|stake_amount",
+      "target": "d730aa81-9c10-4e3a-91e8-1dd9efe81bca",
+      "pg_value": "pending;stake=0",
+      "api_value": "\u2014",
+      "expected": "active|stake>0",
+      "status": "FAIL",
+      "notes": "F-024 PG \u5bf9\u62cd\uff08\u516c\u5f00\u5217\u8868\u53d7 catalog \u8fc7\u6ee4\uff09"
+    },
+    {
+      "probe_id": "pg.happy_order_status",
+      "check": "orders.status",
+      "target": "dfe8d4a7-dfbf-41f4-944d-b418220b0d5b",
+      "pg_value": "completed",
+      "api_value": "\u2014",
+      "expected": "completed",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.dispute_order_status",
+      "check": "orders.status",
+      "target": "774b9cf5-9e60-49a5-8547-e9d7897efc66",
+      "pg_value": "refunded",
+      "api_value": "\u2014",
+      "expected": "partially_refunded|refunded|slashed",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.dispute_resolved",
+      "check": "disputes.status+refund_ratio+arbitrator_id",
+      "target": "e90d0dd0-bba4-4a1b-93b3-cd136bf5112e",
+      "pg_value": "resolved;ratio=1;arb=1d7f6614\u2026",
+      "api_value": "\u2014",
+      "expected": "resolved|refund_ratio=1|arbitrator",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.audit_key_write_accept",
+      "check": "audit_key_write|PG surrogate",
+      "target": "dfe8d4a7-dfbf-41f4-944d-b418220b0d5b",
+      "pg_value": "0",
+      "api_value": "completed",
+      "expected": ">=1 order_accept \u6216 status>created",
+      "status": "PASS",
+      "notes": "PG\u72b6\u6001\u9012\u8fdb"
+    },
+    {
+      "probe_id": "pg.audit_key_write_accept",
+      "check": "audit_key_write|PG surrogate",
+      "target": "774b9cf5-9e60-49a5-8547-e9d7897efc66",
+      "pg_value": "0",
+      "api_value": "refunded",
+      "expected": ">=1 order_accept \u6216 status>created",
+      "status": "PASS",
+      "notes": "PG\u72b6\u6001\u9012\u8fdb"
+    },
+    {
+      "probe_id": "pg.auth_audit_events_readable",
+      "check": "auth_audit_events",
+      "target": "public.auth_audit_events",
+      "pg_value": "0",
+      "api_value": "\u2014",
+      "expected": "table readable",
+      "status": "PASS",
+      "notes": "\u76f4\u67e5\u6210\u529f\uff08\u884c\u6570\u4e0d\u9650\uff09"
+    }
+  ],
+  "issues": [
+    {
+      "id": "OED-PG-1-001",
+      "priority": "P1",
+      "category": "\u524d\u7aef",
+      "role": "guide",
+      "step": "F-024 PG",
+      "route": "guides/d730aa81-9c10-4e3a-91e8-1dd9efe81bca",
+      "title": "\u5411\u5bfc\u8d28\u62bc\u672a\u843d PG",
+      "observation": "status=pending stake=0"
+    }
+  ],
+  "summary": {
+    "pg_pass": 6,
+    "pg_total": 7,
+    "p0": 0,
+    "p1": 1
+  }
+}

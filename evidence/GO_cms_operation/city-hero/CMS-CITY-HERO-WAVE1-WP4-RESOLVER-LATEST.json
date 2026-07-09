@@ -1,0 +1,91 @@
+{
+  "schema": "traveltrust.cms_city_hero_wave1_wp4_resolver_evidence.v1",
+  "recorded_at_utc": "2026-07-07T13:15:46.466Z",
+  "work_package": "WP4",
+  "TT_CMS_CITY_HERO_WAVE1_WP4": "PASS",
+  "TT_CMS_CITY_HERO_WAVE1_TOKYO": "PENDING_IMPLEMENTATION",
+  "upstream_wp3": "PASS",
+  "resolver": "frontend/lib/catalogApi/resolveCityHero.ts",
+  "fallback_chain": [
+    "city_hero(catalog-api)",
+    "landing_ambient(catalog-api-fallback)",
+    "ts"
+  ],
+  "wave1_tokyo": {
+    "country_iso": "JP",
+    "city_slug": "tokyo",
+    "asset_key": "city_hero_tokyo",
+    "fallback_key": "hero_japan"
+  },
+  "static_checks": [
+    {
+      "id": "resolver_file",
+      "verdict": "PASS"
+    },
+    {
+      "id": "fallback_chain_city_hero",
+      "verdict": "PASS"
+    },
+    {
+      "id": "fallback_chain_landing_ambient",
+      "verdict": "PASS"
+    },
+    {
+      "id": "fallback_chain_ts",
+      "verdict": "PASS"
+    },
+    {
+      "id": "catalog_api_fallback_source",
+      "verdict": "PASS"
+    },
+    {
+      "id": "fallback_used_flag",
+      "verdict": "PASS"
+    },
+    {
+      "id": "hero_japan_map",
+      "verdict": "PASS"
+    },
+    {
+      "id": "client_city_slug",
+      "verdict": "PASS"
+    },
+    {
+      "id": "no_consumer_wiring",
+      "verdict": "PASS"
+    },
+    {
+      "id": "unit_tests_present",
+      "verdict": "PASS"
+    },
+    {
+      "id": "landing_pages_untouched",
+      "verdict": "PASS"
+    }
+  ],
+  "vitest": {
+    "verdict": "PASS",
+    "exit_code": 0,
+    "output_tail": "\n RUN  v2.1.9 D:/TravelTrust-V1.1/frontend\n\n ✓ lib/catalogApi/resolveCityHero.test.ts (8 tests) 5ms\n\n Test Files  1 passed (1)\n      Tests  8 passed (8)\n   Start at  21:15:47\n   Duration  1.26s (transform 56ms, setup 17ms, collect 52ms, tests 5ms, environment 547ms, prepare 124ms)\n\n"
+  },
+  "scope": {
+    "changed": [
+      "resolveCityHero.ts",
+      "resolveCityHero.test.ts",
+      "types.ts",
+      "client.ts citySlug",
+      "catalogApi/index.ts exports"
+    ],
+    "untouched": [
+      "home",
+      "travel",
+      "consumer_hooks",
+      "registry",
+      "matrix",
+      "p1_standard",
+      "new_assets"
+    ]
+  },
+  "wp6_workspace_test_reminder": "Full cargo test -p traveltrust-api remains blocked by workspace E0063 until WP6 · vitest resolver tests are WP4 authority",
+  "next_step": "WP5 Home/Travel Consumer wiring"
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "traveltrust.phase3_production_entry_review.v1",
+  "stamp": "20260630T095200Z",
+  "opened_at_utc": "2026-06-30T09:52:37Z",
+  "phase": "\u2462 production entry review",
+  "status": "ACTIVE",
+  "runtime_baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "phase2_closed_at": "2026-06-30T09:52:37Z",
+  "runtime_drift": "NONE",
+  "verdict": {
+    "phase3_production_entry_review": "ACTIVE",
+    "production_go": "NO"
+  },
+  "prerequisites": {
+    "phase2_closed": "evidence/GO_phase2_testnet_graduation/PHASE2-CLOSED.latest.json",
+    "h1": "evidence/GO_phase2_testnet_graduation/h1-human-acceptance/20260630T094242Z/",
+    "deep_gate": "evidence/GO_phase2_testnet_20260526/deep-release-gate/20260630T093714Z/"
+  },
+  "machine_keys": {
+    "TT_PHASE2_CLOSED": "YES",
+    "TT_H1_HUMAN_ACCEPTANCE": "PASS",
+    "TT_LOCAL_FIRST_RUNTIME_DRIFT": "NONE",
+    "TT_PHASE3_PRODUCTION_ENTRY_REVIEW": "ACTIVE",
+    "TT_PHASE3_PRODUCTION_GO": "NO"
+  }
+}

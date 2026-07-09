@@ -1,0 +1,65 @@
+P2FC-E01-order-cancel	GO	ok
+P2FC-E02-duplicate-submit	FAIL	harness exit non-zero
+P2FC-E03-refund-webhook	FAIL	harness exit non-zero
+P2FC-E04-session-wallet-2fa	GO	ok
+P2FC-E05-network-interrupt	GO	ok
+P2FC-E06-cold-start-rollback	GO	ok
+P2FC-F01-deps-normal	GO	ok
+P2FC-F02-deps-fault	GO	ok
+P2FC-F02b-deps-recovery	GO	ok
+P2FC-F03-deps-finalize	GO	ok
+P2FC-F01-deps-normal	GO	ok
+P2FC-F02-deps-fault	GO	ok
+P2FC-F02b-deps-recovery	GO	ok
+P2FC-F03-deps-finalize	GO	ok
+P2FC-F04-email-probe	GO	HTTP 200
+P2FC-F05-storage-probe	GO	HTTP 200
+P2FC-F06-cdn-probe	GO	HTTP 200
+P2FC-F07-payment-probe	GO	HTTP 200
+P2FC-W01-web3-itinerary	GO	ok
+P2FC-W02-governance-uat	GO	ok
+P2FC-W03-community-deep	FAIL	harness exit non-zero
+P2FC-W04-community-moderation	FAIL	harness exit non-zero
+P2FC-D01-cross-domain-pg	FAIL	harness exit non-zero
+P2FC-D01b-pg-matrix	GO	ok
+P2FC-D02-order-escrow-pg	GO	ok
+P2FC-D03-community-pg	GO	ok
+P2FC-D04-growth-funnel	GO	ok
+P2FC-T01-five-role-chain	GO	ok
+P2FC-T02-rov-wave1-pack	GO	ok
+P2FC-T03-rov-wave2-pack	GO	ok
+P2FC-T04-governance-gap	GO	ok
+P2FC-W01-web3-itinerary	FAIL	harness exit non-zero
+P2FC-W02-governance-uat	FAIL	harness exit non-zero
+P2FC-W03-community-deep	FAIL	harness exit non-zero
+P2FC-W04-community-moderation	FAIL	harness exit non-zero
+P2FC-W01-web3-itinerary	GO	ok
+P2FC-D01-cross-domain-pg	GO	ok
+P2FC-D01b-pg-matrix	GO	ok
+P2FC-D02-order-escrow-pg	GO	ok
+P2FC-D03-community-pg	GO	ok
+P2FC-W02-governance-uat	GO	ok
+P2FC-W03-community-deep	FAIL	harness exit non-zero
+P2FC-D04-growth-funnel	GO	ok
+P2FC-W04-community-moderation	GO	ok
+P2FC-B01-chrome	FAIL	chromium
+P2FC-B03-firefox	FAIL	firefox
+P2FC-B04-safari	FAIL	webkit
+P2FC-M01-ios-safari	FAIL	mobile-safari
+P2FC-W01-web3-itinerary	GO	ok
+P2FC-W02-governance-uat	GO	ok
+P2FC-W03-community-deep	GO	ok
+P2FC-B01-chrome	FAIL	chromium
+P2FC-W04-community-moderation	GO	ok
+P2FC-B02-edge	FAIL	chromium
+P2FC-B03-firefox	FAIL	firefox
+P2FC-B04-safari	FAIL	webkit
+P2FC-M01-ios-safari	FAIL	mobile-safari
+P2FC-M02-android-chrome	FAIL	mobile-chrome
+P2FC-B01-chrome	GO	chromium
+P2FC-B02-edge	GO	chromium
+P2FC-B03-firefox	GO	firefox
+P2FC-B04-safari	GO	webkit
+P2FC-M01-ios-safari	GO	mobile-safari
+P2FC-M02-android-chrome	GO	mobile-chrome
+P2FC-M02-android-chrome	FAIL	mobile-chrome

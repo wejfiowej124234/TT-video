@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T141530Z",
+  "trigger_row": 25,
+  "trigger_filename": "ocs-singapore-family-guide-avatar.jpg",
+  "new_chain": "singapore-family",
+  "closed_chains_compared": ["tokyo-photo", "kyoto-culture", "seoul-food", "bangkok-temple"],
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "guide_face_collision": { "pass": true, "note": "Lee 女性亲子 vs Ken/Yuki/Min/Arun 无撞脸" },
+  "theme_duplication": { "pass": true, "note": "亲子现代 vs 摄影/文化/美食/寺庙" },
+  "composition_duplication": { "pass": true, "note": "花园亲子互动 vs 各城 guide 肖像构图各异" },
+  "no_quality_regression_prior_24": true
+}

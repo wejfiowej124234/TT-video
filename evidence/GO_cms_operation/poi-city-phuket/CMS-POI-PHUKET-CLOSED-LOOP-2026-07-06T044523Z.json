@@ -1,0 +1,105 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T04:45:23Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "TH",
+    "city_zh": "普吉",
+    "city_en": "Phuket",
+    "matrix_ids": [
+      "PH-TH-083-ATR",
+      "PH-TH-084-ATR",
+      "PH-TH-085-ATR",
+      "PH-TH-086-ATR",
+      "PH-TH-087-ATR",
+      "PH-TH-088-FOOD",
+      "PH-TH-089-FOOD",
+      "PH-TH-090-FOOD",
+      "PH-TH-091-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-TH-083-ATR",
+      "legacy_value": "芭东海滩",
+      "poi_id": "038d2524-9451-4445-8c0e-47b39a4097c8",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-official-guide-cover.jpg",
+      "hero_file": "ocs-phuket-island-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-083-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-TH-084-ATR",
+      "legacy_value": "攀牙湾",
+      "poi_id": "b55f12aa-4772-4fc8-afe0-19473caeff93",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-community-media.jpg",
+      "hero_file": "ocs-phuket-island-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-084-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-TH-085-ATR",
+      "legacy_value": "皮皮岛",
+      "poi_id": "5b28b1d1-8cdc-428d-9cea-ad8795abe123",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-community-cover.jpg",
+      "hero_file": "ocs-phuket-island-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-085-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-TH-086-ATR",
+      "legacy_value": "大佛",
+      "poi_id": "63714ce1-60d0-4c9e-b9db-9ef17ecc6971",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-provider-cover.jpg",
+      "hero_file": "ocs-phuket-island-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-086-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-TH-087-ATR",
+      "legacy_value": "老镇",
+      "poi_id": "d3044faa-6cbc-4f38-8bd5-6137ea6a2c15",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-acquisition-cover.jpg",
+      "hero_file": "ocs-phuket-island-acquisition-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-087-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-TH-088-FOOD",
+      "legacy_value": "海鲜",
+      "poi_id": "d133ca4e-148c-454f-ae7a-4e5b0779d943",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-guide-avatar.jpg",
+      "hero_file": "ocs-phuket-island-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-088-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-TH-089-FOOD",
+      "legacy_value": "冬阴功",
+      "poi_id": "1dccaa2e-282b-4875-90d1-43c876ebf158",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-official-guide-cover.jpg",
+      "hero_file": "ocs-phuket-island-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-089-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-TH-090-FOOD",
+      "legacy_value": "菠萝饭",
+      "poi_id": "2bdb0eb1-c62e-4fd6-8a68-4c17efb738e8",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-community-media.jpg",
+      "hero_file": "ocs-phuket-island-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-090-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-TH-091-FOOD",
+      "legacy_value": "泰式烧烤",
+      "poi_id": "0b4fcbaa-0993-4e94-91e8-e53f08b70f0b",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-community-cover.jpg",
+      "hero_file": "ocs-phuket-island-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-091-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

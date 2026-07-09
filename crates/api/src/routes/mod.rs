@@ -47,6 +47,8 @@ mod orders;
 mod redemption;
 mod steward;
 mod traveltrust_page;
+mod public_announcements;
+mod public_roadmap;
 mod trust_growth;
 
 #[cfg(test)]
@@ -119,6 +121,8 @@ pub fn api_router() -> Router<ApiMetaState> {
         .merge(guides::router())
         .merge(orders::router())
         .merge(traveltrust_page::router())
+        .merge(public_announcements::router())
+        .merge(public_roadmap::router())
         .merge(itineraries::router())
         .merge(discover::router())
         .merge(messages::router())

@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.p2fc_meta_observability.v1",
+  "recorded_at_utc": "2026-06-24T02:06:39Z",
+  "observability_only": true,
+  "policy": "execution_chain_non_blocking · acceptance_deferred_until_post_soak_deploy",
+  "probes": {
+    "api_health": "200",
+    "api_meta": "408",
+    "api_meta_build": "200",
+    "web_meta": "503",
+    "git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+    "probe_source": "meta_build"
+  },
+  "execution_chain_ok": true,
+  "acceptance_chain_ok": false,
+  "fallback": "meta → meta_build → health (p2fc-staging-probe-lib)"
+}

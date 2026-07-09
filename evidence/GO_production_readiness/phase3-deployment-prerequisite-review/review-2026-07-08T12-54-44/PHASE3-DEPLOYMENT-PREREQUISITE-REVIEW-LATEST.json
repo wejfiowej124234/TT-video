@@ -1,0 +1,1141 @@
+{
+  "schema": "traveltrust.phase3_deployment_prerequisite_review_report.v2",
+  "recorded_utc": "2026-07-08T12:54:45.056Z",
+  "stamp": "2026-07-08T12-54-44",
+  "commit_hash": "4706266acf8ec8a92e5eb01b8d83257013cbd30a",
+  "display_name": "Phase ③ Production Deployment Prerequisite Review",
+  "registry": "registry/phase3-deployment-prerequisite-review.v1.yaml",
+  "runbook": "docs/runbook/PHASE3-DEPLOYMENT-PREREQUISITE-REVIEW-V1.md",
+  "verdict": "PHASE3_DEPLOYMENT_PREREQUISITE_REVIEW_BLOCKED",
+  "completion_model": "Review → Sub Checks → Evidence → PASS",
+  "purpose": "Final system gate before Web3 Freeze and Mainnet Deployment",
+  "prerequisite": {
+    "phase2_exit_review": "PHASE2_EXIT_REVIEW_IN_PROGRESS",
+    "exit_review_required": "PHASE2_EXIT_REVIEW_PASS"
+  },
+  "reviews": [
+    {
+      "id": "REVIEW-01",
+      "name": "Business Logic Review",
+      "machine_key": "TT_R01_BUSINESS_LOGIC",
+      "verdict": "TT_R01_BUSINESS_LOGIC_FAIL",
+      "pass": false,
+      "summary": {
+        "pass": 5,
+        "total": 10
+      },
+      "sub_checks": [
+        {
+          "id": "R01-SC-01",
+          "name": "TTG Lifecycle",
+          "pass": false,
+          "detail": "cert 7/12 · DOM-TTG-GOV",
+          "evidence": [
+            "evidence/GO_ttg_cert/CERT-EXECUTION-INDEX-LATEST.json"
+          ]
+        },
+        {
+          "id": "R01-SC-02",
+          "name": "Escrow Lifecycle",
+          "pass": true,
+          "detail": "ESCROW_SETTLEMENT_MODEL_ALIGNED",
+          "evidence": [
+            "evidence/GO_production_readiness/escrow-bilateral-layer-a/",
+            "evidence/GO_production_readiness/escrow-settlement-authorization/"
+          ]
+        },
+        {
+          "id": "R01-SC-03",
+          "name": "Settlement",
+          "pass": true,
+          "detail": "gaps_p0=0",
+          "evidence": [
+            "evidence/GO_production_readiness/escrow-settlement-authorization/ESCROW-SETTLEMENT-AUTHORIZATION-AUDIT-LATEST.json"
+          ]
+        },
+        {
+          "id": "R01-SC-04",
+          "name": "Treasury",
+          "pass": false,
+          "detail": "Cert #8+ treasury path · signed=7",
+          "evidence": [
+            "evidence/GO_ttg_cert/"
+          ]
+        },
+        {
+          "id": "R01-SC-05",
+          "name": "CountryPool",
+          "pass": true,
+          "detail": "fund-flows domain or ledger contract",
+          "evidence": [
+            "evidence/GO_production_readiness/G3-02/"
+          ]
+        },
+        {
+          "id": "R01-SC-06",
+          "name": "Identity",
+          "pass": true,
+          "detail": "DOM-IDENTITY-STAKE",
+          "evidence": [
+            "registry/sepolia-full-web3-lifecycle-validation.v1.yaml"
+          ]
+        },
+        {
+          "id": "R01-SC-07",
+          "name": "Steward",
+          "pass": true,
+          "detail": "steward pool contract + broadcast script",
+          "evidence": [
+            "contracts/src/RegionStewardStakePool.sol"
+          ]
+        },
+        {
+          "id": "R01-SC-08",
+          "name": "Emergency",
+          "pass": false,
+          "detail": "Cert #10 DR · signed=7",
+          "evidence": [
+            "registry/ttg-governance-cert-gates.v1.yaml"
+          ]
+        },
+        {
+          "id": "R01-SC-09",
+          "name": "Recovery",
+          "pass": false,
+          "detail": "Cert #11 GORP · signed=7",
+          "evidence": [
+            "registry/ttg-governance-cert-gates.v1.yaml"
+          ]
+        },
+        {
+          "id": "R01-SC-10",
+          "name": "Business Logic Audit Doc",
+          "pass": false,
+          "detail": "lifecycle=SEPOLIA_FULL_WEB3_LIFECYCLE_IN_PROGRESS",
+          "evidence": [
+            "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/BUSINESS-LOGIC-AUDIT-LATEST.md"
+          ]
+        }
+      ],
+      "detail": "5/10 sub-checks PASS — R01-SC-01, R01-SC-04, R01-SC-08, R01-SC-09, R01-SC-10 open"
+    },
+    {
+      "id": "REVIEW-02",
+      "name": "Protocol State Machine Review",
+      "machine_key": "TT_R02_PROTOCOL_STATE_MACHINE",
+      "verdict": "TT_R02_PROTOCOL_STATE_MACHINE_FAIL",
+      "pass": false,
+      "summary": {
+        "pass": 8,
+        "total": 9
+      },
+      "sub_checks": [
+        {
+          "id": "R02-SC-01",
+          "name": "State Machine SSOT",
+          "pass": true,
+          "detail": "docs/spec/governance-token/state-machine.v1.md",
+          "evidence": [
+            "docs/spec/governance-token/state-machine.v1.md"
+          ]
+        },
+        {
+          "id": "R02-SC-02",
+          "name": "Order / Escrow projection",
+          "pass": true,
+          "detail": "API orders + Escrow contract",
+          "evidence": [
+            "crates/api/src/db/orders.rs"
+          ]
+        },
+        {
+          "id": "R02-SC-03",
+          "name": "Governance Proposal",
+          "pass": true,
+          "detail": "Governor contract",
+          "evidence": [
+            "contracts/src/TravelTrustGovernor.sol"
+          ]
+        },
+        {
+          "id": "R02-SC-04",
+          "name": "Treasury states",
+          "pass": true,
+          "detail": "Treasury contract",
+          "evidence": [
+            "contracts/src/GovernanceTreasury.sol"
+          ]
+        },
+        {
+          "id": "R02-SC-05",
+          "name": "Staking states",
+          "pass": false,
+          "detail": "staking contracts",
+          "evidence": [
+            "contracts/src/"
+          ]
+        },
+        {
+          "id": "R02-SC-06",
+          "name": "CountryPool states",
+          "pass": true,
+          "detail": "ledger contract",
+          "evidence": [
+            "contracts/src/CountryPoolNetProfitLedger.sol"
+          ]
+        },
+        {
+          "id": "R02-SC-07",
+          "name": "Identity / Role machines",
+          "pass": true,
+          "detail": "ssot_missing=0",
+          "evidence": [
+            "evidence/GO_production_readiness/web3-protocol-grade-audit/"
+          ]
+        },
+        {
+          "id": "R02-SC-08",
+          "name": "Timeout / Recovery paths",
+          "pass": true,
+          "detail": "Cert DR/GORP gates defined",
+          "evidence": [
+            "registry/ttg-governance-cert-gates.v1.yaml"
+          ]
+        },
+        {
+          "id": "R02-SC-09",
+          "name": "Protocol-Grade P0 clear",
+          "pass": true,
+          "detail": "p0=0",
+          "evidence": [
+            "evidence/GO_production_readiness/web3-protocol-grade-audit/WEB3-PROTOCOL-GRADE-AUDIT-LATEST.json"
+          ]
+        }
+      ],
+      "detail": "8/9 sub-checks PASS — R02-SC-05 open"
+    },
+    {
+      "id": "REVIEW-03",
+      "name": "Role Lifecycle Review",
+      "machine_key": "TT_R03_ROLE_LIFECYCLE",
+      "verdict": "TT_R03_ROLE_LIFECYCLE_FAIL",
+      "pass": false,
+      "summary": {
+        "pass": 6,
+        "total": 8
+      },
+      "sub_checks": [
+        {
+          "id": "R03-SC-01",
+          "name": "Traveler",
+          "pass": true,
+          "detail": "evidence present",
+          "evidence": [
+            "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/"
+          ]
+        },
+        {
+          "id": "R03-SC-02",
+          "name": "Guide",
+          "pass": true,
+          "detail": "evidence present",
+          "evidence": [
+            "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/"
+          ]
+        },
+        {
+          "id": "R03-SC-03",
+          "name": "Merchant",
+          "pass": false,
+          "detail": "pending Sepolia journey / Cert",
+          "evidence": [
+            "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/"
+          ]
+        },
+        {
+          "id": "R03-SC-04",
+          "name": "Region Steward",
+          "pass": true,
+          "detail": "evidence present",
+          "evidence": [
+            "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/"
+          ]
+        },
+        {
+          "id": "R03-SC-05",
+          "name": "TTG Holder",
+          "pass": true,
+          "detail": "evidence present",
+          "evidence": [
+            "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/"
+          ]
+        },
+        {
+          "id": "R03-SC-06",
+          "name": "Admin",
+          "pass": true,
+          "detail": "evidence present",
+          "evidence": [
+            "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/"
+          ]
+        },
+        {
+          "id": "R03-SC-07",
+          "name": "User Journey Audit",
+          "pass": true,
+          "detail": "evidence present",
+          "evidence": [
+            "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/"
+          ]
+        },
+        {
+          "id": "R03-SC-08",
+          "name": "Cert walkthrough evidence",
+          "pass": false,
+          "detail": "pending Sepolia journey / Cert",
+          "evidence": [
+            "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/"
+          ]
+        }
+      ],
+      "detail": "6/8 sub-checks PASS — R03-SC-03, R03-SC-08 open"
+    },
+    {
+      "id": "REVIEW-04",
+      "name": "Fund Lifecycle Review",
+      "machine_key": "TT_R04_FUND_LIFECYCLE",
+      "verdict": "TT_R04_FUND_LIFECYCLE_PASS",
+      "pass": true,
+      "summary": {
+        "pass": 8,
+        "total": 8
+      },
+      "sub_checks": [
+        {
+          "id": "R04-SC-01",
+          "name": "Fund-flow SSOT",
+          "pass": true,
+          "detail": "fund-flow-ssot.v1.md",
+          "evidence": [
+            "docs/spec/governance-token/fund-flow-ssot.v1.md"
+          ]
+        },
+        {
+          "id": "R04-SC-02",
+          "name": "Traveler → Escrow",
+          "pass": true,
+          "detail": "Escrow contracts",
+          "evidence": [
+            "contracts/src/EscrowV2.sol"
+          ]
+        },
+        {
+          "id": "R04-SC-03",
+          "name": "Escrow → Guide / FeeRouter",
+          "pass": true,
+          "detail": "FeeRouter",
+          "evidence": [
+            "contracts/src/FeeRouter.sol"
+          ]
+        },
+        {
+          "id": "R04-SC-04",
+          "name": "Treasury path",
+          "pass": true,
+          "detail": "Treasury",
+          "evidence": [
+            "contracts/src/GovernanceTreasury.sol"
+          ]
+        },
+        {
+          "id": "R04-SC-05",
+          "name": "CountryPool path",
+          "pass": true,
+          "detail": "CountryPool ledger",
+          "evidence": [
+            "contracts/src/CountryPoolNetProfitLedger.sol"
+          ]
+        },
+        {
+          "id": "R04-SC-06",
+          "name": "Steward / Claim",
+          "pass": true,
+          "detail": "Steward pool",
+          "evidence": [
+            "contracts/src/RegionStewardStakePool.sol"
+          ]
+        },
+        {
+          "id": "R04-SC-07",
+          "name": "No duplicate / dead funds (FL P1)",
+          "pass": true,
+          "detail": "fl_p1_blockers=0",
+          "evidence": [
+            "evidence/GO_production_readiness/web3-protocol-grade-audit/"
+          ]
+        },
+        {
+          "id": "R04-SC-08",
+          "name": "Economic arbitrage evidence",
+          "pass": true,
+          "detail": "ECO_ARB_PHASE2_EVIDENCE_PASS",
+          "evidence": [
+            "evidence/GO_production_readiness/web3-protocol-grade-audit/ECO-ARB-PHASE2-EVIDENCE-LATEST.json"
+          ]
+        }
+      ],
+      "detail": "8/8 sub-checks PASS"
+    },
+    {
+      "id": "REVIEW-05",
+      "name": "Permission & Security Review",
+      "machine_key": "TT_R05_PERMISSION_SECURITY",
+      "verdict": "TT_R05_PERMISSION_SECURITY_FAIL",
+      "pass": false,
+      "summary": {
+        "pass": 7,
+        "total": 8
+      },
+      "sub_checks": [
+        {
+          "id": "R05-SC-01",
+          "name": "Contract Modifier",
+          "pass": false,
+          "detail": "Escrow modifiers present",
+          "evidence": [
+            "contracts/src/"
+          ]
+        },
+        {
+          "id": "R05-SC-02",
+          "name": "API RBAC",
+          "pass": true,
+          "detail": "RBAC_D3_PRODUCTION_BOUNDARY_CLOSED",
+          "evidence": [
+            "evidence/GO_production_readiness/web3-system-audit/RBAC-D3-CLOSURE-LATEST.json"
+          ]
+        },
+        {
+          "id": "R05-SC-03",
+          "name": "Frontend Gate",
+          "pass": true,
+          "detail": "admin RBAC registry + UI",
+          "evidence": [
+            "registry/admin-rbac-permissions.v1.yaml"
+          ]
+        },
+        {
+          "id": "R05-SC-04",
+          "name": "Registry Permission",
+          "pass": true,
+          "detail": "admin-rbac-permissions SSOT",
+          "evidence": [
+            "registry/admin-rbac-permissions.v1.yaml"
+          ]
+        },
+        {
+          "id": "R05-SC-05",
+          "name": "Dashboard Permission",
+          "pass": true,
+          "detail": "phase dashboard registry",
+          "evidence": [
+            "registry/phase-dashboard.v1.yaml"
+          ]
+        },
+        {
+          "id": "R05-SC-06",
+          "name": "Evidence Permission",
+          "pass": true,
+          "detail": "RBAC closure script + evidence",
+          "evidence": [
+            "scripts/dev/run-rbac-d3-closure.cjs"
+          ]
+        },
+        {
+          "id": "R05-SC-07",
+          "name": "Attack Surface matrix",
+          "pass": true,
+          "detail": "ATTACK-SURFACE-MATRIX-LATEST.md",
+          "evidence": [
+            "evidence/GO_production_readiness/web3-protocol-grade-audit/"
+          ]
+        },
+        {
+          "id": "R05-SC-08",
+          "name": "Protocol-Grade P0 clear",
+          "pass": true,
+          "detail": "p0=0",
+          "evidence": [
+            "evidence/GO_production_readiness/web3-protocol-grade-audit/"
+          ]
+        }
+      ],
+      "detail": "7/8 sub-checks PASS — R05-SC-01 open"
+    },
+    {
+      "id": "REVIEW-06",
+      "name": "Protocol Consistency Review",
+      "machine_key": "TT_R06_PROTOCOL_CONSISTENCY",
+      "verdict": "TT_R06_PROTOCOL_CONSISTENCY_PASS",
+      "pass": true,
+      "summary": {
+        "pass": 10,
+        "total": 10
+      },
+      "sub_checks": [
+        {
+          "id": "R06-SC-01",
+          "name": "Registry ↔ Contracts",
+          "pass": true,
+          "detail": "5/7 core keys",
+          "evidence": [
+            "registry/protocol-convergence-deployments.v1.yaml",
+            "contracts/src/"
+          ]
+        },
+        {
+          "id": "R06-SC-02",
+          "name": "Registry ↔ ABI",
+          "pass": true,
+          "detail": "4 ABI files aligned",
+          "evidence": [
+            "contracts/abi/"
+          ]
+        },
+        {
+          "id": "R06-SC-03",
+          "name": "Registry ↔ API",
+          "pass": true,
+          "detail": "meta_registry_match 9 ok, 0 mismatch",
+          "evidence": [
+            "evidence/GO_production_readiness/web3-system-audit/WEB3-MASTER-MAP-PARITY-LATEST.json"
+          ]
+        },
+        {
+          "id": "R06-SC-04",
+          "name": "Registry ↔ Frontend",
+          "pass": true,
+          "detail": "5/5 NEXT_PUBLIC_* configured",
+          "evidence": [
+            "deploy/fly/tt-web-prod/build.env.sepolia-prod.example"
+          ]
+        },
+        {
+          "id": "R06-SC-05",
+          "name": "Registry ↔ Dashboard",
+          "pass": true,
+          "detail": "dashboard + registry SSOT wired",
+          "evidence": [
+            "registry/dashboard-config.v1.yaml",
+            "registry/protocol-convergence-deployments.v1.yaml"
+          ]
+        },
+        {
+          "id": "R06-SC-06",
+          "name": "Registry ↔ Master Map",
+          "pass": true,
+          "detail": "WEB3_MASTER_MAP_PARITY_PASS",
+          "evidence": [
+            "registry/web3-system-master-map.v1.yaml"
+          ]
+        },
+        {
+          "id": "R06-SC-07",
+          "name": "Registry ↔ Evidence",
+          "pass": true,
+          "detail": "lifecycle=SEPOLIA_FULL_WEB3_LIFECYCLE_IN_PROGRESS",
+          "evidence": [
+            "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/"
+          ]
+        },
+        {
+          "id": "R06-SC-08",
+          "name": "Registry ↔ Deployment Package",
+          "pass": true,
+          "detail": "pre-freeze: registry+generator ready",
+          "evidence": [
+            "registry/mainnet-deployment-package.v1.yaml"
+          ]
+        },
+        {
+          "id": "R06-SC-09",
+          "name": "Registry ↔ Environment",
+          "pass": true,
+          "detail": "fly deploy env templates present",
+          "evidence": [
+            "deploy/fly/"
+          ]
+        },
+        {
+          "id": "R06-SC-10",
+          "name": "Registry ↔ Runtime",
+          "pass": true,
+          "detail": "meta_registry_match 9 ok, 0 mismatch",
+          "evidence": [
+            "https://tt-api-prod.fly.dev"
+          ]
+        }
+      ],
+      "detail": "10/10 sub-checks PASS",
+      "priority": true,
+      "freeze_manifest": null,
+      "prerequisite_evidence": true
+    },
+    {
+      "id": "REVIEW-07",
+      "name": "Upgradeable Architecture Review",
+      "machine_key": "TT_R07_UPGRADEABLE_ARCHITECTURE",
+      "verdict": "TT_R07_UPGRADEABLE_ARCHITECTURE_PASS",
+      "pass": true,
+      "summary": {
+        "pass": 7,
+        "total": 7
+      },
+      "sub_checks": [
+        {
+          "id": "R07-SC-01",
+          "name": "Proxy architecture",
+          "pass": true,
+          "detail": "TimelockUpgradeableProxy",
+          "evidence": [
+            "contracts/src/upgrade/"
+          ]
+        },
+        {
+          "id": "R07-SC-02",
+          "name": "Storage Layout tests",
+          "pass": true,
+          "detail": "proxy bootstrap tests",
+          "evidence": [
+            "contracts/test/"
+          ]
+        },
+        {
+          "id": "R07-SC-03",
+          "name": "initialize / initializer",
+          "pass": true,
+          "detail": "upgrade module",
+          "evidence": [
+            "contracts/src/upgrade/"
+          ]
+        },
+        {
+          "id": "R07-SC-04",
+          "name": "upgradeTo path",
+          "pass": true,
+          "detail": "G24 registry",
+          "evidence": [
+            "registry/g24-p-upgrade-01-contract-posture.v1.yaml"
+          ]
+        },
+        {
+          "id": "R07-SC-05",
+          "name": "Timelock",
+          "pass": true,
+          "detail": "GovernanceTimelock",
+          "evidence": [
+            "contracts/src/GovernanceTimelock.sol"
+          ]
+        },
+        {
+          "id": "R07-SC-06",
+          "name": "Proxy Admin",
+          "pass": true,
+          "detail": "g24Pass=true",
+          "evidence": [
+            "evidence/GO_production_readiness/web3-protocol-grade-audit/"
+          ]
+        },
+        {
+          "id": "R07-SC-07",
+          "name": "G24 baseline",
+          "pass": true,
+          "detail": "G24 posture + audit",
+          "evidence": [
+            "registry/g24-p-upgrade-01-contract-posture.v1.yaml"
+          ]
+        }
+      ],
+      "detail": "7/7 sub-checks PASS"
+    },
+    {
+      "id": "REVIEW-08",
+      "name": "Deployment Dry Run Review",
+      "machine_key": "TT_R08_DEPLOYMENT_DRY_RUN",
+      "verdict": "TT_R08_DEPLOYMENT_DRY_RUN_FAIL",
+      "pass": false,
+      "summary": {
+        "pass": 7,
+        "total": 8
+      },
+      "sub_checks": [
+        {
+          "id": "R08-SC-01",
+          "name": "Deployment Package registry",
+          "pass": true,
+          "detail": "mainnet-deployment-package.v1.yaml",
+          "evidence": [
+            "registry/mainnet-deployment-package.v1.yaml"
+          ]
+        },
+        {
+          "id": "R08-SC-02",
+          "name": "Wave scripts present",
+          "pass": true,
+          "detail": "generator + broadcast + forge script",
+          "evidence": [
+            "scripts/dev/generate-mainnet-deployment-package.cjs"
+          ]
+        },
+        {
+          "id": "R08-SC-03",
+          "name": "ABI in package scope",
+          "pass": true,
+          "detail": "contracts/abi/",
+          "evidence": [
+            "contracts/abi/"
+          ]
+        },
+        {
+          "id": "R08-SC-04",
+          "name": "Constructor / Verify path",
+          "pass": true,
+          "detail": "package gate script",
+          "evidence": [
+            "scripts/gates/check-mainnet-deployment-package-gate.sh"
+          ]
+        },
+        {
+          "id": "R08-SC-05",
+          "name": "Registry in package",
+          "pass": true,
+          "detail": "protocol-convergence-deployments",
+          "evidence": [
+            "registry/protocol-convergence-deployments.v1.yaml"
+          ]
+        },
+        {
+          "id": "R08-SC-06",
+          "name": "Rollback manifest",
+          "pass": true,
+          "detail": "rollback runbook",
+          "evidence": [
+            "docs/runbook/MAINNET-DEPLOYMENT-PACKAGE-V1.md"
+          ]
+        },
+        {
+          "id": "R08-SC-07",
+          "name": "Manifest generated",
+          "pass": false,
+          "detail": "post-Freeze",
+          "evidence": [
+            "MANIFEST/manifest.json"
+          ]
+        },
+        {
+          "id": "R08-SC-08",
+          "name": "Web3 Freeze prerequisite",
+          "pass": true,
+          "detail": "deferred — validated at Web3 Freeze step",
+          "evidence": [
+            "evidence/GO_production_readiness/web3-freeze/"
+          ],
+          "deferred": true
+        }
+      ],
+      "detail": "7/8 sub-checks PASS — R08-SC-07 open"
+    },
+    {
+      "id": "REVIEW-09",
+      "name": "Disaster Recovery Review",
+      "machine_key": "TT_R09_DISASTER_RECOVERY",
+      "verdict": "TT_R09_DISASTER_RECOVERY_FAIL",
+      "pass": false,
+      "summary": {
+        "pass": 10,
+        "total": 12
+      },
+      "sub_checks": [
+        {
+          "id": "R09-SC-01",
+          "name": "RPC Down / Failover",
+          "pass": true,
+          "detail": "mainnet precheck runbook",
+          "evidence": [
+            "docs/runbook/TT-MAINNET-LAUNCH-PRECHECK-AFTER-B435-001.md"
+          ]
+        },
+        {
+          "id": "R09-SC-02",
+          "name": "Indexer Restart",
+          "pass": true,
+          "detail": "indexer module",
+          "evidence": [
+            "crates/api/src/chain/indexer.rs"
+          ]
+        },
+        {
+          "id": "R09-SC-03",
+          "name": "Backend Restart",
+          "pass": true,
+          "detail": "api fly config",
+          "evidence": [
+            "deploy/fly/tt-api-prod/fly.toml"
+          ]
+        },
+        {
+          "id": "R09-SC-04",
+          "name": "Database Recovery",
+          "pass": true,
+          "detail": "api db module",
+          "evidence": [
+            "crates/api/src/db/"
+          ]
+        },
+        {
+          "id": "R09-SC-05",
+          "name": "Contract Pause",
+          "pass": true,
+          "detail": "FeeRouter pause",
+          "evidence": [
+            "contracts/src/FeeRouter.sol"
+          ]
+        },
+        {
+          "id": "R09-SC-06",
+          "name": "Resume",
+          "pass": false,
+          "detail": "Cert #10+ · signed=7",
+          "evidence": [
+            "evidence/GO_ttg_cert/"
+          ]
+        },
+        {
+          "id": "R09-SC-07",
+          "name": "Rollback plan",
+          "pass": true,
+          "detail": "deployment package runbook",
+          "evidence": [
+            "docs/runbook/MAINNET-DEPLOYMENT-PACKAGE-V1.md"
+          ]
+        },
+        {
+          "id": "R09-SC-08",
+          "name": "Treasury Pause",
+          "pass": true,
+          "detail": "Treasury contract",
+          "evidence": [
+            "contracts/src/GovernanceTreasury.sol"
+          ]
+        },
+        {
+          "id": "R09-SC-09",
+          "name": "Emergency Upgrade",
+          "pass": true,
+          "detail": "G24 upgrade posture",
+          "evidence": [
+            "registry/g24-p-upgrade-01-contract-posture.v1.yaml"
+          ]
+        },
+        {
+          "id": "R09-SC-10",
+          "name": "Trigger Matrix",
+          "pass": true,
+          "detail": "G4 Trigger Matrix in TT-MAINNET",
+          "evidence": [
+            "docs/runbook/TT-MAINNET-LAUNCH-PRECHECK-AFTER-B435-001.md"
+          ]
+        },
+        {
+          "id": "R09-SC-11",
+          "name": "Cert #10–11 DR/GORP",
+          "pass": false,
+          "detail": "signed=7/12",
+          "evidence": [
+            "evidence/GO_ttg_cert/CERT-EXECUTION-INDEX-LATEST.json"
+          ]
+        },
+        {
+          "id": "R09-SC-12",
+          "name": "D14 Incident DR audit",
+          "pass": true,
+          "detail": "protocol-grade D14 present",
+          "evidence": [
+            "evidence/GO_production_readiness/web3-protocol-grade-audit/"
+          ]
+        }
+      ],
+      "detail": "10/12 sub-checks PASS — R09-SC-06, R09-SC-11 open"
+    },
+    {
+      "id": "REVIEW-10",
+      "name": "Mainnet Readiness Review",
+      "machine_key": "TT_R10_MAINNET_READINESS",
+      "verdict": "TT_R10_MAINNET_READINESS_FAIL",
+      "pass": false,
+      "summary": {
+        "pass": 5,
+        "total": 8
+      },
+      "sub_checks": [
+        {
+          "id": "R10-SC-01",
+          "name": "Phase ② sub-tracks",
+          "pass": false,
+          "detail": "PHASE2_STAGING_SEPOLIA_PRODUCTION_VALIDATION_IN_PROGRESS",
+          "evidence": [
+            "evidence/GO_production_readiness/phase2-production-validation/"
+          ]
+        },
+        {
+          "id": "R10-SC-02",
+          "name": "Exit Review PASS",
+          "pass": false,
+          "detail": "PHASE2_EXIT_REVIEW_IN_PROGRESS",
+          "evidence": [
+            "evidence/GO_production_readiness/phase2-exit-review/"
+          ]
+        },
+        {
+          "id": "R10-SC-03",
+          "name": "Evidence completeness",
+          "pass": true,
+          "detail": "prerequisite evidence root",
+          "evidence": [
+            "evidence/GO_production_readiness/"
+          ]
+        },
+        {
+          "id": "R10-SC-04",
+          "name": "Third-party Audit R-01",
+          "pass": true,
+          "detail": "R-01 tracked in master map",
+          "evidence": [
+            "docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md"
+          ]
+        },
+        {
+          "id": "R10-SC-05",
+          "name": "Shadow Launch",
+          "pass": true,
+          "detail": "shadow launch evidence root",
+          "evidence": [
+            "evidence/mainnet_shadow_launch/"
+          ]
+        },
+        {
+          "id": "R10-SC-06",
+          "name": "G0–G6 precheck",
+          "pass": true,
+          "detail": "mainnet launch precheck gate",
+          "evidence": [
+            "scripts/gates/check-mainnet-launch-precheck-gate.sh"
+          ]
+        },
+        {
+          "id": "R10-SC-07",
+          "name": "Mainnet readiness P0=0",
+          "pass": false,
+          "detail": "mn_p0=?",
+          "evidence": [
+            "evidence/GO_production_readiness/web3-mainnet-audit/"
+          ]
+        },
+        {
+          "id": "R10-SC-08",
+          "name": "Owner Sign-off",
+          "pass": true,
+          "detail": "owner decision record on file",
+          "evidence": [
+            "docs/runbook/ESCROW-BILATERAL-SETTLEMENT-OWNER-DECISION-RECORD-V1.md"
+          ]
+        }
+      ],
+      "detail": "5/8 sub-checks PASS — R10-SC-01, R10-SC-02, R10-SC-07 open",
+      "deferred": [
+        {
+          "id": "R10-DEF-01",
+          "name": "Web3 Freeze PASS",
+          "evidence": "evidence/GO_production_readiness/web3-freeze/"
+        },
+        {
+          "id": "R10-DEF-02",
+          "name": "Deployment Package PASS",
+          "evidence": "MANIFEST/manifest.json"
+        },
+        {
+          "id": "R10-DEF-03",
+          "name": "Registry Snapshot PASS",
+          "evidence": "registry/protocol-convergence-deployments.v1.yaml"
+        },
+        {
+          "id": "R10-DEF-04",
+          "name": "TT_MAINNET_PRODUCTION_READY final",
+          "evidence": "evidence/GO_production_readiness/web3-mainnet-audit/"
+        }
+      ]
+    }
+  ],
+  "blockers": [
+    {
+      "review_id": "REVIEW-01",
+      "review_verdict": "TT_R01_BUSINESS_LOGIC_FAIL",
+      "sub_check_id": "R01-SC-01",
+      "sub_check_name": "TTG Lifecycle",
+      "detail": "cert 7/12 · DOM-TTG-GOV",
+      "evidence": [
+        "evidence/GO_ttg_cert/CERT-EXECUTION-INDEX-LATEST.json"
+      ]
+    },
+    {
+      "review_id": "REVIEW-01",
+      "review_verdict": "TT_R01_BUSINESS_LOGIC_FAIL",
+      "sub_check_id": "R01-SC-04",
+      "sub_check_name": "Treasury",
+      "detail": "Cert #8+ treasury path · signed=7",
+      "evidence": [
+        "evidence/GO_ttg_cert/"
+      ]
+    },
+    {
+      "review_id": "REVIEW-01",
+      "review_verdict": "TT_R01_BUSINESS_LOGIC_FAIL",
+      "sub_check_id": "R01-SC-08",
+      "sub_check_name": "Emergency",
+      "detail": "Cert #10 DR · signed=7",
+      "evidence": [
+        "registry/ttg-governance-cert-gates.v1.yaml"
+      ]
+    },
+    {
+      "review_id": "REVIEW-01",
+      "review_verdict": "TT_R01_BUSINESS_LOGIC_FAIL",
+      "sub_check_id": "R01-SC-09",
+      "sub_check_name": "Recovery",
+      "detail": "Cert #11 GORP · signed=7",
+      "evidence": [
+        "registry/ttg-governance-cert-gates.v1.yaml"
+      ]
+    },
+    {
+      "review_id": "REVIEW-01",
+      "review_verdict": "TT_R01_BUSINESS_LOGIC_FAIL",
+      "sub_check_id": "R01-SC-10",
+      "sub_check_name": "Business Logic Audit Doc",
+      "detail": "lifecycle=SEPOLIA_FULL_WEB3_LIFECYCLE_IN_PROGRESS",
+      "evidence": [
+        "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/BUSINESS-LOGIC-AUDIT-LATEST.md"
+      ]
+    },
+    {
+      "review_id": "REVIEW-02",
+      "review_verdict": "TT_R02_PROTOCOL_STATE_MACHINE_FAIL",
+      "sub_check_id": "R02-SC-05",
+      "sub_check_name": "Staking states",
+      "detail": "staking contracts",
+      "evidence": [
+        "contracts/src/"
+      ]
+    },
+    {
+      "review_id": "REVIEW-03",
+      "review_verdict": "TT_R03_ROLE_LIFECYCLE_FAIL",
+      "sub_check_id": "R03-SC-03",
+      "sub_check_name": "Merchant",
+      "detail": "pending Sepolia journey / Cert",
+      "evidence": [
+        "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/"
+      ]
+    },
+    {
+      "review_id": "REVIEW-03",
+      "review_verdict": "TT_R03_ROLE_LIFECYCLE_FAIL",
+      "sub_check_id": "R03-SC-08",
+      "sub_check_name": "Cert walkthrough evidence",
+      "detail": "pending Sepolia journey / Cert",
+      "evidence": [
+        "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/"
+      ]
+    },
+    {
+      "review_id": "REVIEW-05",
+      "review_verdict": "TT_R05_PERMISSION_SECURITY_FAIL",
+      "sub_check_id": "R05-SC-01",
+      "sub_check_name": "Contract Modifier",
+      "detail": "Escrow modifiers present",
+      "evidence": [
+        "contracts/src/"
+      ]
+    },
+    {
+      "review_id": "REVIEW-08",
+      "review_verdict": "TT_R08_DEPLOYMENT_DRY_RUN_FAIL",
+      "sub_check_id": "R08-SC-07",
+      "sub_check_name": "Manifest generated",
+      "detail": "post-Freeze",
+      "evidence": [
+        "MANIFEST/manifest.json"
+      ]
+    },
+    {
+      "review_id": "REVIEW-09",
+      "review_verdict": "TT_R09_DISASTER_RECOVERY_FAIL",
+      "sub_check_id": "R09-SC-06",
+      "sub_check_name": "Resume",
+      "detail": "Cert #10+ · signed=7",
+      "evidence": [
+        "evidence/GO_ttg_cert/"
+      ]
+    },
+    {
+      "review_id": "REVIEW-09",
+      "review_verdict": "TT_R09_DISASTER_RECOVERY_FAIL",
+      "sub_check_id": "R09-SC-11",
+      "sub_check_name": "Cert #10–11 DR/GORP",
+      "detail": "signed=7/12",
+      "evidence": [
+        "evidence/GO_ttg_cert/CERT-EXECUTION-INDEX-LATEST.json"
+      ]
+    },
+    {
+      "review_id": "REVIEW-10",
+      "review_verdict": "TT_R10_MAINNET_READINESS_FAIL",
+      "sub_check_id": "R10-SC-01",
+      "sub_check_name": "Phase ② sub-tracks",
+      "detail": "PHASE2_STAGING_SEPOLIA_PRODUCTION_VALIDATION_IN_PROGRESS",
+      "evidence": [
+        "evidence/GO_production_readiness/phase2-production-validation/"
+      ]
+    },
+    {
+      "review_id": "REVIEW-10",
+      "review_verdict": "TT_R10_MAINNET_READINESS_FAIL",
+      "sub_check_id": "R10-SC-02",
+      "sub_check_name": "Exit Review PASS",
+      "detail": "PHASE2_EXIT_REVIEW_IN_PROGRESS",
+      "evidence": [
+        "evidence/GO_production_readiness/phase2-exit-review/"
+      ]
+    },
+    {
+      "review_id": "REVIEW-10",
+      "review_verdict": "TT_R10_MAINNET_READINESS_FAIL",
+      "sub_check_id": "R10-SC-07",
+      "sub_check_name": "Mainnet readiness P0=0",
+      "detail": "mn_p0=?",
+      "evidence": [
+        "evidence/GO_production_readiness/web3-mainnet-audit/"
+      ]
+    }
+  ],
+  "summary": {
+    "reviews_pass": 3,
+    "reviews_total": 10,
+    "sub_checks_pass": 73,
+    "sub_checks_total": 88
+  },
+  "orchestrator_steps": [],
+  "production_readiness_book": "evidence/GO_production_readiness/production-readiness-book/PRODUCTION-READINESS-BOOK-LATEST.md",
+  "next_on_pass": "node scripts/dev/run-web3-freeze.cjs → generate-mainnet-deployment-package.cjs",
+  "forbidden": "Do NOT broadcast mainnet without this gate + Freeze + Package (RULE-DEPLOY-001)"
+}

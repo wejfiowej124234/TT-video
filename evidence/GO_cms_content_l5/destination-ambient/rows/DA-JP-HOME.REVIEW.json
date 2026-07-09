@@ -1,0 +1,48 @@
+{
+  "schema": "traveltrust.cms_content_l5_destination_ambient_row_verify.v1",
+  "stamp_utc": "20260705T002550Z",
+  "matrix_id": "DA-JP-HOME",
+  "product_name": "Destination Ambient",
+  "row": {
+    "matrix_id": "DA-JP-HOME",
+    "country_zh": "日本",
+    "country_iso": "JP",
+    "surface": "home",
+    "scene": "富士山·河口湖镜面或神社山景",
+    "copy_label": "日本·Destination Ambient",
+    "current_source": "ts_unsplash_fallback",
+    "asset_status": "pending",
+    "publish_status": "pending",
+    "review_status": "pending",
+    "public_url": null,
+    "catalog_asset_id": null
+  },
+  "checks": [
+    {
+      "id": "matrix_review_pass",
+      "pass": false,
+      "detail": "pending"
+    },
+    {
+      "id": "matrix_asset_verified",
+      "pass": false,
+      "detail": "pending"
+    },
+    {
+      "id": "matrix_publish_published",
+      "pass": false,
+      "detail": "pending"
+    },
+    {
+      "id": "consumer_not_ts_fallback",
+      "pass": false,
+      "detail": "ts_unsplash_fallback"
+    }
+  ],
+  "TT_CMS_DESTINATION_AMBIENT_ROW_VERIFY": "FAIL",
+  "gates_manual": {
+    "brand_consistency": "required at review_status pass",
+    "country_authenticity": "required at review_status pass",
+    "wcag_visual": "required at review_status pass"
+  }
+}

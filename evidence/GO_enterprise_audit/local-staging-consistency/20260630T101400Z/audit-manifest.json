@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.enterprise_local_staging_consistency_audit.v2",
+  "stamp_utc": "20260630T101400Z",
+  "runtime_consistency": {
+    "verdict": "CLOSED",
+    "open_issues": 0
+  },
+  "non_consistency_open": {
+    "repository_hygiene": 3,
+    "production_entry_review": 4,
+    "manual_validation": 4,
+    "mainnet_prep": 2,
+    "legacy": 2
+  },
+  "machine_keys": {
+    "TT_LOCAL_STAGING_RUNTIME_CONSISTENCY": "CLOSED",
+    "TT_LOCAL_FIRST_RUNTIME_DRIFT": "NONE"
+  }
+}

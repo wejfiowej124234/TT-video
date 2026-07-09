@@ -1,0 +1,300 @@
+{
+  "schema": "traveltrust.official_cold_start_baseline_readiness.v1",
+  "audit_type": "Enterprise_L5_Readiness_Official_Cold_Start_Baseline",
+  "stamp": "20260703T053601Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "recorded_at": "2026-07-03T05:36:12.685Z",
+  "verdict": "PASS",
+  "l5_score": {
+    "total": 100,
+    "max": 100,
+    "percent": 100,
+    "tier": "L5_ENTERPRISE_READINESS"
+  },
+  "dimensions": [
+    {
+      "id": "AX1_product_data_authenticity",
+      "name": "产品 · 数据源真实性",
+      "score": 15,
+      "max": 15,
+      "status": "PASS",
+      "detail": {
+        "ocs_accounts": 35,
+        "guides_public": 10,
+        "provider_public": 10,
+        "acquisition_public": 10,
+        "smoke_hits": 0,
+        "orphans": 0
+      }
+    },
+    {
+      "id": "AX2_operations_pub_ops",
+      "name": "运营 · Admin Public Operations 链路",
+      "score": 15,
+      "max": 15,
+      "status": "PASS",
+      "detail": {
+        "queue": {
+          "guides": {
+            "ocs_published": 10,
+            "with_surfaces": 0,
+            "featured_any": 0
+          },
+          "market_listings": {
+            "ocs_published": 20,
+            "with_surfaces": 20,
+            "featured_any": 0
+          }
+        },
+        "campaigns_deployed": 10,
+        "orchestrator_no_sql": true,
+        "state_json_idempotent": true
+      }
+    },
+    {
+      "id": "AX3_data_governance",
+      "name": "数据治理 · DDG/ML-DG/public_catalog",
+      "score": 15,
+      "max": 15,
+      "status": "PASS",
+      "detail": {
+        "ddg_post": "evidence/GO_official_cold_start_dataset/20260703T044855Z/fs-dg-post.json",
+        "ddg_post_verdict": "PASS",
+        "TEST_DATA_LEAKAGE": 0,
+        "PRODUCT_DATA_DEFECT": 0,
+        "ddg_full_site_reuse": "evidence/GO_staging_full_site_display_governance/20260703T033727Z",
+        "ddg_full_verdict": "PASS",
+        "rc_reopen": false,
+        "fe_api_err_vmarket_bdv": "REUSE DDG pipeline 20260703T033727Z — not re-executed"
+      }
+    },
+    {
+      "id": "AX4_rbac",
+      "name": "RBAC · Official Accounts / Admin 边界",
+      "score": 10,
+      "max": 10,
+      "status": "PASS",
+      "detail": {
+        "admin_orchestrator": "SuperAdmin + PERM_OFFICIAL_*",
+        "user_writes": "Official account tokens only for guide/listing create",
+        "merchant_bootstrap": "Admin-only POST bootstrap-market",
+        "no_direct_sql": true,
+        "official_ops_11_gap": "Fine-grained ops role delegation — Post-GO"
+      }
+    },
+    {
+      "id": "AX5_public_operations",
+      "name": "Public Operations · Queue/Campaign/Surface",
+      "score": 10,
+      "max": 10,
+      "status": "PASS",
+      "detail": {
+        "admin_stats": true,
+        "official_guides": 10,
+        "publish_queue_api": true,
+        "surfaces_set": true
+      }
+    },
+    {
+      "id": "AX6_cold_start",
+      "name": "冷启动 · 10 链 / 展示面 / Day-1",
+      "score": 15,
+      "max": 15,
+      "status": "PASS",
+      "detail": {
+        "chains": "10/10",
+        "surfaces": {
+          "guides": true,
+          "provider": true,
+          "acquisition": true,
+          "home_hero": true,
+          "campaigns": true
+        },
+        "day1_ready": true
+      }
+    },
+    {
+      "id": "AX7_operational_maintenance",
+      "name": "运营维护 · 幂等/Runbook/扩展",
+      "score": 10,
+      "max": 10,
+      "status": "PASS",
+      "detail": {
+        "state_json": true,
+        "runbook": "docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md",
+        "closed_unless_touched": true,
+        "deferred_post_mvp": [
+          "community_100",
+          "historical_orders_20"
+        ]
+      }
+    },
+    {
+      "id": "AX8_release_governance",
+      "name": "发布治理 · CLOSED_UNLESS_TOUCHED / 治理层级",
+      "score": 10,
+      "max": 10,
+      "status": "PASS",
+      "detail": {
+        "ocs_status": "CLOSED",
+        "rerun_policy": "CLOSED_UNLESS_TOUCHED",
+        "governance_ladder": "RC → DDG → OCS → PI3 → GO",
+        "evidence_reuse_policy": "registry/evidence-reuse-policy.v1.yaml#gates/OFFICIAL_COLD_START_DATASET"
+      }
+    }
+  ],
+  "issue_summary": {
+    "blocking": 0,
+    "major": 0,
+    "minor": 5,
+    "enhancement": 4
+  },
+  "issues": [
+    {
+      "severity": "enhancement",
+      "id": "AX7_COMMUNITY",
+      "msg": "Community 100 posts deferred",
+      "detail": "manifest deferred_post_mvp — no Admin bulk API"
+    },
+    {
+      "severity": "enhancement",
+      "id": "AX7_ORDERS",
+      "msg": "Historical orders 20 deferred",
+      "detail": "manifest deferred_post_mvp"
+    },
+    {
+      "severity": "enhancement",
+      "id": "AX7_CAMPAIGN_ITEMS",
+      "msg": "Some campaign items missing from first deploy (slug refs)",
+      "detail": "manifest fixed; optional campaign item re-deploy"
+    },
+    {
+      "severity": "enhancement",
+      "id": "AX7_BROWSER",
+      "msg": "Full browser ERR/CTA/search walk not re-run in this audit",
+      "detail": "API + reuse DDG browser layer CLOSED evidence"
+    },
+    {
+      "severity": "minor",
+      "id": "AX2_CAMP_ITEMS",
+      "msg": "campaign hot-providers items 1/3",
+      "detail": "first deploy slug mismatch — manifest corrected"
+    },
+    {
+      "severity": "minor",
+      "id": "AX2_CAMP_ITEMS",
+      "msg": "campaign hot-acquisition items 0/2",
+      "detail": "first deploy slug mismatch — manifest corrected"
+    },
+    {
+      "severity": "minor",
+      "id": "AX2_CAMP_ITEMS",
+      "msg": "campaign city-tokyo items 2/3",
+      "detail": "first deploy slug mismatch — manifest corrected"
+    },
+    {
+      "severity": "minor",
+      "id": "AX2_CAMP_ITEMS",
+      "msg": "campaign summer items 1/2",
+      "detail": "first deploy slug mismatch — manifest corrected"
+    },
+    {
+      "severity": "minor",
+      "id": "AX2_CAMP_ITEMS",
+      "msg": "campaign weekly-picks items 0/3",
+      "detail": "first deploy slug mismatch — manifest corrected"
+    }
+  ],
+  "coverage": {
+    "guides": 10,
+    "providers": 10,
+    "acquisitions": 10,
+    "official_guides": 10,
+    "campaigns": 10,
+    "ops_accounts": 5,
+    "chains_complete": "10/10"
+  },
+  "chain_rows": [
+    {
+      "chain": "tokyo-photo",
+      "complete": true
+    },
+    {
+      "chain": "kyoto-culture",
+      "complete": true
+    },
+    {
+      "chain": "seoul-food",
+      "complete": true
+    },
+    {
+      "chain": "bangkok-temple",
+      "complete": true
+    },
+    {
+      "chain": "singapore-family",
+      "complete": true
+    },
+    {
+      "chain": "paris-art",
+      "complete": true
+    },
+    {
+      "chain": "nyc-skyline",
+      "complete": true
+    },
+    {
+      "chain": "sydney-coast",
+      "complete": true
+    },
+    {
+      "chain": "barcelona-arch",
+      "complete": true
+    },
+    {
+      "chain": "dubai-luxury",
+      "complete": true
+    }
+  ],
+  "rulings": {
+    "official_cold_start_baseline_met": true,
+    "production_cold_start_baseline": "APPROVED_AFTER_STAGING_PARITY_APPLY_AND_PI3",
+    "phase1_freeze_recommended": true,
+    "closed_unless_touched": true,
+    "enterprise_ops_baseline_mvp_scope": true,
+    "official_ops_11_met": false,
+    "official_ops_11_gaps": [
+      "Community engagement 100 posts (Admin bulk write API)",
+      "Historical orders 20 (Admin seed API)",
+      "Campaign item full coverage re-deploy (optional)",
+      "Dedicated ops RBAC roles (non-SuperAdmin orchestrator)",
+      "Production environment apply + browser sign-off",
+      "Scheduled display_start/end automation for seasonal campaigns"
+    ]
+  },
+  "evidence_reuse": {
+    "rc_reopen": false,
+    "ddg_full_site_rerun": false,
+    "ddg_full": "evidence/GO_staging_full_site_display_governance/20260703T033727Z",
+    "ddg_post": "evidence/GO_official_cold_start_dataset/20260703T044855Z/fs-dg-post.json",
+    "ocs_apply_stamp": "20260703T044855Z",
+    "fe_api_err_vmarket_bdv": "reuse_20260703T033727Z"
+  },
+  "mvp_vs_post_go": {
+    "mvp_closed": [
+      "10 country chains",
+      "5 ops accounts",
+      "10 campaigns deployed",
+      "Admin Public Operations only",
+      "CLOSED_UNLESS_TOUCHED"
+    ],
+    "post_go_enhancement": [
+      "AX7_COMMUNITY",
+      "AX7_ORDERS",
+      "AX7_CAMPAIGN_ITEMS",
+      "AX7_BROWSER"
+    ],
+    "expected_difference": []
+  }
+}

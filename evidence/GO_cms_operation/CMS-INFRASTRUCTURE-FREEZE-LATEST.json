@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.cms_infrastructure_freeze.v1",
+  "stamp_utc": "20260707T112953Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "frozen": true,
+  "final_ops_abstraction": true,
+  "effective_utc": "2026-07-05",
+  "phase": "② staging",
+  "forbidden_additions": [
+    "family",
+    "country",
+    "city",
+    "wave",
+    "kpi",
+    "dashboard",
+    "status",
+    "registry",
+    "runbook"
+  ],
+  "only_remaining_work": "cms_content_to_100_percent_l5",
+  "ops_language": "asset_family_only",
+  "deprecated_ops_language": [
+    "Wave 1",
+    "Wave 2",
+    "Wave 3",
+    "wave_1",
+    "wave_2",
+    "wave_3_plus"
+  ],
+  "hierarchy_frozen": [
+    "asset_family",
+    "country",
+    "city",
+    "asset"
+  ],
+  "unified_pipeline": [
+    "Review",
+    "Replace",
+    "Publish",
+    "Verify",
+    "Evidence",
+    "Live"
+  ],
+  "content_families": [
+    "Destination Ambient",
+    "POI",
+    "Food",
+    "City Hero",
+    "Hotel",
+    "Transport",
+    "Provider Listing",
+    "Acquisition Listing",
+    "Banner",
+    "Video Poster"
+  ],
+  "TT_CMS_INFRASTRUCTURE": "FROZEN",
+  "TT_CMS_ONLY_REMAINING": "cms_content_to_100_percent_l5"
+}

@@ -1,0 +1,111 @@
+# Vacancy V1 · Protocol vs Runtime Deployment Status SSOT
+# Separates "protocol complete in repo" from "Vacancy V1 views live on-chain".
+# Gate: scripts/gates/check-vacancy-deployment-readiness-gate.sh
+schema: traveltrust.vacancy_v1_runtime_deployment_status.v1
+updated_utc: "2026-07-09"
+sepolia_runtime_milestone: VACANCY_LEDGER_V1_SEPOLIA_RUNTIME_ACTIVE_PASS
+
+# Protocol layer — local repo / Forge / indexer (no chain runtime required)
+protocol:
+  implementation_status: PASS
+  protocol_gate: VACANCY_LEDGER_V1_PROTOCOL_COMPLETE
+  protocol_gate_script: scripts/ops/vacancy-ledger-v1-protocol-complete-gate.sh
+  local_forge_tests: PASS
+  indexer_status: PASS
+  indexer_gate: WEB3_VACANCY_INDEXER_RECONCILE
+  indexer_gate_script: scripts/gates/check-web3-vacancy-indexer-reconcile-gate.sh
+  indexer_discipline: event_post_state_only
+  forbidden: "reserve = principal - swept - disbursed"
+
+# Runtime layer — on-chain Vacancy V1 view selectors (capability probe)
+runtime:
+  capability_probe:
+    module: crates/api/src/chain/vacancy_ledger_reconcile.rs
+    function: probe_vacancy_chain_capability
+    selectors:
+      vacancy_ledger: ae607b9e # vacancyLedger()
+      sweep_enabled: a20b5507 # sweepEnabled()
+      vacancy_state: 0d045440 # vacancyState() on CountryPoolNetProfitLedger
+      steward_activation_epoch_id: 123d1b10 # stewardActivationEpochId()
+    legacy_stack_label: Q-F01_LEGACY_BYTECODE
+    live_reconcile_mode_when_pending: SKIPPED_PRE_V1
+
+  environments:
+    sepolia_de:
+      chain_id: 11155111
+      jurisdiction: DE
+      status: ACTIVE # W7 Sepolia activation
+      stack: Vacancy_V1
+      unallocated_steward_path_vault:
+        address: "0xb7d0Ea9579F80B2090195d49a44941d5546554E9"
+        codehash: "0x48774c1c47707f31698ea1837c3778eeadedfe96819ddc4d6627c8ecf9626670"
+        vacancy_ledger_view: true
+        sweep_enabled_view: true
+      country_pool_net_profit_ledger:
+        address: "0x738D2c133d5F90c13eE9907386136471E1f330f5"
+        codehash: "0x5f8050acd36cbc556dd8bccd4d5d5ff81fd8c3325262915cc73edb986828f092"
+        vacancy_state_view: true
+        steward_activation_epoch_view: true
+      notes:
+        - "W7 Sepolia Vacancy V1 runtime ACTIVE — legacy Q-F01 retained LEGACY_READ_ONLY."
+        - "VACANCY_RECONCILE_LIVE=1 required in runtime env for live reconcile."
+
+    production:
+      status: PENDING
+      stack: null
+      notes:
+        - "No Vacancy V1 production deployment recorded."
+
+# Readiness matrix (human summary — gate verifies registry ↔ chain probe alignment)
+readiness_matrix:
+  - layer: Protocol implementation
+    status: PASS
+    gate: VACANCY_LEDGER_V1_PROTOCOL_COMPLETE
+  - layer: Local Forge tests
+    status: PASS
+    gate: VacancyLedgerCore + S3* + invariant suite
+  - layer: Indexer (S4a / W3)
+    status: PASS
+    gate: WEB3_VACANCY_INDEXER_RECONCILE
+  - layer: Sepolia DE Vacancy V1 runtime
+    status: ACTIVE
+    gate: capability probe on sepolia_de
+  - layer: Production Vacancy V1 runtime
+    status: PENDING
+    gate: production environment record
+
+# W4 precondition — governance read-only may ship against indexer; must surface runtime PENDING
+w4_precondition:
+  governance_read_only_allowed: true
+  requires_runtime_active: false
+  ui_must_show_runtime_status: true
+  ui_forbidden:
+    - "reserve = principal - swept - disbursed"
+    - direct_rpc_contract_reads
+    - mutating_sweep_params_recipient
+
+# W4b — Protocol Operations Console (read-only admin ops view)
+w4b_ops_console:
+  status: COMPLETE
+  api: GET /api/v1/admin/vacancy-ledger
+  ui: /admin/vacancy-ledger
+  positioning: Protocol Operations Console
+  read_only: true
+  surfaces:
+    - reconciliation_status
+    - indexer_health
+    - event_explorer
+    - runtime_capability
+  forbidden_writes:
+    - sweep_params
+    - recipient_allowlist
+    - disburse
+    - contract_upgrade
+    - deploy
+
+# API binary compile debt — isolated gate (must not block Vacancy Ledger gates)
+api_build_health:
+  gate_id: API_BUILD_HEALTH
+  gate_script: scripts/gates/check-api-build-health-gate.sh
+  registry: registry/api-build-health.v1.yaml
+  note: Vacancy route logic + lib tests PASS independently of full traveltrust-api bin compile

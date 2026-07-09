@@ -1,0 +1,18 @@
+{
+  "kind": "traveltrust.l5_enterprise_reliability_execution.v1",
+  "recorded_utc": "20260608T032754Z",
+  "verdict": "L5_ENTERPRISE_RELIABILITY_GO",
+  "audit_matrix_verdict": "L5_ENTERPRISE_RELIABILITY_GO",
+  "reliability_score": 88,
+  "target_score": 85,
+  "track_targets": [
+    "RUJR_L5_GO",
+    "A11Y_LIVE_GO",
+    "CHAOS_RESILIENCE_GO"
+  ],
+  "baseline_refs": [
+    "162",
+    "161",
+    "160"
+  ]
+}

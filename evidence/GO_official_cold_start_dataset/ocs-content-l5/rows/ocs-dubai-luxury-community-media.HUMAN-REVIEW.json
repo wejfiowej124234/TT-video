@@ -1,0 +1,73 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T154700Z",
+  "filename": "ocs-dubai-luxury-community-media.jpg",
+  "chain_id": "dubai-luxury",
+  "city": "迪拜",
+  "country_code": "AE",
+  "slot": "community-media",
+  "surface": "Community",
+  "copy_label": "哈利法塔夜景",
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG · decodable · non-placeholder."
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "Burj Khalifa 夜景 community media"
+    },
+    "G3_slot_differentiation": {
+      "pass": true
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "迪拜 AE-only."
+    },
+    "G5_brand_visual": {
+      "pass": true
+    },
+    "G6_commercial_platform": {
+      "pass": true
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true
+    },
+    "G8_evidence_matrix": {
+      "pass": true
+    },
+    "G9_content_authenticity": {
+      "pass": true
+    },
+    "G10_content_diversity": {
+      "pass": true
+    }
+  },
+  "community_authenticity_review": {
+    "pass": true
+  },
+  "user_experience_review": {
+    "pass": true,
+    "feed_click_appeal": true
+  },
+  "surface_boundary_review": {
+    "pass": true
+  },
+  "visual_sequence_review": {
+    "pass": true
+  },
+  "destination_experience_review": {
+    "pass": true
+  },
+  "post_generation_technical_check": {
+    "pass": true,
+    "jpeg_decodable": true,
+    "dimensions_640x480": true,
+    "size_gt_16kb": true,
+    "not_placeholder": true
+  },
+  "regression_closed_chains": {
+    "pass": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

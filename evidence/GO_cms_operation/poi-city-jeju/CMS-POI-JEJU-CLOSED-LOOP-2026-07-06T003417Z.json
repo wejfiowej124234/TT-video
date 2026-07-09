@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T00:34:17Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "济州",
+    "city_en": "Jeju",
+    "matrix_ids": [
+      "PH-KR-057-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-KR-057-FOOD",
+      "legacy_value": "鲍鱼粥",
+      "poi_id": "734d9405-9cef-4344-a599-36a5d9f522e0",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-jeju-island-community-cover.jpg",
+      "hero_file": "ocs-jeju-island-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-057-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

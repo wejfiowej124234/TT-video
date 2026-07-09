@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T13:25:52Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AU",
+    "city_zh": "悉尼",
+    "city_en": "Sydney",
+    "matrix_ids": [
+      "PH-AU-185-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AU-185-ATR",
+      "legacy_value": "海港大桥",
+      "poi_id": "a84575cc-e7de-4e7b-b1c6-faacf9dbb951",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-185-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

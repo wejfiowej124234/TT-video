@@ -1,0 +1,57 @@
+{
+  "schema": "traveltrust.staging_rc_ssot_parity.v1",
+  "recorded_at": "2026-07-08T15:11:43.598Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "ocs_state": "D:\\TravelTrust-V1.1\\evidence\\GO_official_cold_start_dataset\\ocs-surface-expansion-staging\\20260704T073209Z\\state.json",
+  "release_candidate_ref": "evidence/manual-uat/signoff/RELEASE-CANDIDATE-SIGNOFF-20260702T144513Z.md",
+  "manifest_ssot": "data/official-cold-start/dataset.v1.json",
+  "assets_ssot": "data/official-cold-start/assets.v1.json",
+  "unified_baseline": "scripts/dev/lib/staging-rc-public-surface-unified.cjs",
+  "expected_public_surface": {
+    "community_feed": 10,
+    "public_guides": 10,
+    "market_provider": 10,
+    "market_acquisition": 10,
+    "official_guides_published": 10,
+    "campaigns_deployed": 10,
+    "corridor_smoke": 0,
+    "official_assets": 60
+  },
+  "verdict": "FAIL",
+  "machine_keys": {
+    "TT_STAGING_RC_SSOT_PARITY": "FAIL",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "passes": [
+    "ocs_state_10_posts",
+    "ocs_state_10_official_guides",
+    "ocs_state_10_campaigns",
+    "feed_count_10",
+    "guides_ocs_only",
+    "web_rewrite_media_200"
+  ],
+  "failures": [
+    "feed_non_ocs_post=c8f62803-df11-4214-a362-4b2afb418a08",
+    "feed_non_ocs_post=31490f6e-1e6c-472d-9ef1-b074acc13e3c",
+    "feed_non_ocs_post=6d86c9e1-828a-48b0-ae20-78d48cc2ff89",
+    "feed_non_ocs_post=52e3567a-ea23-4a3f-ada4-1ad49b1da465",
+    "feed_non_ocs_post=63269c45-ba83-4e12-8128-62f6c7ae0f8f",
+    "feed_non_ocs_post=391bdfe9-a2ce-49b1-bc5c-350ff2a3e318",
+    "feed_non_ocs_post=efa94487-759b-4589-901c-d12bf369e919",
+    "feed_non_ocs_post=1ac3fae9-1e6f-41ef-9862-ce9711dbb4fb",
+    "feed_non_ocs_post=e7dad984-b926-402c-8f4a-87c6b41d12f2",
+    "feed_non_ocs_post=10d6d49c-aec2-44e4-8ea3-b96e577d6ba8",
+    "market_provider_non_ocs",
+    "market_acquisition_non_ocs",
+    "discover_public=1 expected 0",
+    "official_guides_non_ocs",
+    "campaigns_deployed=17 expected 10"
+  ],
+  "honest_boundary": "Staging ALIGNED to OCS SSOT + RC boundaries ≠ Production GO ≠ G3 CDN VERIFIED",
+  "forbidden_claims": [
+    "Production GO",
+    "Release published",
+    "G3 CDN VERIFIED"
+  ]
+}

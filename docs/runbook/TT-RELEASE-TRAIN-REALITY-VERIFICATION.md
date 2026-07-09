@@ -27,7 +27,17 @@ Formal Acceptance       ← 独立签字闸 · 发布流程
         │
 Gate PASS               ← validate-production-readiness-g2-gate.cjs
         │
-Production GO           ← 仍 NO_GO 直至 G3 + Owner Decision
+G2 Retrospective        ← 冻结 G2 基线 · [`G2-RETROSPECTIVE.md`](G2-RETROSPECTIVE.md)
+        │
+Master Reality Audit    ← [`TT-PRODUCTION-READINESS-MASTER-REALITY-AUDIT.md`](TT-PRODUCTION-READINESS-MASTER-REALITY-AUDIT.md)
+        │
+G3 · Six Domains        ← [`G3-PRODUCTION-DOMAINS.md`](G3-PRODUCTION-DOMAINS.md) · 仅 Production Environment
+        │
+G3 … Gate PASS
+        │
+Production GO Package   ← 唯一 GO 判据 · [`TT-PRODUCTION-GO-DECISION-PACKAGE.md`](TT-PRODUCTION-GO-DECISION-PACKAGE.md)
+        │
+Production Retrospective ← [`PRODUCTION-RETROSPECTIVE.md`](PRODUCTION-RETROSPECTIVE.md)
 ```
 
 **Coverage 低于 100% 或存在未迁移模块 → `TT_PLATFORM_COVERAGE_AUDIT: FAIL` → 不得进入 Formal**

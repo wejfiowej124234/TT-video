@@ -1,0 +1,121 @@
+{
+  "schema": "traveltrust.operations_dashboard.v2",
+  "title": "TravelTrust Operations Dashboard",
+  "recorded_utc": "2026-07-08T12:33:17.748Z",
+  "areas": [
+    {
+      "name": "Website",
+      "status": "PASS"
+    },
+    {
+      "name": "Admin",
+      "status": "PASS"
+    },
+    {
+      "name": "CMS",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "name": "Security",
+      "status": "IN_PROGRESS"
+    }
+  ],
+  "journeys": [
+    {
+      "name": "Traveler Journey",
+      "steps": [
+        {
+          "step": "Register",
+          "status": "PASS"
+        },
+        {
+          "step": "Wallet",
+          "status": "PASS"
+        },
+        {
+          "step": "Book",
+          "status": "PASS"
+        },
+        {
+          "step": "Escrow",
+          "status": "PASS"
+        },
+        {
+          "step": "Travel",
+          "status": "PASS"
+        },
+        {
+          "step": "Confirm",
+          "status": "PASS"
+        },
+        {
+          "step": "Review",
+          "status": "IN_PROGRESS"
+        },
+        {
+          "step": "Done",
+          "status": "IN_PROGRESS"
+        }
+      ]
+    },
+    {
+      "name": "Guide Journey",
+      "steps": [
+        {
+          "step": "Register",
+          "status": "PASS"
+        },
+        {
+          "step": "Identity",
+          "status": "PASS"
+        },
+        {
+          "step": "Stake",
+          "status": "IN_PROGRESS"
+        },
+        {
+          "step": "Accept",
+          "status": "PASS"
+        },
+        {
+          "step": "Travel",
+          "status": "PASS"
+        },
+        {
+          "step": "Settlement",
+          "status": "PASS"
+        },
+        {
+          "step": "Done",
+          "status": "IN_PROGRESS"
+        }
+      ]
+    },
+    {
+      "name": "Merchant Journey",
+      "steps": [
+        {
+          "step": "Register",
+          "status": "PASS"
+        },
+        {
+          "step": "Identity",
+          "status": "IN_PROGRESS"
+        },
+        {
+          "step": "Publish",
+          "status": "IN_PROGRESS"
+        },
+        {
+          "step": "Order",
+          "status": "PASS"
+        },
+        {
+          "step": "Settlement",
+          "status": "PASS"
+        }
+      ]
+    }
+  ],
+  "open_evidence": 11
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "traveltrust.cms_phase1_single_asset_evidence.v1",
+  "product_name": "Market Listing Cover",
+  "matrix_id": "ML-WAVE1-005-PRV",
+  "variant": "provider",
+  "chain_slug": "paris-art",
+  "listing_id": "fe0533d3-305a-474a-b473-df4f4b7ea713",
+  "scaffolded_at_utc": "2026-07-05T09:41:31Z",
+  "step_1_brief_review": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "reviewed_at_utc": "2026-07-05T09:41:31Z"
+  },
+  "step_2_designer_upload": {
+    "status": "COMPLETE",
+    "catalog_asset_id": "55e4f456-4678-49fe-931e-e564dcb4a24d",
+    "uploaded_at_utc": "2026-07-05T09:41:31Z",
+    "notes": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+  },
+  "step_3_cms_review": {
+    "status": "COMPLETE",
+    "gates": {
+      "cms_review": "PASS",
+      "destination_authenticity": "PASS",
+      "brand_consistency": "PASS"
+    }
+  },
+  "step_4_catalog_publish": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "published_at_utc": "2026-07-05T09:41:31Z"
+  },
+  "step_5_verify": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "cover_catalog_asset_id": "55e4f456-4678-49fe-931e-e564dcb4a24d",
+    "cover_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+    "verified_at_utc": "2026-07-05T09:41:31Z"
+  },
+  "step_6_evidence": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "completed_at_utc": "2026-07-05T09:41:31Z"
+  },
+  "matrix_snapshot": {
+    "matrix_row_status": "pass",
+    "asset_lifecycle": "live",
+    "current_source": "catalog_api",
+    "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+    "listing_id": "fe0533d3-305a-474a-b473-df4f4b7ea713"
+  },
+  "TT_CMS_LISTINGS_WAVE1_ROW_VERIFY": "PASS",
+  "TT_CMS_PHASE1_SINGLE_ASSET_ROW": "COMPLETE"
+}

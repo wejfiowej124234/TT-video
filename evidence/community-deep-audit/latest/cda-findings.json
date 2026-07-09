@@ -1,0 +1,443 @@
+{
+  "artifact": "community-deep-audit",
+  "phase": "\u2460+\u2461",
+  "generated_at": "2026-06-07T06:53:44.036426+00:00",
+  "api_base": "http://127.0.0.1:8080",
+  "git_sha": "bc5a939cd89c624be7c128b551306da177bf6016",
+  "registry": "registry\\community-deep-audit-probes.v1.yaml",
+  "verdict": "NO-GO",
+  "summary": {
+    "p0": 3,
+    "p1": 1,
+    "p2": 1,
+    "issues": 5,
+    "ccp_pass": 6,
+    "ccp_total": 8,
+    "mod_pass": 0,
+    "mod_total": 1,
+    "eng_pass": 5,
+    "eng_total": 8,
+    "ui_corridor_pass": 0,
+    "ui_corridor_total": 5,
+    "pg_pass": 5,
+    "pg_total": 5
+  },
+  "community_critical_path_matrix": [
+    {
+      "matrix": "ccp",
+      "probe_id": "ccp.create_post",
+      "role": "author",
+      "step": "\u53d1\u5e16",
+      "method": "POST",
+      "path": "/api/v1/community/posts",
+      "http": 200,
+      "expected": "200|201",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "matrix": "ccp",
+      "probe_id": "ccp.get_post_detail",
+      "role": "author",
+      "step": "\u8be6\u60c5",
+      "method": "GET",
+      "path": "/api/v1/community/posts/5c611215-8f7f-4593-82c2-3e6c81b6256e",
+      "http": 200,
+      "expected": "200+body",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "matrix": "ccp",
+      "probe_id": "ccp.get_post_detail",
+      "role": "public",
+      "step": "\u533f\u540d\u8be6\u60c5",
+      "method": "GET",
+      "path": "/api/v1/community/posts/5c611215-8f7f-4593-82c2-3e6c81b6256e",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "matrix": "ccp",
+      "probe_id": "ccp.get_feed",
+      "role": "author",
+      "step": "Feed",
+      "method": "GET",
+      "path": "/api/v1/community/feed",
+      "http": 200,
+      "expected": "contains_post",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "matrix": "ccp",
+      "probe_id": "ccp.post_comment",
+      "role": "engager",
+      "step": "\u8bc4\u8bba",
+      "method": "POST",
+      "path": "/api/v1/community/posts/5c611215-8f7f-4593-82c2-3e6c81b6256e/comments",
+      "http": 200,
+      "expected": "200+id",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "matrix": "ccp",
+      "probe_id": "ccp.post_reply",
+      "role": "author",
+      "step": "\u56de\u590d",
+      "method": "POST",
+      "path": "/api/v1/community/posts/5c611215-8f7f-4593-82c2-3e6c81b6256e/comments",
+      "http": 200,
+      "expected": "200+id",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "matrix": "ccp",
+      "probe_id": "mod.setup_post",
+      "role": "author",
+      "step": "\u53d1\u5e16",
+      "method": "POST",
+      "path": "/api/v1/community/posts",
+      "http": 429,
+      "expected": "200|201",
+      "status": "FAIL",
+      "notes": ""
+    },
+    {
+      "matrix": "ccp",
+      "probe_id": "ccp.delete_post.setup",
+      "role": "author",
+      "step": "\u53d1\u5e16",
+      "method": "POST",
+      "path": "/api/v1/community/posts",
+      "http": 429,
+      "expected": "200|201",
+      "status": "FAIL",
+      "notes": ""
+    }
+  ],
+  "moderation_matrix": [
+    {
+      "matrix": "mod",
+      "probe_id": "mod.comment_visibility",
+      "role": "admin",
+      "step": "\u8bc4\u8bba\u9690\u85cf",
+      "method": "PATCH",
+      "path": "/api/v1/admin/community/comments/e8c53826-e70c-41ea-9e04-2bb261b20c24",
+      "http": 400,
+      "expected": "200",
+      "status": "FAIL",
+      "notes": ""
+    }
+  ],
+  "engagement_matrix": [
+    {
+      "matrix": "eng",
+      "probe_id": "eng.like",
+      "role": "engager",
+      "step": "\u70b9\u8d5e",
+      "method": "POST",
+      "path": "/api/v1/community/posts/5c611215-8f7f-4593-82c2-3e6c81b6256e/like",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "matrix": "eng",
+      "probe_id": "eng.idempotent_like",
+      "role": "engager",
+      "step": "\u5e42\u7b49\u70b9\u8d5e",
+      "method": "POST",
+      "path": "/api/v1/community/posts/5c611215-8f7f-4593-82c2-3e6c81b6256e/like",
+      "http": 200,
+      "expected": "200+single_row",
+      "status": "PASS",
+      "notes": "created\u5b57\u6bb5\u7f3a\u5931(\u5951\u7ea6\u6f02\u79fb)"
+    },
+    {
+      "matrix": "eng",
+      "probe_id": "eng.unlike_relike",
+      "role": "engager",
+      "step": "\u53d6\u6d88\u518d\u8d5e",
+      "method": "DELETE|POST",
+      "path": "/api/v1/community/posts/5c611215-8f7f-4593-82c2-3e6c81b6256e/like",
+      "http": "200|200",
+      "expected": "200|200",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "matrix": "eng",
+      "probe_id": "eng.collect",
+      "role": "engager",
+      "step": "\u6536\u85cf",
+      "method": "POST",
+      "path": "/api/v1/community/posts/5c611215-8f7f-4593-82c2-3e6c81b6256e/collect",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "matrix": "eng",
+      "probe_id": "eng.like_count",
+      "role": "engager",
+      "step": "\u8ba1\u6570\u6295\u5f71",
+      "method": "GET",
+      "path": "/api/v1/community/posts/5c611215-8f7f-4593-82c2-3e6c81b6256e",
+      "http": 200,
+      "expected": "like_count>=1 liked_by_me",
+      "status": "FAIL",
+      "notes": "like_count=1 collected=False"
+    },
+    {
+      "matrix": "eng",
+      "probe_id": "eng.me_posts",
+      "role": "author",
+      "step": "\u6211\u7684\u5e16\u5b50",
+      "method": "GET",
+      "path": "/api/v1/community/me/posts",
+      "http": 200,
+      "expected": "contains",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "matrix": "eng",
+      "probe_id": "eng.me_likes",
+      "role": "engager",
+      "step": "\u6211\u7684\u70b9\u8d5e",
+      "method": "GET",
+      "path": "/api/v1/community/me/likes",
+      "http": 404,
+      "expected": "contains",
+      "status": "FAIL",
+      "notes": ""
+    },
+    {
+      "matrix": "eng",
+      "probe_id": "eng.me_collects",
+      "role": "engager",
+      "step": "\u6211\u7684\u6536\u85cf",
+      "method": "GET",
+      "path": "/api/v1/community/me/collects",
+      "http": 200,
+      "expected": "contains",
+      "status": "FAIL",
+      "notes": ""
+    }
+  ],
+  "issues": [
+    {
+      "id": "CDA-2-001",
+      "priority": "P2",
+      "category": "\u5951\u7ea6",
+      "role": "engager",
+      "step": "\u70b9\u8d5e",
+      "route": "/api/v1/community/posts/5c611215-8f7f-4593-82c2-3e6c81b6256e/like",
+      "title": "\u54cd\u5e94\u7f3a created \u5e03\u5c14",
+      "observation": "F-016 \u671f\u671b created:true/false",
+      "repro": ""
+    },
+    {
+      "id": "CDA-1-002",
+      "priority": "P1",
+      "category": "\u6cbb\u7406",
+      "role": "admin",
+      "step": "\u8bc4\u8bba",
+      "route": "/api/v1/admin/community/comments/e8c53826-e70c-41ea-9e04-2bb261b20c24",
+      "title": "\u8bc4\u8bba\u9690\u85cf\u5931\u8d25",
+      "observation": "{\"status\":\"missing_idempotency_key\",\"error\":\"missing_idempotency_key\",\"message\":\"missing_idempotency_key\",\"required_header\":\"Idempotency-Key\",\"also_accepted\":\"X",
+      "repro": ""
+    },
+    {
+      "id": "CDA-0-003",
+      "priority": "P0",
+      "category": "\u53d1\u5e16",
+      "role": "author",
+      "step": "\u53d1\u5e16",
+      "route": "/api/v1/community/posts",
+      "title": "\u53d1\u5e16\u5931\u8d25",
+      "observation": "{\"status\":\"error\",\"error\":\"post_too_fast\",\"message\":\"post_too_fast\",\"errors\":{\"body\":\"post_too_fast\"}}",
+      "repro": ""
+    },
+    {
+      "id": "CDA-0-004",
+      "priority": "P0",
+      "category": "\u5168\u94fe\u8def",
+      "role": "admin",
+      "step": "Moderation",
+      "route": "/admin/community",
+      "title": "\u6cbb\u7406\u94fe\u5f02\u5e38",
+      "observation": "create post failed HTTP 429",
+      "repro": ""
+    },
+    {
+      "id": "CDA-0-006",
+      "priority": "P0",
+      "category": "\u5220\u5e16",
+      "role": "author",
+      "step": "\u5220\u9664",
+      "route": "/community/posts",
+      "title": "\u5220\u5e16\u94fe\u5f02\u5e38",
+      "observation": "create post failed HTTP 429",
+      "repro": ""
+    }
+  ],
+  "admin_audit_frozen": true,
+  "oed_audit_frozen": true,
+  "coverage_layers": {
+    "api_matrix": "executed",
+    "frontend_playwright": "failed",
+    "postgres_direct": "executed",
+    "audit_log_table": "executed",
+    "state_machine_ssot": "community_reports + community_penalties + visibility_status",
+    "rbac_registry": "registry\\community-deep-audit-probes.v1.yaml",
+    "cache_consistency": "idempotency ON CONFLICT DO NOTHING",
+    "count_consistency": "api like_count vs PG"
+  },
+  "ui_corridor_matrix": [
+    {
+      "probe_id": "ui.f015",
+      "spec": "f015-f018-request.spec.ts",
+      "step": "F-015 POST post GET detail",
+      "status": "FAIL"
+    },
+    {
+      "probe_id": "ui.f016",
+      "spec": "f015-f018-request.spec.ts",
+      "step": "F-016 like unlike relike",
+      "status": "FAIL"
+    },
+    {
+      "probe_id": "ui.f017",
+      "spec": "f015-f018-request.spec.ts",
+      "step": "F-017 collect",
+      "status": "FAIL"
+    },
+    {
+      "probe_id": "ui.f018",
+      "spec": "f015-f018-request.spec.ts",
+      "step": "F-018 community report",
+      "status": "FAIL"
+    },
+    {
+      "probe_id": "ui.f019",
+      "spec": "f015-f018-request.spec.ts",
+      "step": "F-019 me posts likes collects",
+      "status": "FAIL"
+    }
+  ],
+  "pg_consistency_matrix": [
+    {
+      "probe_id": "pg.like_count",
+      "check": "count",
+      "target": "5c611215-8f7f-4593-82c2-3e6c81b6256e",
+      "pg_value": "1",
+      "api_value": "1",
+      "expected": "equal",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.collect_count",
+      "check": "count",
+      "target": "5c611215-8f7f-4593-82c2-3e6c81b6256e",
+      "pg_value": "1",
+      "api_value": "1",
+      "expected": "equal",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.like_idempotent",
+      "check": "rows",
+      "target": "5c611215-8f7f-4593-82c2-3e6c81b6256e",
+      "pg_value": "1",
+      "api_value": "1",
+      "expected": "single_row",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.comment_count",
+      "check": "count",
+      "target": "5c611215-8f7f-4593-82c2-3e6c81b6256e",
+      "pg_value": "2",
+      "api_value": ">=2",
+      "expected": ">=2",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.comment_visibility",
+      "check": "state",
+      "target": "e8c53826-e70c-41ea-9e04-2bb261b20c24",
+      "pg_value": "visible",
+      "api_value": "hidden",
+      "expected": "hidden",
+      "status": "SKIP",
+      "notes": "visible"
+    },
+    {
+      "probe_id": "pg.auth_audit_events",
+      "check": "infra",
+      "target": "auth_audit_events",
+      "pg_value": "73",
+      "api_value": "readable",
+      "expected": "ok",
+      "status": "PASS",
+      "notes": ""
+    }
+  ],
+  "phase2": {
+    "playwright": {
+      "passed": false,
+      "exit_code": 1,
+      "ui_corridor_matrix": [
+        {
+          "probe_id": "ui.f015",
+          "spec": "f015-f018-request.spec.ts",
+          "step": "F-015 POST post GET detail",
+          "status": "FAIL"
+        },
+        {
+          "probe_id": "ui.f016",
+          "spec": "f015-f018-request.spec.ts",
+          "step": "F-016 like unlike relike",
+          "status": "FAIL"
+        },
+        {
+          "probe_id": "ui.f017",
+          "spec": "f015-f018-request.spec.ts",
+          "step": "F-017 collect",
+          "status": "FAIL"
+        },
+        {
+          "probe_id": "ui.f018",
+          "spec": "f015-f018-request.spec.ts",
+          "step": "F-018 community report",
+          "status": "FAIL"
+        },
+        {
+          "probe_id": "ui.f019",
+          "spec": "f015-f018-request.spec.ts",
+          "step": "F-019 me posts likes collects",
+          "status": "FAIL"
+        }
+      ]
+    },
+    "pg": {
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "pg_pass": 5,
+      "pg_total": 5
+    }
+  }
+}

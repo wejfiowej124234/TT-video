@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_narrative_plan.v1",
+  "stamp_utc": "20260704T141500Z",
+  "chain_id": "singapore-family",
+  "city": "新加坡",
+  "country_code": "SG",
+  "theme": "亲子 · 滨海湾 · 圣淘沙",
+  "six_slot_plan": [
+    { "row": 25, "slot": "guide-avatar", "scene": "Lee family guide with child @ Gardens by the Bay" },
+    { "row": 26, "slot": "provider-cover", "scene": "Family pass at aquarium/attraction entrance group photo" },
+    { "row": 27, "slot": "acquisition-cover", "scene": "Singapore design gift packaging still life" },
+    { "row": 28, "slot": "official-guide-cover", "scene": "Marina Bay skyline + family silhouette wide weekend route" },
+    { "row": 29, "slot": "community-cover", "scene": "Child joyful moment at attraction Feed thumbnail" },
+    { "row": 30, "slot": "community-media", "scene": "Sentosa beach or supertree grove afternoon detail" }
+  ],
+  "geo_coverage_planned": ["滨海湾花园", "动物园", "圣淘沙", "Marina Bay"],
+  "guide_persona": {
+    "nickname": "新加坡亲子向导·Lee",
+    "bio": "滨海湾、动物园与圣淘沙亲子路线，熟悉推车友好动线。",
+    "differentiation_vs_closed_chains": "30s female family specialist vs Tokyo photographer / Kyoto kimono / Seoul food / Bangkok temple male"
+  },
+  "TT_NARRATIVE_PLANNING": "PASS"
+}

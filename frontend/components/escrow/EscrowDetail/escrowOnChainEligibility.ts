@@ -64,14 +64,31 @@ export function canDepositToEscrow(
   return st === "accepted" || st === "escrowed" || st === "funded" || st === "confirmed";
 }
 
+function serviceBothConfirmed(order: OrderRow | null): boolean {
+  if (!order) return false;
+  const o = order as OrderRow & {
+    service_tourist_confirmed?: boolean;
+    service_guide_confirmed?: boolean;
+  };
+  if (o.service_tourist_confirmed === true && o.service_guide_confirmed === true) return true;
+  return normSub(order) === "service_completion_confirmed";
+}
+
 /**
- * 链上 release：仅 Completed 且双方已 confirm-rating（与 chain_off order_confirm_rating_impl 一致）
+ * 链上 release：仅 Completed 且双方已 confirm-service-completion（Layer A · EscrowV2 Layer B 对齐）
  */
-export function canReleaseAfterRating(order: OrderRow | null, hasEscrow: boolean): boolean {
+export function canReleaseAfterServiceCompletion(order: OrderRow | null, hasEscrow: boolean): boolean {
   if (!hasEscrow || !order) return false;
   const st = normState(order);
   if (st !== "completed") return false;
-  return ratingBothConfirmed(order);
+  return serviceBothConfirmed(order);
+}
+
+/**
+ * @deprecated Settlement gate is service completion, not rating. Alias for {@link canReleaseAfterServiceCompletion}.
+ */
+export function canReleaseAfterRating(order: OrderRow | null, hasEscrow: boolean): boolean {
+  return canReleaseAfterServiceCompletion(order, hasEscrow);
 }
 
 /**
@@ -79,7 +96,7 @@ export function canReleaseAfterRating(order: OrderRow | null, hasEscrow: boolean
  */
 export function canRefundEscrow(order: OrderRow | null, hasEscrow: boolean): boolean {
   if (!hasEscrow || !order) return false;
-  if (ratingBothConfirmed(order)) return false;
+  if (serviceBothConfirmed(order)) return false;
   const st = normState(order);
   return st === "escrowed" || st === "funded" || st === "completed";
 }

@@ -1,0 +1,158 @@
+{
+  "validation": "PCP_PHASE_1_FREEZE_REGRESSION",
+  "stamp": "20260703T231905Z",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "sequence": [
+    "phase_1_freeze_gates",
+    "full_site_regression",
+    "ci_governed_view_precheck",
+    "evidence_freeze_signoff"
+  ],
+  "domain_alignment": [
+    {
+      "domain": "community",
+      "status": "ALIGNED",
+      "pct": 100
+    },
+    {
+      "domain": "market",
+      "status": "ALIGNED",
+      "pct": 100
+    },
+    {
+      "domain": "provider",
+      "status": "ALIGNED",
+      "pct": 100
+    },
+    {
+      "domain": "acquisition",
+      "status": "ALIGNED",
+      "pct": 100
+    },
+    {
+      "domain": "official_guide",
+      "status": "ALIGNED",
+      "pct": 100
+    },
+    {
+      "domain": "campaign",
+      "status": "ALIGNED",
+      "pct": 100
+    },
+    {
+      "domain": "admin_public_content_center",
+      "status": "ALIGNED",
+      "pct": 100
+    }
+  ],
+  "phase1_alignment": "COMPLETE",
+  "domains_fully_aligned": "7/7",
+  "overall": "PASS",
+  "TT_PCP_PHASE_1": "COMPLETE",
+  "TT_PCP_PHASE_1_FREEZE": "COMPLETE",
+  "TT_PCP_PHASE_2": "NOT_STARTED",
+  "phase_2_blocked_until": "TT_PCP_PHASE_1_FREEZE: COMPLETE",
+  "phase_2_deferred": [
+    "SearchBuilder",
+    "RecommendationBuilder",
+    "CI governed-view workflow wiring"
+  ],
+  "freeze_sign_off_allowed": true,
+  "freeze_sign_off_note": "7/7 ALIGNED stable on local + Staging — Phase 2 may be planned (not auto-started)",
+  "checks": [
+    {
+      "id": "freeze_phase1_complete",
+      "label": "TT_PCP_PHASE_1: COMPLETE in registry",
+      "status": "PASS",
+      "detail": "Phase 1 engineering complete"
+    },
+    {
+      "id": "freeze_no_phase2_builders",
+      "label": "Phase 1 freeze — SearchBuilder / RecommendationBuilder not started",
+      "status": "PASS",
+      "detail": "No Phase 2 builder files in pcp/"
+    },
+    {
+      "id": "freeze_runbook_phase1",
+      "label": "Runbook documents Phase 1 COMPLETE",
+      "status": "PASS",
+      "detail": "docs/runbook/TT-PUBLIC-CONTENT-PLATFORM.md"
+    },
+    {
+      "id": "regression_validate-pcp-phase1-final-signoff",
+      "label": "scripts/dev/validate-pcp-phase1-final-signoff.cjs",
+      "status": "PASS",
+      "detail": "exit 0"
+    },
+    {
+      "id": "regression_audit-pcp-full-pipeline-alignment",
+      "label": "scripts/dev/audit-pcp-full-pipeline-alignment.cjs",
+      "status": "PASS",
+      "detail": "exit 0"
+    },
+    {
+      "id": "regression_audit-enterprise-ssot-alignment",
+      "label": "scripts/dev/audit-enterprise-ssot-alignment.cjs",
+      "status": "PASS",
+      "detail": "exit 0"
+    },
+    {
+      "id": "ci_enforcement_precheck",
+      "label": "audit-pcp-governed-view-ci-enforcement-precheck.cjs",
+      "status": "PASS",
+      "detail": "Static pre-check PASS (CI workflow wiring = Phase 2)"
+    },
+    {
+      "id": "domain_community",
+      "label": "Domain community ALIGNED",
+      "status": "PASS",
+      "detail": "7/7 layers"
+    },
+    {
+      "id": "domain_market",
+      "label": "Domain market ALIGNED",
+      "status": "PASS",
+      "detail": "7/7 layers"
+    },
+    {
+      "id": "domain_provider",
+      "label": "Domain provider ALIGNED",
+      "status": "PASS",
+      "detail": "7/7 layers"
+    },
+    {
+      "id": "domain_acquisition",
+      "label": "Domain acquisition ALIGNED",
+      "status": "PASS",
+      "detail": "7/7 layers"
+    },
+    {
+      "id": "domain_official_guide",
+      "label": "Domain official_guide ALIGNED",
+      "status": "PASS",
+      "detail": "7/7 layers"
+    },
+    {
+      "id": "domain_campaign",
+      "label": "Domain campaign ALIGNED",
+      "status": "PASS",
+      "detail": "7/7 layers"
+    },
+    {
+      "id": "domain_admin_public_content_center",
+      "label": "Domain admin_public_content_center ALIGNED",
+      "status": "PASS",
+      "detail": "7/7 layers"
+    }
+  ],
+  "ssot_stamp": {
+    "registry": "D:\\TravelTrust-V1.1\\registry\\public-content-platform.v1.yaml",
+    "runbook": "D:\\TravelTrust-V1.1\\docs\\runbook\\TT-PUBLIC-CONTENT-PLATFORM.md",
+    "evidence": {
+      "freeze_regression": "evidence/GO_public_content_platform/20260703T231905Z/phase1-freeze-regression-signoff.json",
+      "phase1_alignment": "evidence/GO_public_content_platform/20260703T231905Z/pcp-phase1-full-alignment.json",
+      "ci_precheck": "evidence/GO_public_content_platform/20260703T231905Z/pcp-governed-view-ci-enforcement-precheck.json",
+      "final_signoff": "evidence/GO_public_content_platform/20260703T231905Z/phase1-final-signoff.json"
+    }
+  }
+}

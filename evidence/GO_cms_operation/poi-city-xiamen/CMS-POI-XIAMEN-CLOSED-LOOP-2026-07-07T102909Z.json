@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T10:29:09Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "厦门",
+    "city_en": "Xiamen",
+    "matrix_ids": [
+      "PH-CN-310-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-310-FOOD",
+      "legacy_value": "土笋冻",
+      "poi_id": "8ab41543-0509-4c20-9f99-1c02c880cf08",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-310-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

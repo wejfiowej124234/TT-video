@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.sprint_completion.v1",
+  "sprints": {
+    "Sprint-A": {
+      "open": 0,
+      "total": 11,
+      "completion_pct": 100.0
+    },
+    "Sprint-B": {
+      "open": 4,
+      "total": 5,
+      "completion_pct": 33.3
+    },
+    "Sprint-C": {
+      "open": 1,
+      "total": 1,
+      "completion_pct": 50.0
+    }
+  }
+}

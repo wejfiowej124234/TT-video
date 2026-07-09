@@ -1,0 +1,55 @@
+{
+  "document_id": "TTG-TOKENOMICS-FREEZE-V1",
+  "phase": "\u2461",
+  "phase2_audit_baseline": true,
+  "stamp_utc": "20260616T074424Z",
+  "chain_id": 11155111,
+  "addresses": {
+    "governor": "0x847b00ddb6ffed71812abc358a407dad4b099fcb",
+    "timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+    "treasury_p4_cap": "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2",
+    "primary_market": "0x7af15f98622b9282298ca3070a698ca4a96a4016",
+    "seat_registry": "0xc99776e980d33f1857d5bb9a57b35ab7669aad1f",
+    "stake_pool_proxy": "0x3a89378bfad12d1028707dd37055294854c8784e",
+    "governance_token_reused": "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+  },
+  "g24_p_upgrade_01": {
+    "proxy_architecture_verified": true,
+    "proxy_admin": "GOV_FREEZE_V1_TIMELOCK"
+  },
+  "reads": {
+    "governor_quorum_bps": 400,
+    "governor_max_voting_power_bps": 400,
+    "timelock_delay_seconds": 172800,
+    "timelock_governor": "0x847B00ddb6FfEd71812abC358A407dAd4b099Fcb",
+    "treasury_p4_deploy_cap_bps": 3000,
+    "primary_market_per_wallet_cap_ttg": "25000000000000000000000",
+    "primary_market_min_usdc": "100000000",
+    "primary_market_round_caps_ttg": [
+      "500000000000000000000000",
+      "500000000000000000000000",
+      "1000000000000000000000000"
+    ],
+    "seat_registry_max_aggregate_stake": "400000000000000000000000",
+    "seat_registry_stake_pool": "0x3a89378bFad12D1028707dD37055294854c8784e"
+  },
+  "expected_ssot": {
+    "GOV-01": {
+      "treasury_p4_deploy_cap_bps": 3000
+    },
+    "GOV-02": {
+      "governance_quorum_bps": 400,
+      "governance_timelock_delay_seconds": 172800
+    },
+    "GOV-03": {
+      "max_voting_power_per_address_bps": 400,
+      "max_aggregate_seat_stake_per_entity_bps": 400
+    },
+    "GOV-04": {
+      "public_sale_per_wallet_cap_ttg": "25000000000000000000000",
+      "public_sale_min_purchase_usdc": "100000000"
+    }
+  },
+  "checks_passed": 16,
+  "verdict": "PASS"
+}

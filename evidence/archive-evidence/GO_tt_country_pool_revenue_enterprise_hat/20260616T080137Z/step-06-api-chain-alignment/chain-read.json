@@ -1,0 +1,6 @@
+{
+  "COUNTRY_POOL_LEDGER_ADDRESS": "0x63bd7d5ee5c5dde707e5e65303f3876267c78e97",
+  "COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa",
+  "api_points_to_net_profit_ledger": false,
+  "blocker_if_mismatch": true
+}

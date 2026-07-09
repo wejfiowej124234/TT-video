@@ -3,6 +3,7 @@ import { DEMO_ACQUISITION_LISTINGS, DEMO_MERCHANT_LISTINGS } from "./marketSubsi
 import {
   filterAcquisitionListings,
   filterMerchantListings,
+  MARKET_SUBSITE_COUNTRY_SAVED_STORAGE,
   MARKET_SUBSITE_COUNTRY_STORAGE,
   parseCountryParam,
   parseMerchantCategoryParam,
@@ -11,6 +12,8 @@ import {
   sortMerchantListings,
   buildMarketSubsiteListingsQueryString,
   applyMarketSubsiteProviderFilters,
+  writeSubsiteCountryPref,
+  clearSubsiteCountryPref,
 } from "./marketSubsiteFilters";
 
 describe("marketSubsiteFilters", () => {
@@ -61,15 +64,22 @@ describe("marketSubsiteFilters", () => {
   });
 
   it("resolveEffectiveSubsiteCountry prefers URL over localStorage", () => {
-    localStorage.setItem(MARKET_SUBSITE_COUNTRY_STORAGE.provider, "JP");
+    writeSubsiteCountryPref("provider", "JP");
     const sp = new URLSearchParams("country=CN");
     expect(resolveEffectiveSubsiteCountry(sp, "provider")).toBe("CN");
-    localStorage.removeItem(MARKET_SUBSITE_COUNTRY_STORAGE.provider);
+    clearSubsiteCountryPref("provider");
   });
 
-  it("resolveEffectiveSubsiteCountry reads localStorage when URL empty", () => {
-    localStorage.setItem(MARKET_SUBSITE_COUNTRY_STORAGE.provider, "jp");
+  it("resolveEffectiveSubsiteCountry reads explicit user save when URL empty", () => {
+    writeSubsiteCountryPref("provider", "JP");
     expect(resolveEffectiveSubsiteCountry(new URLSearchParams(), "provider")).toBe("JP");
+    clearSubsiteCountryPref("provider");
+  });
+
+  it("resolveEffectiveSubsiteCountry ignores orphan localStorage without explicit save", () => {
+    localStorage.setItem(MARKET_SUBSITE_COUNTRY_STORAGE.provider, "jp");
+    expect(localStorage.getItem(MARKET_SUBSITE_COUNTRY_SAVED_STORAGE.provider)).toBeNull();
+    expect(resolveEffectiveSubsiteCountry(new URLSearchParams(), "provider")).toBe("all");
     localStorage.removeItem(MARKET_SUBSITE_COUNTRY_STORAGE.provider);
   });
 });

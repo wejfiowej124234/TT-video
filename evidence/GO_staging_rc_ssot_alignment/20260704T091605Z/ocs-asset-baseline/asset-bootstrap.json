@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.ocs_official_asset_bootstrap.v1",
+  "recorded_at": "2026-07-04T09:17:16.735Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "fly_app": "tt-api-staging",
+  "remote_method": "http_probe_existing",
+  "local_dir": "D:/TravelTrust-V1.1/data/community_post_media",
+  "local_count": 60,
+  "remote_ok": 60,
+  "remote_fail": 0,
+  "remote_log": [
+    {
+      "ok": false,
+      "error": "Connecting to fdaa:7a:3e05:a7b:866:516a:7e09:2...\nError: The handle is invalid.\n"
+    }
+  ],
+  "asset_count": 60
+}

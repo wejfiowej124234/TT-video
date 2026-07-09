@@ -2,8 +2,8 @@
 
 **Target:** [https://tt-web-staging.fly.dev](https://tt-web-staging.fly.dev)  
 **API:** [https://tt-api-staging.fly.dev](https://tt-api-staging.fly.dev)  
-**Recorded:** 2026-06-07T14:46:55.233Z  
-**UAT artifact:** `D:/TravelTrust-V1.1/evidence/staging-uat-six-domains/20260607T144259Z/uat-findings.json`  
+**Recorded:** 2026-07-02T02:36:10.808Z  
+**UAT artifact:** `D:/TravelTrust-V1.1/evidence/GO_phase2_baseline_consistency_audit/20260702T022817Z/six-domains/uat-findings.json`  
 
 > 本矩阵仅登记 **Staging UAT 真实浏览器缺陷**；Remediation 只允许 **bugfix**（含 staging 部署/Env/CORS/构建），**禁止新增产品需求**。 **≠ Production GO** · **≠ Phase ③ 公网 GO**。
 
@@ -13,8 +13,8 @@
 
 | Gate | Verdict |
 |------|---------|
-| **Staging browsable** | **YES** |
-| **Staging UAT (六大域)** | **PASS** (25 PASS / 0 WARN / 0 FAIL) |
+| **Staging browsable** | **PARTIAL** |
+| **Staging UAT (六大域)** | **FAIL** (18 PASS / 5 WARN / 2 FAIL) |
 | **P0 cluster (CORS/meta/fetch)** | **CLEAR** |
 | **Production GO** | **NO-GO** |
 | **Phase ③ Public GO** | **NO-GO** |
@@ -36,11 +36,11 @@
 | ID | 域 | Scope | Staging UAT | Evidence |
 |----|-----|-------|-------------|----------|
 | D1 | 首页 | Marketing / Home / Trust hub | PASS | Staging UAT browser |
-| D2 | 身份 | Auth / me / identities | PASS | Staging UAT browser |
+| D2 | 身份 | Auth / me / identities | WARN | Staging UAT browser |
 | D3 | 市场 | Market / acquisition / guides | PASS | Staging UAT browser |
-| D4 | 社区 | Community feed / explore / messages | PASS | Staging UAT browser |
+| D4 | 社区 | Community feed / explore / messages | FAIL | Staging UAT browser |
 | D5 | 治理 | Governance / staking / Sepolia | PASS | Staging UAT browser |
-| D6 | 管理员 | Admin workspace / ops | PASS | Staging UAT browser |
+| D6 | 管理员 | Admin workspace / ops | WARN | Staging UAT browser |
 | DX | 跨域 | CORS / meta / env alignment | PASS | Staging UAT browser |
 
 ---
@@ -49,7 +49,25 @@
 
 | ID | 域 | Route | Prio | Sev | Observation | Fix class | Status |
 |----|-----|-------|------|-----|-------------|-----------|--------|
-| — | — | — | — | 无 FAIL/WARN 级缺陷记录 | — | — |
+| **DEF-001** | 身份 | `/me` | P1 | WARN | data-tt page shell not visible | bugfix | OPEN |
+| **DEF-002** | 社区 | `/community` | P1 | FAIL | navigation/assert: page.goto: net::ERR_CONNECTION_CLOSED at https://tt-web-staging.fly.dev/community
+Call log:
+[2m  - navigating to "https://tt-web-staging.fly.dev/community", waiting until "load"[2 | bugfix | OPEN |
+| **DEF-003** | 社区 | `/community/explore` | P1 | FAIL | navigation/assert: page.goto: Navigation to "https://tt-web-staging.fly.dev/community/explore" is interrupted by another navigation to "chrome-error://chromewebdata/"
+Call log:
+[2m  - navigating to " | bugfix | OPEN |
+| **DEF-004** | 管理员 | `/admin` | P1 | WARN | console.error×2: Failed to load resource: the server responded with a status of 404 () | [AdminHomeInbox.steward] Error: request_failed_404
+    at d (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js:1:15447)
+    at async v (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js: | bugfix | OPEN |
+| **DEF-005** | 管理员 | `/admin/orders` | P1 | WARN | console.error×2: Failed to load resource: the server responded with a status of 404 () | [AdminHomeInbox.steward] Error: request_failed_404
+    at d (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js:1:15447)
+    at async v (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js: | bugfix | OPEN |
+| **DEF-006** | 管理员 | `/admin/users` | P1 | WARN | console.error×2: Failed to load resource: the server responded with a status of 404 () | [AdminHomeInbox.steward] Error: request_failed_404
+    at d (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js:1:15447)
+    at async v (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js: | bugfix | OPEN |
+| **DEF-007** | 管理员 | `/admin/finance` | P1 | WARN | console.error×2: Failed to load resource: the server responded with a status of 404 () | [AdminHomeInbox.steward] Error: request_failed_404
+    at d (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js:1:15447)
+    at async v (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js: | bugfix | OPEN |
 
 ---
 
@@ -63,7 +81,7 @@
 | P4 | Stripe test vs live isolation | API secrets | **sk_live forbidden** on staging | PREP |
 | P5 | Production CDN / HLS (G7) | staging MP4 only | CDN + HLS GO | **PREP_PASS** |
 | P6 | Build quality (TS/ESLint in CI) | standalone build skips lint/tsc | Full green `npm run build` + lint | **OPEN** |
-| P7 | Zero error-boundary on core routes | UAT §3 | All six domains PASS | **PASS** |
+| P7 | Zero error-boundary on core routes | UAT §3 | All six domains PASS | **FAIL** |
 | P8 | Admin auth (real RBAC) | Bearer + promote_admin (②) | SSO/RBAC + audit | OPEN |
 
 ---
@@ -138,10 +156,10 @@
   {
     "domain": "身份",
     "route": "/me",
-    "status": "PASS",
+    "status": "WARN",
     "auth_mode": "bearer_tourist",
     "notes": [
-      "shell reachable"
+      "data-tt page shell not visible"
     ]
   },
   {
@@ -183,19 +201,19 @@
   {
     "domain": "社区",
     "route": "/community",
-    "status": "PASS",
+    "status": "FAIL",
     "auth_mode": "public",
     "notes": [
-      "shell reachable"
+      "navigation/assert: page.goto: net::ERR_CONNECTION_CLOSED at https://tt-web-staging.fly.dev/community\nCall log:\n\u001b[2m  - navigating to \"https://tt-web-staging.fly.dev/community\", waiting until \"load\"\u001b[2"
     ]
   },
   {
     "domain": "社区",
     "route": "/community/explore",
-    "status": "PASS",
+    "status": "FAIL",
     "auth_mode": "public",
     "notes": [
-      "api auth-only (401/403 ignored for public probe): 401 /api/v1/community/me/following"
+      "navigation/assert: page.goto: Navigation to \"https://tt-web-staging.fly.dev/community/explore\" is interrupted by another navigation to \"chrome-error://chromewebdata/\"\nCall log:\n\u001b[2m  - navigating to \""
     ]
   },
   {
@@ -222,7 +240,7 @@
     "status": "PASS",
     "auth_mode": "public",
     "notes": [
-      "api auth-only (401/403 ignored for public probe): 401 /api/v1/governance/pool"
+      "api auth-only (401/403 ignored for public probe): 401 /api/v1/governance/rewards; 401 /api/v1/governance/pool"
     ]
   },
   {
@@ -255,37 +273,37 @@
   {
     "domain": "管理员",
     "route": "/admin",
-    "status": "PASS",
+    "status": "WARN",
     "auth_mode": "bearer_admin",
     "notes": [
-      "shell reachable"
+      "console.error×2: Failed to load resource: the server responded with a status of 404 () | [AdminHomeInbox.steward] Error: request_failed_404\n    at d (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js:1:15447)\n    at async v (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js:"
     ]
   },
   {
     "domain": "管理员",
     "route": "/admin/orders",
-    "status": "PASS",
+    "status": "WARN",
     "auth_mode": "bearer_admin",
     "notes": [
-      "shell reachable"
+      "console.error×2: Failed to load resource: the server responded with a status of 404 () | [AdminHomeInbox.steward] Error: request_failed_404\n    at d (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js:1:15447)\n    at async v (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js:"
     ]
   },
   {
     "domain": "管理员",
     "route": "/admin/users",
-    "status": "PASS",
+    "status": "WARN",
     "auth_mode": "bearer_admin",
     "notes": [
-      "shell reachable"
+      "console.error×2: Failed to load resource: the server responded with a status of 404 () | [AdminHomeInbox.steward] Error: request_failed_404\n    at d (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js:1:15447)\n    at async v (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js:"
     ]
   },
   {
     "domain": "管理员",
     "route": "/admin/finance",
-    "status": "PASS",
+    "status": "WARN",
     "auth_mode": "bearer_admin",
     "notes": [
-      "shell reachable"
+      "console.error×2: Failed to load resource: the server responded with a status of 404 () | [AdminHomeInbox.steward] Error: request_failed_404\n    at d (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js:1:15447)\n    at async v (https://tt-web-staging.fly.dev/_next/static/chunks/51600-6fac4ee01a713766.js:"
     ]
   },
   {

@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W13",
+  "recorded_utc": "2026-07-08T07:41:56.155Z",
+  "run_id": "2026-07-08T07-41-56-154Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PARTIAL",
+  "summary": {
+    "verdict": "PARTIAL",
+    "detail": "Sepolia explorer tx proof"
+  },
+  "detail": "Sepolia explorer tx proof",
+  "order_id": "fe6b7dda-6668-4734-9937-8dd961ec4f93",
+  "txs": {
+    "approve": "https://sepolia.etherscan.io/tx/0xbf965582a7e8ac626698d68c947b37ac227e829075b9ee51c5003e6f8177d51a",
+    "deposit": "https://sepolia.etherscan.io/tx/0xc181732e5eb39d62b13aa36d3604a9b085eb7543c0f555dcb17fd538aa41a1f3",
+    "release": null
+  }
+}

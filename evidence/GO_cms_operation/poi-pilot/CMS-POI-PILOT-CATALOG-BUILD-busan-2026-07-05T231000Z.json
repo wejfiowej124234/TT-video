@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-05T23:10:00Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "KR",
+    "city_zh": "釜山",
+    "matrix_ids": [
+      "PH-KR-042-ATR",
+      "PH-KR-043-ATR",
+      "PH-KR-044-ATR",
+      "PH-KR-045-ATR",
+      "PH-KR-046-FOOD",
+      "PH-KR-047-FOOD",
+      "PH-KR-048-FOOD",
+      "PH-KR-049-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-community-media.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-KR-042-ATR",
+      "poi_id": "42abb1b3-687b-4e94-91c5-65e440a33922"
+    },
+    {
+      "matrix_id": "PH-KR-043-ATR",
+      "poi_id": "71287a8b-ffdd-4bd6-8b0f-07cffc7fecc7"
+    },
+    {
+      "matrix_id": "PH-KR-044-ATR",
+      "poi_id": "9874beba-8539-47a7-9fc2-63b6f34c8139"
+    },
+    {
+      "matrix_id": "PH-KR-045-ATR",
+      "poi_id": "c8c94aeb-13f7-4315-a324-720663294b91"
+    },
+    {
+      "matrix_id": "PH-KR-046-FOOD",
+      "poi_id": "806b33b3-34cb-49ea-957b-e43d151ca68c"
+    },
+    {
+      "matrix_id": "PH-KR-047-FOOD",
+      "poi_id": "5e6ac1ce-84d7-44e2-9799-6bb8c2f7d289"
+    },
+    {
+      "matrix_id": "PH-KR-048-FOOD",
+      "poi_id": "264ad838-31e9-4105-886b-a400a8dc1906"
+    },
+    {
+      "matrix_id": "PH-KR-049-FOOD",
+      "poi_id": "bdc9e11d-72aa-43fe-9228-f35b5deeb569"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 8,
+    "expected": 8
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

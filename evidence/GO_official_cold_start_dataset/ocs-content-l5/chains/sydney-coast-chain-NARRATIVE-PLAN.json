@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_narrative_plan.v1",
+  "stamp_utc": "20260704T150100Z",
+  "chain_id": "sydney-coast",
+  "city": "悉尼",
+  "country_code": "AU",
+  "theme": "海岸徒步 · 邦迪 · Coogee · 海港",
+  "six_slot_plan": [
+    { "row": 43, "slot": "guide-avatar", "scene": "Mia outdoor coastal guide @ cliff trail" },
+    { "row": 44, "slot": "provider-cover", "scene": "Harbour kayak half-day gear + water" },
+    { "row": 45, "slot": "acquisition-cover", "scene": "Handcrafted surfboard craft still life" },
+    { "row": 46, "slot": "official-guide-cover", "scene": "Bondi to Coogee coastal walk wide hero" },
+    { "row": 47, "slot": "community-cover", "scene": "Beach wave or swimmer silhouette Feed" },
+    { "row": 48, "slot": "community-media", "scene": "Trail overlook bay afternoon light" }
+  ],
+  "TT_NARRATIVE_PLANNING": "PASS"
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "traveltrust.production_go_decision_package.v1",
+  "version": 1,
+  "template_utc": "2026-07-04",
+  "human_runbook": "docs/runbook/TT-PRODUCTION-GO-DECISION-PACKAGE.md",
+  "sole_criterion": {
+    "en": "Production GO is decided ONLY by a signed Production GO Decision Package with G1 PASS + G2 PASS + G3 PASS.",
+    "zh": "Production GO 唯一判据：签字的 Production GO Decision Package，且 G1/G2/G3 均为 PASS。"
+  },
+  "invalid_authority": [
+    "chat opinion",
+    "documentation alone",
+    "master matrix alone without this package",
+    "subjective readiness feeling"
+  ],
+  "required_gate_pass": [
+    "TT_PRODUCTION_READINESS_G1_GATE",
+    "TT_PRODUCTION_READINESS_G2_GATE",
+    "TT_PRODUCTION_READINESS_G3_GATE"
+  ],
+  "decision_chain": [
+    "TT_PRODUCTION_READINESS_G1_GATE: PASS",
+    "TT_PRODUCTION_READINESS_G2_GATE: PASS",
+    "TT_PRODUCTION_READINESS_G3_GATE: PASS",
+    "TT_PRODUCTION_GO: GO"
+  ],
+  "package_fields": {
+    "stamp": "UTC stamp YYYYMMDDTHHMMSSZ",
+    "commit": "git short sha at decision time",
+    "verdict": "GO | NO_GO",
+    "machine_keys": {
+      "TT_PRODUCTION_READINESS_G1_GATE": "PASS",
+      "TT_PRODUCTION_READINESS_G2_GATE": "PASS",
+      "TT_PRODUCTION_READINESS_G3_GATE": "PASS",
+      "TT_PRODUCTION_GO": "GO | NO_GO"
+    },
+    "g3_domains_complete": ["G3-01", "G3-02", "G3-03", "G3-04", "G3-05", "G3-06"],
+    "artifacts": {
+      "go_decision_package_json": "production-go-decision-package.json",
+      "final_per": "path under evidence/",
+      "production_sign_off": "path under evidence/",
+      "launch_checklist": "path under evidence/",
+      "launch_approval": "path under evidence/"
+    },
+    "owner_attestation": {
+      "name": "Owner / Release Authority",
+      "decision": "GO | NO_GO",
+      "signed_utc": "ISO8601"
+    }
+  },
+  "evidence_root": "evidence/GO_production_readiness/production-go-decision",
+  "validator": "node scripts/dev/validate-production-go-decision-package.cjs"
+}

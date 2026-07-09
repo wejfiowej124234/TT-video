@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T144530Z",
+  "filename": "ocs-paris-art-guide-avatar.jpg",
+  "chain_id": "paris-art",
+  "city": "巴黎",
+  "country_code": "FR",
+  "slot": "guide-avatar",
+  "surface": "Guide",
+  "copy_label": "巴黎艺术向导·Claire",
+  "manifest_copy": {
+    "guide.nickname": "巴黎艺术向导·Claire",
+    "guide.bio": "卢浮宫、奥赛与玛黑区画廊讲解，擅长印象派专题路线。",
+    "guide.languages": [
+      "fr",
+      "en",
+      "zh"
+    ],
+    "guide.service_types": [
+      "culture",
+      "walking"
+    ],
+    "chain.tags": [
+      "艺术",
+      "博物馆"
+    ]
+  },
+  "pre_generation_check": {
+    "pass": true,
+    "evidence": "ocs-paris-art-guide-avatar.PRE-GENERATION-CHECK.json"
+  },
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG 56416 bytes。"
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "Claire 博物馆雕塑庭院·与 nickname/bio/艺术主题 100% 对齐。"
+    },
+    "G3_slot_differentiation": {
+      "pass": true,
+      "notes": "巴黎艺术向导肖像；未来 5 slot 已规划。"
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "巴黎 FR-only；经典灰+金；无亚洲元素。"
+    },
+    "G5_brand_visual": {
+      "pass": true,
+      "notes": "经典巴黎艺术纪实；L5 统一。"
+    },
+    "G6_commercial_platform": {
+      "pass": true,
+      "notes": "真实艺术向导；非广告模特。"
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true,
+      "notes": "清晰、曝光自然。"
+    },
+    "G8_evidence_matrix": {
+      "pass": true,
+      "notes": "Country+Guide Identity+Cross-Chain+chain 1/6。"
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "notes": "博物馆语义正确；无水印/Logo/畸形。"
+    },
+    "G10_content_diversity": {
+      "pass": true,
+      "notes": "新 country FR；vs 五城全局区分。"
+    }
+  },
+  "destination_experience_review": {
+    "pass": true,
+    "notes": "用户可感知巴黎艺术向导专业可信。"
+  },
+  "guide_identity_diversity_review": {
+    "pass": true,
+    "vs_tokyo_ken": "欧洲艺术女 vs 日摄影师",
+    "vs_kyoto_yuki": "便装 vs 和服",
+    "vs_seoul_min": "艺术 vs 美食",
+    "vs_bangkok_arun": "博物馆 vs 寺庙",
+    "vs_singapore_lee": "艺术学者 vs 亲子"
+  },
+  "consumer_experience": {
+    "pass": true,
+    "real_guide_not_model": true
+  },
+  "regression_closed_chains": {
+    "pass": true,
+    "notes": "五城 30 行无漂移。"
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

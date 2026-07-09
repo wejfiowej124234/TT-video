@@ -1,0 +1,79 @@
+{
+  "schema": "traveltrust.g3_production_cdn_official_assets.v1",
+  "version": 1,
+  "effective_utc": "2026-07-04",
+  "human_yaml": "registry/g3-production-cdn-official-assets.v1.yaml",
+  "machine_keys": {
+    "TT_G3_PRODUCTION_CDN_OFFICIAL_ASSETS": "ENFORCED",
+    "TT_OCS_OFFICIAL_ASSET_BASELINE_V1": "VERIFIED",
+    "TT_G3_PRODUCTION_CDN_PREP": "READY",
+    "TT_G3_PRODUCTION_CDN_VERIFIED": "PLANNED"
+  },
+  "cdn": {
+    "provider": "cloudflare",
+    "public_base": "https://cdn.traveltrust.app",
+    "official_assets": {
+      "prefix": "official-cold-start/v1",
+      "url_pattern": "{public_base}/{prefix}/{filename}",
+      "filename_pattern": "ocs-{chain_id}-{slot}.jpg",
+      "asset_count": 60,
+      "baseline_version": "V1"
+    }
+  },
+  "cache_policy": {
+    "official_static": {
+      "cache_control": "public, max-age=31536000, immutable",
+      "edge_ttl_seconds": 31536000,
+      "browser_ttl_seconds": 31536000,
+      "cf_cache_status_expect": "HIT"
+    },
+    "community_user_upload": {
+      "cache_control": "public, max-age=86400, immutable",
+      "edge_ttl_seconds": 86400,
+      "prefix": "community-media/v1"
+    }
+  },
+  "version_management": {
+    "rule": "bump baseline prefix on content expansion — never mutate in place",
+    "sequence": ["V1", "V1.1", "V2"],
+    "path_by_version": {
+      "V1": "official-cold-start/v1",
+      "V1.1": "official-cold-start/v1.1",
+      "V2": "official-cold-start/v2"
+    }
+  },
+  "object_lifecycle": {
+    "r2_bucket": "traveltrust-community-media",
+    "rules": [
+      {
+        "id": "official_v1_current",
+        "prefix": "official-cold-start/v1/",
+        "status": "ACTIVE",
+        "expiration_days": null
+      },
+      {
+        "id": "official_superseded_prefix",
+        "prefix": "official-cold-start/",
+        "superseded_after_days": 90,
+        "transition": "STANDARD_IA",
+        "delete": false,
+        "note": "Governance unpublish required before hard delete"
+      },
+      {
+        "id": "community_media_current",
+        "prefix": "community-media/v1/",
+        "status": "ACTIVE",
+        "expiration_days": null
+      }
+    ]
+  },
+  "global_edge": {
+    "compression": ["brotli", "gzip"],
+    "http3": true,
+    "geo": "cloudflare_anycast"
+  },
+  "evidence": {
+    "staging_asset_baseline": "evidence/GO_official_cold_start_dataset/ocs-official-asset-baseline/20260704T085638Z",
+    "prep_root": "evidence/GO_production_readiness/G3-01/preparation"
+  }
+}

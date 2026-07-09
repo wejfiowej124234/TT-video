@@ -1,0 +1,89 @@
+{
+  "schema": "traveltrust.frozen_runtime_baseline.v1",
+  "asset_type": "FROZEN_RUNTIME_BASELINE",
+  "frozen_at_utc": "2026-06-30T10:21:21Z",
+  "baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "baseline_short": "d5aa447f",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "principle": "Runtime Baseline is a Frozen Asset \u2014 not a recurring audit result.",
+  "mutation_forbidden_unless_chain_complete": true,
+  "baseline_mutation_chain": {
+    "summary": "d5aa447f \u2192 e812xxxx \u2192 f91axxxx only via full chain",
+    "required_steps_in_order": [
+      {
+        "step": 1,
+        "id": "RUNTIME_CODE_OR_CONFIG_CHANGE",
+        "title": "Staging runtime code or config change (committed)"
+      },
+      {
+        "step": 2,
+        "id": "S5_DEPLOY",
+        "title": "S5 staging deploy (API + Web)"
+      },
+      {
+        "step": 3,
+        "id": "S6_VALIDATION",
+        "title": "S6 deep release gate PASS @ new SHA"
+      },
+      {
+        "step": 4,
+        "id": "BASELINE_RECORD_UPDATE",
+        "title": "Update FROZEN-RUNTIME-BASELINE + DEPLOY-GOVERNANCE records"
+      }
+    ],
+    "all_four_required": true,
+    "otherwise": "baseline_sha MUST NOT change"
+  },
+  "never_mutates_baseline": [
+    "readme_commit",
+    "evidence_commit",
+    "runbook_commit",
+    "docs_commit",
+    "handbook_commit",
+    "repository_hygiene",
+    "manual_validation",
+    "legacy_tn_p1_009_010",
+    "local_head_ahead_evidence_only"
+  ],
+  "runtime_consistency": {
+    "status": "ARCHIVED",
+    "artifact": "LOCAL-STAGING-RUNTIME-CONSISTENCY-ARCHIVED.v1.json",
+    "note": "Consistency verification archived; baseline is the frozen asset"
+  },
+  "classification": {
+    "docs_evidence_runbook": {
+      "affects_baseline": false,
+      "phase": "any"
+    },
+    "runtime_config_deploy": {
+      "affects_baseline": true,
+      "phase": "S5_S6_chain"
+    },
+    "mainnet": {
+      "affects_baseline": false,
+      "phase": "PHASE3_ONLY"
+    }
+  },
+  "evidence_at_freeze": {
+    "phase2_closed": "evidence/GO_phase2_testnet_graduation/PHASE2-CLOSED.latest.json",
+    "deep_gate": "evidence/GO_phase2_testnet_20260526/deep-release-gate/20260630T093714Z/",
+    "h1": "evidence/GO_phase2_testnet_graduation/h1-human-acceptance/20260630T094242Z/"
+  },
+  "machine_keys": {
+    "TT_RUNTIME_BASELINE_FROZEN_ASSET": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+    "TT_RUNTIME_BASELINE_MUTATION": "FORBIDDEN_UNLESS_S5_S6_CHAIN",
+    "TT_LOCAL_STAGING_RUNTIME_CONSISTENCY": "ARCHIVED",
+    "TT_PHASE2_CLOSED": "YES",
+    "TT_PHASE2_REOPEN": "NO"
+  },
+  "audit_closure_policy": "evidence/GO_phase3_production_entry_review/PHASE12-AUDIT-CLOSURE-POLICY.v1.json",
+  "fixed_response": {
+    "question_zh": "\u672c\u5730\u548c\u6d4b\u8bd5\u7f51\u4e00\u81f4\u4e86\u5417\uff1f",
+    "question_en": "Are local and testnet consistent?",
+    "answer_zh": "Runtime Consistency \u5df2\u4e8e d5aa447f Frozen Baseline \u5b8c\u6210\u5e76\u5f52\u6863\uff08ARCHIVED\uff09\u3002\u9664\u975e\u53d1\u751f\u65b0\u7684\u8fd0\u884c\u65f6\u4ee3\u7801/\u914d\u7f6e\u90e8\u7f72\u5e76\u5b8c\u6210 S5\u2192S6\uff0c\u5426\u5219\u4e0d\u518d\u91cd\u5ba1\u3002",
+    "answer_en": "Runtime Consistency was completed and archived (ARCHIVED) at Frozen Baseline d5aa447f. No re-audit unless new runtime/config is deployed and S5\u2192S6 completes with baseline update.",
+    "baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6"
+  },
+  "updated_at_utc": "2026-06-30T10:34:40Z"
+}

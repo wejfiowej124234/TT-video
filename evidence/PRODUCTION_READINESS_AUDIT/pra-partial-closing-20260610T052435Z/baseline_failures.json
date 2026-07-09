@@ -1,0 +1,17 @@
+{
+  "baseline_stamp": "20260610T044503Z",
+  "failures": [
+    {
+      "id": "PRA-PRESSURE",
+      "verdict": "FAIL"
+    },
+    {
+      "id": "PRA-SECURITY",
+      "verdict": "FAIL"
+    },
+    {
+      "id": "ROV-WAVE2",
+      "verdict": "FAIL"
+    }
+  ]
+}

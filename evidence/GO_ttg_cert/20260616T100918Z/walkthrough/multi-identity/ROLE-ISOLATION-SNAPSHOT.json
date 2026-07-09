@@ -1,0 +1,57 @@
+{
+  "schema": "traveltrust.cert2-multi-identity-isolation.v1",
+  "captured_at_utc": "2026-06-16T13:55:27Z",
+  "account": "multi-demo@test.com",
+  "slots": {
+    "traveler": "active",
+    "guide": "active",
+    "merchant": "active",
+    "region_steward": "active",
+    "acquisition": "active"
+  },
+  "checks": [
+    {
+      "slot": "traveler",
+      "expected": "active",
+      "actual": "active",
+      "ok": true
+    },
+    {
+      "slot": "guide",
+      "expected": "active",
+      "actual": "active",
+      "ok": true
+    },
+    {
+      "slot": "merchant",
+      "expected": "active",
+      "actual": "active",
+      "ok": true
+    },
+    {
+      "slot": "region_steward",
+      "expected": "active",
+      "actual": "active",
+      "ok": true
+    },
+    {
+      "patch": "guide-profile",
+      "http": 200,
+      "ok": true
+    },
+    {
+      "patch": "merchant-profile",
+      "http": 200,
+      "ok": true
+    },
+    {
+      "patch": "region-steward-profile",
+      "http": 200,
+      "ok": true
+    },
+    {
+      "governance_read": 200,
+      "ok": true
+    }
+  ]
+}

@@ -1,0 +1,484 @@
+{
+  "schema": "traveltrust_l5_ui_ux_enterprise_acceptance_matrix.v1",
+  "recorded_utc": "20260608T025938Z",
+  "baseline_refs": [
+    "145",
+    "150",
+    "157",
+    "159",
+    "160"
+  ],
+  "operations_l5_verdict": "OPERATIONS_L5_AUDIT_GO",
+  "verdict": "UI_UX_L5_HOLD",
+  "ui_ux_score": 85,
+  "target_score": 85,
+  "contract_tests_ok": true,
+  "counts": {
+    "pages": 14,
+    "page_go": 13,
+    "page_hold": 1,
+    "p0_issues": 0,
+    "p1_issues": 2,
+    "p2_issues": 1
+  },
+  "pages": [
+    {
+      "id": "U-CMS",
+      "title": "Admin CMS \u00b7 Content Center",
+      "route": "/admin/content/*",
+      "plane": "CMS",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "ia": 10,
+        "ops_path": 10,
+        "states": 10,
+        "auth_hints": 9,
+        "table_ux": 9,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 9,
+        "test_evidence": 10
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Hub page lacks dedicated Playwright beyond sub-routes"
+        }
+      ],
+      "contract_test": "app/admin/content/adminContentCs1.contract.test.ts (+ Cs2-Cs6)",
+      "playwright_spec": "frontend/e2e/c-s1-admin-content-crud.spec.ts (+ c-s2..c-s6)",
+      "smoke_script": "scripts/dev/smoke-admin-content-p0-local.sh",
+      "evidence_notes": "145 C-S1~C-S6 freeze \u00b7 publish-queue + poi-images representative"
+    },
+    {
+      "id": "U-OFF",
+      "title": "Official OPS \u00b7 hub + accounts/guides/templates",
+      "route": "/admin/official/*",
+      "plane": "Official",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "ia": 10,
+        "ops_path": 10,
+        "states": 10,
+        "auth_hints": 9,
+        "table_ux": 9,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 9,
+        "test_evidence": 10
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Custom fetch hooks \u00b7 not AdminStandardListSection"
+        }
+      ],
+      "contract_test": "app/admin/official/adminOfficialOs1.contract.test.ts (+ Os2-Os4)",
+      "playwright_spec": "frontend/e2e/o-s1-official-accounts-management.spec.ts (+ o-s2..o-s4)",
+      "smoke_script": "scripts/dev/smoke-admin-official-accounts-p0-local.sh",
+      "evidence_notes": "145 O-S1~O-S4 \u00b7 data-tt-admin-official-* markers"
+    },
+    {
+      "id": "U-COLD-ADM",
+      "title": "Cold Start Campaign \u00b7 admin deploy/rollback",
+      "route": "/admin/official/cold-start",
+      "plane": "Official",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "ia": 10,
+        "ops_path": 10,
+        "states": 10,
+        "auth_hints": 9,
+        "table_ux": 9,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 9,
+        "test_evidence": 10
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Deploy/rollback confirm UX not wired to AdminL5ConfirmModal pattern"
+        },
+        {
+          "risk": "P2",
+          "summary": "Approval/deploy status chips could be clearer post-157 E2 path"
+        }
+      ],
+      "contract_test": "app/admin/official/adminOfficialOs4.contract.test.ts",
+      "playwright_spec": "frontend/e2e/o-s4-cold-start-campaigns-deployment-operations.spec.ts",
+      "smoke_script": "scripts/dev/smoke-admin-official-cold-start-p0-local.sh",
+      "evidence_notes": "150 E2E-A-01 + 157 D3 live GO \u00b7 Admin\u2192Consumer path verified API-side"
+    },
+    {
+      "id": "U-POI",
+      "title": "POI Media \u00b7 review workflow",
+      "route": "/admin/content/poi-images",
+      "plane": "CMS",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "ia": 10,
+        "ops_path": 10,
+        "states": 10,
+        "auth_hints": 9,
+        "table_ux": 9,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 9,
+        "test_evidence": 10
+      },
+      "issues": [
+        {
+          "risk": "P1",
+          "summary": "Batch detail navigation depth \u00b7 no breadcrumb beyond hub"
+        },
+        {
+          "risk": "P2",
+          "summary": "Consumer POI media on /market depends on CATALOG_API_ENABLED flag"
+        }
+      ],
+      "contract_test": "app/admin/content/adminContentCs2.contract.test.ts",
+      "playwright_spec": "frontend/e2e/c-s2-poi-media-review-workflow.spec.ts",
+      "smoke_script": "scripts/dev/smoke-admin-content-poi-media-p0-local.sh",
+      "evidence_notes": ""
+    },
+    {
+      "id": "U-GROWTH-HUB",
+      "title": "Growth Center \u00b7 hub dashboard",
+      "route": "/admin/growth",
+      "plane": "Growth",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "ia": 10,
+        "ops_path": 10,
+        "states": 10,
+        "auth_hints": 9,
+        "table_ux": 9,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 9,
+        "test_evidence": 10
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "No Playwright coverage for /admin/growth hub"
+        },
+        {
+          "risk": "P2",
+          "summary": "Hub KPI cards deferred \u2014 console nav grid only (160 closure scope)"
+        }
+      ],
+      "contract_test": "lib/admin/adminOpsPlaneUxL5.contract.test.ts",
+      "playwright_spec": "",
+      "smoke_script": "",
+      "evidence_notes": "Sub-routes fully implemented \u00b7 hub deferred per 101 blueprint S1"
+    },
+    {
+      "id": "U-REF",
+      "title": "Referral \u00b7 admin codes",
+      "route": "/admin/growth/referral-codes",
+      "plane": "Growth",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "ia": 10,
+        "ops_path": 10,
+        "states": 10,
+        "auth_hints": 9,
+        "table_ux": 9,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 9,
+        "test_evidence": 10
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Inline error only \u00b7 no AdminL5Confirm on destructive toggle"
+        }
+      ],
+      "contract_test": "app/admin/growth/referral-codes/adminGrowthReferralCodes.contract.test.ts",
+      "playwright_spec": "frontend/e2e/g-s1-referral-minimum-loop.spec.ts",
+      "smoke_script": "scripts/dev/smoke-growth-referral-p0-local.sh",
+      "evidence_notes": ""
+    },
+    {
+      "id": "U-EB",
+      "title": "Early Bird \u00b7 stages & reconcile",
+      "route": "/admin/growth/early-bird",
+      "plane": "Growth",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "ia": 10,
+        "ops_path": 10,
+        "states": 10,
+        "auth_hints": 9,
+        "table_ux": 9,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 9,
+        "test_evidence": 10
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Stage multiplier edit lacks inline validation hints"
+        }
+      ],
+      "contract_test": "app/admin/growth/early-bird/adminGrowthEarlyBird.contract.test.ts",
+      "playwright_spec": "frontend/e2e/g-s3-early-bird-multiplier.spec.ts",
+      "smoke_script": "scripts/dev/smoke-growth-early-bird-p0-local.sh",
+      "evidence_notes": ""
+    },
+    {
+      "id": "U-AIR",
+      "title": "Airdrop \u00b7 snapshot & export",
+      "route": "/admin/growth/airdrop-campaigns",
+      "plane": "Growth",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "ia": 10,
+        "ops_path": 10,
+        "states": 10,
+        "auth_hints": 9,
+        "table_ux": 9,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 9,
+        "test_evidence": 10
+      },
+      "issues": [
+        {
+          "risk": "P1",
+          "summary": "Export/download progress not surfaced (long snapshot jobs)"
+        }
+      ],
+      "contract_test": "app/admin/growth/airdrop-campaigns/adminGrowthAirdrop.contract.test.ts",
+      "playwright_spec": "frontend/e2e/g-s6-airdrop-snapshot-reward-calc.spec.ts",
+      "smoke_script": "scripts/dev/smoke-growth-airdrop-snapshot-p0-local.sh",
+      "evidence_notes": ""
+    },
+    {
+      "id": "U-ANAL",
+      "title": "Growth Analytics \u00b7 read-only",
+      "route": "/admin/growth/analytics",
+      "plane": "Growth",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "ia": 10,
+        "ops_path": 10,
+        "states": 10,
+        "auth_hints": 9,
+        "table_ux": 9,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 9,
+        "test_evidence": 10
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Date-range filter UX minimal \u00b7 no preset windows"
+        }
+      ],
+      "contract_test": "app/admin/growth/analytics/adminGrowthAnalytics.contract.test.ts",
+      "playwright_spec": "frontend/e2e/g-s7-growth-analytics-kol-readonly.spec.ts",
+      "smoke_script": "scripts/dev/smoke-growth-analytics-kol-p0-local.sh",
+      "evidence_notes": ""
+    },
+    {
+      "id": "U-KOL",
+      "title": "KOL Center \u00b7 contributor read-only",
+      "route": "/admin/growth/kol-center",
+      "plane": "Growth",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "ia": 10,
+        "ops_path": 10,
+        "states": 10,
+        "auth_hints": 9,
+        "table_ux": 9,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 9,
+        "test_evidence": 10
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Detail drawer could show referral funnel cross-links to Analytics"
+        }
+      ],
+      "contract_test": "app/admin/growth/kol-center/adminGrowthKolCenter.contract.test.ts",
+      "playwright_spec": "frontend/e2e/g-s7-growth-analytics-kol-readonly.spec.ts",
+      "smoke_script": "scripts/dev/smoke-growth-analytics-kol-p0-local.sh",
+      "evidence_notes": ""
+    },
+    {
+      "id": "U-ME-REF",
+      "title": "User Referral Center",
+      "route": "/me/referrals",
+      "plane": "User",
+      "score": 79,
+      "verdict": "HOLD",
+      "dimensions": {
+        "ia": 9,
+        "ops_path": 9,
+        "states": 9,
+        "auth_hints": 8,
+        "table_ux": 8,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 9,
+        "test_evidence": 9
+      },
+      "issues": [
+        {
+          "risk": "P1",
+          "summary": "Unauthenticated visit shows error only \u00b7 no guided login CTA shell"
+        },
+        {
+          "risk": "P2",
+          "summary": "Copy-link success relies on copyHint text \u00b7 no toast component"
+        }
+      ],
+      "contract_test": "app/me/referrals/meReferralsPage.contract.test.ts",
+      "playwright_spec": "frontend/e2e/g-s4-user-referral-center.spec.ts",
+      "smoke_script": "scripts/dev/smoke-growth-user-referral-center-p0-local.sh",
+      "evidence_notes": "MeSettingsL5FlowPage \u00b7 data-tt-me-referrals-* markers"
+    },
+    {
+      "id": "U-HOME-CS",
+      "title": "Cold Start consumer \u00b7 home_hero",
+      "route": "/",
+      "plane": "Consumer",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "ia": 10,
+        "ops_path": 9,
+        "states": 10,
+        "auth_hints": 9,
+        "table_ux": 9,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 10,
+        "test_evidence": 10
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Playwright e2e-a-01 could assert data-tt-cold-start-* state markers when seeded"
+        }
+      ],
+      "contract_test": "lib/coldStartCampaign/coldStartCampaignE2eA01.contract.test.ts",
+      "playwright_spec": "frontend/e2e/e2e-a-01-cold-start-campaign-consumer.spec.ts",
+      "smoke_script": "scripts/dev/smoke-official-cold-start-consumer-p0-local.sh",
+      "evidence_notes": "150 E2E-A-01 GO \u00b7 157 D3 deploy\u2192consumer linkage GO \u00b7 UX feedback gap"
+    },
+    {
+      "id": "U-MKT-CS",
+      "title": "Cold Start consumer \u00b7 market_feed",
+      "route": "/market",
+      "plane": "Consumer",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "ia": 10,
+        "ops_path": 9,
+        "states": 10,
+        "auth_hints": 9,
+        "table_ux": 9,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 10,
+        "test_evidence": 10
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Playwright e2e-a-01 could assert data-tt-cold-start-* state markers when seeded"
+        }
+      ],
+      "contract_test": "lib/coldStartCampaign/coldStartCampaignE2eA01.contract.test.ts",
+      "playwright_spec": "frontend/e2e/e2e-a-01-cold-start-campaign-consumer.spec.ts",
+      "smoke_script": "scripts/dev/smoke-official-cold-start-consumer-p0-local.sh",
+      "evidence_notes": "150 E2E-A-01 GO \u00b7 157 D3 deploy\u2192consumer linkage GO \u00b7 UX feedback gap"
+    },
+    {
+      "id": "U-COMM-CS",
+      "title": "Cold Start consumer \u00b7 community_feed",
+      "route": "/community",
+      "plane": "Consumer",
+      "score": 85,
+      "verdict": "GO",
+      "dimensions": {
+        "ia": 10,
+        "ops_path": 9,
+        "states": 10,
+        "auth_hints": 9,
+        "table_ux": 9,
+        "mobile_a11y": 9,
+        "visual": 9,
+        "admin_consumer": 10,
+        "test_evidence": 10
+      },
+      "issues": [
+        {
+          "risk": "P2",
+          "summary": "Playwright e2e-a-01 could assert data-tt-cold-start-* state markers when seeded"
+        }
+      ],
+      "contract_test": "lib/coldStartCampaign/coldStartCampaignE2eA01.contract.test.ts",
+      "playwright_spec": "frontend/e2e/e2e-a-01-cold-start-campaign-consumer.spec.ts",
+      "smoke_script": "scripts/dev/smoke-official-cold-start-consumer-p0-local.sh",
+      "evidence_notes": "150 E2E-A-01 GO \u00b7 157 D3 deploy\u2192consumer linkage GO \u00b7 UX feedback gap"
+    }
+  ],
+  "optimizations": [
+    {
+      "id": "UX-P1-01",
+      "risk": "P1",
+      "title": "CMS/Official/Growth bespoke loading/error patterns",
+      "pages": "U-CMS \u00b7 U-OFF \u00b7 U-COLD-ADM",
+      "fix_suggestion": "Align with AdminStandardListSection stale-while-error + AdminListLoadingStatus"
+    },
+    {
+      "id": "UX-P1-02",
+      "risk": "P1",
+      "title": "E2E cold start DOM assertions missing",
+      "pages": "U-HOME-CS \u00b7 U-MKT-CS \u00b7 U-COMM-CS",
+      "fix_suggestion": "Extend e2e-a-01 spec to seed campaign + assert data-tt-cold-start-surface when deployed"
+    },
+    {
+      "id": "UX-P2-01",
+      "risk": "P2",
+      "title": "Orphan /admin/conversion-analytics route",
+      "pages": "\u2014",
+      "fix_suggestion": "Add to nav or deprecate; clarify vs /admin/growth/analytics"
+    }
+  ],
+  "playwright_specs": [
+    "frontend/e2e/c-s1-admin-content-crud.spec.ts (+ c-s2..c-s6)",
+    "frontend/e2e/c-s2-poi-media-review-workflow.spec.ts",
+    "frontend/e2e/e2e-a-01-cold-start-campaign-consumer.spec.ts",
+    "frontend/e2e/g-s1-referral-minimum-loop.spec.ts",
+    "frontend/e2e/g-s3-early-bird-multiplier.spec.ts",
+    "frontend/e2e/g-s4-user-referral-center.spec.ts",
+    "frontend/e2e/g-s6-airdrop-snapshot-reward-calc.spec.ts",
+    "frontend/e2e/g-s7-growth-analytics-kol-readonly.spec.ts",
+    "frontend/e2e/o-s1-official-accounts-management.spec.ts (+ o-s2..o-s4)",
+    "frontend/e2e/o-s4-cold-start-campaigns-deployment-operations.spec.ts"
+  ],
+  "contract_test_log_tail": "ly-bird/adminGrowthEarlyBird.contract.test.ts app/admin/growth/airdrop-campaigns/adminGrowthAirdrop.contract.test.ts app/admin/growth/analytics/adminGrowthAnalytics.contract.test.ts app/admin/growth/kol-center/adminGrowthKolCenter.contract.test.ts app/me/referrals/meReferralsPage.contract.test.ts lib/coldStartCampaign/coldStartCampaignE2eA01.contract.test.ts\n\n\n RUN  v2.1.9 D:/TravelTrust-V1.1/frontend\n\n \u2713 lib/coldStartCampaign/coldStartCampaignE2eA01.contract.test.ts (4 tests) 4ms\n \u2713 lib/admin/adminOpsPlaneUxL5.contract.test.ts (4 tests) 3ms\n \u2713 app/admin/official/adminOfficialOs4.contract.test.ts (1 test) 2ms\n \u2713 app/admin/content/adminContentCs1.contract.test.ts (1 test) 2ms\n \u2713 app/admin/growth/kol-center/adminGrowthKolCenter.contract.test.ts (1 test) 1ms\n \u2713 app/admin/growth/airdrop-campaigns/adminGrowthAirdrop.contract.test.ts (1 test) 1ms\n \u2713 app/admin/official/adminOfficialOs1.contract.test.ts (1 test) 1ms\n \u2713 app/me/referrals/meReferralsPage.contract.test.ts (1 test) 2ms\n \u2713 app/admin/growth/early-bird/adminGrowthEarlyBird.contract.test.ts (1 test) 2ms\n \u2713 app/admin/content/adminContentCs2.contract.test.ts (1 test) 2ms\n \u2713 app/admin/growth/analytics/adminGrowthAnalytics.contract.test.ts (1 test) 2ms\n \u2713 app/admin/growth/referral-codes/adminGrowthReferralCodes.contract.test.ts (2 tests) 2ms\n\n Test Files  12 passed (12)\n      Tests  19 passed (19)\n   Start at  10:59:36\n   Duration  2.60s (transform 791ms, setup 179ms, collect 3.22s, tests 25ms, environment 9.91s, prepare 1.97s)\n\n"
+}

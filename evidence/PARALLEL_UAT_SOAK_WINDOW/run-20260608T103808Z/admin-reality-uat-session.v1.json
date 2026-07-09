@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.admin_reality_uat.v1",
+  "session_id": "ARUAT-20260608",
+  "started_at": "2026-06-08T11:16:01Z",
+  "policy": "record_only no fixes no refactor nav: Home Daily Ops Operator Guide Sidebar",
+  "persona": "first-time operator Ops role",
+  "tasks": [
+    {
+      "id": "CMS-Publish",
+      "guide_entry": "/admin/content/publish-queue",
+      "completion_via_allowed_nav": "partial blocked at publish-queue"
+    },
+    {
+      "id": "Growth-Analytics",
+      "guide_entry": "/admin/growth/analytics",
+      "completion_via_allowed_nav": "yes read-only"
+    },
+    {
+      "id": "Community-Moderation",
+      "guide_entry": "/admin/community/reports?status=open",
+      "completion_via_allowed_nav": "partial wizard needs data"
+    },
+    {
+      "id": "Official-OPS",
+      "guide_entry": "/admin/official/cold-start",
+      "completion_via_allowed_nav": "partial cold-start only needs seed"
+    }
+  ],
+  "summary": {
+    "total_findings": 16,
+    "P0": 1,
+    "P1": 10,
+    "P2": 5
+  },
+  "findings_file": "findings.json"
+}

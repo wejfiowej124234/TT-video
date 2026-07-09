@@ -1,0 +1,25 @@
+{
+  "verdict": "CONDITIONAL",
+  "recorded_at": "2026-06-07T05:05:54.548213+00:00",
+  "evidence_dir": "evidence\\adm-u01-full-write-matrix-audit\\adm_u01_write_20260607T045647Z",
+  "summary": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 1,
+    "api_pass": 102,
+    "api_fail": 0
+  },
+  "issues": [
+    {
+      "id": "ADM-U01-2-001",
+      "priority": "P2",
+      "category": "菜单可见性",
+      "probe_id": "shell.browser",
+      "role": "ALL",
+      "role_display": "ALL",
+      "title": "Playwright Shell 矩阵未产出",
+      "observation": "staging/local FE 均未加载 data-tt-admin-shell-bar；见 contract test 静态对拍"
+    }
+  ],
+  "release_gate": "GO"
+}

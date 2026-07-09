@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.open_findings_age.v1",
+  "buckets": {
+    "0-7d": 0,
+    "8-30d": 0,
+    "31-60d": 0,
+    "60d+": 0
+  },
+  "findings": []
+}

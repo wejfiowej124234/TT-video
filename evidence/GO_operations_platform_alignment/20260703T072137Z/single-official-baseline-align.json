@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.single_official_public_catalog_align.v1",
+  "policy": "single_official_public_catalog_policy",
+  "scope": "public_catalog_unpublish_only",
+  "db_deletion": false,
+  "recorded_at": "2026-07-03T07:23:27.509Z",
+  "dry_run": false,
+  "unpublish": [],
+  "errors": [
+    {
+      "entity_type": "guides",
+      "id": "dc92197e-5681-4639-8c0b-ee04fcf805ae",
+      "status": 404,
+      "body": {
+        "status": "error",
+        "error": "entity_not_found"
+      }
+    }
+  ],
+  "before": {
+    "publish_queue_guides": 10,
+    "publish_queue_market_listings": 20
+  },
+  "after": {
+    "guides_public": 11,
+    "provider_public": 10,
+    "acquisition_public": 10,
+    "publish_queue_guides": 10,
+    "publish_queue_listings": 20,
+    "publish_queue_market_listings": 20
+  }
+}

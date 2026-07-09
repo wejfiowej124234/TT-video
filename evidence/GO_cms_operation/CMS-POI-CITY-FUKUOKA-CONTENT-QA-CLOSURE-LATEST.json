@@ -1,0 +1,118 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-05T15:37:30.776Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "福冈",
+    "city_en": "Fukuoka",
+    "poi_count": 8
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "Osaka Golden Template",
+  "cross_region_remediated": "all_8_execution_plus_geo",
+  "checks": {
+    "assets_locked_8_8": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-JP-018-ATR",
+      "poi": "博多",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-fukuoka-hakata-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T14:53:38.733Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-019-ATR",
+      "poi": "太宰府",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-fukuoka-dazaifu-community-media.jpg",
+      "locked_at_utc": "2026-07-05T14:58:40.072Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-020-ATR",
+      "poi": "能古岛",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-fukuoka-nokonoshima-community-cover.jpg",
+      "locked_at_utc": "2026-07-05T15:03:43.550Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-021-ATR",
+      "poi": "屋台",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-fukuoka-yatai-atr-provider-cover.jpg",
+      "locked_at_utc": "2026-07-05T15:08:42.599Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-022-FOOD",
+      "poi": "豚骨拉面",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-fukuoka-tonkotsu-ramen-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-05T15:13:45.082Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-023-FOOD",
+      "poi": "明太子",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-fukuoka-mentaiko-acquisition-cover.jpg",
+      "locked_at_utc": "2026-07-05T15:18:45.979Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-024-FOOD",
+      "poi": "水炊锅",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-fukuoka-mizutaki-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T15:23:46.553Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-025-FOOD",
+      "poi": "屋台",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-fukuoka-yatai-food-community-media.jpg",
+      "locked_at_utc": "2026-07-05T15:28:26.525Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 8
+  },
+  "TT_CMS_POI_CITY_FUKUOKA_CONTENT_QA": "CLOSED"
+}

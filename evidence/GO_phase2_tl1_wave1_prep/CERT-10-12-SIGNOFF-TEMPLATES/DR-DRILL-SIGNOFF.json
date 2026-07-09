@@ -1,0 +1,9 @@
+{
+  "schema": "ttg-cert-signoff.v1",
+  "cert": 11,
+  "title": "Disaster Recovery Drill",
+  "verdict": "PENDING",
+  "signer": "",
+  "signed_at_utc": "",
+  "evidence_note": "Copy to evidence/GO_ttg_cert/<stamp>/... after recordings; set verdict PASS before complete-ttg-cert-step.sh"
+}

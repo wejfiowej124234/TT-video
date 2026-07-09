@@ -1,0 +1,43 @@
+{
+  "schema": "traveltrust.dual-timelock-ops-matrix.v1",
+  "ssot": "docs/runbook/TTG-GOVERNANCE-OPERATIONAL-READINESS-PROGRAM.md §2.2 · RB-G-09",
+  "chain_id": 11155111,
+  "rows": [
+    {
+      "path": "governance",
+      "use": "P4 spend · params · Buyback proposals",
+      "timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+      "timelock_label": "V2_TL",
+      "schedule_by": "Governor queue",
+      "execute_by": "public after delay",
+      "roles": [
+        "Treasury Operator",
+        "Governor voters"
+      ]
+    },
+    {
+      "path": "operations",
+      "use": "NetProfit epoch · pause · cutover batches",
+      "timelock": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+      "timelock_label": "Legacy_TL",
+      "schedule_by": "Safe admin (0x7c018293396325077bb4D039930dcEe11B7Fb1Cf)",
+      "execute_by": "public after executeAfter",
+      "roles": [
+        "Treasury Operator",
+        "Safe Signers",
+        "Finance Operator review"
+      ]
+    }
+  ],
+  "forbidden": [
+    "mixed Legacy+V2 batch in one Safe tx",
+    "Admin API treasury spend",
+    "Finance Operator holding Timelock admin key",
+    "Steward wallet scheduling"
+  ],
+  "recovery": {
+    "too_early": "GORP §3.1 step 2 — wait EXECUTE_EARLIEST_UNIX",
+    "call_failed": "GORP §3.1 step 3 — eth_call simulate, new schedule",
+    "treasury_mis_transfer": "GORP §3.2 — stop batches, SEV-1, no Admin API recall"
+  }
+}

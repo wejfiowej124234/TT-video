@@ -1,0 +1,7 @@
+{
+  "anonymous_me": "401",
+  "mock_pay_http": "200",
+  "on_chain_status": 2,
+  "deposit_tx": "0x00fc140d680c0ebd36936e405eb0483e6fe2f1820d5ae2b3f2663d3669f13257",
+  "staging_mock_pay_overlap": true
+}

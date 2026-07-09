@@ -1,0 +1,251 @@
+{
+  "schema": "tn_p1_hat_six_role_matrix.v1",
+  "phase": "② testnet",
+  "stamp": "20260615T005921Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "release_gate": "GO",
+  "pass_count": 34,
+  "fail_count": 0,
+  "issues": [],
+  "flows": [
+    {
+      "persona": "infra",
+      "flow": "preflight",
+      "step": "health",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "persona": "Traveler",
+      "flow": "login",
+      "step": "tourist@test.com",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "persona": "Traveler",
+      "flow": "identity",
+      "step": "GET /me",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Traveler",
+      "flow": "orders",
+      "step": "traveler orders",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Traveler",
+      "flow": "publish",
+      "step": "publish-summary",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Traveler",
+      "flow": "rbac",
+      "step": "non-admin deny admin API",
+      "status": "PASS",
+      "notes": "deny HTTP 403"
+    },
+    {
+      "persona": "Guide",
+      "flow": "login",
+      "step": "guide@test.com",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "persona": "Guide",
+      "flow": "identity",
+      "step": "GET /me",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Guide",
+      "flow": "guide",
+      "step": "guide-profile",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Guide",
+      "flow": "orders",
+      "step": "hat=guide",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Guide",
+      "flow": "rbac",
+      "step": "admin capabilities deny",
+      "status": "PASS",
+      "notes": "deny HTTP 403"
+    },
+    {
+      "persona": "Merchant",
+      "flow": "login",
+      "step": "merchant@test.com",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "persona": "Merchant",
+      "flow": "identity",
+      "step": "GET /me",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Merchant",
+      "flow": "merchant",
+      "step": "merchant-profile",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Merchant",
+      "flow": "market",
+      "step": "provider listings",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Merchant",
+      "flow": "rbac",
+      "step": "admin capabilities deny",
+      "status": "PASS",
+      "notes": "deny HTTP 403"
+    },
+    {
+      "persona": "Region Steward (multi-demo)",
+      "flow": "login",
+      "step": "multi-demo@test.com",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "persona": "Region Steward (multi-demo)",
+      "flow": "identity",
+      "step": "GET /me slots",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Region Steward (multi-demo)",
+      "flow": "hat",
+      "step": "slot guide",
+      "status": "PASS",
+      "notes": "active"
+    },
+    {
+      "persona": "Region Steward (multi-demo)",
+      "flow": "hat",
+      "step": "slot merchant",
+      "status": "PASS",
+      "notes": "active"
+    },
+    {
+      "persona": "Region Steward (multi-demo)",
+      "flow": "hat",
+      "step": "slot region_steward",
+      "status": "PASS",
+      "notes": "active"
+    },
+    {
+      "persona": "Region Steward (multi-demo)",
+      "flow": "steward",
+      "step": "steward-profile",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Region Steward (multi-demo)",
+      "flow": "steward",
+      "step": "steward-seat",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Region Steward (multi-demo)",
+      "flow": "governance",
+      "step": "proposals mine",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Region Steward (multi-demo)",
+      "flow": "publish",
+      "step": "publish-summary",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Region Steward (multi-demo)",
+      "flow": "orders",
+      "step": "hat=guide",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Region Steward (multi-demo)",
+      "flow": "orders",
+      "step": "hat=merchant",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Moderator",
+      "flow": "login",
+      "step": "tourist@test.com",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "persona": "Moderator",
+      "flow": "moderation",
+      "step": "moderation cases",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Moderator",
+      "flow": "moderation",
+      "step": "community reports",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Admin",
+      "flow": "login",
+      "step": "tourist@test.com",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "persona": "Admin",
+      "flow": "admin",
+      "step": "capabilities",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Admin",
+      "flow": "admin",
+      "step": "route-matrix",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    },
+    {
+      "persona": "Admin",
+      "flow": "admin",
+      "step": "provider-apps",
+      "status": "PASS",
+      "notes": "HTTP 200"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T152030Z",
+  "filename": "ocs-nyc-skyline-guide-avatar.jpg",
+  "chain_id": "nyc-skyline",
+  "city": "纽约",
+  "country_code": "US",
+  "slot": "guide-avatar",
+  "surface": "Guide",
+  "copy_label": "纽约天际线向导·Alex",
+  "manifest_copy": {
+    "guide.nickname": "纽约天际线向导·Alex",
+    "guide.bio": "布鲁克林大桥、DUMBO 与洛克菲勒观景台最佳拍摄时段。",
+    "guide.languages": [
+      "en",
+      "zh"
+    ],
+    "guide.service_types": [
+      "photography",
+      "walking"
+    ]
+  },
+  "post_generation_quality_check": {
+    "pass": true,
+    "bytes": 56685
+  },
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG 56685 bytes。"
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "Alex 布鲁克林大桥+相机与 bio 100% 对齐。"
+    },
+    "G3_slot_differentiation": {
+      "pass": true,
+      "notes": "NYC 摄影向导；未来 5 slot 已规划。"
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "纽约 US-only · 冷调都市。"
+    },
+    "G5_brand_visual": {
+      "pass": true,
+      "notes": "L5 统一。"
+    },
+    "G6_commercial_platform": {
+      "pass": true,
+      "notes": "真实向导。"
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true,
+      "notes": "清晰。"
+    },
+    "G8_evidence_matrix": {
+      "pass": true,
+      "notes": "Global Regression 37/60。"
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "notes": "无水印/Logo。"
+    },
+    "G10_content_diversity": {
+      "pass": true,
+      "notes": "vs 六城向导区分。"
+    }
+  },
+  "guide_identity_diversity_review": {
+    "pass": true
+  },
+  "destination_experience_review": {
+    "pass": true
+  },
+  "regression_prior_36_rows": {
+    "pass": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "p2fc_staging_soak_job.v1",
+  "stamp_utc": "20260624T001249Z",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "poll_sec": 60,
+  "required_sec": 259200,
+  "expect_git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "phase": "②",
+  "policy": "read_only_no_redeploy",
+  "metadata_baseline_updated_at": "2026-06-24T00:55:36Z",
+  "metadata_baseline_previous_expect_git_sha": "8dcd304afae1bafe5a4de738175e171256a9501e",
+  "metadata_baseline_source": "runtime_meta_build_or_resolve",
+  "metadata_baseline_live_git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "metadata_baseline_probe_source": "meta_build",
+  "freeze_ssot_git_sha": "8dcd304afae1bafe5a4de738175e171256a9501e",
+  "metadata_baseline_policy": "read_only_no_redeploy_no_worker_restart"
+}

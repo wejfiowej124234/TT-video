@@ -102,6 +102,7 @@ function communityPostMediaList(post: Pick<CommunityPost, "media_url" | "media_u
 export function communityPostGridThumbRaw(post: CommunityPost): string {
   const isVid = post.type === "video" || post.is_video === true;
   if (isVid && post.cover_url?.trim()) return post.cover_url.trim();
+  if (!isVid && post.cover_url?.trim()) return post.cover_url.trim();
   const imgs = communityPostMediaList(post);
   if (isVid && imgs.length) {
     const still = imgs.find((u) => COMMUNITY_STILL_IMAGE_RE.test(u));

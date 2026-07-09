@@ -1,0 +1,288 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_exit_check.v1",
+  "recorded_at_utc": "2026-07-05T23:44:04.122Z",
+  "city": {
+    "city_zh": "釜山",
+    "city_en": "Busan",
+    "country_iso": "KR",
+    "poi_count": 8
+  },
+  "replicated_from": "JP Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "checks": [
+    {
+      "id": "assets_locked_8_8",
+      "label": "8/8 Asset 全部 LOCKED · 无 Unlock",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-KR-042-ATR",
+          "poi": "海云台",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-043-ATR",
+          "poi": "甘川文化村",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-044-ATR",
+          "poi": "札嘎其市场",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-045-ATR",
+          "poi": "广安里大桥",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-046-FOOD",
+          "poi": "猪肉汤饭",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-047-FOOD",
+          "poi": "生鱼片",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-048-FOOD",
+          "poi": "鱼饼",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-049-FOOD",
+          "poi": "小麦面",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "six_dimensions_pass",
+      "label": "六维全部 PASS（City Runtime = Gate 4 同源 · 非 national）",
+      "pass": true,
+      "runtime_scope": "city_consumer_runtime",
+      "city_snapshot": {
+        "execution": "PASS",
+        "cms_ownership": "PASS",
+        "runtime_consumer": "PASS",
+        "geo_matching": "PASS",
+        "content_accuracy": "PASS",
+        "l5_quality": "PASS",
+        "content_qa_closed": true
+      },
+      "issues": []
+    },
+    {
+      "id": "catalog_api_busan",
+      "label": "Catalog API 8/8 与 LOCK 一致",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-KR-042-ATR",
+          "poi": "海云台",
+          "expected": "ocs-busan-coast-official-guide-cover.jpg",
+          "catalog": "ocs-busan-coast-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-043-ATR",
+          "poi": "甘川文化村",
+          "expected": "ocs-busan-coast-community-media.jpg",
+          "catalog": "ocs-busan-coast-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-044-ATR",
+          "poi": "札嘎其市场",
+          "expected": "ocs-busan-coast-community-cover.jpg",
+          "catalog": "ocs-busan-coast-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-045-ATR",
+          "poi": "广安里大桥",
+          "expected": "ocs-busan-coast-provider-cover.jpg",
+          "catalog": "ocs-busan-coast-provider-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-046-FOOD",
+          "poi": "猪肉汤饭",
+          "expected": "ocs-busan-coast-guide-avatar.jpg",
+          "catalog": "ocs-busan-coast-guide-avatar.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-047-FOOD",
+          "poi": "生鱼片",
+          "expected": "ocs-busan-coast-official-guide-cover.jpg",
+          "catalog": "ocs-busan-coast-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-048-FOOD",
+          "poi": "鱼饼",
+          "expected": "ocs-busan-coast-community-media.jpg",
+          "catalog": "ocs-busan-coast-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-049-FOOD",
+          "poi": "小麦面",
+          "expected": "ocs-busan-coast-community-cover.jpg",
+          "catalog": "ocs-busan-coast-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "consumer_runtime_cms",
+      "label": "Consumer Runtime 实际页面读取 CMS（非仅 Verify）",
+      "pass": true,
+      "catalog_api_requests": 4,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/busan/busan-poi-runtime-20260705T234403Z.png",
+      "rows": [
+        {
+          "matrix_id": "PH-KR-042-ATR",
+          "poi": "海云台",
+          "expected_fn": "ocs-busan-coast-official-guide-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-043-ATR",
+          "poi": "甘川文化村",
+          "expected_fn": "ocs-busan-coast-community-media.jpg",
+          "runtime_fn": "ocs-busan-coast-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-044-ATR",
+          "poi": "札嘎其市场",
+          "expected_fn": "ocs-busan-coast-community-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-045-ATR",
+          "poi": "广安里大桥",
+          "expected_fn": "ocs-busan-coast-provider-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-provider-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-provider-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-046-FOOD",
+          "poi": "猪肉汤饭",
+          "expected_fn": "ocs-busan-coast-guide-avatar.jpg",
+          "runtime_fn": "ocs-busan-coast-guide-avatar.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-guide-avatar.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-047-FOOD",
+          "poi": "生鱼片",
+          "expected_fn": "ocs-busan-coast-official-guide-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-048-FOOD",
+          "poi": "鱼饼",
+          "expected_fn": "ocs-busan-coast-community-media.jpg",
+          "runtime_fn": "ocs-busan-coast-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-049-FOOD",
+          "poi": "小麦面",
+          "expected_fn": "ocs-busan-coast-community-cover.jpg",
+          "runtime_fn": "ocs-busan-coast-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "visual_screenshot",
+      "label": "页面截图/DOM · 无旧图/错图/Fallback",
+      "pass": true,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/busan/busan-poi-runtime-20260705T234403Z.png",
+      "issues": []
+    },
+    {
+      "id": "no_backlog_unlock",
+      "label": "无 Open Backlog · 无 Unlock",
+      "pass": true,
+      "issues": []
+    }
+  ],
+  "all_pass": true,
+  "city_runtime_pass_count": 8,
+  "city_runtime_required": 8,
+  "verdict": "CONTENT_QA_EXIT_PASS",
+  "TT_CMS_POI_CITY_BUSAN_CONTENT_QA": "CLOSED",
+  "TT_CMS_POI_CITY_BUSAN_CONTENT_QA_EXIT": "PASS",
+  "runtime_tiers": {
+    "city": {
+      "tier": "city_consumer_runtime",
+      "gate_2_equals_gate_4": true
+    },
+    "country": {
+      "tier": "national_runtime",
+      "when": "TT_CMS_KR_COUNTRY: CLOSED",
+      "not_in_scope": true
+    }
+  },
+  "blockers": []
+}

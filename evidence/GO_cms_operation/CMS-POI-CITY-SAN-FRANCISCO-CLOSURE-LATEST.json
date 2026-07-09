@@ -1,0 +1,130 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-06T101332Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "US",
+    "country_zh": "美国",
+    "city_zh": "旧金山",
+    "city_en": "San Francisco"
+  },
+  "poi_count": 8,
+  "matrix_ids": [
+    "PH-US-135-ATR",
+    "PH-US-136-ATR",
+    "PH-US-137-ATR",
+    "PH-US-138-ATR",
+    "PH-US-139-FOOD",
+    "PH-US-140-FOOD",
+    "PH-US-141-FOOD",
+    "PH-US-142-FOOD"
+  ],
+  "pois": [
+    "金门大桥",
+    "渔人码头",
+    "缆车",
+    "九曲花街",
+    "酸面包",
+    "螃蟹",
+    "Mission卷饼",
+    "咖啡"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-US-135-ATR",
+      "legacy_value": "金门大桥",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-136-ATR",
+      "legacy_value": "渔人码头",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-US-137-ATR",
+      "legacy_value": "缆车",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-138-ATR",
+      "legacy_value": "九曲花街",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-139-FOOD",
+      "legacy_value": "酸面包",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-US-140-FOOD",
+      "legacy_value": "螃蟹",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-141-FOOD",
+      "legacy_value": "Mission卷饼",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-US-142-FOOD",
+      "legacy_value": "咖啡",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-135-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-136-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-137-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-138-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-139-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-140-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-141-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-142-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=US&city=%E6%97%A7%E9%87%91%E5%B1%B1&limit=50",
+    "http": 200,
+    "count": 8
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-san francisco/CMS-POI-SAN FRANCISCO-CLOSED-LOOP-LATEST.json",
+  "next_city": {
+    "country_iso": "US",
+    "city_zh": "拉斯维加斯",
+    "city_en": "Las Vegas"
+  },
+  "closure_keys": {
+    "TT_CMS_POI_CITY_SAN_FRANCISCO": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": "US · 拉斯维加斯"
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_SAN_FRANCISCO": "CLOSED"
+}

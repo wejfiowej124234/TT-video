@@ -1,0 +1,156 @@
+{
+  "schema": "traveltrust.ocs_content_l5_community_authenticity_review.v1",
+  "stamp_utc": "20260704T135820Z",
+  "filename": "ocs-seoul-food-community-cover.jpg",
+  "chain_id": "seoul-food",
+  "city": "首尔",
+  "slot": "community-cover",
+  "community_post_destination": "首尔",
+  "peer_community_compared": [
+    {
+      "chain_id": "tokyo-photo",
+      "city": "东京",
+      "destination_label": "东京",
+      "tags": [
+        "东京",
+        "摄影",
+        "官方旅行日志"
+      ],
+      "body_snippet": "清晨从浅草寺出发，沿隅田川步行至晴空塔——官方摄影路线一日实录，附机位与时间窗口建议。",
+      "slot": "community-cover",
+      "scene": "街景摄影瞬间 · 交叉路口或神社鸟居 · Feed 缩略"
+    },
+    {
+      "chain_id": "tokyo-photo",
+      "city": "东京",
+      "destination_label": "东京",
+      "tags": [
+        "东京",
+        "摄影",
+        "官方旅行日志"
+      ],
+      "body_snippet": "清晨从浅草寺出发，沿隅田川步行至晴空塔——官方摄影路线一日实录，附机位与时间窗口建议。",
+      "slot": "community-media",
+      "scene": "晴空塔日落或隅田川步行道 · 与 cover 不同机位"
+    },
+    {
+      "chain_id": "kyoto-culture",
+      "city": "京都",
+      "destination_label": "京都",
+      "tags": [
+        "京都",
+        "文化",
+        "官方旅行日志"
+      ],
+      "body_snippet": "祇园晨雾中的茶道体验与岚山竹林午后——官方文化路线两日记录。",
+      "slot": "community-cover",
+      "scene": "茶道体验瞬间 · 奉茶手势 · Feed 缩略"
+    },
+    {
+      "chain_id": "kyoto-culture",
+      "city": "京都",
+      "destination_label": "京都",
+      "tags": [
+        "京都",
+        "文化",
+        "官方旅行日志"
+      ],
+      "body_snippet": "祇园晨雾中的茶道体验与岚山竹林午后——官方文化路线两日记录。",
+      "slot": "community-media",
+      "scene": "岚山竹林小径行人 · 与 cover 不同场景"
+    },
+    {
+      "chain_id": "seoul-food",
+      "city": "首尔",
+      "destination_label": "首尔",
+      "tags": [
+        "首尔",
+        "美食",
+        "官方旅行日志"
+      ],
+      "body_snippet": "明洞到广藏市场的 48 小时美食巡礼——官方实测排队时间与人均预算。",
+      "slot": "community-media",
+      "scene": "市场过道人群与摊位 · 与 cover 不同尺度"
+    },
+    {
+      "chain_id": "bangkok-temple",
+      "city": "曼谷",
+      "destination_label": "曼谷",
+      "tags": [
+        "曼谷",
+        "寺庙",
+        "官方旅行日志"
+      ],
+      "body_snippet": "黎明寺晨光与湄南河游船——官方寺庙一日路线实录与着装提醒。",
+      "slot": "community-cover",
+      "scene": "寺庙晨光细节 · 尖塔剪影 · Feed"
+    }
+  ],
+  "long_term_fixed_checks": [
+    "authentic_share_feel",
+    "natural_interaction",
+    "feed_thumbnail_readability",
+    "emotional_travel_expression",
+    "ugc_style_not_commercial_poster"
+  ],
+  "community_authenticity_checklist": {
+    "authentic_share_feel": {
+      "pass": true,
+      "policy": "像旅行者发布，而不是广告图。",
+      "notes": "像旅行者发布，而不是广告图。"
+    },
+    "natural_interaction": {
+      "pass": true,
+      "policy": "人物动作、视线、环境符合真实旅行场景。",
+      "notes": "人物动作、视线、环境符合真实旅行场景。"
+    },
+    "feed_thumbnail_readability": {
+      "pass": true,
+      "policy": "缩略图在 Feed 中一眼能理解内容。",
+      "notes": "缩略图在 Feed 中一眼能理解内容。"
+    },
+    "emotional_travel_expression": {
+      "pass": true,
+      "policy": "传递旅行体验，而不仅是展示景点。",
+      "notes": "传递旅行体验，而不仅是展示景点。"
+    },
+    "ugc_style_not_commercial_poster": {
+      "pass": true,
+      "policy": "高质量真实分享风格，非商业宣传海报。",
+      "notes": "高质量真实分享风格，非商业宣传海报。"
+    },
+    "destination_authentic_street_or_food_scene": {
+      "pass": true,
+      "notes": "Surface isolation OK; distinct from tokyo-photo/community-cover, tokyo-photo/community-media, kyoto-culture/community-cover, kyoto-culture/community-media, seoul-food/community-media, bangkok-temple/community-cover."
+    },
+    "not_guide_portrait": {
+      "pass": true,
+      "notes": "Surface isolation OK; distinct from tokyo-photo/community-cover, tokyo-photo/community-media, kyoto-culture/community-cover, kyoto-culture/community-media, seoul-food/community-media, bangkok-temple/community-cover."
+    },
+    "not_provider_service_space": {
+      "pass": true,
+      "notes": "Surface isolation OK; distinct from tokyo-photo/community-cover, tokyo-photo/community-media, kyoto-culture/community-cover, kyoto-culture/community-media, seoul-food/community-media, bangkok-temple/community-cover."
+    },
+    "not_acquisition_product_still_life": {
+      "pass": true,
+      "notes": "Surface isolation OK; distinct from tokyo-photo/community-cover, tokyo-photo/community-media, kyoto-culture/community-cover, kyoto-culture/community-media, seoul-food/community-media, bangkok-temple/community-cover."
+    },
+    "not_official_guide_route_poster": {
+      "pass": true,
+      "notes": "Surface isolation OK; distinct from tokyo-photo/community-cover, tokyo-photo/community-media, kyoto-culture/community-cover, kyoto-culture/community-media, seoul-food/community-media, bangkok-temple/community-cover."
+    },
+    "cover_vs_media_scene_distinct": {
+      "pass": true,
+      "notes": "Cover = dish close-up; media row must use market aisle scale (Row 18)."
+    },
+    "community_post_body_alignment": {
+      "pass": true,
+      "notes": "首尔: 明洞到广藏市场的 48 小时美食巡礼——官方实测排队时间与人均预算。"
+    },
+    "local_cultural_authenticity": {
+      "pass": true,
+      "notes": "Surface isolation OK; distinct from tokyo-photo/community-cover, tokyo-photo/community-media, kyoto-culture/community-cover, kyoto-culture/community-media, seoul-food/community-media, bangkok-temple/community-cover."
+    }
+  },
+  "TT_COMMUNITY_AUTHENTICITY_REVIEW": "PASS"
+}

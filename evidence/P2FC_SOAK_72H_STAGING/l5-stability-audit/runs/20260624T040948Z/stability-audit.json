@@ -1,0 +1,467 @@
+{
+  "schema": "traveltrust.p2fc_soak_l5_stability_audit.v2",
+  "snapshot_stamp": "20260624T040948Z",
+  "generated_at_utc": "2026-06-24T04:09:48Z",
+  "phase": "②",
+  "policy": "read_only_no_staging_no_worker_no_watcher_changes",
+  "soak_dir": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING",
+  "soak_completed": false,
+  "job": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/job-20260624T011124Z",
+  "job_meta": {
+    "schema": "p2fc_staging_soak_job.v1",
+    "stamp_utc": "20260624T011124Z",
+    "api_base": "https://tt-api-staging.fly.dev",
+    "web_base": "https://tt-web-staging.fly.dev",
+    "poll_sec": 60,
+    "required_sec": 259200,
+    "expect_git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+    "expect_git_sha_source": "runtime_meta_build_or_resolve",
+    "probe_policy": "meta_meta_build_health_fallback",
+    "phase": "②",
+    "policy": "read_only_no_redeploy"
+  },
+  "dimensions": {
+    "runtime_volatility": {
+      "ok_polls": 33,
+      "detail_polls": 33,
+      "fail_events": 0,
+      "budget_elapsed_sec": 1980,
+      "wall_elapsed_sec": 10312,
+      "wall_vs_budget_ratio": 5.208,
+      "wall_clock_deviation": {
+        "required_sec": 259200,
+        "ok_needed": 4320,
+        "ok_remaining": 4287,
+        "budget_remaining_sec": 257220,
+        "wall_eta_sec": 1339601,
+        "budget_eta_sec": 257220,
+        "wall_eta_hours": 372.1,
+        "budget_eta_hours": 71.5,
+        "poll_overhead_sec_mean": 260.4,
+        "deviation_sec_per_poll": 260.4,
+        "jitter_trend": "stable"
+      },
+      "interval_stats": {
+        "count": 32,
+        "min_sec": 293.0,
+        "max_sec": 349.0,
+        "mean_sec": 320.4,
+        "stdev_sec": 14.5,
+        "expected_poll_sec": 60,
+        "budget_credit_sec_per_ok": 60,
+        "slow_poll_count": 32,
+        "slow_poll_ratio": 1.0,
+        "jitter_trend": "stable",
+        "recent_mean_sec": 322.7,
+        "prior_mean_sec": 319.0,
+        "mean_delta_pct": 0.011
+      },
+      "distribution": {
+        "health": {
+          "200": 33
+        },
+        "web": {
+          "200": 33
+        },
+        "probe": {
+          "meta_build": 33
+        },
+        "indexer_source": {
+          "(empty)": 32,
+          "runtime": 1
+        }
+      },
+      "sha_unique_count": 1,
+      "sha_aligned_with_expect": true,
+      "verdict": "warn",
+      "notes": [
+        "majority polls wall-clock slow (>3× poll_sec) — /meta timeout pressure"
+      ],
+      "recent_failures": []
+    },
+    "meta_408_503_layers": {
+      "sample_count": 19,
+      "latest": {
+        "schema": "traveltrust.p2fc_meta_observability.v1",
+        "recorded_at_utc": "2026-06-24T04:07:23Z",
+        "observability_only": true,
+        "policy": "execution_chain_non_blocking · acceptance_deferred_until_post_soak_deploy",
+        "probes": {
+          "api_health": "200",
+          "api_meta": "408",
+          "api_meta_build": "200",
+          "web_meta": "503",
+          "git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+          "probe_source": "meta_build"
+        },
+        "execution_chain_ok": true,
+        "acceptance_chain_ok": false,
+        "fallback": "meta → meta_build → health (p2fc-staging-probe-lib)"
+      },
+      "code_distribution": {
+        "api_meta": {
+          "408": 19
+        },
+        "web_meta": {
+          "503": 19
+        }
+      },
+      "execution_chain_ok_ratio": 1.0,
+      "acceptance_chain_ok_ratio": 0.0,
+      "layered_root_cause": [
+        {
+          "layer": "L1_API",
+          "symptom": "GET /meta → 408",
+          "cause": "REQUEST_TIMEOUT_SECS=30 · heavy aggregate"
+        },
+        {
+          "layer": "L2_WEB",
+          "symptom": "GET /meta → 503",
+          "cause": "route.ts proxy maps upstream non-200"
+        },
+        {
+          "layer": "L3_EXEC",
+          "symptom": "probe=meta_build",
+          "cause": "p2fc-staging-probe-lib fallback — non-blocking"
+        },
+        {
+          "layer": "L4_ACCEPT",
+          "symptom": "acceptance_chain_ok=false",
+          "cause": "deferred until post-soak wave-0 hotfix"
+        }
+      ],
+      "failure_propagation": {
+        "dominant_chain": "408>503>exec_ok>accept_deferred",
+        "dominant_ratio": 1.0,
+        "expected_chain": "408>503>exec_ok>accept_deferred",
+        "matches_expected": true,
+        "chain_consistency_ratio": 1.0,
+        "l1_api_to_l2_web_503_ratio": 1.0,
+        "transition_count": 0,
+        "recent_transitions": [],
+        "chain_distribution": {
+          "408>503>exec_ok>accept_deferred": 19
+        },
+        "verdict": "stable_propagation",
+        "notes": [
+          "expected soak chain 408>503>exec_ok>accept_deferred holds 100% of samples"
+        ]
+      },
+      "rca_alignment": {
+        "root_cause_chain": [
+          "API_TIMEOUT_LAYER: GET /meta exceeds REQUEST_TIMEOUT_SECS (staging default 30)",
+          "WEB_PROXY_DEGRADED: app/meta/route.ts maps upstream non-200 to 503 meta_unavailable"
+        ],
+        "api_meta_code": 408,
+        "web_meta_code": 503,
+        "recorded_at_utc": "2026-06-24T03:33:24Z"
+      },
+      "verdict": "observed_degraded_acceptance_ok",
+      "notes": [
+        "api_meta 408 + web_meta 503 stable during soak — expected under observability_only policy",
+        "execution_chain_ok via meta_build fallback"
+      ]
+    },
+    "indexer_exec_chain_drift": {
+      "probe_fallback_ratio": 1.0,
+      "indexer_source_distribution": {
+        "(empty)": 32,
+        "runtime": 1
+      },
+      "indexer_parse_rate": {
+        "parse_rate": 0.03,
+        "empty_rate": 0.97,
+        "flap_rate": 0.03,
+        "flap_detected": true,
+        "runtime_hits": 1,
+        "empty_hits": 32,
+        "total_polls": 33,
+        "graduation_gate": "TN-P1-010 must not depend on GET /meta body parse",
+        "pre_convergence_action": "post-soak wave-0 meta hotfix + internal/indexer-* spine"
+      },
+      "chronic_drift_signals": [
+        {
+          "id": "DRIFT_PROBE_FALLBACK",
+          "severity": "medium",
+          "note": "≥95% polls use meta_build fallback — full /meta never succeeds during soak (expected)"
+        },
+        {
+          "id": "DRIFT_INDEXER_SOURCE_EMPTY",
+          "severity": "medium",
+          "note": "indexer_source empty 97% of polls — /meta body unavailable; TN-P1-010 must use internal spine"
+        },
+        {
+          "id": "DRIFT_INDEXER_SOURCE_FLAP",
+          "severity": "low",
+          "note": "indexer_source alternates empty/runtime — /meta intermittently parseable"
+        }
+      ],
+      "verdict": "stable",
+      "notes": [
+        "≥95% polls use meta_build fallback — full /meta never succeeds during soak (expected)",
+        "indexer_source empty 97% of polls — /meta body unavailable; TN-P1-010 must use internal spine",
+        "indexer_source alternates empty/runtime — /meta intermittently parseable"
+      ]
+    },
+    "backlog_dependency_graph": {
+      "summary_line": "TT_BACKLOG_DEPENDENCY_GRAPH: WARN files=180 risks=1 diffusion=1.1 out=D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/l5-stability-audit/runs/20260624T040948Z",
+      "high_severity_risks": 1,
+      "total_files": 180,
+      "risk_diffusion": {
+        "gate_fanout_score": 11,
+        "max_gates_per_subsystem": 3,
+        "wave_blast_radius": 21,
+        "diffusion_score": 1.1,
+        "new_risks_vs_prior": [],
+        "resolved_risks_vs_prior": [],
+        "prior_snapshot_present": true,
+        "verdict": "stable"
+      }
+    }
+  },
+  "hidden_stability_risks": [
+    {
+      "id": "DRIFT_PROBE_FALLBACK",
+      "severity": "medium",
+      "note": "≥95% polls use meta_build fallback — full /meta never succeeds during soak (expected)"
+    },
+    {
+      "id": "DRIFT_INDEXER_SOURCE_EMPTY",
+      "severity": "medium",
+      "note": "indexer_source empty 97% of polls — /meta body unavailable; TN-P1-010 must use internal spine"
+    },
+    {
+      "id": "DRIFT_INDEXER_SOURCE_FLAP",
+      "severity": "low",
+      "note": "indexer_source alternates empty/runtime — /meta intermittently parseable"
+    },
+    {
+      "id": "HR_LARGE_DIFF_BLOB",
+      "severity": "medium",
+      "note": "42 files with delta≥50 — review blast radius before wave-1",
+      "files": [
+        "crates/api/src/routes/itineraries.rs",
+        ".../components/admin/AdminNavContentTransition.tsx",
+        ".../market/marketStandaloneBusinessPageUtils.ts",
+        "frontend/components/market/useMarketPage.ts",
+        "frontend/e2e/53-main-path.spec.ts",
+        "frontend/e2e/93-matrix-path-p1-remediation.spec.ts",
+        ".../e2e/auth-register-login-market-chain.spec.ts",
+        ".../b468-market-discovery-full-ui-journey.spec.ts"
+      ]
+    },
+    {
+      "id": "HR_ITINERARIES_HUB",
+      "severity": "high",
+      "note": "itineraries.rs hub change — impacts market/escrow/guide consumer paths",
+      "files": [
+        "crates/api/src/routes/itineraries.rs"
+      ]
+    },
+    {
+      "id": "HR_WALL_BUDGET_DIVERGE",
+      "severity": "medium",
+      "note": "wall/budget ratio 5.208 — 72h completion wall-clock >> nominal"
+    }
+  ],
+  "graduation_readiness_hint": "Soak INFLIGHT: exec chain stable; acceptance /meta deferred to post-soak wave-0",
+  "verdict": "WARN",
+  "graduation_risk_preconvergence": {
+    "schema": "traveltrust.p2fc_graduation_risk_preconvergence.v2",
+    "generated_at_utc": "2026-06-24T04:09:48Z",
+    "convergence_score": 100,
+    "convergence_max": 100,
+    "soak_exec_chain_stable": true,
+    "meta_propagation_preclassified": true,
+    "indexer_parse_risk_acknowledged": true,
+    "new_risks_since_prior_snapshot": [],
+    "must_close_post_soak": [
+      {
+        "id": "PC-01",
+        "gate": "G02",
+        "action": "wave-0 meta hotfix + --strict meta verify"
+      },
+      {
+        "id": "PC-02",
+        "gate": "TN-P1-010",
+        "action": "internal/indexer-* spine — not GET /meta parse"
+      },
+      {
+        "id": "PC-03",
+        "gate": "SOAK_72H",
+        "action": "await ok_polls=4320 — wall ETA ~372.1h"
+      },
+      {
+        "id": "PC-BL-HR_ITINERARIES_HUB",
+        "gate": "WAVE-1",
+        "action": "itineraries.rs hub change — impacts market/escrow/guide consumer paths"
+      }
+    ],
+    "honest_boundary": "pre-convergence score ≠ Graduation CLOSED — post-soak one-shot still required",
+    "duration_convergence": "stabilizing",
+    "converged_dimensions": 3,
+    "matrix_ready": true
+  },
+  "graduation_risk_matrix": {
+    "schema": "traveltrust.p2fc_graduation_risk_preconvergence_matrix.v1",
+    "generated_at_utc": "2026-06-24T04:09:48Z",
+    "phase": "②",
+    "soak_completed": false,
+    "matrix_rows": [
+      {
+        "id": "M1_WALL_CLOCK",
+        "dimension": "wall-clock 偏差",
+        "current": 5.208,
+        "unit": "ratio",
+        "trend": "stable",
+        "convergence": "converged",
+        "graduation_gate": "SOAK_72H",
+        "pre_soak_status": "observed",
+        "post_soak_action": "monitor wall ETA ~372.1h — no deploy during soak",
+        "blocks_graduation": false
+      },
+      {
+        "id": "M2_META_PROPAGATION",
+        "dimension": "/meta 分层传播",
+        "current": "408>503>exec_ok>accept_deferred",
+        "unit": "chain",
+        "trend": "stable",
+        "convergence": "converged",
+        "graduation_gate": "G02",
+        "pre_soak_status": "preclassified",
+        "post_soak_action": "wave-0 meta hotfix + p2fc-verify-staging-meta-availability.sh --strict",
+        "blocks_graduation": true
+      },
+      {
+        "id": "M3_INDEXER_PARSE",
+        "dimension": "indexer parse rate",
+        "current": 0.03,
+        "unit": "rate",
+        "trend": "stable",
+        "convergence": "converged_acknowledged",
+        "graduation_gate": "TN-P1-010",
+        "pre_soak_status": "acknowledged_low",
+        "post_soak_action": "TN-P1-010 independent via internal/indexer-* — not GET /meta parse",
+        "blocks_graduation": true
+      },
+      {
+        "id": "M4_BACKLOG_DIFFUSION",
+        "dimension": "backlog 风险扩散",
+        "current": 1.1,
+        "unit": "score",
+        "trend": "insufficient_samples",
+        "convergence": "insufficient_samples",
+        "graduation_gate": "WAVE-1/2",
+        "pre_soak_status": "frozen_registered",
+        "post_soak_action": "deploy backlog stamp + review 1 high-severity files",
+        "blocks_graduation": true
+      }
+    ],
+    "blocking_gates_post_soak": [
+      "M2_META_PROPAGATION",
+      "M3_INDEXER_PARSE",
+      "M4_BACKLOG_DIFFUSION"
+    ],
+    "duration_convergence": "stabilizing",
+    "converged_dimensions": 3,
+    "preconvergence_score": 100,
+    "matrix_ready_for_completed_json": true,
+    "must_close_post_soak": [
+      {
+        "id": "PC-01",
+        "gate": "G02",
+        "action": "wave-0 meta hotfix + --strict meta verify"
+      },
+      {
+        "id": "PC-02",
+        "gate": "TN-P1-010",
+        "action": "internal/indexer-* spine — not GET /meta parse"
+      },
+      {
+        "id": "PC-03",
+        "gate": "SOAK_72H",
+        "action": "await ok_polls=4320 — wall ETA ~372.1h"
+      },
+      {
+        "id": "PC-BL-HR_ITINERARIES_HUB",
+        "gate": "WAVE-1",
+        "action": "itineraries.rs hub change — impacts market/escrow/guide consumer paths"
+      }
+    ],
+    "honest_boundary": "matrix updated pre-COMPLETED.json · no deploy · no staging state change"
+  },
+  "duration_convergence": {
+    "schema": "traveltrust.p2fc_l5_duration_convergence.v1",
+    "snapshot_count": 2,
+    "observation_duration_sec": 270,
+    "observation_duration_hours": 0.07,
+    "poll_interval_sec": 900,
+    "dimensions": {
+      "wall_clock_deviation": {
+        "metric": "wall_vs_budget_ratio",
+        "series": [
+          5.206,
+          5.208
+        ],
+        "latest": 5.208,
+        "trend": "stable",
+        "convergence": "converged",
+        "notes": [
+          "ratio stable → wall ETA predictable for soak completion planning"
+        ]
+      },
+      "meta_layered_propagation": {
+        "metric": "meta_chain_consistency + meta_transitions",
+        "series": [
+          1.0,
+          1.0
+        ],
+        "transitions_series": [
+          0.0
+        ],
+        "latest": 1.0,
+        "trend": "stable",
+        "convergence": "converged",
+        "notes": [
+          "408→503→exec_ok chain pre-classified; acceptance deferred post-soak"
+        ]
+      },
+      "indexer_parse_rate": {
+        "metric": "indexer_parse_rate",
+        "series": [
+          0.031,
+          0.03
+        ],
+        "latest": 0.03,
+        "trend": "stable",
+        "convergence": "converged_acknowledged",
+        "notes": [
+          "low parse rate expected during soak — TN-P1-010 uses internal spine"
+        ]
+      },
+      "backlog_risk_diffusion": {
+        "metric": "backlog_diffusion_score + high_risks",
+        "series": [
+          1.1
+        ],
+        "high_risks_series": [
+          1.0,
+          1.0
+        ],
+        "latest": 1.1,
+        "trend": "insufficient_samples",
+        "convergence": "insufficient_samples",
+        "notes": [
+          "backlog frozen at ACTIVE stamp — diffusion stable until post-soak deploy"
+        ]
+      }
+    },
+    "converged_dimension_count": 3,
+    "overall_convergence": "stabilizing",
+    "honest_boundary": "duration convergence ≠ Graduation CLOSED — matrix pre-registers post-soak gates only"
+  },
+  "metrics_timeseries_summary": {
+    "snapshot_count": 2,
+    "overall_convergence": "stabilizing"
+  }
+}

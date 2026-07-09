@@ -1,0 +1,6 @@
+status: FAIL
+phase: ②
+artifact: ADM-U01
+release_gate: NO_GO
+api_base: https://three-lights-run.loca.lt
+at: 20260603T115036Z

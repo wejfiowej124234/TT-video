@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T134730Z",
+  "row": 21,
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "acquisition_comparison": {
+    "tokyo-photo": "限量镜头",
+    "kyoto-culture": "手工和纸",
+    "seoul-food": "限定零食",
+    "bangkok-temple": "泰国手工丝绸",
+    "distinct": true
+  }
+}

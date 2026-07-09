@@ -1,0 +1,553 @@
+{
+  "schema": "traveltrust.cms_sg_poi_catalog_scope_lock.v1",
+  "recorded_at_utc": "2026-07-06T06:10:54.437Z",
+  "phase": "② staging",
+  "layer": "CMS_OPERATION",
+  "template_countries": [
+    {
+      "country_iso": "JP",
+      "TT_CMS_JP_COUNTRY": "CLOSED",
+      "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "KR",
+      "TT_CMS_KR_COUNTRY": "CLOSED",
+      "closure_ssot": "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "TH",
+      "TT_CMS_TH_COUNTRY": "CLOSED",
+      "closure_ssot": "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json"
+    }
+  ],
+  "lock_guard": {
+    "jp_locked_required": 41,
+    "kr_locked_required": 31,
+    "th_locked_required": 28,
+    "verified": true,
+    "registry": "CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json"
+  },
+  "country": {
+    "country_iso": "SG",
+    "country_zh": "新加坡"
+  },
+  "sg_denominator": {
+    "cities": [
+      "新加坡"
+    ],
+    "city_breakdown": {
+      "新加坡": {
+        "attraction": 5,
+        "food": 5,
+        "total": 10,
+        "matrix_ids": [
+          "PH-SG-101-ATR",
+          "PH-SG-102-ATR",
+          "PH-SG-103-ATR",
+          "PH-SG-104-ATR",
+          "PH-SG-105-ATR",
+          "PH-SG-106-FOOD",
+          "PH-SG-107-FOOD",
+          "PH-SG-108-FOOD",
+          "PH-SG-109-FOOD",
+          "PH-SG-110-FOOD"
+        ]
+      }
+    },
+    "poi_total": 10,
+    "attraction": 5,
+    "food": 5
+  },
+  "pilot_wave": {
+    "advancement_rule": "Scope → Country → City → POI · acceptance = City CLOSED → Country Runtime",
+    "ops_hierarchy": [
+      "asset_family",
+      "country",
+      "city",
+      "asset"
+    ],
+    "acceptance_unit": "city",
+    "template_countries": [
+      "JP",
+      "KR",
+      "TH"
+    ],
+    "jp_country_closed_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+    "kr_country_closed_ssot": "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+    "th_country_closed_ssot": "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+    "active_wave": "POI-WAVE-4-SG-PILOT",
+    "active_catalog_build": {
+      "wave_id": "POI-WAVE-4-SG-PILOT",
+      "label": "Pilot · SG · 新加坡",
+      "country_iso": "SG",
+      "country_zh": "新加坡",
+      "cities": [
+        "新加坡"
+      ],
+      "acceptance_unit": "city",
+      "acceptance_target": "新加坡 CLOSED",
+      "purpose": "Catalog Build → per-POI Review → Live · JP/KR/TH Golden Template 复制 · pilot done when 新加坡 CLOSED",
+      "forbidden": [
+        "bulk_ingest_sg_all",
+        "skip_pilot_before_country_runtime",
+        "accept_by_poi_count"
+      ],
+      "template_countries": [
+        "JP",
+        "KR",
+        "TH"
+      ],
+      "template_closure": [
+        "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json"
+      ],
+      "status": "ACTIVE",
+      "catalog_build": true,
+      "matrix_ids": [
+        "PH-SG-101-ATR",
+        "PH-SG-102-ATR",
+        "PH-SG-103-ATR",
+        "PH-SG-104-ATR",
+        "PH-SG-105-ATR",
+        "PH-SG-106-FOOD",
+        "PH-SG-107-FOOD",
+        "PH-SG-108-FOOD",
+        "PH-SG-109-FOOD",
+        "PH-SG-110-FOOD"
+      ],
+      "poi_count": 10,
+      "by_city": [
+        {
+          "city_zh": "新加坡",
+          "acceptance_unit": "city",
+          "acceptance_target": "新加坡 CLOSED",
+          "poi_count": 10,
+          "matrix_ids": [
+            "PH-SG-101-ATR",
+            "PH-SG-102-ATR",
+            "PH-SG-103-ATR",
+            "PH-SG-104-ATR",
+            "PH-SG-105-ATR",
+            "PH-SG-106-FOOD",
+            "PH-SG-107-FOOD",
+            "PH-SG-108-FOOD",
+            "PH-SG-109-FOOD",
+            "PH-SG-110-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "滨海湾",
+              "poi_type": "attraction",
+              "matrix_id": "PH-SG-101-ATR"
+            },
+            {
+              "legacy_value": "圣淘沙",
+              "poi_type": "attraction",
+              "matrix_id": "PH-SG-102-ATR"
+            },
+            {
+              "legacy_value": "牛车水",
+              "poi_type": "attraction",
+              "matrix_id": "PH-SG-103-ATR"
+            },
+            {
+              "legacy_value": "小印度",
+              "poi_type": "attraction",
+              "matrix_id": "PH-SG-104-ATR"
+            },
+            {
+              "legacy_value": "动物园",
+              "poi_type": "attraction",
+              "matrix_id": "PH-SG-105-ATR"
+            },
+            {
+              "legacy_value": "海南鸡饭",
+              "poi_type": "food",
+              "matrix_id": "PH-SG-106-FOOD"
+            },
+            {
+              "legacy_value": "肉骨茶",
+              "poi_type": "food",
+              "matrix_id": "PH-SG-107-FOOD"
+            },
+            {
+              "legacy_value": "辣椒螃蟹",
+              "poi_type": "food",
+              "matrix_id": "PH-SG-108-FOOD"
+            },
+            {
+              "legacy_value": "叻沙",
+              "poi_type": "food",
+              "matrix_id": "PH-SG-109-FOOD"
+            },
+            {
+              "legacy_value": "椰浆饭",
+              "poi_type": "food",
+              "matrix_id": "PH-SG-110-FOOD"
+            }
+          ]
+        }
+      ],
+      "first_matrix_id": "PH-SG-101-ATR",
+      "first_poi": {
+        "city_zh": "新加坡",
+        "legacy_value": "滨海湾",
+        "matrix_id": "PH-SG-101-ATR"
+      },
+      "sg_country_total": 10,
+      "sg_cities": [
+        "新加坡"
+      ]
+    },
+    "waves": [
+      {
+        "wave_id": "POI-WAVE-4-SG-PILOT",
+        "label": "Pilot · SG · 新加坡",
+        "country_iso": "SG",
+        "country_zh": "新加坡",
+        "cities": [
+          "新加坡"
+        ],
+        "acceptance_unit": "city",
+        "acceptance_target": "新加坡 CLOSED",
+        "purpose": "Catalog Build → per-POI Review → Live · JP/KR/TH Golden Template 复制 · pilot done when 新加坡 CLOSED",
+        "forbidden": [
+          "bulk_ingest_sg_all",
+          "skip_pilot_before_country_runtime",
+          "accept_by_poi_count"
+        ],
+        "template_countries": [
+          "JP",
+          "KR",
+          "TH"
+        ],
+        "template_closure": [
+          "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+          "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+          "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json"
+        ],
+        "status": "ACTIVE",
+        "catalog_build": true,
+        "matrix_ids": [
+          "PH-SG-101-ATR",
+          "PH-SG-102-ATR",
+          "PH-SG-103-ATR",
+          "PH-SG-104-ATR",
+          "PH-SG-105-ATR",
+          "PH-SG-106-FOOD",
+          "PH-SG-107-FOOD",
+          "PH-SG-108-FOOD",
+          "PH-SG-109-FOOD",
+          "PH-SG-110-FOOD"
+        ],
+        "poi_count": 10,
+        "by_city": [
+          {
+            "city_zh": "新加坡",
+            "acceptance_unit": "city",
+            "acceptance_target": "新加坡 CLOSED",
+            "poi_count": 10,
+            "matrix_ids": [
+              "PH-SG-101-ATR",
+              "PH-SG-102-ATR",
+              "PH-SG-103-ATR",
+              "PH-SG-104-ATR",
+              "PH-SG-105-ATR",
+              "PH-SG-106-FOOD",
+              "PH-SG-107-FOOD",
+              "PH-SG-108-FOOD",
+              "PH-SG-109-FOOD",
+              "PH-SG-110-FOOD"
+            ],
+            "pois": [
+              {
+                "legacy_value": "滨海湾",
+                "poi_type": "attraction",
+                "matrix_id": "PH-SG-101-ATR"
+              },
+              {
+                "legacy_value": "圣淘沙",
+                "poi_type": "attraction",
+                "matrix_id": "PH-SG-102-ATR"
+              },
+              {
+                "legacy_value": "牛车水",
+                "poi_type": "attraction",
+                "matrix_id": "PH-SG-103-ATR"
+              },
+              {
+                "legacy_value": "小印度",
+                "poi_type": "attraction",
+                "matrix_id": "PH-SG-104-ATR"
+              },
+              {
+                "legacy_value": "动物园",
+                "poi_type": "attraction",
+                "matrix_id": "PH-SG-105-ATR"
+              },
+              {
+                "legacy_value": "海南鸡饭",
+                "poi_type": "food",
+                "matrix_id": "PH-SG-106-FOOD"
+              },
+              {
+                "legacy_value": "肉骨茶",
+                "poi_type": "food",
+                "matrix_id": "PH-SG-107-FOOD"
+              },
+              {
+                "legacy_value": "辣椒螃蟹",
+                "poi_type": "food",
+                "matrix_id": "PH-SG-108-FOOD"
+              },
+              {
+                "legacy_value": "叻沙",
+                "poi_type": "food",
+                "matrix_id": "PH-SG-109-FOOD"
+              },
+              {
+                "legacy_value": "椰浆饭",
+                "poi_type": "food",
+                "matrix_id": "PH-SG-110-FOOD"
+              }
+            ]
+          }
+        ],
+        "first_matrix_id": "PH-SG-101-ATR",
+        "first_poi": {
+          "city_zh": "新加坡",
+          "legacy_value": "滨海湾",
+          "matrix_id": "PH-SG-101-ATR"
+        },
+        "sg_country_total": 10,
+        "sg_cities": [
+          "新加坡"
+        ]
+      }
+    ],
+    "sg_denominator": {
+      "country_iso": "SG",
+      "cities": [
+        "新加坡"
+      ],
+      "poi_total": 10,
+      "singapore_pilot": 10
+    },
+    "roadmap": [
+      {
+        "stage": "jp_country",
+        "status": "CLOSED",
+        "ssot": "CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+      },
+      {
+        "stage": "kr_country",
+        "status": "CLOSED",
+        "ssot": "CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+      },
+      {
+        "stage": "th_country",
+        "status": "CLOSED",
+        "ssot": "CMS-TH-COUNTRY-CLOSURE-LATEST.json"
+      },
+      {
+        "stage": "sg_scope",
+        "status": "LOCKED"
+      },
+      {
+        "stage": "catalog_build",
+        "status": "ACTIVE",
+        "city": "新加坡",
+        "acceptance": "新加坡 CLOSED"
+      },
+      {
+        "stage": "sg_singapore_execution",
+        "status": "ACTIVE"
+      },
+      {
+        "stage": "sg_singapore_content_qa",
+        "status": "NOT_STARTED"
+      },
+      {
+        "stage": "sg_country_runtime",
+        "status": "NOT_STARTED",
+        "when": "TT_CMS_SG_COUNTRY: CLOSED"
+      }
+    ]
+  },
+  "active_catalog_build": {
+    "wave_id": "POI-WAVE-4-SG-PILOT",
+    "label": "Pilot · SG · 新加坡",
+    "country_iso": "SG",
+    "country_zh": "新加坡",
+    "cities": [
+      "新加坡"
+    ],
+    "acceptance_unit": "city",
+    "acceptance_target": "新加坡 CLOSED",
+    "purpose": "Catalog Build → per-POI Review → Live · JP/KR/TH Golden Template 复制 · pilot done when 新加坡 CLOSED",
+    "forbidden": [
+      "bulk_ingest_sg_all",
+      "skip_pilot_before_country_runtime",
+      "accept_by_poi_count"
+    ],
+    "template_countries": [
+      "JP",
+      "KR",
+      "TH"
+    ],
+    "template_closure": [
+      "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+      "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+      "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json"
+    ],
+    "status": "ACTIVE",
+    "catalog_build": true,
+    "matrix_ids": [
+      "PH-SG-101-ATR",
+      "PH-SG-102-ATR",
+      "PH-SG-103-ATR",
+      "PH-SG-104-ATR",
+      "PH-SG-105-ATR",
+      "PH-SG-106-FOOD",
+      "PH-SG-107-FOOD",
+      "PH-SG-108-FOOD",
+      "PH-SG-109-FOOD",
+      "PH-SG-110-FOOD"
+    ],
+    "poi_count": 10,
+    "by_city": [
+      {
+        "city_zh": "新加坡",
+        "acceptance_unit": "city",
+        "acceptance_target": "新加坡 CLOSED",
+        "poi_count": 10,
+        "matrix_ids": [
+          "PH-SG-101-ATR",
+          "PH-SG-102-ATR",
+          "PH-SG-103-ATR",
+          "PH-SG-104-ATR",
+          "PH-SG-105-ATR",
+          "PH-SG-106-FOOD",
+          "PH-SG-107-FOOD",
+          "PH-SG-108-FOOD",
+          "PH-SG-109-FOOD",
+          "PH-SG-110-FOOD"
+        ],
+        "pois": [
+          {
+            "legacy_value": "滨海湾",
+            "poi_type": "attraction",
+            "matrix_id": "PH-SG-101-ATR"
+          },
+          {
+            "legacy_value": "圣淘沙",
+            "poi_type": "attraction",
+            "matrix_id": "PH-SG-102-ATR"
+          },
+          {
+            "legacy_value": "牛车水",
+            "poi_type": "attraction",
+            "matrix_id": "PH-SG-103-ATR"
+          },
+          {
+            "legacy_value": "小印度",
+            "poi_type": "attraction",
+            "matrix_id": "PH-SG-104-ATR"
+          },
+          {
+            "legacy_value": "动物园",
+            "poi_type": "attraction",
+            "matrix_id": "PH-SG-105-ATR"
+          },
+          {
+            "legacy_value": "海南鸡饭",
+            "poi_type": "food",
+            "matrix_id": "PH-SG-106-FOOD"
+          },
+          {
+            "legacy_value": "肉骨茶",
+            "poi_type": "food",
+            "matrix_id": "PH-SG-107-FOOD"
+          },
+          {
+            "legacy_value": "辣椒螃蟹",
+            "poi_type": "food",
+            "matrix_id": "PH-SG-108-FOOD"
+          },
+          {
+            "legacy_value": "叻沙",
+            "poi_type": "food",
+            "matrix_id": "PH-SG-109-FOOD"
+          },
+          {
+            "legacy_value": "椰浆饭",
+            "poi_type": "food",
+            "matrix_id": "PH-SG-110-FOOD"
+          }
+        ]
+      }
+    ],
+    "first_matrix_id": "PH-SG-101-ATR",
+    "first_poi": {
+      "city_zh": "新加坡",
+      "legacy_value": "滨海湾",
+      "matrix_id": "PH-SG-101-ATR"
+    },
+    "sg_country_total": 10,
+    "sg_cities": [
+      "新加坡"
+    ]
+  },
+  "singapore_pilot": {
+    "city_zh": "新加坡",
+    "poi_count": 10,
+    "matrix_ids": [
+      "PH-SG-101-ATR",
+      "PH-SG-102-ATR",
+      "PH-SG-103-ATR",
+      "PH-SG-104-ATR",
+      "PH-SG-105-ATR",
+      "PH-SG-106-FOOD",
+      "PH-SG-107-FOOD",
+      "PH-SG-108-FOOD",
+      "PH-SG-109-FOOD",
+      "PH-SG-110-FOOD"
+    ],
+    "acceptance": "新加坡 CLOSED"
+  },
+  "catalog_probe": {
+    "http": 200,
+    "count": 0,
+    "catalog_empty": true
+  },
+  "workflow": [
+    "SG Scope Lock",
+    "Singapore Catalog Build",
+    "Execution per POI",
+    "Content QA per POI",
+    "City Runtime Exit Check",
+    "TT_CMS_POI_CITY_SINGAPORE_CONTENT_QA: CLOSED",
+    "SG Country Runtime",
+    "TT_CMS_SG_COUNTRY: CLOSED"
+  ],
+  "forbidden": [
+    "modify_jp_41_lock",
+    "modify_kr_31_lock",
+    "modify_th_28_lock",
+    "adjust_content_qa_standard",
+    "production_go"
+  ],
+  "production_go": "BLOCKED",
+  "next_country": "BLOCKED",
+  "TT_CMS_SG_POI_CATALOG_SCOPE_LOCK": "FROZEN",
+  "TT_CMS_SG_POI_DENOMINATOR_TOTAL": 10,
+  "TT_CMS_SG_POI_PILOT_CATALOG_BUILD": "Pilot · SG · 新加坡",
+  "TT_CMS_SG_POI_PILOT_ACCEPTANCE": "新加坡 CLOSED",
+  "TT_CMS_SG_POI_PILOT_POI_COUNT": 10,
+  "TT_CMS_SG_POI_NEXT_STAGE": "CATALOG_BUILD",
+  "singapore_status": "ACTIVE",
+  "thailand_status": "CLOSED",
+  "korea_status": "CLOSED",
+  "japan_status": "CLOSED"
+}

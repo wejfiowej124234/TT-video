@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T153500Z",
+  "filename": "ocs-dubai-luxury-guide-avatar.jpg",
+  "row": 55,
+  "chain_id": "dubai-luxury",
+  "country_code": "AE",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": ["celebrity_portraits", "brand_logos", "commercial_ad_posters"],
+    "safe_expression": "Omar 沙漠 luxury camp 向导肖像 · 金+沙漠暖 · 得体商务休闲"
+  },
+  "checks": {
+    "manifest_full_field_alignment": {
+      "pass": true,
+      "notes": "nickname 迪拜沙漠向导·Omar · bio 冲沙/黄金市集/哈利法塔 · AE"
+    },
+    "destination_authenticity_9dim_plan": {
+      "pass": true,
+      "notes": "沙漠 camp · 金沙丘 · luxury adventure · 得体着装"
+    },
+    "country_consistency_ae_only": { "pass": true },
+    "guide_identity_diversity_plan": {
+      "pass": true,
+      "vs_prior_nine_guides": "Omar 阿男沙漠 luxury vs 九城向导均区分"
+    },
+    "narrative_planning": { "pass": true },
+    "nine_class_framework_frozen": true
+  }
+}

@@ -1,0 +1,2 @@
+staging_api=https://tt-api-staging.fly.dev
+ocs_state=evidence/GO_official_cold_start_dataset/ocs-surface-expansion-staging/20260704T073209Z/state.json

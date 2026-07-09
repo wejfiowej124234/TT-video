@@ -1,0 +1,91 @@
+{
+  "audit_id": "STAKE_POOL_JURISDICTION_BOOTSTRAP",
+  "stamp_utc": "20260616T034629Z",
+  "pool": "0xeb0e4a8517EC478d6B386a13D28115357AA6d112",
+  "owner": "0x777E532636c53BDc034B9FE73c44E1B2c3113060",
+  "ttg_total_supply_units": "10000000000000000000000000",
+  "jurisdictions_bootstrapped": false,
+  "jurisdictions": [
+    {
+      "jurisdiction": "CN",
+      "expected_bps": 400,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "US",
+      "expected_bps": 400,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "FR",
+      "expected_bps": 450,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "ES",
+      "expected_bps": 450,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "JP",
+      "expected_bps": 250,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "TH",
+      "expected_bps": 250,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "SG",
+      "expected_bps": 200,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "KR",
+      "expected_bps": 200,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "AU",
+      "expected_bps": 150,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "AE",
+      "expected_bps": 150,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    }
+  ],
+  "gov04_vs_seat_stake": {
+    "gov04_per_wallet_cap_ttg_wei": "25000000000000000000000",
+    "min_stake_wei_range": [
+      "0",
+      "0"
+    ],
+    "admission_class": "BOOTSTRAP_PENDING",
+    "product_read": "GOV-04 caps Primary Market public sale per wallet; Seat min stake exceeds cap \u2014 Seat TTG must come from non-PM sources unless SSOT amended"
+  },
+  "failures": 10,
+  "verdict": "FAIL"
+}

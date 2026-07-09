@@ -1,0 +1,47 @@
+{
+  "schema": "traveltrust.ocs_content_l5_community_authenticity_review_framework.v1",
+  "stamp_utc": "20260704T132951Z",
+  "status": "ACTIVE",
+  "applies_to_slots": [
+    "community-cover",
+    "community-media"
+  ],
+  "first_execution_rows": {
+    "seoul-food": [
+      "ocs-seoul-food-community-cover.jpg",
+      "ocs-seoul-food-community-media.jpg"
+    ]
+  },
+  "long_term_fixed_checks": [
+    "authentic_share_feel",
+    "natural_interaction",
+    "feed_thumbnail_readability",
+    "emotional_travel_expression",
+    "ugc_style_not_commercial_poster"
+  ],
+  "long_term_policy": {
+    "authentic_share_feel": "像旅行者发布，而不是广告图。",
+    "natural_interaction": "人物动作、视线、环境符合真实旅行场景。",
+    "feed_thumbnail_readability": "缩略图在 Feed 中一眼能理解内容。",
+    "emotional_travel_expression": "传递旅行体验，而不仅是展示景点。",
+    "ugc_style_not_commercial_poster": "高质量真实分享风格，非商业宣传海报。"
+  },
+  "checklist_dimensions": [
+    "authentic_share_feel",
+    "natural_interaction",
+    "feed_thumbnail_readability",
+    "emotional_travel_expression",
+    "ugc_style_not_commercial_poster",
+    "destination_authentic_street_or_food_scene",
+    "not_guide_portrait",
+    "not_provider_service_space",
+    "not_acquisition_product_still_life",
+    "not_official_guide_route_poster",
+    "cover_vs_media_scene_distinct",
+    "community_post_body_alignment",
+    "local_cultural_authenticity"
+  ],
+  "policy": "Community Cover/Media 须呈现真实社区旅行瞬间；六类专项审核之 Community 闸；禁止与其它 Surface 语义混用。",
+  "machine_key_when_active": "TT_COMMUNITY_AUTHENTICITY_REVIEW",
+  "TT_COMMUNITY_AUTHENTICITY_FRAMEWORK": "ESTABLISHED"
+}

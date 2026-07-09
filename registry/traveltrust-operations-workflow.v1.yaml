@@ -1,0 +1,310 @@
+# TravelTrust Operations Workflow (TTOW) · SSOT
+# Runbook: docs/runbook/TT-TRAVELTRUST-OPERATIONS-WORKFLOW.md
+# Platform taxonomy: registry/traveltrust-operations-platform.v1.yaml
+# Data governance layer: registry/single-official-public-catalog-policy.v1.yaml
+#                       registry/official-catalog-identity-policy.v1.yaml
+#                       registry/official-cold-start-dataset.v1.yaml
+#                       registry/display-data-governance.v1.yaml
+
+schema: traveltrust.operations_workflow.v1
+version: 1
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_OPERATIONS_WORKFLOW: ENFORCED
+  TT_OPS_THREE_LAYER_STACK: data_governance_operations_platform_operations_workflow
+
+# ── Three-layer enterprise stack ──────────────────────────────────────
+#
+#   Layer 1 · Data Governance     — what data rules apply (DDG · SOPCP · OCIP · OCS)
+#   Layer 2 · Operations Platform — who operates which domain (Content · Catalog · …)
+#   Layer 3 · Operations Workflow — how work moves through lifecycle (this SSOT)
+
+layer_stack:
+  L1_data_governance:
+    question: 数据该怎么管理？
+    policies:
+      - registry/display-data-governance.v1.yaml
+      - registry/single-official-public-catalog-policy.v1.yaml
+      - registry/official-catalog-identity-policy.v1.yaml
+      - registry/official-cold-start-dataset.v1.yaml
+    flow: Official_Dataset → Identity → Public_Catalog
+  L2_operations_platform:
+    question: 谁来运营？
+    registry: registry/traveltrust-operations-platform.v1.yaml
+    domains: [content_operations, catalog_operations, campaign_operations, moderation_operations, business_operations, analytics_growth]
+  L3_operations_workflow:
+    question: 运营怎么做？（生命周期，不是裸 CRUD）
+    registry: registry/traveltrust-operations-workflow.v1.yaml
+    principle: workflow_first_not_crud
+
+principles:
+  - each_operations_domain_has_defined_lifecycle
+  - admin_actions_map_to_workflow_transitions
+  - evidence_and_runbooks_reference_workflow_states
+  - catalog_workflow_separate_from_content_editorial_workflow
+  - identity_stable_across_workflow_ocip
+  - public_visibility_terminal_states_governed_by_sopcp
+
+cross_domain_entity_flows:
+  official_guide:
+    description: Editorial + catalog publish are separate workflows
+    chain:
+      - content_operations: draft → review → editorial_approved
+      - catalog_operations: publish_queue → published → surfaced → retire
+    policies: [OCIP, SOPCP]
+  guide_provider_acquisition:
+    description: OCS canonical identity + catalog publish; content updates in place
+    chain:
+      - data_governance: official_dataset → canonical_identity
+      - catalog_operations: create_or_bind → publish_queue → surface → featured → online → retire
+      - campaign_operations: optional_campaign_item_reference
+      - analytics_growth: measure_visibility_and_conversion
+    anti_pattern: create_new_parallel_entity_same_city
+
+workflows:
+  content_operations:
+    domain: registry/traveltrust-operations-platform.v1.yaml#operations_domains.content_operations
+    label: Content Operations Workflow
+    anti_pattern: naked_crud_without_state
+    states:
+      - id: draft
+        label: Draft
+        operator_action: create_or_edit_editorial_assets
+      - id: in_review
+        label: Review
+        operator_action: submit_for_review
+        gate: content_reviewer_or_approval
+      - id: published
+        label: Published
+        operator_action: publish_catalog_entity
+        note: Catalog entity live in CMS; not yet Public Catalog surface
+      - id: archived
+        label: Archived
+        operator_action: archive
+        terminal: true
+    transitions:
+      - draft → in_review: submit_review
+      - in_review → published: approve_and_publish
+      - in_review → draft: reject_or_request_changes
+      - published → archived: archive
+      - published → draft: revision_new_draft_optional
+    implementation:
+      status_field: publish_status
+      api_prefix: /api/v1/admin/content
+      doc: docs/handbook/engineering/136-C-S1-Admin-Content-CRUD-PublishQueue-Report.md
+      machine_values: [draft, in_review, published, archived]
+
+  catalog_operations:
+    domain: registry/traveltrust-operations-platform.v1.yaml#operations_domains.catalog_operations
+    label: Catalog Operations Workflow
+    anti_pattern: insert_new_guide_instead_of_publish_queue
+    policies: [SOPCP, OCIP, OCS]
+    states:
+      - id: draft
+        label: Draft / Hidden
+        machine: display_status=hidden
+        note: Entity exists; OCIP UUID assigned; not on Public Catalog
+      - id: in_review
+        label: Review
+        optional: true
+        note: Official guides / accounts may use in_review before publish
+      - id: publish_queue
+        label: Publish Queue
+        operator_action: ready_for_public_ops_publish
+      - id: published
+        label: Published
+        machine: display_status=published
+        public_catalog: eligible
+      - id: surfaced
+        label: Surface Assigned
+        operator_action: set_display_surfaces
+        examples: [market_provider, market_acquisition, market_feed, home_hero]
+      - id: featured
+        label: Featured / Priority
+        operator_action: set_featured_and_display_priority
+        optional: true
+      - id: online
+        label: Online
+        description: Published + surface + schedule window active on Public Catalog
+      - id: retire
+        label: Retire
+        machine: unpublish_display_status_hidden
+        terminal: true
+        db_retention: keep_uuid_ocip
+    transitions:
+      - draft → publish_queue: mark_ready
+      - publish_queue → published: publish
+      - published → surfaced: assign_surfaces
+      - surfaced → featured: set_featured_priority
+      - featured → online: schedule_active_or_immediate
+      - online → retire: unpublish_or_archive
+      - any → draft: unpublish
+    entity_types:
+      guide: { api: Public Operations entities/guides, consumer: GET /api/v1/guides }
+      provider: { api: Public Operations entities/market_listings, consumer: GET /market/provider/listings }
+      acquisition: { api: Public Operations entities/market_listings, consumer: GET /market/acquisition/listings }
+      official_guide: { api: /admin/official/guides, publish_status_flow: true }
+    implementation:
+      display_status_field: display_status
+      surfaces_field: display_surfaces
+      admin_hub: /admin/official/public-operations
+      machine_values_display: [hidden, published]
+      align_script: scripts/dev/align-single-official-baseline-staging.cjs
+
+  campaign_operations:
+    domain: registry/traveltrust-operations-platform.v1.yaml#operations_domains.campaign_operations
+    label: Campaign Operations Workflow
+    states:
+      - id: planning
+        label: Planning
+        machine: publish_status=draft, status=draft
+        operator_action: define_campaign_goals_and_items
+      - id: editing
+        label: Editing
+        operator_action: add_items_surfaces_copy
+      - id: in_review
+        label: Review
+        machine: publish_status=in_review, status=in_review
+        operator_action: submit_review
+      - id: deploy
+        label: Deploy
+        operator_action: deploy_campaign
+        gate: superadmin_or_campaign_publisher
+      - id: running
+        label: Running
+        machine: publish_status=published, status=deployed
+        consumer: cold_start_surfaces
+      - id: completed
+        label: Completed
+        description: Schedule ended or manually completed; may remain deployed until rollback
+      - id: archive
+        label: Archive
+        machine: publish_status=archived
+        terminal: true
+    transitions:
+      - planning → editing: add_campaign_shell
+      - editing → in_review: submit_review
+      - in_review → deploy: approve_and_deploy
+      - in_review → editing: reject
+      - deploy → running: deploy_success
+      - running → completed: schedule_end_or_manual_complete
+      - running → rolled_back: rollback (required before archive)
+      - rolled_back → archive: archive
+    implementation:
+      api_prefix: /api/v1/admin/official/public-operations/campaigns
+      doc: docs/handbook/engineering/144-O-S4-Cold-Start-Campaigns-Deployment-Operations-Report.md
+      publish_status_values: [draft, in_review, published, archived]
+      deployment_status_values: [draft, in_review, deployed, rolled_back, archived]
+
+  moderation_operations:
+    domain: registry/traveltrust-operations-platform.v1.yaml#operations_domains.moderation_operations
+    label: Moderation Operations Workflow
+    states:
+      - id: submitted
+        label: Submitted
+        operator_action: user_or_merchant_submits_application_or_report
+      - id: triage
+        label: Triage
+        operator_action: moderator_assigns_priority
+      - id: in_review
+        label: In Review
+        operator_action: examiner_reviews_evidence
+      - id: decision
+        label: Decision
+        branches: [approved, rejected, escalated]
+      - id: actioned
+        label: Actioned
+        examples: [account_approved, content_removed, penalty_applied]
+      - id: closed
+        label: Closed
+        terminal: true
+      - id: appealed
+        label: Appealed
+        optional: true
+        flows_to: in_review
+    transitions:
+      - submitted → triage: queue_ingest
+      - triage → in_review: assign_reviewer
+      - in_review → decision: render_decision
+      - decision → actioned: apply_moderation_action
+      - actioned → closed: close_case
+      - actioned → appealed: user_appeals
+      - appealed → in_review: reopen_review
+    implementation:
+      routes: [/admin/onboarding, /admin/approvals, /admin/community/reports, /admin/community/moderation]
+      approval_requests: admin_approval_requests
+
+  business_operations:
+    domain: registry/traveltrust-operations-platform.v1.yaml#operations_domains.business_operations
+    label: Business Operations Workflow
+    note: Corridor and lifecycle ops — distinct from Moderation review
+    states:
+      - id: onboarding
+        label: Onboarding
+      - id: active
+        label: Active
+      - id: restricted
+        label: Restricted
+        optional: true
+      - id: dispute_open
+        label: Dispute Open
+      - id: dispute_resolved
+        label: Dispute Resolved
+      - id: suspended
+        label: Suspended
+      - id: offboarded
+        label: Offboarded
+        terminal: true
+    transitions:
+      - onboarding → active: entitlement_granted
+      - active → dispute_open: dispute_filed
+      - dispute_open → dispute_resolved: resolution_applied
+      - active → suspended: policy_suspension
+      - suspended → active: reinstate
+      - active → offboarded: offboard
+    implementation:
+      routes: [/admin/users, /admin/orders, /admin/disputes, /admin/reviews]
+
+  analytics_growth:
+    domain: registry/traveltrust-operations-platform.v1.yaml#operations_domains.analytics_growth
+    label: Analytics & Growth Workflow
+    states:
+      - id: planning
+        label: Planning
+        operator_action: define_hypothesis_and_metrics
+      - id: configured
+        label: Configured
+        operator_action: set_recommendation_rules_or_experiment
+      - id: running
+        label: Running
+        operator_action: experiment_or_ranking_live
+      - id: measuring
+        label: Measuring
+        operator_action: collect_analytics
+      - id: completed
+        label: Completed
+        operator_action: conclude_experiment
+      - id: archived
+        label: Archived
+        terminal: true
+    transitions:
+      - planning → configured: configure_growth_surface
+      - configured → running: launch
+      - running → measuring: observe
+      - measuring → completed: evaluate
+      - completed → archived: archive
+    implementation:
+      routes: [/admin/growth, /admin/conversion-analytics]
+
+evidence_and_runbook_discipline:
+  rule: all_ops_evidence_must_cite_workflow_state
+  examples:
+    - OCS apply evidence cites catalog_operations published + campaign_operations deploy
+    - DDG audit cites catalog_operations online vs test hidden
+    - Manual UAT steps use workflow verbs not CRUD verbs
+  runbooks:
+    - docs/runbook/TT-TRAVELTRUST-OPERATIONS-WORKFLOW.md
+    - docs/runbook/TT-TRAVELTRUST-OPERATIONS-PLATFORM.md
+    - docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md
+

@@ -1,0 +1,64 @@
+{
+  "schema": "traveltrust.closure_heat_map.v1",
+  "cells": [
+    {
+      "layer": "L1",
+      "domains": [
+        "D01-D76",
+        "DX-01",
+        "DOA"
+      ],
+      "coverage_score": 67,
+      "band": "MEDIUM"
+    },
+    {
+      "layer": "L2",
+      "domains": [
+        "PF",
+        "UXA"
+      ],
+      "coverage_score": 100,
+      "band": "HIGH"
+    },
+    {
+      "layer": "L3",
+      "domains": [
+        "CX",
+        "BA",
+        "OPS",
+        "TRUST",
+        "CS"
+      ],
+      "coverage_score": 100,
+      "band": "HIGH"
+    },
+    {
+      "layer": "L4",
+      "domains": [
+        "ADMIN",
+        "AG"
+      ],
+      "coverage_score": 100,
+      "band": "HIGH"
+    },
+    {
+      "layer": "L5",
+      "domains": [
+        "R",
+        "K",
+        "E",
+        "CA"
+      ],
+      "coverage_score": 100,
+      "band": "HIGH"
+    },
+    {
+      "layer": "L6",
+      "domains": [
+        "MA"
+      ],
+      "coverage_score": 100,
+      "band": "HIGH"
+    }
+  ]
+}

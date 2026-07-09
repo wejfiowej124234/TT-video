@@ -1,0 +1,13 @@
+{
+  "stamp": "20260702T003523Z",
+  "verdict": "PASS",
+  "web": "https://tt-web-staging.fly.dev",
+  "api": "https://tt-api-staging.fly.dev",
+  "browser_pass": 26,
+  "browser_checks": 26,
+  "api_probes": {
+    "policy_patch_applied": true,
+    "public_consumer_http": 401
+  },
+  "phase2_admin_final_validation": "GO"
+}

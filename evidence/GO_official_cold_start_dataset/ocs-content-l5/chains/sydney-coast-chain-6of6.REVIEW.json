@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_progress_review.v1",
+  "stamp_utc": "20260704T151130Z",
+  "chain_id": "sydney-coast",
+  "progress": "6/6",
+  "completed_row": 48,
+  "completed_filename": "ocs-sydney-coast-community-media.jpg",
+  "TT_CHAIN_PROGRESS_REVIEW": "PASS",
+  "chain_final_review": "evidence/GO_official_cold_start_dataset/ocs-content-l5/chains/sydney-coast-chain-FINAL.REVIEW.json"
+}

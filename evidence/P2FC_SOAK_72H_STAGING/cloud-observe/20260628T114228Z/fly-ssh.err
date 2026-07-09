@@ -1,0 +1,3 @@
+Warning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type billable limitedAccessTokens { nodes { id name expiresAt revokedAt user { email } } } } }: context canceled
+Error: ssh: can't build tunnel for personal: websocket: failed to WebSocket dial: failed to send handshake request: Get "https://ams1.gateway.6pn.dev:443/": EOF
+

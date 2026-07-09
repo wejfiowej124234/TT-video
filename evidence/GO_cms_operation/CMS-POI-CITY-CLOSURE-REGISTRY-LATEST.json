@@ -1,0 +1,416 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure_registry.v1",
+  "stamp_utc": "2026-07-07T112945Z",
+  "closed_cities": [
+    {
+      "country_iso": "JP",
+      "city_zh": "东京",
+      "city_en": "Tokyo",
+      "closed_at_utc": "2026-07-05T10:51:30Z",
+      "poi_count": 9,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_TOKYO": "CLOSED"
+    },
+    {
+      "country_iso": "JP",
+      "city_zh": "大阪",
+      "city_en": "Osaka",
+      "closed_at_utc": "2026-07-05T10:57:15Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_OSAKA": "CLOSED"
+    },
+    {
+      "country_iso": "JP",
+      "city_zh": "京都",
+      "city_en": "Kyoto",
+      "closed_at_utc": "2026-07-05T11:01:02Z",
+      "poi_count": 7,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_KYOTO": "CLOSED"
+    },
+    {
+      "country_iso": "JP",
+      "city_zh": "札幌",
+      "city_en": "Sapporo",
+      "closed_at_utc": "2026-07-05T11:05:59Z",
+      "poi_count": 9,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_SAPPORO": "CLOSED"
+    },
+    {
+      "country_iso": "JP",
+      "city_zh": "福冈",
+      "city_en": "Fukuoka",
+      "closed_at_utc": "2026-07-05T15:37:00Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_FUKUOKA": "CLOSED"
+    },
+    {
+      "country_iso": "KR",
+      "city_zh": "首尔",
+      "city_en": "Seoul",
+      "closed_at_utc": "2026-07-05T17:00:56Z",
+      "poi_count": 9,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_SEOUL": "CLOSED"
+    },
+    {
+      "country_iso": "KR",
+      "city_zh": "釜山",
+      "city_en": "Busan",
+      "closed_at_utc": "2026-07-05T23:42:37Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-BUSAN-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_BUSAN": "CLOSED"
+    },
+    {
+      "country_iso": "KR",
+      "city_zh": "济州",
+      "city_en": "Jeju",
+      "closed_at_utc": "2026-07-06T00:39:37Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-JEJU-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_JEJU": "CLOSED"
+    },
+    {
+      "country_iso": "KR",
+      "city_zh": "仁川",
+      "city_en": "Incheon",
+      "closed_at_utc": "2026-07-06T01:04:54Z",
+      "poi_count": 6,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_INCHEON": "CLOSED"
+    },
+    {
+      "country_iso": "TH",
+      "city_zh": "曼谷",
+      "city_en": "Bangkok",
+      "closed_at_utc": "2026-07-06T03:40:54Z",
+      "poi_count": 10,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-BANGKOK-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_BANGKOK": "CLOSED"
+    },
+    {
+      "country_iso": "TH",
+      "city_zh": "普吉",
+      "city_en": "Phuket",
+      "closed_at_utc": "2026-07-06T04:45:45Z",
+      "poi_count": 9,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-PHUKET-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_PHUKET": "CLOSED"
+    },
+    {
+      "country_iso": "TH",
+      "city_zh": "清迈",
+      "city_en": "Chiang Mai",
+      "closed_at_utc": "2026-07-06T05:23:27Z",
+      "poi_count": 9,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-CHIANG-MAI-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_CHIANG_MAI": "CLOSED"
+    },
+    {
+      "country_iso": "SG",
+      "city_zh": "新加坡",
+      "city_en": "Singapore",
+      "closed_at_utc": "2026-07-06T06:43:48Z",
+      "poi_count": 10,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_SINGAPORE": "CLOSED"
+    },
+    {
+      "country_iso": "FR",
+      "city_zh": "巴黎",
+      "city_en": "Paris",
+      "closed_at_utc": "2026-07-06T07:47:18Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-PARIS-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_PARIS": "CLOSED"
+    },
+    {
+      "country_iso": "FR",
+      "city_zh": "里昂",
+      "city_en": "Lyon",
+      "closed_at_utc": "2026-07-06T08:39:20Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-LYON-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_LYON": "CLOSED"
+    },
+    {
+      "country_iso": "FR",
+      "city_zh": "尼斯",
+      "city_en": "Nice",
+      "closed_at_utc": "2026-07-06T09:24:58Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-NICE-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_NICE": "CLOSED"
+    },
+    {
+      "country_iso": "US",
+      "city_zh": "旧金山",
+      "city_en": "San Francisco",
+      "closed_at_utc": "2026-07-06T10:13:32Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SAN-FRANCISCO-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_SAN_FRANCISCO": "CLOSED"
+    },
+    {
+      "country_iso": "US",
+      "city_zh": "拉斯维加斯",
+      "city_en": "Las Vegas",
+      "closed_at_utc": "2026-07-06T10:57:23Z",
+      "poi_count": 7,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-LAS-VEGAS-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_LAS_VEGAS": "CLOSED"
+    },
+    {
+      "country_iso": "US",
+      "city_zh": "洛杉矶",
+      "city_en": "Los Angeles",
+      "closed_at_utc": "2026-07-06T11:43:34Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-LOS-ANGELES-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_LOS_ANGELES": "CLOSED"
+    },
+    {
+      "country_iso": "US",
+      "city_zh": "纽约",
+      "city_en": "New York",
+      "closed_at_utc": "2026-07-06T12:38:10Z",
+      "poi_count": 10,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-NEW-YORK-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_NEW_YORK": "CLOSED"
+    },
+    {
+      "country_iso": "AU",
+      "city_zh": "悉尼",
+      "city_en": "Sydney",
+      "closed_at_utc": "2026-07-06T14:01:20Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SYDNEY-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_SYDNEY": "CLOSED"
+    },
+    {
+      "country_iso": "AU",
+      "city_zh": "墨尔本",
+      "city_en": "Melbourne",
+      "closed_at_utc": "2026-07-06T14:45:36Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-MELBOURNE-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_MELBOURNE": "CLOSED"
+    },
+    {
+      "country_iso": "AU",
+      "city_zh": "黄金海岸",
+      "city_en": "Gold Coast",
+      "closed_at_utc": "2026-07-06T15:25:35Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-GOLD-COAST-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_GOLD_COAST": "CLOSED"
+    },
+    {
+      "country_iso": "ES",
+      "city_zh": "巴塞罗那",
+      "city_en": "Barcelona",
+      "closed_at_utc": "2026-07-06T16:22:17Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-BARCELONA-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_BARCELONA": "CLOSED"
+    },
+    {
+      "country_iso": "ES",
+      "city_zh": "马德里",
+      "city_en": "Madrid",
+      "closed_at_utc": "2026-07-06T17:00:28Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-MADRID-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_MADRID": "CLOSED"
+    },
+    {
+      "country_iso": "ES",
+      "city_zh": "塞维利亚",
+      "city_en": "Seville",
+      "closed_at_utc": "2026-07-06T17:32:54Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SEVILLE-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_SEVILLE": "CLOSED"
+    },
+    {
+      "country_iso": "AE",
+      "city_zh": "阿布扎比",
+      "city_en": "Abu Dhabi",
+      "closed_at_utc": "2026-07-07T00:37:46Z",
+      "poi_count": 8,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-ABU-DHABI-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_ABU_DHABI": "CLOSED"
+    },
+    {
+      "country_iso": "AE",
+      "city_zh": "迪拜",
+      "city_en": "Dubai",
+      "closed_at_utc": "2026-07-07T01:25:12Z",
+      "poi_count": 9,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_DUBAI": "CLOSED"
+    },
+    {
+      "country_iso": "AE",
+      "city_zh": "沙迦",
+      "city_en": "Sharjah",
+      "closed_at_utc": "2026-07-07T02:02:27Z",
+      "poi_count": 7,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_SHARJAH": "CLOSED"
+    },
+    {
+      "country_iso": "CN",
+      "city_zh": "北京",
+      "city_en": "Beijing",
+      "closed_at_utc": "2026-07-07T03:17:52Z",
+      "poi_count": 11,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-BEIJING-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_BEIJING": "CLOSED"
+    },
+    {
+      "country_iso": "CN",
+      "city_zh": "上海",
+      "city_en": "Shanghai",
+      "closed_at_utc": "2026-07-07T04:19:44Z",
+      "poi_count": 10,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SHANGHAI-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_SHANGHAI": "CLOSED"
+    },
+    {
+      "country_iso": "CN",
+      "city_zh": "广州",
+      "city_en": "Guangzhou",
+      "closed_at_utc": "2026-07-07T05:12:30Z",
+      "poi_count": 10,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-GUANGZHOU-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_GUANGZHOU": "CLOSED"
+    },
+    {
+      "country_iso": "CN",
+      "city_zh": "成都",
+      "city_en": "Chengdu",
+      "closed_at_utc": "2026-07-07T06:06:17Z",
+      "poi_count": 10,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-CHENGDU-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_CHENGDU": "CLOSED"
+    },
+    {
+      "country_iso": "CN",
+      "city_zh": "杭州",
+      "city_en": "Hangzhou",
+      "closed_at_utc": "2026-07-07T06:54:56Z",
+      "poi_count": 10,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-HANGZHOU-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_HANGZHOU": "CLOSED"
+    },
+    {
+      "country_iso": "CN",
+      "city_zh": "西安",
+      "city_en": "Xi'an",
+      "closed_at_utc": "2026-07-07T10:04:49Z",
+      "poi_count": 10,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-XIAN-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_XIAN": "CLOSED"
+    },
+    {
+      "country_iso": "CN",
+      "city_zh": "厦门",
+      "city_en": "Xiamen",
+      "closed_at_utc": "2026-07-07T10:33:06Z",
+      "poi_count": 10,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-XIAMEN-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_XIAMEN": "CLOSED"
+    },
+    {
+      "country_iso": "CN",
+      "city_zh": "青岛",
+      "city_en": "Qingdao",
+      "closed_at_utc": "2026-07-07T11:02:17Z",
+      "poi_count": 10,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-QINGDAO-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_QINGDAO": "CLOSED"
+    },
+    {
+      "country_iso": "CN",
+      "city_zh": "大理",
+      "city_en": "Dali",
+      "closed_at_utc": "2026-07-07T11:29:45Z",
+      "poi_count": 10,
+      "closure_evidence": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CLOSURE-LATEST.json",
+      "TT_CMS_POI_CITY_DALI": "CLOSED"
+    }
+  ],
+  "active_city": null,
+  "TT_CMS_POI_ACTIVE_CITY": null,
+  "jp_pilot_wave_complete": true,
+  "TT_CMS_POI_CITY_FUKUOKA": "CLOSED",
+  "updated_at_utc": "2026-07-07T02:21:44.595Z",
+  "active_country": {
+    "country_iso": "CN",
+    "country_zh": "中国",
+    "status": "ACTIVE"
+  },
+  "active_wave": "POI-WAVE-10-CN-PILOT",
+  "jp_country_closed_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+  "kr_scope_lock": "evidence/GO_cms_operation/CMS-KR-POI-CATALOG-SCOPE-LOCK-LATEST.json",
+  "template_country": "JP",
+  "TT_CMS_POI_CITY_SEOUL": "CLOSED",
+  "TT_CMS_POI_CITY_BUSAN": "CLOSED",
+  "TT_CMS_POI_CITY_JEJU": "CLOSED",
+  "TT_CMS_POI_CITY_INCHEON": "CLOSED",
+  "kr_country_closed_ssot": "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+  "th_scope_lock": "evidence/GO_cms_operation/CMS-TH-POI-CATALOG-SCOPE-LOCK-LATEST.json",
+  "template_countries": [
+    "JP",
+    "KR",
+    "TH",
+    "SG",
+    "FR",
+    "US",
+    "AU",
+    "ES",
+    "AE"
+  ],
+  "TT_CMS_POI_CITY_BANGKOK": "CLOSED",
+  "TT_CMS_POI_CITY_PHUKET": "CLOSED",
+  "TT_CMS_POI_CITY_CHIANG_MAI": "CLOSED",
+  "th_country_closed_ssot": "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+  "sg_scope_lock": "evidence/GO_cms_operation/CMS-SG-POI-CATALOG-SCOPE-LOCK-LATEST.json",
+  "TT_CMS_POI_CITY_SINGAPORE": "CLOSED",
+  "fr_scope_lock": "evidence/GO_cms_operation/CMS-FR-POI-CATALOG-SCOPE-LOCK-LATEST.json",
+  "TT_CMS_POI_CITY_PARIS": "CLOSED",
+  "TT_CMS_POI_CITY_LYON": "CLOSED",
+  "TT_CMS_POI_CITY_NICE": "CLOSED",
+  "us_scope_lock": "evidence/GO_cms_operation/CMS-US-POI-CATALOG-SCOPE-LOCK-LATEST.json",
+  "TT_CMS_POI_CITY_SAN_FRANCISCO": "CLOSED",
+  "TT_CMS_POI_CITY_LAS_VEGAS": "CLOSED",
+  "TT_CMS_POI_CITY_LOS_ANGELES": "CLOSED",
+  "TT_CMS_POI_CITY_NEW_YORK": "CLOSED",
+  "au_scope_lock": "evidence/GO_cms_operation/CMS-AU-POI-CATALOG-SCOPE-LOCK-LATEST.json",
+  "TT_CMS_POI_CITY_SYDNEY": "CLOSED",
+  "TT_CMS_POI_CITY_MELBOURNE": "CLOSED",
+  "TT_CMS_POI_CITY_GOLD_COAST": "CLOSED",
+  "es_scope_lock": "evidence/GO_cms_operation/CMS-ES-POI-CATALOG-SCOPE-LOCK-LATEST.json",
+  "TT_CMS_POI_CITY_BARCELONA": "CLOSED",
+  "TT_CMS_POI_CITY_MADRID": "CLOSED",
+  "TT_CMS_POI_CITY_SEVILLE": "CLOSED",
+  "ae_scope_lock": "evidence/GO_cms_operation/CMS-AE-POI-CATALOG-SCOPE-LOCK-LATEST.json",
+  "TT_CMS_POI_CITY_ABU_DHABI": "CLOSED",
+  "TT_CMS_POI_CITY_DUBAI": "CLOSED",
+  "TT_CMS_POI_CITY_SHARJAH": "CLOSED",
+  "cn_scope_lock": "evidence/GO_cms_operation/CMS-CN-POI-CATALOG-SCOPE-LOCK-LATEST.json",
+  "TT_CMS_POI_CITY_BEIJING": "CLOSED",
+  "TT_CMS_POI_CITY_SHANGHAI": "CLOSED",
+  "TT_CMS_POI_CITY_GUANGZHOU": "CLOSED",
+  "TT_CMS_POI_CITY_CHENGDU": "CLOSED",
+  "TT_CMS_POI_CITY_HANGZHOU": "CLOSED",
+  "TT_CMS_POI_CITY_XIAN": "CLOSED",
+  "TT_CMS_POI_CITY_XIAMEN": "CLOSED",
+  "TT_CMS_POI_CITY_QINGDAO": "CLOSED",
+  "TT_CMS_POI_CITY_DALI": "CLOSED"
+}

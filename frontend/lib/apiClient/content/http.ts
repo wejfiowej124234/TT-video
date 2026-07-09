@@ -1,5 +1,6 @@
 import { apiUrl } from "../../api";
 import { routes } from "@/lib/api/routes";
+import { adminCatalogPublishQueueApiBase } from "@/lib/admin/adminCatalogPublishQueueNav";
 import { parseResponse, requestId, writeRequestHeaders, logApiJsonStatusNotOk } from "../core";
 
 export type AdminCatalogPublishStatus = "draft" | "in_review" | "published" | "archived";
@@ -455,6 +456,203 @@ export async function getAdminContentMediaAssets(params?: {
   if (params?.country_id) q.set("country_id", params.country_id);
   const suffix = q.toString() ? `?${q}` : "";
   return adminContentFetch<{ items?: AdminCatalogMediaAssetRow[] }>(`${routes.adminContentMediaAssets}${suffix}`);
+}
+
+export async function getAdminContentMediaAsset(id: string) {
+  return adminContentFetch<{ item?: AdminCatalogMediaAssetRow }>(`${routes.adminContentMediaAssets}/${id}`);
+}
+
+export async function postAdminContentMediaAsset(body: {
+  asset_kind: string;
+  source_type: string;
+  url: string;
+  source_page_url?: string;
+  country_id?: string;
+}) {
+  return adminContentFetch<{ item?: AdminCatalogMediaAssetRow }>(routes.adminContentMediaAssets, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+export async function patchAdminContentMediaAsset(
+  id: string,
+  body: { version: number; url?: string; source_page_url?: string },
+) {
+  return adminContentFetch<{ item?: AdminCatalogMediaAssetRow }>(`${routes.adminContentMediaAssets}/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+export async function postAdminContentMediaAssetWorkflow(
+  id: string,
+  action: "submit-review" | "publish" | "archive" | "request-publish",
+  body: { version: number; reason?: string },
+) {
+  return adminContentFetch<{ version?: number }>(`${routes.adminContentMediaAssets}/${id}/${action}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+export async function postAdminCatalogEntityWorkflow(
+  entityType: string,
+  entityId: string,
+  action: "submit-review" | "publish" | "archive" | "request-publish",
+  body: { version: number; reason?: string },
+) {
+  const base = adminCatalogPublishQueueApiBase(entityType);
+  if (!base) throw new Error("unsupported_catalog_entity");
+  const workflowAction = action === "submit-review" ? "submit-review" : action;
+  return adminContentFetch<{ version?: number }>(`${base}/${entityId}/${workflowAction}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+export type AdminCatalogTranslationRow = {
+  id: string;
+  entity_type: string;
+  entity_id: string;
+  locale: string;
+  field_key: string;
+  value: string;
+  publish_status: AdminCatalogPublishStatus;
+  version: number;
+  updated_at?: string;
+};
+
+export type AdminCatalogSeoRow = {
+  id: string;
+  entity_type: string;
+  entity_id: string;
+  locale: string;
+  title?: string | null;
+  description?: string | null;
+  keywords?: string | null;
+  canonical_url?: string | null;
+  og_image_url?: string | null;
+  publish_status: AdminCatalogPublishStatus;
+  version: number;
+  updated_at?: string;
+};
+
+export async function getAdminContentTranslations(params?: {
+  entity_type?: string;
+  entity_id?: string;
+  locale?: string;
+  publish_status?: string;
+}) {
+  const q = new URLSearchParams();
+  if (params?.entity_type) q.set("entity_type", params.entity_type);
+  if (params?.entity_id) q.set("entity_id", params.entity_id);
+  if (params?.locale) q.set("locale", params.locale);
+  if (params?.publish_status) q.set("publish_status", params.publish_status);
+  const suffix = q.toString() ? `?${q}` : "";
+  return adminContentFetch<{ items?: AdminCatalogTranslationRow[] }>(
+    `${routes.adminContentTranslations}${suffix}`,
+  );
+}
+
+export async function postAdminContentTranslation(body: {
+  entity_type: string;
+  entity_id: string;
+  locale: string;
+  field_key: string;
+  value: string;
+}) {
+  return adminContentFetch<{ item?: AdminCatalogTranslationRow }>(routes.adminContentTranslations, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+export async function patchAdminContentTranslation(id: string, body: { version: number; value?: string }) {
+  return adminContentFetch<{ item?: AdminCatalogTranslationRow }>(`${routes.adminContentTranslations}/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+export async function postAdminContentTranslationWorkflow(
+  id: string,
+  action: "submit-review" | "publish" | "archive",
+  body: { version: number },
+) {
+  return adminContentFetch<{ version?: number }>(`${routes.adminContentTranslations}/${id}/${action}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+export async function getAdminContentSeo(params?: {
+  entity_type?: string;
+  entity_id?: string;
+  locale?: string;
+  publish_status?: string;
+}) {
+  const q = new URLSearchParams();
+  if (params?.entity_type) q.set("entity_type", params.entity_type);
+  if (params?.entity_id) q.set("entity_id", params.entity_id);
+  if (params?.locale) q.set("locale", params.locale);
+  if (params?.publish_status) q.set("publish_status", params.publish_status);
+  const suffix = q.toString() ? `?${q}` : "";
+  return adminContentFetch<{ items?: AdminCatalogSeoRow[] }>(`${routes.adminContentSeo}${suffix}`);
+}
+
+export async function postAdminContentSeo(body: {
+  entity_type: string;
+  entity_id: string;
+  locale?: string;
+  title?: string;
+  description?: string;
+  keywords?: string;
+  canonical_url?: string;
+  og_image_url?: string;
+}) {
+  return adminContentFetch<{ item?: AdminCatalogSeoRow }>(routes.adminContentSeo, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+export async function patchAdminContentSeo(
+  id: string,
+  body: {
+    version: number;
+    title?: string;
+    description?: string;
+    keywords?: string;
+    canonical_url?: string;
+    og_image_url?: string;
+  },
+) {
+  return adminContentFetch<{ item?: AdminCatalogSeoRow }>(`${routes.adminContentSeo}/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+export async function postAdminContentSeoWorkflow(
+  id: string,
+  action: "submit-review" | "publish" | "archive",
+  body: { version: number },
+) {
+  return adminContentFetch<{ version?: number }>(`${routes.adminContentSeo}/${id}/${action}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
 }
 
 export async function getAdminContentLandingAmbient(countryId: string) {

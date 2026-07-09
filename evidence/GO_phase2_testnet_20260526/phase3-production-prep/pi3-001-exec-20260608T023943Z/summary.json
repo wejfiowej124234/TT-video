@@ -1,0 +1,17 @@
+{
+  "kind": "traveltrust.pi3_001_fly_pg_backup_disaster_recovery_execution.v1",
+  "recorded_utc": "20260608T023943Z",
+  "verdict": "PI3-001_HOLD",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "execution_sprint": "152",
+  "b475_status": "PLANNED",
+  "last_restore_drill_utc": "2026-06-07T03:51:45Z",
+  "staging_drill_evidence_ready": true,
+  "prod_drill_evidence_ready": false,
+  "fly_cli_probe_ok": true,
+  "staging_fly_backup": "SKIP",
+  "prod_fly_backup": "SKIP",
+  "pi3_002_execution_ref": "151 PI3-002 HOLD until Owner domain cutover",
+  "catalog_freeze": "CATALOG_RELEASE_FREEZE_GO",
+  "operations_freeze": "OPERATIONS_PLATFORM_GO"
+}

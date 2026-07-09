@@ -1,0 +1,14 @@
+{
+  "gate_ids": [
+    "G24-P-05",
+    "G24-P-06",
+    "G24-P-07",
+    "G24-P-08",
+    "G24-P-09"
+  ],
+  "stamp_utc": "20260616T023302Z",
+  "phase": "\u2461",
+  "scope": "TTG-TOKENOMICS-FREEZE-V1 GovFreeze Sepolia pre-broadcast",
+  "verdict": "PASS",
+  "jurisdiction_registry": "config/jurisdiction_country_pool_net_profit.sepolia.json"
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T14:24:51Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AU",
+    "city_zh": "墨尔本",
+    "city_en": "Melbourne",
+    "matrix_ids": [
+      "PH-AU-179-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AU-179-ATR",
+      "legacy_value": "菲利普岛",
+      "poi_id": "0f6ad6a2-66b9-4b84-8d74-90f617b2db44",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-179-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

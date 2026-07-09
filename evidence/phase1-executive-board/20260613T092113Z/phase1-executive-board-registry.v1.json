@@ -1,0 +1,63 @@
+{
+  "schema": "traveltrust.phase1_executive_board.v1",
+  "version": "1.14.0",
+  "aggregated_domains": [
+    "FZ",
+    "QA2",
+    "PF",
+    "DOA",
+    "CA",
+    "UXA",
+    "AG",
+    "CX"
+  ],
+  "generated_at": "2026-06-13T09:21:13.642174+00:00",
+  "artifacts": [
+    "phase1-readiness-score.v1.json",
+    "domain-completion-matrix.v1.json",
+    "open-p0-findings.v1.json",
+    "open-p1-findings.v1.json",
+    "top10-root-causes.v1.json",
+    "top20-blockers.v1.json",
+    "closure-sprint-queue.v1.json",
+    "freeze-recommendation.v1.json",
+    "estimated-closure.v1.json",
+    "execution-rate.v1.json",
+    "efficiency-scores.v1.json",
+    "phase1-exit-forecast.v1.json",
+    "execution-audit-link.v1.json",
+    "phase1-executive-board-registry.v1.json",
+    "EXECUTIVE-FREEZE-DASHBOARD.md",
+    "execution-audit/"
+  ],
+  "readiness": {
+    "schema": "traveltrust.phase1_executive_readiness.v1",
+    "score": 90,
+    "band": "FREEZE_CANDIDATE",
+    "freeze_recommendation": "GO",
+    "thresholds": {
+      "NO_GO": "<80",
+      "HOLD": "80-89",
+      "FREEZE_CANDIDATE": "90-94",
+      "PHASE1_EXIT_READY": "95+"
+    },
+    "phase2_review_allowed": true
+  },
+  "freeze_recommendation": "GO",
+  "execution_audit": {
+    "forecast": {
+      "current_score": 90,
+      "current_band": "FREEZE_CANDIDATE",
+      "days_to_FREEZE_CANDIDATE": 0,
+      "date_FREEZE_CANDIDATE_utc": "2026-06-13",
+      "days_to_PHASE1_EXIT_READY": 5,
+      "date_PHASE1_EXIT_READY_utc": "2026-06-18",
+      "assumed_readiness_points_per_week": 6.3,
+      "if_fix_top3_root_causes": {
+        "readiness_delta": 19,
+        "projected_score": 100
+      }
+    },
+    "top_opportunity": null
+  }
+}

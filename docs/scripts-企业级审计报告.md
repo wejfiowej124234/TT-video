@@ -47,7 +47,7 @@
 
 - **顺序**：先清端口 → 再起数据库 → 再起后端 → 等约 30 秒 → 再起前端。依赖关系正确。
 - **风险**：首次 `cargo run` 编译可能超过 30 秒，脚本已提示「约 1 分钟后运行 e2e-verify.bat」。
-- **改进**：已在前端启动说明中增加「请等待前端窗口出现 Ready on http://localhost:3000 后再用浏览器打开」。
+- **改进**：已在前端启动说明中增加「请等待前端窗口出现 Ready on http://localhost:3012 后再用浏览器打开」（B-445 / CFG-017）。
 
 ### 3.2 run-frontend.bat
 
@@ -78,8 +78,8 @@
 
 ### 4.3 前端
 
-- **端口**：Next.js `next dev` 默认 3000，未改 port；run-frontend 未传 -p，故为 3000。
-- **URL**：http://localhost:3000、http://localhost:3000/auth/login 正确。
+- **端口**：`frontend/package.json` 固定 `npm run dev` → **3012**（CFG-017 · 与 `docs/spec/38` 一致）。
+- **URL**：http://localhost:3012、http://localhost:3012/auth/login 正确。
 - **结论**：能启动前端；在「等 Ready 后再访问」的前提下，前端页面可正常打开。
 
 ---
@@ -101,7 +101,7 @@ e2e-verify.bat 会检查 3012 是否 LISTENING 且根路径 HTTP 可访问，能
 
 1. **stop-all.bat**：新增「仅终止」脚本，不关 Docker，便于只重启前后端。
 2. **start-api-with-seed.bat**：增加 `docker info` 前置检查；compose 失败时提示检查 docker-compose.yml 与 5432；强调「等 Ready 后再打开浏览器」。
-3. **start_dev.sh**：前端启动前 `export PORT="$FRONTEND_PORT"`，保证 Next 使用配置端口（默认 3000）。
+3. **start_dev.sh**：前端启动前 `export PORT="$FRONTEND_PORT"`，保证 Next 使用配置端口（默认 **3012**）。
 
 ---
 

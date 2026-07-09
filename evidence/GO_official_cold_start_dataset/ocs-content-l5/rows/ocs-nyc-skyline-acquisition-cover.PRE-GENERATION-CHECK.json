@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T153000Z",
+  "filename": "ocs-nyc-skyline-acquisition-cover.jpg",
+  "row": 39,
+  "chain_id": "nyc-skyline",
+  "country_code": "US",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "blocked_elements_avoided": [
+      "recognizable_album_covers",
+      "band_logos",
+      "celebrity_portraits",
+      "nyc_skyline"
+    ],
+    "safe_expression": "通用色块封套黑胶静物 · 非天际线"
+  },
+  "acquisition_product_identity_plan": {
+    "pass": true,
+    "vs_closed_chains": "黑胶 vs 镜头/和纸/零食/泰丝/礼盒/海报",
+    "vs_row37_38": "静物 vs 向导/Provider"
+  },
+  "checks": {
+    "manifest_alignment": {
+      "pass": true
+    },
+    "country_consistency_us": {
+      "pass": true
+    },
+    "nine_class_framework_frozen": true
+  }
+}

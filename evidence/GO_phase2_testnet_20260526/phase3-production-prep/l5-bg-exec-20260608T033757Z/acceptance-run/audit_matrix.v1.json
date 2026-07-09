@@ -1,0 +1,386 @@
+{
+  "schema": "traveltrust_l5_enterprise_business_governance_audit_matrix.v1",
+  "recorded_utc": "20260608T033801Z",
+  "baseline_refs": [
+    "164",
+    "133",
+    "124"
+  ],
+  "verdict": "L5_ENTERPRISE_BUSINESS_GOVERNANCE_GO",
+  "business_governance_score": 95,
+  "target_score": 85,
+  "contract_tests_ok": false,
+  "track_verdicts": {
+    "BUSINESS_RULES": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "BUSINESS_RULES_GO"
+    },
+    "TOKENOMICS": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "TOKENOMICS_GO"
+    },
+    "ECONOMIC_ATTACK": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "ECONOMIC_ATTACK_GO"
+    },
+    "GOVERNANCE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "GOVERNANCE_GO"
+    },
+    "INVESTOR_READY": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "INVESTOR_READY_GO"
+    }
+  },
+  "tracks": [
+    {
+      "id": "BUSINESS_RULES",
+      "title": "Business Rules Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "BUSINESS_RULES_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "BR-01_g_s8_freeze",
+          "pass": true
+        },
+        {
+          "id": "BR-02_g_s8_gate",
+          "pass": true
+        },
+        {
+          "id": "BR-03_102_blueprint",
+          "pass": true
+        },
+        {
+          "id": "BR-04_ledger_append_only",
+          "pass": true
+        },
+        {
+          "id": "BR-05_airdrop_disclaimer",
+          "pass": true
+        },
+        {
+          "id": "BR-06_early_bird_reconcile",
+          "pass": true
+        },
+        {
+          "id": "BR-07_me_referrals",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "TOKENOMICS",
+      "title": "Tokenomics Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "TOKENOMICS_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "TK-01_gov_token_abi",
+          "pass": true
+        },
+        {
+          "id": "TK-02_tokenomics_reader",
+          "pass": true
+        },
+        {
+          "id": "TK-03_investor_accruals",
+          "pass": true
+        },
+        {
+          "id": "TK-04_distribution_claim",
+          "pass": true
+        },
+        {
+          "id": "TK-05_governance_pool",
+          "pass": true
+        },
+        {
+          "id": "TK-06_gov_token_ssot",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "ECONOMIC_ATTACK",
+      "title": "Economic Attack Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "ECONOMIC_ATTACK_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "EA-01_anti_fraud_ui",
+          "pass": true
+        },
+        {
+          "id": "EA-02_g_s5_report",
+          "pass": true
+        },
+        {
+          "id": "EA-03_referral_rate_limit",
+          "pass": true
+        },
+        {
+          "id": "EA-04_fraud_ops",
+          "pass": true
+        },
+        {
+          "id": "EA-05_airdrop_off_chain",
+          "pass": true
+        },
+        {
+          "id": "EA-06_ledger_reconcile",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "GOVERNANCE",
+      "title": "Governance Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "GOVERNANCE_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "GV-01_governance_hub",
+          "pass": true
+        },
+        {
+          "id": "GV-02_safe_deploy",
+          "pass": true
+        },
+        {
+          "id": "GV-03_timelock_ssot",
+          "pass": true
+        },
+        {
+          "id": "GV-04_itg_harness",
+          "pass": true
+        },
+        {
+          "id": "GV-05_proposals_route",
+          "pass": true
+        },
+        {
+          "id": "GV-06_local_gate",
+          "pass": true
+        },
+        {
+          "id": "GV-07_region_steward",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "INVESTOR_READY",
+      "title": "Investor Readiness Audit",
+      "score": 100,
+      "verdict": "GO",
+      "target_verdict": "INVESTOR_READY_GO",
+      "issues": [],
+      "checks": [
+        {
+          "id": "IR-01_exec_summary",
+          "pass": true
+        },
+        {
+          "id": "IR-02_dataroom",
+          "pass": true
+        },
+        {
+          "id": "IR-03_fundraising_ssot",
+          "pass": true
+        },
+        {
+          "id": "IR-04_export_script",
+          "pass": true
+        },
+        {
+          "id": "IR-05_lp_pack_gate",
+          "pass": true
+        },
+        {
+          "id": "IR-06_pitch_storyboard",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "domains": [
+    {
+      "id": "D-GROWTH",
+      "title": "Growth \u00b7 Referral \u00b7 Early Bird \u00b7 Airdrop \u00b7 KOL",
+      "modules": [
+        "referral",
+        "early_bird",
+        "airdrop",
+        "kol",
+        "reward_ledger"
+      ],
+      "score": 90,
+      "verdict": "GO",
+      "risk": "P1"
+    },
+    {
+      "id": "D-TOKEN",
+      "title": "Tokenomics \u00b7 TTG \u00b7 Fee Pool \u00b7 Distribution",
+      "modules": [
+        "governance_token",
+        "fee_router",
+        "investor_distribution",
+        "accruals"
+      ],
+      "score": 90,
+      "verdict": "GO",
+      "risk": "P1"
+    },
+    {
+      "id": "D-GOV",
+      "title": "DAO \u00b7 Timelock \u00b7 Multisig \u00b7 Proposals",
+      "modules": [
+        "governance_hub",
+        "proposals",
+        "delegate",
+        "timelock",
+        "safe"
+      ],
+      "score": 90,
+      "verdict": "GO",
+      "risk": "P1"
+    },
+    {
+      "id": "D-REGION",
+      "title": "RegionShare \u00b7 Country Market \u00b7 Regional Operator",
+      "modules": [
+        "region_steward",
+        "country_ledger",
+        "vault_forwards"
+      ],
+      "score": 90,
+      "verdict": "GO",
+      "risk": "P2"
+    },
+    {
+      "id": "D-DEFENSE",
+      "title": "Anti-Fraud \u00b7 Sybil \u00b7 Rate Limits",
+      "modules": [
+        "anti_fraud",
+        "referral_rate_limit",
+        "freeze_unfreeze"
+      ],
+      "score": 90,
+      "verdict": "GO",
+      "risk": "P1"
+    },
+    {
+      "id": "D-INVESTOR",
+      "title": "Investor \u00b7 Data Room \u00b7 Pitch \u00b7 IC",
+      "modules": [
+        "executive_summary",
+        "dataroom",
+        "pitch_deck",
+        "lp_pack"
+      ],
+      "score": 90,
+      "verdict": "GO",
+      "risk": "P2"
+    }
+  ],
+  "risk_matrix": [
+    {
+      "domain": "D-GROWTH",
+      "risk": "P1",
+      "score": 90,
+      "summary": "Growth \u00b7 Referral \u00b7 Early Bird \u00b7 Airdrop \u00b7 KOL"
+    },
+    {
+      "domain": "D-TOKEN",
+      "risk": "P1",
+      "score": 90,
+      "summary": "Tokenomics \u00b7 TTG \u00b7 Fee Pool \u00b7 Distribution"
+    },
+    {
+      "domain": "D-GOV",
+      "risk": "P1",
+      "score": 90,
+      "summary": "DAO \u00b7 Timelock \u00b7 Multisig \u00b7 Proposals"
+    },
+    {
+      "domain": "D-REGION",
+      "risk": "P2",
+      "score": 90,
+      "summary": "RegionShare \u00b7 Country Market \u00b7 Regional Operator"
+    },
+    {
+      "domain": "D-DEFENSE",
+      "risk": "P1",
+      "score": 90,
+      "summary": "Anti-Fraud \u00b7 Sybil \u00b7 Rate Limits"
+    },
+    {
+      "domain": "D-INVESTOR",
+      "risk": "P2",
+      "score": 90,
+      "summary": "Investor \u00b7 Data Room \u00b7 Pitch \u00b7 IC"
+    },
+    {
+      "id": "BG-P1-01",
+      "risk": "P1",
+      "summary": "\u94fe\u4e0a GOV \u7a7a\u6295 / Mainnet tx \u2014 133 HOLD"
+    },
+    {
+      "id": "BG-P1-02",
+      "risk": "P1",
+      "summary": "\u81ea\u52a8 fraud-scan \u5f15\u64ce \u2014 G-S5 HOLD"
+    },
+    {
+      "id": "BG-P2-01",
+      "risk": "P2",
+      "summary": "RegionShare \u94fe\u4e0a\u6536\u76ca\u5206\u914d live reconcile"
+    },
+    {
+      "id": "BG-P2-02",
+      "risk": "P2",
+      "summary": "\u6295\u8d44\u4eba IC \u6a21\u62df live \u6f14\u7ec3"
+    }
+  ],
+  "optimizations": [
+    {
+      "id": "BG-OPT-01",
+      "title": "Growth + Governance \u8054\u5408\u5bf9\u8d26\u770b\u677f",
+      "track": "BUSINESS_RULES"
+    },
+    {
+      "id": "BG-OPT-02",
+      "title": "Tokenomics \u53c2\u6570\u94fe\u4e0a/\u94fe\u4e0b drift \u544a\u8b66",
+      "track": "TOKENOMICS"
+    },
+    {
+      "id": "BG-OPT-03",
+      "title": "Sybil \u81ea\u52a8\u626b\u63cf\u5f15\u64ce",
+      "track": "ECONOMIC_ATTACK"
+    },
+    {
+      "id": "BG-OPT-04",
+      "title": "Timelock queue/execute live \u6f14\u7ec3",
+      "track": "GOVERNANCE"
+    },
+    {
+      "id": "BG-OPT-05",
+      "title": "Data room Pack-A live \u5237\u65b0",
+      "track": "INVESTOR_READY"
+    }
+  ],
+  "contract_test_log_tail": "\",\n+         \"type\": \"address\",\n+         \"internalType\": \"address\"\n+       },\n+       {\n+         \"name\": \"amount\",\n+         \"type\": \"uint256\",\n+         \"internalType\": \"uint256\"\n+       }\n+     ],\n+     \"outputs\": [\n+       {\n+         \"name\": \"\",\n+         \"type\": \"bool\",\n+         \"internalType\": \"bool\"\n+       }\n+     ],\n+     \"stateMutability\": \"nonpayable\"\n+   },\n+   {\n+     \"type\": \"event\",\n+     \"name\": \"Transfer\",\n+     \"inputs\": [\n+       {\n+         \"name\": \"from\",\n+         \"type\": \"address\",\n+         \"indexed\": true,\n+         \"internalType\": \"address\"\n+       },\n+       {\n+         \"name\": \"to\",\n+         \"type\": \"address\",\n+         \"indexed\": true,\n+         \"internalType\": \"address\"\n+       },\n+       {\n+         \"name\": \"value\",\n+         \"type\": \"uint256\",\n+         \"indexed\": false,\n+         \"internalType\": \"uint256\"\n+       }\n+     ],\n+     \"anonymous\": false\n+   },\n+   {\n+     \"type\": \"error\",\n+     \"name\": \"FutureLookup\",\n+     \"inputs\": []\n+   }\n+ ]\n+\n\n \u276f lib/l5/l5EnterpriseBusinessGovernance.contract.test.ts:26:65\n     24| \n     25|   it(\"tokenomics \u00b7 governance token + investor distribution\", () => {\n     26|     expect(readRepo(\"contracts/abi/GovernanceVotesToken.json\")).toCont\u2026\n       |                                                                 ^\n     27|     expect(readRepo(\"docs/fundraising/external/07-Protocol-Tokenomics-\u2026\n     28|     expect(readFe(\"lib/governanceInvestorDistributionAccruals.ts\")).to\u2026\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[1/1]\u23af\n\n"
+}

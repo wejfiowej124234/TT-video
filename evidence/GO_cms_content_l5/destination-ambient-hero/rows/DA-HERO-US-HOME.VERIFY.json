@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.cms_destination_ambient_hero_row_verify.v1",
+  "stamp_utc": "20260705T100627Z",
+  "matrix_id": "DA-HERO-US-HOME",
+  "pipeline_matrix_id": "DA-US-HOME",
+  "product_name": "Destination Ambient Hero",
+  "row": {
+    "matrix_id": "DA-HERO-US-HOME",
+    "pipeline_matrix_id": "DA-US-HOME",
+    "execution_order": 6,
+    "country_zh": "美国",
+    "country_iso": "US",
+    "landmark_zh": "纽约曼哈顿天际线",
+    "ts_reference_slug": "1514565131-fce0801e5785",
+    "pipeline_public_url_file": "ocs-nyc-skyline-community-media.jpg",
+    "hero_filename": "da-hero-us-home-v1.jpg",
+    "hero_width_px": 3840,
+    "hero_height_px": 2160,
+    "visual_l5_status": "CLOSED",
+    "hero_lifecycle": "live"
+  },
+  "checks": [
+    {
+      "id": "hero_lifecycle_live",
+      "pass": true,
+      "detail": "live"
+    },
+    {
+      "id": "visual_l5_closed",
+      "pass": true,
+      "detail": "CLOSED"
+    },
+    {
+      "id": "catalog_api_url",
+      "pass": true,
+      "detail": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-us-home-v1.jpg"
+    },
+    {
+      "id": "catalog_hero_filename",
+      "pass": true,
+      "detail": "da-hero-us-home-v1.jpg"
+    },
+    {
+      "id": "public_http_200",
+      "pass": true,
+      "detail": "200"
+    },
+    {
+      "id": "hero_decode_dimensions",
+      "pass": true,
+      "detail": "3840×2160"
+    },
+    {
+      "id": "hero_tier_pass",
+      "pass": true,
+      "detail": "PASS (Hero Recommended)"
+    },
+    {
+      "id": "hero_aspect_16_9",
+      "pass": true,
+      "detail": "16:9 ±2%"
+    },
+    {
+      "id": "hero_min_bytes_16kb",
+      "pass": true,
+      "detail": "1449039B"
+    },
+    {
+      "id": "no_production_external_host",
+      "pass": true,
+      "detail": "owned hero url"
+    }
+  ],
+  "verify_tiers": {
+    "required": "PASS",
+    "minimum": "WARN",
+    "fail_below": "1920×1080"
+  },
+  "TT_CMS_DESTINATION_AMBIENT_HERO_ROW_VERIFY": "PASS"
+}

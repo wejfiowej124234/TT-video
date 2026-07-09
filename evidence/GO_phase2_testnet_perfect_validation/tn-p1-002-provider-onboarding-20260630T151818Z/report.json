@@ -1,0 +1,12 @@
+{
+  "schema": "tn_p1_002_provider_onboarding_staging.v1",
+  "stamp": "20260630T151818Z",
+  "phase": "② testnet",
+  "api": "https://tt-api-staging.fly.dev",
+  "merchant_email": "merchant@test.com",
+  "admin_email": "tourist@test.com",
+  "listing_id": "74490335-99c7-4ac0-aa3e-395755932bcb",
+  "final_marker": "TT_SMOKE_PROVIDER_ONBOARDING: OK",
+  "release_gate": "GO",
+  "honest_boundary": "② staging mock onboarding webhook + seed admin · merchant@test.com reuse path OK · ≠ ③ Production PSP/KYB GO"
+}

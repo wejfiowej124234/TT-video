@@ -1,0 +1,122 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_review.v1",
+  "stamp_utc": "20260704T143145Z",
+  "filename": "ocs-paris-art-provider-cover.jpg",
+  "chain_id": "paris-art",
+  "city": "巴黎",
+  "country_code": "FR",
+  "country_label": "法国",
+  "slot": "provider-cover",
+  "surface": "Provider",
+  "manifest_snapshot": {
+    "chain_id": "paris-art",
+    "city": "巴黎",
+    "country_code": "FR",
+    "country_label": "法国",
+    "chain_tags": [
+      "艺术",
+      "博物馆"
+    ],
+    "provider.title": "巴黎博物馆免排队 · 小团",
+    "provider.category": "experience",
+    "provider.description": "含卢浮宫预约与中文讲解，最多 6 人。",
+    "provider.cover_url": "/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+  },
+  "manifest_field_alignment": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "matrix_city_matches_manifest",
+        "pass": true,
+        "detail": "matrix=巴黎 manifest=巴黎"
+      },
+      {
+        "id": "country_code_present",
+        "pass": true,
+        "detail": "FR"
+      },
+      {
+        "id": "copy_label_non_empty",
+        "pass": true,
+        "detail": "巴黎博物馆免排队 · 小团"
+      },
+      {
+        "id": "copy_label_contains_city_or_chain_theme",
+        "pass": true,
+        "detail": "city in copy_label"
+      }
+    ],
+    "requirement": "图片与 Manifest 全字段 100% 同城同主题对齐"
+  },
+  "destination_authenticity_checklist": {
+    "architecture": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "streetscape": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "clothing": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "language_signage": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "transportation": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "natural_environment": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "food_dining": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "commercial_form": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "cultural_elements": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    }
+  },
+  "prohibited": {
+    "cross_country_elements": false,
+    "cross_city_elements": false,
+    "cross_culture_mixing": false
+  },
+  "TT_DESTINATION_AUTHENTICITY_REVIEW": "PASS"
+}

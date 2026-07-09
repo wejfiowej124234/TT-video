@@ -19,6 +19,7 @@ import {
   buildAdminGuideDetailRowDefs,
   GUIDE_DETAIL_RELATED_FOLD_LINKS,
 } from "./adminGuideDetailPageModel";
+import { AdminGuideRegistrationReviewCard } from "@/components/admin/AdminGuideRegistrationReviewCard";
 import { useAdminGuideDetailPage } from "./useAdminGuideDetailPage";
 import {
   ADMIN_DETAIL_FIELD_LABEL_CLASS,
@@ -34,7 +35,7 @@ import {
 export function AdminGuideDetailPageMain() {
   const { t } = useTranslation();
   const pageTitleId = useId();
-  const { guideId, loading, refreshing, error, guide, meta } = useAdminGuideDetailPage();
+  const { guideId, loading, refreshing, error, guide, meta, reload } = useAdminGuideDetailPage();
 
   const rows = guide ? buildAdminGuideDetailRowDefs(guide) : [];
 
@@ -118,6 +119,13 @@ export function AdminGuideDetailPageMain() {
           </AdminDetailContentPanel>
         )}
       </section>
+      {guide && typeof guide.status === "string" ? (
+        <AdminGuideRegistrationReviewCard
+          guideId={guideId}
+          status={guide.status}
+          onUpdated={reload}
+        />
+      ) : null}
     </AdminDetailPageChrome>
   );
 }

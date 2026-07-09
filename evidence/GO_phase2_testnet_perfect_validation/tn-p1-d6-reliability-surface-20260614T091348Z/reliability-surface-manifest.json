@@ -1,0 +1,490 @@
+{
+  "schema": "traveltrust.reliability_surface_manifest.v1",
+  "surfaces": [
+    {
+      "id": "T-P01",
+      "role": "traveler",
+      "path": "/",
+      "action": "landing_view",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "T-P02",
+      "role": "traveler",
+      "path": "/orders",
+      "action": "order_list",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "T-P03",
+      "role": "traveler",
+      "path": "/orders",
+      "action": "order_filter_search",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "T-P04",
+      "role": "traveler",
+      "path": "/market",
+      "action": "market_discover",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "T-P05",
+      "role": "traveler",
+      "path": "/market",
+      "action": "market_filter",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "T-P06",
+      "role": "traveler",
+      "path": "/orders",
+      "action": "escrow_detail",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "T-P07",
+      "role": "traveler",
+      "path": "/",
+      "action": "unlock_modal",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "T-P08",
+      "role": "traveler",
+      "path": "/me/settings",
+      "action": "wallet_connect",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "T-P09",
+      "role": "traveler",
+      "path": "/me/settings",
+      "action": "wallet_disconnect",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "T-P10",
+      "role": "traveler",
+      "path": "/me/identities",
+      "action": "identity_hub",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "T-P11",
+      "role": "traveler",
+      "path": "/community",
+      "action": "community_feed",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "community_feed_shell_visible",
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "T-P12",
+      "role": "traveler",
+      "path": "/me/settings",
+      "action": "settings_nav",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "G-P01",
+      "role": "guide",
+      "path": "/guide",
+      "action": "workbench_view",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "G-P02",
+      "role": "guide",
+      "path": "/orders",
+      "action": "guide_hat_orders",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "G-P03",
+      "role": "guide",
+      "path": "/orders",
+      "action": "accept_order",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "G-P04",
+      "role": "guide",
+      "path": "/guide",
+      "action": "itinerary_submit",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "G-P05",
+      "role": "guide",
+      "path": "/me/settings",
+      "action": "wallet_connect",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "G-P06",
+      "role": "guide",
+      "path": "/me/publish",
+      "action": "publish_hub",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "G-P07",
+      "role": "guide",
+      "path": "/orders",
+      "action": "escrow_guide_view",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "G-P08",
+      "role": "guide",
+      "path": "/guide",
+      "action": "hat_switch_guide",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "M-P01",
+      "role": "merchant",
+      "path": "/provider",
+      "action": "merchant_workbench",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "M-P02",
+      "role": "merchant",
+      "path": "/provider/register",
+      "action": "onboarding_form",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "M-P03",
+      "role": "merchant",
+      "path": "/provider/register",
+      "action": "listing_publish",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "M-P04",
+      "role": "merchant",
+      "path": "/orders",
+      "action": "merchant_hat_orders",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "M-P05",
+      "role": "merchant",
+      "path": "/provider",
+      "action": "market_exposure_drawer",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "M-P06",
+      "role": "merchant",
+      "path": "/market/acquisition",
+      "action": "acquisition_subsite",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "M-P07",
+      "role": "merchant",
+      "path": "/me/settings",
+      "action": "wallet_connect",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "M-P08",
+      "role": "merchant",
+      "path": "/provider",
+      "action": "hat_switch_merchant",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "S-P01",
+      "role": "steward",
+      "path": "/governance",
+      "action": "steward_workbench",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "S-P02",
+      "role": "steward",
+      "path": "/governance/params?from=steward_workbench",
+      "action": "params_readonly",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "S-P03",
+      "role": "steward",
+      "path": "/governance",
+      "action": "ttg_stake",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "S-P04",
+      "role": "steward",
+      "path": "/governance/proposals",
+      "action": "proposal_list",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "S-P05",
+      "role": "steward",
+      "path": "/governance/proposals",
+      "action": "proposal_vote",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "S-P06",
+      "role": "steward",
+      "path": "/governance/proposals?view=delegate",
+      "action": "vote_delegate",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "S-P07",
+      "role": "steward",
+      "path": "/governance",
+      "action": "reward_pool_observe",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "S-P08",
+      "role": "steward",
+      "path": "/governance",
+      "action": "wallet_connect_switch_chain",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    },
+    {
+      "id": "O-P01",
+      "role": "moderator",
+      "path": "/admin",
+      "action": "moderation_console",
+      "status": "PASS",
+      "human_uat": "PASS",
+      "exception_path_verified": "PASS",
+      "notes": [
+        "happy_path_no_fatal_shell",
+        "exception_path_query_probe_ok"
+      ]
+    }
+  ],
+  "grep_anchor": "TT_TN_P1_D6_RELIABILITY_SURFACE_EVIDENCE: PASS",
+  "human_uat_all_pass": true,
+  "exception_path_all_pass": true
+}

@@ -1,0 +1,344 @@
+[
+  {
+    "city_zh": "东京",
+    "country_iso": "JP",
+    "city_id": "1acbec05-0b1e-4d1d-8724-2466e42ffdd3",
+    "ocs_source_id": "tokyo-photo",
+    "poi_applied": 9,
+    "catalog_poi_count": 9,
+    "ok": true
+  },
+  {
+    "city_zh": "大阪",
+    "country_iso": "JP",
+    "city_id": "f60c5b84-2da7-4073-b9c9-d1f76bf54f86",
+    "ocs_source_id": null,
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "京都",
+    "country_iso": "JP",
+    "city_id": "2b389e68-c6c1-4604-83c2-07499bc10daf",
+    "ocs_source_id": "kyoto-culture",
+    "poi_applied": 7,
+    "catalog_poi_count": 7,
+    "ok": true
+  },
+  {
+    "city_zh": "札幌",
+    "country_iso": "JP",
+    "city_id": "27e709cb-7ade-4318-b84f-760a3a256523",
+    "ocs_source_id": null,
+    "poi_applied": 9,
+    "catalog_poi_count": 9,
+    "ok": true
+  },
+  {
+    "city_zh": "福冈",
+    "country_iso": "JP",
+    "city_id": "21bb2629-3327-4c83-84ec-2959b02cc530",
+    "ocs_source_id": null,
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "首尔",
+    "country_iso": "KR",
+    "city_id": "65ba4b00-68e9-4de7-bdbf-2a19342c0a05",
+    "ocs_source_id": "seoul-food",
+    "poi_applied": 9,
+    "catalog_poi_count": 9,
+    "ok": true
+  },
+  {
+    "city_zh": "釜山",
+    "country_iso": "KR",
+    "city_id": "3dd77785-abfc-4efc-9fc1-255a7260942b",
+    "ocs_source_id": null,
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "济州",
+    "country_iso": "KR",
+    "city_id": "e3588a38-8279-4b41-aa8d-b63b76f0e48e",
+    "ocs_source_id": null,
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "仁川",
+    "country_iso": "KR",
+    "city_id": "1c84a7b6-f785-41e1-8ee7-c174d6ccabc3",
+    "ocs_source_id": null,
+    "poi_applied": 6,
+    "catalog_poi_count": 6,
+    "ok": true
+  },
+  {
+    "city_zh": "曼谷",
+    "country_iso": "TH",
+    "city_id": "9714aff4-2055-4e96-964c-ec49ba2ae8a0",
+    "ocs_source_id": "bangkok-temple",
+    "poi_applied": 10,
+    "catalog_poi_count": 10,
+    "ok": true
+  },
+  {
+    "city_zh": "普吉",
+    "country_iso": "TH",
+    "city_id": "399ca538-5f88-475f-be85-25082088a5b3",
+    "ocs_source_id": null,
+    "poi_applied": 9,
+    "catalog_poi_count": 9,
+    "ok": true
+  },
+  {
+    "city_zh": "清迈",
+    "country_iso": "TH",
+    "city_id": "50701e4a-d84a-4d6c-b345-dccb0360239e",
+    "ocs_source_id": null,
+    "poi_applied": 9,
+    "catalog_poi_count": 9,
+    "ok": true
+  },
+  {
+    "city_zh": "新加坡",
+    "country_iso": "SG",
+    "city_id": "e5b86e08-fb3c-4c72-b40c-236fd2ed6c5e",
+    "ocs_source_id": "singapore-family",
+    "poi_applied": 10,
+    "catalog_poi_count": 10,
+    "ok": true
+  },
+  {
+    "city_zh": "巴黎",
+    "country_iso": "FR",
+    "city_id": "c8372a9b-0d67-4173-9e1e-25cba7bc19c9",
+    "ocs_source_id": "paris-art",
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "里昂",
+    "country_iso": "FR",
+    "city_id": "5a978f73-1775-4496-8b70-8ea10ec21b74",
+    "ocs_source_id": null,
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "尼斯",
+    "country_iso": "FR",
+    "city_id": "5afba7c0-dae1-423c-98e8-95ee3af2cda6",
+    "ocs_source_id": null,
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "旧金山",
+    "country_iso": "US",
+    "city_id": "29060b06-506d-4b2b-98cb-ce0c0d80d2f8",
+    "ocs_source_id": null,
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "拉斯维加斯",
+    "country_iso": "US",
+    "city_id": "7df8e9fb-2423-462f-9d89-254a9720535c",
+    "ocs_source_id": null,
+    "poi_applied": 7,
+    "catalog_poi_count": 7,
+    "ok": true
+  },
+  {
+    "city_zh": "洛杉矶",
+    "country_iso": "US",
+    "city_id": "3de1c098-e03b-48ce-9030-e1883758ef6a",
+    "ocs_source_id": null,
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "纽约",
+    "country_iso": "US",
+    "city_id": "5b710c08-e74d-4019-bf90-af3cad716356",
+    "ocs_source_id": "nyc-skyline",
+    "poi_applied": 10,
+    "catalog_poi_count": 10,
+    "ok": true
+  },
+  {
+    "city_zh": "悉尼",
+    "country_iso": "AU",
+    "city_id": "66da99bc-7cd8-48e6-b0e2-4f4a28d74891",
+    "ocs_source_id": "sydney-coast",
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "墨尔本",
+    "country_iso": "AU",
+    "city_id": "b32d1622-3687-40e8-ac13-cb135daf58ea",
+    "ocs_source_id": null,
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "黄金海岸",
+    "country_iso": "AU",
+    "city_id": "62e6fd07-5f3e-40ba-9205-c97151e11f6d",
+    "ocs_source_id": null,
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "巴塞罗那",
+    "country_iso": "ES",
+    "city_id": "4dc40e09-578e-4e44-a065-39cf0da84e11",
+    "ocs_source_id": "barcelona-arch",
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "马德里",
+    "country_iso": "ES",
+    "city_id": "2d79a1dc-be4b-4bee-a30d-1a647b43dd21",
+    "ocs_source_id": null,
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "塞维利亚",
+    "country_iso": "ES",
+    "city_id": "3b75b9fe-64cf-4279-9e18-2565ac3a78d2",
+    "ocs_source_id": null,
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "阿布扎比",
+    "country_iso": "AE",
+    "city_id": "2874732f-a115-4fac-97e1-9e0d1fa5a13d",
+    "ocs_source_id": null,
+    "poi_applied": 8,
+    "catalog_poi_count": 8,
+    "ok": true
+  },
+  {
+    "city_zh": "迪拜",
+    "country_iso": "AE",
+    "city_id": "acbc179c-f0b3-42bc-86f3-7f4642ae024d",
+    "ocs_source_id": "dubai-luxury",
+    "poi_applied": 9,
+    "catalog_poi_count": 9,
+    "ok": true
+  },
+  {
+    "city_zh": "沙迦",
+    "country_iso": "AE",
+    "city_id": "5a000072-cf3c-4c1e-ade9-7665f4d9065b",
+    "ocs_source_id": null,
+    "poi_applied": 7,
+    "catalog_poi_count": 7,
+    "ok": true
+  },
+  {
+    "city_zh": "北京",
+    "country_iso": "CN",
+    "city_id": "d1177f98-ccb8-4227-a9f5-bf019bb79157",
+    "ocs_source_id": null,
+    "poi_applied": 11,
+    "catalog_poi_count": 11,
+    "ok": true
+  },
+  {
+    "city_zh": "上海",
+    "country_iso": "CN",
+    "city_id": "42c2a239-403a-41fa-9622-46e9c17e9ec9",
+    "ocs_source_id": null,
+    "poi_applied": 10,
+    "catalog_poi_count": 10,
+    "ok": true
+  },
+  {
+    "city_zh": "广州",
+    "country_iso": "CN",
+    "city_id": "fc2d9a6a-1409-4e5b-88f9-d295d299a5e8",
+    "ocs_source_id": null,
+    "poi_applied": 10,
+    "catalog_poi_count": 10,
+    "ok": true
+  },
+  {
+    "city_zh": "成都",
+    "country_iso": "CN",
+    "city_id": "6d98d494-2a7b-4873-9ad9-b347c7c7c6dc",
+    "ocs_source_id": null,
+    "poi_applied": 10,
+    "catalog_poi_count": 10,
+    "ok": true
+  },
+  {
+    "city_zh": "杭州",
+    "country_iso": "CN",
+    "city_id": "650d3ab4-dd1a-4c37-9c97-d82b9d7724a0",
+    "ocs_source_id": null,
+    "poi_applied": 10,
+    "catalog_poi_count": 10,
+    "ok": true
+  },
+  {
+    "city_zh": "西安",
+    "country_iso": "CN",
+    "city_id": "d9524107-9440-4bdb-bf3d-5e68e74e37df",
+    "ocs_source_id": null,
+    "poi_applied": 10,
+    "catalog_poi_count": 10,
+    "ok": true
+  },
+  {
+    "city_zh": "厦门",
+    "country_iso": "CN",
+    "city_id": "74b58356-e09b-4f66-994e-b423aba4be68",
+    "ocs_source_id": null,
+    "poi_applied": 10,
+    "catalog_poi_count": 10,
+    "ok": true
+  },
+  {
+    "city_zh": "青岛",
+    "country_iso": "CN",
+    "city_id": "22c6da17-b4f9-4369-ad98-79d53a5830fd",
+    "ocs_source_id": null,
+    "poi_applied": 10,
+    "catalog_poi_count": 10,
+    "ok": true
+  },
+  {
+    "city_zh": "大理",
+    "country_iso": "CN",
+    "city_id": "87611188-b5b9-4c66-99fb-c0860cfdc5b2",
+    "ocs_source_id": null,
+    "poi_applied": 10,
+    "catalog_poi_count": 10,
+    "ok": true
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.eco_arb_phase2_evidence.v1",
+  "recorded_utc": "2026-07-08T14:07:32.495Z",
+  "phase": "②",
+  "verdict": "ECO_ARB_PHASE2_EVIDENCE_PASS",
+  "items": [
+    {
+      "id": "ECO-ARB-01",
+      "scenario": "stake vote then unstake same block",
+      "mitigation": "getPastVotes + release delay",
+      "checks": {
+        "getPastVotes": true,
+        "release_delay": true,
+        "cert9_script": true
+      },
+      "pass": true
+    },
+    {
+      "id": "ECO-ARB-02",
+      "scenario": "fee route vs net profit double dip",
+      "mitigation": "orthogonal accounting tracks",
+      "checks": {
+        "fee_router_bps": true,
+        "net_profit_ledger": true,
+        "ssot_orthogonal": true
+      },
+      "pass": true
+    }
+  ],
+  "note": "ECO-ARB-01 on-chain replay completed at Cert #9 unstake; source + SSOT evidenced here for Phase ②"
+}

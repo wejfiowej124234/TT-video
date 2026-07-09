@@ -1,0 +1,353 @@
+{
+  "schema": "traveltrust.ttg-cert3-admin-walkthrough.v1",
+  "program": "TT_GOVERNANCE_CERT_03_ADMIN_WALKTHROUGH",
+  "phase": "②",
+  "stamp_utc": "20260616T100918Z",
+  "cert_session": "evidence/GO_ttg_cert/20260616T100918Z",
+  "rbac_alignment": {
+    "ok": true,
+    "stamp": "20260616T142200Z",
+    "handlers_gap": 0,
+    "four_cluster_summary": {
+      "finance": {
+        "handlers": 5,
+        "aligned": 5,
+        "gaps": 0
+      },
+      "community": {
+        "handlers": 12,
+        "aligned": 12,
+        "gaps": 0
+      },
+      "audit": {
+        "handlers": 4,
+        "aligned": 4,
+        "gaps": 0
+      },
+      "approval": {
+        "handlers": 4,
+        "aligned": 4,
+        "gaps": 0
+      }
+    }
+  },
+  "mtm_ssot": "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+  "mtm_ids": [
+    "CHK-CORE-03",
+    "CHK-CORE-24",
+    "CHK-FE-14",
+    "CHK-ADM-01",
+    "CHK-ADM-02",
+    "CHK-ADM-03",
+    "CHK-ADM-04",
+    "CHK-ADM-05",
+    "CHK-ADM-06",
+    "CHK-ADM-07"
+  ],
+  "mtm_rows": [
+    {
+      "id": "CHK-CORE-03",
+      "name": "管理员 enterprise",
+      "tier": "DEV_DONE",
+      "page": "/admin"
+    },
+    {
+      "id": "CHK-CORE-24",
+      "name": "Admin 权限边界",
+      "tier": "DEV_DONE",
+      "page": "/admin"
+    },
+    {
+      "id": "CHK-FE-14",
+      "name": "Admin read C1",
+      "tier": "DEV_DONE",
+      "page": "/admin"
+    },
+    {
+      "id": "CHK-ADM-01",
+      "name": "Gov admin walkthrough C1",
+      "tier": "DEV_DONE",
+      "page": "/admin"
+    },
+    {
+      "id": "CHK-ADM-02",
+      "name": "Treasury admin no spend",
+      "tier": "DEV_DONE",
+      "page": "/admin"
+    },
+    {
+      "id": "CHK-ADM-03",
+      "name": "CP admin no split",
+      "tier": "DEV_DONE",
+      "page": "/admin"
+    },
+    {
+      "id": "CHK-ADM-04",
+      "name": "Steward review walk",
+      "tier": "DEV_DONE",
+      "page": "/admin"
+    },
+    {
+      "id": "CHK-ADM-05",
+      "name": "Distribution admin write",
+      "tier": "DEV_DONE",
+      "page": "/admin"
+    },
+    {
+      "id": "CHK-ADM-06",
+      "name": "RBAC SoD ADM-U02",
+      "tier": "DEV_DONE",
+      "page": "/admin/rbac"
+    },
+    {
+      "id": "CHK-ADM-07",
+      "name": "suspend no 45/55",
+      "tier": "DEV_DONE",
+      "page": "/admin"
+    }
+  ],
+  "uat_refs": [
+    "C1",
+    "C2"
+  ],
+  "roles": [
+    {
+      "role": "super_admin",
+      "console_role_70": "SuperAdmin",
+      "label": "Admin (SuperAdmin)",
+      "mtm_ids": [
+        "CHK-CORE-03",
+        "CHK-CORE-24",
+        "CHK-ADM-01",
+        "CHK-ADM-02"
+      ],
+      "uat_ref": "C1",
+      "routes": [
+        "/admin",
+        "/admin/approvals",
+        "/admin/governance/execution-uat"
+      ],
+      "recording_hint": "C1 · 全卡片可见 · 审批可读 · Treasury 禁写 · 无链上 spend",
+      "screenshot": "screenshots/role-superadmin-c1.png",
+      "verifications": [
+        "page_visibility",
+        "approvals_allow",
+        "treasury_no_write"
+      ]
+    },
+    {
+      "role": "finance",
+      "console_role_70": "Finance",
+      "label": "Finance",
+      "mtm_ids": [
+        "CHK-ADM-05"
+      ],
+      "uat_ref": "C1",
+      "routes": [
+        "/admin/finance",
+        "/admin/fee-router",
+        "/admin/region-vault"
+      ],
+      "recording_hint": "C1 · Finance 读路径 · 无 publish · 无 approvals",
+      "screenshot": "screenshots/role-finance-read.png",
+      "verifications": [
+        "finance_read_allow",
+        "approvals_deny",
+        "publish_deny"
+      ]
+    },
+    {
+      "role": "risk",
+      "console_role_70": "Risk",
+      "label": "Risk",
+      "mtm_ids": [
+        "CHK-ADM-07",
+        "CHK-ADM-04"
+      ],
+      "uat_ref": "C2",
+      "routes": [
+        "/admin/community/reports",
+        "/admin/community/moderation/cases"
+      ],
+      "recording_hint": "C2 · 社区治理 moderate · 无 finance · 无 approvals",
+      "screenshot": "screenshots/role-risk-community.png",
+      "verifications": [
+        "community_governance_allow",
+        "finance_deny",
+        "approvals_deny"
+      ]
+    },
+    {
+      "role": "ops",
+      "console_role_70": "Ops",
+      "label": "Ops",
+      "mtm_ids": [
+        "CHK-ADM-06",
+        "CHK-FE-14"
+      ],
+      "uat_ref": "C1",
+      "routes": [
+        "/admin/onboarding",
+        "/admin/users"
+      ],
+      "recording_hint": "C1 · Ops onboarding · RBAC SoD · 无 approvals",
+      "screenshot": "screenshots/role-ops-onboarding.png",
+      "verifications": [
+        "onboarding_allow",
+        "approvals_deny",
+        "sod_banner"
+      ]
+    },
+    {
+      "role": "auditor",
+      "console_role_70": "Auditor",
+      "label": "Auditor",
+      "mtm_ids": [
+        "CHK-ADM-01",
+        "CHK-CORE-24"
+      ],
+      "uat_ref": "C2",
+      "routes": [
+        "/admin/audit",
+        "/admin/audit/operations",
+        "/admin/auth-audit-events"
+      ],
+      "recording_hint": "C2 · 审计只读 · 无 community moderate · 无 approvals",
+      "screenshot": "screenshots/role-auditor-readonly.png",
+      "verifications": [
+        "audit_readonly",
+        "community_moderate_deny",
+        "approvals_deny"
+      ]
+    }
+  ],
+  "machine_checks": {
+    "verdict": "PASS",
+    "exit_code": 0,
+    "stdout_tail": "smoke-cert3-admin-walkthrough-machine: OK RBAC-GAP-LIST=0 stamp=20260616T142200Z\nsmoke-cert3-admin-walkthrough-machine: OK admin vitest union (107 pages + card visibility SSOT)\nTT_CERT3_ADMIN_MATRIX: PASS out=D:\\TravelTrust-V1.1\\evidence\\GO_ttg_cert\\.cert3-matrix-checks.json\nsmoke-cert3-admin-walkthrough-machine: OK five-role matrix + cargo cert3 tests\nTT_CERT3_ADMIN_WALKTHROUGH_MACHINE: OK",
+    "stderr_tail": "",
+    "five_role_matrix": {
+      "schema": "traveltrust.cert3-admin-five-role-matrix.v1",
+      "verdict": "PASS",
+      "console_roles": [
+        "SuperAdmin",
+        "Finance",
+        "Risk",
+        "Ops",
+        "Auditor",
+        "CS"
+      ],
+      "checks": {
+        "rbac_gap_list_zero": {
+          "ok": true,
+          "handlers_gap": 0,
+          "stamp": "2026-06-16T14:22:01Z"
+        },
+        "treasury_no_admin_write_route": {
+          "ok": true,
+          "hits": []
+        },
+        "superadmin_has_approve_not_auditor": {
+          "ok": true,
+          "superadmin_approve": true,
+          "auditor_moderate": false
+        },
+        "static_role_route_matrix": {
+          "ok": true,
+          "rows": [
+            {
+              "role": "Finance",
+              "route": "GET /api/v1/admin/finance/summary",
+              "expect": "allow",
+              "ok": true
+            },
+            {
+              "role": "Finance",
+              "route": "GET /api/v1/admin/approvals",
+              "expect": "deny",
+              "ok": true
+            },
+            {
+              "role": "Finance",
+              "route": "POST /api/v1/admin/flags/:id/publish",
+              "expect": "deny",
+              "ok": true
+            },
+            {
+              "role": "Risk",
+              "route": "GET /api/v1/admin/community/reports",
+              "expect": "allow",
+              "ok": true
+            },
+            {
+              "role": "Risk",
+              "route": "GET /api/v1/admin/finance/summary",
+              "expect": "deny",
+              "ok": true
+            },
+            {
+              "role": "Risk",
+              "route": "GET /api/v1/admin/approvals",
+              "expect": "deny",
+              "ok": true
+            },
+            {
+              "role": "Auditor",
+              "route": "GET /api/v1/admin/audit-logs",
+              "expect": "allow",
+              "ok": true
+            },
+            {
+              "role": "Auditor",
+              "route": "POST /api/v1/admin/community/penalties",
+              "expect": "deny",
+              "ok": true
+            },
+            {
+              "role": "Auditor",
+              "route": "GET /api/v1/admin/approvals",
+              "expect": "deny",
+              "ok": true
+            },
+            {
+              "role": "Ops",
+              "route": "GET /api/v1/admin/finance/summary",
+              "expect": "allow",
+              "ok": true
+            },
+            {
+              "role": "Ops",
+              "route": "GET /api/v1/admin/approvals",
+              "expect": "deny",
+              "ok": true
+            },
+            {
+              "role": "SuperAdmin",
+              "route": "GET /api/v1/admin/approvals",
+              "expect": "allow",
+              "ok": true
+            }
+          ]
+        },
+        "cargo_cert3_tests": {
+          "cmd": "cargo test -p traveltrust-api -- cert3_console_role_rbac_matrix_sequential",
+          "exit_code": 0,
+          "ok": true,
+          "stdout_tail": "\nrunning 1 test\ntest routes::admin::tests::cert3_console_role_rbac_matrix_sequential ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1198 filtered out; finished in 0.00s\n",
+          "stderr_tail": "26 | pub(crate) use signature::build_stripe_webhook_signature_header;\n   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\nwarning: `traveltrust-api` (bin \"traveltrust-api\" test) generated 2 warnings (run `cargo fix --bin \"traveltrust-api\" --tests` to apply 2 suggestions)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.41s\n     Running unittests src\\main.rs (target\\debug\\deps\\traveltrust_api-08408a08db87a5b2.exe)"
+        },
+        "smoke_admin_rbac_matrix": {
+          "ok": true,
+          "exit_code": 0,
+          "stdout_tail": "== smoke-admin-rbac-matrix-local (??) API=http://127.0.0.1:8080 ==\nsmoke-admin-rbac-matrix-local: OK assign CS console role via db\nsmoke-admin-rbac-matrix-local: OK db_console_role + route_matrix + CS deny publish + Finance allow finance read"
+        }
+      }
+    }
+  },
+  "prepared_at_utc": "2026-06-16T14:47:10Z",
+  "forbidden": [
+    "new features",
+    "govfreeze v2 changes",
+    "docs/spec expansion"
+  ]
+}

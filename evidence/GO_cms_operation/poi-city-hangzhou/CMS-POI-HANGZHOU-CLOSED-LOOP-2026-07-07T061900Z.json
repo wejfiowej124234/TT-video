@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T06:19:00Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "杭州",
+    "city_en": "Hangzhou",
+    "matrix_ids": [
+      "PH-CN-283-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-283-ATR",
+      "legacy_value": "雷峰塔",
+      "poi_id": "ade8bcd7-5a34-404a-bfc1-f6c09429fd20",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-283-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

@@ -1,0 +1,98 @@
+{
+  "schema": "traveltrust.p0_rbac_bypass_isolation.v1",
+  "status": "CONFIRMED",
+  "confirmed_before_completed_json": true,
+  "checks": [
+    {
+      "id": "CHK-FLY-deploy-fly-tt-api-staging-fly.toml",
+      "scope": "deploy/fly/tt-api-staging/fly.toml",
+      "pass": true,
+      "detail": "no bypass env in fly.toml [env]"
+    },
+    {
+      "id": "CHK-FLY-deploy-fly-tt-api-prod-fly.toml",
+      "scope": "deploy/fly/tt-api-prod/fly.toml",
+      "pass": true,
+      "detail": "no bypass env in fly.toml [env]"
+    },
+    {
+      "id": "CHK-FLY-deploy-fly-tt-web-staging-fly.toml",
+      "scope": "deploy/fly/tt-web-staging/fly.toml",
+      "pass": true,
+      "detail": "no bypass env in fly.toml [env]"
+    },
+    {
+      "id": "CHK-FLY-frontend-fly.staging.toml",
+      "scope": "frontend/fly.staging.toml",
+      "pass": true,
+      "detail": "no bypass env in fly.toml [env]"
+    },
+    {
+      "id": "CHK-FLY-frontend-fly.production.toml",
+      "scope": "frontend/fly.production.toml",
+      "pass": true,
+      "detail": "no bypass env in fly.toml [env]"
+    },
+    {
+      "id": "CHK-OPS-P2FC",
+      "scope": "scripts/ops/p2fc*.sh",
+      "pass": true,
+      "detail": "ops scripts clean"
+    },
+    {
+      "id": "CHK-MR12-ONE-SHOT",
+      "scope": "scripts/ops/p2fc-post-soak-one-shot-execute.sh",
+      "pass": true,
+      "detail": "one-shot does not export bypass env"
+    },
+    {
+      "id": "CHK-CODE-GATE-409",
+      "scope": "put_admin_user_console_role",
+      "pass": true,
+      "detail": "PUT returns 409 when TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT unset"
+    },
+    {
+      "id": "CHK-LOCAL-SCOPE",
+      "scope": "scripts/dev only",
+      "pass": true,
+      "detail": "local DIRECT refs=17 outside_dev=[]"
+    },
+    {
+      "id": "CHK-MR12-LOCK-PRESENT",
+      "scope": "MR12-EXECUTION-LOCK.json",
+      "pass": true,
+      "detail": "lock_status=FROZEN"
+    },
+    {
+      "id": "CHK-STAGING-LIVE-META",
+      "scope": "GET /meta phase2_prep.console_role_direct_allowed",
+      "pass": null,
+      "detail": {
+        "reachable": false,
+        "error": "URLError",
+        "note": "live probe optional during soak"
+      },
+      "note": "null pass = unreachable · static checks authoritative during soak"
+    }
+  ],
+  "static_pass": true,
+  "live_probe": {
+    "reachable": false,
+    "error": "URLError",
+    "note": "live probe optional during soak"
+  },
+  "bypass_route": {
+    "endpoint": "PUT /api/v1/admin/users/{user_id}/console-role",
+    "env_gate": "TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT",
+    "disabled_response": "409 console_role_use_approval_flow",
+    "enabled_scope": "① local dev scripts only",
+    "staging_deploy_injection": false,
+    "mr12_one_shot_injection": true
+  },
+  "residual_p0": [],
+  "residual_non_p0": [
+    "ADM-U01 staging admin matrix GO not started (D3-F04) — separate from bypass path isolation",
+    "Permission ID drift may exist across Rust/YAML/TS — verify separately"
+  ],
+  "honest_boundary": "CONFIRMED = deploy/MR12 path cannot enable bypass env · ≠ ADM-U01 matrix GO · ≠ live exploit test"
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "traveltrust.production_blocker_registry.v1",
+  "at": "20260614T080500Z",
+  "phase": "③",
+  "verdict": "NO_GO",
+  "source_audit": "evidence/GO_phase2_testnet_20260526/phase3-production-prep/go-audit-20260607T073403Z/go_no_go.json",
+  "counts": {
+    "pass": 9,
+    "warn": 2,
+    "blocker": 7
+  },
+  "blockers": [
+    {
+      "id": "PI3-001",
+      "priority": "P0",
+      "theme": "Fly PG backup B-475 PLANNED",
+      "blocks": "PRODUCTION_GO"
+    },
+    {
+      "id": "PI3-002",
+      "priority": "P0",
+      "theme": "No dedicated prod domain",
+      "blocks": "PRODUCTION_GO"
+    },
+    {
+      "id": "PI3-003",
+      "priority": "P0",
+      "theme": "Stripe live not configured",
+      "blocks": "PRODUCTION_GO"
+    },
+    {
+      "id": "PI3-004",
+      "priority": "P0",
+      "theme": "No production R-002 GO report",
+      "blocks": "PRODUCTION_GO"
+    },
+    {
+      "id": "PI3-005",
+      "priority": "P0",
+      "theme": "Mainnet precheck NOT GO",
+      "blocks": "PRODUCTION_GO_MAINNET"
+    },
+    {
+      "id": "PI3-006",
+      "priority": "P0",
+      "theme": "go-live checklist unchecked",
+      "blocks": "PRODUCTION_GO"
+    },
+    {
+      "id": "M-00",
+      "priority": "P0",
+      "theme": "Owner M-00 unsigned",
+      "blocks": "PRODUCTION_CUTOVER"
+    }
+  ],
+  "warnings": [
+    {
+      "id": "PI3-009",
+      "theme": "Prometheus prod wiring in_progress"
+    },
+    {
+      "id": "STAGING_PROXY",
+      "theme": "Last go-audit used staging API base as proxy"
+    }
+  ],
+  "close_condition": "PI3-001..006 closed + go_no_go blocker=0 + PRODUCTION_GO_DECISION: GO",
+  "issues_ssot": "evidence/GO_phase2_testnet_20260526/phase3-production-prep/issues-phase3-production.md"
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "traveltrust.executive_dashboard_gate_consistency.v1",
+  "stamp": "20260703T093000Z",
+  "verdict": "PASS",
+  "blocking_count": 0,
+  "rollup_computed": {
+    "closed": 1,
+    "interim": 2,
+    "open": 2
+  },
+  "rollup_declared": {
+    "closed": 1,
+    "interim": 2,
+    "open": 2
+  },
+  "release_decision": "NO_GO",
+  "pi3_gates": [
+    {
+      "id": "PI3-001",
+      "status": "CLOSED"
+    },
+    {
+      "id": "PI3-002",
+      "status": "INTERIM_GO"
+    },
+    {
+      "id": "PI3-003",
+      "status": "WAITING_OWNER"
+    },
+    {
+      "id": "PI3-004",
+      "status": "INTERIM_GO"
+    },
+    {
+      "id": "PI3-006",
+      "status": "PENDING"
+    }
+  ],
+  "blockers": [],
+  "rules_enforced": [
+    "INTERIM_GO not counted as CLOSED",
+    "WAITING_OWNER IN_PROGRESS PENDING count as OPEN",
+    "PI3-005 OPTIONAL excluded from release rollup",
+    "Mainnet not in P0 blockers"
+  ]
+}

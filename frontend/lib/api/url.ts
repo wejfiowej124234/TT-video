@@ -36,6 +36,30 @@ function sameOriginApiPathInBrowser(path: string): string | null {
   return `${origin}${p}`;
 }
 
+const LOOPBACK_NEXT_DEV_PORTS = new Set(["3012", "3000"]);
+
+function loopbackDirectAuthApiUrl(path: string): string {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  try {
+    const base = new URL(BASE);
+    let port = base.port || (base.protocol === "https:" ? "443" : "80");
+    if (LOOPBACK_NEXT_DEV_PORTS.has(port)) port = "8080";
+    if (typeof globalThis !== "undefined") {
+      const loc = (globalThis as {
+        window?: { location?: { hostname?: string; protocol?: string; port?: string } };
+      }).window?.location;
+      if (loc?.hostname) {
+        const pagePort = loc.port || (loc.protocol === "https:" ? "443" : "80");
+        if (LOOPBACK_NEXT_DEV_PORTS.has(port) || port === pagePort) port = "8080";
+        return `${loc.protocol}//${loc.hostname}:${port}${p}`;
+      }
+    }
+    return `${base.protocol}//${base.hostname}:${port}${p}`;
+  } catch {
+    return `${BASE}${p}`;
+  }
+}
+
 /** 完整 URL（base + path）。浏览器 + loopback 基址时通常返回「当前页 origin + path」（经 `next.config.js` rewrites 代理）。
  * `/auth/*` 例外：App Router 在同路径有页面时 **afterFiles** rewrite 不覆盖，**POST** 会落到 Next 返回 HTML；开发态 API CORS 已放宽，须直连 `BASE`。
  * `/api/*`：**浏览器**优先「当前 origin + `/api/…`」经 rewrite 到 `BASE`，与 Bearer 同机 E2E（`localhost:3012` → `127.0.0.1:8080`）一致，避免直连跨 host 时偶发鉴权/预检差异；**无 `window`**（SSR / Vitest / Node）仍直连 `BASE`。
@@ -44,7 +68,7 @@ export function apiUrl(path: string): string {
   const p = path.startsWith("/") ? path : `/${path}`;
   if (isLoopbackApiBase(BASE)) {
     if (p.startsWith("/auth/")) {
-      return `${BASE}${p}`;
+      return loopbackDirectAuthApiUrl(p);
     }
     if (p.startsWith("/api/")) {
       const same = sameOriginApiPathInBrowser(p);

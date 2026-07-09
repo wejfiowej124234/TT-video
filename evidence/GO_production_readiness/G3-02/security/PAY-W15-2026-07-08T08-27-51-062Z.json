@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W15",
+  "recorded_utc": "2026-07-08T08:27:51.062Z",
+  "run_id": "2026-07-08T08-27-51-062Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PASS",
+  "summary": {
+    "verdict": "PASS",
+    "detail": "Production mock-pay forbidden probe"
+  },
+  "detail": "Production mock-pay forbidden probe",
+  "probes": {
+    "meta_http": 200,
+    "chain_id_meta": "11155111",
+    "deployment_profile": "production",
+    "order_mock_pay_enabled": false,
+    "p3_chain_off_implied": false
+  }
+}

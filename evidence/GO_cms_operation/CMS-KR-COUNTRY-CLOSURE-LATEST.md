@@ -1,0 +1,25 @@
+# Korea Country CLOSED
+
+**Recorded:** 2026-07-06T01:35:47.353Z
+**TT_CMS_KR_COUNTRY:** `CLOSED`
+**Phase:** ② staging · **Next country:** BLOCKED · **Production GO:** BLOCKED
+
+## 四城 Content QA + Runtime
+
+| 城市 | POI | LOCK | Exec | Content QA | City Runtime | Live Runtime | Catalog |
+|------|-----|------|------|------------|--------------|--------------|---------|
+| 首尔 | 9 | 9/9 | PASS | CLOSED | PASS | 9/9 | 9/9 |
+| 釜山 | 8 | 8/8 | PASS | CLOSED | PASS | 8/8 | 8/8 |
+| 济州 | 8 | 8/8 | PASS | CLOSED | PASS | 8/8 | 8/8 |
+| 仁川 | 6 | 6/6 | PASS | CLOSED | PASS | 6/6 | 6/6 |
+
+## Country criteria
+
+- PASS 所有 City Execution CLOSED
+- PASS Content Accuracy = 100%
+- PASS Runtime Consumer = CMS
+- PASS Geo Matching = 100%
+- PASS L5 Visual = PASS
+- PASS Cross-region Images = 0
+- PASS Unsplash = 0（CMS 管辖 POI 范围）
+- PASS OCS Runtime = 0（CMS 管辖 POI 范围）

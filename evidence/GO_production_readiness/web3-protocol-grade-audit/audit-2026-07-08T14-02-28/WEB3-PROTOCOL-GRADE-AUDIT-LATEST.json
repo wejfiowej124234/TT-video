@@ -1,0 +1,172 @@
+{
+  "schema": "traveltrust.web3_protocol_grade_audit.v1",
+  "audit_name": "Web3 Protocol-Grade Audit (16 Dimensions)",
+  "recorded_utc": "2026-07-08T14:02:57.644Z",
+  "run_dir": "evidence/GO_production_readiness/web3-protocol-grade-audit/audit-2026-07-08T14-02-28",
+  "audit_principle": "Never assume design correct. Every conclusion requires cross-validation of contract source, on-chain state (when scope permits), registry, master map, runtime config, deploy scripts, and evidence chain. Ambiguity = Blocker.\n",
+  "verdict": "WEB3_PROTOCOL_GRADE_IN_PROGRESS",
+  "summary": {
+    "dimensions": 16,
+    "blockers_p0": 0,
+    "blockers_p1": 3,
+    "blockers_p2": 0,
+    "fund_lifecycle_steps": 9,
+    "attack_vectors": 14,
+    "attack_unverified": 8,
+    "deployment_drill_not_run": 12
+  },
+  "dimensions": {
+    "D01_contract_security": {
+      "security_audit_exit": 0,
+      "verdict": "PASS"
+    },
+    "D02_upgradeability": {
+      "g24Pass": true
+    },
+    "D03_storage_layout": {
+      "tests_present": true,
+      "files": [
+        "contracts/test/TtgGovFreezeV1ProxyArchitecture.t.sol",
+        "contracts/test/RegionStewardStakePoolProxyBootstrap.t.sol"
+      ]
+    },
+    "D04_governance": {
+      "cert_signoffs": 7,
+      "cert_total": 12
+    },
+    "D05_treasury": {
+      "cert8_pending": true
+    },
+    "D06_fund_lifecycle": {
+      "steps": 9,
+      "unverified": 0,
+      "escrow_release": {
+        "verified": false,
+        "note": "release() not found"
+      },
+      "escrow_v2_bilateral": {
+        "verified": true,
+        "bilateral_gate": true,
+        "path": "contracts/src/EscrowV2.sol",
+        "note": "EscrowV2 — permissionless release AFTER bilateral service complete"
+      }
+    },
+    "D07_business_logic": {
+      "dual_track_documented": true
+    },
+    "D08_economic_model": {
+      "invariants": [
+        {
+          "id": "ECO-01",
+          "ok": true,
+          "issues": []
+        },
+        {
+          "id": "ECO-02",
+          "ok": true,
+          "issues": []
+        },
+        {
+          "id": "ECO-03",
+          "ok": true,
+          "issues": []
+        }
+      ],
+      "arbitrage_open": 2
+    },
+    "D09_role_state_machine": {
+      "roles": 6,
+      "ssot_missing": 0
+    },
+    "D10_permission_matrix": {
+      "registry_present": true,
+      "tree_nodes": 1
+    },
+    "escrow_settlement": {
+      "exit_code": 0,
+      "verdict": "ESCROW_SETTLEMENT_MODEL_ALIGNED",
+      "target_model": "Bilateral Confirmation Settlement Model",
+      "gaps_p0": 0
+    },
+    "D16_protocol_intent_verification": {
+      "entries": 5,
+      "gaps": 0
+    },
+    "country_pool_audit": {
+      "flows": 6,
+      "unverified": 1,
+      "mainnet_blocker": "GAP-99-03"
+    },
+    "primary_market_economic": {
+      "ui_defer": "DEFER",
+      "invariants_ok": true,
+      "status": "PRE_AUDIT_ECON_ONLY"
+    },
+    "D11_attack_surface": {
+      "vectors": 14,
+      "unverified": 8
+    },
+    "D12_deployment_drill": {
+      "total": 12,
+      "not_run": 12,
+      "pass": 0
+    },
+    "D13_operations_monitoring": {
+      "indexer": true,
+      "admin_governance_ui": true
+    },
+    "D14_incident_dr": {
+      "gorp_doc": true,
+      "cert_dr_pending": true
+    },
+    "D15_responsibility_matrix": {
+      "modules": 7,
+      "complete": true
+    },
+    "master_map_parity": "PASS"
+  },
+  "blockers": [
+    {
+      "priority": "P1",
+      "id": "PG-P1-003",
+      "dimension": "D04",
+      "title": "TTG Cert 7/12 — governance lifecycle incomplete",
+      "fix": "Complete Cert #8–12 on Sepolia then mainnet replay",
+      "paths": [
+        "registry/ttg-governance-cert-gates.v1.yaml"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "priority": "P1",
+      "id": "PG-P1-007",
+      "dimension": "D12",
+      "title": "Mainnet deployment drill not executed (0/12)",
+      "fix": "Run shadow launch + full drill per TT-MAINNET",
+      "paths": [
+        "evidence/mainnet_shadow_launch/"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "priority": "P1",
+      "id": "PG-P1-008",
+      "dimension": "D14",
+      "title": "DR/GORP Cert evidence incomplete",
+      "fix": "Complete Cert #10–12",
+      "paths": [
+        "docs/runbook/TTG-GOVERNANCE-OPERATIONAL-READINESS-PROGRAM.md"
+      ],
+      "status": "OPEN"
+    }
+  ],
+  "discipline": {
+    "business_code_modified": false,
+    "audit_only": true
+  },
+  "references": {
+    "framework": "registry/web3-protocol-grade-audit-framework.v1.yaml",
+    "master_map": "registry/web3-system-master-map.v1.yaml",
+    "mainnet_gate": "registry/web3-mainnet-production-readiness-gate.v1.yaml"
+  }
+}

@@ -1,0 +1,398 @@
+{
+  "audit": "community_deep",
+  "verdict": "PASS",
+  "recorded_at": "2026-06-17T07:47:38.998408+00:00",
+  "api_base": "http://127.0.0.1:8080",
+  "p0": 0,
+  "p1": 0,
+  "p2": 0,
+  "summary": {
+    "total": 26,
+    "pass": 26,
+    "fail": 0
+  },
+  "probes": [
+    {
+      "probe_id": "ccp.create_post",
+      "role": "author",
+      "step": "\u53d1\u5e16",
+      "method": "POST",
+      "path": "/api/v1/community/posts",
+      "http": 200,
+      "expected": "200|201",
+      "status": "PASS",
+      "notes": "",
+      "section": "community_critical_path"
+    },
+    {
+      "probe_id": "ccp.get_post_detail",
+      "role": "author",
+      "step": "\u8be6\u60c5",
+      "method": "GET",
+      "path": "/api/v1/community/posts/2c50b659-a3d3-49de-baf2-6e1d5d007266",
+      "http": 200,
+      "expected": "200+body",
+      "status": "PASS",
+      "notes": "",
+      "section": "community_critical_path"
+    },
+    {
+      "probe_id": "ccp.get_post_detail",
+      "role": "public",
+      "step": "\u533f\u540d\u8be6\u60c5",
+      "method": "GET",
+      "path": "/api/v1/community/posts/2c50b659-a3d3-49de-baf2-6e1d5d007266",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": "",
+      "section": "community_critical_path"
+    },
+    {
+      "probe_id": "ccp.get_feed",
+      "role": "author",
+      "step": "Feed",
+      "method": "GET",
+      "path": "/api/v1/community/feed",
+      "http": 200,
+      "expected": "contains_post",
+      "status": "PASS",
+      "notes": "",
+      "section": "community_critical_path"
+    },
+    {
+      "probe_id": "ccp.post_comment",
+      "role": "engager",
+      "step": "\u8bc4\u8bba",
+      "method": "POST",
+      "path": "/api/v1/community/posts/2c50b659-a3d3-49de-baf2-6e1d5d007266/comments",
+      "http": 200,
+      "expected": "200+id",
+      "status": "PASS",
+      "notes": "",
+      "section": "community_critical_path"
+    },
+    {
+      "probe_id": "ccp.post_reply",
+      "role": "author",
+      "step": "\u56de\u590d",
+      "method": "POST",
+      "path": "/api/v1/community/posts/2c50b659-a3d3-49de-baf2-6e1d5d007266/comments",
+      "http": 200,
+      "expected": "200+id",
+      "status": "PASS",
+      "notes": "",
+      "section": "community_critical_path"
+    },
+    {
+      "probe_id": "eng.like",
+      "role": "engager",
+      "step": "\u70b9\u8d5e",
+      "method": "POST",
+      "path": "/api/v1/community/posts/2c50b659-a3d3-49de-baf2-6e1d5d007266/like",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": "",
+      "section": "engagement_matrix"
+    },
+    {
+      "probe_id": "eng.idempotent_like",
+      "role": "engager",
+      "step": "\u5e42\u7b49\u70b9\u8d5e",
+      "method": "POST",
+      "path": "/api/v1/community/posts/2c50b659-a3d3-49de-baf2-6e1d5d007266/like",
+      "http": 200,
+      "expected": "200+single_row",
+      "status": "PASS",
+      "notes": "False",
+      "section": "engagement_matrix"
+    },
+    {
+      "probe_id": "eng.unlike_relike",
+      "role": "engager",
+      "step": "\u53d6\u6d88\u518d\u8d5e",
+      "method": "DELETE|POST",
+      "path": "/api/v1/community/posts/2c50b659-a3d3-49de-baf2-6e1d5d007266/like",
+      "http": 200,
+      "expected": "200|200",
+      "status": "PASS",
+      "notes": "",
+      "section": "engagement_matrix"
+    },
+    {
+      "probe_id": "eng.collect",
+      "role": "engager",
+      "step": "\u6536\u85cf",
+      "method": "POST",
+      "path": "/api/v1/community/posts/2c50b659-a3d3-49de-baf2-6e1d5d007266/collect",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": "",
+      "section": "engagement_matrix"
+    },
+    {
+      "probe_id": "eng.like_count",
+      "role": "engager",
+      "step": "\u8ba1\u6570\u6295\u5f71",
+      "method": "GET",
+      "path": "/api/v1/community/posts/2c50b659-a3d3-49de-baf2-6e1d5d007266",
+      "http": 200,
+      "expected": "like/collect counts",
+      "status": "PASS",
+      "notes": "liked=None",
+      "section": "engagement_matrix"
+    },
+    {
+      "probe_id": "eng.me_posts",
+      "role": "author",
+      "step": "\u6211\u7684\u5e16\u5b50",
+      "method": "GET",
+      "path": "/api/v1/community/me/posts",
+      "http": 200,
+      "expected": "contains",
+      "status": "PASS",
+      "notes": "",
+      "section": "engagement_matrix"
+    },
+    {
+      "probe_id": "eng.me_likes",
+      "role": "engager",
+      "step": "\u6211\u7684\u70b9\u8d5e",
+      "method": "GET",
+      "path": "/api/v1/community/me/likes",
+      "http": 200,
+      "expected": "contains",
+      "status": "PASS",
+      "notes": "",
+      "section": "engagement_matrix"
+    },
+    {
+      "probe_id": "eng.me_collects",
+      "role": "engager",
+      "step": "\u6211\u7684\u6536\u85cf",
+      "method": "GET",
+      "path": "/api/v1/community/me/collects",
+      "http": 200,
+      "expected": "contains",
+      "status": "PASS",
+      "notes": "",
+      "section": "engagement_matrix"
+    },
+    {
+      "probe_id": "mod.setup_post",
+      "role": "author",
+      "step": "\u53d1\u5e16",
+      "method": "POST",
+      "path": "/api/v1/community/posts",
+      "http": 200,
+      "expected": "200|201",
+      "status": "PASS",
+      "notes": "",
+      "section": "moderation_matrix"
+    },
+    {
+      "probe_id": "mod.pre_feed",
+      "role": "public",
+      "step": "\u4e0b\u67b6\u524d\u53ef\u89c1",
+      "method": "GET",
+      "path": "/api/v1/community/feed",
+      "http": 200,
+      "expected": "present",
+      "status": "PASS",
+      "notes": "",
+      "section": "moderation_matrix"
+    },
+    {
+      "probe_id": "mod.report_create",
+      "role": "reporter",
+      "step": "\u4e3e\u62a5",
+      "method": "POST",
+      "path": "/api/v1/community/reports",
+      "http": 200,
+      "expected": "200+id",
+      "status": "PASS",
+      "notes": "",
+      "section": "moderation_matrix"
+    },
+    {
+      "probe_id": "mod.admin_queue",
+      "role": "admin",
+      "step": "\u5ba1\u6838\u961f\u5217",
+      "method": "GET",
+      "path": "/api/v1/admin/community/reports",
+      "http": 200,
+      "expected": "contains",
+      "status": "PASS",
+      "notes": "",
+      "section": "moderation_matrix"
+    },
+    {
+      "probe_id": "mod.rbac.read_denied",
+      "role": "engager",
+      "step": "RBAC\u8bfb",
+      "method": "GET",
+      "path": "/api/v1/admin/community/reports",
+      "http": 403,
+      "expected": "403",
+      "status": "PASS",
+      "notes": "",
+      "section": "moderation_matrix"
+    },
+    {
+      "probe_id": "mod.rbac.non_admin",
+      "role": "engager",
+      "step": "RBAC",
+      "method": "PATCH",
+      "path": "/api/v1/admin/community/moderation/30b83bd5-857d-4f48-8c4a-5f96c9b62404",
+      "http": 403,
+      "expected": "403",
+      "status": "PASS",
+      "notes": "",
+      "section": "moderation_matrix"
+    },
+    {
+      "probe_id": "mod.comment_visibility",
+      "role": "admin",
+      "step": "\u8bc4\u8bba\u9690\u85cf",
+      "method": "PATCH",
+      "path": "/api/v1/admin/community/comments/6075e914-0c1f-4fa2-be96-0368b370d5e4",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": "",
+      "section": "moderation_matrix"
+    },
+    {
+      "probe_id": "mod.content_remove",
+      "role": "admin",
+      "step": "\u4e0b\u67b6",
+      "method": "PATCH",
+      "path": "/api/v1/admin/community/moderation/30b83bd5-857d-4f48-8c4a-5f96c9b62404",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": "",
+      "section": "moderation_matrix"
+    },
+    {
+      "probe_id": "mod.feed_hidden",
+      "role": "public",
+      "step": "Feed\u9690\u85cf",
+      "method": "GET",
+      "path": "/api/v1/community/feed",
+      "http": 200,
+      "expected": "absent",
+      "status": "PASS",
+      "notes": "",
+      "section": "moderation_matrix"
+    },
+    {
+      "probe_id": "ccp.delete_post.setup",
+      "role": "author",
+      "step": "\u53d1\u5e16",
+      "method": "POST",
+      "path": "/api/v1/community/posts",
+      "http": 200,
+      "expected": "200|201",
+      "status": "PASS",
+      "notes": "",
+      "section": "community_critical_path"
+    },
+    {
+      "probe_id": "ccp.delete_post",
+      "role": "author",
+      "step": "\u5220\u9664",
+      "method": "DELETE",
+      "path": "/api/v1/community/posts/a84435df-a615-4c15-9dc2-d7d286d54703",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": "",
+      "section": "community_critical_path"
+    },
+    {
+      "probe_id": "ccp.delete_post",
+      "role": "public",
+      "step": "\u5220\u540e\u4e0d\u53ef\u8bfb",
+      "method": "GET",
+      "path": "/api/v1/community/posts/a84435df-a615-4c15-9dc2-d7d286d54703",
+      "http": 200,
+      "expected": "404|empty",
+      "status": "PASS",
+      "notes": "",
+      "section": "community_critical_path"
+    },
+    {
+      "probe_id": "pg.like_count",
+      "target": "2c50b659-a3d3-49de-baf2-6e1d5d007266",
+      "pg_value": "0",
+      "expected": ">=1",
+      "status": "WARN",
+      "section": "pg_consistency"
+    },
+    {
+      "probe_id": "pg.collect_count",
+      "target": "2c50b659-a3d3-49de-baf2-6e1d5d007266",
+      "pg_value": "0",
+      "expected": ">=1",
+      "status": "WARN",
+      "section": "pg_consistency"
+    },
+    {
+      "probe_id": "pg.comment_count",
+      "target": "2c50b659-a3d3-49de-baf2-6e1d5d007266",
+      "pg_value": "0",
+      "expected": ">=1",
+      "status": "WARN",
+      "section": "pg_consistency"
+    },
+    {
+      "probe_id": "pg.auth_audit_events",
+      "pg_value": "0",
+      "status": "WARN",
+      "section": "pg_consistency"
+    },
+    {
+      "probe_id": "ui.f015",
+      "step": "F-015 feed",
+      "status": "PASS",
+      "section": "ui_corridor"
+    },
+    {
+      "probe_id": "ui.f016",
+      "step": "F-016 post",
+      "status": "PASS",
+      "section": "ui_corridor"
+    },
+    {
+      "probe_id": "ui.f017",
+      "step": "F-017 comment",
+      "status": "PASS",
+      "section": "ui_corridor"
+    },
+    {
+      "probe_id": "ui.f018",
+      "step": "F-018 like",
+      "status": "PASS",
+      "section": "ui_corridor"
+    },
+    {
+      "probe_id": "ui.f019",
+      "step": "F-019 report",
+      "status": "PASS",
+      "section": "ui_corridor"
+    }
+  ],
+  "issues": [],
+  "trace": {
+    "author_token": "tts_4ef5c82e-4e3f-499d-91d1-b809399d2e35",
+    "engager_token": "tts_6fda7728-12f7-4276-b67f-581af9837976",
+    "post_id": "2c50b659-a3d3-49de-baf2-6e1d5d007266",
+    "mod_post_id": "63e3c8f1-3bf9-43ae-8741-4bbe367a6d2e",
+    "report_id": "30b83bd5-857d-4f48-8c4a-5f96c9b62404",
+    "comment_id": "6075e914-0c1f-4fa2-be96-0368b370d5e4"
+  },
+  "git_sha": "57df30576c70e67251131bb357dd48f4ccf3019e"
+}

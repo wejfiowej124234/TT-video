@@ -1,0 +1,92 @@
+{
+  "audit_id": "tn-p1-010-root-cause-audit-20260614T070000Z",
+  "phase": "②_testnet_staging",
+  "mode": "root_cause_audit_only",
+  "replay_executed": false,
+  "reconcile_retry_executed": false,
+  "audit_standard_modified": false,
+  "chain_id": 11155111,
+  "factory_ssot": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+  "indexer_bootstrap_from_block": 11045000,
+  "indexer_checkpoint": {
+    "consumer_id": "traveltrust_indexer_tick_v1",
+    "block_number": 11056424,
+    "log_index": 0
+  },
+  "reconcile_snapshot": {
+    "report_created_at": "2026-06-14T06:06:55.50846Z",
+    "orders_with_escrow": 4,
+    "projection_rows_chain": 1,
+    "matched": 1,
+    "missing_projection": 3,
+    "projection_reconcile_clean": false,
+    "compound_pass": false
+  },
+  "unified_root_cause": "pre_bootstrap_chain_events_never_indexed_to_event_log",
+  "orders": [
+    {
+      "order_id": "bd83b97f-77f4-4391-b71f-dc236cc4c9c0",
+      "classification_primary": "migration_legacy",
+      "classification_secondary": "historical_dirty_data_db_status_lag",
+      "valid_on_chain_object": true,
+      "invalid_escrow": false,
+      "db_status": "accepted",
+      "chain_status_label": "Funded",
+      "escrow_address": "0x105Ff943F52bCf149459A1e1b644C07Ea52B7253",
+      "data_origin": "test",
+      "orders_projection_rows": 0,
+      "event_log_rows": 0,
+      "escrow_created_block": 11027300,
+      "escrow_created_tx": "0x75f916d8026c85790a2d2cab40ff1ca304cc6f4b9972192a2fc48cb9a68c1b1c",
+      "paid_block": 11027317,
+      "below_bootstrap": true
+    },
+    {
+      "order_id": "f16c01ec-c254-4898-9849-f9e99d969c4e",
+      "classification_primary": "migration_legacy",
+      "valid_on_chain_object": true,
+      "invalid_escrow": false,
+      "db_status": "escrowed",
+      "chain_status_label": "Funded",
+      "escrow_address": "0x7aCE71eB71A5B0930BFE3a81834a8c91D674f288",
+      "data_origin": "test",
+      "orders_projection_rows": 0,
+      "event_log_rows": 0,
+      "escrow_created_block": 11027326,
+      "escrow_created_tx": "0x8ceddd165ae56ac418aa553bb2e34fe8c56635eac5825d1c328f9029a6894981",
+      "paid_block": 11027328,
+      "below_bootstrap": true
+    },
+    {
+      "order_id": "19f7b67b-0b35-401a-b305-0d7a4d662b0f",
+      "classification_primary": "migration_legacy",
+      "valid_on_chain_object": true,
+      "invalid_escrow": false,
+      "db_status": "escrowed",
+      "chain_status_label": "Funded",
+      "escrow_address": "0x15B8B70Ca76608C6895beebA80bC8bF2AF14724A",
+      "data_origin": "test",
+      "orders_projection_rows": 0,
+      "event_log_rows": 0,
+      "escrow_created_block": 11027337,
+      "escrow_created_tx": "0xec20f84150e9218e6a854c3cbc574c50f2568d7a40dce9b540598ee9e69a22de",
+      "paid_block": 11027341,
+      "below_bootstrap": true
+    }
+  ],
+  "contrast_matched_order": {
+    "order_id": "6cef4e60-2246-450a-a7ea-7c7f43efb492",
+    "source": "TN-P1-006-2026-06-14",
+    "escrow_created_block": 11055588,
+    "above_bootstrap": true,
+    "orders_projection_rows": 1,
+    "event_log_rows": 4
+  },
+  "recommended_remediation_options": [
+    "R1_pre_bootstrap_targeted_backfill_then_single_replay",
+    "R2_rebuild_projection_from_rpc",
+    "R3_test_data_quarantine_if_product_accepts",
+    "R4_db_status_fix_bd83b97f_only_with_r1_or_r2"
+  ],
+  "grep_line": "TT_TN_P1_010_ROOT_CAUSE_AUDIT: COMPLETE"
+}

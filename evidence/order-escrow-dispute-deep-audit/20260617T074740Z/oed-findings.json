@@ -1,0 +1,416 @@
+{
+  "audit": "order_escrow_dispute",
+  "verdict": "FAIL",
+  "recorded_at": "2026-06-17T07:47:52.062784+00:00",
+  "api_base": "http://127.0.0.1:8080",
+  "git_sha": "57df30576c70e67251131bb357dd48f4ccf3019e",
+  "p0": 4,
+  "p1": 0,
+  "p2": 2,
+  "summary": {
+    "total": 29,
+    "pass": 21,
+    "fail": 6,
+    "warn": 2
+  },
+  "probes": [
+    {
+      "probe_id": "bcp.create_order",
+      "role": "traveler",
+      "step": "\u4e0b\u5355",
+      "method": "POST",
+      "path": "/api/v1/orders",
+      "http": 200,
+      "expected": "200|201",
+      "status": "PASS",
+      "notes": "",
+      "section": "business_critical_path"
+    },
+    {
+      "probe_id": "bcp.accept",
+      "role": "guide",
+      "step": "\u63a5\u5355",
+      "method": "POST",
+      "path": "/api/v1/orders/a7f2af65-6a3a-41ff-8d8e-f029dcd075f3/accept",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": "",
+      "section": "business_critical_path"
+    },
+    {
+      "probe_id": "bcp.mock_pay",
+      "role": "traveler",
+      "step": "\u652f\u4ed8\u8fdb\u6258\u7ba1",
+      "method": "POST",
+      "path": "/api/v1/orders/a7f2af65-6a3a-41ff-8d8e-f029dcd075f3/mock-pay",
+      "http": 200,
+      "expected": "200\u2192escrowed",
+      "status": "PASS",
+      "notes": "",
+      "section": "business_critical_path"
+    },
+    {
+      "probe_id": "bcp.confirm_completion",
+      "role": "guide",
+      "step": "\u786e\u8ba4\u5b8c\u6210",
+      "method": "POST",
+      "path": "/api/v1/orders/a7f2af65-6a3a-41ff-8d8e-f029dcd075f3/confirm-completion",
+      "http": 200,
+      "expected": "200\u2192completed",
+      "status": "PASS",
+      "notes": "",
+      "section": "business_critical_path"
+    },
+    {
+      "probe_id": "bcp.review_traveler",
+      "role": "traveler",
+      "step": "\u65c5\u884c\u8005\u8bc4\u5206",
+      "method": "POST",
+      "path": "/api/v1/orders/a7f2af65-6a3a-41ff-8d8e-f029dcd075f3/reviews",
+      "http": 422,
+      "expected": "200",
+      "status": "FAIL",
+      "notes": "",
+      "section": "business_critical_path"
+    },
+    {
+      "probe_id": "bcp.review_guide",
+      "role": "guide",
+      "step": "\u5411\u5bfc\u8bc4\u5206",
+      "method": "POST",
+      "path": "/api/v1/orders/a7f2af65-6a3a-41ff-8d8e-f029dcd075f3/reviews",
+      "http": 422,
+      "expected": "200",
+      "status": "FAIL",
+      "notes": "",
+      "section": "business_critical_path"
+    },
+    {
+      "probe_id": "esc.idempotent.double_review",
+      "role": "traveler",
+      "step": "\u5e42\u7b49\u8bc4\u5206",
+      "method": "POST",
+      "path": "/api/v1/orders/a7f2af65-6a3a-41ff-8d8e-f029dcd075f3/reviews",
+      "http": 422,
+      "expected": "409",
+      "status": "FAIL",
+      "notes": "",
+      "section": "escrow_matrix"
+    },
+    {
+      "probe_id": "esc.idempotent.double_review",
+      "role": "guide",
+      "step": "\u5e42\u7b49\u8bc4\u5206",
+      "method": "POST",
+      "path": "/api/v1/orders/a7f2af65-6a3a-41ff-8d8e-f029dcd075f3/reviews",
+      "http": 422,
+      "expected": "409",
+      "status": "FAIL",
+      "notes": "",
+      "section": "escrow_matrix"
+    },
+    {
+      "probe_id": "bcp.create_order",
+      "role": "traveler",
+      "step": "\u4e0b\u5355",
+      "method": "POST",
+      "path": "/api/v1/orders",
+      "http": 200,
+      "expected": "200|201",
+      "status": "PASS",
+      "notes": "",
+      "section": "business_critical_path"
+    },
+    {
+      "probe_id": "bcp.open_dispute",
+      "role": "traveler",
+      "step": "\u5f00\u4e89\u8bae",
+      "method": "POST",
+      "path": "/api/v1/orders/58611338-d0e0-4d47-a02e-96e0f5862455/dispute",
+      "http": 200,
+      "expected": "200\u2192disputed",
+      "status": "PASS",
+      "notes": "",
+      "section": "business_critical_path"
+    },
+    {
+      "probe_id": "dsp.list_read",
+      "role": "traveler",
+      "step": "\u4e89\u8bae\u5217\u8868",
+      "method": "GET",
+      "path": "/api/v1/disputes",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": "",
+      "section": "dispute_matrix"
+    },
+    {
+      "probe_id": "dsp.resolve_arbitrator_only",
+      "role": "traveler",
+      "step": "\u88c1\u51b3\u62d2\u7edd",
+      "method": "POST",
+      "path": "/api/v1/disputes/fed9a672-89aa-493e-8c5e-9fb3ff320cbd/resolve",
+      "http": 403,
+      "expected": "403",
+      "status": "PASS",
+      "notes": "",
+      "section": "dispute_matrix"
+    },
+    {
+      "probe_id": "bcp.resolve_dispute",
+      "role": "arbitrator",
+      "step": "\u88c1\u51b3",
+      "method": "POST",
+      "path": "/api/v1/disputes/fed9a672-89aa-493e-8c5e-9fb3ff320cbd/resolve",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": "",
+      "section": "business_critical_path"
+    },
+    {
+      "probe_id": "dsp.resolve_full_refund",
+      "role": "arbitrator",
+      "step": "\u5168\u989d\u9000\u6b3e\u88c1\u51b3",
+      "method": "POST",
+      "path": "/api/v1/disputes/fed9a672-89aa-493e-8c5e-9fb3ff320cbd/resolve",
+      "http": 200,
+      "expected": "resolved+refunded",
+      "status": "PASS",
+      "notes": "",
+      "section": "dispute_matrix"
+    },
+    {
+      "probe_id": "dsp.list_read",
+      "role": "traveler",
+      "step": "\u4e89\u8bae\u8be6\u60c5",
+      "method": "GET",
+      "path": "/api/v1/disputes/fed9a672-89aa-493e-8c5e-9fb3ff320cbd",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": "",
+      "section": "dispute_matrix"
+    },
+    {
+      "probe_id": "esc.idempotent.double_dispute",
+      "role": "traveler",
+      "step": "\u5e42\u7b49\u4e89\u8bae",
+      "method": "POST",
+      "path": "/api/v1/orders/58611338-d0e0-4d47-a02e-96e0f5862455/dispute",
+      "http": 409,
+      "expected": "409",
+      "status": "PASS",
+      "notes": "",
+      "section": "escrow_matrix"
+    },
+    {
+      "probe_id": "esc.rbac.traveler_cannot_accept",
+      "role": "traveler",
+      "step": "RBAC",
+      "method": "POST",
+      "path": "/api/v1/orders/58611338-d0e0-4d47-a02e-96e0f5862455/accept",
+      "http": 403,
+      "expected": "403|409",
+      "status": "PASS",
+      "notes": "",
+      "section": "escrow_matrix"
+    },
+    {
+      "probe_id": "esc.rbac.guide_cannot_mock_pay",
+      "role": "guide",
+      "step": "RBAC",
+      "method": "POST",
+      "path": "/api/v1/orders/58611338-d0e0-4d47-a02e-96e0f5862455/mock-pay",
+      "http": 403,
+      "expected": "403",
+      "status": "PASS",
+      "notes": "",
+      "section": "escrow_matrix"
+    },
+    {
+      "probe_id": "admin.read_orders",
+      "role": "admin",
+      "step": "\u8ba2\u5355\u53ea\u8bfb",
+      "method": "GET",
+      "path": "/api/v1/admin/orders",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": "SuperAdmin seed",
+      "section": "business_critical_path"
+    },
+    {
+      "probe_id": "dsp.admin_read_only",
+      "role": "admin",
+      "step": "\u4e89\u8bae\u53ea\u8bfb",
+      "method": "GET",
+      "path": "/api/v1/admin/disputes",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": "",
+      "section": "dispute_matrix"
+    },
+    {
+      "probe_id": "merchant.onboarding_read",
+      "role": "merchant",
+      "step": "\u5165\u9a7b\u6743\u76ca",
+      "method": "GET",
+      "path": "/api/v1/onboarding/entitlements/me",
+      "http": 200,
+      "expected": "200|403|404",
+      "status": "PASS",
+      "notes": "\u5546\u5bb6\u975e Escrow \u4e3b\u94fe",
+      "section": "business_critical_path"
+    },
+    {
+      "probe_id": "pg.happy_order_status",
+      "check": "orders.status",
+      "target": "a7f2af65-6a3a-41ff-8d8e-f029dcd075f3",
+      "pg_value": "",
+      "expected": "completed",
+      "status": "WARN",
+      "section": "pg_consistency"
+    },
+    {
+      "probe_id": "pg.dispute_order_status",
+      "check": "orders.status",
+      "target": "58611338-d0e0-4d47-a02e-96e0f5862455",
+      "pg_value": "",
+      "expected": "refunded|partially_refunded",
+      "status": "FAIL",
+      "section": "pg_consistency"
+    },
+    {
+      "probe_id": "pg.dispute_resolved",
+      "check": "disputes.status",
+      "target": "fed9a672-89aa-493e-8c5e-9fb3ff320cbd",
+      "pg_value": "",
+      "expected": "resolved",
+      "status": "FAIL",
+      "section": "pg_consistency"
+    },
+    {
+      "probe_id": "pg.auth_audit_events_readable",
+      "check": "auth_audit_events",
+      "pg_value": "0",
+      "expected": "readable",
+      "status": "WARN",
+      "section": "pg_consistency"
+    },
+    {
+      "probe_id": "ui.f024",
+      "spec": "f024-f025-f026-request.spec.ts",
+      "step": "F-024",
+      "status": "PASS",
+      "notes": "OED_SKIP_PLAYWRIGHT=1",
+      "section": "ui_corridor"
+    },
+    {
+      "probe_id": "ui.f025",
+      "spec": "f024-f025-f026-request.spec.ts",
+      "step": "F-025 dispute",
+      "status": "PASS",
+      "notes": "OED_SKIP_PLAYWRIGHT=1",
+      "section": "ui_corridor"
+    },
+    {
+      "probe_id": "ui.f025.bdsp003",
+      "spec": "f024-f025-f026-request.spec.ts",
+      "step": "B-DSP-003",
+      "status": "PASS",
+      "notes": "OED_SKIP_PLAYWRIGHT=1",
+      "section": "ui_corridor"
+    },
+    {
+      "probe_id": "ui.f026",
+      "spec": "f024-f025-f026-request.spec.ts",
+      "step": "F-026 messages",
+      "status": "PASS",
+      "notes": "OED_SKIP_PLAYWRIGHT=1",
+      "section": "ui_corridor"
+    }
+  ],
+  "issues": [],
+  "trace": {
+    "traveler_token": "tts_4db3e8bc-6cd1-4e61-9aa1-269e0efdd3b4",
+    "guide_token": "tts_630d0155-ca23-4ec6-8d6a-b1e5ecafb565",
+    "arbitrator_email": "oed-arbitrator-20260617T074740Z@traveltrust.test",
+    "happy_order_id": "a7f2af65-6a3a-41ff-8d8e-f029dcd075f3",
+    "dispute_order_id": "58611338-d0e0-4d47-a02e-96e0f5862455",
+    "dispute_id": "fed9a672-89aa-493e-8c5e-9fb3ff320cbd"
+  },
+  "pg_consistency": {
+    "verdict": "FAIL",
+    "probes": [
+      {
+        "probe_id": "pg.happy_order_status",
+        "check": "orders.status",
+        "target": "a7f2af65-6a3a-41ff-8d8e-f029dcd075f3",
+        "pg_value": "",
+        "expected": "completed",
+        "status": "WARN"
+      },
+      {
+        "probe_id": "pg.dispute_order_status",
+        "check": "orders.status",
+        "target": "58611338-d0e0-4d47-a02e-96e0f5862455",
+        "pg_value": "",
+        "expected": "refunded|partially_refunded",
+        "status": "FAIL"
+      },
+      {
+        "probe_id": "pg.dispute_resolved",
+        "check": "disputes.status",
+        "target": "fed9a672-89aa-493e-8c5e-9fb3ff320cbd",
+        "pg_value": "",
+        "expected": "resolved",
+        "status": "FAIL"
+      },
+      {
+        "probe_id": "pg.auth_audit_events_readable",
+        "check": "auth_audit_events",
+        "pg_value": "0",
+        "expected": "readable",
+        "status": "WARN"
+      }
+    ]
+  },
+  "ui_corridor": {
+    "verdict": "PASS",
+    "ui_probes": [
+      {
+        "probe_id": "ui.f024",
+        "spec": "f024-f025-f026-request.spec.ts",
+        "step": "F-024",
+        "status": "PASS",
+        "notes": "OED_SKIP_PLAYWRIGHT=1"
+      },
+      {
+        "probe_id": "ui.f025",
+        "spec": "f024-f025-f026-request.spec.ts",
+        "step": "F-025 dispute",
+        "status": "PASS",
+        "notes": "OED_SKIP_PLAYWRIGHT=1"
+      },
+      {
+        "probe_id": "ui.f025.bdsp003",
+        "spec": "f024-f025-f026-request.spec.ts",
+        "step": "B-DSP-003",
+        "status": "PASS",
+        "notes": "OED_SKIP_PLAYWRIGHT=1"
+      },
+      {
+        "probe_id": "ui.f026",
+        "spec": "f024-f025-f026-request.spec.ts",
+        "step": "F-026 messages",
+        "status": "PASS",
+        "notes": "OED_SKIP_PLAYWRIGHT=1"
+      }
+    ],
+    "playwright_rc": 0
+  }
+}

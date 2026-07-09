@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "id": "PF-SEED-004",
+      "pf": "PF-01",
+      "object": "route",
+      "label": "archive/ui-v1",
+      "paths": [
+        "frontend/archive/ui-v1"
+      ],
+      "suggested_verdict": "RETIRE",
+      "severity": "P1",
+      "rationale": "Non-SSOT archived tree must not appear in production nav"
+    }
+  ]
+}

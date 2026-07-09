@@ -1,0 +1,13 @@
+{
+  "verdict": "PARTIAL",
+  "checks": {
+    "cert2_machine_gates": {
+      "cmd": "C:\\Program Files\\Git\\bin\\bash.exe D:\\TravelTrust-V1.1\\scripts\\dev\\smoke-cert2-multi-identity-machine-gates.sh",
+      "exit_code": 1,
+      "stdout_tail": "smoke-cert2-multi-identity-machine: OK vitest IA union\n== smoke-multi-identity-closure-local (① only) API=http://127.0.0.1:8080 ==\nsmoke-multi-identity-closure: OK login multi-demo@test.com\nsmoke-multi-identity-closure: OK identity_slots guide+merchant+steward active\nsmoke-multi-identity-closure: OK guide settings write\nsmoke-multi-identity-closure: OK merchant settings write\nsmoke-multi-identity-closure: OK steward settings write\nsmoke-multi-identity-closure: OK acquisition settings write\nsmoke-multi-identity-closure: OK merchant listing publish",
+      "stderr_tail": "smoke-multi-identity-closure: FAIL POST acquisition listing HTTP 429 body={\"status\":\"error\",\"error\":\"acquisition_publish_rate_limited\",\"message\":\"acquisition_publish_rate_limited\"}\nsmoke-cert2-multi-identity-machine: FAIL api multi-identity closure",
+      "ok": false,
+      "api_skipped": false
+    }
+  }
+}

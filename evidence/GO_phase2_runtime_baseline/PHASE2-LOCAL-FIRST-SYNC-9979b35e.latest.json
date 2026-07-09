@@ -1,0 +1,55 @@
+{
+  "schema": "traveltrust.phase2_local_first_sync_baseline.v1",
+  "stamp": "20260630T051014Z",
+  "synced_at_utc": "2026-06-30T05:10:14Z",
+  "phase": "② testnet",
+  "policy": "Local First — local qualified baseline deployed to staging; Phase③ WIP isolated",
+  "local_dev_ssot_sha": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+  "staging_runtime_sha": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+  "graduation_frozen_sha": "fc9266ce94f18810420e720bb933946c086ce909",
+  "soak_baseline_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "phase2_closure_slice_only": true,
+  "phase3_wip_isolated": true,
+  "immutable_historical_evidence": {
+    "soak": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+    "graduation": "evidence/GO_phase2_testnet_graduation/freeze-fc9266ce/",
+    "final_human_acceptance": "evidence/GO_phase2_final_human_acceptance/PHASE2-FINAL-HUMAN-ACCEPTANCE.latest.json"
+  },
+  "staging_retest": {
+    "r003_staging_regression": {
+      "release_gate": "GO",
+      "cases": 12,
+      "report": "evidence/GO_phase2_testnet_20260526/report.json"
+    },
+    "adm_u01_staging": {
+      "release_gate": "GO",
+      "api_matrix": "102/102",
+      "playwright_shell": "GO",
+      "run_id": "adm_u01_localfirst_retest3_20260630",
+      "evidence": "evidence/GO_staging_admin_rbac_matrix/adm_u01_localfirst_retest3_20260630"
+    },
+    "uat_cross_domain": {
+      "test": "跨域 · meta 同源代理 + CORS /governance",
+      "verdict": "PASS"
+    },
+    "deep_release_gate": {
+      "verdict": "PASS",
+      "release_gate": "GO",
+      "evidence": "evidence/GO_phase2_testnet_20260526/local-staging-parity/20260630T041949Z/deep-release-gate"
+    },
+    "transient_failures_ruled_out": true,
+    "notes": "Prior SSL/ERR_CONNECTION_CLOSED failures reproduced as client-path flakes; stable-window retest all PASS."
+  },
+  "verdicts": {
+    "tt_phase2_local_first_sync": "COMPLETE",
+    "tt_phase2_runtime_staging_sha": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+    "tt_phase2_runtime_drift_vs_graduation": "LOCAL_FIRST_INTENTIONAL",
+    "phase3_production_entry_review_eligible": true
+  },
+  "honest_boundary": "Local First sync complete ≠ Production GO ≠ re-graduation; soak/HA anchors remain @ graduation SHA",
+  "machine_keys": {
+    "TT_PHASE2_LOCAL_FIRST_SYNC": "COMPLETE",
+    "TT_PHASE2_RUNTIME_STAGING_SHA": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+    "TT_PHASE2_RUNTIME_DRIFT": "LOCAL_FIRST_INTENTIONAL"
+  }
+}

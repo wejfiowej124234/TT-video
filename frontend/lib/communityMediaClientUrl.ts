@@ -25,21 +25,46 @@ export function normalizePersistedCommunityMediaPath(raw: string | null | undefi
 
 /**
  * 将后端持久化的站内媒体路径转为浏览器可加载 URL（与 `apiUrl`、社区 JSON fetch 同源）。
- * - **`/api/*` / `/auth/*`**：走 **`apiUrl`**（loopback 直连 API、非 loopback 拼 **`NEXT_PUBLIC_API_BASE_URL`**）。
- * - **`//api/*` / `//auth/*`**：常见双斜杠笔误，规范为单斜杠后再走 **`apiUrl`**。
- * - **`//cdn.example/…`**：协议相对绝对 URL，用当前页 origin（无 `window` 时默认 `https://127.0.0.1`）解析为完整 **`https:`** / **`http:`**。
- * - **`api/*` / `auth/*`（无前导 `/`）**：网关或历史数据偶发缺斜杠，补 **`/`** 后走 **`apiUrl`**。
- * - **`blob:` / `data:` / `http(s):`**：原样返回。
- * - 以 **`/`** 开头且**不是** **`/api/*`**、**`/auth/*`**、**`//…`** 的路径视为**前端同源**资源（如 `/market/...`、`public` 静态图），原样返回，与 {@link outboundUrlFromPersisted} 一致，避免分源时误拼到 API 基址。
+ * - **`/api/*` / `/auth/*`（浏览器）**：与 **`MarketGuideCover`** 一致，保留**同源相对路径**，经 Next rewrite 代理（② staging web）。
+ * - **`/api/*` / `/auth/*`（SSR / 无 `window`）**：走 **`apiUrl`**。
+ * - **`//api/*` / `//auth/*`**：规范为单斜杠后再走上述规则。
+ * - **`//cdn.example/…`**：协议相对绝对 URL，用当前页 origin 解析。
+ * - **`api/*` / `auth/*`（无前导 `/`）**：补 **`/`** 后同上。
+ * - **`blob:` / `data:` / `http(s):`**：绝对 URL 中 **`/api/v1/uploads/*`** 在浏览器降回相对路径（Guide 封面 parity）。
+ * - 其它以 **`/`** 开头的前端路径原样返回。
  */
+function communityMediaBrowserHasWindow(): boolean {
+  const win = (globalThis as { window?: { location?: { origin?: string } } }).window;
+  return typeof win?.location?.origin === "string" && win.location.origin.length > 0;
+}
+
+/** 浏览器 · `/api/*` / `/auth/*` 与 Guide 封面一致：同源 rewrite，不拼跨域 API host。 */
+function communityMediaSameOriginApiPathForBrowser(path: string): string | null {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  if (!p.startsWith("/api/") && !p.startsWith("/auth/")) return null;
+  return communityMediaBrowserHasWindow() ? p : null;
+}
+
 export function communityMediaAbsoluteUrlForRender(raw: string | null | undefined): string {
   const normalized = normalizePersistedCommunityMediaPath(raw);
   const u = remapCommunityTestCdnPlaybackPath(normalized);
   if (!u) return "";
   if (u.startsWith("blob:") || u.startsWith("data:")) return u;
-  if (u.startsWith("http://") || u.startsWith("https://")) return u;
+  if (u.startsWith("http://") || u.startsWith("https://")) {
+    try {
+      const parsed = new URL(u);
+      const same = communityMediaSameOriginApiPathForBrowser(`${parsed.pathname}${parsed.search}`);
+      if (same) return same;
+    } catch {
+      /* keep absolute */
+    }
+    return u;
+  }
   if (u.startsWith("//api/") || u.startsWith("//auth/")) {
-    return apiUrl(`/${u.slice(2)}`);
+    const p = `/${u.slice(2)}`;
+    const same = communityMediaSameOriginApiPathForBrowser(p);
+    if (same) return same;
+    return apiUrl(p);
   }
   if (u.startsWith("//")) {
     try {
@@ -53,9 +78,16 @@ export function communityMediaAbsoluteUrlForRender(raw: string | null | undefine
   if (u.startsWith("/") && !u.startsWith("//") && !u.startsWith("/api/") && !u.startsWith("/auth/")) {
     return u;
   }
-  if (u.startsWith("/")) return apiUrl(u);
+  if (u.startsWith("/api/") || u.startsWith("/auth/")) {
+    const same = communityMediaSameOriginApiPathForBrowser(u);
+    if (same) return same;
+    return apiUrl(u);
+  }
   if (u.startsWith("api/") || u.startsWith("auth/")) {
-    return apiUrl(`/${u}`);
+    const p = `/${u}`;
+    const same = communityMediaSameOriginApiPathForBrowser(p);
+    if (same) return same;
+    return apiUrl(p);
   }
   return u;
 }

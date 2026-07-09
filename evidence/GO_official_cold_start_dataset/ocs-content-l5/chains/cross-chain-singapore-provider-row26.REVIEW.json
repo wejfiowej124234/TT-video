@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T142030Z",
+  "trigger_row": 26,
+  "trigger_filename": "ocs-singapore-family-provider-cover.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "provider_comparison": {
+    "tokyo-photo": "台场半日旅拍",
+    "kyoto-culture": "私享茶室",
+    "seoul-food": "夜市美食团",
+    "bangkok-temple": "湄南河 sunset 游船晚宴",
+    "singapore-family": "亲子通票 · 水族馆/乐园入口家庭合影",
+    "distinct": true
+  },
+  "vs_row25_guide": "家庭服务场景 vs 向导肖像",
+  "no_quality_regression_prior_25": true
+}

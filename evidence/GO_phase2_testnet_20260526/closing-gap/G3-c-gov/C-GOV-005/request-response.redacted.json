@@ -1,0 +1,55 @@
+{
+  "verdict": "PASS",
+  "note": "GET/POST/DELETE/GET delegate chain_off_mvp on staging",
+  "get_before": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "authenticated": true,
+      "delegate_to": null,
+      "request_id": "d25d7676-7f17-4ce3-8e25-80f6463ed8f7",
+      "data_source": "chain_off_mvp"
+    }
+  },
+  "post_delegate": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "delegate_to": "4b389c45-bfca-4f3a-a897-42cf95c91a6e",
+      "request_id": "fb977b50-54d5-44d3-a42c-6c04a48ecedf",
+      "tx_hash": null,
+      "implementation_note": "chain_off_mvp_no_onchain_tx",
+      "idempotent": false
+    }
+  },
+  "get_after_post": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "authenticated": true,
+      "delegate_to": "4b389c45-bfca-4f3a-a897-42cf95c91a6e",
+      "request_id": "ed0aa9d4-0132-417c-91c6-135f87659db4",
+      "data_source": "chain_off_mvp"
+    }
+  },
+  "delete": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "delegate_to": null,
+      "request_id": "0b2060f4-2577-4be3-936e-f9149f50414e",
+      "tx_hash": null,
+      "implementation_note": "chain_off_mvp_no_onchain_tx"
+    }
+  },
+  "get_after_delete": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "authenticated": true,
+      "delegate_to": null,
+      "request_id": "a328d48a-e4a5-4c9f-b8c3-ac8f9821f768",
+      "data_source": "chain_off_mvp"
+    }
+  }
+}

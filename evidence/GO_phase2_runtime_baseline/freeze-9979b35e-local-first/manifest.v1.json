@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.phase2_runtime_baseline_freeze.v1",
+  "frozen_at_utc": "2026-06-30T05:10:21Z",
+  "phase": "② testnet",
+  "runtime_staging_sha": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+  "graduation_frozen_sha": "fc9266ce94f18810420e720bb933946c086ce909",
+  "soak_baseline_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "sync_kind": "local_first",
+  "immutable_evidence": {
+    "soak": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+    "graduation": "evidence/GO_phase2_testnet_graduation/freeze-fc9266ce/",
+    "graduation_latest": "evidence/GO_phase2_testnet_graduation/PHASE2-CLOSURE-GRADUATION-FREEZE.latest.json",
+    "final_human_acceptance": "evidence/GO_phase2_final_human_acceptance/PHASE2-FINAL-HUMAN-ACCEPTANCE.latest.json",
+    "local_first_sync": "evidence/GO_phase2_runtime_baseline/PHASE2-LOCAL-FIRST-SYNC-9979b35e.latest.json",
+    "runtime_drift": "evidence/GO_phase2_runtime_baseline/PHASE2-RUNTIME-DRIFT-fc9266ce-to-9979b35e-local-first.json"
+  },
+  "soak_snapshot": {
+    "ok_polls": 4320,
+    "fail_polls": 0,
+    "completed_at": "2026-06-29T18:17:13.697Z"
+  },
+  "verdicts": {
+    "tt_phase2_local_first_sync": "COMPLETE",
+    "tt_phase2_runtime_drift": "LOCAL_FIRST_INTENTIONAL",
+    "tt_testnet_graduation": "CLOSED",
+    "tt_phase2_final_human_acceptance": "PASS",
+    "phase2_baseline_frozen": true
+  },
+  "honest_boundary": "Current staging @ 9979b35e · graduation/soak @ fc9266ce unchanged · ② frozen baseline ≠ ③ Production GO"
+}

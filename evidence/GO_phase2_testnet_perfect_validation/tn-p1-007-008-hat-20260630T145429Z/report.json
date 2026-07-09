@@ -1,0 +1,1077 @@
+{
+  "schema": "tn_p1_007_008_hat_staging.v1",
+  "stamp": "20260630T145429Z",
+  "phase": "② testnet",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "tn_p1_007": "CLOSED",
+  "tn_p1_008": "CLOSED",
+  "multi_identity_marker": "TT_SMOKE_MULTI_IDENTITY_CLOSURE_STAGING: OK",
+  "publish_hub_marker": "TT_PUBLISH_HUB_STAGING: OK",
+  "hat_matrix_marker": "TT_TN_P1_HAT_MATRIX_PROBE: PASS",
+  "hat_matrix": {
+    "schema": "tn_p1_hat_matrix_probe.v1",
+    "phase": "② testnet",
+    "api": "https://tt-api-staging.fly.dev",
+    "personas": [
+      "traveler",
+      "guide",
+      "merchant",
+      "steward",
+      "moderator",
+      "admin"
+    ],
+    "traveler_email": "hat-probe-5ebdd509d8@traveltrust.testnet",
+    "probes": [
+      {
+        "role": "traveler",
+        "probe_id": "allow_me",
+        "method": "GET",
+        "path": "/api/v1/me",
+        "http": 200,
+        "expect": [
+          200
+        ],
+        "pass": true,
+        "deny": false,
+        "body_sample": {
+          "status": "ok",
+          "user": {
+            "id": "a98649b8-d7a1-40f0-adea-fa4d7aef8926",
+            "email": "hat-probe-5ebdd509d8@traveltrust.testnet",
+            "role": "tourist",
+            "role_traveltrust": "traveler",
+            "kyc_status": "none",
+            "nickname": "Hat Probe Traveler",
+            "avatar_url": null,
+            "default_wallet_address": null,
+            "email_verified_at": "2026-06-30T14:55:08.462579908+00:00",
+            "settings_preferences": null,
+            "created_at": "2026-06-30T14:55:08.462579908+00:00"
+          },
+          "guide": null,
+          "trust": {
+            "kyc_status": "none",
+            "wallet_linked": false,
+            "guide_registration_status": null,
+            "identity_status": "active",
+            "risk_level": "low",
+            "risk_basis": "open_disputes_as_party:0",
+            "risk_reason_codes": [],
+            "recommended_actions": [],
+            "rule": "90 §6 Partial：identity_status 由 kyc_status + guide.status 推导；risk_level 由未决争议（status=open）且订单参与方为当前用户计数推导；risk_reason_codes/recommended_actions 为同源规则版；非 100 风控引擎终态",
+            "reputation": {
+              "rule_version": "me_reputation_summary_v2",
+              "as_guide": null,
+              "as_reviewer": {
+                "reviews_written_count": 0,
+                "sum_review_weights": 0
+              },
+              "note": "weighted guide reputation applies when role=guide",
+              "formula": "sum_review_weights = sum(weight) for reviews you authored; each weight from traveltrust_core::ReviewWeight at submit (order amount × your account age factors)"
+            },
+            "acquisition_trust_score": 500,
+            "acquisition_publish_eligible": false,
+            "acquisition_publish_bond_waived": false,
+            "acquisition_publish_bond_active": false,
+            "acquisition_listings_published_24h": 0,
+            "acquisition_publish_suspended": false,
+            "acquisition_fulfillment_bond_active": false
+          },
+          "stats": {
+            "orders_total": 0,
+            "total_spent": 0,
+            "reviews_count": 0,
+            "acquisition_orders_as_owner": 0,
+            "acquisition_orders_as_carrier": 0,
+            "acquisition_in_progress_count": 0,
+            "acquisition_listings_published_24h": 0
+          },
+          "identity_slots": [
+            {
+              "id": "traveler",
+              "state": "active",
+              "stake_display": null
+            },
+            {
+              "id": "guide",
+              "state": "inactive",
+              "stake_display": null
+            },
+            {
+              "id": "acquisition",
+              "state": "inactive",
+              "stake_display": null
+            },
+            {
+              "id": "merchant",
+              "state": "inactive",
+              "stake_display": null
+            },
+            {
+              "id": "region_steward",
+              "state": "inactive",
+              "stake_display": null
+            }
+          ]
+        }
+      },
+      {
+        "role": "traveler",
+        "probe_id": "deny_admin_capabilities",
+        "method": "GET",
+        "path": "/api/v1/admin/capabilities",
+        "http": 403,
+        "expect": [
+          401,
+          403
+        ],
+        "pass": true,
+        "deny": true,
+        "body_sample": {
+          "error": "admin_required",
+          "message": "admin_required"
+        }
+      },
+      {
+        "role": "guide",
+        "probe_id": "allow_me",
+        "method": "GET",
+        "path": "/api/v1/me",
+        "http": 200,
+        "expect": [
+          200
+        ],
+        "pass": true,
+        "deny": false,
+        "body_sample": {
+          "status": "ok",
+          "user": {
+            "id": "4b389c45-bfca-4f3a-a897-42cf95c91a6e",
+            "email": "guide@test.com",
+            "role": "guide",
+            "role_traveltrust": "guide",
+            "kyc_status": "none",
+            "nickname": "测试向导",
+            "avatar_url": null,
+            "default_wallet_address": null,
+            "email_verified_at": "2026-06-30T14:55:06.024689079+00:00",
+            "settings_preferences": null,
+            "created_at": "2026-06-05T12:21:40.891847+00:00"
+          },
+          "guide": {
+            "id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+            "wallet_address": null,
+            "stake_amount": "100",
+            "status": "active"
+          },
+          "trust": {
+            "kyc_status": "none",
+            "wallet_linked": false,
+            "guide_registration_status": "active",
+            "identity_status": "active",
+            "risk_level": "low",
+            "risk_basis": "open_disputes_as_party:0",
+            "risk_reason_codes": [],
+            "recommended_actions": [],
+            "rule": "90 §6 Partial：identity_status 由 kyc_status + guide.status 推导；risk_level 由未决争议（status=open）且订单参与方为当前用户计数推导；risk_reason_codes/recommended_actions 为同源规则版；非 100 风控引擎终态",
+            "reputation": {
+              "rule_version": "me_reputation_summary_v2",
+              "as_guide": {
+                "reviews_received_count": 0,
+                "sum_review_weights": 0,
+                "weighted_avg_score": null
+              },
+              "as_reviewer": {
+                "reviews_written_count": 0,
+                "sum_review_weights": 0
+              },
+              "formula": "weighted_avg_score = sum(score*weight)/sum(weight); each weight from traveltrust_core::ReviewWeight at submit (order amount × reviewer account age factors). sum_review_weights = sum(weight) for reviews you authored; each weight from traveltrust_core::ReviewWeight at submit (order amount × your account age factors)"
+            },
+            "acquisition_trust_score": 500,
+            "acquisition_publish_eligible": false,
+            "acquisition_publish_bond_waived": false,
+            "acquisition_publish_bond_active": false,
+            "acquisition_listings_published_24h": 0,
+            "acquisition_publish_suspended": false,
+            "acquisition_fulfillment_bond_active": false
+          },
+          "stats": {
+            "orders_total": 6,
+            "orders_guided": 6,
+            "completed_count": 4,
+            "total_earned": 400,
+            "avg_score": null,
+            "reviews_count": 0,
+            "billing_period_utc": "2026-06",
+            "period_expected_earnings": 100,
+            "period_settled_orders_count": 4,
+            "acquisition_orders_as_owner": 0,
+            "acquisition_orders_as_carrier": 0,
+            "acquisition_in_progress_count": 0,
+            "acquisition_listings_published_24h": 0
+          },
+          "identity_slots": [
+            {
+              "id": "traveler",
+              "state": "active",
+              "stake_display": null
+            },
+            {
+              "id": "guide",
+              "state": "active",
+              "stake_display": "100 USDC"
+            },
+            {
+              "id": "acquisition",
+              "state": "inactive",
+              "stake_display": null
+            },
+            {
+              "id": "merchant",
+              "state": "inactive",
+              "stake_display": null
+            },
+            {
+              "id": "region_steward",
+              "state": "inactive",
+              "stake_display": null
+            }
+          ]
+        }
+      },
+      {
+        "role": "guide",
+        "probe_id": "deny_admin_users",
+        "method": "GET",
+        "path": "/api/v1/admin/users?limit=1",
+        "http": 403,
+        "expect": [
+          401,
+          403
+        ],
+        "pass": true,
+        "deny": true,
+        "body_sample": {
+          "error": "admin_required",
+          "message": "admin_required"
+        }
+      },
+      {
+        "role": "merchant",
+        "probe_id": "allow_merchant_listings",
+        "method": "GET",
+        "path": "/api/v1/me/merchant-listings",
+        "http": 200,
+        "expect": [
+          200
+        ],
+        "pass": true,
+        "deny": false,
+        "body_sample": {
+          "status": "ok",
+          "published": [
+            {
+              "id": "3a34421f-dc1d-4807-ba51-6f937889cb9f",
+              "title": "Smoke Shop Listing 1781453219",
+              "status": "published",
+              "updated_at": "2026-06-14T16:07:17.598258+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "b4a04a5c-8ef6-41ef-baaf-e56121e28a10",
+              "title": "Smoke Shop Listing 1781408893",
+              "status": "published",
+              "updated_at": "2026-06-14T03:48:32.363517+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "93e26203-56b1-4c81-af99-2da8e2e1a4d7",
+              "title": "Smoke Shop Listing 1781089343",
+              "status": "published",
+              "updated_at": "2026-06-10T11:02:38.770222+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "a3b017fe-eadc-4556-9b51-3513c66be1d8",
+              "title": "Smoke Shop Listing 1781071332",
+              "status": "published",
+              "updated_at": "2026-06-10T06:02:31.731568+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "e62cf69f-b6a1-4990-90b0-13deef686b4f",
+              "title": "Smoke Shop Listing 1781070301",
+              "status": "published",
+              "updated_at": "2026-06-10T05:45:15.896941+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "b44acc6e-9b07-45e2-98c3-3667d8484d91",
+              "title": "Smoke Shop Listing 1781066875",
+              "status": "published",
+              "updated_at": "2026-06-10T04:48:08.256581+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "ef1ebf75-392a-4942-9218-8d2e92961048",
+              "title": "Smoke Shop Listing 1780914377",
+              "status": "published",
+              "updated_at": "2026-06-08T10:26:32.525086+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "d82f3a49-c022-4dc1-98b8-6da862511e41",
+              "title": "Smoke Shop Listing 1780913810",
+              "status": "published",
+              "updated_at": "2026-06-08T10:17:10.943120+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "8ea1c300-7981-4280-b190-e78e05da510e",
+              "title": "Smoke Shop Listing 1780913024",
+              "status": "published",
+              "updated_at": "2026-06-08T10:04:00.981009+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "9b00b9cd-e4df-4139-be70-4c995fd1e4a0",
+              "title": "Smoke Shop Listing 1780910712",
+              "status": "published",
+              "updated_at": "2026-06-08T09:25:32.216353+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "b613e43c-05c0-4f4a-affa-0a36d54efc28",
+              "title": "Smoke Shop Listing 1780902946",
+              "status": "published",
+              "updated_at": "2026-06-08T07:16:03.377896+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "a9da4c3f-fa71-414f-8f5e-bc79e1d0c962",
+              "title": "Smoke Shop Listing 1780900378",
+              "status": "published",
+              "updated_at": "2026-06-08T06:33:14.085163+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "033762b8-d3ea-4561-9d42-0a14614a580e",
+              "title": "Smoke Shop Listing 1780899011",
+              "status": "published",
+              "updated_at": "2026-06-08T06:10:31.979849+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "7efccba6-725f-4e2e-88e0-7adc4ed85c74",
+              "title": "Smoke Shop Listing 1780898829",
+              "status": "published",
+              "updated_at": "2026-06-08T06:07:32.403370+00:00",
+              "cover_url": null
+            },
+            {
+              "id": "fda9ca23-dd1f-4ad6-bca9-fdeb2608ed78",
+              "title": "Smoke Shop Listing 1780804182",
+              "status": "published",
+              "updated_at": "2026-06-07T03:50:07.354098+00:00",
+              "cover_url": null
+            }
+          ],
+          "drafts": [],
+          "meta": {
+            "implementation_status": "me_merchant_listings_v1",
+            "source": "postgres_catalog",
+            "variant": "provider"
+          }
+        }
+      },
+      {
+        "role": "merchant",
+        "probe_id": "deny_admin_users",
+        "method": "GET",
+        "path": "/api/v1/admin/users?limit=1",
+        "http": 403,
+        "expect": [
+          401,
+          403
+        ],
+        "pass": true,
+        "deny": true,
+        "body_sample": {
+          "error": "admin_required",
+          "message": "admin_required"
+        }
+      },
+      {
+        "role": "steward",
+        "probe_id": "allow_governance_mine",
+        "method": "GET",
+        "path": "/api/v1/governance/proposals?mine=1",
+        "http": 200,
+        "expect": [
+          200
+        ],
+        "pass": true,
+        "deny": false,
+        "body_sample": {
+          "status": "ok",
+          "items": [
+            {
+              "id": "1",
+              "title": "",
+              "status": "queued"
+            }
+          ],
+          "data_source": "governance_proposals_projection",
+          "chain_id": 11155111,
+          "mine": true,
+          "note": "Filtered by session user default_wallet_address (proposer)"
+        }
+      },
+      {
+        "role": "steward",
+        "probe_id": "deny_admin_users",
+        "method": "GET",
+        "path": "/api/v1/admin/users?limit=1",
+        "http": 403,
+        "expect": [
+          401,
+          403
+        ],
+        "pass": true,
+        "deny": true,
+        "body_sample": {
+          "error": "admin_required",
+          "message": "admin_required"
+        }
+      },
+      {
+        "role": "steward",
+        "probe_id": "allow_identity_slots",
+        "method": "GET",
+        "path": "/api/v1/me",
+        "http": 200,
+        "expect": [
+          200
+        ],
+        "pass": true,
+        "deny": false,
+        "body_sample": {
+          "status": "ok",
+          "user": {
+            "id": "cf1e4c30-34b8-40b6-b747-474cf24517c3",
+            "email": "multi-demo@test.com",
+            "role": "guide",
+            "role_traveltrust": "guide",
+            "kyc_status": "none",
+            "nickname": "多重身份演示",
+            "avatar_url": null,
+            "default_wallet_address": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+            "email_verified_at": "2026-06-30T14:55:06.024689079+00:00",
+            "settings_preferences": null,
+            "created_at": "2026-06-13T13:15:35.111788+00:00"
+          },
+          "guide": {
+            "id": "a6948b9e-c4d3-41da-920e-8aad0bceda1d",
+            "wallet_address": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+            "stake_amount": "100",
+            "status": "active"
+          },
+          "trust": {
+            "kyc_status": "none",
+            "wallet_linked": true,
+            "guide_registration_status": "active",
+            "identity_status": "active",
+            "risk_level": "low",
+            "risk_basis": "open_disputes_as_party:0",
+            "risk_reason_codes": [],
+            "recommended_actions": [],
+            "rule": "90 §6 Partial：identity_status 由 kyc_status + guide.status 推导；risk_level 由未决争议（status=open）且订单参与方为当前用户计数推导；risk_reason_codes/recommended_actions 为同源规则版；非 100 风控引擎终态",
+            "reputation": {
+              "rule_version": "me_reputation_summary_v2",
+              "as_guide": {
+                "reviews_received_count": 0,
+                "sum_review_weights": 0,
+                "weighted_avg_score": null
+              },
+              "as_reviewer": {
+                "reviews_written_count": 0,
+                "sum_review_weights": 0
+              },
+              "formula": "weighted_avg_score = sum(score*weight)/sum(weight); each weight from traveltrust_core::ReviewWeight at submit (order amount × reviewer account age factors). sum_review_weights = sum(weight) for reviews you authored; each weight from traveltrust_core::ReviewWeight at submit (order amount × your account age factors)"
+            },
+            "acquisition_trust_score": 580,
+            "acquisition_publish_eligible": true,
+            "acquisition_publish_bond_waived": false,
+            "acquisition_publish_bond_active": true,
+            "acquisition_publish_bond_display": "50 USDC",
+            "acquisition_listings_published_24h": 0,
+            "acquisition_publish_suspended": false,
+            "acquisition_fulfillment_bond_active": false
+          },
+          "stats": {
+            "orders_total": 0,
+            "orders_guided": 0,
+            "completed_count": 0,
+            "total_earned": 0,
+            "avg_score": null,
+            "reviews_count": 0,
+            "billing_period_utc": "2026-06",
+            "period_expected_earnings": 0,
+            "period_settled_orders_count": 0,
+            "orders_merchant_total": 0,
+            "merchant_in_progress_count": 0,
+            "merchant_period_expected_earnings": 0,
+            "merchant_period_settled_orders_count": 0,
+            "steward_governance_workspace": "/governance?view=region",
+            "steward_orders_n_a": true,
+            "acquisition_orders_as_owner": 0,
+            "acquisition_orders_as_carrier": 0,
+            "acquisition_in_progress_count": 0,
+            "acquisition_listings_published_24h": 0
+          },
+          "identity_slots": [
+            {
+              "id": "traveler",
+              "state": "active",
+              "stake_display": null
+            },
+            {
+              "id": "guide",
+              "state": "active",
+              "stake_display": "100 USDC"
+            },
+            {
+              "id": "acquisition",
+              "state": "active",
+              "stake_display": "50 USDC"
+            },
+            {
+              "id": "merchant",
+              "state": "active",
+              "stake_display": null
+            },
+            {
+              "id": "region_steward",
+              "state": "active",
+              "stake_display": null
+            }
+          ]
+        }
+      },
+      {
+        "role": "admin",
+        "probe_id": "allow_admin_capabilities",
+        "method": "GET",
+        "path": "/api/v1/admin/capabilities",
+        "http": 200,
+        "expect": [
+          200
+        ],
+        "pass": true,
+        "deny": false,
+        "body_sample": {
+          "status": "ok",
+          "role": "super_admin",
+          "console_role_70": "SuperAdmin",
+          "console_role_source": "db:admin_console_roles",
+          "matrix_version": "admin-rbac-v4-cms-ops-growth-2026-06-07",
+          "permissions": [
+            "admin.read",
+            "admin.approve",
+            "admin.onboarding.read",
+            "admin.onboarding.write",
+            "admin.onboarding.provider_review",
+            "admin.onboarding.steward_review",
+            "admin.users.read",
+            "admin.users.write",
+            "admin.orders.read",
+            "admin.disputes.write",
+            "admin.community.read",
+            "admin.community.moderate",
+            "admin.community.super",
+            "admin.finance.read",
+            "admin.fee_router.read",
+            "admin.trust_growth.write",
+            "admin.platform.read",
+            "admin.platform.publish",
+            "admin.acquisition.suspend",
+            "admin.content.read",
+            "admin.content.write",
+            "admin.content.publish",
+            "admin.official.read",
+            "admin.official.write",
+            "admin.official.publish",
+            "admin.growth.read",
+            "admin.growth.write",
+            "admin.growth.publish",
+            "admin.growth.fraud"
+          ],
+          "target_roles_70": [
+            "SuperAdmin",
+            "Ops",
+            "CS",
+            "Risk",
+            "Finance",
+            "Auditor"
+          ],
+          "role_matrix_preview": {
+            "SuperAdmin": [
+              "admin.read",
+              "admin.approve",
+              "admin.onboarding.read",
+              "admin.onboarding.write",
+              "admin.onboarding.provider_review",
+              "admin.onboarding.steward_review",
+              "admin.users.read",
+              "admin.users.write",
+              "admin.orders.read",
+              "admin.disputes.write",
+              "admin.community.read",
+              "admin.community.moderate",
+              "admin.community.super",
+              "admin.finance.read",
+              "admin.fee_router.read",
+              "admin.trust_growth.write",
+              "admin.platform.read",
+              "admin.platform.publish",
+              "admin.acquisition.suspend",
+              "admin.content.read",
+              "admin.content.write",
+              "admin.content.publish",
+              "admin.official.read",
+              "admin.official.write",
+              "admin.official.publish",
+              "admin.growth.read",
+              "admin.growth.write",
+              "admin.growth.publish",
+              "admin.growth.fraud"
+            ],
+            "Ops": [
+              "admin.read",
+              "admin.onboarding.read",
+              "admin.onboarding.write",
+              "admin.onboarding.provider_review",
+              "admin.onboarding.steward_review",
+              "admin.users.read",
+              "admin.users.write",
+              "admin.orders.read",
+              "admin.disputes.write",
+              "admin.community.read",
+              "admin.community.moderate",
+              "admin.finance.read",
+              "admin.fee_router.read",
+              "admin.trust_growth.write",
+              "admin.platform.read",
+              "admin.acquisition.suspend",
+              "admin.content.read",
+              "admin.content.write",
+              "admin.official.read",
+              "admin.official.write",
+              "admin.growth.read",
+              "admin.growth.write",
+              "admin.growth.fraud"
+            ],
+            "CS": [
+              "admin.read",
+              "admin.users.read",
+              "admin.orders.read",
+              "admin.community.read",
+              "admin.onboarding.read",
+              "admin.content.read",
+              "admin.official.read",
+              "admin.growth.read",
+              "admin.fee_router.read"
+            ],
+            "Risk": [
+              "admin.read",
+              "admin.users.read",
+              "admin.users.write",
+              "admin.orders.read",
+              "admin.disputes.write",
+              "admin.community.read",
+              "admin.community.moderate",
+              "admin.onboarding.read",
+              "admin.onboarding.provider_review",
+              "admin.onboarding.steward_review",
+              "admin.trust_growth.write",
+              "admin.acquisition.suspend",
+              "admin.content.read",
+              "admin.official.read",
+              "admin.growth.read",
+              "admin.growth.fraud",
+              "admin.fee_router.read"
+            ],
+            "Finance": [
+              "admin.read",
+              "admin.finance.read",
+              "admin.fee_router.read",
+              "admin.orders.read",
+              "admin.onboarding.read",
+              "admin.platform.read",
+              "admin.growth.read"
+            ],
+            "Auditor": [
+              "admin.read",
+              "admin.users.read",
+              "admin.orders.read",
+              "admin.community.read",
+              "admin.finance.read",
+              "admin.fee_router.read",
+              "admin.onboarding.read",
+              "admin.platform.read",
+              "admin.content.read",
+              "admin.official.read",
+              "admin.growth.read"
+            ]
+          },
+          "route_deny_matrix_preview": {
+            "matrix_version": "admin-rbac-v4-cms-ops-growth-2026-06-07",
+            "items": [
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/users",
+                "required_permission": "admin.users.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/orders",
+                "required_permission": "admin.orders.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/finance/summary",
+                "required_permission": "admin.finance.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/flags",
+                "required_permission": "admin.platform.read"
+              },
+              {
+                "method": "POST",
+                "path": "/api/v1/admin/flags/:id/publish",
+                "required_permission": "admin.platform.publish"
+              },
+              {
+                "method": "POST",
+                "path": "/api/v1/admin/policies/publish",
+                "required_permission": "admin.platform.publish"
+              },
+              {
+                "method": "POST",
+                "path": "/api/v1/admin/tenant-scopes/:id/publish",
+                "required_permission": "admin.platform.publish"
+              },
+              {
+                "method": "POST",
+                "path": "/api/v1/admin/scheduler/jobs/:job_code/rerun",
+                "required_permission": "admin.approve"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/approvals",
+                "required_permission": "admin.approve"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/approvals/:id",
+                "required_permission": "admin.approve"
+              },
+              {
+                "method": "POST",
+                "path": "/api/v1/admin/approvals/:id/approve",
+                "required_permission": "admin.approve"
+              },
+              {
+                "method": "POST",
+                "path": "/api/v1/admin/approvals/:id/reject",
+                "required_permission": "admin.approve"
+              },
+              {
+                "method": "PATCH",
+                "path": "/api/v1/admin/community/reports/:id",
+                "required_permission": "admin.community.moderate"
+              },
+              {
+                "method": "POST",
+                "path": "/api/v1/admin/community/penalties",
+                "required_permission": "admin.community.moderate"
+              },
+              {
+                "method": "PATCH",
+                "path": "/api/v1/admin/trust-growth/control",
+                "required_permission": "admin.trust_growth.write"
+              },
+              {
+                "method": "POST",
+                "path": "/api/v1/admin/compliance/data-requests/:id/update",
+                "required_permission": "admin.approve"
+              },
+              {
+                "method": "PUT",
+                "path": "/api/v1/admin/users/:id/console-role",
+                "required_permission": "admin.users.write"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/finance/summary/export",
+                "required_permission": "admin.finance.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/fee-router/routed-events",
+                "required_permission": "admin.fee_router.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/region-vault/forwarded-events",
+                "required_permission": "admin.finance.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/region-vault/forwarded-events/export",
+                "required_permission": "admin.finance.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/audit/operations",
+                "required_permission": "admin.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/audit-logs",
+                "required_permission": "admin.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/audit-logs/:id",
+                "required_permission": "admin.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/auth-audit-events",
+                "required_permission": "admin.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/community/reports",
+                "required_permission": "admin.community.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/community/appeals",
+                "required_permission": "admin.community.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/community/moderation/cases",
+                "required_permission": "admin.community.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/community/penalties",
+                "required_permission": "admin.community.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/community/ranking/snapshots",
+                "required_permission": "admin.community.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/community/risk-signals",
+                "required_permission": "admin.community.read"
+              },
+              {
+                "method": "GET",
+                "path": "/api/v1/admin/community/policy-change-logs",
+                "required_permission": "admin.community.read"
+              },
+              {
+                "method": "PATCH",
+                "path": "/api/v1/admin/community/moderation/:id",
+                "required_permission": "admin.community.moderate"
+              },
+              {
+                "method": "PATCH",
+                "path": "/api/v1/admin/community/comments/:id",
+                "required_permission": "admin.community.moderate"
+              },
+              {
+                "method": "POST",
+                "path": "/api/v1/admin/community/appeals/:id/review",
+                "required_permission": "admin.community.super"
+              },
+              {
+                "method": "PATCH",
+                "path": "/api/v1/admin/community/abuse-policy",
+                "required_permission": "admin.community.super"
+              }
+            ],
+            "note": "phase_01_local_probe_matrix_not_staging_93_go"
+          },
+          "phase2_prep": {
+            "admin_console_role_db": true,
+            "permission_center_edit": true,
+            "console_role_approval_wired": true,
+            "audit_logs_persist": true,
+            "adm_u02_local_ready": true,
+            "enforce_2fa": false,
+            "totp_verification_wired": true,
+            "console_role_direct_allowed": true,
+            "staging_admin_matrix_go": false,
+            "production_admin_go": false,
+            "implementation_note": "adm_u02_console_role_approval_2fa_audit_local"
+          },
+          "implementation_note": "phase_01_console_role_db_prep",
+          "meta": {
+            "build": {
+              "git_sha": "f99958fa88294ccc624e2bd93ad39d85758784a9",
+              "deployed_at": null,
+              "deployment_profile": "staging",
+              "rule": "120/140：预发/生产建议在容器或进程注入 TRAVELTRUST_GIT_SHA（或 GIT_COMMIT_SHA、SOURCE_VERSION）与 TRAVELTRUST_DEPLOYED_AT（UTC ISO8601）；镜像构建可在 cargo 前 export TRAVELTRUST_BUILD_GIT_SHA 写入编译期兜底；deployment_profile 来自 TRAVELTRUST_DEPLOYMENT_PROFILE（local/staging/production）；730 GET /meta build 对象 build_top_keys / build_top_keys_contract_730 与 META_BUILD_TOP_KEYS 五键顺序同源",
+              "build_top_keys": [
+                "git_sha",
+                "deployed_at",
+                "deployment_profile",
+                "rule",
+                "build_top_keys",
+                "build_top_keys_contract_730"
+              ],
+              "build_top_keys_contract_730": "**730**：**`build_top_keys`** **与 **`META_BUILD_TOP_KEYS`** **同源（顺序 `git_sha`****→**`deployed_at`****→**`deployment_profile`****→**`rule`****→**`build_top_keys`****→**`build_top_keys_contract_730`）"
+            }
+          }
+        }
+      },
+      {
+        "role": "admin",
+        "probe_id": "allow_admin_users",
+        "method": "GET",
+        "path": "/api/v1/admin/users?limit=1",
+        "http": 200,
+        "expect": [
+          200
+        ],
+        "pass": true,
+        "deny": false,
+        "body_sample": {
+          "status": "ok",
+          "items": [
+            {
+              "id": "a98649b8-d7a1-40f0-adea-fa4d7aef8926",
+              "email": "hat-probe-5ebdd509d8@traveltrust.testnet",
+              "role": "tourist",
+              "kyc_status": "none",
+              "created_at": "2026-06-30T14:55:08.462579908Z",
+              "updated_at": "2026-06-30T14:55:08.462579908Z",
+              "acquisition_publish_suspended": false,
+              "acquisition_publish_suspended_until": null
+            }
+          ],
+          "applied_filters": {
+            "limit": 1,
+            "role": null,
+            "kyc_status": null,
+            "source": "memory"
+          },
+          "meta": {
+            "build": {
+              "git_sha": "f99958fa88294ccc624e2bd93ad39d85758784a9",
+              "deployed_at": null,
+              "deployment_profile": "staging",
+              "rule": "120/140：预发/生产建议在容器或进程注入 TRAVELTRUST_GIT_SHA（或 GIT_COMMIT_SHA、SOURCE_VERSION）与 TRAVELTRUST_DEPLOYED_AT（UTC ISO8601）；镜像构建可在 cargo 前 export TRAVELTRUST_BUILD_GIT_SHA 写入编译期兜底；deployment_profile 来自 TRAVELTRUST_DEPLOYMENT_PROFILE（local/staging/production）；730 GET /meta build 对象 build_top_keys / build_top_keys_contract_730 与 META_BUILD_TOP_KEYS 五键顺序同源",
+              "build_top_keys": [
+                "git_sha",
+                "deployed_at",
+                "deployment_profile",
+                "rule",
+                "build_top_keys",
+                "build_top_keys_contract_730"
+              ],
+              "build_top_keys_contract_730": "**730**：**`build_top_keys`** **与 **`META_BUILD_TOP_KEYS`** **同源（顺序 `git_sha`****→**`deployed_at`****→**`deployment_profile`****→**`rule`****→**`build_top_keys`****→**`build_top_keys_contract_730`）"
+            }
+          }
+        }
+      },
+      {
+        "role": "moderator",
+        "probe_id": "allow_community_cases",
+        "method": "GET",
+        "path": "/api/v1/admin/community/moderation/cases?limit=1",
+        "http": 200,
+        "expect": [
+          200,
+          404
+        ],
+        "pass": true,
+        "deny": false,
+        "body_sample": {
+          "status": "ok",
+          "items": [
+            {
+              "id": "25e2b203-80a3-43f8-9139-6d71385c18dc",
+              "report_id": "85e759f8-8ea5-4885-9201-c514b5aa2f7d",
+              "actor_id": "dd435785-c97d-4f22-be73-c7906a5715c8",
+              "status_before": "open",
+              "status_after": "resolved",
+              "admin_notes_snapshot": "c3 staging content_remove",
+              "disposition_snapshot": "content_removed",
+              "penalty_id": "218f7ffc-1bf1-4904-a1f7-d4ddf86a0d0e",
+              "created_at": "2026-06-08T09:34:21.786806+00:00"
+            }
+          ],
+          "applied_filters": {
+            "limit": 1,
+            "report_id": null,
+            "actor_id": null,
+            "status_before": null,
+            "status_after": null
+          },
+          "meta": {
+            "note": "community_moderation_cases 与 PATCH moderation 同事务写入",
+            "build": {
+              "git_sha": "f99958fa88294ccc624e2bd93ad39d85758784a9",
+              "deployed_at": null,
+              "deployment_profile": "staging",
+              "rule": "120/140：预发/生产建议在容器或进程注入 TRAVELTRUST_GIT_SHA（或 GIT_COMMIT_SHA、SOURCE_VERSION）与 TRAVELTRUST_DEPLOYED_AT（UTC ISO8601）；镜像构建可在 cargo 前 export TRAVELTRUST_BUILD_GIT_SHA 写入编译期兜底；deployment_profile 来自 TRAVELTRUST_DEPLOYMENT_PROFILE（local/staging/production）；730 GET /meta build 对象 build_top_keys / build_top_keys_contract_730 与 META_BUILD_TOP_KEYS 五键顺序同源",
+              "build_top_keys": [
+                "git_sha",
+                "deployed_at",
+                "deployment_profile",
+                "rule",
+                "build_top_keys",
+                "build_top_keys_contract_730"
+              ],
+              "build_top_keys_contract_730": "**730**：**`build_top_keys`** **与 **`META_BUILD_TOP_KEYS`** **同源（顺序 `git_sha`****→**`deployed_at`****→**`deployment_profile`****→**`rule`****→**`build_top_keys`****→**`build_top_keys_contract_730`）"
+            }
+          }
+        }
+      },
+      {
+        "role": "guide",
+        "probe_id": "cross_deny_finance_write",
+        "method": "POST",
+        "path": "/api/v1/admin/onboarding/entitlements/00000000-0000-0000-0000-000000000001/approve",
+        "http": 404,
+        "expect": [
+          401,
+          403,
+          404
+        ],
+        "pass": true,
+        "deny": false,
+        "body_sample": {}
+      }
+    ],
+    "summary": {
+      "total": 13,
+      "passed": 13,
+      "failed": 0,
+      "deny_probes": 4
+    },
+    "release_gate": "GO"
+  },
+  "release_gate": "GO",
+  "honest_boundary": "② staging seed accounts + slot RBAC · Moderator=admin community corridor · ≠ ③ Production persona GO"
+}

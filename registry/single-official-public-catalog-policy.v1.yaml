@@ -1,0 +1,215 @@
+# Single Official Public Catalog Policy (SOPCP) · SSOT
+# Runbook: docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md#single-official-public-catalog-policy
+# OCS registry: registry/official-cold-start-dataset.v1.yaml
+
+schema: traveltrust.single_official_public_catalog_policy.v1
+version: 1
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_SINGLE_OFFICIAL_PUBLIC_CATALOG_POLICY: ENFORCED
+  TT_OFFICIAL_COLD_START_DATASET: CLOSED
+  TT_OFFICIAL_PUBLIC_CATALOG_BASELINE: OCS
+  TT_OFFICIAL_CATALOG_IDENTITY_POLICY: ENFORCED
+
+public_content_platform:
+  registry: registry/public-content-platform.v1.yaml
+  runbook: docs/runbook/TT-PUBLIC-CONTENT-PLATFORM.md
+  pcp_role: PCP Governance · Surface Catalog Policy
+  note: Subsumed under PCP — policy ENFORCED unchanged
+
+# ── Long-term rules (SOPCP + OCIP together) ───────────────────────────
+#
+#   1. Public Catalog — one Official Production Dataset visible to users (SOPCP).
+#   2. Canonical Identity — that baseline evolves in place; IDs are not replaced
+#      by copy-and-create on routine operations (OCIP).
+
+official_catalog_identity_policy:
+  registry: registry/official-catalog-identity-policy.v1.yaml
+  status: long_term_enforced
+  applies_to:
+    - guide
+    - provider
+    - acquisition
+    - official_guide
+    - campaign
+  rule: >
+    Every official cold-start entity (Guide, Provider, Acquisition, Official Guide,
+    Campaign, and linked chain members) MUST have a stable, long-lived identity
+    (canonical chain key + runtime UUID in state.json). Operational updates MUST
+    prefer mutating the existing entity — price, bio, avatar, media, tags,
+    surfaces, campaign copy — rather than creating a new official entity for the
+    same business slot.
+  rationale: >
+    SOPCP ensures users see one official baseline on Public Catalog. OCIP ensures
+    that baseline is maintained and evolved over months and years, not duplicated
+    into parallel rows (e.g. 东京摄影师 → 东京摄影师2 → 东京摄影师3). Campaign,
+    Community, Orders, and Reviews keep referencing the same IDs.
+  allowed_new_entity_only_when:
+    - new_city_or_destination_chain_added_to_manifest
+    - new_business_semantics_fundamentally_different
+    - formal_ocs_manifest_amendment_and_apply_with_migration
+  forbidden_routine_operations:
+    - insert_replacement_official_entity_same_city_same_role
+    - rerun_ocs_apply_to_regenerate_uuids_when_state_key_exists
+    - publish_parallel_official_chain_alongside_existing_ocs_slot
+  audit: scripts/dev/audit-official-catalog-identity.cjs
+
+# ── Single Public Surface Manifest (写死 · OCS Surface Expansion) ─────────────
+
+single_public_surface_manifest_principle:
+  rule: >
+    Any Public Surface MUST NOT have an independent official content source.
+    All official content MUST originate from the OCS Manifest
+    (data/official-cold-start/dataset.v1.json + state.json).
+  surfaces: [home, community, market, explore, destination_hub, campaign, guide, provider]
+  orchestrator: scripts/dev/run-official-cold-start-dataset.cjs
+  forbidden_parallel_sources:
+    - community seed / showcase / cold start products
+    - community-cold-start manifest
+    - TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE on staging/prod
+
+community_feed_policy:
+  sole_source: official_cold_start_dataset
+  manifest_item: chains[].community_post
+  forbidden: [Community Seed, Community Showcase, Community Cold Start, independent community manifest]
+
+# ── Core distinction (enterprise pattern) ─────────────────────────────
+#
+#   Database ≠ Public Catalog
+#
+#   DB may hold many lifecycles at once (Airbnb / Booking / Shopify / Uber model).
+#   Users see exactly one Official Production Dataset per Public Surface.
+
+companion_policies:
+  identity: registry/official-catalog-identity-policy.v1.yaml
+  dataset: registry/official-cold-start-dataset.v1.yaml
+  workflow: registry/traveltrust-operations-workflow.v1.yaml
+
+layer_stack:
+  - official_dataset_ocs
+  - canonical_identity_immutable
+  - mutable_content
+  - public_catalog
+
+scope:
+  in_scope: public_catalog_surfaces
+  out_of_scope: database_row_count
+  out_of_scope_note: >
+    Policy does NOT require deleting Archive, Draft, Test, Demo, Smoke, Historical,
+    or Canonical rows from PostgreSQL. It requires they are NOT visible on Public Catalog.
+
+official_production_dataset:
+  id: OFFICIAL_COLD_START_DATASET
+  alias: [OCS]
+  manifest: data/official-cold-start/dataset.v1.json
+  state_mapping: evidence/GO_official_cold_start_dataset/<UTC>/state.json
+  role: default_operational_baseline_for_public_surfaces
+
+public_surfaces:
+  - id: guides
+    consumer_api: GET /api/v1/guides
+    visible: OCS guides with display_status=published
+  - id: provider
+    consumer_api: GET /api/v1/market/provider/listings
+    visible: OCS provider listings with display_status=published
+  - id: acquisition
+    consumer_api: GET /api/v1/market/acquisition/listings
+    visible: OCS acquisition listings with display_status=published
+  - id: official_guides
+    consumer_api: Admin published official guides (consumer TBD)
+    visible: OCS official_guides published
+  - id: campaigns
+    consumer_api: GET /api/v1/official/cold-start/surfaces/*
+    visible: OCS campaigns deployed
+  - id: community_feed
+    consumer_api: GET /api/v1/community/feed
+    visible: OCS community_post published · display_status=published · data_origin=production
+    sole_source: official_cold_start_dataset
+  - id: destination_hub
+    consumer_api: GET /api/v1/community/explore (evolving)
+    visible: aggregates by destination_slug from OCS chains
+
+database_retention:
+  allowed_coexistence:
+    - archive
+    - draft
+    - test
+    - demo
+    - smoke
+    - historical
+    - canonical_showcase
+    - seed
+  catalog_visibility: hidden_unpublished
+  actions:
+    archive: unpublish + display_status=hidden (or entity-specific archive API)
+    draft: never publish to public catalog until promoted into OCS chain
+    test_demo_smoke: hidden; Expected Difference per registry/display-data-governance.v1.yaml
+    canonical_showcase: retain in DB; unpublish from public catalog post-OCS
+
+visibility_matrix:
+  guides:
+    ocs: { public_catalog: show, db: keep }
+    canonical: { public_catalog: hide, db: keep_archived }
+    smoke: { public_catalog: hide, db: keep }
+    demo: { public_catalog: hide, db: keep }
+    draft: { public_catalog: hide, db: keep }
+    historical: { public_catalog: hide, db: keep }
+  provider:
+    ocs: { public_catalog: show, db: keep }
+    other_production: { public_catalog: hide, db: keep_archived }
+    test_demo_smoke: { public_catalog: hide, db: keep }
+  acquisition:
+    ocs: { public_catalog: show, db: keep }
+    other_production: { public_catalog: hide, db: keep_archived }
+    test_demo_smoke: { public_catalog: hide, db: keep }
+
+forbidden_on_public_catalog:
+  - parallel_official_datasets
+  - canonical_plus_ocs_simultaneously
+  - showcase_plus_ocs_simultaneously
+  - duplicate_city_published_chains
+  - test_demo_smoke_labels_visible_to_end_users
+
+operational_discipline:
+  rule: mutate_ocs_in_place
+  identity_policy: registry/official-catalog-identity-policy.v1.yaml
+  long_term: see official_catalog_identity_policy above
+  description: >
+    Operations extend the platform by updating existing OCS entities (same canonical
+    identity / same UUID / same city chain), not by creating parallel published
+    guides for the same city (e.g. 东京摄影师2, 东京摄影师3). New official entities
+    only when business semantics fundamentally change (new city, new business line)
+    via manifest amendment — not for routine content or pricing updates.
+  example:
+    city: 东京
+    correct: update OCS tokyo-photo-guide profile · bio · rates
+    incorrect: publish second active guide for 东京 alongside OCS
+
+audit:
+  script: scripts/dev/audit-single-official-baseline.cjs
+  alias: [SOB_audit, SOPCP_audit]
+  checks: public_catalog_rows_only
+  does_not_check: total_database_entity_count
+
+align:
+  script: scripts/dev/align-single-official-baseline-staging.cjs
+  alias: [SOB_align, SOPCP_align]
+  actions: [unpublish_from_public_catalog]
+  does_not_action: [delete_database_rows, purge_historical_tables]
+
+expected_difference:
+  registry: registry/display-data-governance.v1.yaml#test_data_policy
+  applies_to: []
+  note: >
+    Test accounts (C1–C4) on Public Catalog are never Expected Difference — classify TEST_DATA_LEAKAGE / DDG FAIL.
+  never_expands_to: second_production_baseline_on_public_catalog
+
+latest_staging_audit:
+  stamp: "20260703T053800Z"
+  verdict: PASS
+  evidence:
+    audit_json: evidence/GO_official_cold_start_dataset/20260703T044855Z/single-official-baseline-audit.json
+    align_json: evidence/GO_official_cold_start_dataset/20260703T044855Z/single-official-baseline-align.json
+    report: evidence/GO_official_cold_start_dataset/20260703T044855Z/SINGLE-OFFICIAL-BASELINE-AUDIT-REPORT.md
+  signoff: evidence/manual-uat/signoff/SINGLE-OFFICIAL-PUBLIC-CATALOG-POLICY-SIGNOFF-20260703T054500Z.md

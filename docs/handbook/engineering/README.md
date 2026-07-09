@@ -174,7 +174,7 @@
 | 122 | [122-PI3-001-Production-Database-Backup-Readiness-Report.md](./122-PI3-001-Production-Database-Backup-Readiness-Report.md) | 现行 | **PI3-001 Audit**：Fly PG 备份/B-475/恢复演练/RPO/RTO · staging PARTIAL · **PI3-001 HOLD** |
 | 151 | [151-PI3-002-Production-Domain-TLS-CDN-CORS-Execution-Report.md](./151-PI3-002-Production-Domain-TLS-CDN-CORS-Execution-Report.md) | 现行 | **PI3-002 Execution**：域名/TLS/CORS/env 对拍 · **`PI3-002 HOLD`** |
 | 152 | [152-PI3-001-FlyPG-Backup-Disaster-Recovery-Report.md](./152-PI3-001-FlyPG-Backup-Disaster-Recovery-Report.md) | 现行 | **PI3-001 Execution**：Fly backup · B-475 drill · RPO/RTO · **`PI3-001 HOLD`** |
-| 153 | [153-PI3-003-Stripe-Live-Production-Webhook-Report.md](./153-PI3-003-Stripe-Live-Production-Webhook-Report.md) | 现行 | **PI3-003 Execution**：Stripe Live · prod webhook · **`PI3-003 HOLD`** |
+| 153 | [153-PI3-003-Stripe-Live-Production-Webhook-Report.md](./153-PI3-003-Stripe-Live-Production-Webhook-Report.md) | 现行 | **PI3-003 · P1 Optional Fiat Onboarding**（非核心 Payment）· **`PI3-003 HOLD`** |
 | 154 | [154-PI3-004-Production-Readiness-Verification-Report.md](./154-PI3-004-Production-Readiness-Verification-Report.md) | 现行 | **PI3-004 Execution**：R-003 prod · 六域/全矩阵 · **`PI3-004 HOLD`** |
 | 155 | [155-PI3-006-GoLive-Checklist-Production-Cutover-Report.md](./155-PI3-006-GoLive-Checklist-Production-Cutover-Report.md) | 现行 | **PI3-006 Execution**：go-live §0–§11 · P0 十二项 · Cutover · M-00 · **`PI3-006 HOLD`** |
 | 123 | [123-101-CMS-Audit-Report.md](./123-101-CMS-Audit-Report.md) | 现行 | **101 Blueprint Audit**：CMS M1–M10 · Catalog RO vs Admin · **运营 HOLD · 非 PI3 阻塞** |

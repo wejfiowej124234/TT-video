@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W14",
+  "recorded_utc": "2026-07-08T08:27:51.062Z",
+  "run_id": "2026-07-08T08-27-51-062Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PARTIAL",
+  "summary": {
+    "verdict": "PARTIAL",
+    "detail": "Multi-wallet manual UX (MetaMask / WalletConnect) — prod FE smoke documented"
+  },
+  "detail": "Multi-wallet manual UX (MetaMask / WalletConnect) — prod FE smoke documented",
+  "prod_web": "https://tt-web-prod.fly.dev",
+  "chain_id": 11155111,
+  "manual_checklist": [
+    "Connect MetaMask on Sepolia",
+    "Disconnect and reconnect wallet",
+    "WalletConnect session refresh",
+    "Coinbase Wallet if enabled in FE build"
+  ],
+  "automated": "Session auth + cast-signed txs prove single EOA corridor; full multi-wallet UI requires human FE pass"
+}

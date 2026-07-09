@@ -1,0 +1,22 @@
+{
+  "schema": "phase2_sepolia_p51_country_ledger_dry_run_precheck.v1",
+  "timestamp_utc": "20260605T101417Z",
+  "chain_id": 11155111,
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "deployer_nonce": "94",
+  "deployer_balance_wei": "4432227276790414439",
+  "timelock_address": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+  "pilot_jurisdiction": "DE",
+  "pilot_jurisdiction_hex": "0x4445",
+  "ledger_owner_must_be_timelock": true,
+  "ledger_owner_must_not_be_deployer": true,
+  "broadcast": false,
+  "simulated_addresses": {
+    "country_pool_ledger_pilot_address": "0x63bD7d5eE5c5DdE707e5e65303f3876267C78e97"
+  },
+  "binding_check": "LEDGER_BINDING_CHECK: OK",
+  "gas_estimate_note": "Estimated total gas used for script: 1071311 Estimated amount required: 0.037550913165913238 ETH ",
+  "forge_log": "forge-p51-ledger-dry-run-20260605T101417Z.log",
+  "api_note": "post-broadcast set COUNTRY_POOL_LEDGER_PILOT_ADDRESS + COUNTRY_POOL_LEDGER_ADDRESS (API/indexer)",
+  "ssot": "docs/runbook/TT-PHASE2-P51-COUNTRY-LEDGER-SEPOLIA-BROADCAST-CHECKLIST.md"
+}

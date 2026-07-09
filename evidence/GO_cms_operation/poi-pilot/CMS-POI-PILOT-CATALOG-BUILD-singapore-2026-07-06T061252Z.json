@@ -1,0 +1,69 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-06T06:12:52Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "SG",
+    "city_zh": "新加坡",
+    "matrix_ids": [
+      "PH-SG-101-ATR",
+      "PH-SG-102-ATR",
+      "PH-SG-103-ATR",
+      "PH-SG-104-ATR",
+      "PH-SG-105-ATR",
+      "PH-SG-106-FOOD",
+      "PH-SG-107-FOOD",
+      "PH-SG-108-FOOD",
+      "PH-SG-109-FOOD",
+      "PH-SG-110-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-SG-101-ATR",
+      "poi_id": "4555f779-cab8-4d2c-9088-6c80249f6f1c"
+    },
+    {
+      "matrix_id": "PH-SG-102-ATR",
+      "poi_id": "b3fd5b4a-efe7-486b-a855-2eb652ffc1d3"
+    },
+    {
+      "matrix_id": "PH-SG-103-ATR",
+      "poi_id": "d0177393-e329-4981-bdb5-e32bc6aefab9"
+    },
+    {
+      "matrix_id": "PH-SG-104-ATR",
+      "poi_id": "4bd8110d-82ef-4125-b47d-c867f1307a82"
+    },
+    {
+      "matrix_id": "PH-SG-105-ATR",
+      "poi_id": "590eeff6-cd8e-4220-b127-12ea36c15196"
+    },
+    {
+      "matrix_id": "PH-SG-106-FOOD",
+      "poi_id": "8b29309a-55bc-493b-9eb1-8030bbac80cb"
+    },
+    {
+      "matrix_id": "PH-SG-107-FOOD",
+      "poi_id": "5131bff8-b56f-46e1-b466-4ea5474df1ab"
+    },
+    {
+      "matrix_id": "PH-SG-108-FOOD",
+      "poi_id": "53136a3c-dc3f-4ea2-ba5c-eaf6765eb48f"
+    },
+    {
+      "matrix_id": "PH-SG-109-FOOD",
+      "poi_id": "e712e1ab-b06f-49eb-8db3-cee50f13124e"
+    },
+    {
+      "matrix_id": "PH-SG-110-FOOD",
+      "poi_id": "c1c625dc-b04f-460d-b6bb-b301457e4103"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 10,
+    "expected": 10
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

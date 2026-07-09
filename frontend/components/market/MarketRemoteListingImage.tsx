@@ -4,7 +4,13 @@
 
 import Image from "next/image";
 
-import { useCallback, useState } from "react";
+import { useMemo } from "react";
+
+import { communityMediaAbsoluteUrlForRender } from "@/lib/communityMediaClientUrl";
+
+import { l5CardMediaGradientShellClass } from "@/lib/l5CardMediaPlaceholder";
+
+import { useL5CardMediaReveal } from "@/lib/useL5CardMediaReveal";
 
 
 
@@ -24,15 +30,21 @@ type Props = {
 
   priority?: boolean;
 
+  /** Guides parity · stable gradient when fail/tiny/invalid */
+
+  fallbackSeed?: string;
+
 };
 
 
 
-/** Unsplash 等外链：直连 CDN，避免 dev 下 `/_next/image` 二次拉取失败。 */
+/** Unsplash / OCS API 媒体：直连源 URL，避免 `/_next/image` 域白名单或未配置 loader 失败。 */
 
 function marketListingImageUnoptimized(src: string): boolean {
 
   const s = src.trim();
+
+  if (s.startsWith("/api/")) return true;
 
   if (!s.startsWith("http://") && !s.startsWith("https://")) return false;
 
@@ -40,7 +52,9 @@ function marketListingImageUnoptimized(src: string): boolean {
 
     const host = new URL(s).hostname;
 
-    return host === "images.unsplash.com" || host.endsWith(".unsplash.com");
+    if (host === "images.unsplash.com" || host.endsWith(".unsplash.com")) return true;
+
+    return host.includes("tt-api") || host.endsWith(".fly.dev");
 
   } catch {
 
@@ -52,17 +66,43 @@ function marketListingImageUnoptimized(src: string): boolean {
 
 
 
-/** 远程封面图：加载失败时降级为渐变占位，避免卡片/详情出现裂图。 */
+/** 远程封面图：fail/tiny/invalid → Guides 渐变占位（禁止 1×1 白板铺满）。 */
 
-export default function MarketRemoteListingImage({ src, alt, fill, className = "", sizes, priority }: Props) {
+export default function MarketRemoteListingImage({
 
-  const [failed, setFailed] = useState(false);
+  src,
 
-  const onError = useCallback(() => setFailed(true), []);
+  alt,
+
+  fill,
+
+  className = "",
+
+  sizes,
+
+  priority,
+
+  fallbackSeed,
+
+}: Props) {
+
+  const resolvedSrc = useMemo(() => communityMediaAbsoluteUrlForRender(src), [src]);
+
+  const seed = fallbackSeed?.trim() || src.trim() || alt.trim() || "listing";
+
+  const { degraded, revealed, displaySrc, onLoad, onError, imgRef } = useL5CardMediaReveal(resolvedSrc);
 
 
 
-  if (failed) {
+  const gradientUnder = (
+
+    <div aria-hidden className={l5CardMediaGradientShellClass(seed, "absolute inset-0")} />
+
+  );
+
+
+
+  if (degraded) {
 
     return (
 
@@ -74,7 +114,65 @@ export default function MarketRemoteListingImage({ src, alt, fill, className = "
 
           aria-hidden
 
-          className={`absolute inset-0 bg-gradient-to-br from-ink-800/95 via-ink-900/92 to-[#0c0a09] ring-1 ring-inset ring-ref-sun/14 ${className}`}
+          className={l5CardMediaGradientShellClass(
+
+            seed,
+
+            `absolute inset-0 ring-1 ring-inset ring-ref-sun/14 ${className}`,
+
+          )}
+
+        />
+
+      </>
+
+    );
+
+  }
+
+
+
+  const imgSrc = displaySrc || resolvedSrc || src;
+
+  const imgClass = `absolute inset-0 h-full w-full motion-safe:transition-opacity motion-safe:duration-200 ${
+
+    revealed ? "opacity-100" : "opacity-0"
+
+  } ${className}`;
+
+
+
+  if (marketListingImageUnoptimized(imgSrc)) {
+
+    return (
+
+      <>
+
+        {gradientUnder}
+
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+
+        <img
+
+          ref={imgRef}
+
+          src={imgSrc}
+
+          alt={alt}
+
+          className={imgClass}
+
+          loading={priority ? "eager" : "lazy"}
+
+          fetchPriority={priority ? "high" : "low"}
+
+          sizes={sizes}
+
+          decoding="async"
+
+          onLoad={onLoad}
+
+          onError={onError}
 
         />
 
@@ -88,27 +186,37 @@ export default function MarketRemoteListingImage({ src, alt, fill, className = "
 
   return (
 
-    <Image
+    <>
 
-      src={src}
+      {gradientUnder}
 
-      alt={alt}
+      <Image
 
-      fill={fill}
+        src={imgSrc}
 
-      className={className}
+        alt={alt}
 
-      sizes={sizes}
+        fill={fill}
 
-      priority={Boolean(priority)}
-      loading={priority ? undefined : "lazy"}
-      fetchPriority={priority ? "high" : "low"}
+        className={imgClass}
 
-      unoptimized={marketListingImageUnoptimized(src)}
+        sizes={sizes}
 
-      onError={onError}
+        priority={Boolean(priority)}
 
-    />
+        loading={priority ? undefined : "lazy"}
+
+        fetchPriority={priority ? "high" : "low"}
+
+        unoptimized={false}
+
+        onLoad={onLoad}
+
+        onError={onError}
+
+      />
+
+    </>
 
   );
 

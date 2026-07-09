@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.mainnet_deployment_package_top_manifest_prep.v1",
+  "title": "Mainnet Deployment Package — PREP manifest template",
+  "status": "PREP_NOT_GENERATED",
+  "note": "Replace with generated manifest after WEB3_FREEZE_PASS — do not broadcast from this file",
+  "prep_stamp": "2026-07-08T14-11-55",
+  "prep_utc": "2026-07-08T14:11:55.762Z",
+  "git_head": "ref: refs/heads/feature/g23-04-abi-event-freeze",
+  "prerequisites_pending": {
+    "phase2_exit_review": "PHASE2_EXIT_REVIEW_PASS",
+    "web3_freeze": "WEB3_FREEZE_PASS",
+    "r01_third_party_audit": "OPEN",
+    "shadow_launch": "NOT_STARTED",
+    "owner_signoff": "PENDING",
+    "mainnet_cutover_authorized": false
+  },
+  "rule_deploy_001": "No Sepolia param swap — fill after Freeze from frozen bytecode",
+  "wave_1_escrow": {
+    "deploy_target": "EscrowFactoryV2",
+    "v1_escrow_factory": "FORBIDDEN on mainnet per registry/escrow-bilateral-mainnet-policy.v1.yaml",
+    "deploy_script": "contracts/script/DeployEscrowFactoryV2.s.sol",
+    "broadcast_gate": "scripts/dev/phase3-mainnet-broadcast-escrow-factory-v2.sh"
+  },
+  "package_tree": {
+    "MANIFEST": "manifest.json (generated at Freeze — this is manifest.template.json)",
+    "registry_snapshot": "registry-snapshot/",
+    "abi_snapshot": "abi-snapshot/",
+    "deploy_scripts": "deploy-scripts/",
+    "wave_1_escrow_factory": "wave-1-escrow-factory/",
+    "runbook": "runbook/MAINNET-DEPLOYMENT-EXECUTION-V1.md",
+    "owner_signoff": "owner-signoff/OWNER-SIGNOFF-PACKAGE.md",
+    "verify": "verify/CONTRACT-VERIFY-PACKAGE.md · verify/EXPLORER-VERIFY-PACKAGE.md",
+    "rollback": "rollback/MAINNET-ROLLBACK-PREP-V1.md",
+    "emergency_recovery": "emergency-recovery/EMERGENCY-RECOVERY-PREP-V1.md",
+    "env_template": "env/mainnet.env.template"
+  },
+  "final_generator": "node scripts/dev/generate-mainnet-deployment-package.cjs"
+}

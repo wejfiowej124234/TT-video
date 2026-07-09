@@ -1,0 +1,72 @@
+{
+  "phase": "2.5-coverage-hardening",
+  "recorded_at": "2026-06-07T00:09:11Z",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "boundary": "≠ Production GO · ≠ Phase ③ · TT_PHASE2_GO_VERDICT unchanged",
+  "verdict": "PASS",
+  "slices_pass": 5,
+  "slices_total": 5,
+  "cases": [
+    {
+      "id": "CH-H01",
+      "title": "Escrow/Intent/Dispute",
+      "status": "PASS",
+      "script": "scripts/dev/smoke-phase25-h1-escrow-intent-dispute-staging.sh",
+      "matrix_ids": [
+        "B-ESC-001",
+        "B-ESC-002",
+        "B-DSP-001",
+        "B-ESC-005"
+      ],
+      "log": "CH-H01-run.log"
+    },
+    {
+      "id": "CH-H02",
+      "title": "Acquisition accept + fulfillment-bond",
+      "status": "PASS",
+      "script": "scripts/dev/smoke-phase25-h2-acquisition-fulfillment-staging.sh",
+      "matrix_ids": [
+        "B-MKT-008",
+        "CH-H02-001",
+        "CH-H02-002"
+      ],
+      "log": "CH-H02-run.log"
+    },
+    {
+      "id": "CH-H03",
+      "title": "Stripe webhook exceptions + charge.refunded",
+      "status": "PASS",
+      "script": "scripts/dev/smoke-phase25-h3-stripe-webhook-exceptions-staging.sh",
+      "matrix_ids": [
+        "CH-H03-001",
+        "CH-H03-002",
+        "CH-H03-003"
+      ],
+      "log": "CH-H03-run.log"
+    },
+    {
+      "id": "CH-H04",
+      "title": "Session / Wallet verify / 2FA",
+      "status": "PASS",
+      "script": "scripts/dev/smoke-phase25-h4-session-wallet-2fa-staging.sh",
+      "matrix_ids": [
+        "CH-H04-001",
+        "CH-H04-002",
+        "A-LOG-004"
+      ],
+      "log": "CH-H04-run.log"
+    },
+    {
+      "id": "CH-H05",
+      "title": "Stake/Release/Claim (readonly + WRITE=N/A)",
+      "status": "PASS",
+      "script": "scripts/dev/smoke-phase25-h5-chain-write-staging.sh",
+      "matrix_ids": [
+        "CH-H05-001",
+        "C-STK-001"
+      ],
+      "log": "CH-H05-run.log"
+    }
+  ],
+  "ssot": "docs/runbook/PHASE2.5-COVERAGE-HARDENING.md"
+}

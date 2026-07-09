@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust.p2fc_soak_72h_ready.v1",
+  "prepared_at_utc": "2026-06-25T23:52:41.764Z",
+  "candidate_git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "status": "READY_NOT_LAUNCHED",
+  "policy": "Owner launch after engage-freeze @ HEAD",
+  "launch_sequence": [
+    "bash scripts/ops/p2fc-pivot-final-candidate-pre-soak.sh --phase-staging-live",
+    "bash scripts/ops/p2fc-pivot-final-candidate-pre-soak.sh --engage-freeze",
+    "P2FC_SOAK_SUPERSEDE=1 bash scripts/ops/p2fc-pivot-final-candidate-pre-soak.sh --launch-soak"
+  ],
+  "observe": "bash scripts/ops/p2fc-soak-attest.sh",
+  "honest_boundary": "① local 25/25 + Freeze Candidate manifest ≠ ② staging GO ≠ ③ Production GO"
+}

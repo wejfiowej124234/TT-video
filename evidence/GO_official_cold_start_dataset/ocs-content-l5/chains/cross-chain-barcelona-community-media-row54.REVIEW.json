@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T152830Z",
+  "trigger_row": 54,
+  "trigger_filename": "ocs-barcelona-arch-community-media.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "community_media_comparison": {
+    "tokyo-photo": "台场夜景详情",
+    "kyoto-culture": "竹林小径",
+    "seoul-food": "夜市美食细节",
+    "bangkok-temple": "湄南河游船 POV",
+    "singapore-family": "超级树详情",
+    "paris-art": "雕塑厅",
+    "nyc-skyline": "帝国大厦 blue hour",
+    "sydney-coast": "步道俯瞰海湾",
+    "barcelona-arch": "桂尔公园全景台日间通透",
+    "distinct": true
+  },
+  "no_quality_regression_prior_53": true
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T135830Z",
+  "row": 23,
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "community_cover_comparison": {
+    "tokyo-photo": "街景摄影瞬间",
+    "kyoto-culture": "茶道奉茶",
+    "seoul-food": "tteokbokki 近景",
+    "bangkok-temple": "黎明寺晨光尖塔剪影",
+    "distinct": true
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_review.v1",
+  "stamp_utc": "20260704T132430Z",
+  "chain_id": "seoul-food",
+  "slots_completed": 4,
+  "slots_total": 6,
+  "TT_SEOUL_FOOD_CHAIN_REVIEW": "PASS",
+  "slots_done": ["guide-avatar", "provider-cover", "acquisition-cover", "official-guide-cover"],
+  "regression_check": {
+    "pass": true,
+    "notes": "Guide/Provider/Acquisition Rows 13-15 无回归；Tokyo/Kyoto 全链稳定。"
+  },
+  "gate_to_row17": "PASS"
+}

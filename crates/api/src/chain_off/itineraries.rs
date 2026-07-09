@@ -647,10 +647,13 @@ pub async fn itinerary_create_impl(
         guide_confirmed: None,
         rating_tourist_confirmed: None,
         rating_guide_confirmed: None,
+            service_tourist_confirmed: None,
+            service_guide_confirmed: None,
         chain_id: state.config.business_chain_id,
         data_origin,
         order_kind: None,
         market_listing_id: None,
+        ..Default::default()
     };
     {
         let mut store = state.store.write().await;
@@ -698,6 +701,8 @@ pub async fn itinerary_create_impl(
                     o.guide_confirmed,
                     o.rating_tourist_confirmed,
                     o.rating_guide_confirmed,
+                    o.service_tourist_confirmed,
+                    o.service_guide_confirmed,
                     chain_id,
                 )
                 .await
@@ -1220,10 +1225,13 @@ pub async fn itinerary_custom_create_impl(
         guide_confirmed: None,
         rating_tourist_confirmed: None,
         rating_guide_confirmed: None,
+            service_tourist_confirmed: None,
+            service_guide_confirmed: None,
         chain_id: state.config.business_chain_id,
         data_origin,
         order_kind: None,
         market_listing_id: None,
+        ..Default::default()
     };
     let bundle = ItineraryBundle {
         order_id,
@@ -1285,6 +1293,8 @@ pub async fn itinerary_custom_create_impl(
                     o.guide_confirmed,
                     o.rating_tourist_confirmed,
                     o.rating_guide_confirmed,
+                    o.service_tourist_confirmed,
+                    o.service_guide_confirmed,
                     chain_id,
                 )
                 .await

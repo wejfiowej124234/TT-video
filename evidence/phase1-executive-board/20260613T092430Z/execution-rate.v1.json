@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.execution_rate.v1",
+  "rate_pct": 100.0,
+  "closed": 17,
+  "open": 0,
+  "total_tracked": 17
+}

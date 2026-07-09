@@ -1,0 +1,39 @@
+{
+  "schema": "traveltrust.market_listings_display_governance.v1",
+  "api": "https://tt-api-staging.fly.dev",
+  "recorded_at": "2026-07-02T10:38:02.117Z",
+  "verdict": "PASS",
+  "surfaces": {
+    "provider": {
+      "variant": "provider",
+      "public_count": 13,
+      "admin_published": 13
+    },
+    "acquisition": {
+      "variant": "acquisition",
+      "public_count": 9,
+      "admin_published": 9
+    }
+  },
+  "issue_counts": {
+    "PRODUCT_DEFECT": 0,
+    "EXPECTED_DIFFERENCE": 0,
+    "ENHANCEMENT": 2
+  },
+  "issues": [
+    {
+      "id": "ML-PROVIDER-PLACEHOLDER-MEDIA",
+      "variant": "provider",
+      "classification": "ENHANCEMENT",
+      "summary": "Multiple cards share placeholder media pool",
+      "detail": "count=13"
+    },
+    {
+      "id": "ML-ACQUISITION-PLACEHOLDER-MEDIA",
+      "variant": "acquisition",
+      "classification": "ENHANCEMENT",
+      "summary": "Multiple cards share placeholder media pool",
+      "detail": "count=9"
+    }
+  ]
+}

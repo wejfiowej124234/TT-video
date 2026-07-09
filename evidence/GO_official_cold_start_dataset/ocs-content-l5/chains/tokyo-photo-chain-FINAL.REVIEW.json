@@ -1,0 +1,65 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_final_review.v1",
+  "stamp_utc": "20260704T123830Z",
+  "chain_id": "tokyo-photo",
+  "city": "东京",
+  "country_code": "JP",
+  "slots_completed": 6,
+  "slots_total": 6,
+  "TT_TOKYO_PHOTO_CHAIN": "CLOSED",
+  "regression_check": { "pass": true, "notes": "Row6 关闭 chain；Row1–5 无回归。" },
+  "tokyo_chain_content_score": {
+    "value": 93.2,
+    "scale": "0-100",
+    "formula": "weighted_mean_of_G1_G10_chain_aggregate",
+    "pass_threshold": 85,
+    "result": "PASS"
+  },
+  "g1_g10_summary": {
+    "G1_real_assets": { "pass": true, "chain_score": 95 },
+    "G2_copy_alignment": { "pass": true, "chain_score": 94 },
+    "G3_slot_differentiation": { "pass": true, "chain_score": 93 },
+    "G4_cross_surface_city": { "pass": true, "chain_score": 96 },
+    "G5_brand_visual": { "pass": true, "chain_score": 92 },
+    "G6_commercial_perception": { "pass": true, "chain_score": 91 },
+    "G7_wcag_visual": { "pass": true, "chain_score": 93 },
+    "G8_evidence_matrix": { "pass": true, "chain_score": 95 },
+    "G9_content_authenticity": { "pass": true, "chain_score": 90 },
+    "G10_content_diversity": { "pass": true, "chain_score": 94 },
+    "all_pass": true
+  },
+  "consumer_experience": {
+    "result": "PASS",
+    "summary": "用户从 Community Feed(涩谷瞬间)→详情(隅田川→晴空塔日落)、Market(Guide/Provider/Acquisition)、Official Guide(路线封面) 浏览时，感知为同一东京摄影生态而非素材堆砌。",
+    "feed_to_detail_continuity": true,
+    "market_guide_provider_acquisition_coherent": true,
+    "not_stock_wall": true
+  },
+  "brand_consistency": {
+    "result": "PASS",
+    "machine_key_preview": "TT_CONTENT_BRAND_CONSISTENCY chain_slice",
+    "g5_g9_g10_chain_pass": true
+  },
+  "narrative_continuity": {
+    "result": "PASS",
+    "arc": "Ken 向导(浅草) → 半日旅拍(台场) → 镜头悬赏(器材) → 官方路线(浅草→晴空塔) → 社区日志(Feed 涩谷 + 详情隅田川步行日落)",
+    "geo_coverage": ["浅草", "隅田川", "晴空塔", "台场", "涩谷"],
+    "theme": "城市摄影"
+  },
+  "production_readiness": {
+    "tokyo_chain": "READY",
+    "global_ocs_content_l5": "IN_PROGRESS",
+    "matrix_progress": "6/60 verified+pass",
+    "next_matrix_row": 7,
+    "next_chain_id": "kyoto-culture",
+    "note": "tokyo-photo chain CLOSED；全局 OCS Content L5 仍须 54 行完成后四键 CLOSED。"
+  },
+  "surfaces_all_verified": [
+    "ocs-tokyo-photo-guide-avatar.jpg",
+    "ocs-tokyo-photo-provider-cover.jpg",
+    "ocs-tokyo-photo-acquisition-cover.jpg",
+    "ocs-tokyo-photo-official-guide-cover.jpg",
+    "ocs-tokyo-photo-community-cover.jpg",
+    "ocs-tokyo-photo-community-media.jpg"
+  ]
+}

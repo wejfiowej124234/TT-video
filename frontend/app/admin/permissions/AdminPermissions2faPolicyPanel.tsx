@@ -9,9 +9,12 @@ import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatu
 import {
   ADMIN_2FA_POLICY_ACTIVE_BADGE_CLASS,
   ADMIN_FIN_SUITE_STATUS_PLACEHOLDER_CLASS,
+  ADMIN_INNER_DIVIDER_CLASS,
+  ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_STEP_MARKER_CLASS,
-  ADMIN_INNER_DIVIDER_CLASS,} from "@/lib/adminUi";
+} from "@/lib/adminUi";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
+import { CONSOLE_ROLES_70, CONSOLE_ROLE_70_LABEL_KEYS } from "@/lib/admin/adminRole70Matrix";
 import { useAdminCanWrite } from "@/lib/admin/useAdminCanWrite";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import { adminFetchJson, adminErrorUserText, adminFetchErrorKind } from "@/lib/adminFetchDisplay";
@@ -30,6 +33,7 @@ export function AdminPermissions2faPolicyPanel() {
   const requestConfirm = useAdminL5ConfirmRequest();
   const { canWrite } = useAdminCanWrite(ADMIN_PERM.APPROVE);
   const [enforced, setEnforced] = useState(false);
+  const [requiredRoles, setRequiredRoles] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -46,6 +50,8 @@ export function AdminPermissions2faPolicyPanel() {
           return;
         }
         setEnforced(body.policy?.enforced === true);
+        const roles = body.policy?.required_console_roles?.filter(Boolean) ?? [];
+        setRequiredRoles(roles.length > 0 ? roles : ["SuperAdmin", "Ops"]);
       })
       .catch((e) => setMsg(adminErrorUserText(adminFetchErrorKind(e), t)))
       .finally(() => setLoading(false));
@@ -55,7 +61,7 @@ export function AdminPermissions2faPolicyPanel() {
     load();
   }, [load]);
 
-  async function onSaveImpl(next: boolean) {
+  async function onSaveImpl(patch: { enforced?: boolean; required_console_roles?: string[] }) {
     if (!canWrite) return;
     setBusy(true);
     setMsg(null);
@@ -69,7 +75,7 @@ export function AdminPermissions2faPolicyPanel() {
             ...writeRequestHeaders(`admin-2fa-policy-patch-${Date.now()}`),
             "x-request-id": `admin-2fa-policy-patch-${Date.now()}`,
           },
-          body: JSON.stringify({ enforced: next }),
+          body: JSON.stringify(patch),
         },
       );
       if (!res.ok) {
@@ -77,6 +83,8 @@ export function AdminPermissions2faPolicyPanel() {
         return;
       }
       setEnforced(body.policy?.enforced === true);
+      const roles = body.policy?.required_console_roles?.filter(Boolean) ?? requiredRoles;
+      setRequiredRoles(roles);
       setMsg(t("admin_permissions_2fa_policy_saved"));
       caps.reload();
       window.dispatchEvent(new CustomEvent("traveltrust:admin-2fa-change"));
@@ -87,13 +95,28 @@ export function AdminPermissions2faPolicyPanel() {
     }
   }
 
-  const onSave = (next: boolean) => {
+  const onSaveEnforced = (next: boolean) => {
     if (!canWrite || next === enforced) return;
     requestConfirm({
       titleKey: next ? "admin_l5_confirm_title_danger" : "admin_l5_confirm_title_write",
       descKey: next ? "admin_l5_confirm_desc_2fa_policy_enforce" : "admin_l5_confirm_desc_2fa_policy_relax",
       danger: next,
-      onConfirm: () => void onSaveImpl(next),
+      onConfirm: () => void onSaveImpl({ enforced: next }),
+    });
+  };
+
+  const toggleRole = (role: string) => {
+    setRequiredRoles((prev) =>
+      prev.includes(role) ? prev.filter((r) => r !== role) : [...prev, role].sort(),
+    );
+  };
+
+  const saveRoles = () => {
+    if (!canWrite || requiredRoles.length === 0) return;
+    requestConfirm({
+      titleKey: "admin_l5_confirm_title_write",
+      descKey: "admin_permissions_2fa_policy_roles_confirm",
+      onConfirm: () => void onSaveImpl({ required_console_roles: requiredRoles }),
     });
   };
 
@@ -115,7 +138,7 @@ export function AdminPermissions2faPolicyPanel() {
         {(["admin_permissions_2fa_step1", "admin_permissions_2fa_step2", "admin_permissions_2fa_step3"] as const).map(
           (key, i) => (
             <li key={key} className="flex gap-2 text-small text-ink-700">
-              <span className="font-semibold text-ink-700" aria-hidden>
+              <span className={ADMIN_STEP_MARKER_CLASS} aria-hidden>
                 {i + 1}.
               </span>
               <span>{t(key)}</span>
@@ -126,30 +149,55 @@ export function AdminPermissions2faPolicyPanel() {
       {loading ? (
         <AdminListLoadingStatus message={t("admin_capability_strip_loading")} className="mt-3 text-small text-ink-500" />
       ) : (
-        <div className="mt-4 flex flex-wrap items-center gap-3">
-          <label className="flex items-center gap-2 text-small">
-            <input
-              type="checkbox"
-              checked={enforced}
-              disabled={!canWrite || busy}
-              onChange={(e) => void onSave(e.target.checked)}
-              data-tt-admin-2fa-policy-enforced="1"
-            />
-            <span>{t("admin_permissions_2fa_policy_enforced")}</span>
-          </label>
-          {caps.phase2Prep?.enforce_2fa ? (
-            <span className={ADMIN_2FA_POLICY_ACTIVE_BADGE_CLASS}>
-              {t("admin_permissions_2fa_policy_active")}
-            </span>
-          ) : (
-            <span
-              className={ADMIN_FIN_SUITE_STATUS_PLACEHOLDER_CLASS}
-              data-tt-admin-2fa-staging-prep="1"
-            >
-              {t("admin_permissions_2fa_staging_prep")}
-            </span>
-          )}
-        </div>
+        <>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <label className="flex items-center gap-2 text-small">
+              <input
+                type="checkbox"
+                checked={enforced}
+                disabled={!canWrite || busy}
+                onChange={(e) => void onSaveEnforced(e.target.checked)}
+                data-tt-admin-2fa-policy-enforced="1"
+              />
+              <span>{t("admin_permissions_2fa_policy_enforced")}</span>
+            </label>
+            {caps.phase2Prep?.enforce_2fa ? (
+              <span className={ADMIN_2FA_POLICY_ACTIVE_BADGE_CLASS}>
+                {t("admin_permissions_2fa_policy_active")}
+              </span>
+            ) : (
+              <span className={ADMIN_FIN_SUITE_STATUS_PLACEHOLDER_CLASS} data-tt-admin-2fa-staging-prep="1">
+                {t("admin_permissions_2fa_staging_prep")}
+              </span>
+            )}
+          </div>
+          <div className="mt-4" data-tt-admin-2fa-policy-roles="1">
+            <p className="text-small font-medium text-ink-800">{t("admin_permissions_2fa_policy_roles_title")}</p>
+            <div className="mt-2 flex flex-wrap gap-3">
+              {CONSOLE_ROLES_70.map((role) => (
+                <label key={role} className="flex items-center gap-2 text-small">
+                  <input
+                    type="checkbox"
+                    checked={requiredRoles.includes(role)}
+                    disabled={!canWrite || busy}
+                    onChange={() => toggleRole(role)}
+                  />
+                  <span>{t(CONSOLE_ROLE_70_LABEL_KEYS[role])}</span>
+                </label>
+              ))}
+            </div>
+            {canWrite ? (
+              <button
+                type="button"
+                className={`mt-3 ${ADMIN_PRIMARY_ACTION_BTN_CLASS}`}
+                disabled={busy || requiredRoles.length === 0}
+                onClick={saveRoles}
+              >
+                {t("admin_permissions_2fa_policy_roles_save")}
+              </button>
+            ) : null}
+          </div>
+        </>
       )}
       {msg ? <p className="mt-3 text-small text-ink-700">{msg}</p> : null}
       {!canWrite ? (

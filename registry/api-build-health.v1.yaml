@@ -1,0 +1,25 @@
+# API binary build health — separate from Vacancy Ledger gates
+# Vacancy route logic + lib tests can PASS while full `traveltrust-api` bin has unrelated compile debt.
+schema: traveltrust.api_build_health.v1
+updated_utc: "2026-07-09"
+
+gate_id: API_BUILD_HEALTH
+gate_script: scripts/gates/check-api-build-health-gate.sh
+report: docs/spec/governance-token/API-BUILD-HEALTH-GATE-REPORT-v1.md
+
+layers:
+  vacancy_indexer_lib:
+    status: PASS
+    command: cargo test -p traveltrust-api --lib
+    scope: Vacancy indexer / reconcile / ops / transparency modules
+  traveltrust_api_bin:
+    status: KNOWN_DEBT
+    command: cargo check -p traveltrust-api --bin traveltrust-api
+    note: Pre-existing unrelated compile errors — must not block Vacancy Ledger gates
+
+vacancy_ledger_gates:
+  - WEB3_VACANCY_INDEXER_RECONCILE
+  - VACANCY_DEPLOYMENT_READINESS
+  - W4a governance transparency
+  - W4b protocol operations console
+  isolated_from: API_BUILD_HEALTH

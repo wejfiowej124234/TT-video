@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.role_matrix.v1",
+  "roles": [
+    "Traveler",
+    "Guide",
+    "Merchant",
+    "Acquisition",
+    "Steward",
+    "Admin"
+  ],
+  "identity_hub": "/me/identities"
+}

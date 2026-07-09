@@ -12,6 +12,16 @@ export const OFFICIAL_COLD_START_SURFACE_OPTIONS = [
 
 export type OfficialColdStartSurfaceId = (typeof OFFICIAL_COLD_START_SURFACE_OPTIONS)[number]["id"];
 
+/** 实体级 display_surfaces · SSOT-PUB-OPS §3.4（与 Cold Start 同名 + 子站扩展） */
+export const PUBLIC_OPS_ENTITY_SURFACE_OPTIONS = [
+  ...OFFICIAL_COLD_START_SURFACE_OPTIONS,
+  { id: "did_rank", labelKey: "admin_public_operations_surface_did_rank" },
+  { id: "market_provider", labelKey: "admin_public_operations_surface_market_provider" },
+  { id: "market_acquisition", labelKey: "admin_public_operations_surface_market_acquisition" },
+] as const;
+
+export type PublicOpsEntitySurfaceId = (typeof PUBLIC_OPS_ENTITY_SURFACE_OPTIONS)[number]["id"];
+
 export const OFFICIAL_OPS_HUB_LINKS = [
   {
     href: "/admin/official/accounts",
@@ -30,6 +40,12 @@ export const OFFICIAL_OPS_HUB_LINKS = [
     labelKey: "admin_shell_nav_official_templates",
     hintKey: "admin_official_hub_hint_templates",
     dataAttr: "/admin/official/itinerary-templates",
+  },
+  {
+    href: "/admin/official/public-operations",
+    labelKey: "admin_shell_nav_official_public_operations",
+    hintKey: "admin_official_hub_hint_public_operations",
+    dataAttr: "/admin/official/public-operations",
   },
   {
     href: "/admin/official/cold-start",

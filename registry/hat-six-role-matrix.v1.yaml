@@ -3,8 +3,13 @@
 # 备注列：失败原因/issue_id · 修复时无需重新定位
 
 schema: traveltrust.hat_six_role_matrix.v1
-version: 11
+version: 12
 effective_utc: "2026-07-08"
+payment_rail_ssot: registry/payment-architecture-classification.v1.yaml
+payment_rail_notes:
+  core_trip_market: Web3 USDC approve → Escrow.deposit → release (G3-02 · PAY-W01..W16)
+  mock_pay: chain_off sandbox only (P3_CHAIN_OFF=1 · ① local / ② staging) — NOT production payment
+  onboarding_stripe: optional P1 fiat onboarding only — NOT trip escrow rail
 machine_key: TT_HAT_SIX_ROLE_MATRIX
 execute_order: 2
 priority: P1
@@ -27,7 +32,7 @@ roles:
       login: { verdict: pass, note: "HAT-003 · triple login 200 · role=tourist · admin 403 · E: HAT-003-TOURIST-LOGIN-VALIDATION" }
       browse: { verdict: pass, note: "HAT-003 · GET orders 200 · E: HAT-003-TOURIST-LOGIN-VALIDATION" }
       order: { verdict: pass, note: "HAT-EvidenceSync · Manual 8 created order 61aed01a · cancel UX verified · refresh probe created status · E: manual-cancel_refund-LATEST · manual-refresh_recovery-LATEST" }
-      pay: { verdict: pass, note: "HAT-EvidenceSync · Manual 7 API+UI mock-pay PASS · Track A closed staging gap · E: manual-pay_mock-LATEST · BFM mock-pay API" }
+      pay: { verdict: pass, note: "HAT-EvidenceSync · ② staging chain_off mock-pay sandbox PASS (NOT prod USDC) · prod corridor = G3-02 USDC escrow · E: manual-pay_mock-LATEST" }
       complete: { verdict: pass, note: "HAT-EvidenceSync · Manual 8/9 · escrow 1bbb38dc 已完成 · API+UI post-refresh consistent · E: manual-cancel_refund-LATEST · manual-refresh_recovery-LATEST" }
       logout: { verdict: pass, note: "HAT-003 · logout 200 · session 401 after · E: HAT-003-TOURIST-LOGIN-VALIDATION" }
 
@@ -38,8 +43,8 @@ roles:
       register: { verdict: pass, note: "HAT-HumanQueue · register shell + seed guide@test.com role=guide · E: hat-guide-register-LATEST · BFM-GUIDE-FLOW" }
       login: { verdict: pass, note: "HAT-HumanQueue · guide login → /guide 向导工作台 · E: hat-guide-login-LATEST" }
       browse: { verdict: pass, note: "HAT-HumanQueue · /market?view=guides · 10 guides · E: hat-guide-browse-LATEST · BFM list" }
-      order: { verdict: pass, note: "Sprint A · 迪拜 pilot · create→accept→mock-pay→completed · e8be4517" }
-      pay: { verdict: pass, note: "mock-pay escrowed" }
+      order: { verdict: pass, note: "Sprint A · 迪拜 pilot · create→accept→② mock-pay sandbox→completed · prod pay = USDC escrow G3-02" }
+      pay: { verdict: pass, note: "② chain_off mock-pay escrowed (sandbox) · core rail = USDC wallet deposit" }
       complete: { verdict: pass, note: "confirm-completion completed" }
       logout: { verdict: pass, note: "HAT-HumanQueue · session clear → /auth/login?returnUrl=/guide · E: hat-guide-logout-LATEST" }
 
@@ -51,7 +56,7 @@ roles:
       login: { verdict: pass, note: "BD-005 · provider_auth 200 · merchant@test.com · active guide 627c8c31…" }
       browse: { verdict: pass, note: "BD-005 · public catalog 200 · production listing · E: SPRINT-B-PROVIDER-HAT-ORDER" }
       order: { verdict: pass, note: "BD-005 · create_order 200 · order d3b96f98…" }
-      pay: { verdict: pass, note: "BD-005 · mock_pay 200 · escrowed" }
+      pay: { verdict: pass, note: "BD-005 · ② mock_pay sandbox 200 · escrowed · NOT prod USDC path" }
       complete: { verdict: pass, note: "BD-005 · confirm_completion 200 · completed" }
       logout: { verdict: pass, note: "HAT-HumanQueue · session clear → /auth/login?returnUrl=/provider · E: hat-provider-logout-LATEST" }
 
@@ -63,7 +68,7 @@ roles:
       login: { verdict: pass, note: "HAT-HumanQueue · owner login → /market/acquisition authenticated · E: hat-acquisition-login-LATEST" }
       browse: { verdict: pass, note: "HAT-HumanQueue · /market/acquisition catalog usable · E: hat-acquisition-browse-LATEST" }
       order: { verdict: pass, note: "HAT-HumanQueue · publish+respond/accept · listing 3842f57f… order 15d2051c… · E: hat-acquisition-order-LATEST" }
-      pay: { verdict: pass, note: "HAT-HumanQueue · owner mock-pay escrowed · E: hat-acquisition-pay-LATEST · Session C close_deal" }
+      pay: { verdict: pass, note: "HAT · ② owner mock-pay sandbox escrowed · acquisition prod pay = USDC escrow · E: hat-acquisition-pay-LATEST" }
       complete: { verdict: pass, note: "HAT-HumanQueue · carrier confirm · UI 已完成 · E: hat-acquisition-complete-LATEST" }
       logout: { verdict: pass, note: "HAT-HumanQueue · session clear → login redirect · E: hat-acquisition-logout-LATEST" }
 

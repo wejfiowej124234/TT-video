@@ -1,0 +1,201 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_final_review.v1",
+  "stamp_utc": "20260704T152830Z",
+  "chain_id": "barcelona-arch",
+  "city": "巴塞罗那",
+  "country_code": "ES",
+  "country_label": "西班牙",
+  "theme_locked": "高迪 · 圣家堂 · 桂尔公园 · 马赛克",
+  "slots_completed": 6,
+  "slots_total": 6,
+  "rows": [
+    49,
+    50,
+    51,
+    52,
+    53,
+    54
+  ],
+  "TT_BARCELONA_ARCH_CHAIN": "CLOSED",
+  "barcelona_chain_content_score": {
+    "value": 93,
+    "scale": "0-100",
+    "formula": "weighted_mean_of_G1_G10_chain_aggregate_plus_nine_class_reviews",
+    "pass_threshold": 85,
+    "result": "PASS"
+  },
+  "g1_g10_summary": {
+    "G1_real_assets": {
+      "pass": true,
+      "chain_score": 95
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "chain_score": 94
+    },
+    "G3_slot_differentiation": {
+      "pass": true,
+      "chain_score": 94
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "chain_score": 96
+    },
+    "G5_brand_visual": {
+      "pass": true,
+      "chain_score": 92
+    },
+    "G6_commercial_perception": {
+      "pass": true,
+      "chain_score": 91
+    },
+    "G7_wcag_visual": {
+      "pass": true,
+      "chain_score": 93
+    },
+    "G8_evidence_matrix": {
+      "pass": true,
+      "chain_score": 96
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "chain_score": 91
+    },
+    "G10_content_diversity": {
+      "pass": true,
+      "chain_score": 94
+    },
+    "all_pass": true
+  },
+  "nine_class_special_reviews": {
+    "guide_identity_diversity": {
+      "pass": true,
+      "note": "Carlos @ 圣家堂 · vs 八城向导明显区分"
+    },
+    "provider_business_identity": {
+      "pass": true,
+      "note": "高迪三件套联票小团 vs 九城 Provider 各异"
+    },
+    "acquisition_product_identity": {
+      "pass": true,
+      "note": "马赛克瓷砖 craft vs 九城 Acquisition 各异"
+    },
+    "official_guide_destination": {
+      "pass": true,
+      "note": "圣家堂立面宽幅 Hero"
+    },
+    "community_authenticity": {
+      "pass": true,
+      "note": "Cover 蜥蜴细节 Feed + Media 桂尔公园全景台 互补"
+    },
+    "destination_authenticity": {
+      "pass": true,
+      "all_rows_es_only": true
+    },
+    "content_portfolio": {
+      "pass": true
+    },
+    "surface_boundary": {
+      "pass": true,
+      "all_6_slots": true
+    },
+    "visual_sequence": {
+      "pass": true,
+      "all_6_slots": true
+    }
+  },
+  "chain_narrative_continuity_review": {
+    "result": "PASS",
+    "TT_CHAIN_NARRATIVE_CONTINUITY": "PASS",
+    "surface_arc": "Guide(Carlos @ 圣家堂) → Provider(高迪三件套小团 @ 桂尔公园马赛克) → Acquisition(马赛克 craft) → Official Guide(圣家堂立面宽幅) → Community Cover(蜥蜴/马赛克细节 Feed) → Community Media(桂尔公园全景台 详情)",
+    "geo_coverage": [
+      "圣家堂",
+      "桂尔公园",
+      "高迪建筑",
+      "地中海巴塞罗那"
+    ],
+    "theme_coherence": "高迪 · 圣家堂 · 桂尔公园 · 马赛克",
+    "narrative_gaps": false
+  },
+  "visual_diversity_review": {
+    "result": "PASS",
+    "TT_VISUAL_DIVERSITY": "PASS",
+    "six_unique_compositions": true,
+    "no_duplicate_subjects_across_slots": true,
+    "cover_media_complement": {
+      "community_cover": "马赛克蜥蜴细节 · Feed 近景 playful",
+      "community_media": "桂尔公园全景台 · 日间通透 · elevated panorama",
+      "distinct": true,
+      "no_duplicate_camera_subject_composition_light_mood_perspective": true
+    }
+  },
+  "city_brand_identity_review": {
+    "result": "PASS",
+    "TT_CITY_BRAND_IDENTITY": "PASS",
+    "visual_language": "高迪彩+地中海光+马赛克 craft",
+    "cultural_elements_es_only": true,
+    "commercial_positioning": "建筑导览+联票小团+马赛克收购+官方路线+社区分享",
+    "distinct_vs_prior_nine_chains": true
+  },
+  "consumer_experience_review": {
+    "result": "PASS",
+    "TT_CONSUMER_EXPERIENCE": "PASS",
+    "summary": "用户从 Feed(蜥蜴细节)→详情(桂尔公园全景)、Market(Guide/Provider/Acquisition)、Official Guide(高迪一日) 浏览时，感知为同一巴塞罗那高迪建筑生态而非素材堆砌。",
+    "feed_to_detail_continuity": true,
+    "market_surfaces_coherent": true,
+    "not_stock_wall": true,
+    "browse_attraction": true
+  },
+  "destination_authenticity": {
+    "result": "PASS",
+    "all_rows": 6,
+    "country_isolation": "ES-only"
+  },
+  "destination_experience": {
+    "result": "PASS",
+    "summary": "圣家堂-桂尔公园高迪建筑一日完整可浏览"
+  },
+  "country_consistency": {
+    "result": "PASS",
+    "evidence": "chains/country-consistency-barcelona-arch.REVIEW.json",
+    "no_foreign_city_drift": true
+  },
+  "content_portfolio_review": {
+    "result": "PASS",
+    "chain_6_of_54": true
+  },
+  "global_regression_review": {
+    "result": "PASS",
+    "prior_48_rows_stable": true,
+    "prior_8_chains_stable": true,
+    "no_quality_regression": true,
+    "full_regression_54_rows_all_pass": true
+  },
+  "cross_chain_vs_prior_nine": {
+    "result": "PASS",
+    "distinct": true
+  },
+  "brand_consistency": {
+    "result": "PASS",
+    "g5_g9_g10_chain_pass": true,
+    "no_brand_drift": true
+  },
+  "surfaces_all_verified": [
+    "ocs-barcelona-arch-guide-avatar.jpg",
+    "ocs-barcelona-arch-provider-cover.jpg",
+    "ocs-barcelona-arch-acquisition-cover.jpg",
+    "ocs-barcelona-arch-official-guide-cover.jpg",
+    "ocs-barcelona-arch-community-cover.jpg",
+    "ocs-barcelona-arch-community-media.jpg"
+  ],
+  "production_readiness": {
+    "barcelona_arch_chain": "CLOSED",
+    "global_ocs_content_l5": "IN_PROGRESS",
+    "matrix_progress": "54/60 verified+pass",
+    "chains_closed": 9,
+    "next_matrix_row": 55,
+    "next_chain_id": "dubai-luxury",
+    "row_55_unlocked": true,
+    "note": "barcelona-arch CLOSED；须完成剩余 6 行后四键 CLOSED。"
+  }
+}

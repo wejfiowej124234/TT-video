@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.testnet_staging_freeze.v1",
+  "frozen_at": "2026-06-17T02:18:47Z",
+  "stamp": "20260617T021847Z",
+  "git_sha": "8dcd304afae1bafe5a4de738175e171256a9501e",
+  "reason": "Phase② baseline consistency audit PASS · TL#1 Wave 1 wait",
+  "policy": "no_redeploy_no_restart_no_migrations_no_config_changes",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "override_env": "TESTNET_FREEZE_OVERRIDE=1",
+  "audit_evidence": "evidence/GO_phase2_baseline_consistency_audit/20260617T020824Z",
+  "next_gate": "TL#1 Wave 1 (Cert #7 finalize + Cert #8 queue)"
+}

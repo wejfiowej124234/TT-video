@@ -1,0 +1,75 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_review.v1",
+  "stamp_utc": "20260704T123130Z",
+  "chain_id": "tokyo-photo",
+  "city": "东京",
+  "country_code": "JP",
+  "theme": "城市摄影 · 浅草 · 晴空塔 · 街景",
+  "slots_completed": 4,
+  "slots_total": 6,
+  "TT_TOKYO_PHOTO_CHAIN_REVIEW": "PASS",
+  "chain_consistency": {
+    "all_surfaces_tokyo_theme": true,
+    "no_foreign_city_landmarks": true,
+    "no_foreign_culture_mix": true,
+    "copy_image_100pct_aligned": true,
+    "no_composition_subject_tone_duplication": true,
+    "no_business_semantics_error": true
+  },
+  "continuous_browsing_narrative": {
+    "pass": true,
+    "summary": "四 Surface 构成连贯东京摄影体验：Ken 向导(浅草) → 半日旅拍服务(台场) → 限定镜头悬赏(器材) → 官方一日路线(浅草寺→晴空塔/隅田川)。用户可感知同一城市摄影主题下的角色递进，而非四张孤立图。",
+    "geo_thread": "浅草/隅田川/晴空塔轴线在 Guide bio、Official Guide body、Row4 封面形成地理叙事闭环；台场(Rainbow Bridge)作为 Provider 外景扩展同一城市不同机位。"
+  },
+  "surfaces": [
+    {
+      "row": 1,
+      "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+      "surface": "Guide",
+      "subject": "持相机向导 Ken 肖像",
+      "scene": "浅草雷门 bokeh",
+      "tone": "暖金纪实",
+      "manifest_key": "guide.nickname / guide.bio",
+      "differentiation_ok": true
+    },
+    {
+      "row": 2,
+      "filename": "ocs-tokyo-photo-provider-cover.jpg",
+      "surface": "Provider",
+      "subject": "情侣+摄影师服务现场",
+      "scene": "台场 Rainbow Bridge",
+      "tone": "黄金时刻商业",
+      "manifest_key": "provider.title / description",
+      "differentiation_ok": true
+    },
+    {
+      "row": 3,
+      "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+      "surface": "Acquisition",
+      "subject": "镜头原包装/店内陈列",
+      "scene": "相机店静物",
+      "tone": "中性产品光",
+      "manifest_key": "acquisition.title / description",
+      "differentiation_ok": true
+    },
+    {
+      "row": 4,
+      "filename": "ocs-tokyo-photo-official-guide-cover.jpg",
+      "surface": "Official Guide",
+      "subject": "浅草五重塔+隅田川+晴空塔路线",
+      "scene": "史诗宽幅河景路线",
+      "tone": "略暖路线封面",
+      "manifest_key": "official_guide.title / body / destination / tags",
+      "differentiation_ok": true
+    }
+  ],
+  "regression_check": {
+    "pass": true,
+    "notes": "Row4 新增未导致 Row1–3 构图/语义回归；四行均已 verified+pass。"
+  },
+  "pending_slots": [
+    "ocs-tokyo-photo-community-cover.jpg",
+    "ocs-tokyo-photo-community-media.jpg"
+  ],
+  "gate_to_row5": "PASS — 本行 PASS 且 Chain 4/6 无回归"
+}

@@ -1,0 +1,94 @@
+{
+  "validation": "PCP_PHASE_1_MARKET_BATCH_1",
+  "stamp": "20260703T231140Z",
+  "sequence": [
+    "local_architecture",
+    "local_static_market_batch",
+    "staging_market_routes",
+    "evidence"
+  ],
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "migration": "20260704110000_governed_market_catalog_v1.sql",
+  "builder": "crates/api/src/pcp/market_builder.rs",
+  "domains": [
+    "market",
+    "provider",
+    "acquisition",
+    "official_guide"
+  ],
+  "campaign_builder_deferred": true,
+  "overall": "PASS",
+  "batch_1_sign_off": true,
+  "batch_1_note": "Market batch 1 PASS — may proceed to CampaignBuilder engineering",
+  "checks": [
+    {
+      "id": "architecture_compliance",
+      "label": "TT_PCP_ARCHITECTURE_COMPLIANCE (local)",
+      "status": "PASS",
+      "detail": "Architecture compliance PASS"
+    },
+    {
+      "id": "local_migration",
+      "label": "Migration 20260704110000 governed_market_catalog_v1",
+      "status": "PASS",
+      "detail": "crates/api/migrations/20260704110000_governed_market_catalog_v1.sql"
+    },
+    {
+      "id": "market_builder_static",
+      "label": "pcp/market_builder.rs re-exports governed views (no inline governance)",
+      "status": "PASS",
+      "detail": "MarketBuilder reads governed_market_* only"
+    },
+    {
+      "id": "market_catalog_static",
+      "label": "db/market_catalog.rs reads governed_market_* views",
+      "status": "PASS",
+      "detail": "All three governed views referenced"
+    },
+    {
+      "id": "guides_governed_path",
+      "label": "GET /guides wired to list_governed_market_guides when catalog filter on",
+      "status": "PASS",
+      "detail": "guides.rs uses governed catalog path"
+    },
+    {
+      "id": "staging_health",
+      "label": "Staging /health/ready",
+      "status": "PASS",
+      "detail": "database=ok"
+    },
+    {
+      "id": "staging_guides",
+      "label": "GET /api/v1/guides?limit=5",
+      "status": "PASS",
+      "detail": "HTTP 200 · payload shape ok"
+    },
+    {
+      "id": "staging_provider_listings",
+      "label": "GET /api/v1/market/provider/listings?limit=5",
+      "status": "PASS",
+      "detail": "HTTP 200 · payload shape ok"
+    },
+    {
+      "id": "staging_acquisition_listings",
+      "label": "GET /api/v1/market/acquisition/listings?limit=5",
+      "status": "PASS",
+      "detail": "HTTP 200 · payload shape ok"
+    },
+    {
+      "id": "staging_discover_orders",
+      "label": "GET /api/v1/discover/orders?limit=5",
+      "status": "PASS",
+      "detail": "HTTP 200 · payload shape ok"
+    }
+  ],
+  "summary": {
+    "pass": 10,
+    "fail": 0,
+    "skipped": 0
+  },
+  "prerequisites": {
+    "architecture_compliance": true,
+    "static_market_batch": true
+  }
+}

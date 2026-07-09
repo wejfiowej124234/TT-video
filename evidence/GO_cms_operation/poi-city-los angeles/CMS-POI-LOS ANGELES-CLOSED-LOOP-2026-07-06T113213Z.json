@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T11:32:13Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "US",
+    "city_zh": "洛杉矶",
+    "city_en": "Los Angeles",
+    "matrix_ids": [
+      "PH-US-155-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-US-155-FOOD",
+      "legacy_value": "墨西哥菜",
+      "poi_id": "3c6dc0de-833b-41c4-9fc1-c6964a1c178a",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-155-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

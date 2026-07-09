@@ -1,0 +1,719 @@
+{
+  "schema": "traveltrust.product_experience_audit.v1",
+  "report_id": "PEA-SOAK-20260608",
+  "title": "Product Experience Audit · UX Findings Report",
+  "completed_at": "2026-06-08T10:57:54Z",
+  "audit_method": "static IA/navigation/copy/empty-error-state review · five personas · nine domains · no code-correctness gate",
+  "exec_env": "local/staging-dev codebase review during staging-soak freeze",
+  "staging_policy": "no staging changes · no token fixes · no new features during soak",
+  "personas": [
+    "Traveler",
+    "Guide",
+    "Merchant",
+    "Operator",
+    "Admin"
+  ],
+  "domains": [
+    "CMS",
+    "Official OPS",
+    "Growth",
+    "Referral",
+    "Early Bird",
+    "Community Moderation",
+    "Market",
+    "Identity",
+    "Governance"
+  ],
+  "dimensions": [
+    "information_architecture",
+    "navigation",
+    "naming",
+    "interaction_feedback",
+    "empty_states",
+    "error_messaging",
+    "task_completion_paths",
+    "cognitive_cost"
+  ],
+  "summary": {
+    "total": 29,
+    "P0": 5,
+    "P1": 14,
+    "P2": 10
+  },
+  "post_audit_sequence": [
+    "Unified UX optimization sprint (P0→P1→P2)",
+    "Re-run Product Experience Audit spot-check",
+    "Real-user UAT (ROV / ten operational scenarios)",
+    "33/33 GO → Token Debt Sprint → next testnet release"
+  ],
+  "findings": [
+    {
+      "id": "UX-P0-01",
+      "severity": "P0",
+      "domain": "Identity",
+      "personas": [
+        "Traveler",
+        "Guide"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER",
+        "SCN-GUIDE"
+      ],
+      "kind": "workflow",
+      "surface": "/me → /community · profile at /me/settings/profile",
+      "title": "Me/Profile 信息架构迁移未完成，首访路径与标签不一致",
+      "expected": "单一、可预测的个人中心入口；Profile/Me/Community 命名一致",
+      "actual": "/me 重定向至 /community feed；遗留 community_tab_me 标签；Header Profile 指向 /me/settings/profile",
+      "cognitive_cost": "用户以为 Me=个人中心，却进入社区 feed",
+      "evidence": [
+        "frontend/app/me/page.tsx",
+        "frontend/locales/en.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P0-02",
+      "severity": "P0",
+      "domain": "Identity",
+      "personas": [
+        "Merchant"
+      ],
+      "scenario_ids": [
+        "SCN-MERCHANT"
+      ],
+      "kind": "naming",
+      "surface": "/provider/register · role=provider · Merchant copy",
+      "title": "Merchant 与 Provider 双命名体系贯穿 URL/API/UI",
+      "expected": "商家入驻全链路使用一致用户可见术语",
+      "actual": "URL/query 为 provider；UI 为 Merchant；Studio 为 merchant* 代码 ID",
+      "cognitive_cost": "商家无法将 Merchant onboarding 与 /provider/register 对应",
+      "evidence": [
+        "frontend/app/provider/register/README.md",
+        "frontend/locales/en.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P0-03",
+      "severity": "P0",
+      "domain": "Referral",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-REFERRAL"
+      ],
+      "kind": "workflow",
+      "surface": "/me/referrals",
+      "title": "Referral 增长任务路径深埋，首访不可发现",
+      "expected": "邀请任务可从 Header/Community/注册流自然触达",
+      "actual": "Referrals 仅 Settings→Travel→Referrals & points；非五主路由",
+      "cognitive_cost": "增长核心动作需 3+ 次点击",
+      "evidence": [
+        "frontend/lib/me/meSettingsNavModel.ts",
+        "frontend/app/me/referrals/MeReferralsPageMain.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P0-04",
+      "severity": "P0",
+      "domain": "Growth",
+      "personas": [
+        "Operator",
+        "Admin"
+      ],
+      "scenario_ids": [
+        "SCN-GROWTH",
+        "SCN-ADMIN"
+      ],
+      "kind": "naming",
+      "surface": "/admin/growth vs /admin/trust-growth",
+      "title": "Growth Center 与 Trust Growth 命名碰撞",
+      "expected": "运营可区分 Referral/Early Bird 增长台与 Banner A/B 信任增长台",
+      "actual": "Sidebar Growth 组 vs Governance 组 trust-growth；Analytics 另拆 conversion-analytics",
+      "cognitive_cost": "Ops 易进错控制台；KPI 归属不清",
+      "evidence": [
+        "frontend/lib/admin/adminShellGrowthNavLinks.ts",
+        "frontend/lib/admin/adminShellGovernanceNavLinks.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P0-05",
+      "severity": "P0",
+      "domain": "Referral",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-REFERRAL"
+      ],
+      "kind": "copy",
+      "surface": "/me/referrals eyebrow",
+      "title": "工程 Sprint 标识暴露于用户界面",
+      "expected": "用户可见文案为产品语言，无内部 ticket",
+      "actual": "me_referrals_eyebrow: Growth · G-S4 渲染在 Referrals 页",
+      "cognitive_cost": "破坏产品专业感；用户无法理解 G-S4",
+      "evidence": [
+        "frontend/locales/en.ts",
+        "frontend/app/me/referrals/MeReferralsPageMain.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-01",
+      "severity": "P1",
+      "domain": "Market",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER"
+      ],
+      "kind": "navigation",
+      "surface": "Global Header · Orders/Pay",
+      "title": "订单/支付/托管不在全局主导航",
+      "expected": "预订后管理订单、支付可在 Header 一级触达",
+      "actual": "Header 仅 Home/Market/Ranking/Community；Orders 在用户菜单",
+      "cognitive_cost": "完成预订后的下一步需打开用户菜单",
+      "evidence": [
+        "frontend/components/Header.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-02",
+      "severity": "P1",
+      "domain": "Market",
+      "personas": [
+        "Guide",
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-GUIDE"
+      ],
+      "kind": "workflow",
+      "surface": "/guide/register · /guides · /market",
+      "title": "向导招募入口分散（BP-03）",
+      "expected": "单一向导招募漏斗",
+      "actual": "入口含 home PES、guides empty、market empty、MeTrust；/guide vs /guides 语义分裂",
+      "cognitive_cost": "潜在向导不知从哪开始",
+      "evidence": [
+        "frontend/lib/conversionFunnelModel.ts",
+        "frontend/app/guides/page.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-03",
+      "severity": "P1",
+      "domain": "Identity",
+      "personas": [
+        "Merchant"
+      ],
+      "scenario_ids": [
+        "SCN-MERCHANT"
+      ],
+      "kind": "workflow",
+      "surface": "/provider/register ↔ /me/onboarding",
+      "title": "商家 5 步入驻跨页跳跃，Settings 无承接",
+      "expected": "入驻进度可在 Identities Hub 续作",
+      "actual": "Step2→onboarding；Settings hub 无 merchant 行",
+      "cognitive_cost": "中途离开难以找回进度（BP-04）",
+      "evidence": [
+        "frontend/app/provider/register/README.md",
+        "frontend/app/me/identities/page.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-04",
+      "severity": "P1",
+      "domain": "Market",
+      "personas": [
+        "Guide"
+      ],
+      "scenario_ids": [
+        "SCN-GUIDE"
+      ],
+      "kind": "naming",
+      "surface": "/guide vs /guides",
+      "title": "Guide 工作台与 Guides 目录单复数路径无统合 wayfinding",
+      "expected": "目录页与向导工作台有明确互链",
+      "actual": "/guide=workspace，/guides=public directory",
+      "cognitive_cost": "已注册向导与访客混淆两个 guides",
+      "evidence": [
+        "frontend/app/guide/layout.tsx",
+        "frontend/app/guides/page.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-05",
+      "severity": "P1",
+      "domain": "CMS",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-CMS"
+      ],
+      "kind": "navigation",
+      "surface": "/admin/content hub vs sidebar",
+      "title": "CMS Hub 链接网格与 Sidebar 不一致",
+      "expected": "Content Hub 覆盖 Sidebar 全部 P1 模块",
+      "actual": "Sidebar 含 Country market；Hub 网格遗漏",
+      "cognitive_cost": "运营从 Hub 找不到国别市场模块",
+      "evidence": [
+        "frontend/components/admin/content/AdminContentPageShell.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-06",
+      "severity": "P1",
+      "domain": "Community Moderation",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-MODERATION"
+      ],
+      "kind": "naming",
+      "surface": "/admin/community/reports",
+      "title": "Community 首项 Nav 标签与页面标题不一致",
+      "expected": "Sidebar 标签与 H1 一致",
+      "actual": "Nav Community governance → reports；H1 Community reports",
+      "cognitive_cost": "审核员搜索举报与导航文案不匹配",
+      "evidence": [
+        "frontend/lib/admin/adminShellCommunityNavLinks.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-07",
+      "severity": "P1",
+      "domain": "Official OPS",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-OFFICIAL-OPS"
+      ],
+      "kind": "naming",
+      "surface": "/admin/guides vs /admin/official/guides",
+      "title": "Operations Guides 与 Official Guides 同名异义",
+      "expected": "导航消歧 Marketplace vs Official content",
+      "actual": "Operations /admin/guides KYB；Official /admin/official/guides 官方攻略",
+      "cognitive_cost": "运营发布官方攻略时可能进错模块",
+      "evidence": [
+        "frontend/lib/admin/adminShellOperationsNavLinks.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-08",
+      "severity": "P1",
+      "domain": "Growth",
+      "personas": [
+        "Operator",
+        "Admin"
+      ],
+      "scenario_ids": [
+        "SCN-GROWTH",
+        "SCN-ADMIN"
+      ],
+      "kind": "navigation",
+      "surface": "/admin/growth/analytics vs /admin/conversion-analytics",
+      "title": "两套 Analytics 产品 IA 未向运营解释",
+      "expected": "Hub 说明 Growth funnel vs PES conversion 分工",
+      "actual": "Growth analytics 在 Growth 组；Conversion 在 More 组",
+      "cognitive_cost": "报表需求方不知打开哪个控制台",
+      "evidence": [
+        "frontend/app/admin/growth/analytics",
+        "frontend/app/admin/conversion-analytics/page.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-09",
+      "severity": "P1",
+      "domain": "Market",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER"
+      ],
+      "kind": "naming",
+      "surface": "Escrow · Pay · Payment",
+      "title": "支付/托管术语混用",
+      "expected": "消费者面统一支付/订金/担保语言",
+      "actual": "Pay & escrow、Payment breadcrumb、escrow 步骤并存",
+      "cognitive_cost": "非 Web3 用户不理解 escrow",
+      "evidence": [
+        "frontend/components/market/EmptyState.tsx",
+        "frontend/locales/en.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-10",
+      "severity": "P1",
+      "domain": "Referral",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-REFERRAL"
+      ],
+      "kind": "feedback",
+      "surface": "/me/referrals empty",
+      "title": "Referrals 无邀请成果空态引导",
+      "expected": "零邀请时展示如何分享与预期反馈",
+      "actual": "统计为 0；无 guided empty panel",
+      "cognitive_cost": "用户不确定功能是否可用",
+      "evidence": [
+        "frontend/app/me/referrals/MeReferralsPageMain.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-11",
+      "severity": "P1",
+      "domain": "Early Bird",
+      "personas": [
+        "Traveler",
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-EARLY-BIRD"
+      ],
+      "kind": "feedback",
+      "surface": "Register · /admin/growth/early-bird",
+      "title": "Early Bird 消费者触达与 Admin stages 关联弱",
+      "expected": "注册/Me 披露早鸟状态；Admin 与 consumer 文案对齐",
+      "actual": "早鸟主要在 register payload/admin；consumer 自解释不足",
+      "cognitive_cost": "用户不知是否获得早鸟",
+      "evidence": [
+        "frontend/app/auth/register",
+        "frontend/app/admin/growth/early-bird"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-12",
+      "severity": "P1",
+      "domain": "Official OPS",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-OFFICIAL-OPS",
+        "SCN-TRAVELER"
+      ],
+      "kind": "feedback",
+      "surface": "ConsumerSurfaceStatePanel",
+      "title": "冷启动 consumer 空态过于泛化",
+      "expected": "空态说明 data_origin 与下一步",
+      "actual": "Generic Nothing here yet；缺 numbered steps",
+      "cognitive_cost": "用户不知是 bug 还是尚未 seed",
+      "evidence": [
+        "frontend/components/consumer/ConsumerSurfaceStatePanel.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-13",
+      "severity": "P1",
+      "domain": "Community Moderation",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-MODERATION"
+      ],
+      "kind": "interaction",
+      "surface": "/admin/community/*",
+      "title": "Community Admin Legacy list UX 与 Ops Plane 不一致",
+      "expected": "Moderation 与 CMS/Growth 一致 loading/empty/error",
+      "actual": "AdminStandardListSection vs OpsPlaneFetchStates",
+      "cognitive_cost": "同一 Admin 内交互模式切换",
+      "evidence": [
+        "frontend/components/admin/AdminStandardListSection.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P1-14",
+      "severity": "P1",
+      "domain": "CMS",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-CMS",
+        "SCN-ADMIN"
+      ],
+      "kind": "navigation",
+      "surface": "Admin breadcrumb",
+      "title": "Content/Official/Growth breadcrumb 上下文缺失",
+      "expected": "Ops Plane breadcrumb 反映四平面分组",
+      "actual": "adminShellContextForPath 缺少 content/official_ops/growth 规则",
+      "cognitive_cost": "深页运营失去位置感",
+      "evidence": [
+        "frontend/lib/admin/adminShellContextForPath.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P2-01",
+      "severity": "P2",
+      "domain": "Market",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER"
+      ],
+      "kind": "naming",
+      "surface": "Home hero vs Header",
+      "title": "首页 Plan trip 与 Header Web3 Travel 双 framing",
+      "expected": "同一 / 入口产品语言一致",
+      "actual": "LandingHeroNavTabs vs Header 措辞不同",
+      "cognitive_cost": "轻度品牌 vs 任务导向分裂",
+      "evidence": [
+        "frontend/components/landing/LandingHeroNavTabs.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P2-02",
+      "severity": "P2",
+      "domain": "Market",
+      "personas": [
+        "Traveler",
+        "Merchant"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER",
+        "SCN-MERCHANT"
+      ],
+      "kind": "naming",
+      "surface": "Market sub-nav",
+      "title": "Market / Book travel / Merchants 动词不一致",
+      "expected": "子导航同一层级命名风格",
+      "actual": "Header Market；子 nav Book travel / Merchants / Travel acquisition",
+      "cognitive_cost": "轻度",
+      "evidence": [
+        "frontend/components/market/MarketHubSubNav.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P2-03",
+      "severity": "P2",
+      "domain": "Market",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER"
+      ],
+      "kind": "naming",
+      "surface": "Orders · Saved · Collects",
+      "title": "订单/收藏多标签指相近目的地",
+      "expected": "Saved/Collects/Orders 用户语言统一",
+      "actual": "My orders / Saved / My collects 并存",
+      "cognitive_cost": "轻度",
+      "evidence": [
+        "frontend/components/header/headerUserMenuNavModel.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P2-04",
+      "severity": "P2",
+      "domain": "Identity",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER"
+      ],
+      "kind": "copy",
+      "surface": "User menu Identities",
+      "title": "Multiple roles & onboarding 菜单文案过长",
+      "expected": "简洁消费者语言",
+      "actual": "headerUserMenuNavModel account 区偏 spec",
+      "cognitive_cost": "轻度阅读负担",
+      "evidence": [
+        "frontend/components/header/headerUserMenuNavModel.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P2-05",
+      "severity": "P2",
+      "domain": "CMS",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-CMS"
+      ],
+      "kind": "naming",
+      "surface": "/admin/content",
+      "title": "Sidebar Content vs Hub Content Center",
+      "expected": "组名与 Hub H1 一致",
+      "actual": "admin_shell_nav_group_content vs admin_content_hub_title",
+      "cognitive_cost": "轻度",
+      "evidence": [
+        "frontend/locales/en.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P2-06",
+      "severity": "P2",
+      "domain": "Official OPS",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-OFFICIAL-OPS"
+      ],
+      "kind": "naming",
+      "surface": "/admin/official",
+      "title": "Official Ops nav vs Official Operations H1",
+      "expected": "Nav 与页面标题一致",
+      "actual": "admin_shell_nav_official_hub vs admin_official_hub_title",
+      "cognitive_cost": "轻度",
+      "evidence": [
+        "frontend/locales/en.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P2-07",
+      "severity": "P2",
+      "domain": "Community Moderation",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-MODERATION"
+      ],
+      "kind": "naming",
+      "surface": "/admin/community/moderation/cases",
+      "title": "Mod cases 缩写 vs moderation/cases 路径",
+      "expected": "运营可读全称或一致缩写",
+      "actual": "Nav 缩写；路径完整",
+      "cognitive_cost": "轻度",
+      "evidence": [
+        "frontend/lib/admin/adminShellCommunityNavLinks.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P2-08",
+      "severity": "P2",
+      "domain": "Identity",
+      "personas": [
+        "Merchant"
+      ],
+      "scenario_ids": [
+        "SCN-MERCHANT"
+      ],
+      "kind": "interaction",
+      "surface": "/provider/register",
+      "title": "商家注册复用 GuideRegister UI 骨架",
+      "expected": "Merchant 独立视觉/文案",
+      "actual": "ProviderRegister 导入 GuideRegisterLoginGate 与 guideReg* classes",
+      "cognitive_cost": "轻度 — 像向导注册",
+      "evidence": [
+        "frontend/app/provider/register/ProviderRegisterPageMain.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P2-09",
+      "severity": "P2",
+      "domain": "Governance",
+      "personas": [
+        "Traveler",
+        "Admin"
+      ],
+      "scenario_ids": [
+        "SCN-ADMIN",
+        "SCN-TRAVELER"
+      ],
+      "kind": "navigation",
+      "surface": "/governance/*",
+      "title": "Consumer Governance 与 Admin Governance 无 wayfinding",
+      "expected": "治理路径有文档或入口说明",
+      "actual": "Consumer /governance 不在 Header 四主路由",
+      "cognitive_cost": "轻度 — 入口隐蔽",
+      "evidence": [
+        "frontend/app/governance",
+        "frontend/app/admin/governance/execution-uat"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "UX-P2-10",
+      "severity": "P2",
+      "domain": "CMS",
+      "personas": [
+        "Operator",
+        "Admin"
+      ],
+      "scenario_ids": [
+        "SCN-CMS",
+        "SCN-ADMIN"
+      ],
+      "kind": "navigation",
+      "surface": "/admin home",
+      "title": "Admin Home 未覆盖 Content/Official/Growth 四平面",
+      "expected": "Workspace home 一键进入四平面 Hub",
+      "actual": "ADMIN_HOME_CARDS 偏 legacy；四平面仅 sidebar",
+      "cognitive_cost": "轻度",
+      "evidence": [
+        "frontend/lib/admin/adminHomeModel.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open"
+    }
+  ],
+  "handbook_ref": "docs/handbook/engineering/180-Parallel-UAT-During-Soak-Sprint.md",
+  "scenarios_ref": "evidence/PARALLEL_UAT_SOAK_WINDOW/operational-uat-scenarios.v1.json"
+}

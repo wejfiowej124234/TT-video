@@ -1,0 +1,574 @@
+{
+  "schema": "traveltrust.cms_th_poi_catalog_scope_lock.v1",
+  "recorded_at_utc": "2026-07-06T02:00:26.171Z",
+  "phase": "② staging",
+  "layer": "CMS_OPERATION",
+  "template_countries": [
+    {
+      "country_iso": "JP",
+      "TT_CMS_JP_COUNTRY": "CLOSED",
+      "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "KR",
+      "TT_CMS_KR_COUNTRY": "CLOSED",
+      "closure_ssot": "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+    }
+  ],
+  "lock_guard": {
+    "jp_locked_required": 41,
+    "kr_locked_required": 31,
+    "verified": true,
+    "registry": "CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json"
+  },
+  "country": {
+    "country_iso": "TH",
+    "country_zh": "泰国"
+  },
+  "th_denominator": {
+    "cities": [
+      "普吉",
+      "曼谷",
+      "清迈"
+    ],
+    "city_breakdown": {
+      "曼谷": {
+        "attraction": 5,
+        "food": 5,
+        "total": 10,
+        "matrix_ids": [
+          "PH-TH-073-ATR",
+          "PH-TH-074-ATR",
+          "PH-TH-075-ATR",
+          "PH-TH-076-ATR",
+          "PH-TH-077-ATR",
+          "PH-TH-078-FOOD",
+          "PH-TH-079-FOOD",
+          "PH-TH-080-FOOD",
+          "PH-TH-081-FOOD",
+          "PH-TH-082-FOOD"
+        ]
+      },
+      "普吉": {
+        "attraction": 5,
+        "food": 4,
+        "total": 9,
+        "matrix_ids": [
+          "PH-TH-083-ATR",
+          "PH-TH-084-ATR",
+          "PH-TH-085-ATR",
+          "PH-TH-086-ATR",
+          "PH-TH-087-ATR",
+          "PH-TH-088-FOOD",
+          "PH-TH-089-FOOD",
+          "PH-TH-090-FOOD",
+          "PH-TH-091-FOOD"
+        ]
+      },
+      "清迈": {
+        "attraction": 5,
+        "food": 4,
+        "total": 9,
+        "matrix_ids": [
+          "PH-TH-092-ATR",
+          "PH-TH-093-ATR",
+          "PH-TH-094-ATR",
+          "PH-TH-095-ATR",
+          "PH-TH-096-ATR",
+          "PH-TH-097-FOOD",
+          "PH-TH-098-FOOD",
+          "PH-TH-099-FOOD",
+          "PH-TH-100-FOOD"
+        ]
+      }
+    },
+    "poi_total": 28,
+    "attraction": 15,
+    "food": 13
+  },
+  "pilot_wave": {
+    "advancement_rule": "Scope → Country → City → POI · acceptance = City CLOSED",
+    "ops_hierarchy": [
+      "asset_family",
+      "country",
+      "city",
+      "asset"
+    ],
+    "acceptance_unit": "city",
+    "template_countries": [
+      "JP",
+      "KR"
+    ],
+    "jp_country_closed_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+    "kr_country_closed_ssot": "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+    "active_wave": "POI-WAVE-3-TH-PILOT",
+    "active_catalog_build": {
+      "wave_id": "POI-WAVE-3-TH-PILOT",
+      "label": "Pilot · TH · 曼谷",
+      "country_iso": "TH",
+      "country_zh": "泰国",
+      "cities": [
+        "曼谷"
+      ],
+      "acceptance_unit": "city",
+      "acceptance_target": "曼谷 CLOSED",
+      "purpose": "Catalog Build → per-POI Review → Live · JP/KR Golden Template 复制 · pilot done when 曼谷 CLOSED",
+      "forbidden": [
+        "bulk_ingest_th_all",
+        "skip_pilot_before_next_city",
+        "accept_by_poi_count"
+      ],
+      "template_countries": [
+        "JP",
+        "KR"
+      ],
+      "template_closure": [
+        "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+      ],
+      "status": "ACTIVE",
+      "catalog_build": true,
+      "matrix_ids": [
+        "PH-TH-073-ATR",
+        "PH-TH-074-ATR",
+        "PH-TH-075-ATR",
+        "PH-TH-076-ATR",
+        "PH-TH-077-ATR",
+        "PH-TH-078-FOOD",
+        "PH-TH-079-FOOD",
+        "PH-TH-080-FOOD",
+        "PH-TH-081-FOOD",
+        "PH-TH-082-FOOD"
+      ],
+      "poi_count": 10,
+      "by_city": [
+        {
+          "city_zh": "曼谷",
+          "acceptance_unit": "city",
+          "acceptance_target": "曼谷 CLOSED",
+          "poi_count": 10,
+          "matrix_ids": [
+            "PH-TH-073-ATR",
+            "PH-TH-074-ATR",
+            "PH-TH-075-ATR",
+            "PH-TH-076-ATR",
+            "PH-TH-077-ATR",
+            "PH-TH-078-FOOD",
+            "PH-TH-079-FOOD",
+            "PH-TH-080-FOOD",
+            "PH-TH-081-FOOD",
+            "PH-TH-082-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "大皇宫",
+              "poi_type": "attraction",
+              "matrix_id": "PH-TH-073-ATR"
+            },
+            {
+              "legacy_value": "卧佛寺",
+              "poi_type": "attraction",
+              "matrix_id": "PH-TH-074-ATR"
+            },
+            {
+              "legacy_value": "郑王庙",
+              "poi_type": "attraction",
+              "matrix_id": "PH-TH-075-ATR"
+            },
+            {
+              "legacy_value": "考山路",
+              "poi_type": "attraction",
+              "matrix_id": "PH-TH-076-ATR"
+            },
+            {
+              "legacy_value": "水上市场",
+              "poi_type": "attraction",
+              "matrix_id": "PH-TH-077-ATR"
+            },
+            {
+              "legacy_value": "冬阴功",
+              "poi_type": "food",
+              "matrix_id": "PH-TH-078-FOOD"
+            },
+            {
+              "legacy_value": "泰式炒河粉",
+              "poi_type": "food",
+              "matrix_id": "PH-TH-079-FOOD"
+            },
+            {
+              "legacy_value": "芒果糯米饭",
+              "poi_type": "food",
+              "matrix_id": "PH-TH-080-FOOD"
+            },
+            {
+              "legacy_value": "青木瓜沙拉",
+              "poi_type": "food",
+              "matrix_id": "PH-TH-081-FOOD"
+            },
+            {
+              "legacy_value": "泰式奶茶",
+              "poi_type": "food",
+              "matrix_id": "PH-TH-082-FOOD"
+            }
+          ]
+        }
+      ],
+      "first_matrix_id": "PH-TH-073-ATR",
+      "first_poi": {
+        "city_zh": "曼谷",
+        "legacy_value": "大皇宫",
+        "matrix_id": "PH-TH-073-ATR"
+      },
+      "th_country_total": 28,
+      "th_cities": [
+        "曼谷",
+        "普吉",
+        "清迈"
+      ]
+    },
+    "waves": [
+      {
+        "wave_id": "POI-WAVE-3-TH-PILOT",
+        "label": "Pilot · TH · 曼谷",
+        "country_iso": "TH",
+        "country_zh": "泰国",
+        "cities": [
+          "曼谷"
+        ],
+        "acceptance_unit": "city",
+        "acceptance_target": "曼谷 CLOSED",
+        "purpose": "Catalog Build → per-POI Review → Live · JP/KR Golden Template 复制 · pilot done when 曼谷 CLOSED",
+        "forbidden": [
+          "bulk_ingest_th_all",
+          "skip_pilot_before_next_city",
+          "accept_by_poi_count"
+        ],
+        "template_countries": [
+          "JP",
+          "KR"
+        ],
+        "template_closure": [
+          "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+          "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+        ],
+        "status": "ACTIVE",
+        "catalog_build": true,
+        "matrix_ids": [
+          "PH-TH-073-ATR",
+          "PH-TH-074-ATR",
+          "PH-TH-075-ATR",
+          "PH-TH-076-ATR",
+          "PH-TH-077-ATR",
+          "PH-TH-078-FOOD",
+          "PH-TH-079-FOOD",
+          "PH-TH-080-FOOD",
+          "PH-TH-081-FOOD",
+          "PH-TH-082-FOOD"
+        ],
+        "poi_count": 10,
+        "by_city": [
+          {
+            "city_zh": "曼谷",
+            "acceptance_unit": "city",
+            "acceptance_target": "曼谷 CLOSED",
+            "poi_count": 10,
+            "matrix_ids": [
+              "PH-TH-073-ATR",
+              "PH-TH-074-ATR",
+              "PH-TH-075-ATR",
+              "PH-TH-076-ATR",
+              "PH-TH-077-ATR",
+              "PH-TH-078-FOOD",
+              "PH-TH-079-FOOD",
+              "PH-TH-080-FOOD",
+              "PH-TH-081-FOOD",
+              "PH-TH-082-FOOD"
+            ],
+            "pois": [
+              {
+                "legacy_value": "大皇宫",
+                "poi_type": "attraction",
+                "matrix_id": "PH-TH-073-ATR"
+              },
+              {
+                "legacy_value": "卧佛寺",
+                "poi_type": "attraction",
+                "matrix_id": "PH-TH-074-ATR"
+              },
+              {
+                "legacy_value": "郑王庙",
+                "poi_type": "attraction",
+                "matrix_id": "PH-TH-075-ATR"
+              },
+              {
+                "legacy_value": "考山路",
+                "poi_type": "attraction",
+                "matrix_id": "PH-TH-076-ATR"
+              },
+              {
+                "legacy_value": "水上市场",
+                "poi_type": "attraction",
+                "matrix_id": "PH-TH-077-ATR"
+              },
+              {
+                "legacy_value": "冬阴功",
+                "poi_type": "food",
+                "matrix_id": "PH-TH-078-FOOD"
+              },
+              {
+                "legacy_value": "泰式炒河粉",
+                "poi_type": "food",
+                "matrix_id": "PH-TH-079-FOOD"
+              },
+              {
+                "legacy_value": "芒果糯米饭",
+                "poi_type": "food",
+                "matrix_id": "PH-TH-080-FOOD"
+              },
+              {
+                "legacy_value": "青木瓜沙拉",
+                "poi_type": "food",
+                "matrix_id": "PH-TH-081-FOOD"
+              },
+              {
+                "legacy_value": "泰式奶茶",
+                "poi_type": "food",
+                "matrix_id": "PH-TH-082-FOOD"
+              }
+            ]
+          }
+        ],
+        "first_matrix_id": "PH-TH-073-ATR",
+        "first_poi": {
+          "city_zh": "曼谷",
+          "legacy_value": "大皇宫",
+          "matrix_id": "PH-TH-073-ATR"
+        },
+        "th_country_total": 28,
+        "th_cities": [
+          "曼谷",
+          "普吉",
+          "清迈"
+        ]
+      }
+    ],
+    "th_denominator": {
+      "country_iso": "TH",
+      "cities": [
+        "曼谷",
+        "普吉",
+        "清迈"
+      ],
+      "poi_total": 28,
+      "bangkok_pilot": 10
+    },
+    "roadmap": [
+      {
+        "stage": "jp_country",
+        "status": "CLOSED",
+        "ssot": "CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+      },
+      {
+        "stage": "kr_country",
+        "status": "CLOSED",
+        "ssot": "CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+      },
+      {
+        "stage": "th_scope",
+        "status": "LOCKED"
+      },
+      {
+        "stage": "catalog_build",
+        "status": "ACTIVE",
+        "city": "曼谷",
+        "acceptance": "曼谷 CLOSED"
+      },
+      {
+        "stage": "th_bangkok_execution",
+        "status": "ACTIVE"
+      },
+      {
+        "stage": "th_bangkok_content_qa",
+        "status": "NOT_STARTED"
+      },
+      {
+        "stage": "th_country_runtime",
+        "status": "NOT_STARTED",
+        "when": "TT_CMS_TH_COUNTRY: CLOSED"
+      }
+    ]
+  },
+  "active_catalog_build": {
+    "wave_id": "POI-WAVE-3-TH-PILOT",
+    "label": "Pilot · TH · 曼谷",
+    "country_iso": "TH",
+    "country_zh": "泰国",
+    "cities": [
+      "曼谷"
+    ],
+    "acceptance_unit": "city",
+    "acceptance_target": "曼谷 CLOSED",
+    "purpose": "Catalog Build → per-POI Review → Live · JP/KR Golden Template 复制 · pilot done when 曼谷 CLOSED",
+    "forbidden": [
+      "bulk_ingest_th_all",
+      "skip_pilot_before_next_city",
+      "accept_by_poi_count"
+    ],
+    "template_countries": [
+      "JP",
+      "KR"
+    ],
+    "template_closure": [
+      "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+      "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+    ],
+    "status": "ACTIVE",
+    "catalog_build": true,
+    "matrix_ids": [
+      "PH-TH-073-ATR",
+      "PH-TH-074-ATR",
+      "PH-TH-075-ATR",
+      "PH-TH-076-ATR",
+      "PH-TH-077-ATR",
+      "PH-TH-078-FOOD",
+      "PH-TH-079-FOOD",
+      "PH-TH-080-FOOD",
+      "PH-TH-081-FOOD",
+      "PH-TH-082-FOOD"
+    ],
+    "poi_count": 10,
+    "by_city": [
+      {
+        "city_zh": "曼谷",
+        "acceptance_unit": "city",
+        "acceptance_target": "曼谷 CLOSED",
+        "poi_count": 10,
+        "matrix_ids": [
+          "PH-TH-073-ATR",
+          "PH-TH-074-ATR",
+          "PH-TH-075-ATR",
+          "PH-TH-076-ATR",
+          "PH-TH-077-ATR",
+          "PH-TH-078-FOOD",
+          "PH-TH-079-FOOD",
+          "PH-TH-080-FOOD",
+          "PH-TH-081-FOOD",
+          "PH-TH-082-FOOD"
+        ],
+        "pois": [
+          {
+            "legacy_value": "大皇宫",
+            "poi_type": "attraction",
+            "matrix_id": "PH-TH-073-ATR"
+          },
+          {
+            "legacy_value": "卧佛寺",
+            "poi_type": "attraction",
+            "matrix_id": "PH-TH-074-ATR"
+          },
+          {
+            "legacy_value": "郑王庙",
+            "poi_type": "attraction",
+            "matrix_id": "PH-TH-075-ATR"
+          },
+          {
+            "legacy_value": "考山路",
+            "poi_type": "attraction",
+            "matrix_id": "PH-TH-076-ATR"
+          },
+          {
+            "legacy_value": "水上市场",
+            "poi_type": "attraction",
+            "matrix_id": "PH-TH-077-ATR"
+          },
+          {
+            "legacy_value": "冬阴功",
+            "poi_type": "food",
+            "matrix_id": "PH-TH-078-FOOD"
+          },
+          {
+            "legacy_value": "泰式炒河粉",
+            "poi_type": "food",
+            "matrix_id": "PH-TH-079-FOOD"
+          },
+          {
+            "legacy_value": "芒果糯米饭",
+            "poi_type": "food",
+            "matrix_id": "PH-TH-080-FOOD"
+          },
+          {
+            "legacy_value": "青木瓜沙拉",
+            "poi_type": "food",
+            "matrix_id": "PH-TH-081-FOOD"
+          },
+          {
+            "legacy_value": "泰式奶茶",
+            "poi_type": "food",
+            "matrix_id": "PH-TH-082-FOOD"
+          }
+        ]
+      }
+    ],
+    "first_matrix_id": "PH-TH-073-ATR",
+    "first_poi": {
+      "city_zh": "曼谷",
+      "legacy_value": "大皇宫",
+      "matrix_id": "PH-TH-073-ATR"
+    },
+    "th_country_total": 28,
+    "th_cities": [
+      "曼谷",
+      "普吉",
+      "清迈"
+    ]
+  },
+  "bangkok_pilot": {
+    "city_zh": "曼谷",
+    "poi_count": 10,
+    "matrix_ids": [
+      "PH-TH-073-ATR",
+      "PH-TH-074-ATR",
+      "PH-TH-075-ATR",
+      "PH-TH-076-ATR",
+      "PH-TH-077-ATR",
+      "PH-TH-078-FOOD",
+      "PH-TH-079-FOOD",
+      "PH-TH-080-FOOD",
+      "PH-TH-081-FOOD",
+      "PH-TH-082-FOOD"
+    ],
+    "acceptance": "曼谷 CLOSED"
+  },
+  "catalog_probe": {
+    "http": 200,
+    "count": 0,
+    "catalog_empty": true
+  },
+  "workflow": [
+    "TH Scope Lock",
+    "Bangkok Catalog Build",
+    "Execution per POI",
+    "Content QA per POI",
+    "City Runtime Exit Check",
+    "TT_CMS_POI_CITY_BANGKOK_CONTENT_QA: CLOSED",
+    "… 普吉 → 清迈",
+    "TH Country Runtime",
+    "TT_CMS_TH_COUNTRY: CLOSED"
+  ],
+  "forbidden": [
+    "modify_jp_41_lock",
+    "modify_kr_31_lock",
+    "adjust_content_qa_standard",
+    "production_go"
+  ],
+  "production_go": "BLOCKED",
+  "TT_CMS_TH_POI_CATALOG_SCOPE_LOCK": "FROZEN",
+  "TT_CMS_TH_POI_DENOMINATOR_TOTAL": 28,
+  "TT_CMS_TH_POI_PILOT_CATALOG_BUILD": "Pilot · TH · 曼谷",
+  "TT_CMS_TH_POI_PILOT_ACCEPTANCE": "曼谷 CLOSED",
+  "TT_CMS_TH_POI_PILOT_POI_COUNT": 10,
+  "TT_CMS_TH_POI_NEXT_STAGE": "CATALOG_BUILD",
+  "thailand_status": "ACTIVE",
+  "korea_status": "CLOSED",
+  "japan_status": "CLOSED"
+}

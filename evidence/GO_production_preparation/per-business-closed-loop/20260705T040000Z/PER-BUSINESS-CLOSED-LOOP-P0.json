@@ -1,0 +1,457 @@
+{
+  "schema": "traveltrust.per_business_closed_loop_p0.v1",
+  "stamp_utc": "20260705T040000Z",
+  "phase": "Production Preparation · PER Item 1",
+  "environment": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev",
+    "phase_note": "② staging probe · not ③ Production GO"
+  },
+  "inventory_ref": "evidence/GO_content_ownership_inventory/CONTENT-OWNERSHIP-INVENTORY-LATEST.json",
+  "flow": [
+    "inventory",
+    "p0_pages",
+    "evidence",
+    "signoff"
+  ],
+  "p0_verification": [
+    {
+      "inventory_id": "home-hero-ocs",
+      "page_module": "Home Hero / Campaign Highlights",
+      "route": "/",
+      "owner": "OPS",
+      "inventory_current_status": "live",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/",
+      "business_action": "GET /api/v1/official/cold-start/surfaces/home_hero",
+      "expected_result": "200 · status=ok · campaign/surface resolved",
+      "actual_result": "http=200 status=ok items=2",
+      "blockers": [],
+      "loop_result": "PASS",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/official/cold-start/surfaces/home_hero"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "OPS",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "home-destination-ambient",
+      "page_module": "首页国家背景 · Destination Ambient",
+      "route": "/",
+      "owner": "CMS",
+      "inventory_current_status": "draft",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/",
+      "business_action": "User selects country · backdrop loads (catalog or ① fallback)",
+      "expected_result": "Page loads · catalog optional empty · fallback ambient acceptable ①",
+      "actual_result": "web_home=200 catalog_jp_items=0 inventory_status=draft",
+      "blockers": [
+        "CMS Wave1 not live · catalog landing_ambient empty (Expected Difference ①)"
+      ],
+      "loop_result": "PASS_EXPECTED_DIFFERENCE",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/catalog/media?asset_kind=landing_ambient&country_iso=JP",
+        "https://tt-web-staging.fly.dev/"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "CMS",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "home-itinerary-preview",
+      "page_module": "创新行程预览卡",
+      "route": "/",
+      "owner": "API",
+      "inventory_current_status": "live",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/",
+      "business_action": "Hero 创单 · POST /api/v1/itineraries",
+      "expected_result": "200 · itinerary_id · daily_itinerary[]",
+      "actual_result": "http=200 itinerary_id=de44fe6e-0e56-4a4c-a630-758db0fc38cd days=3",
+      "blockers": [],
+      "loop_result": "PASS",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/itineraries"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "API",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "home-featured-ocs",
+      "page_module": "Featured / 冷启动展示条",
+      "route": "/",
+      "owner": "OPS",
+      "inventory_current_status": "live",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/",
+      "business_action": "GET …/official/cold-start/surfaces/home_hero",
+      "expected_result": "200 · status=ok · campaign resolved",
+      "actual_result": "http=200 surface=home_hero",
+      "blockers": [],
+      "loop_result": "PASS",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/official/cold-start/surfaces/home_hero"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "OPS",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "market-main",
+      "page_module": "Market 主页面",
+      "route": "/market",
+      "owner": "API",
+      "inventory_current_status": "live",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/market",
+      "business_action": "Load market · discover orders + guides SSR/API",
+      "expected_result": "200 APIs · page 200 · list data for cards",
+      "actual_result": "web=200 orders=0 guides=5",
+      "blockers": [
+        "discover/orders empty on staging"
+      ],
+      "loop_result": "PASS_EXPECTED_DIFFERENCE",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/discover/orders",
+        "https://tt-api-staging.fly.dev/api/v1/guides",
+        "https://tt-web-staging.fly.dev/market"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "API",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "market-order-cover",
+      "page_module": "订单卡封面",
+      "route": "/market",
+      "owner": "API",
+      "inventory_current_status": "ops_maintenance",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/market",
+      "business_action": "Render order cards with cover image or fallback",
+      "expected_result": "discover items present · image field or fallback path",
+      "actual_result": "orders=0 with_image_field=0",
+      "blockers": [
+        "discover/orders empty — card loop cannot close on staging"
+      ],
+      "loop_result": "FAIL",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/discover/orders"
+      ],
+      "owner_sign_off": {
+        "status": "BLOCKED",
+        "owner": "API",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "market-guide-avatar",
+      "page_module": "向导卡头像",
+      "route": "/market",
+      "owner": "OCS",
+      "inventory_current_status": "frozen",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/market",
+      "business_action": "Guide cards load avatar_url (OCS-owned media)",
+      "expected_result": "guides[] with avatar_url · media HTTP 200",
+      "actual_result": "guides=10 avatars=10 sample_http=200",
+      "blockers": [],
+      "loop_result": "PASS",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/guides"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "OCS",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "market-ocs-feed",
+      "page_module": "Market Feed 冷启动",
+      "route": "/market",
+      "owner": "OPS",
+      "inventory_current_status": "live",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/market",
+      "business_action": "GET …/official/cold-start/surfaces/market_feed",
+      "expected_result": "200 · status=ok · campaign resolved",
+      "actual_result": "http=200 surface=market_feed",
+      "blockers": [],
+      "loop_result": "PASS",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/official/cold-start/surfaces/market_feed"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "OPS",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "community-main",
+      "page_module": "Community 主 Feed",
+      "route": "/community",
+      "owner": "API",
+      "inventory_current_status": "live",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/community",
+      "business_action": "GET /api/v1/community/feed",
+      "expected_result": "200 · posts[] non-empty",
+      "actual_result": "http=200 posts=10",
+      "blockers": [],
+      "loop_result": "PASS",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/community/feed",
+        "https://tt-web-staging.fly.dev/community"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "API",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "community-feed-ocs-promo",
+      "page_module": "Feed OCS 推广条",
+      "route": "/community",
+      "owner": "OPS",
+      "inventory_current_status": "live",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/community",
+      "business_action": "GET …/official/cold-start/surfaces/community_feed",
+      "expected_result": "200 · status=ok · campaign resolved",
+      "actual_result": "http=200 surface=community_feed",
+      "blockers": [],
+      "loop_result": "PASS",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/official/cold-start/surfaces/community_feed"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "OPS",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "community-explore",
+      "page_module": "Explore",
+      "route": "/community/explore",
+      "owner": "API",
+      "inventory_current_status": "ops_maintenance",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/community/explore",
+      "business_action": "GET …/community/explore/destinations",
+      "expected_result": "200 · destinations[] · page 200",
+      "actual_result": "web=200 destinations=10",
+      "blockers": [],
+      "loop_result": "PASS",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/community/explore/destinations"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "API",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "guides-list-avatar",
+      "page_module": "向导列表",
+      "route": "/guides",
+      "owner": "OCS",
+      "inventory_current_status": "frozen",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/guides",
+      "business_action": "GET /api/v1/guides · list page",
+      "expected_result": "200 · guides with OCS avatars · page 200",
+      "actual_result": "web=200 guides=10",
+      "blockers": [],
+      "loop_result": "PASS",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/guides",
+        "https://tt-web-staging.fly.dev/guides"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "OCS",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "dest-ambient-all-countries",
+      "page_module": "十国 Destination Ambient",
+      "route": "/ (country selection)",
+      "owner": "CMS",
+      "inventory_current_status": "draft",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/",
+      "business_action": "User selects country · backdrop loads (catalog or ① fallback)",
+      "expected_result": "Page loads · catalog optional empty · fallback ambient acceptable ①",
+      "actual_result": "web_home=200 catalog_jp_items=0 inventory_status=draft",
+      "blockers": [
+        "CMS Wave1 not live · catalog landing_ambient empty (Expected Difference ①)"
+      ],
+      "loop_result": "PASS_EXPECTED_DIFFERENCE",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/catalog/media?asset_kind=landing_ambient&country_iso=JP",
+        "https://tt-web-staging.fly.dev/"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "CMS",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "auth-login",
+      "page_module": "登录",
+      "route": "/auth/login",
+      "owner": "API",
+      "inventory_current_status": "frozen",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/auth/login",
+      "business_action": "POST /auth/login (C2) · page load",
+      "expected_result": "200 token · login page 200",
+      "actual_result": "web=200 token=issued",
+      "blockers": [],
+      "loop_result": "PASS",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/auth/login",
+        "https://tt-web-staging.fly.dev/auth/login"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "API",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "auth-register",
+      "page_module": "注册",
+      "route": "/auth/register",
+      "owner": "API",
+      "inventory_current_status": "frozen",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/auth/register",
+      "business_action": "Register page load · API health (no duplicate account create)",
+      "expected_result": "register page 200 · API up",
+      "actual_result": "web=200 api_health=200",
+      "blockers": [],
+      "loop_result": "PASS",
+      "evidence_refs": [
+        "https://tt-web-staging.fly.dev/auth/register",
+        "https://tt-api-staging.fly.dev/health"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "API",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "escrow-order",
+      "page_module": "Escrow 订单页",
+      "route": "/escrow/[id]",
+      "owner": "API",
+      "inventory_current_status": "ops_maintenance",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/escrow/2e3e41d7-730d-4227-b109-1b8899c170b9",
+      "business_action": "GET /api/v1/orders/:id after create · escrow page",
+      "expected_result": "200 order JSON · escrow page 200",
+      "actual_result": "get=200 state=draft web=200",
+      "blockers": [],
+      "loop_result": "PASS",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/api/v1/orders/2e3e41d7-730d-4227-b109-1b8899c170b9",
+        "https://tt-web-staging.fly.dev/escrow/2e3e41d7-730d-4227-b109-1b8899c170b9"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "API",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    },
+    {
+      "inventory_id": "provider-register",
+      "page_module": "商家入驻",
+      "route": "/provider/register",
+      "owner": "API",
+      "inventory_current_status": "frozen",
+      "business_criticality": "P0",
+      "entry": "https://tt-web-staging.fly.dev/provider/register",
+      "business_action": "C4 login · provider register page load",
+      "expected_result": "merchant auth · register page 200",
+      "actual_result": "web=200 merchant_token=yes",
+      "blockers": [],
+      "loop_result": "PASS",
+      "evidence_refs": [
+        "https://tt-api-staging.fly.dev/auth/login",
+        "https://tt-web-staging.fly.dev/provider/register"
+      ],
+      "owner_sign_off": {
+        "status": "PENDING_OWNER",
+        "owner": "API",
+        "note": "Solo maintainer attestation slot · Production Entry Review P0-1"
+      }
+    }
+  ],
+  "p1_deferred": {
+    "note": "P0-1 scope completes P0 entry list first; P1 verified after P0 PASS",
+    "page_ids": [
+      "market-provider-listing",
+      "market-acquisition-listing",
+      "itinerary-new",
+      "guide-detail",
+      "official-guide-community",
+      "guide-workbench",
+      "dest-catalog-countries",
+      "dest-poi-images",
+      "hotel-transport-stock",
+      "admin-public-ops",
+      "admin-ocs-cold-start",
+      "admin-cms-hub",
+      "admin-community-mod"
+    ],
+    "status": "NOT_RUN"
+  },
+  "p2_deferred": {
+    "note": "P2 after P1",
+    "page_ids": [
+      "traveltrust-page",
+      "traveltrust-video",
+      "traveltrust-announcements",
+      "did-rank-boards",
+      "did-rank-trust"
+    ],
+    "status": "NOT_RUN"
+  },
+  "summary": {
+    "p0_total": 17,
+    "pass": 13,
+    "pass_expected_difference": 3,
+    "fail": 1,
+    "blocking_items": [
+      "discover/orders empty — card loop cannot close on staging"
+    ]
+  },
+  "owner_sign_off": {
+    "status": "BLOCKED",
+    "attestation": "Sebastian Ward · Solo maintainer · PER P0-1 Business Closed Loop evidence pack",
+    "signed_at_utc": null
+  },
+  "TT_PER_BUSINESS_CLOSED_LOOP": "FAIL",
+  "honest_boundary": "PASS = staging business loops for Inventory P0 · ≠ Production GO · ≠ PER complete"
+}

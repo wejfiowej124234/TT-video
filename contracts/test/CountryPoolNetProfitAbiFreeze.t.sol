@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import "forge-std/Test.sol";
 import "../src/CountryPoolNetProfitLedger.sol";
 import "../src/StewardPathVault.sol";
-import "../src/UnallocatedStewardPathVault.sol";
+import "../src/vacancy/UnallocatedStewardPathVault.sol";
 import "../src/CountryPoolNetProfitGovernancePayload.sol";
 
 /// G23-04 · ABI / event / selector freeze regression (reads manifest topic0 table).
@@ -35,7 +35,9 @@ contract CountryPoolNetProfitAbiFreezeTest is Test {
         assertEq(CountryPoolNetProfitLedger.splitNetProfit.selector, bytes4(0xc90d5363));
         assertEq(CountryPoolNetProfitLedger.setActiveStewardConfig.selector, bytes4(0x4c6043ec));
         assertEq(StewardPathVault.depositFromLedger.selector, bytes4(0x4fe38819));
-        assertEq(UnallocatedStewardPathVault.releaseToStewardPath.selector, bytes4(0x7fc399a2));
+        assertEq(UnallocatedStewardPathVault.releaseToStewardPath.selector, bytes4(0xdfa1aad4));
+        assertEq(UnallocatedStewardPathVault.disburseJurisdictionReserve.selector, bytes4(0x0e5d6614));
+        assertEq(UnallocatedStewardPathVault.setDisburseRecipientAllowed.selector, bytes4(0xf2522a68));
     }
 
     function test_T_ABI_02_GovernancePayloadSelectorParity() public pure {
@@ -66,6 +68,14 @@ contract CountryPoolNetProfitAbiFreezeTest is Test {
         assertEq(
             CountryPoolNetProfitGovernancePayload.CPNP_RELEASE_UNALLOCATED,
             UnallocatedStewardPathVault.releaseToStewardPath.selector
+        );
+        assertEq(
+            CountryPoolNetProfitGovernancePayload.CPNP_DISBURSE_JURISDICTION_RESERVE,
+            UnallocatedStewardPathVault.disburseJurisdictionReserve.selector
+        );
+        assertEq(
+            CountryPoolNetProfitGovernancePayload.CPNP_SET_DISBURSE_RECIPIENT,
+            UnallocatedStewardPathVault.setDisburseRecipientAllowed.selector
         );
     }
 

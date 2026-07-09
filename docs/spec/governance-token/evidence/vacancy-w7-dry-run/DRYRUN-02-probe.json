@@ -1,0 +1,1 @@
+{"dryRunId":"W7-DryRun-02","result":"PASS","mode":"LIVE_CAPABLE","newAddresses":{"unallocated":"0x367571A4bb72DE563F7fc7E9e785eA2E9DE8488c","ledger":"0xc0Da7c66C39C154a11F307e10070E44DEFeec1ED"},"probes":{"vacancyLedger":"PASS","sweepEnabled":"PASS","vacancyState":"PASS","stewardActivationEpochId":"PASS"},"legacyControl":{"qf01VacancyLedger":"REVERT","qf01VacancyState":"REVERT"}}

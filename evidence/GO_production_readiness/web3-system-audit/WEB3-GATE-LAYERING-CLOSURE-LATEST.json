@@ -1,0 +1,52 @@
+{
+  "schema": "traveltrust.web3_gate_layering_closure.v1",
+  "recorded_utc": "2026-07-08T08:17:07.866Z",
+  "verdict": "WEB3_GATE_LAYERING_CLOSURE_PASS",
+  "step_1_governance": {
+    "status": "CLOSED",
+    "artifacts": [
+      "registry/web3-gate-layering.v1.yaml",
+      "registry/web3-system-production-gate.v1.yaml",
+      "docs/runbook/WEB3-GATE-LAYERING.md",
+      "registry/production-readiness-master-matrix.v1.yaml",
+      "registry/production-go-four-gate-framework.v1.yaml"
+    ],
+    "machine_keys": {
+      "TT_WEB3_PAYMENT_PRODUCTION_READY": "WEB3_PAYMENT_PRODUCTION_PASS",
+      "TT_WEB3_SYSTEM_PRODUCTION_READY": "WEB3_SYSTEM_PRODUCTION_IN_PROGRESS",
+      "TT_PRODUCTION_WEB3_READY": "IN_PROGRESS"
+    }
+  },
+  "steps_open": [
+    {
+      "step": 2,
+      "title": "Prod runtime wiring 10/10 meta",
+      "runbook": "docs/runbook/WEB3-SYSTEM-PRODUCTION-RUNTIME-WIRING.md"
+    },
+    {
+      "step": 3,
+      "title": "G24 registry restored",
+      "status": "CLOSED",
+      "evidence": "evidence/GO_local_gov_freeze_v1_onchain/g24-p-upgrade-01/"
+    },
+    {
+      "step": 4,
+      "title": "TTG Cert 6/12 signoffs indexed",
+      "status": "PARTIAL"
+    },
+    {
+      "step": 5,
+      "title": "RBAC D3 partial closure manifest",
+      "status": "PARTIAL",
+      "evidence": "RBAC-D3-CLOSURE-LATEST.json"
+    },
+    {
+      "step": 6,
+      "title": "WEB3-SYSTEM-CLOSURE",
+      "status": "BLOCKED"
+    }
+  ],
+  "discipline": {
+    "business_code_modified": false
+  }
+}

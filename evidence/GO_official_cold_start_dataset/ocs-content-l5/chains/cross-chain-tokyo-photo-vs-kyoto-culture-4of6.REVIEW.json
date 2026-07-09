@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T125030Z",
+  "chains_compared": ["tokyo-photo", "kyoto-culture"],
+  "kyoto_slots_reviewed": 4,
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "official_guide_slot": {
+    "tokyo": "浅草五重塔+隅田川+晴空塔河景",
+    "kyoto": "岚山竹林隧道宽幅",
+    "distinct": true
+  },
+  "homogenization_risk": false
+}

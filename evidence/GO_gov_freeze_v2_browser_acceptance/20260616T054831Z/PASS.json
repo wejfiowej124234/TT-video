@@ -1,0 +1,10 @@
+{
+  "audit_id": "G24-BROWSER-ACCEPT-01",
+  "stamp_utc": "20260616T054831Z",
+  "baseline": "GOV-FREEZE-V2-CLEAN-BASELINE",
+  "ssot": "TTG-TOKENOMICS-FREEZE-V1",
+  "verdict": "PASS_MACHINE",
+  "human_signoff_required": true,
+  "checklist": "/d/TravelTrust-V1.1/evidence/GO_gov_freeze_v2_browser_acceptance/20260616T054831Z/HUMAN-PAGE-ACCEPTANCE-CHECKLIST.md",
+  "next": "HAT-R1 Phase A after human ☐ → bash scripts/dev/run-hat-r1-sepolia-live-wallet.sh --phase a"
+}

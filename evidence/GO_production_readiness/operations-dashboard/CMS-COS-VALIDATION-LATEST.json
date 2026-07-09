@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.phase2_cms_cos_validation.v1",
+  "recorded_utc": "2026-07-08T14:05:32.846Z",
+  "phase": "②-C",
+  "verdict": "PHASE2_CMS_COS_VALIDATION_PASS",
+  "display_data_governance": "PASS",
+  "full_site_audit": "PASS",
+  "ocs_g6": "PASS"
+}

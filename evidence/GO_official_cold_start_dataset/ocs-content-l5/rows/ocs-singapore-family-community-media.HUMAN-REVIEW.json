@@ -1,0 +1,55 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T144030Z",
+  "filename": "ocs-singapore-family-community-media.jpg",
+  "chain_id": "singapore-family",
+  "city": "新加坡",
+  "country_code": "SG",
+  "slot": "community-media",
+  "surface": "Community Media",
+  "copy_label": "滨海湾到圣淘沙的亲子周末——官方路线含午休与室内备选实测。",
+  "manifest_copy": {
+    "community_post.destination_slug": "singapore",
+    "community_post.destination_label": "新加坡",
+    "community_post.tags": ["新加坡", "亲子", "官方旅行日志"],
+    "community_post.body_markdown": "滨海湾到圣淘沙的亲子周末——官方路线含午休与室内备选实测。",
+    "community_post.media_urls": ["/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg"]
+  },
+  "cover_media_complementarity": {
+    "pass": true,
+    "row29_cover": "儿童开心近景 · Feed 情绪吸引",
+    "row30_media": "圣淘沙海滩环境广角 · 下午柔光 · 详情叙事",
+    "no_duplicate_composition": true,
+    "no_duplicate_subject": true,
+    "feed_detail_pair": true
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 125577 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "圣淘沙海滩环境支撑 body 滨海湾到圣淘沙亲子周末叙事。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "环境纪实广角；非 Row29 Cover/非 Row25-28。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "新加坡 SG-only · 圣淘沙语义。" },
+    "G5_brand_visual": { "pass": true, "notes": "下午柔光热带纪实；chain 统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "Community 详情主图真实可信。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光自然。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "Chain Final + Global Regression 30/60。" },
+    "G9_content_authenticity": { "pass": true, "notes": "圣淘沙海滩语义正确；无他国元素。" },
+    "G10_content_diversity": { "pass": true, "notes": "完成 singapore 6/6 场景覆盖。" }
+  },
+  "destination_experience_review": {
+    "pass": true,
+    "notes": "海滩环境传递「滨海湾到圣淘沙周末」详情叙事；与 Feed 儿童近景互补。"
+  },
+  "community_authenticity_review": {
+    "pass": true,
+    "authentic_share_feel": true,
+    "environment_narrative": true,
+    "ugc_style_not_commercial_poster": true
+  },
+  "surface_boundary_review": { "pass": true },
+  "visual_sequence_review": {
+    "pass": true,
+    "vs_row29": "环境广角 vs 儿童近景 — 无连续相似"
+  },
+  "regression_prior_29_rows": { "pass": true },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

@@ -1,0 +1,20 @@
+{
+  "kind": "traveltrust.l5_enterprise_business_governance_execution.v1",
+  "recorded_utc": "20260608T033826Z",
+  "verdict": "L5_ENTERPRISE_BUSINESS_GOVERNANCE_GO",
+  "audit_matrix_verdict": "L5_ENTERPRISE_BUSINESS_GOVERNANCE_GO",
+  "business_governance_score": 95,
+  "target_score": 85,
+  "track_targets": [
+    "BUSINESS_RULES_GO",
+    "TOKENOMICS_GO",
+    "ECONOMIC_ATTACK_GO",
+    "GOVERNANCE_GO",
+    "INVESTOR_READY_GO"
+  ],
+  "baseline_refs": [
+    "164",
+    "133",
+    "124"
+  ]
+}

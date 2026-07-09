@@ -130,7 +130,8 @@ cmp_addr_field "ESCROW_FACTORY_ADDRESS" "escrow_factory_address"
 cmp_addr_field "REGION_STEWARD_STAKE_POOL_ADDRESS" "region_steward_stake_pool_address"
 cmp_addr_field "GOVERNOR_ADDRESS" "governor_address"
 cmp_addr_field "GOVERNANCE_TIMELOCK_ADDRESS" "timelock_address" "TIMELOCK_ADDRESS"
-cmp_addr_field "TREASURY_ADDRESS" "treasury_address" "REGION_VAULT_ADDRESS"
+cmp_addr_field "GOVERNANCE_TREASURY_P4CAP_ADDRESS" "treasury_address" "TREASURY_P4_CAP_ADDRESS"
+cmp_addr_field "LEGACY_TREASURY_ADDRESS" "legacy_treasury_address"
 cmp_chain_id
 
 rm -f "$META_BODY"

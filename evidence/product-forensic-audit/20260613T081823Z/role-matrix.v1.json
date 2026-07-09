@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.product_forensic_role_matrix.v1",
+  "roles": [
+    "Traveler",
+    "Guide",
+    "Merchant",
+    "Acquisition",
+    "Steward",
+    "Admin"
+  ],
+  "account_nav_routes": 31,
+  "pf": "PF-07"
+}

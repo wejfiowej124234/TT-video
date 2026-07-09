@@ -1,0 +1,172 @@
+{
+  "schema": "traveltrust.governance_freeze_manifest.v1",
+  "recorded_utc": "2026-07-08T14:34:21.512Z",
+  "stamp": "2026-07-08T14-34-21",
+  "run_dir": "evidence/GO_production_readiness/governance-freeze/freeze-2026-07-08T14-34-21",
+  "verdict": "GOVERNANCE_FREEZE_ACTIVE",
+  "machine_key": "TT_GOVERNANCE_FREEZE",
+  "scope": "governance_layer_structure_only",
+  "model": "structure_frozen_state_continues",
+  "definition_en": "Governance Freeze freezes release governance structure, schemas, templates, and process definitions. It does not freeze runtime state, evidence updates, certification progress, or deployment execution.",
+  "structure_frozen": [
+    "release_runbooks_and_process_definitions",
+    "registry_schema_and_machine_key_naming",
+    "production_readiness_book_layout",
+    "gate_definitions_and_review_categories",
+    "evidence_directory_tree",
+    "prep_package_template_structure"
+  ],
+  "state_continues": [
+    "bug_fixes_during_cert_or_validation",
+    "cert_execution_and_results",
+    "dashboard_status_values",
+    "evidence_content_and_latest_pointers",
+    "readiness_book_status_refresh",
+    "web3_freeze_and_mainnet_package_generation",
+    "owner_signoff_shadow_launch_wave_deployment"
+  ],
+  "update_types": {
+    "structure_update": {
+      "post_governance_freeze": "FORBIDDEN"
+    },
+    "state_update": {
+      "post_governance_freeze": "ALLOWED"
+    },
+    "execution": {
+      "post_governance_freeze": "ALLOWED"
+    }
+  },
+  "principle_1": {
+    "id": "PG-P1",
+    "title": "Structure Frozen · State Continues",
+    "ssot": "registry/production-governance-principles.v1.yaml"
+  },
+  "governance_version": {
+    "id": "production_release_governance_v1",
+    "label": "Production Release Governance v1",
+    "status": "FROZEN",
+    "lifecycle": "COMPLETE",
+    "mode": "OPERATE",
+    "compatibility": "PATCH_ONLY",
+    "governance_root": "registry/production-governance-principles.v1.yaml"
+  },
+  "git_head": "4706266acf8ec8a92e5eb01b8d83257013cbd30a",
+  "phase_transition": {
+    "from": "build_release_governance_system",
+    "to": "execute_release_system_per_frozen_process",
+    "substantive_blocker": "PHASE2_EXIT_REVIEW_PASS via Cert #8–#12"
+  },
+  "frozen_scope_summary": [
+    "Four-Gate Framework",
+    "Production Readiness Book structure",
+    "Executive Summary",
+    "Deployment Readiness Matrix",
+    "Owner Checklist",
+    "PREP Package structure (8 components)",
+    "Registry field naming (listed registries)",
+    "Evidence directory structure (GO_production_readiness)"
+  ],
+  "file_anchors": {
+    "registry/governance-freeze.v1.yaml": {
+      "sha256": "5dc73494a02e0fd55cacebc4a91921c8d0e00de053fb2ac697421db66b4f87b1",
+      "present": true
+    },
+    "registry/production-governance-principles.v1.yaml": {
+      "sha256": "9d85a0a1548554f32d44318d0ad3984ff36a0475011422fdaceefabcdb8b523e",
+      "present": true
+    },
+    "registry/production-go-four-gate-framework.v1.yaml": {
+      "sha256": "b8a6e3710f5757917401aa5a14b1aa6d6b8d105f2ea2d36bd2503498ca6eedae",
+      "present": true
+    },
+    "registry/phase3-deployment-prerequisite-review.v1.yaml": {
+      "sha256": "7414f9dc4ae0c4f7c2cfd5b94bde48469402036fc3b34ccbac15b2d8e801c9e9",
+      "present": true
+    },
+    "registry/mainnet-deployment-package.v1.yaml": {
+      "sha256": "bc83979b30216365616f9dae59f53732062fc38b8550cd170fd3d3527b16c7e2",
+      "present": true
+    },
+    "registry/web3-three-phase-closure-discipline.v1.yaml": {
+      "sha256": "91523d609b821dbb7057692d1cc464eb3015b6246b15600c7139603c70c78f8b",
+      "present": true
+    },
+    "registry/phase2-staging-sepolia-production-validation.v1.yaml": {
+      "sha256": "63e347830986b2e90a43c2a6e1ec365c72edd48296fbd82125fbcfcfb3769482",
+      "present": true
+    },
+    "scripts/dev/gen-production-readiness-book.cjs": {
+      "sha256": "656537ade24eef1104898c3814838205a10672a833d60b97fbff5a5e5c3c2f82",
+      "present": true
+    },
+    "scripts/dev/lib/mainnet-deployment-readiness-rollups.cjs": {
+      "sha256": "fea88cf32c1dd66d053b46c3efcba5f0e38a75b5eaf2fdfedf0b0a1f7b125db7",
+      "present": true
+    },
+    "scripts/dev/prepare-mainnet-deployment-package-prep.cjs": {
+      "sha256": "1d99f7f36e9856731daa2a8257ce209ef4bb52af52225ab669d7a96c412f7bd7",
+      "present": true
+    },
+    "scripts/dev/generate-mainnet-deployment-package.cjs": {
+      "sha256": "29fede4b4842f9d14da23e614692443de0ef596030a3bba0ee0c8f4e517a4734",
+      "present": true
+    },
+    "scripts/dev/refresh-governance-status.cjs": {
+      "sha256": "f83e34135e6649cd859a6c83d58386e37f3c062b2b8aa23e703f0477e2bc8f41",
+      "present": true
+    },
+    "docs/runbook/GOVERNANCE-FREEZE-V1.md": {
+      "sha256": "3abfa0aa38e82397681402e583b912728c061aa59a364bedc3142fa31d5b16b7",
+      "present": true
+    },
+    "docs/runbook/PRODUCTION-GOVERNANCE-PRINCIPLES-V1.md": {
+      "sha256": "d4bdeb3859bb74431aedd8addac09db42ebd05292c2f6b95069004b4ca375e71",
+      "present": true
+    },
+    "docs/runbook/PRODUCTION-GO-FOUR-GATE-FRAMEWORK.md": {
+      "sha256": "a9a637dc46c90b346acd8dc22baedfd4c96bc5fbfebe05bb3a80047afb837ce8",
+      "present": true
+    },
+    "docs/runbook/MAINNET-DEPLOYMENT-PACKAGE-V1.md": {
+      "sha256": "1b0c7f5d07fefd294add72e08e8aee79b8f0a319e3551342fe6e6548eca62aa4",
+      "present": true
+    }
+  },
+  "prep_template_anchors": {
+    "docs/runbook/templates/mainnet-package/emergency-recovery/EMERGENCY-RECOVERY-PREP-V1.md": "c19d72cc01d85f5a8bbf2500d218198b7df5d5448e582680fc845637e1c6173a",
+    "docs/runbook/templates/mainnet-package/env/mainnet.env.template": "1f15b7f206d907dba6e976d2ef7047811799c57283294a45ab7c23a159fe5b54",
+    "docs/runbook/templates/mainnet-package/owner-signoff/OWNER-SIGNOFF-PACKAGE.md": "3cb5711c180ae1dc969339c75e114ec0e6ea9a7d3b1b0c7f44f56d310793c3f4",
+    "docs/runbook/templates/mainnet-package/rollback/MAINNET-ROLLBACK-PREP-V1.md": "67957c7e40213743faad58ffb9d3a9e4acf8e8913d91cb6ca6f9751df7a6400c",
+    "docs/runbook/templates/mainnet-package/runbook/MAINNET-DEPLOYMENT-EXECUTION-V1.md": "9fff7eff73fe5d2350a2a87c00a036f26a127723949da9dc7576ce6df66ffde7",
+    "docs/runbook/templates/mainnet-package/verify/CONTRACT-VERIFY-PACKAGE.md": "a617a8a8a637d797ef6cfc85e73276bf7f94fb622f749c74881f495569dc51bd",
+    "docs/runbook/templates/mainnet-package/verify/EXPLORER-VERIFY-PACKAGE.md": "6c190559af03fe17056586773360fc1f689c822c43cb0e2f7e1d0720f0a1bef6",
+    "docs/runbook/templates/mainnet-package/wave-1-escrow-factory/ESCROW-FACTORY-WAVE1-MAINNET-PREP.md": "51c614c9d0bc3fb87234a3fae2c052b45cda0d5ca85b630c8e2e6ee64df30a93"
+  },
+  "evidence_layout": {
+    "book": "evidence/GO_production_readiness/production-readiness-book/",
+    "prerequisite": "evidence/GO_production_readiness/phase3-deployment-prerequisite-review/",
+    "mainnet_prep": "evidence/GO_production_readiness/mainnet-deployment-package/",
+    "governance_freeze": "evidence/GO_production_readiness/governance-freeze/"
+  },
+  "timelock_period_allowed": [
+    "Wait for Timelock expiry",
+    "node scripts/dev/refresh-governance-status.cjs",
+    "Cert #8–#12 execution",
+    "Evidence LATEST updates from cert / validation"
+  ],
+  "timelock_period_forbidden": [
+    "New governance docs or PREP templates",
+    "Book / Matrix / Checklist structural changes",
+    "New Review categories or Gate frameworks",
+    "Registry machine_key renames"
+  ],
+  "unfreeze_exceptions": [
+    "CERT_STATE_REFRESH",
+    "MAINNET_DRILL_DEFECT",
+    "AUDIT_MANDATORY",
+    "INCIDENT_RETROSPECTIVE"
+  ],
+  "status_refresh_only": "scripts/dev/refresh-governance-status.cjs",
+  "registry_ssot": "registry/governance-freeze.v1.yaml",
+  "runbook": "docs/runbook/GOVERNANCE-FREEZE-V1.md"
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.execution_queue.v1",
+  "NOW": [
+    {
+      "id": "MA-SEED-001",
+      "layer": "L6_UPGRADE_GATES",
+      "dim": "MA-04",
+      "severity": "P1",
+      "verdict": "KEEP",
+      "title": "U12 row count vs MASTER bundles",
+      "execution_queue": "NOW",
+      "rationale": "MASTER chains 6 domain gates — align U12-12 narrative"
+    },
+    {
+      "id": "MA-SEED-003",
+      "layer": "L1_FOUNDATION",
+      "dim": "MA-03",
+      "severity": "P0",
+      "verdict": "KEEP",
+      "title": "P0 weight in §2 dimension table",
+      "execution_queue": "NOW",
+      "rationale": "P0 drives U12-3 and MASTER NO-GO"
+    }
+  ],
+  "NEXT": [
+    {
+      "id": "MA-SEED-002",
+      "layer": "L4_PLATFORM_GOVERNANCE",
+      "dim": "MA-17",
+      "severity": "P1",
+      "verdict": "MERGE",
+      "title": "ADMIN overlap PGX vs AG",
+      "execution_queue": "NEXT",
+      "rationale": "§25 PGX-ADMIN vs §28 AG — reader dedup in Layer map"
+    }
+  ],
+  "LATER": []
+}

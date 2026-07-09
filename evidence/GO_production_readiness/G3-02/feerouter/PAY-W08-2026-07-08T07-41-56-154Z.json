@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W08",
+  "recorded_utc": "2026-07-08T07:41:56.155Z",
+  "run_id": "2026-07-08T07-41-56-154Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PARTIAL",
+  "summary": {
+    "verdict": "PARTIAL",
+    "detail": "FeeRouter received platform fee on release (distribute via Timelock owner — not executed)"
+  },
+  "detail": "FeeRouter received platform fee on release (distribute via Timelock owner — not executed)",
+  "fee_router_address": "0x81A8009210c5215100564c6E4123F672c4459306",
+  "fee_router_token_balance": "0",
+  "distribute_skipped": true,
+  "reason": "FeeRouter.owner is Timelock; release Transfer Escrow→FeeRouter verified on-chain"
+}

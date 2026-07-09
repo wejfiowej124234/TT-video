@@ -1,0 +1,15 @@
+{
+  "chain": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa",
+  "api_ledger_env": "0x63bd7d5ee5c5dde707e5e65303f3876267c78e97",
+  "global_treasury": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+  "govfreeze_v2_timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+  "global_treasury_timelock_match": false,
+  "page_bps_ok": true,
+  "split_observed": false,
+  "blockers": [
+    "API COUNTRY_POOL_LEDGER_ADDRESS != NET_PROFIT ledger",
+    "no SPLIT_COMPLETED epoch on Sepolia DE pilot (split pipeline not exercised)",
+    "ledger globalTreasury 0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f != GovFreeze V2 TIMELOCK 0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+  ],
+  "verdict": "FAIL"
+}

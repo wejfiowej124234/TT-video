@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.d24_surface_staging_manifest.v1",
+  "surfaces": [
+    {
+      "id": "O-P02",
+      "role": "moderator",
+      "route": "/admin/community",
+      "action": "community_moderation",
+      "status": "PASS",
+      "exception_path_verified": true,
+      "human_uat": "PASS",
+      "notes": [
+        "reports_inbox_shell",
+        "route=/admin/community/reports"
+      ]
+    },
+    {
+      "id": "O-P03",
+      "role": "moderator",
+      "route": "/admin/community",
+      "action": "suspend_action",
+      "status": "PASS",
+      "exception_path_verified": true,
+      "human_uat": "PASS",
+      "notes": [
+        "exception_path_empty_inbox_no_rows",
+        "moderation_wizard_controls_present_in_dom"
+      ]
+    }
+  ],
+  "grep_anchor": "TT_TN_P1_D24_SURFACE_EVIDENCE: PASS",
+  "surface_ids": [
+    "O-P02",
+    "O-P03"
+  ]
+}

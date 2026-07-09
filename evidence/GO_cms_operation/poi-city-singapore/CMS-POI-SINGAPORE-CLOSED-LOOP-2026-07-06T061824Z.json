@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T06:18:24Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "SG",
+    "city_zh": "新加坡",
+    "city_en": "Singapore",
+    "matrix_ids": [
+      "PH-SG-103-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-SG-103-ATR",
+      "legacy_value": "牛车水",
+      "poi_id": "d0177393-e329-4981-bdb5-e32bc6aefab9",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-cover.jpg",
+      "hero_file": "ocs-singapore-family-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-SG-103-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

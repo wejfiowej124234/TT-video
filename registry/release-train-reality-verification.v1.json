@@ -13,6 +13,9 @@
     "Evidence Integrity Audit",
     "Formal Acceptance",
     "Gate PASS",
+    "G2 Retrospective",
+    "Master Reality Audit",
+    "G3 Production Domains",
     "Production GO"
   ],
   "release_train_fixed": {
@@ -29,12 +32,21 @@
       "Evidence Integrity Audit",
       "Formal Acceptance",
       "Gate PASS",
-      "Production GO"
+      "G2 Retrospective",
+      "Master Reality Audit",
+      "G3 Production Domains",
+      "G3 Gate PASS",
+      "Production GO Decision Package",
+      "Production Retrospective"
     ],
     "distinctions": {
       "reality_verification_complete": "Sets TT_G2_REALITY_VERIFICATION COMPLETE · TT_WAVE2_FORMAL_ACCEPTANCE READY",
       "formal_acceptance_complete": "Sets TT_WAVE2_FORMAL_ACCEPTANCE COMPLETE · enables G2 Gate validate",
-      "g2_gate_pass": "Only after Formal Acceptance · validate-production-readiness-g2-gate.cjs exit 0"
+      "g2_gate_pass": "Only after Formal Acceptance · validate-production-readiness-g2-gate.cjs exit 0",
+      "g2_retrospective_complete": "Sets TT_G2_RETROSPECTIVE COMPLETE · immutable G2 baseline before G3",
+      "g3_production_domains_only": "All G3 work in G3-01..G3-06 · registry/g3-production-domains.v1.json · no platform/architecture work",
+      "production_go_sole_authority": "TT_PRODUCTION_GO GO only via Production GO Decision Package · validate-production-go-decision-package.cjs",
+      "production_retrospective_complete": "Sets TT_PRODUCTION_RETROSPECTIVE COMPLETE · immutable V1 launch baseline after GO"
     }
   },
   "evidence_integrity_audit": {
@@ -45,6 +57,59 @@
     "position": "after_reality_verification_before_formal",
     "blocks_formal_when_fail": true
   },
+  "g2_retrospective": {
+    "machine_key": "TT_G2_RETROSPECTIVE",
+    "script": "bash scripts/dev/run-g2-retrospective.sh",
+    "validator": "node scripts/dev/validate-g2-retrospective.cjs",
+    "runbook": "docs/runbook/G2-RETROSPECTIVE.md",
+    "position": "after_g2_gate_pass_before_g3",
+    "blocks_g3_when_incomplete": true
+  },
+  "master_reality_audit": {
+    "machine_key": "TT_PRODUCTION_READINESS_MASTER_REALITY_AUDIT",
+    "script": "bash scripts/dev/run-production-readiness-master-reality-audit.sh",
+    "validator": "node scripts/dev/validate-production-readiness-master-reality-audit.cjs",
+    "runbook": "docs/runbook/TT-PRODUCTION-READINESS-MASTER-REALITY-AUDIT.md",
+    "position": "after_g2_retrospective_before_g3_01",
+    "blocks_g3_when_fail": true,
+    "output_verdicts": ["VERIFIED", "PLANNED"],
+    "g3_entry_rule": "audit CLOSED and all G3-01..G3-06 status PLANNED"
+  },
+  "g3_production_domains": {
+    "registry": "registry/g3-production-domains.v1.json",
+    "runbook": "docs/runbook/G3-PRODUCTION-DOMAINS.md",
+    "frozen_topics": ["platform", "architecture", "builder", "registry", "guard", "runtime_identity", "pcp"],
+    "admission_question": "Does this directly affect Production GO?",
+    "domains": ["G3-01", "G3-02", "G3-03", "G3-04", "G3-05", "G3-06"],
+    "domain_status_machine": ["PLANNED", "IMPLEMENTING", "VERIFIED", "CLOSED"],
+    "per_domain_steps": ["implementation", "reality_verification", "evidence_integrity", "formal_acceptance", "VERIFIED", "matrix_closed"],
+    "evidence_layout": {
+      "root": "evidence/GO_production_readiness/{domain_id}/",
+      "subdirs": ["implementation", "verification", "evidence", "formal"],
+      "signoff": "signoff.json"
+    },
+    "active_domain": "G3-01",
+    "verified_evidence_environment": "production_only",
+    "forbidden": ["local_or_staging_evidence_as_production_verified"],
+    "verification_reuse": ["TT_G3_REALITY_VERIFICATION", "TT_EVIDENCE_INTEGRITY_AUDIT", "TT_WAVE3_FORMAL_ACCEPTANCE"]
+  },
+  "production_go_decision_package": {
+    "template": "registry/production-go-decision-package.v1.template.json",
+    "runbook": "docs/runbook/TT-PRODUCTION-GO-DECISION-PACKAGE.md",
+    "validator": "node scripts/dev/validate-production-go-decision-package.cjs",
+    "sole_authority_for": "TT_PRODUCTION_GO",
+    "required_gates": ["TT_PRODUCTION_READINESS_G1_GATE", "TT_PRODUCTION_READINESS_G2_GATE", "TT_PRODUCTION_READINESS_G3_GATE"],
+    "domain": "G3-06"
+  },
+  "production_retrospective": {
+    "machine_key": "TT_PRODUCTION_RETROSPECTIVE",
+    "script": "bash scripts/dev/run-production-retrospective.sh",
+    "validator": "node scripts/dev/validate-production-retrospective.cjs",
+    "runbook": "docs/runbook/PRODUCTION-RETROSPECTIVE.md",
+    "position": "after_production_go_before_v2_development",
+    "requires": ["TT_PRODUCTION_GO: GO", "TT_PRODUCTION_READINESS_G3_GATE: PASS"]
+  },
+  "platform_coverage_audit": {
     "script": "bash scripts/dev/run-platform-coverage-audit.sh",
     "gate_validator": "node scripts/dev/validate-platform-coverage-gate.cjs",
     "registry": "registry/platform-capability-registry.v1.json",
@@ -123,7 +188,7 @@
     "TT_PRODUCTION_RUNTIME_IDENTITY != PASS (when required)",
     "TT_CONFIGURATION_TRUTH != PASS (when required)",
     "TT_G2_REALITY_VERIFICATION != COMPLETE (when required)",
-    "TT_EVIDENCE_INTEGRITY_AUDIT != PASS (pre-Formal)",
+    "TT_EVIDENCE_INTEGRITY_AUDIT != PASS (pre-Formal)"
   ],
   "next_phase_goal": {
     "label": "Platform Adoption 100%",

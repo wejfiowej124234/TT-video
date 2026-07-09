@@ -1,0 +1,21 @@
+{
+  "schema": "phase3_production_go_audit.v1",
+  "at": "20260701T004017Z",
+  "phase": "③",
+  "scope": "production_go_preparation_audit",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "counts": {
+    "pass": 9,
+    "warn": 2,
+    "blocker": 7
+  },
+  "verdict": "NO_GO",
+  "verdict_reason": "7 BLOCKER(s) · 2 WARN · 9 PASS",
+  "honest_boundary": "staging proxy checks ≠ Production GO · PI-3 P0 must close · M-00 unsigned",
+  "ssot": [
+    "docs/runbook/PHASE3-PRODUCTION-PREPARATION.md",
+    "docs/go-live-checklist.md",
+    "evidence/GO_phase2_testnet_20260526/phase3-production-prep/issues-phase3-production.md"
+  ]
+}

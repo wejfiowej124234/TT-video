@@ -1,0 +1,18 @@
+{
+  "bundle_id": "GO_20260501_tt9627_local_chain_001",
+  "git_commit": "72b2d06cde19326475c5893197729baf619f453d",
+  "primary_report_json": "frontend/evidence/GO_20260426_local_final_truth/report.json",
+  "r002_soft_prereport": "evidence/GO_20260501_tt9627_local_chain_001/r002_soft/r002_iss007_prereport/report.json",
+  "environment_tier": "①",
+  "broadcast_batch_all_required": "OK_exit_0",
+  "validate_regression_report": {
+    "fail_on_case_not_run_restored": true
+  },
+  "strict_r002_prereport_20260501": {
+    "status": "NO_GO_partial",
+    "pass_anchors": 3,
+    "fail_anchors": 40,
+    "report_json": "evidence/GO_20260501_tt9627_local_chain_001/r002_strict/r002_iss007_prereport/report.json",
+    "note": "D-IDX-001 D-ADM-003 A-ENV-001 PASS after internal_indexer_admin_db_api_tests + migrate_embed + it_db_pool; 40 anchors remain (other modules)."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "base_url": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "recorded_at": "2026-06-30T04:50:58.087Z",
+  "boundary": "staging UAT · bugfix only · not Production GO",
+  "auth": {
+    "email": "tourist@test.com",
+    "user_id": "2760d445-cbf4-47d0-9461-fcba3db0516f",
+    "bearer_preflight": false,
+    "note": "Auth-gated routes probed with Bearer (tourist + promote_admin); public routes unauthenticated; 401/403 on public = P1 not P0"
+  },
+  "findings": [
+    {
+      "domain": "跨域",
+      "route": "GET /meta (same-origin via Next)",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "chain_id=11155111"
+      ]
+    },
+    {
+      "domain": "跨域",
+      "route": "OPTIONS /api/v1/governance/proposals (CORS)",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "preflight ok"
+      ]
+    }
+  ],
+  "summary": {
+    "pass": 2,
+    "warn": 0,
+    "fail": 0
+  }
+}

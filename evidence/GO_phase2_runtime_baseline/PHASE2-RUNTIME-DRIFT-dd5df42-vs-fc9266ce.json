@@ -1,0 +1,72 @@
+{
+  "schema": "traveltrust.phase2_runtime_drift_analysis.v1",
+  "analyzed_at_utc": "2026-06-30T12:00:00Z",
+  "phase": "② testnet",
+  "baseline": {
+    "label": "Phase② Runtime Baseline",
+    "git_sha": "fc9266ce94f18810420e720bb933946c086ce909",
+    "staging_api": "https://tt-api-staging.fly.dev",
+    "soak_baseline_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7"
+  },
+  "compare": {
+    "git_sha": "dd5df42ab2e07f6e6fe3f09a3c3d8ce358256663",
+    "commits": [
+      "c6a8a4a4 chore(②): restore ADM-U01 merge gate and Windows-safe P0 runtime verify",
+      "dd5df42a fix(② Closure): graduate @ fc9266ce runtime SHA and freeze evidence manifest"
+    ],
+    "diff_range": "fc9266ce94f18810420e720bb933946c086ce909..dd5df42ab2e07f6e6fe3f09a3c3d8ce358256663",
+    "files_changed": 19,
+    "insertions": 3685,
+    "deletions": 32
+  },
+  "runtime_trees_scanned": [
+    "crates/",
+    "frontend/",
+    "contracts/",
+    "deploy/",
+    "registry/",
+    "config/"
+  ],
+  "runtime_trees_changed_in_range": [],
+  "verdict": {
+    "runtime_drift": "NONE",
+    "staging_redeploy_required": false,
+    "runtime_validation_rerun_required": false,
+    "phase2_baseline_frozen": true,
+    "phase3_entry_review": "PROCEED",
+    "honest_boundary": "② graduation CLOSED + drift NONE ≠ ③ Production GO; local HEAD dd5df42 does not replace staging runtime @ fc9266ce"
+  },
+  "machine_keys": {
+    "TT_PHASE2_RUNTIME_DRIFT": "NONE",
+    "TT_PHASE2_BASELINE_SHA": "fc9266ce94f18810420e720bb933946c086ce909",
+    "TT_PHASE3_ENTRY_REVIEW": "READY"
+  },
+  "items": [
+    {"path": "evidence/GO_phase2_testnet_graduation/PHASE2-CLOSURE-GRADUATION-FREEZE.latest.json", "class": "evidence", "runtime_affecting": false, "note": "Graduation freeze pointer"},
+    {"path": "evidence/GO_phase2_testnet_graduation/freeze-fc9266ce/*", "class": "evidence", "runtime_affecting": false, "note": "Freeze bundle (7 files)"},
+    {"path": "scripts/dev/gen-p2fc-phase2-closure-graduation-freeze-manifest.py", "class": "script", "runtime_affecting": false, "note": "Manifest generator"},
+    {"path": "scripts/dev/gen-p2fc-web3-live-risk-convergence.py", "class": "script", "runtime_affecting": false, "note": "Report generator"},
+    {"path": "scripts/dev/gen-phase2-testnet-graduation-matrix.mjs", "class": "script", "runtime_affecting": false, "note": "Graduation matrix gen"},
+    {"path": "scripts/dev/lib/staging-adm-u01-env.sh", "class": "script", "runtime_affecting": false, "note": "ADM-U01 probe env"},
+    {"path": "scripts/dev/lib/tn-p1-010-graduation-gate.mjs", "class": "script", "runtime_affecting": false, "note": "Freeze SHA resolution RCA; gate eval only"},
+    {"path": "scripts/dev/probe-phase2-testnet-deep-closure.mjs", "class": "script", "runtime_affecting": false, "note": "Staging read-only probe"},
+    {"path": "scripts/gates/merge-adm-u01-staging-report.py", "class": "script", "runtime_affecting": false, "note": "Report merge"},
+    {"path": "scripts/gates/merge-adm-u02-staging-report.py", "class": "script", "runtime_affecting": false, "note": "Report merge"},
+    {"path": "scripts/ops/p2fc-post-soak-mr12-runtime-convergence.sh", "class": "script", "runtime_affecting": false, "note": "Closure orchestration; no deploy"},
+    {"path": "scripts/ops/p2fc-post-soak-priority-closure-sequential.sh", "class": "script", "runtime_affecting": false, "note": "Priority closure runner"},
+    {"path": "scripts/ops/p2fc-verify-p0-rbac-bypass-runtime.sh", "class": "script", "runtime_affecting": false, "note": "Staging P0 verify probe; not API code"}
+  ],
+  "working_tree_warning": {
+    "scope": "outside committed range fc9266ce..dd5df42",
+    "uncommitted_runtime_paths_detected": true,
+    "examples": ["crates/api/", "frontend/", "deploy/fly/tt-api-staging/fly.toml"],
+    "action": "Do not deploy or substitute local working tree for frozen staging baseline"
+  },
+  "phase3_entry_prerequisites": {
+    "graduation_closed_at_fc9266ce": true,
+    "closure_chain_pass": true,
+    "final_human_acceptance_staging": "PASS",
+    "final_ha_evidence": "evidence/GO_phase2_final_human_acceptance/PHASE2-FINAL-HUMAN-ACCEPTANCE.latest.json",
+    "production_go": false
+  }
+}

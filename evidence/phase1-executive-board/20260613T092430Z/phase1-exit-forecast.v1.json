@@ -1,0 +1,13 @@
+{
+  "current_score": 95,
+  "current_band": "PHASE1_EXIT_READY",
+  "days_to_FREEZE_CANDIDATE": 0,
+  "date_FREEZE_CANDIDATE_utc": "2026-06-13",
+  "days_to_PHASE1_EXIT_READY": 0,
+  "date_PHASE1_EXIT_READY_utc": "2026-06-13",
+  "assumed_readiness_points_per_week": 6.3,
+  "if_fix_top3_root_causes": {
+    "readiness_delta": 19,
+    "projected_score": 100
+  }
+}

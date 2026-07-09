@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T00:59:46Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AE",
+    "city_zh": "迪拜",
+    "city_en": "Dubai",
+    "matrix_ids": [
+      "PH-AE-228-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AE-228-ATR",
+      "legacy_value": "沙漠冲沙",
+      "poi_id": "8784e8b4-e585-4a9d-b4ce-7e852b1693c0",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-228-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

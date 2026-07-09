@@ -1,0 +1,28 @@
+{
+  "error": "forge CreateEscrowB407 failed — see forge-create-escrow.log",
+  "stack": "Error: forge CreateEscrowB407 failed — see forge-create-escrow.log\n    at main (D:\\TravelTrust-V1.1\\scripts\\dev\\run-g3-02-web3-payment-production-verification.cjs:383:36)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+  "partial": {
+    "recorded_utc": "2026-07-08T07:39:36.858Z",
+    "run_dir": "D:\\TravelTrust-V1.1\\evidence\\GO_production_readiness\\G3-02\\exec-2026-07-08T07-39-36-858Z",
+    "prod_api": "https://tt-api-prod.fly.dev",
+    "prod_web": "https://tt-web-prod.fly.dev",
+    "chain_id": 11155111,
+    "items": {
+      "PAY-W15": {
+        "verdict": "PASS",
+        "detail": "Production mock-pay forbidden probe"
+      },
+      "PAY-W01": {
+        "verdict": "PASS",
+        "detail": "Prod session + on-chain traveler identity for deposit corridor"
+      }
+    },
+    "flow": {
+      "traveler_address": "0xFA62bb5F7B21C160eFe115297dc5338982E24649",
+      "guide_address": "0x96A7C3DB87a738ec3bDb1B0C1147A5c1dE8FE4E5",
+      "factory_deployer_address": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+      "order_id": "c875d168-178f-4a4f-9cfe-fcad8acf72c2"
+    },
+    "errors": []
+  }
+}

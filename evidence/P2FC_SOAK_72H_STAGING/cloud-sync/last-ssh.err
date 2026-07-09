@@ -1,0 +1,18 @@
+attempt=1 rc=1
+Connecting to fdaa:7a:3e05:a7b:6a9:566b:8967:2...
+Warning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type billable limitedAccessTokens { nodes { id name expiresAt revokedAt user { email } } } } }: context canceled
+Error: error connecting to SSH server: ssh: handshake failed: EOF
+attempt=2 rc=1
+Warning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type billable limitedAccessTokens { nodes { id name expiresAt revokedAt user { email } } } } }: context canceled
+Error: app tt-soak-watcher-staging has no started VMs.
+It may be unhealthy or not have been deployed yet.
+Try the following command to verify:
+
+fly status
+attempt=3 rc=1
+Warning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type billable limitedAccessTokens { nodes { id name expiresAt revokedAt user { email } } } } }: context canceled
+Error: app tt-soak-watcher-staging has no started VMs.
+It may be unhealthy or not have been deployed yet.
+Try the following command to verify:
+
+fly status

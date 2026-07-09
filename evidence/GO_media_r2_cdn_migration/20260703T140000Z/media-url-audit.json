@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.staging_media_url_audit.v1",
+  "stamp": "20260703T140000Z",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "endpoints": [
+    {
+      "id": "capabilities",
+      "http": 200,
+      "url_count": 0
+    },
+    {
+      "id": "provider_listings",
+      "http": 200,
+      "url_count": 10
+    },
+    {
+      "id": "acquisition_listings",
+      "http": 200,
+      "url_count": 10
+    },
+    {
+      "id": "market_feed",
+      "http": 200,
+      "url_count": 0
+    },
+    {
+      "id": "community_feed",
+      "http": 200,
+      "url_count": 10
+    }
+  ],
+  "media_urls": [],
+  "loca_lt_urls": [],
+  "cdn_urls": [],
+  "blocking": [],
+  "blocking_count": 0,
+  "verdict": "PASS"
+}

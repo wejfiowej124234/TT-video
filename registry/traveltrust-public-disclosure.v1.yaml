@@ -1,0 +1,97 @@
+# TravelTrust Public Disclosure · Machine SSOT (Home / Pulse / Roadmap)
+#
+# Human closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/HOME-PUBLIC-DISCLOSURE-ALIGNMENT-CLOSEOUT.md
+# Frontend consumer: frontend/lib/traveltrustNetworkAnnouncements.ts
+# Gate: bash scripts/gates/check-home-public-disclosure-alignment-gate.sh
+
+schema: traveltrust.public_disclosure.v1
+version: 1
+effective_utc: "2026-07-09"
+machine_key: TT_PUBLIC_DISCLOSURE
+verdict: HOME_PUBLIC_DISCLOSURE_ALIGNED
+verdict_status: PASS
+
+program_state:
+  phase25_web3_hardening: CLOSED
+  phase3_entry: ACTIVE
+  p3_01_baseline: FROZEN
+  p3_02_runtime_evidence: PASS
+  p3_03_address_planning: PASS
+  p3_04_deployment_plan: PASS
+  sepolia_web3_runtime: ACTIVE
+  mainnet_broadcast: NOT_STARTED
+
+forbidden_public_terms:
+  - Sepolia Preview
+  - testnet preview
+  - 测试网预览
+  - Engineering Mock
+  - 待上线
+  - Opening Jul 15
+  - Round 1 Beta
+
+canonical_status_labels:
+  sepolia_runtime_active: traveltrust_announcements_detail_status_sepolia_active
+  mainnet_live: traveltrust_announcements_detail_status_mainnet_live
+  governance_runtime_kicker: governance_params_web3_runtime_kicker
+
+frontend_ssot:
+  announcements: frontend/lib/traveltrustNetworkAnnouncements.ts
+  roadmap:
+    primary: GET /api/v1/public/roadmap
+    fallback: frontend/lib/traveltrustRoadmap2026.ts
+  governance_params_strip: frontend/app/governance/params/GovernanceParamsWeb3RuntimeStrip.tsx
+
+pulse_announcements:
+  lane: product
+  items:
+    - id: product-planned-launch
+      content_tier: upcoming
+      release_at: "2026-07-15"
+      pinned: true
+    - id: product-escrow-usdc
+      content_tier: upcoming
+      release_at: "2026-07-15"
+    - id: product-guide-merchant
+      content_tier: upcoming
+      release_at: "2026-07-15"
+    - id: product-security-disclosure
+      content_tier: live
+
+protocol_status_archive:
+  - id: phase3-entry-mainnet-prep
+    lane: protocol_status
+    content_tier: live
+    effective_at: "2026-07-09"
+  - id: product-deploy-phase3
+    lane: protocol_status
+    content_tier: live
+    effective_at: "2026-07-09"
+  - id: product-deploy-phase2
+    lane: protocol_status
+    content_tier: live
+    effective_at: "2026-07-09"
+  - id: product-deploy-phase1
+    lane: protocol_status
+    content_tier: live
+    effective_at: "2026-07-09"
+
+ttg_public_rounds: frontend/lib/traveltrustTtgPublicRounds.ts
+
+announcement_lane_governance:
+  verdict: ANNOUNCEMENT_LANE_GOVERNANCE_FROZEN
+  registry: registry/traveltrust-announcement-lane-governance.v1.yaml
+  closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/ANNOUNCEMENT-LANE-GOVERNANCE-CLOSEOUT.md
+  gate: scripts/gates/check-announcement-lane-governance-gate.sh
+
+escrow_v2_public_copy:
+  status: DEPLOYMENT_PREPARATION_READY
+  not: [MAINNET_READY, Sepolia ACTIVE factory]
+
+closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/HOME-PUBLIC-DISCLOSURE-ALIGNMENT-CLOSEOUT.md
+
+full_site_surface_audit:
+  verdict: PUBLIC_SURFACE_AUDIT_PASS
+  registry: registry/traveltrust-public-surface-audit.v1.yaml
+  closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PUBLIC-SURFACE-AUDIT-CLOSEOUT.md
+  gate: scripts/gates/check-public-surface-audit-gate.sh

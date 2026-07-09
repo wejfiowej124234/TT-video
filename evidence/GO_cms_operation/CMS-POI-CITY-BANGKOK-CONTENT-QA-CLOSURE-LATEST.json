@@ -1,0 +1,138 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-06T03:42:04.910Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "TH",
+    "city_zh": "曼谷",
+    "city_en": "Bangkok",
+    "poi_count": 10
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-BANGKOK-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "JP Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "cross_region_remediated": "all_10_execution_plus_geo",
+  "checks": {
+    "assets_locked_10_10": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-TH-073-ATR",
+      "poi": "大皇宫",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-bangkok-temple-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-06T02:01:42.552Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-074-ATR",
+      "poi": "卧佛寺",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-bangkok-temple-community-media.jpg",
+      "locked_at_utc": "2026-07-06T02:06:43.368Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-075-ATR",
+      "poi": "郑王庙",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-bangkok-temple-community-cover.jpg",
+      "locked_at_utc": "2026-07-06T02:11:43.847Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-076-ATR",
+      "poi": "考山路",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-bangkok-temple-provider-cover.jpg",
+      "locked_at_utc": "2026-07-06T02:16:47.833Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-077-ATR",
+      "poi": "水上市场",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-bangkok-temple-acquisition-cover.jpg",
+      "locked_at_utc": "2026-07-06T02:21:53.630Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-078-FOOD",
+      "poi": "冬阴功",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-bangkok-temple-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-06T02:26:49.365Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-079-FOOD",
+      "poi": "泰式炒河粉",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-bangkok-temple-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-06T02:31:51.540Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-080-FOOD",
+      "poi": "芒果糯米饭",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-bangkok-temple-community-media.jpg",
+      "locked_at_utc": "2026-07-06T03:24:59.179Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-081-FOOD",
+      "poi": "青木瓜沙拉",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-bangkok-temple-community-cover.jpg",
+      "locked_at_utc": "2026-07-06T03:30:00.256Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-082-FOOD",
+      "poi": "泰式奶茶",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-bangkok-temple-community-media.jpg",
+      "locked_at_utc": "2026-07-06T03:35:01.167Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 10
+  },
+  "TT_CMS_POI_CITY_BANGKOK_CONTENT_QA": "CLOSED"
+}

@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { TRAVELTRUST_NETWORK_ANNOUNCEMENTS } from "@/lib/traveltrustNetworkAnnouncements";
+import { TRAVELTRUST_NETWORK_ANNOUNCEMENTS } from "./traveltrustNetworkAnnouncements";
 import {
   assertTraveltrustAnnouncementHrefs,
   isTraveltrustV6AllowedHref,
-} from "@/lib/traveltrustFundraisingLinkPolicy";
+} from "./traveltrustFundraisingLinkPolicy";
 
 describe("traveltrustFundraisingLinkPolicy (TT-PH1-111/112)", () => {
   it("allows internal product routes", () => {

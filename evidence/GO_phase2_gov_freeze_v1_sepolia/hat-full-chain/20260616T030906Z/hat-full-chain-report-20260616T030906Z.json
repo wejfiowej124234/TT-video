@@ -1,0 +1,18 @@
+{
+  "hat_id": "GOV_FREEZE_V1_HAT_FULL_CHAIN",
+  "stamp_utc": "20260616T030906Z",
+  "phase": "\u2461",
+  "sequence": [
+    "permissions",
+    "redemption",
+    "stake",
+    "seat",
+    "proposals_vote_read",
+    "revenue_distribution",
+    "exit_read",
+    "ui_vitest"
+  ],
+  "baseline": "GovFreeze V1 Sepolia Proxy",
+  "verdict": "PASS",
+  "honest_boundary": "proposal execute requires 48h timelock; API 503 acceptable if API not running"
+}

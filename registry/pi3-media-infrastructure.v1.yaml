@@ -1,0 +1,84 @@
+# TravelTrust · PI3 Media Infrastructure · SSOT
+# Human: docs/runbook/TT-MEDIA-THREE-TIER-ARCHITECTURE.md
+#
+# Scope: upload · download · object storage · CDN · cache · video playback
+# NOT IN SCOPE: Catalog asset sources (Unsplash / owned images) — see catalog-asset-migration.v1.yaml
+
+schema: traveltrust.pi3_media_infrastructure.v1
+version: 1
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_PI3_MEDIA_INFRASTRUCTURE: ENFORCED
+  TT_PI3_MEDIA_INFRA_CATALOG_DECOUPLED: ENFORCED
+  TT_MEDIA_INFRA_ACCEPTANCE_SCOPE: ENFORCED
+
+governance:
+  acceptance_decoupling_principle: >
+    Media Infrastructure acceptance validates media service capability only (object storage,
+    upload, download, CDN, cache, multipart, playback, CORS) — not catalog asset sources.
+    Catalog Asset Migration acceptance validates asset source, copyright, and operational
+    content only — it does not re-validate media infrastructure.
+  question_answered: 媒体系统能不能稳定运行？
+  independent_progress_example:
+    media_infrastructure: "100% CLOSED while catalog_asset_migration at 30% is normal"
+
+policy:
+  infra_complete_criterion: >
+    R2 + CDN + multipart upload + playback + cache + acceptance PASS for user/community media.
+    Catalog URLs may still be Unsplash — that does NOT block PI3-MEDIA-INFRASTRUCTURE CLOSED.
+  not_a_defect: [unsplash_in_catalog_payloads, missing_owned_guide_covers]
+
+capabilities:
+  - minio_local_dev
+  - fly_tigris_staging_interim
+  - cloudflare_r2_target
+  - cdn_traveltrust_app
+  - multipart_upload
+  - direct_browser_cdn_download
+  - cache_rules
+  - video_playback
+  - head_bucket_capabilities_probe
+
+tiers:
+  phase1_local:
+    object_store: minio
+    public_base_url: "http://127.0.0.1:19000/traveltrust-community-media"
+  phase2_staging_interim:
+    object_store: fly_tigris
+    public_base_url: "https://traveltrust-community-media.fly.storage.tigris.dev"
+    closed_issue: PI3-MEDIA-PERSISTENT-STAGING
+  phase2_3_target:
+    object_store: cloudflare_r2
+    public_base_url: "https://cdn.traveltrust.app"
+    cdn: cloudflare
+
+issues:
+  track: PI3-MEDIA-INFRASTRUCTURE
+  closed:
+    - id: PI3-MEDIA-PERSISTENT-STAGING
+      note: staging off loca.lt · Fly Tigris interim
+  open:
+    - id: PI3-MEDIA-R2-CDN-FINAL
+      display_status: WAITING_OWNER_CF
+      owner: owner_live
+    - id: MEDIA_CDN_PRODUCTION_ACCEPTANCE
+      display_status: PENDING
+      blocks_closure_of: PI3-MEDIA-R2-CDN-FINAL
+
+close_flow:
+  - PI3-MEDIA-R2-CDN-FINAL owner config
+  - MEDIA_CDN_PRODUCTION_ACCEPTANCE PASS
+  - PI3-MEDIA-R2-CDN-FINAL CLOSED
+  - track_status: PI3-MEDIA-INFRASTRUCTURE CLOSED
+
+decoupled_track:
+  id: PI3-CATALOG-ASSET-MIGRATION
+  registry: registry/catalog-asset-migration.v1.yaml
+  rule: does_not_block_media_infrastructure_close
+
+pointers:
+  architecture: registry/media-three-tier-architecture.v1.yaml
+  owner_checklist: docs/runbook/TT-PI3-MEDIA-R2-CDN-FINAL-OWNER-CHECKLIST.md
+  acceptance_gate: docs/runbook/TT-MEDIA-CDN-PRODUCTION-ACCEPTANCE-GATE.md
+  acceptance_registry: registry/media-cdn-production-acceptance.v1.yaml

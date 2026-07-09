@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T14:29:53Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AU",
+    "city_zh": "墨尔本",
+    "city_en": "Melbourne",
+    "matrix_ids": [
+      "PH-AU-180-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AU-180-FOOD",
+      "legacy_value": "brunch",
+      "poi_id": "459f064d-1f1b-4b53-993b-7a3175fa5af5",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-180-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

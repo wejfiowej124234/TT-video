@@ -1,0 +1,18 @@
+{
+  "captured_at_utc": "2026-06-16T15:11:21Z",
+  "recordings": [
+    "C-PB-01-owner-unpause-prerequisites.mp4",
+    "C-PB-02-phase-a-handoff-eta-dual-timelock.mp4",
+    "C-PB-03-phase-b-sequence-recovery.mp4"
+  ],
+  "screenshots": [
+    "role-owner-unpause-gate.png",
+    "role-prerequisites-chain.png",
+    "role-governor-phase-a-handoff.png",
+    "role-treasury-timelock-eta.png",
+    "role-phase-b-sequence.png",
+    "role-recovery-paths.png"
+  ],
+  "execute_earliest_unix": "1781765044",
+  "honest_boundary": "Slide-based ffmpeg walkthrough; unpause gate only — not live Execute tx"
+}

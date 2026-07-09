@@ -1,0 +1,48 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T151000Z",
+  "filename": "ocs-paris-art-community-cover.jpg",
+  "row": 35,
+  "chain_id": "paris-art",
+  "country_code": "FR",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "blocked_elements_avoided": [
+      "mona_lisa",
+      "recognizable_masterpieces",
+      "celebrity_portraits",
+      "brand_logos",
+      "louvre_pyramid_exterior_hero"
+    ],
+    "safe_expression": "展厅透视 Feed · 模糊画框 · 无识别名画"
+  },
+  "cover_media_complement_plan": {
+    "pass": true,
+    "row35_cover": "展厅透视 intimate Feed",
+    "row36_media_planned": "奥赛钟面或雕塑厅 · 不同馆/角度",
+    "vs_row34": "室内透视 vs Official 金字塔 外观宽幅"
+  },
+  "checks": {
+    "manifest_alignment": {
+      "pass": true
+    },
+    "destination_authenticity_9dim": {
+      "pass": true
+    },
+    "country_consistency_fr": {
+      "pass": true
+    },
+    "community_authenticity_plan": {
+      "pass": true,
+      "ugc_not_ad": true
+    },
+    "cross_chain_community_plan": {
+      "pass": true
+    },
+    "surface_boundary_plan": {
+      "pass": true
+    },
+    "nine_class_framework_frozen": true
+  }
+}

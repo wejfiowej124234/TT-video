@@ -1,0 +1,674 @@
+# CMS Wave 1 · Market Listings ×20 (Provider ×10 → Acquisition ×10)
+schema: traveltrust.cms_listings_wave1_matrix.v1
+version: 1
+effective_utc: "2026-07-05"
+machine_key: TT_CMS_LISTINGS_WAVE1_MATRIX
+wave_id: LISTINGS-WAVE-1
+
+summary:
+  total_rows: 20
+  matrix_pass: 20
+  provider_rows: 10
+  acquisition_rows: 10
+  asset_lifecycle_draft: 0
+
+rows:
+  - matrix_id: ML-WAVE1-001-PRV
+    execution_order: 1
+    variant: provider
+    chain_slug: dubai-luxury
+    country_iso: AE
+    cover_file: ocs-dubai-luxury-provider-cover.jpg
+    asset_kind: generic
+    listing_id: db1ab8d0-8215-4647-ae2a-74e5f2a35b0d
+    scan_id: VIS-MKT-provider-db1ab8d0-8215-4647-ae2a-74e5f2a35b0d
+    scene: dubai-luxury · provider listing cover · OCS stock
+    copy_label: dubai-luxury · provider cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:41:31Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 9b5294b3-85e2-4144-8771-2c3a946829d5
+    market_listing_id: db1ab8d0-8215-4647-ae2a-74e5f2a35b0d
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-provider-cover.jpg
+
+  - matrix_id: ML-WAVE1-002-PRV
+    execution_order: 2
+    variant: provider
+    chain_slug: barcelona-arch
+    country_iso: ES
+    cover_file: ocs-barcelona-arch-provider-cover.jpg
+    asset_kind: generic
+    listing_id: 4a62be85-92aa-4423-9136-9b26e47924f6
+    scan_id: VIS-MKT-provider-4a62be85-92aa-4423-9136-9b26e47924f6
+    scene: barcelona-arch · provider listing cover · OCS stock
+    copy_label: barcelona-arch · provider cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:41:31Z"
+      rollback_target_revision: 1
+    catalog_asset_id: b459ed57-a9cd-465c-9747-6681db5d0b12
+    market_listing_id: 4a62be85-92aa-4423-9136-9b26e47924f6
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg
+
+  - matrix_id: ML-WAVE1-003-PRV
+    execution_order: 3
+    variant: provider
+    chain_slug: sydney-coast
+    country_iso: AU
+    cover_file: ocs-sydney-coast-provider-cover.jpg
+    asset_kind: generic
+    listing_id: 4151ab89-4a88-427b-9f34-eb4fbe01a196
+    scan_id: VIS-MKT-provider-4151ab89-4a88-427b-9f34-eb4fbe01a196
+    scene: sydney-coast · provider listing cover · OCS stock
+    copy_label: sydney-coast · provider cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:41:31Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 2eaf885c-61b8-4f4f-a856-71b4f27413f8
+    market_listing_id: 4151ab89-4a88-427b-9f34-eb4fbe01a196
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg
+
+  - matrix_id: ML-WAVE1-004-PRV
+    execution_order: 4
+    variant: provider
+    chain_slug: nyc-skyline
+    country_iso: US
+    cover_file: ocs-nyc-skyline-provider-cover.jpg
+    asset_kind: generic
+    listing_id: 8ccff008-23d6-4028-a6b4-65ac68e6eea7
+    scan_id: VIS-MKT-provider-8ccff008-23d6-4028-a6b4-65ac68e6eea7
+    scene: nyc-skyline · provider listing cover · OCS stock
+    copy_label: nyc-skyline · provider cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:41:31Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 9dd1ed47-5630-4292-b1ec-9030148fe943
+    market_listing_id: 8ccff008-23d6-4028-a6b4-65ac68e6eea7
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg
+
+  - matrix_id: ML-WAVE1-005-PRV
+    execution_order: 5
+    variant: provider
+    chain_slug: paris-art
+    country_iso: FR
+    cover_file: ocs-paris-art-provider-cover.jpg
+    asset_kind: generic
+    listing_id: fe0533d3-305a-474a-b473-df4f4b7ea713
+    scan_id: VIS-MKT-provider-fe0533d3-305a-474a-b473-df4f4b7ea713
+    scene: paris-art · provider listing cover · OCS stock
+    copy_label: paris-art · provider cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:41:31Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 55e4f456-4678-49fe-931e-e564dcb4a24d
+    market_listing_id: fe0533d3-305a-474a-b473-df4f4b7ea713
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg
+
+  - matrix_id: ML-WAVE1-006-PRV
+    execution_order: 6
+    variant: provider
+    chain_slug: singapore-family
+    country_iso: SG
+    cover_file: ocs-singapore-family-provider-cover.jpg
+    asset_kind: generic
+    listing_id: b2d9f022-0653-4400-826c-91042ea8b3b8
+    scan_id: VIS-MKT-provider-b2d9f022-0653-4400-826c-91042ea8b3b8
+    scene: singapore-family · provider listing cover · OCS stock
+    copy_label: singapore-family · provider cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:41:31Z"
+      rollback_target_revision: 1
+    catalog_asset_id: ce4672a7-6d78-4687-b259-2f36ec7c0908
+    market_listing_id: b2d9f022-0653-4400-826c-91042ea8b3b8
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg
+
+  - matrix_id: ML-WAVE1-007-PRV
+    execution_order: 7
+    variant: provider
+    chain_slug: bangkok-temple
+    country_iso: TH
+    cover_file: ocs-bangkok-temple-provider-cover.jpg
+    asset_kind: generic
+    listing_id: fc552d6f-81c4-4e1b-bdaa-1fb9245ab8a4
+    scan_id: VIS-MKT-provider-fc552d6f-81c4-4e1b-bdaa-1fb9245ab8a4
+    scene: bangkok-temple · provider listing cover · OCS stock
+    copy_label: bangkok-temple · provider cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:42:29Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 22293cc4-c38b-413f-8b07-717eddcb2067
+    market_listing_id: fc552d6f-81c4-4e1b-bdaa-1fb9245ab8a4
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg
+
+  - matrix_id: ML-WAVE1-008-PRV
+    execution_order: 8
+    variant: provider
+    chain_slug: seoul-food
+    country_iso: KR
+    cover_file: ocs-seoul-food-provider-cover.jpg
+    asset_kind: generic
+    listing_id: 1c0103f3-4dac-4c2b-93f4-8a8d6c276266
+    scan_id: VIS-MKT-provider-1c0103f3-4dac-4c2b-93f4-8a8d6c276266
+    scene: seoul-food · provider listing cover · OCS stock
+    copy_label: seoul-food · provider cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:42:29Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 39b163a6-62a1-4034-9bb6-56ec9d1e9740
+    market_listing_id: 1c0103f3-4dac-4c2b-93f4-8a8d6c276266
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg
+
+  - matrix_id: ML-WAVE1-009-PRV
+    execution_order: 9
+    variant: provider
+    chain_slug: kyoto-culture
+    country_iso: JP
+    cover_file: ocs-kyoto-culture-provider-cover.jpg
+    asset_kind: generic
+    listing_id: 80784772-af41-4d21-8faa-24dea081d0e6
+    scan_id: VIS-MKT-provider-80784772-af41-4d21-8faa-24dea081d0e6
+    scene: kyoto-culture · provider listing cover · OCS stock
+    copy_label: kyoto-culture · provider cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:42:29Z"
+      rollback_target_revision: 1
+    catalog_asset_id: ca4c84c1-77e9-4254-a247-b303cf94e487
+    market_listing_id: 80784772-af41-4d21-8faa-24dea081d0e6
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg
+
+  - matrix_id: ML-WAVE1-010-PRV
+    execution_order: 10
+    variant: provider
+    chain_slug: tokyo-photo
+    country_iso: JP
+    cover_file: ocs-tokyo-photo-provider-cover.jpg
+    asset_kind: generic
+    listing_id: c6f938af-4fb6-4059-bcac-5dd3e2015655
+    scan_id: VIS-MKT-provider-c6f938af-4fb6-4059-bcac-5dd3e2015655
+    scene: tokyo-photo · provider listing cover · OCS stock
+    copy_label: tokyo-photo · provider cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:42:29Z"
+      rollback_target_revision: 1
+    catalog_asset_id: f22e3d6e-3b95-4a47-bf14-55d61e1b3852
+    market_listing_id: c6f938af-4fb6-4059-bcac-5dd3e2015655
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg
+
+  - matrix_id: ML-WAVE1-011-ACQ
+    execution_order: 11
+    variant: acquisition
+    chain_slug: dubai-luxury
+    country_iso: AE
+    cover_file: ocs-dubai-luxury-acquisition-cover.jpg
+    asset_kind: generic
+    listing_id: d9ece4dc-7b9d-4928-9d4d-c6b314292b8b
+    scan_id: VIS-MKT-acquisition-d9ece4dc-7b9d-4928-9d4d-c6b314292b8b
+    scene: dubai-luxury · acquisition listing cover · OCS stock
+    copy_label: dubai-luxury · acquisition cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:42:29Z"
+      rollback_target_revision: 1
+    catalog_asset_id: e9dc23f9-fad7-4401-9d3f-53bb3b254e65
+    market_listing_id: d9ece4dc-7b9d-4928-9d4d-c6b314292b8b
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-acquisition-cover.jpg
+
+  - matrix_id: ML-WAVE1-012-ACQ
+    execution_order: 12
+    variant: acquisition
+    chain_slug: barcelona-arch
+    country_iso: ES
+    cover_file: ocs-barcelona-arch-acquisition-cover.jpg
+    asset_kind: generic
+    listing_id: 4f677a25-a73c-4a14-8e1f-3c25640e5a4c
+    scan_id: VIS-MKT-acquisition-4f677a25-a73c-4a14-8e1f-3c25640e5a4c
+    scene: barcelona-arch · acquisition listing cover · OCS stock
+    copy_label: barcelona-arch · acquisition cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:42:29Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 9d8c3c1e-4e1d-486e-9d3b-58c934cac525
+    market_listing_id: 4f677a25-a73c-4a14-8e1f-3c25640e5a4c
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-acquisition-cover.jpg
+
+  - matrix_id: ML-WAVE1-013-ACQ
+    execution_order: 13
+    variant: acquisition
+    chain_slug: sydney-coast
+    country_iso: AU
+    cover_file: ocs-sydney-coast-acquisition-cover.jpg
+    asset_kind: generic
+    listing_id: 7ecec219-7981-454c-84c7-e30cd01b815a
+    scan_id: VIS-MKT-acquisition-7ecec219-7981-454c-84c7-e30cd01b815a
+    scene: sydney-coast · acquisition listing cover · OCS stock
+    copy_label: sydney-coast · acquisition cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:42:29Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 7868a013-d6fe-45c0-a358-e77fedd0bcbd
+    market_listing_id: 7ecec219-7981-454c-84c7-e30cd01b815a
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg
+
+  - matrix_id: ML-WAVE1-014-ACQ
+    execution_order: 14
+    variant: acquisition
+    chain_slug: nyc-skyline
+    country_iso: US
+    cover_file: ocs-nyc-skyline-acquisition-cover.jpg
+    asset_kind: generic
+    listing_id: 5c497be1-a4dc-4103-b16b-8021e357b08c
+    scan_id: VIS-MKT-acquisition-5c497be1-a4dc-4103-b16b-8021e357b08c
+    scene: nyc-skyline · acquisition listing cover · OCS stock
+    copy_label: nyc-skyline · acquisition cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:42:29Z"
+      rollback_target_revision: 1
+    catalog_asset_id: d4b95b83-415a-407f-9c1f-b2cefb47bdcb
+    market_listing_id: 5c497be1-a4dc-4103-b16b-8021e357b08c
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-acquisition-cover.jpg
+
+  - matrix_id: ML-WAVE1-015-ACQ
+    execution_order: 15
+    variant: acquisition
+    chain_slug: paris-art
+    country_iso: FR
+    cover_file: ocs-paris-art-acquisition-cover.jpg
+    asset_kind: generic
+    listing_id: 28a1d88a-a2ba-4ec6-9243-074ab846c590
+    scan_id: VIS-MKT-acquisition-28a1d88a-a2ba-4ec6-9243-074ab846c590
+    scene: paris-art · acquisition listing cover · OCS stock
+    copy_label: paris-art · acquisition cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:42:29Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 193e04a3-56f9-42c0-b2cc-68da1e392ed8
+    market_listing_id: 28a1d88a-a2ba-4ec6-9243-074ab846c590
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-acquisition-cover.jpg
+
+  - matrix_id: ML-WAVE1-016-ACQ
+    execution_order: 16
+    variant: acquisition
+    chain_slug: singapore-family
+    country_iso: SG
+    cover_file: ocs-singapore-family-acquisition-cover.jpg
+    asset_kind: generic
+    listing_id: 6876ca7c-195e-40d8-b766-2787f2da9cf3
+    scan_id: VIS-MKT-acquisition-6876ca7c-195e-40d8-b766-2787f2da9cf3
+    scene: singapore-family · acquisition listing cover · OCS stock
+    copy_label: singapore-family · acquisition cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:42:29Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 9742eb1e-b303-4de7-be4c-174e042d84d4
+    market_listing_id: 6876ca7c-195e-40d8-b766-2787f2da9cf3
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg
+
+  - matrix_id: ML-WAVE1-017-ACQ
+    execution_order: 17
+    variant: acquisition
+    chain_slug: bangkok-temple
+    country_iso: TH
+    cover_file: ocs-bangkok-temple-acquisition-cover.jpg
+    asset_kind: generic
+    listing_id: 83b7cb80-c17d-494e-9cd3-48cdd1b96940
+    scan_id: VIS-MKT-acquisition-83b7cb80-c17d-494e-9cd3-48cdd1b96940
+    scene: bangkok-temple · acquisition listing cover · OCS stock
+    copy_label: bangkok-temple · acquisition cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:44:37Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 67c53ac5-e0a0-4f6d-9fc1-634b214aa718
+    market_listing_id: 83b7cb80-c17d-494e-9cd3-48cdd1b96940
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg
+
+  - matrix_id: ML-WAVE1-018-ACQ
+    execution_order: 18
+    variant: acquisition
+    chain_slug: seoul-food
+    country_iso: KR
+    cover_file: ocs-seoul-food-acquisition-cover.jpg
+    asset_kind: generic
+    listing_id: 62173ab8-b657-4b8c-9654-6dbac09b3ced
+    scan_id: VIS-MKT-acquisition-62173ab8-b657-4b8c-9654-6dbac09b3ced
+    scene: seoul-food · acquisition listing cover · OCS stock
+    copy_label: seoul-food · acquisition cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:44:37Z"
+      rollback_target_revision: 1
+    catalog_asset_id: db4af6ed-c2e8-4096-85d0-485830d8b5b7
+    market_listing_id: 62173ab8-b657-4b8c-9654-6dbac09b3ced
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg
+
+  - matrix_id: ML-WAVE1-019-ACQ
+    execution_order: 19
+    variant: acquisition
+    chain_slug: kyoto-culture
+    country_iso: JP
+    cover_file: ocs-kyoto-culture-acquisition-cover.jpg
+    asset_kind: generic
+    listing_id: a110921b-af3b-49a0-923c-52f201e9134e
+    scan_id: VIS-MKT-acquisition-a110921b-af3b-49a0-923c-52f201e9134e
+    scene: kyoto-culture · acquisition listing cover · OCS stock
+    copy_label: kyoto-culture · acquisition cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:44:37Z"
+      rollback_target_revision: 1
+    catalog_asset_id: 0bac6714-70be-43cc-82bf-d3785f120033
+    market_listing_id: a110921b-af3b-49a0-923c-52f201e9134e
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg
+
+  - matrix_id: ML-WAVE1-020-ACQ
+    execution_order: 20
+    variant: acquisition
+    chain_slug: tokyo-photo
+    country_iso: JP
+    cover_file: ocs-tokyo-photo-acquisition-cover.jpg
+    asset_kind: generic
+    listing_id: c3a45398-9677-4cf4-879b-011d1f1323b1
+    scan_id: VIS-MKT-acquisition-c3a45398-9677-4cf4-879b-011d1f1323b1
+    scene: tokyo-photo · acquisition listing cover · OCS stock
+    copy_label: tokyo-photo · acquisition cover
+    current_label: Catalog bound listing payload
+    current_source: catalog_api
+    asset_lifecycle: live
+    matrix_row_status: pass
+    execution_gates:
+      brief_review: PASS
+      cms_review: PASS
+      destination_authenticity: PASS
+      brand_consistency: PASS
+      catalog_publish: PASS
+      verify: PASS
+      evidence_complete: PASS
+    asset_version:
+      revision_number: 3
+      revision_label: v1
+      published_by: tourist@test.com
+      published_at_utc: "2026-07-05T09:44:37Z"
+      rollback_target_revision: 1
+    catalog_asset_id: f36e6e03-a6d4-47d0-b38a-bd16365de968
+    market_listing_id: c3a45398-9677-4cf4-879b-011d1f1323b1
+    public_url: https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg

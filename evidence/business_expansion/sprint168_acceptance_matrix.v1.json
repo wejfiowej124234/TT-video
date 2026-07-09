@@ -1,0 +1,45 @@
+{
+  "schema": "traveltrust_sprint168_acceptance_matrix.v1",
+  "sprint": 168,
+  "scope": ["BE-FRD-01", "BE-GCM-01"],
+  "excluded_scopes": ["product_ui", "user_pages", "growth_feature_audit", "l5_excellence"],
+  "phase": "①_local",
+  "tracks": {
+    "BE-FRD-01": {
+      "name": "Fraud Engine v1",
+      "enterprise_before": { "automation_pct": 25, "ops_cost": "HIGH", "verdict": "NOT_MET" },
+      "enterprise_target": { "automation_pct": 72, "ops_cost": "MEDIUM", "verdict": "MET" },
+      "acceptance": [
+        { "id": "FRD-A01", "priority": "P0", "criterion": "POST /internal/growth/fraud-scan returns 200 with idempotency", "probe": "cargo test fraud_scan" },
+        { "id": "FRD-A02", "priority": "P0", "criterion": "Register hook invokes fraud-scan best-effort", "probe": "auth_register integration test" },
+        { "id": "FRD-A03", "priority": "P0", "criterion": ">=4 v1 rules execute; HIGH triggers auto status or signal", "probe": "growth_fraud_scan unit tests" },
+        { "id": "FRD-A04", "priority": "P0", "criterion": "growth_fraud_scan_runs audit row per scan", "probe": "sqlx migration + list API" },
+        { "id": "FRD-A05", "priority": "P1", "criterion": "Admin GET scan-runs paginated", "probe": "admin contract test" },
+        { "id": "FRD-A06", "priority": "P1", "criterion": "Open cases auto-created on auto_action", "probe": "existing cases table" },
+        { "id": "FRD-A07", "priority": "P1", "criterion": "Ops SOP documented in 168 + fraud-engine-v1.yaml", "probe": "plan audit script" },
+        { "id": "FRD-A08", "priority": "P2", "criterion": "False positive rate <15% on seed dataset", "probe": "manual ops sign-off" }
+      ]
+    },
+    "BE-GCM-01": {
+      "name": "Country Market Playbook v1",
+      "enterprise_before": { "automation_pct": 35, "ops_cost": "HIGH", "verdict": "NOT_MET" },
+      "enterprise_target": { "automation_pct": 55, "ops_cost": "MEDIUM", "verdict": "MET" },
+      "acceptance": [
+        { "id": "GCM-A01", "priority": "P0", "criterion": "COUNTRY-MARKET-GO-LIVE-PLAYBOOK.v1.md exists with 7 phases", "probe": "run-sprint168 plan audit" },
+        { "id": "GCM-A02", "priority": "P0", "criterion": "country_market_launches table + CRUD Admin API", "probe": "cargo test country_market" },
+        { "id": "GCM-A03", "priority": "P0", "criterion": "Checklist JSONB patch per phase with audit log", "probe": "admin audit action" },
+        { "id": "GCM-A04", "priority": "P0", "criterion": "Publish blocked if legal+geo gates fail", "probe": "publish gate integration test" },
+        { "id": "GCM-A05", "priority": "P1", "criterion": "Admin country-market launches list UI (data-only)", "probe": "contract test" },
+        { "id": "GCM-A06", "priority": "P1", "criterion": "run-country-market-launch-gate.sh --iso=XX", "probe": "gate script exit 0" },
+        { "id": "GCM-A07", "priority": "P1", "criterion": "evidence/country_market/_TEMPLATE/ scaffold", "probe": "directory exists" },
+        { "id": "GCM-A08", "priority": "P2", "criterion": "One pilot ISO walkthrough documented", "probe": "evidence/country_market/CN or JP bundle" }
+      ]
+    }
+  },
+  "combined_gate": "TT_SPRINT168_BE_FRD01_GCM01",
+  "roi": {
+    "FRD-01": { "score": 9.2, "ops_hours_saved_monthly": 40, "risk_reduction": "CRITICAL_to_MEDIUM" },
+    "GCM-01": { "score": 8.5, "ops_hours_saved_per_country": 24, "markets_unlocked": "parallel" },
+    "combined_payback_weeks": 6
+  }
+}

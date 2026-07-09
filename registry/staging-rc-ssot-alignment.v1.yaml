@@ -1,0 +1,66 @@
+# Staging ↔ Release Candidate SSOT Alignment Cleanup
+# Human: docs/runbook/TT-STAGING-RC-SSOT-ALIGNMENT-CLEANUP.md
+
+schema: traveltrust.staging_rc_ssot_alignment.v1
+version: 1
+effective_utc: "2026-07-04"
+
+machine_keys:
+  TT_STAGING_RC_BASELINE: READY
+  TT_STAGING_RC_SSOT_ALIGNMENT: ENFORCED
+  TT_STAGING_RC_SSOT_PARITY: ALIGNED
+  TT_PRODUCTION_GO: NO_GO
+
+ssot_chain:
+  dataset: data/official-cold-start/dataset.v1.json
+  assets: data/official-cold-start/assets.v1.json
+  registry: registry/official-cold-start-dataset.v1.yaml
+  release_candidate: evidence/manual-uat/signoff/RELEASE-CANDIDATE-SIGNOFF-20260702T144513Z.md
+  display_governance: registry/display-data-governance.v1.yaml
+
+scope:
+  in_scope:
+    - historical_smoke_display_data_purge
+    - non_ocs_public_catalog_removal
+    - community_feed_ocs_only
+    - api_volume_media_rebundle_via_docker
+    - fly_process_restart_cache_flush
+    - staging_rc_parity_validation
+  out_of_scope:
+    - new_business_features
+    - production_go
+    - g3_cdn_cutover
+    - dns_tls_changes
+
+scripts:
+  orchestrator: scripts/dev/run-staging-rc-ssot-alignment-cleanup.sh
+  baseline_final: scripts/dev/run-staging-rc-baseline-final-alignment.sh
+  purge_display: scripts/dev/purge-staging-smoke-display-data.cjs
+  align_guides: scripts/dev/align-ocs-staging-guides-public-catalog.cjs
+  align_market: scripts/dev/align-ocs-staging-market-catalog.cjs
+  align_official_guides: scripts/dev/align-ocs-staging-official-guides.cjs
+  align_campaigns: scripts/dev/align-ocs-staging-campaigns.cjs
+  align_community: scripts/dev/align-ocs-staging-community-feed.cjs
+  purge_community_sql: scripts/dev/purge-staging-community-feed-sql.cjs
+  asset_baseline: scripts/dev/run-ocs-official-asset-baseline.sh
+  validate: scripts/dev/validate-staging-rc-ssot-parity.cjs
+  corridor_smoke_lib: scripts/dev/lib/staging-corridor-smoke.cjs
+
+evidence_root: evidence/GO_staging_rc_ssot_alignment/
+
+expected_staging_surface:
+  ocs_community_posts: 10
+  ocs_public_guides: 10
+  ocs_market_provider: 10
+  ocs_market_acquisition: 10
+  ocs_official_guides_published: 10
+  ocs_campaigns_deployed: 10
+  feed_smoke_posts: 0
+  corridor_smoke_bodies: 0
+  official_assets: 60
+
+unified_baseline_lib: scripts/dev/lib/staging-rc-public-surface-unified.cjs
+
+honest_boundary: >-
+  ALIGNED = Staging runtime matches OCS SSOT + RC signoff boundaries.
+  Not Production GO. Not public release. Publish deferred.

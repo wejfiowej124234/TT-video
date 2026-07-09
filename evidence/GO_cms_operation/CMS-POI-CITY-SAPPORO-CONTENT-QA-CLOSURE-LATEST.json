@@ -1,0 +1,127 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-05T12:55:01.361Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "札幌",
+    "city_en": "Sapporo",
+    "poi_count": 9
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "Osaka Golden Template",
+  "checks": {
+    "assets_locked_9_9": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CONTENT-QA-EXIT-CHECK-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-JP-033-ATR",
+      "poi": "大通公园",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-sapporo-odori-park-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T12:18:08.008Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-034-ATR",
+      "poi": "时计台",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-sapporo-clock-tower-community-media.jpg",
+      "locked_at_utc": "2026-07-05T12:23:09.076Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-035-ATR",
+      "poi": "羊之丘",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-sapporo-hitachi-hill-community-cover.jpg",
+      "locked_at_utc": "2026-07-05T12:28:10.570Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-036-ATR",
+      "poi": "白色恋人工厂",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-sapporo-shiroi-koibito-provider-cover.jpg",
+      "locked_at_utc": "2026-07-05T12:33:10.413Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-037-ATR",
+      "poi": "藻岩山",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-sapporo-moiwa-acquisition-cover.jpg",
+      "locked_at_utc": "2026-07-05T12:38:11.737Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-038-FOOD",
+      "poi": "味噌拉面",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-sapporo-miso-ramen-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-05T12:43:12.623Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-039-FOOD",
+      "poi": "成吉思汗",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-sapporo-jingisukan-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T12:45:05.202Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-040-FOOD",
+      "poi": "汤咖喱",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-sapporo-soup-curry-community-cover.jpg",
+      "locked_at_utc": "2026-07-05T12:48:13.525Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-JP-041-FOOD",
+      "poi": "海鲜",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-sapporo-seafood-provider-cover.jpg",
+      "locked_at_utc": "2026-07-05T12:50:06.924Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 9
+  },
+  "TT_CMS_POI_CITY_SAPPORO_CONTENT_QA": "CLOSED"
+}

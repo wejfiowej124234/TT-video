@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.ocs_content_l5_acquisition_product_identity_aggregate.v1",
+  "stamp_utc": "20260704T131932Z",
+  "acquisition_covers_reviewed": 3,
+  "TT_ACQUISITION_PRODUCT_IDENTITY_AGGREGATE": "PASS",
+  "rows": [
+    {
+      "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-kyoto-culture-acquisition-cover.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-seoul-food-acquisition-cover.jpg",
+      "pass": true
+    }
+  ],
+  "policy": "代购/悬赏商品须具明确本地特色与业务语义；不得与 Guide/Provider/Community/Official Guide 主体或场景混用；跨城商品不得高度相似。"
+}

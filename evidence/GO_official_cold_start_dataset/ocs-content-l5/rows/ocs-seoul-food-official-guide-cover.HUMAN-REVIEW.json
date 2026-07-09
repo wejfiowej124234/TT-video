@@ -1,0 +1,55 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T132430Z",
+  "filename": "ocs-seoul-food-official-guide-cover.jpg",
+  "chain_id": "seoul-food",
+  "city": "首尔",
+  "country_code": "KR",
+  "slot": "official-guide-cover",
+  "surface": "Official Guide",
+  "copy_label": "首尔 48 小时美食地图",
+  "manifest_copy": {
+    "official_guide.title": "首尔 48 小时美食地图",
+    "official_guide.destination": "首尔",
+    "official_guide.body": "按区域划分的美食清单，含预约建议与人均预算参考。",
+    "official_guide.tags": ["首尔", "美食", "官方精选"],
+    "official_guide.cover_url": "/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg"
+  },
+  "alignment_checklist": {
+    "city_100pct": true,
+    "destination_100pct": true,
+    "tags_100pct": true,
+    "title_body_100pct": true,
+    "route_logic_coherent": true,
+    "supports_half_or_full_day_guide": true,
+    "no_guide_provider_acquisition_community_mix": true
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 151652 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "明洞霓虹→益善洞韩屋巷→广藏市场美食厅宽幅路线，与 48h 美食地图 title/body/destination/tags 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "史诗宽幅路线封面；区别于 Row13 肖像、Row14 组团用餐、Row15 零食静物。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "首尔 KR-only；Hangul 霓虹+韩式市场；无日/中/他国地标。" },
+    "G5_brand_visual": { "pass": true, "notes": "霓虹+暖食路线感；与 seoul-food chain 品牌统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "官方攻略/Hero 封面观感。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光均衡、640x480 无低清块。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "HUMAN-REVIEW + Official Guide Destination + chain 4/6 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "首尔美食路线语义正确；多站点可读；无水印/畸形。" },
+    "G10_content_diversity": { "pass": true, "notes": "路线宽幅 slot；与 Tokyo 浅草-晴空塔摄影线、Kyoto 岚山-祇园文化线明显不同。" }
+  },
+  "destination_experience_review": {
+    "pass": true,
+    "notes": "用户可感知 48 小时按区域美食攻略的可信路线封面，支撑半日/两日规划。"
+  },
+  "official_guide_destination_review": {
+    "pass": true,
+    "first_formal_execution": true,
+    "route_stops_readable": ["明洞", "益善洞", "广藏市场", "北村韩屋远景"],
+    "vs_tokyo": "摄影一日机位线 vs 美食区域地图线",
+    "vs_kyoto": "文化慢游 vs 霓虹+市场美食线"
+  },
+  "guide_provider_acquisition_regression": {
+    "pass": true,
+    "notes": "Rows 1-15 无回归、冲突或品牌漂移。"
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

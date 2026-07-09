@@ -1,0 +1,119 @@
+{
+  "recheck_id": "20260607T144225Z",
+  "recorded_at": "20260607T144225Z",
+  "verdict": "PHASE3_ENTRY_GO",
+  "catalog_freeze": "CATALOG_RELEASE_FREEZE_GO",
+  "blockers": 0,
+  "flags": {
+    "NEXT_PUBLIC_CATALOG_API_ENABLED": "0",
+    "CATALOG_SERVER_GEO_VALIDATION": "0"
+  },
+  "checks": [
+    {
+      "name": "API health + auth",
+      "result": "PASS",
+      "notes": "PHASE28_HUMAN_ACCEPTANCE PASS"
+    },
+    {
+      "name": "Admin key pages",
+      "result": "PASS",
+      "notes": ""
+    },
+    {
+      "name": "Community media gate",
+      "result": "PASS",
+      "notes": ""
+    },
+    {
+      "name": "Six-domain UAT",
+      "result": "PASS",
+      "notes": ""
+    },
+    {
+      "name": "HAT (P0/P1 blockers)",
+      "result": "PASS",
+      "notes": ""
+    },
+    {
+      "name": "Catalog S5 release freeze gate",
+      "result": "PASS",
+      "notes": ""
+    }
+  ],
+  "domain_rows": [
+    {
+      "domain": "D1\u2013D6 UAT",
+      "req": "Staging six-domain PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "HAT",
+      "req": "P0=0 P1=0",
+      "status": "PASS"
+    },
+    {
+      "domain": "Admin",
+      "req": "Key /admin/* shells",
+      "status": "PASS"
+    },
+    {
+      "domain": "API",
+      "req": "/health /meta /auth",
+      "status": "PASS"
+    },
+    {
+      "domain": "Catalog",
+      "req": "S5 freeze gate",
+      "status": "CATALOG_RELEASE_FREEZE_GO"
+    },
+    {
+      "domain": "Community media",
+      "req": "C2/C5/C7 + capabilities",
+      "status": "PASS"
+    }
+  ],
+  "remaining_p0": [
+    {
+      "id": "PI3-001",
+      "text": "Fly PG prod backup B-475 status=PASS"
+    },
+    {
+      "id": "PI3-002",
+      "text": "Dedicated prod domain + CDN + locked CORS"
+    },
+    {
+      "id": "PI3-003",
+      "text": "Stripe Live + production webhook"
+    },
+    {
+      "id": "PI3-004",
+      "text": "R-002 / 93 full-site prod report.json GO"
+    },
+    {
+      "id": "PI3-005",
+      "text": "Mainnet \u00a79 G0\u2013G6+SL (or written Sepolia-only scope)"
+    },
+    {
+      "id": "PI3-006",
+      "text": "go-live-checklist \u00a70\u2013\u00a711 + P0 twelve items"
+    }
+  ],
+  "remaining_p1": [
+    {
+      "id": "HAT-P2-001",
+      "text": "Staging \u65e0\u9884\u7f6e merchant@test.com \u4e00\u952e\u8d26\u53f7"
+    },
+    {
+      "id": "P6",
+      "text": "CI full npm run build + lint green"
+    },
+    {
+      "id": "P8",
+      "text": "Admin prod SSO/RBAC vs staging promote_admin"
+    },
+    {
+      "id": "B-S4-02~06",
+      "text": "Catalog S6+ server geo gaps (frozen \u00b7 not Entry blockers)"
+    }
+  ]
+}

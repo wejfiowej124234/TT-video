@@ -1,0 +1,37 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T143500Z",
+  "filename": "ocs-singapore-family-community-cover.jpg",
+  "row": 29,
+  "chain_id": "singapore-family",
+  "country_code": "SG",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "checks": {
+    "manifest_alignment": { "pass": true, "notes": "body/tags/destination 与 brief+dataset 100%" },
+    "destination_authenticity_9dim": { "pass": true, "notes": "滨海湾花园儿童瞬间 SG-only" },
+    "country_consistency_sg": { "pass": true },
+    "community_authenticity_plan": { "pass": true, "ugc_share_not_ad_poster": true },
+    "surface_boundary_plan": { "pass": true, "notes": "Community Cover Feed · 非 Official/Guide/Provider/Acquisition" },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row28": "儿童近景情绪 vs Official 天际线宽幅",
+      "vs_row25": "分享瞬间 vs 向导肖像",
+      "vs_row30_media": "Feed 情绪吸引 vs 环境叙事（圣淘沙/超级树）"
+    },
+    "cover_media_complement_plan": {
+      "pass": true,
+      "row29_cover": "儿童开心近景 · 情绪 · Feed 缩略",
+      "row30_media_planned": "圣淘沙海滩或超级树 grove 环境广角",
+      "different_subject_angle_composition": true
+    },
+    "cross_chain_community_plan": {
+      "pass": true,
+      "vs_tokyo_kyoto_seoul_bangkok": "亲子儿童瞬间 vs 街景/茶道/美食/寺庙剪影"
+    },
+    "brand_consistency_plan": { "pass": true },
+    "consumer_experience_plan": { "pass": true, "feed_thumbnail_attraction": true },
+    "business_authenticity": { "pass": true },
+    "copyright_logo_watermark_ai": { "pass": true, "no_watermark": true, "no_logo": true, "no_ai_artifacts": true },
+    "nine_class_framework_frozen": true
+  }
+}

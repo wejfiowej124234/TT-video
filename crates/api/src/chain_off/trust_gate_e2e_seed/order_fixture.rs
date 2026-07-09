@@ -40,9 +40,12 @@ pub(super) fn base_order(
         guide_confirmed: None,
         rating_tourist_confirmed: None,
         rating_guide_confirmed: None,
+        service_tourist_confirmed: None,
+        service_guide_confirmed: None,
         chain_id: None,
         order_kind: None,
         market_listing_id: None,
         data_origin: "production".into(),
+        ..Default::default()
     }
 }

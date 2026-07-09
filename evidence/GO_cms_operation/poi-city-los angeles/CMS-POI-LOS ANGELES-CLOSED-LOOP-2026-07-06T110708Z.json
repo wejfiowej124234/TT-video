@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T11:07:08Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "US",
+    "city_zh": "洛杉矶",
+    "city_en": "Los Angeles",
+    "matrix_ids": [
+      "PH-US-150-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-US-150-ATR",
+      "legacy_value": "好莱坞",
+      "poi_id": "4b8dc4dc-d683-4c6f-ac01-d3207f13a5b4",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-150-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

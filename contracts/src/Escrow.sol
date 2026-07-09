@@ -135,7 +135,7 @@ contract Escrow {
     /// @notice Completed 路径放款分账（01 §10 / 80 附录 §2 · Completed 收平台费）。
     /// @dev 向导到账 = floor(totalAmount * (10000 - platformFeeBps) / 10000)；
     ///      平台费 = totalAmount - guideAmount（BPS 乘除余数归平台费腿，与 01「dust 归平台」一致）。
-    function release() external {
+    function release() external virtual {
         if (status != Status.Funded) revert InvalidState();
         uint256 guideAmount = (totalAmount * (uint256(10000) - uint256(platformFeeBps))) / 10000;
         uint256 fee = totalAmount - guideAmount;

@@ -86,7 +86,8 @@ Production GO     NO_GO
 | **Monitoring** | **G2** | 🟡 |
 | **Deployment** | **G3** | 🟢 |
 | **Domain / CDN** | **G3** | 🟡 |
-| **Stripe Live** | **G3** | 🔴 |
+| **Web3 USDC Escrow Payment** | **G3** | 🔴 |
+| **Optional Fiat Onboarding (Stripe)** | **G3** | 🟢 P1 |
 | **Disaster Recovery** | **G3** | 🟡 |
 
 **Production GO 规则（写死）：** **G1 PASS** + **G2 PASS** + **G3 PASS** → GO 决策闸
@@ -95,7 +96,7 @@ Production GO     NO_GO
 |---------|------|------|-------------------|
 | **G1** Product Verification | **IN_PROGRESS** | 1.1 | **Browser UAT · Manual Validation** |
 | **G2** Production Hardening | NOT_STARTED | 2 | Security · Performance · Monitoring |
-| **G3** Production Cutover | NOT_STARTED | 3 | Stripe · Domain/CDN · DR · Go Live |
+| **G3** Production Cutover | NOT_STARTED | 3 | Web3 Payment · Domain/CDN · DR · Go Live |
 
 **G1 执行：** `bash scripts/dev/run-production-readiness-wave-1-1-g1.sh` · 签收 `node scripts/dev/validate-production-readiness-g1-gate.cjs`
 
@@ -175,7 +176,7 @@ DOMAIN: SEC | UAT | MVAL | CONTENT | PER | OBS | DEP | DOM | STR | DR | MON
 CLASS:  B=BLOCKER · D=DEFECT · E=EXPECTED_DIFFERENCE · N=ENHANCEMENT
 ```
 
-示例：`PRM-STR-B001` = Stripe Live · BLOCKER · #001 · `PRM-CONTENT-B001` = 历史 CLOSED · 新问题用 `PRM-CONTENT-B00X`
+示例：`PRM-WEB3-PAY-B001` = Web3 Escrow Payment · BLOCKER · `PRM-STR-B001` = Optional Fiat Onboarding · ENHANCEMENT
 
 ---
 
@@ -206,7 +207,8 @@ CLASS:  B=BLOCKER · D=DEFECT · E=EXPECTED_DIFFERENCE · N=ENHANCEMENT
 |-----|--------|------------|
 | PI3-001 | Disaster Recovery | PRM-DR-B001 · PRM-DR-B002 |
 | PI3-002 | Domain / CDN | PRM-DOM-B001 (+ PRM-DOM-D001 DEFECT) |
-| PI3-003 | Stripe Live | PRM-STR-B001 |
+| G3-02 | Web3 USDC Escrow Payment | PRM-WEB3-PAY-B001 |
+| PI3-003 | Optional Fiat Onboarding (Stripe) | PRM-STR-B001 (P1 · not blocking) |
 | PI3-004 | Manual Validation | PRM-MVAL-B004 |
 | PI3-005 | Security / Mainnet | Mainnet scope — 见 [PRODUCTION-GO-DECISION-PACKAGE](PRODUCTION-GO-DECISION-PACKAGE.md) |
 | PI3-006 | 全域 | go-live §0～§11 并联 |

@@ -1,0 +1,167 @@
+{
+  "acceptance_id": "TT_GOVERNANCE_CERT_03_ADMIN_WALKTHROUGH",
+  "signoff_kind": "HUMAN-SIGNOFF",
+  "cert": 3,
+  "stamp_utc": "20260616T100918Z",
+  "signer": "Sebastian Ward",
+  "signed_at_utc": "2026-06-16T14:47:15Z",
+  "rbac_gap_list_zero": true,
+  "rbac_alignment_stamp": "20260616T142200Z",
+  "mtm_ssot": "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+  "mtm_ids": [
+    "CHK-CORE-03",
+    "CHK-CORE-24",
+    "CHK-FE-14",
+    "CHK-ADM-01",
+    "CHK-ADM-02",
+    "CHK-ADM-03",
+    "CHK-ADM-04",
+    "CHK-ADM-05",
+    "CHK-ADM-06",
+    "CHK-ADM-07"
+  ],
+  "target_tier": "HUMAN_DONE",
+  "console_roles_walked": [
+    "SuperAdmin",
+    "Finance",
+    "Risk",
+    "Ops",
+    "Auditor"
+  ],
+  "verifications": {
+    "page_visibility": "admin vitest 107 + adminHomeCardPermission",
+    "api_permission_deny": "cargo cert3 + smoke-admin-rbac-matrix-local",
+    "treasury_no_write": "no admin treasury/spend route in live router",
+    "approval_permissions": "SuperAdmin allow · Finance/Risk/Ops/Auditor deny",
+    "community_governance": "Risk moderate allow · Auditor write deny",
+    "audit_readonly": "Auditor/CS audit-logs read · moderate deny"
+  },
+  "uat_refs": [
+    "C1",
+    "C2"
+  ],
+  "recordings": [
+    "C1-admin-finance-ops-boundaries.mp4",
+    "C2-risk-auditor-community-audit.mp4"
+  ],
+  "screenshots": [
+    "role-auditor-readonly.png",
+    "role-finance-read.png",
+    "role-ops-onboarding.png",
+    "role-risk-community.png",
+    "role-superadmin-c1.png"
+  ],
+  "machine_checks_verdict": "PASS",
+  "machine_checks": {
+    "rbac_gap_list_zero": {
+      "ok": true,
+      "handlers_gap": 0,
+      "stamp": "2026-06-16T14:22:01Z"
+    },
+    "treasury_no_admin_write_route": {
+      "ok": true,
+      "hits": []
+    },
+    "superadmin_has_approve_not_auditor": {
+      "ok": true,
+      "superadmin_approve": true,
+      "auditor_moderate": false
+    },
+    "static_role_route_matrix": {
+      "ok": true,
+      "rows": [
+        {
+          "role": "Finance",
+          "route": "GET /api/v1/admin/finance/summary",
+          "expect": "allow",
+          "ok": true
+        },
+        {
+          "role": "Finance",
+          "route": "GET /api/v1/admin/approvals",
+          "expect": "deny",
+          "ok": true
+        },
+        {
+          "role": "Finance",
+          "route": "POST /api/v1/admin/flags/:id/publish",
+          "expect": "deny",
+          "ok": true
+        },
+        {
+          "role": "Risk",
+          "route": "GET /api/v1/admin/community/reports",
+          "expect": "allow",
+          "ok": true
+        },
+        {
+          "role": "Risk",
+          "route": "GET /api/v1/admin/finance/summary",
+          "expect": "deny",
+          "ok": true
+        },
+        {
+          "role": "Risk",
+          "route": "GET /api/v1/admin/approvals",
+          "expect": "deny",
+          "ok": true
+        },
+        {
+          "role": "Auditor",
+          "route": "GET /api/v1/admin/audit-logs",
+          "expect": "allow",
+          "ok": true
+        },
+        {
+          "role": "Auditor",
+          "route": "POST /api/v1/admin/community/penalties",
+          "expect": "deny",
+          "ok": true
+        },
+        {
+          "role": "Auditor",
+          "route": "GET /api/v1/admin/approvals",
+          "expect": "deny",
+          "ok": true
+        },
+        {
+          "role": "Ops",
+          "route": "GET /api/v1/admin/finance/summary",
+          "expect": "allow",
+          "ok": true
+        },
+        {
+          "role": "Ops",
+          "route": "GET /api/v1/admin/approvals",
+          "expect": "deny",
+          "ok": true
+        },
+        {
+          "role": "SuperAdmin",
+          "route": "GET /api/v1/admin/approvals",
+          "expect": "allow",
+          "ok": true
+        }
+      ]
+    },
+    "cargo_cert3_tests": {
+      "cmd": "cargo test -p traveltrust-api -- cert3_console_role_rbac_matrix_sequential",
+      "exit_code": 0,
+      "ok": true,
+      "stdout_tail": "\nrunning 1 test\ntest routes::admin::tests::cert3_console_role_rbac_matrix_sequential ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1198 filtered out; finished in 0.00s\n",
+      "stderr_tail": "26 | pub(crate) use signature::build_stripe_webhook_signature_header;\n   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\nwarning: `traveltrust-api` (bin \"traveltrust-api\" test) generated 2 warnings (run `cargo fix --bin \"traveltrust-api\" --tests` to apply 2 suggestions)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.41s\n     Running unittests src\\main.rs (target\\debug\\deps\\traveltrust_api-08408a08db87a5b2.exe)"
+    },
+    "smoke_admin_rbac_matrix": {
+      "ok": true,
+      "exit_code": 0,
+      "stdout_tail": "== smoke-admin-rbac-matrix-local (??) API=http://127.0.0.1:8080 ==\nsmoke-admin-rbac-matrix-local: OK assign CS console role via db\nsmoke-admin-rbac-matrix-local: OK db_console_role + route_matrix + CS deny publish + Finance allow finance read"
+    }
+  },
+  "verdict": "PASS",
+  "honest_boundary": "② Cert#3 admin walkthrough ≠ 58/58 Human ≠ Enterprise 100 ≠ ③ Production GO",
+  "forbidden": [
+    "new features",
+    "govfreeze v2 changes",
+    "docs/spec expansion"
+  ]
+}

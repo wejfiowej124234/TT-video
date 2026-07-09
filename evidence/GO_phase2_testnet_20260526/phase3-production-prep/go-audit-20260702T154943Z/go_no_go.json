@@ -1,0 +1,27 @@
+{
+  "schema": "phase3_production_go_audit.v1",
+  "at": "20260702T154943Z",
+  "phase": "③",
+  "scope": "production_go_preparation_audit",
+  "api_base": "https://tt-api-prod.fly.dev",
+  "web_base": "https://tt-web-prod.fly.dev",
+  "counts": {
+    "pass": 6,
+    "warn": 3,
+    "blocker_non_production": 4,
+    "blocker_production_only": 7,
+    "blocker_total": 11
+  },
+  "convergence_gate": "FAIL",
+  "non_production_blockers": 4,
+  "production_only_blockers": 7,
+  "verdict": "NO_GO",
+  "verdict_reason": "4 non-prod BLOCKER(s) · 7 production-only · 3 WARN · 6 PASS",
+  "honest_boundary": "staging proxy checks ≠ Production GO · PI-3 P0 must close · M-00 unsigned · production_only blockers expected until prod cutover",
+  "ssot": [
+    "docs/runbook/PHASE3-PRODUCTION-PREPARATION.md",
+    "docs/go-live-checklist.md",
+    "evidence/GO_phase2_testnet_20260526/phase3-production-prep/issues-phase3-production.md",
+    "evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260701T002252Z.md"
+  ]
+}

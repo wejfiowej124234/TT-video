@@ -210,6 +210,9 @@ async function auditS02Discover(token) {
   if (dupIds(rows).length) block(sid, 'UUID_DUP', 'discover orders');
   const bad = rows.filter((o) => /^(test|demo|smoke)$/i.test(o.data_origin || ''));
   if (bad.length) block(sid, 'DATA_ORIGIN_LEAK', `${bad.length} test/demo in discover`);
+  const { isSmokeContent } = require('./lib/smoke-data-heuristics.cjs');
+  const smokeOrders = rows.filter((o) => isSmokeContent(o));
+  if (smokeOrders.length) block(sid, 'SMOKE_CONTENT_LEAK', `${smokeOrders.length} smoke orders in discover`);
   checkPlaceholderCollisions(rows, orderCoverPlaceholderKey, sid, 'ORDER_COVER');
 
   if (token) {
@@ -233,6 +236,11 @@ async function auditS03Community() {
   report.surfaces[sid] = { feed_count: posts.length };
   if (feed.status !== 200) block(sid, 'API_UNREACHABLE', String(feed.status));
   if (dupIds(posts).length) block(sid, 'UUID_DUP', 'feed posts');
+  const bad = posts.filter((p) => /^(test|demo|smoke)$/i.test(p.data_origin || ''));
+  if (bad.length) block(sid, 'DATA_ORIGIN_LEAK', `${bad.length} test/demo in community feed`);
+  const { isSmokeContent } = require('./lib/smoke-data-heuristics.cjs');
+  const smokePosts = posts.filter((p) => isSmokeContent(p));
+  if (smokePosts.length) block(sid, 'SMOKE_CONTENT_LEAK', `${smokePosts.length} smoke posts in feed`);
 
   const p1 = await getJson('/api/v1/community/feed?limit=10');
   const page1 = p1.json.posts || [];
@@ -406,17 +414,114 @@ async function auditS11GuideDetail() {
   report.surfaces[sid] = out;
 }
 
-async function auditS12MarketListings() {
+/** Listings without videoUrl share one PLACEHOLDER_IMG by design — no per-id pool yet. */
+function listingHasExplicitMedia(row) {
+  const p = row.payload || {};
+  const videoUrl = typeof p.videoUrl === 'string' ? p.videoUrl.trim() : '';
+  return videoUrl.startsWith('http://') || videoUrl.startsWith('https://');
+}
+
+async function auditS12MarketListings(token) {
   const sid = 'S12_MARKET_LISTINGS';
   for (const variant of ['provider', 'acquisition']) {
     const r = await getJson(`/api/v1/market/${variant}/listings?limit=50`);
     const rows = r.json.items || [];
     report.surfaces[sid] = report.surfaces[sid] || {};
-    report.surfaces[sid][variant] = rows.length;
-    if (r.status !== 200) warn(sid, 'API_WARN', `${variant} listings ${r.status}`);
+    report.surfaces[sid][variant] = { api_count: rows.length, detail_checked: 0 };
+    if (r.status !== 200) block(sid, 'API_UNREACHABLE', `${variant} listings ${r.status}`);
     if (dupIds(rows).length) block(sid, 'UUID_DUP', variant);
     const bad = rows.filter((x) => /^(test|demo|smoke)$/i.test(x.data_origin || ''));
-    if (bad.length) warn(sid, 'TEST_LISTING_PUBLIC', `${bad.length} test ${variant} listings visible`);
+    if (bad.length) block(sid, 'DATA_ORIGIN_LEAK', `${bad.length} test ${variant} listings visible`);
+
+    if (token) {
+      const admin = await getJson(
+        `/api/v1/admin/official/public-operations/publish-queue?entity_type=market_listings&limit=500`,
+        token
+      );
+      const adminPub = (admin.json.items || []).filter(
+        (x) =>
+          x.display_status === 'published' &&
+          (x.label || '').toLowerCase().includes(variant === 'provider' ? 'provider' : 'acquisition')
+      );
+      const pubIds = new Set(rows.map((r) => r.id));
+      const adminIds = new Set(adminPub.map((x) => x.id));
+      const orphanPublic = rows.filter((r) => !adminIds.has(r.id));
+      const missingPublic = adminPub.filter((x) => !pubIds.has(x.id) && x.data_origin === 'production');
+      if (orphanPublic.length) {
+        block(sid, 'ADMIN_DRIFT_ORPHAN', `${variant} public not in admin queue: ${orphanPublic.map((r) => r.id).join(',')}`);
+      }
+      if (missingPublic.length) {
+        warn(sid, 'ADMIN_DRIFT_MISSING', `${variant} admin published missing public: ${missingPublic.map((x) => x.id).join(',')}`);
+      }
+      report.surfaces[sid][variant].admin_published = adminPub.length;
+    }
+
+    for (const row of rows) {
+      if (!row.id) block(sid, 'MISSING_ID', `${variant} listing without id`);
+      const title = row.payload?.title;
+      if (typeof title !== 'string' || !title.trim()) {
+        warn(sid, 'MISSING_TITLE', `${variant} ${row.id} missing payload.title`);
+      }
+    }
+
+    const withoutMedia = rows.filter((row) => !listingHasExplicitMedia(row));
+    if (withoutMedia.length > 1) {
+      report.surfaces[sid][variant].shared_placeholder_count = withoutMedia.length;
+    }
+
+    for (const row of rows.slice(0, 3)) {
+      if (!row.id) continue;
+      const detail = await getJson(
+        `/api/v1/market/${variant}/listings/${encodeURIComponent(row.id)}`
+      );
+      report.surfaces[sid][variant].detail_checked += 1;
+      if (detail.status !== 200) {
+        warn(sid, 'DETAIL_GAP', `${variant} detail ${row.id} HTTP ${detail.status}`);
+        continue;
+      }
+      const lid = detail.json.listing?.id || detail.json.id;
+      if (lid && lid !== row.id) block(sid, 'UUID_DRIFT', `${variant} list ${row.id} detail ${lid}`);
+    }
+  }
+}
+
+async function auditS13Itinerary(token) {
+  const sid = 'S13_ITINERARY';
+  const countries = await getJson('/api/v1/catalog/countries?limit=50');
+  report.surfaces[sid] = {
+    catalog_countries: (countries.json.items || []).length,
+    catalog_status: countries.status,
+  };
+  if (countries.status !== 200) block(sid, 'CATALOG_UNREACHABLE', `countries ${countries.status}`);
+  if (token) {
+    const itin = await getJson('/api/v1/itineraries?limit=20', token);
+    report.surfaces[sid].itineraries_status = itin.status;
+    report.surfaces[sid].itineraries_count = (itin.json.items || itin.json.itineraries || []).length;
+    if (itin.status !== 200 && itin.status !== 404 && itin.status !== 405) {
+      warn(sid, 'ITINERARIES_DRIFT', `/itineraries ${itin.status}`);
+    }
+  } else {
+    warn(sid, 'SKIP_NO_TOKEN', 'itinerary authed list skipped');
+  }
+}
+
+async function auditS14Web3() {
+  const sid = 'S14_WEB3_META';
+  const meta = await getJson('/meta');
+  const chainId = meta.json.chain?.chain_id;
+  report.surfaces[sid] = {
+    status: meta.status,
+    chain_id: chainId,
+    has_contracts: !!meta.json.chain?.contracts,
+  };
+  if (meta.status !== 200) block(sid, 'META_UNREACHABLE', String(meta.status));
+  if (ENV_LABEL === 'staging' && Number(chainId) !== 11155111) {
+    block(sid, 'CHAIN_ID_DRIFT', `staging expected 11155111 got ${chainId}`);
+  }
+  const contracts = meta.json.chain?.contracts || {};
+  const required = ['governor_address', 'treasury_address'];
+  for (const k of required) {
+    if (!contracts[k]) warn(sid, 'CONTRACT_GAP', `missing chain.contracts.${k}`);
   }
 }
 
@@ -446,7 +551,9 @@ async function auditS00MockPolicy() {
   await auditS09Messages(token);
   await auditS10Admin(token);
   await auditS11GuideDetail();
-  await auditS12MarketListings();
+  await auditS12MarketListings(token);
+  await auditS13Itinerary(token);
+  await auditS14Web3();
 
   console.log(
     'frontend-api-consistency-audit:',

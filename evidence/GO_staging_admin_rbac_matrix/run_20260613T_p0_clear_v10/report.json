@@ -1,0 +1,71 @@
+{
+  "artifact": "adm-u01-staging-rbac-matrix",
+  "phase": "\u2461",
+  "environment": {
+    "name": "staging",
+    "api_base": "https://tt-api-staging.fly.dev",
+    "probe_api_base": "https://tt-api-staging.fly.dev",
+    "not_localhost_assertion": true,
+    "health_checked_staging_url": "https://tt-api-staging.fly.dev",
+    "deployment_kind": "persistent_host"
+  },
+  "matrix_version": "admin-rbac-v4-cms-ops-growth-2026-06-07",
+  "registry_version": "adm-u01-staging-2026-06-03",
+  "generated_at": "20260613T125816Z",
+  "roles": [
+    "SuperAdmin",
+    "Ops",
+    "CS",
+    "Risk",
+    "Finance",
+    "Auditor"
+  ],
+  "shell_domains": [
+    "workbench",
+    "onboarding",
+    "operations",
+    "community",
+    "finance",
+    "governance",
+    "more"
+  ],
+  "summary": {
+    "total": 102,
+    "pass": 34,
+    "fail": 68,
+    "by_domain": {
+      "workbench": {
+        "pass": 0,
+        "fail": 12
+      },
+      "onboarding": {
+        "pass": 0,
+        "fail": 12
+      },
+      "operations": {
+        "pass": 1,
+        "fail": 17
+      },
+      "community": {
+        "pass": 7,
+        "fail": 5
+      },
+      "finance": {
+        "pass": 2,
+        "fail": 10
+      },
+      "governance": {
+        "pass": 9,
+        "fail": 3
+      },
+      "more": {
+        "pass": 15,
+        "fail": 9
+      }
+    }
+  },
+  "release_gate": "NO_GO",
+  "evidence_files": [
+    "matrix-api-results.json"
+  ]
+}

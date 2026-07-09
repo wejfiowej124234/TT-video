@@ -1,0 +1,10 @@
+{
+  "review": "PCP_AUTHENTICITY_GAP_REGISTER",
+  "stamp": "20260703T234311Z",
+  "gaps": [],
+  "fix_order": [],
+  "totals": {
+    "blocker": 0,
+    "defect": 0
+  }
+}

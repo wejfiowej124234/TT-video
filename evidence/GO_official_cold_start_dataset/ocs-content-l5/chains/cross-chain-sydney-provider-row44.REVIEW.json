@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T150330Z",
+  "trigger_row": 44,
+  "trigger_filename": "ocs-sydney-coast-provider-cover.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "provider_comparison": {
+    "tokyo-photo": "台场半日旅拍",
+    "kyoto-culture": "私享茶室",
+    "seoul-food": "夜市美食团",
+    "bangkok-temple": "湄南河 sunset 游船晚宴",
+    "singapore-family": "亲子通票水族馆",
+    "paris-art": "博物馆小团",
+    "nyc-skyline": "观景台联票",
+    "sydney-coast": "海港皮划艇半日",
+    "distinct": true
+  },
+  "no_quality_regression_prior_43": true
+}

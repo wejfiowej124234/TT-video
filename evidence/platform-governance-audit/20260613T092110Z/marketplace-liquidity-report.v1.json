@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.marketplace_liquidity.v1",
+  "discover_api": "GET discover orders",
+  "market_routes": [
+    "/market",
+    "/market/acquisition",
+    "/market/acquisition/[id]",
+    "/market/provider",
+    "/market/provider/showcase/[id]"
+  ],
+  "note": "② cross-device bookmarks SLA separate"
+}

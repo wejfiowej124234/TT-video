@@ -1,0 +1,6 @@
+status: PASS
+phase: ②
+artifact: TN-P1-007 + TN-P1-008 HAT
+at: 20260614T040856Z
+release_gate: GO
+personas: Traveler Guide Merchant Region-Steward Moderator Admin

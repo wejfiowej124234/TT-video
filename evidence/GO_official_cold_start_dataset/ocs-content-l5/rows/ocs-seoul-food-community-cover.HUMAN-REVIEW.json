@@ -1,0 +1,56 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T132930Z",
+  "filename": "ocs-seoul-food-community-cover.jpg",
+  "chain_id": "seoul-food",
+  "city": "首尔",
+  "country_code": "KR",
+  "slot": "community-cover",
+  "surface": "Community Cover",
+  "copy_label": "明洞到广藏市场的 48 小时美食巡礼——官方实测排队时间与人均预算。",
+  "manifest_copy": {
+    "community_post.destination_slug": "seoul",
+    "community_post.destination_label": "首尔",
+    "community_post.post_type": "photo",
+    "community_post.tags": ["首尔", "美食", "官方旅行日志"],
+    "community_post.body_markdown": "明洞到广藏市场的 48 小时美食巡礼——官方实测排队时间与人均预算。",
+    "community_post.cover_url": "/api/v1/uploads/community-posts/ocs-seoul-food-community-cover.jpg"
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 88993 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "广藏市场 tteokbokki+筷子近景分享瞬间，与 body/tags/destination 美食巡礼 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "单道代表菜+筷子 Feed 缩略；与 Row13-16 各 slot 类型均不同。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "首尔 KR 市场场景；Hangul 背景；无他国元素。" },
+    "G5_brand_visual": { "pass": true, "notes": "高食欲 UGC 纪实；与 seoul-food chain 统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "Community Feed 首屏缩略可读；非硬广海报。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光自然、640x480 无低清块。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "HUMAN-REVIEW + Community Authenticity + chain 5/6 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "真实市场用餐瞬间；手脸自然；无水印。" },
+    "G10_content_diversity": { "pass": true, "notes": "食物近景+旅行者互动 slot；与 Tokyo 街景、Kyoto 茶道手势不同。" }
+  },
+  "destination_experience_review": {
+    "pass": true,
+    "notes": "传递首尔街头美食巡礼的真实兴奋与食欲体验。"
+  },
+  "community_authenticity_review": {
+    "pass": true,
+    "first_formal_execution": true,
+    "authentic_share_feel": true,
+    "natural_interaction": true,
+    "feed_thumbnail_readability": true,
+    "emotional_travel_expression": true,
+    "ugc_style_not_commercial_poster": true
+  },
+  "consumer_experience_review": {
+    "pass": true,
+    "not_ad_like": true,
+    "not_staged_photoshoot": true,
+    "not_stock_library": true,
+    "not_duplicate_official_guide_cover": true
+  },
+  "prior_surfaces_regression": {
+    "pass": true,
+    "notes": "Guide/Provider/Acquisition/Official Guide Rows 13-16 无回归。"
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

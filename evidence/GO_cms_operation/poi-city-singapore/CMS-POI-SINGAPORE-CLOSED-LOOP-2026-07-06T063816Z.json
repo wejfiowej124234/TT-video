@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T06:38:16Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "SG",
+    "city_zh": "新加坡",
+    "city_en": "Singapore",
+    "matrix_ids": [
+      "PH-SG-110-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-SG-110-FOOD",
+      "legacy_value": "椰浆饭",
+      "poi_id": "c1c625dc-b04f-460d-b6bb-b301457e4103",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg",
+      "hero_file": "ocs-singapore-family-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-SG-110-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

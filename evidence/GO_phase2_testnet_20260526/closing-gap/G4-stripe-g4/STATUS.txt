@@ -1,0 +1,8 @@
+status: PASS
+last_run: 20260606T095305Z
+api_base: https://tt-api-staging.fly.dev
+stripe_mode: test
+webhook_url: https://tt-api-staging.fly.dev/api/v1/hooks/stripe/onboarding
+note: G-4 Stripe real test PI + webhook + non-zero amount (LOCAL_DEV=0)
+phase: ② testnet closing gap
+artifacts: payment-flow.log webhook.log run.log

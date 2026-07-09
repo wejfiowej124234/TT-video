@@ -1,0 +1,5 @@
+status: PASS
+phase: ②
+artifact: TN-P1-006 WEB3-P2-003
+at: 20260614T030618Z
+release_gate: GO

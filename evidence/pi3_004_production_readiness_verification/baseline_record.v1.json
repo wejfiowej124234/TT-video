@@ -1,0 +1,11 @@
+{
+  "schema": "traveltrust_pi3_004_production_readiness_verification.v1",
+  "status": "PLANNED",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "chain_id": 11155111,
+  "report_json_path": "D:/TravelTrust-V1.1/evidence/pi3_004_production_readiness_verification/r003-production-20260702T170051Z/report.json",
+  "report_release_gate": "PARTIAL_GO",
+  "last_r003_production_run_utc": "2026-07-02T17:01:30Z",
+  "six_domain_uat_prod_utc": "",
+  "notes": "R-003 production run 2026-07-02T17:01:30Z release_gate=PARTIAL_GO"
+}

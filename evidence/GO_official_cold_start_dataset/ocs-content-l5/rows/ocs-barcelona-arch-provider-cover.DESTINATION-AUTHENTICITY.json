@@ -1,0 +1,122 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_review.v1",
+  "stamp_utc": "20260704T152046Z",
+  "filename": "ocs-barcelona-arch-provider-cover.jpg",
+  "chain_id": "barcelona-arch",
+  "city": "巴塞罗那",
+  "country_code": "ES",
+  "country_label": "西班牙",
+  "slot": "provider-cover",
+  "surface": "Provider",
+  "manifest_snapshot": {
+    "chain_id": "barcelona-arch",
+    "city": "巴塞罗那",
+    "country_code": "ES",
+    "country_label": "西班牙",
+    "chain_tags": [
+      "建筑",
+      "高迪"
+    ],
+    "provider.title": "高迪三件套联票 · 含导览",
+    "provider.category": "experience",
+    "provider.description": "含圣家堂、巴特罗之家与桂尔公园预约。",
+    "provider.cover_url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg"
+  },
+  "manifest_field_alignment": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "matrix_city_matches_manifest",
+        "pass": true,
+        "detail": "matrix=巴塞罗那 manifest=巴塞罗那"
+      },
+      {
+        "id": "country_code_present",
+        "pass": true,
+        "detail": "ES"
+      },
+      {
+        "id": "copy_label_non_empty",
+        "pass": true,
+        "detail": "高迪三件套联票 · 含导览"
+      },
+      {
+        "id": "copy_label_contains_city_or_chain_theme",
+        "pass": true,
+        "detail": "manifest title/country/tags aligned"
+      }
+    ],
+    "requirement": "图片与 Manifest 全字段 100% 同城同主题对齐"
+  },
+  "destination_authenticity_checklist": {
+    "architecture": {
+      "pass": true,
+      "belongs_to_city": "巴塞罗那",
+      "belongs_to_country": "西班牙",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴塞罗那 (西班牙). No cross-city/country/culture mixing."
+    },
+    "streetscape": {
+      "pass": true,
+      "belongs_to_city": "巴塞罗那",
+      "belongs_to_country": "西班牙",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴塞罗那 (西班牙). No cross-city/country/culture mixing."
+    },
+    "clothing": {
+      "pass": true,
+      "belongs_to_city": "巴塞罗那",
+      "belongs_to_country": "西班牙",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴塞罗那 (西班牙). No cross-city/country/culture mixing."
+    },
+    "language_signage": {
+      "pass": true,
+      "belongs_to_city": "巴塞罗那",
+      "belongs_to_country": "西班牙",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴塞罗那 (西班牙). No cross-city/country/culture mixing."
+    },
+    "transportation": {
+      "pass": true,
+      "belongs_to_city": "巴塞罗那",
+      "belongs_to_country": "西班牙",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴塞罗那 (西班牙). No cross-city/country/culture mixing."
+    },
+    "natural_environment": {
+      "pass": true,
+      "belongs_to_city": "巴塞罗那",
+      "belongs_to_country": "西班牙",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴塞罗那 (西班牙). No cross-city/country/culture mixing."
+    },
+    "food_dining": {
+      "pass": true,
+      "belongs_to_city": "巴塞罗那",
+      "belongs_to_country": "西班牙",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴塞罗那 (西班牙). No cross-city/country/culture mixing."
+    },
+    "commercial_form": {
+      "pass": true,
+      "belongs_to_city": "巴塞罗那",
+      "belongs_to_country": "西班牙",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴塞罗那 (西班牙). No cross-city/country/culture mixing."
+    },
+    "cultural_elements": {
+      "pass": true,
+      "belongs_to_city": "巴塞罗那",
+      "belongs_to_country": "西班牙",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴塞罗那 (西班牙). No cross-city/country/culture mixing."
+    }
+  },
+  "prohibited": {
+    "cross_country_elements": false,
+    "cross_city_elements": false,
+    "cross_culture_mixing": false
+  },
+  "TT_DESTINATION_AUTHENTICITY_REVIEW": "PASS"
+}

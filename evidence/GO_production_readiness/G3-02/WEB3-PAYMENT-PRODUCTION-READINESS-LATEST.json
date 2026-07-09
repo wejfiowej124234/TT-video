@@ -1,0 +1,35 @@
+{
+  "kind": "traveltrust.web3_payment_production_readiness.v1",
+  "recorded_utc": "20260708T084043Z",
+  "stamp": "20260708T084043Z",
+  "verdict": "WEB3_PAYMENT_PRODUCTION_PASS",
+  "machine_key": "TT_WEB3_PAYMENT_PRODUCTION_READINESS",
+  "g3_domain": "G3-02",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "chain_id": 11155111,
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "prod_web": "https://tt-web-prod.fly.dev",
+  "ssot": {
+    "checklist": "registry/production-payment-readiness-checklist.v1.yaml",
+    "gate": "registry/web3-payment-production-gate.v1.yaml",
+    "runbook": "docs/runbook/PRODUCTION-PAYMENT-READINESS-WEB3-USDC.md"
+  },
+  "runtime_probes": {
+    "meta_reachable": true,
+    "mock_pay_forbidden": "absent",
+    "contract_parity_ok": true
+  },
+  "checklist_evidence": {
+    "total": 16,
+    "with_artifacts": 16
+  },
+  "stripe_onboarding_extension": {
+    "classification": "P1_FUTURE_FIAT_ONRAMP",
+    "pi3_verdict": "PI3-003_WAITING_OWNER_STRIPE",
+    "blocks_core_payment_gate": false,
+    "blocks_production_go": false
+  },
+  "failures": 0,
+  "warnings": 1,
+  "evidence_dir": "evidence/GO_production_readiness/G3-02/web3-payment-readiness-20260708T084043Z"
+}

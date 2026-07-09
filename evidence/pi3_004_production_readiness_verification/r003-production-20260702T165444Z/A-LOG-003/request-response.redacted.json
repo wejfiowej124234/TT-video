@@ -1,0 +1,37 @@
+{
+  "request_chain": [
+    {
+      "method": "POST",
+      "url": "https://tt-api-prod.fly.dev/auth/logout",
+      "headers": {
+        "Authorization": "Bearer tts_[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "body": {}
+    },
+    {
+      "method": "GET",
+      "url": "https://tt-api-prod.fly.dev/api/v1/me",
+      "headers": {
+        "Authorization": "Bearer tts_[REDACTED]"
+      }
+    }
+  ],
+  "response": {
+    "logout_http": 400,
+    "logout_body": {
+      "status": "missing_idempotency_key",
+      "error": "missing_idempotency_key",
+      "message": "missing_idempotency_key",
+      "required_header": "Idempotency-Key",
+      "also_accepted": "X-Idempotency-Key",
+      "rule": "写请求必须提供幂等键；Admin 高危写接口为强制项。否则网络重试/并发会造成重复入队/重复链上尝试，产生资损风险"
+    },
+    "me_after_http": 401,
+    "me_after_body": {
+      "error": "unauthorized",
+      "message": "unauthorized",
+      "detail": "STRICT_SESSION_GATE=1：须提供 Authorization: Bearer <session_token>（不接受仅 X-User-Id）"
+    }
+  }
+}

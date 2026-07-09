@@ -1,0 +1,301 @@
+=== 01-OnePager-v1.3-CN.pdf pages=6 extract_chars=2409 ===
+One Pager
+TravelTrust · One Pager · Release 1.3TravelTrust    ·    Investor Relations    ·    Confidential — not an offer
+2   ·   General information only — not an offer
+目录
+   融资沟通快照（与 Deck / FAQ 一致）
+   TravelTrust 是什么
+   解决的问题
+   解法（产品主链）
+   核心优势
+   一句话
+   当前阶段
+   表述边界TravelTrust    ·    Investor Relations    ·    Confidential — not an offer
+3   ·   General information only — not an offer
+法律免责声明
+一般性信息；不构成在任何司法辖区出售或要约购买证券、虚拟资产或投资产品的要约或诱引，亦不
+构成投资、税务或法律建议。前瞻性表述受风险影响；协议参数与代币安排可能变更或不再推出。交
+易条款仅以双方签署文本为准。
+General information only. Not an offer to sell or solicitation to buy securities, virtual assets, 
+or any investment product. Not investment, tax, or legal advice. Forward-looking statements 
+are subject to risk; protocol economics and token features may change or never launch. 
+Terms of any transaction are governed only by signed documents.TravelTrust    ·    Investor Relations    ·    Confidential — not an offer
+4   ·   General information only — not an offer
+融资沟通快照（与 Deck / FAQ 一致）
+维度 对外口径（定性）
+阶段 可演示核心路径已贯通：市场—订单—托管—争议/评分—信誉—社区承
+接可连贯展示；公开发布节奏与生产域名以正式公告为准。
+近窗关注点 测试网/预演环境稳定性、合作伙伴接入、对外材料与路演节奏、合规与
+披露边界（含代币路径的前瞻性说明）。
+关键指标 本页不载运营数字。 GMV、订单、活跃、托管流水等仅在 NDA + 报表
+/系统导出 下提供；路演先讲机制与阶段，数字
+
+=== 01-OnePager-v1.3-EN.pdf pages=6 extract_chars=4042 ===
+One Pager
+TravelTrust · One Pager · Release 1.3TravelTrust    ·    Investor Relations    ·    Confidential — not an offer
+2   ·   General information only — not an offer
+Contents
+   Fundraising snapshot (aligned with Deck & FAQ)
+   What TravelTrust is
+   Problems we address
+   How we solve it (main chain)
+   Strengths
+   One line
+   Where we are
+   BoundariesTravelTrust    ·    Investor Relations    ·    Confidential — not an offer
+3   ·   General information only — not an offer
+Legal disclaimer
+General information only. Not an offer to sell or solicitation to buy securities, virtual assets, 
+or any investment product. Not investment, tax, or legal advice. Forward-looking statements 
+are subject to risk; protocol economics and token features may change or never launch. 
+Terms of any transaction are governed only by signed documents.
+一般性信息；不构成在任何司法辖区出售或要约购买证券、虚拟资产或投资产品的要约或诱引，亦不
+构成投资、税务或法律建议。前瞻性表述受风险影响；协议参数与代币安排可能变更或不再推出。交
+易条款仅以双方签署文本为准。TravelTrust    ·    Investor Relations    ·    Confidential — not an offer
+4   ·   General information only — not an offer
+Fundraising snapshot (aligned with Deck & FAQ)
+Dimension External narrative (qualitative)
+Stage Demonstrable core path: 
+
+=== 03-FAQ-v1.3-CN.pdf pages=6 extract_chars=3048 ===
+FAQ
+TravelTrust · FAQ · Release 1.3TravelTrust    ·    Investor Relations    ·    Confidential — not an offer
+2   ·   General information only — not an offer
+目录
+     1. TravelTrust 是什么？
+     2. TravelTrust 不是什么？
+     3. 和普通旅游平台有什么不同？
+     4. 和普通 Web3 项目有什么不同？
+     5. /traveltrust 是什么？
+     6. /market 是什么？
+     7. 为何订单与托管重要？
+     8. 订单与 Escrow 路径说明什么？
+     9. 信誉展示层的作用？
+     10. 社区与帮助入口的作用？
+     11. 当前入口是否均为正式公开域名？
+     12. 项目是否算完全上线？
+     13. 投资人第一次了解应看什么？
+     14. 合作方第一次了解应看什么？
+     15. 社区新人第一次应看什么？
+     16. 向导「质押」和治理「质押」是一回事吗？
+     17. 当前对外最稳妥怎么讲？
+     18. One Pager / Deck 里为什么几乎没有具体数字？
+     19. 路线图里的季度节点是承诺吗？
+     20. 能拿到哪些「硬数据」？
+     21. 你们现在在融资流程的哪一段？
+     22. 资料包以外还有什么？TravelTrust    ·    Investor Relations    ·    Confidential — not an offer
+3   ·   General information only — not an offer
+法律免责声明
+一般性信息；不构成在任何司法辖区出售或要约购买证券、虚拟资产或投资产品的要约或诱引，亦不
+构成投资、税务或法律建议。前瞻性表述受风险影响；协议参数与代币安排可能变更或不再推出。交
+易条款仅以双方签署文本为准。
+General information only. Not an offer to sell or solicitation to buy securities, virtual assets, 
+or any investment product. Not investment, tax, or legal advice. Forward-looking statements 
+are subject to risk; protocol economics and token features may chang
+
+=== 03-FAQ-v1.3-EN.pdf pages=6 extract_chars=4982 ===
+FAQ
+TravelTrust · FAQ · Release 1.3TravelTrust    ·    Investor Relations    ·    Confidential — not an offer
+2   ·   General information only — not an offer
+Contents
+     1. What is TravelTrust?
+     2. What is TravelTrust not?
+     3. vs traditional travel platforms?
+     4. vs typical Web3 projects?
+     5. What is /traveltrust?
+     6. What is /market?
+     7. Why orders & escrow matter?
+     8. What does an Escrow path signal?
+     9. Reputation layer?
+     10. Community & help?
+     11. Are all URLs production?
+     12. Fully launched?
+     13. First touch for investors?
+     14. First touch for partners?
+     15. New community members?
+     16. Guide “staking” vs governance “staking”?
+     17. Safest public narrative?
+     18. Why so few hard numbers on One Pager / Deck?
+     19. Are roadmap quarters a commitment?
+     20. What “hard data” can we get?
+     21. Where are you in a financing process?
+     22. Beyond this pack?TravelTrust    ·    Investor Relations    ·    Confidential — not an offer
+3   ·   General information only — not an offer
+Legal disclaimer
+General information only. Not an offer to sell or solicitation to buy securities, virtual asse
+
+=== 04-PitchDeck-v1.3-CN.pdf pages=15 extract_chars=1434 ===
+保密 · 仅供合格对话方
+TravelTrust
+旅行订单金融科技
+TravelTrust IR · 版本 1.3TravelTrust · 一般性信息 — 非要约 — 1.3     ·     1/15主旨
+TravelTrust
+旅行订单金融科技：围绕单笔订单对齐交付与争议。
+TravelTrust · 1.3 · 一般性信息 — 非要约     ·     2/15问题
+核心痛点
+信息对不上
+ 出了事扯不清
+订单资金状态：客人侧与平台侧是否两本账？
+TravelTrust · 1.3 · 一般性信息 — 非要约     ·     3/15怎么走
+单笔订单对齐交付与争议
+找到
+下单
+对齐交付
+有事处理
+听公告
+TravelTrust · 1.3 · 一般性信息 — 非要约     ·     4/15五步
+订单与规则分几层（图）
+①
+ 找到
+②
+ 下单
+③
+ 对齐交付
+④
+ 有事处理
+⑤
+ 听公告
+TravelTrust · 1.3 · 一般性信息 — 非要约     ·     5/15差异
+三句话记住
+平台赚服务费、抽成；旅费不算平台自有收入
+治理信号：只投票；非旅费支付工具。
+披露：听公告
+TravelTrust · 1.3 · 一般性信息 — 非要约     ·     6/15看一单
+一笔订单：交付对齐了吗
+一单从下单一路对齐交付？
+跑到哪一步：听公告。
+TravelTrust · 1.3 · 一般性信息 — 非要约     ·     7/15优势
+系统性优势
+履约侧
+ 订单对齐
+ 交付与争议
+ 出事有人收
+ 听公告
+TravelTrust · 1.3 · 一般性信息 — 非要约     ·     8/15经济
+协议经济· 第一层
+披露
+协议经济
+100% （白皮书）
+45%
+ 55%
+TravelTrust · 1.3 · 一般性信息 — 非要约     ·     9/15窗口
+进展与路线图（定性）
+进展· 四轨并行
+平台披露分流：100/45/55% （白皮书）
+运营/ 季度：NDA
+TravelTrust · 1.3 · 一般性信息 — 非要约     ·     10/15增长
+Go-to-Market
+供给：KYB+ 履约+ 培训
+ 需求：披露口径+ 渠道试点
+渠道：把合作摊开说 · 订单资金状态分开算
+TravelTrust · 1.3 · 一般性信息 — 非要约     ·     11/15时机
+为何现在是现在（定性）
+需求：客人要听得真，不要吹。
+ 供给：名声带走；披露节奏听公告。
+监管：订单资金状态与平台服务费分开走。
+窗口：分销碎，先对齐交付再接。
+TravelTrust · 1.3 · 一般性信息 — 非要约     ·     12/15格局
+竞争矩阵（定性）
+Web2
+争议弱
+链上
+缺履约栈
+TT
+履约栈
+
+
+=== 04-PitchDeck-v1.3-EN.pdf pages=15 extract_chars=3104 ===
+CONFIDENTIAL · QUALIFIED CONVERSATIONS
+TravelTrust
+Trip-order fintech
+TravelTrust IR · Release 1.3TravelTrust · General information only — not an offer · 1.3     ·     1/15THESIS
+TravelTrust
+Trip-order fintech: align delivery and disputes around each trip order.
+TravelTrust · Release 1.3 · General information only — not an offer     ·     2/15PROBLEM
+Pain
+Facts don’t line up
+ Disputes drag
+Traveler vs platform order funds state—split books?
+TravelTrust · Release 1.3 · General information only — not an offer     ·     3/15FLOW
+Trip-order: align delivery and disputes
+Find
+Book
+Align delivery
+Handle issues
+Whitepaper
+TravelTrust · Release 1.3 · General information only — not an offer     ·     4/15STEPS
+Trip-order & rules stack (figure)
+1
+ Find
+2
+ Book
+3
+ Align delivery
+4
+ Handle issues
+5
+ Whitepaper
+TravelTrust · Release 1.3 · General information only — not an offer     ·     5/15DIFF
+Three lines to remember
+Platform take is ours; order funds state isn’t.
+ Governance signal: votes, not trip pay.
+Trip releases: Whitepaper.
+TravelTrust · Release 1.3 · General information only — not an offer     ·     6/15ONE ORDER
+One order: delivery aligned?
+One order: book through to aligned delivery
+
+=== 04-IC-Memo-v1.3-CN.pdf pages=8 extract_chars=980 ===
+保密 · 仅供合格对话方
+Partner Summary / IC Memo
+TravelTrust
+基金合伙人会前摘要 · 口径与主 Deck / 白皮书一致 · 不新增披露数字
+TravelTrust IR · 版本 1.3TravelTrust · 一般性信息 — 非要约 — 1.3     ·     1/8时机
+Why Now （定性）
+同主 Deck ** 第 13 页** ；本 IC ** 不重复** 。
+TravelTrust · IC 附录 · 1.3 · 一般性信息 — 非要约     ·     2/8差异
+Why Us
+平台赚服务费、抽成；旅费不算平台自己赚的钱；TTG 只投票，不付旅行钱
+放钱听托管
+TravelTrust · IC 附录 · 1.3 · 一般性信息 — 非要约     ·     3/8增长
+Why Win
+同主 Deck ** 第 12 页** ；本 IC ** 不重复** 。
+TravelTrust · IC 附录 · 1.3 · 一般性信息 — 非要约     ·     4/8风险
+主要风险（定性）
+同 `06` **§11** 与主 Deck ** 第 10 页** 合规/ 阶段轨；本 IC ** 不展开** 。
+TravelTrust · IC 附录 · 1.3 · 一般性信息 — 非要约     ·     5/8格局
+竞争格局与壁垒
+同主 Deck ** 第 14 页** ；本 IC ** 不重复** 。
+TravelTrust · IC 附录 · 1.3 · 一般性信息 — 非要约     ·     6/8尽调
+关键 DD 问题（公开边界）
+同主 Deck ** 第 16 页** ；本 IC ** 不重复** 。
+TravelTrust · IC 附录 · 1.3 · 一般性信息 — 非要约     ·     7/8结论
+投资结论框架（非投资建议）
+结论槽位 A ：是否认可「旅行履约信任栈」长期结构性需求
+结论槽位 B ：是否接受当前阶段以演示链与门禁披露为主的风险收益
+结论槽位 C ：下一步 — 深度材料（06/07 ）与条款仅在签署与 NDA 
+后推进
+TravelTrust · IC 附录 · 1.3 · 一般性信息 — 非要约     ·     8/8
+
+=== 04-IC-Memo-v1.3-EN.pdf pages=8 extract_chars=1768 ===
+CONFIDENTIAL · QUALIFIED CONVERSATIONS
+Partner Summary / IC Memo
+TravelTrust
+Pre-partner meeting memo · aligned with main deck & whitepaper · no 
+new disclosed numbers
+TravelTrust IR · Release 1.3TravelTrust · General information only — not an offer · 1.3     ·     1/8NOW
+Why now (qualitative)
+Same as main deck **slide 13**; **not repeated** here.
+TravelTrust · IC appendix · Release 1.3 · General information only — not an offer     ·     2/8US
+Why us
+Platform earns fees & take; trip money isn’t. TTG votes, not trip pay.
+Who holds the money calls releases.
+TravelTrust · IC appendix · Release 1.3 · General information only — not an offer     ·     3/8WIN
+Why win
+Same as main deck **slide 12**; **not repeated** here.
+TravelTrust · IC appendix · Release 1.3 · General information only — not an offer     ·     4/8RISK
+Key risks (qualitative)
+Same as **06 §11** and main deck **slide 10** compliance/stage rail; **not expanded** here.
+TravelTrust · IC appendix · Release 1.3 · General information only — not an offer     ·     5/8MAP
+Competition & moat
+Same as main deck **slide 14**; **not repeated** here.
+TravelTrust · IC appendix · Release 1.3 · General information only — not an offer     ·

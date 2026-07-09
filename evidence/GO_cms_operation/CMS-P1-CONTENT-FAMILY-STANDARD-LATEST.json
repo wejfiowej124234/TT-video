@@ -1,0 +1,140 @@
+{
+  "schema": "traveltrust.cms_p1_content_family_standard_evidence.v1",
+  "recorded_at_utc": "2026-07-07T12:26:30.426Z",
+  "effective_utc": "2026-07-07T12:26:30.426Z",
+  "status": "FROZEN",
+  "version": "1.1.0",
+  "review": "CMS-P1-STANDARD-REVIEW-LATEST.json",
+  "TT_CMS_P1_CONTENT_FAMILY_STANDARD": "FROZEN",
+  "runbook": "docs/runbook/TT-CMS-P1-CONTENT-FAMILY-STANDARD.md",
+  "registry_yaml": "registry/cms-p1-content-family-standard.v1.yaml",
+  "roadmap": [
+    "P1 Standard",
+    "City Hero",
+    "Hotel",
+    "Transport",
+    "Listings"
+  ],
+  "standard_sections": [
+    "asset_kind_naming",
+    "catalog_schema",
+    "runtime_contract",
+    "admin_editing",
+    "publish_flow",
+    "verify_flow",
+    "l5_exit_conditions"
+  ],
+  "modules": [
+    {
+      "id": "city_hero",
+      "registry_id": "city_hero",
+      "product_name": "City Hero",
+      "asset_kind": "city_hero",
+      "asset_kind_verdict": "CONFIRMED_RESERVED",
+      "business_critical": "P1",
+      "ops_hierarchy": "[asset_family, country, city, asset]",
+      "acceptance_unit": "city",
+      "admin_route_planned": "/admin/content/city-hero",
+      "matrix_ssot_planned": "data/catalog/city-hero-matrix.v1.yaml",
+      "runtime_api": "GET /api/v1/catalog/media?asset_kind=city_hero",
+      "catalog_status": "catalog_empty",
+      "next_action": "Brief + Asset Matrix only",
+      "registry_status": "Pilot",
+      "registry_l5": "❌",
+      "registry_next": "\"Brief + Asset Matrix\""
+    },
+    {
+      "id": "hotel",
+      "registry_id": "hotel",
+      "product_name": "Hotel Stock",
+      "asset_kind": "hotel_tier_stock",
+      "asset_kind_verdict": "FROZEN",
+      "exception": "dual_read",
+      "admin_route": "/admin/content/hotel-tiers",
+      "matrix_ssot": "data/catalog/hotel-transport-wave1-matrix.v1.yaml",
+      "next_action": "Brief + 全 tier 规模化",
+      "registry_status": "Backlog",
+      "registry_l5": "❌",
+      "registry_next": "\"按 P1 Standard 规模化\""
+    },
+    {
+      "id": "transport",
+      "registry_id": "transport",
+      "product_name": "Transport Stock",
+      "asset_kind": "transport_stock",
+      "asset_kind_verdict": "FROZEN",
+      "admin_route": "/admin/content/transport-region-rules",
+      "matrix_ssot": "data/catalog/hotel-transport-wave1-matrix.v1.yaml",
+      "next_action": "Brief + 十国规模化",
+      "registry_status": "Backlog",
+      "registry_l5": "❌",
+      "registry_next": "\"按 P1 Standard 规模化\""
+    },
+    {
+      "id": "listings",
+      "registry_id": "listings",
+      "product_name": "Listings",
+      "content_families": "[provider_listing, acquisition_listing]",
+      "asset_kind_verdict": "CONFIRMED_NOT_MEDIA_KIND",
+      "rejected_kind": "listing_cover",
+      "admin_route": "MerchantShowcaseStudio · AcquisitionCarryStudio",
+      "matrix_ssot_planned": "data/catalog/listings-matrix.v1.yaml",
+      "next_action": "Brief + listing cover 结构",
+      "registry_status": "Backlog",
+      "registry_l5": "❌",
+      "registry_next": "\"按 P1 Standard 规划结构\""
+    }
+  ],
+  "p0_frozen": [
+    {
+      "id": "poi_content_qa",
+      "asset_kind": "poi_hero",
+      "locked": "330/330"
+    },
+    {
+      "id": "destination_ambient_hero",
+      "asset_kind": "landing_ambient",
+      "locked": "10/10 hero"
+    },
+    {
+      "id": "destination_ambient",
+      "asset_kind": "landing_ambient",
+      "locked": "10/10 ambient"
+    }
+  ],
+  "master_registry_p1": [
+    {
+      "id": "city_hero",
+      "module": "\"City Hero\"",
+      "status": "Pilot",
+      "business_critical": "\"P1\"",
+      "plane": "CMS",
+      "next": "\"Brief + Asset Matrix\""
+    },
+    {
+      "id": "hotel",
+      "module": "\"Hotel\"",
+      "status": "Backlog",
+      "business_critical": "\"P1\"",
+      "plane": "CMS",
+      "next": "\"按 P1 Standard 规模化\""
+    },
+    {
+      "id": "transport",
+      "module": "\"Transport\"",
+      "status": "Backlog",
+      "business_critical": "\"P1\"",
+      "plane": "CMS",
+      "next": "\"按 P1 Standard 规模化\""
+    },
+    {
+      "id": "listings",
+      "module": "\"Listings\"",
+      "status": "Backlog",
+      "business_critical": "\"P1\"",
+      "plane": "CMS",
+      "next": "\"按 P1 Standard 规划结构\""
+    }
+  ],
+  "city_hero_ssot": "evidence/GO_cms_operation/CMS-CITY-HERO-SSOT-VERIFICATION-LATEST.json"
+}

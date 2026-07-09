@@ -1,0 +1,311 @@
+{
+  "schema": "traveltrust.ocs_content_l5_local_asset_verify.v1",
+  "stamp_utc": "20260704T155000Z",
+  "scope": "local_media_files",
+  "total": 60,
+  "pass_count": 60,
+  "TT_OCS_CONTENT_L5_LOCAL_ASSET_VERIFY": "PASS",
+  "checks": [
+    {
+      "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+      "pass": true,
+      "detail": "61826 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-tokyo-photo-provider-cover.jpg",
+      "pass": true,
+      "detail": "83004 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+      "pass": true,
+      "detail": "71791 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-tokyo-photo-official-guide-cover.jpg",
+      "pass": true,
+      "detail": "88885 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-tokyo-photo-community-cover.jpg",
+      "pass": true,
+      "detail": "113904 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-tokyo-photo-community-media.jpg",
+      "pass": true,
+      "detail": "113315 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-kyoto-culture-guide-avatar.jpg",
+      "pass": true,
+      "detail": "66416 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-kyoto-culture-provider-cover.jpg",
+      "pass": true,
+      "detail": "73369 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-kyoto-culture-acquisition-cover.jpg",
+      "pass": true,
+      "detail": "108760 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-kyoto-culture-official-guide-cover.jpg",
+      "pass": true,
+      "detail": "147626 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-kyoto-culture-community-cover.jpg",
+      "pass": true,
+      "detail": "66802 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-kyoto-culture-community-media.jpg",
+      "pass": true,
+      "detail": "133702 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-seoul-food-guide-avatar.jpg",
+      "pass": true,
+      "detail": "61768 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-seoul-food-provider-cover.jpg",
+      "pass": true,
+      "detail": "124901 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-seoul-food-acquisition-cover.jpg",
+      "pass": true,
+      "detail": "126383 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-seoul-food-official-guide-cover.jpg",
+      "pass": true,
+      "detail": "151652 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-seoul-food-community-cover.jpg",
+      "pass": true,
+      "detail": "88993 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-seoul-food-community-media.jpg",
+      "pass": true,
+      "detail": "129511 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-bangkok-temple-guide-avatar.jpg",
+      "pass": true,
+      "detail": "76981 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-bangkok-temple-provider-cover.jpg",
+      "pass": true,
+      "detail": "101680 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-bangkok-temple-acquisition-cover.jpg",
+      "pass": true,
+      "detail": "135921 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-bangkok-temple-official-guide-cover.jpg",
+      "pass": true,
+      "detail": "122079 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-bangkok-temple-community-cover.jpg",
+      "pass": true,
+      "detail": "87718 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-bangkok-temple-community-media.jpg",
+      "pass": true,
+      "detail": "90578 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-singapore-family-guide-avatar.jpg",
+      "pass": true,
+      "detail": "91448 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-singapore-family-provider-cover.jpg",
+      "pass": true,
+      "detail": "83836 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-singapore-family-acquisition-cover.jpg",
+      "pass": true,
+      "detail": "74394 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-singapore-family-official-guide-cover.jpg",
+      "pass": true,
+      "detail": "83366 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-singapore-family-community-cover.jpg",
+      "pass": true,
+      "detail": "62767 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-singapore-family-community-media.jpg",
+      "pass": true,
+      "detail": "125577 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-paris-art-guide-avatar.jpg",
+      "pass": true,
+      "detail": "56416 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-paris-art-provider-cover.jpg",
+      "pass": true,
+      "detail": "81046 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-paris-art-acquisition-cover.jpg",
+      "pass": true,
+      "detail": "78485 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-paris-art-official-guide-cover.jpg",
+      "pass": true,
+      "detail": "155546 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-paris-art-community-cover.jpg",
+      "pass": true,
+      "detail": "98392 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-paris-art-community-media.jpg",
+      "pass": true,
+      "detail": "143327 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-nyc-skyline-guide-avatar.jpg",
+      "pass": true,
+      "detail": "56685 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-nyc-skyline-provider-cover.jpg",
+      "pass": true,
+      "detail": "119821 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-nyc-skyline-acquisition-cover.jpg",
+      "pass": true,
+      "detail": "75296 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-nyc-skyline-official-guide-cover.jpg",
+      "pass": true,
+      "detail": "132606 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-nyc-skyline-community-cover.jpg",
+      "pass": true,
+      "detail": "83814 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-nyc-skyline-community-media.jpg",
+      "pass": true,
+      "detail": "105255 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-sydney-coast-guide-avatar.jpg",
+      "pass": true,
+      "detail": "105178 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-sydney-coast-provider-cover.jpg",
+      "pass": true,
+      "detail": "102550 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-sydney-coast-acquisition-cover.jpg",
+      "pass": true,
+      "detail": "76826 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-sydney-coast-official-guide-cover.jpg",
+      "pass": true,
+      "detail": "172633 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-sydney-coast-community-cover.jpg",
+      "pass": true,
+      "detail": "118417 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-sydney-coast-community-media.jpg",
+      "pass": true,
+      "detail": "218904 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-barcelona-arch-guide-avatar.jpg",
+      "pass": true,
+      "detail": "83508 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-barcelona-arch-provider-cover.jpg",
+      "pass": true,
+      "detail": "105068 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-barcelona-arch-acquisition-cover.jpg",
+      "pass": true,
+      "detail": "152326 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-barcelona-arch-official-guide-cover.jpg",
+      "pass": true,
+      "detail": "123192 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-barcelona-arch-community-cover.jpg",
+      "pass": true,
+      "detail": "185670 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-barcelona-arch-community-media.jpg",
+      "pass": true,
+      "detail": "149989 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-dubai-luxury-guide-avatar.jpg",
+      "pass": true,
+      "detail": "56250 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-dubai-luxury-provider-cover.jpg",
+      "pass": true,
+      "detail": "85017 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-dubai-luxury-acquisition-cover.jpg",
+      "pass": true,
+      "detail": "115171 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-dubai-luxury-official-guide-cover.jpg",
+      "pass": true,
+      "detail": "92511 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-dubai-luxury-community-cover.jpg",
+      "pass": true,
+      "detail": "88833 bytes jpeg=true"
+    },
+    {
+      "filename": "ocs-dubai-luxury-community-media.jpg",
+      "pass": true,
+      "detail": "62627 bytes jpeg=true"
+    }
+  ],
+  "note": "Local file decode/size only — staging HTTP probe is separate ② gate."
+}

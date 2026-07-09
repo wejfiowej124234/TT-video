@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_verify.v1",
+  "stamp_utc": "20260704T154713Z",
+  "filename": "ocs-dubai-luxury-community-cover.jpg",
+  "row": {
+    "filename": "ocs-dubai-luxury-community-cover.jpg",
+    "chain_id": "dubai-luxury",
+    "city": "迪拜",
+    "slot": "community-cover",
+    "surface": "Community Cover",
+    "scene": "冲沙 SUV 或沙丘曲线 · Feed",
+    "copy_label": "沙漠冲沙与哈利法塔夜景——官方两日路线与安全着装建议实录。",
+    "asset_status": "verified",
+    "review_status": "pass"
+  },
+  "checks": [
+    {
+      "id": "media_exists",
+      "pass": true,
+      "detail": "D:\\TravelTrust-V1.1\\data\\official-cold-start\\media\\ocs-dubai-luxury-community-cover.jpg"
+    },
+    {
+      "id": "jpeg_magic",
+      "pass": true,
+      "detail": "ok"
+    },
+    {
+      "id": "min_size_16kb",
+      "pass": true,
+      "detail": "88833 bytes"
+    },
+    {
+      "id": "matrix_asset_status",
+      "pass": true,
+      "detail": "verified"
+    },
+    {
+      "id": "matrix_review_pass",
+      "pass": true,
+      "detail": "pass"
+    }
+  ],
+  "TT_OCS_CONTENT_L5_ROW_VERIFY": "PASS",
+  "gates_manual": {
+    "G2_copy_alignment": "pending_human",
+    "G3_slot_differentiation": "pending_human",
+    "G9_content_authenticity": "pending_human",
+    "G10_content_diversity": "pending_human"
+  }
+}

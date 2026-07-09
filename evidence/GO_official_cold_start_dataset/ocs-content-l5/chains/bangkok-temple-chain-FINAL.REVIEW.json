@@ -1,0 +1,114 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_final_review.v1",
+  "stamp_utc": "20260704T140230Z",
+  "chain_id": "bangkok-temple",
+  "city": "曼谷",
+  "country_code": "TH",
+  "country_label": "泰国",
+  "theme_locked": "寺庙 · 湄南河 · 游船日落",
+  "slots_completed": 6,
+  "slots_total": 6,
+  "TT_BANGKOK_TEMPLE_CHAIN": "CLOSED",
+  "bangkok_chain_content_score": {
+    "value": 92.9,
+    "scale": "0-100",
+    "formula": "weighted_mean_of_G1_G10_chain_aggregate_plus_nine_class_reviews",
+    "pass_threshold": 85,
+    "result": "PASS"
+  },
+  "g1_g10_summary": {
+    "G1_real_assets": { "pass": true, "chain_score": 95 },
+    "G2_copy_alignment": { "pass": true, "chain_score": 94 },
+    "G3_slot_differentiation": { "pass": true, "chain_score": 94 },
+    "G4_cross_surface_city": { "pass": true, "chain_score": 96 },
+    "G5_brand_visual": { "pass": true, "chain_score": 92 },
+    "G6_commercial_perception": { "pass": true, "chain_score": 91 },
+    "G7_wcag_visual": { "pass": true, "chain_score": 93 },
+    "G8_evidence_matrix": { "pass": true, "chain_score": 96 },
+    "G9_content_authenticity": { "pass": true, "chain_score": 91 },
+    "G10_content_diversity": { "pass": true, "chain_score": 94 },
+    "all_pass": true
+  },
+  "nine_class_special_reviews": {
+    "guide_identity_diversity": { "pass": true, "note": "Arun @ Wat Arun · 与 Tokyo/Kyoto/Seoul 向导明显区分" },
+    "provider_business_identity": { "pass": true, "note": "湄南河 sunset 游船晚宴 vs 旅拍/茶室/夜市" },
+    "acquisition_product_identity": { "pass": true, "note": "泰丝 craft vs 镜头/和纸/韩式零食" },
+    "official_guide_destination": { "pass": true, "note": "尖塔+河景一日路线宽幅" },
+    "community_authenticity": { "pass": true, "note": "Cover 尖塔剪影 + Media 河船 POV 互补" },
+    "destination_authenticity": { "pass": true, "all_rows_th_only": true },
+    "content_portfolio": { "pass": true },
+    "surface_boundary": { "pass": true, "all_6_slots": true },
+    "visual_sequence": { "pass": true, "all_6_slots": true }
+  },
+  "chain_narrative_continuity_review": {
+    "result": "PASS",
+    "TT_CHAIN_NARRATIVE_CONTINUITY": "PASS",
+    "surface_arc": "Guide(Arun @ 黎明寺) → Provider(湄南河 sunset 游船晚宴) → Acquisition(泰丝 craft) → Official Guide(尖塔+河景一日路线) → Community Cover(尖塔晨光剪影 Feed) → Community Media(湄南河游船 POV 详情)",
+    "geo_coverage": ["郑王庙/黎明寺", "大皇宫区域", "湄南河", "游船"],
+    "theme_coherence": "寺庙 · 湄南河 · 游船体验",
+    "narrative_gaps": false
+  },
+  "visual_diversity_review": {
+    "result": "PASS",
+    "TT_VISUAL_DIVERSITY": "PASS",
+    "six_unique_compositions": true,
+    "no_duplicate_subjects_across_slots": true,
+    "cover_media_complement": {
+      "community_cover": "尖塔晨光剪影 · 静态垂直",
+      "community_media": "河船 POV · 河面反光 · 动态水平",
+      "distinct": true
+    }
+  },
+  "city_brand_identity_review": {
+    "result": "PASS",
+    "TT_CITY_BRAND_IDENTITY": "PASS",
+    "visual_language": "金蓝寺庙+河面纪实+泰式 craft",
+    "cultural_elements_th_only": true,
+    "commercial_positioning": "寺庙体验+河船晚宴+泰丝收购+官方路线+社区分享",
+    "distinct_vs_tokyo_kyoto_seoul": true
+  },
+  "consumer_experience_review": {
+    "result": "PASS",
+    "TT_CONSUMER_EXPERIENCE": "PASS",
+    "summary": "用户从 Feed(尖塔剪影)→详情(河船 POV)、Market(Guide/Provider/Acquisition)、Official Guide(一日路线) 浏览时，感知为同一曼谷寺庙河景生态而非素材堆砌。",
+    "feed_to_detail_continuity": true,
+    "market_surfaces_coherent": true,
+    "not_stock_wall": true,
+    "browse_attraction": true
+  },
+  "destination_authenticity": { "result": "PASS", "all_rows": 6, "country_isolation": "TH-only" },
+  "destination_experience": {
+    "result": "PASS",
+    "summary": "黎明寺/湄南河/游船完整可浏览"
+  },
+  "country_consistency": { "result": "PASS", "no_jp_kr_cn_drift": true },
+  "cross_chain_vs_tokyo_kyoto_seoul": { "result": "PASS", "distinct": true },
+  "full_regression_24_rows": {
+    "pass": true,
+    "tokyo_photo_6": "stable",
+    "kyoto_culture_6": "stable",
+    "seoul_food_6": "stable",
+    "bangkok_temple_6": "closed"
+  },
+  "brand_consistency": {
+    "result": "PASS",
+    "g5_g9_g10_chain_pass": true
+  },
+  "surfaces_all_verified": [
+    "ocs-bangkok-temple-guide-avatar.jpg",
+    "ocs-bangkok-temple-provider-cover.jpg",
+    "ocs-bangkok-temple-acquisition-cover.jpg",
+    "ocs-bangkok-temple-official-guide-cover.jpg",
+    "ocs-bangkok-temple-community-cover.jpg",
+    "ocs-bangkok-temple-community-media.jpg"
+  ],
+  "production_readiness": {
+    "bangkok_temple_chain": "CLOSED",
+    "global_ocs_content_l5": "IN_PROGRESS",
+    "matrix_progress": "24/60 verified+pass",
+    "chains_closed": 4,
+    "next_matrix_row": 25,
+    "next_chain_id": "singapore-family",
+    "note": "bangkok-temple CLOSED；须完成剩余 36 行后四键 CLOSED。"
+  }
+}

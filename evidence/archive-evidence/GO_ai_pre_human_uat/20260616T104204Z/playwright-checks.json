@@ -1,0 +1,67 @@
+{
+  "checks": [
+    {
+      "id": "PW-INV-A5",
+      "persona": "investor",
+      "route": "/governance/distribution-accruals",
+      "dimension": "accrual read-only",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/investor-accruals.png"
+    },
+    {
+      "id": "PW-INV-A6-D4",
+      "persona": "investor",
+      "route": "/governance/distribution-claim",
+      "dimension": "claim boundary",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/investor-claim.png"
+    },
+    {
+      "id": "PW-STEWARD-B2",
+      "persona": "steward",
+      "route": "/governance/steward-region-workbench",
+      "dimension": "Seat/Stake no USDC exit narrative",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/steward-workbench.png"
+    },
+    {
+      "id": "PW-STEWARD-REGION",
+      "persona": "steward",
+      "route": "/governance?view=region",
+      "dimension": "steward region view",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/steward-region-view.png"
+    },
+    {
+      "id": "PW-ADMIN-C1",
+      "persona": "admin",
+      "route": "/admin",
+      "dimension": "Admin read-only boundary",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/admin-home-readonly.png"
+    },
+    {
+      "id": "PW-MULTI-B1",
+      "persona": "multi_identity",
+      "route": "/me/identities",
+      "dimension": "multi-id hub",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/multi-identities-hub.png"
+    },
+    {
+      "id": "PW-MULTI-GOV",
+      "persona": "multi_identity",
+      "route": "/governance",
+      "dimension": "post-switch governance",
+      "verdict": "PASS",
+      "detail": "no forbidden dividend copy",
+      "screenshot": "screenshots/multi-governance-after-hub.png"
+    }
+  ]
+}

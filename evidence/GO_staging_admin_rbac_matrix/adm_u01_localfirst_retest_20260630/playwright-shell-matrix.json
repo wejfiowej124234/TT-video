@@ -1,0 +1,13 @@
+{
+  "artifact": "adm-u01-playwright-shell",
+  "phase": "②",
+  "staging_fe_probe": "",
+  "playwright_fe_base": "",
+  "generated_at": "2026-06-30T04:56:47.310Z",
+  "summary": {
+    "total": 0,
+    "pass": 0,
+    "fail": 0
+  },
+  "rows": []
+}

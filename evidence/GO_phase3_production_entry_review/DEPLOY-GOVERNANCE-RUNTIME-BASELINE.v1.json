@@ -11,11 +11,23 @@
     "evidence_only_commits_no_hat_rerun": true,
     "example_evidence_only_sha": "b739fca39384a73a182d1720e34b9635d7bbfdbd",
     "code_change_requires_s5": true,
-    "ssot": "docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md"
+    "ssot": "docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md",
+    "guard_script": "scripts/ops/lib/deploy-governance-phase3-guard.sh",
+    "classifier_script": "scripts/dev/classify-deploy-change-scope.py",
+    "example_governance_only_sha": "422aadb9f7685c125b4f9ada83bfbb3396d881a8",
+    "phase2_reopen": "FORBIDDEN",
+    "phase3_only_after_close": true
   },
   "machine_keys": {
     "TT_PHASE2_CLOSED": "YES",
     "TT_PHASE2_REOPEN": "NO",
-    "TT_RUNTIME_BASELINE_FROZEN": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6"
-  }
+    "TT_RUNTIME_BASELINE_FROZEN": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+    "TT_PHASE3_PRODUCTION_ENTRY_REVIEW": "ACTIVE",
+    "TT_RUNTIME_BASELINE_FROZEN_ASSET": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+    "TT_RUNTIME_BASELINE_MUTATION": "FORBIDDEN_UNLESS_S5_S6_CHAIN"
+  },
+  "updated_at_utc": "2026-06-30T10:21:21Z",
+  "asset_type": "FROZEN_RUNTIME_BASELINE",
+  "frozen_asset": "evidence/GO_phase3_production_entry_review/FROZEN-RUNTIME-BASELINE.v1.json",
+  "baseline_mutation": "FORBIDDEN_UNLESS_S5_S6_CHAIN"
 }

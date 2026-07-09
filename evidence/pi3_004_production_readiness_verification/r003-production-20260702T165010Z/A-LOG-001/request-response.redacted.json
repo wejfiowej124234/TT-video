@@ -1,0 +1,28 @@
+{
+  "request_chain": [
+    {
+      "method": "POST",
+      "url": "https://tt-api-prod.fly.dev/auth/login",
+      "body": {
+        "email": "r003.prod.interim@traveltrust.test",
+        "password": "[REDACTED]"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://tt-api-prod.fly.dev/api/v1/me",
+      "headers": {
+        "Authorization": "Bearer tts_[REDACTED]"
+      }
+    }
+  ],
+  "response": {
+    "login_http": 400,
+    "me_http": 401,
+    "me_body": {
+      "error": "unauthorized",
+      "message": "unauthorized",
+      "detail": "STRICT_SESSION_GATE=1：须提供 Authorization: Bearer <session_token>（不接受仅 X-User-Id）"
+    }
+  }
+}

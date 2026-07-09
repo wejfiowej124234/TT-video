@@ -1,0 +1,58 @@
+{
+  "sprint": "PHASE2-HUMAN-ACCEPTANCE-SPRINT",
+  "stamp": "20260610T112500Z",
+  "recorded_at": "2026-06-10T11:32:04.984072+00:00",
+  "overall_verdict": "NO-GO",
+  "phase3_review_status": "HOLD",
+  "role_matrix": {
+    "旅行者": {
+      "local": "FAIL",
+      "staging": "PASS"
+    },
+    "向导": {
+      "local": "FAIL",
+      "staging": "PASS"
+    },
+    "管理员": {
+      "local": "FAIL",
+      "staging": "PASS"
+    },
+    "收购/运营": {
+      "local": "FAIL",
+      "staging": "FAIL"
+    }
+  },
+  "local": {
+    "verdict": "NO-GO",
+    "targets": {
+      "web": "http://127.0.0.1:3012",
+      "api": "http://127.0.0.1:8080"
+    },
+    "summary": {
+      "p0": 1,
+      "p1": 25,
+      "p2": 0,
+      "flows_pass": 31,
+      "flows_fail": 26,
+      "flows_partial": 0
+    },
+    "findings": "D:/TravelTrust-V1.1/evidence/phase2-human-acceptance-sprint/20260610T112500Z/local/p2ha-findings.json"
+  },
+  "staging": {
+    "verdict": "NO-GO",
+    "targets": {
+      "web": "https://tt-web-staging.fly.dev",
+      "api": "https://tt-api-staging.fly.dev"
+    },
+    "summary": {
+      "p0": 16,
+      "p1": 0,
+      "p2": 0,
+      "flows_pass": 41,
+      "flows_fail": 16,
+      "flows_partial": 0
+    },
+    "findings": "D:/TravelTrust-V1.1/evidence/phase2-human-acceptance-sprint/20260610T112500Z/staging/p2ha-findings.json"
+  },
+  "boundary": "All roles PASS on ①+② required before TT_PHASE3_PRODUCTION_READINESS_REVIEW: REQUESTED"
+}

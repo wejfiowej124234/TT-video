@@ -40,8 +40,8 @@ trap cleanup EXIT
 
 p2b407_load_env
 
-PK_STAKER="$(p2b407_normalize_hex_pk "${STEWARD_STAKER_PK:-${B407_TRAVELER_PK:-}}")"
-[[ -n "$PK_STAKER" ]] || fail "STEWARD_STAKER_PK or B407_TRAVELER_PK required"
+PK_STAKER="$(p2b407_normalize_hex_pk "${STEWARD_STAKER_PK:-${B407_TRAVELER_PK:-${PRIVATE_KEY:-}}}")"
+[[ -n "$PK_STAKER" ]] || fail "STEWARD_STAKER_PK or B407_TRAVELER_PK or PRIVATE_KEY required"
 STAKER="$(cast wallet address --private-key "$PK_STAKER")"
 
 command -v anvil >/dev/null 2>&1 || fail "anvil not found"

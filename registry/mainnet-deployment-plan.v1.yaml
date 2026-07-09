@@ -1,0 +1,310 @@
+# Mainnet Deployment Plan · Execution SSOT (P3-04)
+#
+# Human: docs/spec/governance-token/MAINNET-DEPLOYMENT-PLAN-v1.md
+# Gate:  bash scripts/gates/check-mainnet-deployment-plan-gate.sh
+# Dry-run: node scripts/dev/run-mainnet-deployment-plan-dry-run.cjs
+#
+# P3-03 = what addresses exist and who controls them.
+# P3-04 = how deployment day executes with evidence — NOT broadcast.
+
+schema: traveltrust.mainnet_deployment_plan.v1
+version: 1
+planning_item: P3-04
+effective_utc: "2026-07-09"
+machine_key: TT_MAINNET_DEPLOYMENT_PLAN
+verdict: MAINNET_DEPLOYMENT_PLAN_READY
+verdict_status: PASS
+execution_status: PLAN_ONLY
+
+address_planning_ssot: registry/mainnet-address-registry.v1.yaml
+deployment_package_ssot: registry/mainnet-deployment-package.v1.yaml
+post_freeze_manifest: MANIFEST/manifest.json
+
+network:
+  id: ethereum_mainnet
+  chain_id: 1
+  broadcast_authorized: false
+  deploy_status: NOT_STARTED
+
+# ── Preconditions (required before any mainnet broadcast) ───────────────────
+
+preconditions:
+  p3_entry:
+    - id: P3-01
+      requirement: Production Entry Baseline FROZEN
+      registry: registry/phase3-production-entry-baseline.v1.yaml
+      gate: null
+      status: PASS
+    - id: P3-02
+      requirement: Runtime Evidence PASS
+      verdict: VACANCY_PRODUCTION_ENTRY_RECONCILE
+      gate: scripts/gates/check-web3-vacancy-indexer-reconcile-gate.sh
+      status: PASS
+    - id: P3-03
+      requirement: Address Planning PASS
+      verdict: MAINNET_ADDRESS_PLANNING_READY
+      gate: scripts/gates/check-mainnet-address-planning-gate.sh
+      status: PASS
+    - id: P3-04
+      requirement: Deployment Plan PASS (this artifact)
+      verdict: MAINNET_DEPLOYMENT_PLAN_READY
+      gate: scripts/gates/check-mainnet-deployment-plan-gate.sh
+      status: PASS
+
+  owner_approval:
+    required: true
+    status: PENDING
+    artifact: owner-signoff/OWNER-MAINNET-DEPLOY-AUTHORIZATION.md
+    env_flag: TRAVELTRUST_MAINNET_PHASE3_AUTHORIZED
+
+  security_review:
+    required: true
+    status: PENDING
+    item: P3-05
+    note: External audit refresh / R-01 — not satisfied by P3-04 alone
+
+  final_config_freeze:
+    required: true
+    status: PENDING
+    gates:
+      - WEB3_FREEZE_PASS
+      - MAINNET_DEPLOYMENT_PACKAGE_GENERATED
+    note: Tokenomics frozen per TTG-TOKENOMICS-FREEZE-V1 — config params locked at package generation
+
+  additional_blockers:
+    - mainnet_cutover_authorized: false
+    - PRODUCTION_SCOPE_MAINNET: NOT_SELECTED
+    - shadow_launch: NOT_STARTED
+
+# ── ABI-002 · Escrow V2 deployment preparation (NOT mainnet ready) ───────────
+
+abi_002:
+  id: ABI-002
+  contract: EscrowV2
+  previous_status: FUTURE_MAINNET_REQUIRED
+  status: DEPLOYMENT_PREPARATION_READY
+  not_status:
+    - MAINNET_READY
+    - DEPLOYED
+    - VERIFIED
+    - ACTIVE
+  preparation_artifacts:
+    source: contracts/src/EscrowV2.sol
+    abi: contracts/abi/EscrowV2.json
+    factory_abi: contracts/abi/EscrowFactoryV2.json
+    deploy_script: contracts/script/DeployEscrowFactoryV2.s.sol
+    sepolia_broadcast_shell: scripts/dev/phase2-sepolia-broadcast-escrow-factory-v2.sh
+    mainnet_broadcast_shell: PLANNED
+    forge_test: contracts/test/EscrowV2.t.sol
+  policy: registry/escrow-bilateral-mainnet-policy.v1.yaml
+  note: >
+    ABI + deploy script ready for execution-day use.
+    Does NOT imply mainnet broadcast, on-chain verification, or production enablement.
+
+# ── Deployment order (execution playbook) ───────────────────────────────────
+
+deployment_order:
+  - step: 1
+    id: DEPLOY_IMPLEMENTATIONS
+    title: Deploy implementation contracts
+    status: NOT_STARTED
+    scripts:
+      - contracts/script/DeployGovFreezeV2CleanBaseline.s.sol
+      - contracts/script/DeployFundStackUnderTimelock.s.sol
+      - contracts/script/DeployEscrowFactoryV2.s.sol
+    evidence:
+      artifact_type: tx_hash_bundle
+      path_pattern: evidence/mainnet_deploy/step-01-implementations/
+      gate: STEP_01_IMPLEMENTATIONS_EVIDENCE
+    rollback_phase: before_ownership_transfer
+
+  - step: 2
+    id: DEPLOY_PROXIES
+    title: Deploy proxy contracts
+    status: NOT_STARTED
+    pattern: TimelockUpgradeableProxy
+    posture_ssot: registry/g24-p-upgrade-01-contract-posture.v1.yaml
+    evidence:
+      artifact_type: tx_hash_bundle
+      path_pattern: evidence/mainnet_deploy/step-02-proxies/
+      gate: STEP_02_PROXIES_EVIDENCE
+    rollback_phase: before_ownership_transfer
+
+  - step: 3
+    id: INITIALIZE_PROXY_STORAGE
+    title: Initialize proxy storage
+    status: NOT_STARTED
+    init_functions:
+      - initializeProxyStorage
+    params_ssot: docs/spec/governance-token/protocol-ssot.v1.yaml
+    evidence:
+      artifact_type: event_logs
+      path_pattern: evidence/mainnet_deploy/step-03-init/
+      gate: STEP_03_INIT_EVIDENCE
+    rollback_phase: before_ownership_transfer
+
+  - step: 4
+    id: CONFIGURE_ROLES
+    title: Configure Treasury · Governor · Timelock · roles
+    status: NOT_STARTED
+    scope:
+      - FeeRouter routing
+      - Stake pool jurisdictions
+      - EscrowFactoryV2 guardian binding
+      - Treasury P4Cap caps
+    evidence:
+      artifact_type: role_snapshot
+      path_pattern: evidence/mainnet_deploy/step-04-configure/
+      gate: STEP_04_CONFIGURE_EVIDENCE
+    rollback_phase: after_proxy_before_governance_transfer
+
+  - step: 5
+    id: TRANSFER_OWNERSHIP
+    title: Transfer ownership and control to Timelock
+    status: NOT_STARTED
+    transfers:
+      - proxy_admin → GovernanceTimelock
+      - contract_owner → GovernanceTimelock
+      - escrow_factory_guardian → GovernanceTimelock
+    evidence:
+      artifact_type: owner_proof
+      path_pattern: evidence/mainnet_deploy/step-05-ownership/
+      gate: STEP_05_OWNERSHIP_EVIDENCE
+    rollback_phase: after_proxy_before_governance_transfer
+
+  - step: 6
+    id: VERIFY_CONTRACTS
+    title: Verify contracts on explorer
+    status: NOT_STARTED
+    checks:
+      - etherscan_verification
+      - bytecode_hash_manifest
+      - cast_admin_implementation
+    evidence:
+      artifact_type: explorer_verification
+      path_pattern: evidence/mainnet_deploy/step-06-verify/
+      gate: STEP_06_VERIFY_EVIDENCE
+    rollback_phase: disable_activation_only
+
+  - step: 7
+    id: ENABLE_PRODUCTION
+    title: Enable production features
+    status: NOT_STARTED
+    scope:
+      - registry/mainnet-address-registry.v1.yaml address fill
+      - env mainnet template
+      - API GET /meta
+      - indexer start
+      - frontend factory pointer
+    evidence:
+      artifact_type: production_enable_record
+      path_pattern: evidence/mainnet_deploy/step-07-enable/
+      gate: STEP_07_ENABLE_EVIDENCE
+    blocked_by:
+      - shadow_launch_GO
+      - owner_signoff
+      - P3-05_security_review
+      - P3-06_ops_runbook
+    rollback_phase: emergency_pause_only
+
+# ── Evidence chain (Action → Artifact → Gate) ─────────────────────────────────
+
+evidence_chain:
+  model: Deployment_Action → Evidence_Artifact → Gate
+  root: evidence/mainnet_deploy/
+  dry_run: scripts/dev/run-mainnet-deployment-plan-dry-run.cjs
+  per_step:
+    - step: 1
+      action: forge_broadcast_implementations
+      artifact: [tx_hashes, broadcast_json, forge_log]
+      gate: STEP_01_IMPLEMENTATIONS_EVIDENCE
+    - step: 2
+      action: forge_broadcast_proxies
+      artifact: [tx_hashes, proxy_address_manifest]
+      gate: STEP_02_PROXIES_EVIDENCE
+    - step: 3
+      action: initialize_proxies
+      artifact: [init_event_logs, cast_storage_snapshot]
+      gate: STEP_03_INIT_EVIDENCE
+    - step: 4
+      action: configure_roles
+      artifact: [role_snapshot_json, cast_call_bundle]
+      gate: STEP_04_CONFIGURE_EVIDENCE
+    - step: 5
+      action: transfer_ownership
+      artifact: [owner_cast_proof, admin_cast_proof]
+      gate: STEP_05_OWNERSHIP_EVIDENCE
+    - step: 6
+      action: explorer_verify
+      artifact: [verify_receipt_json, bytecode_hash_diff]
+      gate: STEP_06_VERIFY_EVIDENCE
+    - step: 7
+      action: enable_production
+      artifact: [production_enable_record_json, meta_parity_log]
+      gate: STEP_07_ENABLE_EVIDENCE
+
+# ── Rollback plan (honest on-chain boundary) ──────────────────────────────────
+
+rollback_plan:
+  principle: >
+    On-chain state is NOT reversible like a database.
+    Rollback = abort next step · disable activation · emergency pause — not undo deploys.
+  ssot_template: docs/runbook/templates/mainnet-package/rollback/MAINNET-ROLLBACK-PREP-V1.md
+
+  phases:
+    before_ownership_transfer:
+      trigger: [deploy_failure, init_failure, config_mismatch]
+      actions:
+        - abort_broadcast_sequence
+        - do_not_publish_addresses_to_registry
+        - discard_partial_env_slots
+        - document_abandoned_addresses_in_evidence
+      forbidden: claim_production_ready
+
+    after_proxy_before_governance_transfer:
+      trigger: [verify_failure, role_mismatch, binding_check_fail]
+      actions:
+        - disable_activation
+        - do_not_enable_api_meta
+        - do_not_start_indexer_on_new_addresses
+        - retain_deployer_control_only_if_timelock_not_yet_admin
+      forbidden: arbitrary_state_revert
+
+    after_governance_transfer:
+      trigger: [post_enable_critical_bug, shadow_launch_NO_GO]
+      actions:
+        - emergency_pause_via_timelock
+        - FeeRouter.setDistributePaused
+        - disable_new_escrow_routes
+        - maintenance_banner
+      forbidden: undo_ownership_or_proxy_admin
+
+# ── Dry-run (P3-04 allowed · no broadcast) ──────────────────────────────────
+
+dry_run:
+  script: scripts/dev/run-mainnet-deployment-plan-dry-run.cjs
+  mode: simulation_only
+  checks:
+    - preconditions_p3_01_03_pass
+    - abi_002_preparation_artifacts_present
+    - deploy_scripts_exist
+    - step_order_documented
+    - rollback_phases_documented
+  forbidden:
+    - forge_broadcast
+    - mainnet_rpc_broadcast
+    - fund_transfer
+
+p3_04_scope_excluded:
+  - mainnet_broadcast
+  - real_deployment
+  - fund_transfer
+  - production_multisig_operations
+
+next_items:
+  - P3-05_security_review_refresh
+  - P3-06_mainnet_ops_runbook
+  - P3-07_mainnet_dry_run_gate_scaffold
+  - P3-08_owner_signoff
+
+closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/P3-04-DEPLOYMENT-PLAN-CLOSEOUT.md

@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_consistency_review.v1",
+  "stamp_utc": "20260704T131830Z",
+  "matrix_rows_reviewed": 15,
+  "TT_GLOBAL_CONSISTENCY_REVIEW": "PASS",
+  "new_row": "ocs-seoul-food-acquisition-cover.jpg",
+  "checks": {
+    "no_duplicate_composition": true,
+    "no_duplicate_acquisition_archetype": true,
+    "surface_slot_isolation": true,
+    "no_brand_drift": true
+  },
+  "regression_chains": {
+    "tokyo-photo": { "pass": true },
+    "kyoto-culture": { "pass": true },
+    "seoul-food": { "pass": true, "rows_verified": 3 }
+  },
+  "gate_to_row16": "PASS"
+}

@@ -1,0 +1,123 @@
+{
+  "verdict": "PASS",
+  "exit_code": 0,
+  "stdout_tail": "smoke-cert3-admin-walkthrough-machine: OK RBAC-GAP-LIST=0 stamp=20260616T142200Z\nsmoke-cert3-admin-walkthrough-machine: OK admin vitest union (107 pages + card visibility SSOT)\nTT_CERT3_ADMIN_MATRIX: PASS out=D:\\TravelTrust-V1.1\\evidence\\GO_ttg_cert\\.cert3-matrix-checks.json\nsmoke-cert3-admin-walkthrough-machine: OK five-role matrix + cargo cert3 tests\nTT_CERT3_ADMIN_WALKTHROUGH_MACHINE: OK",
+  "stderr_tail": "",
+  "five_role_matrix": {
+    "schema": "traveltrust.cert3-admin-five-role-matrix.v1",
+    "verdict": "PASS",
+    "console_roles": [
+      "SuperAdmin",
+      "Finance",
+      "Risk",
+      "Ops",
+      "Auditor",
+      "CS"
+    ],
+    "checks": {
+      "rbac_gap_list_zero": {
+        "ok": true,
+        "handlers_gap": 0,
+        "stamp": "2026-06-16T14:22:01Z"
+      },
+      "treasury_no_admin_write_route": {
+        "ok": true,
+        "hits": []
+      },
+      "superadmin_has_approve_not_auditor": {
+        "ok": true,
+        "superadmin_approve": true,
+        "auditor_moderate": false
+      },
+      "static_role_route_matrix": {
+        "ok": true,
+        "rows": [
+          {
+            "role": "Finance",
+            "route": "GET /api/v1/admin/finance/summary",
+            "expect": "allow",
+            "ok": true
+          },
+          {
+            "role": "Finance",
+            "route": "GET /api/v1/admin/approvals",
+            "expect": "deny",
+            "ok": true
+          },
+          {
+            "role": "Finance",
+            "route": "POST /api/v1/admin/flags/:id/publish",
+            "expect": "deny",
+            "ok": true
+          },
+          {
+            "role": "Risk",
+            "route": "GET /api/v1/admin/community/reports",
+            "expect": "allow",
+            "ok": true
+          },
+          {
+            "role": "Risk",
+            "route": "GET /api/v1/admin/finance/summary",
+            "expect": "deny",
+            "ok": true
+          },
+          {
+            "role": "Risk",
+            "route": "GET /api/v1/admin/approvals",
+            "expect": "deny",
+            "ok": true
+          },
+          {
+            "role": "Auditor",
+            "route": "GET /api/v1/admin/audit-logs",
+            "expect": "allow",
+            "ok": true
+          },
+          {
+            "role": "Auditor",
+            "route": "POST /api/v1/admin/community/penalties",
+            "expect": "deny",
+            "ok": true
+          },
+          {
+            "role": "Auditor",
+            "route": "GET /api/v1/admin/approvals",
+            "expect": "deny",
+            "ok": true
+          },
+          {
+            "role": "Ops",
+            "route": "GET /api/v1/admin/finance/summary",
+            "expect": "allow",
+            "ok": true
+          },
+          {
+            "role": "Ops",
+            "route": "GET /api/v1/admin/approvals",
+            "expect": "deny",
+            "ok": true
+          },
+          {
+            "role": "SuperAdmin",
+            "route": "GET /api/v1/admin/approvals",
+            "expect": "allow",
+            "ok": true
+          }
+        ]
+      },
+      "cargo_cert3_tests": {
+        "cmd": "cargo test -p traveltrust-api -- cert3_console_role_rbac_matrix_sequential",
+        "exit_code": 0,
+        "ok": true,
+        "stdout_tail": "\nrunning 1 test\ntest routes::admin::tests::cert3_console_role_rbac_matrix_sequential ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1198 filtered out; finished in 0.00s\n",
+        "stderr_tail": "26 | pub(crate) use signature::build_stripe_webhook_signature_header;\n   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\nwarning: `traveltrust-api` (bin \"traveltrust-api\" test) generated 2 warnings (run `cargo fix --bin \"traveltrust-api\" --tests` to apply 2 suggestions)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.41s\n     Running unittests src\\main.rs (target\\debug\\deps\\traveltrust_api-08408a08db87a5b2.exe)"
+      },
+      "smoke_admin_rbac_matrix": {
+        "ok": true,
+        "exit_code": 0,
+        "stdout_tail": "== smoke-admin-rbac-matrix-local (??) API=http://127.0.0.1:8080 ==\nsmoke-admin-rbac-matrix-local: OK assign CS console role via db\nsmoke-admin-rbac-matrix-local: OK db_console_role + route_matrix + CS deny publish + Finance allow finance read"
+      }
+    }
+  }
+}

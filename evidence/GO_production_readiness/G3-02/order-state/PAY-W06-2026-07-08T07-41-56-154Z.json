@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W06",
+  "recorded_utc": "2026-07-08T07:41:56.155Z",
+  "run_id": "2026-07-08T07-41-56-154Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PARTIAL",
+  "summary": {
+    "verdict": "PARTIAL",
+    "detail": "Order state sync API ↔ chain via indexer"
+  },
+  "detail": "Order state sync API ↔ chain via indexer",
+  "order_id": "fe6b7dda-6668-4734-9937-8dd961ec4f93",
+  "status": "accepted",
+  "escrow_address": "0x04f7A01Dd16D159F0855b9d8BcfAd2E41eB2F8D1",
+  "mock_pay_probe": {
+    "http": 501,
+    "forbidden": true
+  }
+}

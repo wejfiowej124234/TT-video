@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.staging_infra_recovery_probe.v1",
+  "stamp": "20260703T130900Z",
+  "market_runtime": "CLOSED",
+  "governance": {
+    "OCS": "CLOSED",
+    "DDG": "CLOSED",
+    "SOPCP": "CLOSED",
+    "market_default_filter": "CLOSED"
+  },
+  "probes": {
+    "acquisition_listings_http": "200",
+    "market_feed_http": "200",
+    "loca_lt_tunnel": "503_tunnel_unavailable",
+    "acquisition_listings_items": 10
+  },
+  "acquisition_count": "10",
+  "verdict_api_recovered": "acquisition_listings and market_feed return 200 at probe time"
+}

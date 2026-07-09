@@ -1,5 +1,7 @@
 # TravelTrust Go-Live Checklist
 
+> **核心支付（2026-07-08）：** Trip/Market/收购支付 = **Web3 USDC + Escrow** — 全方位验收见 **[PRODUCTION-USDC-GO-LIVE-MASTER-CHECKLIST.md](runbook/PRODUCTION-USDC-GO-LIVE-MASTER-CHECKLIST.md)**（PAY-W01～W16 · 合约/API/ABI 对拍）。**Stripe 仅 Optional Fiat Onboarding（P1 附录）**，不是本清单 §1～§7 的核心支付前提。
+
 基于当前 **`docs/verification-evidence-pack.md`** 与 **`.env.example`** 的上线前必做项；按顺序执行并逐项勾选。不包含功能扩展或新任务。
 
 **2026-04-17**：**新增** **§9 · Ethereum Mainnet 强制门禁（P0）**；原 **「监控与值班」** **顺延为** **§10**；原 **「发版真值并联」** **顺延为** **§11**（**P0 覆盖映射表** **已同步**）。

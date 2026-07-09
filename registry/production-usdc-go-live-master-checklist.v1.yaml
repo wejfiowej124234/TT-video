@@ -1,0 +1,225 @@
+# Production USDC Go-Live Master Checklist · Machine SSOT
+#
+# Replaces Stripe-as-core-payment prep. Payment = Web3 Escrow (USDC).
+# Stripe = Optional Fiat Onboarding (Appendix only · P1 · not blocking GO).
+#
+# Human: docs/runbook/PRODUCTION-USDC-GO-LIVE-MASTER-CHECKLIST.md
+# Payment gate: scripts/check-web3-payment-production-readiness.sh
+# Architecture: registry/payment-architecture-classification.v1.yaml
+# GO sequence: registry/production-go-closure-sequence.v1.yaml
+
+schema: traveltrust.production_usdc_go_live_master_checklist.v1
+version: 1
+effective_utc: "2026-07-08"
+machine_key: TT_PRODUCTION_USDC_GO_LIVE_MASTER_CHECKLIST
+production_scope: PRODUCTION_SCOPE_SEPOLIA
+chain_id: 11155111
+
+architecture:
+  core_payment: Web3 Escrow (USDC)
+  flow: Wallet → approve → deposit → Escrow → events → Indexer → order → release → FeeRouter → Settlement → Ledger
+  not_core: Optional Fiat Onboarding (Stripe · PI3-003 · P1)
+  forbidden_on_prod: [P3_CHAIN_OFF=1, mock-pay, sk_test_on_prod_payment_path]
+
+prod_sepolia_baseline:
+  CHAIN_ID: 11155111
+  SETTLEMENT_TOKEN_ADDRESS: "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
+  ESCROW_FACTORY_ADDRESS: "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
+  FEE_ROUTER_ADDRESS: "0x81A8009210c5215100564c6E4123F672c4459306"
+  REGISTRY_ADDRESS: "0xc50913e154f850583D0afbE9158a75E0e2167AAb"
+  GOVERNOR_ADDRESS: "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+  TIMELOCK_ADDRESS: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+  GOVERNANCE_TOKEN_ADDRESS: "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+  GUIDE_STAKING_ADDRESS: "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f"
+  REGION_VAULT_ADDRESS: "0x2Ea061d50393c09af2f607Ee9f89679642A3a65B"
+  REGION_STEWARD_STAKE_POOL_ADDRESS: "0x3a89378bfad12d1028707dd37055294854c8784e"
+  ssot_refs:
+    - registry/protocol-convergence-deployments.v1.yaml
+    - registry/production-payment-readiness-checklist.v1.yaml
+    - docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md
+    - docs/runbook/TT-PHASE2-FUND-STACK-SEPOLIA-BROADCAST-CHECKLIST.md
+
+abi_ssot:
+  Escrow: contracts/abi/Escrow.json
+  EscrowFactory: contracts/abi/EscrowFactory.json
+  FeeRouter: contracts/abi/FeeRouter.json
+  source_of_truth: contracts/src/
+  fe_abi_parity: frontend uses same deposit/approve/release selectors as contracts/abi
+
+env_parity_matrix:
+  api_fly_secrets: scripts/dev/.env.production.local
+  fe_build: deploy/fly/tt-web-prod/build.env.local
+  meta_probe: GET /meta
+  required_pairs:
+    - api: CHAIN_ID
+      fe: NEXT_PUBLIC_CHAIN_ID
+    - api: CHAIN_RPC_URL
+      fe: NEXT_PUBLIC_RPC_URL
+    - api: SETTLEMENT_TOKEN
+      fe: NEXT_PUBLIC_SETTLEMENT_TOKEN_ADDRESS
+    - api: ESCROW_FACTORY_ADDRESS
+      fe: NEXT_PUBLIC_ESCROW_FACTORY_ADDRESS
+    - api: FEE_ROUTER_ADDRESS
+      fe: NEXT_PUBLIC_FEE_ROUTER_ADDRESS
+    - api: REGISTRY_ADDRESS
+      fe: NEXT_PUBLIC_REGISTRY_ADDRESS
+    - api: GOVERNOR_ADDRESS
+      fe: NEXT_PUBLIC_GOVERNOR_ADDRESS
+    - api: GUIDE_STAKING_ADDRESS
+      fe: NEXT_PUBLIC_GUIDE_STAKING_ADDRESS
+
+sections:
+  - id: GL-A
+    title: Architecture & Production Scope
+    items:
+      - id: GL-A01
+        check: Production scope disclosed as Sepolia (PRODUCTION_SCOPE_SEPOLIA)
+      - id: GL-A02
+        check: Core payment documented as USDC + Escrow — not Stripe card checkout
+      - id: GL-A03
+        check: P3_CHAIN_OFF unset or 0 on prod · mock-pay returns 501
+      - id: GL-A04
+        check: MAINNET_CUTOVER not authorized unless separate PI3-005-M program
+
+  - id: GL-B
+    title: Contract · ABI · Address Parity
+    items:
+      - id: GL-B01
+        check: All prod_sepolia_baseline addresses match API Fly secrets
+      - id: GL-B02
+        check: All NEXT_PUBLIC_* contract addresses match API /meta
+      - id: GL-B03
+        check: SETTLEMENT_TOKEN (API) == NEXT_PUBLIC_SETTLEMENT_TOKEN_ADDRESS (FE)
+      - id: GL-B04
+        check: Escrow platformFeeRecipient == FEE_ROUTER_ADDRESS on-chain
+      - id: GL-B05
+        check: ABI files (Escrow/EscrowFactory/FeeRouter) match deployed bytecode / verified explorer
+      - id: GL-B06
+        check: FE CreateOnChainEscrowBlock uses contracts/abi selectors (approve/deposit/release)
+      - id: GL-B07
+        check: GovFreeze V2 Timelock/Governor/Treasury boundaries documented and address-aligned
+
+  - id: GL-C
+    title: USDC Settlement Token
+    items:
+      - id: GL-C01
+        check: SETTLEMENT_TOKEN configured on tt-api-prod
+      - id: GL-C02
+        check: Token decimals / symbol match FE display and order amount units
+      - id: GL-C03
+        check: User wallet holds Sepolia USDC (test track token) for prod smoke
+      - id: GL-C04
+        check: approve(spender=Escrow) succeeds before deposit smoke
+
+  - id: GL-D
+    title: API Runtime · Order · Indexer
+    items:
+      - id: GL-D01
+        check: GET /meta chain_id=11155111 · order_mock_pay_enabled=false
+      - id: GL-D02
+        check: POST /orders → accept → set-escrow-address (if needed) → chain path
+      - id: GL-D03
+        check: GET /orders/:id includes escrow_address · chain_id when bound
+      - id: GL-D04
+        check: GET /orders/:id/chain-sync-status returns tx_hash after deposit
+      - id: GL-D05
+        check: POST /internal/indexer-tick processes Deposited events
+      - id: GL-D06
+        check: POST /internal/indexer-reconcile persist=true converges order state
+      - id: GL-D07
+        check: orders_projection SSOT for terminal states (B-094)
+      - id: GL-D08
+        check: INTERNAL_API_SECRET set · /internal/* not public
+
+  - id: GL-E
+    title: Frontend · Wallet · DApp
+    items:
+      - id: GL-E01
+        check: WalletConnect + injected (MetaMask) connect on prod FE
+      - id: GL-E02
+        check: Coinbase Wallet if supported — or documented N/A
+      - id: GL-E03
+        check: connect / disconnect / reconnect / page refresh recovery
+      - id: GL-E04
+        check: /escrow/:id or pay hub shows approve + deposit flow
+      - id: GL-E05
+        check: Explorer link (TxHash · block · confirmations) per paid order
+      - id: GL-E06
+        check: Insufficient USDC / gas UX paths documented
+
+  - id: GL-F
+    title: Payment Production Verification (PAY-W01..W16)
+    ref: registry/production-payment-readiness-checklist.v1.yaml
+    gate: scripts/check-web3-payment-production-readiness.sh
+    machine_key: TT_WEB3_PAYMENT_PRODUCTION_READINESS
+    items:
+      - { id: PAY-W01, title: Wallet }
+      - { id: PAY-W02, title: Approve }
+      - { id: PAY-W03, title: Deposit }
+      - { id: PAY-W04, title: Escrow + contract parity }
+      - { id: PAY-W05, title: Indexer }
+      - { id: PAY-W06, title: Order state }
+      - { id: PAY-W07, title: Release }
+      - { id: PAY-W08, title: FeeRouter }
+      - { id: PAY-W09, title: Settlement }
+      - { id: PAY-W10, title: Ledger reconcile }
+      - { id: PAY-W11, title: Event replay }
+      - { id: PAY-W12, title: RPC failover }
+      - { id: PAY-W13, title: Explorer UX }
+      - { id: PAY-W14, title: Multi wallet }
+      - { id: PAY-W15, title: Security / scope }
+      - { id: PAY-W16, title: Gas / recovery }
+
+  - id: GL-G
+    title: Infrastructure (non-payment · parallel track)
+    ref: docs/go-live-checklist.md
+    items:
+      - id: GL-G01
+        check: OCS Production Bootstrap + parity PASS
+      - id: GL-G02
+        check: CMS full operations verification
+      - id: GL-G03
+        check: Domain / TLS / CORS (PI3-002)
+      - id: GL-G04
+        check: PG backup / DR (PI3-001)
+      - id: GL-G05
+        check: Monitoring / alerting
+      - id: GL-G06
+        check: R-002 prod regression report.json GO
+      - id: GL-G07
+        check: Owner Final Sign-off (G3-06)
+
+production_go_sequence:
+  ssot: registry/production-go-closure-sequence.v1.yaml
+  steps:
+    - OCS Production Bootstrap
+    - Web3 Payment Production Verification
+    - CMS Full Operations
+    - API / Data Lineage / Parity
+    - CDN / Media
+    - Domain / TLS / CORS
+    - Monitoring / Alert
+    - Backup / Rollback
+    - Security Review
+    - Owner Final Sign-off
+
+appendix_optional_fiat_onboarding:
+  id: APP-STRIPE-P1
+  label: Optional Fiat Onboarding (Stripe · NOT Production Payment)
+  classification: P1_FUTURE_FIAT_ONRAMP
+  blocks_production_go: false
+  when_required: TRAVELTRUST_ONBOARDING_STRIPE_ENABLED=1
+  ssot: docs/runbook/PRODUCTION-STRIPE-ENV-MATRIX-SEPOLIA-SCOPE.md
+  gate: scripts/check-pi3-003-stripe-live-production-webhook-execution.sh
+  note: Default onboarding remains USDC → OnboardingFeeReceiver
+
+verification_commands:
+  meta: curl -s "${PROD_API_BASE}/meta" | jq '.chain, .order_mock_pay_enabled'
+  web3_gate: bash scripts/check-web3-payment-production-readiness.sh
+  alignment: PROD_API_BASE=… PROD_WEB_BASE=… bash scripts/dev/check-production-web-alignment.sh
+  escrow_ssot: bash scripts/ops/runtime-chain-ssot-cast-verify.sh
+
+removed_from_core_prep:
+  - Stripe Live as step 3 in PI3 owner checklist
+  - PI3-003 as P0 Production Payment blocker
+  - sk_live_* as prerequisite for trip/market payment GO

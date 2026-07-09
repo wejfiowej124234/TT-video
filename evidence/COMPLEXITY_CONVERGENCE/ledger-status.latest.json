@@ -1,0 +1,39 @@
+{
+  "schema": "traveltrust.complexity_convergence_ledger_status.v1",
+  "generated_at_utc": "2026-06-30T07:53:37Z",
+  "ledger_path": "D:/TravelTrust-V1.1/registry/complexity-convergence-fix-ledger.v1.yaml",
+  "gap_inventory_path": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/gap-inventory.latest.json",
+  "counts": {
+    "total": 21,
+    "open_p0": 12,
+    "open_p1": 6,
+    "in_progress": 0,
+    "closed": 0,
+    "gap_open": 18
+  },
+  "open_p0_ids": [
+    "BOOK-P0-01",
+    "BOOK-P0-02",
+    "BOOK-P0-03",
+    "BOOK-P0-04",
+    "BOOK-P0-05",
+    "STRAT-S1",
+    "STRAT-S2",
+    "STRAT-S3",
+    "STRAT-S4",
+    "STRAT-S5",
+    "STRAT-S6",
+    "STRAT-S7"
+  ],
+  "open_p1_ids": [
+    "EXP-P1-01",
+    "EXP-P1-02",
+    "EXP-P1-03",
+    "EXP-P1-04",
+    "EXP-P1-05",
+    "GATE-P1-01"
+  ],
+  "drift": [],
+  "ready_for_staging_live": false,
+  "ready_for_freeze_candidate": false
+}

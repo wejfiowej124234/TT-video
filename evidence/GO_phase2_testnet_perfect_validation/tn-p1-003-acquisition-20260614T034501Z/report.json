@@ -1,0 +1,14 @@
+{
+  "schema": "tn_p1_003_acquisition_staging.v1",
+  "stamp": "20260614T034501Z",
+  "phase": "② testnet",
+  "api": "https://tt-api-staging.fly.dev",
+  "listing_id": "e54a77f1-57ec-4d90-be9a-1ce3c70a96c5",
+  "order_id": "aa0ce61e-b035-4766-a6c0-71fc9ec5c298",
+  "owner_email": "acq-stg-own-1781408709@traveltrust.test",
+  "carrier_email": "acq-stg-car-1781408709@traveltrust.test",
+  "final_status": "completed",
+  "payment_mode": "mock-pay",
+  "release_gate": "GO",
+  "honest_boundary": "② staging mock bond + mock-pay escrow · ≠ ③ mainnet acquisition bond/PSP · reviews/trust parity optional"
+}

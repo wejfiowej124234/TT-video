@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T143030Z",
+  "trigger_row": 28,
+  "trigger_filename": "ocs-singapore-family-official-guide-cover.jpg",
+  "TT_CROSS_CHAIN_OFFICIAL_GUIDE_REVIEW": "PASS",
+  "official_guide_comparison": {
+    "tokyo-photo": "浅草→晴空塔摄影一日",
+    "kyoto-culture": "岚山祇园文化两日",
+    "seoul-food": "明洞→广藏 48h 美食地图",
+    "bangkok-temple": "郑王庙尖塔+湄南河寺庙河景一日",
+    "singapore-family": "滨海湾天际线+家庭剪影 · 亲子周末两天",
+    "distinct_route_brand": true,
+    "no_landmark_duplication": true,
+    "no_composition_tone_duplication": true
+  },
+  "no_quality_regression_prior_27": true
+}

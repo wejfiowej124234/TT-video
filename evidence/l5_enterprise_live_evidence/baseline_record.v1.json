@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust_l5_enterprise_live_evidence_baseline.v1",
+  "status": "PASS",
+  "baseline_refs": [
+    "163",
+    "162",
+    "161"
+  ],
+  "last_audit_matrix_path": "evidence/l5_enterprise_live_evidence/audit_matrix.v1.json",
+  "audit_verdict": "L5_ENTERPRISE_LIVE_EVIDENCE_GO",
+  "live_evidence_score": 95,
+  "track_verdicts": {
+    "RUJR_LIVE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "RUJR_LIVE_GO"
+    },
+    "A11Y_LIVE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "A11Y_LIVE_GO"
+    },
+    "LIVE_RESILIENCE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "LIVE_RESILIENCE_GO"
+    }
+  },
+  "last_audit_run_utc": "20260608T033228Z"
+}

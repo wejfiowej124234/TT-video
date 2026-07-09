@@ -1,0 +1,134 @@
+{
+  "schema": "traveltrust.phase3_work_taxonomy.v1",
+  "effective_at_utc": "2026-06-30T10:12:57Z",
+  "supersedes_mixed_labels": [
+    "LS-P1",
+    "LS-P2",
+    "alignment gap as consistency fix"
+  ],
+  "phase_boundary": {
+    "runtime_consistency": "ARCHIVED (CLOSED) \u2014 re-audit only after new staging deploy",
+    "phase2_reopen": "NO"
+  },
+  "categories": [
+    {
+      "id": "RUNTIME_CONSISTENCY",
+      "title": "\u672c\u5730\u2194\u6d4b\u8bd5\u7f51 Runtime \u4e00\u81f4\u6027",
+      "is_local_staging_consistency": true,
+      "status": "ARCHIVED",
+      "closure": "evidence/GO_phase3_production_entry_review/LOCAL-STAGING-RUNTIME-CONSISTENCY-ARCHIVED.v1.json",
+      "status_alias": "CLOSED",
+      "no_reaudit_unless": "new_staging_runtime_or_config_deploy",
+      "frozen_baseline_asset": "FROZEN-RUNTIME-BASELINE.v1.json",
+      "baseline_mutation": "FORBIDDEN_UNLESS_S5_S6_CHAIN"
+    },
+    {
+      "id": "REPOSITORY_HYGIENE",
+      "title": "Repository Hygiene \u00b7 \u5de5\u7a0b\u536b\u751f",
+      "is_local_staging_consistency": false,
+      "status": "IN_PROGRESS",
+      "track": "P3-HYG",
+      "examples": [
+        "worktree porcelain",
+        "deploy-path WIP",
+        "tracked dirty",
+        "deploy-path isolation"
+      ]
+    },
+    {
+      "id": "LEGACY_PHASE2",
+      "title": "Legacy \u00b7 Phase\u2461 \u9057\u7559\u95f8",
+      "is_local_staging_consistency": false,
+      "status": "PARKED",
+      "examples": [
+        "TN-P1-009 72h soak",
+        "TN-P1-010 indexer graduation"
+      ],
+      "note": "\u5386\u53f2\u8f68\u9053\uff0c\u4ec5\u5f15\u7528\uff1b\u4e0d\u5f71\u54cd Phase\u2461 CLOSED \u6216 Phase\u2462 \u4e3b\u6d41\u7a0b",
+      "participates_in_main_flow": false,
+      "status_label": "PARKED\uff08\u65c1\u8def \u00b7 \u975e\u672a\u5b8c\u6210\uff09"
+    },
+    {
+      "id": "PRODUCTION_ENTRY_REVIEW",
+      "title": "Production Entry Review \u00b7 \u751f\u4ea7\u73af\u5883\u51c6\u5907",
+      "is_local_staging_consistency": false,
+      "status": "OPEN",
+      "tracks": [
+        "P3-ENV",
+        "P3-KEYS",
+        "P3-SEC",
+        "P3-MON",
+        "P3-RB",
+        "P3-GOLIVE"
+      ],
+      "examples": [
+        "Stripe verify",
+        "Fly secrets",
+        "rollback drill",
+        "monitor/on-call",
+        "go-live audit"
+      ]
+    },
+    {
+      "id": "MAINNET_PREP",
+      "title": "Mainnet Preparation \u00b7 \u4e3b\u7f51\u51c6\u5907",
+      "is_local_staging_consistency": false,
+      "status": "OPEN",
+      "track": "P3-MAINNET",
+      "examples": [
+        "CHAIN_ID=1",
+        "TT-MAINNET G0-G6",
+        "Shadow Launch"
+      ]
+    },
+    {
+      "id": "MANUAL_VALIDATION",
+      "title": "Manual Validation \u00b7 \u4eba\u5de5\u9a8c\u8bc1",
+      "is_local_staging_consistency": false,
+      "status": "PENDING",
+      "examples": [
+        "FRCA UI journeys",
+        "Wallet",
+        "Escrow hand path",
+        "Governance Vote/Claim"
+      ],
+      "note": "FRCA \u7b49\u4eba\u5de5\u624b\u64cd\uff1b\u4e0d\u5c5e\u4e8e Phase\u2460/\u2461 \u5b8c\u6210\u5ea6",
+      "status_label": "PENDING\uff08Phase\u2462\uff09"
+    }
+  ],
+  "four_directions_phase3": [
+    "REPOSITORY_HYGIENE",
+    "PRODUCTION_ENTRY_REVIEW",
+    "MANUAL_VALIDATION",
+    "MAINNET_PREP"
+  ],
+  "machine_keys": {
+    "TT_LOCAL_STAGING_RUNTIME_CONSISTENCY": "ARCHIVED",
+    "TT_LOCAL_STAGING_RUNTIME_CONSISTENCY_REAUDIT": "FORBIDDEN_UNLESS_NEW_STAGING_DEPLOY",
+    "TT_PHASE3_WORK_TAXONOMY": "ACTIVE",
+    "TT_PHASE3_PROGRAM_FLOW": "ACTIVE",
+    "TT_RUNTIME_BASELINE_FROZEN_ASSET": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+    "TT_RUNTIME_BASELINE_MUTATION": "FORBIDDEN_UNLESS_S5_S6_CHAIN",
+    "TT_HEAD_STAGING_SHA_PARITY": "NOT_REQUIRED",
+    "TT_LEGACY_TN_P1": "PARKED",
+    "TT_FRCA_MANUAL_VALIDATION": "PENDING_PHASE3",
+    "TT_PHASE1_AUDIT_REGENERATE": "FORBIDDEN",
+    "TT_PHASE2_AUDIT_REGENERATE": "FORBIDDEN",
+    "TT_RUNTIME_CONSISTENCY_AUDIT_REGENERATE": "FORBIDDEN"
+  },
+  "updated_at_utc": "2026-06-30T10:34:40Z",
+  "program_flow": "evidence/GO_phase3_production_entry_review/PHASE3-PROGRAM-FLOW.v1.json",
+  "frozen_runtime_baseline": "evidence/GO_phase3_production_entry_review/FROZEN-RUNTIME-BASELINE.v1.json",
+  "baseline_mutation_chain": [
+    "RUNTIME_CODE_OR_CONFIG_CHANGE",
+    "S5_DEPLOY",
+    "S6_VALIDATION",
+    "BASELINE_RECORD_UPDATE"
+  ],
+  "phase12_checklist_semantics": "evidence/GO_phase3_production_entry_review/PHASE12-COMPLETION-CHECKLIST-SEMANTICS.v1.json",
+  "head_staging_sha_parity": {
+    "status": "NOT_REQUIRED",
+    "note": "HEAD may lead frozen baseline; not Phase\u2461 open item"
+  },
+  "audit_closure_policy": "evidence/GO_phase3_production_entry_review/PHASE12-AUDIT-CLOSURE-POLICY.v1.json"
+}

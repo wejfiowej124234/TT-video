@@ -1,0 +1,206 @@
+# CMS Content L5 · Registry
+# Runbook: docs/runbook/TT-CMS-CONTENT-L5.md
+# OCS parallel: registry/ocs-content-l5.v1.yaml
+
+schema: traveltrust.cms_content_l5.v1
+version: 1
+effective_utc: "2026-07-05"
+cms_content_l5_version: 1.3.1
+
+machine_keys:
+  TT_CMS_CONTENT_L5: BASELINE_ESTABLISHED
+  TT_CMS_CONTENT_L5_EXECUTION: NOT_STARTED
+  TT_CMS_CONTENT_L5_READY: "NO"
+  TT_CMS_CHANGE_POLICY: docs/runbook/TT-CMS-CHANGE-POLICY.md
+  TT_CMS_CONTENT_HEALTH_SCORE: evidence/GO_cms_content_l5/CMS-CONTENT-HEALTH-SCORE-LATEST.json
+  TT_CMS_ASSET_LIFECYCLE_ENUM: draft,review,approved,published,live,archived
+  TT_CMS_PHASE_1_COUNTRY_ORDER: JP,KR,TH,SG,FR,US,AU,ES,AE,CN
+  TT_CMS_CONTENT_L5_CONTENT_BRIEF: data/catalog/cms-content-brief.v1.yaml
+  TT_CMS_DESTINATION_AMBIENT_MATRIX: data/catalog/destination-ambient-matrix.v1.yaml
+  TT_CMS_CONTENT_L5_RUNBOOK: docs/runbook/TT-CMS-CONTENT-L5.md
+  TT_CMS_CONTENT_L5_EVIDENCE_ROOT: evidence/GO_cms_content_l5/
+  TT_CONTENT_OWNERSHIP_POLICY: docs/runbook/TT-CONTENT-OWNERSHIP-POLICY.md
+  TT_CMS_PHASE1_SINGLE_ASSET_TEMPLATE: docs/runbook/TT-CMS-PHASE1-SINGLE-ASSET-TEMPLATE.md
+  TT_CMS_PHASE1_EVIDENCE_TEMPLATE: data/catalog/templates/cms-phase1-single-asset-evidence.v1.json
+
+content_ownership_four_layers:
+  priority_a: OCS_OFFICIAL_CONTENT
+  priority_b: CMS_OPERATIONAL_CONTENT
+  priority_c: PUBLIC_OPERATIONS
+  priority_d: MEDIA_PLATFORM
+
+destination_ambient:
+  product_name: Destination Ambient
+  catalog_asset_kind_legacy: landing_ambient
+  matrix_rows: 10
+  matrix_verified_pass: 0
+  baseline_phase: PHASE_0
+  closure_keys:
+    - TT_CMS_DESTINATION_AMBIENT_MATRIX
+    - TT_CMS_DESTINATION_AMBIENT_READY
+    - TT_CMS_CONTENT_BRAND_CONSISTENCY
+    - TT_CMS_CONTENT_L5_DESTINATION_AMBIENT
+
+asset_families_planned:
+  - destination_ambient
+  - poi_hero
+  - hotel_stock
+  - transport_stock
+  - airport_stock
+  - family_stock
+  - museum_stock
+  - marketing_image
+
+lifecycle:
+  - brief
+  - asset_matrix
+  - designer_upload
+  - cms_review
+  - catalog_publish
+  - verify
+  - evidence
+  - matrix_pass
+
+asset_lifecycle:
+  enum: [draft, review, approved, published, live, archived]
+  machine_field: asset_lifecycle
+
+asset_version:
+  fields: [revision_number, revision_label, published_by, published_at_utc, rollback_target_revision]
+  catalog_ssot: catalog_content_revisions
+
+phase_1:
+  country_order: [JP, KR, TH, SG, FR, US, AU, ES, AE, CN]
+  single_asset_template: docs/runbook/TT-CMS-PHASE1-SINGLE-ASSET-TEMPLATE.md
+  evidence_schema: traveltrust.cms_phase1_single_asset_evidence.v1
+  execution_gates: [brief_review, cms_review, destination_authenticity, brand_consistency, catalog_publish, verify, evidence_complete]
+  forbidden_shortcut: upload_direct_to_live
+  forbidden:
+    - skip_review
+    - skip_verify
+    - batch_upload_then_accept
+    - mark_pass_without_evidence
+
+verify_scripts:
+  baseline: scripts/dev/run-cms-content-l5-baseline-pack.cjs
+  row: scripts/dev/run-cms-content-l5-destination-ambient-verify.cjs
+  scaffold_evidence: scripts/dev/scaffold-cms-phase1-single-asset-evidence.cjs
+  row_dod: scripts/dev/run-cms-phase1-single-asset-dod.cjs
+  health_score: scripts/dev/run-cms-content-health-score.cjs
+
+change_policy:
+  runbook: docs/runbook/TT-CMS-CHANGE-POLICY.md
+  types:
+    content_fix:
+      operator_allowed: true
+      flow: [cms_review, catalog_publish, verify, evidence]
+    content_refresh:
+      operator_allowed: true
+      flow: [designer_upload, cms_review, catalog_publish, verify, evidence]
+      revision_rule: append_only_no_overwrite
+    structural_change:
+      operator_allowed: false
+      gate: architecture_review
+
+phase_1_pilot:
+  wave_1: [DA-JP-HOME]
+  wave_2: [DA-KR-HOME]
+  wave_3_plus_after: wave_1_and_2_complete
+  forbid_batch_all_countries: true
+
+content_health_score:
+  schema: traveltrust.cms_content_health_score.v2
+  governance_metrics: [live_assets, review_sla, verify_pass_rate, revision_rollback_success, evidence_completeness]
+  content_health_ops:
+    - live_assets
+    - pending_review
+    - published
+    - rejected
+    - average_review_time_hours
+    - average_publish_time_hours
+    - revision_rollback_success
+    - last_publish
+    - last_verify
+    - ops_board
+  baseline_overall: BASELINE_ESTABLISHED
+
+# 三条长期原则 · 工作重心（2026-07-05 冻结 · 不新增治理文档）
+long_term_principles:
+  decision_gate:
+    q1_which_mainline: [CMS_OPERATION, PER]
+    q1_rule: If neither mainline, likely not current priority.
+    q2_direct_ops_or_go_live: >-
+      Does this work directly improve ops or go-live readiness? Yes→execute. No→defer; do not re-enter governance design.
+  p1_operator_action_gate: >-
+    Do not pause ops for perfect design. Before any addition: does it reduce one
+    real operator action? Yes→do. No→skip. No new review types / runbooks / registry
+    fields / checklists / governance docs unless current flow cannot cover real business.
+  p2_single_cms_loop: >-
+    One loop for all asset families (Destination Ambient, POI, Hotel, Transport,
+    Future Video, Landing Hero): Brief→Upload→Review→Publish→Verify→Evidence→Live→Health Score.
+  p3_per_cms_decouple: >-
+    PER (system go-live) and CMS Operation (content long-run ops) run in parallel under
+    Production Preparation; never merge or block each other.
+
+work_focus_active:
+  governance_discussion: frozen
+  # Production Preparation 阶段默认执行优先级（非永久绝对规则；PER 完成后重心可自然切向 CMS/Public Ops/Growth）
+  phase: production_preparation
+  default_execution_priority:
+    - PER_production_entry_review
+    - CMS_operation_waves
+  priority_note: >-
+    PER first while it blocks Production GO; after PER five items complete, focus shifts
+    to CMS/Public Ops/Growth without rewriting governance stack.
+  phase_transition:
+    current: production_preparation
+    after_per_complete: post_go_operations
+    post_go_operations_focus:
+      - CMS
+      - public_operations
+      - growth
+      - content_expansion
+    transition_rule: >-
+      Priority shifts with project phase naturally; do not amend governance docs or
+      redesign process to switch focus after PER sign-off.
+  execution_rhythm: >-
+    Two-question gate → execute → closure evidence → next item; no process redesign.
+  per_track:
+    phase_priority: 1
+    order:
+      - business_closed_loop
+      - recovery
+      - rollback
+      - monitoring
+      - production_configuration
+    closure: evidence_plus_signoff_per_item
+    outcome: production_entry_review_signoff_basis
+  cms_operation_track:
+    phase_priority: 2
+    order:
+      - wave_1_DA-JP-HOME
+      - wave_2_DA-KR-HOME
+      - wave_3_plus_sequential
+      - destination_ambient_10_countries_live
+    closure_per_row: [publish, verify, evidence, health_score]
+    outcome: live_assets_and_health_score_growth
+
+honest_boundary: >-
+  CMS L5 Baseline ESTABLISHED ≠ Destination Ambient CLOSED ≠ Production GO.
+  OCS Content L5 remains CLOSED; CMS does not modify OCS manifest.
+  Operations freeze: do not add Runbook/Policy/Review-type unless it removes
+  one real operator action. All asset families share Brief→Upload→Review→Publish→Verify→Evidence→Live→Health Score.
+
+operations_principle: >-
+  Before any new governance doc: does it reduce one real operator action? If no, do not add.
+  CMS and PER are parallel pipelines in Production Preparation (PER=system go-live; CMS=content ops).
+
+cms_universal_loop:
+  - brief
+  - upload
+  - review
+  - publish
+  - verify
+  - evidence
+  - live
+  - health_score_refresh

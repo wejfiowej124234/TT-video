@@ -18,6 +18,9 @@
 |----|------|
 | Docker | `docker compose up -d` 能拉起 **`traveltrust-postgres`**（默认端口 **5432**） |
 | API | `traveltrust-api` 监听 **`API_BASE_URL`**（默认 **`http://127.0.0.1:8080`**） |
+| **可选 · 社区媒体** | MinIO **`:19000`**（`bash scripts/dev/setup-community-media-minio-local.sh` · CFG-006） |
+| **可选 · 链上** | Anvil **`:8545`** + 根 `.env` **`TT ANVIL LOCAL`** 块；未起链时 **`P3_CHAIN_OFF=1`** 走链下走廊（CFG-007） |
+| **配置漂移登记** | **FROZEN** · [CFG-REGISTRY](../evidence/manual-uat/summary/CFG-REGISTRY.md)（CFG-001～028 · 维护验证 `bash scripts/dev/verify-cfg-drift-closure.sh` · [TT-CONFIGURATION-ZERO-DRIFT-FROZEN](../docs/runbook/TT-CONFIGURATION-ZERO-DRIFT-FROZEN.md)） |
 | 链下种子 | 建议 **`SEED_TEST_ACCOUNTS=1`**，保证杭州 **`/api/v1/guides?city=杭州`** 至少有一名 active 向导 |
 | 客户端 | **curl**、**bash**、能 **`import json`** 的 **python** 或 **python3**（Windows 勿用 Store 占位 `python3`；脚本会择优） |
 | 工作目录 | 在**仓库根**执行烟测（脚本使用相对路径 `.smoke_ab_body.json`） |

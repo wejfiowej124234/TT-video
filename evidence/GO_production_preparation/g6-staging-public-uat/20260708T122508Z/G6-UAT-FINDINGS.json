@@ -1,0 +1,223 @@
+[
+  {
+    "severity": "Critical",
+    "code": "G6_PROVIDER_COVER_MISSING",
+    "message": "No public provider cover URL",
+    "chain_id": "tokyo-photo",
+    "surface": "provider-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ACQUISITION_COVER_MISSING",
+    "message": "No public acquisition cover URL",
+    "chain_id": "tokyo-photo",
+    "surface": "acquisition-cover"
+  },
+  {
+    "severity": "Minor",
+    "code": "G2_COPY_SOFT_DRIFT",
+    "message": "Public copy soft drift vs matrix copy_label",
+    "chain_id": "kyoto-culture",
+    "surface": "guide-avatar",
+    "public": "祇园与岚山文化讲解，专注茶道体验与和服街",
+    "matrix_copy_label": "京都茶道向导·Yuki"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_PROVIDER_COVER_MISSING",
+    "message": "No public provider cover URL",
+    "chain_id": "kyoto-culture",
+    "surface": "provider-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ACQUISITION_COVER_MISSING",
+    "message": "No public acquisition cover URL",
+    "chain_id": "kyoto-culture",
+    "surface": "acquisition-cover"
+  },
+  {
+    "severity": "Minor",
+    "code": "G2_COPY_SOFT_DRIFT",
+    "message": "Public copy soft drift vs matrix copy_label",
+    "chain_id": "seoul-food",
+    "surface": "guide-avatar",
+    "public": "弘大、明洞与广藏市场深度美食路线，擅长韩",
+    "matrix_copy_label": "首尔美食向导·Min"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_PROVIDER_COVER_MISSING",
+    "message": "No public provider cover URL",
+    "chain_id": "seoul-food",
+    "surface": "provider-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ACQUISITION_COVER_MISSING",
+    "message": "No public acquisition cover URL",
+    "chain_id": "seoul-food",
+    "surface": "acquisition-cover"
+  },
+  {
+    "severity": "Minor",
+    "code": "G2_COPY_SOFT_DRIFT",
+    "message": "Public copy soft drift vs matrix copy_label",
+    "chain_id": "bangkok-temple",
+    "surface": "guide-avatar",
+    "public": "大皇宫、郑王庙与湄南河游船路线，提供泰英",
+    "matrix_copy_label": "曼谷文化向导·Arun"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_PROVIDER_COVER_MISSING",
+    "message": "No public provider cover URL",
+    "chain_id": "bangkok-temple",
+    "surface": "provider-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ACQUISITION_COVER_MISSING",
+    "message": "No public acquisition cover URL",
+    "chain_id": "bangkok-temple",
+    "surface": "acquisition-cover"
+  },
+  {
+    "severity": "Minor",
+    "code": "G2_COPY_SOFT_DRIFT",
+    "message": "Public copy soft drift vs matrix copy_label",
+    "chain_id": "singapore-family",
+    "surface": "guide-avatar",
+    "public": "滨海湾、动物园与圣淘沙亲子路线，熟悉推车",
+    "matrix_copy_label": "新加坡亲子向导·Lee"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_PROVIDER_COVER_MISSING",
+    "message": "No public provider cover URL",
+    "chain_id": "singapore-family",
+    "surface": "provider-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ACQUISITION_COVER_MISSING",
+    "message": "No public acquisition cover URL",
+    "chain_id": "singapore-family",
+    "surface": "acquisition-cover"
+  },
+  {
+    "severity": "Minor",
+    "code": "G2_COPY_SOFT_DRIFT",
+    "message": "Public copy soft drift vs matrix copy_label",
+    "chain_id": "paris-art",
+    "surface": "guide-avatar",
+    "public": "卢浮宫、奥赛与玛黑区画廊讲解，擅长印象派",
+    "matrix_copy_label": "巴黎艺术向导·Claire"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_PROVIDER_COVER_MISSING",
+    "message": "No public provider cover URL",
+    "chain_id": "paris-art",
+    "surface": "provider-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ACQUISITION_COVER_MISSING",
+    "message": "No public acquisition cover URL",
+    "chain_id": "paris-art",
+    "surface": "acquisition-cover"
+  },
+  {
+    "severity": "Minor",
+    "code": "G2_COPY_SOFT_DRIFT",
+    "message": "Public copy soft drift vs matrix copy_label",
+    "chain_id": "nyc-skyline",
+    "surface": "guide-avatar",
+    "public": "布鲁克林大桥、DUMBO 与洛克菲勒观景",
+    "matrix_copy_label": "纽约天际线向导·Alex"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_PROVIDER_COVER_MISSING",
+    "message": "No public provider cover URL",
+    "chain_id": "nyc-skyline",
+    "surface": "provider-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ACQUISITION_COVER_MISSING",
+    "message": "No public acquisition cover URL",
+    "chain_id": "nyc-skyline",
+    "surface": "acquisition-cover"
+  },
+  {
+    "severity": "Minor",
+    "code": "G2_COPY_SOFT_DRIFT",
+    "message": "Public copy soft drift vs matrix copy_label",
+    "chain_id": "sydney-coast",
+    "surface": "guide-avatar",
+    "public": "邦迪至 Coogee 海岸步道与歌剧院周",
+    "matrix_copy_label": "悉尼海岸向导·Mia"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_PROVIDER_COVER_MISSING",
+    "message": "No public provider cover URL",
+    "chain_id": "sydney-coast",
+    "surface": "provider-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ACQUISITION_COVER_MISSING",
+    "message": "No public acquisition cover URL",
+    "chain_id": "sydney-coast",
+    "surface": "acquisition-cover"
+  },
+  {
+    "severity": "Minor",
+    "code": "G2_COPY_SOFT_DRIFT",
+    "message": "Public copy soft drift vs matrix copy_label",
+    "chain_id": "barcelona-arch",
+    "surface": "guide-avatar",
+    "public": "高迪建筑专题讲解，熟悉圣家堂与桂尔公园预",
+    "matrix_copy_label": "巴塞罗那建筑向导·Carlos"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_PROVIDER_COVER_MISSING",
+    "message": "No public provider cover URL",
+    "chain_id": "barcelona-arch",
+    "surface": "provider-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ACQUISITION_COVER_MISSING",
+    "message": "No public acquisition cover URL",
+    "chain_id": "barcelona-arch",
+    "surface": "acquisition-cover"
+  },
+  {
+    "severity": "Minor",
+    "code": "G2_COPY_SOFT_DRIFT",
+    "message": "Public copy soft drift vs matrix copy_label",
+    "chain_id": "dubai-luxury",
+    "surface": "guide-avatar",
+    "public": "沙漠冲沙、老城黄金市集与哈利法塔观景路线",
+    "matrix_copy_label": "迪拜沙漠向导·Omar"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_PROVIDER_COVER_MISSING",
+    "message": "No public provider cover URL",
+    "chain_id": "dubai-luxury",
+    "surface": "provider-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_ACQUISITION_COVER_MISSING",
+    "message": "No public acquisition cover URL",
+    "chain_id": "dubai-luxury",
+    "surface": "acquisition-cover"
+  }
+]

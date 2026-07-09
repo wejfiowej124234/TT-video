@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W03",
+  "recorded_utc": "2026-07-08T08:27:51.062Z",
+  "run_id": "2026-07-08T08-27-51-062Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PASS",
+  "summary": {
+    "verdict": "PASS",
+    "detail": "Escrow.deposit on Production Sepolia"
+  },
+  "detail": "Escrow.deposit on Production Sepolia",
+  "deposit_tx_hash": "0x22826113de109b5909c763447d5c5df1e3211579d339442d0fd0cc4cf7eb2949",
+  "escrow_status": "2",
+  "total_amount_wei": "10000000",
+  "explorer": "https://sepolia.etherscan.io/tx/0x22826113de109b5909c763447d5c5df1e3211579d339442d0fd0cc4cf7eb2949"
+}

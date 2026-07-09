@@ -1,0 +1,39 @@
+{
+  "schema": "traveltrust.cms_city_hero_pilot_architecture_validated.v1",
+  "recorded_at_utc": "2026-07-07T13:17:44.274Z",
+  "TT_CMS_CITY_HERO_STATUS": "Pilot Architecture Validated",
+  "TT_CMS_CITY_HERO_REGISTRY_STATUS": "Pilot",
+  "TT_CMS_CITY_HERO_FROZEN": false,
+  "not_frozen_reasons": [
+    "no_full_l5_exit",
+    "no_consumer_verify",
+    "no_formal_ops_asset_matrix",
+    "wp5_consumer_paused"
+  ],
+  "completed": {
+    "design_ssot": true,
+    "runtime_contract_review_pass": true,
+    "wp0_db_migration": true,
+    "wp1_admin_allowlist": true,
+    "wp2_api_city_slug": true,
+    "wp3_catalog_publish_pilot": true,
+    "wp4_resolver": true
+  },
+  "paused": {
+    "wp5_consumer_home_travel": true,
+    "reason": "prioritize_market_ops_hotel_and_prelaunch_blockers"
+  },
+  "p1_focus_shift": {
+    "next_cms_p1": "Hotel",
+    "transport": "后续",
+    "listings": "后续"
+  },
+  "wp_evidence": {
+    "wp0": "CMS-CITY-HERO-WAVE1-WP0-MIGRATION-LATEST.json",
+    "wp1": "CMS-CITY-HERO-WAVE1-WP1-ADMIN-ALLOWLIST-LATEST.json",
+    "wp2": "CMS-CITY-HERO-WAVE1-WP2-API-CITY-SLUG-LATEST.json",
+    "wp3": "CMS-CITY-HERO-WAVE1-WP3-PUBLISH-LATEST.json",
+    "wp4": "CMS-CITY-HERO-WAVE1-WP4-RESOLVER-LATEST.json"
+  },
+  "verdict": "PASS"
+}

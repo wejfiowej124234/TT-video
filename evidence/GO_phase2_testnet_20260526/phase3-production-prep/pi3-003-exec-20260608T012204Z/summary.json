@@ -1,0 +1,14 @@
+{
+  "kind": "traveltrust.pi3_003_stripe_live_production_webhook_execution.v1",
+  "recorded_utc": "20260608T012204Z",
+  "verdict": "PI3-003_HOLD",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "execution_sprint": "153",
+  "pi3_003_baseline_status": "PLANNED",
+  "staging_h3_webhook_smoke_ok": true,
+  "prod_live_webhook_smoke_ok": false,
+  "webhook_path": "/api/v1/hooks/stripe/onboarding",
+  "pi3_002_execution_ref": "151 PI3-002 HOLD until prod API domain",
+  "catalog_freeze": "CATALOG_RELEASE_FREEZE_GO",
+  "operations_freeze": "OPERATIONS_PLATFORM_GO"
+}

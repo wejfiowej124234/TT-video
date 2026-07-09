@@ -1,0 +1,292 @@
+{
+  "schema": "traveltrust.escrow_settlement_authorization_audit.v1",
+  "audit_name": "Escrow Settlement Authorization Model Audit",
+  "recorded_utc": "2026-07-08T11:15:53.563Z",
+  "run_dir": "evidence/GO_production_readiness/escrow-settlement-authorization/audit-2026-07-08T11-15-53",
+  "target_model": "Bilateral Confirmation Settlement Model",
+  "determined_model": "Bilateral Confirmation Settlement Model",
+  "verdict": "ESCROW_SETTLEMENT_BUSINESS_LOGIC_GAP",
+  "model_aligned": false,
+  "summary": {
+    "gaps_p0": 3,
+    "gaps_p1": 3,
+    "gaps_p2": 1,
+    "cross_checks_pass": 7,
+    "cross_checks_total": 15
+  },
+  "lifecycle": {
+    "flow": [
+      "create_order",
+      "usdc_deposit",
+      "escrow_locked",
+      "service_in_progress",
+      "guide_confirm_complete",
+      "traveler_confirm_complete",
+      "order_service_completed",
+      "release_allowed",
+      "guide_settlement",
+      "feerouter_fee",
+      "ledger_record"
+    ],
+    "state_rules": {
+      "deposit": {
+        "caller": "traveler",
+        "from": "Created",
+        "to": "Funded"
+      },
+      "service_confirm": {
+        "caller": "traveler+guide bilateral",
+        "from": "Escrowed",
+        "to": "ServiceCompleted target"
+      },
+      "release": {
+        "caller": "permissionless keeper post-auth",
+        "from": "Funded",
+        "to": "Completed chain",
+        "executes": "fund split only"
+      },
+      "refund": {
+        "caller": "traveler",
+        "from": "Funded",
+        "to": "Refunded"
+      },
+      "dispute": {
+        "caller": "participant target",
+        "from": "Funded",
+        "to": "Disputed"
+      },
+      "cancel": {
+        "caller": "participant pre-escrow",
+        "to": "Cancelled"
+      }
+    }
+  },
+  "layers": {
+    "contract": {
+      "release": {
+        "verified": false,
+        "note": "release() not found"
+      },
+      "depositOk": true,
+      "refundOk": true,
+      "hasCompletionFlags": false
+    },
+    "api_db": {
+      "singleShotComplete": true,
+      "hasCompletionBilateralFields": false,
+      "escrowedToCompleted": true
+    },
+    "frontend": {
+      "releaseAfterRating": true,
+      "tripBilateralRelease": true
+    },
+    "docs": {
+      "docSaysDualComplete": true,
+      "docSaysReleaseSeparate": true
+    }
+  },
+  "gaps": [
+    {
+      "severity": "P0",
+      "id": "ESC-GAP-001",
+      "layer": "Contract",
+      "title": "No on-chain bilateral service-completion flags — release() only checks Funded",
+      "fix": "Architecture decision: Escrow V2 / CompletionRegistry / or documented keeper+attestation model",
+      "refs": [
+        "contracts/src/Escrow.sol"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "severity": "P0",
+      "id": "ESC-GAP-002",
+      "layer": "Contract",
+      "title": "release() permissionless while Funded — single-party early fund movement risk",
+      "fix": "Align with Bilateral Confirmation Settlement Model before mainnet",
+      "refs": [
+        "contracts/src/Escrow.sol",
+        "frontend/components/escrow/EscrowDetail/escrowOnChainEligibility.ts"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "severity": "P1",
+      "id": "ESC-GAP-003",
+      "layer": "Contract",
+      "title": "executeResolution() defines OnlyArbitrator but does not enforce it",
+      "fix": "Add arbitrator check or document permissionless executor model",
+      "refs": [
+        "contracts/src/Escrow.sol"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "severity": "P2",
+      "id": "ESC-GAP-004",
+      "layer": "Contract",
+      "title": "openDispute() has no participant restriction",
+      "fix": "Restrict to traveler/guide or document intentional openness",
+      "refs": [
+        "contracts/src/Escrow.sol"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "severity": "P0",
+      "id": "ESC-GAP-010",
+      "layer": "API/DB",
+      "title": "order_confirm_completion_impl sets Completed on first participant call — not bilateral",
+      "fix": "Implement per-party completion confirmation; Completed only when both true (or timeout rule)",
+      "refs": [
+        "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs",
+        "crates/core/src/escrow.rs"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "severity": "P1",
+      "id": "ESC-GAP-011",
+      "layer": "API/DB",
+      "title": "No completion_tourist_confirmed / completion_guide_confirmed columns",
+      "fix": "Add migration + API fields mirroring pre-pay bilateral pattern",
+      "refs": [
+        "crates/api/src/db/migrations/"
+      ],
+      "status": "OPEN"
+    },
+    {
+      "severity": "P1",
+      "id": "ESC-GAP-030",
+      "layer": "Docs vs Implementation",
+      "title": "Product docs (53/01) describe dual-sign completion — API/contract do not implement",
+      "fix": "Close doc↔code gap via Bilateral Settlement Model rollout",
+      "refs": [
+        "docs/spec/53-阶段开发技术文档.md",
+        "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs"
+      ],
+      "status": "OPEN"
+    }
+  ],
+  "cross_checks": [
+    {
+      "layer": "Contract",
+      "item": "deposit caller",
+      "expected": "traveler only",
+      "actual": "restricted",
+      "pass": true
+    },
+    {
+      "layer": "Contract",
+      "item": "refund caller",
+      "expected": "traveler only",
+      "actual": "restricted",
+      "pass": true
+    },
+    {
+      "layer": "Contract",
+      "item": "release caller",
+      "expected": "permissionless AFTER bilateral complete (target) OR restricted (legacy)",
+      "pass": false
+    },
+    {
+      "layer": "Contract",
+      "item": "completion flags on-chain",
+      "expected": "travelerConfirmed + guideConfirmed OR status gate",
+      "actual": "absent",
+      "pass": false
+    },
+    {
+      "layer": "Contract",
+      "item": "release requires business complete",
+      "expected": "status/service gate beyond Funded",
+      "actual": "no",
+      "pass": false
+    },
+    {
+      "layer": "API/DB",
+      "item": "confirm-completion bilateral",
+      "expected": "both parties confirm before Completed",
+      "actual": "single-party immediate Completed",
+      "pass": false
+    },
+    {
+      "layer": "API/DB",
+      "item": "completion_* DB fields",
+      "expected": "completion_tourist_confirmed + completion_guide_confirmed",
+      "actual": "absent",
+      "pass": false
+    },
+    {
+      "layer": "API/DB",
+      "item": "Escrowed→Completed transition",
+      "expected": "after bilateral service confirm",
+      "actual": "allowed in one API call",
+      "pass": false
+    },
+    {
+      "layer": "API/DB",
+      "item": "pre-pay bilateral (itinerary)",
+      "expected": "confirm-bilateral fields",
+      "actual": "present",
+      "pass": true
+    },
+    {
+      "layer": "Frontend",
+      "item": "release gate",
+      "expected": "after bilateral SERVICE complete (target)",
+      "actual": "after rating bilateral",
+      "pass": false
+    },
+    {
+      "layer": "Frontend",
+      "item": "trip completion bilateral UX",
+      "expected": "waiting for other party",
+      "actual": "present",
+      "pass": true
+    },
+    {
+      "layer": "Frontend",
+      "item": "confirm completion action",
+      "expected": "per-party confirm trip done",
+      "actual": "missing",
+      "pass": false
+    },
+    {
+      "layer": "Docs",
+      "item": "bilateral service complete in 53/01",
+      "expected": "documented",
+      "actual": "yes",
+      "pass": true
+    },
+    {
+      "layer": "Docs",
+      "item": "release separate from completion confirm",
+      "expected": "documented",
+      "actual": "yes",
+      "pass": true
+    },
+    {
+      "layer": "Registry/MasterMap",
+      "item": "Escrow module M10",
+      "expected": "present",
+      "actual": "yes",
+      "pass": true
+    }
+  ],
+  "keeper_model": {
+    "role": "automation_executor",
+    "not": "business_authorization",
+    "authorized_after": "bilateral_service_complete_or_timeout_or_dispute_resolution"
+  },
+  "discipline": {
+    "business_code_modified": false,
+    "audit_only": true
+  },
+  "references": {
+    "contract": "contracts/src/Escrow.sol",
+    "api": "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs",
+    "order_fsm": "crates/core/src/escrow.rs",
+    "fe_eligibility": "frontend/components/escrow/EscrowDetail/escrowOnChainEligibility.ts",
+    "architecture_proposal": "ESCROW-BILATERAL-SETTLEMENT-ARCHITECTURE-PROPOSAL-LATEST.md"
+  }
+}

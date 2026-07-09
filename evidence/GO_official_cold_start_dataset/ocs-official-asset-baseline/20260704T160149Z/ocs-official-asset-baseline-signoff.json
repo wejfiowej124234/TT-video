@@ -1,0 +1,111 @@
+{
+  "schema": "traveltrust.ocs_official_asset_baseline.signoff.v1",
+  "stamp": "20260704T160149Z",
+  "environment": "staging",
+  "api": "https://tt-api-staging.fly.dev",
+  "baseline": "Official Asset Baseline V1",
+  "recorded_at": "2026-07-04T16:04:17.834Z",
+  "verdict": "VERIFIED",
+  "machine_keys": {
+    "TT_OCS_OFFICIAL_ASSET_BASELINE_V1": "VERIFIED",
+    "TT_OCS_ASSET_VERIFICATION": "PASS",
+    "TT_OCS_SURFACE_EXPANSION": "VERIFIED"
+  },
+  "asset_verification": {
+    "delivery_ok": true,
+    "delivery_pass": 60,
+    "asset_count": 60
+  },
+  "publish_gate": {
+    "METADATA": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "OCS_MANIFEST",
+          "ok": true
+        },
+        {
+          "id": "OCS_SINGLE_SOURCE",
+          "ok": true
+        },
+        {
+          "id": "OFFICIAL_IDENTITY",
+          "ok": true
+        }
+      ]
+    },
+    "ASSET": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "MEDIA",
+          "ok": true
+        },
+        {
+          "id": "ASSET_VERIFICATION",
+          "ok": true
+        }
+      ]
+    },
+    "GOVERNANCE": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "PUBLIC_OPERATIONS",
+          "ok": true
+        },
+        {
+          "id": "REVERSE_GOVERNANCE",
+          "ok": true
+        }
+      ]
+    },
+    "SURFACE": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "SURFACE_CONSISTENCY",
+          "ok": true
+        },
+        {
+          "id": "COMMUNITY_FEED",
+          "ok": true
+        },
+        {
+          "id": "CAMPAIGN",
+          "ok": true
+        },
+        {
+          "id": "DESTINATION",
+          "ok": true
+        }
+      ]
+    },
+    "VERIFICATION": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "ASSET_VERIFICATION",
+          "ok": true
+        }
+      ]
+    }
+  },
+  "publish_gate_pass": true,
+  "media_bindings": {},
+  "bootstrap": {
+    "local_count": 60,
+    "remote_ok": 60,
+    "fly_app": "tt-api-staging"
+  },
+  "manifests": {
+    "content": "data/official-cold-start/dataset.v1.json",
+    "assets": "data/official-cold-start/assets.v1.json"
+  },
+  "honest_boundary": "Staging TT_OCS_OFFICIAL_ASSET_BASELINE_V1 VERIFIED ≠ G3 Production CDN ≠ Production GO",
+  "forbidden_claims": [
+    "G3 Production CDN VERIFIED",
+    "Production GO",
+    "Phase ③ CDN edge"
+  ]
+}

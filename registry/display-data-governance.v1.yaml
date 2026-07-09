@@ -8,17 +8,34 @@ effective_utc: "2026-07-01"
 
 phase:
   name: Display Data Governance
-  placement: AFTER_ADMIN_COMPLETE_BEFORE_BUSINESS_MANUAL_UAT
-  mandatory: true
+  placement: MANDATORY_PRE_PRODUCTION_GATE
+  after: PRODUCT_CAPABILITY_COMPLETE
+  before: BUSINESS_MANUAL_UAT
+  every_release: true
+  applies_to: [v1.0, v1.1, all_future_production_releases]
   not_bugfix: true
   not_admin_dev: true
   not_pi3: true
   not_mainnet: true
 
+release_pipeline: registry/release-pipeline.v1.yaml
+
 machine_keys:
   TT_DISPLAY_DATA_GOVERNANCE: ENFORCED
+  TT_MARKET_LISTINGS_DISPLAY_GOVERNANCE: CLOSED
   TT_DISPLAY_DATA_GOVERNANCE_PHASE: PRE_BUSINESS_UAT
   TT_DISPLAY_DATA_GOVERNANCE_RUNBOOK: docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md
+  TT_DISPLAY_DATA_GOVERNANCE_EVERY_RELEASE: true
+  TT_SINGLE_OFFICIAL_PUBLIC_CATALOG_POLICY: ENFORCED
+
+single_official_public_catalog_policy: registry/single-official-public-catalog-policy.v1.yaml
+
+public_content_platform:
+  registry: registry/public-content-platform.v1.yaml
+  runbook: docs/runbook/TT-PUBLIC-CONTENT-PLATFORM.md
+  pcp_role: PCP Governance · DDG leakage audit capability
+  gate_status: CLOSED
+  note: Subsumed under PCP — gate not reopened by PCP establishment
 
 surfaces:
   - market_guides
@@ -30,28 +47,62 @@ surfaces:
 
 test_accounts_registry: registry/test-accounts-business-immutable.v1.yaml
 
+# Binding principle (2026-07-03): two roles, one Public Catalog source.
+public_catalog_boundary:
+  principle: >
+    Test accounts validate business capability (login, orders, workbench, FTAE, E2E).
+    Official Accounts (@ocs.traveltrust.app) carry user-visible content via OCS.
+    C1–C4 must never be part of Public Catalog official operations data.
+  public_surfaces:
+    - guides
+    - provider
+    - acquisition
+    - official_guides
+    - campaigns
+  official_source: OCS
+  test_account_leak_on_public_catalog: TEST_DATA_LEAKAGE
+  never_expected_difference: true
+  runbook: docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md#01--运营展示-vs-业务测试账号
+
 test_data_policy:
   C3:
     account_id: C3
     email: guide@test.com
-    must_be_published: true
-    must_appear_in_market: true
+    must_be_published: false
+    must_appear_in_market: false
+    must_appear_in_public_catalog: false
     market_city: Hangzhou
     canonical_bio: 测试向导账号，用于联调
     ui_label: "[TEST]"
+    public_catalog_leak_classification: TEST_DATA_LEAKAGE
+    public_catalog:
+      default: hidden
+      note: Test account exists in DB for 联调; never Public Catalog official ops data
+    staging_ocs_baseline:
+      must_appear_in_market: false
+      must_appear_in_public_catalog: false
+      leak_is_ddg_fail: true
+      note: "OCS CLOSED：C3 保留 DB/联调；Public Catalog 仅 OCS；泄漏 = DDG FAIL"
+      fly_secret: TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=0
+      align_script: scripts/dev/align-ocs-staging-guides-public-catalog.cjs
   C1:
     account_id: C1
     email: multi-demo@test.com
     must_be_published: false
+    must_appear_in_market: false
     visible_when_env:
       - TRAVELTRUST_SEED_MULTI_DEMO_PUBLIC_MARKET=1
       - TRAVELTRUST_MANUAL_ACCEPTANCE=1
-    note: "Local/staging walkthrough only; hide from Production catalog"
+    note: "Local/staging walkthrough only; multi-demo market_listings blocked from public catalog (2026-07-03)"
   unpublish_other_test_published: true
   unpublish_demo_published: true
 
 canonical_production:
   # Stable UUID prefixes — same rule local & staging (UUIDs differ per DB; prefixes/patterns align)
+  # SOPCP: rows MAY remain in DB; Public Catalog MUST NOT show them post-OCS (unpublish only).
+  public_catalog_post_ocs: hidden_archived
+  db_retention: keep
+  align_script: scripts/dev/align-single-official-baseline-staging.cjs
   guide_id_prefixes:
     - "f0e0b101-" # Trust Gate · Hangzhou E2E set (local)
   guide_id_exact:
@@ -61,12 +112,20 @@ canonical_production:
     - "00000000-0000-4000-8000-000000000314" # Hangzhou showcase (staging / sparse seed)
 
 market_expectations:
+  # Pre-OCS / local DDG probes may still use city min/max. Post-OCS Staging: SOPCP overrides —
+  # Public Catalog = OCS only; C3/canonical not counted toward public production min.
+  staging_post_ocs_override:
+    policy: registry/single-official-public-catalog-policy.v1.yaml
+    public_catalog_production_source: OCS_only
+    require_c3_on_public_catalog: false
   cities:
     - query: Hangzhou
       aliases: [杭州]
       min_production: 1
       max_production: 3
-      require_c3_visible: true
+      require_c3_visible: false
+      staging_post_ocs_require_c3_visible: false
+      note: Post-OCS Hangzhou public catalog = OCS only; C3 visibility is DDG FAIL if leaked
     - query: Beijing
       aliases: [北京]
       min_production: 1
@@ -93,3 +152,70 @@ environments:
     admin_email: tourist@test.com
 
 evidence_root: evidence/GO_display_data_governance
+
+staging_full_site_scan:
+  orchestrator: scripts/dev/run-staging-full-site-display-governance.sh
+  audit: scripts/dev/staging-full-site-display-governance-audit.cjs
+  purge: scripts/dev/purge-staging-smoke-display-data.cjs
+  smoke_heuristics: scripts/dev/lib/smoke-data-heuristics.cjs
+  surfaces_scanned:
+    - market_provider
+    - market_acquisition
+    - market_guides
+    - discover_orders
+    - community_feed
+    - admin_public_ops_guides
+    - admin_public_ops_orders
+    - admin_public_ops_market_listings
+    - admin_public_ops_community_posts
+    - cms_publish_queue
+    - official_guides_admin
+  issue_classifications:
+    - PRODUCT_DATA_DEFECT
+    - TEST_DATA_LEAKAGE
+    - EXPECTED_DIFFERENCE
+    - POST_GO_ENHANCEMENT
+  rerun_policy:
+    status: CLOSED_UNLESS_TOUCHED
+    evidence_reuse: registry/evidence-reuse-policy.v1.yaml#gates/STAGING_FULL_SITE_DDG
+    note: "Do not re-run staging full-site DDG unless public catalog, data_origin, seed, or smoke scripts change."
+    rerun_when_paths_change:
+      - crates/api/src/db/public_catalog_surface.rs
+      - crates/api/src/db/market_listings.rs
+      - crates/api/src/chain_off/market_public_surface.rs
+      - crates/api/src/chain_off/community_public_surface.rs
+      - crates/api/src/chain_off/guides.rs
+      - crates/api/src/chain_off/discover.rs
+      - crates/api/src/db/seed_market_public_showcase.rs
+      - scripts/dev/purge-staging-smoke-display-data.cjs
+      - scripts/dev/display-data-governance-run.cjs
+      - scripts/dev/staging-full-site-display-governance-audit.cjs
+      - scripts/dev/lib/smoke-data-heuristics.cjs
+      - scripts/dev/seed-staging-showcase-market-listings.cjs
+      - crates/api/migrations/*data_origin*
+      - crates/api/migrations/*smoke*
+      - crates/api/migrations/*probe*
+
+latest_staging_full_site_run:
+  stamp: "20260703T033727Z"
+  api_deploy: deployment-01KWJWDV3PKE00RVJ19E265NZZ
+  evidence: evidence/GO_staging_full_site_display_governance/20260703T033727Z/
+  signoff: evidence/manual-uat/signoff/STAGING-FULL-SITE-DDG-SIGNOFF-20260703T033727Z.md
+  fs_dg_verdict: PASS
+  ddg_verdict: PASS
+  ml_dg_verdict: PASS
+  fe_api_blocking: 0
+  v_market_err_browser: PASS
+  smoke_listings_purged_prior: 0
+  multi_demo_public_market: disabled
+
+market_listings_display_governance:
+  status: CLOSED
+  registry: registry/market-listings-display-governance.v1.yaml
+  runbook: docs/runbook/TT-MARKET-LISTINGS-DISPLAY-GOVERNANCE.md
+  stamp: "20260703T013023Z"
+  api_deploy: deployment-01KWJS6GH9B1QMMGSKH238QTMY
+  evidence: evidence/GO_market_listings_display_governance/20260703T013023Z/
+  signoff: evidence/manual-uat/signoff/MARKET-LISTINGS-DISPLAY-GOVERNANCE-SIGNOFF-20260703T013023Z.md
+  product_defects_open: 0
+  smoke_filter: chain_off::is_dev_catalog_email(multi-demo) + payload_text_is_smoke_market_listing

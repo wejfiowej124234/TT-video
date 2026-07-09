@@ -1,0 +1,5 @@
+status: INFLIGHT
+phase: ②
+artifact: TN-P1-009 P2FC 72h soak START
+at: 20260614T134947Z
+close_when: evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json

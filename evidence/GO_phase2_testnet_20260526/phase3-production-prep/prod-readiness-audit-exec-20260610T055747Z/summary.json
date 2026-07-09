@@ -1,0 +1,19 @@
+{
+  "kind": "traveltrust.production_readiness_deep_audit_execution.v1",
+  "recorded_utc": "20260610T055747Z",
+  "verdict": "PRODUCTION_READINESS_DEEP_AUDIT_HOLD",
+  "audit_matrix_verdict": "PRODUCTION_READINESS_DEEP_AUDIT_HOLD",
+  "production_readiness_score": 58,
+  "production_go_decision": "NO_GO",
+  "baseline_status": "PLANNED",
+  "p0_hold_count": 5,
+  "execution_sprint": "158",
+  "pi3_tracks": [
+    "PI3-001",
+    "PI3-002",
+    "PI3-003",
+    "PI3-004",
+    "PI3-005",
+    "PI3-006"
+  ]
+}

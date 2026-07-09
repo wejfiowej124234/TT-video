@@ -1,0 +1,10 @@
+status: PASS
+last_run: 20260606T095405Z
+api_base: https://tt-api-staging.fly.dev
+phase: phase2_testnet_closing_gap_g3
+cases: C-GOV-004=PASS C-GOV-005=PASS C-GOV-010=N/A
+governor_mode: chain_governor_indexed
+chain_id: 11155111
+note: MANUAL-P1 staging evidence; C-GOV-010 wallet write N/A
+artifacts: run.log manifest.json C-GOV-004/ C-GOV-005/ C-GOV-010/
+ssot: docs/runbook/PHASE2-TESTNET-ACCEPTANCE.md

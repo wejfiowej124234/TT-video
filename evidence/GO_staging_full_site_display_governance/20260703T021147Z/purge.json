@@ -1,0 +1,116 @@
+{
+  "unpublish": [
+    {
+      "entity": "owner_provider",
+      "id": "37fc4a04-c2ed-406d-9135-9c29a1d01cc3",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_provider",
+      "id": "282bfbc5-a0ac-494d-ae2c-11ad2f23889a",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_provider",
+      "id": "16737c81-da77-4292-bc07-d964b6073bc6",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_provider",
+      "id": "f28de216-54b6-4013-91b6-67b9d5c5c767",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_provider",
+      "id": "b89571b3-ebb0-4e7e-8107-8741886df1b3",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_provider",
+      "id": "069f6dd8-bdf6-4a07-a54b-dcc3105ce5d4",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_provider",
+      "id": "97169467-8ba6-4006-a53c-94e2247a00f6",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_provider",
+      "id": "6b147ab5-746f-4ba7-ad36-60b2e71526f4",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_provider",
+      "id": "f201f016-fbb6-4b9f-8bc3-4b5396382039",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_provider",
+      "id": "d951c677-2faf-4a50-bb57-5200ac95d390",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_provider",
+      "id": "8adfd3c1-fc20-4486-8cac-7baf67ae93ee",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_provider",
+      "id": "371c8979-580a-4f4b-a0b5-fc8f4b4e1cdc",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_provider",
+      "id": "8b13b19c-f954-431d-988c-d2937e5966cf",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_acquisition",
+      "id": "cdf19aa3-f3f8-4812-b051-4899edbd73dc",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_acquisition",
+      "id": "fba25bc6-5d3a-4504-ab9f-11059eb51176",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_acquisition",
+      "id": "90aa4a6e-b92c-4326-b2c3-1086be6d3223",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_acquisition",
+      "id": "0a330b59-f2cb-4802-9aeb-922dd1034184",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_acquisition",
+      "id": "03dfb3e6-4858-4385-9e90-3af1d299c324",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_acquisition",
+      "id": "8ea0c49b-6c08-4533-812a-0420d04bb300",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_acquisition",
+      "id": "a0a366c0-8d79-4d0c-a0d6-e6a4d5d7d842",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_acquisition",
+      "id": "bee456bd-3090-46df-baae-73c41138c7da",
+      "action": "archive"
+    },
+    {
+      "entity": "owner_acquisition",
+      "id": "62e9c4a3-9583-46c5-b736-b5e9fc152fb9",
+      "action": "archive"
+    }
+  ],
+  "errors": [],
+  "dry_run": false
+}

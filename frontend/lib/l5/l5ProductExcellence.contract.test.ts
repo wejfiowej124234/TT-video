@@ -41,7 +41,7 @@ describe("L5 Product Excellence contract (162)", () => {
     );
     expect(readFe("lib/usePesAnalytics.ts")).toContain("usePesTouchpointImpression");
     expect(readFe("lib/pesAuthReturnFlow.ts")).toContain("buildPesAuthHref");
-    expect(readFe("lib/admin/adminShellMoreNavLinks.ts")).toContain("/admin/conversion-analytics");
+    expect(readFe("lib/admin/adminShellGrowthNavLinks.ts")).toContain("/admin/conversion-analytics");
   });
 
   it("mobile + accessibility markers", () => {

@@ -1,0 +1,27 @@
+{
+  "schema": "traveltrust.cms_au_poi_wave_kickoff.v1",
+  "stamp_utc": "2026-07-06T152535Z",
+  "country_iso": "AU",
+  "status": "AU_CITY_PILOT_ACTIVE",
+  "active_city": "悉尼",
+  "template": "JP + KR + TH + SG + FR + US Golden Template",
+  "TT_CMS_AU_POI_WAVE": "GOLD_COAST_CLOSED",
+  "next_stage": null,
+  "sydney_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SYDNEY-CLOSURE-LATEST.json"
+  },
+  "active_catalog_build": null,
+  "TT_CMS_POI_CITY_SYDNEY": "CLOSED",
+  "TT_CMS_POI_ACTIVE_CITY": null,
+  "melbourne_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-MELBOURNE-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_MELBOURNE": "CLOSED",
+  "gold_coast_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-GOLD-COAST-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_GOLD_COAST": "CLOSED"
+}

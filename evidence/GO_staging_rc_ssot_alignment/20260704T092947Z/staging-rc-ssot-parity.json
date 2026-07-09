@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.staging_rc_ssot_parity.v1",
+  "recorded_at": "2026-07-04T09:30:28.695Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "ocs_state": "D:/TravelTrust-V1.1/evidence/GO_staging_rc_ssot_alignment/20260704T091605Z/ocs-asset-baseline/state.json",
+  "release_candidate_ref": "evidence/manual-uat/signoff/RELEASE-CANDIDATE-SIGNOFF-20260702T144513Z.md",
+  "manifest_ssot": "data/official-cold-start/dataset.v1.json",
+  "assets_ssot": "data/official-cold-start/assets.v1.json",
+  "verdict": "ALIGNED",
+  "machine_keys": {
+    "TT_STAGING_RC_SSOT_PARITY": "ALIGNED",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "passes": [
+    "ocs_state_10_posts",
+    "feed_count_10",
+    "feed_ocs_only",
+    "guides_ocs_only",
+    "market_provider_ocs_only",
+    "market_acquisition_ocs_only",
+    "web_rewrite_media_200"
+  ],
+  "failures": [],
+  "honest_boundary": "Staging ALIGNED to OCS SSOT + RC boundaries ≠ Production GO ≠ G3 CDN VERIFIED",
+  "forbidden_claims": [
+    "Production GO",
+    "Release published",
+    "G3 CDN VERIFIED"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_regression_review.v1",
+  "stamp_utc": "20260704T135830Z",
+  "trigger_row": 23,
+  "rows_reviewed": 23,
+  "TT_GLOBAL_REGRESSION_REVIEW": "PASS",
+  "nine_class_all_pass": true,
+  "gate_to_row24": "PASS"
+}

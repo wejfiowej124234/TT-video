@@ -66,4 +66,6 @@ if [[ "${_tt9627_seg456}" == "1" ]]; then
   echo "==> TT9627_SEGMENT456_SPEC_PRESENCE=1 vertical-slice-tt9627-segments-456-spec-presence (4+5+6)"
   bash scripts/gates/vertical-slice-tt9627-segments-456-spec-presence.sh
 fi
+echo "==> Community Media Guard (repo data layer; not PRM Blocker)"
+bash scripts/gates/run-community-media-guard.sh
 echo "OK: ci-local-delivery-minimum"

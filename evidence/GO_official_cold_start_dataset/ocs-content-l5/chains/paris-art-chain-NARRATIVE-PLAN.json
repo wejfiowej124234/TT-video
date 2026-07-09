@@ -1,0 +1,51 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_narrative_plan.v1",
+  "stamp_utc": "20260704T144500Z",
+  "chain_id": "paris-art",
+  "city": "巴黎",
+  "country_code": "FR",
+  "theme": "博物馆 · 卢浮宫 · 奥赛 · 艺术",
+  "six_slot_plan": [
+    {
+      "row": 31,
+      "slot": "guide-avatar",
+      "scene": "Claire art guide @ museum sculpture courtyard"
+    },
+    {
+      "row": 32,
+      "slot": "provider-cover",
+      "scene": "Small group skip-line museum tour at painting"
+    },
+    {
+      "row": 33,
+      "slot": "acquisition-cover",
+      "scene": "Vintage poster art print flat lay"
+    },
+    {
+      "row": 34,
+      "slot": "official-guide-cover",
+      "scene": "Louvre pyramid dusk or Seine museums wide"
+    },
+    {
+      "row": 35,
+      "slot": "community-cover",
+      "scene": "Masterpiece detail or gallery perspective Feed"
+    },
+    {
+      "row": 36,
+      "slot": "community-media",
+      "scene": "Orsay clock or sculpture hall different angle"
+    }
+  ],
+  "geo_coverage_planned": [
+    "卢浮宫",
+    "奥赛",
+    "玛黑区",
+    "塞纳河"
+  ],
+  "guide_persona": {
+    "nickname": "巴黎艺术向导·Claire",
+    "bio": "卢浮宫、奥赛与玛黑区画廊讲解，擅长印象派专题路线。"
+  },
+  "TT_NARRATIVE_PLANNING": "PASS"
+}

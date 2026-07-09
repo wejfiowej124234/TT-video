@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T130130Z",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "both_chains_closed": true,
+  "homogenization_risk": false
+}

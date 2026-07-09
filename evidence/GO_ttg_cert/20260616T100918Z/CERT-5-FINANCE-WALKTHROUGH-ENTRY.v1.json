@@ -1,0 +1,27 @@
+{
+  "program": "TTG_CERT_EXECUTION",
+  "phase": "②",
+  "active_cert": 5,
+  "cert4_signoff": "evidence/GO_ttg_cert/20260616T100918Z/walkthrough/safe/SAFE-WALKTHROUGH-SIGNOFF.json",
+  "four_ledger": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z/four-ledger-reconcile.json",
+  "cert5": {
+    "cert": 5,
+    "name": "Finance Walkthrough",
+    "target_tier": "OPS_DONE",
+    "mtm_ids": [
+      "CHK-CORE-15",
+      "CHK-OPS-02",
+      "CHK-ID-09",
+      "CHK-FN-11"
+    ],
+    "roles": [
+      "Finance Operator",
+      "Treasury Operator",
+      "Auditor"
+    ],
+    "gorp": "GORP-05 · W-F1～W-F5",
+    "evidence_subdir": "walkthrough/finance",
+    "signoff_file": "FINANCE-WALKTHROUGH-SIGNOFF.json"
+  },
+  "prepared_at_utc": "2026-06-16T15:05:08Z"
+}

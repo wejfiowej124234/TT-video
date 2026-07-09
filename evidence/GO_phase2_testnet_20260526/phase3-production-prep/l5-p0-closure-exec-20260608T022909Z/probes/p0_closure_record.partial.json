@@ -1,0 +1,13 @@
+{
+  "probes": {
+    "E4": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "D:/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/l5-p0-closure-exec-20260608T022909Z/probes/E4-20260608T022920Z.log",
+      "log_path": "20260608T022920Z",
+      "gate_script": "scripts/dev/l5-p0-e4-rbac-escalation-smoke.sh",
+      "reproduce": "bash scripts/dev/l5-p0-e4-rbac-escalation-smoke.sh",
+      "fix_suggestion": "Run smoke-admin-rbac-matrix-local.sh on every release candidate"
+    }
+  }
+}

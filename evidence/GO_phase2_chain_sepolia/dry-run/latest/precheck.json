@@ -1,0 +1,28 @@
+{
+  "schema": "phase2_sepolia_dry_run_precheck.v1",
+  "timestamp_utc": "20260605T082942Z",
+  "chain_id": 11155111,
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "deployer_nonce": "76",
+  "deployer_balance_wei": "4977174253173189655",
+  "timelock_admin_address": "0x7c018293396325077bb4D039930dcEe11B7Fb1Cf",
+  "timelock_admin_is_contract": true,
+  "timelock_address_env": "0x...",
+  "broadcast": false,
+  "deploy_order_simulated": [
+    "DeployGovernanceStack.s.sol (Phase A deploy + Phase B Safe admin via Phase2SafeExec)"
+  ],
+  "deploy_order_pending": [
+    "DeployFundStackUnderTimelock.s.sol",
+    "DeployRegionStewardStakePool.s.sol",
+    "DeployCountryPoolRedemptionEpochV0.s.sol"
+  ],
+  "gas_estimate_note": "Estimated total gas used for script: 7027317 ",
+  "owner_bindings": {
+    "governance_timelock_admin": "0x7c018293396325077bb4D039930dcEe11B7Fb1Cf",
+    "escrow_factory_guardian_expected": "TIMELOCK_ADDRESS post step 1",
+    "p2_pool_owner_expected": "TIMELOCK_ADDRESS post step 1"
+  },
+  "forge_log": "forge-dry-run-20260605T082942Z.log",
+  "ssot": "docs/runbook/TT-PHASE2-GOVERNANCE-SAFE-EXECUTION-PLAN.md"
+}

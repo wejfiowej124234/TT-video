@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W12",
+  "recorded_utc": "2026-07-08T07:41:56.155Z",
+  "run_id": "2026-07-08T07-41-56-154Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PARTIAL",
+  "summary": {
+    "verdict": "PARTIAL",
+    "detail": "Primary + backup RPC probe"
+  },
+  "detail": "Primary + backup RPC probe",
+  "primary_rpc_configured": true,
+  "backup_rpc": "https://sepolia.drpc.org",
+  "primary_chain_id": "",
+  "backup_chain_id": "11155111",
+  "prod_backup_env_configured": false
+}

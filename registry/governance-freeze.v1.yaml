@@ -1,0 +1,174 @@
+# Governance Freeze · Machine SSOT
+#
+# Governance layer structure FROZEN — status refresh only during Timelock wait.
+# Phase transition: "build release system" → "execute release system per frozen process"
+#
+#   node scripts/dev/run-governance-freeze.cjs
+#   node scripts/dev/refresh-governance-status.cjs   # Timelock: status sync only
+#
+# Human: docs/runbook/GOVERNANCE-FREEZE-V1.md
+
+schema: traveltrust.governance_freeze.v1
+version: 1
+effective_utc: "2026-07-08"
+machine_key: TT_GOVERNANCE_FREEZE
+verdict_active: GOVERNANCE_FREEZE_ACTIVE
+verdict_inactive: GOVERNANCE_FREEZE_NOT_ACTIVE
+
+# GOVERNANCE_FREEZE_ACTIVE = governance-layer structure freeze ONLY.
+# Structure Frozen · State Continues — NOT a project-wide or deployment freeze.
+definition_en: >
+  Governance Freeze freezes release governance structure, schemas, templates, and process definitions.
+  It does not freeze runtime state, evidence updates, certification progress, or deployment execution.
+definition_zh: >
+  治理冻结仅锁定发布治理结构（Runbook · Registry Schema · Book 结构 · Gate 定义 · Evidence 结构 · PREP 结构）。
+  不冻结运行时状态、Evidence 内容增长、Cert 执行、Dashboard 状态值、Readiness Book 状态刷新、Bug 修复或 Mainnet Package 正式生成。
+
+structure_frozen:
+  - release_runbooks_and_process_definitions
+  - registry_schema_and_machine_key_naming
+  - production_readiness_book_layout
+  - gate_definitions_and_review_categories
+  - evidence_directory_tree
+  - prep_package_template_structure
+
+state_continues:
+  - bug_fixes_found_during_cert_or_validation
+  - cert_execution_and_results
+  - dashboard_status_values
+  - evidence_content_and_latest_pointers
+  - readiness_book_status_refresh
+  - mainnet_package_formal_generation_post_web3_freeze
+  - web3_freeze_execution
+  - owner_signoff_shadow_launch_wave_deployment
+
+runbook: docs/runbook/GOVERNANCE-FREEZE-V1.md
+governance_root: registry/production-governance-principles.v1.yaml
+governance_version: production_release_governance_v1
+production_governance_principles: registry/production-governance-principles.v1.yaml
+principles_runbook: docs/runbook/PRODUCTION-GOVERNANCE-PRINCIPLES-V1.md
+
+principle_1_ref: PG-P1
+principle_1_title: Structure Frozen · State Continues
+
+update_types:
+  structure_update:
+    label: Structure Update
+    post_governance_freeze: FORBIDDEN
+    includes: Modify Runbook · Schema · Gate · Book structure · Evidence tree · PREP templates
+  state_update:
+    label: State Update
+    post_governance_freeze: ALLOWED
+    includes: Dashboard · Book · Evidence · Registry status refresh
+    orchestrator: scripts/dev/refresh-governance-status.cjs
+  execution:
+    label: Execution
+    post_governance_freeze: ALLOWED
+    includes: Cert · Freeze · Package · Deployment · Sign-off
+
+# Legacy alias — use update_types above
+update_types_allowed:
+  state_update:
+    ref: update_types.state_update
+  execution:
+    ref: update_types.execution
+
+phase_transition:
+  from: build_release_governance_system
+  to: execute_release_system_per_frozen_process
+  substantive_blocker: PHASE2_EXIT_REVIEW_PASS_via_CERT_8_12
+
+orchestrator: scripts/dev/run-governance-freeze.cjs
+status_refresh: scripts/dev/refresh-governance-status.cjs
+evidence_manifest: evidence/GO_production_readiness/governance-freeze/GOVERNANCE-FREEZE-MANIFEST-LATEST.json
+runbook: docs/runbook/GOVERNANCE-FREEZE-V1.md
+
+frozen_scope:
+  four_gate_framework:
+    registry: registry/production-go-four-gate-framework.v1.yaml
+    runbook: docs/runbook/PRODUCTION-GO-FOUR-GATE-FRAMEWORK.md
+    note: L1–L4 · Owner Sign-off · TT_PRODUCTION_GO terminology immutable
+  production_readiness_book:
+    generator: scripts/dev/gen-production-readiness-book.cjs
+    rollups: scripts/dev/lib/mainnet-deployment-readiness-rollups.cjs
+    evidence: evidence/GO_production_readiness/production-readiness-book/PRODUCTION-READINESS-BOOK-LATEST.md
+    structure: Executive Summary → Matrix → Checklist → PREP → Reviews detail
+  executive_summary:
+    evidence: evidence/GO_production_readiness/production-readiness-book/PRODUCTION-READINESS-EXECUTIVE-SUMMARY-LATEST.md
+    schema: traveltrust.production_readiness_executive_summary.v1
+  deployment_readiness_matrix:
+    evidence: evidence/GO_production_readiness/production-readiness-book/DEPLOYMENT-READINESS-MATRIX-LATEST.md
+    schema: traveltrust.deployment_readiness_matrix.v2
+    sections: [four_gate_framework, mainnet_deployment_track]
+  owner_checklist:
+    evidence: evidence/GO_production_readiness/production-readiness-book/OWNER-MAINNET-DEPLOY-CHECKLIST-LATEST.md
+    schema: traveltrust.owner_mainnet_deploy_checklist.v1
+  prep_package_structure:
+    registry: registry/mainnet-deployment-package.v1.yaml
+    prep_generator: scripts/dev/prepare-mainnet-deployment-package-prep.cjs
+    package_generator: scripts/dev/generate-mainnet-deployment-package.cjs
+    template_root: docs/runbook/templates/mainnet-package/
+    components: 8
+  prerequisite_review:
+    registry: registry/phase3-deployment-prerequisite-review.v1.yaml
+    orchestrator: scripts/dev/run-phase3-deployment-prerequisite-review.cjs
+    note: 10 Reviews · 88 sub-checks — no new review categories
+  registry_field_naming:
+    - registry/production-go-four-gate-framework.v1.yaml
+    - registry/phase3-deployment-prerequisite-review.v1.yaml
+    - registry/mainnet-deployment-package.v1.yaml
+    - registry/web3-three-phase-closure-discipline.v1.yaml
+    - registry/phase2-staging-sepolia-production-validation.v1.yaml
+  evidence_directory_structure:
+    root: evidence/GO_production_readiness/
+    book: evidence/GO_production_readiness/production-readiness-book/
+    prerequisite: evidence/GO_production_readiness/phase3-deployment-prerequisite-review/
+    mainnet_prep: evidence/GO_production_readiness/mainnet-deployment-package/
+    phase2: evidence/GO_production_readiness/phase2-exit-review/
+    web3_freeze: evidence/GO_production_readiness/web3-freeze/
+    cert: evidence/GO_ttg_cert/
+
+timelock_period_allowed:
+  - Wait for Timelock expiry
+  - refresh-governance-status.cjs — Dashboard + Readiness Book status sync
+  - Cert #8–#12 execution per existing cert runbooks
+  - Evidence LATEST pointer updates from cert / validation runs
+  - Prerequisite Review re-run (state refresh only)
+
+timelock_period_forbidden:
+  - New governance documents or PREP templates
+  - Restructuring Book / Matrix / Checklist sections
+  - New Review categories or Gate frameworks
+  - Registry machine_key renames without new governance cycle
+  - Evidence directory tree reorganization
+
+unfreeze_exceptions:
+  - id: CERT_STATE_REFRESH
+    description: Cert chain execution changes Gate state — normal refresh, not structural change
+  - id: MAINNET_DRILL_DEFECT
+    description: Mainnet drill reveals governance process defect requiring structural fix
+  - id: AUDIT_MANDATORY
+    description: Third-party audit mandates publish process change
+  - id: INCIDENT_RETROSPECTIVE
+    description: Production incident retrospective requires new governance item
+
+execution_chain_post_timelock:
+  - Cert #8–#12
+  - Phase ②-F Exit Review PASS
+  - Web3 Freeze
+  - generate-mainnet-deployment-package.cjs
+  - Owner Sign-off
+  - Shadow Launch
+  - Wave 1
+
+cert_execution_env:
+  env_flags:
+    - HAT_R1_LIVE_WALLET_OK=1
+    - HAT_R1_PHASE_B_PAUSED=0
+    - HAT_R1_ALLOW_SPEND_EXECUTE=1
+  dashboard: node scripts/dev/dashboard.cjs --execute --refresh
+  cert_scripts:
+    - scripts/dev/run-tt-governance-cert-10-emergency-pause.sh
+    - scripts/dev/run-tt-governance-cert-11-dr-replay.sh
+    - scripts/dev/run-tt-governance-cert-12-gorp-replay.sh
+  note: Cert #8–#9 use dashboard --execute path; #10–#12 sequential per existing runbooks

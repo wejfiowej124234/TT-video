@@ -1,0 +1,15 @@
+{
+  "kind": "traveltrust.pi3_004_production_readiness_verification_execution.v1",
+  "recorded_utc": "20260608T014009Z",
+  "verdict": "PI3-004_HOLD",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "execution_sprint": "154",
+  "pi3_004_baseline_status": "PLANNED",
+  "skeleton_report_release_gate": "NO_GO",
+  "prod_r003_report_go": false,
+  "r002_validate": "scripts/validate-regression-report.py --fail-on-no-go --require-go",
+  "pi3_151_152_153_ref": "151/152/153 execution HOLD until Owner prod cutover",
+  "catalog_freeze": "CATALOG_RELEASE_FREEZE_GO",
+  "operations_freeze": "OPERATIONS_PLATFORM_GO",
+  "growth_freeze": "GROWTH_RELEASE_FREEZE_GO"
+}

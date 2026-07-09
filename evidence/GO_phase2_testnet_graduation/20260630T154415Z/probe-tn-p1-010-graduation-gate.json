@@ -1,0 +1,7 @@
+{
+  "pass": true,
+  "state": "yes",
+  "note": "tn-p1-010-indexer-reconcile-20260630T153818Z stamp=20260630T153818Z after_soak=1 freeze_sha=8dcd304afae1bafe5a4de738175e171256a9501e",
+  "freeze_sha": "8dcd304afae1bafe5a4de738175e171256a9501e",
+  "report_dir": "tn-p1-010-indexer-reconcile-20260630T153818Z"
+}

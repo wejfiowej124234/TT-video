@@ -1,0 +1,9 @@
+{
+  "listing_id": "2473ad28-9d66-40fe-9ebf-75b2c853c25c",
+  "order_id": "d43bc8cb-f3bd-4243-a2cd-4b2eb35864ba",
+  "owner_email": "acq-stg-own-1781453249@traveltrust.test",
+  "carrier_email": "acq-stg-car-1781453249@traveltrust.test",
+  "final_status": "completed",
+  "payment_mode": "mock-pay",
+  "api": "https://tt-api-staging.fly.dev"
+}

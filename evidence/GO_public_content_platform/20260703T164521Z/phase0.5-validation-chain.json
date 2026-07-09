@@ -1,0 +1,44 @@
+{
+  "validation": "PCP_PHASE_0_5",
+  "stamp": "20260703T164521Z",
+  "sequence": [
+    "local_architecture",
+    "staging_runtime",
+    "evidence",
+    "sign_off_if_pass"
+  ],
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "overall": "FAIL",
+  "sign_off": false,
+  "sign_off_note": "Do NOT sign off — fix failures and re-run",
+  "checks": [
+    {
+      "id": "architecture_compliance",
+      "label": "TT_PCP_ARCHITECTURE_COMPLIANCE (local)",
+      "status": "PASS",
+      "detail": "All public catalog surfaces + FeedBuilder purity PASS"
+    },
+    {
+      "id": "builder_purity",
+      "label": "FeedBuilder — no governance rules",
+      "status": "PASS",
+      "detail": "No display_status/surface/tier checks in Builder"
+    },
+    {
+      "id": "staging_health",
+      "label": "Staging /health/ready",
+      "status": "PASS",
+      "detail": "API reachable"
+    },
+    {
+      "id": "staging_db",
+      "label": "Staging database_connected",
+      "status": "FAIL",
+      "detail": "database_connected=undefined"
+    }
+  ],
+  "summary": {
+    "pass": 3,
+    "fail": 1
+  }
+}

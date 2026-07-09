@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust.staging_rc_baseline.active.v1",
+  "machine_key": "TT_STAGING_RC_BASELINE",
+  "status": "READY",
+  "stamp": "20260704T100947Z",
+  "recorded_at": "2026-07-04T10:11:09Z",
+  "git_sha": "9b90696d5ff18f7e095f427f48d2f6e193b304d9",
+  "evidence": "evidence/GO_staging_rc_baseline/20260704T100947Z",
+  "ssot_alignment": "evidence/GO_staging_rc_ssot_alignment/20260704T100947Z",
+  "ocs_state": "evidence/GO_staging_rc_ssot_alignment/20260704T091605Z/ocs-asset-baseline/state.json",
+  "registry": "registry/staging-rc-baseline.v1.yaml",
+  "forbidden": ["smoke_data", "non_ocs_public_rows", "legacy_volume_media", "new_business_features"],
+  "allowed": ["deployment_sync", "production_cutover_prep"]
+}

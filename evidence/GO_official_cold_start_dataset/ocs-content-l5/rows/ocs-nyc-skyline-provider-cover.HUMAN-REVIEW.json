@@ -1,0 +1,67 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T152530Z",
+  "filename": "ocs-nyc-skyline-provider-cover.jpg",
+  "chain_id": "nyc-skyline",
+  "city": "纽约",
+  "country_code": "US",
+  "slot": "provider-cover",
+  "surface": "Provider",
+  "copy_label": "纽约观景台联票 · 官方合作",
+  "manifest_copy": {
+    "provider.title": "纽约观景台联票 · 官方合作",
+    "provider.description": "含两处观景台与夜间导览，适合首次访客。",
+    "provider.price_usdc": 245
+  },
+  "post_generation_quality_check": {
+    "pass": true
+  },
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG >16KB。"
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "观景台剪影+天际线蓝调与 title/description 对齐。"
+    },
+    "G3_slot_differentiation": {
+      "pass": true
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "纽约 US-only。"
+    },
+    "G5_brand_visual": {
+      "pass": true
+    },
+    "G6_commercial_platform": {
+      "pass": true
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true
+    },
+    "G8_evidence_matrix": {
+      "pass": true
+    },
+    "G9_content_authenticity": {
+      "pass": true
+    },
+    "G10_content_diversity": {
+      "pass": true
+    }
+  },
+  "provider_business_identity_review": {
+    "pass": true
+  },
+  "destination_experience_review": {
+    "pass": true
+  },
+  "surface_boundary_review": {
+    "pass": true
+  },
+  "regression_prior_37_rows": {
+    "pass": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

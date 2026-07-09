@@ -1,0 +1,103 @@
+{
+  "generated_at": "2026-06-08T09:33:59.704027+00:00",
+  "issues": [],
+  "pg_consistency_matrix": [
+    {
+      "probe_id": "pg.like_count",
+      "check": "count",
+      "target": "471a3e1e-c6c1-4437-bc34-c14a89289e2a",
+      "pg_value": "1",
+      "api_value": "1",
+      "expected": "equal",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.collect_count",
+      "check": "count",
+      "target": "471a3e1e-c6c1-4437-bc34-c14a89289e2a",
+      "pg_value": "1",
+      "api_value": "1",
+      "expected": "equal",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.like_idempotent",
+      "check": "rows",
+      "target": "471a3e1e-c6c1-4437-bc34-c14a89289e2a",
+      "pg_value": "1",
+      "api_value": "1",
+      "expected": "single_row",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.comment_count",
+      "check": "count",
+      "target": "471a3e1e-c6c1-4437-bc34-c14a89289e2a",
+      "pg_value": "2",
+      "api_value": ">=2",
+      "expected": ">=2",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.post_visibility",
+      "check": "state",
+      "target": "dd3bb6b4-93cd-4d48-b8db-fe86edf886ee",
+      "pg_value": "archived",
+      "api_value": "archived|removed",
+      "expected": "hidden",
+      "status": "PASS",
+      "notes": "archived"
+    },
+    {
+      "probe_id": "pg.report_status",
+      "check": "state",
+      "target": "8814583a-89e3-46b7-9309-b35ab54e349b",
+      "pg_value": "resolved",
+      "api_value": "resolved",
+      "expected": "resolved",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.moderation_case",
+      "check": "audit",
+      "target": "8814583a-89e3-46b7-9309-b35ab54e349b",
+      "pg_value": "1",
+      "api_value": ">=1",
+      "expected": "row_exists",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.comment_visibility",
+      "check": "state",
+      "target": "2a223898-f1be-44fd-86d6-9db3cc62f8e4",
+      "pg_value": "hidden",
+      "api_value": "hidden",
+      "expected": "hidden",
+      "status": "PASS",
+      "notes": "hidden"
+    },
+    {
+      "probe_id": "pg.auth_audit_events",
+      "check": "infra",
+      "target": "auth_audit_events",
+      "pg_value": "73",
+      "api_value": "readable",
+      "expected": "ok",
+      "status": "PASS",
+      "notes": ""
+    }
+  ],
+  "summary": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 0,
+    "pg_pass": 9,
+    "pg_total": 9
+  }
+}

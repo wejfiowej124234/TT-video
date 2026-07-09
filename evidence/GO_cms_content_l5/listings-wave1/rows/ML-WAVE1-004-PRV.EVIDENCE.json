@@ -1,0 +1,54 @@
+{
+  "schema": "traveltrust.cms_phase1_single_asset_evidence.v1",
+  "product_name": "Market Listing Cover",
+  "matrix_id": "ML-WAVE1-004-PRV",
+  "variant": "provider",
+  "chain_slug": "nyc-skyline",
+  "listing_id": "8ccff008-23d6-4028-a6b4-65ac68e6eea7",
+  "scaffolded_at_utc": "2026-07-05T09:41:31Z",
+  "step_1_brief_review": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "reviewed_at_utc": "2026-07-05T09:41:31Z"
+  },
+  "step_2_designer_upload": {
+    "status": "COMPLETE",
+    "catalog_asset_id": "9dd1ed47-5630-4292-b1ec-9030148fe943",
+    "uploaded_at_utc": "2026-07-05T09:41:31Z",
+    "notes": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg"
+  },
+  "step_3_cms_review": {
+    "status": "COMPLETE",
+    "gates": {
+      "cms_review": "PASS",
+      "destination_authenticity": "PASS",
+      "brand_consistency": "PASS"
+    }
+  },
+  "step_4_catalog_publish": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "published_at_utc": "2026-07-05T09:41:31Z"
+  },
+  "step_5_verify": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "cover_catalog_asset_id": "9dd1ed47-5630-4292-b1ec-9030148fe943",
+    "cover_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg",
+    "verified_at_utc": "2026-07-05T09:41:31Z"
+  },
+  "step_6_evidence": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "completed_at_utc": "2026-07-05T09:41:31Z"
+  },
+  "matrix_snapshot": {
+    "matrix_row_status": "pass",
+    "asset_lifecycle": "live",
+    "current_source": "catalog_api",
+    "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg",
+    "listing_id": "8ccff008-23d6-4028-a6b4-65ac68e6eea7"
+  },
+  "TT_CMS_LISTINGS_WAVE1_ROW_VERIFY": "PASS",
+  "TT_CMS_PHASE1_SINGLE_ASSET_ROW": "COMPLETE"
+}

@@ -1,0 +1,7 @@
+{
+  "step": "reconcile",
+  "result": "PASS",
+  "legacyUnallocBalance": "0",
+  "newUnallocBalance": "495000",
+  "migrationRaw": "495000"
+}

@@ -1,0 +1,203 @@
+{
+  "schema": "traveltrust.cms_content_execution.v1",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "infrastructure": {
+    "frozen": true,
+    "final_ops_abstraction": true,
+    "effective_utc": "2026-07-05",
+    "phase": "② staging",
+    "forbidden_additions": [
+      "family",
+      "country",
+      "city",
+      "wave",
+      "kpi",
+      "dashboard",
+      "status",
+      "registry",
+      "runbook"
+    ],
+    "only_remaining_work": "cms_content_to_100_percent_l5",
+    "ops_language": "asset_family_only",
+    "deprecated_ops_language": [
+      "Wave 1",
+      "Wave 2",
+      "Wave 3",
+      "wave_1",
+      "wave_2",
+      "wave_3_plus"
+    ],
+    "hierarchy_frozen": [
+      "asset_family",
+      "country",
+      "city",
+      "asset"
+    ],
+    "unified_pipeline": [
+      "Review",
+      "Replace",
+      "Publish",
+      "Verify",
+      "Evidence",
+      "Live"
+    ]
+  },
+  "statement": "CMS 系统已就绪 · ③ 未完成 = 真实图片内容未全部 L5 · 仅执行内容至 100%",
+  "content_families": [
+    {
+      "order": 1,
+      "id": "destination_ambient",
+      "label": "Destination Ambient",
+      "content_pct": 100,
+      "progress_bar": "██████████ 100%",
+      "lock_completion": "10/10 (100%)",
+      "catalog_empty": false,
+      "live": 10,
+      "total": 10,
+      "execution_status": "CLOSED",
+      "display": "✅ CLOSED"
+    },
+    {
+      "order": 2,
+      "id": "poi",
+      "label": "POI",
+      "content_pct": 0,
+      "progress_bar": "░░░░░░░░░░ 0%",
+      "lock_completion": "0/0 (catalog_empty)",
+      "catalog_empty": true,
+      "live": 0,
+      "total": 0,
+      "execution_status": "ACTIVE",
+      "display": "▶ ACTIVE"
+    },
+    {
+      "order": 3,
+      "id": "food",
+      "label": "Food",
+      "content_pct": 0,
+      "progress_bar": "░░░░░░░░░░ 0%",
+      "lock_completion": "0/0 (catalog_empty)",
+      "catalog_empty": true,
+      "live": 0,
+      "total": 0,
+      "execution_status": "WAITING",
+      "display": "WAITING"
+    },
+    {
+      "order": 4,
+      "id": "city",
+      "label": "City Hero",
+      "content_pct": 0,
+      "progress_bar": "░░░░░░░░░░ 0%",
+      "lock_completion": "0/0 (catalog_empty)",
+      "catalog_empty": true,
+      "live": 0,
+      "total": 0,
+      "execution_status": "WAITING",
+      "display": "WAITING"
+    },
+    {
+      "order": 5,
+      "id": "hotel",
+      "label": "Hotel",
+      "content_pct": 0,
+      "progress_bar": "░░░░░░░░░░ 0%",
+      "lock_completion": "0/0 (catalog_empty)",
+      "catalog_empty": true,
+      "live": 0,
+      "total": 0,
+      "execution_status": "WAITING",
+      "display": "WAITING"
+    },
+    {
+      "order": 6,
+      "id": "transport",
+      "label": "Transport",
+      "content_pct": 0,
+      "progress_bar": "░░░░░░░░░░ 0%",
+      "lock_completion": "0/0 (catalog_empty)",
+      "catalog_empty": true,
+      "live": 0,
+      "total": 0,
+      "execution_status": "WAITING",
+      "display": "WAITING"
+    },
+    {
+      "order": 7,
+      "id": "provider_listing",
+      "label": "Provider Listing",
+      "content_pct": 0,
+      "progress_bar": "░░░░░░░░░░ 0%",
+      "lock_completion": "0/10 (0%)",
+      "catalog_empty": false,
+      "live": 0,
+      "total": 10,
+      "execution_status": "WAITING",
+      "display": "WAITING"
+    },
+    {
+      "order": 8,
+      "id": "acquisition_listing",
+      "label": "Acquisition Listing",
+      "content_pct": 0,
+      "progress_bar": "░░░░░░░░░░ 0%",
+      "lock_completion": "0/10 (0%)",
+      "catalog_empty": false,
+      "live": 0,
+      "total": 10,
+      "execution_status": "WAITING",
+      "display": "WAITING"
+    },
+    {
+      "order": 9,
+      "id": "banner",
+      "label": "Banner",
+      "content_pct": 0,
+      "progress_bar": "░░░░░░░░░░ 0%",
+      "lock_completion": "0/0 (catalog_empty)",
+      "catalog_empty": true,
+      "live": 0,
+      "total": 0,
+      "execution_status": "WAITING",
+      "display": "WAITING"
+    },
+    {
+      "order": 10,
+      "id": "video_poster",
+      "label": "Video Poster",
+      "content_pct": 0,
+      "progress_bar": "░░░░░░░░░░ 0%",
+      "lock_completion": "0/1 (0%)",
+      "catalog_empty": false,
+      "live": 0,
+      "total": 1,
+      "execution_status": "WAITING",
+      "display": "WAITING"
+    }
+  ],
+  "active_family": "poi",
+  "active_family_label": "POI",
+  "pipeline_needs": {
+    "need_review": 21,
+    "need_replace": 0,
+    "need_publish": 0,
+    "need_verify": 0,
+    "need_evidence": 0,
+    "target_all_zero": true
+  },
+  "completion_gate": {
+    "all_families_100pct": false,
+    "pipeline_all_zero": false
+  },
+  "summary": {
+    "ambient_closed": true,
+    "cms_review_required": 21,
+    "families_closed": 1,
+    "families_total": 10
+  },
+  "TT_CMS_INFRASTRUCTURE": "FROZEN",
+  "TT_CMS_CONTENT_EXECUTION": "ACTIVE",
+  "TT_CMS_ACTIVE_FAMILY": "poi"
+}

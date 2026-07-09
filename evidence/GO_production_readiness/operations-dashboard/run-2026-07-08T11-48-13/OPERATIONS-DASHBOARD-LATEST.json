@@ -1,0 +1,65 @@
+{
+  "schema": "traveltrust.operations_dashboard.v1",
+  "title": "TravelTrust Operations Dashboard",
+  "recorded_utc": "2026-07-08T11:48:13.586Z",
+  "modules": [
+    {
+      "name": "Website",
+      "pct": 95,
+      "status": "IN_PROGRESS"
+    },
+    {
+      "name": "Guide",
+      "pct": 90,
+      "status": "IN_PROGRESS"
+    },
+    {
+      "name": "Provider",
+      "pct": 88,
+      "status": "IN_PROGRESS"
+    },
+    {
+      "name": "Merchant",
+      "pct": 86,
+      "status": "IN_PROGRESS"
+    },
+    {
+      "name": "Traveler",
+      "pct": 92,
+      "status": "IN_PROGRESS"
+    },
+    {
+      "name": "Community",
+      "pct": 80,
+      "status": "IN_PROGRESS"
+    },
+    {
+      "name": "CMS",
+      "pct": 67,
+      "status": "TARGET"
+    },
+    {
+      "name": "COS",
+      "pct": 63,
+      "status": "TARGET"
+    },
+    {
+      "name": "Growth",
+      "pct": 63,
+      "status": "TARGET"
+    },
+    {
+      "name": "Admin",
+      "pct": 73,
+      "status": "IN_PROGRESS"
+    },
+    {
+      "name": "Security",
+      "pct": 65,
+      "status": "IN_PROGRESS"
+    }
+  ],
+  "overall_pct": 78,
+  "drag_module": "COS",
+  "uat_pct": 84
+}

@@ -1,0 +1,32 @@
+{
+  "audit_id": "TT_COUNTRY_POOL_REVENUE_ENTERPRISE_HAT",
+  "stamp_utc": "20260616T080137Z",
+  "jurisdiction_pilot": "DE",
+  "steps": [
+    "step-01-profit-accrual",
+    "step-02-netprofit-ledger",
+    "step-03-split-4555",
+    "step-04-steward-path-vault",
+    "step-05-global-treasury",
+    "step-06-api-chain-alignment",
+    "step-08-frontend-constants",
+    "step-09-claim-path-boundary"
+  ],
+  "four_ledger": {
+    "chain": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa",
+    "api_ledger_env": "0x63bd7d5ee5c5dde707e5e65303f3876267c78e97",
+    "page_bps_ok": true,
+    "split_observed": false,
+    "blockers": [
+      "API COUNTRY_POOL_LEDGER_ADDRESS != NET_PROFIT ledger",
+      "no SPLIT_COMPLETED epoch on Sepolia DE pilot (split pipeline not exercised)"
+    ],
+    "verdict": "FAIL"
+  },
+  "overall_verdict": "FAIL",
+  "phase_b_unblock_requires": [
+    "four_ledger PASS",
+    "run-enterprise-hat-l9-recheck PASS",
+    "HAT_R1_PHASE_B_PAUSED=0"
+  ]
+}

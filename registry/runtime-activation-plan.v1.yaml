@@ -1,0 +1,333 @@
+# TravelTrust Web3 Runtime Activation Plan v1 — machine SSOT
+# Human: docs/spec/governance-token/TRAVELTRUST-WEB3-RUNTIME-ACTIVATION-PLAN-v1.md
+# Prior audit: WEB3_PROTOCOL_MASTER_AUDIT_V1 (W5 · WARN)
+# W6: planning only · W7: execution BLOCKED until gate + approval
+
+schema: traveltrust.web3_runtime_activation_plan.v1
+version: "1.0.0"
+effective_utc: "2026-07-09"
+sprint: W6
+next_sprint: W7
+w7_execution: BLOCKED
+
+inputs:
+  master_audit_report: docs/spec/governance-token/traveltrust-web3-protocol-master-audit-report-v1.md
+  drift_report: docs/spec/governance-token/traveltrust-web3-protocol-drift-report-v1.md
+  master_matrix: registry/traveltrust-web3-protocol-master-matrix.v1.yaml
+  vacancy_runtime: registry/vacancy-v1-runtime-deployment-status.v1.yaml
+  active_deploy_baseline: gov_freeze_v2_clean_baseline
+  chain_id: 11155111
+  network: sepolia
+
+phase_conclusion:
+  protocol_development: COMPLETE
+  verification_layer: COMPLETE
+  transparency_layer: COMPLETE
+  runtime_activation: PENDING
+  current_phase: protocol_asset_governance_and_runtime_activation
+
+status_model:
+  protocol_status: [COMPLETE, IN_PROGRESS, DEPRECATED]
+  deployment_status: [NOT_DEPLOYED, DEPLOYED, VERIFIED]
+  runtime_status: [ACTIVE, LEGACY, PENDING_UPGRADE, UNKNOWN]
+  activation_tier: [ACTIVE, DEFER, FUTURE_MAINNET_REQUIRED, LEGACY_READ_ONLY]
+
+w6_prohibitions:
+  - modify_solidity
+  - broadcast_deploy_scripts
+  - on_chain_upgradeTo
+  - change_registry_addresses
+  - change_production_env_values
+  - alter_tokenomics
+  - alter_governance_parameters
+
+priority_matrix:
+  - priority: P0
+    module: treasury_env_api
+    current: naming_drift
+    target: unified_p4cap_and_legacy_keys
+    w6_action: define_alias_map_forbid_list_meta_contract
+    w7_action: config_and_api_pr_no_chain_tx
+    drift_issues: [W3-AUDIT-001, W3-AUDIT-002, W3-AUDIT-003]
+  - priority: P1
+    module: vacancy_de_country_pool
+    current: Q-F01_LEGACY
+    target: vacancy_v1_runtime_active
+    w6_action: select_migration_option_b
+    w7_action: deploy_new_triplet_registry_switch
+    drift_issues: [W3-AUDIT-005]
+  - priority: P1
+    module: dual_timelock_de
+    current: legacy_owns_qf01_triplet_v2_owns_gov
+    target: v2_owner_on_new_triplet_documented_split
+    w6_action: strategy_and_runbook
+    w7_action: deploy_with_v2_owner_optional_balance_migration
+    drift_issues: [W3-AUDIT-008]
+  - priority: P2
+    module: escrow_factory_v2
+    current: not_deployed_sepolia
+    target: future_mainnet_required_sepolia_defer
+    w6_action: reclassify_activation_tier
+    w7_action: deploy_only_if_approved
+    drift_issues: [W3-AUDIT-007]
+  - priority: P3
+    module: primary_market
+    current: on_chain_active_ui_deferred
+    target: confirm_before_public_ops
+    w6_action: checklist
+    w7_action: fe_wiring_when_product_ready
+  - priority: P3
+    module: steward_identity_stake
+    current: active
+    target: confirm_probe
+    w6_action: checklist
+    w7_action: ops_verification
+
+treasury_env_plan:
+  active:
+    env_primary: GOVERNANCE_TREASURY_P4CAP_ADDRESS
+    env_aliases: [TREASURY_P4_CAP_ADDRESS]
+    sepolia_address: "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+    role: dao_treasury_gov_01_p4_cap
+  legacy:
+    env_primary: LEGACY_TREASURY_ADDRESS
+    sepolia_address: "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be"
+    role: fee_router_global_ops_15pct_leg
+  forbidden_env_keys:
+    - TREASURY_ADDRESS
+  migrate_reads_from:
+    - GOVERNANCE_TREASURY_ADDRESS
+  w7_surfaces:
+    - crates/api/src/chain/mod.rs
+    - crates/api/src/routes/governance/governance_pool.rs
+    - scripts/dev/phase2-sepolia-fundstack-verify-bindings.sh
+  rollback: revert_config_pr
+  on_chain_tx: false
+
+vacancy_de_migration:
+  question: "Proxy upgrade vs new vault + registry switch?"
+  option_a_proxy_upgrade:
+    available: false
+    reason: DE triplet IMMUTABLE_EXEMPT per g24-p-upgrade-01-contract-posture.v1.yaml
+    contracts: [CountryPoolNetProfitLedger, StewardPathVault, UnallocatedStewardPathVault]
+  option_b_new_deploy_registry_switch:
+    available: true
+    recommended: true
+    w6_decision: SELECTED
+    deploy_script: contracts/script/DeployCountryPoolNetProfitStack.s.sol
+    cutover_reference: contracts/script/CpNetProfitSepoliaCutoverAndDrill.s.sol
+    legacy_triplet:
+      ledger: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+      steward_path_vault: "0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb"
+      unallocated_vault: "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0"
+      runtime_stack: Q-F01_LEGACY_BYTECODE
+      post_migration_status: LEGACY_READ_ONLY
+    new_triplet:
+      addresses: TBD_W7
+      recommended_owner: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+      recommended_owner_note: V2 GovernanceTimelock — collapse admin for new addresses
+    registry_switch_targets:
+      - registry/protocol-convergence-deployments.v1.yaml
+      - registry/traveltrust-web3-protocol-master-matrix.v1.yaml
+      - config/jurisdiction_country_pool_net_profit.sepolia.json
+      - registry/vacancy-v1-runtime-deployment-status.v1.yaml
+    env_keys:
+      - COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS
+      - COUNTRY_POOL_STEWARD_PATH_VAULT_ADDRESS
+      - UNALLOCATED_STEWARD_PATH_VAULT_ADDRESS
+  three_status:
+    today:
+      protocol_status: COMPLETE
+      deployment_status: DEPLOYED
+      runtime_status: LEGACY
+    target:
+      protocol_status: COMPLETE
+      deployment_status: VERIFIED
+      runtime_status: ACTIVE
+  rollback:
+    - do_not_switch_registry_if_probe_fail
+    - revert_env_registry_to_qf01_addresses
+    - cannot_revert_immutable_bytecode_at_old_addresses
+  w7_verification:
+    - four_selector_probe_pass
+    - VACANCY_DEPLOYMENT_READINESS_pass
+    - WEB3_VACANCY_INDEXER_RECONCILE_live_pass
+    - ops_console_runtime_active
+
+escrow_factory_v2:
+  why_exists: bilateral_confirmation_settlement_model
+  policy: registry/escrow-bilateral-mainnet-policy.v1.yaml
+  v1:
+    sepolia: ACTIVE
+    mainnet: FORBIDDEN
+  v2:
+    protocol_status: COMPLETE
+    deployment_status_sepolia: NOT_DEPLOYED
+    activation_tier: FUTURE_MAINNET_REQUIRED
+    sepolia_tier: DEFERRED_BY_POLICY
+    mainnet_tier: REQUIRED_BEFORE_NEW_ORDERS
+    note: Not a W5 missing-deploy defect — intentional defer on Sepolia pilot
+  deploy_script: contracts/script/DeployEscrowFactoryV2.s.sol
+  broadcast_shell: scripts/dev/phase2-sepolia-broadcast-escrow-factory-v2.sh
+  w7_options:
+    defer_sepolia: continue_v1_pilot
+    sepolia_pilot: broadcast_when_bilateral_ux_needed
+    mainnet: required_at_production_go
+
+dual_timelock:
+  v2_governance:
+    address: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    controls:
+      - TravelTrustGovernor_proxy_admin
+      - GovernanceTreasuryP4Cap_proxy_admin
+      - TtgPrimaryMarketV1_proxy_admin
+      - TtgSeatConcentrationRegistry_proxy_admin
+      - RegionStewardStakePool_proxy_admin
+      - globalTreasury_target_55pct_leg
+  legacy_de_settlement:
+    address: "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
+    controls:
+      - Q-F01_DE_triplet_owner
+  w6_strategy:
+    - document_split_no_forced_merge
+    - new_triplet_owner_v2_timelock
+    - legacy_timelock_for_balance_migration_only
+  w7_optional:
+    - transfer_balances_from_old_vaults_via_legacy_timelock_governance
+
+capability_probes:
+  discipline: ops_only_eth_getCode_and_eth_call · UI_API_remain_indexer_ssot
+  probes:
+    - id: PROBE_VACANCY_V1
+      module: vacancy
+      pass: all_four_selectors_in_bytecode
+      selectors:
+        vacancy_ledger: ae607b9e
+        sweep_enabled: a20b5507
+        vacancy_state: 0d045440
+        steward_activation_epoch_id: 123d1b10
+      implementation: crates/api/src/chain/vacancy_ledger_reconcile.rs
+      today_result: FAIL_QF01
+      target_result: PASS
+      reconcile_mode_today: SKIPPED_PRE_V1
+      reconcile_mode_target: LIVE_ENABLED
+    - id: PROBE_TTG
+      module: ttg_token
+      pass: "symbol TTG · decimals 18 · totalSupply 10M ether"
+      w7_script: planned
+    - id: PROBE_GOVERNOR
+      module: governor
+      pass: timelock_and_proxy_admin_eq_v2_timelock
+    - id: PROBE_TREASURY_P4CAP
+      module: treasury_p4cap
+      pass: proxy_admin_eq_v2_timelock
+    - id: PROBE_TIMELOCK
+      module: timelock_v2
+      pass: getMinDelay_eq_48h
+    - id: PROBE_ESCROW_V1
+      module: escrow_v1_factory
+      pass: code_nonzero
+      address: "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
+    - id: PROBE_ESCROW_V2
+      module: escrow_v2_factory
+      pass: code_nonzero_when_deployed
+      optional: true
+    - id: PROBE_FEE_ROUTER
+      module: fee_router
+      pass: countryBucketBps_eq_4500
+      address: "0x81A8009210c5215100564c6E4123F672c4459306"
+    - id: PROBE_SETTLEMENT_DE
+      module: settlement_ledger
+      pass: splitNetProfit_selector_present
+    - id: PROBE_STEWARD_STAKE
+      module: region_steward_stake_pool
+      pass: proxy_admin_eq_v2_timelock
+  w7_aggregator_script: scripts/gates/check-web3-runtime-capability-probe-gate.sh
+  w7_aggregator_status: PLANNED
+
+activation_gate:
+  gate_id: WEB3_RUNTIME_ACTIVATION_GATE
+  w6_status: DEFINED_NOT_RUN
+  w7_blocks_execution: true
+  preconditions:
+    - id: PRE-01
+      check: W5_master_audit_complete
+      required: WEB3_PROTOCOL_MASTER_AUDIT_GATE_accepted
+    - id: PRE-02
+      check: W6_plan_approved
+      required: this_registry_and_human_doc_signed_off
+    - id: PRE-03
+      check: master_matrix_convergence
+      script: scripts/gates/check-web3-protocol-master-matrix-gate.sh
+    - id: PRE-04
+      check: upgrade_path_confirmed_per_module
+      required: vacancy_option_b · treasury_env_spec · escrow_v2_tier
+    - id: PRE-05
+      check: owner_timelock_confirmed
+      required: v2_and_legacy_de_documented
+    - id: PRE-06
+      check: migration_tested
+      required: vacancy_w7_dryrun_pass
+      script: scripts/gates/check-vacancy-runtime-migration-dryrun-gate.sh
+      checklist: docs/spec/governance-token/TRAVELTRUST-WEB3-VACANCY-W7-DRY-RUN-CHECKLIST-v1.md
+    - id: PRE-07
+      check: capability_probe_pass
+      required: target_addresses_only
+    - id: PRE-08
+      check: reconcile_pass
+      required: vacancy_live_not_skipped_pre_v1
+  results: [PASS, WARN, FAIL]
+
+module_upgrade_strategies:
+  - module: treasury_env
+    current: drift
+    target: unified_keys
+    method: config_api_only
+    rollback: revert_pr
+    verification: meta_and_drift_closed
+  - module: vacancy_de
+    current: LEGACY
+    target: ACTIVE
+    method: option_b_new_triplet_registry_switch
+    rollback: revert_registry_env
+    verification: probe_and_live_reconcile
+  - module: escrow_v2
+    current: NOT_DEPLOYED
+    target: mainnet_required
+    method: deploy_when_approved
+    rollback: stop_routing_new_orders
+    verification: PROBE_ESCROW_V2
+  - module: gov_proxies
+    current: v2_implementations
+    target: future_impl
+    method: timelock_upgradeTo
+    rollback: record_previous_impl
+    verification: forge_and_admin_check
+
+sprint_roadmap:
+  W5: Web3 Protocol Master Audit · COMPLETE · WARN accepted
+  W6: Runtime Activation Plan · COMPLETE
+  W6_5_B: Historical Balance Audit · PASS
+  W6_5: Owner Review and Runtime Activation Sign-off · PENDING
+  W7_DRYRUN: Vacancy migration dry run · PASS
+  W7: Sepolia Runtime Execution · BLOCKED
+  W7_guard: no_on_chain_tx_until_dryrun_signoff_and_activation_gate_pass
+
+signoff_package:
+  human: docs/spec/governance-token/TRAVELTRUST-WEB3-RUNTIME-ACTIVATION-SIGNOFF-v1.md
+  machine: registry/runtime-activation-signoff.v1.yaml
+  status: PENDING
+
+dryrun_gate:
+  gate_id: VACANCY_RUNTIME_MIGRATION_DRYRUN_GATE
+  status: PASS
+  checklist: docs/spec/governance-token/TRAVELTRUST-WEB3-VACANCY-W7-DRY-RUN-CHECKLIST-v1.md
+  machine: registry/vacancy-w7-dry-run.v1.yaml
+  script: scripts/gates/check-vacancy-runtime-migration-dryrun-gate.sh
+  orchestrator: scripts/ops/vacancy-w7-dry-run-orchestrator.sh
+
+w6_gate_certificate:
+  plan_id: W6_RUNTIME_ACTIVATION_PLAN
+  result: COMPLETE
+  w6_5_signoff: PENDING
+  w7_execution: BLOCKED

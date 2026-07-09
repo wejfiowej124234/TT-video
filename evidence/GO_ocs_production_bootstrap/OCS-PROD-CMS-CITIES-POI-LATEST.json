@@ -1,0 +1,73 @@
+{
+  "schema": "traveltrust.ocs_production_cms_cities_poi_bootstrap.v1",
+  "stamp": "20260708T055601Z",
+  "recorded_at": "2026-07-08T06:51:13.193Z",
+  "api": "https://tt-api-prod.fly.dev",
+  "web": "https://tt-web-prod.fly.dev",
+  "policy": "Frozen SSOT apply — poi-hero-matrix + OCS dataset read-only",
+  "check1_ssot_frozen": true,
+  "pre_hashes": {
+    "ocs_registry_yaml": "eb3b7758bf6ad0d8a988d340b996f3bb98d9f2d2d8b76437b40014339500a082",
+    "ocs_dataset_json": "316f63270c8349a033247f2c6b171e88135e72b1732cabbbe76601f6d573964e",
+    "poi_hero_matrix_yaml": "347e009f03d9f0301612bbc3ba6fb29767078e1559be4e8c6693602004240e0a"
+  },
+  "post_hashes": {
+    "ocs_registry_yaml": "eb3b7758bf6ad0d8a988d340b996f3bb98d9f2d2d8b76437b40014339500a082",
+    "ocs_dataset_json": "316f63270c8349a033247f2c6b171e88135e72b1732cabbbe76601f6d573964e",
+    "poi_hero_matrix_yaml": "347e009f03d9f0301612bbc3ba6fb29767078e1559be4e8c6693602004240e0a"
+  },
+  "cities_applied": 38,
+  "poi_lineage_rows": 330,
+  "catalog_surfaces": {
+    "countries": 10,
+    "cities": 38,
+    "poi": 330
+  },
+  "targets": {
+    "countries": {
+      "actual": 10,
+      "target": 10,
+      "ok": true
+    },
+    "cities": {
+      "actual": 38,
+      "target": 38,
+      "ok": true
+    },
+    "poi": {
+      "actual": 330,
+      "target": 234,
+      "ok": true,
+      "ssot_full": 330,
+      "ssot_ok": true
+    }
+  },
+  "web_probes": [
+    {
+      "route": "/",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/market",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/community",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "route": "/guides",
+      "status": 200,
+      "ok": true
+    }
+  ],
+  "machine_keys": {
+    "OCS_PRODUCTION_CMS_CITIES_POI": "PASS",
+    "OCS_PRODUCTION_PARITY_AUDIT": "PASS"
+  },
+  "admin_email_redacted": "adm-u01-***@traveltrust.prod",
+  "evidence_dir": "D:/TravelTrust-V1.1/evidence/GO_ocs_production_bootstrap/20260708T055601Z"
+}

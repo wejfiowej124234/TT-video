@@ -1,0 +1,9 @@
+{
+  "schema": "p2fc_graduation_pause.v1",
+  "status": "PAUSED",
+  "reason": "Freeze-Lift Single SSOT Reconciliation before final 72h soak",
+  "paused_at": "20260614T084139Z",
+  "superseded_soak_job": "job-20260614T070154Z",
+  "resume_when": "TT_SINGLE_SSOT_RECONCILIATION: RECONCILED",
+  "then": ["start fresh P2FC 72h soak on reconciled SHA", "post-soak graduation audit"]
+}

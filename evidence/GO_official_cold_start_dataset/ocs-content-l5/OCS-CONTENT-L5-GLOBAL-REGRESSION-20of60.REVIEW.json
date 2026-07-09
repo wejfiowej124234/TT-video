@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_regression_review.v1",
+  "stamp_utc": "20260704T134330Z",
+  "trigger_row": 20,
+  "trigger_filename": "ocs-bangkok-temple-provider-cover.jpg",
+  "rows_reviewed": 20,
+  "TT_GLOBAL_REGRESSION_REVIEW": "PASS",
+  "no_quality_regression": true,
+  "checks": {
+    "all_20_rows_verified_pass": { "pass": true, "count": 20 },
+    "guide_identity_diversity_4_guides": { "pass": true, "no_face_collision": true },
+    "provider_business_identity_4_providers": { "pass": true, "distinct_business_models": true },
+    "composition_no_duplicate": { "pass": true },
+    "tone_no_homogenization": { "pass": true },
+    "city_distinctness_jp_kr_th": { "pass": true },
+    "closed_chains_stable": { "tokyo-photo": true, "kyoto-culture": true, "seoul-food": true },
+    "six_class_reviews_intact": { "pass": true },
+    "brand_consistency_no_drift": { "pass": true },
+    "consumer_experience_no_regression": { "pass": true }
+  },
+  "policy": "新增 Row 20 不得导致已完成 19 行质量下降；若 FAIL 须返工 Row 20 而非改历史行。",
+  "gate_to_row21": "PASS"
+}

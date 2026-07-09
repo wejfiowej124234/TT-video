@@ -1,0 +1,123 @@
+# TravelTrust · Business Test Accounts · Immutable ID Registry
+# SSOT: docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md §0.1b
+# Email may change via TT_TEST_ACCOUNT_CHANGE; logical ID + business_role MUST NOT change.
+
+schema: traveltrust.test_accounts_business_immutable.v1
+version: 1
+effective_utc: "2026-07-01"
+
+governance:
+  immutable_logical_ids: [C1, C2, C3, C4, E1, E2]
+  backward_compatible_only: true
+  breaking_semantic_change_policy: ADD_NEW_ID
+  email_change_allowed: true
+  role_reassignment_forbidden: true
+  change_gate: TT_TEST_ACCOUNT_CHANGE
+  operations_platform: registry/traveltrust-operations-platform.v1.yaml
+  public_catalog:
+    allowed: false
+    surfaces: [guides, provider, acquisition, official_guides, campaigns]
+    leak_classification: TEST_DATA_LEAKAGE
+    policy: registry/display-data-governance.v1.yaml#public_catalog_boundary
+    note: Test accounts validate business flows only — never official ops display data
+
+# Business personas test CONSUMER/MARKET flows — not Content/Campaign ops layer names.
+# Admin RBAC personas (§10) test OPERATIONS PLATFORM roles — ephemeral emails.
+# OCS @ocs.traveltrust.app = L1 official production operators — not in this registry.
+
+operations_platform:
+  align_policy: map_operations_domain_do_not_rename_ids
+  taxonomy: registry/traveltrust-operations-platform.v1.yaml
+  organization_model: operations_function_first_v2
+  domains_reference: registry/traveltrust-operations-platform.v1.yaml#operations_domains
+  accounts:
+    C1:
+      operations_domain: consumer_multi_identity
+      ops_console_domains: []
+      note: Multi-demo steward; not Content/Catalog ops persona
+    C2:
+      operations_domain: consumer_tourist
+      ops_console_domains: []
+      admin_dev_shortcut: SuperAdmin_cross_domain_dev_only
+    C3:
+      operations_domain: consumer_guide_workbench
+      ops_console_domains: []
+      note: Guide chain B; DB/联调 only — must not appear on Public Catalog (DDG FAIL if leaked)
+    C4:
+      operations_domain: consumer_merchant_provider
+      ops_console_domains: []
+    E1:
+      operations_domain: trust_gate_e2e
+      environments: [local]
+      ops_console_domains: []
+    E2:
+      operations_domain: did_rank_demo_provider
+      ops_console_domains: []
+  official_cold_start:
+    email_domain: ocs.traveltrust.app
+    operations_domains: [catalog_operations]
+    registry: registry/official-cold-start-dataset.v1.yaml
+    not_a_test_account: true
+  admin_console_personas:
+    doc: docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md#tt-admin-console-personas
+    email_pattern: adm-rbac-*@traveltrust.test
+    maps_to_ops_domains: [moderation_operations, catalog_operations, business_operations]
+    fixed_ops_email_forbidden: true
+
+accounts:
+  C1:
+    business_role: MultiIdentityHubSteward
+    storage_role: guide
+    escrow_chain: null
+    email: multi-demo@test.com
+    password_default: Test123!
+    lifecycle: Permanent
+    owner: Seed Script
+  C2:
+    business_role: TouristTraveler
+    storage_role: tourist
+    escrow_chain: A_and_B_traveler
+    email: tourist@test.com
+    password_default: Test123!
+    lifecycle: Permanent
+    owner: Seed Script
+    notes: "Admin SuperAdmin dev shortcut via Step 6b2 — separate Admin persona"
+  C3:
+    business_role: GuideWorkbench
+    storage_role: guide
+    escrow_chain: B
+    email: guide@test.com
+    password_default: Test123!
+    lifecycle: Permanent
+    owner: Seed Script
+  C4:
+    business_role: MerchantProvider
+    storage_role: provider
+    escrow_chain: null
+    email: merchant@test.com
+    password_default: Test123!
+    lifecycle: Permanent
+    owner: Seed Script
+  E1:
+    business_role: TrustGateCatalogGuide
+    storage_role: guide
+    escrow_chain: A
+    email: tg_guide_main@trustgate-e2e.local
+    password_default: Test123!
+    lifecycle: Permanent
+    owner: Seed Script
+    environments: [local]
+    seed_step: "6b4 POST /auth/seed-trust-gate-e2e"
+  E2:
+    business_role: DidRankDemoProvider
+    storage_role: provider
+    escrow_chain: null
+    email: provider-did-rank-demo@test.com
+    password_default: Test123!
+    lifecycle: Permanent
+    owner: Seed Script
+
+probe_matrix:
+  step_6b5_ids: [C1, C2, C3, C4, E2]
+  step_6b4_ids: [E1]
+  staging_excluded_ids: [E1]

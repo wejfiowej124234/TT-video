@@ -1,0 +1,67 @@
+{
+  "schema": "traveltrust.root_cause_compression.v1",
+  "raw_count": 10,
+  "compressed_count": 6,
+  "ratio": 1.67,
+  "top100_to_top10_target": "10:1 max noise",
+  "root_causes": [
+    {
+      "id": "RC-01",
+      "title": "Navigation / IA duplication across PF · PGX · UXA",
+      "merged_findings": [
+        "F-001",
+        "F-002",
+        "F-010"
+      ],
+      "verdict": "MERGE",
+      "queue": "NEXT"
+    },
+    {
+      "id": "RC-02",
+      "title": "Runbook ↔ scripts path drift (DOA SSOT)",
+      "merged_findings": [
+        "F-003",
+        "F-004"
+      ],
+      "verdict": "UPDATE",
+      "queue": "NOW"
+    },
+    {
+      "id": "RC-03",
+      "title": "Admin governance boundary overlap AG vs PGX-ADMIN",
+      "merged_findings": [
+        "F-005",
+        "F-006"
+      ],
+      "verdict": "REFACTOR",
+      "queue": "NOW"
+    },
+    {
+      "id": "RC-04",
+      "title": "U12 / MASTER bundle narrative misalignment",
+      "merged_findings": [
+        "F-007"
+      ],
+      "verdict": "KEEP",
+      "queue": "NOW"
+    },
+    {
+      "id": "RC-05",
+      "title": "Acquisition lifecycle traceability gap",
+      "merged_findings": [
+        "F-008"
+      ],
+      "verdict": "UPDATE",
+      "queue": "NEXT"
+    },
+    {
+      "id": "RC-06",
+      "title": "L5 token drift on account/settings surfaces",
+      "merged_findings": [
+        "F-009"
+      ],
+      "verdict": "KEEP",
+      "queue": "LATER"
+    }
+  ]
+}

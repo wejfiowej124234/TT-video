@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.ocs_content_l5_phase_open.v1",
+  "stamp_utc": "20260704T120000Z",
+  "phase": "Phase② OCS Content L5",
+  "machine_keys": {
+    "TT_OCS_CONTENT_L5": "IN_PROGRESS",
+    "TT_OCS_CONTENT_L5_READY": "NO",
+    "TT_RC_RUNTIME_CONVERGENCE": "FROZEN_CLOSED"
+  },
+  "content_ssot": "data/official-cold-start/content-brief.v1.yaml",
+  "registry": "registry/ocs-content-l5.v1.yaml",
+  "runbook": "docs/runbook/TT-OCS-CONTENT-L5.md",
+  "assets_status": { "total": 60, "real_photography_replaced": 0, "placeholder_solid_color": 60 },
+  "blocks_until_ready": ["production_preparation_entry", "production_go"]
+}

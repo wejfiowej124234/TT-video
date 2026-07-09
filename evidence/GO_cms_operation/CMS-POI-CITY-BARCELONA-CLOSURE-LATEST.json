@@ -1,0 +1,130 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-06T162217Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "ES",
+    "country_zh": "西班牙",
+    "city_zh": "巴塞罗那",
+    "city_en": "Barcelona"
+  },
+  "poi_count": 8,
+  "matrix_ids": [
+    "PH-ES-192-ATR",
+    "PH-ES-193-ATR",
+    "PH-ES-194-ATR",
+    "PH-ES-195-ATR",
+    "PH-ES-196-FOOD",
+    "PH-ES-197-FOOD",
+    "PH-ES-198-FOOD",
+    "PH-ES-199-FOOD"
+  ],
+  "pois": [
+    "圣家堂",
+    "古埃尔公园",
+    "兰布拉",
+    "米拉之家",
+    "海鲜饭",
+    "tapas",
+    "伊比利亚火腿",
+    "桑格利亚"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-ES-192-ATR",
+      "legacy_value": "圣家堂",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-ES-193-ATR",
+      "legacy_value": "古埃尔公园",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-ES-194-ATR",
+      "legacy_value": "兰布拉",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-ES-195-ATR",
+      "legacy_value": "米拉之家",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-ES-196-FOOD",
+      "legacy_value": "海鲜饭",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-ES-197-FOOD",
+      "legacy_value": "tapas",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-ES-198-FOOD",
+      "legacy_value": "伊比利亚火腿",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-ES-199-FOOD",
+      "legacy_value": "桑格利亚",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-192-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-193-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-194-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-195-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-196-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-197-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-198-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-ES-199-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=ES&city=%E5%B7%B4%E5%A1%9E%E7%BD%97%E9%82%A3&limit=50",
+    "http": 200,
+    "count": 8
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-barcelona/CMS-POI-BARCELONA-CLOSED-LOOP-LATEST.json",
+  "next_city": {
+    "country_iso": "ES",
+    "city_zh": "马德里",
+    "city_en": "Madrid"
+  },
+  "closure_keys": {
+    "TT_CMS_POI_CITY_BARCELONA": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": "ES · 马德里"
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_BARCELONA": "CLOSED"
+}

@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-06T14:19:33Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "AU",
+    "city_zh": "墨尔本",
+    "matrix_ids": [
+      "PH-AU-176-ATR",
+      "PH-AU-177-ATR",
+      "PH-AU-178-ATR",
+      "PH-AU-179-ATR",
+      "PH-AU-180-FOOD",
+      "PH-AU-181-FOOD",
+      "PH-AU-182-FOOD",
+      "PH-AU-183-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-AU-176-ATR",
+      "poi_id": "d3908844-7e3a-42ac-8447-c4308bf60603"
+    },
+    {
+      "matrix_id": "PH-AU-177-ATR",
+      "poi_id": "7d615a71-099d-4a07-abe1-4349909d30a6"
+    },
+    {
+      "matrix_id": "PH-AU-178-ATR",
+      "poi_id": "05c3fae0-9996-4050-8e01-8691fc5994fc"
+    },
+    {
+      "matrix_id": "PH-AU-179-ATR",
+      "poi_id": "0f6ad6a2-66b9-4b84-8d74-90f617b2db44"
+    },
+    {
+      "matrix_id": "PH-AU-180-FOOD",
+      "poi_id": "459f064d-1f1b-4b53-993b-7a3175fa5af5"
+    },
+    {
+      "matrix_id": "PH-AU-181-FOOD",
+      "poi_id": "795df12e-a8b1-41d2-be7f-566f7e8c46f0"
+    },
+    {
+      "matrix_id": "PH-AU-182-FOOD",
+      "poi_id": "33c45bb9-fc0e-41f4-8a97-c0d440a99045"
+    },
+    {
+      "matrix_id": "PH-AU-183-FOOD",
+      "poi_id": "1d9a2035-8027-4373-8cbf-3c37c052f96c"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 8,
+    "expected": 8
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

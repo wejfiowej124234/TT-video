@@ -1,0 +1,310 @@
+{
+  "items": [
+    {
+      "id": "PF-SEED-001",
+      "pf": "PF-04",
+      "object": "function",
+      "label": "编辑资料 / Edit profile",
+      "paths": [
+        "/guide/profile",
+        "/me/settings/profile",
+        "/me/publish (hub shell)"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "Same traveler profile edit surfaced in Guide, Settings, Publish Hub"
+    },
+    {
+      "id": "PF-SEED-002",
+      "pf": "PF-04",
+      "object": "function",
+      "label": "Merchant listing / inventory",
+      "paths": [
+        "/me/publish",
+        "/provider",
+        "MerchantWorkbenchMarketExposureCard"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "Publish Hub vs Provider Workbench dual listing surfaces"
+    },
+    {
+      "id": "PF-SEED-003",
+      "pf": "PF-11",
+      "object": "nav_entry",
+      "label": "Publish Hub entry",
+      "paths": [
+        "topbar",
+        "/me/settings",
+        "/me/identities",
+        "/me/publish",
+        "/provider"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "Four+ entry points to publish flows"
+    },
+    {
+      "id": "PF-AUTO-005",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "common_retry",
+      "paths": [
+        "frontend/app/error.tsx",
+        "frontend/app/(home)/error.tsx",
+        "frontend/app/admin/error.tsx",
+        "frontend/app/community/error.tsx",
+        "frontend/app/discover/error.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 90 files"
+    },
+    {
+      "id": "PF-AUTO-006",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "common_backtohome",
+      "paths": [
+        "frontend/app/error.tsx",
+        "frontend/app/not-found.tsx",
+        "frontend/app/(home)/error.tsx",
+        "frontend/app/admin/error.tsx",
+        "frontend/app/community/error.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 29 files"
+    },
+    {
+      "id": "PF-AUTO-007",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "common_loading",
+      "paths": [
+        "frontend/app/loading.tsx",
+        "frontend/app/loading.tsx",
+        "frontend/app/discover/loading.tsx",
+        "frontend/app/network/loading.tsx",
+        "frontend/app/traveltrust/loading.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 31 files"
+    },
+    {
+      "id": "PF-AUTO-008",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_tab_feed",
+      "paths": [
+        "frontend/app/community/loading.tsx",
+        "frontend/components/community/CommunityFeedDesktopLead.tsx",
+        "frontend/components/community/CommunityFeedHeader.tsx",
+        "frontend/components/community/CommunityFeedMain.tsx",
+        "frontend/components/community/CommunityFeedMainShell.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 6 files"
+    },
+    {
+      "id": "PF-AUTO-009",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "didrank_title",
+      "paths": [
+        "frontend/app/did-rank/DidRankPageInner.tsx",
+        "frontend/app/did-rank/loading.tsx",
+        "frontend/components/did-rank/DidRankRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-010",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "escrow_detailaria",
+      "paths": [
+        "frontend/app/escrow/loading.tsx",
+        "frontend/components/escrow/EscrowDetail/EscrowDetailLoaded.tsx",
+        "frontend/components/escrow/EscrowDetail/EscrowDetailLoadErrorView.tsx",
+        "frontend/components/escrow/EscrowDetail/EscrowDetailSkeleton.tsx",
+        "frontend/components/escrow/EscrowDetail/index.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 5 files"
+    },
+    {
+      "id": "PF-AUTO-011",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "governance_nav_label",
+      "paths": [
+        "frontend/app/governance/GovernanceHubPageMain.tsx",
+        "frontend/app/governance/delegate/GovernanceDelegatePageMain.tsx",
+        "frontend/app/governance/delegate/page.tsx",
+        "frontend/app/governance/distribution-accruals/GovernanceDistributionAccrualsPageMain.tsx",
+        "frontend/app/governance/distribution-accruals/page.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 18 files"
+    },
+    {
+      "id": "PF-AUTO-012",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "guides_title",
+      "paths": [
+        "frontend/app/guides/loading.tsx",
+        "frontend/app/guides/page.tsx",
+        "frontend/app/guides/page.tsx",
+        "frontend/app/guides/page.tsx",
+        "frontend/app/guides/page.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 6 files"
+    },
+    {
+      "id": "PF-AUTO-013",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "market_hero_title",
+      "paths": [
+        "frontend/app/market/loading.tsx",
+        "frontend/app/market/MarketPageClient.tsx",
+        "frontend/components/market/MarketRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-014",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "escrow_deleteorder",
+      "paths": [
+        "frontend/app/orders/OrdersListCardItem.tsx",
+        "frontend/components/escrow/EscrowDetail/EscrowDetailItineraryBudgetZoneToolbar.tsx",
+        "frontend/components/escrow/EscrowDetail/EscrowDraftExperienceFooter.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-015",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "orders_myorders",
+      "paths": [
+        "frontend/app/orders/OrdersListCards.tsx",
+        "frontend/app/orders/OrdersListPageMain.tsx",
+        "frontend/app/orders/OrdersPageLoadingView.tsx",
+        "frontend/app/orders/OrdersPageLoadingView.tsx",
+        "frontend/app/orders/page.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 6 files"
+    },
+    {
+      "id": "PF-AUTO-016",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "orders_createtitle",
+      "paths": [
+        "frontend/app/orders/new/loading.tsx",
+        "frontend/app/orders/new/OrdersNewPageMain.tsx",
+        "frontend/components/orders/OrdersNewRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-017",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "{t(labelkey)}",
+      "paths": [
+        "frontend/app/me/onboarding/MeOnboardingRolePick.tsx",
+        "frontend/app/community/user/[id]/CommunityUserPostsVisibilityNav.tsx",
+        "frontend/app/admin/approvals/AdminApprovalsQuickFilters.tsx",
+        "frontend/components/admin/AdminAuditQuickFilters.tsx",
+        "frontend/components/admin/AdminClipboardCopyButton.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 6 files"
+    },
+    {
+      "id": "PF-AUTO-018",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "itin_title",
+      "paths": [
+        "frontend/app/itinerary/new/ItineraryNewPageMain.tsx",
+        "frontend/app/itinerary/new/loading.tsx",
+        "frontend/app/itinerary/new/page.tsx",
+        "frontend/components/itinerary/ItineraryNewRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-019",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "guidedetail_title",
+      "paths": [
+        "frontend/app/guides/[id]/GuideDetailPageErrorView.tsx",
+        "frontend/app/guides/[id]/GuideDetailPageLoadingView.tsx",
+        "frontend/app/guides/[id]/GuideDetailPageNotFoundView.tsx",
+        "frontend/app/guides/[id]/loading.tsx",
+        "frontend/components/guides/GuideDetailRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 5 files"
+    },
+    {
+      "id": "PF-AUTO-020",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "guideregister_title",
+      "paths": [
+        "frontend/app/guide/register/GuideRegisterPageMain.tsx",
+        "frontend/app/guide/register/GuideRegisterPageMain.tsx",
+        "frontend/app/guide/register/loading.tsx",
+        "frontend/components/guide/GuideRegisterRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-021",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "common_closealert",
+      "paths": [
+        "frontend/app/governance/fee-routes/GovernanceFeeRoutesLoadMoreSection.tsx",
+        "frontend/app/governance/fee-routes/page.tsx",
+        "frontend/app/governance/vault-forwards/GovernanceVaultForwardsPageMain.tsx",
+        "frontend/app/governance/vault-forwards/page.tsx",
+        "frontend/app/community/messages/[id]/CommunityConversationPageComposer.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 6 files"
+    }
+  ]
+}

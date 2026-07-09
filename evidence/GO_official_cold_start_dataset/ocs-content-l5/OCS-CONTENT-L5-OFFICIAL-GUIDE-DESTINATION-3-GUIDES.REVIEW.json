@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.ocs_content_l5_official_guide_destination_aggregate.v1",
+  "stamp_utc": "20260704T132501Z",
+  "official_guide_covers_reviewed": 3,
+  "TT_OFFICIAL_GUIDE_DESTINATION_AGGREGATE": "PASS",
+  "rows": [
+    {
+      "filename": "ocs-tokyo-photo-official-guide-cover.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-kyoto-culture-official-guide-cover.jpg",
+      "pass": true
+    },
+    {
+      "filename": "ocs-seoul-food-official-guide-cover.jpg",
+      "pass": true
+    }
+  ],
+  "policy": "Official Guide Cover 须表达目的地路线/地图封面语义；禁止 Guide 肖像、Provider 服务场、Acquisition 商品静物、Community 生活抓拍；跨城路线封面须明显不同。"
+}

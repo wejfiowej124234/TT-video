@@ -1,0 +1,56 @@
+{
+  "schema": "traveltrust.p0_elimination_plan.v1",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Close RC-01: Navigation / IA duplication (PF · CX · UXA)",
+      "finding_ids": [
+        "PF-SEED-001",
+        "PF-SEED-002",
+        "PF-SEED-003"
+      ],
+      "readiness_delta": 8,
+      "cumulative_score": 96
+    },
+    {
+      "step": 2,
+      "action": "Close RC-02: Runbook ↔ scripts / spec-path drift (DOA)",
+      "finding_ids": [
+        "DOA-SEED-001",
+        "DOA-SEED-004"
+      ],
+      "readiness_delta": 6,
+      "cumulative_score": 100
+    },
+    {
+      "step": 3,
+      "action": "Close RC-03: Admin governance boundary (AG · PGX-ADMIN)",
+      "finding_ids": [
+        "AG-SEED-001",
+        "AG-SEED-003"
+      ],
+      "readiness_delta": 5,
+      "cumulative_score": 100
+    },
+    {
+      "step": 4,
+      "action": "Close RC-04: Architecture SSOT spine (CA · API)",
+      "finding_ids": [
+        "LFC-CA-001",
+        "LFC-CA-002"
+      ],
+      "readiness_delta": 2,
+      "cumulative_score": 100
+    },
+    {
+      "step": 5,
+      "action": "Close RC-05: L5 freeze compliance (UXA · five-main)",
+      "finding_ids": [
+        "LFC-UXA-001",
+        "LFC-UXA-002"
+      ],
+      "readiness_delta": 2,
+      "cumulative_score": 100
+    }
+  ]
+}

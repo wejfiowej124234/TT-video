@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust_pi3_003_stripe_live_production_webhook.v1",
+  "status": "PLANNED",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "stripe_mode": "live",
+  "webhook_path": "/api/v1/hooks/stripe/onboarding",
+  "webhook_url": "",
+  "prod_api_base": "",
+  "last_live_webhook_smoke_utc": "",
+  "last_payment_regression_utc": "",
+  "staging_regression_ref": "smoke-phase25-h3-stripe-webhook-exceptions-staging.sh",
+  "notes": "PI3-003 execution baseline. Prod GO requires sk_live + live whsec on tt-api-prod, Dashboard webhook on api.<domain>, and smoke-stripe-live-webhook-prod.sh PASS."
+}

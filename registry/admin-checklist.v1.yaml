@@ -1,0 +1,15 @@
+# Checklist progress tracker — maps to feature IDs in admin-functional-usability-audit.v1.yaml
+# Dev entry: FUNCTIONAL_AUDIT_ONLY
+
+version: v1.1.0
+status_ssot: docs/runbook/TT-ADMIN-FUNCTIONAL-USABILITY-AUDIT-20260701.md
+feature_map: docs/runbook/TT-ADMIN-FEATURE-SSOT.md
+registry: registry/admin-functional-usability-audit.v1.yaml
+dev_entry: false
+open: 0
+done: 40
+staging_manual_validation: GO
+phase2_admin_final_validation: GO
+dev_validation: CLOSED
+capability_complete: true
+enterprise_capability_complete: true

@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_consistency_review.v1",
+  "stamp_utc": "20260704T130430Z",
+  "matrix_rows_reviewed": 13,
+  "TT_GLOBAL_CONSISTENCY_REVIEW": "PASS",
+  "new_country_chain_started": "KR/seoul-food",
+  "gate_to_row14": "PASS"
+}

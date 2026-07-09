@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.cms_us_poi_wave_kickoff.v1",
+  "stamp_utc": "2026-07-06T123810Z",
+  "country_iso": "US",
+  "status": "US_CITY_PILOT_COMPLETE",
+  "active_city": "旧金山",
+  "template": "JP + KR + TH + SG + FR Golden Template",
+  "TT_CMS_US_POI_WAVE": "NEW_YORK_CLOSED",
+  "next_stage": null,
+  "san_francisco_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SAN-FRANCISCO-CLOSURE-LATEST.json"
+  },
+  "active_catalog_build": null,
+  "TT_CMS_POI_CITY_SAN_FRANCISCO": "CLOSED",
+  "TT_CMS_POI_ACTIVE_CITY": null,
+  "las_vegas_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-LAS-VEGAS-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_LAS_VEGAS": "CLOSED",
+  "los_angeles_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-LOS-ANGELES-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_LOS_ANGELES": "CLOSED",
+  "new_york_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-NEW-YORK-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_NEW_YORK": "CLOSED"
+}

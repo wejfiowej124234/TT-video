@@ -1,0 +1,110 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_final_review.v1",
+  "stamp_utc": "20260704T133530Z",
+  "chain_id": "seoul-food",
+  "city": "首尔",
+  "country_code": "KR",
+  "country_label": "韩国",
+  "theme_locked": "深夜美食 · 明洞 · 广藏市场",
+  "slots_completed": 6,
+  "slots_total": 6,
+  "TT_SEOUL_FOOD_CHAIN": "CLOSED",
+  "seoul_chain_content_score": {
+    "value": 93.0,
+    "scale": "0-100",
+    "formula": "weighted_mean_of_G1_G10_chain_aggregate_plus_six_class_reviews",
+    "pass_threshold": 85,
+    "result": "PASS"
+  },
+  "g1_g10_summary": {
+    "G1_real_assets": { "pass": true, "chain_score": 95 },
+    "G2_copy_alignment": { "pass": true, "chain_score": 94 },
+    "G3_slot_differentiation": { "pass": true, "chain_score": 94 },
+    "G4_cross_surface_city": { "pass": true, "chain_score": 96 },
+    "G5_brand_visual": { "pass": true, "chain_score": 92 },
+    "G6_commercial_perception": { "pass": true, "chain_score": 91 },
+    "G7_wcag_visual": { "pass": true, "chain_score": 93 },
+    "G8_evidence_matrix": { "pass": true, "chain_score": 96 },
+    "G9_content_authenticity": { "pass": true, "chain_score": 91 },
+    "G10_content_diversity": { "pass": true, "chain_score": 95 },
+    "all_pass": true
+  },
+  "six_class_special_reviews": {
+    "guide_identity_diversity": { "pass": true, "note": "Min v2 45+ 与 Tokyo/Kyoto 向导明显区分" },
+    "provider_business_identity": { "pass": true, "note": "夜市 pojangmacha vs 旅拍/茶室" },
+    "acquisition_product_identity": { "pass": true, "note": "韩式零食 vs 镜头/和纸" },
+    "official_guide_destination": { "pass": true, "note": "48h 美食地图路线封面" },
+    "community_authenticity": { "pass": true, "note": "Cover 近景 + Media 市场过道互补" },
+    "destination_authenticity": { "pass": true, "all_rows_kr_only": true }
+  },
+  "chain_narrative_continuity_review": {
+    "result": "PASS",
+    "TT_CHAIN_NARRATIVE_CONTINUITY": "PASS",
+    "surface_arc": "Guide(Min·弘大/明洞/广藏) → Provider(4h 5站美食团) → Acquisition(限定零食悬赏) → Official Guide(48h 区域美食地图) → Community Cover(tteokbokki 分享瞬间) → Community Media(广藏市场过道纪实)",
+    "geo_coverage": ["明洞", "广藏市场", "益善洞", "弘大", "北村韩屋远景"],
+    "theme_coherence": "深夜美食 · 夜市 · 韩式小吃",
+    "narrative_gaps": false
+  },
+  "visual_diversity_review": {
+    "result": "PASS",
+    "TT_VISUAL_DIVERSITY": "PASS",
+    "six_unique_compositions": true,
+    "no_duplicate_subjects_across_slots": true,
+    "cover_media_complement": {
+      "community_cover": "菜品+筷子近景",
+      "community_media": "市场过道广角纪实",
+      "distinct": true
+    }
+  },
+  "city_brand_identity_review": {
+    "result": "PASS",
+    "TT_CITY_BRAND_IDENTITY": "PASS",
+    "visual_language": "霓虹+暖食+夜市纪实",
+    "cultural_elements_kr_only": true,
+    "commercial_positioning": "美食体验+代购+官方地图+社区分享",
+    "distinct_vs_tokyo_kyoto": true
+  },
+  "consumer_experience_review": {
+    "result": "PASS",
+    "TT_CONSUMER_EXPERIENCE": "PASS",
+    "summary": "用户从 Feed(美食近景)→详情(市场过道)、Market(Guide/Provider/Acquisition)、Official Guide(48h 地图) 浏览时，感知为同一首尔美食生态而非素材堆砌。",
+    "feed_to_detail_continuity": true,
+    "market_surfaces_coherent": true,
+    "not_stock_wall": true,
+    "browse_attraction": true
+  },
+  "destination_authenticity": { "result": "PASS", "all_rows": 6, "country_isolation": "KR-only" },
+  "destination_experience": {
+    "result": "PASS",
+    "summary": "弘大/明洞/广藏深度美食路线完整可浏览"
+  },
+  "country_consistency": { "result": "PASS", "no_jp_cn_drift": true },
+  "cross_chain_vs_tokyo_kyoto": { "result": "PASS", "distinct": true },
+  "full_regression_18_rows": {
+    "pass": true,
+    "tokyo_photo_6": "stable",
+    "kyoto_culture_6": "stable",
+    "seoul_food_6": "closed"
+  },
+  "brand_consistency": {
+    "result": "PASS",
+    "g5_g9_g10_chain_pass": true
+  },
+  "surfaces_all_verified": [
+    "ocs-seoul-food-guide-avatar.jpg",
+    "ocs-seoul-food-provider-cover.jpg",
+    "ocs-seoul-food-acquisition-cover.jpg",
+    "ocs-seoul-food-official-guide-cover.jpg",
+    "ocs-seoul-food-community-cover.jpg",
+    "ocs-seoul-food-community-media.jpg"
+  ],
+  "production_readiness": {
+    "seoul_food_chain": "CLOSED",
+    "global_ocs_content_l5": "IN_PROGRESS",
+    "matrix_progress": "18/60 verified+pass",
+    "chains_closed": 3,
+    "next_matrix_row": 19,
+    "next_chain_id": "bangkok-temple",
+    "note": "seoul-food CLOSED；须完成剩余 42 行后四键 CLOSED。"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "schema_version": "1",
+  "run_id": "GO_phase2_testnet_20260526_R003_STAGING",
+  "title": "R-003 staging first full regression (A + B §2.0)",
+  "executor": "solo-maintainer@traveltrust.local",
+  "reviewer": "",
+  "started_at": "2026-06-30T05:02:25Z",
+  "finished_at": "2026-06-30T05:03:20Z",
+  "environment": {
+    "name": "staging",
+    "database": "enabled",
+    "chain_mode": "chain_off",
+    "auth_mode": "bearer"
+  },
+  "release_gate": "GO",
+  "release_gate_reason": "R-003 阶段 0→1→门禁→2：计划内 A+B 最低集 PASS；须 Release Owner 复核铁律① DB 写后读（ENV-DB-PROOF/notes.md）与会签。",
+  "summary": {
+    "PASS": 12,
+    "FAIL": 0,
+    "BLOCKED": 0,
+    "N_A": 0,
+    "NOT_RUN": 0
+  },
+  "cases": [
+    {
+      "id": "A-ENV-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/phase0",
+      "notes": "阶段0：GET /health 200；GET /meta 200 且含 build/chain 等键"
+    },
+    {
+      "id": "A-NEG-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/A-NEG-002",
+      "notes": "无会话 GET /api/v1/me → 401"
+    },
+    {
+      "id": "A-NEG-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/A-NEG-001",
+      "notes": "错误密码 → 401 invalid_credentials"
+    },
+    {
+      "id": "A-LOG-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/A-LOG-001",
+      "notes": "登录成功且 GET /api/v1/me 200"
+    },
+    {
+      "id": "A-ME-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/A-ME-001",
+      "notes": "GET /api/v1/me 字段与账号一致"
+    },
+    {
+      "id": "A-LOG-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/A-LOG-002",
+      "notes": "连续 GET /api/v1/me 200"
+    },
+    {
+      "id": "A-LOG-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/A-LOG-003",
+      "notes": "登出后原 token GET /me → 401（依赖服务端 delete_session）"
+    },
+    {
+      "id": "B-MKT-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/B-MKT-001",
+      "notes": "GET /api/v1/discover/orders 200"
+    },
+    {
+      "id": "B-GDE-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/B-GDE-001",
+      "notes": "GET guides 列表取 id + GET guides/:id 200（无 active 向导时 BLOCKED：需 SEED 或数据）"
+    },
+    {
+      "id": "B-ORD-001",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/B-ORD-001",
+      "notes": "POST /orders 200 且返回 order.id"
+    },
+    {
+      "id": "B-ORD-003",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/B-ORD-003",
+      "notes": "GET /orders/:id 200"
+    },
+    {
+      "id": "B-MSG-002",
+      "status": "PASS",
+      "evidence_path": "evidence/GO_phase2_testnet_20260526/B-MSG-002",
+      "notes": "POST+GET 订单消息；501→BLOCKED（可走 PARTIAL_GO）"
+    }
+  ]
+}

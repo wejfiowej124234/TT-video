@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_regression_review.v1",
+  "stamp_utc": "20260704T141530Z",
+  "trigger_row": 25,
+  "trigger_filename": "ocs-singapore-family-guide-avatar.jpg",
+  "rows_reviewed": 25,
+  "chains_closed": 4,
+  "chains_in_progress": 1,
+  "TT_GLOBAL_REGRESSION_REVIEW": "PASS",
+  "nine_class_all_pass": true,
+  "no_quality_regression": true,
+  "prior_rows_stable": {
+    "tokyo_photo_6": true,
+    "kyoto_culture_6": true,
+    "seoul_food_6": true,
+    "bangkok_temple_6": true
+  },
+  "gate_to_row26": "PASS"
+}

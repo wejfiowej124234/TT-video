@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://tt-api-staging.fly.dev/api/v1/me"
+  },
+  "response": {
+    "http_status": 401,
+    "body": {
+      "error": "unauthorized",
+      "message": "unauthorized",
+      "detail": "需登录：请提供 X-User-Id 或 Authorization"
+    }
+  }
+}

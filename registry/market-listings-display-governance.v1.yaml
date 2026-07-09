@@ -1,0 +1,56 @@
+# Provider + Acquisition · Market Listings Display Data Governance · SSOT
+# Runbook: docs/runbook/TT-MARKET-LISTINGS-DISPLAY-GOVERNANCE.md
+# Script: scripts/dev/run-market-listings-display-governance-audit.sh
+
+schema: traveltrust.market_listings_display_governance.v1
+version: 1
+effective_utc: "2026-07-02"
+
+machine_keys:
+  TT_MARKET_LISTINGS_DISPLAY_GOVERNANCE: CLOSED
+  TT_RELEASE_DECISION: NO_GO
+
+rerun_policy:
+  status: CLOSED_UNLESS_TOUCHED
+  evidence_reuse: registry/evidence-reuse-policy.v1.yaml#gates/MARKET_LISTINGS_DISPLAY_GOVERNANCE
+
+placement:
+  after: display_data_governance
+  after_production_release_review: true
+  respects_product_development_freeze: true
+  capstone_for_surfaces: [market_provider, market_acquisition]
+
+scripts:
+  audit: scripts/dev/market-listings-display-governance-audit.cjs
+  orchestrator: scripts/dev/run-market-listings-display-governance-audit.sh
+  browser: frontend/e2e/frontend-api-consistency-audit.spec.ts
+
+evidence_root: evidence/GO_market_listings_display_governance
+
+latest_run:
+  stamp: "20260703T013023Z"
+  api_deploy: deployment-01KWJS6GH9B1QMMGSKH238QTMY
+  ledger: evidence/GO_market_listings_display_governance/20260703T013023Z/ml-dg-audit.json
+  signoff: evidence/manual-uat/signoff/MARKET-LISTINGS-DISPLAY-GOVERNANCE-SIGNOFF-20260703T013023Z.md
+  provider_public_count: 1
+  acquisition_public_count: 0
+  smoke_listings_purged: 22
+  product_defects_open: 0
+  test_automation_issues_open: 0
+  enhancements_open: 1
+
+exit_criteria:
+  product_defects_open: 0
+  admin_public_parity: true
+  err_provider_acquisition_pass: true
+  v_market_provider_acquisition_pass: true
+
+issue_classifications:
+  - PRODUCT_DEFECT
+  - EXPECTED_DIFFERENCE
+  - ENHANCEMENT
+
+synthesizes:
+  - registry/display-data-governance.v1.yaml
+  - registry/production-release-review.v1.yaml
+  - registry/frontend-api-consistency-audit.v1.yaml

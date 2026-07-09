@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.pi3_003_stripe_live_closure.v1",
+  "stamp": "20260708T065521Z",
+  "verdict": "PI3-003_WAITING_OWNER_STRIPE",
+  "blocker": "TRAVELTRUST_STRIPE_SECRET_KEY missing or invalid",
+  "next_steps": [
+    "Owner: Stripe Dashboard → Live mode → API keys → sk_live_*",
+    "Owner: register webhook or copy whsec_*",
+    "Edit scripts/dev/.env.production.local (never commit)",
+    "bash scripts/dev/sync-fly-stripe-onboarding-secrets-prod.sh",
+    "PROD_API_BASE=https://tt-api-prod.fly.dev bash scripts/dev/register-stripe-live-webhook-prod.sh",
+    "PROD_API_BASE=https://tt-api-prod.fly.dev bash scripts/dev/smoke-stripe-live-webhook-prod.sh",
+    "bash scripts/dev/run-pi3-003-stripe-live-production-closure.sh"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "traveltrust.cms_city_hero_runtime_contract_evidence.v1",
+  "recorded_at_utc": "2026-07-07T12:32:51.974Z",
+  "version": "1.0.0",
+  "status": "CONTRACT_ONLY",
+  "TT_CMS_CITY_HERO_RUNTIME_CONTRACT": "CONTRACT_ONLY",
+  "contract_yaml": "data/catalog/city-hero-runtime-contract.v1.yaml",
+  "runbook": "docs/runbook/TT-CMS-CITY-HERO-RUNTIME-CONTRACT-V1.md",
+  "upstream_readonly": [
+    "docs/runbook/TT-CMS-P1-CONTENT-FAMILY-STANDARD.md",
+    "data/catalog/city-hero-brief.v1.yaml",
+    "data/catalog/city-hero-matrix.v1.yaml"
+  ],
+  "untouched": [
+    "registry",
+    "ownership_matrix",
+    "p1_standard"
+  ],
+  "api_read": {
+    "method": "GET",
+    "path": "/api/v1/catalog/media",
+    "query": {
+      "asset_kind": "city_hero",
+      "country_iso": "{ISO}",
+      "city_slug": "{slug}"
+    },
+    "implementation_status": "PLANNED"
+  },
+  "fallback_chain": [
+    "city_hero",
+    "landing_ambient_country",
+    "ts_static"
+  ],
+  "consumers": {
+    "home": "/",
+    "travel": "/traveltrust"
+  },
+  "verify_script_planned": "scripts/dev/run-cms-content-l5-city-hero-verify.cjs",
+  "evidence_schema": "traveltrust.cms_p1_family_verify.v1",
+  "wave1": {
+    "matrix_id": "CH-JP-TOKYO-001",
+    "asset_key": "city_hero_tokyo",
+    "fallback_key": "hero_japan",
+    "complete_key": "TT_CMS_CITY_HERO_WAVE1_TOKYO"
+  },
+  "forbidden": [
+    "admin",
+    "api_implementation",
+    "runtime_resolver",
+    "frontend",
+    "upload",
+    "registry_update",
+    "ownership_matrix_update"
+  ]
+}

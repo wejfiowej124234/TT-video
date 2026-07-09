@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T154500Z",
+  "filename": "ocs-dubai-luxury-official-guide-cover.jpg",
+  "row": 58,
+  "chain_id": "dubai-luxury",
+  "country_code": "AE",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "no_quality_regression_acknowledged": true,
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": ["brand_logos", "celebrity_portraits", "readable_trademarks"],
+    "safe_expression": "哈利法塔+沙漠双主题宽幅 · 非产品静物"
+  },
+  "checks": {
+    "manifest_full_field_alignment": { "pass": true, "notes": "迪拜沙漠与都市官方两日 · 沙漠活动与都市地标组合" },
+    "destination_authenticity_9dim_plan": { "pass": true, "notes": "desert+city contrast · Burj + dunes · AE" },
+    "country_consistency_ae_only": { "pass": true },
+    "official_guide_destination_plan": { "pass": true, "vs_rows55_57": "Official 宽幅 hero vs 肖像/晚宴/香氛" },
+    "surface_boundary_plan": { "pass": true },
+    "visual_sequence_plan": { "pass": true },
+    "nine_class_framework_frozen": true
+  }
+}

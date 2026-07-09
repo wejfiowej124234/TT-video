@@ -1,0 +1,141 @@
+# City Hero · Content Brief（Design SSOT · P1）
+# 实现前设计真源 · 不写 Admin/API/Runtime/Frontend
+# P1 Standard: docs/runbook/TT-CMS-P1-CONTENT-FAMILY-STANDARD.md (FROZEN v1.1.0)
+# Asset Matrix: data/catalog/city-hero-matrix.v1.yaml
+
+schema: traveltrust.cms_city_hero_brief.v1
+version: 1
+effective_utc: "2026-07-07"
+machine_key: TT_CMS_CITY_HERO_BRIEF
+status: DESIGN_SSOT
+phase: BRIEF_AND_MATRIX
+
+registry_module: city_hero
+asset_kind: city_hero
+asset_kind_verdict: CONFIRMED_RESERVED
+p1_standard: docs/runbook/TT-CMS-P1-CONTENT-FAMILY-STANDARD.md
+
+# ── 1 · 模块目标（Why） ─────────────────────────────────────────────
+
+goal_one_liner: >-
+  City Hero 为每个开放城市提供独立运营主视觉，不依赖 POI Hero，可由 CMS 独立发布与版本管理。
+
+not_same_as:
+  - poi_hero
+  - destination_ambient_hero
+  - landing_ambient
+
+scope:
+  countries: [JP, KR, TH, SG, FR, US, AU, ES, AE, CN]
+  cities_total: 38
+  cities_ssot: data/catalog/poi-hero-matrix.v1.yaml
+  rule: City Hero 分母与 POI Catalog Scope 城市集合一致 · 不扩国不缩城
+
+# ── 2 · Asset 约定 ─────────────────────────────────────────────────
+
+asset_key_convention: city_hero_{city_slug}
+city_slug_rule: city_en lowercase · spaces → underscore · 例 tokyo · san_francisco · xian
+
+fallback_key_convention: hero_{country_slug}
+country_slug_map:
+  JP: japan
+  KR: korea
+  TH: thailand
+  SG: singapore
+  FR: france
+  US: usa
+  AU: australia
+  ES: spain
+  AE: uae
+  CN: china
+
+fallback_runtime_rule: >-
+  若 catalog 无 city_hero_{city_slug} · Runtime 回退至 fallback_key 对应国家级 Hero Assets
+  （landing_ambient · country_iso）· 见 destination-ambient-hero-matrix.v1.yaml
+
+aspect_ratio: "16:9"
+technical_minimum:
+  min_width_px: 1920
+  min_height_px: 1080
+  hero_recommended: 3840x2160
+  min_bytes: 16384
+  formats: [JPEG, WebP]
+
+# ── 3 · 生命周期（与 P1 Standard 一致） ─────────────────────────────
+
+lifecycle:
+  - Draft
+  - Review
+  - Publish
+  - Catalog
+  - Runtime
+  - Consumer
+  - Verify
+  - Evidence
+  - Frozen
+
+pipeline: [Review, Replace, Publish, Verify, Evidence, Live]
+forbidden: [upload_direct_to_live, skip_verify, mark_pass_without_evidence]
+
+# ── 4 · Consumer Mapping（页面级 · 矩阵行见 consumer 列） ───────────
+
+consumer_pages:
+  - page: Home
+    uses_city_hero: true
+    note: 用户选择城市后 · 城市主视觉（非国家级 da-hero）
+  - page: Travel
+    uses_city_hero: true
+    note: 品牌/目的地叙事中的城市块
+  - page: Guide
+    uses_city_hero: false
+    note: 未来可开 · 须 Matrix 增行
+  - page: Market
+    uses_city_hero: false
+  - page: Community
+    uses_city_hero: false
+  - page: Provider
+    uses_city_hero: false
+  - page: Governance
+    uses_city_hero: false
+  - page: Me
+    uses_city_hero: false
+
+consumer_column_enum: [Home, Travel, "Home · Travel"]
+
+# ── 5 · L5 Exit ───────────────────────────────────────────────────
+
+l5_exit_ssot: docs/runbook/TT-CMS-P1-CONTENT-FAMILY-STANDARD.md
+l5_exit_section: "§8 · Frozen Exit Gate（六门）"
+l5_exit_rule: >-
+  不重复定义 · 模块 Frozen 须满足 P1 Standard 六门全 PASS · Catalog Ready · Runtime Ready ·
+  Consumer Ready · Verify PASS · Evidence PASS · L5 PASS
+
+# ── 实现前禁止（Brief 冻结期） ─────────────────────────────────────
+
+forbidden_until_brief_frozen:
+  - admin_ui
+  - api_schema_change
+  - catalog_ingest
+  - runtime_resolver
+  - frontend_wiring
+  - upload
+
+planned_ssot_after_implementation:
+  brief_merge_target: data/catalog/cms-content-brief.v1.yaml
+  admin_route_planned: /admin/content/city-hero
+  matrix_ssot: data/catalog/city-hero-matrix.v1.yaml
+  verify_script_planned: scripts/dev/run-cms-content-l5-city-hero-verify.cjs
+
+pilot_discipline:
+  wave_1:
+    matrix_id: CH-JP-TOKYO-001
+    city: 东京
+    purpose: 单行闭环验证 P1 Standard 模板
+  wave_2:
+    matrix_id: CH-KR-SEOUL-001
+    city: 首尔
+    purpose: 确认流程无需调整
+  scale_after: wave_1_and_2_complete
+
+evidence_script: scripts/dev/run-cms-city-hero-design-ssot.cjs
+latest_evidence: evidence/GO_cms_operation/CMS-CITY-HERO-BRIEF-LATEST.json

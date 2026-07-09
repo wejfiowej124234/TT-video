@@ -1,0 +1,128 @@
+{
+  "schema": "traveltrust.ocs_surface_expansion.staging_acceptance.v1",
+  "stamp": "20260704T073025Z",
+  "environment": "staging",
+  "api": "https://tt-api-staging.fly.dev",
+  "manifest": "data/official-cold-start/dataset.v1.json",
+  "state_path": "D:/TravelTrust-V1.1/evidence/GO_official_cold_start_dataset/ocs-surface-expansion-staging/20260704T073025Z/state.json",
+  "recorded_at": "2026-07-04T07:30:46.251Z",
+  "verdict": "FAIL",
+  "required_acceptance": [
+    "OCS_MANIFEST",
+    "OCS_SINGLE_SOURCE",
+    "OFFICIAL_IDENTITY",
+    "PUBLIC_OPERATIONS",
+    "SURFACE_CONSISTENCY",
+    "COMMUNITY_FEED",
+    "CAMPAIGN",
+    "DESTINATION",
+    "REVERSE_GOVERNANCE",
+    "MEDIA"
+  ],
+  "required_acceptance_count": 10,
+  "ocs_strict_legacy_media": true,
+  "machine_keys": {
+    "TT_OCS_SURFACE_EXPANSION": "READY_FOR_STAGING_VERIFICATION",
+    "TT_OFFICIAL_COLD_START_DATASET": "CLOSED_UNLESS_TOUCHED"
+  },
+  "acceptance_checks": [
+    {
+      "id": "OCS_MANIFEST",
+      "label": "10 community_post from OCS orchestrator (not SQL/seed)",
+      "ok": false,
+      "detail": "community_posts=0/10"
+    },
+    {
+      "id": "OCS_SINGLE_SOURCE",
+      "label": "Feed official content only from OCS manifest state map",
+      "ok": true,
+      "detail": "stray_official=0 leak=0 ocs_ids=0"
+    },
+    {
+      "id": "OFFICIAL_IDENTITY",
+      "label": "author_account_slug binds Official Account",
+      "ok": true,
+      "detail": "domain=@ocs.traveltrust.app"
+    },
+    {
+      "id": "SURFACE_CONSISTENCY",
+      "label": "Manifest surfaces/priority/campaign refs match Public Operations",
+      "ok": false,
+      "detail": "published_rows=0"
+    },
+    {
+      "id": "PUBLIC_OPERATIONS",
+      "label": "Publish / Unpublish / Priority / Featured / Surface",
+      "ok": false,
+      "detail": "probe=none"
+    },
+    {
+      "id": "COMMUNITY_FEED",
+      "label": "Feed official content from governed path",
+      "ok": false,
+      "detail": "ocs_on_feed=0/10 leak=0"
+    },
+    {
+      "id": "CAMPAIGN",
+      "label": "Campaign community_post refs without second source",
+      "ok": false,
+      "detail": "items=2"
+    },
+    {
+      "id": "DESTINATION",
+      "label": "destination_slug · explore · no Hub API",
+      "ok": false,
+      "detail": "catalog=api-aggregate-v1"
+    },
+    {
+      "id": "REVERSE_GOVERNANCE",
+      "label": "Unpublish hides Feed · Explore · Campaign",
+      "ok": false,
+      "detail": "{}"
+    },
+    {
+      "id": "MEDIA",
+      "label": "No Showcase / Sample / Legacy URLs (OCS_STRICT_LEGACY_MEDIA=1)",
+      "ok": true,
+      "detail": "strict=true scanned=55"
+    }
+  ],
+  "issues": [
+    {
+      "id": "OCS_MANIFEST",
+      "severity": "blocking",
+      "msg": "community_posts=0/10"
+    },
+    {
+      "id": "SURFACE_CONSISTENCY",
+      "severity": "blocking",
+      "msg": "published_rows=0"
+    },
+    {
+      "id": "PUBLIC_OPERATIONS",
+      "severity": "blocking",
+      "msg": "probe=none"
+    },
+    {
+      "id": "COMMUNITY_FEED",
+      "severity": "blocking",
+      "msg": "ocs_on_feed=0/10 leak=0"
+    },
+    {
+      "id": "CAMPAIGN",
+      "severity": "blocking",
+      "msg": "items=2"
+    },
+    {
+      "id": "DESTINATION",
+      "severity": "blocking",
+      "msg": "catalog=api-aggregate-v1"
+    },
+    {
+      "id": "REVERSE_GOVERNANCE",
+      "severity": "blocking",
+      "msg": "{}"
+    }
+  ],
+  "honest_boundary": "Staging VERIFIED ≠ G3-01 Production Network · Destination Hub API deferred post-G3"
+}

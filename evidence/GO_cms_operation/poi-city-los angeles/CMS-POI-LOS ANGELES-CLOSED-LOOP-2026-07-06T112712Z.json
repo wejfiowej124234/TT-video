@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T11:27:12Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "US",
+    "city_zh": "洛杉矶",
+    "city_en": "Los Angeles",
+    "matrix_ids": [
+      "PH-US-154-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-US-154-FOOD",
+      "legacy_value": "In-N-Out",
+      "poi_id": "5a1d8e5e-423a-43bc-b9ff-d4bd268ee47f",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-154-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

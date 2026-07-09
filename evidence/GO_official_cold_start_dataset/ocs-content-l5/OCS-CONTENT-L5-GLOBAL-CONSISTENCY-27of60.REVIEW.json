@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_consistency_review.v1",
+  "stamp_utc": "20260704T142530Z",
+  "matrix_rows_reviewed": 27,
+  "TT_GLOBAL_CONSISTENCY_REVIEW": "PASS",
+  "no_acquisition_product_duplication": true,
+  "no_brand_drift": true,
+  "gate_to_row28": "PASS"
+}

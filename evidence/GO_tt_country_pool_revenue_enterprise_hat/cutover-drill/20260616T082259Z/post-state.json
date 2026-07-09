@@ -1,0 +1,26 @@
+{
+  "ledger": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa",
+  "global_treasury": "0x904a6C4c6Aab698AfBF08EC6151D317c393520cC",
+  "govfreeze_v2_timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+  "global_treasury_v2_match": true,
+  "funding_source": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "latest_epoch_id": 1,
+  "bps_steward": 4500,
+  "bps_global": 5500,
+  "balances": {
+    "steward_vault": 0,
+    "unallocated_vault": 495000,
+    "global_treasury": 605000,
+    "ledger": 0
+  },
+  "epoch": {
+    "id": 1,
+    "status": 4,
+    "net_profit_prime": 1100000,
+    "split": {
+      "steward": 0,
+      "unallocated": 495000,
+      "global": 605000
+    }
+  }
+}

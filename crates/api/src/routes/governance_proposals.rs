@@ -88,8 +88,8 @@ impl ProposalsMvpStore {
         proposals.insert(
             id1,
             ProposalRecord {
-                title: "TT MVP: FeeRouter parameter calibration".to_string(),
-                body: "Chain-off governance demo proposal. Vote to signal support for aligning protocol-reference snapshots with runtime GET /meta (B-072 MVP)."
+                title: "Protocol params review: FeeRouter layer-1 allocation".to_string(),
+                body: "Community review of FeeRouter layer-1 allocation coefficients against the published protocol-reference snapshot. On-chain execution requires Governor vote, Timelock queue, and Production GO."
                     .to_string(),
                 status: "active".to_string(),
             },
@@ -97,8 +97,8 @@ impl ProposalsMvpStore {
         proposals.insert(
             id2,
             ProposalRecord {
-                title: "Treasury rotation (placeholder)".to_string(),
-                body: "Second demo entry for list/detail navigation and vote isolation tests."
+                title: "Treasury rotation: Global Treasury asset allocation".to_string(),
+                body: "Review of Global Treasury asset allocation and rotation policy. Opens for community signal before on-chain Governor approval and Timelock execution."
                     .to_string(),
                 status: "active".to_string(),
             },

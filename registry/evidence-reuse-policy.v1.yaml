@@ -1,0 +1,307 @@
+# TravelTrust · Evidence Reuse Policy · SSOT
+# Runbook: docs/runbook/TT-RELEASE-PIPELINE.md § Evidence Reuse Policy
+# Applies to all CLOSED graduation gates and capstone audits in the release pipeline.
+
+schema: traveltrust.evidence_reuse_policy.v1
+version: 2
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_EVIDENCE_REUSE_POLICY: ENFORCED
+  TT_EVIDENCE_REUSE_RUNBOOK: docs/runbook/TT-RELEASE-PIPELINE.md
+  TT_EVIDENCE_REUSE_RULE1: CLOSED_UNLESS_TOUCHED
+  TT_EVIDENCE_REUSE_RULE2: REUSE_EXISTING_EVIDENCE
+  TT_EVIDENCE_REUSE_RULE3: INCIDENT_OVERRIDE
+
+# ── Three-layer rules (priority: Rule 3 > Rule 1 triggers > Rule 2 default) ──
+
+rules:
+  rule_1:
+    id: CLOSED_UNLESS_TOUCHED
+    priority: default
+    summary: CLOSED gates are not re-executed unless a configured rerun trigger matches.
+  rule_2:
+    id: REUSE_EXISTING_EVIDENCE
+    priority: default_when_no_triggers
+    summary: >
+      If the gate is CLOSED and no rerun trigger (categories 1–4 below) has changed since
+      the latest evidence stamp, the existing evidence remains authoritative and the gate
+      must not be re-executed.
+  rule_3:
+    id: INCIDENT_OVERRIDE
+    priority: highest
+    summary: >
+      A CLOSED gate must be re-executed if a production incident, security event, critical
+      regression, or data integrity issue invalidates the previous evidence, regardless of
+      whether configured trigger paths changed.
+    requires:
+      - incident_record_or_signoff_note
+      - scope_gate_ids_affected
+      - new_evidence_stamp
+    invalidates_without_code_change: true
+
+principle: >
+  Default: do not re-run CLOSED gates — reuse existing evidence (Rule 2).
+  Re-run when any rerun trigger category matches since latest evidence (Rule 1).
+  Re-run when Rule 3 incident override applies, even with zero code diffs.
+
+decision_flow:
+  - id: CHECK_INCIDENT_OVERRIDE
+    priority: 1
+    action: >
+      If production incident, security event, critical regression, or data integrity issue
+      invalidates prior evidence → RE_EXECUTE_GATE (Rule 3) and record override reason.
+  - id: CHECK_GATE_CLOSED
+    priority: 2
+    action: Confirm gate status is CLOSED (or PASS for one-time graduation gates)
+  - id: CHECK_RERUN_TRIGGERS
+    priority: 3
+    action: Evaluate rerun trigger categories 1–4 against latest evidence stamp
+  - id: REUSE_EXISTING_EVIDENCE
+    priority: 4
+    when: gate_closed AND no_triggers_matched AND no_incident_override
+    action: Point Registry / Dashboard / Sign-off at latest evidence — do not re-run (Rule 2)
+  - id: RE_EXECUTE_GATE
+    priority: 5
+    when: any_trigger_matched OR incident_override
+    action: Re-run gate orchestrator, write new evidence, update sign-off
+
+# ── Rerun trigger categories (explicit — avoid ambiguous "runtime config") ──
+
+rerun_trigger_categories:
+  "1_code_paths":
+    label: Code path changes
+    field: rerun_when_paths_change
+    description: >
+      Files or globs listed per gate, plus shared audit scripts, gates, and gate registries.
+    detection: git diff since latest evidence stamp against gate path list
+  "2_deployment":
+    label: Deployment changes
+    description: New staging or production deployment invalidates browser/API evidence tied to deploy ids.
+    staging:
+      - staging_api_deploy_id
+      - staging_web_deploy_id
+    production:
+      - production_api_deploy_id
+      - production_web_deploy_id
+    detection: compare fly release / deploy id recorded in latest evidence vs current live deploy
+  "3_runtime_configuration":
+    label: Runtime configuration changes
+    description: >
+      Secrets, environment variables, and feature flags that affect public surfaces, seed
+      behaviour, or gate outcomes — not generic infra noise.
+    env_vars:
+      - TRAVELTRUST_SEED_MULTI_DEMO_PUBLIC_MARKET
+      - TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET
+      - TRAVELTRUST_MARKET_PUBLIC_SHOWCASE
+      - TRAVELTRUST_MANUAL_ACCEPTANCE
+      - TRAVELTRUST_SHOW_TEST_DATA
+    secrets_and_flags:
+      - fly secrets diff affecting API/WEB staging or production apps
+      - feature flags toggling public catalog, admin RBAC, or seed paths
+    detection: compare env/secrets snapshot in latest evidence vs current deployment config
+  "4_data_model_and_contract":
+    label: Data model or contract changes
+    description: >
+      API schema, response shapes, data_origin, public_catalog_only filters, migrations, or
+      OpenAPI/contract tests that change what "PASS" means for the gate.
+    paths:
+      - crates/api/migrations/**
+      - crates/api/src/db/public_catalog_surface.rs
+      - crates/api/src/db/market_listings.rs
+      - frontend/lib/apiClient/**
+      - registry/*contract*
+      - docs/spec/*API*
+    keywords:
+      - data_origin
+      - public_catalog_only
+      - display_origin
+      - display_status
+    detection: git diff on paths/keywords since latest evidence stamp
+
+incident_override:
+  applies_to: all CLOSED gates in this registry
+  triggers:
+    - production_incident
+    - security_event
+    - critical_regression
+    - data_integrity_issue
+    - evidence_proven_stale_by_ops_review
+  action: RE_EXECUTE_GATE
+  documentation:
+    - evidence/manual-uat/signoff/<GATE>-INCIDENT-OVERRIDE-<UTC>.md
+    - link incident ticket or postmortem id in sign-off body
+  note: >
+    Rule 3 overrides Rule 2 even when categories 1–4 show no diff. Do not use Rule 3 for
+    routine release hygiene — use configured triggers instead.
+
+gates:
+  RELEASE_CANDIDATE:
+    rerun_policy: CLOSED_UNLESS_TOUCHED
+    aliases: [RC, PRR, FTAE, EFA]
+    registry:
+      - registry/production-release-review.v1.yaml
+      - registry/full-test-account-e2e.v1.yaml
+      - registry/enterprise-final-acceptance.v1.yaml
+    latest_evidence:
+      prr: evidence/GO_production_release_review/20260702T114024Z/
+      ftae: evidence/GO_full_test_account_e2e/20260702T114733Z/
+      efa: evidence/GO_enterprise_final_acceptance/20260702T144513Z/
+      rc_signoff: evidence/manual-uat/signoff/RELEASE-CANDIDATE-SIGNOFF-20260702T144513Z.md
+    recorded_deploy:
+      staging_web: deployment-01KWH932M1RT388ZQ6QHQ8SK2A
+      staging_api: deployment-01KWH6XESXJG093YWFHRQC5NED
+    rerun_when_paths_change:
+      - scripts/dev/run-production-release-review.sh
+      - scripts/dev/gen-production-release-review-ledger.cjs
+      - scripts/dev/business-domain-validation-probes.cjs
+      - scripts/dev/business-manual-uat-probes.cjs
+      - frontend/e2e/business-domain-validation.spec.ts
+      - frontend/e2e/enterprise-release-review.spec.ts
+      - scripts/dev/run-full-test-account-e2e-validation.sh
+      - scripts/dev/run-enterprise-final-acceptance-audit.sh
+      - scripts/dev/gen-enterprise-acceptance-ledger.cjs
+      - registry/production-release-review.v1.yaml
+      - registry/full-test-account-e2e.v1.yaml
+      - registry/enterprise-final-acceptance.v1.yaml
+
+  PHASE12_FINAL_CONVERGENCE:
+    rerun_policy: CLOSED_UNLESS_TOUCHED
+    registry: registry/phase12-final-convergence.v1.yaml
+    latest_evidence: evidence/GO_phase12_final_convergence/20260702T023014Z/
+    signoff: evidence/manual-uat/signoff/PHASE12-FINAL-CONVERGENCE-SIGNOFF-20260702T023014Z.md
+    rerun_when_paths_change:
+      - scripts/dev/run-phase12-final-convergence-review.sh
+      - scripts/dev/gen-phase12-final-convergence-ledger.cjs
+      - scripts/gates/check-phase12-final-convergence-ssot.sh
+      - registry/phase12-final-convergence.v1.yaml
+      - registry/evidence-reuse-policy.v1.yaml#gates/RELEASE_CANDIDATE
+      - registry/evidence-reuse-policy.v1.yaml#gates/ADMIN_40_40
+      - registry/evidence-reuse-policy.v1.yaml#gates/MARKET_LISTINGS_DISPLAY_GOVERNANCE
+      - registry/evidence-reuse-policy.v1.yaml#gates/STAGING_FULL_SITE_DDG
+
+  MARKET_LISTINGS_DISPLAY_GOVERNANCE:
+    rerun_policy: CLOSED_UNLESS_TOUCHED
+    registry: registry/market-listings-display-governance.v1.yaml
+    latest_evidence: evidence/GO_market_listings_display_governance/20260703T013023Z/
+    signoff: evidence/manual-uat/signoff/MARKET-LISTINGS-DISPLAY-GOVERNANCE-SIGNOFF-20260703T013023Z.md
+    recorded_deploy:
+      staging_api: deployment-01KWJS6GH9B1QMMGSKH238QTMY
+    rerun_when_paths_change:
+      - scripts/dev/market-listings-display-governance-audit.cjs
+      - scripts/dev/run-market-listings-display-governance-audit.sh
+      - crates/api/src/db/market_listings.rs
+      - crates/api/src/routes/market_subsite.rs
+      - crates/api/src/routes/market_subsite_list_query.rs
+      - crates/api/src/chain_off/market_public_surface.rs
+      - scripts/dev/lib/smoke-data-heuristics.cjs
+      - registry/market-listings-display-governance.v1.yaml
+
+  STAGING_FULL_SITE_DDG:
+    rerun_policy: CLOSED_UNLESS_TOUCHED
+    registry: registry/display-data-governance.v1.yaml#staging_full_site_scan
+    latest_evidence: evidence/GO_staging_full_site_display_governance/20260703T033727Z/
+    signoff: evidence/manual-uat/signoff/STAGING-FULL-SITE-DDG-SIGNOFF-20260703T033727Z.md
+    recorded_deploy:
+      staging_api: deployment-01KWJWDV3PKE00RVJ19E265NZZ
+    rerun_when_paths_change:
+      - scripts/dev/run-staging-full-site-display-governance.sh
+      - scripts/dev/staging-full-site-display-governance-audit.cjs
+      - scripts/dev/purge-staging-smoke-display-data.cjs
+      - scripts/dev/display-data-governance-run.cjs
+      - scripts/dev/seed-staging-showcase-market-listings.cjs
+      - scripts/dev/lib/smoke-data-heuristics.cjs
+      - crates/api/src/db/public_catalog_surface.rs
+      - crates/api/src/db/market_listings.rs
+      - crates/api/src/chain_off/market_public_surface.rs
+      - crates/api/src/chain_off/community_public_surface.rs
+      - crates/api/src/chain_off/guides.rs
+      - crates/api/src/chain_off/discover.rs
+      - crates/api/src/db/seed_market_public_showcase.rs
+      - crates/api/migrations/*data_origin*
+      - crates/api/migrations/*smoke*
+      - crates/api/migrations/*probe*
+    note: >
+      OCS apply/orchestrator paths are owned by OFFICIAL_COLD_START_DATASET gate.
+      Re-run DDG after OCS re-execute (documented on OCS gate on_reexecute_also_run).
+
+  OFFICIAL_COLD_START_DATASET:
+    rerun_policy: CLOSED_UNLESS_TOUCHED
+    aliases: [OCS, TT_OFFICIAL_COLD_START_DATASET]
+    registry: registry/official-cold-start-dataset.v1.yaml
+    latest_evidence: evidence/GO_official_cold_start_dataset/20260703T044855Z/
+    signoff: evidence/manual-uat/signoff/OCS-PHASE1-SIGNOFF-20260703T044855Z.md
+    recorded_deploy:
+      staging_api: deployment-01KWK533SGKGS5PBAVB6NMTKN0
+    baseline_frozen: true
+    role: production_official_content_baseline
+    rerun_when_paths_change:
+      # manifest modification
+      - data/official-cold-start/**
+      - registry/official-cold-start-dataset.v1.yaml
+      # orchestrator / validation
+      - scripts/dev/run-official-cold-start-dataset.cjs
+      - scripts/dev/run-official-cold-start-dataset.sh
+      - scripts/dev/validate-official-cold-start-dataset.cjs
+      - scripts/dev/audit-official-cold-start-dataset-l5.cjs
+      - scripts/dev/audit-official-cold-start-baseline-readiness.cjs
+      - scripts/dev/lib/official-cold-start-admin-client.cjs
+      # campaign structure modification
+      - crates/api/migrations/*cold_start*
+      - crates/api/migrations/*ops_cold_start*
+      - crates/api/src/db/ops_cold_start_campaigns_admin.rs
+      - crates/api/src/db/ops_cold_start_campaigns_consumer.rs
+      - crates/api/src/db/public_operations_campaigns.rs
+      - crates/api/src/routes/admin/admin_cold_start_http.rs
+      - crates/api/src/routes/admin/admin_official_public_operations_campaigns_http.rs
+      # official account model modification
+      - crates/api/migrations/*official_account*
+      - crates/api/migrations/*ops_official*
+      - crates/api/src/db/ops_official_accounts_admin.rs
+      - crates/api/src/routes/admin/admin_official_accounts_http.rs
+      # public surface modification
+      - crates/api/src/db/public_operations_display_admin.rs
+      - crates/api/src/db/public_operations_display_history.rs
+      - crates/api/src/db/public_catalog_surface.rs
+      - registry/display-data-governance.v1.yaml
+      # data_origin modification
+      - crates/api/migrations/*data_origin*
+      - crates/api/src/db/market_listings.rs
+      - crates/api/src/chain_off/market_public_surface.rs
+      # official ops API modification
+      - crates/api/src/routes/admin/admin_official_public_operations_http.rs
+      - crates/api/src/routes/admin/admin_official_guides_http.rs
+      - crates/api/src/routes/official/**
+      - docs/runbook/TT-OFFICIAL-OPS-PUBLIC-OPERATIONS-SSOT.md
+    on_reexecute_also_run:
+      - scripts/dev/staging-full-site-display-governance-audit.cjs
+    do_not_reexecute_when:
+      - routine_production_release
+      - pi3_infrastructure_only_changes
+      - staging_api_redeploy_without_ocs_path_diff
+    note: >
+      Official ops baseline — do not regenerate unless a trigger path changes or
+      Rule 3 incident override applies. Validation-only re-check is allowed without
+      full apply when evidence stamp is unchanged and ops confirms no drift.
+
+  ADMIN_40_40:
+    rerun_policy: CLOSED_UNLESS_TOUCHED
+    registry: registry/admin-functional-usability-audit.v1.yaml
+    latest_evidence: evidence/GO_admin_platform_40_complete/20260701T180425Z/
+    signoff: evidence/manual-uat/signoff/PHASE2-ADMIN-FINAL-VALIDATION-SIGNOFF-20260702.md
+    rerun_when_paths_change:
+      - scripts/gates/run-admin-platform-40-verification.sh
+      - scripts/dev/run-admin-l5-green.sh
+      - frontend/app/admin/**
+      - crates/api/src/routes/admin/**
+      - registry/admin-functional-usability-audit.v1.yaml
+      - registry/admin-four-centers-enterprise-audit.v1.yaml
+
+still_every_release:
+  description: Gates that remain mandatory per Production release (not CLOSED_UNLESS_TOUCHED)
+  gates:
+    - FRONTEND_API_CONSISTENCY_AUDIT
+    - DISPLAY_DATA_GOVERNANCE
+    - BUSINESS_MANUAL_UAT
+    - PRODUCTION_INFRASTRUCTURE
+    - PRODUCTION_GO

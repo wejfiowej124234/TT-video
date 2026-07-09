@@ -7,13 +7,31 @@
 # 对拍：bash scripts/gates/check-protocol-quote-parity.sh
 
 schema_version: "1"
-updated: "2026-06-16T05:45:55Z"
+updated: "2026-07-09T03:30:00Z"
 
+# WEB3_PROTOCOL_VERSION — numeric SSOT lives in protocol-ssot.v1.yaml (not this file).
 protocol_ssot:
-  version: "1.0.1"
+  version: "1.0.3"
   md_ref: docs/spec/governance-token/protocol-ssot.v1.md
   yaml_ref: docs/spec/governance-token/protocol-ssot.v1.yaml
-  content_sha256: "cd114ba2bb1f25de83e879db5babeb100b7235da9472239a09d86072533bc4fc"
+  content_sha256: "3d1daf94ac346c4e7cb169c2cb51f7b7098640f286fb97c7fa071f12cefba616"
+  master_matrix: registry/traveltrust-web3-protocol-master-matrix.v1.yaml
+
+# Treasury naming (P0-02): never use bare TREASURY_ADDRESS without documenting which treasury.
+treasury_semantics:
+  governance_treasury_p4cap:
+    contract: GovernanceTreasuryP4Cap
+    env_primary: GOVERNANCE_TREASURY_P4CAP_ADDRESS
+    env_aliases: [TREASURY_P4_CAP_ADDRESS]
+    registry_key: treasury_p4_cap_address
+    status: ACTIVE
+  legacy_treasury:
+    contract: GovernanceTreasury
+    env_primary: LEGACY_TREASURY_ADDRESS
+    deprecated_env: TREASURY_ADDRESS
+    registry_key: legacy_treasury_address
+    status: deprecated
+    note: FeeRouter globalOps leg · pre-GovFreeze fund stack only
 
 # 控制面 env（R-02 · 与 contracts/script/Phase2ControlPlane.sol 同源）
 control_plane_env:
@@ -40,6 +58,15 @@ contracts:
     source: contracts/src/EscrowFactory.sol
     deploy_script: contracts/script/DeployFundStackUnderTimelock.s.sol
     env_address_key: ESCROW_FACTORY_ADDRESS
+    mainnet_deploy: FORBIDDEN
+    note: Sepolia/testnet legacy only — PG-P0-ESC · registry/escrow-bilateral-mainnet-policy.v1.yaml
+  EscrowFactoryV2:
+    source: contracts/src/EscrowFactoryV2.sol
+    deploy_script: contracts/script/DeployEscrowFactoryV2.s.sol
+    env_address_key: ESCROW_FACTORY_V2_ADDRESS
+    registry_key: escrow_factory_v2_address
+    mainnet_path: REQUIRED
+    note: Bilateral Confirmation Settlement Model — mainnet new orders only via V2
   FeeRouter:
     source: contracts/src/FeeRouter.sol
     deploy_script: contracts/script/DeployFundStackUnderTimelock.s.sol
@@ -96,6 +123,13 @@ environments:
       region_steward_stake_pool_address: "0x3a89378bfad12d1028707dd37055294854c8784e"
       country_pool_redemption_epoch_cn_address: "0x712050e4b1517C3f3ab39B32Cabb70CC0E1C0829"
       country_pool_ledger_pilot_address: "0x63bd7d5ee5c5dde707e5e65303f3876267c78e97"
+      region_vault_address: "0x2Ea061d50393c09af2f607Ee9f89679642A3a65B"
+      legacy_treasury_address: "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be"
+      reserve_vault_address: "0xbC541FAf26e139eF1f0AC22b52c4b4F85FFF7855"
+      guide_staking_pool_address: "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f"
+      provider_staking_pool_address: "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075"
+      registry_address: "0xc50913e154f850583D0afbE9158a75E0e2167AAb"
+      fund_stack_token_address: "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
     env_to_registry:
       GOVERNANCE_TOKEN_ADDRESS: governance_token_address
       GOVERNOR_ADDRESS: governor_address
@@ -105,8 +139,18 @@ environments:
       REGION_STEWARD_STAKE_POOL_ADDRESS: region_steward_stake_pool_address
       COUNTRY_POOL_REDEMPTION_EPOCH_CN_ADDRESS: country_pool_redemption_epoch_cn_address
       COUNTRY_POOL_LEDGER_PILOT_ADDRESS: country_pool_ledger_pilot_address
+      GOVERNANCE_TREASURY_P4CAP_ADDRESS: treasury_p4_cap_address
+      LEGACY_TREASURY_ADDRESS: legacy_treasury_address
+      REGION_VAULT_ADDRESS: region_vault_address
+      RESERVE_VAULT_ADDRESS: reserve_vault_address
+      GUIDE_STAKING_POOL_ADDRESS: guide_staking_pool_address
+      PROVIDER_STAKING_POOL_ADDRESS: provider_staking_pool_address
+      REGISTRY_ADDRESS: registry_address
+      FUND_STACK_TOKEN_ADDRESS: fund_stack_token_address
+      # ESCROW_FACTORY_V2_ADDRESS: escrow_factory_v2_address — populate after Sepolia V2 broadcast
     notes: |
       部署后填 addresses.* 并同步根 .env · 禁止在 R-01/R-02/R-03 未清零前 broadcast。
+      escrow_factory_v2_address: PENDING — Sepolia prod still V1 factory · merge after phase2-sepolia-broadcast-escrow-factory-v2.sh
       见 docs/runbook/TT-PHASE2-CHAIN-DEPLOYMENT-GATE.md
 
 
@@ -136,9 +180,75 @@ environments:
       seat_registry_address: "0xc99776e980d33f1857d5bb9a57b35ab7669aad1f"
       region_steward_stake_pool_proxy_address: "0x3a89378bfad12d1028707dd37055294854c8784e"
       governance_token_address: "0x2837ea0c50e27d59b88af617abbb231a040062c5"
-      country_pool_net_profit_ledger_address: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+      country_pool_net_profit_ledger_address: "0x738D2c133d5F90c13eE9907386136471E1f330f5"
+      country_pool_steward_path_vault_address: "0xaB6c15Ebcae78606E0AE5663d831E09e05af32FA"
+      country_pool_unallocated_steward_vault_address: "0xb7d0Ea9579F80B2090195d49a44941d5546554E9"
+      country_pool_net_profit_settlement_token_address: "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
+    env_to_registry:
+      GOVERNANCE_TREASURY_P4CAP_ADDRESS: treasury_p4_cap_address
+      COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS: country_pool_net_profit_ledger_address
+      COUNTRY_POOL_STEWARD_PATH_VAULT_ADDRESS: country_pool_steward_path_vault_address
+      UNALLOCATED_STEWARD_PATH_VAULT_ADDRESS: country_pool_unallocated_steward_vault_address
+      COUNTRY_POOL_NET_PROFIT_SETTLEMENT_TOKEN_ADDRESS: country_pool_net_profit_settlement_token_address
     notes: |
       G24-CLEAN-BASELINE-01 · 全新 Timelock+Proxy · 10国 Stake init · allow×5 · ② Sepolia only
+      D-4555-B DE triplet + settlement token · config/jurisdiction_country_pool_net_profit.sepolia.json
+    settlement_de_d4555_b:
+      jurisdiction: DE
+      network: sepolia
+      chain_id: 11155111
+      settlement_token_address: "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
+      owner_timelock_address: "0x904a6C4c6aab698afbf08ec6151d317c393520cc"
+      owner_note: "W7 Vacancy V1 triplet · V2 Governance Timelock owner"
+      legacy_qf01:
+        country_pool_net_profit_ledger: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+        steward_path_vault: "0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb"
+        unallocated_steward_path_vault: "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0"
+        owner_timelock_address: "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
+        status: LEGACY_READ_ONLY
+      country_pool_net_profit_ledger:
+        address: "0x738D2c133d5F90c13eE9907386136471E1f330f5"
+        implementation_codehash: "0x5f8050acd36cbc556dd8bccd4d5d5ff81fd8c3325262915cc73edb986828f092"
+      steward_path_vault:
+        address: "0xaB6c15Ebcae78606E0AE5663d831E09e05af32FA"
+        implementation_codehash: "0xd7f83b453c463eae75f2901a79a0315acc15da84e3f04e08f4255fd9822f277d"
+      unallocated_steward_path_vault:
+        address: "0xb7d0Ea9579F80B2090195d49a44941d5546554E9"
+        implementation_codehash: "0x48774c1c47707f31698ea1837c3778eeadedfe96819ddc4d6627c8ecf9626670"
+        vacancy:
+          version: V1
+          protocol_gate: VACANCY_LEDGER_V1_PROTOCOL_COMPLETE
+          runtime_deployment_status: ACTIVE
+          runtime_stack: Vacancy_V1
+          runtime_status_ssot: registry/vacancy-v1-runtime-deployment-status.v1.yaml
+          readiness_gate: VACANCY_DEPLOYMENT_READINESS
+          w7_milestone: VACANCY_LEDGER_V1_SEPOLIA_RUNTIME_ACTIVE_PASS
+  proxy_implementations:
+    verified_utc: "2026-07-09"
+    read_method: "cast call implementation() / admin()"
+    upgrade_admin_address: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    upgrade_path: "Governor → Timelock.schedule → Timelock.execute → upgradeTo"
+    entries:
+      governor:
+        proxy: "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+        implementation: "0x91C479a93dA2B4D78C03EeE03Db9A5AD65d09968"
+        implementation_codehash: "0x161ed77be8a8fa8701a385ea36ca2a547d0563e3b78eadfca81f17773eb26fe9"
+      treasury_p4_cap:
+        proxy: "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+        implementation: "0xeb2542f912215d1cA46394360a854b32586b8303"
+        implementation_codehash: "0x84d2b5dd2fae145c1823d7d0f17ffce6b17ff3f385159b5086a38296deb7fe24"
+      primary_market:
+        proxy: "0x7af15f98622b9282298ca3070a698ca4a96a4016"
+        implementation: "0x94F23511fe808efdc2DDA5b98dCE34c513644F12"
+        implementation_codehash: "0x6c121d6f2a53188e0092ea132945acb571e4304acc5e4ad15c1d78834ce5b9a9"
+      seat_registry:
+        proxy: "0xc99776e980d33f1857d5bb9a57b35ab7669aad1f"
+        implementation: "0xa6326194358C0D8dd22950Ffe8071C7BE1d21e9D"
+        implementation_codehash: "0x3b87c97ee0457cf0e435da71f60c8d1ab8b7accfc76037623539ae0459c42be1"
+      region_steward_stake_pool:
+        proxy: "0x3a89378bfad12d1028707dd37055294854c8784e"
+        implementation: "0x7e9B940302E3aEf8e880F49BDe88247A2721ac2f"
+        implementation_codehash: "0xef2101114610e8250467852b4833dc9521a1a72b9e3406385a909a4779a10814"
   testnet_template:
     chain_id: null
     region_steward_stake_pool_address: null

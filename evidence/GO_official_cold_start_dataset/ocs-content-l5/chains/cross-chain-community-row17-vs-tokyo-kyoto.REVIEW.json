@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T132930Z",
+  "row": 17,
+  "filename": "ocs-seoul-food-community-cover.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "community_cover_comparison": {
+    "tokyo-photo": "涩谷/街景摄影生活瞬间",
+    "kyoto-culture": "茶道奉茶手势 intimate 瞬间",
+    "seoul-food": "广藏市场 tteokbokki+筷子 美食分享近景",
+    "distinct_moments": true
+  },
+  "homogenization_risk": false
+}

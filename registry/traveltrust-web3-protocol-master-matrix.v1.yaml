@@ -1,0 +1,594 @@
+# TravelTrust Web3 Protocol Master Matrix v1 — machine SSOT (post Master Audit v1)
+# Human audit: docs/spec/governance-token/traveltrust-web3-protocol-master-audit-report-v1.md
+# Human matrix (legacy): docs/spec/governance-token/traveltrust-web3-protocol-master-matrix-v1.md
+# Convergence gate: bash scripts/gates/check-web3-protocol-master-matrix-gate.sh
+
+schema: traveltrust.web3_protocol_master_matrix.v1
+version: "2.0.0-audit"
+effective_utc: "2026-07-09"
+audit_id: WEB3_PROTOCOL_MASTER_AUDIT_V1
+audit_report: docs/spec/governance-token/traveltrust-web3-protocol-master-audit-report-v1.md
+active_deploy_baseline: gov_freeze_v2_clean_baseline
+chain_id: 11155111
+network: sepolia
+
+audit_gate:
+  gate_id: WEB3_PROTOCOL_MASTER_AUDIT_GATE
+  result: WARN
+  sprint: W5
+  next_sprint: PHASE2_5_WEB3_HARDENING
+  generated_utc: "2026-07-09"
+  drift_report: docs/spec/governance-token/traveltrust-web3-protocol-drift-report-v1.md
+  rationale: >
+    Post-W7: Vacancy V1 Sepolia runtime ACTIVE — full testnet maturity loop complete.
+    Phase② WARN is NOT Vacancy — only treasury env/API naming drift (W3-AUDIT-001..003).
+    EscrowFactory V2 is FUTURE_MAINNET_REQUIRED by design, not a Sepolia omission.
+  drift_summary:
+    high: 3
+    medium: 6
+    low: 7
+    info: 2
+    total: 18
+    resolved: [W3-AUDIT-005]
+
+phase2_runtime_closeout:
+  gate_id: PHASE2_WEB3_RUNTIME_ALIGNMENT
+  result: PASS
+  milestone: TT_PHASE2_WEB3_RUNTIME_READY
+  vacancy_track: PASS
+  vacancy_milestone: VACANCY_LEDGER_V1_SEPOLIA_RUNTIME_ACTIVE_PASS
+  warn_drivers: []
+  excluded_from_warn:
+    - EscrowFactory_V2_FUTURE_MAINNET_REQUIRED
+  next: PHASE3_MAINNET_PREPARATION
+  phase2_5_hardening: COMPLETE
+  phase3_mainnet: NOT_STARTED
+
+web3_runtime_status:
+  title: TravelTrust Web3 Runtime Status
+  network: sepolia
+  as_of_utc: "2026-07-09"
+  token:
+    protocol: COMPLETE
+    deployment: VERIFIED
+    runtime: ACTIVE
+  governance:
+    governor_v2: COMPLETE
+    timelock: ACTIVE
+    proxy_upgrade: READY
+  treasury:
+    protocol: COMPLETE
+    runtime: ACTIVE
+    on_chain_sink: GOVERNANCE_TREASURY_P4CAP
+    naming_cleanup: COMPLETE
+    drift_ids: []
+    risk_class: off_chain_config_governance
+    funds_safe: true
+  settlement:
+    ledger: COMPLETE
+    country_pool: ACTIVE
+    vacancy: ACTIVE
+    mainnet_migration: PENDING
+  escrow:
+    v1: ACTIVE
+    v2: FUTURE_MAINNET_REQUIRED
+  indexer:
+    status: LIVE_READY
+    vacancy_reconcile_live: true
+  dashboard:
+    transparency: READY
+    governance_vacancy_ui: PASS
+    ops_console: PASS
+
+status_model:
+  protocol_status: [COMPLETE, IN_PROGRESS, DEPRECATED]
+  deployment_status: [NOT_DEPLOYED, DEPLOYED, VERIFIED, FUTURE_MAINNET_REQUIRED]
+  runtime_status: [ACTIVE, LEGACY, PENDING_UPGRADE, FUTURE_MAINNET_REQUIRED, UNKNOWN]
+  audit_verdict: [PASS, CHECK, DRIFT, PENDING]
+
+web3_protocol_version:
+  source: docs/spec/governance-token/protocol-ssot.v1.yaml
+  field: version
+  current: "1.0.3"
+  content_sha256: "3d1daf94ac346c4e7cb169c2cb51f7b7098640f286fb97c7fa071f12cefba616"
+
+ssot_refs:
+  protocol_numerics_md: docs/spec/governance-token/protocol-ssot.v1.md
+  protocol_numerics_yaml: docs/spec/governance-token/protocol-ssot.v1.yaml
+  tokenomics_freeze: docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md
+  governance_baseline_freeze: docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md
+  fund_flow: docs/spec/governance-token/fund-flow-ssot.v1.md
+  accounting_spec: docs/spec/governance-token/country-pool-net-profit-accounting-spec-v1.md
+  deploy_registry: registry/protocol-convergence-deployments.v1.yaml
+  proxy_posture: registry/g24-p-upgrade-01-contract-posture.v1.yaml
+  system_map: registry/web3-system-master-map.v1.yaml
+  env_catalog_w2: registry/env-key-catalog-web3.v1.yaml
+  vacancy_pcm: docs/spec/governance-token/protocol-conformance-matrix-vacancy-ledger-v1.md
+  vacancy_runtime: registry/vacancy-v1-runtime-deployment-status.v1.yaml
+  api_build_health: registry/api-build-health.v1.yaml
+  jurisdiction_de: config/jurisdiction_country_pool_net_profit.sepolia.json
+
+module_inventory:
+  - module: TTG Token
+    protocol_version: V1
+    chain_runtime: V1
+    protocol_status: COMPLETE
+    deployment_status: VERIFIED
+    runtime_status: ACTIVE
+    verdict: PASS
+    sepolia_address: "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+  - module: Governor
+    protocol_version: V2
+    chain_runtime: V2
+    protocol_status: COMPLETE
+    deployment_status: VERIFIED
+    runtime_status: ACTIVE
+    verdict: PASS
+    proxy: "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+  - module: Timelock V2
+    protocol_version: V2
+    chain_runtime: V2
+    protocol_status: COMPLETE
+    deployment_status: VERIFIED
+    runtime_status: ACTIVE
+    verdict: PASS
+    address: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+  - module: Treasury P4Cap
+    protocol_version: V2
+    chain_runtime: V2
+    protocol_status: COMPLETE
+    deployment_status: VERIFIED
+    runtime_status: ACTIVE
+    verdict: CHECK
+    note: env/API naming drift W3-AUDIT-001～002
+    proxy: "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+  - module: Treasury Legacy
+    protocol_version: Fund-stack V1
+    chain_runtime: V1
+    protocol_status: DEPRECATED
+    deployment_status: VERIFIED
+    runtime_status: LEGACY
+    verdict: PASS
+    note: FeeRouter 15% leg only · not Primary Market sink
+    address: "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be"
+  - module: Primary Market
+    protocol_version: V1
+    chain_runtime: V2 proxy
+    protocol_status: COMPLETE
+    deployment_status: VERIFIED
+    runtime_status: ACTIVE
+    verdict: CHECK
+    note: UI deferred · ops not exercised
+    proxy: "0x7af15f98622b9282298ca3070a698ca4a96a4016"
+  - module: Seat Registry
+    protocol_version: V2
+    chain_runtime: V2
+    protocol_status: COMPLETE
+    deployment_status: VERIFIED
+    runtime_status: ACTIVE
+    verdict: PASS
+  - module: Steward Stake Pool
+    protocol_version: V2
+    chain_runtime: V2
+    protocol_status: COMPLETE
+    deployment_status: VERIFIED
+    runtime_status: ACTIVE
+    verdict: PASS
+  - module: Escrow V1
+    protocol_version: V1
+    chain_runtime: V1
+    protocol_status: COMPLETE
+    deployment_status: VERIFIED
+    runtime_status: ACTIVE
+    verdict: PASS
+    factory: "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
+  - module: Escrow V2
+    protocol_version: V2
+    chain_runtime: null
+    protocol_status: COMPLETE
+    deployment_status: DEPLOYMENT_PREPARATION_READY
+    runtime_status: FUTURE_MAINNET_REQUIRED
+    verdict: PASS
+    note: >
+      ABI + deploy script ready (P3-04). Not deployed or production-enabled.
+      Escrow V1 ACTIVE on Sepolia · V2 mainnet wave only.
+  - module: FeeRouter
+    protocol_version: D-4555-A
+    chain_runtime: V1
+    protocol_status: COMPLETE
+    deployment_status: VERIFIED
+    runtime_status: ACTIVE
+    verdict: PASS
+  - module: Country Pool Net Profit DE
+    protocol_version: D-4555-B + Vacancy V1
+    chain_runtime: Vacancy_V1
+    protocol_status: COMPLETE
+    deployment_status: DEPLOYED
+    runtime_status: ACTIVE
+    verdict: PASS
+    ledger: "0x738D2c133d5F90c13eE9907386136471E1f330f5"
+    legacy_ledger: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+  - module: Vacancy Ledger
+    protocol_version: V1
+    chain_runtime: Vacancy_V1
+    protocol_status: COMPLETE
+    deployment_status: DEPLOYED
+    runtime_status: ACTIVE
+    verdict: PASS
+    vault: "0xb7d0Ea9579F80B2090195d49a44941d5546554E9"
+    legacy_vault: "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0"
+  - module: Indexer Transparency
+    protocol_version: W3+W4
+    chain_runtime: off-chain
+    protocol_status: COMPLETE
+    deployment_status: DEPLOYED
+    runtime_status: ACTIVE
+    verdict: PASS
+  - module: Governance Transparency Dashboard
+    protocol_version: W4a+W4b
+    chain_runtime: off-chain
+    protocol_status: COMPLETE
+    deployment_status: DEPLOYED
+    runtime_status: ACTIVE
+    verdict: PASS
+    note: Vacancy ledger transparency + ops console · indexer-only reads
+
+status_enum_legacy:
+  note: superseded by status_model — retained for backward gate reads
+
+treasury_semantics:
+  governance_treasury_p4cap:
+    contract: GovernanceTreasuryP4Cap
+    env_primary: GOVERNANCE_TREASURY_P4CAP_ADDRESS
+    env_aliases: [TREASURY_P4_CAP_ADDRESS]
+    registry_key: treasury_p4_cap_address
+    address_sepolia: "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+    role: GOV-01 DAO treasury · Timelock spend · 30% period cap
+    status: ACTIVE
+  legacy_treasury:
+    contract: GovernanceTreasury
+    env_primary: LEGACY_TREASURY_ADDRESS
+    deprecated_env: TREASURY_ADDRESS
+    address_sepolia: "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be"
+    role: FeeRouter globalOps leg · pre-P4Cap fund stack
+    status: LEGACY
+    note: Do not use bare TREASURY_ADDRESS without documenting which treasury.
+  deprecated_aliases_resolved_pr2:
+    - GOVERNANCE_TREASURY_ADDRESS
+    note: Cataloged deprecated · API migrated PR-1 · env catalog gate PR-2
+
+token_system:
+  symbol: TTG
+  name: TravelTrust Governance
+  decimals: 18
+  total_supply_ttg: 10000000
+  total_supply_wei: "10000000000000000000000000"
+  sepolia_address: "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+  mint_policy: constructor_only
+  burn_on_chain: false
+  voting: getPastVotes_checkpoints
+  allocation_bps:
+    country_pool_shelf: 2500
+    public_global: 2000
+    ecosystem: 1500
+    team: 1500
+    advisors: 500
+    treasury_dao: 2000
+  gov_04_public_sale:
+    round_ttg: [500000, 500000, 1000000]
+    per_wallet_cap_ttg: 25000
+    min_purchase_usdc: 100
+  consistency:
+    protocol_ssot_yaml: PASS
+    ttg_gov_freeze_constants: PASS
+    api_protocol_ssot_version: PASS
+    frontend_protocol_ssot_ts: PASS
+    frontend_tokenomics_model_doc_version: DRIFT_1_0_2
+
+governance_architecture:
+  flow: "TTG Holder → Governor.propose → castVote → queue → Timelock (48h) → execute"
+  sepolia_v2:
+    timelock: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    governor_proxy: "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+    treasury_p4cap_proxy: "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+    primary_market_proxy: "0x7af15f98622b9282298ca3070a698ca4a96a4016"
+    seat_registry_proxy: "0xc99776e980d33f1857d5bb9a57b35ab7669aad1f"
+    steward_stake_proxy: "0x3a89378bfad12d1028707dd37055294854c8784e"
+  parameters:
+    quorum_bps: 400
+    approval_threshold_bps: 5000
+    timelock_delay_hours: 48
+    max_voting_power_per_address_bps: 400
+    p4_deploy_cap_bps: 3000
+  upgrade_admin: GovernanceTimelock
+  bypass_check:
+    proxy_upgrade_via_timelock_only: PASS
+    token_mint_after_deploy: PASS
+    dual_timelock_de_settlement: DOCUMENTED_SPLIT
+
+treasury_flows:
+  ttg_primary_market:
+    - User USDC → TtgPrimaryMarketV1 → GovernanceTreasuryP4Cap
+    - spend: Governor → Timelock → execute
+  travel_payment_d4555_a:
+    - User Payment → EscrowFactory → Escrow → FeeRouter
+    - FeeRouter: 45% RegionVault · 55% global (65% stake / 20% ReserveVault / 15% Legacy Treasury)
+  net_profit_d4555_b_de:
+    - splitNetProfit → 45% StewardPathVault or UnallocatedStewardPathVault
+    - 55% → Global Treasury (V2 Timelock target)
+    - evaluateVacancySweep when V1 runtime active
+
+layers:
+  token:
+    status: PASS
+    contracts: [GovernanceVotesToken]
+  governance:
+    status: PASS
+    contracts: [TravelTrustGovernor, GovernanceTimelock, TtgPrimaryMarketV1, TtgSeatConcentrationRegistry, RegionStewardStakePool]
+  treasury:
+    status: IN_PROGRESS
+    note: Cert #8 treasury spend queued · treasury env drift W3-AUDIT-001～003
+  payment:
+    status: PARTIAL
+    note: EscrowFactory V2 PENDING on Sepolia
+  staking:
+    status: IN_PROGRESS
+  settlement:
+    status: PARTIAL
+    pilot_jurisdiction: DE
+  vacancy:
+    status: PROTOCOL_COMPLETE
+    runtime_deployment: LEGACY
+    sprints:
+      S1: COMPLETE
+      S2: COMPLETE
+      S3a: COMPLETE
+      S3b: COMPLETE
+      S3c: COMPLETE
+      S4a: COMPLETE
+      S4b: COMPLETE
+    completion_gate: scripts/ops/vacancy-ledger-v1-protocol-complete-gate.sh
+  indexer:
+    status: PASS
+    gate: WEB3_VACANCY_INDEXER_RECONCILE
+  dashboard:
+    status: COMPLETE
+    routes:
+      governance: /governance/vacancy-ledger
+      ops_console: /admin/vacancy-ledger
+
+addresses:
+  gov_freeze_v2_clean_baseline:
+    governance_token_address: "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+    timelock_address: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    governor_address: "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+    treasury_p4_cap_address: "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+    primary_market_address: "0x7af15f98622b9282298ca3070a698ca4a96a4016"
+    seat_registry_address: "0xc99776e980d33f1857d5bb9a57b35ab7669aad1f"
+    region_steward_stake_pool_proxy_address: "0x3a89378bfad12d1028707dd37055294854c8784e"
+    country_pool_net_profit_ledger_address: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+    country_pool_steward_path_vault_address: "0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb"
+    country_pool_unallocated_steward_vault_address: "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0"
+    country_pool_net_profit_settlement_token_address: "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
+  sepolia_fund_stack:
+    fee_router_address: "0x81A8009210c5215100564c6E4123F672c4459306"
+    escrow_factory_address: "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
+    escrow_factory_v2_address: null
+    region_vault_address: "0x2Ea061d50393c09af2f607Ee9f89679642A3a65B"
+    legacy_treasury_address: "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be"
+    reserve_vault_address: "0xbC541FAf26e139eF1f0AC22b52c4b4F85FFF7855"
+    guide_staking_pool_address: "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f"
+    provider_staking_pool_address: "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075"
+    registry_address: "0xc50913e154f850583D0afbE9158a75E0e2167AAb"
+    fund_stack_token_address: "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
+    country_pool_redemption_epoch_cn_address: "0x712050e4b1517C3f3ab39B32Cabb70CC0E1C0829"
+    country_pool_ledger_pilot_address: "0x63bd7d5ee5c5dde707e5e65303f3876267c78e97"
+
+env_keys:
+  GOVERNANCE_TREASURY_P4CAP_ADDRESS: treasury_p4_cap_address
+  LEGACY_TREASURY_ADDRESS: legacy_treasury_address
+  UNALLOCATED_STEWARD_PATH_VAULT_ADDRESS: country_pool_unallocated_steward_vault_address
+  COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS: country_pool_net_profit_ledger_address
+  COUNTRY_POOL_STEWARD_PATH_VAULT_ADDRESS: country_pool_steward_path_vault_address
+
+proxy_implementations:
+  verified_utc: "2026-07-09"
+  read_method: "cast call <proxy> implementation() / admin() · Sepolia on-chain"
+  upgrade_admin_registry_key: timelock_address
+  upgrade_path: "Governor.propose → Timelock.schedule (48h) → Timelock.execute → TimelockUpgradeableProxy.upgradeTo"
+  entries:
+    governor:
+      contract: TravelTrustGovernor
+      proxy: "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+      implementation: "0x91C479a93dA2B4D78C03EeE03Db9A5AD65d09968"
+      implementation_codehash: "0x161ed77be8a8fa8701a385ea36ca2a547d0563e3b78eadfca81f17773eb26fe9"
+      upgrade_admin: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    treasury_p4_cap:
+      contract: GovernanceTreasuryP4Cap
+      proxy: "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+      implementation: "0xeb2542f912215d1cA46394360a854b32586b8303"
+      implementation_codehash: "0x84d2b5dd2fae145c1823d7d0f17ffce6b17ff3f385159b5086a38296deb7fe24"
+      upgrade_admin: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    primary_market:
+      contract: TtgPrimaryMarketV1
+      proxy: "0x7af15f98622b9282298ca3070a698ca4a96a4016"
+      implementation: "0x94F23511fe808efdc2DDA5b98dCE34c513644F12"
+      implementation_codehash: "0x6c121d6f2a53188e0092ea132945acb571e4304acc5e4ad15c1d78834ce5b9a9"
+      upgrade_admin: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    seat_registry:
+      contract: TtgSeatConcentrationRegistry
+      proxy: "0xc99776e980d33f1857d5bb9a57b35ab7669aad1f"
+      implementation: "0xa6326194358C0D8dd22950Ffe8071C7BE1d21e9D"
+      implementation_codehash: "0x3b87c97ee0457cf0e435da71f60c8d1ab8b7accfc76037623539ae0459c42be1"
+      upgrade_admin: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    region_steward_stake_pool:
+      contract: RegionStewardStakePool
+      proxy: "0x3a89378bfad12d1028707dd37055294854c8784e"
+      implementation: "0x7e9B940302E3aEf8e880F49BDe88247A2721ac2f"
+      implementation_codehash: "0xef2101114610e8250467852b4833dc9521a1a72b9e3406385a909a4779a10814"
+      upgrade_admin: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+
+settlement_de_d4555_b:
+  network: sepolia
+  chain_id: 11155111
+  jurisdiction: DE
+  settlement_token: "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
+  owner_timelock_legacy: "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
+  gov_freeze_v2_timelock: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+  contracts:
+    country_pool_net_profit_ledger:
+      address: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+      posture: IMMUTABLE_EXEMPT
+      status: DEPLOYED
+    steward_path_vault:
+      address: "0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb"
+      posture: IMMUTABLE_EXEMPT
+      status: DEPLOYED
+    unallocated_steward_path_vault:
+      address: "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0"
+      posture: IMMUTABLE_EXEMPT
+      status: LEGACY
+      vacancy:
+        protocol: PROTOCOL_COMPLETE
+        runtime: LEGACY
+        runtime_stack: Q-F01_LEGACY_BYTECODE
+
+contract_inventory:
+  # Machine index — full fields in audit report §A
+  governance:
+    - { name: GovernanceVotesToken, path: contracts/src/GovernanceVotesToken.sol, proxy: false, status: DEPLOYED, abi: contracts/abi/GovernanceVotesToken.json }
+    - { name: GovernanceTimelock, path: contracts/src/GovernanceTimelock.sol, proxy: false, status: DEPLOYED, abi: contracts/abi/GovernanceTimelock.json }
+    - { name: TravelTrustGovernor, path: contracts/src/TravelTrustGovernor.sol, proxy: true, status: DEPLOYED, abi: contracts/abi/TravelTrustGovernor.json }
+    - { name: GovernanceTreasuryP4Cap, path: contracts/src/GovernanceTreasuryP4Cap.sol, proxy: true, status: DEPLOYED, abi: contracts/abi/GovernanceTreasuryP4Cap.json }
+    - { name: GovernanceTreasury, path: contracts/src/GovernanceTreasury.sol, proxy: false, status: LEGACY, abi: contracts/abi/GovernanceTreasury.json }
+    - { name: TtgPrimaryMarketV1, path: contracts/src/TtgPrimaryMarketV1.sol, proxy: true, status: DEPLOYED, abi: contracts/abi/TtgPrimaryMarketV1.json }
+    - { name: TtgSeatConcentrationRegistry, path: contracts/src/TtgSeatConcentrationRegistry.sol, proxy: true, status: DEPLOYED, abi: contracts/abi/TtgSeatConcentrationRegistry.json }
+    - { name: RegionStewardStakePool, path: contracts/src/RegionStewardStakePool.sol, proxy: true, status: DEPLOYED, abi: contracts/abi/RegionStewardStakePool.json }
+    - { name: TimelockUpgradeableProxy, path: contracts/src/upgrade/TimelockUpgradeableProxy.sol, proxy: shell, status: DEPLOYED, abi: null }
+  payment:
+    - { name: EscrowFactory, path: contracts/src/EscrowFactory.sol, proxy: false, status: DEPLOYED, abi: contracts/abi/EscrowFactory.json }
+    - { name: EscrowFactoryV2, path: contracts/src/EscrowFactoryV2.sol, proxy: false, status: FUTURE_MAINNET_REQUIRED, abi: null }
+    - { name: Escrow, path: contracts/src/Escrow.sol, proxy: per_instance, status: DEPLOYED, abi: contracts/abi/Escrow.json }
+    - { name: EscrowV2, path: contracts/src/EscrowV2.sol, proxy: per_instance, status: PROTOCOL_COMPLETE, abi: null }
+    - { name: FeeRouter, path: contracts/src/FeeRouter.sol, proxy: false, status: DEPLOYED, abi: contracts/abi/FeeRouter.json }
+  staking:
+    - { name: GuideIdentityStakingPool, path: contracts/src/GuideIdentityStakingPool.sol, proxy: false, status: DEPLOYED, abi: contracts/abi/GuideIdentityStakingPool.json }
+    - { name: ProviderIdentityStakingPool, path: contracts/src/ProviderIdentityStakingPool.sol, proxy: false, status: DEPLOYED, abi: contracts/abi/ProviderIdentityStakingPool.json }
+    - { name: ReserveVault, path: contracts/src/ReserveVault.sol, proxy: false, status: DEPLOYED, abi: contracts/abi/ReserveVault.json }
+  region:
+    - { name: RegionVault, path: contracts/src/RegionVault.sol, proxy: false, status: DEPLOYED, abi: contracts/abi/RegionVault.json }
+    - { name: Registry, path: contracts/src/Registry.sol, proxy: false, status: DEPLOYED, abi: contracts/abi/Registry.json }
+  settlement:
+    - { name: CountryPoolNetProfitLedger, path: contracts/src/CountryPoolNetProfitLedger.sol, proxy: false, status: DEPLOYED, abi: contracts/abi/CountryPoolNetProfitLedger.json }
+    - { name: StewardPathVault, path: contracts/src/StewardPathVault.sol, proxy: false, status: DEPLOYED, abi: contracts/abi/StewardPathVault.json }
+    - { name: UnallocatedStewardPathVault, path: contracts/src/vacancy/UnallocatedStewardPathVault.sol, proxy: false, status: LEGACY, abi: contracts/abi/UnallocatedStewardPathVault.json }
+    - { name: CountryPoolLedgerV0, path: contracts/src/CountryPoolLedgerV0.sol, proxy: false, status: DEPLOYED, abi: contracts/abi/CountryPoolLedgerV0.json }
+    - { name: CountryPoolRedemptionEpochV0, path: contracts/src/CountryPoolRedemptionEpochV0.sol, proxy: false, status: DEPLOYED, abi: contracts/abi/CountryPoolRedemptionEpochV0.json }
+  vacancy_support:
+    - { name: VacancyGovernance, path: contracts/src/vacancy/VacancyGovernance.sol, proxy: false, status: PROTOCOL_COMPLETE, abi: null }
+    - { name: VacancyLedgerLib, path: contracts/src/vacancy/VacancyLedgerLib.sol, proxy: false, status: PROTOCOL_COMPLETE, abi: null }
+
+dependency_graph:
+  core:
+    - TTG → Governor → Timelock → {P4Cap, PrimaryMarket, SeatRegistry, StewardStake, proxy upgrades}
+    - Escrow → FeeRouter → {RegionVault, ReserveVault, LegacyTreasury}
+    - CountryPoolNetProfitLedger → {StewardPathVault, UnallocatedStewardPathVault, GlobalTreasury}
+  upgrade_surfaces:
+    - TimelockUpgradeableProxy × 5
+  single_point_risks:
+    - treasury_env_api_naming_drift
+
+drift_issues:
+  - id: W3-AUDIT-001
+    severity: HIGH
+    location: crates/api/src/chain/mod.rs
+    current: RESOLVED — P4Cap-only treasury resolution (Phase②.5 PR-1)
+    expected: GOVERNANCE_TREASURY_P4CAP_ADDRESS only
+    action: RESOLVED
+  - id: W3-AUDIT-002
+    severity: HIGH
+    location: crates/api/src/routes/governance/governance_pool.rs
+    current: RESOLVED — ChainConfig.treasury_address (P4Cap)
+    expected: GOVERNANCE_TREASURY_P4CAP_ADDRESS
+    action: RESOLVED
+  - id: W3-AUDIT-003
+    severity: HIGH
+    location: scripts/dev/phase2-sepolia-fundstack-verify-bindings.sh
+    current: RESOLVED — LEGACY_TREASURY_ADDRESS + GOVERNANCE_TREASURY_P4CAP_ADDRESS
+    expected: LEGACY_TREASURY_ADDRESS
+    action: RESOLVED
+  - id: W3-AUDIT-004
+    severity: MEDIUM
+    location: docs/spec/governance-token/traveltrust-web3-protocol-master-matrix-v1.md
+    current: W3 NEXT · dashboard PLANNED
+    expected: Match YAML sprint COMPLETE states
+    action: Refresh human matrix doc
+  - id: W3-AUDIT-005
+    severity: MEDIUM
+    location: DE UnallocatedStewardPathVault Sepolia
+    current: Vacancy_V1 ACTIVE (W7)
+    expected: Vacancy V1 runtime selectors
+    action: RESOLVED — W7 Sepolia runtime activation
+  - id: W3-AUDIT-007
+    severity: INFO
+    location: EscrowFactoryV2 Sepolia
+    current: FUTURE_MAINNET_REQUIRED
+    expected: Mainnet wave deploy when Phase③ approved
+    action: NOT a Sepolia gap · Escrow V1 ACTIVE · do not classify as missing
+  - id: W3-AUDIT-008
+    severity: MEDIUM
+    location: settlement_de_d4555_b owner
+    current: legacy timelock 0x0359d4fB…
+    expected: documented migration to V2 or explicit dual-control runbook
+    action: Ops runbook
+  - id: W3-AUDIT-011
+    severity: LOW
+    location: frontend/lib/governance/governanceParamsTokenomicsModel.ts
+    current: PROTOCOL_SSOT_DOC_VERSION 1.0.2
+    expected: "1.0.3"
+    action: Bump display string
+
+vacancy_indexer:
+  discipline: event_post_state_only
+  forbidden: "reserve = principal - swept - disbursed"
+  events: [VacancyEntered, GraceStarted, SweepExecuted, ReserveReached, StewardActivated, JurisdictionReserveDisbursed]
+  api:
+    snapshot: GET /api/v1/admin/vacancy-ledger/:jurisdiction
+    ops_console: GET /api/v1/admin/vacancy-ledger
+  ui:
+    governance: /governance/vacancy-ledger
+    ops_console: /admin/vacancy-ledger
+
+sprint_roadmap:
+  W1: Web3 SSOT cleanup · master matrix · COMPLETE
+  W2: Registry closure · DE triplet · proxy impl populate · COMPLETE
+  W3: S4a reconcile gate · event projection tests · COMPLETE
+  W3_readiness: VACANCY_DEPLOYMENT_READINESS · COMPLETE
+  W4: S4b governance read-only dashboard · COMPLETE
+  W4a: Governance Vacancy Ledger Transparency · COMPLETE
+  W4b: Protocol Operations Console · COMPLETE
+  W5: Web3 Protocol Master Audit · COMPLETE · WARN accepted
+  W6: Runtime Activation Plan · COMPLETE
+  W6_5: Owner Runtime Activation Sign-off · COMPLETE
+  W7: Sepolia Runtime Execution · COMPLETE
+  W7_post_activation: Ops cleanup W7-CLEANUP-01..03 · COMPLETE
+  phase2_web3_runtime_closeout: COMPLETE · TT_PHASE2_WEB3_RUNTIME_READY WARN
+  phase2_5_web3_hardening: NEXT
+  phase2_5_full_alignment_audit_v2: BASELINE_COMPLETE
+  phase3_mainnet_preparation: NOT_STARTED
+  signoff: registry/runtime-activation-signoff.v1.yaml
+  API_BUILD_HEALTH: full API bin compile debt · isolated from Vacancy gates
+
+deploy_scripts:
+  forge_dir: contracts/script/
+  count: 24
+  primary_governance: DeployGovFreezeV2CleanBaseline.s.sol
+  primary_settlement_de: DeployCountryPoolNetProfitStack.s.sol
+  shell_wrappers: scripts/dev/phase2-sepolia-broadcast-*.sh
+
+abi_registry:
+  canonical_dir: contracts/abi/
+  count: 30
+  frontend_mirror: frontend/dapp/abis/
+  frontend_count: 11
+  missing: [EscrowV2, TimelockUpgradeableProxy, InvestorShareLockLedger]

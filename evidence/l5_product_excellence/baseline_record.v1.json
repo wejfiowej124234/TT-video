@@ -1,0 +1,45 @@
+{
+  "schema": "traveltrust_l5_product_excellence_baseline.v1",
+  "status": "PASS",
+  "baseline_refs": [
+    "160",
+    "161",
+    "145"
+  ],
+  "last_audit_matrix_path": "evidence/l5_product_excellence/audit_matrix.v1.json",
+  "audit_verdict": "L5_PRODUCT_EXCELLENCE_GO",
+  "excellence_score": 93,
+  "track_verdicts": {
+    "USER_JOURNEY": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "USER_JOURNEY_L5_GO"
+    },
+    "IA": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "IA_L5_GO"
+    },
+    "DESIGN_SYSTEM": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "DESIGN_SYSTEM_L5_GO"
+    },
+    "CONVERSION": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "CONVERSION_L5_GO"
+    },
+    "MOBILE": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "MOBILE_L5_GO"
+    },
+    "ACCESSIBILITY": {
+      "score": 100,
+      "verdict": "GO",
+      "target": "ACCESSIBILITY_L5_GO"
+    }
+  },
+  "last_audit_run_utc": "20260608T032212Z"
+}

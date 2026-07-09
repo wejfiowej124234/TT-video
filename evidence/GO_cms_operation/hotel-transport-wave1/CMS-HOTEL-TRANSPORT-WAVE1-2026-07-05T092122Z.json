@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.cms_hotel_transport_wave1_closed_loop.v1",
+  "recorded_at": "2026-07-05T09:21:22Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "results": [
+    {
+      "matrix_id": "HT-WAVE1-COMFORT",
+      "tier_code": "tier_comfort",
+      "verify": "PASS"
+    },
+    {
+      "matrix_id": "TS-WAVE1-JP",
+      "country_iso": "JP",
+      "verify": "PASS"
+    }
+  ],
+  "TT_CMS_HOTEL_TRANSPORT_WAVE1": "PASS"
+}

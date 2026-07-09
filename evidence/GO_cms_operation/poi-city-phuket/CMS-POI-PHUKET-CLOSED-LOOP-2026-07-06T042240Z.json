@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T04:22:40Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "TH",
+    "city_zh": "普吉",
+    "city_en": "Phuket",
+    "matrix_ids": [
+      "PH-TH-084-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-TH-084-ATR",
+      "legacy_value": "攀牙湾",
+      "poi_id": "b55f12aa-4772-4fc8-afe0-19473caeff93",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-community-media.jpg",
+      "hero_file": "ocs-phuket-island-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-084-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

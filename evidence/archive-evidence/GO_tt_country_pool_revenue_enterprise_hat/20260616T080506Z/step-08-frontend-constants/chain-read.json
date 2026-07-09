@@ -1,0 +1,5 @@
+{
+  "GOVERNANCE_NET_PROFIT_STEWARD_BPS": 4500,
+  "GOVERNANCE_NET_PROFIT_GLOBAL_POOL_BPS": 5500,
+  "matches_chain_bps": true
+}

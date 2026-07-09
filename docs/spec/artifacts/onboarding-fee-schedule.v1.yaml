@@ -1,0 +1,107 @@
+# Onboarding fee schedule v1 — machine-readable mirror (B轨 · 运营 SKU)
+# Authoritative prose: onboarding-fee-schedule.v1.md — on conflict, markdown wins until API codegen lands.
+version: fee_schedule_v1
+artifact: onboarding-fee-schedule.v1
+status: target
+effective_from: "2026-05-28"
+currency_default: USDC
+amount_unit: minor  # 2-decimal display units (29900 = 299.00 USDC); on-chain uses token decimals (6)
+
+# 仅引用 protocol-ssot 的 tier 标签；禁止在本文件出现 steward_stake_bps / fee_route_bps
+tier_weak_linkage:
+  protocol_ssot_jurisdiction_table: docs/spec/governance-token/protocol-ssot.v1.md#§4-辖区参数phase-1--十国
+  rule: tier_label_only
+  forbid_fields:
+    - steward_stake_bps
+    - fee_route_bps
+    - ttg_units
+    - cumulative_steward_stake_bps
+
+jurisdiction_tier_map:
+  CN: S
+  US: S
+  FR: S
+  ES: S
+  JP: A
+  TH: A
+  SG: A
+  KR: A
+  AU: B
+  AE: B
+
+roles:
+  provider:
+    sku_default: provider_onboarding_default
+    pricing_one_time:
+      by_tier:
+        S: { amount_minor: 29900, currency: USDC }
+        A: { amount_minor: 19900, currency: USDC }
+        B: { amount_minor: 14900, currency: USDC }
+      jurisdiction_override: {}  # provider 默认单辖区；扩展时在此按 ISO 覆写
+    quote_ttl_hours: 1
+
+  region_steward:
+    sku_default: region_steward_onboarding_default
+    pricing_one_time:
+      by_tier:
+        S: { amount_minor: 49900, currency: USDC }
+        A: { amount_minor: 34900, currency: USDC }
+        B: { amount_minor: 24900, currency: USDC }
+    multi_jurisdiction:
+      mode: tiered_additive
+      first_jurisdiction: full_tier_price
+      each_additional:
+        basis: tier_of_added_jurisdiction
+        amount_minor_ratio_bps: 3500  # +35% of that jurisdiction's tier base
+      cap:
+        max_jurisdictions: 5
+        max_total_ratio_bps: 25000  # 首国 100% + 增国累加上限 250%（防异常组合）
+    quote_ttl_hours: 1
+
+renewal:
+  enabled: false  # v1：一次性准入费；续费另开 fee_schedule_v2 或 renewal_sku
+  policy_version: fee_schedule_v1_renewal_none
+  note: 席位续费 / 年审费未在 v1 启用；启用须 bump version 与 96-18 §3.6 同批
+
+refund:
+  policy_version: fee_schedule_v1_refund_policy
+  rules:
+    - id: R1
+      event: application_rejected_before_role_confirm
+      entitlement_status: paid
+      refund: full
+      sla_business_days: 14
+    - id: R2
+      event: duplicate_payment_idempotent_replay
+      refund: none
+      note: 幂等重放不退款
+    - id: R3
+      event: chargeback_dispute_lost
+      refund: none
+      entitlement: revoked
+    - id: R4
+      event: local_dev_mark_paid
+      refund: not_applicable
+      note: ① TRAVELTRUST_ONBOARDING_LOCAL_DEV 模拟；非生产 PSP
+
+local_dev:
+  override_amount_minor: 0
+  requires_env:
+    api: TRAVELTRUST_ONBOARDING_LOCAL_DEV=1
+    fe_optional: NEXT_PUBLIC_ONBOARDING_LOCAL_DEV_TOOLS=1
+  forbid_in_production: true
+
+quote_response_fields:
+  - fee_schedule_version
+  - role
+  - sku
+  - currency
+  - amount_minor
+  - expires_at
+  - refund_policy_version
+  - jurisdiction_breakdown  # region_steward 多国可选
+
+forbidden_in_quote:
+  - steward_stake_bps
+  - cumulative_ttg_units
+  - pool_address

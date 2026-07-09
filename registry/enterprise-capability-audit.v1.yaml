@@ -1,0 +1,192 @@
+# TravelTrust Enterprise Capability Audit · machine-readable registry
+# SSOT doc: docs/runbook/TT-ENTERPRISE-CAPABILITY-AUDIT-20260702.md
+# Template: v2.1.0 — seven dimensions + Release Decision
+
+version: enterprise-capability-audit-2026-07-02-v4
+audit_date: 2026-07-02
+doc_version: 2.1.0
+structure: SEVEN_DIMENSIONS_PLUS_RELEASE_DECISION
+
+# §0 Two-layer summary (fixed reporting)
+capability_tracks:
+  product_capability:
+    status: ENTERPRISE_COMPLETE
+    symbol: "✅"
+    includes:
+      - frontend
+      - backend
+      - database
+      - admin_platform
+      - four_centers
+      - rbac
+      - official_ops
+      - content_center
+      - business_flow
+      - operational_scenario
+      - page_entity_web3_product_track
+  production_capability:
+    status: IN_PROGRESS
+    symbol: "🟡"
+    includes:
+      - production_infrastructure
+      - mainnet
+      - business_manual_uat
+      - production_go
+      - production_evidence_track
+
+# Seven-dimensional matrix (no subjective scores)
+capability_matrix:
+  page_capability:
+    order: 1
+    status: COMPLETE
+    track: product
+    machine_key: TT_PAGE_CAPABILITY
+  entity_capability:
+    order: 2
+    status: COMPLETE
+    track: product
+    machine_key: TT_ENTITY_CAPABILITY
+  web3_capability:
+    order: 3
+    status: COMPLETE_SEPOLIA
+    track: product
+    machine_key: TT_WEB3_CAPABILITY
+  production_infrastructure:
+    order: 4
+    status: IN_PROGRESS
+    track: production
+    machine_key: TT_PRODUCTION_INFRASTRUCTURE
+    blockers_open: 6
+  business_flow:
+    order: 5
+    status: COMPLETE
+    track: product
+    machine_key: TT_BUSINESS_FLOW_CAPABILITY
+  operational_scenario:
+    order: 6
+    status: COMPLETE
+    track: product
+    machine_key: TT_OPERATIONAL_CAPABILITY
+  evidence_completeness:
+    order: 7
+    status: PARTIAL
+    track: both
+    product_track: COMPLETE
+    production_track: IN_PROGRESS
+    machine_key: TT_EVIDENCE_COMPLETENESS
+
+release_decision:
+  value: NO_GO
+  machine_key: TT_RELEASE_DECISION
+  go_requires:
+    - all_seven_dimensions_complete
+    - business_manual_uat_go
+    - production_evidence_track_closed
+
+pre_go_questions:
+  pages_missing: false
+  entities_missing: false
+  flows_broken: false
+  ops_independent: true
+  web3_closed_sepolia: true
+  production_ready: false
+  evidence_supports_claim: partial
+  release_decision: NO_GO
+
+milestones:
+  product_capability:
+    status: ENTERPRISE_COMPLETE
+  production_capability:
+    status: IN_PROGRESS
+    queue:
+      - PI3
+      - Mainnet
+      - Business_Manual_UAT
+      - Production_GO
+
+evidence_completeness:
+  product_track:
+    status: COMPLETE
+    artifacts:
+      - evidence/GO_admin_platform_40_complete/20260701T180425Z
+      - evidence/GO_staging_admin_final_validation_walkthrough/20260702T003523Z
+      - evidence/GO_staging_admin_rbac_matrix/latest
+      - evidence/GO_staging_admin_adm_u02/latest
+      - evidence/staging-uat-six-domains
+      - evidence/manual-uat/signoff/PHASE2-ADMIN-FINAL-VALIDATION-SIGNOFF-20260702.md
+  production_track:
+    status: IN_PROGRESS
+    gaps:
+      - ECAP-PI3-001
+      - ECAP-PI3-002
+      - ECAP-PI3-003
+      - ECAP-PI3-004
+      - ECAP-PI3-005
+      - ECAP-PI3-006
+      - business_manual_uat_signoff_pending
+
+classification:
+  - COMPLETE
+  - PARTIAL
+  - MISSING
+  - EXPECTED_DIFFERENCE
+  - PRODUCTION_BLOCKER
+  - ENHANCEMENT
+
+gaps:
+  production_blockers:
+    - ECAP-PI3-001
+    - ECAP-PI3-002
+    - ECAP-PI3-003
+    - ECAP-PI3-004
+    - ECAP-PI3-005
+    - ECAP-PI3-006
+  missing: []
+
+rerun_template:
+  trigger: major_release_or_production_go_review
+  steps:
+    - update capability_matrix seven rows
+    - update evidence_completeness product and production tracks
+    - rerun business_flow BF-01 through BF-06
+    - rerun operational_scenario four spot-checks
+    - set release_decision GO only when all seven dimensions COMPLETE
+
+machine_keys:
+  TT_ENTERPRISE_CAPABILITY_AUDIT_VERSION: "2.1.0"
+  TT_PAGE_CAPABILITY: COMPLETE
+  TT_ENTITY_CAPABILITY: COMPLETE
+  TT_WEB3_CAPABILITY: COMPLETE_SEPOLIA
+  TT_PRODUCTION_INFRASTRUCTURE: IN_PROGRESS
+  TT_BUSINESS_FLOW_CAPABILITY: COMPLETE
+  TT_OPERATIONAL_CAPABILITY: COMPLETE
+  TT_EVIDENCE_COMPLETENESS: PARTIAL
+  TT_EVIDENCE_PRODUCT_TRACK: COMPLETE
+  TT_EVIDENCE_PRODUCTION_TRACK: IN_PROGRESS
+  TT_PRODUCT_CAPABILITY: ENTERPRISE_COMPLETE
+  TT_PRODUCTION_CAPABILITY: IN_PROGRESS
+  TT_RELEASE_DECISION: NO_GO
+  TT_PROJECT_REPORTING_TEMPLATE: FIXED_20260702
+
+reporting_template:
+  id: FIXED_20260702
+  ssot: docs/runbook/TT-PROGRAM-MAINLINE-DISCIPLINE.md
+  required_sections:
+    - product_capability
+    - production_capability
+    - evidence_completeness
+    - current_mainline
+    - current_blocking_items
+    - release_decision
+  forbidden_topics:
+    - admin_daily_progress
+    - official_ops_daily
+    - cms_daily
+  product_capability: ENTERPRISE_COMPLETE
+  production_capability: IN_PROGRESS
+  evidence_product_track: COMPLETE
+  evidence_production_track: IN_PROGRESS
+  release_decision: NO_GO
+
+evidence:
+  audit_doc: docs/runbook/TT-ENTERPRISE-CAPABILITY-AUDIT-20260702.md

@@ -64,10 +64,14 @@ chmod +x "$REPO_ROOT/scripts/dev/smoke-community-c4-staging-video-playback.sh" 2
   export PLAYWRIGHT_REUSE_FE_SERVER=0
   export PLAYWRIGHT_API_SERVER_TIMEOUT_MS=300000
   if [[ "$API_BASE" == *"fly.dev"* ]]; then
-    MINIO_TUNNEL="${C4_MINIO_TUNNEL_URL:-https://thirty-dryers-give.loca.lt}"
-    MINIO_PUBLIC="${MINIO_TUNNEL}/traveltrust-community-media"
+    # Staging must use R2+CDN public base — NOT localtunnel (see TT-MEDIA-THREE-TIER-ARCHITECTURE.md)
+    MINIO_PUBLIC="${NEXT_PUBLIC_COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL:-https://cdn.traveltrust.app}"
+    MINIO_TUNNEL="${C4_MINIO_TUNNEL_URL:-}"
+    if [[ -n "$MINIO_TUNNEL" && "$MINIO_TUNNEL" == *"loca.lt"* ]]; then
+      echo "WARN: C4_MINIO_TUNNEL_URL loca.lt is DEPRECATED for staging — set NEXT_PUBLIC_COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL to CDN" >&2
+    fi
     export NEXT_PUBLIC_COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL="$MINIO_PUBLIC"
-    export NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES="${MINIO_PUBLIC},${MINIO_TUNNEL}"
+    export NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES="${MINIO_PUBLIC}${MINIO_TUNNEL:+,${MINIO_TUNNEL}}"
     FE_LOCAL="$REPO_ROOT/frontend/.env.local"
       if [[ -f "$FE_LOCAL" ]]; then
       cp "$FE_LOCAL" "$FE_LOCAL.bak-c4-${STAMP}"

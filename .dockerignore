@@ -11,6 +11,8 @@ docs
 !docs/spec/artifacts/onboarding-fee-schedule.v1.yaml
 evidence
 data
+!data/official-cold-start/media
+!data/official-cold-start/media/**
 *.md
 !README.md
 .mcps

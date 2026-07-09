@@ -1,0 +1,20 @@
+{
+  "kind": "traveltrust.l5_enterprise_acceptance_execution.v1",
+  "recorded_utc": "20260608T030946Z",
+  "verdict": "L5_ENTERPRISE_ACCEPTANCE_GO",
+  "audit_matrix_verdict": "L5_ENTERPRISE_ACCEPTANCE_GO",
+  "enterprise_score": 100,
+  "target_score": 85,
+  "track_targets": [
+    "UX_P1_P2_GO",
+    "DATA_INTEGRITY_GO",
+    "RBAC_SECURITY_GO",
+    "PERFORMANCE_GO",
+    "HUMAN_ACCEPTANCE_GO"
+  ],
+  "baseline_refs": [
+    "157",
+    "160",
+    "158"
+  ]
+}

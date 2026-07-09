@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T145000Z",
+  "filename": "ocs-paris-art-provider-cover.jpg",
+  "row": 32,
+  "chain_id": "paris-art",
+  "country_code": "FR",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "checks": {
+    "manifest_alignment": {
+      "pass": true
+    },
+    "destination_authenticity_9dim": {
+      "pass": true,
+      "notes": "卢浮宫式展厅 FR-only"
+    },
+    "country_consistency_fr": {
+      "pass": true
+    },
+    "provider_business_identity_plan": {
+      "pass": true,
+      "vs_tokyo": "博物馆小团 vs 旅拍",
+      "vs_kyoto": "名画讲解 vs 茶室",
+      "vs_seoul": "室内艺术 vs 夜市",
+      "vs_bangkok": "博物馆 vs 河船",
+      "vs_singapore": "艺术小团 vs 亲子通票",
+      "vs_row31": "服务场景 vs 向导肖像"
+    },
+    "global_visual_diversity_plan": {
+      "pass": true,
+      "notes": "室内博物馆光"
+    },
+    "brand_consistency_plan": {
+      "pass": true
+    },
+    "consumer_experience_plan": {
+      "pass": true
+    },
+    "surface_identity_plan": {
+      "pass": true,
+      "notes": "Provider only"
+    },
+    "narrative_continuity_plan": {
+      "pass": true
+    },
+    "business_authenticity": {
+      "pass": true,
+      "price_usdc": 320,
+      "max_6": true
+    },
+    "copyright_logo_watermark_ai": {
+      "pass": true,
+      "no_watermark": true,
+      "no_logo": true,
+      "no_ai_artifacts": true
+    },
+    "nine_class_framework_frozen": true
+  }
+}

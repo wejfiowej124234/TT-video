@@ -1,0 +1,13 @@
+{
+  "kind": "traveltrust.pi3_001_database_backup_readiness.v1",
+  "recorded_utc": "20260607T150445Z",
+  "verdict": "PI3-001_HOLD",
+  "b475_status": "PLANNED",
+  "last_restore_drill_utc": "2026-06-07T03:51:45Z",
+  "staging_drill_evidence_ready": true,
+  "fly_cli_ok": false,
+  "staging_fly_backup": "SKIP",
+  "prod_fly_backup": "SKIP",
+  "pi3_002_ref": "PI3-002_HOLD per 121",
+  "catalog_freeze": "CATALOG_RELEASE_FREEZE_GO"
+}

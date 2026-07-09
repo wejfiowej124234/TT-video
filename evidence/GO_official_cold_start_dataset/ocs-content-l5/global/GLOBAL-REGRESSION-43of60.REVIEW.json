@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_regression_review.v1",
+  "stamp_utc": "20260704T150130Z",
+  "progress": "43/60",
+  "trigger_filename": "ocs-sydney-coast-guide-avatar.jpg",
+  "TT_GLOBAL_REGRESSION_REVIEW": "PASS",
+  "no_quality_regression": true,
+  "chains_closed_unchanged": 7
+}

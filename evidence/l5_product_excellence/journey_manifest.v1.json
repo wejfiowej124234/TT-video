@@ -1,0 +1,72 @@
+{
+  "schema": "traveltrust_l5_product_excellence_journey_manifest.v1",
+  "recorded_utc": "20260608T000000Z",
+  "baseline_refs": ["160", "161", "145"],
+  "roles": ["traveler", "guide", "merchant", "ops", "admin"],
+  "dimensions_per_page": [
+    "nav",
+    "interaction",
+    "loading",
+    "empty",
+    "error",
+    "permission",
+    "conversion",
+    "mobile",
+    "consistency",
+    "a11y"
+  ],
+  "journeys": {
+    "traveler": {
+      "label": "Traveler · discover · community · referrals",
+      "pages": [
+        { "id": "P-HOME", "route": "/", "title": "Home · Web3 travel" },
+        { "id": "P-MKT", "route": "/market", "title": "Market · discover" },
+        { "id": "P-COMM", "route": "/community", "title": "Community feed" },
+        { "id": "P-ME-REF", "route": "/me/referrals", "title": "User referral center" },
+        { "id": "P-AUTH", "route": "/auth/login", "title": "Auth login" }
+      ],
+      "pes_persona": "traveler",
+      "rujr_ref": "frontend/lib/pesJourneyReviewModel.ts"
+    },
+    "guide": {
+      "label": "Guide · hub · register",
+      "pages": [
+        { "id": "P-GUIDE", "route": "/guide", "title": "Guide hub" },
+        { "id": "P-GUIDE-REG", "route": "/guide/register", "title": "Guide register" }
+      ],
+      "pes_persona": "guide",
+      "rujr_ref": "frontend/lib/pesJourneyReviewModel.ts"
+    },
+    "merchant": {
+      "label": "Merchant · provider register · onboarding",
+      "pages": [
+        { "id": "P-PROV", "route": "/provider/register", "title": "Provider register" },
+        { "id": "P-ME-ONB", "route": "/me/onboarding", "title": "Me onboarding" }
+      ],
+      "pes_persona": "merchant",
+      "rujr_ref": "frontend/lib/pesJourneyReviewModel.ts"
+    },
+    "ops": {
+      "label": "Ops · CMS · growth · official",
+      "pages": [
+        { "id": "P-ADM-CMS", "route": "/admin/content", "title": "Admin CMS" },
+        { "id": "P-ADM-GROWTH", "route": "/admin/growth", "title": "Growth console" },
+        { "id": "P-ADM-OFF", "route": "/admin/official", "title": "Official OPS" }
+      ],
+      "state_system": "OpsPlaneFetchStates · OpsPlanePageShell"
+    },
+    "admin": {
+      "label": "Admin · conversion · growth analytics",
+      "pages": [
+        { "id": "P-CONV", "route": "/admin/conversion-analytics", "title": "Conversion analytics" },
+        { "id": "P-ADM-ANAL", "route": "/admin/growth/analytics", "title": "Growth analytics" }
+      ],
+      "nav_ref": "frontend/lib/admin/adminShellMoreNavLinks.ts"
+    }
+  },
+  "frca_ref": "scripts/dev/five-role-full-chain-audit.py",
+  "open_backlog": [
+    { "id": "PE-P1-01", "risk": "P1", "summary": "RUJR 48-run Playwright evidence refresh" },
+    { "id": "PE-P1-02", "risk": "P1", "summary": "FRCA live five-role browser gaps" }
+  ]
+}

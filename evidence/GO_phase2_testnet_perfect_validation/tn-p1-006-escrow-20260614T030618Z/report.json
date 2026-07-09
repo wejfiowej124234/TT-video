@@ -1,0 +1,20 @@
+{
+  "schema": "tn_p1_006_escrow_staging.v1",
+  "stamp": "20260614T030618Z",
+  "phase": "② testnet",
+  "api": "https://tt-api-staging.fly.dev",
+  "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
+  "order_id": "6cef4e60-2246-450a-a7ea-7c7f43efb492",
+  "escrow_address": "0x04cBccf6Ac70fF9df7256222a838F830FDAEcA61",
+  "deposit_tx": "0xc010ae19695fc2572c6955a17b24b35e34ab94cbe6760f2c879a42fd1d38b767",
+  "release_tx": "0x067c46403a80486f1519f5127f1f386aa4735b1f4d150492bb8c5f1e537e58cc",
+  "refund_leg": {
+    "order_id": "a4f81415-940d-47a7-9f77-4659e5982567",
+    "escrow": "0xA39Fe740625918Fa218624a15aa83259c53E3031",
+    "refund_tx": "0x46d1ea19a1081a003203f2fab4d56a18047f9a60c6b1bcdf31097738cc63a4f3",
+    "status": 4,
+    "honest_boundary": "on-chain refund leg without API order bind"
+  },
+  "release_gate": "GO",
+  "honest_boundary": "Sepolia MockERC20 fund track · create+fund+release(API corridor)+refund(on-chain leg) · ≠ ③ mainnet USDC"
+}

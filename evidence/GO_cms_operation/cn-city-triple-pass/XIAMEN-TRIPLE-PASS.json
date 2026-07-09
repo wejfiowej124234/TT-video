@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.cms_cn_city_triple_pass_report.v1",
+  "city_zh": "厦门",
+  "recorded_at_utc": "2026-07-07T10:36:01.623Z",
+  "poi_locked": "10/10",
+  "TT_CMS_POI_CITY_XIAMEN": "CLOSED",
+  "TT_CMS_POI_CITY_XIAMEN_CONTENT_QA": "CLOSED",
+  "TT_CMS_POI_CITY_XIAMEN_CONTENT_QA_EXIT": "PASS"
+}

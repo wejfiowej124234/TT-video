@@ -1,0 +1,84 @@
+{
+  "schema": "traveltrust.ocs_staging_discover_orders_align.v1",
+  "recorded_at": "2026-07-04T10:34:01.294Z",
+  "ocs_order_ids": 0,
+  "published_before": 12,
+  "unpublish": [
+    {
+      "id": "0ec4baba-9882-4522-b0b2-f3a58369f2ce",
+      "label": "中国",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "83ad5cbd-61d9-4b98-b467-34695b3ede37",
+      "label": "中国",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "348f126c-6f47-4144-8742-0c00ddd82bd2",
+      "label": "中国",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "cf400ea4-57d8-44f2-9525-511daf884549",
+      "label": "order",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "fc2ee051-64cd-4109-8fe1-0ad2a4e33d9d",
+      "label": "order",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "293dd20d-c01a-4174-bd8e-5c4514556cf2",
+      "label": "order",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "07b34708-e20a-4c00-bf2d-1dbf5cf95d89",
+      "label": "order",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "7085a362-9ab3-45da-9c9f-23d88fcb14b7",
+      "label": "order",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "a0c548d5-63d2-4cfa-a865-651d200f4861",
+      "label": "中国",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "4daab152-cf4e-48d6-8957-339d187c44bc",
+      "label": "order",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "7c7041a3-c276-49c8-89c8-73384d41fe88",
+      "label": "order",
+      "action": "unpublish",
+      "status": 200
+    },
+    {
+      "id": "cbbc6d40-393a-40e1-b8b9-26acac9ea97e",
+      "label": "order",
+      "action": "unpublish",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "dry_run": false,
+  "public_after": 0,
+  "ok": true
+}

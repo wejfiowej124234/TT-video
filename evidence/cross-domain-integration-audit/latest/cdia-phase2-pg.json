@@ -1,0 +1,94 @@
+{
+  "generated_at": "2026-06-08T07:04:32.064528+00:00",
+  "issues": [
+    {
+      "id": "CDIA-PG-0-001",
+      "priority": "P0",
+      "category": "\u4e00\u81f4\u6027",
+      "role": "arbitrator",
+      "step": "\u8ba2\u5355",
+      "route": "orders/801bbbb3-4c34-49ed-9f0f-bcb1d588885a",
+      "title": "\u88c1\u51b3\u540e PG\u2194API \u8ba2\u5355\u6001\u4e0d\u4e00\u81f4",
+      "observation": "pg=disputed api=disputed"
+    },
+    {
+      "id": "CDIA-PG-1-002",
+      "priority": "P1",
+      "category": "\u4e00\u81f4\u6027",
+      "role": "arbitrator",
+      "step": "\u4e89\u8bae",
+      "route": "disputes/482fc9ed-eceb-462e-b1d2-e4394af62b7a",
+      "title": "\u4e89\u8bae PG\u2194API \u672a resolved",
+      "observation": "pg=open api=open"
+    }
+  ],
+  "pg_consistency_matrix": [
+    {
+      "probe_id": "pg.order_happy",
+      "check": "state",
+      "target": "a228d994-6348-46cb-a954-f4f3484ec75d",
+      "pg_value": "completed",
+      "api_value": "completed|escrowed|accepted",
+      "expected": "progressed",
+      "status": "PASS",
+      "notes": "completed"
+    },
+    {
+      "probe_id": "pg.order_dispute_terminal",
+      "check": "sync",
+      "target": "801bbbb3-4c34-49ed-9f0f-bcb1d588885a",
+      "pg_value": "disputed",
+      "api_value": "disputed",
+      "expected": "equal+terminal",
+      "status": "FAIL",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.dispute_resolved",
+      "check": "sync",
+      "target": "482fc9ed-eceb-462e-b1d2-e4394af62b7a",
+      "pg_value": "open",
+      "api_value": "open",
+      "expected": "resolved",
+      "status": "FAIL",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.penalty_active",
+      "check": "state",
+      "target": "83d11f79-0089-4c74-a412-f776ab2e9050",
+      "pg_value": "2",
+      "api_value": ">=1",
+      "expected": "active",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.auth_audit_events",
+      "check": "infra",
+      "target": "auth_audit_events",
+      "pg_value": "73",
+      "api_value": "readable",
+      "expected": "ok",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.admin_audit_logs",
+      "check": "infra",
+      "target": "admin_audit_logs",
+      "pg_value": "5848",
+      "api_value": "readable",
+      "expected": "ok",
+      "status": "PASS",
+      "notes": ""
+    }
+  ],
+  "summary": {
+    "p0": 1,
+    "p1": 1,
+    "p2": 0,
+    "pg_pass": 4,
+    "pg_total": 6
+  }
+}

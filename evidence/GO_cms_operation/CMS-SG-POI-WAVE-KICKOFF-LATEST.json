@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.cms_sg_poi_wave_kickoff.v1",
+  "stamp_utc": "2026-07-06T064348Z",
+  "asset_family": "poi",
+  "country_iso": "SG",
+  "status": "SG_CITY_PILOT_COMPLETE",
+  "next_stage": "SG_COUNTRY_RUNTIME",
+  "active_city": "新加坡",
+  "template": "JP + KR + TH Golden Template",
+  "when_pilot_complete": [
+    "新加坡 CLOSED",
+    "SG Country Runtime"
+  ],
+  "TT_CMS_SG_POI_WAVE": "SINGAPORE_CLOSED",
+  "singapore_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CLOSURE-LATEST.json"
+  },
+  "active_catalog_build": null,
+  "TT_CMS_POI_CITY_SINGAPORE": "CLOSED",
+  "TT_CMS_POI_ACTIVE_CITY": null
+}

@@ -1,0 +1,351 @@
+{
+  "summary": {
+    "schema": "staging_business_resample.v1",
+    "stamp": "20260701T003201Z",
+    "api": "https://tt-api-staging.fly.dev",
+    "fe": "https://tt-web-staging.fly.dev",
+    "pass": 37,
+    "fail": 0,
+    "total": 37,
+    "verdict": "PASS",
+    "browser_pass": 6,
+    "phase3_entry": "READY",
+    "note": "\u2461 graduation CLOSED preserved \u00b7 no new Business Defects"
+  },
+  "results": [
+    {
+      "corridor": "Auth",
+      "check": "login",
+      "persona": "C1",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "Auth",
+      "check": "login",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "Auth",
+      "check": "login",
+      "persona": "C3",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "Auth",
+      "check": "login",
+      "persona": "C4",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "Auth",
+      "check": "login",
+      "persona": "E2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "Booking/Orders",
+      "check": "/api/v1/orders?limit=5",
+      "persona": "C1",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 items=0"
+    },
+    {
+      "corridor": "Booking/Orders",
+      "check": "/api/v1/orders?limit=5",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 items=5"
+    },
+    {
+      "corridor": "Booking/Orders",
+      "check": "/api/v1/orders?limit=5",
+      "persona": "C3",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 items=5"
+    },
+    {
+      "corridor": "Booking/Orders",
+      "check": "/api/v1/me",
+      "persona": "C1",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 email=multi-demo@test.com"
+    },
+    {
+      "corridor": "Booking/Orders",
+      "check": "/api/v1/me",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 email=tourist@test.com"
+    },
+    {
+      "corridor": "Booking/Orders",
+      "check": "/api/v1/me",
+      "persona": "C3",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 email=guide@test.com"
+    },
+    {
+      "corridor": "Booking/Orders",
+      "check": "/api/v1/me",
+      "persona": "C4",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 email=merchant@test.com"
+    },
+    {
+      "corridor": "Booking/Orders",
+      "check": "/api/v1/me",
+      "persona": "E2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 email=provider-did-rank-demo@test.com"
+    },
+    {
+      "corridor": "Guide",
+      "check": "/api/v1/me/guide-profile",
+      "persona": "C3",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "Guide",
+      "check": "/api/v1/me/guide-profile",
+      "persona": "C1",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "Guide",
+      "check": "/api/v1/guides?city=Beijing&limit=3",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 items=3"
+    },
+    {
+      "corridor": "Merchant",
+      "check": "/api/v1/me/merchant-listings",
+      "persona": "C4",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "Merchant",
+      "check": "/api/v1/me/merchant-listings",
+      "persona": "C1",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "Merchant",
+      "check": "/api/v1/me/merchant-listings-summary",
+      "persona": "C4",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "Market",
+      "check": "/api/v1/market/acquisition/listings?limit=3",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 items=9"
+    },
+    {
+      "corridor": "Market",
+      "check": "/api/v1/market/provider/listings?limit=3",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 items=13"
+    },
+    {
+      "corridor": "Itinerary",
+      "check": "/api/v1/catalog/countries",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 items=0"
+    },
+    {
+      "corridor": "Itinerary",
+      "check": "/api/v1/catalog/cities?country_code=CN",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 items=0"
+    },
+    {
+      "corridor": "Governance",
+      "check": "/api/v1/governance/proposals?limit=5",
+      "persona": "C1",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 items=3"
+    },
+    {
+      "corridor": "Governance",
+      "check": "/api/v1/governance/proposals?limit=5",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 items=3"
+    },
+    {
+      "corridor": "Governance",
+      "check": "/api/v1/governance/proposals?mine=1",
+      "persona": "C1",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200 items=2"
+    },
+    {
+      "corridor": "DID/Rank",
+      "check": "/api/v1/me/publish-summary",
+      "persona": "E2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "Publish",
+      "check": "/api/v1/me/acquisition-listings",
+      "persona": "C1",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "FE shell",
+      "check": "/",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "FE shell",
+      "check": "/orders",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "FE shell",
+      "check": "/itinerary/new",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "FE shell",
+      "check": "/market",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "FE shell",
+      "check": "/traveltrust",
+      "persona": "C1",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "FE shell",
+      "check": "/governance",
+      "persona": "C1",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "FE shell",
+      "check": "/me/settings",
+      "persona": "C1",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "FE shell",
+      "check": "/community",
+      "persona": "C2",
+      "status": "PASS",
+      "http": 200,
+      "detail": "HTTP 200"
+    },
+    {
+      "corridor": "Meta",
+      "check": "/meta/build",
+      "persona": "-",
+      "status": "PASS",
+      "http": 200,
+      "detail": "f99958fa8829"
+    }
+  ],
+  "browser": [
+    {
+      "corridor": "Auth/UI",
+      "check": "C2 login tourist@test.com",
+      "status": "PASS",
+      "detail": "session \u2192 \u7528\u6237\u83dc\u5355\u00b7\u65c5\u884c\u8005"
+    },
+    {
+      "corridor": "Orders",
+      "check": "/orders shell+data",
+      "status": "PASS",
+      "detail": "7 orders \u00b7 filters \u8fdb\u884c\u4e2d1/\u5df2\u5b8c\u62104/\u4e89\u8bae1"
+    },
+    {
+      "corridor": "Itinerary",
+      "check": "/itinerary/new form",
+      "status": "PASS",
+      "detail": "10 countries \u00b7 draft form mounted"
+    },
+    {
+      "corridor": "Market",
+      "check": "/market guides",
+      "status": "PASS",
+      "detail": "16 guides listed \u00b7 acquisition/provider tabs"
+    },
+    {
+      "corridor": "Governance",
+      "check": "/governance read",
+      "status": "PASS",
+      "detail": "portal + proposals/delegate links \u00b7 pool snapshot empty (documented)"
+    },
+    {
+      "corridor": "TravelTrust",
+      "check": "/traveltrust home",
+      "status": "PASS",
+      "detail": "5 role tabs \u00b7 TTG gateway \u00b7 trust facts"
+    }
+  ]
+}

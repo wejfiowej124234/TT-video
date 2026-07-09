@@ -1,0 +1,14 @@
+{
+  "kind": "traveltrust.pi3_006_m00_final_release_audit.v1",
+  "recorded_utc": "20260608T024127Z",
+  "audit_verdict": "NO_GO",
+  "blocker_count": 7,
+  "prod_bases_used": false,
+  "api_base": "https://tt-api-staging.fly.dev",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "mainnet_section_9": "N_A_SEPOLIA_SCOPE",
+  "m00_gate": "G6",
+  "production_go_decision_required": "GO",
+  "honest_expectation": "NO_GO until PI3-001~004 Owner GO and checklist closed"
+}

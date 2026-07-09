@@ -133,6 +133,8 @@ const nextConfig = {
       { source: "/health", destination: `${dest}/health` },
       { source: "/meta", destination: `${dest}/meta` },
       { source: "/meta/build", destination: `${dest}/meta/build` },
+      /** PP-D-001 / deploy fingerprint：与 `/meta/build` 同源，避免 Next 404 HTML */
+      { source: "/api/meta/build", destination: `${dest}/meta/build` },
       { source: "/auth/:path*", destination: `${dest}/auth/:path*` },
     ];
     if (

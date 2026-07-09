@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T10:56:54Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "青岛",
+    "city_en": "Qingdao",
+    "matrix_ids": [
+      "PH-CN-300-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-300-FOOD",
+      "legacy_value": "烧烤",
+      "poi_id": "a86464e0-c8bc-4c57-a4e0-820bca6cf677",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-300-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

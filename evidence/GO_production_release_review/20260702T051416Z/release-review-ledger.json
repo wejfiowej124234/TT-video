@@ -1,0 +1,323 @@
+{
+  "schema": "traveltrust.production_release_review_ledger.v1",
+  "stamp": "20260702T051416Z",
+  "generated_at_utc": "2026-07-02T05:19:51.455Z",
+  "name": "Production Release Review · Business Domain Validation",
+  "not_a_new_audit_type": true,
+  "evidence_signals": {
+    "fe_api_strict": true,
+    "bdv_probes_staging": true,
+    "bdv_browser": true,
+    "err_browser": false,
+    "err_domain_signals": {
+      "provider": false,
+      "acquisition": false,
+      "discover": false,
+      "governance": false,
+      "orders": false,
+      "messages": false,
+      "web3": false,
+      "itinerary": false
+    }
+  },
+  "synthesizes": [
+    "Functional Audit",
+    "Enterprise Capability Audit",
+    "Frontend-API Consistency Audit",
+    "Display Data Governance",
+    "Business Manual UAT",
+    "Phase12 Final Convergence",
+    "Enterprise Release Review (Guide-depth parity)"
+  ],
+  "layers": [
+    "L1_all_pages",
+    "L2_business_flows",
+    "L3_admin_functions",
+    "L4_page_consistency",
+    "L5_enterprise_ux"
+  ],
+  "summary": {
+    "domains_total": 12,
+    "pass": 3,
+    "partial": 9,
+    "gap": 0,
+    "product_defects_open": 9,
+    "production_blockers_pi3": 6,
+    "all_domains_pass": false
+  },
+  "domain_matrix": [
+    {
+      "domain": "Home",
+      "pages": [
+        "/",
+        "/traveltrust"
+      ],
+      "api": "PASS",
+      "browser": "PARTIAL",
+      "admin": "N/A",
+      "business": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Market · Guides",
+      "pages": [
+        "/market?view=guides"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "PASS",
+      "business": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Discover · Orders",
+      "pages": [
+        "/market?view=orders"
+      ],
+      "api": "PASS",
+      "browser": "PARTIAL",
+      "admin": "N/A",
+      "business": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Provider",
+      "pages": [
+        "/market/provider",
+        "/market?view=provider"
+      ],
+      "api": "PASS",
+      "browser": "PARTIAL",
+      "admin": "PASS",
+      "business": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Acquisition",
+      "pages": [
+        "/market/acquisition"
+      ],
+      "api": "PASS",
+      "browser": "PARTIAL",
+      "admin": "PASS",
+      "business": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Itinerary",
+      "pages": [
+        "/",
+        "/orders/new",
+        "/itineraries"
+      ],
+      "api": "PASS",
+      "browser": "PARTIAL",
+      "admin": "N/A",
+      "business": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Community",
+      "pages": [
+        "/community",
+        "/community/explore"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "PASS",
+      "business": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    },
+    {
+      "domain": "Messages",
+      "pages": [
+        "/community/messages"
+      ],
+      "api": "PASS",
+      "browser": "PARTIAL",
+      "admin": "N/A",
+      "business": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Governance",
+      "pages": [
+        "/governance",
+        "/governance/proposals"
+      ],
+      "api": "PASS",
+      "browser": "PARTIAL",
+      "admin": "PASS",
+      "business": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Orders · Escrow",
+      "pages": [
+        "/escrow",
+        "/orders"
+      ],
+      "api": "PASS",
+      "browser": "PARTIAL",
+      "admin": "PARTIAL",
+      "business": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Web3 · Staking",
+      "pages": [
+        "/staking",
+        "/treasury"
+      ],
+      "api": "PASS",
+      "browser": "PARTIAL",
+      "admin": "N/A",
+      "business": "PARTIAL",
+      "ux": "PARTIAL",
+      "status": "PARTIAL"
+    },
+    {
+      "domain": "Admin Platform",
+      "pages": [
+        "/admin/*"
+      ],
+      "api": "PASS",
+      "browser": "PASS",
+      "admin": "PASS",
+      "business": "PASS",
+      "ux": "PASS",
+      "status": "PASS"
+    }
+  ],
+  "ledger": {
+    "product_defects": [
+      {
+        "id": "PD-ERR-Home",
+        "classification": "PRODUCT_DEFECT",
+        "domain": "Home",
+        "disposition": "CLOSE_BEFORE_PI3_PRODUCT_SIGNOFF",
+        "gap": "Domain Home not at Guide-depth PASS",
+        "status": "OPEN"
+      },
+      {
+        "id": "PD-ERR-Discover_Orders",
+        "classification": "PRODUCT_DEFECT",
+        "domain": "Discover · Orders",
+        "disposition": "CLOSE_BEFORE_PI3_PRODUCT_SIGNOFF",
+        "gap": "Domain Discover · Orders not at Guide-depth PASS",
+        "status": "OPEN"
+      },
+      {
+        "id": "PD-ERR-Provider",
+        "classification": "PRODUCT_DEFECT",
+        "domain": "Provider",
+        "disposition": "CLOSE_BEFORE_PI3_PRODUCT_SIGNOFF",
+        "gap": "Domain Provider not at Guide-depth PASS",
+        "status": "OPEN"
+      },
+      {
+        "id": "PD-ERR-Acquisition",
+        "classification": "PRODUCT_DEFECT",
+        "domain": "Acquisition",
+        "disposition": "CLOSE_BEFORE_PI3_PRODUCT_SIGNOFF",
+        "gap": "Domain Acquisition not at Guide-depth PASS",
+        "status": "OPEN"
+      },
+      {
+        "id": "PD-ERR-Itinerary",
+        "classification": "PRODUCT_DEFECT",
+        "domain": "Itinerary",
+        "disposition": "CLOSE_BEFORE_PI3_PRODUCT_SIGNOFF",
+        "gap": "Domain Itinerary not at Guide-depth PASS",
+        "status": "OPEN"
+      },
+      {
+        "id": "PD-ERR-Messages",
+        "classification": "PRODUCT_DEFECT",
+        "domain": "Messages",
+        "disposition": "CLOSE_BEFORE_PI3_PRODUCT_SIGNOFF",
+        "gap": "Domain Messages not at Guide-depth PASS",
+        "status": "OPEN"
+      },
+      {
+        "id": "PD-ERR-Governance",
+        "classification": "PRODUCT_DEFECT",
+        "domain": "Governance",
+        "disposition": "CLOSE_BEFORE_PI3_PRODUCT_SIGNOFF",
+        "gap": "Domain Governance not at Guide-depth PASS",
+        "status": "OPEN"
+      },
+      {
+        "id": "PD-ERR-Orders_Escrow",
+        "classification": "PRODUCT_DEFECT",
+        "domain": "Orders · Escrow",
+        "disposition": "CLOSE_BEFORE_PI3_PRODUCT_SIGNOFF",
+        "gap": "Domain Orders · Escrow not at Guide-depth PASS",
+        "status": "OPEN"
+      },
+      {
+        "id": "PD-ERR-Web3_Staking",
+        "classification": "PRODUCT_DEFECT",
+        "domain": "Web3 · Staking",
+        "disposition": "CLOSE_BEFORE_PI3_PRODUCT_SIGNOFF",
+        "gap": "Domain Web3 · Staking not at Guide-depth PASS",
+        "status": "OPEN"
+      }
+    ],
+    "production_blockers": [
+      {
+        "id": "PB-PI3-001",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Production Database / Backup",
+        "disposition": "PI3_MAINLINE"
+      },
+      {
+        "id": "PB-PI3-002",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Domain / TLS / CDN",
+        "disposition": "PI3_MAINLINE"
+      },
+      {
+        "id": "PB-PI3-003",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Stripe Live",
+        "disposition": "PI3_MAINLINE"
+      },
+      {
+        "id": "PB-PI3-004",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Production Validation",
+        "disposition": "PI3_MAINLINE"
+      },
+      {
+        "id": "PB-PI3-005",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Mainnet",
+        "disposition": "PI3_MAINLINE"
+      },
+      {
+        "id": "PB-PI3-006",
+        "classification": "PRODUCTION_BLOCKER",
+        "item": "Go-Live Checklist",
+        "disposition": "PI3_MAINLINE"
+      }
+    ],
+    "expected_differences": "docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md §4",
+    "enhancements": "Post-GO Official Ops 1.1 · CDN/HLS · Admin SSO"
+  },
+  "machine_keys": {
+    "TT_PRODUCTION_RELEASE_REVIEW": "IN_PROGRESS",
+    "TT_BUSINESS_DOMAIN_VALIDATION": "IN_PROGRESS",
+    "TT_RELEASE_DECISION": "NO_GO"
+  }
+}

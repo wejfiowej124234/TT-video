@@ -1,0 +1,385 @@
+version: complexity-convergence-fix-ledger-v1
+schema: traveltrust.complexity_convergence_fix_ledger.v1
+strategy: STRAT-F_FINAL_CANDIDATE_PRE_SOAK
+business_ssot: booking_bilateral_market_traveler_guide_escrow
+updated_at_utc: '2026-06-24T00:00:00Z'
+principles:
+- booking_core_first
+- complexity_convergence_second
+- expansion_deferred
+- dual_phase_sync_required
+phase_discipline:
+  phase1: local_green_and_contract_gates
+  phase2: staging_live_and_gap_inventory
+  no_drift: ① 已闭 须 ② 矩阵/探针同步；② 已变 须 ① 契约/矩阵回写
+status_enum:
+- open
+- in_progress
+- phase1_closed
+- closed
+- deferred
+- wont_fix
+sync_bundle_required:
+- phase1_gate_exit_0
+- phase2_probe_or_evidence
+- matrix_93_or_oed_registry
+- contract_or_api_tests
+- e2e_when_ui_touched
+- rbac_when_admin_touched
+- gap_inventory_item_ref
+- ssot_doc_row_updated
+- evidence_artifact_path
+exit_gates:
+  all_p0_p1_closed: ledger open_count(priority in [P0,P1]) == 0
+  staging_live: 'TT_P2FC_FINAL_CANDIDATE_PHASE_STAGING_LIVE: PASS'
+  freeze_candidate: engage-testnet-staging-baseline-freeze.sh @ HEAD
+  soak_launch: P2FC_SOAK_SUPERSEDE=1 p2fc-launch-staging-soak-72h.sh
+items:
+- id: BOOK-P0-01
+  priority: P0
+  wave: booking_core
+  title: OED 走廊烟测（订单→mock-pay→争议→裁决）
+  category: business_essential
+  status: phase1_closed
+  gap_refs: []
+  phase1:
+    gate: RESTART_API=0 bash scripts/dev/smoke-order-escrow-dispute-p0-local.sh
+    matrix: registry/order-escrow-dispute-audit-probes.v1.yaml
+    evidence: evidence/COMPLEXITY_CONVERGENCE/BOOK-P0-01/
+  phase2:
+    gate: bash scripts/ops/phase2-full-coverage-validation.sh --slice oed
+    probe: registry/phase2-testnet-surface-coverage-registry.v1.yaml
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/items/BOOK-P0-01/
+  ssot:
+  - docs/handbook/engineering/20-B-订单机制.md
+  - registry/order-escrow-dispute-audit-probes.v1.yaml
+  notes: Windows ARG_MAX 修复 · RESTART_API=0 可复用已启 API
+- id: BOOK-P0-02
+  priority: P0
+  wave: booking_core
+  title: Web3 行程全链烟测（Landing→Escrow→Market）
+  category: business_essential
+  status: phase1_closed
+  gap_refs: []
+  phase1:
+    gate: bash scripts/dev/smoke-web3-itinerary-full-chain-local.sh
+    matrix: frontend/evidence/GO_local_web3_itinerary_l5/
+    evidence: evidence/COMPLEXITY_CONVERGENCE/BOOK-P0-02/
+  phase2:
+    gate: bash scripts/gates/tt-9627-testnet-segment12-smoke-pack.sh
+    probe: registry/phase2-testnet-surface-coverage-registry.v1.yaml
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/items/BOOK-P0-02/
+  ssot:
+  - frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md
+  - frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md
+- id: BOOK-P0-03
+  priority: P0
+  wave: booking_core
+  title: 向导详情页→预约下单链
+  category: business_essential
+  status: phase1_closed
+  gap_refs: []
+  phase1:
+    gate: RESTART_API=0 SKIP_PLAYWRIGHT=1 bash scripts/dev/smoke-guide-detail-booking-local.sh
+    evidence: evidence/COMPLEXITY_CONVERGENCE/BOOK-P0-03/
+  phase2:
+    gate: bash scripts/dev/smoke-guide-detail-booking-p2-local.sh
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/items/BOOK-P0-03/
+  ssot:
+  - frontend/app/guides/[id]/README.md
+- id: BOOK-P0-04
+  priority: P0
+  wave: booking_core
+  title: 双边确认 + mock-pay API 契约（cargo matrix_93）
+  category: business_essential
+  status: phase1_closed
+  gap_refs: []
+  phase1:
+    gate: cargo test -p traveltrust-api -- matrix_93
+    matrix: docs/spec/93-全站功能验证矩阵-域别回归清单.md
+    evidence: evidence/COMPLEXITY_CONVERGENCE/BOOK-P0-04/
+  phase2:
+    gate: BASE=https://tt-api-staging.fly.dev bash scripts/gates/smoke-api-public-routes.sh
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/items/BOOK-P0-04/
+  ssot:
+  - crates/api/src/routes/orders/mutations.rs
+  - docs/spec/04-后端与API.md
+- id: BOOK-P0-05
+  priority: P0
+  wave: booking_core
+  title: Escrow 草稿体验绿集（非 UI 结构变更）
+  category: business_essential
+  status: phase1_closed
+  gap_refs: []
+  phase1:
+    gate: bash scripts/dev/run-web3-itinerary-l5-green.sh
+    evidence: evidence/COMPLEXITY_CONVERGENCE/BOOK-P0-05/
+  phase2:
+    gate: bash scripts/dev/smoke-staging-web.sh
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/items/BOOK-P0-05/
+  ssot:
+  - frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-DRAFT-EXPERIENCE-FREEZE.md
+- id: STRAT-S1
+  priority: P0
+  wave: strat_f_deploy
+  title: MR-01/02 + backlog patch · wave1/wave2 staging deploy
+  category: soak_blocker
+  status: phase1_closed
+  gap_refs:
+  - S1_MR12
+  phase1:
+    gate: bash scripts/ops/p2fc-pivot-final-candidate-pre-soak.sh --phase-local
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/
+  phase2:
+    gate: bash scripts/ops/p2fc-pivot-final-candidate-pre-soak.sh --phase-staging-deploy
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/deploy-complete.json
+  ssot:
+  - scripts/ops/p2fc-pivot-final-candidate-pre-soak.sh
+  depends_on:
+  - BOOK-P0-01
+  - BOOK-P0-02
+  - BOOK-P0-04
+- id: STRAT-S2
+  priority: P0
+  wave: strat_f_live
+  title: ADM-U01 staging 六角色证据 persistent_host GO
+  category: soak_blocker
+  status: phase2_closed
+  gap_refs:
+  - S2_ADM_U01
+  phase1:
+    gate: bash scripts/dev/smoke-admin-rbac-matrix-local.sh
+    rbac: registry/admin-rbac-staging-probes.v1.yaml
+    evidence: evidence/COMPLEXITY_CONVERGENCE/STRAT-S2/
+  phase2:
+    gate: ADM_U01_STRICT=1 ADM_U01_REQUIRE_PERSISTENT_HOST=1 bash scripts/dev/record-adm-u01-staging-evidence.sh
+    rbac: registry/admin-rbac-staging-probes.v1.yaml
+    evidence: evidence/GO_staging_admin_rbac_matrix/run_20260701T092450Z
+    release_gate: GO
+    closed_utc: "2026-07-01T09:28:17Z"
+  ssot:
+  - docs/runbook/ADM-U01-staging-rbac-matrix.md
+  depends_on:
+  - STRAT-S1
+- id: STRAT-S3
+  priority: P0
+  wave: strat_f_live
+  title: P0 RBAC bypass runtime CONFIRMED on staging
+  category: soak_blocker
+  status: phase1_closed
+  gap_refs:
+  - S3_P0_RUNTIME
+  phase1:
+    gate: bash scripts/dev/run-admin-l5-green.sh
+    evidence: evidence/COMPLEXITY_CONVERGENCE/STRAT-S3/
+  phase2:
+    gate: bash scripts/ops/p2fc-verify-p0-rbac-bypass-runtime.sh
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/items/STRAT-S3/
+  ssot:
+  - crates/api/src/routes/admin/admin_rbac.rs
+  depends_on:
+  - STRAT-S1
+- id: STRAT-S4
+  priority: P0
+  wave: strat_f_live
+  title: Blocker B1–B4 清零（TN-P1-010 + G02/meta）
+  category: soak_blocker
+  status: phase1_closed
+  gap_refs:
+  - S4_BLOCKERS
+  - B1_TN_P1_010
+  - B2_W1_ITINERARIES_HUB
+  - B3_G06_G08
+  - B4_DB_COMPOUND
+  phase1:
+    gate: bash scripts/dev/run-g02-meta-contract-gate-local.sh
+    evidence: evidence/COMPLEXITY_CONVERGENCE/STRAT-S4/
+  phase2:
+    gate: bash scripts/ops/p2fc-run-tn-p1-010-independent.sh --allow-pre-soak
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/items/STRAT-S4/
+  depends_on:
+  - STRAT-S1
+  - BOOK-P0-04
+- id: STRAT-S5
+  priority: P0
+  wave: strat_f_live
+  title: ADM-U02 staging 审批链证据 GO
+  category: soak_blocker
+  status: phase2_closed
+  gap_refs:
+  - S5_ADM_U02
+  phase1:
+    gate: bash scripts/dev/l5-p0-e2-approval-chain-smoke.sh
+    evidence: evidence/COMPLEXITY_CONVERGENCE/STRAT-S5/
+  phase2:
+    gate: bash scripts/dev/record-adm-u02-staging-evidence.sh
+    evidence: evidence/GO_staging_admin_adm_u02/run_20260701T100804Z/
+  ssot:
+  - docs/runbook/ADM-U02-admin-permissions-2fa-approval.md
+  depends_on:
+  - STRAT-S2
+  - STRAT-S3
+- id: STRAT-S6
+  priority: P0
+  wave: strat_f_security
+  title: D3 安全合并（ADM-U01 GO + P0 runtime）
+  category: soak_blocker
+  status: phase1_closed
+  gap_refs:
+  - S6_D3
+  - D3-F02
+  phase1:
+    gate: bash scripts/ops/p2fc-run-web3-system-security-audit-readonly.sh
+    evidence: evidence/COMPLEXITY_CONVERGENCE/STRAT-S6/
+  phase2:
+    gate: bash scripts/dev/gen-p2fc-web3-system-security-audit.py
+    evidence: evidence/P2FC_SOAK_72H_STAGING/web3-system-security-audit/
+  depends_on:
+  - STRAT-S2
+  - STRAT-S3
+- id: STRAT-S7
+  priority: P0
+  wave: strat_f_security
+  title: D1/D2/D4 WARN/OPEN 收敛 live evidence
+  category: soak_blocker
+  status: phase1_closed
+  gap_refs:
+  - S7_D124
+  - D1-F02
+  - D1-F04
+  - D2-F03
+  - D3-F04
+  - D4-F01
+  - D4-F03
+  phase1:
+    gate: bash scripts/dev/validate-complexity-convergence-ledger-sync.sh
+    evidence: evidence/COMPLEXITY_CONVERGENCE/STRAT-S7/
+  phase2:
+    gate: bash scripts/ops/p2fc-post-soak-priority-closure-sequential.sh --execute
+      --strat-f
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/
+  depends_on:
+  - STRAT-S6
+- id: EXP-P1-01
+  priority: P1
+  wave: expansion_freeze
+  title: 多身份 Hub 仅 guide+traveler 活跃展示
+  category: complexity_convergence
+  status: phase1_closed
+  gap_refs: []
+  phase1:
+    gate: bash scripts/dev/smoke-multi-identity-ia-closure-local.sh
+    contract: frontend/lib/me/meIdentitiesPage.contract.test.ts
+    evidence: evidence/COMPLEXITY_CONVERGENCE/EXP-P1-01/
+  phase2:
+    gate: bash scripts/dev/smoke-multi-identity-closure-local.sh
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/items/EXP-P1-01/
+  ssot:
+  - frontend/app/me/identities/README.md
+  - docs/spec/artifacts/multi-operator-identity-sprint.v1.md
+- id: EXP-P1-02
+  priority: P1
+  wave: expansion_freeze
+  title: 收购 PD-009 / provider B轨 staging 写面默认关闭
+  category: complexity_convergence
+  status: phase1_closed
+  gap_refs: []
+  phase1:
+    gate: bash scripts/dev/smoke-acquisition-pd009-local.sh
+    evidence: evidence/COMPLEXITY_CONVERGENCE/EXP-P1-02/
+  phase2:
+    gate: 'staging: Growth/acquisition admin routes 404 or read-only'
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/items/EXP-P1-02/
+  ssot:
+  - frontend/app/market/acquisition/README.md
+  - docs/handbook/engineering/125-Production-Feature-Gap-Matrix.md
+- id: EXP-P1-03
+  priority: P1
+  wave: admin_trim
+  title: Admin 侧栏收敛至 P0+P1（~20 项）
+  category: complexity_convergence
+  status: phase1_closed
+  gap_refs: []
+  phase1:
+    gate: bash scripts/dev/smoke-admin-pages-local.sh
+    rbac: registry/admin-rbac-permissions.v1.yaml
+    evidence: evidence/COMPLEXITY_CONVERGENCE/EXP-P1-03/
+  phase2:
+    gate: bash scripts/gates/smoke-admin-rbac-staging-matrix.sh
+    rbac: registry/admin-rbac-staging-probes.v1.yaml
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/items/EXP-P1-03/
+  ssot:
+  - frontend/lib/admin/adminHomeCardCapability.ts
+  - docs/handbook/engineering/40-D-Admin机制.md
+- id: EXP-P1-04
+  priority: P1
+  wave: expansion_freeze
+  title: Growth Admin staging 不部署（B 层 HOLD）
+  category: complexity_convergence
+  status: phase1_closed
+  gap_refs: []
+  phase1:
+    gate: bash scripts/dev/smoke-growth-referral-p0-local.sh
+    evidence: evidence/COMPLEXITY_CONVERGENCE/EXP-P1-04/
+  phase2:
+    gate: curl staging /api/v1/admin/growth → 404 or deny
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/items/EXP-P1-04/
+  ssot:
+  - docs/handbook/engineering/125-Production-Feature-Gap-Matrix.md
+- id: EXP-P1-05
+  priority: P1
+  wave: governance_narrow
+  title: 治理 UI 窄化只读（proposals 列表/详情）
+  category: complexity_convergence
+  status: phase1_closed
+  gap_refs: []
+  phase1:
+    gate: bash scripts/dev/smoke-governance-proposals-l5-local.sh
+    evidence: evidence/COMPLEXITY_CONVERGENCE/EXP-P1-05/
+  phase2:
+    gate: bash scripts/gates/governance-matrix-local-gate.sh
+    evidence: evidence/P2FC_SOAK_72H_STAGING/final-candidate-pre-soak/items/EXP-P1-05/
+  ssot:
+  - docs/handbook/engineering/31-C-治理与质押只读导读.md
+- id: GATE-P1-01
+  priority: P1
+  wave: gate_merge
+  title: Site-10 重跑合并为 p1-slices-recheck 单入口
+  category: complexity_convergence
+  status: phase1_closed
+  gap_refs: []
+  phase1:
+    gate: bash scripts/dev/run-site10-p1-slices-recheck-sequential.sh
+    evidence: evidence/COMPLEXITY_CONVERGENCE/GATE-P1-01/
+  phase2:
+    gate: bash scripts/ops/p2fc-run-soak-l5-stability-audit.sh
+    evidence: evidence/P2FC_SOAK_72H_STAGING/soak-l5-stability-audit/
+  ssot:
+  - scripts/dev/run-site10-p1-slices-recheck-sequential.sh
+- id: DEF-P2-01
+  priority: P2
+  wave: post_soak
+  title: Catalog Admin CRUD（破 120 冻结后）
+  category: future_extension
+  status: deferred
+  gap_refs: []
+  ssot:
+  - docs/handbook/engineering/120-S5-Catalog-Release-Freeze-Report.md
+- id: DEF-P2-02
+  priority: P2
+  wave: post_soak
+  title: CountryPool NetProfit / TTG PrimaryMarket 开发轨
+  category: future_extension
+  status: deferred
+  gap_refs: []
+  ssot:
+  - docs/runbook/PHASE2-OPEN-ITEMS-BURN-DOWN.md
+- id: DEF-P2-03
+  priority: P2
+  wave: post_soak
+  title: ROV-T6 RegionShare / ROV-T7 Investor Demo
+  category: future_extension
+  status: deferred
+  gap_refs: []
+  ssot:
+  - docs/handbook/engineering/174-Real-Operations-Validation-Report.md

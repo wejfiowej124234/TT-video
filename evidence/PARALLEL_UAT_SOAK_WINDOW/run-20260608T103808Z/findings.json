@@ -1,0 +1,2329 @@
+{
+  "schema": "traveltrust.parallel_uat_findings.v1",
+  "sprint": "运营视角人工 UAT · 十条真实业务场景 · soak window record-only",
+  "exec_env": "local_or_staging_dev_only",
+  "staging_soak_touch_policy": "no_redeploy_no_restart_no_migration_no_config_on_tt-api-staging_or_tt-web-staging",
+  "fix_policy": "record_only_during_soak_window",
+  "post_soak": "unfreeze_then_token_debt_sprint_then_next_testnet_round",
+  "reviewer": "",
+  "started_at": "2026-06-08T10:38:08Z",
+  "run_ref": "evidence/PARALLEL_UAT_SOAK_WINDOW/run-20260608T103808Z",
+  "items": [
+    {
+      "id": "UAT-CMS-001",
+      "track": "CMS-catalog-ro",
+      "domain": "CMS",
+      "failure_step": "GET /api/v1/catalog/pois?country_iso=CN&city=北京&type=attraction（smoke-catalog-consumer-opt-in-staging-p0-local.sh 第 3 条 catalog RO 探针）",
+      "expected": "HTTP 200 · status=ok · items[] 可返回 CN/北京/attraction 已发布 POI（与前两条 countries/cities RO 200 一致）",
+      "actual": "HTTP 400 · harness 在 countries/cities 200 后于 pois 探针 FAIL（日志末行：FAIL catalog RO … pois… -> HTTP 400）",
+      "evidence": [
+        "tracks/CMS-catalog-ro.log",
+        "manifest.json"
+      ],
+      "suspected_layer": "Config",
+      "suspected_layer_notes": "复现：未 URL 编码的 city=北京 导致 query 解析异常，type 未正确传入 → invalid_catalog_poi_type(400)；city 百分号编码后同 API 返回 200。根因在 harness URL 编码/探针参数，非 staging-soak 部署。",
+      "severity": "P1",
+      "blocks_phase2": false,
+      "blocks_phase2_notes": "Catalog consumer 局部探针失败；countries/cities 已 200。不阻塞 P2FC-S01 soak；阻塞完整 C-S6 本地绿集直至 harness 修复。",
+      "fix_window": "soak后",
+      "fix_window_notes": "harness 已本地验证；解冻后合入 parallel-uat 下一轮，不涉及 tt-api-staging redeploy。FE :3012 未起时 fe / 仍 404，属环境前置非本项 API 根因。",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T10:48:39Z",
+      "fix_applied": "scripts/dev/smoke-catalog-consumer-opt-in-staging-p0-local.sh · catalog_pois_ro_code() uses curl -G --data-urlencode for city=北京",
+      "local_verification": "tracks/CMS-catalog-ro-rerun.log · catalog RO pois (urlencoded city) -> HTTP 200",
+      "staging_deploy": "deferred_until_post_soak_rerun"
+    },
+    {
+      "id": "UAT-GROWTH-001",
+      "track": "Growth-funnel",
+      "domain": "Growth",
+      "failure_step": "rov-wave1-t3-growth-funnel.sh 入口 · 依赖 ROV-T1 cohort_users.jsonl（L12: [[ -f \"$T1\" ]] || rov_fail \"missing T1 cohort\"）",
+      "expected": "parallel-uat 调用 T3 前存在 evidence/…/tracks/ROV-T1/cohort_users.jsonl 与 referral_code.txt（由 rov-wave1-t1 或等价 seed 产出）",
+      "actual": "rov-wave1: FAIL missing T1 cohort · T3 未执行任何 Growth API 探针",
+      "evidence": [
+        "tracks/Growth-funnel.log",
+        "manifest.json"
+      ],
+      "suspected_layer": "Seed",
+      "suspected_layer_notes": "parallel-uat-during-soak.sh 直接调用 T3，未编排 ROV-T1/T2 前置 cohort；属 local harness 编排缺口，非 Fly staging Growth 404。",
+      "severity": "P2",
+      "blocks_phase2": false,
+      "blocks_phase2_notes": "Growth 人工验收与 funnel 机读未跑通；staging-soak 不受影响。Phase② Growth 全链路 GO 需解冻后补 T1→T3 编排或文档化前置条件。",
+      "fix_window": "立即本地",
+      "fix_window_notes": "T1→T3 编排已本地验证；parallel-uat 合入 soak 后下一轮。T3 依赖 ROV_OUT_DIR 下 ROV-T1/cohort_users.jsonl。",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T10:48:39Z",
+      "fix_applied": "scripts/ops/parallel-uat-during-soak.sh · export ROV_OUT_DIR + run_track Growth-funnel runs rov-wave1-t1-recruit.sh && rov-wave1-t3-growth-funnel.sh",
+      "local_verification": "tracks/Growth-funnel-rerun.log · TT_ROV_T1: GO registered=32 · TT_ROV_T3: GO · cohort evidence/.../rov-wave1-rerun/",
+      "staging_deploy": "deferred_until_post_soak_rerun"
+    },
+    {
+      "id": "UAT-MOD-001",
+      "track": "Community-moderation",
+      "domain": "人工审核",
+      "failure_step": "举报提交 OK 后 · GET /api/v1/admin/community/reports?status=open&limit=50（seed promote_admin + admin login 之后）",
+      "expected": "HTTP 200 · items[] 含刚提交的 open report · 可继续 PATCH …/admin/community/moderation/:id 完成 content_remove",
+      "actual": "HTTP 403 · smoke-community-c3-staging-moderation: FAIL admin reports HTTP 403 · 前置步骤（发帖/feed/举报）均 OK",
+      "evidence": [
+        "tracks/Community-moderation.log",
+        "manifest.json"
+      ],
+      "suspected_layer": "Auth",
+      "suspected_layer_notes": "根因为 admin_2fa_required(403)，非 promote/role 缺失；local PG policy relax + console role 后 C3 E2E 绿。",
+      "severity": "P0",
+      "blocks_phase2": true,
+      "blocks_phase2_notes": "160 人工审核 E2E 在 local 无法走完 Admin 队列→处置链；属 Phase② 社区治理验收阻塞项（仅 local/staging-dev 范围，未证 staging-soak 同态）。",
+      "fix_window": "soak后",
+      "fix_window_notes": "local/staging-dev smoke 已验证；staging-soak 冻结不变，下一轮测试网回归再验。",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T10:48:39Z",
+      "fix_applied": "scripts/dev/lib/smoke-admin-local-prep.sh (relax 2FA + console role) · smoke-community-c3-staging-moderation.sh calls prep after admin login",
+      "local_verification": "tracks/Community-moderation-rerun.log · TT_COMMUNITY_C3_STAGING_MODERATION: OK · admin reports/moderation chain end-to-end",
+      "staging_deploy": "deferred_until_post_soak_rerun"
+    },
+    {
+      "id": "UX-P0-01",
+      "severity": "P0",
+      "domain": "Identity",
+      "personas": [
+        "Traveler",
+        "Guide"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER",
+        "SCN-GUIDE"
+      ],
+      "kind": "workflow",
+      "surface": "/me → /community · profile at /me/settings/profile",
+      "title": "Me/Profile 信息架构迁移未完成，首访路径与标签不一致",
+      "expected": "单一、可预测的个人中心入口；Profile/Me/Community 命名一致",
+      "actual": "/me 重定向至 /community feed；遗留 community_tab_me 标签；Header Profile 指向 /me/settings/profile",
+      "cognitive_cost": "用户以为 Me=个人中心，却进入社区 feed",
+      "evidence": [
+        "frontend/app/me/page.tsx",
+        "frontend/locales/en.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P0-02",
+      "severity": "P0",
+      "domain": "Identity",
+      "personas": [
+        "Merchant"
+      ],
+      "scenario_ids": [
+        "SCN-MERCHANT"
+      ],
+      "kind": "naming",
+      "surface": "/provider/register · role=provider · Merchant copy",
+      "title": "Merchant 与 Provider 双命名体系贯穿 URL/API/UI",
+      "expected": "商家入驻全链路使用一致用户可见术语",
+      "actual": "URL/query 为 provider；UI 为 Merchant；Studio 为 merchant* 代码 ID",
+      "cognitive_cost": "商家无法将 Merchant onboarding 与 /provider/register 对应",
+      "evidence": [
+        "frontend/app/provider/register/README.md",
+        "frontend/locales/en.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P0-03",
+      "severity": "P0",
+      "domain": "Referral",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-REFERRAL"
+      ],
+      "kind": "workflow",
+      "surface": "/me/referrals",
+      "title": "Referral 增长任务路径深埋，首访不可发现",
+      "expected": "邀请任务可从 Header/Community/注册流自然触达",
+      "actual": "Referrals 仅 Settings→Travel→Referrals & points；非五主路由",
+      "cognitive_cost": "增长核心动作需 3+ 次点击",
+      "evidence": [
+        "frontend/lib/me/meSettingsNavModel.ts",
+        "frontend/app/me/referrals/MeReferralsPageMain.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P0-04",
+      "severity": "P0",
+      "domain": "Growth",
+      "personas": [
+        "Operator",
+        "Admin"
+      ],
+      "scenario_ids": [
+        "SCN-GROWTH",
+        "SCN-ADMIN"
+      ],
+      "kind": "naming",
+      "surface": "/admin/growth vs /admin/trust-growth",
+      "title": "Growth Center 与 Trust Growth 命名碰撞",
+      "expected": "运营可区分 Referral/Early Bird 增长台与 Banner A/B 信任增长台",
+      "actual": "Sidebar Growth 组 vs Governance 组 trust-growth；Analytics 另拆 conversion-analytics",
+      "cognitive_cost": "Ops 易进错控制台；KPI 归属不清",
+      "evidence": [
+        "frontend/lib/admin/adminShellGrowthNavLinks.ts",
+        "frontend/lib/admin/adminShellGovernanceNavLinks.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P0-05",
+      "severity": "P0",
+      "domain": "Referral",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-REFERRAL"
+      ],
+      "kind": "copy",
+      "surface": "/me/referrals eyebrow",
+      "title": "工程 Sprint 标识暴露于用户界面",
+      "expected": "用户可见文案为产品语言，无内部 ticket",
+      "actual": "me_referrals_eyebrow: Growth · G-S4 渲染在 Referrals 页",
+      "cognitive_cost": "破坏产品专业感；用户无法理解 G-S4",
+      "evidence": [
+        "frontend/locales/en.ts",
+        "frontend/app/me/referrals/MeReferralsPageMain.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-01",
+      "severity": "P1",
+      "domain": "Market",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER"
+      ],
+      "kind": "navigation",
+      "surface": "Global Header · Orders/Pay",
+      "title": "订单/支付/托管不在全局主导航",
+      "expected": "预订后管理订单、支付可在 Header 一级触达",
+      "actual": "Header 仅 Home/Market/Ranking/Community；Orders 在用户菜单",
+      "cognitive_cost": "完成预订后的下一步需打开用户菜单",
+      "evidence": [
+        "frontend/components/Header.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-02",
+      "severity": "P1",
+      "domain": "Market",
+      "personas": [
+        "Guide",
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-GUIDE"
+      ],
+      "kind": "workflow",
+      "surface": "/guide/register · /guides · /market",
+      "title": "向导招募入口分散（BP-03）",
+      "expected": "单一向导招募漏斗",
+      "actual": "入口含 home PES、guides empty、market empty、MeTrust；/guide vs /guides 语义分裂",
+      "cognitive_cost": "潜在向导不知从哪开始",
+      "evidence": [
+        "frontend/lib/conversionFunnelModel.ts",
+        "frontend/app/guides/page.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-03",
+      "severity": "P1",
+      "domain": "Identity",
+      "personas": [
+        "Merchant"
+      ],
+      "scenario_ids": [
+        "SCN-MERCHANT"
+      ],
+      "kind": "workflow",
+      "surface": "/provider/register ↔ /me/onboarding",
+      "title": "商家 5 步入驻跨页跳跃，Settings 无承接",
+      "expected": "入驻进度可在 Identities Hub 续作",
+      "actual": "Step2→onboarding；Settings hub 无 merchant 行",
+      "cognitive_cost": "中途离开难以找回进度（BP-04）",
+      "evidence": [
+        "frontend/app/provider/register/README.md",
+        "frontend/app/me/identities/page.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-04",
+      "severity": "P1",
+      "domain": "Market",
+      "personas": [
+        "Guide"
+      ],
+      "scenario_ids": [
+        "SCN-GUIDE"
+      ],
+      "kind": "naming",
+      "surface": "/guide vs /guides",
+      "title": "Guide 工作台与 Guides 目录单复数路径无统合 wayfinding",
+      "expected": "目录页与向导工作台有明确互链",
+      "actual": "/guide=workspace，/guides=public directory",
+      "cognitive_cost": "已注册向导与访客混淆两个 guides",
+      "evidence": [
+        "frontend/app/guide/layout.tsx",
+        "frontend/app/guides/page.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-05",
+      "severity": "P1",
+      "domain": "CMS",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-CMS"
+      ],
+      "kind": "navigation",
+      "surface": "/admin/content hub vs sidebar",
+      "title": "CMS Hub 链接网格与 Sidebar 不一致",
+      "expected": "Content Hub 覆盖 Sidebar 全部 P1 模块",
+      "actual": "Sidebar 含 Country market；Hub 网格遗漏",
+      "cognitive_cost": "运营从 Hub 找不到国别市场模块",
+      "evidence": [
+        "frontend/components/admin/content/AdminContentPageShell.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-06",
+      "severity": "P1",
+      "domain": "Community Moderation",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-MODERATION"
+      ],
+      "kind": "naming",
+      "surface": "/admin/community/reports",
+      "title": "Community 首项 Nav 标签与页面标题不一致",
+      "expected": "Sidebar 标签与 H1 一致",
+      "actual": "Nav Community governance → reports；H1 Community reports",
+      "cognitive_cost": "审核员搜索举报与导航文案不匹配",
+      "evidence": [
+        "frontend/lib/admin/adminShellCommunityNavLinks.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-07",
+      "severity": "P1",
+      "domain": "Official OPS",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-OFFICIAL-OPS"
+      ],
+      "kind": "naming",
+      "surface": "/admin/guides vs /admin/official/guides",
+      "title": "Operations Guides 与 Official Guides 同名异义",
+      "expected": "导航消歧 Marketplace vs Official content",
+      "actual": "Operations /admin/guides KYB；Official /admin/official/guides 官方攻略",
+      "cognitive_cost": "运营发布官方攻略时可能进错模块",
+      "evidence": [
+        "frontend/lib/admin/adminShellOperationsNavLinks.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-08",
+      "severity": "P1",
+      "domain": "Growth",
+      "personas": [
+        "Operator",
+        "Admin"
+      ],
+      "scenario_ids": [
+        "SCN-GROWTH",
+        "SCN-ADMIN"
+      ],
+      "kind": "navigation",
+      "surface": "/admin/growth/analytics vs /admin/conversion-analytics",
+      "title": "两套 Analytics 产品 IA 未向运营解释",
+      "expected": "Hub 说明 Growth funnel vs PES conversion 分工",
+      "actual": "Growth analytics 在 Growth 组；Conversion 在 More 组",
+      "cognitive_cost": "报表需求方不知打开哪个控制台",
+      "evidence": [
+        "frontend/app/admin/growth/analytics",
+        "frontend/app/admin/conversion-analytics/page.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-09",
+      "severity": "P1",
+      "domain": "Market",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER"
+      ],
+      "kind": "naming",
+      "surface": "Escrow · Pay · Payment",
+      "title": "支付/托管术语混用",
+      "expected": "消费者面统一支付/订金/担保语言",
+      "actual": "Pay & escrow、Payment breadcrumb、escrow 步骤并存",
+      "cognitive_cost": "非 Web3 用户不理解 escrow",
+      "evidence": [
+        "frontend/components/market/EmptyState.tsx",
+        "frontend/locales/en.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-10",
+      "severity": "P1",
+      "domain": "Referral",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-REFERRAL"
+      ],
+      "kind": "feedback",
+      "surface": "/me/referrals empty",
+      "title": "Referrals 无邀请成果空态引导",
+      "expected": "零邀请时展示如何分享与预期反馈",
+      "actual": "统计为 0；无 guided empty panel",
+      "cognitive_cost": "用户不确定功能是否可用",
+      "evidence": [
+        "frontend/app/me/referrals/MeReferralsPageMain.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-11",
+      "severity": "P1",
+      "domain": "Early Bird",
+      "personas": [
+        "Traveler",
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-EARLY-BIRD"
+      ],
+      "kind": "feedback",
+      "surface": "Register · /admin/growth/early-bird",
+      "title": "Early Bird 消费者触达与 Admin stages 关联弱",
+      "expected": "注册/Me 披露早鸟状态；Admin 与 consumer 文案对齐",
+      "actual": "早鸟主要在 register payload/admin；consumer 自解释不足",
+      "cognitive_cost": "用户不知是否获得早鸟",
+      "evidence": [
+        "frontend/app/auth/register",
+        "frontend/app/admin/growth/early-bird"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-12",
+      "severity": "P1",
+      "domain": "Official OPS",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-OFFICIAL-OPS",
+        "SCN-TRAVELER"
+      ],
+      "kind": "feedback",
+      "surface": "ConsumerSurfaceStatePanel",
+      "title": "冷启动 consumer 空态过于泛化",
+      "expected": "空态说明 data_origin 与下一步",
+      "actual": "Generic Nothing here yet；缺 numbered steps",
+      "cognitive_cost": "用户不知是 bug 还是尚未 seed",
+      "evidence": [
+        "frontend/components/consumer/ConsumerSurfaceStatePanel.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-13",
+      "severity": "P1",
+      "domain": "Community Moderation",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-MODERATION"
+      ],
+      "kind": "interaction",
+      "surface": "/admin/community/*",
+      "title": "Community Admin Legacy list UX 与 Ops Plane 不一致",
+      "expected": "Moderation 与 CMS/Growth 一致 loading/empty/error",
+      "actual": "AdminStandardListSection vs OpsPlaneFetchStates",
+      "cognitive_cost": "同一 Admin 内交互模式切换",
+      "evidence": [
+        "frontend/components/admin/AdminStandardListSection.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P1-14",
+      "severity": "P1",
+      "domain": "CMS",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-CMS",
+        "SCN-ADMIN"
+      ],
+      "kind": "navigation",
+      "surface": "Admin breadcrumb",
+      "title": "Content/Official/Growth breadcrumb 上下文缺失",
+      "expected": "Ops Plane breadcrumb 反映四平面分组",
+      "actual": "adminShellContextForPath 缺少 content/official_ops/growth 规则",
+      "cognitive_cost": "深页运营失去位置感",
+      "evidence": [
+        "frontend/lib/admin/adminShellContextForPath.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P2-01",
+      "severity": "P2",
+      "domain": "Market",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER"
+      ],
+      "kind": "naming",
+      "surface": "Home hero vs Header",
+      "title": "首页 Plan trip 与 Header Web3 Travel 双 framing",
+      "expected": "同一 / 入口产品语言一致",
+      "actual": "LandingHeroNavTabs vs Header 措辞不同",
+      "cognitive_cost": "轻度品牌 vs 任务导向分裂",
+      "evidence": [
+        "frontend/components/landing/LandingHeroNavTabs.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P2-02",
+      "severity": "P2",
+      "domain": "Market",
+      "personas": [
+        "Traveler",
+        "Merchant"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER",
+        "SCN-MERCHANT"
+      ],
+      "kind": "naming",
+      "surface": "Market sub-nav",
+      "title": "Market / Book travel / Merchants 动词不一致",
+      "expected": "子导航同一层级命名风格",
+      "actual": "Header Market；子 nav Book travel / Merchants / Travel acquisition",
+      "cognitive_cost": "轻度",
+      "evidence": [
+        "frontend/components/market/MarketHubSubNav.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P2-03",
+      "severity": "P2",
+      "domain": "Market",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER"
+      ],
+      "kind": "naming",
+      "surface": "Orders · Saved · Collects",
+      "title": "订单/收藏多标签指相近目的地",
+      "expected": "Saved/Collects/Orders 用户语言统一",
+      "actual": "My orders / Saved / My collects 并存",
+      "cognitive_cost": "轻度",
+      "evidence": [
+        "frontend/components/header/headerUserMenuNavModel.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P2-04",
+      "severity": "P2",
+      "domain": "Identity",
+      "personas": [
+        "Traveler"
+      ],
+      "scenario_ids": [
+        "SCN-TRAVELER"
+      ],
+      "kind": "copy",
+      "surface": "User menu Identities",
+      "title": "Multiple roles & onboarding 菜单文案过长",
+      "expected": "简洁消费者语言",
+      "actual": "headerUserMenuNavModel account 区偏 spec",
+      "cognitive_cost": "轻度阅读负担",
+      "evidence": [
+        "frontend/components/header/headerUserMenuNavModel.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P2-05",
+      "severity": "P2",
+      "domain": "CMS",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-CMS"
+      ],
+      "kind": "naming",
+      "surface": "/admin/content",
+      "title": "Sidebar Content vs Hub Content Center",
+      "expected": "组名与 Hub H1 一致",
+      "actual": "admin_shell_nav_group_content vs admin_content_hub_title",
+      "cognitive_cost": "轻度",
+      "evidence": [
+        "frontend/locales/en.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P2-06",
+      "severity": "P2",
+      "domain": "Official OPS",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-OFFICIAL-OPS"
+      ],
+      "kind": "naming",
+      "surface": "/admin/official",
+      "title": "Official Ops nav vs Official Operations H1",
+      "expected": "Nav 与页面标题一致",
+      "actual": "admin_shell_nav_official_hub vs admin_official_hub_title",
+      "cognitive_cost": "轻度",
+      "evidence": [
+        "frontend/locales/en.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P2-07",
+      "severity": "P2",
+      "domain": "Community Moderation",
+      "personas": [
+        "Operator"
+      ],
+      "scenario_ids": [
+        "SCN-MODERATION"
+      ],
+      "kind": "naming",
+      "surface": "/admin/community/moderation/cases",
+      "title": "Mod cases 缩写 vs moderation/cases 路径",
+      "expected": "运营可读全称或一致缩写",
+      "actual": "Nav 缩写；路径完整",
+      "cognitive_cost": "轻度",
+      "evidence": [
+        "frontend/lib/admin/adminShellCommunityNavLinks.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P2-08",
+      "severity": "P2",
+      "domain": "Identity",
+      "personas": [
+        "Merchant"
+      ],
+      "scenario_ids": [
+        "SCN-MERCHANT"
+      ],
+      "kind": "interaction",
+      "surface": "/provider/register",
+      "title": "商家注册复用 GuideRegister UI 骨架",
+      "expected": "Merchant 独立视觉/文案",
+      "actual": "ProviderRegister 导入 GuideRegisterLoginGate 与 guideReg* classes",
+      "cognitive_cost": "轻度 — 像向导注册",
+      "evidence": [
+        "frontend/app/provider/register/ProviderRegisterPageMain.tsx"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P2-09",
+      "severity": "P2",
+      "domain": "Governance",
+      "personas": [
+        "Traveler",
+        "Admin"
+      ],
+      "scenario_ids": [
+        "SCN-ADMIN",
+        "SCN-TRAVELER"
+      ],
+      "kind": "navigation",
+      "surface": "/governance/*",
+      "title": "Consumer Governance 与 Admin Governance 无 wayfinding",
+      "expected": "治理路径有文档或入口说明",
+      "actual": "Consumer /governance 不在 Header 四主路由",
+      "cognitive_cost": "轻度 — 入口隐蔽",
+      "evidence": [
+        "frontend/app/governance",
+        "frontend/app/admin/governance/execution-uat"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "UX-P2-10",
+      "severity": "P2",
+      "domain": "CMS",
+      "personas": [
+        "Operator",
+        "Admin"
+      ],
+      "scenario_ids": [
+        "SCN-CMS",
+        "SCN-ADMIN"
+      ],
+      "kind": "navigation",
+      "surface": "/admin home",
+      "title": "Admin Home 未覆盖 Content/Official/Growth 四平面",
+      "expected": "Workspace home 一键进入四平面 Hub",
+      "actual": "ADMIN_HOME_CARDS 偏 legacy；四平面仅 sidebar",
+      "cognitive_cost": "轻度",
+      "evidence": [
+        "frontend/lib/admin/adminHomeModel.ts"
+      ],
+      "fix_window": "post_audit_unified_ux_sprint",
+      "status": "open",
+      "audit_source": "product_experience_audit.v1"
+    },
+    {
+      "id": "ADMIN-UX-P0-01",
+      "severity": "P0",
+      "admin_group": "growth",
+      "domain": "Growth",
+      "surface": "/admin/growth vs /admin/trust-growth",
+      "kind": "naming",
+      "title": "Growth Center 与 Trust Growth 同名异义，运营无法区分",
+      "expected": "Sidebar/标题明确区分 Referral/Early Bird 增长台 vs Banner A/B 信任增长台",
+      "actual": "Growth 组 vs Governance 组 trust-growth 均含 Growth/增长；Home audit_finance 卡片再引入第三入口",
+      "operator_impact": "首次运营不知道打开哪个控制台配置邀请码或 Banner",
+      "evidence": [
+        "frontend/lib/admin/adminShellGrowthNavLinks.ts",
+        "frontend/lib/admin/adminShellGovernanceNavLinks.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P0-02",
+      "severity": "P0",
+      "admin_group": "operations",
+      "domain": "Official OPS",
+      "surface": "/admin/guides vs /admin/official/guides",
+      "kind": "naming",
+      "title": "Operations「Guide onboarding」与 Official「Official Guides」导航无法区分",
+      "expected": "Nav 消歧：入驻审核 vs 官方内容发布",
+      "actual": "Operations admin_guides_title=Guide onboarding；Official admin_shell_nav_official_guides=Official Guides",
+      "operator_impact": "发布官方攻略时可能进入向导 KYB 台账",
+      "evidence": [
+        "frontend/lib/admin/adminShellOperationsNavLinks.ts",
+        "frontend/lib/admin/adminShellOfficialOpsNavLinks.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P0-03",
+      "severity": "P0",
+      "admin_group": "community",
+      "domain": "Community Moderation",
+      "surface": "/admin/community/reports (first nav item)",
+      "kind": "naming",
+      "title": "Community 首项 Nav「Community governance」实际指向举报队列",
+      "expected": "Nav 标签与页面 H1「Community reports/举报工单」一致",
+      "actual": "admin_shell_nav_community_hub=Community governance；无 /admin/community hub；H1=Community reports",
+      "operator_impact": "运营找「治理台」却进入工单列表，或找「举报」对不上 Nav",
+      "evidence": [
+        "frontend/lib/admin/adminShellCommunityNavLinks.ts",
+        "frontend/locales/en.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P0-04",
+      "severity": "P0",
+      "admin_group": "cross_cutting",
+      "domain": "CMS",
+      "surface": "Content/Official/Growth deep pages breadcrumb",
+      "kind": "navigation",
+      "title": "P1 四平面深页 breadcrumb 仅显示 Workspace，丢失域上下文",
+      "expected": "Breadcrumb 显示 Content / Official Ops / Growth 分组 + 叶子页",
+      "actual": "adminShellContextForPath 缺少 content/official_ops/growth PREFIX_GROUPS；返回 null",
+      "operator_impact": "深页运营不知道自己在哪个平面，无法回溯 Hub",
+      "evidence": [
+        "frontend/lib/admin/adminShellContextForPath.ts",
+        "frontend/components/admin/AdminSubpageBreadcrumb.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P0-05",
+      "severity": "P0",
+      "admin_group": "cross_cutting",
+      "domain": "CMS",
+      "surface": "Page subtitles (M1, G-S7, O-S4, C-S1…)",
+      "kind": "copy",
+      "title": "页面副标题大量 Sprint/模块代号，运营看不懂业务含义",
+      "expected": "副标题描述业务目的与消费者影响，无工程 ticket",
+      "actual": "Content/Official/Growth 页 subtitle 含 M1–M10、G-S7、O-S4、C-S1 等代号",
+      "operator_impact": "首次接触无法从标题理解页面职责",
+      "evidence": [
+        "frontend/locales/en.ts",
+        "frontend/components/admin/content/AdminContentPageShell.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P0-06",
+      "severity": "P0",
+      "admin_group": "growth",
+      "domain": "Growth",
+      "surface": "/admin/growth/analytics vs /admin/conversion-analytics",
+      "kind": "metric_definitions",
+      "title": "两套 Analytics 指标来源不同但命名相近，指标定义未自解释",
+      "expected": "页级说明 KPI 口径、时间窗、数据源",
+      "actual": "Growth analytics=server aggregates；Conversion analytics=localStorage PES；Registrations 一个有(30d)一个无",
+      "operator_impact": "运营对比两页数字会得出错误结论",
+      "evidence": [
+        "frontend/app/admin/growth/analytics/AdminGrowthAnalyticsPageMain.tsx",
+        "frontend/app/admin/conversion-analytics/AdminConversionAnalyticsPageMain.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P0-07",
+      "severity": "P0",
+      "admin_group": "content",
+      "domain": "CMS",
+      "surface": "/admin/content/geo-validation",
+      "kind": "copy",
+      "title": "Geo validation 页展示原始 HOLD/GO、PASS/FAIL、环境变量名",
+      "expected": "运营可读的状态与修复建议",
+      "actual": "UI 渲染技术枚举与 env 名",
+      "operator_impact": "非工程运营无法理解验证结果",
+      "evidence": [
+        "frontend/app/admin/content/geo-validation/AdminContentGeoValidationPageMain.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P0-08",
+      "severity": "P0",
+      "admin_group": "community",
+      "domain": "Community Moderation",
+      "surface": "Penalties/Appeals breadcrumb",
+      "kind": "navigation",
+      "title": "Penalties/Appeals breadcrumb 引用缺失 i18n key，叶子标题不可读",
+      "expected": "Breadcrumb 显示与 Sidebar 一致的 Penalties/Appeals",
+      "actual": "adminShellContextForPath 用 admin_community_penalties_title/admin_community_appeals_title，locale 不存在",
+      "operator_impact": "面包屑显示 raw key 或空白，位置感丢失",
+      "evidence": [
+        "frontend/lib/admin/adminShellContextForPath.ts",
+        "frontend/locales/en.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P0-09",
+      "severity": "P0",
+      "admin_group": "workspace",
+      "domain": "CMS",
+      "surface": "/admin home",
+      "kind": "information_architecture",
+      "title": "Workspace Home 无 Content/Official/Growth 入口，四平面仅 Sidebar 可见",
+      "expected": "首次登录 Home 可发现 CMS/Official/Growth 日常任务入口",
+      "actual": "ADMIN_HOME_CARDS 无 P1 平面卡片；Command palette 亦不含；Home section 仍标 Community & content",
+      "operator_impact": "无培训时运营不知道 CMS/Growth 在哪开始",
+      "evidence": [
+        "frontend/lib/admin/adminHomeModel.ts",
+        "frontend/lib/admin/adminCommandPaletteEntries.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P0-10",
+      "severity": "P0",
+      "admin_group": "governance",
+      "domain": "Governance",
+      "surface": "/admin/governance/execution-uat",
+      "kind": "copy",
+      "title": "Governance execution UAT 页为脚本/证据路径，非日常运营语言",
+      "expected": "治理 UAT 页有运营可读摘要或链到 runbook",
+      "actual": "Sepolia script sequence + evidence pack 目录名",
+      "operator_impact": "Ops 误入后无法理解要做什么",
+      "evidence": [
+        "frontend/app/admin/governance/execution-uat/AdminGovernanceExecutionUatPageMain.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P1-01",
+      "severity": "P1",
+      "admin_group": "content",
+      "domain": "CMS",
+      "surface": "Content publish actions",
+      "kind": "risk_warnings",
+      "title": "CMS 发布/Import 无 L5 确认对话框，与 Community 处置不一致",
+      "expected": "Publish/import 前有后果说明与二次确认",
+      "actual": "countries/POI/publish-queue/import 一键 Publish；Community moderation 有 admin_l5_confirm",
+      "operator_impact": "易误触 live catalog 变更",
+      "evidence": [
+        "frontend/app/admin/content/countries/AdminContentCountriesPageMain.tsx",
+        "frontend/app/admin/community/reports/useAdminCommunityReportsPage.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P1-02",
+      "severity": "P1",
+      "admin_group": "official_ops",
+      "domain": "Official OPS",
+      "surface": "/admin/official/* publish · /admin/official/cold-start deploy",
+      "kind": "risk_warnings",
+      "title": "Official 发布与冷启动 Deploy/Rollback 无确认与风险 Banner",
+      "expected": "Deploy/rollback 前确认 consumer 影响范围",
+      "actual": "Publish directly / deploy / rollback 即时执行；subtitle 提 impact 但无 inline guard",
+      "operator_impact": "易误部署冷启动或发布错误官方内容",
+      "evidence": [
+        "frontend/app/admin/official/cold-start/AdminOfficialColdStartPageMain.tsx",
+        "frontend/app/admin/official/guides/AdminOfficialGuidesPageMain.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P1-03",
+      "severity": "P1",
+      "admin_group": "growth",
+      "domain": "Growth",
+      "surface": "/admin/growth/anti-fraud",
+      "kind": "risk_warnings",
+      "title": "Growth anti-fraud freeze/unfreeze 无确认",
+      "expected": "冻结/解冻邀请或账户前二次确认",
+      "actual": "Underlined link 即时执行",
+      "operator_impact": "误冻结增长用户或 referral",
+      "evidence": [
+        "frontend/app/admin/growth/anti-fraud/AdminAntiFraudPageMain.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P1-04",
+      "severity": "P1",
+      "admin_group": "more",
+      "domain": "Growth",
+      "surface": "/admin/conversion-analytics",
+      "kind": "operation_feedback",
+      "title": "Conversion analytics「Clear local data」无确认对话框",
+      "expected": " destructive clear 需确认",
+      "actual": "ConversionFunnelDashboard 直接清除 localStorage",
+      "operator_impact": "误删本地漏斗样本",
+      "evidence": [
+        "frontend/components/product-enhancement/ConversionFunnelDashboard.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P1-05",
+      "severity": "P1",
+      "admin_group": "content",
+      "domain": "CMS",
+      "surface": "/admin/content hub vs sidebar",
+      "kind": "navigation",
+      "title": "Content Hub 链接网格遗漏 Country market（Sidebar 有）",
+      "expected": "Hub 覆盖 Sidebar 全部 Content 模块",
+      "actual": "adminShellContentNavLinks 含 country-market；AdminContentHubLinks 未含",
+      "operator_impact": "从 Hub 进入后找不到国别市场模块，改从 Sidebar 摸索",
+      "evidence": [
+        "frontend/components/admin/content/AdminContentPageShell.tsx",
+        "frontend/lib/admin/adminShellContentNavLinks.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P1-06",
+      "severity": "P1",
+      "admin_group": "official_ops",
+      "domain": "Official OPS",
+      "surface": "/admin/official hub",
+      "kind": "copy",
+      "title": "Official Hub 副标题/正文锁死在 O-S4 冷启动，掩盖 M7–M9 模块",
+      "expected": "Hub 概述账号/攻略/模板/冷启动四模块",
+      "actual": "Hub 仅用 admin_official_hub_subtitle_os4；os1–os3 locale 未用",
+      "operator_impact": "运营以为 Official Ops=仅冷启动",
+      "evidence": [
+        "frontend/app/admin/official/page.tsx",
+        "frontend/locales/en.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P1-07",
+      "severity": "P1",
+      "admin_group": "cross_cutting",
+      "domain": "CMS",
+      "surface": "AdminShellBar vs Sidebar permissions",
+      "kind": "navigation",
+      "title": "Top bar 与 Sidebar 权限 SSOT 不一致，链接可见性可能不同",
+      "expected": "Top bar 与 Sidebar 同一 permission 规则",
+      "actual": "shellNav() 用 adminHomeCardRequiredPermission 默认 admin.read；Sidebar 用 CONTENT_READ 等",
+      "operator_impact": "Top bar 出现无法使用的链接或 Sidebar 有而 Top bar 无",
+      "evidence": [
+        "frontend/components/admin/AdminShellBar.tsx",
+        "frontend/lib/admin/adminHomeCardPermission.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P1-08",
+      "severity": "P1",
+      "admin_group": "cross_cutting",
+      "domain": "Governance",
+      "surface": "Sidebar partial group · capabilities API",
+      "kind": "operation_feedback",
+      "title": "Sidebar 组可见但子链按 capability 隐藏，无「权限不足」解释",
+      "expected": "空组或折叠时说明所需 console role/perm",
+      "actual": "Ops 见 Finance/Community 组但 finance/disputes/penalties 链可能缺失",
+      "operator_impact": "运营以为功能未上线而非权限问题",
+      "evidence": [
+        "frontend/lib/admin/admU01ShellGroupVisibility.ts",
+        "frontend/evidence/adm-u01-shell-browser-audit/20260607T050950Z/adm-u01-shell-browser-findings.json"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P1-09",
+      "severity": "P1",
+      "admin_group": "growth",
+      "domain": "Growth",
+      "surface": "/admin/growth/analytics fraud breakdown",
+      "kind": "metric_definitions",
+      "title": "Growth analytics 展示 raw growth_fraud_status 枚举",
+      "expected": "运营可读欺诈状态标签",
+      "actual": "Fraud breakdown 渲染 API 原始 status 字符串",
+      "operator_impact": "误判风险等级或无法向业务解释",
+      "evidence": [
+        "frontend/app/admin/growth/analytics/AdminGrowthAnalyticsPageMain.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P1-10",
+      "severity": "P1",
+      "admin_group": "more",
+      "domain": "Growth",
+      "surface": "/admin/conversion-analytics drop-off matrix",
+      "kind": "metric_definitions",
+      "title": "Conversion analytics 漏斗矩阵显示 raw stage ID",
+      "expected": "阶段名翻译为运营语言",
+      "actual": "fromStageId/toStageId 直接展示",
+      "operator_impact": "无法解读 drop-off 发生在哪一步",
+      "evidence": [
+        "frontend/components/product-enhancement/ConversionFunnelDashboard.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P1-11",
+      "severity": "P1",
+      "admin_group": "onboarding",
+      "domain": "Identity",
+      "surface": "Provider/Steward/Approvals queues",
+      "kind": "naming",
+      "title": "入驻三队列 Sidebar/Home/Operator guide 各用不同名称",
+      "expected": "同一队列在 Nav、Home card、Guide 步骤同名",
+      "actual": "Provider queue vs Merchant onboarding queue vs admin_operator_flow_provider 等 3–4 套",
+      "operator_impact": "重复搜索同一队列",
+      "evidence": [
+        "frontend/lib/admin/adminShellOnboardingNavLinks.ts",
+        "frontend/app/admin/operator-guide/adminOperatorGuidePageModel.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P1-12",
+      "severity": "P1",
+      "admin_group": "workspace",
+      "domain": "CMS",
+      "surface": "/admin/operator-guide",
+      "kind": "task_completion_paths",
+      "title": "Operator guide 仅 6 步 inbox 流，未覆盖 CMS/Official/Growth 日常任务",
+      "expected": "首次运营 runbook 覆盖四平面主路径",
+      "actual": "inbox→provider→steward→approvals→reports→permissions；无 content/official/growth",
+      "operator_impact": "按 guide 完成仍不会 CMS 发布或 Growth 配置",
+      "evidence": [
+        "frontend/app/admin/operator-guide/adminOperatorGuidePageModel.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "resolved_local",
+      "resolved_at": "2026-06-08T11:12:00Z",
+      "fix_sprint": "admin_ux_cleanup_sprint_20260608"
+    },
+    {
+      "id": "ADMIN-UX-P1-13",
+      "severity": "P1",
+      "admin_group": "content",
+      "domain": "CMS",
+      "surface": "Content list pages empty",
+      "kind": "empty_states",
+      "title": "多数 CMS 列表页空数据时仅空白表格，无引导空态",
+      "expected": "空态说明如何创建首条记录 + 链到 publish-queue",
+      "actual": "countries/cities/pois 等无 empty prop；与 Community warm empty 对比",
+      "operator_impact": "新环境运营以为页面故障",
+      "evidence": [
+        "frontend/app/admin/content/countries/AdminContentCountriesPageMain.tsx",
+        "frontend/components/admin/AdminListPageEmptyState.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P1-14",
+      "severity": "P1",
+      "admin_group": "official_ops",
+      "domain": "Official OPS",
+      "surface": "Official list pages",
+      "kind": "empty_states",
+      "title": "Official 列表统一 ops_plane_empty「Nothing here yet.» 无下一步",
+      "expected": "空态链到创建账号/攻略/模板或 cold-start deploy 文档",
+      "actual": "Generic empty；无 nextLinks",
+      "operator_impact": "空库时不知先做什么",
+      "evidence": [
+        "frontend/app/admin/official/guides/AdminOfficialGuidesPageMain.tsx",
+        "frontend/components/admin/ops/OpsPlaneFetchStates.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P1-15",
+      "severity": "P1",
+      "admin_group": "finance",
+      "domain": "Governance",
+      "surface": "/admin/finance summary KPI grid",
+      "kind": "metric_definitions",
+      "title": "Finance summary 部分 KPI 以 raw JSON 块展示",
+      "expected": "卡片化可读指标 + 口径 footnote",
+      "actual": "AdminFinanceSummaryGridSection 含 status count JSON tiles",
+      "operator_impact": "财务/运营无法快速读数",
+      "evidence": [
+        "frontend/app/admin/finance/AdminFinanceSummaryGridSection.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-01",
+      "severity": "P2",
+      "admin_group": "official_ops",
+      "domain": "Official OPS",
+      "surface": "/admin/official hub H1",
+      "kind": "naming",
+      "title": "Sidebar「Official Ops」vs Hub H1「Official Operations」",
+      "expected": "Nav 与 H1 一致",
+      "actual": "admin_shell_nav_official_hub vs admin_official_hub_title",
+      "operator_impact": "轻度 — 同一模块两种英文",
+      "evidence": [
+        "frontend/locales/en.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-02",
+      "severity": "P2",
+      "admin_group": "content",
+      "domain": "CMS",
+      "surface": "/admin/content",
+      "kind": "naming",
+      "title": "Sidebar 组「Content」vs Hub「Content Center」",
+      "expected": "组名与 Hub 标题一致",
+      "actual": "admin_shell_nav_group_content vs admin_content_hub_title",
+      "operator_impact": "轻度命名漂移",
+      "evidence": [
+        "frontend/locales/en.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-03",
+      "severity": "P2",
+      "admin_group": "community",
+      "domain": "Community Moderation",
+      "surface": "Community sub-nav vs page titles",
+      "kind": "naming",
+      "title": "Community 子项 Nav 缩写与 Page H1 长度不一致",
+      "expected": "Nav 可短但 tooltip/aria 与 H1 对齐",
+      "actual": "Mod cases vs Community moderation cases 等",
+      "operator_impact": "轻度 — 搜索时匹配困难",
+      "evidence": [
+        "frontend/lib/admin/adminShellCommunityNavLinks.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-04",
+      "severity": "P2",
+      "admin_group": "finance",
+      "domain": "Governance",
+      "surface": "Finance sidebar",
+      "kind": "naming",
+      "title": "Finance suite / Finance · hub / reconciliation suite 三名混用",
+      "expected": "Finance 组内链接命名层级一致",
+      "actual": "admin_shell_nav_finance_suite vs finance_reconciliation vs admin_fin_suite_title",
+      "operator_impact": "轻度 — 多点击试错",
+      "evidence": [
+        "frontend/lib/admin/adminShellFinanceNavLinks.ts",
+        "frontend/locales/en.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-05",
+      "severity": "P2",
+      "admin_group": "cross_cutting",
+      "domain": "CMS",
+      "surface": "Ops plane vs L5 list loading",
+      "kind": "interaction_feedback",
+      "title": "Content/Growth 用 skeleton；Community/Operations 用文本 loading",
+      "expected": "Admin 内 loading 模式统一",
+      "actual": "OpsPlaneFetchStates skeleton vs AdminListLoadingStatus text",
+      "operator_impact": "轻度 — 感知性能与专业度不一致",
+      "evidence": [
+        "frontend/components/admin/ops/OpsPlaneFetchStates.tsx",
+        "frontend/components/admin/AdminListLoadingStatus.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-06",
+      "severity": "P2",
+      "admin_group": "workspace",
+      "domain": "CMS",
+      "surface": "/admin home KPI strips",
+      "kind": "metric_definitions",
+      "title": "Home 三层 KPI（inbox / ops snapshot / system overview）口径未互链",
+      "expected": "Footnote 说明各层数据源与 cap",
+      "actual": "三层并存；honesty footnote 分散",
+      "operator_impact": "轻度 — 读数需交叉验证",
+      "evidence": [
+        "frontend/components/admin/AdminHomeInboxStrip.tsx",
+        "frontend/components/admin/AdminHomeKpiStrip.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-07",
+      "severity": "P2",
+      "admin_group": "growth",
+      "domain": "Growth",
+      "surface": "/admin/growth hub",
+      "kind": "copy",
+      "title": "Growth Hub subtitle 仍引用 G-S7/S1 且 locale body 有过时 copy",
+      "expected": "Hub intro 描述当前已 ship 模块",
+      "actual": "admin_growth_hub_subtitle_s1；admin_growth_hub_body_s1 过时",
+      "operator_impact": "轻度 — 信任度下降",
+      "evidence": [
+        "frontend/app/admin/growth/AdminGrowthHubMain.tsx",
+        "frontend/locales/en.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-08",
+      "severity": "P2",
+      "admin_group": "onboarding",
+      "domain": "Identity",
+      "surface": "/admin/onboarding nav order",
+      "kind": "information_architecture",
+      "title": "Onboarding Sidebar 三队列在前、Hub 居中，与 mental model 相反",
+      "expected": "Hub 置顶或分组「Queues / Tools」",
+      "actual": "adminShellOnboardingNavLinks 顺序：queues→hub→entitlements→…",
+      "operator_impact": "轻度 — 首次需滚动找 Hub",
+      "evidence": [
+        "frontend/lib/admin/adminShellOnboardingNavLinks.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-09",
+      "severity": "P2",
+      "admin_group": "workspace",
+      "domain": "CMS",
+      "surface": "/admin/operator-guide discoverability",
+      "kind": "task_completion_paths",
+      "title": "Operator guide 不在 Sidebar workspace 组，仅 Home/maintainer fold",
+      "expected": "Workspace 组固定「Operator guide / 运营手册」",
+      "actual": "Sidebar workspace 仅 /admin + /admin/inbox",
+      "operator_impact": "轻度 — 手册难找",
+      "evidence": [
+        "frontend/lib/admin/adminShellSidebarModel.ts",
+        "frontend/lib/admin/adminOperatorGuideRelatedFoldLinks.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-10",
+      "severity": "P2",
+      "admin_group": "more",
+      "domain": "Governance",
+      "surface": "/admin/observability empty",
+      "kind": "empty_states",
+      "title": "Observability overview 空态为 plain text 无 retry 组件",
+      "expected": "与 OpsPlane 一致 empty + retry",
+      "actual": "No overview payload returned plain <p>",
+      "operator_impact": "轻度 — 空态体验弱于其他页",
+      "evidence": [
+        "frontend/app/admin/observability/AdminObservabilityPageMain.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-11",
+      "severity": "P2",
+      "admin_group": "growth",
+      "domain": "Growth",
+      "surface": "/admin/growth/kol-center",
+      "kind": "metric_definitions",
+      "title": "KOL center 复用 analytics window label key，控件语义漂移",
+      "expected": "KOL 专属时间窗/指标标签",
+      "actual": "admin_growth_analytics_window_label 用于非 analytics 控件",
+      "operator_impact": "轻度 — 误解时间窗含义",
+      "evidence": [
+        "frontend/app/admin/growth/kol-center/AdminKolCenterPageMain.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-12",
+      "severity": "P2",
+      "admin_group": "operations",
+      "domain": "Market",
+      "surface": "/admin/orders · /admin/disputes empty",
+      "kind": "empty_states",
+      "title": "Operations 列表空态缺少 Community 级 hintKey/nextLinks",
+      "expected": "Orders/Disputes empty 链到 inbox 或 filter 说明",
+      "actual": "AdminListPageEmptyState 无 nextLinks（对比 community reports）",
+      "operator_impact": "轻度 — 空队列时不知下一步",
+      "evidence": [
+        "frontend/app/admin/orders/AdminOrdersPageMain.tsx",
+        "frontend/app/admin/community/reports/AdminCommunityReportsPageInner.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-13",
+      "severity": "P2",
+      "admin_group": "onboarding",
+      "domain": "Identity",
+      "surface": "/admin/users dual label",
+      "kind": "naming",
+      "title": "Users 在 Operations 与 Onboarding Hub 意图标签不同",
+      "expected": "同一路由单一产品名 + 场景副标题",
+      "actual": "admin_users_title vs admin_onboarding_hub_users Per-user entitlements",
+      "operator_impact": "轻度 — 同一页两种入口叙事",
+      "evidence": [
+        "frontend/lib/admin/adminShellOperationsNavLinks.ts",
+        "frontend/app/admin/onboarding/page.tsx"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-14",
+      "severity": "P2",
+      "admin_group": "governance",
+      "domain": "Governance",
+      "surface": "Governance nav vs folder",
+      "kind": "information_architecture",
+      "title": "Governance 组含 cross-check/drift/trust-growth，仅 execution-uat 在 governance/ 目录",
+      "expected": "Nav 分组与 URL 路径或文档一致",
+      "actual": "Folder structure ≠ sidebar grouping",
+      "operator_impact": "轻度 — 深链接/bookmark 混乱",
+      "evidence": [
+        "frontend/lib/admin/adminShellGovernanceNavLinks.ts",
+        "frontend/app/admin/governance/"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "ADMIN-UX-P2-15",
+      "severity": "P2",
+      "admin_group": "workspace",
+      "domain": "CMS",
+      "surface": "Ops primary CTAs",
+      "kind": "task_completion_paths",
+      "title": "Ops 角色 Home primary CTA 仅 provider/steward/reports，缺 Content/Growth",
+      "expected": "Home CTA 与 Sidebar 四平面 visibility 对齐",
+      "actual": "adminHomePrimaryCtaByRole Ops 不含 content/official/growth",
+      "operator_impact": "轻度 — 日常 CMS/Growth 任务多一步",
+      "evidence": [
+        "frontend/lib/admin/adminHomePrimaryCtaByRole.ts"
+      ],
+      "audit_source": "admin_product_experience_audit.v1",
+      "persona": "operator",
+      "fix_window": "post_audit_admin_ux_sprint",
+      "status": "open"
+    },
+    {
+      "id": "REUAT-001",
+      "severity": "P0",
+      "track": "Admin-Reality-UAT",
+      "scenario": "CMS-Publish",
+      "task": "CMS publish",
+      "entry_path": "Operator Guide · Daily ops #1 → /admin/content/publish-queue",
+      "kind": "blocked",
+      "title": "Publish queue has no Publish action; guide path cannot complete publish",
+      "steps": [
+        "Home → Operator Guide → Daily ops step 1",
+        "Land on Publish queue page"
+      ],
+      "expected": "Review and publish catalog changes on this page",
+      "actual": "Read-only table (entity/status/version); no Publish or Actions column; empty state only says No pending publish items",
+      "extra_clicks": "Must discover Sidebar Content → Countries for Publish (not in guide)",
+      "evidence": [
+        "frontend/app/admin/content/publish-queue/AdminContentPublishQueuePageMain.tsx"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "resolved_local",
+      "fix_policy": "deferred_post_reality_uat",
+      "resolved_at": "2026-06-08T11:21:33Z",
+      "fix_applied": "Admin Reality Alignment Sprint · local FE",
+      "sprint": "admin_reality_alignment_sprint"
+    },
+    {
+      "id": "REUAT-002",
+      "severity": "P1",
+      "track": "Admin-Reality-UAT",
+      "scenario": "CMS-Publish",
+      "task": "CMS publish",
+      "entry_path": "Home Daily Ops → Publish queue card",
+      "kind": "misunderstanding",
+      "title": "Home card copy promises review and publish but page is view-only",
+      "steps": [
+        "Workspace → expand Daily ops → Publish queue card"
+      ],
+      "expected": "Quick path to publish catalog changes",
+      "actual": "Same as REUAT-001; card and guide labels imply publish capability",
+      "extra_clicks": "+2–4 via Content hub → Countries → Publish confirm",
+      "evidence": [
+        "frontend/lib/admin/adminHomeModel.ts",
+        "frontend/locales/en.ts"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "resolved_local",
+      "fix_policy": "deferred_post_reality_uat",
+      "resolved_at": "2026-06-08T11:21:33Z",
+      "fix_applied": "Admin Reality Alignment Sprint · local FE",
+      "sprint": "admin_reality_alignment_sprint"
+    },
+    {
+      "id": "REUAT-003",
+      "severity": "P1",
+      "track": "Admin-Reality-UAT",
+      "scenario": "CMS-Publish",
+      "task": "CMS publish",
+      "entry_path": "Sidebar · Content → Publish Queue",
+      "kind": "terminology",
+      "title": "Publish queue subtitle still uses engineering jargon",
+      "steps": [
+        "Sidebar Content group → Publish Queue"
+      ],
+      "expected": "Operator-readable purpose and next step",
+      "actual": "Subtitle: catalog_publish_pending · in_review aggregate (not cleaned in cleanup sprint)",
+      "extra_clicks": 0,
+      "evidence": [
+        "frontend/locales/en.ts"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "resolved_local",
+      "fix_policy": "deferred_post_reality_uat",
+      "resolved_at": "2026-06-08T11:21:33Z",
+      "fix_applied": "Admin Reality Alignment Sprint · local FE",
+      "sprint": "admin_reality_alignment_sprint"
+    },
+    {
+      "id": "REUAT-004",
+      "severity": "P1",
+      "track": "Admin-Reality-UAT",
+      "scenario": "CMS-Publish",
+      "task": "CMS publish",
+      "entry_path": "Sidebar · Content → Countries (self-discovered)",
+      "kind": "extra_clicks",
+      "title": "Only publish entry not on Daily Ops or Guide primary path",
+      "steps": [
+        "Sidebar Content → Countries → Submit review → Publish with confirm"
+      ],
+      "expected": "Daily Ops 5-minute path includes publish action",
+      "actual": "Countries page has Publish; guide does not point here; empty queue causes wandering",
+      "extra_clicks": "+3 vs guide deep link",
+      "evidence": [
+        "frontend/app/admin/content/countries/AdminContentCountriesPageMain.tsx"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "resolved_local",
+      "fix_policy": "deferred_post_reality_uat",
+      "resolved_at": "2026-06-08T11:21:33Z",
+      "fix_applied": "Admin Reality Alignment Sprint · local FE",
+      "sprint": "admin_reality_alignment_sprint"
+    },
+    {
+      "id": "REUAT-005",
+      "severity": "P2",
+      "track": "Admin-Reality-UAT",
+      "scenario": "CMS-Publish",
+      "task": "CMS publish",
+      "entry_path": "Home · section IA",
+      "kind": "lost",
+      "title": "Daily ops section below Onboarding; requires scroll or expand",
+      "steps": [
+        "Login /admin",
+        "First screen shows Inbox/KPI/Onboarding"
+      ],
+      "expected": "Four daily task entries visible above fold",
+      "actual": "ops_planes is second collapsible section; may default collapsed when no pending counts",
+      "extra_clicks": "+1 expand Daily ops",
+      "evidence": [
+        "frontend/components/admin/AdminHomeClient.tsx",
+        "frontend/lib/admin/adminHomeSectionPending.ts"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "open",
+      "fix_policy": "deferred_post_reality_uat"
+    },
+    {
+      "id": "REUAT-006",
+      "severity": "P1",
+      "track": "Admin-Reality-UAT",
+      "scenario": "Growth-Analytics",
+      "task": "Growth analytics",
+      "entry_path": "Operator Guide · Daily ops #2",
+      "kind": "terminology",
+      "title": "Sidebar Referral & rewards vs Guide Growth analytics label mismatch",
+      "steps": [
+        "Guide step 2 → Growth analytics",
+        "Compare Sidebar group Referral & rewards"
+      ],
+      "expected": "Consistent naming for same product surface",
+      "actual": "Three names: Referral & rewards / Growth analytics / Growth hub",
+      "extra_clicks": 0,
+      "evidence": [
+        "frontend/locales/en.ts"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "open",
+      "fix_policy": "deferred_post_reality_uat"
+    },
+    {
+      "id": "REUAT-007",
+      "severity": "P2",
+      "track": "Admin-Reality-UAT",
+      "scenario": "Growth-Analytics",
+      "task": "Growth analytics",
+      "entry_path": "Operator Guide #2 or Home card",
+      "kind": "cognitive_cost",
+      "title": "Growth analytics many KPI blocks and time window; heavy for 5-minute browse",
+      "steps": [
+        "Enter /admin/growth/analytics",
+        "Scan overview/funnel/fraud/top referrers"
+      ],
+      "expected": "Quick answer: how is referral conversion this week",
+      "actual": "Read-only page is information-dense; fraud section may show raw status strings",
+      "extra_clicks": 0,
+      "evidence": [
+        "frontend/app/admin/growth/analytics/AdminGrowthAnalyticsPageMain.tsx"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "open",
+      "fix_policy": "deferred_post_reality_uat"
+    },
+    {
+      "id": "REUAT-008",
+      "severity": "P1",
+      "track": "Admin-Reality-UAT",
+      "scenario": "Growth-Analytics",
+      "task": "Growth analytics",
+      "entry_path": "Sidebar · More → Conversion analytics (mis-click)",
+      "kind": "misunderstanding",
+      "title": "More group Conversion analytics confusable with Growth analytics",
+      "steps": [
+        "Sidebar Referral & rewards",
+        "More group has Conversion analytics"
+      ],
+      "expected": "No wrong path when exploring sidebar",
+      "actual": "Conversion analytics uses browser localStorage, not Growth API metrics",
+      "extra_clicks": "Wrong path round-trip",
+      "evidence": [
+        "frontend/lib/admin/adminShellMoreNavLinks.ts"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "open",
+      "fix_policy": "deferred_post_reality_uat"
+    },
+    {
+      "id": "REUAT-009",
+      "severity": "P1",
+      "track": "Admin-Reality-UAT",
+      "scenario": "Community-Moderation",
+      "task": "Community report handling",
+      "entry_path": "Operator Guide · Daily ops #3 vs Legacy flow #5",
+      "kind": "misunderstanding",
+      "title": "Operator Guide two report links with different labels, same destination",
+      "steps": [
+        "Daily ops: Moderation · open reports",
+        "Legacy flow: Open community reports"
+      ],
+      "expected": "Single moderation entry narrative",
+      "actual": "Same reports queue URL; first-time operator unsure if different queues",
+      "extra_clicks": 0,
+      "evidence": [
+        "frontend/app/admin/operator-guide/adminOperatorGuidePageModel.ts"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "resolved_local",
+      "fix_policy": "deferred_post_reality_uat",
+      "resolved_at": "2026-06-08T11:21:33Z",
+      "fix_applied": "Admin Reality Alignment Sprint · local FE",
+      "sprint": "admin_reality_alignment_sprint"
+    },
+    {
+      "id": "REUAT-010",
+      "severity": "P1",
+      "track": "Admin-Reality-UAT",
+      "scenario": "Community-Moderation",
+      "task": "Community report handling",
+      "entry_path": "Sidebar · Community → Community reports",
+      "kind": "cognitive_cost",
+      "title": "Moderation 3-step wizard plus expected_ver field; hard without training",
+      "steps": [
+        "Open open report",
+        "Start moderation wizard",
+        "Fill status/disposition/expected_ver"
+      ],
+      "expected": "Complete one report disposition within 5 minutes",
+      "actual": "Wizard 3 steps plus optimistic lock version; filter card has many fields",
+      "extra_clicks": "Multiple wizard steps",
+      "evidence": [
+        "frontend/app/admin/community/reports/AdminCommunityReportsModerationWizard.tsx"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "resolved_local",
+      "fix_policy": "deferred_post_reality_uat",
+      "resolved_at": "2026-06-08T11:21:33Z",
+      "fix_applied": "Admin Reality Alignment Sprint · local FE",
+      "sprint": "admin_reality_alignment_sprint"
+    },
+    {
+      "id": "REUAT-011",
+      "severity": "P2",
+      "track": "Admin-Reality-UAT",
+      "scenario": "Community-Moderation",
+      "task": "Community report handling",
+      "entry_path": "Home Primary CTA · Ops",
+      "kind": "extra_clicks",
+      "title": "Home Primary CTA duplicates Daily ops card and Guide entry",
+      "steps": [
+        "Home top CTA Open reports",
+        "Compare Daily ops step 3"
+      ],
+      "expected": "Single recommended path",
+      "actual": "Three equivalent links increase choice cost",
+      "extra_clicks": 0,
+      "evidence": [
+        "frontend/lib/admin/adminHomePrimaryCtaByRole.ts"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "open",
+      "fix_policy": "deferred_post_reality_uat"
+    },
+    {
+      "id": "REUAT-012",
+      "severity": "P1",
+      "track": "Admin-Reality-UAT",
+      "scenario": "Official-OPS",
+      "task": "Official OPS",
+      "entry_path": "Operator Guide · Daily ops #4 → cold-start only",
+      "kind": "misunderstanding",
+      "title": "Official OPS task narrowed to cold-start vs Home Official hub four modules",
+      "steps": [
+        "Guide step 4 → /admin/official/cold-start",
+        "Compare Home Official Operations hub (4 links)"
+      ],
+      "expected": "Daily Official OPS covers accounts/guides/templates/cold-start",
+      "actual": "Guide only cold-start; accounts/guides require Sidebar Official Ops",
+      "extra_clicks": "Sidebar exploration",
+      "evidence": [
+        "frontend/app/admin/official/page.tsx",
+        "frontend/app/admin/operator-guide/adminOperatorGuidePageModel.ts"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "resolved_local",
+      "fix_policy": "deferred_post_reality_uat",
+      "resolved_at": "2026-06-08T11:21:33Z",
+      "fix_applied": "Admin Reality Alignment Sprint · local FE",
+      "sprint": "admin_reality_alignment_sprint"
+    },
+    {
+      "id": "REUAT-013",
+      "severity": "P1",
+      "track": "Admin-Reality-UAT",
+      "scenario": "Official-OPS",
+      "task": "Official OPS",
+      "entry_path": "Guide or Sidebar → cold-start",
+      "kind": "terminology",
+      "title": "Cold-start page subtitle still M10 · ops_cold_start_* engineering jargon",
+      "steps": [
+        "Enter cold-start page"
+      ],
+      "expected": "Operator-readable deploy/rollback explanation",
+      "actual": "admin_official_cold_start_subtitle contains M10 · ops_cold_start_*",
+      "extra_clicks": 0,
+      "evidence": [
+        "frontend/locales/en.ts"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "resolved_local",
+      "fix_policy": "deferred_post_reality_uat",
+      "resolved_at": "2026-06-08T11:21:33Z",
+      "fix_applied": "Admin Reality Alignment Sprint · local FE",
+      "sprint": "admin_reality_alignment_sprint"
+    },
+    {
+      "id": "REUAT-014",
+      "severity": "P1",
+      "track": "Admin-Reality-UAT",
+      "scenario": "Official-OPS",
+      "task": "Official OPS",
+      "entry_path": "Sidebar · Official Ops → Cold Start",
+      "kind": "blocked",
+      "title": "Empty cold-start needs create campaign + items before deploy; guide silent",
+      "steps": [
+        "Follow guide to cold-start",
+        "No campaign or empty list"
+      ],
+      "expected": "Complete one deploy walkthrough",
+      "actual": "Must fill name/surfaces CSV/item_type/ref; multi-form; no guided empty state",
+      "extra_clicks": "Create campaign multi-step",
+      "evidence": [
+        "frontend/app/admin/official/cold-start/AdminOfficialColdStartPageMain.tsx"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "resolved_local",
+      "fix_policy": "deferred_post_reality_uat",
+      "resolved_at": "2026-06-08T11:21:33Z",
+      "fix_applied": "Admin Reality Alignment Sprint · local FE",
+      "sprint": "admin_reality_alignment_sprint"
+    },
+    {
+      "id": "REUAT-015",
+      "severity": "P2",
+      "track": "Admin-Reality-UAT",
+      "scenario": "Official-OPS",
+      "task": "Official OPS",
+      "entry_path": "Sidebar · Official Ops vs Operations",
+      "kind": "terminology",
+      "title": "Sidebar Official Ops vs Operations Guide KYB queue still coexist",
+      "steps": [
+        "Browse Sidebar Operations and Official Ops groups"
+      ],
+      "expected": "Official content vs guide KYB clearly separated",
+      "actual": "Operations has Guide KYB queue; Official has Official Guides; mis-clicks likely",
+      "extra_clicks": "Mis-click round-trip",
+      "evidence": [
+        "frontend/lib/admin/adminShellOperationsNavLinks.ts"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "open",
+      "fix_policy": "deferred_post_reality_uat"
+    },
+    {
+      "id": "REUAT-016",
+      "severity": "P2",
+      "track": "Admin-Reality-UAT",
+      "scenario": "Cross",
+      "task": "Operator Guide discoverability",
+      "entry_path": "Sidebar · Workspace",
+      "kind": "extra_clicks",
+      "title": "Operator Guide in Workspace sidebar but not Home first-screen CTA",
+      "steps": [
+        "First login seeking runbook",
+        "Home has no Start here CTA"
+      ],
+      "expected": "Guide as first-touch entry",
+      "actual": "Must expand Daily ops for Operator guide card or Sidebar Workspace → Operator guide",
+      "extra_clicks": "+1–2",
+      "evidence": [
+        "frontend/lib/admin/adminShellSidebarModel.ts"
+      ],
+      "audit_source": "admin_reality_uat.v1",
+      "reviewer": "",
+      "status": "open",
+      "fix_policy": "deferred_post_reality_uat"
+    },
+    {
+      "id": "AFSC-001",
+      "track": "Admin-Final-Spot-Check",
+      "status": "open_env_p1",
+      "fix_policy": "deferred_post_soak_env_only",
+      "path_id": "Cross",
+      "severity": "P0",
+      "kind": "blocked",
+      "title": "Spot check harness error",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-content-countries-list]')\nExpected: visible\nTimeout: 30000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 30000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-tt-admin-content-countries-list]')\u001b[22m\n",
+      "audit_source": "admin_final_spot_check.v1",
+      "reviewer": "",
+      "layer": "env",
+      "layer_notes": "local :3012 session/API shell · not Admin UX IA regression",
+      "ux_backlog": false,
+      "fix_window": "post_soak_manual_or_harness",
+      "admin_ux_workflow": "closed_frozen"
+    },
+    {
+      "id": "AFSC-002",
+      "track": "Admin-Final-Spot-Check",
+      "status": "open_env_p1",
+      "fix_policy": "deferred_post_soak_env_only",
+      "path_id": "Guide-Official-Deploy",
+      "severity": "P1",
+      "kind": "blocked",
+      "title": "Official hub shell not rendered",
+      "observation": "http://localhost:3012/admin/official",
+      "audit_source": "admin_final_spot_check.v1",
+      "reviewer": "",
+      "layer": "env",
+      "layer_notes": "local :3012 session/API shell · not Admin UX IA regression",
+      "ux_backlog": false,
+      "fix_window": "post_soak_manual_or_harness",
+      "admin_ux_workflow": "closed_frozen"
+    },
+    {
+      "id": "AFSC-003",
+      "track": "Admin-Final-Spot-Check",
+      "status": "open_env_p1",
+      "fix_policy": "deferred_post_soak_env_only",
+      "path_id": "Guide-Reports-Wizard",
+      "severity": "P1",
+      "kind": "blocked",
+      "title": "Community reports page shell not rendered",
+      "observation": "http://localhost:3012/admin/community/reports?status=open",
+      "audit_source": "admin_final_spot_check.v1",
+      "reviewer": "",
+      "layer": "env",
+      "layer_notes": "local :3012 session/API shell · not Admin UX IA regression",
+      "ux_backlog": false,
+      "fix_window": "post_soak_manual_or_harness",
+      "admin_ux_workflow": "closed_frozen"
+    }
+  ],
+  "local_fix_batch": {
+    "completed_at": "2026-06-08T10:48:39Z",
+    "policy": "staging-soak FROZEN · no redeploy tt-api-staging / tt-web-staging",
+    "git_scope": "local harness only · post-soak merge + p2fc-rerun-after-soak.sh"
+  },
+  "operational_uat": {
+    "scenarios_ref": "operational-uat-scenarios.v1.json",
+    "policy": "禁止新增功能 · 禁止修 token · 禁止修改 staging · 仅登记 findings",
+    "finding_kinds": [
+      "ui",
+      "interaction",
+      "naming",
+      "workflow",
+      "feedback",
+      "cognitive_cost",
+      "a11y",
+      "copy",
+      "data"
+    ],
+    "scenario_progress": [
+      {
+        "scenario_id": "SCN-CMS",
+        "track": "CMS",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-OFFICIAL-OPS",
+        "track": "Official OPS",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-GROWTH",
+        "track": "Growth",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-REFERRAL",
+        "track": "Referral",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-EARLY-BIRD",
+        "track": "Early Bird",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-MODERATION",
+        "track": "Moderation",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-MERCHANT",
+        "track": "Merchant",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-GUIDE",
+        "track": "Guide",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-TRAVELER",
+        "track": "Traveler",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      },
+      {
+        "scenario_id": "SCN-ADMIN",
+        "track": "Admin",
+        "status": "pending",
+        "reviewed_at": "",
+        "findings_count": 0
+      }
+    ],
+    "started_at": "2026-06-08T11:00:00Z",
+    "reviewer": ""
+  },
+  "item_schema_example": {
+    "id": "UAT-<TRACK>-NNN",
+    "scenario_id": "SCN-CMS",
+    "track": "CMS",
+    "persona": "operator | traveler | merchant | guide | admin",
+    "surface": "route or UI surface",
+    "kind": "ui | interaction | naming | workflow | feedback | cognitive_cost | a11y | copy | data",
+    "failure_step": "where stuck",
+    "steps": [
+      "1. …",
+      "2. …"
+    ],
+    "expected": "operational outcome",
+    "actual": "what happened",
+    "cognitive_cost_notes": "why hard for first-time user or operator",
+    "evidence": [
+      "attachments/scn-cms-01.png"
+    ],
+    "severity": "P0 | P1 | P2",
+    "blocks_phase2": false,
+    "fix_window": "post_soak",
+    "status": "open"
+  },
+  "product_experience_audit": {
+    "report": "ux-findings-report.v1.json",
+    "completed_at": "2026-06-08T10:57:54Z",
+    "summary": {
+      "total": 29,
+      "P0": 5,
+      "P1": 14,
+      "P2": 10
+    },
+    "policy": "no staging changes · no token fixes · no new features during soak"
+  },
+  "admin_product_experience_audit": {
+    "report": "admin-ux-findings-report.v1.json",
+    "completed_at": "2026-06-08T11:00:41Z",
+    "scope_pages": 106,
+    "summary": {
+      "total": 40,
+      "P0": 10,
+      "P1": 15,
+      "P2": 15
+    },
+    "goal": "Admin usable for daily ops without training before real-user UAT",
+    "policy": "no staging changes · no token fixes · no new features during soak"
+  },
+  "admin_ux_cleanup_sprint": {
+    "completed_at": "2026-06-08T11:12:00Z",
+    "scope": "P0 + risk P1 · no new business features · local only",
+    "goal": "5min daily ops without training before real-user UAT",
+    "resolved_p0": 10,
+    "resolved_risk_p1": 6
+  },
+  "admin_reality_uat": {
+    "session": "admin-reality-uat-session.v1.json",
+    "started_at": "2026-06-08T11:16:01Z",
+    "policy": "record_only no fixes no refactor nav: Home Daily Ops Operator Guide Sidebar",
+    "summary": {
+      "total_findings": 16,
+      "P0": 1,
+      "P1": 10,
+      "P2": 5
+    },
+    "task_completion": [
+      {
+        "id": "CMS-Publish",
+        "guide_entry": "/admin/content/publish-queue",
+        "completion_via_allowed_nav": "partial blocked at publish-queue"
+      },
+      {
+        "id": "Growth-Analytics",
+        "guide_entry": "/admin/growth/analytics",
+        "completion_via_allowed_nav": "yes read-only"
+      },
+      {
+        "id": "Community-Moderation",
+        "guide_entry": "/admin/community/reports?status=open",
+        "completion_via_allowed_nav": "partial wizard needs data"
+      },
+      {
+        "id": "Official-OPS",
+        "guide_entry": "/admin/official/cold-start",
+        "completion_via_allowed_nav": "partial cold-start only needs seed"
+      }
+    ]
+  },
+  "admin_reality_alignment_sprint": {
+    "resolved_at": "2026-06-08T11:21:33Z",
+    "resolved_ids": [
+      "REUAT-001",
+      "REUAT-002",
+      "REUAT-003",
+      "REUAT-004",
+      "REUAT-009",
+      "REUAT-010",
+      "REUAT-012",
+      "REUAT-013",
+      "REUAT-014"
+    ],
+    "deferred_p2": [
+      "REUAT-005",
+      "REUAT-006",
+      "REUAT-007",
+      "REUAT-008",
+      "REUAT-011",
+      "REUAT-015",
+      "REUAT-016"
+    ]
+  },
+  "admin_final_spot_check": {
+    "session": "admin-final-spot-check.v1.json",
+    "started_at": "2026-06-08T11:40:54.544Z",
+    "policy": "record_only · no UX fixes except P0/P1 block · wait staging-soak",
+    "summary": {
+      "total": 3,
+      "P0": 0,
+      "P1": 3,
+      "P2": 0
+    },
+    "path_log": {
+      "Guide-Countries-Publish": [
+        "goto /admin/operator-guide",
+        "click daily ops #1 href=/admin/content/countries",
+        "landed http://localhost:3012/admin/content/countries"
+      ],
+      "Guide-Official-Deploy": [
+        "goto /admin/operator-guide",
+        "click daily ops #4 href=/admin/official",
+        "hub http://localhost:3012/admin/official"
+      ],
+      "Guide-Reports-Wizard": [
+        "goto /admin/operator-guide",
+        "reports http://localhost:3012/admin/community/reports?status=open"
+      ]
+    }
+  },
+  "admin_ux_workflow": {
+    "status": "CLOSED_FROZEN",
+    "closed_at": "2026-06-08T11:45:06Z",
+    "freeze_scope": [
+      "Admin IA",
+      "navigation",
+      "Operator Guide",
+      "Home Daily Ops cards",
+      "admin shell nav labels"
+    ],
+    "allowed_until_unfreeze": [
+      "P0 production blockers outside Admin IA",
+      "token debt CSS-only fixes post-soak",
+      "staging-soak evidence"
+    ],
+    "forbidden_until_unfreeze": [
+      "Admin UX backlog items (REUAT P2, ADMIN-UX P1/P2 open)",
+      "Admin Reality follow-up sprints",
+      "Guide/Home/Sidebar IA changes"
+    ],
+    "afsc_classification": {
+      "ids": [
+        "AFSC-001",
+        "AFSC-002",
+        "AFSC-003"
+      ],
+      "layer": "env",
+      "ux_backlog": false,
+      "notes": "Shell markers missing in automated spot check; navigation URLs verified OK"
+    },
+    "next_after_soak": [
+      "P2FC_SOAK COMPLETED.json",
+      "p2fc-rerun-after-soak → 33/33 GO",
+      "Token Debt Sprint (plan-token-debt-sprint.py)",
+      "next testnet deploy round"
+    ]
+  }
+}

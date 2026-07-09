@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T13:45:56Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AU",
+    "city_zh": "悉尼",
+    "city_en": "Sydney",
+    "matrix_ids": [
+      "PH-AU-189-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AU-189-FOOD",
+      "legacy_value": "brunch",
+      "poi_id": "76255c98-909a-4930-a3c0-80d3b811f054",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-189-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

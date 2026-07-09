@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T14:58:35Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "福冈",
+    "city_en": "Fukuoka",
+    "matrix_ids": [
+      "PH-JP-019-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-JP-019-ATR",
+      "legacy_value": "太宰府",
+      "poi_id": "7a240629-286f-40d5-aef6-58e2cc7e714d",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-fukuoka-dazaifu-community-media.jpg",
+      "hero_file": "ocs-fukuoka-dazaifu-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-019-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

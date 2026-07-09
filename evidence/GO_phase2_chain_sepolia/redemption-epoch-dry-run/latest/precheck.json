@@ -1,0 +1,23 @@
+{
+  "schema": "phase2_sepolia_redemption_epoch_dry_run_precheck.v1",
+  "timestamp_utc": "20260607T032805Z",
+  "chain_id": 11155111,
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "deployer_nonce": "95",
+  "deployer_balance_wei": "4418679818494482347",
+  "timelock_address": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+  "pilot_jurisdiction": "CN",
+  "redemption_max_nav_pct_bps": 1000,
+  "redemption_window_seconds": 1296000,
+  "epoch_owner_must_be_timelock": true,
+  "epoch_owner_must_not_be_deployer": true,
+  "broadcast": false,
+  "simulated_addresses": {
+    "country_pool_redemption_epoch_cn_address": "0x1AAe69F7921AE87B4A91b5bb1a187c48b6147524",
+    "redemption_asset_address": "0x4825693A7B333B8b2b73ad5632C60A9b7cAa51F9"
+  },
+  "binding_check": "REDEMPTION_BINDING_CHECK: OK",
+  "gas_estimate_note": "Estimated total gas used for script: 2148127 Estimated amount required: 0.105980445547699466 ETH ",
+  "forge_log": "forge-redemption-dry-run-20260607T032805Z.log",
+  "ssot": "docs/runbook/TT-PHASE2-REDEMPTION-EPOCH-SEPOLIA-BROADCAST-CHECKLIST.md"
+}

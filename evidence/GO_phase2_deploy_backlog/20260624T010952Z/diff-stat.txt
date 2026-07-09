@@ -1,0 +1,247 @@
+ crates/api/src/db/mod.rs                           |    2 +
+ .../api/src/middleware/auth_pause_metrics/mod.rs   |    1 +
+ crates/api/src/routes/itineraries.rs               |  195 +-
+ frontend/.i18n-coverage.json                       |   17 +-
+ .../AdminAirdropCampaignsPageMain.tsx              |    3 +
+ .../analytics/AdminGrowthAnalyticsPageMain.tsx     |    3 +
+ .../growth/early-bird/AdminEarlyBirdPageMain.tsx   |    3 +
+ .../growth/kol-center/AdminKolCenterPageMain.tsx   |    3 +
+ .../referral-codes/AdminReferralCodesPageMain.tsx  |    3 +-
+ .../reward-ledger/AdminRewardLedgerPageMain.tsx    |    3 +
+ .../accounts/AdminOfficialAccountsPageMain.tsx     |    2 +
+ .../cold-start/AdminOfficialColdStartPageMain.tsx  |    2 +
+ .../guides/AdminOfficialGuidesPageMain.tsx         |    3 +
+ .../AdminOfficialItineraryTemplatesPageMain.tsx    |    2 +
+ frontend/app/guides/page.tsx                       |    5 +-
+ frontend/app/market/MarketPageClient.tsx           |    4 +-
+ frontend/app/orders/OrdersListCardItem.tsx         |    9 +-
+ frontend/app/orders/OrdersListCards.tsx            |   33 +-
+ frontend/app/orders/useOrdersListPageCore.ts       |    7 +-
+ frontend/app/terms/community-guidelines/page.tsx   |    1 +
+ frontend/components/admin/AdminMainBootGate.tsx    |   32 +-
+ .../components/admin/AdminNavContentTransition.tsx |   98 +-
+ .../components/community/PublishDrawer/index.tsx   |   28 +-
+ .../community/useCommunityFeedPostDeepLink.ts      |   18 +-
+ frontend/components/header/HeaderUserMenu.tsx      |   11 +-
+ .../components/header/HeaderUserMenuNavLinks.tsx   |   48 +-
+ .../market/AcquisitionCarryStudioModal.tsx         |   26 +-
+ .../market/MarketStandaloneBusinessPage.tsx        |    2 +
+ .../market/MerchantShowcaseStudioModal.tsx         |   30 +-
+ .../marketStandaloneBusinessPageUtils.test.ts      |    3 +-
+ .../market/marketStandaloneBusinessPageUtils.ts    |   50 +-
+ frontend/components/market/useMarketPage.ts        |  119 +-
+ .../market/useMarketPageOrderGuideDeepLinks.ts     |   43 +-
+ .../components/market/useMarketPageRouterSync.ts   |    6 +-
+ .../me/MeSettingsExtensionDocumentShell.tsx        |    9 +-
+ frontend/e2e/53-main-path.spec.ts                  |  237 +-
+ frontend/e2e/93-matrix-admin-deep-batch.spec.ts    |   28 +-
+ frontend/e2e/93-matrix-admin-domain-batch.spec.ts  |   15 +-
+ frontend/e2e/93-matrix-enterprise-p1-batch.spec.ts |    6 +-
+ .../e2e/93-matrix-path-community-feed-post.spec.ts |   40 +-
+ .../e2e/93-matrix-path-did-rank-boards.spec.ts     |    8 +-
+ frontend/e2e/93-matrix-path-f1-f4.spec.ts          |   31 +-
+ frontend/e2e/93-matrix-path-p1-remediation.spec.ts |   97 +-
+ frontend/e2e/96-17-header-identity-spine.spec.ts   |   10 +-
+ frontend/e2e/account-nav-header-ia.spec.ts         |   29 +-
+ frontend/e2e/admin-l5-staging-closure.spec.ts      |   11 +
+ .../e2e/auth-forgot-password-api-happy.spec.ts     |    7 +-
+ .../e2e/auth-register-login-market-chain.spec.ts   |  198 +-
+ frontend/e2e/auth-reset-password-api-happy.spec.ts |    5 +-
+ frontend/e2e/auth-reset-password-api.spec.ts       |    3 +
+ frontend/e2e/auth-verify-email-api.spec.ts         |    3 +
+ .../b468-market-discovery-full-ui-journey.spec.ts  |  222 +-
+ .../b469-guides-drawer-booking-convergence.spec.ts |  126 +-
+ frontend/e2e/c-s1-admin-content-crud.spec.ts       |   24 +-
+ .../e2e/c-s2-poi-media-review-workflow.spec.ts     |   33 +-
+ frontend/e2e/c-s3-catalog-operations-admin.spec.ts |   18 +-
+ ...c-s4-catalog-revision-import-operations.spec.ts |   18 +-
+ ...atalog-server-geo-validation-operations.spec.ts |   22 +-
+ frontend/e2e/community-feed-discovery-geo.spec.ts  |    4 +-
+ ...community-feed-drawer-interaction-local.spec.ts |   38 +-
+ .../e2e/community-feed-mobile-first-post.spec.ts   |   15 +-
+ .../e2e/community-friends-messages-flow.spec.ts    |   10 +-
+ frontend/e2e/community-me-data-state.spec.ts       |  176 +-
+ .../community-me-hub-tab-redirect-matrix.spec.ts   |    3 +
+ .../e2e/community-me-l5-a-parity-closeout.spec.ts  |   66 +-
+ frontend/e2e/community-modals-interaction.spec.ts  |   61 +-
+ frontend/e2e/community-phase1-narrow-flows.spec.ts |  136 +-
+ ...ost-detail-collect-persist-after-reload.spec.ts |   40 +-
+ .../e2e/community-post-detail-comment-sort.spec.ts |  115 +-
+ ...y-post-detail-like-persist-after-reload.spec.ts |   40 +-
+ .../community-post-detail-showcase-local.spec.ts   |   29 +-
+ .../e2e/community-publish-entry-diagnostic.spec.ts |   23 +-
+ frontend/e2e/community-subroutes-data.spec.ts      |   16 +-
+ .../e2e/community-subroutes-l5-markers.spec.ts     |   70 +-
+ frontend/e2e/core-path.spec.ts                     |    2 +-
+ .../e2e-a-01-cold-start-campaign-consumer.spec.ts  |   38 +-
+ .../e2e/escrow-bilateral-experience-l5.spec.ts     |    2 +
+ .../e2e/escrow-p03-p04-itinerary-first.spec.ts     |    2 +
+ frontend/e2e/f012-f013-f014-request.spec.ts        |   34 +-
+ frontend/e2e/f021-f022-f023-request.spec.ts        |   28 +-
+ frontend/e2e/f024-f025-f026-request.spec.ts        |    4 +-
+ frontend/e2e/f027-f028-f033-request.spec.ts        |    2 +-
+ frontend/e2e/f029-f030-f031-request.spec.ts        |   25 +-
+ frontend/e2e/g-s1-referral-minimum-loop.spec.ts    |    9 +-
+ frontend/e2e/g-s2-growth-ledger-observer.spec.ts   |    8 +-
+ frontend/e2e/g-s3-early-bird-multiplier.spec.ts    |   17 +-
+ frontend/e2e/g-s4-user-referral-center.spec.ts     |   18 +-
+ .../e2e/g-s5-admin-growth-fraud-reward-ops.spec.ts |   13 +-
+ .../e2e/g-s6-airdrop-snapshot-reward-calc.spec.ts  |    8 +-
+ .../e2e/g-s7-growth-analytics-kol-readonly.spec.ts |   14 +-
+ frontend/e2e/governance-params-full-l5.spec.ts     |   84 +-
+ frontend/e2e/governance-proposal-create-l5.spec.ts |   31 +-
+ frontend/e2e/guide-register-l5.spec.ts             |   15 +-
+ frontend/e2e/guide-workbench-full-l5.spec.ts       |    2 +-
+ frontend/e2e/guide-workbench-inbox-l5.spec.ts      |    2 +
+ frontend/e2e/helpers/accountNavSession.ts          |   13 +
+ frontend/e2e/helpers/adminCapabilitiesSession.ts   |   30 +-
+ frontend/e2e/helpers/apiSession.ts                 |   91 +-
+ frontend/e2e/helpers/communityFeedPostDeepLink.ts  |    5 +-
+ frontend/e2e/helpers/communityMeLegacyRedirects.ts |   21 +-
+ frontend/e2e/helpers/communityMePageReady.ts       |  198 +-
+ .../e2e/helpers/communityShowcasePostDetail.ts     |  109 +-
+ frontend/e2e/helpers/communitySocialFlow.ts        |   30 +
+ frontend/e2e/helpers/headerUserMenu.ts             |    3 +-
+ frontend/e2e/helpers/landingHomeForm.ts            |   13 +-
+ frontend/e2e/helpers/marketSeedGuideCard.ts        |   95 +-
+ frontend/e2e/helpers/marketStudioOpen.ts           |   41 +-
+ frontend/e2e/helpers/meIdentitiesHubMocks.ts       |    4 +
+ frontend/e2e/helpers/meSettingsE2e.ts              |   41 +-
+ frontend/e2e/helpers/p0RealApiWaits.ts             |   31 +
+ frontend/e2e/helpers/seedPaidMarketEntitlements.ts |  100 +-
+ frontend/e2e/helpers/smoke-nav.ts                  |   45 +-
+ frontend/e2e/helpers/traveltrustV6Ready.ts         |   10 +-
+ frontend/e2e/helpers/uiAuthControlledForms.ts      |   44 +-
+ frontend/e2e/home-landing-shell.spec.ts            |   13 +-
+ frontend/e2e/itinerary-52.spec.ts                  |  136 +-
+ .../e2e/itinerary-date-as-source-corridor.spec.ts  |   45 +-
+ .../itinerary-first-main-chain-acceptance.spec.ts  |    5 +-
+ frontend/e2e/l5-a11y-live-scan.spec.ts             |   22 +-
+ .../e2e/market-custom-itinerary-catalog-ui.spec.ts |   22 +-
+ frontend/e2e/market-deep-link.spec.ts              |  118 +-
+ .../e2e/market-subsite-community-gates.body.ts     |   34 +-
+ .../e2e/market-subsite-community-media.body.ts     |   18 +-
+ frontend/e2e/market-subsite-shared.ts              |  240 +-
+ frontend/e2e/market-subsite-studios.body.ts        |   81 +-
+ frontend/e2e/me-identities-core-hub.spec.ts        |   20 +-
+ frontend/e2e/me-onboarding-96-18-shell.spec.ts     |  130 +-
+ frontend/e2e/me-security-community-hub.spec.ts     |   60 +-
+ frontend/e2e/me-settings-l5-hub.spec.ts            |   35 +-
+ .../e2e/o-s1-official-accounts-management.spec.ts  |   41 +-
+ ...s2-official-guides-community-publishing.spec.ts |   45 +-
+ .../e2e/o-s3-official-itinerary-templates.spec.ts  |   53 +-
+ ...d-start-campaigns-deployment-operations.spec.ts |   41 +-
+ frontend/e2e/orders-list-filters-search.spec.ts    |   94 +-
+ frontend/e2e/orders-list-keyboard.spec.ts          |   52 +-
+ frontend/e2e/orders-list-to-escrow.spec.ts         |   44 +-
+ frontend/e2e/orders-list-to-pay.spec.ts            |   40 +-
+ frontend/e2e/p0-spine-real-api-public.spec.ts      |   38 +-
+ frontend/e2e/p0-spine-real-api-session.spec.ts     |   79 +-
+ frontend/e2e/p01-login-market-auth.spec.ts         |   58 +-
+ frontend/e2e/p02-tourist-order-create-list.spec.ts |   12 +-
+ frontend/e2e/p03-tourist-guide-accept.spec.ts      |   15 +-
+ frontend/e2e/p04-bilateral-confirm.spec.ts         |   12 +-
+ .../e2e/pi1-community-browser-acceptance.spec.ts   |   16 +-
+ .../pi1-traveltrust-v6-browser-acceptance.spec.ts  |   38 +-
+ frontend/e2e/release-flow.spec.ts                  |   46 +-
+ .../e2e/section10-5-login-community-feed.spec.ts   |    3 +-
+ frontend/e2e/smoke-admin-extended.spec.ts          |   81 +-
+ frontend/e2e/smoke-admin.spec.ts                   |  143 +-
+ frontend/e2e/smoke-community.spec.ts               |    7 +-
+ frontend/e2e/smoke-governance.spec.ts              |   50 +-
+ frontend/e2e/smoke.spec.ts                         |  401 +-
+ .../e2e/sprint168-country-market-admin.spec.ts     |   17 +-
+ frontend/e2e/steward-workbench-full-l5.spec.ts     |   28 +-
+ .../e2e/traveltrust-hero-visual-regression.spec.ts |    3 +-
+ ...raveltrust-home-modular-visual-qa.probe.spec.ts |   14 +-
+ frontend/e2e/trust-gate-escrow.spec.ts             |  281 +-
+ .../blue-block-dom-origin/baseline.png             |  Bin 237526 -> 191457 bytes
+ .../blue-block-dom-origin/dom-origin-report.json   |  104 +-
+ .../blue-block-dom-origin/kill-try-1.png           |  Bin 735622 -> 429753 bytes
+ .../dom-compositor-audit.json                      | 6889 ++++++++++++--------
+ .../hero-earth-realism-pass-a-desktop.png          |  Bin 190018 -> 192238 bytes
+ .../after-hero-hub-geo-pass-b-desktop.png          |  Bin 250750 -> 191579 bytes
+ .../layer-kill-audit/00-baseline.png               |  Bin 418026 -> 306045 bytes
+ .../layer-kill-audit/computed-audit.json           |    2 +-
+ .../layer-kill-audit/kill-canvas-hero-sky-cap.png  |  Bin 445525 -> 372705 bytes
+ .../layer-kill-audit/kill-canvas-warm-band.png     |  Bin 425479 -> 344716 bytes
+ .../layer-kill-audit/kill-equator-strip.png        |  Bin 419273 -> 334575 bytes
+ .../layer-kill-audit/kill-globe-underlay-decor.png |  Bin 432085 -> 354894 bytes
+ .../layer-kill-audit/kill-hero-dom-sky-veil.png    |  Bin 457025 -> 390765 bytes
+ .../layer-kill-audit/kill-hero-section.png         |  Bin 681710 -> 533445 bytes
+ .../layer-kill-audit/kill-hero-sky-wash.png        |  Bin 416031 -> 319838 bytes
+ .../layer-kill-audit/kill-hero-warm-backdrop.png   |  Bin 438342 -> 361284 bytes
+ .../layer-kill-audit/kill-matrix.json              |  397 +-
+ .../layer-kill-audit/kill-page-cinematic-3d.png    |  Bin 297716 -> 280755 bytes
+ .../layer-kill-audit/kill-viewport-ink.png         |  Bin 298949 -> 326876 bytes
+ .../p0-acceptance/hero-p0-hard-refresh.png         |  Bin 453759 -> 277494 bytes
+ .../01-desktop-hard-refresh-baseline.png           |  Bin 455188 -> 192025 bytes
+ .../p1-acceptance/02-desktop-cta-dock-hover.png    |  Bin 450630 -> 191219 bytes
+ .../03-desktop-compact-roster-hover.png            |  Bin 456908 -> 330427 bytes
+ .../p1-acceptance/04-desktop-canvas-pin-hover.png  |  Bin 534157 -> 236653 bytes
+ .../05-desktop-pin-click-to-start.png              |  Bin 593906 -> 212457 bytes
+ .../06-desktop-cta-click-to-start.png              |  Bin 432885 -> 317518 bytes
+ .../p1-acceptance/07-mobile-roster-chip-hover.png  |  Bin 168592 -> 117526 bytes
+ .../p1-acceptance/acceptance-report.json           |    8 +-
+ .../p2b-acceptance/01-deep-link-cn-match.png       |  Bin 303604 -> 215779 bytes
+ .../p2b-acceptance/02-hero-cta-to-start-plan.png   |  Bin 435406 -> 287808 bytes
+ .../p2b-acceptance/03-step-pill-to-escrow.png      |  Bin 236115 -> 207085 bytes
+ .../p2c-acceptance/01-theater-asia-match-guide.png |  Bin 615614 -> 411586 bytes
+ .../p2c-acceptance/02-theater-escrow-merchant.png  |  Bin 777856 -> 219541 bytes
+ .../p3-acceptance/01-hero-p3-network-default.png   |  Bin 442666 -> 334642 bytes
+ .../p3-acceptance/02-hero-p3-focus-cn.png          |  Bin 454385 -> 333232 bytes
+ .../scene-debug-canvas-step-0.png                  |  Bin 151743 -> 238141 bytes
+ .../scene-debug-canvas-step-1.png                  |  Bin 151815 -> 248632 bytes
+ .../scene-debug-canvas-step-2.png                  |  Bin 152192 -> 254838 bytes
+ .../scene-debug-canvas-step-3.png                  |  Bin 152472 -> 260851 bytes
+ .../scene-debug-canvas-step-4.png                  |  Bin 152540 -> 263058 bytes
+ .../scene-debug-canvas-step-5.png                  |  Bin 152399 -> 152104 bytes
+ .../scene-debug-step-0.png                         |  Bin 151762 -> 239534 bytes
+ .../scene-debug-step-1.png                         |  Bin 152172 -> 249563 bytes
+ .../scene-debug-step-2.png                         |  Bin 152130 -> 255547 bytes
+ .../scene-debug-step-3.png                         |  Bin 152427 -> 260992 bytes
+ .../scene-debug-step-4.png                         |  Bin 152660 -> 263845 bytes
+ .../scene-debug-step-5.png                         |  Bin 152275 -> 150866 bytes
+ .../PHASE1-LOCAL-ENGINEERING-CLOSED-20260603.md    |    3 +-
+ frontend/evidence/GO_local_phase1/README.md        |   45 +-
+ .../guide-modal-desktop-1280x800.png               |  Bin 62943 -> 85103 bytes
+ .../community/desktop-1280x800.png                 |  Bin 496680 -> 548877 bytes
+ .../POST-screenshots/community/mobile-390x844.png  |  Bin 192791 -> 206033 bytes
+ .../POST-screenshots/did-rank/desktop-1280x800.png |  Bin 173705 -> 160104 bytes
+ .../POST-screenshots/did-rank/mobile-390x844.png   |  Bin 104241 -> 52888 bytes
+ .../POST-screenshots/explore/desktop-1280x800.png  |  Bin 346265 -> 404918 bytes
+ .../POST-screenshots/feedback/desktop-1280x800.png |  Bin 413823 -> 445096 bytes
+ .../POST-screenshots/friends/desktop-1280x800.png  |  Bin 427162 -> 445616 bytes
+ .../POST-screenshots/home/desktop-1280x800.png     |  Bin 873900 -> 960847 bytes
+ .../POST-screenshots/home/mobile-390x844.png       |  Bin 314430 -> 226978 bytes
+ .../market-acquisition/desktop-1280x800.png        |  Bin 410160 -> 411360 bytes
+ .../market-provider/desktop-1280x800.png           |  Bin 415360 -> 413463 bytes
+ .../POST-screenshots/market/desktop-1280x800.png   |  Bin 677928 -> 506128 bytes
+ .../POST-screenshots/market/mobile-390x844.png     |  Bin 219116 -> 212402 bytes
+ .../POST-screenshots/me/desktop-1280x800.png       |  Bin 435804 -> 402819 bytes
+ .../POST-screenshots/messages/desktop-1280x800.png |  Bin 419400 -> 446683 bytes
+ .../POST-screenshots/tt/desktop-1280x800.png       |  Bin 463363 -> 520514 bytes
+ .../V2-hard-refresh-capture/01-market-hero-hub.png |  Bin 679938 -> 574295 bytes
+ .../02-market-provider-title.png                   |  Bin 406052 -> 408809 bytes
+ .../03-market-acquisition-title.png                |  Bin 410355 -> 400694 bytes
+ .../04-did-rank-header-tabs.png                    |  Bin 124698 -> 126474 bytes
+ .../05-community-feed-tabs.png                     |  Bin 404601 -> 537537 bytes
+ .../06-community-explore-h1.png                    |  Bin 317540 -> 403051 bytes
+ .../auth-login/desktop-1280x800.png                |  Bin 29945 -> 504095 bytes
+ .../WAVE-B-screenshots/guides/desktop-1280x800.png |  Bin 605992 -> 415599 bytes
+ .../WAVE-B-screenshots/help/desktop-1280x800.png   |  Bin 77028 -> 75652 bytes
+ .../WAVE-B-screenshots/home/desktop-1280x800.png   |  Bin 874214 -> 961871 bytes
+ .../traveltrust/desktop-1280x800.png               |  Bin 182622 -> 22956 bytes
+ .../evidence/l5-a11y-live-scan/scan-results.jsonl  |   99 +
+ .../evidence/l5-a11y-live-scan/scan-summary.json   |    8 +-
+ .../journey-runs-batch-01.jsonl                    |   10 +-
+ frontend/lib/admin/adminNavPerfL5.contract.test.ts |    5 +-
+ frontend/lib/apiClient/marketSubsite/http.ts       |    3 +
+ frontend/lib/marketingUi.ts                        |    2 +-
+ frontend/lib/orders/ordersListL5.contract.test.ts  |   29 +-
+ frontend/lib/traveltrust/home/visualQaManifest.ts  |   10 +-
+ frontend/locales/en.ts                             |   10 +
+ frontend/playwright.config.ts                      |   53 +-
+ frontend/scripts/run-dev-webserver-logged.mjs      |    4 +-
+ frontend/scripts/run-e2e-default.mjs               |   21 +-
+ 246 files changed, 9357 insertions(+), 5215 deletions(-)

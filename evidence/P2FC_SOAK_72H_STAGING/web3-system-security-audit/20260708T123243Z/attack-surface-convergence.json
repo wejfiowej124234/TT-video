@@ -1,0 +1,114 @@
+{
+  "schema": "traveltrust.attack_surface_convergence.v1",
+  "nodes": [
+    {
+      "id": "N-TIMLOCK",
+      "domain": "D1+D2",
+      "control": "GovernanceTimelock 48h delay",
+      "spof": "SPOF-D1-02"
+    },
+    {
+      "id": "N-PROXY-ADMIN",
+      "domain": "D1",
+      "control": "Proxy ADMIN_SLOT = timelock",
+      "spof": "SPOF-D1-01"
+    },
+    {
+      "id": "N-VOTE-CAP",
+      "domain": "D2",
+      "control": "MAX_VOTING_POWER_PER_ADDRESS_BPS",
+      "spof": "SPOF-D2-01"
+    },
+    {
+      "id": "N-SEAT-REG",
+      "domain": "D2",
+      "control": "TtgSeatConcentrationRegistry",
+      "spof": "SPOF-D2-02"
+    },
+    {
+      "id": "N-API-RBAC",
+      "domain": "D3+D4",
+      "control": "require_admin_permission deny matrix",
+      "spof": "SPOF-D3-01"
+    },
+    {
+      "id": "N-CONSOLE-DIRECT",
+      "domain": "D3",
+      "control": "TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT gate",
+      "spof": "SPOF-D3-02"
+    },
+    {
+      "id": "N-MR12-DEPLOY",
+      "domain": "MR12",
+      "control": "post-soak fly API/Web only",
+      "spof": null
+    }
+  ],
+  "convergence_edges": [
+    {
+      "from": "N-MR12-DEPLOY",
+      "to": "N-CONSOLE-DIRECT",
+      "vector": "fly secrets / [env] injection during one-shot",
+      "mitigation": "static: bypass env absent from staging fly.toml + ops scripts",
+      "residual": "low"
+    },
+    {
+      "from": "N-CONSOLE-DIRECT",
+      "to": "N-API-RBAC",
+      "vector": "PUT console-role skips approval → privilege escalation",
+      "mitigation": "env default off · 409 when disabled · isolated to scripts/dev",
+      "residual": "low"
+    },
+    {
+      "from": "N-TIMLOCK",
+      "to": "N-PROXY-ADMIN",
+      "vector": "compromised timelock proposer schedules malicious upgrade",
+      "mitigation": "48h delay + Safe multisig + Owner review",
+      "residual": "medium"
+    },
+    {
+      "from": "N-VOTE-CAP",
+      "to": "N-TIMLOCK",
+      "vector": "economic attack accumulates governance control",
+      "mitigation": "400 bps cap + seat registry + P4 treasury cap",
+      "residual": "medium"
+    },
+    {
+      "from": "N-API-RBAC",
+      "to": "N-TIMLOCK",
+      "vector": "none direct — CeFi admin ≠ on-chain proposer",
+      "mitigation": "intentional split (D4-F01)",
+      "residual": "none"
+    }
+  ],
+  "breakpoints": [
+    {
+      "id": "BP-P0-RBAC-01",
+      "priority": "P0",
+      "surface": "N-CONSOLE-DIRECT",
+      "requirement": "staging deploy path must not set TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT",
+      "blocks": "MR12 one-shot → off-chain SuperAdmin escalation without approval"
+    },
+    {
+      "id": "BP-D1-01",
+      "priority": "P1",
+      "surface": "N-PROXY-ADMIN",
+      "requirement": "production baseline = TimelockUpgradeableProxy only",
+      "blocks": "instant implementation swap"
+    },
+    {
+      "id": "BP-D2-01",
+      "priority": "P1",
+      "surface": "N-TIMLOCK",
+      "requirement": "GOVERNANCE_TIMELOCK_DELAY_SECONDS frozen at 48h",
+      "blocks": "governance param / treasury rush"
+    }
+  ],
+  "domain_verdicts": {
+    "D1": "WARN",
+    "D2": "WARN",
+    "D3": "WARN"
+  },
+  "mr12_isolated_from_on_chain": null,
+  "unified_residual_risk": "WARN"
+}

@@ -23,8 +23,9 @@ Runbook：`docs/runbook/TT-PH1-SITE-THEME-V1-UPGRADE-001.md` §6.1。
 ## 链上全栈对齐（① · `TRAVELTRUST_CHAIN_ON=1`）
 
 **持久化 SSOT（必读）：** [`docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md`](../../docs/runbook/TT-STEWARD-ADMISSION-CHAIN-STATE-SSOT.md) · Gate：`bash scripts/gates/check-steward-admission-chain-state-ssot.sh`  
-**测试账号矩阵 SSOT：** [`docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md`](../../docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md)（核心 4 + 扩展 2 · L0 `multi-demo` · **§9 覆盖边界**）  
-**① P0 手测（六账号 ≠ 全矩阵）：** [`docs/runbook/TT-LOCAL-P0-MANUAL-UAT-CHECKLIST.md`](../../docs/runbook/TT-LOCAL-P0-MANUAL-UAT-CHECKLIST.md)  
+**TravelTrust Test Accounts SSOT：** [**Quick Reference**](../../docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md) · [`registry/test-accounts-business-immutable.v1.yaml`](../../registry/test-accounts-business-immutable.v1.yaml) · [Matrix](../../docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md) · **Immutable IDs** C1–E2 · **6b5** = C1 C2 C3 C4 E2 · **6b4** = E1  
+**引用纪律：** Smoke / HAT / FRCA / ADM-U01 **只引用 Immutable ID 或矩阵 §0.1** — **禁止**本 README 外平行账号表 · Step **6b2** = SuperAdmin **捷径**  
+**① P0 深测（③ · 六账号 ≠ 全矩阵）：** [`docs/runbook/TT-LOCAL-P0-MANUAL-UAT-CHECKLIST.md`](../../docs/runbook/TT-LOCAL-P0-MANUAL-UAT-CHECKLIST.md)  
 **日常不重质押：** `set SKIP_ANVIL_ALIGN=1` 后启栈；**仅**地址碰撞修复时 `TTG_ANVIL_FORCE_DEPLOY=1`。
 
 **用途**：本地 Anvil 链 + API `/meta` 链字段 + 根 `.env` + 前端 `NEXT_PUBLIC_*` + 管理员种子 + ABI forge multiset **一次对齐**（**①**；**非** ② 测试网 GO）。

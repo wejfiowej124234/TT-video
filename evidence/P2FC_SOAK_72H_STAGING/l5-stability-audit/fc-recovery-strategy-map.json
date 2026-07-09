@@ -1,0 +1,85 @@
+{
+  "schema": "traveltrust.p2fc_recovery_strategy_map.v1",
+  "recovery_strategy_map": {
+    "FC-01_TIMEOUT_MISMATCH": [
+      {
+        "id": "REC-01-A",
+        "when": "step-3 apply_patches reject",
+        "action": "git apply --3way hotfix; resolve middleware/mod.rs + fly.toml hunks",
+        "rollback": "abort; do not deploy; soak evidence preserved"
+      },
+      {
+        "id": "REC-01-B",
+        "when": "step-6 meta strict 408",
+        "action": "verify fly secrets/env REQUEST_TIMEOUT_SECS=120 on tt-api-staging; redeploy API only",
+        "rollback": "p2fc_rollback_fly_app tt-api-staging previous_image"
+      },
+      {
+        "id": "REC-01-C",
+        "when": "step-6 web /meta 503",
+        "action": "confirm wave2 deployed route.ts 130s; curl api/meta then web/meta",
+        "rollback": "p2fc_rollback_fly_app tt-web-staging previous_image"
+      }
+    ],
+    "FC-02_ITINERARIES_HUB": [
+      {
+        "id": "REC-02-A",
+        "when": "step-4 fly deploy OOM/timeout",
+        "action": "rollback API image; split wave1 — deploy hotfix-only subset first",
+        "rollback": "fly-rollback-snapshot.json previous_image tt-api-staging"
+      },
+      {
+        "id": "REC-02-B",
+        "when": "step-4 health≠200 post deploy",
+        "action": "fly logs tt-api-staging; isolate itineraries.rs; local cargo test -p traveltrust-api",
+        "rollback": "immediate API rollback before wave2"
+      },
+      {
+        "id": "REC-02-C",
+        "when": "post-deploy consumer regression",
+        "action": "smoke-web3-itinerary-l5-local as pre-check before COMPLETED if time permits",
+        "rollback": "wave-rollback-plan wave-1 revert"
+      }
+    ],
+    "FC-03_LARGE_DIFF_BLOB": [
+      {
+        "id": "REC-03-A",
+        "when": "step-3 patch apply slow/conflict",
+        "action": "apply hotfix first per wave plan; --3way backlog hunks",
+        "rollback": "git apply -R; stay on pre-backlog tree"
+      },
+      {
+        "id": "REC-03-B",
+        "when": "step-4/5 OOM",
+        "action": "wave split: L0 hotfix → L1 API subset → L2 web; defer L3 e2e assets",
+        "rollback": "both apps previous_image from snapshot"
+      },
+      {
+        "id": "REC-03-C",
+        "when": "step-7 G02 non-meta fail",
+        "action": "do not conflate with FC-03; meta green first then isolate G03/G08",
+        "rollback": "checkpoint.json phase trace"
+      }
+    ]
+  },
+  "fc_analyses_summary": [
+    {
+      "id": "FC-01_TIMEOUT_MISMATCH",
+      "time_to_failure_min": 45,
+      "primary_fail_phase": "meta_availability",
+      "recovery_count": 3
+    },
+    {
+      "id": "FC-02_ITINERARIES_HUB",
+      "time_to_failure_min": 28,
+      "primary_fail_phase": "wave1_api_deploy",
+      "recovery_count": 3
+    },
+    {
+      "id": "FC-03_LARGE_DIFF_BLOB",
+      "time_to_failure_min": 28,
+      "primary_fail_phase": "wave1_api_deploy",
+      "recovery_count": 3
+    }
+  ]
+}

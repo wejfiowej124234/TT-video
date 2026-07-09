@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.rbac_boundary_matrix.v1",
+  "permission_count": 28,
+  "ssot": [
+    "frontend/lib/admin/adminPermissionIds.ts",
+    "registry/admin-rbac-permissions.v1.yaml",
+    "GET /api/v1/admin/rbac/route-matrix"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "batch": "W2",
+  "items": [
+    "RP-010",
+    "RP-006",
+    "RP-011",
+    "RP-013"
+  ],
+  "completed_at": "2026-06-07T01:04:07.795702Z",
+  "regression": {
+    "L0": {
+      "result": "PASS",
+      "note": "ci-local-delivery-minimum exit 0"
+    },
+    "L1": {
+      "result": "PASS",
+      "note": "run-admin-l5-green.mjs exit 0"
+    },
+    "L2": {
+      "result": "PASS",
+      "note": "parity --local-test S3 \u00b7 evidence/local-staging-parity/20260607T005907Z"
+    },
+    "COM": {
+      "result": "PASS",
+      "note": "run-community-l5-green.sh exit 0"
+    },
+    "S5": {
+      "result": "BLOCKED",
+      "note": "fly not authenticated \u2014 phase2-staging-fly-deploy-and-sync FAIL"
+    },
+    "DeepGate": {
+      "result": "FAIL",
+      "note": "G04 ADM-U01 RBAC NO_GO \u00b7 evidence/deep-release-gate/20260607T010124Z"
+    },
+    "S6": {
+      "result": "SKIPPED",
+      "note": "blocked by Deep Gate FAIL + S5 not deployed"
+    },
+    "HAT": {
+      "result": "BLOCKED",
+      "note": "deep gate FAIL per policy \u00b7 TT_PHASE2_DEEP_RELEASE_GATE_BLOCKS: HAT"
+    }
+  },
+  "phase3_entry_gate": {
+    "verdict": "HOLD",
+    "reasons": [
+      "\u2461.9 in-scope 6/8 done \u2014 W3 pending RP-003 RP-015",
+      "S5 deploy blocked (fly auth) \u2014 W2 UI not on staging",
+      "Deep Gate FAIL (G04 RBAC pre-existing, not W2 UI)",
+      "HAT blocked until Deep Gate PASS + staging deploy"
+    ]
+  },
+  "scope_discipline": "UI-only; no API/DB/RBAC/orders/funds logic"
+}

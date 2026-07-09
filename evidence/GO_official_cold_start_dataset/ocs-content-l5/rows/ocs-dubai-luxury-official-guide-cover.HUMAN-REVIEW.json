@@ -1,0 +1,79 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T154530Z",
+  "filename": "ocs-dubai-luxury-official-guide-cover.jpg",
+  "chain_id": "dubai-luxury",
+  "city": "迪拜",
+  "country_code": "AE",
+  "slot": "official-guide-cover",
+  "surface": "Official Guide",
+  "copy_label": "迪拜沙漠与都市官方两日",
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG · decodable · non-placeholder."
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "沙漠+都市双主题 · 与 official_guide title/body 对齐。"
+    },
+    "G3_slot_differentiation": {
+      "pass": true,
+      "notes": "Official 宽幅 hero；非 Guide/Provider/Acquisition/Community。"
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "迪拜 AE desert+city 对比。"
+    },
+    "G5_brand_visual": {
+      "pass": true,
+      "notes": "desert+city contrast luxury warm。"
+    },
+    "G6_commercial_platform": {
+      "pass": true,
+      "notes": "官方攻略封面；非硬广。"
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true,
+      "notes": "清晰可读。"
+    },
+    "G8_evidence_matrix": {
+      "pass": true,
+      "notes": "九类专项 + Official Guide Destination 归档。"
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "notes": "迪拜沙漠都市双主题语义正确。"
+    },
+    "G10_content_diversity": {
+      "pass": true,
+      "notes": "vs 九城 Official Hero 各异。"
+    }
+  },
+  "official_guide_destination_review": {
+    "pass": true,
+    "burj_plus_desert_dual_theme": true
+  },
+  "surface_boundary_review": {
+    "pass": true
+  },
+  "visual_sequence_review": {
+    "pass": true,
+    "vs_prior_dubai_rows": "宽幅 hero vs 肖像/晚宴/香氛"
+  },
+  "destination_experience_review": {
+    "pass": true
+  },
+  "post_generation_technical_check": {
+    "pass": true,
+    "jpeg_decodable": true,
+    "dimensions_640x480": true,
+    "size_gt_16kb": true,
+    "not_placeholder": true
+  },
+  "regression_closed_chains": {
+    "pass": true,
+    "notes": "九城 54 行 + Row55-57 无漂移。"
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

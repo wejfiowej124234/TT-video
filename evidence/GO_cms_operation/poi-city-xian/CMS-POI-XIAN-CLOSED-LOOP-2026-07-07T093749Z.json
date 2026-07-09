@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T09:37:49Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "西安",
+    "city_en": "Xi'an",
+    "matrix_ids": [
+      "PH-CN-325-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-325-ATR",
+      "legacy_value": "华清池",
+      "poi_id": "1c7ac46a-1b33-4589-a218-bef3266f065b",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-325-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.knowledge_risk_report.v1",
+  "solo_maintainer": true,
+  "ssot_docs": [
+    "docs/solo-dev-rhythm.md",
+    "frontend/evidence/GO_local_phase1/SOLO-MAINTAINER-SIGNATURE-INDEX.md",
+    "ops/RUNBOOK.md",
+    "AGENTS.md"
+  ],
+  "risks": [
+    {
+      "id": "K-RISK-001",
+      "area": "onboarding/fee_schedule",
+      "suggested_verdict": "UPDATE",
+      "note": "Ensure handoff paragraph in TT-9618"
+    }
+  ]
+}

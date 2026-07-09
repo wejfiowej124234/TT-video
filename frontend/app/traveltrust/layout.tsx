@@ -10,17 +10,14 @@ import {
   TRAVELTRUST_GLOBE_EARTH_TEXTURE_PATH,
 } from "@/lib/traveltrustGlobeEarthAsset";
 import { getTraveltrustLayoutPreloadSync } from "@/lib/traveltrustPageBrief.server";
+import { getSiteMetadataBase } from "@/lib/siteMetadataBase";
 import { TT_Z, ttZClass } from "@/lib/traveltrustZ";
 import { TravelTrustHomePrefetchBoot } from "@/modules/traveltrust-home";
-
-const siteUrl =
-  (typeof process !== "undefined" && process.env.NEXT_PUBLIC_SITE_URL?.trim()) ||
-  "https://traveltrust.app";
 
 const title = zh.traveltrust_meta_title;
 const description = zh.traveltrust_meta_description;
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: getSiteMetadataBase(),
   title,
   description,
   keywords: ["TravelTrust", "travel", "Web3", "escrow", "custom trip", "定制游", "托管"],

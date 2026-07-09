@@ -1,0 +1,34 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T134730Z",
+  "filename": "ocs-bangkok-temple-acquisition-cover.jpg",
+  "chain_id": "bangkok-temple",
+  "city": "曼谷",
+  "country_code": "TH",
+  "slot": "acquisition-cover",
+  "surface": "Acquisition",
+  "copy_label": "泰国手工丝绸 · 收购",
+  "manifest_copy": {
+    "acquisition.title": "泰国手工丝绸 · 收购",
+    "acquisition.category": "craft",
+    "acquisition.description": "征集手工丝绸围巾与桌旗，需工艺说明。",
+    "acquisition.cover_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg"
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 135921 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "泰丝围巾桌旗织物平铺与 title/description/category craft 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "织物静物；非 Row19-20/未来 slot。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "泰国 craft · 非河景（刻意与 Provider 河船区分）。" },
+    "G5_brand_visual": { "pass": true, "notes": "中性产品光；L5 统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "收购/悬赏标的封面。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、纹理可读。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "Portfolio + Global Regression 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "泰丝工艺语义；无他国元素。" },
+    "G10_content_diversity": { "pass": true, "notes": "craft 类；vs 镜头/和纸/零食明显不同。" }
+  },
+  "acquisition_product_identity_review": { "pass": true },
+  "destination_experience_review": { "pass": true },
+  "content_portfolio_review": { "pass": true },
+  "global_regression_review": { "pass": true },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

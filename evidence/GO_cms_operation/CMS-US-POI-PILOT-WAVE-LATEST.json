@@ -1,0 +1,390 @@
+{
+  "schema": "traveltrust.cms_us_poi_pilot_wave.v1",
+  "stamp_utc": "2026-07-06T123810Z",
+  "advancement_rule": "Scope → Country → City → POI · acceptance = City CLOSED → Country Runtime",
+  "ops_hierarchy": [
+    "asset_family",
+    "country",
+    "city",
+    "asset"
+  ],
+  "acceptance_unit": "city",
+  "template_countries": [
+    "JP",
+    "KR",
+    "TH",
+    "SG",
+    "FR"
+  ],
+  "jp_country_closed_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+  "kr_country_closed_ssot": "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+  "th_country_closed_ssot": "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+  "sg_country_closed_ssot": "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json",
+  "fr_country_closed_ssot": "evidence/GO_cms_operation/CMS-FR-COUNTRY-CLOSURE-LATEST.json",
+  "active_wave": "POI-WAVE-6-US-PILOT",
+  "active_catalog_build": null,
+  "waves": [
+    {
+      "wave_id": "POI-WAVE-6-US-PILOT",
+      "label": "Pilot · US · 旧金山",
+      "country_iso": "US",
+      "country_zh": "美国",
+      "cities": [
+        "旧金山"
+      ],
+      "acceptance_unit": "city",
+      "acceptance_target": "旧金山 CLOSED",
+      "purpose": "Catalog Build → per-POI Review → Live · JP/KR/TH/SG/FR Golden Template 复制 · pilot done when 旧金山 CLOSED",
+      "forbidden": [
+        "bulk_ingest_us_all",
+        "skip_pilot_before_next_city",
+        "accept_by_poi_count"
+      ],
+      "template_countries": [
+        "JP",
+        "KR",
+        "TH",
+        "SG",
+        "FR"
+      ],
+      "template_closure": [
+        "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json",
+        "evidence/GO_cms_operation/CMS-FR-COUNTRY-CLOSURE-LATEST.json"
+      ],
+      "status": "ACTIVE",
+      "catalog_build": true,
+      "matrix_ids": [
+        "PH-US-135-ATR",
+        "PH-US-136-ATR",
+        "PH-US-137-ATR",
+        "PH-US-138-ATR",
+        "PH-US-139-FOOD",
+        "PH-US-140-FOOD",
+        "PH-US-141-FOOD",
+        "PH-US-142-FOOD"
+      ],
+      "poi_count": 8,
+      "by_city": [
+        {
+          "city_zh": "旧金山",
+          "acceptance_unit": "city",
+          "acceptance_target": "旧金山 CLOSED",
+          "poi_count": 8,
+          "matrix_ids": [
+            "PH-US-135-ATR",
+            "PH-US-136-ATR",
+            "PH-US-137-ATR",
+            "PH-US-138-ATR",
+            "PH-US-139-FOOD",
+            "PH-US-140-FOOD",
+            "PH-US-141-FOOD",
+            "PH-US-142-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "金门大桥",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-135-ATR"
+            },
+            {
+              "legacy_value": "渔人码头",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-136-ATR"
+            },
+            {
+              "legacy_value": "缆车",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-137-ATR"
+            },
+            {
+              "legacy_value": "九曲花街",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-138-ATR"
+            },
+            {
+              "legacy_value": "酸面包",
+              "poi_type": "food",
+              "matrix_id": "PH-US-139-FOOD"
+            },
+            {
+              "legacy_value": "螃蟹",
+              "poi_type": "food",
+              "matrix_id": "PH-US-140-FOOD"
+            },
+            {
+              "legacy_value": "Mission卷饼",
+              "poi_type": "food",
+              "matrix_id": "PH-US-141-FOOD"
+            },
+            {
+              "legacy_value": "咖啡",
+              "poi_type": "food",
+              "matrix_id": "PH-US-142-FOOD"
+            }
+          ]
+        },
+        {
+          "city_zh": "拉斯维加斯",
+          "acceptance_unit": "city",
+          "acceptance_target": "拉斯维加斯 CLOSED",
+          "poi_count": 7,
+          "matrix_ids": [
+            "PH-US-143-ATR",
+            "PH-US-144-ATR",
+            "PH-US-145-ATR",
+            "PH-US-146-ATR",
+            "PH-US-147-FOOD",
+            "PH-US-148-FOOD",
+            "PH-US-149-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "大道",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-143-ATR"
+            },
+            {
+              "legacy_value": "百乐宫喷泉",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-144-ATR"
+            },
+            {
+              "legacy_value": "大峡谷",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-145-ATR"
+            },
+            {
+              "legacy_value": "秀",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-146-ATR"
+            },
+            {
+              "legacy_value": "自助餐",
+              "poi_type": "food",
+              "matrix_id": "PH-US-147-FOOD"
+            },
+            {
+              "legacy_value": "牛排",
+              "poi_type": "food",
+              "matrix_id": "PH-US-148-FOOD"
+            },
+            {
+              "legacy_value": "buffet",
+              "poi_type": "food",
+              "matrix_id": "PH-US-149-FOOD"
+            }
+          ]
+        },
+        {
+          "city_zh": "洛杉矶",
+          "acceptance_unit": "city",
+          "acceptance_target": "洛杉矶 CLOSED",
+          "poi_count": 8,
+          "matrix_ids": [
+            "PH-US-150-ATR",
+            "PH-US-151-ATR",
+            "PH-US-152-ATR",
+            "PH-US-153-ATR",
+            "PH-US-154-FOOD",
+            "PH-US-155-FOOD",
+            "PH-US-156-FOOD",
+            "PH-US-157-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "好莱坞",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-150-ATR"
+            },
+            {
+              "legacy_value": "环球影城",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-151-ATR"
+            },
+            {
+              "legacy_value": "圣莫尼卡",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-152-ATR"
+            },
+            {
+              "legacy_value": "盖蒂",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-153-ATR"
+            },
+            {
+              "legacy_value": "In-N-Out",
+              "poi_type": "food",
+              "matrix_id": "PH-US-154-FOOD"
+            },
+            {
+              "legacy_value": "墨西哥菜",
+              "poi_type": "food",
+              "matrix_id": "PH-US-155-FOOD"
+            },
+            {
+              "legacy_value": "韩餐",
+              "poi_type": "food",
+              "matrix_id": "PH-US-156-FOOD"
+            },
+            {
+              "legacy_value": "健康轻食",
+              "poi_type": "food",
+              "matrix_id": "PH-US-157-FOOD"
+            }
+          ]
+        },
+        {
+          "city_zh": "纽约",
+          "acceptance_unit": "city",
+          "acceptance_target": "纽约 CLOSED",
+          "poi_count": 10,
+          "matrix_ids": [
+            "PH-US-158-ATR",
+            "PH-US-159-ATR",
+            "PH-US-160-ATR",
+            "PH-US-161-ATR",
+            "PH-US-162-ATR",
+            "PH-US-163-FOOD",
+            "PH-US-164-FOOD",
+            "PH-US-165-FOOD",
+            "PH-US-166-FOOD",
+            "PH-US-167-FOOD"
+          ],
+          "pois": [
+            {
+              "legacy_value": "自由女神",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-158-ATR"
+            },
+            {
+              "legacy_value": "时代广场",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-159-ATR"
+            },
+            {
+              "legacy_value": "中央公园",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-160-ATR"
+            },
+            {
+              "legacy_value": "大都会",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-161-ATR"
+            },
+            {
+              "legacy_value": "帝国大厦",
+              "poi_type": "attraction",
+              "matrix_id": "PH-US-162-ATR"
+            },
+            {
+              "legacy_value": "披萨",
+              "poi_type": "food",
+              "matrix_id": "PH-US-163-FOOD"
+            },
+            {
+              "legacy_value": "热狗",
+              "poi_type": "food",
+              "matrix_id": "PH-US-164-FOOD"
+            },
+            {
+              "legacy_value": "贝果",
+              "poi_type": "food",
+              "matrix_id": "PH-US-165-FOOD"
+            },
+            {
+              "legacy_value": "牛排",
+              "poi_type": "food",
+              "matrix_id": "PH-US-166-FOOD"
+            },
+            {
+              "legacy_value": "brunch",
+              "poi_type": "food",
+              "matrix_id": "PH-US-167-FOOD"
+            }
+          ]
+        }
+      ],
+      "first_matrix_id": "PH-US-135-ATR",
+      "first_poi": {
+        "city_zh": "旧金山",
+        "legacy_value": "金门大桥",
+        "matrix_id": "PH-US-135-ATR"
+      },
+      "us_country_total": 33,
+      "us_cities": [
+        "旧金山",
+        "拉斯维加斯",
+        "洛杉矶",
+        "纽约"
+      ]
+    }
+  ],
+  "us_denominator": {
+    "country_iso": "US",
+    "cities": [
+      "旧金山",
+      "拉斯维加斯",
+      "洛杉矶",
+      "纽约"
+    ],
+    "poi_total": 33,
+    "san_francisco_pilot": 8
+  },
+  "roadmap": [
+    {
+      "stage": "jp_country",
+      "status": "CLOSED",
+      "ssot": "CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "kr_country",
+      "status": "CLOSED",
+      "ssot": "CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "th_country",
+      "status": "CLOSED",
+      "ssot": "CMS-TH-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "sg_country",
+      "status": "CLOSED",
+      "ssot": "CMS-SG-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "fr_country",
+      "status": "CLOSED",
+      "ssot": "CMS-FR-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "stage": "us_scope",
+      "status": "LOCKED"
+    },
+    {
+      "stage": "catalog_build",
+      "status": "ACTIVE",
+      "city": "旧金山",
+      "acceptance": "旧金山 CLOSED"
+    },
+    {
+      "stage": "us_san_francisco_execution",
+      "status": "ACTIVE"
+    },
+    {
+      "stage": "us_country_runtime",
+      "status": "NOT_STARTED",
+      "when": "TT_CMS_US_COUNTRY: CLOSED"
+    }
+  ],
+  "san_francisco_closed": true,
+  "TT_CMS_POI_CITY_SAN_FRANCISCO": "CLOSED",
+  "las_vegas_closed": true,
+  "TT_CMS_POI_CITY_LAS_VEGAS": "CLOSED",
+  "los_angeles_closed": true,
+  "TT_CMS_POI_CITY_LOS_ANGELES": "CLOSED",
+  "new_york_closed": true,
+  "TT_CMS_POI_CITY_NEW_YORK": "CLOSED"
+}

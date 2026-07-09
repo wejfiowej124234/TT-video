@@ -1,0 +1,306 @@
+{
+  "schema": "traveltrust.p2fc_failure_competition_optimization.v1",
+  "generated_from": [
+    "fc_execution_path_rehearsal",
+    "graduation-failure-mode-forecast"
+  ],
+  "failure_competition_model": {
+    "global_ranking": [
+      {
+        "fc_id": "FC-01_TIMEOUT_MISMATCH",
+        "score": 0.85,
+        "gate": "g02_meta"
+      },
+      {
+        "fc_id": "FC-02_ITINERARIES_HUB",
+        "score": 0.55,
+        "gate": "wave1"
+      },
+      {
+        "fc_id": "FC-03_LARGE_DIFF_BLOB",
+        "score": 0.3,
+        "gate": "wave1"
+      }
+    ],
+    "arenas": [
+      {
+        "arena": "wave1_api_deploy",
+        "offset_min": 28,
+        "competitors": [
+          {
+            "fc_id": "FC-02_ITINERARIES_HUB",
+            "severity": "high",
+            "fail_p": 0.42,
+            "win_score": 0.55,
+            "mechanism": "itineraries.rs Δ195 compile/OOM/health"
+          },
+          {
+            "fc_id": "FC-03_LARGE_DIFF_BLOB",
+            "severity": "medium",
+            "fail_p": 0.22,
+            "win_score": 0.3,
+            "mechanism": "42-file large delta amplifies wave1 surface"
+          }
+        ],
+        "correlation": 0.65,
+        "combined_fail_p": 0.503,
+        "predicted_winner": "FC-02_ITINERARIES_HUB",
+        "ranking": [
+          "FC-02_ITINERARIES_HUB",
+          "FC-03_LARGE_DIFF_BLOB"
+        ]
+      },
+      {
+        "arena": "apply_patches",
+        "offset_min": 12,
+        "competitors": [
+          {
+            "fc_id": "FC-01_TIMEOUT_MISMATCH",
+            "fail_p": 0.22,
+            "win_score": 0.4,
+            "mechanism": "hotfix+backlog hunk overlap"
+          },
+          {
+            "fc_id": "FC-03_LARGE_DIFF_BLOB",
+            "fail_p": 0.17600000000000002,
+            "win_score": 0.35,
+            "mechanism": "large patch apply conflict"
+          }
+        ],
+        "correlation": 0.4,
+        "combined_fail_p": 0.36,
+        "predicted_winner": "FC-01_TIMEOUT_MISMATCH",
+        "ranking": [
+          "FC-01_TIMEOUT_MISMATCH",
+          "FC-03_LARGE_DIFF_BLOB"
+        ]
+      },
+      {
+        "arena": "meta_availability",
+        "offset_min": 45,
+        "competitors": [
+          {
+            "fc_id": "FC-01_TIMEOUT_MISMATCH",
+            "fail_p": 0.42,
+            "win_score": 0.85,
+            "mechanism": "30s live timeout vs 120s hotfix requirement"
+          }
+        ],
+        "correlation": 0.0,
+        "combined_fail_p": 0.42,
+        "predicted_winner": "FC-01_TIMEOUT_MISMATCH",
+        "ranking": [
+          "FC-01_TIMEOUT_MISMATCH"
+        ]
+      }
+    ],
+    "first_competition_winner": "FC-02_ITINERARIES_HUB",
+    "graduation_blocker_if_survive_wave1": "FC-01_TIMEOUT_MISMATCH"
+  },
+  "system_success_model": {
+    "baseline_phase_success": {
+      "tn_p1_010": 0.92,
+      "rollback_snapshot": 0.96,
+      "apply_patches": 0.78,
+      "wave1_api_deploy": 0.497,
+      "wave2_web_deploy": 0.78,
+      "meta_availability": 0.58,
+      "g02_deep_gate": 0.78,
+      "graduation": 0.92
+    },
+    "baseline_wave1_to_graduation_p": 0.1613,
+    "baseline_end_to_end_p": 0.1111,
+    "baseline_success_score": 11.1,
+    "projected_with_minimal_risk_set_p": 0.3563,
+    "projected_success_score_with_mr": 35.6,
+    "score_scale": "0-100 (end-to-end probability × 100)"
+  },
+  "execution_strategies": [
+    {
+      "id": "STRAT-A_DEFAULT",
+      "name": "default one-shot full backlog",
+      "path": [
+        "TN-P1-010",
+        "snapshot",
+        "full patch",
+        "wave1",
+        "wave2",
+        "meta strict",
+        "G02",
+        "graduation"
+      ],
+      "wave1_g02_grad_p": 0.1613,
+      "end_to_end_p": 0.1111,
+      "success_score": 11.1,
+      "risk": "FC-02+03 compete at wave1; FC-01 at meta"
+    },
+    {
+      "id": "STRAT-B_WAVE0_FIRST",
+      "name": "L0 hotfix-only deploy → meta smoke → backlog wave1/2",
+      "path": [
+        "TN-P1-010",
+        "snapshot",
+        "hotfix-only apply",
+        "wave1-hotfix",
+        "meta smoke",
+        "backlog patch",
+        "wave1-full",
+        "wave2",
+        "meta strict",
+        "G02",
+        "graduation"
+      ],
+      "wave1_g02_grad_p": 0.3479,
+      "end_to_end_p": 0.2827,
+      "success_score": 28.3,
+      "risk": "extra deploy cycle; lowest FC-01 exposure",
+      "delta_vs_default": "+hotfix-first sequencing"
+    },
+    {
+      "id": "STRAT-C_SPLIT_ITINERARIES",
+      "name": "defer itineraries.rs from wave1 (minimal L1)",
+      "path": [
+        "TN-P1-010",
+        "snapshot",
+        "patch minus itineraries",
+        "wave1-subset",
+        "wave2",
+        "meta strict",
+        "G02",
+        "graduation",
+        "wave1-itineraries follow-up"
+      ],
+      "wave1_g02_grad_p": 0.2662,
+      "end_to_end_p": 0.1834,
+      "success_score": 18.3,
+      "risk": "itineraries post-grad follow-up required",
+      "delta_vs_default": "excludes crates/api/.../itineraries.rs from wave1"
+    }
+  ],
+  "optimal_execution_path": {
+    "strategy_id": "STRAT-B_WAVE0_FIRST",
+    "strategy_name": "L0 hotfix-only deploy → meta smoke → backlog wave1/2",
+    "path": [
+      "TN-P1-010",
+      "snapshot",
+      "hotfix-only apply",
+      "wave1-hotfix",
+      "meta smoke",
+      "backlog patch",
+      "wave1-full",
+      "wave2",
+      "meta strict",
+      "G02",
+      "graduation"
+    ],
+    "success_score": 28.3,
+    "wave1_g02_graduation_chain": [
+      "wave1-hotfix",
+      "meta smoke",
+      "wave1-full",
+      "wave2",
+      "meta strict",
+      "G02",
+      "graduation"
+    ]
+  },
+  "minimal_risk_change_set": {
+    "changes": [
+      {
+        "id": "MR-01",
+        "priority": 1,
+        "change": "Apply + deploy meta-availability-hotfix.patch only (Wave0)",
+        "artifacts": [
+          "evidence/GO_phase2_deploy_backlog/meta-availability-hotfix.patch",
+          "deploy/fly/tt-api-staging/fly.toml REQUEST_TIMEOUT_SECS=120",
+          "frontend/app/meta/route.ts META_ROUTE_FETCH_TIMEOUT_MS=130000"
+        ],
+        "addresses_fc": [
+          "FC-01_TIMEOUT_MISMATCH"
+        ],
+        "success_uplift_est": "+25% meta_availability phase",
+        "deploy_scope": "tt-api-staging + tt-web-staging (hotfix files only)"
+      },
+      {
+        "id": "MR-02",
+        "priority": 2,
+        "change": "Defer itineraries.rs from initial wave1 deploy",
+        "artifacts": [
+          "crates/api/src/routes/itineraries.rs"
+        ],
+        "addresses_fc": [
+          "FC-02_ITINERARIES_HUB",
+          "FC-03_LARGE_DIFF_BLOB"
+        ],
+        "success_uplift_est": "+27% wave1_api_deploy phase",
+        "deploy_scope": "wave1 subset without Δ195 hub"
+      },
+      {
+        "id": "MR-03",
+        "priority": 3,
+        "change": "Capture fly-rollback-snapshot immediately pre-wave1",
+        "artifacts": [
+          "post-soak-one-shot/fly-rollback-snapshot.json"
+        ],
+        "addresses_fc": [
+          "FC-02_ITINERARIES_HUB",
+          "FC-03_LARGE_DIFF_BLOB"
+        ],
+        "success_uplift_est": "recovery not success — limits blast radius",
+        "deploy_scope": "read-only preflight (already in one-shot step 2)"
+      },
+      {
+        "id": "MR-04",
+        "priority": 4,
+        "change": "Verify REQUEST_TIMEOUT_SECS live before meta --strict",
+        "artifacts": [
+          "curl tt-api-staging /meta/build + /meta probe"
+        ],
+        "addresses_fc": [
+          "FC-01_TIMEOUT_MISMATCH"
+        ],
+        "success_uplift_est": "+15% g02_deep_gate conditional on meta",
+        "deploy_scope": "read-only gate between step 5 and 6"
+      }
+    ],
+    "recommended_core": [
+      {
+        "id": "MR-01",
+        "priority": 1,
+        "change": "Apply + deploy meta-availability-hotfix.patch only (Wave0)",
+        "artifacts": [
+          "evidence/GO_phase2_deploy_backlog/meta-availability-hotfix.patch",
+          "deploy/fly/tt-api-staging/fly.toml REQUEST_TIMEOUT_SECS=120",
+          "frontend/app/meta/route.ts META_ROUTE_FETCH_TIMEOUT_MS=130000"
+        ],
+        "addresses_fc": [
+          "FC-01_TIMEOUT_MISMATCH"
+        ],
+        "success_uplift_est": "+25% meta_availability phase",
+        "deploy_scope": "tt-api-staging + tt-web-staging (hotfix files only)"
+      },
+      {
+        "id": "MR-02",
+        "priority": 2,
+        "change": "Defer itineraries.rs from initial wave1 deploy",
+        "artifacts": [
+          "crates/api/src/routes/itineraries.rs"
+        ],
+        "addresses_fc": [
+          "FC-02_ITINERARIES_HUB",
+          "FC-03_LARGE_DIFF_BLOB"
+        ],
+        "success_uplift_est": "+27% wave1_api_deploy phase",
+        "deploy_scope": "wave1 subset without Δ195 hub"
+      }
+    ],
+    "combined_addresses": [
+      "FC-01_TIMEOUT_MISMATCH",
+      "FC-02_ITINERARIES_HUB",
+      "FC-03_LARGE_DIFF_BLOB"
+    ],
+    "note": "MR-01+MR-02 = smallest deploy surface for Wave1→G02→Graduation pass"
+  },
+  "optimization_converged": true,
+  "honest_boundary": "scores are pre-COMPLETED models · not measured deploy outcomes · no staging change"
+}

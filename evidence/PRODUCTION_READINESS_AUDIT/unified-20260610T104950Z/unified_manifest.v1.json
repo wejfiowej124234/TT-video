@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.unified_release_evidence_pack.v1",
+  "recorded_utc": "2026-06-10T11:04:07.896Z",
+  "stamp": "20260610T104950Z",
+  "overall_verdict": "GO",
+  "failure_count": 0,
+  "feature_freeze": true,
+  "production_go": "NO",
+  "phase": "②",
+  "phases": {
+    "PRA-PRESSURE": "GO",
+    "PRA-STAGING-FULLCHAIN": "GO",
+    "PRA-SECURITY": "GO",
+    "PRA-DR": "GO",
+    "ROV-WAVE2": "GO",
+    "PRA-158-DEEP-AUDIT": "GO"
+  },
+  "report_ssot": "docs/handbook/engineering/176-Production-Readiness-Audit-Report.md",
+  "rov_report_ssot": "docs/handbook/engineering/174-Real-Operations-Validation-Report.md"
+}

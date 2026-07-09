@@ -1,0 +1,61 @@
+{
+  "schema": "traveltrust.p2fc_post_soak_blocker_watch.v2",
+  "observed_at_utc": "2026-06-25T16:04:57Z",
+  "soak_attest": "INFLIGHT|job=D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/job-20260624T011124Z pid=123095 alive=0 ok_polls=104 fail_polls=2 elapsed_sec~=6240 remaining_sec~=252960 required_sec=259200 expect=520abf396cce… live=520abf396cce… probe=fast_job_json sha_aligned=yes",
+  "completed_json": false,
+  "read_only": true,
+  "no_deploy": true,
+  "no_restart": true,
+  "no_strategy_change": true,
+  "execution_strategy": "STRAT-A_PLUS_MR12",
+  "mr12_execution_lock": {
+    "lock_status": "FROZEN",
+    "verify_line": "TT_MR12_EXECUTION_LOCK: FROZEN strategy=STRAT-A_PLUS_MR12 reject=STRAT-B entrypoint=one-shot",
+    "verify_rc": 0,
+    "consistent": true,
+    "drift": false,
+    "drift_fields": [],
+    "zero_drift_pre_completed": true
+  },
+  "one_shot_watcher": "scripts/ops/p2fc-post-soak-one-shot-execute.sh --watch",
+  "one_shot_exec_started": false,
+  "tn_graduation_gate": {
+    "pass": false,
+    "state": "no",
+    "note": "soak COMPLETED.json missing",
+    "freeze_sha": "8dcd304afae1bafe5a4de738175e171256a9501e"
+  },
+  "blockers": [
+    {
+      "id": "B1_TN_P1_010",
+      "ref": "TN-B04",
+      "phase": "defer-soak",
+      "status": "open",
+      "note": "await COMPLETED.json"
+    },
+    {
+      "id": "B2_W1_ITINERARIES_HUB",
+      "ref": "W1-B01",
+      "phase": "post-soak-execute",
+      "status": "open",
+      "note": "MR-02 defer itineraries.rs from wave1 first deploy (Δ195 hub)"
+    },
+    {
+      "id": "B3_G06_G08",
+      "ref": "G06-G08",
+      "phase": "defer-soak",
+      "status": "open",
+      "note": "G06 soak · G07 TN+indexer · G08 deep surface — post one-shot chain"
+    },
+    {
+      "id": "B4_DB_COMPOUND",
+      "ref": "TN-B02/B03",
+      "phase": "post-soak-execute",
+      "status": "open",
+      "note": "db/mod.rs + itineraries compound — TN-P1-010 before wave1"
+    }
+  ],
+  "open_blocker_count": 4,
+  "checkpoint_tn_phase": "pending",
+  "verdict": "INFLIGHT"
+}

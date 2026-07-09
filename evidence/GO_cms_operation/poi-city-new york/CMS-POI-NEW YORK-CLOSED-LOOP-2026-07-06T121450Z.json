@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T12:14:50Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "US",
+    "city_zh": "纽约",
+    "city_en": "New York",
+    "matrix_ids": [
+      "PH-US-162-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-US-162-ATR",
+      "legacy_value": "帝国大厦",
+      "poi_id": "c8e47a08-ec30-463a-99e3-b289d10062aa",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-162-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

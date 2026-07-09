@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T10:36:49Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "青岛",
+    "city_en": "Qingdao",
+    "matrix_ids": [
+      "PH-CN-292-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-292-ATR",
+      "legacy_value": "八大关",
+      "poi_id": "7f65db22-950a-40ad-b078-6796fcede0dd",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-292-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

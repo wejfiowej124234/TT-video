@@ -15,7 +15,7 @@ STAMP="$(cat "$ROOT/evidence/GO_ttg_cert/latest-stamp.txt" 2>/dev/null | tr -d '
 [[ -n "$STAMP" ]] || fail "missing GO_ttg_cert session"
 
 C7="$ROOT/evidence/GO_ttg_cert/${STAMP}/phase-b/execute/PHASE-B-EXECUTE-SIGNOFF.json"
-HAT_EXEC="$HAT_R1_ROOT"/step-07-execute/tx-execute.json"
+HAT_EXEC="${HAT_R1_ROOT}/step-07-execute/tx-execute.json"
 [[ -f "$HAT_EXEC" ]] || fail "Cert #7 execute tx evidence required"
 
 python "$ROOT/scripts/dev/run-cert8-treasury-matrix-checks.py" \

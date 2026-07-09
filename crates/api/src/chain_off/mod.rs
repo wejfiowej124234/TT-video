@@ -16,6 +16,14 @@ pub(crate) fn data_origin_production_string() -> String {
     "production".to_string()
 }
 
+fn default_display_status_published() -> String {
+    "published".into()
+}
+
+fn default_display_origin_real() -> String {
+    "REAL".into()
+}
+
 // ---------- 配置（01/03 超时与争议窗口：dispute_deadline ≥ auto_complete_at） ----------
 
 #[derive(Clone)]
@@ -275,8 +283,61 @@ pub struct GuideRow {
     /// 企业级数据分离：`production` | `test` | `demo`
     #[serde(default = "data_origin_production_string")]
     pub data_origin: String,
+    /// PCP · public surface governance (`display_*` columns)
+    #[serde(default = "default_display_status_published")]
+    pub display_status: String,
+    #[serde(default = "default_display_origin_real")]
+    pub display_origin: String,
+    #[serde(default)]
+    pub featured: bool,
+    #[serde(default)]
+    pub display_priority: i32,
+    #[serde(default)]
+    pub display_surfaces: Vec<String>,
+    #[serde(default)]
+    pub display_start_at: Option<DateTime<Utc>>,
+    #[serde(default)]
+    pub display_end_at: Option<DateTime<Utc>>,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
+}
+
+impl Default for GuideRow {
+    fn default() -> Self {
+        let now = Utc::now();
+        Self {
+            id: Uuid::nil(),
+            user_id: Uuid::nil(),
+            city: String::new(),
+            country_code: String::new(),
+            languages: Vec::new(),
+            service_types: Vec::new(),
+            bio: None,
+            wallet_address: None,
+            real_name: None,
+            passport_number_hash: None,
+            id_photo_url: None,
+            language_cert_url: None,
+            guide_license_url: None,
+            stake_amount: String::new(),
+            hourly_rate: None,
+            avatar_url: None,
+            public_title: None,
+            status: String::new(),
+            rejection_codes: Vec::new(),
+            rejection_message: None,
+            data_origin: data_origin_production_string(),
+            display_status: default_display_status_published(),
+            display_origin: default_display_origin_real(),
+            featured: false,
+            display_priority: 0,
+            display_surfaces: Vec::new(),
+            display_start_at: None,
+            display_end_at: None,
+            created_at: now,
+            updated_at: now,
+        }
+    }
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
@@ -317,12 +378,33 @@ pub struct OrderRow {
     /// 53 评分：向导已确认评分与材料
     #[serde(default)]
     pub rating_guide_confirmed: Option<bool>,
+    /// Escrow Bilateral Settlement · Layer A：游客已确认行程服务完成
+    #[serde(default)]
+    pub service_tourist_confirmed: Option<bool>,
+    /// Escrow Bilateral Settlement · Layer A：向导已确认行程服务完成
+    #[serde(default)]
+    pub service_guide_confirmed: Option<bool>,
     /// 业务归属链（**`orders.chain_id`** 同源）；**None** = 未配置或未 hydrate
     #[serde(default)]
     pub chain_id: Option<i64>,
     /// 企业级数据分离：`production` | `test` | `demo`
     #[serde(default = "data_origin_production_string")]
     pub data_origin: String,
+    /// PCP · public surface governance (`display_*` columns)
+    #[serde(default = "default_display_status_published")]
+    pub display_status: String,
+    #[serde(default = "default_display_origin_real")]
+    pub display_origin: String,
+    #[serde(default)]
+    pub featured: bool,
+    #[serde(default)]
+    pub display_priority: i32,
+    #[serde(default)]
+    pub display_surfaces: Vec<String>,
+    #[serde(default)]
+    pub display_start_at: Option<DateTime<Utc>>,
+    #[serde(default)]
+    pub display_end_at: Option<DateTime<Utc>>,
     /// PD-009 / F-021：**`acquisition_listing`** · **`merchant_listing`** 等
     #[serde(default)]
     pub order_kind: Option<String>,
@@ -387,8 +469,17 @@ impl Default for OrderRow {
             guide_confirmed: None,
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
+            service_tourist_confirmed: None,
+            service_guide_confirmed: None,
             chain_id: None,
             data_origin: data_origin_production_string(),
+            display_status: default_display_status_published(),
+            display_origin: default_display_origin_real(),
+            featured: false,
+            display_priority: 0,
+            display_surfaces: Vec::new(),
+            display_start_at: None,
+            display_end_at: None,
             order_kind: None,
             market_listing_id: None,
         }
@@ -436,6 +527,8 @@ pub struct ChainOffStore {
     pub acquisition_profiles_by_user: HashMap<Uuid, AcquisitionProfileRow>,
     /// **`POST/GET /api/v1/me/guide-exit-*`** 最新退出申请（guide_id → 行；① 内存真源）
     pub guide_exit_requests_by_guide: HashMap<Uuid, guide_exit::GuideExitRequestRow>,
+    /// Public Operations · singleton policy mirror (PCP · chain_off read path)
+    pub public_ops_policy: crate::db::PublicOpsPolicyRow,
 }
 
 /// 注册验证码条目（① chain_off 内存 · 10 分钟有效）
@@ -481,6 +574,7 @@ impl Default for ChainOffStore {
             register_verification_codes: HashMap::new(),
             acquisition_profiles_by_user: HashMap::new(),
             guide_exit_requests_by_guide: HashMap::new(),
+            public_ops_policy: crate::db::PublicOpsPolicyRow::default(),
         }
     }
 }
@@ -589,9 +683,11 @@ mod discover;
 pub use discover::*;
 mod community_public_surface;
 mod market_public_surface;
+mod community_content_readiness_stub;
 pub mod market_guide_filter;
 pub use community_public_surface::*;
 pub use market_public_surface::*;
+pub use community_content_readiness_stub::*;
 mod acquisition_trust;
 #[allow(unused_imports)] // PD-009 parity 测试经 `crate::chain_off::check_acquisition_trust_pg_memory_parity`
 pub use acquisition_trust::*;
@@ -731,8 +827,17 @@ pub(crate) fn order_from_db(o: &crate::db::DbOrderRow) -> OrderRow {
         guide_confirmed: o.guide_confirmed,
         rating_tourist_confirmed: o.rating_tourist_confirmed,
         rating_guide_confirmed: o.rating_guide_confirmed,
+        service_tourist_confirmed: o.service_tourist_confirmed,
+        service_guide_confirmed: o.service_guide_confirmed,
         chain_id: o.chain_id,
         data_origin: o.data_origin.clone(),
+        display_status: default_display_status_published(),
+        display_origin: default_display_origin_real(),
+        featured: false,
+        display_priority: 0,
+        display_surfaces: Vec::new(),
+        display_start_at: None,
+        display_end_at: None,
         order_kind: o.order_kind.clone(),
         market_listing_id: o.market_listing_id,
     }
@@ -799,6 +904,8 @@ pub(crate) async fn try_persist_order_to_db(
         order.guide_confirmed,
         order.rating_tourist_confirmed,
         order.rating_guide_confirmed,
+        order.service_tourist_confirmed,
+        order.service_guide_confirmed,
         chain_id,
         &order.data_origin,
         order.order_kind.as_deref(),

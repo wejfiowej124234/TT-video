@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T150930Z",
+  "trigger_row": 47,
+  "trigger_filename": "ocs-sydney-coast-community-cover.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "community_cover_comparison": {
+    "tokyo-photo": "台场夜景 Feed",
+    "kyoto-culture": "祇园街景",
+    "seoul-food": "明洞街头",
+    "bangkok-temple": "黎明寺尖塔剪影",
+    "singapore-family": "滨海湾亲子",
+    "paris-art": "奥赛钟面",
+    "nyc-skyline": "大桥钢索仰拍",
+    "sydney-coast": "海滩浪花泳者剪影",
+    "distinct": true
+  },
+  "no_quality_regression_prior_46": true
+}

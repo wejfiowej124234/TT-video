@@ -1,0 +1,123 @@
+{
+  "schema": "traveltrust.web3_system_closure.v1",
+  "recorded_utc": "2026-07-08T09:51:31.911Z",
+  "run_dir": "evidence/GO_production_readiness/web3-system-audit/closure-2026-07-08T09-51-31",
+  "audit_verdict": "WEB3_SYSTEM_AUDIT_HIGH_DRIFT",
+  "verdict": "WEB3_SYSTEM_CLOSURE_BLOCKED",
+  "summary": {
+    "blockers_p0": 0,
+    "blockers_p1": 1,
+    "blockers_p2": 0,
+    "payment_rail_subset_pass": true,
+    "web3_system_ready": false,
+    "closure_eligible": false
+  },
+  "honest_boundary": {
+    "payment_rail_g3_02": "G3-02 PAY-W01..W16 may PASS while full Web3 System (Governance/TTG/Staking/Primary Market) remains OPEN",
+    "gate2_registry_note": "TT_PRODUCTION_WEB3_READY=IN_PROGRESS until TT_WEB3_SYSTEM_PRODUCTION_READY=PASS (layering SSOT 2026-07-08)"
+  },
+  "open_blockers": [
+    {
+      "priority": "P1",
+      "id": "WEB3-SYS-P1-004",
+      "dimension": "Primary Market · UI/UX",
+      "title": "TtgPrimaryMarketV1 deployed on Sepolia SSOT but no FE purchase route — locales disclose ② on-chain Primary Market NOT STARTED",
+      "paths": [
+        "contracts/src/TtgPrimaryMarketV1.sol",
+        "frontend/locales/en.ts",
+        "registry/protocol-convergence-deployments.v1.yaml"
+      ],
+      "fix": "Either: (A) ship /primary-market wallet purchase UI + prod env wiring, or (B) formal Owner deferral with TT_WEB3_SYSTEM scope excluding Primary Market until Phase ③",
+      "status": "OPEN",
+      "risk": "MEDIUM"
+    }
+  ],
+  "closure_steps": [
+    {
+      "id": "STEP-0-MASTER-MAP-PARITY",
+      "title": "Master Map → Registry → Contracts → /meta → Evidence parity",
+      "paths": [
+        "registry/web3-system-master-map.v1.yaml",
+        "docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md",
+        "scripts/dev/check-web3-system-master-map-parity.cjs"
+      ],
+      "status": "CLOSED",
+      "evidence": "evidence/GO_production_readiness/web3-system-audit/WEB3-MASTER-MAP-PARITY-LATEST.json",
+      "summary": {
+        "modules_total": 25,
+        "strict_modules": 23,
+        "registered_only": 2,
+        "strict_pass": 23,
+        "strict_fail": 0
+      },
+      "note": "Informational for closure eligibility · P0/P1 blockers still govern WEB3_SYSTEM_CLOSURE_PASS"
+    },
+    {
+      "id": "STEP-1-GATE-LAYERING",
+      "title": "Split TT_WEB3_PAYMENT_PRODUCTION_READY vs TT_WEB3_SYSTEM_PRODUCTION_READY",
+      "paths": [
+        "registry/web3-gate-layering.v1.yaml",
+        "registry/web3-system-production-gate.v1.yaml",
+        "docs/runbook/WEB3-GATE-LAYERING.md",
+        "registry/production-readiness-master-matrix.v1.yaml",
+        "registry/production-go-four-gate-framework.v1.yaml"
+      ],
+      "status": "CLOSED",
+      "evidence": "evidence/GO_production_readiness/web3-system-audit/WEB3-GATE-LAYERING-CLOSURE-LATEST.json"
+    },
+    {
+      "id": "STEP-2-RUNTIME-WIRING",
+      "title": "Prod /meta 10/10 contract wiring",
+      "paths": [
+        "docs/runbook/WEB3-SYSTEM-PRODUCTION-RUNTIME-WIRING.md",
+        "scripts/dev/check-web3-system-production-meta-contracts.cjs"
+      ],
+      "status": "OPEN",
+      "note": "Requires Fly secrets deploy — configuration only documented"
+    },
+    {
+      "id": "STEP-3-G24-REGISTRY",
+      "title": "G24 proxy registry restored + gate PASS",
+      "paths": [
+        "registry/g24-p-upgrade-01-contract-posture.v1.yaml",
+        "scripts/gates/check-g24-p-upgrade-01-proxy-architecture.sh"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "id": "STEP-4-TTG-CERT",
+      "title": "TTG Cert evidence index",
+      "paths": [
+        "scripts/dev/gen-ttg-cert-production-evidence-index.cjs",
+        "evidence/GO_ttg_cert/"
+      ],
+      "status": "PARTIAL"
+    },
+    {
+      "id": "STEP-5-RBAC-D3",
+      "title": "RBAC D3 closure manifest",
+      "paths": [
+        "evidence/GO_production_readiness/web3-system-audit/RBAC-D3-CLOSURE-LATEST.json"
+      ],
+      "status": "CLOSED"
+    }
+  ],
+  "closure_prereqs_met": false,
+  "discipline": {
+    "business_code_modified": false,
+    "audit_only": true
+  },
+  "master_map_parity": {
+    "verdict": "WEB3_MASTER_MAP_PARITY_PASS",
+    "evidence": "evidence/GO_production_readiness/web3-system-audit/WEB3-MASTER-MAP-PARITY-LATEST.json",
+    "failed_modules": []
+  },
+  "references": {
+    "master_map_registry": "registry/web3-system-master-map.v1.yaml",
+    "master_map_human": "docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md",
+    "deep_audit_latest": "evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-DEEP-AUDIT-LATEST.json",
+    "blockers_md": "evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-BLOCKERS-LATEST.md",
+    "payment_rail_subset": "evidence/GO_production_readiness/payment-deep-audit/PAYMENT-USDC-WEB3-DEEP-AUDIT-LATEST.json",
+    "g3_02": "evidence/GO_production_readiness/G3-02/WEB3-PAYMENT-PRODUCTION-READINESS-LATEST.json"
+  }
+}

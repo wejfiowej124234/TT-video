@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W02",
+  "recorded_utc": "2026-07-08T08:27:51.062Z",
+  "run_id": "2026-07-08T08-27-51-062Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "verdict": "PASS",
+  "summary": {
+    "verdict": "PASS",
+    "detail": "USDC approve to Escrow on Sepolia prod token"
+  },
+  "detail": "USDC approve to Escrow on Sepolia prod token",
+  "settlement_token": "0x241948bE49a778490c8A4Ae8D98b7537fE001f63",
+  "allowance": "",
+  "approve_tx_hash": "0xc46a6483401cb3e683f061ba77a3dd87dde44a528fe4e8755abb0fa6d644bab4",
+  "explorer": "https://sepolia.etherscan.io/tx/0xc46a6483401cb3e683f061ba77a3dd87dde44a528fe4e8755abb0fa6d644bab4"
+}

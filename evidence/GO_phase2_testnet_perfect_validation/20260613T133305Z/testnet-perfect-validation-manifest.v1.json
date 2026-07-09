@@ -1,0 +1,17 @@
+{
+  "schema": "testnet_perfect_validation.v1",
+  "stamp": "20260613T133305Z",
+  "recorded_at": "2026-06-13T13:33:05Z",
+  "phase": "② testnet",
+  "current_verdict": {
+    "open_testnet_p0": 0,
+    "open_testnet_p1": 10,
+    "tn_p0_001_adm_u01": "CLOSED",
+    "adm_u01_release_gate": "GO",
+    "six_console_roles_pct": 100,
+    "phase2_readiness": 84,
+    "tt_testnet_perfect_validation_go": "NO-GO"
+  },
+  "adm_u01_evidence": "evidence/GO_staging_admin_rbac_matrix/run_20260613T_p0_clear_v13",
+  "report_ssot": "docs/runbook/TESTNET-PERFECT-VALIDATION-REPORT.md"
+}

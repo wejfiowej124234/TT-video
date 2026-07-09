@@ -1,0 +1,17 @@
+{
+  "cutover_ok": true,
+  "split_completed": true,
+  "math_ok": true,
+  "fund_flow": {
+    "net_profit_prime": 1100000,
+    "split": {
+      "steward": 0,
+      "unallocated": 495000,
+      "global": 605000
+    },
+    "treasury_delta": 605000,
+    "unallocated_vault_balance": 495000
+  },
+  "blockers": [],
+  "verdict": "PASS"
+}

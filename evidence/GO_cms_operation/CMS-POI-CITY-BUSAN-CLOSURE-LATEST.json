@@ -1,0 +1,130 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-05T234237Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "KR",
+    "country_zh": "韩国",
+    "city_zh": "釜山",
+    "city_en": "Busan"
+  },
+  "poi_count": 8,
+  "matrix_ids": [
+    "PH-KR-042-ATR",
+    "PH-KR-043-ATR",
+    "PH-KR-044-ATR",
+    "PH-KR-045-ATR",
+    "PH-KR-046-FOOD",
+    "PH-KR-047-FOOD",
+    "PH-KR-048-FOOD",
+    "PH-KR-049-FOOD"
+  ],
+  "pois": [
+    "海云台",
+    "甘川文化村",
+    "札嘎其市场",
+    "广安里大桥",
+    "猪肉汤饭",
+    "生鱼片",
+    "鱼饼",
+    "小麦面"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-KR-042-ATR",
+      "legacy_value": "海云台",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-KR-043-ATR",
+      "legacy_value": "甘川文化村",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-KR-044-ATR",
+      "legacy_value": "札嘎其市场",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-KR-045-ATR",
+      "legacy_value": "广安里大桥",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-KR-046-FOOD",
+      "legacy_value": "猪肉汤饭",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-KR-047-FOOD",
+      "legacy_value": "生鱼片",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-KR-048-FOOD",
+      "legacy_value": "鱼饼",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-KR-049-FOOD",
+      "legacy_value": "小麦面",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-community-cover.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-042-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-043-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-044-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-045-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-046-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-047-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-048-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-049-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=KR&city=%E9%87%9C%E5%B1%B1&limit=50",
+    "http": 200,
+    "count": 8
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-busan/CMS-POI-BUSAN-CLOSED-LOOP-LATEST.json",
+  "next_city": {
+    "country_iso": "KR",
+    "city_zh": "济州",
+    "city_en": "Jeju"
+  },
+  "closure_keys": {
+    "TT_CMS_POI_CITY_BUSAN": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": "KR · 济州"
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_BUSAN": "CLOSED"
+}

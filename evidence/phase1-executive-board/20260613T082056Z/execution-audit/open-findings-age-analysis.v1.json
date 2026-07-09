@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.open_findings_age.v1",
+  "buckets": {
+    "0-7d": 0,
+    "8-30d": 3,
+    "31-60d": 2,
+    "60d+": 0
+  },
+  "findings": [
+    {
+      "id": "AG-SEED-003",
+      "age_days": 22,
+      "severity": "P1"
+    },
+    {
+      "id": "LFC-CA-001",
+      "age_days": 28,
+      "severity": "P1"
+    },
+    {
+      "id": "LFC-UXA-001",
+      "age_days": 40,
+      "severity": "P1"
+    },
+    {
+      "id": "PF-SEED-004",
+      "age_days": 60,
+      "severity": "P1"
+    },
+    {
+      "id": "PGX-CX-002",
+      "age_days": 12,
+      "severity": "P1"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T150030Z",
+  "trigger_row": 33,
+  "trigger_filename": "ocs-paris-art-acquisition-cover.jpg",
+  "TT_CROSS_CHAIN_ACQUISITION_REVIEW": "PASS",
+  "acquisition_comparison": {
+    "tokyo-photo": "限量镜头",
+    "kyoto-culture": "手工和纸",
+    "seoul-food": "限定零食",
+    "bangkok-temple": "泰国手工丝绸",
+    "singapore-family": "新加坡设计礼盒",
+    "paris-art": "巴黎中古艺术海报",
+    "distinct": true,
+    "no_product_duplication": true
+  },
+  "no_quality_regression_prior_32": true
+}

@@ -1,0 +1,42 @@
+{
+  "schema": "traveltrust.audit_coverage_heat_map.v1",
+  "cells": [
+    {
+      "layer": "L1_FOUNDATION",
+      "label": "基础系统层",
+      "coverage_score": 85,
+      "band": "HIGH"
+    },
+    {
+      "layer": "L2_PRODUCT_EXPERIENCE",
+      "label": "产品体验层",
+      "coverage_score": 85,
+      "band": "HIGH"
+    },
+    {
+      "layer": "L3_BUSINESS_OPERATIONS",
+      "label": "业务运营层",
+      "coverage_score": 85,
+      "band": "HIGH"
+    },
+    {
+      "layer": "L4_PLATFORM_GOVERNANCE",
+      "label": "平台治理层",
+      "coverage_score": 85,
+      "band": "HIGH"
+    },
+    {
+      "layer": "L5_LIFECYCLE_GOVERNANCE",
+      "label": "生命周期治理层",
+      "coverage_score": 85,
+      "band": "HIGH"
+    },
+    {
+      "layer": "L6_UPGRADE_GATES",
+      "label": "升级总闸层",
+      "coverage_score": 84,
+      "band": "HIGH"
+    }
+  ],
+  "missing_gates": 0
+}

@@ -1,0 +1,1 @@
+{"error":"unauthorized","message":"unauthorized","detail":"STRICT_SESSION_GATE=1：须提供 Authorization: Bearer <session_token>（不接受仅 X-User-Id）"}

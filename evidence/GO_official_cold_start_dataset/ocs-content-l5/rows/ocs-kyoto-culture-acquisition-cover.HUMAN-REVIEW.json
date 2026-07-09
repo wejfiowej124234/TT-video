@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T124730Z",
+  "filename": "ocs-kyoto-culture-acquisition-cover.jpg",
+  "chain_id": "kyoto-culture",
+  "city": "京都",
+  "country_code": "JP",
+  "slot": "acquisition-cover",
+  "surface": "Acquisition",
+  "copy_label": "京都手工和纸 · 收购",
+  "manifest_copy": {
+    "chain.city": "京都",
+    "chain.tags": ["文化", "茶道"],
+    "acquisition.title": "京都手工和纸 · 收购",
+    "acquisition.category": "craft",
+    "acquisition.description": "征集京都手工和纸与漆器小件，需来源说明。",
+    "acquisition.cover_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg"
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 108760 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "和纸+漆器工艺静物与 title/description/category 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "工艺产品静物；非 Row7 肖像/Row8 茶室服务/未来岚山/茶道瞬间。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "京都同 chain；无东京/他国。" },
+    "G5_brand_visual": { "pass": true, "notes": "低饱和禅意工艺质感；kyoto chain 统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "Acquisition 悬赏/收购商品封面观感。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光柔和、白平衡自然。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "HUMAN-REVIEW + chain 3/6 + cross-chain 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "和纸漆器语义；无水印/Logo/畸形；② AI 素材。" },
+    "G10_content_diversity": { "pass": true, "notes": "工艺产品 slot；chain 场景扩展。" }
+  },
+  "business_semantics": { "pass": true, "notes": "Acquisition 商品/器物；非 Guide/Provider/Community。" },
+  "consumer_experience": { "pass": true, "notes": "可识别为京都工艺收购标的。" },
+  "narrative_continuity": { "pass": true, "notes": "Yuki→茶室→工艺收购；文化生态连贯。" },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

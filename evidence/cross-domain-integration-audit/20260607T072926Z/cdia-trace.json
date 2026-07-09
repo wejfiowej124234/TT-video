@@ -1,0 +1,19 @@
+{
+  "arbitrator_user_id": "bce28026-d98d-4284-9d26-4cfb03a2cb6a",
+  "arbitrator_email": "cdia-arbitrator-audit@traveltrust.test",
+  "arbitrator_role": "arbitrator",
+  "order_id": "3b9e2259-06cf-4272-bda9-bff77d625752",
+  "dispute_order_id": "f30df417-09a1-4fb2-b1de-e76a762a92b1",
+  "dispute_id": "7c9fd04c-211f-48f3-83ec-265890129952",
+  "dispute_traveler_token": "tts_ab78f50d-41c6-4b6c-be3c-8097b00d5641",
+  "author_user_id": "230aaf88-3f4a-4f5c-87d5-68814636c605",
+  "post_id": "2bb112c5-a866-4663-93a4-12f278ebee9f",
+  "report_id": "9f68c124-fb3d-4005-b14d-8ed203d78bd3",
+  "penalty_ok": true,
+  "governance_proposal_id": "911919911919911919911919911919911919",
+  "traveler_user_id": "e577bb09-2837-4cc2-a6fe-598db5009682",
+  "guide_row_id": "cd805f14-b6b9-49a3-8ec6-ea232a6f7e97",
+  "api_base": "http://127.0.0.1:8080",
+  "stamp": 1780817369,
+  "run_id": "96fe9ca3"
+}

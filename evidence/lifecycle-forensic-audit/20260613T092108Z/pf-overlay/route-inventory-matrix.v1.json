@@ -1,0 +1,1363 @@
+{
+  "schema": "traveltrust.pf_route_inventory.v1",
+  "items": [
+    {
+      "route": "/admin",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/alerts/incidents",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/alerts/incidents/[id]",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/api-versions",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/approvals",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/approvals/[id]",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/audit",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/audit/logs/[id]",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/audit/operations",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/auth-audit-events",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/community/abuse-policy",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/community/appeals",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/community/appeals/review",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/community/comments/visibility",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/community/moderation/cases",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/community/penalties",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/community/policy-change-logs",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/community/ranking/snapshots",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/community/reports",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/community/risk-signals",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/compliance",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/compliance/requests",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/compliance/requests/[requestId]/events",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/compliance/requests/[requestId]/update",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/config",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/config/releases",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/config/releases/[id]",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/catalog-dashboard",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/cities",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/countries",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/country-market",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/geo-validation",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/hotel-tiers",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/import-operations",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/intercity-routes",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/landing-ambient",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/media-assets",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/poi-images",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/poi-images/batches/[id]",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/pois",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/pricing",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/publish-queue",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/revisions",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/revisions/compare",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/content/transport-region-rules",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/conversion-analytics",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/cross-check",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/disputes",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/disputes/[id]",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/drift-summary",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/fee-router",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/finance",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/finance-reconciliation",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/finance-suite",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/flags",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/governance/execution-uat",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/growth",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/growth/airdrop-campaigns",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/growth/analytics",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/growth/anti-fraud",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/growth/early-bird",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/growth/kol-center",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/growth/referral-codes",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/growth/reward-ledger",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/guide-applications",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/guides",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/guides/[id]",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/inbox",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/indexer",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/indexer/reconcile-reports",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/indexer/reconcile/[id]",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/internal-tools/audits",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/jobs",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/lifecycle",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/media/access-logs",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/media/signed-url-tokens",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/observability",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/official",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/official/accounts",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/official/cold-start",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/official/guides",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/official/itinerary-templates",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/onboarding",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/onboarding/compliance-audit",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/onboarding/entitlements",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/onboarding/entitlements/[id]",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/onboarding/payment-events",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/onboarding/webhook-jobs",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/operator-guide",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/orders",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/orders/[id]",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/permissions",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/policies",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/provider-applications",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/region-share/reconcile",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/region-vault",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/reviews",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/reviews/[id]",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/scheduler/jobs",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/schema",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/secrets/metadata",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/steward-applications",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/tenants/scopes",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/trust-growth",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/users",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/admin/users/[id]",
+      "owner": "Admin/Ops",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/auth/forgot-password",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/auth/login",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/auth/register",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/auth/reset-password",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/auth/verify-email",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/activity",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/explore",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/feedback",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/friends",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/guidelines",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/me",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/me/collects",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/me/likes",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/me/posts",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/me/reports",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/me/reports/[id]",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/messages",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/messages/[id]",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/post/[id]",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/topic/[tag]",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/tt",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/community/user/[id]",
+      "owner": "Community",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/did-rank",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/discover",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/disputes",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/disputes/[id]",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/escrow/[id]",
+      "owner": "Orders/Escrow",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/escrow/[id]/chain",
+      "owner": "Orders/Escrow",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/escrow/[id]/proof",
+      "owner": "Orders/Escrow",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/escrow/[id]/rate",
+      "owner": "Orders/Escrow",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/governance",
+      "owner": "Steward/Governance",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/governance/delegate",
+      "owner": "Steward/Governance",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/governance/distribution-accruals",
+      "owner": "Steward/Governance",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/governance/distribution-accruals/[id]",
+      "owner": "Steward/Governance",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/governance/distribution-claim",
+      "owner": "Steward/Governance",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/governance/fee-routes",
+      "owner": "Steward/Governance",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/governance/params",
+      "owner": "Steward/Governance",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/governance/proposals",
+      "owner": "Steward/Governance",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/governance/proposals/[id]",
+      "owner": "Steward/Governance",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/governance/proposals/new",
+      "owner": "Steward/Governance",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/governance/vault-forwards",
+      "owner": "Steward/Governance",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/guide",
+      "owner": "Guide Workbench",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/guide/register",
+      "owner": "Guide Workbench",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/guides",
+      "owner": "Guide Workbench",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/guides/[id]",
+      "owner": "Guide Workbench",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/help",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/home",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/itinerary/new",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/market",
+      "owner": "Market",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/market/acquisition",
+      "owner": "Market",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/market/acquisition/[id]",
+      "owner": "Market",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/market/provider",
+      "owner": "Market",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/market/provider/showcase/[id]",
+      "owner": "Market",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/identities",
+      "owner": "Identity Hub",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/identities/acquisition/settings",
+      "owner": "Identity Hub",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/identities/guide/settings",
+      "owner": "Identity Hub",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/identities/merchant/settings",
+      "owner": "Identity Hub",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/identities/region-steward/settings",
+      "owner": "Identity Hub",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/onboarding",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/password",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/publish",
+      "owner": "Publish Hub",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/referrals",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/security",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/settings",
+      "owner": "Settings",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/settings/data",
+      "owner": "Settings",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/settings/language",
+      "owner": "Settings",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/settings/notifications-prefs",
+      "owner": "Settings",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/settings/privacy",
+      "owner": "Settings",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/settings/profile",
+      "owner": "Settings",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/me/settings/trust",
+      "owner": "Settings",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/network",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/orders",
+      "owner": "Orders/Escrow",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/orders/[id]",
+      "owner": "Orders/Escrow",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/orders/new",
+      "owner": "Orders/Escrow",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/pay",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/privacy",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/provider",
+      "owner": "Merchant Workbench",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/provider/register",
+      "owner": "Merchant Workbench",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/staking",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/steward/register",
+      "owner": "Steward/Governance",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/terms",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/terms/community-guidelines",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/traveltrust",
+      "owner": "Five-Main Marketing",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/traveltrust/announcements",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    },
+    {
+      "route": "/trust",
+      "owner": "TBD",
+      "value_hypothesis": "TBD — human PF-01",
+      "verdict": "PENDING",
+      "pf": "PF-01"
+    }
+  ]
+}

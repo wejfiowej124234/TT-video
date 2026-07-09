@@ -1,0 +1,6 @@
+{
+  "steward_path": "StewardPathVault.depositFromLedger \u00b7 Active Seat eligibility at split",
+  "investor_claim": "InvestorDistributionClaim \u00b7 governance-registered distribution_id only",
+  "not_auto_p4_dividend": true,
+  "note": "claim page orthogonal to 45% steward leg; P4 requires Governor+Timelock"
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T02:21:41Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "TH",
+    "city_zh": "曼谷",
+    "city_en": "Bangkok",
+    "matrix_ids": [
+      "PH-TH-077-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-TH-077-ATR",
+      "legacy_value": "水上市场",
+      "poi_id": "9feda618-0224-474b-b078-323e72062f06",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg",
+      "hero_file": "ocs-bangkok-temple-acquisition-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-077-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

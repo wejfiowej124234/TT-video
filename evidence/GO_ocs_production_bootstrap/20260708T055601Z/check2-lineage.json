@@ -1,0 +1,442 @@
+[
+  {
+    "ocs_source_id": "tokyo-photo",
+    "guide": {
+      "guide_id": "17f3f0b1-4277-4180-872f-65704fb65531",
+      "ocs_source_id": "tokyo-photo",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/guides/17f3f0b1-4277-4180-872f-65704fb65531"
+    },
+    "provider_listing": {
+      "listing_id": "60a0fce4-ae59-48a6-a93c-bd39ce39a259",
+      "ocs_source_id": "tokyo-photo",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings/60a0fce4-ae59-48a6-a93c-bd39ce39a259",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings?limit=100"
+    },
+    "acquisition_listing": {
+      "listing_id": "de2e86d9-cb03-4d7c-a57c-3a776dec6a7b",
+      "ocs_source_id": "tokyo-photo",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings/de2e86d9-cb03-4d7c-a57c-3a776dec6a7b",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings?limit=100"
+    },
+    "official_guide": {
+      "post_id": "2e3c1b19-e5d4-4340-b03e-ed7e74ae1ebe",
+      "ocs_source_id": "tokyo-photo",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/guides/2e3c1b19-e5d4-4340-b03e-ed7e74ae1ebe"
+    },
+    "community_post": {
+      "post_id": "9f66ae74-55b1-4429-b022-09b086a1080a",
+      "ocs_source_id": "tokyo-photo",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-tokyo-photo-community-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/community/posts/9f66ae74-55b1-4429-b022-09b086a1080a",
+      "feed_api": "https://tt-api-prod.fly.dev/api/v1/community/feed?limit=50"
+    }
+  },
+  {
+    "ocs_source_id": "kyoto-culture",
+    "guide": {
+      "guide_id": "8b417a00-128a-45ba-8fac-b25db6299f10",
+      "ocs_source_id": "kyoto-culture",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-kyoto-culture-guide-avatar.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/guides/8b417a00-128a-45ba-8fac-b25db6299f10"
+    },
+    "provider_listing": {
+      "listing_id": "3b940f9a-b2ff-4309-8183-9cb467c5b544",
+      "ocs_source_id": "kyoto-culture",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings/3b940f9a-b2ff-4309-8183-9cb467c5b544",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings?limit=100"
+    },
+    "acquisition_listing": {
+      "listing_id": "46bd9fac-7209-4825-8727-922c0dcc5664",
+      "ocs_source_id": "kyoto-culture",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings/46bd9fac-7209-4825-8727-922c0dcc5664",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings?limit=100"
+    },
+    "official_guide": {
+      "post_id": "135e6fbe-188c-4653-acd3-db845f8e6fda",
+      "ocs_source_id": "kyoto-culture",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/guides/135e6fbe-188c-4653-acd3-db845f8e6fda"
+    },
+    "community_post": {
+      "post_id": "30b94bc6-14a5-4eac-9c9a-7deaf4deb6a5",
+      "ocs_source_id": "kyoto-culture",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-kyoto-culture-community-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/community/posts/30b94bc6-14a5-4eac-9c9a-7deaf4deb6a5",
+      "feed_api": "https://tt-api-prod.fly.dev/api/v1/community/feed?limit=50"
+    }
+  },
+  {
+    "ocs_source_id": "seoul-food",
+    "guide": {
+      "guide_id": "3ac0d9db-9cdc-4f5c-b4f4-502f9fee1ca3",
+      "ocs_source_id": "seoul-food",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-seoul-food-guide-avatar.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/guides/3ac0d9db-9cdc-4f5c-b4f4-502f9fee1ca3"
+    },
+    "provider_listing": {
+      "listing_id": "d42a9a54-fc92-40cf-8e78-94eaf742be73",
+      "ocs_source_id": "seoul-food",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings/d42a9a54-fc92-40cf-8e78-94eaf742be73",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings?limit=100"
+    },
+    "acquisition_listing": {
+      "listing_id": "338f0225-a5ff-458a-8f10-3d1ac4b5c4df",
+      "ocs_source_id": "seoul-food",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings/338f0225-a5ff-458a-8f10-3d1ac4b5c4df",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings?limit=100"
+    },
+    "official_guide": {
+      "post_id": "502a493a-500b-447e-9c71-a76dccd4e588",
+      "ocs_source_id": "seoul-food",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/guides/502a493a-500b-447e-9c71-a76dccd4e588"
+    },
+    "community_post": {
+      "post_id": "78536f4a-49f6-4a0a-a753-3186f6f84d25",
+      "ocs_source_id": "seoul-food",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-seoul-food-community-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/community/posts/78536f4a-49f6-4a0a-a753-3186f6f84d25",
+      "feed_api": "https://tt-api-prod.fly.dev/api/v1/community/feed?limit=50"
+    }
+  },
+  {
+    "ocs_source_id": "bangkok-temple",
+    "guide": {
+      "guide_id": "c1824bc2-4241-490d-96ae-72a70a57331f",
+      "ocs_source_id": "bangkok-temple",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-bangkok-temple-guide-avatar.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/guides/c1824bc2-4241-490d-96ae-72a70a57331f"
+    },
+    "provider_listing": {
+      "listing_id": "c4e7fcd0-0eee-48ca-9f3a-b8f66a88908d",
+      "ocs_source_id": "bangkok-temple",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings/c4e7fcd0-0eee-48ca-9f3a-b8f66a88908d",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings?limit=100"
+    },
+    "acquisition_listing": {
+      "listing_id": "f28040d4-4263-455c-ad5a-707f0c2bda70",
+      "ocs_source_id": "bangkok-temple",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings/f28040d4-4263-455c-ad5a-707f0c2bda70",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings?limit=100"
+    },
+    "official_guide": {
+      "post_id": "be84822b-a414-4559-857c-8ed2a8a177cf",
+      "ocs_source_id": "bangkok-temple",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/guides/be84822b-a414-4559-857c-8ed2a8a177cf"
+    },
+    "community_post": {
+      "post_id": "708ae509-b2ed-48cd-97e8-8f3184cd5670",
+      "ocs_source_id": "bangkok-temple",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-bangkok-temple-community-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/community/posts/708ae509-b2ed-48cd-97e8-8f3184cd5670",
+      "feed_api": "https://tt-api-prod.fly.dev/api/v1/community/feed?limit=50"
+    }
+  },
+  {
+    "ocs_source_id": "singapore-family",
+    "guide": {
+      "guide_id": "9b93b6ac-fcec-489f-af6e-88e01d50e337",
+      "ocs_source_id": "singapore-family",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-singapore-family-guide-avatar.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/guides/9b93b6ac-fcec-489f-af6e-88e01d50e337"
+    },
+    "provider_listing": {
+      "listing_id": "64123bda-ee92-4d3d-82b4-a6912ec3491c",
+      "ocs_source_id": "singapore-family",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings/64123bda-ee92-4d3d-82b4-a6912ec3491c",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings?limit=100"
+    },
+    "acquisition_listing": {
+      "listing_id": "aa80403b-db61-4edf-849f-ed06094669bc",
+      "ocs_source_id": "singapore-family",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings/aa80403b-db61-4edf-849f-ed06094669bc",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings?limit=100"
+    },
+    "official_guide": {
+      "post_id": "af7855b9-140a-431f-9bfe-92119bdd92c8",
+      "ocs_source_id": "singapore-family",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/guides/af7855b9-140a-431f-9bfe-92119bdd92c8"
+    },
+    "community_post": {
+      "post_id": "e67b7c13-cf06-4ea4-a6da-af20a942618c",
+      "ocs_source_id": "singapore-family",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-singapore-family-community-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/community/posts/e67b7c13-cf06-4ea4-a6da-af20a942618c",
+      "feed_api": "https://tt-api-prod.fly.dev/api/v1/community/feed?limit=50"
+    }
+  },
+  {
+    "ocs_source_id": "paris-art",
+    "guide": {
+      "guide_id": "f444b9f9-a312-4db9-b504-ccd428172f7e",
+      "ocs_source_id": "paris-art",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/guides/f444b9f9-a312-4db9-b504-ccd428172f7e"
+    },
+    "provider_listing": {
+      "listing_id": "54bb451b-fc95-4c04-9a64-41c12e109100",
+      "ocs_source_id": "paris-art",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings/54bb451b-fc95-4c04-9a64-41c12e109100",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings?limit=100"
+    },
+    "acquisition_listing": {
+      "listing_id": "2d3cf893-a81c-4a6e-b747-95b1ddd94e42",
+      "ocs_source_id": "paris-art",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-paris-art-acquisition-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings/2d3cf893-a81c-4a6e-b747-95b1ddd94e42",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings?limit=100"
+    },
+    "official_guide": {
+      "post_id": "b6f01271-6640-4d29-bdbd-73c499716cbf",
+      "ocs_source_id": "paris-art",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/guides/b6f01271-6640-4d29-bdbd-73c499716cbf"
+    },
+    "community_post": {
+      "post_id": "0b4c87b9-df17-4b32-9acc-7f9879e7e2e5",
+      "ocs_source_id": "paris-art",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/community/posts/0b4c87b9-df17-4b32-9acc-7f9879e7e2e5",
+      "feed_api": "https://tt-api-prod.fly.dev/api/v1/community/feed?limit=50"
+    }
+  },
+  {
+    "ocs_source_id": "nyc-skyline",
+    "guide": {
+      "guide_id": "54493d8e-6358-4526-9b43-2cee2a759e3f",
+      "ocs_source_id": "nyc-skyline",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-nyc-skyline-guide-avatar.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/guides/54493d8e-6358-4526-9b43-2cee2a759e3f"
+    },
+    "provider_listing": {
+      "listing_id": "c5e2c767-49eb-4862-ae67-0eb5588dfb6b",
+      "ocs_source_id": "nyc-skyline",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings/c5e2c767-49eb-4862-ae67-0eb5588dfb6b",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings?limit=100"
+    },
+    "acquisition_listing": {
+      "listing_id": "41e19d23-094f-447b-8cec-2945bd5c63a1",
+      "ocs_source_id": "nyc-skyline",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-nyc-skyline-acquisition-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings/41e19d23-094f-447b-8cec-2945bd5c63a1",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings?limit=100"
+    },
+    "official_guide": {
+      "post_id": "8616fa51-ab2c-4a3e-916b-5ad65b56c16f",
+      "ocs_source_id": "nyc-skyline",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-nyc-skyline-official-guide-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/guides/8616fa51-ab2c-4a3e-916b-5ad65b56c16f"
+    },
+    "community_post": {
+      "post_id": "a4b97049-d09c-4c78-b572-0e5575e1ef81",
+      "ocs_source_id": "nyc-skyline",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-nyc-skyline-community-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/community/posts/a4b97049-d09c-4c78-b572-0e5575e1ef81",
+      "feed_api": "https://tt-api-prod.fly.dev/api/v1/community/feed?limit=50"
+    }
+  },
+  {
+    "ocs_source_id": "sydney-coast",
+    "guide": {
+      "guide_id": "f55601f5-c21d-4dfd-b729-4b949eaac41b",
+      "ocs_source_id": "sydney-coast",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-sydney-coast-guide-avatar.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/guides/f55601f5-c21d-4dfd-b729-4b949eaac41b"
+    },
+    "provider_listing": {
+      "listing_id": "9562d235-e514-42d3-9d81-093dab90b044",
+      "ocs_source_id": "sydney-coast",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings/9562d235-e514-42d3-9d81-093dab90b044",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings?limit=100"
+    },
+    "acquisition_listing": {
+      "listing_id": "db3dc45a-adcb-4f68-983f-6bd59fc3c6c3",
+      "ocs_source_id": "sydney-coast",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings/db3dc45a-adcb-4f68-983f-6bd59fc3c6c3",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings?limit=100"
+    },
+    "official_guide": {
+      "post_id": "ea1d0524-6a98-4d5e-a77e-a8cf95aa0520",
+      "ocs_source_id": "sydney-coast",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/guides/ea1d0524-6a98-4d5e-a77e-a8cf95aa0520"
+    },
+    "community_post": {
+      "post_id": "72aa161f-3f51-4082-a72d-6ef826a73a60",
+      "ocs_source_id": "sydney-coast",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-sydney-coast-community-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/community/posts/72aa161f-3f51-4082-a72d-6ef826a73a60",
+      "feed_api": "https://tt-api-prod.fly.dev/api/v1/community/feed?limit=50"
+    }
+  },
+  {
+    "ocs_source_id": "barcelona-arch",
+    "guide": {
+      "guide_id": "f26abd6c-b225-4010-8c65-23ce4ef81de8",
+      "ocs_source_id": "barcelona-arch",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-barcelona-arch-guide-avatar.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/guides/f26abd6c-b225-4010-8c65-23ce4ef81de8"
+    },
+    "provider_listing": {
+      "listing_id": "bc3bfde9-2407-4d3c-a5f3-fc2bcec72453",
+      "ocs_source_id": "barcelona-arch",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings/bc3bfde9-2407-4d3c-a5f3-fc2bcec72453",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings?limit=100"
+    },
+    "acquisition_listing": {
+      "listing_id": "f3ad356e-2a6f-4258-9c50-0f653aba8eb6",
+      "ocs_source_id": "barcelona-arch",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-barcelona-arch-acquisition-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings/f3ad356e-2a6f-4258-9c50-0f653aba8eb6",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings?limit=100"
+    },
+    "official_guide": {
+      "post_id": "36652840-54af-458c-9636-6664e9ac249b",
+      "ocs_source_id": "barcelona-arch",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-barcelona-arch-official-guide-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/guides/36652840-54af-458c-9636-6664e9ac249b"
+    },
+    "community_post": {
+      "post_id": "78cd9220-48de-4e30-b3c4-8354c4663f89",
+      "ocs_source_id": "barcelona-arch",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-barcelona-arch-community-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/community/posts/78cd9220-48de-4e30-b3c4-8354c4663f89",
+      "feed_api": "https://tt-api-prod.fly.dev/api/v1/community/feed?limit=50"
+    }
+  },
+  {
+    "ocs_source_id": "dubai-luxury",
+    "guide": {
+      "guide_id": "9ccab777-3e3f-4711-af42-75203b639670",
+      "ocs_source_id": "dubai-luxury",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-dubai-luxury-guide-avatar.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/guides/9ccab777-3e3f-4711-af42-75203b639670"
+    },
+    "provider_listing": {
+      "listing_id": "35a7f26f-bcf2-4967-8d2a-2fd402fce43e",
+      "ocs_source_id": "dubai-luxury",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-dubai-luxury-provider-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings/35a7f26f-bcf2-4967-8d2a-2fd402fce43e",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/provider/listings?limit=100"
+    },
+    "acquisition_listing": {
+      "listing_id": "a3c80f40-3763-4d2b-9ab0-7a5990ae297e",
+      "ocs_source_id": "dubai-luxury",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-dubai-luxury-acquisition-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings/a3c80f40-3763-4d2b-9ab0-7a5990ae297e",
+      "market_api": "https://tt-api-prod.fly.dev/api/v1/market/acquisition/listings?limit=100"
+    },
+    "official_guide": {
+      "post_id": "59888020-0126-43e3-be00-0d30c7132e6d",
+      "ocs_source_id": "dubai-luxury",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-dubai-luxury-official-guide-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/guides/59888020-0126-43e3-be00-0d30c7132e6d"
+    },
+    "community_post": {
+      "post_id": "7c5f4809-603b-4eab-aae0-7db46f973cfe",
+      "ocs_source_id": "dubai-luxury",
+      "published_asset": "/api/v1/uploads/community-posts/ocs-dubai-luxury-community-cover.jpg",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/community/posts/7c5f4809-603b-4eab-aae0-7db46f973cfe",
+      "feed_api": "https://tt-api-prod.fly.dev/api/v1/community/feed?limit=50"
+    }
+  },
+  {
+    "ocs_source_id": "home-hero",
+    "campaign": {
+      "campaign_id": "bd0e988d-e949-483e-9609-83adc3485aa3",
+      "ocs_source_id": "home-hero",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/cold-start/surfaces/undefined"
+    }
+  },
+  {
+    "ocs_source_id": "hot-guides",
+    "campaign": {
+      "campaign_id": "562c2329-a62f-4d55-ba05-2924e2c71806",
+      "ocs_source_id": "hot-guides",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/cold-start/surfaces/undefined"
+    }
+  },
+  {
+    "ocs_source_id": "hot-providers",
+    "campaign": {
+      "campaign_id": "7bfb470c-9d96-4631-997e-0e6d32bc1db3",
+      "ocs_source_id": "hot-providers",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/cold-start/surfaces/undefined"
+    }
+  },
+  {
+    "ocs_source_id": "hot-acquisition",
+    "campaign": {
+      "campaign_id": "68d31a36-7722-4b7e-8ac8-e5435d4a74d0",
+      "ocs_source_id": "hot-acquisition",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/cold-start/surfaces/undefined"
+    }
+  },
+  {
+    "ocs_source_id": "official-picks",
+    "campaign": {
+      "campaign_id": "30577996-e63c-43e4-ae06-577b8d34fc66",
+      "ocs_source_id": "official-picks",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/cold-start/surfaces/undefined"
+    }
+  },
+  {
+    "ocs_source_id": "newcomer",
+    "campaign": {
+      "campaign_id": "00a15115-a40a-4caf-a730-ada2c0d67615",
+      "ocs_source_id": "newcomer",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/cold-start/surfaces/undefined"
+    }
+  },
+  {
+    "ocs_source_id": "city-tokyo",
+    "campaign": {
+      "campaign_id": "c9cde901-1726-4124-9e65-45a22bc91424",
+      "ocs_source_id": "city-tokyo",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/cold-start/surfaces/undefined"
+    }
+  },
+  {
+    "ocs_source_id": "summer",
+    "campaign": {
+      "campaign_id": "e80baee0-e17f-4545-bb25-50f23ecbdf6f",
+      "ocs_source_id": "summer",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/cold-start/surfaces/undefined"
+    }
+  },
+  {
+    "ocs_source_id": "festival",
+    "campaign": {
+      "campaign_id": "6988c918-5b6c-4882-a93c-9be0c0f8c53d",
+      "ocs_source_id": "festival",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/cold-start/surfaces/undefined"
+    }
+  },
+  {
+    "ocs_source_id": "weekly-picks",
+    "campaign": {
+      "campaign_id": "d03b0409-16bf-45fc-9126-91cbda492c0d",
+      "ocs_source_id": "weekly-picks",
+      "public_api": "https://tt-api-prod.fly.dev/api/v1/official/cold-start/surfaces/undefined"
+    }
+  }
+]

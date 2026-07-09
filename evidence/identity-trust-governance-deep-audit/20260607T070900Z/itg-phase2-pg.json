@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-06-07T07:10:13.674049+00:00",
+  "issues": [],
+  "pg_consistency_matrix": [
+    {
+      "probe_id": "pg.user_role",
+      "check": "state",
+      "target": "027b924d-6bb7-47c3-897d-f9b7332e1966",
+      "pg_value": "tourist",
+      "api_value": "traveler|guide|tourist",
+      "expected": "registered",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.trust_metrics",
+      "check": "count",
+      "target": "itg-m-eba6e82f/itg-v-eba6e82f",
+      "pg_value": "1",
+      "api_value": ">=1",
+      "expected": ">=1",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.trust_generation",
+      "check": "consistency",
+      "target": "runtime_state",
+      "pg_value": "177",
+      "api_value": "177",
+      "expected": "equal",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.mvp_proposals",
+      "check": "infra",
+      "target": "governance_mvp_proposals",
+      "pg_value": "2",
+      "api_value": ">=1",
+      "expected": "seeded",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.lifecycle_sm",
+      "check": "infra",
+      "target": "lifecycle_state_machines",
+      "pg_value": "10",
+      "api_value": ">=1",
+      "expected": "registry",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.auth_audit_events",
+      "check": "infra",
+      "target": "auth_audit_events",
+      "pg_value": "73",
+      "api_value": "readable",
+      "expected": "ok",
+      "status": "PASS",
+      "notes": ""
+    }
+  ],
+  "summary": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 0,
+    "pg_pass": 6,
+    "pg_total": 6
+  }
+}

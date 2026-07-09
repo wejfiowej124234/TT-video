@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T00:17:14Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AE",
+    "city_zh": "阿布扎比",
+    "city_en": "Abu Dhabi",
+    "matrix_ids": [
+      "PH-AE-216-ATR",
+      "PH-AE-217-ATR",
+      "PH-AE-218-ATR",
+      "PH-AE-219-ATR",
+      "PH-AE-220-FOOD",
+      "PH-AE-221-FOOD",
+      "PH-AE-222-FOOD",
+      "PH-AE-223-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AE-216-ATR",
+      "legacy_value": "谢赫扎耶德清真寺",
+      "poi_id": "e2d4a651-d4fb-47a3-82c4-32a4ff21bfb8",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-216-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-217-ATR",
+      "legacy_value": "卢浮宫阿布扎比",
+      "poi_id": "7b96fc4d-53ad-4fc7-95b2-7a6500a063fb",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-217-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-218-ATR",
+      "legacy_value": "法拉利世界",
+      "poi_id": "029d3ead-b742-4bd4-aa67-d9c3b3560441",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-218-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-219-ATR",
+      "legacy_value": "滨海大道",
+      "poi_id": "f5f2ee11-e39e-4f25-a14e-89804891dc2e",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-219-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-220-FOOD",
+      "legacy_value": "鹰嘴豆泥",
+      "poi_id": "4356009f-6f36-4de1-b888-0f4b80ba2039",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-220-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-221-FOOD",
+      "legacy_value": "海鲜饭",
+      "poi_id": "956ee236-01d7-432c-af5a-1f0ce141da7a",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-221-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-222-FOOD",
+      "legacy_value": "骆驼奶",
+      "poi_id": "7e8a5ce0-2790-4a20-ac3f-76a70822657a",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-222-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-223-FOOD",
+      "legacy_value": "烤肉拼盘",
+      "poi_id": "072db2cd-39da-47cb-85df-0b998c2e85eb",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-223-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

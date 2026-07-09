@@ -1,0 +1,26 @@
+{
+  "schema": "traveltrust.g02_meta_contract_gate.v1",
+  "generated_at": "2026-06-24T01:45:14.789Z",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "gate": {
+    "id": "G02_META_CONTRACT",
+    "title": "/meta contract (staging subset)",
+    "staging_only": true,
+    "verdict": "FAIL",
+    "checks": [
+      {
+        "gate_id": "G02_META_CONTRACT",
+        "check_id": "meta_fetch",
+        "title": "GET /meta JSON",
+        "verdict": "FAIL",
+        "severity": "P0",
+        "detail": "HTTP 408"
+      }
+    ],
+    "notes": "",
+    "p0_fail": 1,
+    "p1_fail": 0
+  },
+  "verdict": "FAIL"
+}

@@ -46,7 +46,7 @@ export const TT_SCROLL_CHROME_PILL_L5 =
 export const TT_SCROLL_PROGRESS_L5 = {
   barClass: "bg-gradient-to-r from-ref-sun via-ref-coral/85 to-amber-200/65",
   chapterBorderClass: "border-ref-sun/22",
-  /** 左下锚点（含窄屏）；与右下角间距调试钮（dev / ?tt_spacing=1）分离 */
+  /** 左下锚点（含窄屏）；间距调试钮仅 `?tt_spacing=1` 或 env opt-in */
   chromeDockClass:
     "pointer-events-none fixed bottom-4 left-4 z-[28] flex max-w-[min(14rem,calc(100vw-2rem))] flex-col items-start gap-1.5 pb-[env(safe-area-inset-bottom,0px)] motion-reduce:hidden",
   chromeBaseClass: `${TT_SCROLL_CHROME_PILL_L5} px-2.5 py-1.5`,
@@ -90,12 +90,12 @@ export const TT_HERO_FILM_CHROME_L5 = {
   bottomBridgePulseRepeat: 0 as const,
 } as const;
 
-/** Pulse 公告 kind 色（governance 改暖珊瑚） */
-export const TT_PULSE_KIND_L5: Record<"release" | "governance" | "campaign" | "ops", string> = {
-  release: "text-ref-sun",
-  governance: "text-ref-coral",
+/** Pulse 公告 kind 色 — product / trust / community / campaign */
+export const TT_PULSE_KIND_L5: Record<"product" | "trust" | "community" | "campaign", string> = {
+  product: "text-ref-sun",
+  trust: "text-emerald-300/90",
+  community: "text-ref-coral",
   campaign: "text-ref-coral",
-  ops: "text-slate-300",
 };
 
 export const TT_PULSE_GRADIENT_L5 =

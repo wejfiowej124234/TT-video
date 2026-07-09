@@ -1,0 +1,339 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_exit_check.v1",
+  "recorded_at_utc": "2026-07-07T11:30:52.007Z",
+  "city": {
+    "city_zh": "大理",
+    "city_en": "Dali",
+    "country_iso": "CN",
+    "poi_count": 10
+  },
+  "replicated_from": "JP + KR + TH + SG + FR Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "checks": [
+    {
+      "id": "assets_locked_8_8",
+      "label": "10/10 Asset 全部 LOCKED · 无 Unlock",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-CN-261-ATR",
+          "poi": "洱海",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-CN-262-ATR",
+          "poi": "古城",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-CN-263-ATR",
+          "poi": "崇圣寺",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-CN-264-ATR",
+          "poi": "双廊",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-CN-265-ATR",
+          "poi": "喜洲",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-CN-266-FOOD",
+          "poi": "乳扇",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-CN-267-FOOD",
+          "poi": "饵块",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-CN-268-FOOD",
+          "poi": "酸辣鱼",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-CN-269-FOOD",
+          "poi": "白族三道茶",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-CN-270-FOOD",
+          "poi": "喜洲粑粑",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "six_dimensions_pass",
+      "label": "六维全部 PASS（City Runtime = Gate 4 同源 · 非 national）",
+      "pass": true,
+      "runtime_scope": "city_consumer_runtime",
+      "city_snapshot": {
+        "execution": "PASS",
+        "cms_ownership": "PASS",
+        "runtime_consumer": "PASS",
+        "geo_matching": "PASS",
+        "content_accuracy": "PASS",
+        "l5_quality": "PASS",
+        "content_qa_closed": true
+      },
+      "issues": []
+    },
+    {
+      "id": "catalog_api_san_francisco",
+      "label": "Catalog API 10/10 与 LOCK 一致",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-CN-261-ATR",
+          "poi": "洱海",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-CN-262-ATR",
+          "poi": "古城",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-CN-263-ATR",
+          "poi": "崇圣寺",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-CN-264-ATR",
+          "poi": "双廊",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-CN-265-ATR",
+          "poi": "喜洲",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-CN-266-FOOD",
+          "poi": "乳扇",
+          "expected": "ocs-paris-art-official-guide-cover.jpg",
+          "catalog": "ocs-paris-art-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-CN-267-FOOD",
+          "poi": "饵块",
+          "expected": "ocs-paris-art-community-media.jpg",
+          "catalog": "ocs-paris-art-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-CN-268-FOOD",
+          "poi": "酸辣鱼",
+          "expected": "ocs-paris-art-community-cover.jpg",
+          "catalog": "ocs-paris-art-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-CN-269-FOOD",
+          "poi": "白族三道茶",
+          "expected": "ocs-paris-art-provider-cover.jpg",
+          "catalog": "ocs-paris-art-provider-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-CN-270-FOOD",
+          "poi": "喜洲粑粑",
+          "expected": "ocs-paris-art-guide-avatar.jpg",
+          "catalog": "ocs-paris-art-guide-avatar.jpg",
+          "image_source": "payload",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "consumer_runtime_cms",
+      "label": "Consumer Runtime 实际页面读取 CMS（非仅 Verify）",
+      "pass": true,
+      "catalog_api_requests": 4,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/dali/dali-poi-runtime-20260707T113050Z.png",
+      "rows": [
+        {
+          "matrix_id": "PH-CN-261-ATR",
+          "poi": "洱海",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-CN-262-ATR",
+          "poi": "古城",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-CN-263-ATR",
+          "poi": "崇圣寺",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-CN-264-ATR",
+          "poi": "双廊",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-CN-265-ATR",
+          "poi": "喜洲",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-CN-266-FOOD",
+          "poi": "乳扇",
+          "expected_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_fn": "ocs-paris-art-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-CN-267-FOOD",
+          "poi": "饵块",
+          "expected_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_fn": "ocs-paris-art-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-CN-268-FOOD",
+          "poi": "酸辣鱼",
+          "expected_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_fn": "ocs-paris-art-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-CN-269-FOOD",
+          "poi": "白族三道茶",
+          "expected_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_fn": "ocs-paris-art-provider-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-CN-270-FOOD",
+          "poi": "喜洲粑粑",
+          "expected_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_fn": "ocs-paris-art-guide-avatar.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        }
+      ],
+      "issues": [],
+      "probe_attempt": 1
+    },
+    {
+      "id": "visual_screenshot",
+      "label": "页面截图/DOM · 无旧图/错图/Fallback",
+      "pass": true,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/dali/dali-poi-runtime-20260707T113050Z.png",
+      "issues": []
+    },
+    {
+      "id": "no_backlog_unlock",
+      "label": "无 Open Backlog · 无 Unlock",
+      "pass": true,
+      "issues": []
+    }
+  ],
+  "all_pass": true,
+  "city_runtime_pass_count": 10,
+  "city_runtime_required": 10,
+  "verdict": "CONTENT_QA_EXIT_PASS",
+  "TT_CMS_POI_CITY_DALI_CONTENT_QA": "CLOSED",
+  "TT_CMS_POI_CITY_DALI_CONTENT_QA_EXIT": "PASS",
+  "runtime_tiers": {
+    "city": {
+      "tier": "city_consumer_runtime",
+      "gate_2_equals_gate_4": true
+    },
+    "country": {
+      "tier": "national_runtime",
+      "when": "TT_CMS_CN_COUNTRY: CLOSED",
+      "not_in_scope": true
+    }
+  },
+  "blockers": []
+}

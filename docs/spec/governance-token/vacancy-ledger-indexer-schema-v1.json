@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VacancyLedgerIndexerSnapshotV1",
+  "description": "S4a read-only SSOT. Values are event-emitted on-chain dimensions — never recomputed as principal - swept - disbursed.",
+  "type": "object",
+  "required": [
+    "jurisdiction",
+    "state",
+    "principal",
+    "swept",
+    "reserve",
+    "disbursed",
+    "sweepEnabled",
+    "dataSource",
+    "readOnly"
+  ],
+  "properties": {
+    "jurisdiction": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$",
+      "description": "ISO-style two-letter jurisdiction id (bytes2)"
+    },
+    "state": {
+      "type": "string",
+      "enum": ["STEWARD_ACTIVE", "GRACE_PERIOD", "SWEEP"]
+    },
+    "principal": { "type": "string", "pattern": "^[0-9]+$" },
+    "swept": { "type": "string", "pattern": "^[0-9]+$" },
+    "reserve": { "type": "string", "pattern": "^[0-9]+$" },
+    "disbursed": { "type": "string", "pattern": "^[0-9]+$" },
+    "sweepEnabled": { "type": "boolean" },
+    "stewardActivationEpochId": { "type": "string", "pattern": "^[0-9]+$" },
+    "dataSource": { "const": "indexer" },
+    "readOnly": { "const": true }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "jurisdiction": "JP",
+      "state": "SWEEP",
+      "principal": "900000000000",
+      "swept": "225000000000",
+      "reserve": "450000000000",
+      "disbursed": "225000000000",
+      "sweepEnabled": false,
+      "stewardActivationEpochId": "2",
+      "dataSource": "indexer",
+      "readOnly": true
+    }
+  ],
+  "x-indexedEvents": [
+    "VacancyEntered",
+    "GraceStarted",
+    "SweepExecuted",
+    "ReserveReached",
+    "StewardActivated",
+    "JurisdictionReserveDisbursed"
+  ]
+}

@@ -62,11 +62,13 @@ describe("home `/` SSOT (marketing closure)", () => {
   it("backdrop resolves country image via catalog ambient hook (W1)", () => {
     const backdrop = join(__dirname, "../../components/landing/LandingHomeAmbientBackdrop.tsx");
     const src = readFileSync(backdrop, "utf8");
-    expect(src).toContain("useLandingAmbientUrl");
-    expect(src).not.toContain("landingAmbientImageUrl");
+    expect(src).toContain("useLandingAmbientResolution");
+    expect(src).toContain("displaySrc");
     expect(src).toContain("preloadAmbientImage");
     expect(src).toContain("tt-home-ambient-ken-burns");
     expect(src).toContain('data-tt-home-ambient-src');
+    expect(src).toContain('data-tt-home-ambient-ts-url');
+    expect(src).toContain('data-tt-home-ambient-runtime-url');
     expect(src).toContain('data-tt-home-ambient-motion');
     expect(src).toContain('data-tt-home-ambient-phase="A"');
     expect(src).not.toContain("landingHomeAmbientVideo");

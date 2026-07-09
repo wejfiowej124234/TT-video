@@ -352,6 +352,17 @@ def probe_login(api: str, email: str, password: str = "Test123!") -> dict[str, A
 
 
 def main() -> None:
+    # Runtime Consistency ARCHIVED — no re-audit unless post-deploy (see ARCHIVED.v1.json).
+    guard_path = ROOT / "scripts/dev/lib/runtime-consistency-archived-guard.py"
+    if guard_path.is_file():
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("rc_archived_guard", guard_path)
+        if spec and spec.loader:
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            mod.assert_reaudit_allowed(sys.argv[1:])
+
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "--expect-sha",

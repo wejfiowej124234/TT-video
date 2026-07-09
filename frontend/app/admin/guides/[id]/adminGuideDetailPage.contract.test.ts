@@ -11,6 +11,7 @@ function readModuleSources(): string {
     readFileSync(join(__dir, "AdminGuideDetailPageMain.tsx"), "utf8"),
     readFileSync(join(__dir, "useAdminGuideDetailPage.ts"), "utf8"),
     readFileSync(join(__dir, "adminGuideDetailPageModel.ts"), "utf8"),
+    readFileSync(join(__dir, "../../../../components/admin/AdminGuideRegistrationReviewCard.tsx"), "utf8"),
     readFileSync(join(__dir, "../../../../lib/admin/useAdminStandardDetailFetch.ts"), "utf8"),
   ].join("\n");
 }
@@ -30,5 +31,8 @@ describe("admin guide detail page", () => {
     expect(src).toContain("GUIDE_DETAIL_RELATED_FOLD_LINKS");
     expect(src).not.toContain("AdminOpsQueueBackLinks");
     expect(src).toContain("adminTableRowPrimaryActionClass");
+    expect(src).toContain("AdminGuideRegistrationReviewCard");
+    expect(src).toContain("data-tt-admin-guide-registration-review");
+    expect(src).toContain("patchAdminGuideRegistration");
   });
 });

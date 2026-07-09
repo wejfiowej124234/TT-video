@@ -1,0 +1,211 @@
+{
+  "stamp": "20260701T180551Z",
+  "git_sha": "987bc260cd4c4d409c317ddbf3c70d4c3d212a70",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "audit_email": "tourist@test.com",
+  "login_role": "super_admin",
+  "browser_verdict": "SKIP",
+  "probe_count": 24,
+  "fail_count": 1,
+  "p0_blockers": [],
+  "probes": [
+    {
+      "id": "capabilities",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/capabilities",
+      "http": 200,
+      "time_s": 0.897714,
+      "error": null,
+      "body_snip": "{\"status\":\"ok\",\"role\":\"super_admin\",\"console_role_70\":\"SuperAdmin\",\"console_role_source\":\"db:admin_console_roles\",\"matrix_version\":\"admin-rbac-v4-cms-ops-growth-2026-06-07\",\"permissions\":[\"admin.read\"",
+      "kind": "api"
+    },
+    {
+      "id": "home_overview",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/metrics/home-overview",
+      "http": 200,
+      "time_s": 0.808702,
+      "error": null,
+      "body_snip": "{\"status\":\"ok\",\"schema_version\":\"admin-home-metrics-v1\",\"source\":\"postgres\",\"honesty\":{\"users_total_scope\":\"postgres_users_table\",\"admin_activity_scope\":\"admin_audit_logs_7d_utc\",\"site_traffic_note\":\"",
+      "kind": "api"
+    },
+    {
+      "id": "orders_list",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/orders?limit=20",
+      "http": 200,
+      "time_s": 0.888299,
+      "error": null,
+      "body_snip": "{\"status\":\"ok\",\"items\":[{\"id\":\"df27a3fc-a149-4a2f-8bcd-8b6480166451\",\"tourist_id\":\"2760d445-cbf4-47d0-9461-fcba3db0516f\",\"traveler_id\":\"2760d445-cbf4-47d0-9461-fcba3db0516f\",\"guide_id\":\"00000000-0000-",
+      "kind": "api"
+    },
+    {
+      "id": "users_list",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/users?limit=20",
+      "http": 200,
+      "time_s": 0.883131,
+      "error": null,
+      "body_snip": "{\"status\":\"ok\",\"items\":[{\"id\":\"7d3403a4-1299-4cc4-9a6d-ebda206b1869\",\"email\":\"adm-u02-e2e-tgt-1782900555469@traveltrust.test\",\"role\":\"admin\",\"kyc_status\":\"none\",\"created_at\":\"2026-07-01T10:09:35.58558",
+      "kind": "api"
+    },
+    {
+      "id": "guides_list",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/guides?limit=20",
+      "http": 200,
+      "time_s": 0.911982,
+      "error": null,
+      "body_snip": "{\"status\":\"ok\",\"items\":[{\"id\":\"3e7c5a93-c3ee-49a4-aa2e-0c12177de8ea\",\"user_id\":\"cf1e4c30-34b8-40b6-b747-474cf24517c3\",\"city\":\"杭州\",\"country_code\":\"CN\",\"languages\":[\"zh\",\"en\"],\"service_types\":[\"walking\"",
+      "kind": "api"
+    },
+    {
+      "id": "disputes_list",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/disputes?limit=20",
+      "http": 200,
+      "time_s": 0.851389,
+      "error": null,
+      "body_snip": "{\"status\":\"ok\",\"items\":[],\"applied_filters\":{\"limit\":20,\"status\":null,\"source\":\"memory\"},\"meta\":{\"build\":{\"git_sha\":\"987bc260cd4c4d409c317ddbf3c70d4c3d212a70\",\"deployed_at\":null,\"deployment_profile\":\"",
+      "kind": "api"
+    },
+    {
+      "id": "approvals_list",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/approvals?limit=20",
+      "http": 200,
+      "time_s": 0.928151,
+      "error": null,
+      "body_snip": "{\"status\":\"ok\",\"items\":[{\"id\":\"73b10281-c68f-4314-97d0-8fa5de8bc7a9\",\"action\":\"admin.console_role.change\",\"resource_type\":\"admin_console_roles\",\"resource_id\":\"7d3403a4-1299-4cc4-9a6d-ebda206b1869\",\"re",
+      "kind": "api"
+    },
+    {
+      "id": "audit_logs",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/audit-logs?limit=20",
+      "http": 200,
+      "time_s": 0.904043,
+      "error": null,
+      "body_snip": "{\"status\":\"ok\",\"items\":[{\"id\":\"f59ad686-17c8-4a5f-8eb9-42d915080852\",\"action\":\"admin.approvals.read\",\"resource_type\":\"admin_approval_requests\",\"resource_id\":null,\"actor_id\":\"2760d445-cbf4-47d0-9461-fc",
+      "kind": "api"
+    },
+    {
+      "id": "finance_summary",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/finance/summary",
+      "http": 200,
+      "time_s": 0.959066,
+      "error": null,
+      "body_snip": "{\"status\":\"ok\",\"meta\":{\"generated_at\":\"2026-07-01T18:06:04.952848449+00:00\",\"source\":\"chain_off\",\"db_order_count\":64,\"db_orders_with_escrow_count\":6,\"orders_projection_reconcile_report_count\":18,\"reco",
+      "kind": "api"
+    },
+    {
+      "id": "rbac_matrix",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/rbac/route-matrix",
+      "http": 200,
+      "time_s": 0.818711,
+      "error": null,
+      "body_snip": "{\"status\":\"ok\",\"route_matrix\":{\"matrix_version\":\"admin-rbac-v4-cms-ops-growth-2026-06-07\",\"items\":[{\"method\":\"GET\",\"path\":\"/api/v1/admin/users\",\"required_permission\":\"admin.users.read\"},{\"method\":\"GET",
+      "kind": "api"
+    },
+    {
+      "id": "2fa_policy",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/security/2fa-policy",
+      "http": 200,
+      "time_s": 0.777969,
+      "error": null,
+      "body_snip": "{\"status\":\"ok\",\"policy\":{\"enforced\":false,\"implementation_note\":\"phase_01_prep_not_enforced\",\"required_console_roles\":[\"SuperAdmin\",\"Ops\"]},\"totp_verification_wired\":true,\"implementation_note\":\"totp_e",
+      "kind": "api"
+    },
+    {
+      "id": "community_reports",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/community/reports?limit=20",
+      "http": 200,
+      "time_s": 0.983181,
+      "error": null,
+      "body_snip": "{\"status\":\"ok\",\"items\":[{\"id\":\"85e759f8-8ea5-4885-9201-c514b5aa2f7d\",\"reporter_id\":\"36839535-9374-4b14-b4ec-66df4e8925db\",\"target_type\":\"post\",\"target_id\":\"e034beca-c227-4d2a-bc6b-d3178691e84e\",\"reaso",
+      "kind": "api"
+    },
+    {
+      "id": "provider_apps",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/provider-applications?limit=20",
+      "http": 200,
+      "time_s": 0.826823,
+      "error": null,
+      "body_snip": "{\"status\":\"ok\",\"items\":[{\"user_id\":\"fe929c0c-c52d-4f3b-bee8-31d2685766ec\",\"email\":\"merchant@test.com\",\"user_role\":\"provider\",\"application\":{\"id\":\"7ac34d49-5109-4069-a277-bb17c07c63c4\",\"status\":\"approv",
+      "kind": "api"
+    },
+    {
+      "id": "steward_apps",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/steward-applications?limit=20",
+      "http": 404,
+      "time_s": 0.762164,
+      "error": null,
+      "body_snip": "",
+      "kind": "api"
+    },
+    {
+      "id": "capabilities_no_auth",
+      "url": "https://tt-api-staging.fly.dev/api/v1/admin/capabilities",
+      "http": 401,
+      "time_s": 0.75652,
+      "error": "unauthorized",
+      "body_snip": "{\"error\":\"unauthorized\",\"message\":\"unauthorized\",\"detail\":\"需登录：请提供 X-User-Id 或 Authorization\"}",
+      "kind": "api"
+    },
+    {
+      "id": "fe_middleware_no_cookie",
+      "url": "https://tt-web-staging.fly.dev/admin",
+      "http": 307,
+      "redirect": "https://tt-web-staging.fly.dev/auth/login?returnUrl=%2Fadmin",
+      "kind": "fe_middleware",
+      "cookie": null
+    },
+    {
+      "id": "fe_middleware_uid_only",
+      "url": "https://tt-web-staging.fly.dev/admin",
+      "http": 307,
+      "redirect": "https://tt-web-staging.fly.dev/auth/login?returnUrl=%2Fadmin",
+      "kind": "fe_middleware",
+      "cookie": "traveltrust_user_id=stale-uid-only"
+    },
+    {
+      "id": "fe_middleware_uid_and_ok",
+      "url": "https://tt-web-staging.fly.dev/admin",
+      "http": 200,
+      "redirect": null,
+      "kind": "fe_middleware",
+      "cookie": "traveltrust_user_id=stale-uid-only; traveltrust_session_ok=1"
+    },
+    {
+      "id": "fe_admin",
+      "url": "https://tt-web-staging.fly.dev/admin",
+      "http": 307,
+      "kind": "fe_shell"
+    },
+    {
+      "id": "fe_admin_orders",
+      "url": "https://tt-web-staging.fly.dev/admin/orders",
+      "http": 307,
+      "kind": "fe_shell"
+    },
+    {
+      "id": "fe_admin_users",
+      "url": "https://tt-web-staging.fly.dev/admin/users",
+      "http": 307,
+      "kind": "fe_shell"
+    },
+    {
+      "id": "fe_admin_permissions",
+      "url": "https://tt-web-staging.fly.dev/admin/permissions",
+      "http": 307,
+      "kind": "fe_shell"
+    },
+    {
+      "id": "fe_admin_approvals",
+      "url": "https://tt-web-staging.fly.dev/admin/approvals",
+      "http": 307,
+      "kind": "fe_shell"
+    },
+    {
+      "id": "fe_proxy_capabilities",
+      "url": "https://tt-web-staging.fly.dev/api/v1/admin/capabilities",
+      "http": 200,
+      "time_s": 0.8687,
+      "kind": "fe_proxy"
+    }
+  ],
+  "verdict": "WARN"
+}

@@ -1,0 +1,6 @@
+phase=local-1
+gate=traveltrust-ph1-homepage-local.sh
+e2e=0
+e2e_full=0
+visual=0
+status=exit_0

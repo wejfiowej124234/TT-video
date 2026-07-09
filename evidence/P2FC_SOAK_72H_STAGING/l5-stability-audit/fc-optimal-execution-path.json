@@ -1,0 +1,109 @@
+{
+  "optimal_execution_path": {
+    "strategy_id": "STRAT-B_WAVE0_FIRST",
+    "strategy_name": "L0 hotfix-only deploy → meta smoke → backlog wave1/2",
+    "path": [
+      "TN-P1-010",
+      "snapshot",
+      "hotfix-only apply",
+      "wave1-hotfix",
+      "meta smoke",
+      "backlog patch",
+      "wave1-full",
+      "wave2",
+      "meta strict",
+      "G02",
+      "graduation"
+    ],
+    "success_score": 28.3,
+    "wave1_g02_graduation_chain": [
+      "wave1-hotfix",
+      "meta smoke",
+      "wave1-full",
+      "wave2",
+      "meta strict",
+      "G02",
+      "graduation"
+    ]
+  },
+  "execution_strategies": [
+    {
+      "id": "STRAT-A_DEFAULT",
+      "name": "default one-shot full backlog",
+      "path": [
+        "TN-P1-010",
+        "snapshot",
+        "full patch",
+        "wave1",
+        "wave2",
+        "meta strict",
+        "G02",
+        "graduation"
+      ],
+      "wave1_g02_grad_p": 0.1613,
+      "end_to_end_p": 0.1111,
+      "success_score": 11.1,
+      "risk": "FC-02+03 compete at wave1; FC-01 at meta"
+    },
+    {
+      "id": "STRAT-B_WAVE0_FIRST",
+      "name": "L0 hotfix-only deploy → meta smoke → backlog wave1/2",
+      "path": [
+        "TN-P1-010",
+        "snapshot",
+        "hotfix-only apply",
+        "wave1-hotfix",
+        "meta smoke",
+        "backlog patch",
+        "wave1-full",
+        "wave2",
+        "meta strict",
+        "G02",
+        "graduation"
+      ],
+      "wave1_g02_grad_p": 0.3479,
+      "end_to_end_p": 0.2827,
+      "success_score": 28.3,
+      "risk": "extra deploy cycle; lowest FC-01 exposure",
+      "delta_vs_default": "+hotfix-first sequencing"
+    },
+    {
+      "id": "STRAT-C_SPLIT_ITINERARIES",
+      "name": "defer itineraries.rs from wave1 (minimal L1)",
+      "path": [
+        "TN-P1-010",
+        "snapshot",
+        "patch minus itineraries",
+        "wave1-subset",
+        "wave2",
+        "meta strict",
+        "G02",
+        "graduation",
+        "wave1-itineraries follow-up"
+      ],
+      "wave1_g02_grad_p": 0.2662,
+      "end_to_end_p": 0.1834,
+      "success_score": 18.3,
+      "risk": "itineraries post-grad follow-up required",
+      "delta_vs_default": "excludes crates/api/.../itineraries.rs from wave1"
+    }
+  ],
+  "system_success_model": {
+    "baseline_phase_success": {
+      "tn_p1_010": 0.92,
+      "rollback_snapshot": 0.96,
+      "apply_patches": 0.78,
+      "wave1_api_deploy": 0.497,
+      "wave2_web_deploy": 0.78,
+      "meta_availability": 0.58,
+      "g02_deep_gate": 0.78,
+      "graduation": 0.92
+    },
+    "baseline_wave1_to_graduation_p": 0.1613,
+    "baseline_end_to_end_p": 0.1111,
+    "baseline_success_score": 11.1,
+    "projected_with_minimal_risk_set_p": 0.3563,
+    "projected_success_score_with_mr": 35.6,
+    "score_scale": "0-100 (end-to-end probability × 100)"
+  }
+}

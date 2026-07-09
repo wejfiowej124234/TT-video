@@ -1,0 +1,86 @@
+{
+  "schema": "traveltrust.ocs_content_l5_acquisition_product_identity_review.v1",
+  "stamp_utc": "20260704T141619Z",
+  "filename": "ocs-singapore-family-acquisition-cover.jpg",
+  "chain_id": "singapore-family",
+  "city": "新加坡",
+  "acquisition_title": "新加坡设计周边 · 悬赏",
+  "acquisition_category": "collectibles",
+  "peer_acquisitions_compared": [
+    {
+      "chain_id": "tokyo-photo",
+      "city": "东京",
+      "title": "东京限定镜头代购 · 悬赏",
+      "category": "collectibles",
+      "description_snippet": "求购日本本土限量镜头，需原包装与小票。",
+      "scene": "相机镜头/限定器材 · 店内陈列或包装 · 非天际线"
+    },
+    {
+      "chain_id": "kyoto-culture",
+      "city": "京都",
+      "title": "京都手工和纸 · 收购",
+      "category": "craft",
+      "description_snippet": "征集京都手工和纸与漆器小件，需来源说明。",
+      "scene": "和纸/手工纸品 · 工艺细节 · 非寺庙全景"
+    },
+    {
+      "chain_id": "seoul-food",
+      "city": "首尔",
+      "title": "韩国限定零食礼包 · 悬赏",
+      "category": "food",
+      "description_snippet": "求购当季限定零食组合，需保质期 60 天以上。",
+      "scene": "韩国限定零食礼包平铺 · 包装色彩 · 非街景"
+    },
+    {
+      "chain_id": "bangkok-temple",
+      "city": "曼谷",
+      "title": "泰国手工丝绸 · 收购",
+      "category": "craft",
+      "description_snippet": "征集手工丝绸围巾与桌旗，需工艺说明。",
+      "scene": "泰丝/手工织物细节 · 非河景"
+    }
+  ],
+  "product_identity_checklist": {
+    "no_same_product_archetype_vs_other_acquisitions": {
+      "pass": true,
+      "notes": "Distinct product identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple; acquisition/bounty semantics only."
+    },
+    "distinct_local_product_category": {
+      "pass": true,
+      "notes": "Distinct product identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple; acquisition/bounty semantics only."
+    },
+    "acquisition_bounty_semantics_clear": {
+      "pass": true,
+      "notes": "Still-life product/packaging; readable as proxy-purchase or bounty listing, not tour service."
+    },
+    "not_guide_portrait_scene": {
+      "pass": true,
+      "notes": "Distinct product identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple; acquisition/bounty semantics only."
+    },
+    "not_provider_service_scene": {
+      "pass": true,
+      "notes": "Distinct product identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple; acquisition/bounty semantics only."
+    },
+    "not_official_guide_landscape": {
+      "pass": true,
+      "notes": "Distinct product identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple; acquisition/bounty semantics only."
+    },
+    "not_community_street_scene": {
+      "pass": true,
+      "notes": "Distinct product identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple; acquisition/bounty semantics only."
+    },
+    "local_specialty_packaging": {
+      "pass": true,
+      "notes": "Distinct product identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple; acquisition/bounty semantics only."
+    },
+    "manifest_product_alignment": {
+      "pass": true,
+      "notes": "新加坡设计周边 · 悬赏 (collectibles): 求购本地设计师限量周边，需正品凭证。"
+    },
+    "multi_city_browse_not_same_product": {
+      "pass": true,
+      "notes": "Distinct product identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple; acquisition/bounty semantics only."
+    }
+  },
+  "TT_ACQUISITION_PRODUCT_IDENTITY_REVIEW": "PASS"
+}

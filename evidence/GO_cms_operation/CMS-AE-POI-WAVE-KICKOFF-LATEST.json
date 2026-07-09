@@ -1,0 +1,27 @@
+{
+  "schema": "traveltrust.cms_ae_poi_wave_kickoff.v1",
+  "stamp_utc": "2026-07-07T020227Z",
+  "country_iso": "AE",
+  "status": "AE_CITY_PILOT_ACTIVE",
+  "active_city": "阿布扎比",
+  "template": "JP + KR + TH + SG + FR + US + AU + ES Golden Template",
+  "TT_CMS_AE_POI_WAVE": "SHARJAH_CLOSED",
+  "next_stage": null,
+  "abu_dhabi_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-ABU-DHABI-CLOSURE-LATEST.json"
+  },
+  "active_catalog_build": null,
+  "TT_CMS_POI_CITY_ABU_DHABI": "CLOSED",
+  "TT_CMS_POI_ACTIVE_CITY": null,
+  "dubai_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-DUBAI-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_DUBAI": "CLOSED",
+  "sharjah_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SHARJAH-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_SHARJAH": "CLOSED"
+}

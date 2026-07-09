@@ -1,0 +1,93 @@
+{
+  "global_ranking": [
+    {
+      "fc_id": "FC-01_TIMEOUT_MISMATCH",
+      "score": 0.85,
+      "gate": "g02_meta"
+    },
+    {
+      "fc_id": "FC-02_ITINERARIES_HUB",
+      "score": 0.55,
+      "gate": "wave1"
+    },
+    {
+      "fc_id": "FC-03_LARGE_DIFF_BLOB",
+      "score": 0.3,
+      "gate": "wave1"
+    }
+  ],
+  "arenas": [
+    {
+      "arena": "wave1_api_deploy",
+      "offset_min": 28,
+      "competitors": [
+        {
+          "fc_id": "FC-02_ITINERARIES_HUB",
+          "severity": "high",
+          "fail_p": 0.42,
+          "win_score": 0.55,
+          "mechanism": "itineraries.rs Δ195 compile/OOM/health"
+        },
+        {
+          "fc_id": "FC-03_LARGE_DIFF_BLOB",
+          "severity": "medium",
+          "fail_p": 0.22,
+          "win_score": 0.3,
+          "mechanism": "42-file large delta amplifies wave1 surface"
+        }
+      ],
+      "correlation": 0.65,
+      "combined_fail_p": 0.503,
+      "predicted_winner": "FC-02_ITINERARIES_HUB",
+      "ranking": [
+        "FC-02_ITINERARIES_HUB",
+        "FC-03_LARGE_DIFF_BLOB"
+      ]
+    },
+    {
+      "arena": "apply_patches",
+      "offset_min": 12,
+      "competitors": [
+        {
+          "fc_id": "FC-01_TIMEOUT_MISMATCH",
+          "fail_p": 0.22,
+          "win_score": 0.4,
+          "mechanism": "hotfix+backlog hunk overlap"
+        },
+        {
+          "fc_id": "FC-03_LARGE_DIFF_BLOB",
+          "fail_p": 0.17600000000000002,
+          "win_score": 0.35,
+          "mechanism": "large patch apply conflict"
+        }
+      ],
+      "correlation": 0.4,
+      "combined_fail_p": 0.36,
+      "predicted_winner": "FC-01_TIMEOUT_MISMATCH",
+      "ranking": [
+        "FC-01_TIMEOUT_MISMATCH",
+        "FC-03_LARGE_DIFF_BLOB"
+      ]
+    },
+    {
+      "arena": "meta_availability",
+      "offset_min": 45,
+      "competitors": [
+        {
+          "fc_id": "FC-01_TIMEOUT_MISMATCH",
+          "fail_p": 0.42,
+          "win_score": 0.85,
+          "mechanism": "30s live timeout vs 120s hotfix requirement"
+        }
+      ],
+      "correlation": 0.0,
+      "combined_fail_p": 0.42,
+      "predicted_winner": "FC-01_TIMEOUT_MISMATCH",
+      "ranking": [
+        "FC-01_TIMEOUT_MISMATCH"
+      ]
+    }
+  ],
+  "first_competition_winner": "FC-02_ITINERARIES_HUB",
+  "graduation_blocker_if_survive_wave1": "FC-01_TIMEOUT_MISMATCH"
+}

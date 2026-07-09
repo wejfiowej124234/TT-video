@@ -1,0 +1,69 @@
+# Live Closure Chain · 运行时裁决父子两级真源 SSOT
+#
+# 子真源 TT_ADMIN_STAGING_GO_CLAIM：仅裁决 Admin GO（ALLOWED/DENIED）
+# 父真源 TT_LIVE_CLOSURE_CHAIN_VERDICT：汇总 admin_go · phase2_closure · production_go
+#
+# Admin GO=YES 必须依赖 TT_ADMIN_STAGING_GO_CLAIM=ALLOWED
+# Phase② Closure=YES 必须依赖 staging-live-closure.latest.json verdict=PASS
+# Production GO 永不由本链产生
+
+version: live-closure-chain-ssot-2026-06-24-v3
+
+ssot_hierarchy:
+  child:
+    line: TT_ADMIN_STAGING_GO_CLAIM
+    role: admin_go_only
+    values: [ALLOWED, DENIED]
+    artifact: evidence/P2FC_SOAK_72H_STAGING/post-soak-staging-live-closure/admin-go-claim-gate.latest.json
+    gate_script: scripts/ops/p2fc-gate-admin-staging-go-claim.sh
+    query_script: scripts/ops/p2fc-query-admin-staging-go-claim.sh
+    registry: registry/admin-staging-go-claim-ssot.v1.yaml
+  parent:
+    line: TT_LIVE_CLOSURE_CHAIN_VERDICT
+    role: three_verdict_summary
+    artifact: evidence/P2FC_SOAK_72H_STAGING/post-soak-staging-live-closure/live-closure-verdict.latest.json
+    generator: scripts/dev/gen-p2fc-live-closure-chain-verdict.py
+    query_script: scripts/ops/p2fc-query-live-closure-verdict.sh
+
+unified_query: scripts/ops/p2fc-query-runtime-adjudication.sh
+post_completed_entrypoint: scripts/ops/p2fc-post-soak-staging-live-closure-chain.sh --watch
+
+parent_derives:
+  admin_go:
+    yes_when: "TT_ADMIN_STAGING_GO_CLAIM=ALLOWED"
+    no_otherwise: true
+    must_not_independently_verify: true
+  phase2_closure:
+    yes_when: "staging-live-closure.latest.json verdict=PASS only"
+    no_otherwise: true
+  production_go:
+    value: NO
+    never_from_this_chain: true
+
+child_prerequisites_for_allowed:
+  - COMPLETED.json
+  - MR12 one-shot PASS
+  - ADM-U01 Live release_gate=GO persistent_host
+  - P0 Runtime CONFIRMED
+
+adjudication_basis_only:
+  - release_gate
+  - runtime_evidence
+  - closure_ssot
+
+forbidden_go_substitutes:
+  - prep
+  - static
+  - tunnel
+  - local
+  - smoke
+  - watcher
+  - health
+  - audit
+  - prep_only
+  - soak_inflight
+  - mr12_prep_only
+
+honest_boundary: |
+  Prep/Static/Tunnel/Local/Smoke/Watcher/Health/Audit/Prep-Only/Soak Inflight
+  均不得作为 GO 依据。父真源 admin_go 必须来自子真源 ALLOWED，不得独立推断。

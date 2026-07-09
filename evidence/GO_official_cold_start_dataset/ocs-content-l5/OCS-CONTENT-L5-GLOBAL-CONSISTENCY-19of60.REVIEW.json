@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_consistency_review.v1",
+  "stamp_utc": "20260704T133930Z",
+  "matrix_rows_reviewed": 19,
+  "TT_GLOBAL_CONSISTENCY_REVIEW": "PASS",
+  "new_country_chain_started": "TH/bangkok-temple",
+  "regression_chains_closed": { "tokyo-photo": true, "kyoto-culture": true, "seoul-food": true },
+  "gate_to_row20": "PASS"
+}

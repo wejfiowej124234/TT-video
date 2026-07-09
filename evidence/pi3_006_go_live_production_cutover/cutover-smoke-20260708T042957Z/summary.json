@@ -1,0 +1,8 @@
+{
+  "kind": "traveltrust.pi3_006_cutover_smoke.v1",
+  "recorded_utc": "20260708T042957Z",
+  "verdict": "FAIL",
+  "prod_api_base": "https://tt-api-prod.fly.dev",
+  "prod_web_base": "https://tt-web-prod.fly.dev",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA"
+}

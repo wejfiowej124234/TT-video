@@ -1,0 +1,273 @@
+{
+  "probe_id": "G24-CLEAN-BASELINE-01-ONCHAIN",
+  "chain_id": 11155111,
+  "addresses": {
+    "timelock": "0x777E532636c53BDc034B9FE73c44E1B2c3113060",
+    "governor": "0xD972Bee4717218bD2314Eb542a671d8747336136",
+    "primary_market": "0x2216A416462366b65d4F6Cc96bE50Db1f6e9fbAc",
+    "treasury_p4_cap": "0xc0FbFc9A50f551273F5748EB2e45B49719dDc796",
+    "seat_registry": "0x75bF993402eb9aCc6145CBdac0EBd322548317d3",
+    "stake_pool_proxy": "0xeb0e4a8517EC478d6B386a13D28115357AA6d112",
+    "country_pool_net_profit_de": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+  },
+  "proxies": [
+    {
+      "label": "Governor",
+      "proxy": "0xD972Bee4717218bD2314Eb542a671d8747336136",
+      "admin": "0x777E532636c53BDc034B9FE73c44E1B2c3113060",
+      "implementation": "0xa98e59b144C68EC64e40Cb07E1BaAb93Cc6920dA",
+      "admin_is_timelock": true,
+      "status": "PASS"
+    },
+    {
+      "label": "TreasuryP4Cap",
+      "proxy": "0xc0FbFc9A50f551273F5748EB2e45B49719dDc796",
+      "admin": "0x777E532636c53BDc034B9FE73c44E1B2c3113060",
+      "implementation": "0x1C7A5eead776fdFa2E54e57A0FE2b8B67d830506",
+      "admin_is_timelock": true,
+      "status": "PASS"
+    },
+    {
+      "label": "PrimaryMarket",
+      "proxy": "0x2216A416462366b65d4F6Cc96bE50Db1f6e9fbAc",
+      "admin": "0x777E532636c53BDc034B9FE73c44E1B2c3113060",
+      "implementation": "0x02d098eaE3c466EC45566581002748305d6779BF",
+      "admin_is_timelock": true,
+      "status": "PASS"
+    },
+    {
+      "label": "SeatRegistry",
+      "proxy": "0x75bF993402eb9aCc6145CBdac0EBd322548317d3",
+      "admin": "0x777E532636c53BDc034B9FE73c44E1B2c3113060",
+      "implementation": "0x632756A1E379145b5D4dD00779f2edCCf19292E1",
+      "admin_is_timelock": true,
+      "status": "PASS"
+    },
+    {
+      "label": "StakePool",
+      "proxy": "0xeb0e4a8517EC478d6B386a13D28115357AA6d112",
+      "admin": "0x777E532636c53BDc034B9FE73c44E1B2c3113060",
+      "implementation": "0x8832D70b2956EBBb90b56f701e66a35321b6A63A",
+      "admin_is_timelock": true,
+      "status": "PASS"
+    }
+  ],
+  "allowed_execution_target": {
+    "governor": true,
+    "primary_market": false,
+    "treasury_p4_cap": true,
+    "seat_registry": false,
+    "stake_pool": true
+  },
+  "stake_pool_jurisdictions": [
+    {
+      "jurisdiction": "CN",
+      "expected_bps": 400,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "US",
+      "expected_bps": 400,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "FR",
+      "expected_bps": 450,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "ES",
+      "expected_bps": 450,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "JP",
+      "expected_bps": 250,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "TH",
+      "expected_bps": 250,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "SG",
+      "expected_bps": 200,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "KR",
+      "expected_bps": 200,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "AU",
+      "expected_bps": 150,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    },
+    {
+      "jurisdiction": "AE",
+      "expected_bps": 150,
+      "on_chain_bps": 0,
+      "min_stake_wei": "0",
+      "status": "FAIL"
+    }
+  ],
+  "jurisdictions_bootstrapped_call": null,
+  "stake_pool_owner": "0x777E532636c53BDc034B9FE73c44E1B2c3113060",
+  "seat_registry_stake_pool": "0xeb0e4a8517EC478d6B386a13D28115357AA6d112",
+  "patch_timelock_ops": [
+    {
+      "jurisdiction": "CN",
+      "operation_id": "0x698cc036cae4d68da7d3b53c9bd7e2cbd1b53bf37f5e87d6e1aeb94f13ab9f88",
+      "ready_at_unix": 1781755056,
+      "done": false,
+      "patch_pending": true
+    },
+    {
+      "jurisdiction": "US",
+      "operation_id": "0x828c80f4ba7ada9580581d8fc1a1852527472fbff9162ef79fef96c1070009fb",
+      "ready_at_unix": 1781755056,
+      "done": false,
+      "patch_pending": true
+    },
+    {
+      "jurisdiction": "FR",
+      "operation_id": "0xcef428e6444b7a55278810cc17a9b5f17dc1ef3543165cd07b52733fe3548f09",
+      "ready_at_unix": 1781755056,
+      "done": false,
+      "patch_pending": true
+    },
+    {
+      "jurisdiction": "ES",
+      "operation_id": "0xb1be90e7e9b9f552ec815de2b795693981bb9c791aa8bb72e370f5c2d110ef4a",
+      "ready_at_unix": 1781755056,
+      "done": false,
+      "patch_pending": true
+    },
+    {
+      "jurisdiction": "JP",
+      "operation_id": "0x6e2045c5857affeb9e8be81a91a60350a59ae9c4555aceaa570beb01332f30cb",
+      "ready_at_unix": 1781755056,
+      "done": false,
+      "patch_pending": true
+    },
+    {
+      "jurisdiction": "TH",
+      "operation_id": "0x1c477cd90bea67bc7060624d8a285b53ade76ad50f4eb8490b092184f7a137b7",
+      "ready_at_unix": 1781755056,
+      "done": false,
+      "patch_pending": true
+    },
+    {
+      "jurisdiction": "SG",
+      "operation_id": "0xb2777f1493ca6c56ffdbd30c48fe1072a5794b8d23370e3225b0d79fe4900b10",
+      "ready_at_unix": 1781755056,
+      "done": false,
+      "patch_pending": true
+    },
+    {
+      "jurisdiction": "KR",
+      "operation_id": "0xb00fa8c56cf0b842ad7c7f7f6e669773ac720d5fae7e4e489f1d0fd15b9b3166",
+      "ready_at_unix": 1781755056,
+      "done": false,
+      "patch_pending": true
+    },
+    {
+      "jurisdiction": "AU",
+      "operation_id": "0xdace39abfc1743fb48215e3249033dba5d8bf8c7b232c8f9270d3970b8f29651",
+      "ready_at_unix": 1781755056,
+      "done": false,
+      "patch_pending": true
+    },
+    {
+      "jurisdiction": "AE",
+      "operation_id": "0x6b87cec1ae5272842bcd48653ff302e9c203e4617fb76b127c9d9fe5ee9a0136",
+      "ready_at_unix": 1781755056,
+      "done": false,
+      "patch_pending": true
+    }
+  ],
+  "patch_pending_count": 10,
+  "de_country_pool_bps": {
+    "steward": 4500,
+    "global": 5500
+  },
+  "findings": [
+    {
+      "id": "CB-02",
+      "severity": "P0",
+      "title": "allowedExecutionTarget(primary_market)",
+      "detail": {
+        "expected": true,
+        "actual": false
+      }
+    },
+    {
+      "id": "CB-02",
+      "severity": "P0",
+      "title": "allowedExecutionTarget(seat_registry)",
+      "detail": {
+        "expected": true,
+        "actual": false
+      }
+    },
+    {
+      "id": "CB-03",
+      "severity": "P0",
+      "title": "Stake Pool 10\u56fd\u4e00\u6b21\u521d\u59cb\u5316\u4e0d\u5b8c\u6574",
+      "detail": {
+        "failures": 10,
+        "note": "minStake=0 / bps=0 \u2014 \u975e deploy-time bootstrap"
+      }
+    },
+    {
+      "id": "CB-06",
+      "severity": "P0",
+      "title": "\u8865\u4e01\u5f0f Timelock schedule \u5f85 execute\uff08\u975e\u5e72\u51c0\u57fa\u7ebf\uff09",
+      "detail": {
+        "pending_ops": 10,
+        "path": "10x configureJurisdiction"
+      }
+    },
+    {
+      "id": "CB-08",
+      "severity": "P1",
+      "title": "Country Pool NetProfit \u914d\u7f6e\u4ec5 pilot\uff08\u975e 10 \u56fd ledger\uff09",
+      "detail": {
+        "configured_jurisdictions": [
+          "DE"
+        ],
+        "expected_note": "Gate-2.4 pilot DE OK \u00b7 \u4e0e 10 \u56fd Stake SSOT \u5206\u5c42"
+      }
+    },
+    {
+      "id": "CB-09",
+      "severity": "P1",
+      "title": "\u65e7 CountryPoolLedgerV0 pilot \u4e0e D-4555-B ledger \u5e76\u5b58",
+      "detail": {
+        "pilot": "0x63bd7d5ee5c5dde707e5e65303f3876267c78e97",
+        "d4555b_de": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+      }
+    }
+  ],
+  "finding_count": 6
+}

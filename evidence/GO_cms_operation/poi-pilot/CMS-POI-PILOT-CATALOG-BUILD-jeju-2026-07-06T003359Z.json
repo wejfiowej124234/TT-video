@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-06T00:33:59Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "KR",
+    "city_zh": "济州",
+    "matrix_ids": [
+      "PH-KR-050-ATR",
+      "PH-KR-051-ATR",
+      "PH-KR-052-ATR",
+      "PH-KR-053-ATR",
+      "PH-KR-054-FOOD",
+      "PH-KR-055-FOOD",
+      "PH-KR-056-FOOD",
+      "PH-KR-057-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-jeju-island-community-media.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-KR-050-ATR",
+      "poi_id": "1f7063dd-5440-4f48-8ffc-91c32e1b6547"
+    },
+    {
+      "matrix_id": "PH-KR-051-ATR",
+      "poi_id": "ddabb38b-0d28-4378-89ea-6a7e5e830e7b"
+    },
+    {
+      "matrix_id": "PH-KR-052-ATR",
+      "poi_id": "8f094ce9-900b-4e90-97f2-3e7462d6d47e"
+    },
+    {
+      "matrix_id": "PH-KR-053-ATR",
+      "poi_id": "976ff75e-cb6d-4fd8-ba43-bd75834866ca"
+    },
+    {
+      "matrix_id": "PH-KR-054-FOOD",
+      "poi_id": "4705e268-78c5-4886-930c-f37e5efefb5f"
+    },
+    {
+      "matrix_id": "PH-KR-055-FOOD",
+      "poi_id": "43b62f92-2486-42d8-8496-e3cd6c6cc7ee"
+    },
+    {
+      "matrix_id": "PH-KR-056-FOOD",
+      "poi_id": "9e46177a-d79f-4b7f-a090-3275e9c81ee8"
+    },
+    {
+      "matrix_id": "PH-KR-057-FOOD",
+      "poi_id": "734d9405-9cef-4344-a599-36a5d9f522e0"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 8,
+    "expected": 8
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

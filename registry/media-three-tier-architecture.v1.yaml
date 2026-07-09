@@ -1,0 +1,93 @@
+# TravelTrust · Media Three-Tier Architecture · SSOT
+# Human: docs/runbook/TT-MEDIA-THREE-TIER-ARCHITECTURE.md
+
+schema: traveltrust.media_three_tier_architecture.v1
+version: 1
+effective_utc: "2026-07-03"
+
+machine_keys:
+  TT_MEDIA_THREE_TIER_ARCHITECTURE: ENFORCED
+  TT_MEDIA_LOCALTUNNEL_STAGING: DEPRECATED
+  TT_MEDIA_STAGING_TARGET: CLOUDFLARE_R2_CDN
+  TT_MEDIA_PRODUCTION_TARGET: CLOUDFLARE_R2_CDN
+
+policy:
+  api_role: metadata_only
+  browser_delivery: direct_cdn
+  forbidden_staging_patterns: [localtunnel, "*.loca.lt", developer_pc_minio_tunnel]
+  decouple_infra_from_catalog_assets: true
+  catalog_unsplash_not_infra_defect: true
+  acceptance_decoupling_principle: >
+    Media Infrastructure acceptance validates media service capability only — not catalog asset sources.
+    Catalog Asset Migration acceptance validates asset source, copyright, and operational content only —
+    it does not re-validate media infrastructure.
+
+pi3_tracks:
+  PI3-MEDIA-INFRASTRUCTURE:
+    registry: registry/pi3-media-infrastructure.v1.yaml
+    scope: [minio, tigris, r2, cdn, s3, upload, download, cache, video_playback]
+  PI3-CATALOG-ASSET-MIGRATION:
+    registry: registry/catalog-asset-migration.v1.yaml
+    scope: [guide_cover, provider_cover, acquisition_cover, official_guide, campaign, hero, avatar, poi]
+    current_source: unsplash_and_placeholders
+    blocks_infra_close: false
+
+tiers:
+  phase1_local:
+    object_store: minio
+    public_base_url: "http://127.0.0.1:19000/traveltrust-community-media"
+  phase2_staging:
+    object_store: cloudflare_r2
+    public_base_url: "https://cdn.traveltrust.app"
+    staging_interim_20260703:
+      object_store: fly_tigris
+      public_base_url: "https://traveltrust-community-media.fly.storage.tigris.dev"
+      note: "off loca.lt until cdn.traveltrust.app DNS + R2 provisioned"
+    cdn: cloudflare
+  phase3_production:
+    object_store: cloudflare_r2
+    public_base_url: "https://cdn.traveltrust.app"
+
+migration:
+  script: scripts/dev/provision-staging-media-r2-cdn.sh
+  env_template: scripts/dev/staging-media-r2-cdn.env.example
+  runbook: docs/runbook/TT-MEDIA-THREE-TIER-ARCHITECTURE.md
+  owner_checklist: docs/runbook/TT-PI3-MEDIA-R2-CDN-FINAL-OWNER-CHECKLIST.md
+  acceptance_gate: docs/runbook/TT-MEDIA-CDN-PRODUCTION-ACCEPTANCE-GATE.md
+  acceptance_registry: registry/media-cdn-production-acceptance.v1.yaml
+  closeout_evidence: evidence/GO_media_r2_cdn_migration/20260703T141500Z/
+
+issue_renames:
+  PI3-MEDIA-R2-CDN-STAGING:
+    split_into:
+      closed: PI3-MEDIA-PERSISTENT-STAGING
+      waiting_owner: PI3-MEDIA-R2-CDN-FINAL
+
+issues:
+  PI3-MEDIA-PERSISTENT-STAGING:
+    status: CLOSED
+    evidence: evidence/GO_media_r2_cdn_migration/20260703T141500Z/
+    note: Fly Tigris interim — staging off loca.lt; NOT Cloudflare R2
+  PI3-MEDIA-R2-CDN-FINAL:
+    status: WAITING_OWNER_CF
+    owner: owner_live
+    owner_checklist: docs/runbook/TT-PI3-MEDIA-R2-CDN-FINAL-OWNER-CHECKLIST.md
+    acceptance_gate: MEDIA_CDN_PRODUCTION_ACCEPTANCE
+    close_requires: MEDIA_CDN_PRODUCTION_ACCEPTANCE_PASS
+    rollback_env: scripts/dev/staging-media-tigris-rollback.env.example
+    blockers: [cloudflare_account, traveltrust_app_dns, r2_bucket, cdn_cutover]
+    script: scripts/dev/provision-staging-media-r2-cdn.sh
+  MEDIA_CDN_PRODUCTION_ACCEPTANCE:
+    status: PENDING
+    owner: platform_engineering
+    runbook: docs/runbook/TT-MEDIA-CDN-PRODUCTION-ACCEPTANCE-GATE.md
+    registry: registry/media-cdn-production-acceptance.v1.yaml
+    runner: scripts/dev/run-media-cdn-production-acceptance-gate.sh
+    blocks_closure_of: PI3-MEDIA-R2-CDN-FINAL
+  PI3-CATALOG-ASSET-MIGRATION:
+    status: DEFERRED
+    track: PI3-CATALOG-ASSET-MIGRATION
+    runbook: docs/runbook/TT-PI3-CATALOG-ASSET-MIGRATION.md
+    registry: registry/catalog-asset-migration.v1.yaml
+    note: Unsplash catalog URLs — content sourcing, not infra defect
+    blocks_media_infra_close: false

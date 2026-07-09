@@ -1,0 +1,11 @@
+phase: ② testnet
+standard: TT-PHASE2-TESTNET-CLOSURE-GOVERNANCE-STANDARD
+addendum: Deep Closure Addendum v1
+at: 20260614T051744Z
+graduation_verdict: OPEN
+blocking_open: 5
+missing_coverage: 3
+evidence_gap: 10
+open_p0: 0
+open_p1: 2
+readiness: 97

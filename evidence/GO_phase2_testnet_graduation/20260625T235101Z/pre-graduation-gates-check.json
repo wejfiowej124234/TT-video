@@ -1,0 +1,17 @@
+{
+  "graduation_verdict": "OPEN",
+  "blocking_open": 2,
+  "soak_only_blocking": false,
+  "non_soak_blocking": [
+    "G12 A5",
+    "G12 A7"
+  ],
+  "non_soak_track_gaps": [
+    "D1:OPEN"
+  ],
+  "missing_coverage": 1,
+  "evidence_gap": 3,
+  "soak_completed": false,
+  "indexer_ok": true,
+  "surface_ok": true
+}

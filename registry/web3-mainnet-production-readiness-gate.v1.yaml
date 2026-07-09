@@ -1,0 +1,110 @@
+# Web3 Mainnet Production Readiness Gate · Machine SSOT
+#
+# Audit-only · cross-validation · no business logic mutation
+#
+#   node scripts/dev/run-web3-mainnet-production-readiness-audit.cjs
+#
+# Principle: never assume design correct — ambiguity = Blocker until evidenced.
+
+schema: traveltrust.web3_mainnet_production_readiness_gate.v1
+version: 1
+effective_utc: "2026-07-08"
+machine_key: TT_WEB3_MAINNET_PRODUCTION_READY
+target_chain_id: "1"
+target_network: Ethereum Mainnet
+
+current_production_scope: PRODUCTION_SCOPE_SEPOLIA
+current_production_chain_id: "11155111"
+mainnet_cutover_authorized: false
+
+escrow_bilateral_mainnet_policy:
+  registry: registry/escrow-bilateral-mainnet-policy.v1.yaml
+  owner_decision: docs/runbook/ESCROW-BILATERAL-SETTLEMENT-OWNER-DECISION-RECORD-V1.md
+  v1_mainnet: FORBIDDEN
+  v2_mainnet_path: EscrowV2_EscrowFactoryV2
+  pg_p0_esc: OPEN
+  note: >
+    Mainnet BLOCKED until PG-P0-ESC closure: V2 deploy + registry + Cert 8-12 + R-01 +
+    Shadow Launch G6 + Layer A/B evidence PASS
+
+prerequisites_not_sufficient:
+  - TT_WEB3_PAYMENT_PRODUCTION_READY
+  - TT_WEB3_SYSTEM_PRODUCTION_READY
+  note: Sepolia Production PASS does not imply Mainnet Production PASS
+
+phase2_master_validation:
+  registry: registry/phase2-staging-sepolia-production-validation.v1.yaml
+  runbook: docs/runbook/PHASE2-STAGING-SEPOLIA-PRODUCTION-VALIDATION-V1.md
+  orchestrator: scripts/dev/run-phase2-production-validation.cjs
+  required_verdict: PHASE2_STAGING_SEPOLIA_PRODUCTION_VALIDATION_PASS
+  sub_tracks: [2A, 2B, 2C, 2D, 2E, 2F]
+
+phase2d_web3_lifecycle_gate:
+  registry: registry/sepolia-full-web3-lifecycle-validation.v1.yaml
+  exit_rule: RULE-PH2-001
+  gate_script: scripts/gates/check-phase2-mainnet-feature-evidence-gate.sh
+  orchestrator: scripts/dev/run-sepolia-full-web3-lifecycle-validation.cjs
+  required_verdict: SEPOLIA_FULL_WEB3_LIFECYCLE_PASS
+
+phase2_exit_review_gate:
+  runbook: docs/runbook/PHASE2-EXIT-REVIEW-V1.md
+  orchestrator: scripts/dev/run-phase2-exit-review.cjs
+  gate_script: scripts/gates/check-phase2-exit-review-gate.sh
+  required_verdict: PHASE2_EXIT_REVIEW_PASS
+
+mainnet_deployment_package_gate:
+  registry: registry/mainnet-deployment-package.v1.yaml
+  runbook: docs/runbook/MAINNET-DEPLOYMENT-PACKAGE-V1.md
+  generator: scripts/dev/generate-mainnet-deployment-package.cjs
+  gate_script: scripts/gates/check-mainnet-deployment-package-gate.sh
+  top_manifest: MANIFEST/manifest.json
+  required_verdict: MAINNET_DEPLOYMENT_PACKAGE_GENERATED
+  anti_pattern: RULE-DEPLOY-001
+
+web3_freeze_gate:
+  registry: registry/web3-freeze.v1.yaml
+  runbook: docs/runbook/WEB3-FREEZE-V1.md
+  orchestrator: scripts/dev/run-web3-freeze.cjs
+  gate_script: scripts/gates/check-web3-freeze-gate.sh
+  required_verdict: WEB3_FREEZE_PASS
+  anti_pattern: RULE-FREEZE-001
+
+mainnet_validation_gate:
+  runbook: docs/runbook/MAINNET-VALIDATION-V1.md
+  orchestrator: scripts/dev/run-mainnet-wave-validation.cjs
+  note: Per-wave validation after Phase ③ broadcast; Shadow Launch + Production GO
+
+prerequisites_protocol_grade:
+  machine_key: TT_WEB3_PROTOCOL_GRADE_AUDIT
+  framework: registry/web3-protocol-grade-audit-framework.v1.yaml
+  audit_script: scripts/dev/run-web3-protocol-grade-audit.cjs
+  evidence_root: evidence/GO_production_readiness/web3-protocol-grade-audit
+  note: Mainnet cutover requires protocol-grade audit P0=0; Sepolia PASS alone insufficient
+
+cross_validation_sources:
+  - contracts/src/
+  - registry/protocol-convergence-deployments.v1.yaml
+  - registry/web3-system-master-map.v1.yaml
+  - registry/web3-protocol-grade-audit-framework.v1.yaml
+  - registry/g24-p-upgrade-01-contract-posture.v1.yaml
+  - docs/spec/governance-token/fund-flow-ssot.v1.md
+  - docs/spec/governance-token/protocol-ssot.v1.yaml
+  - docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md
+  - docs/runbook/TT-MAINNET-LAUNCH-PRECHECK-AFTER-B435-001.md
+  - deploy/fly/
+  - evidence/GO_production_readiness/
+  - evidence/GO_ttg_cert/
+  - evidence/mainnet_shadow_launch/
+
+mainnet_gates_ref: docs/runbook/TT-MAINNET-LAUNCH-PRECHECK-AFTER-B435-001.md#0-门禁总表mainnet-deploy--cutover--全部为-go-才允许
+
+verdict_enum:
+  - WEB3_MAINNET_PRODUCTION_NOT_STARTED
+  - WEB3_MAINNET_PRODUCTION_BLOCKED
+  - WEB3_MAINNET_PRODUCTION_IN_PROGRESS
+  - WEB3_MAINNET_PRODUCTION_PASS
+
+evidence_root: evidence/GO_production_readiness/web3-mainnet-audit
+audit_script: scripts/dev/run-web3-mainnet-production-readiness-audit.cjs
+
+current_verdict: WEB3_MAINNET_PRODUCTION_BLOCKED

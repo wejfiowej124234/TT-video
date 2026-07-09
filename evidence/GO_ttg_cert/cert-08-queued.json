@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.cert8_queued.v1",
+  "recorded_utc": "2026-07-08T14:02:12.670Z",
+  "cert": 8,
+  "timelock_eta_unix": "1783675206",
+  "note": "Treasury spend queued — waiting 2nd Timelock execute"
+}

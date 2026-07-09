@@ -1,0 +1,86 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T150030Z",
+  "filename": "ocs-paris-art-acquisition-cover.jpg",
+  "chain_id": "paris-art",
+  "city": "巴黎",
+  "country_code": "FR",
+  "slot": "acquisition-cover",
+  "surface": "Acquisition",
+  "copy_label": "巴黎中古海报 · 收购",
+  "manifest_copy": {
+    "acquisition.title": "巴黎中古海报 · 收购",
+    "acquisition.category": "collectibles",
+    "acquisition.description": "征集 1960–1990 艺术海报，需品相说明。",
+    "acquisition.bounty_min_usdc": 100,
+    "acquisition.bounty_max_usdc": 600
+  },
+  "content_safety_pre_check": {
+    "pass": true,
+    "evidence": "PRE-GENERATION content_safety_pre_check"
+  },
+  "post_generation_quality_check": {
+    "pass": true,
+    "jpeg_magic": true,
+    "bytes": 78485,
+    "dimensions": "640x480",
+    "placeholder": false
+  },
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG 78485 bytes，可解码。"
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "中古海报平铺与 title/description/1960-1990 100% 对齐。"
+    },
+    "G3_slot_differentiation": {
+      "pass": true,
+      "notes": "复古纸品静物；非 Row31-32/未来 slot。"
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "巴黎 FR-only · 非埃菲尔/非展厅。"
+    },
+    "G5_brand_visual": {
+      "pass": true,
+      "notes": "中性产品光；paris-art 统一。"
+    },
+    "G6_commercial_platform": {
+      "pass": true,
+      "notes": "收购悬赏标的封面。"
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true,
+      "notes": "清晰、纸品纹理可读。"
+    },
+    "G8_evidence_matrix": {
+      "pass": true,
+      "notes": "Global Regression 33/60。"
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "notes": "无版权名画/Logo/水印。"
+    },
+    "G10_content_diversity": {
+      "pass": true,
+      "notes": "vs 五城 Acquisition 明显不同。"
+    }
+  },
+  "acquisition_product_identity_review": {
+    "pass": true
+  },
+  "surface_boundary_review": {
+    "pass": true,
+    "still_life_only": true,
+    "no_people": true
+  },
+  "destination_experience_review": {
+    "pass": true
+  },
+  "regression_prior_32_rows": {
+    "pass": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

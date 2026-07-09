@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T05:40:49Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "成都",
+    "city_en": "Chengdu",
+    "matrix_ids": [
+      "PH-CN-256-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-256-FOOD",
+      "legacy_value": "火锅",
+      "poi_id": "7591c901-5adf-49b2-a495-d3b109bb5a06",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-256-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

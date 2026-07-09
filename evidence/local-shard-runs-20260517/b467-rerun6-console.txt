@@ -1,0 +1,186 @@
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] DATABASE_URL loaded from repo root .env
+[e2e] P3_CHAIN_OFF loaded from repo root .env
+[e2e] TRAVELTRUST_EMAIL_TRANSPORT=log (auth forgot/verify; resend incomplete or transport off)
+[e2e] TRAVELTRUST_AUTH_TOKEN_PEPPER set (Playwright dev default; set in root .env to override)
+[e2e] P3_CHAIN_OFF=1 (chromium mock-pay contract; root .env had "0"; use PLAYWRIGHT_PRESERVE_ROOT_P3_CHAIN_OFF=1 + run-e2e-sepolia for chain-on)
+sync-frontend-env: wrote D:\TravelTrust\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080 + NEXT_PUBLIC_SKIP_ME_FETCH=0 + NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI=1
+[e2e] PLAYWRIGHT_REUSE_FE_SERVER=0 + reclaimed FE listen port (default for PLAYWRIGHT_FULL_STACK=1 so Next picks .env.local SKIP_ME; set PLAYWRIGHT_REUSE_FE_SERVER=1 to reuse)
+[e2e] PLAYWRIGHT_FE_USE_PRODUCTION_START=1 — reuse existing .next production build (delete .next or unset PLAYWRIGHT_SKIP_FE_BUILD to force rebuild)
+[e2e] NODE_OPTIONS += --max-old-space-size=16384 (full-stack local; long suite / Next dev OOM guard; PLAYWRIGHT_SKIP_E2E_NODE_HEAP=1 to opt out)
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.32s
+[1A[2K[WebServer]     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.30s
+
+[1A[2K[WebServer]      Running `target\debug\traveltrust-api.exe`
+
+[1A[2K[WebServer] [req] x-request-id=b098f1a8-409f-4e6a-a518-71f8aaf55fe0 path=/health status=200
+[WebServer] [req] x-message-id=fc1171e4-8202-4331-bdf9-f328b8458cf3 path=/health status=200
+
+
+Running 3 tests using 1 worker
+
+[1A[2K(node:11836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:11836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/3] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:27:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K[WebServer] [req] x-request-id=326d66cb-2683-46af-80e7-003f2d6436d0 path=/meta status=200
+[WebServer] [req] x-message-id=3d615983-d2cd-48d9-ab2b-d4ad4e72dc29 path=/meta status=200
+
+[1A[2K[2/3] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:39:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K[WebServer] [req] x-request-id=33e3b75a-3d3b-491e-ac61-b08fa1c77b5d path=/meta status=200
+[WebServer] [req] x-message-id=657ec36f-e244-4aff-8a2e-1a86ab4f0e9d path=/meta status=200
+
+[1A[2K(node:2488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:2488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[3/3] [chromium] › e2e\b467-full-ui-order-journey.spec.ts:60:7 › B-467 · full UI journey (create on /orders/new → pay → complete → review) › 建单→接单→模拟入金→确认完成→评价→向导可见 @e2e-chain-off-mock-pay
+[1A[2K[WebServer] [req] x-request-id=4ecc761b-5564-43c0-bebc-c56ba7575c0d path=/health status=200
+[WebServer] [req] x-message-id=3bc2f072-cdfd-45e1-bd00-02cfb430cdac path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=cc5f44ea-7f44-4ccf-a07d-df25356577b2 path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=edf936db-9a4d-4d5e-bd5f-b74ac49f5998 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=c4ca18c5-be29-463a-997f-c04612e4085c path=/auth/login status=200
+[WebServer] [req] x-message-id=b5e187ed-4cee-458d-8a1f-dd6e347b3776 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=56442512-0c37-42f0-9024-778e7db1594d path=/auth/login status=200
+[WebServer] [req] x-message-id=a42fc397-b9a2-49a5-a730-1f42de236220 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=28147beb-6f28-426e-b27e-2f538d753368
+
+[1A[2K[WebServer]  path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=18662ace-5b36-4183-9653-2a2bc48a3a63 path=/api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=455c9653-dda6-4302-9edc-06677a370c3f path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+[WebServer] [req] x-message-id=c3b63f4b-5806-435d-b9c9-5d958eac7aa8 path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=d76dd6b7-e70f-47a9-9d1f-5ff89b99537b path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+[WebServer] [req] x-message-id=a6d83413-9650-49e7-9ac8-16be8e3ad176 path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=54ed7e10-d589-45ea-b002-d2d0897862dc path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+[WebServer] [req] x-message-id=c66c000b-569b-4563-b93f-7dc41e61f9a4 path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel
+
+[1A[2K[WebServer]  status=403
+
+[1A[2K[WebServer] [req] x-request-id=91b0eaae-e77a-4579-ae7f-bee359fec556 path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+[WebServer] [req] x-message-id=53a288f9-2506-4d78-9285-76a66101941e path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=
+
+[1A[2K[WebServer] 403
+
+[1A[2K[WebServer] [req] x-request-id=e88f98be-d2a7-4a84-920a-741f575b3863 path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+[WebServer] [req] x-message-id=373d7ea2-d690-4e58-a815-ba927b007f18 path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=
+
+[1A[2K[WebServer] 403
+
+[1A[2K[WebServer] [req] x-request-id=5c13a4e7-7946-453f-bb18-3d3d4537a01b path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+[WebServer] [req] x-message-id=4d625f67-6229-445c-9220-ee5f444c2d09 path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel
+
+[1A[2K[WebServer]  status=403
+
+[1A[2K[WebServer] [req] x-request-id=9bf197f8-a22b-4727-871f-11913231732e path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+[WebServer] [req] x-message-id=f2248b22-c5ee-47cd-8af0-f36d553ffc9e path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=16c92965-1924-444a-8340-c3efb0f1421b path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+[WebServer] [req] x-message-id=43224d9a-4954-4aa1-b555-0580ca455e41 path=
+
+[1A[2K[WebServer] /api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=43440a0f-27cf-46e9-8bc7-7f23f94edca2 path=/api/v1/orders/dafd853e-023b-435d-90d0-87256ea02b97/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=6540ca75-f9d0-43d2-893b-9719dd6443dc path=/api/v1/orders/dafd853e-023b-435d-90d0-87256ea02b97/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=847a13bc-6ff0-43ca-9a06-8627bed80eee path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=f4cd305b-7409-406d-96fd-7472a47515ca path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=722ed61c-3e4c-4ace-b2b5-951355dbe01b path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] d12745f0-9240-4345-8fbd-0db45797e514 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=248949e6-75b7-4e80-9d8c-820570d23bb5 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+[WebServer] [req] x-message-id=fd94ec60-48cb-4b8e-8b13-7e163e4eaed1 path=
+
+[1A[2K[WebServer] /api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=e6e27c28-2949-4ba8-9c30-7aebd396e509 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=c21c3268-14b9-42dd-a339-0abd057dc022 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=34c8046b-fd0f-4dd8-aaf1-3154d5d25e82 path=/auth/login status=200
+[WebServer] [req] x-message-id=41e49b01-aa13-4dec-9aff-a67f7a3c2d22 path=/auth/login status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=45aada7d-0929-45fc-926e-17cccb4f0ff2 path=/auth/login status=200
+[WebServer] [req] x-message-id=14f02396-54af-4239-9236-6215a7a46599 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=3feedfd7-d960-4251-8e9d-3785cbba668e path=/api/v1/me status=200
+[WebServer] [req] x-message-id=12d49ab5-863a-4b49-b1a9-18538b135ef4 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=01d0bd9f-1dd7-420f-be93-7d0588888325 path=/meta status=200
+[WebServer] [req] x-message-id=d03b776d-2fe4-4917-88e8-ecba2443ef92 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=9fee8a31-55c3-44e9-9dc8-b351ae80f637 path=/auth/login status=200
+[WebServer] [req] x-message-id=9147f615-71dc-4ce9-9c11-e92f725726ba path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=1da05a7f-0b31-4736-8e64-94f8849704ad path=/auth/login status=200
+[WebServer] [req] x-message-id=118cf882-600d-4436-8204-1a8f8ae1e857 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=1020e750-2e6f-4ef5-a6c1-5ea7398efa4b path=/api/v1/me status=200
+[WebServer] [req] x-message-id=de267146-0846-4401-90e4-c0a3f2a39320 path=/api/v1/me status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=9f7fd977-699b-44c6-b56b-f4b50ca933f3 path=/api/v1/guides/6a893ba7-2241-4efd-93a5-556200676145 status=200
+[WebServer] [req] x-message-id=b4f30399-c98d-4f69-8d02-a5e2983835bb path=/api/v1/guides/6a893ba7-2241-4efd-93a5-556200676145 status=200
+
+[1A[2K[WebServer] [req] x-request-id=29187ede-11c8-43b2-a10a-c69e18c41835 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=783a088d-7ced-450b-907b-bc2992591215 path=/api/v1/guides status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=01cee7da-7ee8-481b-9836-93ce842c2765 path=/api/v1/orders status=409
+[WebServer] [req] x-message-id=54775a66-dd40-42a8-ad21-7b1253174fe7 path=/api/v1/orders status=409
+
+[1A[2K  1) [chromium] › e2e\b467-full-ui-order-journey.spec.ts:60:7 › B-467 · full UI journey (create on /orders/new → pay → complete → review) › 建单→接单→模拟入金→确认完成→评价→向导可见 @e2e-chain-off-mock-pay 
+
+    TimeoutError: page.waitForResponse: Timeout 120000ms exceeded while waiting for event "response"
+
+       97 |
+       98 |     const [createResponse] = await Promise.all([
+    >  99 |       page.waitForResponse((res) => isPostCreateOrder(res) && res.status() === 200, { timeout: 120_000 }),
+          |            ^
+      100 |       ordersNewShell.getByRole("button", { name: /Create order|创建订单/i }).click(),
+      101 |     ]);
+      102 |     const createdJson = (await createResponse.json()) as { order?: { id?: string } };
+        at D:\TravelTrust\frontend\e2e\b467-full-ui-order-journey.spec.ts:99:12
+
+    Error Context: test-results\b467-full-ui-order-journey-0ecfe-iew-建单→接单→模拟入金→确认完成→评价→向导可见-chromium\error-context.md
+
+
+[1A[2K  1 failed
+    [chromium] › e2e\b467-full-ui-order-journey.spec.ts:60:7 › B-467 · full UI journey (create on /orders/new → pay → complete → review) › 建单→接单→模拟入金→确认完成→评价→向导可见 @e2e-chain-off-mock-pay 
+  2 passed (3.7m)
+
+[e2e] Playwright exited non-zero with PLAYWRIGHT_FULL_STACK=1.
+  If many failures are `net::ERR_CONNECTION_REFUSED` to :3012, Next dev likely died mid-suite (OOM or crash); later tests cascade red.
+  If failures mention :8080 / ECONNREFUSED, API is not listening — ensure `traveltrust-api` is up (Playwright webServer starts it by default) or match PLAYWRIGHT_API_PORT / PLAYWRIGHT_API_HEALTH_URL.
+  If webServer logs `pool timed out while waiting for an open connection`, Postgres is unreachable or exhausted — fix DATABASE_URL (see scripts/dev/export-database-url-from-root-env.sh), run migrations, and ensure PG is listening before full-stack E2E.
+  Try: smaller slices `npm run e2e:chromium:smoke-surface`, `e2e:chromium:smoke-admin-all`, `e2e:chromium:core-release`, `e2e:chromium:p0-spine`, `e2e:chromium:trust-gate`, `e2e:chromium:93-admin-matrix`; full matrix: `bash scripts/gates/local-e2e-chromium-full-matrix.sh` (sets PLAYWRIGHT_FE_USE_PRODUCTION_START=1 → next start); or `npm run e2e:full-chromium:list` to see where green stops; optional `PLAYWRIGHT_SKIP_E2E_NODE_HEAP=1` to test without extra heap (not a fix for OOM).
+  Solo / independent dev: keep local exit-0 evidence per docs/solo-dev-rhythm.md and CONTRIBUTING.md (GitHub Actions green is not the sole bar).
+

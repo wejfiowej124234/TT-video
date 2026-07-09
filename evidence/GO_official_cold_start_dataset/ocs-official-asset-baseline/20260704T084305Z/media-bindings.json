@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.ocs_official_media_bindings_remediation.v1",
+  "api": "https://tt-api-staging.fly.dev",
+  "state_path": "D:/TravelTrust-V1.1/evidence/GO_official_cold_start_dataset/ocs-official-asset-baseline/20260704T084305Z/state.json",
+  "recorded_at": "2026-07-04T08:44:44.137Z",
+  "http_patched": 0,
+  "sql_pending": 0,
+  "results": []
+}

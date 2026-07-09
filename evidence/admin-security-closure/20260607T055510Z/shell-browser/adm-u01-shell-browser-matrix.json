@@ -1,0 +1,19 @@
+{
+  "artifact": "adm-u01-shell-browser-audit",
+  "phase": "②",
+  "generated_at": "2026-06-07T06:11:57.292Z",
+  "fe_base": "http://127.0.0.1:3012",
+  "api_matrix_path": "d:/TravelTrust-V1.1/evidence/admin-security-closure/20260607T055510Z/shell-browser/matrix-api-results.json",
+  "verdict": "PASS",
+  "summary": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 0,
+    "issues": 0
+  },
+  "shell_matrix": [],
+  "menu_matrix": [],
+  "route_matrix": [],
+  "visibility_matrix": [],
+  "issues": []
+}

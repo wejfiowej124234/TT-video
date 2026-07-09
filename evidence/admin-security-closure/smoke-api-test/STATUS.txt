@@ -1,0 +1,6 @@
+status: FAIL
+phase: ②
+artifact: ADM-U01
+release_gate: NO_GO
+api_base: https://tt-api-staging.fly.dev
+at: 20260607T055050Z

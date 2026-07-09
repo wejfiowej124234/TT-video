@@ -1,0 +1,7 @@
+{
+  "schema": "phase3_release_rollback_drill.v1",
+  "at": "20260701T003652Z",
+  "dry_run": 0,
+  "apps": ["tt-api-staging", "tt-web-staging"],
+  "allowed_pattern": "tt-api-staging|tt-web-staging"
+}

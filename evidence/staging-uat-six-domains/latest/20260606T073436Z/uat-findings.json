@@ -1,0 +1,245 @@
+{
+  "base_url": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "recorded_at": "2026-06-06T07:39:25.969Z",
+  "boundary": "staging UAT · bugfix only · not Production GO",
+  "auth": {
+    "email": "tourist@test.com",
+    "user_id": "2760d445-cbf4-47d0-9461-fcba3db0516f",
+    "bearer_preflight": true,
+    "note": "Auth-gated routes probed with Bearer (tourist + promote_admin); public routes unauthenticated; 401/403 on public = P1 not P0"
+  },
+  "findings": [
+    {
+      "domain": "首页",
+      "route": "/",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/traveltrust",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/trust",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/did-rank",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/auth/login",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/auth/register",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me/settings",
+      "status": "WARN",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "console.error×2: useCommunityFeed getMeCollects: TypeError: Failed to fetch\n    at L (https://tt-web-staging.fly.dev/_next/static/chunks/19250-a36061c57cabd180.js:1:9664)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/64300-22eca16304b045e3.js:1: | useCommunityFeed getMeFollowing: TypeError: Failed to fetch\n    at A (https://tt-web-staging.fly.dev/_next/static/chunks/19250-a36061c57cabd180.js:1:7710)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/64300-22eca16304b045e3.js:1"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me/identities",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "市场",
+      "route": "/market",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "市场",
+      "route": "/market/acquisition",
+      "status": "WARN",
+      "auth_mode": "public",
+      "notes": [
+        "console.error×1: useMarketPage getGuides: TypeError: Failed to fetch"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/explore",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/messages",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/me/posts",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance/proposals",
+      "status": "WARN",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "console.error×1: Failed to load resource: the server responded with a status of 503 ()",
+        "api≥400: 503 /api/v1/me"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance/delegate",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/staking",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin",
+      "status": "PASS",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/orders",
+      "status": "PASS",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/users",
+      "status": "PASS",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/finance",
+      "status": "PASS",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "跨域",
+      "route": "GET /meta (same-origin via Next)",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "chain_id=11155111"
+      ]
+    },
+    {
+      "domain": "跨域",
+      "route": "OPTIONS /api/v1/governance/proposals (CORS)",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "preflight ok"
+      ]
+    }
+  ],
+  "summary": {
+    "pass": 22,
+    "warn": 3,
+    "fail": 0
+  }
+}

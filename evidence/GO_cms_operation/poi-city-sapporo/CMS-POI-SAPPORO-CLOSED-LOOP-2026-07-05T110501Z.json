@@ -1,0 +1,105 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T11:05:01Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "札幌",
+    "city_en": "Sapporo",
+    "matrix_ids": [
+      "PH-JP-033-ATR",
+      "PH-JP-034-ATR",
+      "PH-JP-035-ATR",
+      "PH-JP-036-ATR",
+      "PH-JP-037-ATR",
+      "PH-JP-038-FOOD",
+      "PH-JP-039-FOOD",
+      "PH-JP-040-FOOD",
+      "PH-JP-041-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-JP-033-ATR",
+      "legacy_value": "大通公园",
+      "poi_id": "61b601c5-56a2-45b2-80dc-6d458546028e",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg",
+      "hero_file": "ocs-sydney-coast-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-033-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-034-ATR",
+      "legacy_value": "时计台",
+      "poi_id": "d13d0b1a-f514-4e52-b05e-6c9482504c33",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-community-media.jpg",
+      "hero_file": "ocs-sydney-coast-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-034-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-035-ATR",
+      "legacy_value": "羊之丘",
+      "poi_id": "2e804313-feb6-4a35-9c1e-f2e54d6f3723",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-community-cover.jpg",
+      "hero_file": "ocs-sydney-coast-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-035-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-036-ATR",
+      "legacy_value": "白色恋人工厂",
+      "poi_id": "8036cf7f-3632-4f61-8693-2c24c4ada165",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg",
+      "hero_file": "ocs-sydney-coast-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-036-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-037-ATR",
+      "legacy_value": "藻岩山",
+      "poi_id": "35eaff99-d19a-434f-a5d4-a4b41f521bff",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg",
+      "hero_file": "ocs-sydney-coast-acquisition-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-037-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-038-FOOD",
+      "legacy_value": "味噌拉面",
+      "poi_id": "62f6777b-749d-45b7-92ac-800d61819178",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-guide-avatar.jpg",
+      "hero_file": "ocs-sydney-coast-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-038-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-039-FOOD",
+      "legacy_value": "成吉思汗",
+      "poi_id": "be977cf0-1530-403e-bdf3-a9bb6b051bc5",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-039-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-040-FOOD",
+      "legacy_value": "汤咖喱",
+      "poi_id": "30501de9-3494-4e4b-a013-65f86bd08282",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-040-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-041-FOOD",
+      "legacy_value": "海鲜",
+      "poi_id": "de70452d-d488-4a25-94bd-b9b2b3f02cba",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-041-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

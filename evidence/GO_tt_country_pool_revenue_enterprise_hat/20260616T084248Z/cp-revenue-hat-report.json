@@ -1,0 +1,32 @@
+{
+  "audit_id": "TT_COUNTRY_POOL_REVENUE_ENTERPRISE_HAT",
+  "stamp_utc": "20260616T084248Z",
+  "jurisdiction_pilot": "DE",
+  "steps": [
+    "step-01-profit-accrual",
+    "step-02-netprofit-ledger",
+    "step-03-split-4555",
+    "step-04-steward-path-vault",
+    "step-05-global-treasury",
+    "step-06-api-chain-alignment",
+    "step-08-frontend-constants",
+    "step-09-claim-path-boundary"
+  ],
+  "four_ledger": {
+    "chain": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa",
+    "api_ledger_env": "",
+    "global_treasury": "0x904a6C4c6Aab698AfBF08EC6151D317c393520cC",
+    "govfreeze_v2_timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+    "global_treasury_timelock_match": true,
+    "page_bps_ok": true,
+    "split_observed": true,
+    "blockers": [],
+    "verdict": "PASS"
+  },
+  "overall_verdict": "PASS",
+  "phase_b_unblock_requires": [
+    "four_ledger PASS",
+    "run-enterprise-hat-l9-recheck PASS",
+    "HAT_R1_PHASE_B_PAUSED=0"
+  ]
+}

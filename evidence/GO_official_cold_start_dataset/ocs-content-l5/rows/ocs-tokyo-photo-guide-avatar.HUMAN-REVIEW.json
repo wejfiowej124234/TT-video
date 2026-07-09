@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T121533Z",
+  "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+  "chain_id": "tokyo-photo",
+  "city": "东京",
+  "slot": "guide-avatar",
+  "surface": "Guide",
+  "gates_human_review": {
+    "G2_copy_alignment": { "pass": true, "notes": "持相机向导+浅草雷门 bokeh，与 Ken nickname/bio 一致" },
+    "G3_slot_differentiation": { "pass": true, "notes": "人物肖像 slot，区别于同 chain 风景/产品封面" },
+    "G9_content_authenticity": { "pass": true, "notes": "东京 Guide 角色，无他城/水印/色块占位" },
+    "G10_content_diversity": { "pass": true, "notes": "人物+相机场景，作为 chain 多样性起点" },
+    "G5_brand_visual": { "pass": true, "notes": "暖色清晨纪实" },
+    "G7_wcag_visual": { "pass": true, "notes": "主体可辨，无图内文案" }
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

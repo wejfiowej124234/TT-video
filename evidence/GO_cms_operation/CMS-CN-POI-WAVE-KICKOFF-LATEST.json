@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_cn_poi_wave_kickoff.v1",
+  "stamp_utc": "2026-07-07T112945Z",
+  "country_iso": "CN",
+  "status": "AE_CITY_PILOT_ACTIVE",
+  "active_city": "北京",
+  "template": "JP + KR + TH + SG + FR + US + AU + ES + AE Golden Template",
+  "TT_CMS_CN_POI_WAVE": "DALI_CLOSED",
+  "next_stage": null,
+  "abu_dhabi_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-DALI-CLOSURE-LATEST.json"
+  },
+  "active_catalog_build": null,
+  "TT_CMS_POI_CITY_BEIJING": "CLOSED",
+  "TT_CMS_POI_ACTIVE_CITY": null,
+  "TT_CMS_POI_CITY_SHANGHAI": "CLOSED",
+  "TT_CMS_POI_CITY_GUANGZHOU": "CLOSED",
+  "TT_CMS_POI_CITY_CHENGDU": "CLOSED",
+  "TT_CMS_POI_CITY_HANGZHOU": "CLOSED",
+  "TT_CMS_POI_CITY_XIAN": "CLOSED",
+  "TT_CMS_POI_CITY_XIAMEN": "CLOSED",
+  "TT_CMS_POI_CITY_QINGDAO": "CLOSED",
+  "TT_CMS_POI_CITY_DALI": "CLOSED"
+}

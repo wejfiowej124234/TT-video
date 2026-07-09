@@ -102,14 +102,15 @@ fn chain_meta_top_keys_order_and_literals_729() {
 fn chain_contracts_meta_top_keys_order_and_literals_759() {
     assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[7], "registry_address");
     assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[8], "escrow_factory_address");
+    assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[9], "escrow_factory_v2_address");
     assert_eq!(
-        CHAIN_CONTRACTS_META_TOP_KEYS[9],
+        CHAIN_CONTRACTS_META_TOP_KEYS[10],
         "region_steward_stake_pool_address"
     );
-    assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[10], "rule");
-    assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[11], "chain_contracts_top_keys");
+    assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[11], "rule");
+    assert_eq!(CHAIN_CONTRACTS_META_TOP_KEYS[12], "chain_contracts_top_keys");
     assert_eq!(
-        CHAIN_CONTRACTS_META_TOP_KEYS[12],
+        CHAIN_CONTRACTS_META_TOP_KEYS[13],
         "chain_contracts_top_keys_contract_759"
     );
     let c = format_chain_contracts_meta_top_keys_contract_759();

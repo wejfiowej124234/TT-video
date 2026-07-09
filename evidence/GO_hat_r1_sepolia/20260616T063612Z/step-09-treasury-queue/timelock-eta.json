@@ -1,0 +1,7 @@
+{
+  "proposal_id": "4",
+  "timelock_delay_seconds": "172800",
+  "treasury_execute_earliest_unix": "1783675206",
+  "queue_tx": "0xb69c04e9dae65de478e20b168623582cc96954df1e9616a7c4bfb33afc8a3c52",
+  "honest_boundary": "48h Timelock before treasury spend execute — no bypass"
+}

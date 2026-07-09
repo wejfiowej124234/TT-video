@@ -1,0 +1,138 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-06T06:44:30.865Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "SG",
+    "city_zh": "新加坡",
+    "city_en": "Singapore",
+    "poi_count": 10
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "JP + KR + TH Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "cross_region_remediated": "all_10_execution_plus_geo",
+  "checks": {
+    "assets_locked_10_10": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-SG-101-ATR",
+      "poi": "滨海湾",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-singapore-family-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-06T06:13:16.521Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-SG-102-ATR",
+      "poi": "圣淘沙",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-singapore-family-community-media.jpg",
+      "locked_at_utc": "2026-07-06T06:18:17.938Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-SG-103-ATR",
+      "poi": "牛车水",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-singapore-family-community-cover.jpg",
+      "locked_at_utc": "2026-07-06T06:18:28.904Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-SG-104-ATR",
+      "poi": "小印度",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-singapore-family-provider-cover.jpg",
+      "locked_at_utc": "2026-07-06T06:23:18.932Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-SG-105-ATR",
+      "poi": "动物园",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-singapore-family-acquisition-cover.jpg",
+      "locked_at_utc": "2026-07-06T06:23:29.990Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-SG-106-FOOD",
+      "poi": "海南鸡饭",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-singapore-family-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-06T06:28:20.461Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-SG-107-FOOD",
+      "poi": "肉骨茶",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-singapore-family-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-06T06:28:30.782Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-SG-108-FOOD",
+      "poi": "辣椒螃蟹",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-singapore-family-community-media.jpg",
+      "locked_at_utc": "2026-07-06T06:33:21.088Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-SG-109-FOOD",
+      "poi": "叻沙",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-singapore-family-community-cover.jpg",
+      "locked_at_utc": "2026-07-06T06:33:32.109Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-SG-110-FOOD",
+      "poi": "椰浆饭",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-singapore-family-community-media.jpg",
+      "locked_at_utc": "2026-07-06T06:38:21.793Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "PASS",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 10
+  },
+  "TT_CMS_POI_CITY_SINGAPORE_CONTENT_QA": "CLOSED"
+}

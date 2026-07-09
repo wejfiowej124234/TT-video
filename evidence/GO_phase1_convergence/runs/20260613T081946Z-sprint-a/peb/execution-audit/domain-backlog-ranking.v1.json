@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust.domain_backlog_ranking.v1",
+  "ranking": [
+    {
+      "domain": "AG",
+      "open_count": 1,
+      "p0": 0,
+      "p1": 1
+    },
+    {
+      "domain": "CA",
+      "open_count": 1,
+      "p0": 0,
+      "p1": 1
+    },
+    {
+      "domain": "UXA",
+      "open_count": 1,
+      "p0": 0,
+      "p1": 1
+    },
+    {
+      "domain": "PF",
+      "open_count": 1,
+      "p0": 0,
+      "p1": 1
+    },
+    {
+      "domain": "CX",
+      "open_count": 1,
+      "p0": 0,
+      "p1": 1
+    }
+  ]
+}

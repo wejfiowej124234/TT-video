@@ -1,0 +1,11 @@
+{
+  "wallet": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "jurisdiction": "KR",
+  "eth_wei": "4080217647231855918",
+  "ttg_wei": "2000100000000000000000000",
+  "usdc": "0",
+  "min_stake_wei": "200000000000000000000000",
+  "stake_bps": "200",
+  "phase": "a",
+  "stake_pool_bootstrapped": true
+}

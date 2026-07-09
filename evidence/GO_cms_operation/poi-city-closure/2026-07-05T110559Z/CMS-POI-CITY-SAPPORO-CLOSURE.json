@@ -1,0 +1,186 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-05T110559Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "city": {
+    "country_iso": "JP",
+    "country_zh": "日本",
+    "city_zh": "札幌",
+    "city_en": "Sapporo"
+  },
+  "poi_count": 9,
+  "matrix_ids": [
+    "PH-JP-033-ATR",
+    "PH-JP-034-ATR",
+    "PH-JP-035-ATR",
+    "PH-JP-036-ATR",
+    "PH-JP-037-ATR",
+    "PH-JP-038-FOOD",
+    "PH-JP-039-FOOD",
+    "PH-JP-040-FOOD",
+    "PH-JP-041-FOOD"
+  ],
+  "pois": [
+    "大通公园",
+    "时计台",
+    "羊之丘",
+    "白色恋人工厂",
+    "藻岩山",
+    "味噌拉面",
+    "成吉思汗",
+    "汤咖喱",
+    "海鲜"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-JP-033-ATR",
+      "legacy_value": "大通公园",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-JP-034-ATR",
+      "legacy_value": "时计台",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-JP-035-ATR",
+      "legacy_value": "羊之丘",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-JP-036-ATR",
+      "legacy_value": "白色恋人工厂",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-JP-037-ATR",
+      "legacy_value": "藻岩山",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-JP-038-FOOD",
+      "legacy_value": "味噌拉面",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-JP-039-FOOD",
+      "legacy_value": "成吉思汗",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-JP-040-FOOD",
+      "legacy_value": "汤咖喱",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-JP-041-FOOD",
+      "legacy_value": "海鲜",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-033-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-034-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-035-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-036-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-037-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-038-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-039-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-040-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-041-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=JP&city=%E6%9C%AD%E5%B9%8C&limit=50",
+    "http": 200,
+    "count": 9,
+    "legacy_values": [
+      {
+        "legacy_value": "大通公园",
+        "ok": true
+      },
+      {
+        "legacy_value": "时计台",
+        "ok": true
+      },
+      {
+        "legacy_value": "羊之丘",
+        "ok": true
+      },
+      {
+        "legacy_value": "白色恋人工厂",
+        "ok": true
+      },
+      {
+        "legacy_value": "藻岩山",
+        "ok": true
+      },
+      {
+        "legacy_value": "味噌拉面",
+        "ok": true
+      },
+      {
+        "legacy_value": "成吉思汗",
+        "ok": true
+      },
+      {
+        "legacy_value": "汤咖喱",
+        "ok": true
+      },
+      {
+        "legacy_value": "海鲜",
+        "ok": true
+      }
+    ]
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-sapporo/CMS-POI-SAPPORO-CLOSED-LOOP-LATEST.json",
+  "next_city": {
+    "country_iso": "JP",
+    "city_zh": "福冈",
+    "city_en": "Fukuoka",
+    "matrix_ids": [
+      "PH-JP-018-ATR",
+      "PH-JP-019-ATR",
+      "PH-JP-020-ATR",
+      "PH-JP-021-ATR",
+      "PH-JP-022-FOOD",
+      "PH-JP-023-FOOD",
+      "PH-JP-024-FOOD",
+      "PH-JP-025-FOOD"
+    ],
+    "poi_count": 8
+  },
+  "closure_keys": {
+    "TT_CMS_POI_CITY_SAPPORO": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": "JP · 福冈",
+    "TT_CMS_POI_CITY_FUKUOKA": "ACTIVE"
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_SAPPORO": "CLOSED"
+}

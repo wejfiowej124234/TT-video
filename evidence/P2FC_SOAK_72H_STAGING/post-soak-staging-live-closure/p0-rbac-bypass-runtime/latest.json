@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.p0_rbac_bypass_runtime.v1",
+  "verified_at_utc": "2026-06-30T04:24:40.588Z",
+  "status": "CONFIRMED",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "checks": {
+    "fly_toml_static_clean": true,
+    "meta_console_role_direct_allowed": false,
+    "meta_staging_admin_matrix_go": false,
+    "unauth_put_http": "401"
+  },
+  "honest_boundary": "runtime GET/409 probe only · prep CONFIRMED does not substitute · ≠ ADM-U01 GO"
+}

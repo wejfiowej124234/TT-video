@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   filterGuidePublicServiceTypes,
+  formatGuideHourlyRateLabel,
   formatGuideLanguages,
   formatGuidePublicBio,
   formatGuideServiceTypeLabel,
@@ -15,12 +16,15 @@ const t = (key: string) =>
     market_order_teaser_itinerary_line: "{{country}} · {{days}}天 · {{route}}",
     market_order_teaser_country_fallback: "行程",
     market_guide_service_culture: "Culture",
+    guide_card_perHour: "{{amount}} {{currency}}/hr",
+    guide_card_perHour_on_request: "{{amount}}/hr · on request",
   })[key] ?? key;
 
 describe("marketDisplayCopy", () => {
   it("flags internal seed bios and smoke placeholders", () => {
     expect(isInternalMarketSeedCopy("PD-009 acquisition fulfillment (auto-provisioned)")).toBe(true);
     expect(isInternalMarketSeedCopy("smoke save")).toBe(true);
+    expect(isInternalMarketSeedCopy("多重身份演示 · 向导轨")).toBe(true);
     expect(isInternalMarketSeedCopy("五日文化线 · 故宫深度游")).toBe(false);
   });
 
@@ -40,9 +44,15 @@ describe("marketDisplayCopy", () => {
 
   it("filterGuidePublicServiceTypes drops internal slugs and dedupes", () => {
     expect(
-      filterGuidePublicServiceTypes(["acquisition_fulfillment", "walking", "Walking", "smoke_tag"]),
+      filterGuidePublicServiceTypes(["acquisition_fulfillment", "walking", "Walking", "smoke_tag", "playmate"]),
     ).toEqual(["walking"]);
     expect(isInternalGuideServiceType("acquisition_fulfillment")).toBe(true);
+    expect(isInternalGuideServiceType("playmate")).toBe(true);
+  });
+
+  it("formatGuideHourlyRateLabel avoids engineering currency placeholders", () => {
+    expect(formatGuideHourlyRateLabel({ hourly_rate: "50", hourly_currency: "USDC" }, t)).toBe("50 USDC/hr");
+    expect(formatGuideHourlyRateLabel({ hourly_rate: "50", hourly_currency: "" }, t)).toBe("50/hr · on request");
   });
 
   it("formatGuideServiceTypeLabel maps known slugs and humanizes unknown", () => {

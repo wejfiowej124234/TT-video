@@ -1,0 +1,25 @@
+{
+  "acceptance_id": "GOVFREEZE_V2_HUMAN_SCREEN_ACCEPTANCE",
+  "stamp_utc": "20260616T100918Z",
+  "signer": "Sebastian Ward",
+  "signed_at_utc": "2026-06-16T12:09:13Z",
+  "economic_baseline": {
+    "govfreeze_v2": true,
+    "four_ledger_verdict": "PASS",
+    "cp_revenue_evidence": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z"
+  },
+  "cert1_minimal_pack": "evidence/GO_ttg_cert/20260616T100918Z/human-uat/CERT1-MINIMAL-9-MAPPING.v1.json",
+  "mtm_ids": [
+    "CHK-CORE-01",
+    "CHK-FE-01",
+    "CHK-FE-02",
+    "CHK-FE-03",
+    "CHK-FE-09",
+    "CHK-FE-10",
+    "CHK-FE-13",
+    "CHK-OPS-12",
+    "CHK-BASE-06"
+  ],
+  "verdict": "PASS",
+  "honest_boundary": "\u2461 human screen acceptance \u2260 \u2462 Production GO"
+}

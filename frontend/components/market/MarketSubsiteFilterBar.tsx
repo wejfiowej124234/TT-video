@@ -5,17 +5,19 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "@/components/LocaleProvider";
 import {
   ACQUISITION_CATEGORY_SLUGS,
-  MARKET_SUBSITE_COUNTRY_STORAGE,
+  clearSubsiteCountryPref,
   MERCHANT_CATEGORY_SLUGS,
   parseAcquisitionCategoryParam,
   parseAcquisitionSortParam,
   parseMerchantCategoryParam,
   parseMerchantSortParam,
-  useEffectiveSubsiteCountry,
+  writeSubsiteCountryPref,
   type MarketSubsiteCountryParam,
 } from "@/lib/marketSubsiteFilters";
+import { useEffectiveSubsiteCountry } from "@/lib/useEffectiveSubsiteCountry";
 import { useCatalogProductCountries } from "@/lib/catalogApi/useCatalogGeo";
 import { buildPathnameSearchHref } from "@/lib/marketLoginReturnPath";
+import { PRODUCT_COUNTRIES } from "@/lib/productCountries";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 
@@ -73,29 +75,16 @@ export default function MarketSubsiteFilterBar({
   /** Country pref hydration: `useMarketStandaloneBusinessPage` useLayoutEffect (avoid double fetch race). */
 
   const pickCountry = (c: MarketSubsiteCountryParam) => {
+    writeSubsiteCountryPref(variant, c);
     if (c === "all") {
-      try {
-        localStorage.removeItem(MARKET_SUBSITE_COUNTRY_STORAGE[variant]);
-      } catch {
-        /* ignore */
-      }
       setParams({ country: null });
       return;
-    }
-    try {
-      localStorage.setItem(MARKET_SUBSITE_COUNTRY_STORAGE[variant], c);
-    } catch {
-      /* ignore */
     }
     setParams({ country: c });
   };
 
   const resetAll = () => {
-    try {
-      localStorage.removeItem(MARKET_SUBSITE_COUNTRY_STORAGE[variant]);
-    } catch {
-      /* ignore */
-    }
+    clearSubsiteCountryPref(variant);
     router.replace(pathname, { scroll: false });
   };
 
@@ -104,9 +93,14 @@ export default function MarketSubsiteFilterBar({
   const sort = isProvider ? sortMerchant : sortAcquisition;
 
   const productCountries = useCatalogProductCountries();
-  const countryRow = productCountries.find((c) => c.iso === country);
-  const countryLabel =
-    country === "all" || !countryRow ? t("market_subsite_filter_country_all") : t(countryRow.guideRegisterLabelKey);
+  const countryLabel = (() => {
+    if (country === "all") return t("market_subsite_filter_country_all");
+    const fromCatalog = productCountries.find((c) => c.iso === country);
+    if (fromCatalog) return t(fromCatalog.guideRegisterLabelKey);
+    const fromTs = PRODUCT_COUNTRIES.find((c) => c.iso === country);
+    if (fromTs) return t(fromTs.guideRegisterLabelKey);
+    return country;
+  })();
 
   const categoryLabel =
     category === "all"

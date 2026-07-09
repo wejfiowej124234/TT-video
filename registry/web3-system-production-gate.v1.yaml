@@ -1,0 +1,82 @@
+# Entire Web3 System Production Gate · Machine SSOT (≠ Payment Rail)
+#
+#   node scripts/dev/run-web3-system-deep-audit.cjs
+#   node scripts/dev/run-web3-system-closure.cjs
+#
+# Layering SSOT: registry/web3-gate-layering.v1.yaml
+
+schema: traveltrust.web3_system_production_gate.v1
+version: 1
+effective_utc: "2026-07-08"
+machine_key: TT_WEB3_SYSTEM_PRODUCTION_READY
+production_scope: PRODUCTION_SCOPE_SEPOLIA
+chain_id: "11155111"
+
+not_same_as:
+  machine_key: TT_WEB3_PAYMENT_PRODUCTION_READY
+  note: Payment rail (G3-02) is necessary subset M25 — not sufficient for this gate
+
+prerequisites:
+  TT_WEB3_PAYMENT_PRODUCTION_READY: WEB3_PAYMENT_PRODUCTION_PASS
+  OCS_PRODUCTION_PARITY_AUDIT: PASS
+
+module_tree_ref: scripts/dev/run-web3-system-deep-audit.cjs#MODULE_TREE
+master_map_registry: registry/web3-system-master-map.v1.yaml
+master_map_human: docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md
+master_map_parity_probe: scripts/dev/check-web3-system-master-map-parity.cjs
+
+required_prod_meta_contract_keys:
+  - governor_address
+  - timelock_address
+  - governance_token_address
+  - fee_router_address
+  - treasury_address
+  - registry_address
+  - escrow_factory_address
+  - region_steward_stake_pool_address
+  - guide_staking_address
+  - staking_provider_address
+
+prod_meta_target: "10/10 non-null · match gov_freeze_v2_clean_baseline SSOT"
+prod_meta_probe: scripts/dev/check-web3-system-production-meta-contracts.cjs
+runtime_wiring_runbook: docs/runbook/WEB3-SYSTEM-PRODUCTION-RUNTIME-WIRING.md
+
+sub_gates:
+  - id: SYS-W01
+    title: Prod /meta contract parity (10 keys)
+    probe: GET /meta chain.contracts
+  - id: SYS-W02
+    title: Governance execution chain (Governor → Timelock → Execute)
+    requires: [timelock_address, governor_address]
+  - id: SYS-W03
+    title: G24 Proxy architecture evidence
+    script: scripts/gates/check-g24-p-upgrade-01-proxy-architecture.sh
+    registry: registry/g24-p-upgrade-01-contract-posture.v1.yaml
+  - id: SYS-W04
+    title: TTG Cert #1-12 signoffs
+    registry: registry/ttg-governance-cert-gates.v1.yaml
+    evidence: evidence/GO_ttg_cert/
+  - id: SYS-W05
+    title: P2FC RBAC D3 production boundary
+    evidence: evidence/GO_production_readiness/web3-system-audit/RBAC-D3-CLOSURE-LATEST.json
+  - id: SYS-W06
+    title: FE build.env Web3 NEXT_PUBLIC_* parity
+    paths: [deploy/fly/tt-web-prod/build.env.local, deploy/fly/tt-web-prod/build.env.sepolia-prod.example]
+  - id: SYS-W07
+    title: Master Map parity (Map → Registry → Contracts → /meta → Evidence)
+    registry: registry/web3-system-master-map.v1.yaml
+    probe: scripts/dev/check-web3-system-master-map-parity.cjs
+    evidence: evidence/GO_production_readiness/web3-system-audit/WEB3-MASTER-MAP-PARITY-LATEST.json
+
+verdict_enum:
+  - WEB3_SYSTEM_PRODUCTION_NOT_STARTED
+  - WEB3_SYSTEM_PRODUCTION_IN_PROGRESS
+  - WEB3_SYSTEM_PRODUCTION_PASS
+  - WEB3_SYSTEM_PRODUCTION_FAIL
+
+evidence_root: evidence/GO_production_readiness/web3-system-audit
+evidence_manifest: evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-DEEP-AUDIT-LATEST.json
+closure_manifest: evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-CLOSURE-LATEST.json
+
+current_verdict: WEB3_SYSTEM_PRODUCTION_IN_PROGRESS
+open_blockers_ref: evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-BLOCKERS-LATEST.md

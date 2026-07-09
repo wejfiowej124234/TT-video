@@ -1,0 +1,46 @@
+{
+  "schema": "traveltrust.cms_destination_ambient_runtime_closure.v1",
+  "stamp_utc": "20260705T104328Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "destination_ambient_runtime": {
+    "status": "CLOSED",
+    "pass_count": 10,
+    "total": 10,
+    "display": "10/10 (100%)",
+    "unsplash_count": 0
+  },
+  "acceptance": {
+    "criterion": "Runtime URL === Catalog publish URL · Unsplash/TS fallback = 0 · l5_compliant per country row",
+    "wiring_verdict": "PASS",
+    "web_base": "https://tt-web-staging.fly.dev",
+    "api_base": "https://tt-api-staging.fly.dev"
+  },
+  "closure_keys": {
+    "TT_CMS_DESTINATION_AMBIENT_RUNTIME": "CLOSED",
+    "TT_CMS_AMBIENT_RUNTIME_WIRING": "PASS",
+    "TT_CMS_AMBIENT_RUNTIME": "10/10",
+    "TT_CMS_AMBIENT_UNSplash": "0"
+  },
+  "pipeline_wave1_closure": {
+    "status": "COMPLETE",
+    "evidence": "evidence/GO_cms_operation/CMS-AMBIENT-WAVE1-CLOSURE-LATEST.json",
+    "note": "Hero/Publish wave closed · Runtime closure is separate SSOT layer"
+  },
+  "next_asset_family": "POI",
+  "poi_upload_pause_lifted": true,
+  "evidence_refs": [
+    "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+    "scripts/dev/run-cms-ambient-runtime-wiring-audit.cjs",
+    "scripts/dev/lib/cms-l5-audit-ssot.cjs"
+  ],
+  "wiring_ssot": {
+    "path": "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+    "stamp_utc": "20260705T103644Z",
+    "producer": "scripts/dev/run-cms-ambient-runtime-wiring-audit.cjs"
+  },
+  "frozen": true,
+  "do_not_modify": "Ambient runtime closed · CN visual outstanding only (process LIVE)",
+  "TT_CMS_DESTINATION_AMBIENT_RUNTIME": "CLOSED"
+}

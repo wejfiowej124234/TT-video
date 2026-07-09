@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T152500Z",
+  "filename": "ocs-nyc-skyline-provider-cover.jpg",
+  "row": 38,
+  "chain_id": "nyc-skyline",
+  "country_code": "US",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "blocked_elements_avoided": [
+      "brand_logos",
+      "celebrity_portraits",
+      "readable_trademarks"
+    ],
+    "safe_expression": "观景台游客剪影 + 曼哈顿天际线蓝调 · 背影 only"
+  },
+  "provider_business_identity_plan": {
+    "pass": true,
+    "vs_closed_chains": "观景台联票 vs 旅拍/茶室/夜市/河船/亲子通票/博物馆小团",
+    "vs_row37": "服务场景 vs 向导肖像"
+  },
+  "checks": {
+    "manifest_alignment": {
+      "pass": true
+    },
+    "country_consistency_us": {
+      "pass": true
+    },
+    "nine_class_framework_frozen": true
+  }
+}

@@ -1,0 +1,204 @@
+{
+  "schema": "traveltrust.cms_us_country_closure.v1",
+  "recorded_at_utc": "2026-07-06T12:55:50.038Z",
+  "phase": "② staging",
+  "layer": "CONTENT_QA",
+  "country": {
+    "country_iso": "US",
+    "country_zh": "美国",
+    "city_count": 4,
+    "poi_total": 33
+  },
+  "jp_lock_guard": {
+    "required": 41,
+    "unchanged": true
+  },
+  "kr_lock_guard": {
+    "required": 31,
+    "unchanged": true
+  },
+  "th_lock_guard": {
+    "required": 28,
+    "unchanged": true
+  },
+  "sg_lock_guard": {
+    "required": 10,
+    "unchanged": true
+  },
+  "fr_lock_guard": {
+    "required": 24,
+    "unchanged": true
+  },
+  "us_lock_guard": {
+    "required": 33,
+    "unchanged": true
+  },
+  "next_country": "BLOCKED",
+  "production_go": "BLOCKED",
+  "workflow": "Execution → Content QA → Country Runtime → Country CLOSED",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "runtime_audit_ssot": "evidence/GO_cms_operation/CMS-US-COUNTRY-RUNTIME-AUDIT-LATEST.json",
+  "usa_content_qa_ssot": "evidence/GO_cms_operation/CMS-USA-CONTENT-QA-LATEST.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "template_countries": [
+    "JP",
+    "KR",
+    "TH",
+    "SG",
+    "FR"
+  ],
+  "runtime_tier": "national_runtime",
+  "consumer_surfaces": [
+    "home_usa",
+    "market",
+    "market_itinerary_us",
+    "market_provider",
+    "market_acquisition",
+    "traveltrust",
+    "community"
+  ],
+  "city_summary": [
+    {
+      "city_zh": "旧金山",
+      "city_en": "San Francisco",
+      "poi_count": 8,
+      "execution": "PASS",
+      "content_qa_closed": true,
+      "runtime_consumer": "FAIL",
+      "geo_matching": "PASS",
+      "content_accuracy": "PASS",
+      "l5_quality": "PASS",
+      "locked": "8/8",
+      "exit_runtime": "8/8",
+      "live_runtime": "8/8",
+      "catalog_runtime": "8/8"
+    },
+    {
+      "city_zh": "拉斯维加斯",
+      "city_en": "Las Vegas",
+      "poi_count": 7,
+      "execution": "PASS",
+      "content_qa_closed": true,
+      "runtime_consumer": "FAIL",
+      "geo_matching": "PASS",
+      "content_accuracy": "PASS",
+      "l5_quality": "PASS",
+      "locked": "7/7",
+      "exit_runtime": "7/7",
+      "live_runtime": "7/7",
+      "catalog_runtime": "7/7"
+    },
+    {
+      "city_zh": "洛杉矶",
+      "city_en": "Los Angeles",
+      "poi_count": 8,
+      "execution": "PASS",
+      "content_qa_closed": true,
+      "runtime_consumer": "FAIL",
+      "geo_matching": "PASS",
+      "content_accuracy": "PASS",
+      "l5_quality": "PASS",
+      "locked": "8/8",
+      "exit_runtime": "8/8",
+      "live_runtime": "8/8",
+      "catalog_runtime": "8/8"
+    },
+    {
+      "city_zh": "纽约",
+      "city_en": "New York",
+      "poi_count": 10,
+      "execution": "PASS",
+      "content_qa_closed": true,
+      "runtime_consumer": "FAIL",
+      "geo_matching": "PASS",
+      "content_accuracy": "PASS",
+      "l5_quality": "PASS",
+      "locked": "10/10",
+      "exit_runtime": "10/10",
+      "live_runtime": "10/10",
+      "catalog_runtime": "10/10"
+    }
+  ],
+  "country_criteria": [
+    {
+      "id": "all_city_execution_closed",
+      "label": "所有 City Execution CLOSED",
+      "key": "all_city_execution_closed",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "content_accuracy_100",
+      "label": "Content Accuracy = 100%",
+      "key": "content_accuracy_100",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "runtime_consumer_cms",
+      "label": "Runtime Consumer = CMS",
+      "key": "runtime_consumer_cms",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "geo_matching_100",
+      "label": "Geo Matching = 100%",
+      "key": "geo_matching_100",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "l5_visual_pass",
+      "label": "L5 Visual = PASS",
+      "key": "l5_visual_pass",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "cross_region_images_0",
+      "label": "Cross-region Images = 0",
+      "key": "cross_region_images_0",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "unsplash_0",
+      "label": "Unsplash = 0（CMS 管辖 POI 范围）",
+      "key": "unsplash_0",
+      "pass": true,
+      "verdict": "PASS"
+    },
+    {
+      "id": "ocs_runtime_0",
+      "label": "OCS Runtime = 0（CMS 管辖 POI 范围）",
+      "key": "ocs_runtime_0",
+      "pass": true,
+      "verdict": "PASS"
+    }
+  ],
+  "country_runtime_consumer": {
+    "verdict": "PASS",
+    "reason": "USA Country Runtime audit PASS · 四城 Consumer + Catalog + Ambient",
+    "tier": "national_runtime",
+    "ssot": "evidence/GO_cms_operation/CMS-US-COUNTRY-RUNTIME-AUDIT-LATEST.json",
+    "poi_runtime": "33/33"
+  },
+  "checks": {
+    "four_city_execution_closed": true,
+    "four_city_content_qa_closed": true,
+    "four_city_exit_checks": true,
+    "us_lock_registry_unchanged": true,
+    "fr_lock_registry_unchanged": true,
+    "sg_lock_registry_unchanged": true,
+    "th_lock_registry_unchanged": true,
+    "kr_lock_registry_unchanged": true,
+    "jp_lock_registry_unchanged": true,
+    "us_country_runtime_pass": true,
+    "content_accuracy_100": true,
+    "cross_region_0": true
+  },
+  "TT_CMS_US_COUNTRY": "CLOSED",
+  "TT_CMS_US_CONTENT_QA": "CLOSED",
+  "verdict": "US_COUNTRY_CLOSED"
+}

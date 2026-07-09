@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T150500Z",
+  "filename": "ocs-sydney-coast-acquisition-cover.jpg",
+  "row": 45,
+  "chain_id": "sydney-coast",
+  "country_code": "AU",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "no_quality_regression_acknowledged": true,
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "brand_logos",
+      "celebrity_portraits",
+      "recognizable_trademarks",
+      "opera_house_panorama"
+    ],
+    "safe_expression": "手工冲浪板装饰 craft 静物 · 木纹理+海浪纹样 · 非地标全景"
+  },
+  "checks": {
+    "manifest_full_field_alignment": {
+      "pass": true,
+      "notes": "澳洲手工冲浪板 · 收购 · 小型装饰件 · 材质说明"
+    },
+    "destination_authenticity_9dim_plan": {
+      "pass": true,
+      "notes": "澳式海岸 craft · 冲浪文化周边 · 工作室静物"
+    },
+    "country_consistency_au_only": { "pass": true },
+    "acquisition_product_identity_plan": {
+      "pass": true,
+      "vs_tokyo": "冲浪板 craft vs 相机镜头",
+      "vs_kyoto": "木艺冲浪 vs 和纸",
+      "vs_seoul": "海岸 craft vs 韩零食",
+      "vs_bangkok": "冲浪板 vs 泰丝",
+      "vs_singapore": "手工木艺 vs 设计礼盒",
+      "vs_paris": "冲浪 craft vs 艺术海报",
+      "vs_nyc": "冲浪板 vs 黑胶",
+      "vs_row43_44": "产品静物 vs 向导/皮划艇"
+    },
+    "surface_boundary_plan": { "pass": true, "notes": "Acquisition 产品 · 非 Guide/Provider/Official/Community" },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row43": "craft 静物 vs 向导肖像",
+      "vs_row44": "木艺产品 vs 海港皮划艇"
+    },
+    "nine_class_framework_frozen": true
+  }
+}

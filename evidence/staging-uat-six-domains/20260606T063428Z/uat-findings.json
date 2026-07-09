@@ -1,0 +1,243 @@
+{
+  "base_url": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "recorded_at": "2026-06-06T06:37:33.220Z",
+  "boundary": "staging UAT · bugfix only · not Production GO",
+  "auth": {
+    "email": "tourist@test.com",
+    "bearer_preflight": true,
+    "note": "Auth-gated routes probed with Bearer (tourist + promote_admin); public routes unauthenticated; 401/403 on public = P1 not P0"
+  },
+  "findings": [
+    {
+      "domain": "首页",
+      "route": "/",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/traveltrust",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/did-rank",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "首页",
+      "route": "/trust",
+      "status": "WARN",
+      "auth_mode": "public",
+      "notes": [
+        "console.error×1: useDidRankData fetchRankData: TypeError: Failed to fetch\n    at ts (https://tt-web-staging.fly.dev/_next/static/chunks/19250-40277f9245a3dbc6.js:1:93121)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/did-rank/page-dde5e065ec"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/auth/login",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/auth/register",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me",
+      "status": "WARN",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "main shell not matched: /Profile|资料|Community|社区/i"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me/settings",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "身份",
+      "route": "/me/identities",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "市场",
+      "route": "/market",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "市场",
+      "route": "/market/acquisition",
+      "status": "WARN",
+      "auth_mode": "public",
+      "notes": [
+        "console.error×1: useMarketPage getGuides: TypeError: Failed to fetch\n    at s (https://tt-web-staging.fly.dev/_next/static/chunks/19250-40277f9245a3dbc6.js:1:79626)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/93130-2cd9e640970b32bc.js:1:70552\n"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/explore",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/messages",
+      "status": "PASS",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "社区",
+      "route": "/community/me",
+      "status": "WARN",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "main shell not matched: /Profile|资料|Me/i"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "shell reachable"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance/proposals",
+      "status": "WARN",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "console.error×1: Failed to load resource: the server responded with a status of 401 ()"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/governance/delegate",
+      "status": "WARN",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "console.error×1: GovernanceProposalsPage fetch: TypeError: Failed to fetch\n    at h (https://tt-web-staging.fly.dev/_next/static/chunks/95536-e7ffb197fba78aeb.js:1:11037)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/governance/proposals/pag"
+      ]
+    },
+    {
+      "domain": "治理",
+      "route": "/staking",
+      "status": "WARN",
+      "auth_mode": "bearer_tourist",
+      "notes": [
+        "console.error×1: GovernanceDelegatePage getGovernanceDelegate: TypeError: Failed to fetch\n    at H (https://tt-web-staging.fly.dev/_next/static/chunks/19250-40277f9245a3dbc6.js:1:90549)\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/governanc"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin",
+      "status": "FAIL",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "navigation/assert: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-tt-admin-capability-strip=\"1\"]')\nExpected: \u001b[32m\"1"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/orders",
+      "status": "WARN",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "console.error×3: [AdminHomeSystemOverview.observability] TypeError: Failed to fetch\n    at h (https://tt-web-staging.fly.dev/_next/static/chunks/95536-e7ffb197fba78aeb.js:1:11037)\n    at l (https://tt-web-staging.fly.dev/_next/static/chunks/62741-f235888c2d | Failed to load resource: the server responded with a status of 401 () | [AdminOrdersPage] Error: login_required\n    at https://tt-web-staging.fly.dev/_next/static/chunks/app/admin/orders/page-4b0ae536839745ef.js:1:3798"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/users",
+      "status": "WARN",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "console.error×2: [AdminHomeKpi.disputes] TypeError: Failed to fetch\n    at h (https://tt-web-staging.fly.dev/_next/static/chunks/95536-e7ffb197fba78aeb.js:1:11037)\n    at l (https://tt-web-staging.fly.dev/_next/static/chunks/62741-f235888c2d79df54.js:1:260) | [AdminHomeInbox.steward] TypeError: Failed to fetch\n    at h (https://tt-web-staging.fly.dev/_next/static/chunks/95536-e7ffb197fba78aeb.js:1:11037)\n    at l (https://tt-web-staging.fly.dev/_next/static/chunks/62741-f235888c2d79df54.js:1:260"
+      ]
+    },
+    {
+      "domain": "管理员",
+      "route": "/admin/finance",
+      "status": "WARN",
+      "auth_mode": "bearer_admin",
+      "notes": [
+        "console.error×3: [AdminHomeKpi.orders] TypeError: Failed to fetch\n    at h (https://tt-web-staging.fly.dev/_next/static/chunks/95536-e7ffb197fba78aeb.js:1:11037)\n    at l (https://tt-web-staging.fly.dev/_next/static/chunks/62741-f235888c2d79df54.js:1:260)\n  | [AdminHomeInbox.provider] TypeError: Failed to fetch\n    at h (https://tt-web-staging.fly.dev/_next/static/chunks/95536-e7ffb197fba78aeb.js:1:11037)\n    at l (https://tt-web-staging.fly.dev/_next/static/chunks/62741-f235888c2d79df54.js:1:26 | [AdminUsersPage] TypeError: Failed to fetch\n    at h (https://tt-web-staging.fly.dev/_next/static/chunks/95536-e7ffb197fba78aeb.js:1:11037)\n    at l (https://tt-web-staging.fly.dev/_next/static/chunks/62741-f235888c2d79df54.js:1:260)\n    at"
+      ]
+    },
+    {
+      "domain": "跨域",
+      "route": "GET /meta (same-origin via Next)",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "chain_id=11155111"
+      ]
+    },
+    {
+      "domain": "跨域",
+      "route": "OPTIONS /api/v1/governance/proposals (CORS)",
+      "status": "PASS",
+      "auth_mode": "public",
+      "notes": [
+        "preflight ok"
+      ]
+    }
+  ],
+  "summary": {
+    "pass": 14,
+    "warn": 10,
+    "fail": 1
+  }
+}

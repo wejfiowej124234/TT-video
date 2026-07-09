@@ -7,7 +7,8 @@ import "../src/CountryPoolLedgerV0.sol";
 import "../src/CountryPoolRedemptionEpochV0.sol";
 import "../src/CountryPoolNetProfitLedger.sol";
 import "../src/StewardPathVault.sol";
-import "../src/UnallocatedStewardPathVault.sol";
+import "../src/vacancy/UnallocatedStewardPathVault.sol";
+import "./vacancy/VacancyTestParams.sol";
 import "../src/MockERC20.sol";
 
 /// D-4555-B · Gate-2.2 regression · T-REG-* (arch §10.6 · orthogonal to FeeRouter / P5 / Redemption).
@@ -22,7 +23,13 @@ contract CountryPoolNetProfitRegressionTest is Test {
         address predictedLedger = vm.computeCreateAddress(address(this), n + 2);
         stewardVault = new StewardPathVault(owner, J_DE, address(token), predictedLedger);
         UnallocatedStewardPathVault unallocVault = new UnallocatedStewardPathVault(
-            owner, J_DE, address(token), predictedLedger, address(stewardVault)
+            owner,
+            J_DE,
+            address(token),
+            predictedLedger,
+            address(stewardVault),
+            treasury,
+            VacancyTestParams.ssotV1Defaults()
         );
         ledger = new CountryPoolNetProfitLedger(
             owner,

@@ -69,19 +69,20 @@ export const TT_PULSE_UPDATES_PANEL_L5 = {
   detailOverlayClass: "fixed inset-0 z-[420] flex items-end justify-center sm:items-center sm:p-5",
   backdropClass:
     "absolute inset-0 bg-[#0a0908]/78 backdrop-blur-md motion-reduce:backdrop-blur-none",
-  /** 移动底 sheet · sm+ 居中 modal */
+  /** 移动底 sheet · sm+ 居中 modal（max 608px） */
   detailPanelClass:
-    "relative z-10 flex max-h-[min(88vh,34rem)] w-full max-w-[min(100vw,32rem)] flex-col overflow-hidden rounded-t-2xl border border-ref-sun/20 bg-[#0c0a09] text-slate-100 shadow-[0_-20px_64px_rgba(0,0,0,0.65),0_0_48px_-16px_rgba(252,164,124,0.22)] ring-1 ring-inset ring-ref-sun/12 [color-scheme:dark] [background-image:linear-gradient(180deg,rgba(252,164,124,0.08)_0%,transparent_32%)] sm:max-h-[min(82vh,34rem)] sm:rounded-2xl sm:shadow-[0_28px_72px_rgba(0,0,0,0.68),0_0_56px_-12px_rgba(252,164,124,0.28)]",
+    "relative z-10 flex max-h-[min(92dvh,44rem)] w-full max-w-[min(100vw,38rem)] flex-col overflow-hidden rounded-t-2xl border border-ref-sun/20 bg-[#0c0a09] text-slate-100 shadow-[0_-20px_64px_rgba(0,0,0,0.65),0_0_48px_-16px_rgba(252,164,124,0.22)] ring-1 ring-inset ring-ref-sun/12 [color-scheme:dark] [background-image:linear-gradient(180deg,rgba(252,164,124,0.08)_0%,transparent_32%)] sm:rounded-2xl sm:shadow-[0_28px_72px_rgba(0,0,0,0.68),0_0_56px_-12px_rgba(252,164,124,0.28)]",
   detailPanelTopGlowClass:
     "pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ref-sun/45 to-transparent",
   sheetHandleClass:
     "mx-auto mt-2 mb-0 h-1 w-10 shrink-0 rounded-full bg-ref-sun/25 sm:hidden",
-  headerClass: "flex shrink-0 items-start justify-between gap-3 border-b border-ref-sun/10 px-4 py-4 sm:px-5",
+  headerClass: "flex shrink-0 items-start justify-between gap-3 border-b border-ref-sun/10 px-4 py-3 sm:px-5",
   titleClass: "font-mono text-[11px] uppercase tracking-[0.14em] text-ref-sun/90",
   descClass: "mt-1 text-meta text-slate-300/88",
   closeBtnClass:
     "inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-lg border border-ref-sun/18 bg-white/[0.04] text-lg leading-none text-slate-200 transition hover:border-ref-sun/32 hover:bg-ref-sun/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09]",
-  detailTitleClass: "mt-2 text-lg font-semibold leading-snug tracking-tight text-slate-50",
+  detailTitleClass: "mt-1.5 text-[18px] font-semibold leading-snug tracking-tight text-slate-50",
+  detailContentClass: "shrink-0 space-y-4 px-4 py-4 sm:px-5",
   listClass: "min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-5 [scrollbar-gutter:stable]",
   rowClass:
     "rounded-2xl border border-ref-sun/12 bg-gradient-to-b from-ref-sun/[0.06] to-transparent px-4 py-3.5 motion-sub transition duration-300 hover:-translate-y-0.5 hover:border-ref-sun/24 hover:shadow-[0_8px_28px_-12px_rgba(252,164,124,0.35)] motion-reduce:transition-none motion-reduce:hover:translate-y-0",
@@ -97,9 +98,79 @@ export const TT_PULSE_UPDATES_PANEL_L5 = {
   detailShimmerClass:
     "pointer-events-none absolute inset-0 bg-[linear-gradient(105deg,transparent_44%,rgba(255,255,255,0.05)_50%,transparent_56%)]",
   detailFooterClass:
-    "flex shrink-0 justify-end border-t border-ref-sun/10 px-4 py-3 sm:px-5",
+    "flex shrink-0 items-center justify-end gap-3 border-t border-ref-sun/10 px-4 py-3 sm:px-5",
   detailPrimaryCtaClass:
     "inline-flex min-h-[44px] items-center rounded-full border border-ref-sun/40 bg-ref-sun px-5 text-small font-semibold text-[#0c0a09] shadow-[0_0_24px_-6px_rgba(252,164,124,0.6)] transition duration-200 hover:border-ref-sun hover:bg-[#fcb87a] hover:shadow-[0_0_28px_-4px_rgba(252,164,124,0.7)] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09] motion-sub motion-reduce:transition-none motion-reduce:active:scale-100",
+  detailSecondaryCtaClass:
+    "inline-flex min-h-[44px] items-center rounded-full border border-ref-sun/18 bg-white/[0.04] px-4 text-small font-medium text-slate-200 transition hover:border-ref-sun/32 hover:bg-ref-sun/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09]",
+  detailMetaBlockClass: "space-y-2",
+  detailMetaRowClass: "flex flex-col gap-0.5",
+  detailMetaLabelClass: "shrink-0 font-mono text-[10px] uppercase tracking-[0.12em] text-ref-sun/70",
+  detailMetaValueClass: "text-meta leading-snug text-slate-200/90",
+} as const;
+
+/** 公告详情弹层 · 少量专用 class（其余复用 Pulse / Roadmap / FAQ token） */
+export const TT_ANNOUNCEMENT_DETAIL_V2_L5 = {
+  highlightInnerClass:
+    "whitespace-pre-line rounded-[0.9rem] border border-ref-sun/14 bg-ink-950/55 px-3.5 py-2.5 text-small font-medium leading-snug text-slate-100/95",
+  benefitListClass: "space-y-1.5",
+  benefitItemClass: "flex gap-2 text-meta leading-snug text-slate-300/95",
+  benefitMarkClass: "shrink-0 font-medium text-ref-sun/85",
+  sectionLabelClass: "font-mono text-[10px] uppercase tracking-[0.14em] text-ref-sun/60",
+  stepsDesktopClass: "hidden sm:grid sm:grid-cols-3 sm:gap-3",
+  stepsMobileClass: "space-y-2.5 sm:hidden",
+  stepTimelineRowClass: "flex gap-2.5",
+  stepIndexClass:
+    "inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ref-sun/15 font-mono text-kicker font-semibold tabular-nums text-ref-sun/90",
+  stepTitleClass: "text-meta font-semibold text-slate-50",
+  stepBodyClass: "whitespace-pre-line text-meta leading-snug text-slate-400/95",
+  stepColClass: "min-w-0",
+  relatedListClass: "mt-2 flex flex-wrap gap-2",
+  relatedLinkClass: TT_PULSE_UPDATES_PANEL_L5.detailSecondaryCtaClass,
+  techDetailsClass:
+    "group rounded-xl border border-ref-sun/12 bg-ink-950/40 px-3 py-2 open:border-ref-sun/22",
+  techSummaryClass:
+    "flex cursor-pointer list-none items-center justify-between gap-2 text-meta font-medium text-ref-sun/85 marker:content-none [&::-webkit-details-marker]:hidden",
+  techChevronClass:
+    "shrink-0 text-ref-sun/50 transition-transform duration-200 group-open:rotate-90 motion-reduce:transition-none",
+  metaRowClass: "flex flex-col gap-0.5",
+  statusBadgeClass:
+    "inline-flex w-fit items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em]",
+  statusBadgePreviewClass: "border-amber-400/35 bg-amber-500/10 text-amber-200/95",
+  statusBadgeLiveClass: "border-emerald-400/35 bg-emerald-500/10 text-emerald-200/95",
+} as const;
+
+/** 2026 路线图时间轴 */
+export const TT_ROADMAP_L5 = {
+  sectionClass: "mt-10 sm:mt-12 scroll-mt-28",
+  headerClass: "mb-5 sm:mb-6",
+  titleClass: "text-xl font-semibold tracking-tight text-slate-50 sm:text-2xl",
+  subtitleClass: "mt-2 text-small leading-relaxed text-slate-300/88",
+  disclaimerClass: "mt-2 text-meta text-slate-400/90",
+  plateClass: `${TT_FAQ_ACCORDION_L5.warmPlateClass} p-0.5`,
+  listClass: "divide-y divide-ref-sun/10",
+  itemClass: "relative px-5 py-4 sm:px-6 sm:py-5",
+  itemUpcomingClass: "bg-transparent",
+  itemLiveClass: "bg-ref-sun/[0.06]",
+  itemCompleteClass: "opacity-80",
+  rowClass: "flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-5",
+  dateClass:
+    "shrink-0 font-mono text-[11px] tabular-nums uppercase tracking-wide text-ref-sun/85 sm:w-28 sm:pt-0.5",
+  bodyClass: "min-w-0 flex-1",
+  kindClass: "font-mono text-[10px] font-medium uppercase tracking-[0.14em]",
+  headlineClass: "mt-1.5 text-small font-semibold leading-snug text-slate-50 sm:text-[15px]",
+  benefitClass: "mt-2 text-meta leading-relaxed text-slate-300/88",
+  statusBadgeClass:
+    "mt-2 inline-flex w-fit rounded-full border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide",
+  statusUpcomingClass: "border-ref-sun/25 text-ref-sun/80",
+  statusLiveClass: "border-emerald-400/35 bg-emerald-400/10 text-emerald-200",
+  statusCompleteClass: "border-slate-500/30 text-slate-400",
+  statusInProgressClass: "border-sky-400/35 bg-sky-400/10 text-sky-200",
+  tierLiveClass: "border-emerald-400/30 bg-emerald-400/8 text-emerald-200/95",
+  tierUpcomingClass: "border-ref-sun/28 bg-ref-sun/8 text-ref-sun/90",
+  tierRoadmapClass: "border-slate-400/28 bg-slate-400/8 text-slate-300",
+  ctaClass:
+    "mt-3 inline-flex min-h-[40px] items-center text-meta font-semibold text-ref-sun/90 underline-offset-[3px] transition hover:text-ref-sun hover:underline",
 } as const;
 
 export const TT_ANNOUNCEMENTS_MOTION_L5 = {
@@ -124,6 +195,12 @@ export const TT_ANNOUNCEMENTS_LIST_L5 = {
   rowHighlightClass: TT_FAQ_ACCORDION_L5.itemOpen,
   rowHover: TT_FAQ_ACCORDION_L5.itemHover,
   rowTap: TT_FAQ_ACCORDION_L5.triggerTap,
+  tagRowClass: "flex flex-wrap items-center gap-2",
+  phaseChipClass:
+    "inline-flex shrink-0 min-h-[1.375rem] items-center justify-center rounded-md border border-ref-sun/20 bg-ref-sun/8 px-2 font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-ref-sun/90",
+  rowTitleClass: "mt-2 text-small font-semibold leading-snug text-slate-50",
+  dateChipClass:
+    "inline-flex items-center rounded-full border border-ref-sun/14 bg-ink-950/55 px-2.5 py-0.5 font-mono text-[10px] tabular-nums text-slate-300/88",
 } as const;
 
 /** `/traveltrust/announcements` 页内氛围（layout 为 unified 纯色时补长页底光 + 点阵） */

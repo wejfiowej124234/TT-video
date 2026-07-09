@@ -1,0 +1,5 @@
+api=https://tt-api-staging.fly.dev
+web=https://tt-web-staging.fly.dev
+dry_run=0
+rc_signoff=evidence/manual-uat/signoff/RELEASE-CANDIDATE-SIGNOFF-20260702T144513Z.md
+ocs_state=/d/TravelTrust-V1.1/evidence/GO_staging_rc_ssot_alignment/20260704T091605Z/ocs-asset-baseline/state.json

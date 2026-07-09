@@ -5,7 +5,8 @@ import "forge-std/Script.sol";
 import "./Phase2ControlPlane.sol";
 import "../src/CountryPoolNetProfitLedger.sol";
 import "../src/StewardPathVault.sol";
-import "../src/UnallocatedStewardPathVault.sol";
+import "../src/vacancy/UnallocatedStewardPathVault.sol";
+import "../src/vacancy/VacancyTypes.sol";
 import "../src/MockERC20.sol";
 
 /**
@@ -62,7 +63,19 @@ contract DeployCountryPoolNetProfitStack is Phase2ControlPlane {
         StewardPathVault stewardVault =
             new StewardPathVault(stackOwner, jurisdiction, tokenAddr, predictedLedger);
         UnallocatedStewardPathVault unallocVault = new UnallocatedStewardPathVault(
-            stackOwner, jurisdiction, tokenAddr, predictedLedger, address(stewardVault)
+            stackOwner,
+            jurisdiction,
+            tokenAddr,
+            predictedLedger,
+            address(stewardVault),
+            treasury,
+            VacancyTypes.VacancyParams({
+                vacancySweepRateBps: 2500,
+                vacancySweepCapBps: 7500,
+                jurisdictionReserveBps: 2500,
+                vacancyGraceDays: 180,
+                vacancySweepAutoReenable: false
+            })
         );
         CountryPoolNetProfitLedger ledger = new CountryPoolNetProfitLedger(
             stackOwner,

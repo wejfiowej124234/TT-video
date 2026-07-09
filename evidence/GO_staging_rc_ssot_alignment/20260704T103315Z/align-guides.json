@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.ocs_staging_guides_catalog_align.v1",
+  "recorded_at": "2026-07-04T10:33:41.602Z",
+  "ocs_guide_count": 10,
+  "published_before": 10,
+  "unpublish_candidates": [],
+  "unpublish": [],
+  "errors": [],
+  "dry_run": false,
+  "publish": [],
+  "surface_fix": [],
+  "public_after": {
+    "count": 10,
+    "ocs_only": true,
+    "cities": [
+      "迪拜",
+      "巴塞罗那",
+      "悉尼",
+      "纽约",
+      "巴黎",
+      "新加坡",
+      "曼谷",
+      "首尔",
+      "京都",
+      "东京"
+    ],
+    "extras_before_fix": []
+  },
+  "duplicate_cities_after": []
+}

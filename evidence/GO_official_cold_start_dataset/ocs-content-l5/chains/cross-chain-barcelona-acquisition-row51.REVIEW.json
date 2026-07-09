@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T152130Z",
+  "trigger_row": 51,
+  "trigger_filename": "ocs-barcelona-arch-acquisition-cover.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "acquisition_comparison": {
+    "tokyo-photo": "相机镜头",
+    "kyoto-culture": "和纸",
+    "seoul-food": "韩零食",
+    "bangkok-temple": "泰丝",
+    "singapore-family": "设计礼盒",
+    "paris-art": "艺术海报",
+    "nyc-skyline": "黑胶",
+    "sydney-coast": "冲浪板 craft",
+    "barcelona-arch": "马赛克瓷砖 craft",
+    "distinct": true
+  },
+  "no_quality_regression_prior_50": true
+}

@@ -122,10 +122,7 @@ pub async fn guides_list_impl(
         .values()
         .filter(|g| g.status == "active")
         .filter(|g| !super::market_public_surface::is_placeholder_global_guide(g))
-        .filter(|g| {
-            !super::public_catalog_surface_filter_enabled()
-                || !super::should_hide_guide_from_public_catalog(g, &store)
-        })
+        .filter(|g| !super::market_public_surface::should_exclude_guide_from_public_list(g, &store))
         .filter(|g| {
             country_trim.map_or(true, |cc| g.country_code.eq_ignore_ascii_case(cc))
                 && city.as_ref().map_or(true, |c| {
@@ -574,6 +571,7 @@ pub async fn guide_create_impl(
         data_origin,
         created_at: now,
         updated_at: now,
+        ..Default::default()
     };
     store.guides.insert(id, guide.clone());
     store.guides_by_user.insert(user_id, id);

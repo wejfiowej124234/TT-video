@@ -1,0 +1,82 @@
+# Web3 Freeze · Machine SSOT
+#
+# Mandatory stage between Phase ② Exit Review PASS and Mainnet Deployment Package.
+# Prevents post-review drift of Registry / ABI / Contracts / Runbooks.
+#
+#   node scripts/dev/run-web3-freeze.cjs
+#   bash scripts/gates/check-web3-freeze-gate.sh
+#
+# Human runbook: docs/runbook/WEB3-FREEZE-V1.md
+
+schema: traveltrust.web3_freeze.v1
+version: 1
+effective_utc: "2026-07-08"
+machine_key: TT_WEB3_FREEZE
+
+prerequisite:
+  phase2_exit_review_verdict: PHASE2_EXIT_REVIEW_PASS
+  exit_review_gate: scripts/gates/check-phase2-exit-review-gate.sh
+
+purpose: >
+  After Exit Review PASS, freeze all Web3 deploy-relevant assets before generating
+  Mainnet Deployment Package. Any change to frozen assets invalidates the package
+  and requires re-freeze + re-package.
+
+freeze_scope:
+  contracts:
+    glob: contracts/src/**/*.sol
+    note: Source tree hash + per-file sha256 in manifest
+  registry:
+    files:
+      - registry/protocol-convergence-deployments.v1.yaml
+      - registry/web3-three-phase-closure-discipline.v1.yaml
+      - registry/web3-system-master-map.v1.yaml
+      - registry/escrow-bilateral-mainnet-policy.v1.yaml
+      - registry/sepolia-full-web3-lifecycle-validation.v1.yaml
+      - registry/mainnet-deployment-package.v1.yaml
+      - registry/web3-freeze.v1.yaml
+  abi:
+    glob: contracts/abi/*.json
+  runbooks:
+    files:
+      - docs/runbook/WEB3-THREE-PHASE-CLOSURE-DISCIPLINE-V1.md
+      - docs/runbook/SEPOLIA-FULL-WEB3-LIFECYCLE-VALIDATION-V1.md
+      - docs/runbook/PHASE2-EXIT-REVIEW-V1.md
+      - docs/runbook/WEB3-FREEZE-V1.md
+      - docs/runbook/MAINNET-DEPLOYMENT-PACKAGE-V1.md
+      - docs/runbook/MAINNET-VALIDATION-V1.md
+      - docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md
+      - docs/runbook/ESCROW-BILATERAL-SETTLEMENT-OWNER-DECISION-RECORD-V1.md
+  evidence:
+    refs:
+      - evidence/GO_production_readiness/sepolia-full-web3-lifecycle/
+      - evidence/GO_production_readiness/phase2-exit-review/
+      - evidence/GO_production_readiness/web3-system-audit/
+      - evidence/GO_production_readiness/web3-protocol-grade-audit/
+      - evidence/GO_ttg_cert/
+  master_map:
+    - registry/web3-system-master-map.v1.yaml
+    - docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md
+  protocol_ssot:
+    files:
+      - docs/spec/governance-token/protocol-ssot.v1.yaml
+      - docs/spec/governance-token/protocol-ssot.v1.md
+      - docs/spec/governance-token/fund-flow-ssot.v1.md
+  deployment_scripts:
+    files:
+      - contracts/script/DeployEscrowFactoryV2.s.sol
+      - contracts/script/DeployFundStackUnderTimelock.s.sol
+      - contracts/script/DeployGovernanceStack.s.sol
+      - contracts/script/DeployRegionStewardStakePool.s.sol
+      - contracts/script/DeployCountryPoolRedemptionEpochV0.s.sol
+      - scripts/dev/phase3-mainnet-broadcast-escrow-factory-v2.sh
+
+verdict_pass: WEB3_FREEZE_PASS
+verdict_stale: WEB3_FREEZE_STALE
+
+orchestrator: scripts/dev/run-web3-freeze.cjs
+gate: scripts/gates/check-web3-freeze-gate.sh
+evidence_root: evidence/GO_production_readiness/web3-freeze
+next_stage: mainnet_deployment_package
+
+invalidates_package_on_change: true

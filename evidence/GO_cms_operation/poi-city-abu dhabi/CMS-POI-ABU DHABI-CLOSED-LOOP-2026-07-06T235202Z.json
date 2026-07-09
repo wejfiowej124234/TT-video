@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T23:52:02Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AE",
+    "city_zh": "阿布扎比",
+    "city_en": "Abu Dhabi",
+    "matrix_ids": [
+      "PH-AE-218-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AE-218-ATR",
+      "legacy_value": "法拉利世界",
+      "poi_id": "029d3ead-b742-4bd4-aa67-d9c3b3560441",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-218-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust.per_wave_c_escrow_evidence.v1",
+  "per_item": "PER-R1-VP-06",
+  "phase": "① local",
+  "timestamp_utc": "20260709T152002Z",
+  "api_base": "http://127.0.0.1:8080",
+  "web_base": "http://127.0.0.1:3012",
+  "order_id": "cf0944e4-aa85-40ef-993b-f94581ef9233",
+  "guide_id": "93df88ff-67c5-42b1-b895-1dbcab2beca7",
+  "buyer_perspective": {
+    "email": "tourist@test.com",
+    "steps": [
+      "POST /orders",
+      "POST /orders/:id/mock-pay",
+      "POST /orders/:id/confirm-completion (buyer release)",
+      "GET /orders/:id",
+      "POST /orders/:id/reviews"
+    ],
+    "terminal_status": "completed"
+  },
+  "provider_perspective": {
+    "email": "guide@test.com",
+    "steps": [
+      "POST /orders/:id/accept",
+      "POST /orders/:id/confirm-completion (guide)",
+      "POST /orders/:id/confirm-completion (provider fulfill)"
+    ],
+    "terminal_status": "completed"
+  },
+  "escrow_ui_url": "http://127.0.0.1:3012/escrow/cf0944e4-aa85-40ef-993b-f94581ef9233",
+  "mock_pay": {
+    "local_api": "enabled_under_P3_CHAIN_OFF",
+    "production_ui": "gated_by_travelTrustUiGuards"
+  },
+  "state_transitions": [
+    "created",
+    "accepted",
+    "escrowed",
+    "service_completion_pending",
+    "completed"
+  ],
+  "pass": true,
+  "note": "① mock-pay sandbox evidence; not ② staging nor ③ production PSP GO"
+}

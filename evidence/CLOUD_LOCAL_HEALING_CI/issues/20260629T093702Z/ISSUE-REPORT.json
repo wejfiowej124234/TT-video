@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.cloud_layer_issue_report.v1",
+  "detected_at_utc": "2026-06-29T09:37:17.309Z",
+  "stamp": "20260629T093702Z",
+  "phase": "②",
+  "executor": "cloud_soak_watcher",
+  "expect_git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "live_git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "health_code": "200",
+  "issues": [],
+  "next_layer": "AI Fix Engine — FIX-PROPOSAL.json",
+  "policy": "detect_only_no_staging_deploy"
+}

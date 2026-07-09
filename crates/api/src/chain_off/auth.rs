@@ -984,6 +984,7 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
             data_origin: "test".into(),
             created_at: now,
             updated_at: now,
+            ..Default::default()
         };
         if let Some(ref pool) = state.db_pool {
             if strict_seed {
@@ -1344,6 +1345,7 @@ fn ensure_multi_identity_demo_chain_off_slots(
                 data_origin: "test".into(),
                 created_at: now,
                 updated_at: now,
+                ..Default::default()
             },
         );
         store.guides_by_user.insert(user_id, guide_id);

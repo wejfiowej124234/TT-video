@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust_b417_owner_sign_off.v1",
+  "signed": false,
+  "owner_role": "FinOps / Governance Owner",
+  "run_dir": "evidence/b417_governance_execution_runs/run_<UTC>/",
+  "signed_at_utc": null,
+  "notes": "Set signed=true after reviewing report and sidecar tx hashes on Sepolia explorer."
+}

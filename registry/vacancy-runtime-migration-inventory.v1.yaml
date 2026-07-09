@@ -1,0 +1,164 @@
+# Vacancy Q-F01 · Runtime migration inventory (W6.5-B)
+# Human: docs/spec/governance-token/VACANCY-QF01-HISTORICAL-BALANCE-AUDIT-v1.md
+# Gate: bash scripts/gates/check-vacancy-legacy-balance-audit-gate.sh
+
+schema: traveltrust.vacancy_runtime_migration_inventory.v1
+version: "1.0.0"
+audit_utc: "2026-07-09T04:30:00Z"
+chain_id: 11155111
+network: sepolia
+jurisdiction: DE
+rpc_used: https://ethereum-sepolia-rpc.publicnode.com
+audit_method: read_only_cast_call
+
+legacy_runtime:
+  stack: Q-F01_LEGACY_BYTECODE
+  status: LEGACY_READ_ONLY
+  owner_timelock:
+    address: "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
+    label: CP_NET_PROFIT_LEDGER_OWNER_TIMELOCK
+  contracts:
+    country_pool_net_profit_ledger:
+      address: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+      runtime: Q-F01
+      owner: "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
+      version_string: country_pool_net_profit_ledger_v1
+      codehash: "0xaef300132ad0f060001eabf13b11e7dc287739c964905023a564a81af92d8d0f"
+    steward_path_vault:
+      address: "0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb"
+      runtime: Q-F01
+      owner: "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
+    unallocated_steward_path_vault:
+      address: "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0"
+      runtime: Q-F01
+      owner: "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
+      vacancy_ledger_selector: absent_reverts
+  settlement_token:
+    address: "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
+    decimals: 6
+    symbol: MockERC20_USDC_track
+
+target_runtime:
+  stack: Vacancy_V1
+  status: PLANNED_ACTIVE
+  recommended_owner: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+  recommended_owner_label: V2_GovernanceTimelock
+  contracts:
+    country_pool_net_profit_ledger: TBD_W7
+    steward_path_vault: TBD_W7
+    unallocated_steward_path_vault: TBD_W7
+  capability_probes_required:
+    - vacancyLedger
+    - sweepEnabled
+    - vacancyState
+    - stewardActivationEpochId
+
+balance_snapshot:
+  audited_utc: "2026-07-09T04:30:00Z"
+  token_balance:
+    unallocated_vault:
+      raw: "495000"
+      human: "0.495000 USDC"
+      action: migrate_via_timelock
+    steward_path_vault:
+      raw: "0"
+      human: "0 USDC"
+      action: direct_switch
+    ledger_contract:
+      raw: "0"
+      human: "0 USDC"
+      action: accounting_only
+  ledger_accounting:
+    latest_epoch_id: 1
+    epoch_status: SPLIT_COMPLETED
+    epoch_status_code: 4
+    settlement_paused: false
+    carried_loss_raw: "0"
+    net_profit_prime_raw: "1100000"
+    net_profit_prime_human: "1.100000 USDC"
+    split_amounts_raw:
+      steward: "0"
+      unallocated: "495000"
+      global: "605000"
+    split_amounts_human:
+      steward: "0 USDC"
+      unallocated: "0.495000 USDC"
+      global: "0.605000 USDC"
+    global_treasury: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+    global_treasury_note: already points to V2 Timelock (prior cutover)
+    vacancy_state_view: revert_qf01
+    steward_activation_epoch_id_view: revert_qf01
+  vault_counters:
+    unallocated_total_received_raw: "495000"
+    unallocated_total_released_raw: "0"
+    steward_total_received_raw: "0"
+  active_steward:
+    address: "0x0000000000000000000000000000000000000000"
+    suspended: false
+    tenure_satisfied: false
+    has_pending_steward_claim: false
+  pending_release:
+    unallocated: false
+    steward_path: false
+
+event_history:
+  method:
+    - on_chain_epoch_record_alignment
+    - full_eth_getLogs_deferred_w7_deploy_block
+  alignment:
+    net_profit_split_matches_unallocated_balance: true
+    note: >
+      Epoch 1 SPLIT_COMPLETED with unallocatedAmount=495000 matches token balanceOf(unallocated).
+      No OPEN or SPLIT_PENDING epoch. RPC log range limits prevented full historical log scan in W6.5-B.
+  vacancy_indexer_events:
+    status: check_ops_console_or_db_at_w7
+    note: Transparency layer may have zero Vacancy V1 events on Q-F01 runtime (expected)
+
+migration_decision:
+  recommended_case: CASE_B_TOKEN_MIGRATION
+  case_a_eligible: false
+  case_a_blockers:
+    - unallocated_vault_token_balance_non_zero
+  case_b_required:
+    - governance_proposal_or_timelock_ops_transfer_495000_usdc
+    - accounting_reconcile_post_transfer
+  case_b_not_required:
+    - no_open_epoch
+    - no_split_pending
+    - no_steward_path_balance
+    - no_active_steward_claim
+  simplified_w7_path:
+    - deploy_new_v1_triplet_owner_v2_timelock
+    - probe_pass
+    - timelock_transfer_unallocated_usdc_old_to_new
+    - verify_balances
+    - registry_switch
+    - live_reconcile
+
+registry_switch_order:
+  - deploy_new_contracts
+  - probe_new_addresses
+  - initialize_and_wire
+  - token_migration_if_required
+  - registry_jurisdiction_env_update
+  - indexer_switch
+  - live_reconcile_enabled
+
+audit_gate:
+  gate_id: VACANCY_LEGACY_BALANCE_AUDIT_GATE
+  gate_script: scripts/gates/check-vacancy-legacy-balance-audit-gate.sh
+  result: PASS
+  checks:
+    three_contract_balances: CONFIRMED
+    epoch_state: CONFIRMED_SPLIT_COMPLETED
+    claim_state: CONFIRMED_NO_PENDING_CLAIM
+    event_history: PARTIAL_EPOCH_ALIGNMENT_OK
+    migration_path: CONFIRMED_CASE_B_TOKEN_MIGRATION
+  w6_5_signoff_impact: READY
+
+signoff_fill:
+  B3_balance_audit_completed: true
+  B3_migration_path: governance_timelock_transfer_0_495_usdc_then_registry_switch
+  B3_simple_switch_only: false
+  B3_unallocated_usdc: "0.495000"
+  B3_audit_report: docs/spec/governance-token/VACANCY-QF01-HISTORICAL-BALANCE-AUDIT-v1.md

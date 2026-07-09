@@ -1,0 +1,99 @@
+{
+  "schema": "staging_local_full_diff.v1",
+  "stamp_utc": "20260630T100655Z",
+  "local_HEAD": "422aadb9f7685c125b4f9ada83bfbb3396d881a8",
+  "live_probes": {
+    "api_health": 0,
+    "api_meta": 0,
+    "api_meta_build": 200,
+    "web_meta": 0
+  },
+  "staging_git_sha": {
+    "meta_build": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+    "meta": "",
+    "web_meta": ""
+  },
+  "s6_deep_gate": {
+    "expect": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+    "release": "GO",
+    "g01": "PASS",
+    "g02": "PASS"
+  },
+  "freeze_ACTIVE_git_sha": null,
+  "soak_expect_git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "soak_metadata_patched_at": null,
+  "dirty_deploy_path_count": 42,
+  "diff_count": 3,
+  "risk_count": 5,
+  "version_fork": true,
+  "evidence_lag": true,
+  "runtime_availability_diff": true,
+  "findings": [
+    {
+      "domain": "commit/build SHA",
+      "item": "local HEAD vs /meta/build",
+      "local": "422aadb9f7685c125b4f9ada83bfbb3396d881a8",
+      "staging_or_evidence": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "commit SHA",
+      "item": "S6 expect vs current HEAD",
+      "local": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+      "staging_or_evidence": "422aadb9f7685c125b4f9ada83bfbb3396d881a8",
+      "severity": "DIFF",
+      "note": ""
+    },
+    {
+      "domain": "运行时可用性",
+      "item": "GET /health",
+      "local": "200",
+      "staging_or_evidence": "0",
+      "severity": "DIFF",
+      "note": ""
+    }
+  ],
+  "risks": [
+    {
+      "domain": "API schema",
+      "item": "GET /meta full contract",
+      "local": "37 meta_top_keys (S6 G02 PASS)",
+      "staging_or_evidence": "unavailable (HTTP 0)",
+      "severity": "RISK",
+      "note": "runtime availability · not version drift"
+    },
+    {
+      "domain": "证据层 metadata",
+      "item": "soak job expect_git_sha",
+      "local": "422aadb9f7685c125b4f9ada83bfbb3396d881a8",
+      "staging_or_evidence": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+      "severity": "RISK",
+      "note": ""
+    },
+    {
+      "domain": "工作区",
+      "item": "deploy-path 未提交变更",
+      "local": "clean @ 422aadb9f768…",
+      "staging_or_evidence": "42 paths",
+      "severity": "RISK",
+      "note": "staging mirrors committed tree only"
+    },
+    {
+      "domain": "运行时可用性",
+      "item": "GET /meta",
+      "local": "200",
+      "staging_or_evidence": "0",
+      "severity": "RISK",
+      "note": "stability · not version drift"
+    },
+    {
+      "domain": "运行时可用性",
+      "item": "GET web /meta",
+      "local": "200",
+      "staging_or_evidence": "0",
+      "severity": "RISK",
+      "note": ""
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "traveltrust.ocs_content_l5_country_consistency_review.v1",
+  "stamp_utc": "20260704T151500Z",
+  "chain_id": "barcelona-arch",
+  "city": "巴塞罗那",
+  "country_code": "ES",
+  "country_label": "西班牙",
+  "theme_locked": "高迪 · 圣家堂 · 桂尔公园 · 马赛克",
+  "TT_COUNTRY_CONSISTENCY_REVIEW": "PASS",
+  "isolation_rules": {
+    "no_japan_elements": true,
+    "no_korea_elements": true,
+    "no_thailand_elements": true,
+    "no_china_elements": true,
+    "no_us_elements": true,
+    "no_france_paris_elements": true,
+    "no_singapore_elements": true,
+    "no_australia_elements": true,
+    "no_other_country_landmarks": true,
+    "es_gaudi_mediterranean_visual_language": true
+  },
+  "future_slots_require": [
+    "provider: 高迪三件套联票小团",
+    "acquisition: 马赛克瓷砖 craft",
+    "official_guide: 圣家堂立面宽幅",
+    "community: 马赛克细节 + 桂尔公园全景"
+  ],
+  "gate_barcelona_chain_completion": "6/6 must maintain ES-only Gaudi visual language"
+}

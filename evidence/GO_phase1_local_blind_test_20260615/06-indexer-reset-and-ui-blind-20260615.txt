@@ -1,0 +1,43 @@
+# ① indexer 复验 + 真人 UI 盲测（2026-06-15）
+
+## Indexer（BL-③-008 修复后）
+
+| 项 | 修复前 | 修复后 |
+|----|--------|--------|
+| runtime 文件 | Sepolia chain_id 11155111 · last_block 10676552 | 已删除 + 启动链 ID 守卫 |
+| /meta checkpoint | 10676552 | **57**（Anvil tip 69 · FINALITY_N 12） |
+| /meta memory | 10676552 | **57** |
+
+修复项（① only）：
+- crates/api/src/chain/indexer.rs `mount_runtime_indexer_state`
+- scripts/dev/reset-indexer-runtime-local-anvil.sh
+- align-anvil-local-stack.sh 调用 reset
+
+② soak：未动
+
+## 机读烟测（重启后）
+
+- guide/provider stake smoke: PASS
+- multi-identity API smoke: PASS
+
+## 真人 UI 盲测 @3012 + 8080 chain-on（Playwright 辅助 · 无 MetaMask 签名）
+
+### A Guide /staking?scope=guide
+- [x] pool 0x9fE467… 页面可见
+- [x] 连接钱包提示可见
+- [ ] stake/withdraw 手操 — 待 Owner MetaMask（链 31337）
+
+### B Provider /staking?scope=provider
+- [x] pool 0xCf7Ed3… 页面可见
+- [x] 连接钱包提示可见
+- [ ] approve+stake 手操 — 待 Owner MetaMask
+- [ ] 浏览器 tab 标题仍为「向导质押与准入」（scope=provider 未区分）→ BL-UI-011
+
+### C Chain B
+- [x] **SKIP**（8080 chain-on · mock-pay 501 预期 · BL-③-001）
+
+### D 多身份 /me/identities（multi-demo@test.com · localStorage token）
+- [x] 页面 200 · 向导/商家/主理人/收购卡片文案可见
+- [x] 与 API smoke 一致（经营身份已开通）
+- [ ] 收购条「请先绑定并验证主钱包」— 钱包未连时预期门闸 → BL-UI-012
+

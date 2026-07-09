@@ -1,0 +1,98 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-06T01:05:25.319Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "仁川",
+    "city_en": "Incheon",
+    "poi_count": 6
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-INCHEON-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "JP Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "cross_region_remediated": "all_6_execution_plus_geo",
+  "checks": {
+    "assets_locked_6_6": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-KR-058-ATR",
+      "poi": "中华街",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-incheon-port-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-06T00:48:19.195Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-059-ATR",
+      "poi": "月尾岛",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-incheon-port-community-media.jpg",
+      "locked_at_utc": "2026-07-06T00:49:41.522Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-060-ATR",
+      "poi": "松岛新城",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-incheon-port-community-cover.jpg",
+      "locked_at_utc": "2026-07-06T00:53:20.296Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-061-FOOD",
+      "poi": "炸酱面",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-incheon-port-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-06T00:54:42.860Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-062-FOOD",
+      "poi": "海鲜",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-incheon-port-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-06T00:58:21.565Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-063-FOOD",
+      "poi": "辣炒年糕",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-incheon-port-community-media.jpg",
+      "locked_at_utc": "2026-07-06T00:59:43.899Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 6
+  },
+  "TT_CMS_POI_CITY_INCHEON_CONTENT_QA": "CLOSED"
+}

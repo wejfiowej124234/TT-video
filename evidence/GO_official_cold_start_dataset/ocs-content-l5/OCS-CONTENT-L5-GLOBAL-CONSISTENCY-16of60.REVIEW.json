@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_consistency_review.v1",
+  "stamp_utc": "20260704T132430Z",
+  "matrix_rows_reviewed": 16,
+  "TT_GLOBAL_CONSISTENCY_REVIEW": "PASS",
+  "new_row": "ocs-seoul-food-official-guide-cover.jpg",
+  "official_guide_destination_review_first_execution": true,
+  "regression_chains": {
+    "tokyo-photo": { "pass": true },
+    "kyoto-culture": { "pass": true },
+    "seoul-food": { "pass": true, "rows_verified": 4 }
+  },
+  "gate_to_row17": "PASS"
+}

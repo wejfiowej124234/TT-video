@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T15:36:31Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "福冈",
+    "city_en": "Fukuoka",
+    "matrix_ids": [
+      "PH-JP-018-ATR",
+      "PH-JP-019-ATR",
+      "PH-JP-020-ATR",
+      "PH-JP-021-ATR",
+      "PH-JP-022-FOOD",
+      "PH-JP-023-FOOD",
+      "PH-JP-024-FOOD",
+      "PH-JP-025-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-JP-018-ATR",
+      "legacy_value": "博多",
+      "poi_id": "8cb9334c-a4b8-42dc-a690-66a92aa31bd1",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-fukuoka-hakata-official-guide-cover.jpg",
+      "hero_file": "ocs-fukuoka-hakata-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-018-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-019-ATR",
+      "legacy_value": "太宰府",
+      "poi_id": "7a240629-286f-40d5-aef6-58e2cc7e714d",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-fukuoka-dazaifu-community-media.jpg",
+      "hero_file": "ocs-fukuoka-dazaifu-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-019-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-020-ATR",
+      "legacy_value": "能古岛",
+      "poi_id": "e80d3c2e-3bf4-4e2e-b9d3-4d342a17ba25",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-fukuoka-nokonoshima-community-cover.jpg",
+      "hero_file": "ocs-fukuoka-nokonoshima-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-020-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-021-ATR",
+      "legacy_value": "屋台",
+      "poi_id": "309cf969-6b69-4034-842d-4c8123cba890",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-fukuoka-yatai-atr-provider-cover.jpg",
+      "hero_file": "ocs-fukuoka-yatai-atr-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-021-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-022-FOOD",
+      "legacy_value": "豚骨拉面",
+      "poi_id": "1e151e0b-ba71-452b-b74b-c3850bcbe281",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-fukuoka-tonkotsu-ramen-guide-avatar.jpg",
+      "hero_file": "ocs-fukuoka-tonkotsu-ramen-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-022-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-023-FOOD",
+      "legacy_value": "明太子",
+      "poi_id": "5b1f327d-fddf-4047-876d-2860ffe8cab0",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-fukuoka-mentaiko-acquisition-cover.jpg",
+      "hero_file": "ocs-fukuoka-mentaiko-acquisition-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-023-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-024-FOOD",
+      "legacy_value": "水炊锅",
+      "poi_id": "e617e0d7-998e-411f-b180-8f7ebccd7b2d",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-fukuoka-mizutaki-official-guide-cover.jpg",
+      "hero_file": "ocs-fukuoka-mizutaki-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-024-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-JP-025-FOOD",
+      "legacy_value": "屋台",
+      "poi_id": "a18c5b61-61f8-42b7-a9bc-2680ef79c504",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-fukuoka-yatai-food-community-media.jpg",
+      "hero_file": "ocs-fukuoka-yatai-food-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-025-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

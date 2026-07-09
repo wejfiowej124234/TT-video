@@ -1,0 +1,18 @@
+{
+  "audit_id": "TT_GOVERNANCE_ENTERPRISE_HAT",
+  "stamp_utc": "20260616T072107Z",
+  "verdict": "PREP_READY",
+  "human_signoff_required": true,
+  "checklist": "D:\\TravelTrust-V1.1\\evidence\\GO_tt_governance_enterprise_hat\\20260616T072107Z\\ENTERPRISE-HAT-CHECKLIST.md",
+  "machine_advisory": {
+    "ui_alignment": "PASS_MACHINE",
+    "onchain_verify": "PASS",
+    "note": "Advisory only \u2014 does not substitute L1-L9 human PASS"
+  },
+  "next": [
+    "Complete ENTERPRISE-HAT-CHECKLIST.md L1-L9",
+    "bash scripts/dev/record-tt-governance-enterprise-hat-signoff.sh --all-pass",
+    "export TT_GOVERNANCE_ENTERPRISE_HAT_OK=1",
+    "bash scripts/dev/run-hat-r1-phase-b-when-ready.sh"
+  ]
+}

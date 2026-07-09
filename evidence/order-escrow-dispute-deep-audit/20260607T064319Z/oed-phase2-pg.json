@@ -1,0 +1,74 @@
+{
+  "artifact": "oed-phase2-pg-consistency",
+  "generated_at": "2026-06-07T06:43:29.495178+00:00",
+  "database_configured": true,
+  "pg_consistency_matrix": [
+    {
+      "probe_id": "pg.happy_order_status",
+      "check": "orders.status",
+      "target": "452fb2b5-96ac-4974-85d6-141131d5be8a",
+      "pg_value": "completed",
+      "api_value": "\u2014",
+      "expected": "completed",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.dispute_order_status",
+      "check": "orders.status",
+      "target": "c1a99429-16b6-4714-8787-3019326d0978",
+      "pg_value": "refunded",
+      "api_value": "\u2014",
+      "expected": "partially_refunded|refunded|slashed",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.dispute_resolved",
+      "check": "disputes.status+refund_ratio+arbitrator_id",
+      "target": "87450ef1-ee43-4d5c-a87e-a305685e0c7a",
+      "pg_value": "resolved;ratio=1;arb=483aa4a8\u2026",
+      "api_value": "\u2014",
+      "expected": "resolved|refund_ratio=1|arbitrator",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "pg.audit_key_write_accept",
+      "check": "audit_key_write|PG surrogate",
+      "target": "452fb2b5-96ac-4974-85d6-141131d5be8a",
+      "pg_value": "0",
+      "api_value": "completed",
+      "expected": ">=1 order_accept \u6216 status>created",
+      "status": "PASS",
+      "notes": "PG\u72b6\u6001\u9012\u8fdb"
+    },
+    {
+      "probe_id": "pg.audit_key_write_accept",
+      "check": "audit_key_write|PG surrogate",
+      "target": "c1a99429-16b6-4714-8787-3019326d0978",
+      "pg_value": "0",
+      "api_value": "refunded",
+      "expected": ">=1 order_accept \u6216 status>created",
+      "status": "PASS",
+      "notes": "PG\u72b6\u6001\u9012\u8fdb"
+    },
+    {
+      "probe_id": "pg.auth_audit_events_readable",
+      "check": "auth_audit_events",
+      "target": "public.auth_audit_events",
+      "pg_value": "0",
+      "api_value": "\u2014",
+      "expected": "table readable",
+      "status": "PASS",
+      "notes": "\u76f4\u67e5\u6210\u529f\uff08\u884c\u6570\u4e0d\u9650\uff09"
+    }
+  ],
+  "issues": [],
+  "summary": {
+    "pg_pass": 6,
+    "pg_total": 6,
+    "p0": 0,
+    "p1": 0
+  }
+}

@@ -35,6 +35,7 @@ export const ADMIN_HOME_CARD_TIER_BY_HREF: Record<string, AdminHomeCardTier> = {
   "/admin/indexer": "read",
   "/admin/indexer/reconcile-reports": "read",
   "/admin/schema": "placeholder",
+  "/admin/backup": "placeholder",
   "/admin/community/reports": "write",
   "/admin/community/appeals": "super_write",
   "/admin/community/moderation/cases": "read",
@@ -60,6 +61,7 @@ export const ADMIN_HOME_CARD_TIER_BY_HREF: Record<string, AdminHomeCardTier> = {
   "/admin/community/comments/visibility": "super_write",
   "/admin/compliance": "read",
   "/admin/finance-suite": "read",
+  "/admin/vacancy-ledger": "read",
 };
 
 /** 首页卡片 href 可能带 `?status=`（收件箱 SSOT）；lookup 用 pathname。 */

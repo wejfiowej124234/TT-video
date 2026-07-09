@@ -1,0 +1,89 @@
+# Repository Alignment & Cleanup Execution Checklist
+
+**Program:** `TT_REPOSITORY_ALIGNMENT_CLEANUP_PROGRAM`
+**Stamp:** `20260616T130427Z`
+**Baseline SSOT:** GovFreeze V2 Clean Baseline
+**Generated:** 2026-06-16T13:04:39Z
+
+**纪律：** 一致性 · 追溯性 · 仓库清洁度 · **禁止**重复评估已通过治理逻辑
+
+**Inventory:** ACTIVE=31 · LEGACY=17 · DELETE_CANDIDATE=0
+**P0 route drift open=0** · **P1 doc narrative open=0** · **P1 address drift open=0**
+**P2 dead-code open=0** · **P2 superseded-doc drift open=0**
+**P3 evidence stale open=0** · **DELETE_CANDIDATE total=0**
+**Baseline addresses:** active=19 · legacy=8
+
+---
+
+## ACTIVE (31)
+
+| ID | Category | Path | Summary | Action | Risk |
+|----|----------|------|---------|--------|------|
+| SSOT-BASELINE-FREEZE | baseline | `docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md` | GovFreeze V2 Clean Baseline 唯一经济真源 | 只读引用 | P0 |
+| SSOT-MTM-146 | baseline | `docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md` | 146 行执行真源 · Cert #1→#12 | 维护 Tier · 禁止新矩阵 | P0 |
+| ADDR-ACTIVE-COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS=0x2704566a6657dcbeebb71e43ceca381f16e1a8aa | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-COUNTRY_POOL_NET_PROFIT_SETTLEMENT_TOKEN_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | COUNTRY_POOL_NET_PROFIT_SETTLEMENT_TOKEN_ADDRESS=0x241948be49a778490c8a4ae8d98b7537fe001f63 | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-COUNTRY_POOL_STEWARD_PATH_VAULT_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | COUNTRY_POOL_STEWARD_PATH_VAULT_ADDRESS=0x6b3391c0b6297a5866c0bb7ad06da99e08f0a3fb | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-COUNTRY_POOL_UNALLOCATED_STEWARD_VAULT_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | COUNTRY_POOL_UNALLOCATED_STEWARD_VAULT_ADDRESS=0xabe36f8ef43d544b9d0e1c0a5f9638dc37ed33d0 | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-GOVERNANCE_TIMELOCK_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | GOVERNANCE_TIMELOCK_ADDRESS=0x904a6c4c6aab698afbf08ec6151d317c393520cc | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-GOVERNANCE_TOKEN_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | GOVERNANCE_TOKEN_ADDRESS=0x2837ea0c50e27d59b88af617abbb231a040062c5 | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-GOVERNANCE_VOTES_TOKEN_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | GOVERNANCE_VOTES_TOKEN_ADDRESS=0x2837ea0c50e27d59b88af617abbb231a040062c5 | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-GOVERNOR_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | GOVERNOR_ADDRESS=0x847b00ddb6ffed71812abc358a407dad4b099fcb | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-GOV_FREEZE_V2_GOVERNOR_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | GOV_FREEZE_V2_GOVERNOR_ADDRESS=0x847b00ddb6ffed71812abc358a407dad4b099fcb | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-GOV_FREEZE_V2_PRIMARY_MARKET_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | GOV_FREEZE_V2_PRIMARY_MARKET_ADDRESS=0x7af15f98622b9282298ca3070a698ca4a96a4016 | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-GOV_FREEZE_V2_SEAT_REGISTRY_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | GOV_FREEZE_V2_SEAT_REGISTRY_ADDRESS=0xc99776e980d33f1857d5bb9a57b35ab7669aad1f | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-GOV_FREEZE_V2_STAKE_POOL_PROXY_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | GOV_FREEZE_V2_STAKE_POOL_PROXY_ADDRESS=0x3a89378bfad12d1028707dd37055294854c8784e | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-GOV_FREEZE_V2_TIMELOCK_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | GOV_FREEZE_V2_TIMELOCK_ADDRESS=0x904a6c4c6aab698afbf08ec6151d317c393520cc | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-GOV_FREEZE_V2_TREASURY_P4_CAP_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | GOV_FREEZE_V2_TREASURY_P4_CAP_ADDRESS=0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2 | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-PRIMARY_MARKET_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | PRIMARY_MARKET_ADDRESS=0x7af15f98622b9282298ca3070a698ca4a96a4016 | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-REGION_STEWARD_STAKE_POOL_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | REGION_STEWARD_STAKE_POOL_ADDRESS=0x3a89378bfad12d1028707dd37055294854c8784e | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-REGION_STEWARD_STAKE_POOL_PROXY_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | REGION_STEWARD_STAKE_POOL_PROXY_ADDRESS=0x3a89378bfad12d1028707dd37055294854c8784e | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-SEAT_REGISTRY_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | SEAT_REGISTRY_ADDRESS=0xc99776e980d33f1857d5bb9a57b35ab7669aad1f | 禁止替换为 LEGACY | P0 |
+| ADDR-ACTIVE-TIMELOCK_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | TIMELOCK_ADDRESS=0x904a6c4c6aab698afbf08ec6151d317c393520cc | 禁止替换为 LEGACY | P0 |
+| FE-GOV-ROUTES | frontend_routes | `frontend/app/governance/**` | 治理前端 SSOT 路由 13 条 | 冻结 UI · 仅数据链 | — |
+| BE-GOV-GET | api_routes | `crates/api/src/routes/governance/**` | 治理 GET 契约 6 条 · read_contract guard | 与 MTM API 列对拍 | — |
+| EVID-ARCHIVE-INDEX | evidence | `evidence/archive-evidence/ARCHIVE-EVIDENCE-INDEX.v1.json` | P3 归档索引 · entries=52 | 只读 · 禁止删最终证据 | P3 |
+| EVID-LATEST-GO_hat_r1_sepolia | evidence | `evidence/GO_hat_r1_sepolia/latest-stamp.txt` | latest=20260616T063612Z | 保留 latest + baseline 锚 · 旧 stamp 归档 archive-evidence | P3 |
+| EVID-LATEST-GO_tt_country_pool_revenue_enterprise_hat | evidence | `evidence/GO_tt_country_pool_revenue_enterprise_hat/latest-stamp.txt` | latest=20260616T084248Z | 保留 latest + baseline 锚 · 旧 stamp 归档 archive-evidence | P3 |
+| EVID-LATEST-GO_ai_pre_human_uat | evidence | `evidence/GO_ai_pre_human_uat/latest-stamp.txt` | latest=20260616T114646Z | 保留 latest + baseline 锚 · 旧 stamp 归档 archive-evidence | P3 |
+| EVID-LATEST-GO_ttg_cert | evidence | `evidence/GO_ttg_cert/latest-stamp.txt` | latest=20260616T100918Z | 保留 latest + baseline 锚 · 旧 stamp 归档 archive-evidence | P3 |
+| EVID-LATEST-GO_govfreeze_v2_human_screen_acceptance | evidence | `evidence/GO_govfreeze_v2_human_screen_acceptance/latest-stamp.txt` | latest=20260616T100918Z | 保留 latest + baseline 锚 · 旧 stamp 归档 archive-evidence | P3 |
+| ID-IA-HUB | multi_identity | `frontend/app/me/identities/**` | 多重身份 Hub · ME-IDENTITIES-UI-FREEZE | 与治理数据链隔离验收 | — |
+| ADM-READONLY | admin_boundary | `frontend/app/admin/**` | Admin 只读/门闸 · 无 Treasury 直转 | Cert #3 walkthrough | P0 |
+
+## LEGACY (17)
+
+| ID | Category | Path | Summary | Action | Risk |
+|----|----------|------|---------|--------|------|
+| ADDR-LEGACY-CP_NET_PROFIT_LEDGER_OWNER_TIMELOCK | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | CP_NET_PROFIT_LEDGER_OWNER_TIMELOCK=0x0359d4fb9c4b9f69188a1e9ae2202abfed1fee8f · cutover/只读归档 | 保留 · 禁止作活跃读口 | P1 |
+| ADDR-LEGACY-LEGACY_GOVERNANCE_TOKEN_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | LEGACY_GOVERNANCE_TOKEN_ADDRESS=0xac2e29ac7089e4863c21daf232cf8bbb025d91ca · cutover/只读归档 | 保留 · 禁止作活跃读口 | P1 |
+| ADDR-LEGACY-LEGACY_PRE_GOV_FREEZE_V2_GOVERNOR_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | LEGACY_PRE_GOV_FREEZE_V2_GOVERNOR_ADDRESS=0xd5225ba81af40600c9802d20888898193861f161 · cutover/只读归档 | 保留 · 禁止作活跃读口 | P1 |
+| ADDR-LEGACY-LEGACY_PRE_GOV_FREEZE_V2_PRIMARY_MARKET_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | LEGACY_PRE_GOV_FREEZE_V2_PRIMARY_MARKET_ADDRESS=0xc77f717c1c98d460e006266ecb20d870d05cb5c1 · cutover | 保留 · 禁止作活跃读口 | P1 |
+| ADDR-LEGACY-LEGACY_PRE_GOV_FREEZE_V2_REGION_STEWARD_STAKE_POOL_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | LEGACY_PRE_GOV_FREEZE_V2_REGION_STEWARD_STAKE_POOL_ADDRESS=0xbf1f5b8c5b8a1cfc8e4458eb43c1a0ab2401280 | 保留 · 禁止作活跃读口 | P1 |
+| ADDR-LEGACY-LEGACY_PRE_GOV_FREEZE_V2_SEAT_REGISTRY_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | LEGACY_PRE_GOV_FREEZE_V2_SEAT_REGISTRY_ADDRESS=0x87c77986c7de47131d02a6407308b974324cc6dc · cutover/ | 保留 · 禁止作活跃读口 | P1 |
+| ADDR-LEGACY-LEGACY_PRE_GOV_FREEZE_V2_TIMELOCK_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | LEGACY_PRE_GOV_FREEZE_V2_TIMELOCK_ADDRESS=0x462c2351971707a8ceeb3ce789f268b8326c76a0 · cutover/只读归档 | 保留 · 禁止作活跃读口 | P1 |
+| ADDR-LEGACY-LEGACY_PRE_GOV_FREEZE_V2_TREASURY_P4_CAP_ADDRESS | contract_address | `scripts/dev/.env.phase2-chain-deploy.local` | LEGACY_PRE_GOV_FREEZE_V2_TREASURY_P4_CAP_ADDRESS=0xfa0796236aa350342ee71853c1d5593f48e55090 · cutove | 保留 · 禁止作活跃读口 | P1 |
+| ARCH-UI-V1 | archive_tree | `frontend/archive/ui-v1` | 归档树 97 files | 保留只读 · 禁止回流 runtime | P2 |
+| ARCH-ARCHIVE | archive_tree | `docs/spec/governance-token/archive` | 归档树 2 files | 保留只读 · 禁止回流 runtime | P2 |
+| ARCH-ARCHIVE | archive_tree | `docs/spec/archive` | 归档树 8 files | 保留只读 · 禁止回流 runtime | P2 |
+| DOC-LEG-TTG-GOVERNANCE-FULL-COVE | superseded_doc | `docs/spec/governance-token/TTG-GOVERNANCE-FULL-COVERAGE-MATRIX.md` | 834 行覆盖率矩阵 · MTM 146 取代 · 已标 SUPERSEDED · MTM 146 | — | P2 |
+| DOC-LEG-gen-ttg-governance-full- | superseded_doc | `scripts/dev/gen-ttg-governance-full-coverage-matrix.py` | 旧矩阵 generator · MTM generator 为执行真源 · 已标 SUPERSEDED · MTM 146 | — | P2 |
+| DOC-LEG-TTG-GOVERNANCE-HUMAN-CER | superseded_doc | `docs/spec/governance-token/TTG-GOVERNANCE-HUMAN-CERTIFICATION-COVERAGE-REPORT.md` | 77 行 Human 覆盖表 · MTM Cert 列取代 · 已标 SUPERSEDED · MTM 146 | — | P2 |
+| NO-RERUN-run-tt-governance-en | audit_script | `scripts/dev/run-tt-governance-enterprise-hat-audit.sh` | 治理逻辑已 PASS · 本程序禁止重复评估 | 仅一致性扫描时只读引用 | — |
+| NO-RERUN-gen-ttg-governance-f | audit_script | `scripts/dev/gen-ttg-governance-full-coverage-matrix.py` | 治理逻辑已 PASS · 本程序禁止重复评估 | 仅一致性扫描时只读引用 | — |
+| NO-RERUN-run-g24-clean-baseli | audit_script | `scripts/dev/run-g24-clean-baseline-01-root-cause-audit.sh` | 治理逻辑已 PASS · 本程序禁止重复评估 | 仅一致性扫描时只读引用 | — |
+
+## DELETE_CANDIDATE (0)
+
+| ID | Category | Path | Summary | Action | Risk |
+|----|----------|------|---------|--------|------|
+
+## Execution queue（写死顺序）
+
+1. **P0** — 修复 ACTIVE 地址误引用 / 路由 drift（`proposals/create`→`new`）
+2. **P1** — 文档旧叙事 · legacy 地址无注释引用
+3. **P2** — 死代码 · superseded 矩阵/doc 标 LEGACY
+4. **P3** — evidence 旧 stamp 压缩（保留 latest + baseline freeze 锚）
+5. **禁止** — 删 `GOV-FREEZE-V2` env · 删 MTM · 重跑 enterprise hat audit
+
+**Machine key:** `TT_REPO_ALIGN: ACTIVE=31 LEGACY=17 DEL=0 P0_ROUTE_DRIFT=0 BASELINE=V2`

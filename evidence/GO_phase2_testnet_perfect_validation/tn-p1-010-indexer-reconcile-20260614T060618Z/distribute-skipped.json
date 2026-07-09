@@ -1,0 +1,7 @@
+{
+  "skipped": true,
+  "reason": "router_balance_zero_or_B407_OWNER_PK_unset",
+  "router_balance": "0",
+  "fee_router_owner_is_timelock": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+  "platform_fee_bps_default": 0
+}

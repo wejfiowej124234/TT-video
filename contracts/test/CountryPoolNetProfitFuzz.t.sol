@@ -4,7 +4,8 @@ pragma solidity 0.8.19;
 import "forge-std/Test.sol";
 import "../src/CountryPoolNetProfitLedger.sol";
 import "../src/StewardPathVault.sol";
-import "../src/UnallocatedStewardPathVault.sol";
+import "../src/vacancy/UnallocatedStewardPathVault.sol";
+import "./vacancy/VacancyTestParams.sol";
 import "../src/GovernanceVotesToken.sol";
 import "../src/RegionStewardStakePool.sol";
 import "../src/MockERC20.sol";
@@ -46,7 +47,13 @@ contract CountryPoolNetProfitFuzzTest is Test {
         address predictedLedger = vm.computeCreateAddress(address(this), n + 2);
         s.stewardVault = new StewardPathVault(s.owner, J_DE, address(s.usdc), predictedLedger);
         s.unallocVault = new UnallocatedStewardPathVault(
-            s.owner, J_DE, address(s.usdc), predictedLedger, address(s.stewardVault)
+            s.owner,
+            J_DE,
+            address(s.usdc),
+            predictedLedger,
+            address(s.stewardVault),
+            s.treasury,
+            VacancyTestParams.ssotV1Defaults()
         );
         s.ledger = new CountryPoolNetProfitLedger(
             s.owner,
@@ -207,8 +214,13 @@ contract CountryPoolNetProfitFuzzTest is Test {
             s.ledger.epochSplitAmounts(1);
 
         if (eligible) {
-            assertEq(s.stewardVault.totalReceived() - stewardBefore, stewardAmount);
-            assertEq(unallocatedAmount, 0);
+            if (1 > s.ledger.stewardActivationEpochId()) {
+                assertEq(s.stewardVault.totalReceived() - stewardBefore, stewardAmount);
+                assertEq(unallocatedAmount, 0);
+            } else {
+                assertEq(stewardAmount, 0);
+                assertGt(unallocatedAmount, 0);
+            }
         } else {
             assertEq(s.unallocVault.totalReceived() - unallocBefore, unallocatedAmount);
             assertEq(stewardAmount, 0);

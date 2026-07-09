@@ -1,0 +1,8 @@
+{
+  "step": "registry",
+  "result": "PASS",
+  "ledger": "0x738D2c133d5F90c13eE9907386136471E1f330f5",
+  "steward": "0xaB6c15Ebcae78606E0AE5663d831E09e05af32FA",
+  "unalloc": "0xb7d0Ea9579F80B2090195d49a44941d5546554E9",
+  "legacyRetained": "LEGACY_READ_ONLY"
+}

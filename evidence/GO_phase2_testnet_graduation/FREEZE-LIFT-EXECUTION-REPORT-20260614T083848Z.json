@@ -1,0 +1,253 @@
+{
+  "schema": "traveltrust.freeze_lift_execution_report.v1",
+  "audit": "Phase② Post-Graduation Single SSOT Reconciliation Audit",
+  "at": "20260614T083848Z",
+  "local_ssot_baseline": "working_tree",
+  "verdict": "NOT_RECONCILED",
+  "phase3_readiness_gate": "BLOCKED_PENDING_FREEZE_LIFT",
+  "graduation": {
+    "soak_completed": false,
+    "tt_testnet_graduation_closed": false,
+    "soak_job": "job-20260614T070154Z"
+  },
+  "shas": {
+    "working_tree_target": "WT→commit→S",
+    "head": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+    "staging": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+    "wt_dirty_count": 2086
+  },
+  "unified_ssot_matrix": [
+    {
+      "id": "code",
+      "label": "代码",
+      "WT": "delta (278+1808)",
+      "HEAD": "committed",
+      "Staging": "matches HEAD",
+      "Evidence": "PASS on old behavior",
+      "aligned": false,
+      "recon": [
+        "RECON-001",
+        "RECON-002"
+      ],
+      "flb": [
+        "FLB-001",
+        "FLB-003",
+        "FLB-004",
+        "FLB-006",
+        "FLB-007"
+      ]
+    },
+    {
+      "id": "db_migrations",
+      "label": "数据库迁移",
+      "WT": "10 untracked files",
+      "HEAD": "missing 10 CMS/Growth/guides",
+      "Staging": "likely applied OOB",
+      "Evidence": "no migration stamp",
+      "aligned": false,
+      "recon": [
+        "RECON-003"
+      ],
+      "flb": [
+        "FLB-002"
+      ]
+    },
+    {
+      "id": "config",
+      "label": "配置",
+      "WT": "local .env staging file",
+      "HEAD": "partial",
+      "Staging": "gov_token=null stake=null",
+      "Evidence": "n/a",
+      "aligned": false,
+      "recon": [
+        "RECON-007",
+        "RECON-008"
+      ],
+      "flb": [
+        "FLB-005"
+      ]
+    },
+    {
+      "id": "deploy_version",
+      "label": "部署版本",
+      "WT": "not deployed",
+      "HEAD": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+      "Staging": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+      "Evidence": "5ab1f8ba2229",
+      "aligned": false,
+      "recon": [
+        "RECON-001"
+      ],
+      "flb": [
+        "FLB-006",
+        "FLB-007",
+        "FLB-009"
+      ]
+    },
+    {
+      "id": "on_chain",
+      "label": "链上参数",
+      "WT": "registry SSOT",
+      "HEAD": "registry in git",
+      "Staging": "escrow=0xbf746B6a…",
+      "Evidence": "spine audit OK 20260614",
+      "aligned": true,
+      "recon": [],
+      "flb": [
+        "FLB-008"
+      ]
+    },
+    {
+      "id": "evidence_chain",
+      "label": "证据链",
+      "WT": "n/a",
+      "HEAD": "TN-P1-010 semantic gap",
+      "Staging": "compound_pass live",
+      "Evidence": "TN-P1-010 PASS 065942Z",
+      "aligned": false,
+      "recon": [
+        "RECON-002"
+      ],
+      "flb": [
+        "FLB-010"
+      ]
+    }
+  ],
+  "recon_audit": [
+    {
+      "id": "RECON-001",
+      "status": "OPEN",
+      "flb_pending": [
+        "FLB-001",
+        "FLB-002",
+        "FLB-003",
+        "FLB-004",
+        "FLB-006",
+        "FLB-007",
+        "FLB-009"
+      ]
+    },
+    {
+      "id": "RECON-002",
+      "status": "OPEN",
+      "detail": "WT ESCROW=0x83,0xa2,0x65,0xa7 HEAD=0x87,0x90,0x6b,0x1e",
+      "flb_pending": [
+        "FLB-001",
+        "FLB-006",
+        "FLB-010"
+      ]
+    },
+    {
+      "id": "RECON-003",
+      "status": "OPEN",
+      "flb_pending": [
+        "FLB-002"
+      ]
+    }
+  ],
+  "flb_audit": [
+    {
+      "id": "FLB-001",
+      "status": "NOT_STARTED",
+      "reason": "Reliability Freeze · soak INFLIGHT"
+    },
+    {
+      "id": "FLB-002",
+      "status": "NOT_STARTED",
+      "reason": "Reliability Freeze · soak INFLIGHT"
+    },
+    {
+      "id": "FLB-003",
+      "status": "NOT_STARTED",
+      "reason": "Reliability Freeze · soak INFLIGHT"
+    },
+    {
+      "id": "FLB-004",
+      "status": "NOT_STARTED",
+      "reason": "Reliability Freeze · soak INFLIGHT"
+    },
+    {
+      "id": "FLB-005",
+      "status": "NOT_STARTED",
+      "reason": "Reliability Freeze · soak INFLIGHT"
+    },
+    {
+      "id": "FLB-006",
+      "status": "NOT_STARTED",
+      "reason": "Reliability Freeze · soak INFLIGHT"
+    },
+    {
+      "id": "FLB-007",
+      "status": "NOT_STARTED",
+      "reason": "Reliability Freeze · soak INFLIGHT"
+    },
+    {
+      "id": "FLB-008",
+      "status": "NOT_STARTED",
+      "reason": "Reliability Freeze · soak INFLIGHT"
+    },
+    {
+      "id": "FLB-009",
+      "status": "NOT_STARTED",
+      "reason": "Reliability Freeze · soak INFLIGHT"
+    },
+    {
+      "id": "FLB-010",
+      "status": "NOT_STARTED",
+      "reason": "Reliability Freeze · soak INFLIGHT"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "BLK-SOAK",
+      "severity": "P0",
+      "note": "P2FC COMPLETED.json missing"
+    },
+    {
+      "id": "BLK-GRAD",
+      "severity": "P0",
+      "note": "TT_TESTNET_GRADUATION not CLOSED"
+    },
+    {
+      "id": "BLK-WT",
+      "severity": "P0",
+      "note": "2086 WT files not committed (FLB-001~004 pending)"
+    },
+    {
+      "id": "BLK-IDX",
+      "severity": "P0",
+      "note": "TN-P1-010 selectors WT≠HEAD (FLB-001)"
+    },
+    {
+      "id": "BLK-MIG",
+      "severity": "P0",
+      "note": "10 migrations not in git (FLB-002)"
+    }
+  ],
+  "recon_open": [
+    "RECON-001",
+    "RECON-002",
+    "RECON-003"
+  ],
+  "flb_remaining": [
+    "FLB-001",
+    "FLB-002",
+    "FLB-003",
+    "FLB-004",
+    "FLB-005",
+    "FLB-006",
+    "FLB-007",
+    "FLB-008",
+    "FLB-009",
+    "FLB-010"
+  ],
+  "next_actions": [
+    "Wait P2FC COMPLETED.json",
+    "run-phase2-testnet-post-soak-graduation-closure.sh",
+    "Execute FLB-001→010 per FREEZE-LIFT-EXECUTION-PLAN.md",
+    "Re-run emit-freeze-lift-execution-report.mjs until RECONCILED"
+  ],
+  "honest_boundary": "NOT_RECONCILED during Reliability Freeze is expected · ≠ audit failure · ③ blocked until RECONCILED",
+  "grep_verdict": "TT_SINGLE_SSOT_RECONCILIATION: NOT_RECONCILED 20260614T083848Z"
+}

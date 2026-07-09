@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T124130Z",
+  "filename": "ocs-kyoto-culture-guide-avatar.jpg",
+  "chain_id": "kyoto-culture",
+  "city": "京都",
+  "country_code": "JP",
+  "slot": "guide-avatar",
+  "surface": "Guide",
+  "copy_label": "京都茶道向导·Yuki",
+  "manifest_copy": {
+    "chain.city": "京都",
+    "chain.tags": ["文化", "茶道"],
+    "guide.nickname": "京都茶道向导·Yuki",
+    "guide.bio": "祇园与岚山文化讲解，专注茶道体验与和服街拍路线规划。",
+    "guide.avatar_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-guide-avatar.jpg"
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 66416 bytes；非纯色占位。" },
+    "G2_copy_alignment": { "pass": true, "notes": "和服向导 Yuki + 祇园石阶晨雾 bokeh，与 nickname/bio/京都茶道文化 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "京都 chain 首行人物肖像；与后续茶室/和纸/岚山/茶道瞬间 slot 场景类型不同；与 Tokyo Ken 摄影向导区分。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "京都同 chain；无东京/他国地标。" },
+    "G5_brand_visual": { "pass": true, "notes": "低饱和禅意纪实；TravelTrust 品牌协调。" },
+    "G6_commercial_platform": { "pass": true, "notes": "Guide 列表头像观感专业可信。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光柔和、640x480 无低清块。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "HUMAN-REVIEW + row verify 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "京都 Guide 角色；手脸自然；无水印/Logo；② AI 素材。" },
+    "G10_content_diversity": { "pass": true, "notes": "人物+和服+祇园场景，作为 kyoto chain 多样性起点。" }
+  },
+  "kyoto_chain_future_slots": {
+    "provider": "茶室内部",
+    "acquisition": "和纸工艺",
+    "official_guide": "岚山/祇园宽幅",
+    "community_cover": "茶道奉茶瞬间",
+    "community_media": "岚山竹林行人"
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-06T15:24:44Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "AU",
+    "city_zh": "黄金海岸",
+    "matrix_ids": [
+      "PH-AU-168-ATR",
+      "PH-AU-169-ATR",
+      "PH-AU-170-ATR",
+      "PH-AU-171-ATR",
+      "PH-AU-172-FOOD",
+      "PH-AU-173-FOOD",
+      "PH-AU-174-FOOD",
+      "PH-AU-175-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-AU-168-ATR",
+      "poi_id": "2cd31918-d5f6-4ee9-89eb-3feb9336e920"
+    },
+    {
+      "matrix_id": "PH-AU-169-ATR",
+      "poi_id": "095b9c98-c973-44fe-a8b1-b81a9e945585"
+    },
+    {
+      "matrix_id": "PH-AU-170-ATR",
+      "poi_id": "5c34e00e-8a39-4c2c-a00e-fa869fba28d4"
+    },
+    {
+      "matrix_id": "PH-AU-171-ATR",
+      "poi_id": "3bb79b06-efc2-4ccf-b404-aea2caade348"
+    },
+    {
+      "matrix_id": "PH-AU-172-FOOD",
+      "poi_id": "14e63c64-408b-4100-bf76-572f86d17c20"
+    },
+    {
+      "matrix_id": "PH-AU-173-FOOD",
+      "poi_id": "a83926b5-1682-4e72-9312-b86883ed6871"
+    },
+    {
+      "matrix_id": "PH-AU-174-FOOD",
+      "poi_id": "b347f35f-26ae-4889-87a9-4379996c9986"
+    },
+    {
+      "matrix_id": "PH-AU-175-FOOD",
+      "poi_id": "16ceac11-1b4b-4b93-9249-3679fc6303ac"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 8,
+    "expected": 8
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T133930Z",
+  "filename": "ocs-bangkok-temple-guide-avatar.jpg",
+  "chain_id": "bangkok-temple",
+  "city": "曼谷",
+  "country_code": "TH",
+  "slot": "guide-avatar",
+  "surface": "Guide",
+  "copy_label": "曼谷文化向导·Arun",
+  "manifest_copy": {
+    "guide.nickname": "曼谷文化向导·Arun",
+    "guide.bio": "大皇宫、郑王庙与湄南河游船路线，提供泰英双语讲解。",
+    "guide.languages": ["th", "en"],
+    "guide.service_types": ["culture", "walking"],
+    "chain.tags": ["寺庙", "河景"]
+  },
+  "pre_generation_check": { "pass": true, "evidence": "ocs-bangkok-temple-guide-avatar.PRE-GENERATION-CHECK.json" },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 76981 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "Arun 于黎明寺台阶晨光·得体着装，与 nickname/bio/郑王庙主题 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "泰式寺庙向导肖像；未来 5 slot 场景类型已规划。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "曼谷 TH-only；Wat Arun 金蓝晨光；无日韩元素。" },
+    "G5_brand_visual": { "pass": true, "notes": "金+蓝晨空纪实；TravelTrust L5 统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "真实文化向导；非广告模特摆拍。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光自然、640x480。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "预检查+Country+Guide Identity+chain 1/6 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "黎明寺语义正确；无水印/Logo/畸形。" },
+    "G10_content_diversity": { "pass": true, "notes": "新 country chain 首行；与 Tokyo/Kyoto/Seoul 全局构图/色调/主体区分。" }
+  },
+  "destination_experience_review": {
+    "pass": true,
+    "notes": "用户可感知曼谷寺庙文化向导专业可信。"
+  },
+  "guide_identity_diversity_review": {
+    "pass": true,
+    "vs_tokyo_ken": "泰文化男向导 vs 日摄影师",
+    "vs_kyoto_yuki": "男性便装 vs 女性和服",
+    "vs_seoul_min": "30s 寺庙 vs 45+ 美食"
+  },
+  "consumer_experience": { "pass": true, "real_guide_not_model": true },
+  "regression_closed_chains": { "pass": true, "notes": "Tokyo/Kyoto/Seoul 18 行无漂移。" },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

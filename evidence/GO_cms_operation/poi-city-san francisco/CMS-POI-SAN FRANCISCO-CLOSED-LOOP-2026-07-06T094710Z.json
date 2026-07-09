@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T09:47:10Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "US",
+    "city_zh": "旧金山",
+    "city_en": "San Francisco",
+    "matrix_ids": [
+      "PH-US-135-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-US-135-ATR",
+      "legacy_value": "金门大桥",
+      "poi_id": "750c11ae-e516-4b4e-b3da-75ea6a8bc355",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-135-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

@@ -1,0 +1,48 @@
+{
+  "audit": "ENTERPRISE_PLATFORM_CONSISTENCY",
+  "stamp": "20260703T172057Z",
+  "pcp_phase1_stamp": "20260703T172057Z",
+  "enterprise_ssot": "PASS",
+  "pcp_sub_audits": {
+    "architecture_compliance": "PASS",
+    "full_pipeline": "PASS",
+    "phase_0_5_staging": "PASS",
+    "enterprise_ssot": "PASS"
+  },
+  "blocking_gaps": [],
+  "phase1_gaps": [
+    {
+      "severity": "PHASE1",
+      "domain": "market",
+      "layer": "governance",
+      "id": "OLD-MKT-002",
+      "note": "Legacy in-memory governance fallback when db_pool unavailable",
+      "fix": "Prefer PG governed path; retain for chain_off-only mode",
+      "classification": "OLD_READ_PATH"
+    },
+    {
+      "severity": "PHASE1",
+      "domain": "campaign",
+      "layer": "governance",
+      "id": "OLD-CAM-001",
+      "note": "Campaign public surface via ops_cold_start consumer (not pcp/campaign_builder)",
+      "fix": "pcp/campaign_builder.rs + governed campaign surfaces",
+      "classification": "OLD_READ_PATH"
+    },
+    {
+      "severity": "PHASE1",
+      "domain": "campaign",
+      "layer": "builder",
+      "id": "P1-CAM-BLD-001",
+      "note": "CampaignBuilder not under pcp/ — ops_cold_start consumer",
+      "fix": "pcp/campaign_builder.rs + governed campaign surfaces",
+      "classification": "PARTIAL"
+    }
+  ],
+  "verdict": {
+    "phase1_alignment": "IN_PROGRESS",
+    "community_baseline": "PASS",
+    "sign_off_allowed": false,
+    "note": "Phase 1 IN_PROGRESS — eliminate REFERENCE_IMPL / PARTIAL / OLD_READ_PATH per domain"
+  }
+}

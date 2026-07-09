@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T152000Z",
+  "filename": "ocs-nyc-skyline-guide-avatar.jpg",
+  "row": 37,
+  "chain_id": "nyc-skyline",
+  "country_code": "US",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "blocked_elements_avoided": [
+      "celebrity_portraits",
+      "brand_logos",
+      "copyrighted_artworks"
+    ],
+    "safe_expression": "Alex 布鲁克林大桥摄影向导肖像 · 都市冷调"
+  },
+  "guide_identity_diversity_plan": {
+    "pass": true,
+    "note": "美式摄影男 Alex vs 东京 Ken/巴黎 Claire/新加坡 Lee 等六城向导区分"
+  },
+  "checks": {
+    "manifest_alignment": {
+      "pass": true
+    },
+    "country_consistency_us": {
+      "pass": true
+    },
+    "nine_class_framework_frozen": true
+  }
+}

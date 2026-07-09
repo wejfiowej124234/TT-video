@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T143530Z",
+  "trigger_row": 29,
+  "trigger_filename": "ocs-singapore-family-community-cover.jpg",
+  "TT_CROSS_CHAIN_COMMUNITY_REVIEW": "PASS",
+  "community_cover_comparison": {
+    "tokyo-photo": "街景/摄影分享",
+    "kyoto-culture": "茶道手势近景",
+    "seoul-food": "tteokbokki+筷子美食近景",
+    "bangkok-temple": "黎明寺尖塔晨光剪影",
+    "singapore-family": "儿童景点开心瞬间 · 亲子情绪 Feed",
+    "distinct": true
+  },
+  "vs_rows_25_28": {
+    "row25_guide": "儿童分享 vs 向导肖像",
+    "row26_provider": "UGC vs 通票入口合影",
+    "row28_official": "近景情绪 vs 天际线宽幅",
+    "distinct": true
+  },
+  "no_quality_regression_prior_28": true
+}

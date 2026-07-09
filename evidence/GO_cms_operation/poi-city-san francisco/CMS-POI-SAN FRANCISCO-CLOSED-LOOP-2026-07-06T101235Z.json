@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T10:12:35Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "US",
+    "city_zh": "旧金山",
+    "city_en": "San Francisco",
+    "matrix_ids": [
+      "PH-US-135-ATR",
+      "PH-US-136-ATR",
+      "PH-US-137-ATR",
+      "PH-US-138-ATR",
+      "PH-US-139-FOOD",
+      "PH-US-140-FOOD",
+      "PH-US-141-FOOD",
+      "PH-US-142-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-US-135-ATR",
+      "legacy_value": "金门大桥",
+      "poi_id": "750c11ae-e516-4b4e-b3da-75ea6a8bc355",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-135-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-US-136-ATR",
+      "legacy_value": "渔人码头",
+      "poi_id": "914c4506-59b3-4d22-a3bb-1d4794d3a5a3",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-136-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-US-137-ATR",
+      "legacy_value": "缆车",
+      "poi_id": "b344907a-b968-4c97-a106-8fad71b3d8e2",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-137-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-US-138-ATR",
+      "legacy_value": "九曲花街",
+      "poi_id": "59d6106c-929e-4000-bfc7-f4c2627d2435",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-138-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-US-139-FOOD",
+      "legacy_value": "酸面包",
+      "poi_id": "354b2003-3dd1-4d9f-bb20-7858920bf96e",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-139-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-US-140-FOOD",
+      "legacy_value": "螃蟹",
+      "poi_id": "d43ee32c-be6e-4621-a0c3-613f1ccaa190",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-140-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-US-141-FOOD",
+      "legacy_value": "Mission卷饼",
+      "poi_id": "9199078d-b572-4fa6-aa65-ab06799d40fa",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-141-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-US-142-FOOD",
+      "legacy_value": "咖啡",
+      "poi_id": "d832d1ef-6c6c-4168-8e94-11a1c5388e90",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-142-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

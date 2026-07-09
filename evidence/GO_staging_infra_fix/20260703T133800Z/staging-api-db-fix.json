@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.staging_infra_api_db_fix.v1",
+  "stamp": "20260703T133800Z",
+  "issue_id": "STAGING_API_DB_TRANSIENT_503",
+  "status": "CLOSED",
+  "probes": {
+    "staging": { "acquisition_listings": 200, "market_feed": 200, "health_ready": 200 },
+    "local_staging_mirror": { "acquisition_listings": 200, "market_feed": 200, "health_ready": 200 }
+  },
+  "source_truth_audit": "PASS",
+  "blocking_count": 0
+}

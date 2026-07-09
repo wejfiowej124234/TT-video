@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://tt-api-prod.fly.dev/auth/login",
+    "body": {
+      "email": "r003.prod.interim2@traveltrust.test",
+      "password": "[REDACTED]"
+    }
+  },
+  "response": {
+    "http_status": 401,
+    "body": {
+      "error": "invalid_credentials",
+      "message": "invalid_credentials"
+    }
+  }
+}

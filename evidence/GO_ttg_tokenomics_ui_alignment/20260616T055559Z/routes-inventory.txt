@@ -1,0 +1,13 @@
+# TTG Tokenomics UI alignment · route inventory
+/governance
+/governance/params#gov-params-tokenomics-freeze
+/governance/params#gov-params-treasury-policy
+/governance/params#gov-params-overview
+/governance/proposals
+/governance/proposals/create
+/governance/delegate
+/governance/distribution-claim
+/governance/distribution-accruals
+/governance/fee-routes
+/governance/vault-forwards
+/governance/steward-region-workbench

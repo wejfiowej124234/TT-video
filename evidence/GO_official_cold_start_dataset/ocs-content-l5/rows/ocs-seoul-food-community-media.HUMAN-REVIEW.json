@@ -1,0 +1,52 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T133430Z",
+  "filename": "ocs-seoul-food-community-media.jpg",
+  "chain_id": "seoul-food",
+  "city": "首尔",
+  "country_code": "KR",
+  "slot": "community-media",
+  "surface": "Community Media",
+  "copy_label": "明洞到广藏市场的 48 小时美食巡礼——官方实测排队时间与人均预算。",
+  "manifest_copy": {
+    "community_post.destination_slug": "seoul",
+    "community_post.destination_label": "首尔",
+    "community_post.tags": ["首尔", "美食", "官方旅行日志"],
+    "community_post.body_markdown": "明洞到广藏市场的 48 小时美食巡礼——官方实测排队时间与人均预算。",
+    "community_post.media_urls": ["/api/v1/uploads/community-posts/ocs-seoul-food-community-media.jpg"]
+  },
+  "cover_media_complementarity": {
+    "pass": true,
+    "row17_cover": "单道 tteokbokki+筷子 近景 · 个人分享",
+    "row18_media": "广藏市场过道人群+摊位 · 环境纪实广角",
+    "no_duplicate_composition": true,
+    "no_duplicate_subject": true,
+    "different_focal_length_scale": true
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 129511 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "市场过道人群与摊位纪实，支撑 body 广藏市场美食巡礼叙事。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "环境纪实广角；非 Row17 菜品特写/非 Row13-16 各 slot。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "首尔 KR-only；Hangul 摊位。" },
+    "G5_brand_visual": { "pass": true, "notes": "夜市纪实暖色；seoul-food 品牌统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "Community 详情主图真实可信。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光自然。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "全层 Evidence + Final Review 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "广藏市场语义正确；无他国元素。" },
+    "G10_content_diversity": { "pass": true, "notes": "完成 seoul 6/6 场景覆盖。" }
+  },
+  "destination_experience_review": {
+    "pass": true,
+    "notes": "市场过道蒸汽与人群传递「48h 美食巡礼」详情叙事；与 Feed 封面近景互补。"
+  },
+  "community_authenticity_review": {
+    "pass": true,
+    "authentic_share_feel": true,
+    "natural_interaction": true,
+    "feed_detail_readability": true,
+    "emotional_travel_expression": true,
+    "ugc_style_not_commercial_poster": true
+  },
+  "full_surface_regression": { "pass": true, "notes": "Rows 13-17 无回归。" },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

@@ -1,0 +1,91 @@
+{
+  "audit_id": "STAKE_POOL_JURISDICTION_BOOTSTRAP",
+  "stamp_utc": "20260616T043618Z",
+  "pool": "0xBf1F5B8c5b8A1cFC8E4458Eb43C1a0ab24012806",
+  "owner": "0x462c2351971707A8CEEb3ce789F268B8326C76a0",
+  "ttg_total_supply_units": "10000000000000000000000000",
+  "jurisdictions_bootstrapped": true,
+  "jurisdictions": [
+    {
+      "jurisdiction": "CN",
+      "expected_bps": 400,
+      "on_chain_bps": 400,
+      "min_stake_wei": "400000000000000000000000",
+      "status": "PASS"
+    },
+    {
+      "jurisdiction": "US",
+      "expected_bps": 400,
+      "on_chain_bps": 400,
+      "min_stake_wei": "400000000000000000000000",
+      "status": "PASS"
+    },
+    {
+      "jurisdiction": "FR",
+      "expected_bps": 450,
+      "on_chain_bps": 450,
+      "min_stake_wei": "450000000000000000000000",
+      "status": "PASS"
+    },
+    {
+      "jurisdiction": "ES",
+      "expected_bps": 450,
+      "on_chain_bps": 450,
+      "min_stake_wei": "450000000000000000000000",
+      "status": "PASS"
+    },
+    {
+      "jurisdiction": "JP",
+      "expected_bps": 250,
+      "on_chain_bps": 250,
+      "min_stake_wei": "250000000000000000000000",
+      "status": "PASS"
+    },
+    {
+      "jurisdiction": "TH",
+      "expected_bps": 250,
+      "on_chain_bps": 250,
+      "min_stake_wei": "250000000000000000000000",
+      "status": "PASS"
+    },
+    {
+      "jurisdiction": "SG",
+      "expected_bps": 200,
+      "on_chain_bps": 200,
+      "min_stake_wei": "200000000000000000000000",
+      "status": "PASS"
+    },
+    {
+      "jurisdiction": "KR",
+      "expected_bps": 200,
+      "on_chain_bps": 200,
+      "min_stake_wei": "200000000000000000000000",
+      "status": "PASS"
+    },
+    {
+      "jurisdiction": "AU",
+      "expected_bps": 150,
+      "on_chain_bps": 150,
+      "min_stake_wei": "150000000000000000000000",
+      "status": "PASS"
+    },
+    {
+      "jurisdiction": "AE",
+      "expected_bps": 150,
+      "on_chain_bps": 150,
+      "min_stake_wei": "150000000000000000000000",
+      "status": "PASS"
+    }
+  ],
+  "gov04_vs_seat_stake": {
+    "gov04_per_wallet_cap_ttg_wei": "25000000000000000000000",
+    "min_stake_wei_range": [
+      "150000000000000000000000",
+      "450000000000000000000000"
+    ],
+    "admission_class": "PRIMARY_MARKET_ALONE_INSUFFICIENT",
+    "product_read": "GOV-04 caps Primary Market public sale per wallet; Seat min stake exceeds cap \u2014 Seat TTG must come from non-PM sources unless SSOT amended"
+  },
+  "failures": 0,
+  "verdict": "PASS"
+}

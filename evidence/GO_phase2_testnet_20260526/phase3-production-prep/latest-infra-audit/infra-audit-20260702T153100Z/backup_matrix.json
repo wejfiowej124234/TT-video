@@ -1,0 +1,27 @@
+[
+  {
+    "id": "B-475-baseline",
+    "component": "PostgreSQL backup/PITR baseline",
+    "staging_pg_app": "tt-traveltrust-staging",
+    "prod_pg_app": "tt-traveltrust-prod",
+    "baseline_status": "PLANNED",
+    "last_restore_drill_utc": "2026-07-01T10:12:40Z",
+    "gate_script_exit0": true,
+    "verdict": "PARTIAL",
+    "pi3": "PI3-001"
+  },
+  {
+    "id": "fly-backup-tt-traveltrust-staging",
+    "component": "Fly managed PG backup",
+    "fly_app": "tt-traveltrust-staging",
+    "verdict": "FAIL",
+    "notes": "fly postgres backup list failed"
+  },
+  {
+    "id": "fly-backup-tt-traveltrust-prod",
+    "component": "Fly managed PG backup",
+    "fly_app": "tt-traveltrust-prod",
+    "verdict": "FAIL",
+    "notes": "fly postgres backup list failed"
+  }
+]

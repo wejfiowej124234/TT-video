@@ -1,0 +1,27 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T130830Z",
+  "filename": "ocs-seoul-food-guide-avatar.jpg",
+  "revision": "v2_redo_guide_identity_diversity",
+  "revision_reason": "v1 与 Tokyo Ken 男性向导 archetype 撞脸风险；按 Guide Identity Diversity Review 重做。",
+  "chain_id": "seoul-food",
+  "city": "首尔",
+  "country_code": "KR",
+  "slot": "guide-avatar",
+  "surface": "Guide",
+  "copy_label": "首尔美食向导·Min",
+  "manifest_copy": {
+    "guide.nickname": "首尔美食向导·Min",
+    "guide.bio": "弘大、明洞与广藏市场深度美食路线，擅长韩餐与咖啡地图。"
+  },
+  "gates_human_review": { "G1_real_assets": { "pass": true }, "G2_copy_alignment": { "pass": true }, "G3_slot_differentiation": { "pass": true }, "G4_cross_surface_city": { "pass": true }, "G5_brand_visual": { "pass": true }, "G6_commercial_platform": { "pass": true }, "G7_wcag_visual_quality": { "pass": true }, "G8_evidence_matrix": { "pass": true }, "G9_content_authenticity": { "pass": true }, "G10_content_diversity": { "pass": true } },
+  "guide_identity_diversity_review": {
+    "pass": true,
+    "vs_tokyo_ken": "Ken 年轻持相机男性 vs Min 45+ 眼镜围裙美食专家 — 明显不同",
+    "vs_kyoto_yuki": "女性和服茶道 vs 男性夜市美食 — 明显不同",
+    "age_layer": "45-50",
+    "distinct_features": ["金属圆框眼镜", "花白短发", "黑色围裙", "美食专家气质"]
+  },
+  "destination_experience_review": { "pass": true },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

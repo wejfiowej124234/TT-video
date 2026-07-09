@@ -1,0 +1,3 @@
+staging_api=https://tt-api-staging.fly.dev
+stamp=20260704T160149Z
+state_seed=/d/TravelTrust-V1.1/evidence/GO_staging_rc_ssot_alignment/20260704T091605Z/ocs-asset-baseline/state.json

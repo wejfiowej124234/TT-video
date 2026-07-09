@@ -1,0 +1,934 @@
+{
+  "schema": "traveltrust.product_forensic_registry.v1",
+  "domain": "DOMAIN-X",
+  "created_at": "2026-06-13T08:18:25.976684+00:00",
+  "verdict_vocabulary": [
+    "KEEP",
+    "MERGE",
+    "RETIRE",
+    "REFACTOR"
+  ],
+  "findings": [
+    {
+      "id": "PF-SEED-001",
+      "pf": "PF-04",
+      "object": "function",
+      "label": "编辑资料 / Edit profile",
+      "paths": [
+        "/guide/profile",
+        "/me/settings/profile",
+        "/me/publish (hub shell)"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "Same traveler profile edit surfaced in Guide, Settings, Publish Hub"
+    },
+    {
+      "id": "PF-SEED-002",
+      "pf": "PF-04",
+      "object": "function",
+      "label": "Merchant listing / inventory",
+      "paths": [
+        "/me/publish",
+        "/provider",
+        "MerchantWorkbenchMarketExposureCard"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "Publish Hub vs Provider Workbench dual listing surfaces"
+    },
+    {
+      "id": "PF-SEED-003",
+      "pf": "PF-11",
+      "object": "nav_entry",
+      "label": "Publish Hub entry",
+      "paths": [
+        "topbar",
+        "/me/settings",
+        "/me/identities",
+        "/me/publish",
+        "/provider"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P0",
+      "rationale": "Four+ entry points to publish flows"
+    },
+    {
+      "id": "PF-SEED-004",
+      "pf": "PF-01",
+      "object": "route",
+      "label": "archive/ui-v1",
+      "paths": [
+        "frontend/archive/ui-v1"
+      ],
+      "suggested_verdict": "RETIRE",
+      "severity": "P1",
+      "rationale": "Non-SSOT archived tree must not appear in production nav"
+    },
+    {
+      "id": "PF-AUTO-005",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "common_retry",
+      "paths": [
+        "frontend/app/error.tsx",
+        "frontend/app/(home)/error.tsx",
+        "frontend/app/admin/error.tsx",
+        "frontend/app/community/error.tsx",
+        "frontend/app/discover/error.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 90 files"
+    },
+    {
+      "id": "PF-AUTO-006",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "common_backtohome",
+      "paths": [
+        "frontend/app/error.tsx",
+        "frontend/app/not-found.tsx",
+        "frontend/app/(home)/error.tsx",
+        "frontend/app/admin/error.tsx",
+        "frontend/app/community/error.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 29 files"
+    },
+    {
+      "id": "PF-AUTO-007",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "common_loading",
+      "paths": [
+        "frontend/app/loading.tsx",
+        "frontend/app/loading.tsx",
+        "frontend/app/discover/loading.tsx",
+        "frontend/app/network/loading.tsx",
+        "frontend/app/traveltrust/loading.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 31 files"
+    },
+    {
+      "id": "PF-AUTO-008",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_tab_feed",
+      "paths": [
+        "frontend/app/community/loading.tsx",
+        "frontend/components/community/CommunityFeedDesktopLead.tsx",
+        "frontend/components/community/CommunityFeedHeader.tsx",
+        "frontend/components/community/CommunityFeedMain.tsx",
+        "frontend/components/community/CommunityFeedMainShell.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 6 files"
+    },
+    {
+      "id": "PF-AUTO-009",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "didrank_title",
+      "paths": [
+        "frontend/app/did-rank/DidRankPageInner.tsx",
+        "frontend/app/did-rank/loading.tsx",
+        "frontend/components/did-rank/DidRankRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-010",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "escrow_detailaria",
+      "paths": [
+        "frontend/app/escrow/loading.tsx",
+        "frontend/components/escrow/EscrowDetail/EscrowDetailLoaded.tsx",
+        "frontend/components/escrow/EscrowDetail/EscrowDetailLoadErrorView.tsx",
+        "frontend/components/escrow/EscrowDetail/EscrowDetailSkeleton.tsx",
+        "frontend/components/escrow/EscrowDetail/index.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 5 files"
+    },
+    {
+      "id": "PF-AUTO-011",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "governance_nav_label",
+      "paths": [
+        "frontend/app/governance/GovernanceHubPageMain.tsx",
+        "frontend/app/governance/delegate/GovernanceDelegatePageMain.tsx",
+        "frontend/app/governance/delegate/page.tsx",
+        "frontend/app/governance/distribution-accruals/GovernanceDistributionAccrualsPageMain.tsx",
+        "frontend/app/governance/distribution-accruals/page.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 18 files"
+    },
+    {
+      "id": "PF-AUTO-012",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "guides_title",
+      "paths": [
+        "frontend/app/guides/loading.tsx",
+        "frontend/app/guides/page.tsx",
+        "frontend/app/guides/page.tsx",
+        "frontend/app/guides/page.tsx",
+        "frontend/app/guides/page.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 6 files"
+    },
+    {
+      "id": "PF-AUTO-013",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "market_hero_title",
+      "paths": [
+        "frontend/app/market/loading.tsx",
+        "frontend/app/market/MarketPageClient.tsx",
+        "frontend/components/market/MarketRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-014",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "escrow_deleteorder",
+      "paths": [
+        "frontend/app/orders/OrdersListCardItem.tsx",
+        "frontend/components/escrow/EscrowDetail/EscrowDetailItineraryBudgetZoneToolbar.tsx",
+        "frontend/components/escrow/EscrowDetail/EscrowDraftExperienceFooter.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-015",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "orders_myorders",
+      "paths": [
+        "frontend/app/orders/OrdersListCards.tsx",
+        "frontend/app/orders/OrdersListPageMain.tsx",
+        "frontend/app/orders/OrdersPageLoadingView.tsx",
+        "frontend/app/orders/OrdersPageLoadingView.tsx",
+        "frontend/app/orders/page.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 6 files"
+    },
+    {
+      "id": "PF-AUTO-016",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "orders_createtitle",
+      "paths": [
+        "frontend/app/orders/new/loading.tsx",
+        "frontend/app/orders/new/OrdersNewPageMain.tsx",
+        "frontend/components/orders/OrdersNewRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-017",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "{t(labelkey)}",
+      "paths": [
+        "frontend/app/me/onboarding/MeOnboardingRolePick.tsx",
+        "frontend/app/community/user/[id]/CommunityUserPostsVisibilityNav.tsx",
+        "frontend/app/admin/approvals/AdminApprovalsQuickFilters.tsx",
+        "frontend/components/admin/AdminAuditQuickFilters.tsx",
+        "frontend/components/admin/AdminClipboardCopyButton.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 6 files"
+    },
+    {
+      "id": "PF-AUTO-018",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "itin_title",
+      "paths": [
+        "frontend/app/itinerary/new/ItineraryNewPageMain.tsx",
+        "frontend/app/itinerary/new/loading.tsx",
+        "frontend/app/itinerary/new/page.tsx",
+        "frontend/components/itinerary/ItineraryNewRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-019",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "guidedetail_title",
+      "paths": [
+        "frontend/app/guides/[id]/GuideDetailPageErrorView.tsx",
+        "frontend/app/guides/[id]/GuideDetailPageLoadingView.tsx",
+        "frontend/app/guides/[id]/GuideDetailPageNotFoundView.tsx",
+        "frontend/app/guides/[id]/loading.tsx",
+        "frontend/components/guides/GuideDetailRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 5 files"
+    },
+    {
+      "id": "PF-AUTO-020",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "guideregister_title",
+      "paths": [
+        "frontend/app/guide/register/GuideRegisterPageMain.tsx",
+        "frontend/app/guide/register/GuideRegisterPageMain.tsx",
+        "frontend/app/guide/register/loading.tsx",
+        "frontend/components/guide/GuideRegisterRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-021",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "common_closealert",
+      "paths": [
+        "frontend/app/governance/fee-routes/GovernanceFeeRoutesLoadMoreSection.tsx",
+        "frontend/app/governance/fee-routes/page.tsx",
+        "frontend/app/governance/vault-forwards/GovernanceVaultForwardsPageMain.tsx",
+        "frontend/app/governance/vault-forwards/page.tsx",
+        "frontend/app/community/messages/[id]/CommunityConversationPageComposer.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 6 files"
+    },
+    {
+      "id": "PF-AUTO-022",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "governance_fee_routes_filter_group",
+      "paths": [
+        "frontend/app/governance/fee-routes/GovernanceFeeRoutesPageMain.tsx",
+        "frontend/app/governance/fee-routes/page.tsx",
+        "frontend/app/governance/vault-forwards/GovernanceVaultForwardsPageMain.tsx",
+        "frontend/app/governance/vault-forwards/page.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-023",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "rate_pagetitle",
+      "paths": [
+        "frontend/app/escrow/[id]/rate/EscrowRatePageEmptyIdView.tsx",
+        "frontend/app/escrow/[id]/rate/EscrowRatePageLoadErrorView.tsx",
+        "frontend/components/escrow/EscrowRateRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-024",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_feedback_title",
+      "paths": [
+        "frontend/app/community/feedback/CommunityFeedbackPageMain.tsx",
+        "frontend/app/community/feedback/loading.tsx",
+        "frontend/app/community/feedback/page.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-025",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "common_close",
+      "paths": [
+        "frontend/app/community/feedback/CommunityFeedbackPostModal.tsx",
+        "frontend/app/community/feedback/page.tsx",
+        "frontend/components/traveltrust/cinematic/TravelTrustAnnouncementDetailDialog.tsx",
+        "frontend/components/traveltrust/cinematic/TravelTrustAnnouncementDetailDialog.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-026",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_tab_friends",
+      "paths": [
+        "frontend/app/community/friends/CommunityFriendsPageInner.tsx",
+        "frontend/app/community/friends/CommunityFriendsPageInner.tsx",
+        "frontend/app/community/friends/loading.tsx",
+        "frontend/app/community/friends/page.tsx",
+        "frontend/app/community/friends/page.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 6 files"
+    },
+    {
+      "id": "PF-AUTO-027",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_tab_messages",
+      "paths": [
+        "frontend/app/community/messages/CommunityMessagesPageMain.tsx",
+        "frontend/app/community/messages/loading.tsx",
+        "frontend/components/community/CommunityRouteShellMobileBottomNav.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-028",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_pull_to_refresh",
+      "paths": [
+        "frontend/app/community/messages/CommunityMessagesPageMain.tsx",
+        "frontend/components/community/CommunityFeedMain.tsx",
+        "frontend/components/community/CommunityFeedMainPostFilterAlerts.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-029",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_me_my_posts",
+      "paths": [
+        "frontend/app/community/user/[id]/CommunityUserPostsFeedSection.tsx",
+        "frontend/app/community/me/posts/CommunityMePostsPageMain.tsx",
+        "frontend/app/community/me/posts/loading.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-030",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_me_my_collects",
+      "paths": [
+        "frontend/app/community/me/collects/CommunityMeCollectsPageMain.tsx",
+        "frontend/app/community/me/collects/loading.tsx",
+        "frontend/components/me/communityMeNotes/CommunityMeCollectsExperience.tsx",
+        "frontend/components/me/communityMeNotes/CommunityMeCollectsExperience.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-031",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_me_likes_title",
+      "paths": [
+        "frontend/app/community/me/likes/CommunityMeLikesPageMain.tsx",
+        "frontend/app/community/me/likes/loading.tsx",
+        "frontend/components/me/communityMeNotes/CommunityMeLikesExperience.tsx",
+        "frontend/components/me/communityMeNotes/CommunityMeLikesExperience.tsx",
+        "frontend/components/me/communityMeNotes/CommunityMeLikesExperience.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 5 files"
+    },
+    {
+      "id": "PF-AUTO-032",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "{t(\"common_retry\")}",
+      "paths": [
+        "frontend/app/community/me/posts/CommunityMePostsGrid.tsx",
+        "frontend/components/community/CommunityFeedFilterBarFeedError.tsx",
+        "frontend/components/me/MeSettingsProfilePanelError.tsx",
+        "frontend/components/me/MeSettingsTrustProgressPanel.tsx",
+        "frontend/components/me/communityMePage/CommunityMeAccountPanelError.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 6 files"
+    },
+    {
+      "id": "PF-AUTO-033",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_me_my_reports",
+      "paths": [
+        "frontend/app/community/me/reports/CommunityMeReportsPageMain.tsx",
+        "frontend/app/community/me/reports/CommunityMeReportsPageMain.tsx",
+        "frontend/app/community/me/reports/loading.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-034",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_report_ticket_title",
+      "paths": [
+        "frontend/app/community/me/reports/[id]/loading.tsx",
+        "frontend/app/community/me/reports/[id]/page.tsx",
+        "frontend/app/community/me/reports/[id]/page.tsx",
+        "frontend/app/community/me/reports/[id]/page.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-035",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "admin_finance_export_csv_aria",
+      "paths": [
+        "frontend/app/admin/finance/AdminFinancePageHeader.tsx",
+        "frontend/app/admin/finance/AdminFinancePageHeader.tsx",
+        "frontend/app/admin/finance/AdminFinancePageMain.tsx",
+        "frontend/app/admin/finance/AdminFinancePageMain.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-036",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "admin_indexer_reconcile_sectiontitle",
+      "paths": [
+        "frontend/app/admin/indexer/AdminIndexerHealthPanel.tsx",
+        "frontend/app/admin/indexer/AdminIndexerHealthPanel.tsx",
+        "frontend/app/admin/indexer/AdminIndexerReconcileJumpSection.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-037",
+      "pf": "PF-02",
+      "object": "button",
+      "label": ") : null}",
+      "paths": [
+        "frontend/app/admin/permissions/AdminConsoleRoleShellPreview.tsx",
+        "frontend/components/community/CommunityFeedDiscoveryChrome.tsx",
+        "frontend/components/community/CommunityFeedMasonryCard.tsx",
+        "frontend/components/community/CommunityVideoOverlayActionRail.tsx",
+        "frontend/components/community/CommunityVideoOverlayActionRail.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 7 files"
+    },
+    {
+      "id": "PF-AUTO-038",
+      "pf": "PF-02",
+      "object": "button",
+      "label": ": null}",
+      "paths": [
+        "frontend/components/auth/AuthL5Checkbox.tsx",
+        "frontend/components/community/CommunityFeedDesktopAside.tsx",
+        "frontend/components/community/CommunityVideoOverlayActionRail.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-039",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_retry",
+      "paths": [
+        "frontend/components/community/CommentDrawerComposer.tsx",
+        "frontend/components/community/CommentDrawerComposer.tsx",
+        "frontend/components/community/PostDetailDrawerFooterComposer.tsx",
+        "frontend/components/community/PostDetailDrawerFooterComposer.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-040",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_view_full",
+      "paths": [
+        "frontend/components/community/CommunityFeedCardCompact.tsx",
+        "frontend/components/community/CommunityFeedMasonryCard.tsx",
+        "frontend/components/community/PostDetailDrawerMediaZone.tsx",
+        "frontend/components/me/communityMeNotes/CommunityMeNotesPostThumbGrid.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-041",
+      "pf": "PF-02",
+      "object": "button",
+      "label": ")}",
+      "paths": [
+        "frontend/components/community/CommunityFeedCardCompact.tsx",
+        "frontend/components/community/CommunityFeedMasonryCard.tsx",
+        "frontend/components/community/CommunityVideoOverlayTopBar.tsx",
+        "frontend/components/community/CommunityVideoOverlayTopBar.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-042",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_search_placeholder",
+      "paths": [
+        "frontend/components/community/CommunityFeedComposerBlock.tsx",
+        "frontend/components/community/CommunityFeedDiscoveryChrome.tsx",
+        "frontend/components/community/CommunityFeedFilterBar.tsx",
+        "frontend/components/community/CommunityFeedFilterBarSearch.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-043",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_title",
+      "paths": [
+        "frontend/components/community/CommunityFeedDiscoveryChrome.tsx",
+        "frontend/components/community/CommunityFeedFilterBar.tsx",
+        "frontend/components/community/CommunityFeedFilterBarTabs.tsx",
+        "frontend/components/community/CommunityFeedRouteSuspense.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-044",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_filter_type_aria",
+      "paths": [
+        "frontend/components/community/CommunityFeedDiscoveryChrome.tsx",
+        "frontend/components/community/CommunityFeedDiscoveryChrome.tsx",
+        "frontend/components/community/CommunityFeedDiscoveryChrome.tsx",
+        "frontend/components/community/CommunityFeedFilterBar.tsx",
+        "frontend/components/community/CommunityFeedFilterBarChipFilters.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 5 files"
+    },
+    {
+      "id": "PF-AUTO-045",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_region_filter",
+      "paths": [
+        "frontend/components/community/CommunityFeedDiscoveryChrome.tsx",
+        "frontend/components/community/CommunityFeedFilterBar.tsx",
+        "frontend/components/community/CommunityFeedFilterBarChipFilters.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-046",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_hot_destinations",
+      "paths": [
+        "frontend/components/community/CommunityFeedDiscoveryChrome.tsx",
+        "frontend/components/community/CommunityFeedFilterBar.tsx",
+        "frontend/components/community/CommunityFeedFilterBarChipFilters.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-047",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_feed_loading_hint",
+      "paths": [
+        "frontend/components/community/CommunityFeedList.tsx",
+        "frontend/components/community/FeedSkeleton.tsx",
+        "frontend/components/community/FeedSkeleton.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-048",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_publish",
+      "paths": [
+        "frontend/components/community/CommunityFeedMain.tsx",
+        "frontend/components/community/CommunityFeedMainPageChrome.tsx",
+        "frontend/components/community/CommunityRouteShellMobileBottomNav.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-049",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_close",
+      "paths": [
+        "frontend/components/community/CommunityMeQuickLinksDrawer.tsx",
+        "frontend/components/community/CommunityMeQuickLinksDrawer.tsx",
+        "frontend/components/community/CommunitySupportMenu.tsx",
+        "frontend/components/community/CommunityVideoOverlayCommentSheet.tsx",
+        "frontend/components/community/CommunityVideoOverlayCommentSheet.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 7 files"
+    },
+    {
+      "id": "PF-AUTO-050",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "community_nav_tabs_aria",
+      "paths": [
+        "frontend/components/community/CommunityRouteShell.tsx",
+        "frontend/components/community/CommunityRouteShell.tsx",
+        "frontend/components/community/CommunityRouteShellInner.tsx",
+        "frontend/components/community/CommunityRouteShellInner.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-051",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "steward_workbench_stake_aria",
+      "paths": [
+        "frontend/components/governance/StewardWorkbenchStakingGateCard.tsx",
+        "frontend/components/steward/StewardTtgStakeManagePanel.tsx",
+        "frontend/components/steward/StewardTtgStakeManagePanel.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 3 files"
+    },
+    {
+      "id": "PF-AUTO-052",
+      "pf": "PF-02",
+      "object": "button",
+      "label": "order_protocolzonearia",
+      "paths": [
+        "frontend/components/escrow/EscrowDetail/EscrowDetailLoaded.tsx",
+        "frontend/components/escrow/EscrowDetail/EscrowDetailLoadErrorView.tsx",
+        "frontend/components/escrow/EscrowDetail/EscrowDetailSkeleton.tsx",
+        "frontend/components/escrow/EscrowDetail/index.tsx"
+      ],
+      "suggested_verdict": "MERGE",
+      "severity": "P1",
+      "rationale": "Label repeated in 4 files"
+    },
+    {
+      "id": "PF-AUTO-053",
+      "pf": "PF-11",
+      "object": "nav_entry",
+      "label": "Hub must not duplicate: /orders",
+      "paths": [
+        "/orders",
+        "/me/identities"
+      ],
+      "suggested_verdict": "KEEP",
+      "severity": "P1",
+      "rationale": "account-nav-page-tracker IA rule — verify compliance"
+    },
+    {
+      "id": "PF-AUTO-054",
+      "pf": "PF-11",
+      "object": "nav_entry",
+      "label": "Hub must not duplicate: /me/settings/profile",
+      "paths": [
+        "/me/settings/profile",
+        "/me/identities"
+      ],
+      "suggested_verdict": "KEEP",
+      "severity": "P1",
+      "rationale": "account-nav-page-tracker IA rule — verify compliance"
+    },
+    {
+      "id": "PF-AUTO-055",
+      "pf": "PF-11",
+      "object": "nav_entry",
+      "label": "Hub must not duplicate: /community/me",
+      "paths": [
+        "/community/me",
+        "/me/identities"
+      ],
+      "suggested_verdict": "KEEP",
+      "severity": "P1",
+      "rationale": "account-nav-page-tracker IA rule — verify compliance"
+    },
+    {
+      "id": "PF-AUTO-056",
+      "pf": "PF-11",
+      "object": "nav_entry",
+      "label": "Hub must not duplicate: /community/me/posts",
+      "paths": [
+        "/community/me/posts",
+        "/me/identities"
+      ],
+      "suggested_verdict": "KEEP",
+      "severity": "P1",
+      "rationale": "account-nav-page-tracker IA rule — verify compliance"
+    },
+    {
+      "id": "PF-AUTO-057",
+      "pf": "PF-11",
+      "object": "nav_entry",
+      "label": "Hub must not duplicate: /community/me/collects",
+      "paths": [
+        "/community/me/collects",
+        "/me/identities"
+      ],
+      "suggested_verdict": "KEEP",
+      "severity": "P1",
+      "rationale": "account-nav-page-tracker IA rule — verify compliance"
+    },
+    {
+      "id": "PF-AUTO-058",
+      "pf": "PF-11",
+      "object": "nav_entry",
+      "label": "Hub must not duplicate: /community/me/likes",
+      "paths": [
+        "/community/me/likes",
+        "/me/identities"
+      ],
+      "suggested_verdict": "KEEP",
+      "severity": "P1",
+      "rationale": "account-nav-page-tracker IA rule — verify compliance"
+    },
+    {
+      "id": "PF-AUTO-059",
+      "pf": "PF-11",
+      "object": "nav_entry",
+      "label": "Hub must not duplicate: /community/me/reports",
+      "paths": [
+        "/community/me/reports",
+        "/me/identities"
+      ],
+      "suggested_verdict": "KEEP",
+      "severity": "P1",
+      "rationale": "account-nav-page-tracker IA rule — verify compliance"
+    },
+    {
+      "id": "PF-AUTO-060",
+      "pf": "PF-11",
+      "object": "nav_entry",
+      "label": "Hub must not duplicate: /me/identities",
+      "paths": [
+        "/me/identities",
+        "/me/identities"
+      ],
+      "suggested_verdict": "KEEP",
+      "severity": "P1",
+      "rationale": "account-nav-page-tracker IA rule — verify compliance"
+    }
+  ],
+  "pf_dimensions": [
+    "PF-01",
+    "PF-02",
+    "PF-03",
+    "PF-04",
+    "PF-05",
+    "PF-06",
+    "PF-07",
+    "PF-08",
+    "PF-09",
+    "PF-10",
+    "PF-11",
+    "PF-12",
+    "PF-13",
+    "PF-14",
+    "PF-15",
+    "PF-16",
+    "PF-17",
+    "PF-18",
+    "PF-19",
+    "PF-20"
+  ],
+  "artifacts": [
+    "button-inventory-matrix.v1.json",
+    "complexity-score.v1.json",
+    "feature-retirement-list.v1.json",
+    "navigation-matrix.v1.json",
+    "permission-matrix.v1.json",
+    "product-weight-report.v1.json",
+    "redundancy-score.v1.json",
+    "role-matrix.v1.json",
+    "route-inventory-matrix.v1.json",
+    "top-100-product-findings.v1.json",
+    "top-20-merge-candidates.v1.json",
+    "top-20-refactor-candidates.v1.json",
+    "top-20-remove-candidates.v1.json",
+    "ux-debt-registry.v1.json",
+    "workflow-matrix.v1.json",
+    "simplification-roadmap.v1.md",
+    "EXECUTIVE-PRODUCT-HEALTH-REPORT.md"
+  ]
+}

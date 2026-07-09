@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T11:25:34Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "大阪",
+    "city_en": "Osaka",
+    "matrix_ids": [
+      "PH-JP-006-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-JP-006-FOOD",
+      "legacy_value": "大阪烧",
+      "poi_id": "b7673df7-d69f-446f-85b1-5b1c93d39200",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-osaka-okonomiyaki-guide-avatar.jpg",
+      "hero_file": "ocs-osaka-okonomiyaki-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-006-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

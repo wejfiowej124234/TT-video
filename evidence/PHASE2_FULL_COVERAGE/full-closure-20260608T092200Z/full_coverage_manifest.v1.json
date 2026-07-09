@@ -1,0 +1,187 @@
+{
+  "schema": "traveltrust.phase2_full_coverage_validation.v1",
+  "recorded_utc": "2026-06-08T09:46:08.220Z",
+  "stamp": "closure-20260608T092200Z",
+  "overall_verdict": "FAIL",
+  "failure_count": 1,
+  "feature_freeze": true,
+  "phase": "②",
+  "production_go": "NO",
+  "strict_policy": "all_checks_GO_no_PARTIAL_no_FAIL_no_uncovered",
+  "counts": {
+    "go": 40,
+    "fail": 2,
+    "partial": 0,
+    "total": 42
+  },
+  "checks": {
+    "P2FC-P00-baseline-freeze": {
+      "verdict": "GO",
+      "note": "12/12"
+    },
+    "P2FC-T01-five-role-chain": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-T02-rov-wave1-pack": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-T03-rov-wave2-pack": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-T04-governance-gap": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "TRACK-A-business": {
+      "verdict": "GO",
+      "note": "track"
+    },
+    "P2FC-E01-order-cancel": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-E02-duplicate-submit": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-E03-refund-webhook": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-E04-session-wallet-2fa": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-E05-network-interrupt": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-E06-cold-start-rollback": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "TRACK-B-exceptions": {
+      "verdict": "GO",
+      "note": "track"
+    },
+    "P2FC-D01-cross-domain-pg": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-D01b-pg-matrix": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-D02-order-escrow-pg": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-D03-community-pg": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-D04-growth-funnel": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "TRACK-C-consistency": {
+      "verdict": "GO",
+      "note": "track"
+    },
+    "P2FC-W01-web3-itinerary": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-W02-governance-uat": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-W03-community-deep": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-W04-community-moderation": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "TRACK-D-web3-community": {
+      "verdict": "GO",
+      "note": "track"
+    },
+    "P2FC-B01-chrome": {
+      "verdict": "GO",
+      "note": "chromium"
+    },
+    "P2FC-B02-edge": {
+      "verdict": "GO",
+      "note": "chromium"
+    },
+    "P2FC-B03-firefox": {
+      "verdict": "GO",
+      "note": "firefox"
+    },
+    "P2FC-B04-safari": {
+      "verdict": "GO",
+      "note": "webkit"
+    },
+    "P2FC-M01-ios-safari": {
+      "verdict": "GO",
+      "note": "mobile-safari"
+    },
+    "P2FC-M02-android-chrome": {
+      "verdict": "GO",
+      "note": "mobile-chrome"
+    },
+    "TRACK-E-browser-mobile": {
+      "verdict": "GO",
+      "note": "track"
+    },
+    "P2FC-F01-deps-normal": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-F02-deps-fault": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-F02b-deps-recovery": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-F03-deps-finalize": {
+      "verdict": "GO",
+      "note": "ok"
+    },
+    "P2FC-F04-email-probe": {
+      "verdict": "GO",
+      "note": "HTTP 200"
+    },
+    "P2FC-F05-storage-probe": {
+      "verdict": "GO",
+      "note": "HTTP 200"
+    },
+    "P2FC-F06-cdn-probe": {
+      "verdict": "GO",
+      "note": "HTTP 200"
+    },
+    "P2FC-F07-payment-probe": {
+      "verdict": "GO",
+      "note": "HTTP 200"
+    },
+    "TRACK-F-fault-deps": {
+      "verdict": "GO",
+      "note": "track"
+    },
+    "P2FC-S01-soak-72h": {
+      "verdict": "FAIL",
+      "note": "job=/d/TravelTrust-V1.1/evidence/P2FC_SOAK_72H/job-20260608T094544Z pid=95191 alive=1 ok_polls=1 fail_polls=0"
+    },
+    "0 required_sec=259200 — await COMPLETED.json": {
+      "note": ""
+    }
+  },
+  "report_ssot": "docs/handbook/engineering/179-Phase2-Full-Coverage-Validation-Report.md"
+}

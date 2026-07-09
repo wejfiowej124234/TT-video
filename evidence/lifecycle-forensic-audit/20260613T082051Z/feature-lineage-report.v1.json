@@ -1,0 +1,29 @@
+{
+  "schema": "traveltrust.feature_lineage_report.v1",
+  "centers": {
+    "publish": [
+      "/me/publish",
+      "/provider",
+      "/me/identities"
+    ],
+    "orders": [
+      "/orders",
+      "/escrow"
+    ],
+    "settings": [
+      "/me/settings",
+      "/me/settings/profile",
+      "/me/settings/trust"
+    ],
+    "governance": [
+      "/governance",
+      "/steward"
+    ],
+    "community": [
+      "/community"
+    ],
+    "admin": [
+      "/admin"
+    ]
+  }
+}

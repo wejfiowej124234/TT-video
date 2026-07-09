@@ -1,0 +1,31 @@
+{
+  "verdict": "PASS",
+  "probes": [
+    {
+      "probe_id": "pg.like_count",
+      "target": "2c50b659-a3d3-49de-baf2-6e1d5d007266",
+      "pg_value": "0",
+      "expected": ">=1",
+      "status": "WARN"
+    },
+    {
+      "probe_id": "pg.collect_count",
+      "target": "2c50b659-a3d3-49de-baf2-6e1d5d007266",
+      "pg_value": "0",
+      "expected": ">=1",
+      "status": "WARN"
+    },
+    {
+      "probe_id": "pg.comment_count",
+      "target": "2c50b659-a3d3-49de-baf2-6e1d5d007266",
+      "pg_value": "0",
+      "expected": ">=1",
+      "status": "WARN"
+    },
+    {
+      "probe_id": "pg.auth_audit_events",
+      "pg_value": "0",
+      "status": "WARN"
+    }
+  ]
+}

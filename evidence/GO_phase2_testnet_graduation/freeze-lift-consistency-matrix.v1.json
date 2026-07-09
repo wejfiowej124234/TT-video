@@ -1,0 +1,588 @@
+{
+  "schema": "traveltrust.freeze_lift_consistency_matrix.v1",
+  "at": "20260614T083606Z",
+  "ssot_target": "working_tree_committed_then_deployed",
+  "layers": [
+    "WT",
+    "HEAD",
+    "Staging",
+    "Evidence"
+  ],
+  "dimensions": [
+    "code",
+    "db_migrations",
+    "config",
+    "deploy_version",
+    "evidence_chain"
+  ],
+  "recon_audits": [
+    {
+      "id": "RECON-001",
+      "cells": {
+        "code": {
+          "WT": "delta",
+          "HEAD": "stale",
+          "Staging": "stale",
+          "Evidence": "partial"
+        },
+        "db_migrations": {
+          "WT": "ahead",
+          "HEAD": "stale",
+          "Staging": "unknown",
+          "Evidence": "no_stamp"
+        },
+        "config": {
+          "WT": "ahead",
+          "HEAD": "partial",
+          "Staging": "partial",
+          "Evidence": "n/a"
+        },
+        "deploy_version": {
+          "WT": "n/a",
+          "HEAD": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+          "Staging": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+          "Evidence": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328"
+        },
+        "evidence_chain": {
+          "WT": "n/a",
+          "HEAD": "pass_old_sha",
+          "Staging": "pass_old_sha",
+          "Evidence": "attested"
+        }
+      },
+      "target_after_flb": {
+        "code": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        },
+        "db_migrations": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        },
+        "config": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        },
+        "deploy_version": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        },
+        "evidence_chain": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        }
+      }
+    },
+    {
+      "id": "RECON-002",
+      "cells": {
+        "code": {
+          "WT": "fixed",
+          "HEAD": "wrong_selector",
+          "Staging": "wrong_selector",
+          "Evidence": "claims_pass"
+        },
+        "db_migrations": {
+          "WT": "n/a",
+          "HEAD": "n/a",
+          "Staging": "n/a",
+          "Evidence": "n/a"
+        },
+        "config": {
+          "WT": "n/a",
+          "HEAD": "n/a",
+          "Staging": "n/a",
+          "Evidence": "n/a"
+        },
+        "deploy_version": {
+          "WT": "n/a",
+          "HEAD": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+          "Staging": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+          "Evidence": "065942Z_pass"
+        },
+        "evidence_chain": {
+          "WT": "n/a",
+          "HEAD": "semantic_gap",
+          "Staging": "semantic_gap",
+          "Evidence": "TN-P1-010_PASS"
+        }
+      },
+      "target_after_flb": {
+        "code": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        },
+        "db_migrations": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        },
+        "config": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        },
+        "deploy_version": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        },
+        "evidence_chain": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        }
+      }
+    },
+    {
+      "id": "RECON-003",
+      "cells": {
+        "code": {
+          "WT": "n/a",
+          "HEAD": "n/a",
+          "Staging": "n/a",
+          "Evidence": "n/a"
+        },
+        "db_migrations": {
+          "WT": "10_files",
+          "HEAD": "missing",
+          "Staging": "likely_applied",
+          "Evidence": "no_stamp"
+        },
+        "config": {
+          "WT": "n/a",
+          "HEAD": "n/a",
+          "Staging": "n/a",
+          "Evidence": "n/a"
+        },
+        "deploy_version": {
+          "WT": "n/a",
+          "HEAD": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+          "Staging": "5ab1f8ba2229ccf20b99deb35e7ae1370954a328",
+          "Evidence": "D6_D10_PASS"
+        },
+        "evidence_chain": {
+          "WT": "n/a",
+          "HEAD": "incomplete",
+          "Staging": "incomplete",
+          "Evidence": "surfaces_pass"
+        }
+      },
+      "target_after_flb": {
+        "code": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        },
+        "db_migrations": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        },
+        "config": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        },
+        "deploy_version": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        },
+        "evidence_chain": {
+          "WT": "clean",
+          "HEAD": "match_wt",
+          "Staging": "match_head",
+          "Evidence": "match_head"
+        }
+      }
+    }
+  ],
+  "flb_execution": [
+    {
+      "id": "FLB-001",
+      "wave": 1,
+      "priority": "P0",
+      "title": "Commit TN-P1-010 Indexer bundle",
+      "resolves": [
+        "RECON-002"
+      ],
+      "dimensions": {
+        "code": "Commit mod.rs selectors + indexer.rs → HEAD",
+        "db_migrations": "—",
+        "config": "—",
+        "deploy_version": "New HEAD SHA (pre-deploy)",
+        "evidence_chain": "Do not rerun sprint; prepare FLB-010 append"
+      },
+      "scope_in": [
+        "crates/api/src/chain/mod.rs",
+        "crates/api/src/chain/indexer.rs"
+      ],
+      "scope_out": [
+        "New indexer features",
+        "Expanded test matrix",
+        "Soak/D6 rerun"
+      ],
+      "commands": [
+        "cargo test -p traveltrust-api",
+        "git commit -m \"fix(api): TN-P1-010 Sepolia escrow selectors + indexer\""
+      ],
+      "gate": "HEAD selectors match WT; tests green"
+    },
+    {
+      "id": "FLB-002",
+      "wave": 1,
+      "priority": "P0",
+      "title": "Migration inventory commit",
+      "resolves": [
+        "RECON-003"
+      ],
+      "dimensions": {
+        "code": "—",
+        "db_migrations": "git add 10 files; record staging _sqlx_migrations stamp",
+        "config": "—",
+        "deploy_version": "Same commit train as FLB-001/003",
+        "evidence_chain": "Write migration-stamp-staging.json"
+      },
+      "scope_in": [
+        "crates/api/migrations/20260607120000_cms_catalog_p1.sql",
+        "crates/api/migrations/20260607120100_cms_official_ops_p2.sql",
+        "crates/api/migrations/20260607120200_cms_growth_p3.sql",
+        "crates/api/migrations/20260607130000_cms_catalog_s2_004_pricing_tiers_media.sql",
+        "crates/api/migrations/20260607140000_growth_early_bird_g_s3.sql",
+        "crates/api/migrations/20260607150000_growth_airdrop_g_s6.sql",
+        "crates/api/migrations/20260608120000_sprint168_business_expansion.sql",
+        "crates/api/migrations/20260609120000_guides_hourly_rate_avatar_url.sql",
+        "crates/api/migrations/20260612120000_guides_public_title.sql",
+        "crates/api/migrations/20260613120000_guide_exit_requests.sql"
+      ],
+      "scope_out": [
+        "New migrations",
+        "Staging migrate unless drift detected"
+      ],
+      "commands": [
+        "git add crates/api/migrations/202606*.sql crates/api/migrations/20260613*.sql",
+        "fly proxy + psql SELECT max(version) FROM _sqlx_migrations → evidence"
+      ],
+      "gate": "10 files tracked; stamp JSON on file"
+    },
+    {
+      "id": "FLB-003",
+      "wave": 2,
+      "priority": "P0",
+      "title": "Commit CMS/Growth/Admin API + chain_off",
+      "resolves": [
+        "RECON-001"
+      ],
+      "dimensions": {
+        "code": "Untracked admin/catalog/growth routes + chain_off → HEAD",
+        "db_migrations": "Depends FLB-002",
+        "config": "—",
+        "deploy_version": "HEAD advances",
+        "evidence_chain": "—"
+      },
+      "scope_in": [
+        "crates/api/src/routes/admin/*",
+        "crates/api/src/routes/catalog/",
+        "crates/api/src/routes/growth/",
+        "crates/api/src/chain_off/*"
+      ],
+      "scope_out": [
+        "New API surfaces",
+        "04 spec expansion"
+      ],
+      "commands": [
+        "bash scripts/run-check-04-routes.sh"
+      ],
+      "gate": "04 routes exit 0"
+    },
+    {
+      "id": "FLB-004",
+      "wave": 2,
+      "priority": "P1",
+      "title": "Commit Admin + Governance FE",
+      "resolves": [
+        "RECON-001"
+      ],
+      "dimensions": {
+        "code": "frontend/app/admin/* + governance/* → HEAD",
+        "db_migrations": "—",
+        "config": "build.env.local sync if NEXT_PUBLIC_* changed",
+        "deploy_version": "HEAD advances",
+        "evidence_chain": "—"
+      },
+      "scope_in": [
+        "frontend/app/admin/",
+        "frontend/app/governance/"
+      ],
+      "scope_out": [
+        "Five-main routes UI",
+        "New Playwright suites"
+      ],
+      "commands": [
+        "Affected vitest contracts only"
+      ],
+      "gate": "No five-main freeze violations"
+    },
+    {
+      "id": "FLB-005",
+      "wave": 3,
+      "priority": "P1",
+      "title": "Fly env · meta exposure",
+      "resolves": [
+        "RECON-007",
+        "RECON-008",
+        "RECON-009"
+      ],
+      "dimensions": {
+        "code": "—",
+        "db_migrations": "—",
+        "config": "GOVERNANCE_VOTES_TOKEN · STAKING_ADDRESS · TRAVELTRUST_DEPLOYED_AT on Fly",
+        "deploy_version": "Same release as FLB-006",
+        "evidence_chain": "curl /meta snapshot in evidence"
+      },
+      "scope_in": [
+        "Fly secrets sync only"
+      ],
+      "scope_out": [
+        "New env vars",
+        "Production keys"
+      ],
+      "commands": [
+        "scripts/dev/phase2-staging-fly-deploy-and-sync.sh (secrets leg)",
+        "curl /meta"
+      ],
+      "gate": "meta gov token + staking + deployed_at non-null"
+    },
+    {
+      "id": "FLB-006",
+      "wave": 3,
+      "priority": "P0",
+      "title": "Deploy tt-api-staging",
+      "resolves": [
+        "RECON-001",
+        "RECON-002"
+      ],
+      "dimensions": {
+        "code": "WT→HEAD committed code live",
+        "db_migrations": "Verify no pending migrate on staging",
+        "config": "FLB-005 applied",
+        "deploy_version": "Staging git_sha = post-FLB HEAD",
+        "evidence_chain": "Read-only reconcile probe"
+      },
+      "scope_in": [
+        "bash scripts/dev/phase2-staging-fly-deploy-and-sync.sh"
+      ],
+      "scope_out": [
+        "Feature flags",
+        "New smoke suites"
+      ],
+      "commands": [
+        "phase2-staging-fly-deploy-and-sync.sh",
+        "curl /meta",
+        "indexer-reconcile persist=false"
+      ],
+      "gate": "compound_pass=true; git_sha match"
+    },
+    {
+      "id": "FLB-007",
+      "wave": 3,
+      "priority": "P1",
+      "title": "Deploy tt-web-staging",
+      "resolves": [
+        "RECON-001"
+      ],
+      "dimensions": {
+        "code": "FE HEAD live",
+        "db_migrations": "—",
+        "config": "NEXT_PUBLIC_* from build.env.local",
+        "deploy_version": "Same SHA family as FLB-006",
+        "evidence_chain": "check-staging-web-alignment log"
+      },
+      "scope_in": [
+        "bash scripts/dev/deploy-tt-web-staging.sh"
+      ],
+      "scope_out": [
+        "Five-main UI changes",
+        "New E2E matrix"
+      ],
+      "commands": [
+        "deploy-tt-web-staging.sh",
+        "check-staging-web-alignment.sh"
+      ],
+      "gate": "FAIL=0"
+    },
+    {
+      "id": "FLB-008",
+      "wave": 4,
+      "priority": "P2",
+      "title": "Contracts artifacts commit",
+      "resolves": [
+        "RECON-011"
+      ],
+      "dimensions": {
+        "code": "contracts/src + abi → HEAD",
+        "db_migrations": "—",
+        "config": "registry yaml if address change",
+        "deploy_version": "—",
+        "evidence_chain": "spine audit OK"
+      },
+      "scope_in": [
+        "contracts/ untracked if in scope"
+      ],
+      "scope_out": [
+        "New broadcasts",
+        "Mainnet"
+      ],
+      "commands": [
+        "phase2-sepolia-spine-audit.sh"
+      ],
+      "gate": "TT_PHASE2_SEPOLIA_SPINE_AUDIT: OK"
+    },
+    {
+      "id": "FLB-009",
+      "wave": 5,
+      "priority": "P0",
+      "title": "Reconciliation verification",
+      "resolves": [
+        "RECON-001",
+        "RECON-002",
+        "RECON-003"
+      ],
+      "dimensions": {
+        "code": "WT clean or = HEAD",
+        "db_migrations": "git complete + stamp match",
+        "config": "meta aligned",
+        "deploy_version": "HEAD=Staging",
+        "evidence_chain": "manifest git_sha"
+      },
+      "scope_in": [
+        "run-local-ssot-reconciliation-audit.sh",
+        "run-phase1-phase2-full-alignment-audit.sh"
+      ],
+      "scope_out": [
+        "New audit dimensions",
+        "Full ISS-007 matrix",
+        "Soak/D6 rerun"
+      ],
+      "commands": [
+        "run-local-ssot-reconciliation-audit.sh",
+        "emit-freeze-lift-execution-plan.mjs"
+      ],
+      "gate": "TT_LOCAL_SSOT_RECONCILIATION: RECONCILED"
+    },
+    {
+      "id": "FLB-010",
+      "wave": 5,
+      "priority": "P2",
+      "title": "Evidence SHA refresh",
+      "resolves": [
+        "RECON-002"
+      ],
+      "dimensions": {
+        "code": "—",
+        "db_migrations": "—",
+        "config": "—",
+        "deploy_version": "Evidence records deployed SHA",
+        "evidence_chain": "manifest + TN-P1-010 STATUS append"
+      },
+      "scope_in": [
+        "testnet-perfect-validation-manifest.v1.json",
+        "tn-p1-010 STATUS line"
+      ],
+      "scope_out": [
+        "Rerun TN-P1-010 sprint",
+        "Rerun D6",
+        "Rerun soak"
+      ],
+      "commands": [
+        "Update manifest anchors only"
+      ],
+      "gate": "Evidence git_sha = Staging /meta"
+    }
+  ],
+  "convergence_definition": {
+    "single_ssot": "One git SHA S: WT empty, HEAD=S, Staging.meta.git_sha=S, Evidence.manifest.git_sha=S",
+    "forbidden": [
+      "new features",
+      "audit standard expansion",
+      "expanded test scope beyond FLB gates",
+      "rerun TN-P1-009 soak",
+      "rerun D6 52-surface",
+      "full TN-P1-010 sprint rerun"
+    ]
+  },
+  "execution_timeline": [
+    {
+      "phase": "T0",
+      "trigger": "TT_TESTNET_GRADUATION:CLOSED",
+      "action": "Owner sign-off complete"
+    },
+    {
+      "phase": "T1",
+      "window": "Day 0",
+      "flb": [
+        "FLB-001",
+        "FLB-002"
+      ],
+      "type": "commit-only"
+    },
+    {
+      "phase": "T2",
+      "window": "Day 0-1",
+      "flb": [
+        "FLB-003",
+        "FLB-004"
+      ],
+      "type": "commit-only"
+    },
+    {
+      "phase": "T3",
+      "window": "Day 1",
+      "flb": [
+        "FLB-005",
+        "FLB-006",
+        "FLB-007"
+      ],
+      "type": "deploy"
+    },
+    {
+      "phase": "T4",
+      "window": "Day 1-2",
+      "flb": [
+        "FLB-008"
+      ],
+      "type": "optional commit"
+    },
+    {
+      "phase": "T5",
+      "window": "Day 2",
+      "flb": [
+        "FLB-009",
+        "FLB-010"
+      ],
+      "type": "verify + evidence refresh"
+    }
+  ],
+  "grep_plan": "TT_FREEZE_LIFT_EXECUTION_PLAN: ACTIVE 20260614T083606Z"
+}

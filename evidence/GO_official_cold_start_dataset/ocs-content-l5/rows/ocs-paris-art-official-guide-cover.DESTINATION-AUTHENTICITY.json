@@ -1,0 +1,132 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_review.v1",
+  "stamp_utc": "20260704T143655Z",
+  "filename": "ocs-paris-art-official-guide-cover.jpg",
+  "chain_id": "paris-art",
+  "city": "巴黎",
+  "country_code": "FR",
+  "country_label": "法国",
+  "slot": "official-guide-cover",
+  "surface": "Official Guide",
+  "manifest_snapshot": {
+    "chain_id": "paris-art",
+    "city": "巴黎",
+    "country_code": "FR",
+    "country_label": "法国",
+    "chain_tags": [
+      "艺术",
+      "博物馆"
+    ],
+    "official_guide.title": "巴黎艺术博物馆两日官方指南",
+    "official_guide.destination": "巴黎",
+    "official_guide.body": "经典馆藏顺序与预约窗口，附官方推荐休息点。",
+    "official_guide.tags": [
+      "巴黎",
+      "艺术",
+      "官方攻略"
+    ],
+    "official_guide.cover_url": "/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+  },
+  "manifest_field_alignment": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "matrix_city_matches_manifest",
+        "pass": true,
+        "detail": "matrix=巴黎 manifest=巴黎"
+      },
+      {
+        "id": "country_code_present",
+        "pass": true,
+        "detail": "FR"
+      },
+      {
+        "id": "copy_label_non_empty",
+        "pass": true,
+        "detail": "巴黎艺术博物馆两日官方指南"
+      },
+      {
+        "id": "copy_label_contains_city_or_chain_theme",
+        "pass": true,
+        "detail": "city in copy_label"
+      },
+      {
+        "id": "official_guide_destination_matches_city",
+        "pass": true,
+        "detail": "巴黎"
+      }
+    ],
+    "requirement": "图片与 Manifest 全字段 100% 同城同主题对齐"
+  },
+  "destination_authenticity_checklist": {
+    "architecture": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "streetscape": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "clothing": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "language_signage": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "transportation": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "natural_environment": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "food_dining": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "commercial_form": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    },
+    "cultural_elements": {
+      "pass": true,
+      "belongs_to_city": "巴黎",
+      "belongs_to_country": "法国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 巴黎 (法国). No cross-city/country/culture mixing."
+    }
+  },
+  "prohibited": {
+    "cross_country_elements": false,
+    "cross_city_elements": false,
+    "cross_culture_mixing": false
+  },
+  "TT_DESTINATION_AUTHENTICITY_REVIEW": "PASS"
+}

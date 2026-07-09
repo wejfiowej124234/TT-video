@@ -1,0 +1,35 @@
+# Deployment Dashboard · FUTURE (Phase ② end → Phase ③)
+#
+# NOT active until Phase ② Exit Review approaching completion.
+# Activate when daily focus shifts to: broadcast · registry · verify · rollback.
+#
+#   node scripts/dev/run-deployment-dashboard.cjs   # stub until Phase ③
+
+schema: traveltrust.deployment_dashboard.v1
+version: 1
+status: NOT_ACTIVE
+activate_when:
+  - PHASE2_EXIT_REVIEW_PASS
+  - MAINNET_DEPLOYMENT_PACKAGE_GENERATED
+  - TRAVELTRUST_MAINNET_PHASE3_AUTHORIZED
+
+future_script: scripts/dev/run-deployment-dashboard.cjs
+future_evidence: evidence/GO_production_readiness/deployment-dashboard/
+
+purpose: >
+  Phase ③ daily cockpit: which contracts to broadcast today, registry updates,
+  verify steps, rollback readiness. Not feature validation — deployment ops.
+
+future_waves:
+  wave_1:
+    - Governance
+    - Escrow
+    - Treasury
+  wave_2:
+    - CountryPool
+  wave_3:
+    - Mainnet cutover
+
+status_enum: [PASS, IN_PROGRESS, BLOCKED, WAIT, NOT_STARTED]
+
+note: Do NOT implement until Phase ② near exit. Use Project/Web3/Operations dashboards now.

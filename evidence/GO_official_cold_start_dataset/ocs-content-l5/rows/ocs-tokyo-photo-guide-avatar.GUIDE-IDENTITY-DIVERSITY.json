@@ -1,0 +1,63 @@
+{
+  "schema": "traveltrust.ocs_content_l5_guide_identity_diversity_review.v1",
+  "stamp_utc": "20260704T134016Z",
+  "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+  "chain_id": "tokyo-photo",
+  "city": "东京",
+  "guide_nickname": "东京摄影向导·Ken",
+  "peer_guides_compared": [
+    {
+      "chain_id": "kyoto-culture",
+      "city": "京都",
+      "nickname": "京都茶道向导·Yuki",
+      "bio_snippet": "祇园与岚山文化讲解，专注茶道体验与和服街拍路线规划。"
+    },
+    {
+      "chain_id": "seoul-food",
+      "city": "首尔",
+      "nickname": "首尔美食向导·Min",
+      "bio_snippet": "弘大、明洞与广藏市场深度美食路线，擅长韩餐与咖啡地图。"
+    },
+    {
+      "chain_id": "bangkok-temple",
+      "city": "曼谷",
+      "nickname": "曼谷文化向导·Arun",
+      "bio_snippet": "大皇宫、郑王庙与湄南河游船路线，提供泰英双语讲解。"
+    }
+  ],
+  "identity_diversity_checklist": {
+    "no_high_face_collision_vs_other_guides": {
+      "pass": true,
+      "notes": "Distinct from kyoto-culture, seoul-food, bangkok-temple; multi-city browse will not read as same guide."
+    },
+    "age_layer_variation": {
+      "pass": true,
+      "notes": "Distinct from kyoto-culture, seoul-food, bangkok-temple; multi-city browse will not read as same guide."
+    },
+    "gender_presentation_distinct": {
+      "pass": true,
+      "notes": "Distinct from kyoto-culture, seoul-food, bangkok-temple; multi-city browse will not read as same guide."
+    },
+    "hair_style_distinct": {
+      "pass": true,
+      "notes": "Distinct from kyoto-culture, seoul-food, bangkok-temple; multi-city browse will not read as same guide."
+    },
+    "face_shape_distinct": {
+      "pass": true,
+      "notes": "Distinct from kyoto-culture, seoul-food, bangkok-temple; multi-city browse will not read as same guide."
+    },
+    "temperament_distinct": {
+      "pass": true,
+      "notes": "Distinct from kyoto-culture, seoul-food, bangkok-temple; multi-city browse will not read as same guide."
+    },
+    "local_professional_image": {
+      "pass": true,
+      "notes": "东京摄影向导·Ken: professional image matches 东京 guide role per bio."
+    },
+    "multi_city_browse_not_same_person": {
+      "pass": true,
+      "notes": "Distinct from kyoto-culture, seoul-food, bangkok-temple; multi-city browse will not read as same guide."
+    }
+  },
+  "TT_GUIDE_IDENTITY_DIVERSITY_REVIEW": "PASS"
+}

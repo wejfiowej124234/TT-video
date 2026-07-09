@@ -1,0 +1,674 @@
+{
+  "schema": "traveltrust.content_ownership_inventory_report.v2",
+  "stamp_utc": "20260705T031000Z",
+  "inventory_type": "read_only",
+  "not_governance": true,
+  "inventory_path": "data/catalog/content-ownership-inventory.v1.yaml",
+  "inventory_schema": "traveltrust.content_ownership_inventory.v2",
+  "policy_ssot": "docs/runbook/TT-CONTENT-OWNERSHIP-POLICY.md",
+  "execution_links": {
+    "per_business_closed_loop": {
+      "flow": [
+        "inventory",
+        "p0_pages",
+        "evidence",
+        "signoff"
+      ],
+      "criticality_order": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "p0_entry_ids": [
+        "home-destination-ambient",
+        "home-hero-ocs",
+        "home-itinerary-preview",
+        "home-featured-ocs",
+        "market-main",
+        "market-order-cover",
+        "market-guide-avatar",
+        "market-ocs-feed",
+        "community-main",
+        "community-feed-ocs-promo",
+        "community-explore",
+        "guides-list-avatar",
+        "dest-ambient-all-countries",
+        "auth-login",
+        "auth-register",
+        "escrow-order",
+        "provider-register"
+      ]
+    },
+    "cms_operation": {
+      "flow": [
+        "inventory",
+        "owner",
+        "modify_entry",
+        "publish",
+        "verify",
+        "evidence",
+        "health_score"
+      ]
+    },
+    "production_go": {
+      "requires": [
+        "per_signoff",
+        "cms_ops_maturity"
+      ]
+    }
+  },
+  "summary": {
+    "categories_checked": 9,
+    "pages_modules_checked": 39,
+    "image_consumption_points": 34,
+    "by_current_status": {
+      "live": 11,
+      "draft": 2,
+      "frozen": 11,
+      "ops_maintenance": 11,
+      "redirect": 1,
+      "not_started": 3
+    },
+    "by_business_criticality": {
+      "P0": 21,
+      "P1": 13,
+      "P2": 5
+    }
+  },
+  "per_p0_pages": [
+    {
+      "id": "home-hero-ocs",
+      "page_module": "Home Hero / Campaign Highlights",
+      "route": "/",
+      "owner": "OPS",
+      "current_status": "live",
+      "current_status_label": "Live",
+      "modify_entry": "/admin/official/public-operations · /admin/official/cold-start"
+    },
+    {
+      "id": "home-destination-ambient",
+      "page_module": "首页国家背景 · Destination Ambient",
+      "route": "/",
+      "owner": "CMS",
+      "current_status": "draft",
+      "current_status_label": "Draft",
+      "modify_entry": "/admin/content/landing-ambient"
+    },
+    {
+      "id": "home-itinerary-preview",
+      "page_module": "创新行程预览卡",
+      "route": "/",
+      "owner": "API",
+      "current_status": "live",
+      "current_status_label": "Live",
+      "modify_entry": "Backend itineraries mock · locales"
+    },
+    {
+      "id": "home-featured-ocs",
+      "page_module": "Featured / 冷启动展示条",
+      "route": "/",
+      "owner": "OPS",
+      "current_status": "live",
+      "current_status_label": "Live",
+      "modify_entry": "/admin/official/public-operations"
+    },
+    {
+      "id": "market-main",
+      "page_module": "Market 主页面",
+      "route": "/market",
+      "owner": "API",
+      "current_status": "live",
+      "current_status_label": "Live",
+      "modify_entry": "Backend discover · locales · /admin/official/public-operations (OCS feed)"
+    },
+    {
+      "id": "market-order-cover",
+      "page_module": "订单卡封面",
+      "route": "/market",
+      "owner": "API",
+      "current_status": "ops_maintenance",
+      "current_status_label": "Ops Maintenance",
+      "modify_entry": "Backend discover seed · marketMediaFallback.ts"
+    },
+    {
+      "id": "market-guide-avatar",
+      "page_module": "向导卡头像",
+      "route": "/market",
+      "owner": "OCS",
+      "current_status": "frozen",
+      "current_status_label": "Frozen",
+      "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+    },
+    {
+      "id": "market-ocs-feed",
+      "page_module": "Market Feed 冷启动",
+      "route": "/market",
+      "owner": "OPS",
+      "current_status": "live",
+      "current_status_label": "Live",
+      "modify_entry": "/admin/official/public-operations"
+    },
+    {
+      "id": "community-main",
+      "page_module": "Community 主 Feed",
+      "route": "/community",
+      "owner": "API",
+      "current_status": "live",
+      "current_status_label": "Live",
+      "modify_entry": "PublishDrawer · /admin/community"
+    },
+    {
+      "id": "community-feed-ocs-promo",
+      "page_module": "Feed OCS 推广条",
+      "route": "/community",
+      "owner": "OPS",
+      "current_status": "live",
+      "current_status_label": "Live",
+      "modify_entry": "/admin/official/public-operations"
+    },
+    {
+      "id": "community-explore",
+      "page_module": "Explore",
+      "route": "/community/explore",
+      "owner": "API",
+      "current_status": "ops_maintenance",
+      "current_status_label": "Ops Maintenance",
+      "modify_entry": "CMS geo backend · frozen UI"
+    },
+    {
+      "id": "guides-list-avatar",
+      "page_module": "向导列表",
+      "route": "/guides",
+      "owner": "OCS",
+      "current_status": "frozen",
+      "current_status_label": "Frozen",
+      "modify_entry": "/admin/official/guides (frozen)"
+    },
+    {
+      "id": "dest-ambient-all-countries",
+      "page_module": "十国 Destination Ambient",
+      "route": "/ (country selection)",
+      "owner": "CMS",
+      "current_status": "draft",
+      "current_status_label": "Draft",
+      "modify_entry": "/admin/content/landing-ambient"
+    },
+    {
+      "id": "auth-login",
+      "page_module": "登录",
+      "route": "/auth/login",
+      "owner": "API",
+      "current_status": "frozen",
+      "current_status_label": "Frozen",
+      "modify_entry": "locales · backend auth (AUTH-LOGIN-UI-FREEZE)"
+    },
+    {
+      "id": "auth-register",
+      "page_module": "注册",
+      "route": "/auth/register",
+      "owner": "API",
+      "current_status": "frozen",
+      "current_status_label": "Frozen",
+      "modify_entry": "locales · backend auth"
+    },
+    {
+      "id": "escrow-order",
+      "page_module": "Escrow 订单页",
+      "route": "/escrow/[id]",
+      "owner": "API",
+      "current_status": "ops_maintenance",
+      "current_status_label": "Ops Maintenance",
+      "modify_entry": "Backend orders"
+    },
+    {
+      "id": "provider-register",
+      "page_module": "商家入驻",
+      "route": "/provider/register",
+      "owner": "API",
+      "current_status": "frozen",
+      "current_status_label": "Frozen",
+      "modify_entry": "/provider/register · /admin/provider-applications"
+    }
+  ],
+  "items_by_criticality": {
+    "P0": [
+      {
+        "id": "home-hero-ocs",
+        "page_module": "Home Hero / Campaign Highlights",
+        "route": "/",
+        "owner": "OPS",
+        "current_status": "live",
+        "modify_entry": "/admin/official/public-operations · /admin/official/cold-start"
+      },
+      {
+        "id": "home-destination-ambient",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "route": "/",
+        "owner": "CMS",
+        "current_status": "draft",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      {
+        "id": "home-itinerary-preview",
+        "page_module": "创新行程预览卡",
+        "route": "/",
+        "owner": "API",
+        "current_status": "live",
+        "modify_entry": "Backend itineraries mock · locales"
+      },
+      {
+        "id": "home-featured-ocs",
+        "page_module": "Featured / 冷启动展示条",
+        "route": "/",
+        "owner": "OPS",
+        "current_status": "live",
+        "modify_entry": "/admin/official/public-operations"
+      },
+      {
+        "id": "market-main",
+        "page_module": "Market 主页面",
+        "route": "/market",
+        "owner": "API",
+        "current_status": "live",
+        "modify_entry": "Backend discover · locales · /admin/official/public-operations (OCS feed)"
+      },
+      {
+        "id": "market-backdrop",
+        "page_module": "Market 页身氛围 (CSS)",
+        "route": "/market",
+        "owner": "FE",
+        "current_status": "frozen",
+        "modify_entry": "MarketAmbientBackdrop.tsx (UI frozen)"
+      },
+      {
+        "id": "market-order-cover",
+        "page_module": "订单卡封面",
+        "route": "/market",
+        "owner": "API",
+        "current_status": "ops_maintenance",
+        "modify_entry": "Backend discover seed · marketMediaFallback.ts"
+      },
+      {
+        "id": "market-guide-avatar",
+        "page_module": "向导卡头像",
+        "route": "/market",
+        "owner": "OCS",
+        "current_status": "frozen",
+        "modify_entry": "/admin/official/guides · OCS manifest (frozen)"
+      },
+      {
+        "id": "market-ocs-feed",
+        "page_module": "Market Feed 冷启动",
+        "route": "/market",
+        "owner": "OPS",
+        "current_status": "live",
+        "modify_entry": "/admin/official/public-operations"
+      },
+      {
+        "id": "market-discover-alias",
+        "page_module": "Discover 别名",
+        "route": "/discover",
+        "owner": "FE",
+        "current_status": "redirect",
+        "modify_entry": "app/discover/page.tsx"
+      },
+      {
+        "id": "community-main",
+        "page_module": "Community 主 Feed",
+        "route": "/community",
+        "owner": "API",
+        "current_status": "live",
+        "modify_entry": "PublishDrawer · /admin/community"
+      },
+      {
+        "id": "community-feed-ocs-promo",
+        "page_module": "Feed OCS 推广条",
+        "route": "/community",
+        "owner": "OPS",
+        "current_status": "live",
+        "modify_entry": "/admin/official/public-operations"
+      },
+      {
+        "id": "community-explore",
+        "page_module": "Explore",
+        "route": "/community/explore",
+        "owner": "API",
+        "current_status": "ops_maintenance",
+        "modify_entry": "CMS geo backend · frozen UI"
+      },
+      {
+        "id": "community-detail-media",
+        "page_module": "Post / User 媒体",
+        "route": "/community/post/[id] · /community/user/[id]",
+        "owner": "API",
+        "current_status": "live",
+        "modify_entry": "User publish · /admin/community"
+      },
+      {
+        "id": "community-shell",
+        "page_module": "Community 壳 UI",
+        "route": "/community/*",
+        "owner": "FE",
+        "current_status": "frozen",
+        "modify_entry": "i18n/a11y only (COMMUNITY-PHASE1-FREEZE)"
+      },
+      {
+        "id": "guides-list-avatar",
+        "page_module": "向导列表",
+        "route": "/guides",
+        "owner": "OCS",
+        "current_status": "frozen",
+        "modify_entry": "/admin/official/guides (frozen)"
+      },
+      {
+        "id": "dest-ambient-all-countries",
+        "page_module": "十国 Destination Ambient",
+        "route": "/ (country selection)",
+        "owner": "CMS",
+        "current_status": "draft",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      {
+        "id": "auth-login",
+        "page_module": "登录",
+        "route": "/auth/login",
+        "owner": "API",
+        "current_status": "frozen",
+        "modify_entry": "locales · backend auth (AUTH-LOGIN-UI-FREEZE)"
+      },
+      {
+        "id": "auth-register",
+        "page_module": "注册",
+        "route": "/auth/register",
+        "owner": "API",
+        "current_status": "frozen",
+        "modify_entry": "locales · backend auth"
+      },
+      {
+        "id": "escrow-order",
+        "page_module": "Escrow 订单页",
+        "route": "/escrow/[id]",
+        "owner": "API",
+        "current_status": "ops_maintenance",
+        "modify_entry": "Backend orders"
+      },
+      {
+        "id": "provider-register",
+        "page_module": "商家入驻",
+        "route": "/provider/register",
+        "owner": "API",
+        "current_status": "frozen",
+        "modify_entry": "/provider/register · /admin/provider-applications"
+      }
+    ],
+    "P1": [
+      {
+        "id": "market-provider-listing",
+        "page_module": "商家橱窗 Listing",
+        "route": "/market/provider",
+        "owner": "CMS",
+        "current_status": "ops_maintenance",
+        "modify_entry": "MerchantShowcaseStudio · /admin/content"
+      },
+      {
+        "id": "market-acquisition-listing",
+        "page_module": "收购 Listing",
+        "route": "/market/acquisition",
+        "owner": "CMS",
+        "current_status": "ops_maintenance",
+        "modify_entry": "AcquisitionCarryStudio"
+      },
+      {
+        "id": "itinerary-new",
+        "page_module": "独立行程创建",
+        "route": "/itinerary/new",
+        "owner": "API",
+        "current_status": "ops_maintenance",
+        "modify_entry": "Backend mock · /admin/official/itinerary-templates"
+      },
+      {
+        "id": "guide-detail",
+        "page_module": "向导详情",
+        "route": "/guides/[id]",
+        "owner": "OCS",
+        "current_status": "frozen",
+        "modify_entry": "/me/identities/guide/settings · /admin/guides"
+      },
+      {
+        "id": "official-guide-community",
+        "page_module": "官方向导 Community 贴",
+        "route": "/community?official_guide=",
+        "owner": "OCS",
+        "current_status": "frozen",
+        "modify_entry": "/admin/official/guides"
+      },
+      {
+        "id": "guide-workbench",
+        "page_module": "向导工作台",
+        "route": "/guide",
+        "owner": "API",
+        "current_status": "ops_maintenance",
+        "modify_entry": "/guide/* operator UI"
+      },
+      {
+        "id": "dest-catalog-countries",
+        "page_module": "国家/城市 Catalog",
+        "route": "global adapters",
+        "owner": "CMS",
+        "current_status": "ops_maintenance",
+        "modify_entry": "/admin/content/countries · cities"
+      },
+      {
+        "id": "dest-poi-images",
+        "page_module": "行程/POI 配图",
+        "route": "/ · /itinerary/new · /escrow/[id]",
+        "owner": "CMS",
+        "current_status": "not_started",
+        "modify_entry": "/admin/content/poi-images · pois"
+      },
+      {
+        "id": "hotel-transport-stock",
+        "page_module": "酒店/交通库存图",
+        "route": "market/itinerary/escrow adapters",
+        "owner": "CMS",
+        "current_status": "not_started",
+        "modify_entry": "/admin/content/hotel-tiers · transport-region-rules"
+      },
+      {
+        "id": "admin-public-ops",
+        "page_module": "Public Operations",
+        "route": "/admin/official/public-operations",
+        "owner": "OPS",
+        "current_status": "live",
+        "modify_entry": "/admin/official/public-operations"
+      },
+      {
+        "id": "admin-ocs-cold-start",
+        "page_module": "OCS Cold Start",
+        "route": "/admin/official/cold-start",
+        "owner": "OCS",
+        "current_status": "frozen",
+        "modify_entry": "/admin/official/cold-start (frozen)"
+      },
+      {
+        "id": "admin-cms-hub",
+        "page_module": "CMS Admin",
+        "route": "/admin/content/*",
+        "owner": "CMS",
+        "current_status": "ops_maintenance",
+        "modify_entry": "/admin/content/*"
+      },
+      {
+        "id": "admin-community-mod",
+        "page_module": "Community 审核",
+        "route": "/admin/community/*",
+        "owner": "API",
+        "current_status": "ops_maintenance",
+        "modify_entry": "/admin/community/*"
+      }
+    ],
+    "P2": [
+      {
+        "id": "traveltrust-page",
+        "page_module": "/traveltrust 品牌页",
+        "route": "/traveltrust",
+        "owner": "API",
+        "current_status": "frozen",
+        "modify_entry": "locales · env deploy (UI frozen)"
+      },
+      {
+        "id": "traveltrust-video",
+        "page_module": "品牌视频 / Poster",
+        "route": "/ · /traveltrust",
+        "owner": "Media",
+        "current_status": "not_started",
+        "modify_entry": "deploy media · Media Platform (future)"
+      },
+      {
+        "id": "traveltrust-announcements",
+        "page_module": "Pulse / Announcements",
+        "route": "/traveltrust/announcements",
+        "owner": "API",
+        "current_status": "ops_maintenance",
+        "modify_entry": "lib/traveltrustNetworkAnnouncements.ts"
+      },
+      {
+        "id": "did-rank-boards",
+        "page_module": "DID Rank 各榜",
+        "route": "/did-rank",
+        "owner": "API",
+        "current_status": "live",
+        "modify_entry": "Backend rank compute"
+      },
+      {
+        "id": "did-rank-trust",
+        "page_module": "Trust 深链",
+        "route": "/did-rank → /community/user/[id]",
+        "owner": "API",
+        "current_status": "live",
+        "modify_entry": "Backend · community profile"
+      }
+    ]
+  },
+  "quick_lookup": [
+    {
+      "question": "首页背景去哪改？",
+      "owner": "CMS",
+      "current_status": "draft",
+      "modify_entry": "/admin/content/landing-ambient"
+    },
+    {
+      "question": "Home Hero 去哪改？",
+      "owner": "OPS",
+      "current_status": "live",
+      "modify_entry": "/admin/official/public-operations"
+    },
+    {
+      "question": "Guide Avatar 去哪改？",
+      "owner": "OCS",
+      "current_status": "frozen",
+      "modify_entry": "/admin/official/guides"
+    },
+    {
+      "question": "Provider Cover 去哪改？",
+      "owner": "OCS",
+      "current_status": "frozen",
+      "modify_entry": "OCS manifest provider slots"
+    },
+    {
+      "question": "Community Feed 去哪改？",
+      "owner": "API",
+      "current_status": "live",
+      "modify_entry": "PublishDrawer · /admin/community"
+    },
+    {
+      "question": "TravelTrust Video 去哪改？",
+      "owner": "Media",
+      "current_status": "not_started",
+      "modify_entry": "public/media · Media Platform (future)"
+    },
+    {
+      "question": "JP 背景 Wave1 去哪改？",
+      "owner": "CMS",
+      "current_status": "draft",
+      "modify_entry": "/admin/content/landing-ambient · DA-JP-HOME"
+    }
+  ],
+  "operator_summary_table": [
+    {
+      "page": "Home Hero / Campaign Highlights",
+      "owner": "OPS",
+      "current_status": "Live",
+      "criticality": "P0"
+    },
+    {
+      "page": "首页国家背景 · Destination Ambient",
+      "owner": "CMS",
+      "current_status": "Draft",
+      "criticality": "P0"
+    },
+    {
+      "page": "创新行程预览卡",
+      "owner": "API",
+      "current_status": "Live",
+      "criticality": "P0"
+    },
+    {
+      "page": "Featured / 冷启动展示条",
+      "owner": "OPS",
+      "current_status": "Live",
+      "criticality": "P0"
+    },
+    {
+      "page": "Market 主页面",
+      "owner": "API",
+      "current_status": "Live",
+      "criticality": "P0"
+    },
+    {
+      "page": "Market 页身氛围 (CSS)",
+      "owner": "FE",
+      "current_status": "Frozen",
+      "criticality": "P0"
+    },
+    {
+      "page": "订单卡封面",
+      "owner": "API",
+      "current_status": "Ops Maintenance",
+      "criticality": "P0"
+    },
+    {
+      "page": "向导卡头像",
+      "owner": "OCS",
+      "current_status": "Frozen",
+      "criticality": "P0"
+    },
+    {
+      "page": "Market Feed 冷启动",
+      "owner": "OPS",
+      "current_status": "Live",
+      "criticality": "P0"
+    },
+    {
+      "page": "商家橱窗 Listing",
+      "owner": "CMS",
+      "current_status": "Ops Maintenance",
+      "criticality": "P1"
+    },
+    {
+      "page": "收购 Listing",
+      "owner": "CMS",
+      "current_status": "Ops Maintenance",
+      "criticality": "P1"
+    },
+    {
+      "page": "Discover 别名",
+      "owner": "FE",
+      "current_status": "Redirect",
+      "criticality": "P0"
+    }
+  ],
+  "completion_criterion": "Every entry: owner, modify_entry, current_status, business_criticality",
+  "TT_CONTENT_OWNERSHIP_INVENTORY": "COMPLETE",
+  "honest_boundary": "Inventory = map for PER + CMS execution; not governance; phase ① basis"
+}

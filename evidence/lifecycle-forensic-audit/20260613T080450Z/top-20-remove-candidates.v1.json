@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.lifecycle_top20_remove.v1",
+  "candidates": [
+    {
+      "id": "LFC-SEED-004",
+      "domain": "DOMAIN-CA",
+      "dim": "CA-06",
+      "object": "code",
+      "label": "archive/ui-v1 dead tree",
+      "suggested_verdict": "DEPRECATE",
+      "severity": "P1",
+      "rationale": "Non-SSOT archive — RETIRE path after grep zero nav refs"
+    }
+  ]
+}

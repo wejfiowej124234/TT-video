@@ -1,0 +1,8 @@
+mode=sepolia_fork_anvil
+fork_upstream=https://ethereum-sepolia-rpc.publicnode.com
+chain_id=11155111
+governance_token=0x9f88a0072319c5d5c6ec1c61082288f6b86511a2
+region_steward_stake_pool=0xCA75bBc4E7fF5944597E3d3b2824747D4637bc5B
+pool_version="region_steward_stake_pool_v1"
+min_stake_cn=400000000000000000000000
+note=Not a Sepolia mainnet broadcast; run deploy-steward-stake-pool-testnet.sh for ② testnet GO

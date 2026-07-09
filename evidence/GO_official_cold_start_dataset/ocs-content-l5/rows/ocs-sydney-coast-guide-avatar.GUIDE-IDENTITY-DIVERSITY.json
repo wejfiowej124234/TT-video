@@ -1,0 +1,87 @@
+{
+  "schema": "traveltrust.ocs_content_l5_guide_identity_diversity_review.v1",
+  "stamp_utc": "20260704T150019Z",
+  "filename": "ocs-sydney-coast-guide-avatar.jpg",
+  "chain_id": "sydney-coast",
+  "city": "悉尼",
+  "guide_nickname": "悉尼海岸向导·Mia",
+  "peer_guides_compared": [
+    {
+      "chain_id": "tokyo-photo",
+      "city": "东京",
+      "nickname": "东京摄影向导·Ken",
+      "bio_snippet": "十年东京街景与神社摄影路线，熟悉浅草、涩谷与台场最佳机位。"
+    },
+    {
+      "chain_id": "kyoto-culture",
+      "city": "京都",
+      "nickname": "京都茶道向导·Yuki",
+      "bio_snippet": "祇园与岚山文化讲解，专注茶道体验与和服街拍路线规划。"
+    },
+    {
+      "chain_id": "seoul-food",
+      "city": "首尔",
+      "nickname": "首尔美食向导·Min",
+      "bio_snippet": "弘大、明洞与广藏市场深度美食路线，擅长韩餐与咖啡地图。"
+    },
+    {
+      "chain_id": "bangkok-temple",
+      "city": "曼谷",
+      "nickname": "曼谷文化向导·Arun",
+      "bio_snippet": "大皇宫、郑王庙与湄南河游船路线，提供泰英双语讲解。"
+    },
+    {
+      "chain_id": "singapore-family",
+      "city": "新加坡",
+      "nickname": "新加坡亲子向导·Lee",
+      "bio_snippet": "滨海湾、动物园与圣淘沙亲子路线，熟悉推车友好动线。"
+    },
+    {
+      "chain_id": "paris-art",
+      "city": "巴黎",
+      "nickname": "巴黎艺术向导·Claire",
+      "bio_snippet": "卢浮宫、奥赛与玛黑区画廊讲解，擅长印象派专题路线。"
+    },
+    {
+      "chain_id": "nyc-skyline",
+      "city": "纽约",
+      "nickname": "纽约天际线向导·Alex",
+      "bio_snippet": "布鲁克林大桥、DUMBO 与洛克菲勒观景台最佳拍摄时段。"
+    }
+  ],
+  "identity_diversity_checklist": {
+    "no_high_face_collision_vs_other_guides": {
+      "pass": true,
+      "notes": "Distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family, paris-art, nyc-skyline; multi-city browse will not read as same guide."
+    },
+    "age_layer_variation": {
+      "pass": true,
+      "notes": "Distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family, paris-art, nyc-skyline; multi-city browse will not read as same guide."
+    },
+    "gender_presentation_distinct": {
+      "pass": true,
+      "notes": "Distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family, paris-art, nyc-skyline; multi-city browse will not read as same guide."
+    },
+    "hair_style_distinct": {
+      "pass": true,
+      "notes": "Distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family, paris-art, nyc-skyline; multi-city browse will not read as same guide."
+    },
+    "face_shape_distinct": {
+      "pass": true,
+      "notes": "Distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family, paris-art, nyc-skyline; multi-city browse will not read as same guide."
+    },
+    "temperament_distinct": {
+      "pass": true,
+      "notes": "Distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family, paris-art, nyc-skyline; multi-city browse will not read as same guide."
+    },
+    "local_professional_image": {
+      "pass": true,
+      "notes": "悉尼海岸向导·Mia: professional image matches 悉尼 guide role per bio."
+    },
+    "multi_city_browse_not_same_person": {
+      "pass": true,
+      "notes": "Distinct from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family, paris-art, nyc-skyline; multi-city browse will not read as same guide."
+    }
+  },
+  "TT_GUIDE_IDENTITY_DIVERSITY_REVIEW": "PASS"
+}

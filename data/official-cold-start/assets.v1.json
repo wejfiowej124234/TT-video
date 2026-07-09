@@ -1,0 +1,1042 @@
+{
+  "schema": "traveltrust.official_cold_start_assets.v1",
+  "version": 1,
+  "baseline": "Official Asset Baseline V1",
+  "effective_utc": "2026-07-04",
+  "storage_policy": {
+    "public_read": "GET /api/v1/uploads/community-posts/:name (anonymous)",
+    "note": "Flat filenames only — nested paths rejected by upload serve route"
+  },
+  "assets": [
+    {
+      "id": "ocs/tokyo-photo/guide-avatar",
+      "chain_id": "tokyo-photo",
+      "slot": "guide-avatar",
+      "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-tokyo-photo-guide-avatar.jpg",
+      "binds": [
+        {
+          "entity": "guide",
+          "field": "avatar_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/tokyo-photo/provider-cover",
+      "chain_id": "tokyo-photo",
+      "slot": "provider-cover",
+      "filename": "ocs-tokyo-photo-provider-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-tokyo-photo-provider-cover.jpg",
+      "binds": [
+        {
+          "entity": "provider",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/tokyo-photo/acquisition-cover",
+      "chain_id": "tokyo-photo",
+      "slot": "acquisition-cover",
+      "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-tokyo-photo-acquisition-cover.jpg",
+      "binds": [
+        {
+          "entity": "acquisition",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/tokyo-photo/official-guide-cover",
+      "chain_id": "tokyo-photo",
+      "slot": "official-guide-cover",
+      "filename": "ocs-tokyo-photo-official-guide-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-tokyo-photo-official-guide-cover.jpg",
+      "binds": [
+        {
+          "entity": "official_guide",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/tokyo-photo/community-cover",
+      "chain_id": "tokyo-photo",
+      "slot": "community-cover",
+      "filename": "ocs-tokyo-photo-community-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-community-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-tokyo-photo-community-cover.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/tokyo-photo/community-media",
+      "chain_id": "tokyo-photo",
+      "slot": "community-media",
+      "filename": "ocs-tokyo-photo-community-media.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-community-media.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-tokyo-photo-community-media.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "media_urls",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "ocs/kyoto-culture/guide-avatar",
+      "chain_id": "kyoto-culture",
+      "slot": "guide-avatar",
+      "filename": "ocs-kyoto-culture-guide-avatar.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-guide-avatar.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-kyoto-culture-guide-avatar.jpg",
+      "binds": [
+        {
+          "entity": "guide",
+          "field": "avatar_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/kyoto-culture/provider-cover",
+      "chain_id": "kyoto-culture",
+      "slot": "provider-cover",
+      "filename": "ocs-kyoto-culture-provider-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-kyoto-culture-provider-cover.jpg",
+      "binds": [
+        {
+          "entity": "provider",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/kyoto-culture/acquisition-cover",
+      "chain_id": "kyoto-culture",
+      "slot": "acquisition-cover",
+      "filename": "ocs-kyoto-culture-acquisition-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-kyoto-culture-acquisition-cover.jpg",
+      "binds": [
+        {
+          "entity": "acquisition",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/kyoto-culture/official-guide-cover",
+      "chain_id": "kyoto-culture",
+      "slot": "official-guide-cover",
+      "filename": "ocs-kyoto-culture-official-guide-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-kyoto-culture-official-guide-cover.jpg",
+      "binds": [
+        {
+          "entity": "official_guide",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/kyoto-culture/community-cover",
+      "chain_id": "kyoto-culture",
+      "slot": "community-cover",
+      "filename": "ocs-kyoto-culture-community-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-community-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-kyoto-culture-community-cover.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/kyoto-culture/community-media",
+      "chain_id": "kyoto-culture",
+      "slot": "community-media",
+      "filename": "ocs-kyoto-culture-community-media.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-community-media.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-kyoto-culture-community-media.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "media_urls",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "ocs/seoul-food/guide-avatar",
+      "chain_id": "seoul-food",
+      "slot": "guide-avatar",
+      "filename": "ocs-seoul-food-guide-avatar.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-seoul-food-guide-avatar.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-seoul-food-guide-avatar.jpg",
+      "binds": [
+        {
+          "entity": "guide",
+          "field": "avatar_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/seoul-food/provider-cover",
+      "chain_id": "seoul-food",
+      "slot": "provider-cover",
+      "filename": "ocs-seoul-food-provider-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-seoul-food-provider-cover.jpg",
+      "binds": [
+        {
+          "entity": "provider",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/seoul-food/acquisition-cover",
+      "chain_id": "seoul-food",
+      "slot": "acquisition-cover",
+      "filename": "ocs-seoul-food-acquisition-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-seoul-food-acquisition-cover.jpg",
+      "binds": [
+        {
+          "entity": "acquisition",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/seoul-food/official-guide-cover",
+      "chain_id": "seoul-food",
+      "slot": "official-guide-cover",
+      "filename": "ocs-seoul-food-official-guide-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-seoul-food-official-guide-cover.jpg",
+      "binds": [
+        {
+          "entity": "official_guide",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/seoul-food/community-cover",
+      "chain_id": "seoul-food",
+      "slot": "community-cover",
+      "filename": "ocs-seoul-food-community-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-seoul-food-community-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-seoul-food-community-cover.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/seoul-food/community-media",
+      "chain_id": "seoul-food",
+      "slot": "community-media",
+      "filename": "ocs-seoul-food-community-media.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-seoul-food-community-media.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-seoul-food-community-media.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "media_urls",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "ocs/bangkok-temple/guide-avatar",
+      "chain_id": "bangkok-temple",
+      "slot": "guide-avatar",
+      "filename": "ocs-bangkok-temple-guide-avatar.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-guide-avatar.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-bangkok-temple-guide-avatar.jpg",
+      "binds": [
+        {
+          "entity": "guide",
+          "field": "avatar_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/bangkok-temple/provider-cover",
+      "chain_id": "bangkok-temple",
+      "slot": "provider-cover",
+      "filename": "ocs-bangkok-temple-provider-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-bangkok-temple-provider-cover.jpg",
+      "binds": [
+        {
+          "entity": "provider",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/bangkok-temple/acquisition-cover",
+      "chain_id": "bangkok-temple",
+      "slot": "acquisition-cover",
+      "filename": "ocs-bangkok-temple-acquisition-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-bangkok-temple-acquisition-cover.jpg",
+      "binds": [
+        {
+          "entity": "acquisition",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/bangkok-temple/official-guide-cover",
+      "chain_id": "bangkok-temple",
+      "slot": "official-guide-cover",
+      "filename": "ocs-bangkok-temple-official-guide-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-bangkok-temple-official-guide-cover.jpg",
+      "binds": [
+        {
+          "entity": "official_guide",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/bangkok-temple/community-cover",
+      "chain_id": "bangkok-temple",
+      "slot": "community-cover",
+      "filename": "ocs-bangkok-temple-community-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-community-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-bangkok-temple-community-cover.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/bangkok-temple/community-media",
+      "chain_id": "bangkok-temple",
+      "slot": "community-media",
+      "filename": "ocs-bangkok-temple-community-media.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-bangkok-temple-community-media.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "media_urls",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "ocs/singapore-family/guide-avatar",
+      "chain_id": "singapore-family",
+      "slot": "guide-avatar",
+      "filename": "ocs-singapore-family-guide-avatar.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-singapore-family-guide-avatar.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-singapore-family-guide-avatar.jpg",
+      "binds": [
+        {
+          "entity": "guide",
+          "field": "avatar_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/singapore-family/provider-cover",
+      "chain_id": "singapore-family",
+      "slot": "provider-cover",
+      "filename": "ocs-singapore-family-provider-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-singapore-family-provider-cover.jpg",
+      "binds": [
+        {
+          "entity": "provider",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/singapore-family/acquisition-cover",
+      "chain_id": "singapore-family",
+      "slot": "acquisition-cover",
+      "filename": "ocs-singapore-family-acquisition-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-singapore-family-acquisition-cover.jpg",
+      "binds": [
+        {
+          "entity": "acquisition",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/singapore-family/official-guide-cover",
+      "chain_id": "singapore-family",
+      "slot": "official-guide-cover",
+      "filename": "ocs-singapore-family-official-guide-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-singapore-family-official-guide-cover.jpg",
+      "binds": [
+        {
+          "entity": "official_guide",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/singapore-family/community-cover",
+      "chain_id": "singapore-family",
+      "slot": "community-cover",
+      "filename": "ocs-singapore-family-community-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-singapore-family-community-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-singapore-family-community-cover.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/singapore-family/community-media",
+      "chain_id": "singapore-family",
+      "slot": "community-media",
+      "filename": "ocs-singapore-family-community-media.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-singapore-family-community-media.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "media_urls",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "ocs/paris-art/guide-avatar",
+      "chain_id": "paris-art",
+      "slot": "guide-avatar",
+      "filename": "ocs-paris-art-guide-avatar.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-paris-art-guide-avatar.jpg",
+      "binds": [
+        {
+          "entity": "guide",
+          "field": "avatar_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/paris-art/provider-cover",
+      "chain_id": "paris-art",
+      "slot": "provider-cover",
+      "filename": "ocs-paris-art-provider-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-paris-art-provider-cover.jpg",
+      "binds": [
+        {
+          "entity": "provider",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/paris-art/acquisition-cover",
+      "chain_id": "paris-art",
+      "slot": "acquisition-cover",
+      "filename": "ocs-paris-art-acquisition-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-paris-art-acquisition-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-paris-art-acquisition-cover.jpg",
+      "binds": [
+        {
+          "entity": "acquisition",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/paris-art/official-guide-cover",
+      "chain_id": "paris-art",
+      "slot": "official-guide-cover",
+      "filename": "ocs-paris-art-official-guide-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-paris-art-official-guide-cover.jpg",
+      "binds": [
+        {
+          "entity": "official_guide",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/paris-art/community-cover",
+      "chain_id": "paris-art",
+      "slot": "community-cover",
+      "filename": "ocs-paris-art-community-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-paris-art-community-cover.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/paris-art/community-media",
+      "chain_id": "paris-art",
+      "slot": "community-media",
+      "filename": "ocs-paris-art-community-media.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-paris-art-community-media.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "media_urls",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "ocs/nyc-skyline/guide-avatar",
+      "chain_id": "nyc-skyline",
+      "slot": "guide-avatar",
+      "filename": "ocs-nyc-skyline-guide-avatar.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-guide-avatar.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-nyc-skyline-guide-avatar.jpg",
+      "binds": [
+        {
+          "entity": "guide",
+          "field": "avatar_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/nyc-skyline/provider-cover",
+      "chain_id": "nyc-skyline",
+      "slot": "provider-cover",
+      "filename": "ocs-nyc-skyline-provider-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-nyc-skyline-provider-cover.jpg",
+      "binds": [
+        {
+          "entity": "provider",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/nyc-skyline/acquisition-cover",
+      "chain_id": "nyc-skyline",
+      "slot": "acquisition-cover",
+      "filename": "ocs-nyc-skyline-acquisition-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-acquisition-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-nyc-skyline-acquisition-cover.jpg",
+      "binds": [
+        {
+          "entity": "acquisition",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/nyc-skyline/official-guide-cover",
+      "chain_id": "nyc-skyline",
+      "slot": "official-guide-cover",
+      "filename": "ocs-nyc-skyline-official-guide-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-official-guide-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-nyc-skyline-official-guide-cover.jpg",
+      "binds": [
+        {
+          "entity": "official_guide",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/nyc-skyline/community-cover",
+      "chain_id": "nyc-skyline",
+      "slot": "community-cover",
+      "filename": "ocs-nyc-skyline-community-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-community-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-nyc-skyline-community-cover.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/nyc-skyline/community-media",
+      "chain_id": "nyc-skyline",
+      "slot": "community-media",
+      "filename": "ocs-nyc-skyline-community-media.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-nyc-skyline-community-media.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-nyc-skyline-community-media.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "media_urls",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "ocs/sydney-coast/guide-avatar",
+      "chain_id": "sydney-coast",
+      "slot": "guide-avatar",
+      "filename": "ocs-sydney-coast-guide-avatar.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-guide-avatar.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-sydney-coast-guide-avatar.jpg",
+      "binds": [
+        {
+          "entity": "guide",
+          "field": "avatar_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/sydney-coast/provider-cover",
+      "chain_id": "sydney-coast",
+      "slot": "provider-cover",
+      "filename": "ocs-sydney-coast-provider-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-sydney-coast-provider-cover.jpg",
+      "binds": [
+        {
+          "entity": "provider",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/sydney-coast/acquisition-cover",
+      "chain_id": "sydney-coast",
+      "slot": "acquisition-cover",
+      "filename": "ocs-sydney-coast-acquisition-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-sydney-coast-acquisition-cover.jpg",
+      "binds": [
+        {
+          "entity": "acquisition",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/sydney-coast/official-guide-cover",
+      "chain_id": "sydney-coast",
+      "slot": "official-guide-cover",
+      "filename": "ocs-sydney-coast-official-guide-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-sydney-coast-official-guide-cover.jpg",
+      "binds": [
+        {
+          "entity": "official_guide",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/sydney-coast/community-cover",
+      "chain_id": "sydney-coast",
+      "slot": "community-cover",
+      "filename": "ocs-sydney-coast-community-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-community-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-sydney-coast-community-cover.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/sydney-coast/community-media",
+      "chain_id": "sydney-coast",
+      "slot": "community-media",
+      "filename": "ocs-sydney-coast-community-media.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-community-media.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-sydney-coast-community-media.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "media_urls",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "ocs/barcelona-arch/guide-avatar",
+      "chain_id": "barcelona-arch",
+      "slot": "guide-avatar",
+      "filename": "ocs-barcelona-arch-guide-avatar.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-guide-avatar.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-barcelona-arch-guide-avatar.jpg",
+      "binds": [
+        {
+          "entity": "guide",
+          "field": "avatar_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/barcelona-arch/provider-cover",
+      "chain_id": "barcelona-arch",
+      "slot": "provider-cover",
+      "filename": "ocs-barcelona-arch-provider-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-barcelona-arch-provider-cover.jpg",
+      "binds": [
+        {
+          "entity": "provider",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/barcelona-arch/acquisition-cover",
+      "chain_id": "barcelona-arch",
+      "slot": "acquisition-cover",
+      "filename": "ocs-barcelona-arch-acquisition-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-acquisition-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-barcelona-arch-acquisition-cover.jpg",
+      "binds": [
+        {
+          "entity": "acquisition",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/barcelona-arch/official-guide-cover",
+      "chain_id": "barcelona-arch",
+      "slot": "official-guide-cover",
+      "filename": "ocs-barcelona-arch-official-guide-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-official-guide-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-barcelona-arch-official-guide-cover.jpg",
+      "binds": [
+        {
+          "entity": "official_guide",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/barcelona-arch/community-cover",
+      "chain_id": "barcelona-arch",
+      "slot": "community-cover",
+      "filename": "ocs-barcelona-arch-community-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-community-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-barcelona-arch-community-cover.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/barcelona-arch/community-media",
+      "chain_id": "barcelona-arch",
+      "slot": "community-media",
+      "filename": "ocs-barcelona-arch-community-media.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-barcelona-arch-community-media.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-barcelona-arch-community-media.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "media_urls",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "id": "ocs/dubai-luxury/guide-avatar",
+      "chain_id": "dubai-luxury",
+      "slot": "guide-avatar",
+      "filename": "ocs-dubai-luxury-guide-avatar.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-guide-avatar.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-dubai-luxury-guide-avatar.jpg",
+      "binds": [
+        {
+          "entity": "guide",
+          "field": "avatar_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/dubai-luxury/provider-cover",
+      "chain_id": "dubai-luxury",
+      "slot": "provider-cover",
+      "filename": "ocs-dubai-luxury-provider-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-provider-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-dubai-luxury-provider-cover.jpg",
+      "binds": [
+        {
+          "entity": "provider",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/dubai-luxury/acquisition-cover",
+      "chain_id": "dubai-luxury",
+      "slot": "acquisition-cover",
+      "filename": "ocs-dubai-luxury-acquisition-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-acquisition-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-dubai-luxury-acquisition-cover.jpg",
+      "binds": [
+        {
+          "entity": "acquisition",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/dubai-luxury/official-guide-cover",
+      "chain_id": "dubai-luxury",
+      "slot": "official-guide-cover",
+      "filename": "ocs-dubai-luxury-official-guide-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-official-guide-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-dubai-luxury-official-guide-cover.jpg",
+      "binds": [
+        {
+          "entity": "official_guide",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/dubai-luxury/community-cover",
+      "chain_id": "dubai-luxury",
+      "slot": "community-cover",
+      "filename": "ocs-dubai-luxury-community-cover.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-community-cover.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-dubai-luxury-community-cover.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "cover_url"
+        }
+      ]
+    },
+    {
+      "id": "ocs/dubai-luxury/community-media",
+      "chain_id": "dubai-luxury",
+      "slot": "community-media",
+      "filename": "ocs-dubai-luxury-community-media.jpg",
+      "public_url": "/api/v1/uploads/community-posts/ocs-dubai-luxury-community-media.jpg",
+      "storage_dir": "community_post_media",
+      "mime": "image/jpeg",
+      "kind": "image",
+      "source_file": "media/ocs-dubai-luxury-community-media.jpg",
+      "binds": [
+        {
+          "entity": "community_post",
+          "field": "media_urls",
+          "index": 0
+        }
+      ]
+    }
+  ]
+}

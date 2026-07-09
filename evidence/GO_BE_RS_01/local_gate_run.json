@@ -1,0 +1,8 @@
+{
+  "sprint": "170-B",
+  "track": "BE-RS-01",
+  "environment": "local-gate",
+  "gate_command": "bash scripts/dev/run-sprint170-be-rs01-implementation-gate.sh",
+  "expected_verdict": "BE_RS_01_GO",
+  "automation_pct": 78
+}

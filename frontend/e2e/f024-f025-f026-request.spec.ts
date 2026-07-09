@@ -2,7 +2,10 @@
  * **§8.2 · F-024 / F-025 / F-026** — Playwright **`request`**（与 **`guides_disputes_db_api_tests`** / **`messages_db_api_tests`** 同形）。
  *
  * - **F-024**：**`POST …/guides`** → **`POST …/stake`**（**`amount: "100"`**）→ **`GET /api/v1/guides?city=Shanghai`** **`items`** 含 **`guide.id`**（**B-GDE-003** / **MANUAL-P1** 窄口径 **E2E** 旁证；**真链质押**仍 **ISS-007**）。
- * - **F-025**：下单 → **`accept`** → **`mock-pay`**（**`P3_CHAIN_OFF`**）→ **`POST …/orders/:id/dispute`** → **`GET /disputes`** / **`GET /disputes/:id`**（**B-DSP-002**）；同链再 **`GET …/orders/:id`** **`order.status=disputed`**（**B-TRN-003**）。**B-DSP-003** 见同文件 **`POST …/disputes/:id/resolve`**（须 API **`P3_SEED_ARBITRATOR_EMAIL`** 与 **`PLAYWRIGHT_ARBITRATOR_SEED_EMAIL`** 对齐，**CI** **`build.yml`·`e2e`** 已注入）。
+ * **Payment rail (2026-07-08 SSOT):** **`mock-pay`** below = **chain_off sandbox only** (`P3_CHAIN_OFF=1` · ①/②).
+ * **Production core payment** = USDC **Approve + Deposit** on Escrow (G3-02 · PAY-W01..W16) — **forbidden on prod**.
+ *
+ * - **F-025**：下单 → **`accept`** → **`mock-pay`**（**`P3_CHAIN_OFF`** · sandbox）→ **`POST …/orders/:id/dispute`** → **`GET /disputes`** / **`GET /disputes/:id`**（**B-DSP-002**）；同链再 **`GET …/orders/:id`** **`order.status=disputed`**（**B-TRN-003**）。**B-DSP-003** 见同文件 **`POST …/disputes/:id/resolve`**（须 API **`P3_SEED_ARBITRATOR_EMAIL`** 与 **`PLAYWRIGHT_ARBITRATOR_SEED_EMAIL`** 对齐，**CI** **`build.yml`·`e2e`** 已注入）。
  * - **F-026**：同上至 **`mock-pay`** → **`POST|GET …/orders/:id/messages`**（**B-MSG-002**）；**旅客 `POST`→向导 `GET` 同路径**（**B-MSG-002C** ↔ **`matrix_93_b_msg_002c_f026_*`**）。
  *
  * **环境**：**`DATABASE_URL`** + **`P3_CHAIN_OFF=1`**；**F-025/F-026** 须经 **`skipUnlessOrderMockPayAvailable`**（**`mock-pay`≠501**）。

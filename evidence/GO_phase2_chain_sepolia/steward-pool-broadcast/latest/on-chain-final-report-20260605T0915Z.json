@@ -1,0 +1,100 @@
+{
+  "schema": "phase2_sepolia_steward_pool_on_chain_final_report.v1",
+  "timestamp_utc": "20260605T0915Z",
+  "chain_id": 11155111,
+  "pool_address": "0x16F914f3D50f7Aa02665589e715F94CA3b7Ab47c",
+  "broadcast_tx": "0xd28221bcd00dca9b1aad553df7966bf9f10b602af3d8b12ea5ceb3d32acd1b7d",
+  "control_plane": {
+    "owner": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+    "timelock": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+    "owner_eq_timelock": true,
+    "owner_ne_deployer": true,
+    "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212"
+  },
+  "ttg": {
+    "on_chain": "0xaC2E29AC7089e4863C21dAF232cF8bbb025d91ca",
+    "expected": "0xaC2E29AC7089e4863C21dAF232cF8bbb025d91ca",
+    "match": true
+  },
+  "immutables": {
+    "version": "region_steward_stake_pool_v1",
+    "release_delay_seconds": 7776000,
+    "release_vest_seconds": 31536000,
+    "ttg_total_supply_units": "10000000000000000000000000"
+  },
+  "jurisdictions": [
+    {
+      "id": "CN",
+      "steward_stake_bps": 400,
+      "min_stake_wei": "400000000000000000000000",
+      "min_stake_ttg_units": 400000
+    },
+    {
+      "id": "US",
+      "steward_stake_bps": 400,
+      "min_stake_wei": "400000000000000000000000",
+      "min_stake_ttg_units": 400000
+    },
+    {
+      "id": "FR",
+      "steward_stake_bps": 450,
+      "min_stake_wei": "450000000000000000000000",
+      "min_stake_ttg_units": 450000
+    },
+    {
+      "id": "ES",
+      "steward_stake_bps": 450,
+      "min_stake_wei": "450000000000000000000000",
+      "min_stake_ttg_units": 450000
+    },
+    {
+      "id": "JP",
+      "steward_stake_bps": 250,
+      "min_stake_wei": "250000000000000000000000",
+      "min_stake_ttg_units": 250000
+    },
+    {
+      "id": "TH",
+      "steward_stake_bps": 250,
+      "min_stake_wei": "250000000000000000000000",
+      "min_stake_ttg_units": 250000
+    },
+    {
+      "id": "SG",
+      "steward_stake_bps": 200,
+      "min_stake_wei": "200000000000000000000000",
+      "min_stake_ttg_units": 200000
+    },
+    {
+      "id": "KR",
+      "steward_stake_bps": 200,
+      "min_stake_wei": "200000000000000000000000",
+      "min_stake_ttg_units": 200000
+    },
+    {
+      "id": "AU",
+      "steward_stake_bps": 150,
+      "min_stake_wei": "150000000000000000000000",
+      "min_stake_ttg_units": 150000
+    },
+    {
+      "id": "AE",
+      "steward_stake_bps": 150,
+      "min_stake_wei": "150000000000000000000000",
+      "min_stake_ttg_units": 150000
+    }
+  ],
+  "on_chain_verified": {
+    "rpc": "https://1rpc.io/sepolia",
+    "script": "phase2-sepolia-steward-pool-verify-bindings.sh",
+    "checks_passed": 9,
+    "cn_bps_on_chain": 400,
+    "cn_min_stake_wei": "400000000000000000000000",
+    "env_registry_parity": true
+  },
+  "backfill": {
+    "env_phase2": "REGION_STEWARD_STAKE_POOL_ADDRESS=0x16F914f3D50f7Aa02665589e715F94CA3b7Ab47c",
+    "registry": "region_steward_stake_pool_address updated",
+    "anvil_block_untouched": true
+  }
+}

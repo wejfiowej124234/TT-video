@@ -1,0 +1,26 @@
+{
+  "schema": "traveltrust.ocs_content_l5_official_guide_destination_review_framework.v1",
+  "stamp_utc": "20260704T131910Z",
+  "status": "FRAMEWORK_ONLY",
+  "applies_to_slots": [
+    "official-guide-cover"
+  ],
+  "first_execution_row": {
+    "seoul-food": "ocs-seoul-food-official-guide-cover.jpg"
+  },
+  "checklist_dimensions": [
+    "destination_landmark_sequence_readable",
+    "route_or_map_cover_semantics",
+    "official_guide_title_body_alignment",
+    "not_guide_portrait",
+    "not_provider_service_interior",
+    "not_acquisition_product_still_life",
+    "not_community_candid_moment",
+    "local_destination_expression",
+    "cross_city_route_cover_distinct",
+    "hero_wide_composition_quality"
+  ],
+  "policy": "Official Guide Cover 须表达目的地路线/地图封面语义；禁止 Guide 肖像、Provider 服务场、Acquisition 商品静物、Community 生活抓拍；跨城路线封面须明显不同。",
+  "machine_key_when_active": "TT_OFFICIAL_GUIDE_DESTINATION_REVIEW",
+  "TT_OFFICIAL_GUIDE_DESTINATION_FRAMEWORK": "ESTABLISHED"
+}

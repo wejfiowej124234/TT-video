@@ -1,0 +1,116 @@
+diff --git a/crates/api/src/middleware/mod.rs b/crates/api/src/middleware/mod.rs
+index 5fda8baa..a6296249 100644
+--- a/crates/api/src/middleware/mod.rs
++++ b/crates/api/src/middleware/mod.rs
+@@ -55,6 +55,18 @@ pub fn idempotency_cache_max() -> usize {
+     })
+ }
+ pub const REQUEST_TIMEOUT_SECS: u64 = 30;
++
++/// Axum TimeoutLayer + GET /meta.defaults 同源；`REQUEST_TIMEOUT_SECS` env 覆盖（5..=600，默认 30）。
++pub fn request_timeout_secs() -> u64 {
++    static SECS: OnceLock<u64> = OnceLock::new();
++    *SECS.get_or_init(|| {
++        env::var("REQUEST_TIMEOUT_SECS")
++            .ok()
++            .and_then(|s| s.parse().ok())
++            .filter(|&n| (5..=600).contains(&n))
++            .unwrap_or(REQUEST_TIMEOUT_SECS)
++    })
++}
+ pub const REQUEST_BODY_LIMIT_BYTES: usize = 1024 * 1024;
+ pub const GUIDE_UPLOAD_RATE_LIMIT: usize = 10;
+ pub const GUIDE_UPLOAD_RATE_WINDOW_SECS: u64 = 60;
+diff --git a/crates/api/src/router.rs b/crates/api/src/router.rs
+index dd5bd423..42d5d0de 100644
+--- a/crates/api/src/router.rs
++++ b/crates/api/src/router.rs
+@@ -29,7 +29,7 @@ pub fn app(
+         .with_state(meta_state)
+         .layer(axum::middleware::from_fn(internal_api_secret_gate_layer))
+         .layer(TimeoutLayer::new(Duration::from_secs(
+-            middleware::REQUEST_TIMEOUT_SECS,
++            middleware::request_timeout_secs(),
+         )))
+         .layer(RequestBodyLimitLayer::new(
+             middleware::REQUEST_BODY_LIMIT_BYTES,
+diff --git a/crates/api/src/routes/health_meta/handlers.rs b/crates/api/src/routes/health_meta/handlers.rs
+index 7867c3cb..f29a5457 100644
+--- a/crates/api/src/routes/health_meta/handlers.rs
++++ b/crates/api/src/routes/health_meta/handlers.rs
+@@ -913,7 +913,7 @@ pub(super) async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse
+     }
+ 
+     let mut defaults_section = json!({
+-        "request_timeout_secs": middleware::REQUEST_TIMEOUT_SECS,
++        "request_timeout_secs": middleware::request_timeout_secs(),
+         "request_body_limit_bytes": middleware::REQUEST_BODY_LIMIT_BYTES,
+         "idempotency_cache_max": middleware::idempotency_cache_max(),
+         "rule": "GET /meta.defaults mirrors middleware REQUEST_TIMEOUT_SECS / REQUEST_BODY_LIMIT_BYTES / idempotency cache max (routes/middleware); 754 GET /meta defaults 对象 defaults_top_keys / defaults_top_keys_contract_754 与 DEFAULTS_META_TOP_KEYS 六键顺序同源",
+diff --git a/deploy/fly/tt-api-staging/fly.toml b/deploy/fly/tt-api-staging/fly.toml
+index 21ef5c70..a5277cb0 100644
+--- a/deploy/fly/tt-api-staging/fly.toml
++++ b/deploy/fly/tt-api-staging/fly.toml
+@@ -12,6 +12,8 @@ primary_region = 'sin'
+ 
+ [env]
+   PORT = '8080'
++  # GET /meta 治理聚合易超 30s → 408；与 meta-availability-hotfix 同源
++  REQUEST_TIMEOUT_SECS = '120'
+   # TN-P1-010 · staging indexer backfill（freetier RPC + Fly HTTP 窗）
+   INDEXER_ETH_GET_LOGS_MAX_BLOCK_SPAN = '9999'
+   INDEXER_TICK_MAX_BLOCKS_PER_SCAN = '9999'
+diff --git a/frontend/app/meta/route.ts b/frontend/app/meta/route.ts
+index f5c3c5c3..0468b913 100644
+--- a/frontend/app/meta/route.ts
++++ b/frontend/app/meta/route.ts
+@@ -4,8 +4,15 @@ import { META_DEV_FALLBACK } from "@/lib/metaDevFallback";
+ const apiBase = () => (process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8080").replace(/\/$/, "");
+ 
+ function metaFetchTimeoutMs(): number {
++  const fromEnv = Number(process.env.META_ROUTE_FETCH_TIMEOUT_MS);
++  if (Number.isFinite(fromEnv) && fromEnv >= 15_000 && fromEnv <= 300_000) return fromEnv;
+   if (process.env.PLAYWRIGHT_FULL_STACK === "1") return 60_000;
+-  return 8_000;
++  // Must exceed API REQUEST_TIMEOUT_SECS (staging 120) + margin
++  return 130_000;
++}
++
++function shouldRetryMetaStatus(status: number): boolean {
++  return status === 408 || status === 502 || status === 503 || status === 504;
+ }
+ 
+ async function fetchApiMeta(): Promise<Response> {
+@@ -20,7 +27,10 @@ async function fetchApiMeta(): Promise<Response> {
+ export async function GET() {
+   try {
+     let res = await fetchApiMeta();
+-    if (!res.ok && process.env.PLAYWRIGHT_FULL_STACK === "1") {
++    if (!res.ok && (process.env.PLAYWRIGHT_FULL_STACK === "1" || shouldRetryMetaStatus(res.status))) {
++      res = await fetchApiMeta();
++    }
++    if (!res.ok && shouldRetryMetaStatus(res.status)) {
+       res = await fetchApiMeta();
+     }
+     if (res.ok) {
+diff --git a/scripts/dev/start-api-for-playwright.sh b/scripts/dev/start-api-for-playwright.sh
+index 79c8d007..c54a00c1 100644
+--- a/scripts/dev/start-api-for-playwright.sh
++++ b/scripts/dev/start-api-for-playwright.sh
+@@ -6,6 +6,7 @@ ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+ cd "$ROOT"
+ export SEED_TEST_ACCOUNTS="${SEED_TEST_ACCOUNTS:-1}"
+ export DID_RANK_SEED_MARKET_DEMO="${DID_RANK_SEED_MARKET_DEMO:-1}"
++export TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE="${TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE:-1}"
+ # 勿默认 P3_CHAIN_OFF=1：会先于 dotenv 写入进程环境，导致根 .env 的 P3_CHAIN_OFF=0（测试网 / 链上 E2E）被覆盖。
+ # 链下 mock-pay E2E 请在根 `.env` 设 `P3_CHAIN_OFF=1`；CI workflow 已对 job 注入该变量。
+ # 全栈 E2E 单 IP 高频轮询 / 双账号切换易触达 50-B1 与关键写限流（429）；Playwright 专用入口默认关闭，可在环境变量中覆盖为非 0
+@@ -14,6 +15,8 @@ export CRITICAL_WRITE_RATE_LIMIT_PER_MINUTE="${CRITICAL_WRITE_RATE_LIMIT_PER_MIN
+ # F-007 / PH1-FE-05：有 DATABASE_URL 时允许本机 profile-avatar 落盘（非 S3 路径）
+ export TRAVELTRUST_ALLOW_LOCAL_PROFILE_AVATAR="${TRAVELTRUST_ALLOW_LOCAL_PROFILE_AVATAR:-1}"
+ export TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT="${TRAVELTRUST_ADMIN_CONSOLE_ROLE_DIRECT:-1}"
++# GET /meta 治理 eth_call 叠压易超 30s → HTTP 408；与 run-e2e-default.mjs 同源
++export REQUEST_TIMEOUT_SECS="${REQUEST_TIMEOUT_SECS:-120}"
+ # 与 CI E2E、sync-frontend-env 一致：勿把 Next 端口误当作 API
+ if [[ -n "${API_PORT:-}" ]]; then
+   export PORT="$API_PORT"

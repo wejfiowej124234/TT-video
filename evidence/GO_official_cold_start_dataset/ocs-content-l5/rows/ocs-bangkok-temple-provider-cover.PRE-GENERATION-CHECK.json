@@ -1,0 +1,27 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T134330Z",
+  "filename": "ocs-bangkok-temple-provider-cover.jpg",
+  "chain_id": "bangkok-temple",
+  "row": 20,
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "no_quality_regression_acknowledged": true,
+  "checks": {
+    "manifest_full_field_alignment": { "pass": true, "notes": "湄南河 sunset 游船·含晚餐 · 私人包船2h泰式晚餐" },
+    "destination_authenticity_9dim_plan": { "pass": true, "notes": "湄南河游船甲板·日落·泰餐·郑王庙远景" },
+    "country_consistency_th_only": { "pass": true },
+    "provider_business_identity_plan": {
+      "pass": true,
+      "vs_tokyo": "河船晚宴 vs 台场旅拍",
+      "vs_kyoto": "户外河船 vs 室内茶室",
+      "vs_seoul": "日落游船 vs pojangmacha",
+      "vs_bangkok_guide": "服务场景 vs 向导肖像"
+    },
+    "global_visual_diversity_plan": { "pass": true, "notes": "暖橙河景日落；非霓虹/室内禅意/台场天际线" },
+    "brand_consistency_l5": { "pass": true },
+    "consumer_experience": { "pass": true, "notes": "可售私人河船晚宴体验" },
+    "copyright_watermark_anatomy": { "pass": true },
+    "surface_identity_provider_only": { "pass": true },
+    "narrative_planning": { "pass": true, "notes": "Arun寺庙向导→河船晚宴→泰丝→官方路线→社区" }
+  }
+}

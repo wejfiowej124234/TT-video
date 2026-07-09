@@ -1,0 +1,9 @@
+{
+  "kind": "traveltrust.pi3_003_stripe_live_production_webhook_execution.v1",
+  "recorded_utc": "20260708T052813Z",
+  "verdict": "PI3-003_WAITING_OWNER_STRIPE",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "execution_sprint": "153",
+  "pi3_003_baseline_status": "PLANNED",
+  "prod_live_webhook_smoke": false
+}

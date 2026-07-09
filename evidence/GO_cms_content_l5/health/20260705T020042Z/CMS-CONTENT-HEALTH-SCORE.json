@@ -1,0 +1,251 @@
+{
+  "schema": "traveltrust.cms_content_health_score.v3",
+  "stamp_utc": "20260705T020042Z",
+  "layer": "CMS_OPERATION",
+  "ssot": "evidence/GO_cms_operation/CMS-ASSET-MATRIX-LATEST.json",
+  "ssot_stamp_utc": "20260705T020042Z",
+  "passthrough": true,
+  "operations_kpi": {
+    "source_alignment": {
+      "label": "Source Alignment",
+      "aligned": 3,
+      "total": 8,
+      "display": "3 / 8",
+      "pct": 37.5
+    },
+    "content_health_score": {
+      "ssot": "source_alignment",
+      "label": "37.5%",
+      "status": "IN_PROGRESS",
+      "display": "3 / 8",
+      "pct": 37.5,
+      "aligned": 3,
+      "total": 8
+    }
+  },
+  "source_alignment": {
+    "label": "Source Alignment",
+    "aligned": 3,
+    "total": 8,
+    "display": "3 / 8",
+    "pct": 37.5
+  },
+  "content_health_score": {
+    "ssot": "source_alignment",
+    "label": "37.5%",
+    "status": "IN_PROGRESS",
+    "display": "3 / 8",
+    "pct": 37.5,
+    "aligned": 3,
+    "total": 8
+  },
+  "destination_ambient": {
+    "wave_order": [
+      "JP",
+      "KR",
+      "TH",
+      "SG",
+      "FR",
+      "US",
+      "AU",
+      "ES",
+      "AE",
+      "CN"
+    ],
+    "live": 0,
+    "total": 10,
+    "display": "0/10",
+    "ops_board": {
+      "live": [],
+      "review": [],
+      "pending": [],
+      "published": [],
+      "draft": [
+        "JP",
+        "KR",
+        "TH",
+        "SG",
+        "FR",
+        "US",
+        "AU",
+        "ES",
+        "AE",
+        "CN"
+      ],
+      "rejected": []
+    },
+    "rows": {
+      "live": [],
+      "review": [],
+      "pending": [],
+      "published": [],
+      "draft": [
+        {
+          "matrix_id": "DA-JP-HOME",
+          "country_iso": "JP",
+          "country_zh": "日本",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-KR-HOME",
+          "country_iso": "KR",
+          "country_zh": "韩国",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-TH-HOME",
+          "country_iso": "TH",
+          "country_zh": "泰国",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-SG-HOME",
+          "country_iso": "SG",
+          "country_zh": "新加坡",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-FR-HOME",
+          "country_iso": "FR",
+          "country_zh": "法国",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-US-HOME",
+          "country_iso": "US",
+          "country_zh": "美国",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-AU-HOME",
+          "country_iso": "AU",
+          "country_zh": "澳大利亚",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-ES-HOME",
+          "country_iso": "ES",
+          "country_zh": "西班牙",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-AE-HOME",
+          "country_iso": "AE",
+          "country_zh": "阿联酋",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-CN-HOME",
+          "country_iso": "CN",
+          "country_zh": "中国",
+          "asset_lifecycle": "draft"
+        }
+      ],
+      "rejected": [],
+      "archived": []
+    },
+    "evidence_dir": "D:\\TravelTrust-V1.1\\evidence\\GO_cms_content_l5\\destination-ambient\\rows"
+  },
+  "cms_operation": {
+    "phase": "CMS_OPERATION",
+    "priority_1": "destination_ambient_10_countries",
+    "country_wave_order": [
+      "JP",
+      "KR",
+      "TH",
+      "SG",
+      "FR",
+      "US",
+      "AU",
+      "ES",
+      "AE",
+      "CN"
+    ],
+    "priority_2": [
+      "poi",
+      "hotel",
+      "transport",
+      "video"
+    ],
+    "operational_loop": [
+      "upload",
+      "publish",
+      "verify",
+      "evidence",
+      "asset_matrix_pack",
+      "health_score"
+    ],
+    "refresh_script": "scripts/dev/run-cms-ops-refresh.cjs",
+    "forbidden": [
+      "new_registry",
+      "new_runbook",
+      "new_review",
+      "new_matrix",
+      "new_policy"
+    ]
+  },
+  "operator_table": [
+    {
+      "page_module": "首页 Ambient",
+      "current_source": "unsplash_fallback",
+      "target_source": "catalog",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/landing-ambient"
+    },
+    {
+      "page_module": "POI",
+      "current_source": "placeholder",
+      "target_source": "catalog",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/poi-images"
+    },
+    {
+      "page_module": "Hotel",
+      "current_source": "placeholder",
+      "target_source": "catalog",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/hotel-tiers"
+    },
+    {
+      "page_module": "Transport",
+      "current_source": "placeholder",
+      "target_source": "catalog",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/transport"
+    },
+    {
+      "page_module": "首页 Hero",
+      "current_source": "official_cold_start",
+      "target_source": "official_cold_start",
+      "owner": "OCS / OPS",
+      "modify_entry": "不修改"
+    },
+    {
+      "page_module": "Market Guide",
+      "current_source": "official_cold_start",
+      "target_source": "official_cold_start",
+      "owner": "OCS",
+      "modify_entry": "不修改"
+    },
+    {
+      "page_module": "Community Official",
+      "current_source": "official_cold_start",
+      "target_source": "official_cold_start",
+      "owner": "OCS",
+      "modify_entry": "不修改"
+    },
+    {
+      "page_module": "TravelTrust Video",
+      "current_source": "placeholder",
+      "target_source": "media_platform",
+      "owner": "Media",
+      "modify_entry": "后续"
+    }
+  ],
+  "TT_CMS_SOURCE_ALIGNMENT": "3 / 8",
+  "TT_CMS_SOURCE_ALIGNMENT_PCT": 37.5,
+  "TT_CMS_CONTENT_HEALTH_SCORE": "37.5%",
+  "TT_CMS_CONTENT_HEALTH_STATUS": "IN_PROGRESS",
+  "TT_CMS_DESTINATION_AMBIENT_LIVE": "0/10",
+  "honest_boundary": "Health Score = passthrough from Asset Matrix SSOT · no independent KPI math · ≠ Production GO"
+}

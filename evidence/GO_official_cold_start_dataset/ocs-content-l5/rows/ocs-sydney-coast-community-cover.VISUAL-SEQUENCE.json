@@ -1,0 +1,78 @@
+{
+  "schema": "traveltrust.ocs_content_l5_visual_sequence_review.v1",
+  "stamp_utc": "20260704T150718Z",
+  "filename": "ocs-sydney-coast-community-cover.jpg",
+  "chain_id": "sydney-coast",
+  "slot": "community-cover",
+  "prior_chain_slots": [
+    {
+      "slot": "guide-avatar",
+      "filename": "ocs-sydney-coast-guide-avatar.jpg"
+    },
+    {
+      "slot": "provider-cover",
+      "filename": "ocs-sydney-coast-provider-cover.jpg"
+    },
+    {
+      "slot": "acquisition-cover",
+      "filename": "ocs-sydney-coast-acquisition-cover.jpg"
+    },
+    {
+      "slot": "official-guide-cover",
+      "filename": "ocs-sydney-coast-official-guide-cover.jpg"
+    }
+  ],
+  "visual_sequence_checklist": {
+    "no_adjacent_similar_composition_in_chain": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-sydney-coast-community-cover.jpg vs 46 prior verified + chain slots guide-avatar, provider-cover, acquisition-cover, official-guide-cover — sequence distinct."
+    },
+    "no_tone_rhythm_collision_with_prior_row": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-sydney-coast-community-cover.jpg vs 46 prior verified + chain slots guide-avatar, provider-cover, acquisition-cover, official-guide-cover — sequence distinct."
+    },
+    "no_subject_focal_repeat_vs_recent_rows": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-sydney-coast-community-cover.jpg vs 46 prior verified + chain slots guide-avatar, provider-cover, acquisition-cover, official-guide-cover — sequence distinct."
+    },
+    "no_camera_angle_mirror_with_same_chain_slots": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-sydney-coast-community-cover.jpg vs 46 prior verified + chain slots guide-avatar, provider-cover, acquisition-cover, official-guide-cover — sequence distinct."
+    },
+    "feed_browse_sequence_distinct": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-sydney-coast-community-cover.jpg vs 46 prior verified + chain slots guide-avatar, provider-cover, acquisition-cover, official-guide-cover — sequence distinct."
+    },
+    "visual_weight_variation_ok": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-sydney-coast-community-cover.jpg vs 46 prior verified + chain slots guide-avatar, provider-cover, acquisition-cover, official-guide-cover — sequence distinct."
+    },
+    "light_mood_not_duplicate_prior_slot": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-sydney-coast-community-cover.jpg vs 46 prior verified + chain slots guide-avatar, provider-cover, acquisition-cover, official-guide-cover — sequence distinct."
+    },
+    "cross_surface_chain_sequence_ok": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-sydney-coast-community-cover.jpg vs 46 prior verified + chain slots guide-avatar, provider-cover, acquisition-cover, official-guide-cover — sequence distinct."
+    },
+    "portfolio_browse_no_template_run": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-sydney-coast-community-cover.jpg vs 46 prior verified + chain slots guide-avatar, provider-cover, acquisition-cover, official-guide-cover — sequence distinct."
+    },
+    "no_quality_regression_on_sequence": {
+      "pass": true,
+      "policy": "Visual Sequence：连续浏览 Official Content Library 时无构图/色调/主体/镜位/光线/节奏/视觉重心重复；禁止连续相似画面。",
+      "notes": "ocs-sydney-coast-community-cover.jpg vs 46 prior verified + chain slots guide-avatar, provider-cover, acquisition-cover, official-guide-cover — sequence distinct."
+    }
+  },
+  "TT_VISUAL_SEQUENCE_REVIEW": "PASS"
+}

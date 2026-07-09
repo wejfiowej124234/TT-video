@@ -1,0 +1,1 @@
+access-control-allow-origin: https://tt-web-staging.fly.dev

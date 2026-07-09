@@ -1,0 +1,24 @@
+{
+  "schema": "traveltrust.parallel_uat_soak_window.v1",
+  "stamp": "20260608T103808Z",
+  "exec_env": "local_or_staging_dev_only",
+  "staging_soak_policy": "frozen_no_redeploy_no_config_change",
+  "freeze_git_sha": "bc5a939cd89c624be7c128b551306da177bf6016",
+  "local_api_base": "http://127.0.0.1:8080",
+  "local_fe_base": "http://127.0.0.1:3012",
+  "local_api_health": "200",
+  "token_debt_audit": {
+    "tool": "npm run check:tokens",
+    "exit_code": 0,
+    "log": "tracks/token-debt-check-tokens.log",
+    "fix_policy": "deferred_until_soak_completed_and_freeze_lifted"
+  },
+  "harness_tracks": {
+    "CMS-catalog-ro": "FAIL",
+    "Growth-funnel": "FAIL",
+    "Official-cold-start": "GO",
+    "Community-moderation": "FAIL"
+  },
+  "human_findings_file": "findings.json",
+  "handbook": "docs/handbook/engineering/180-Parallel-UAT-During-Soak-Sprint.md"
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "traveltrust.local_staging_runtime_consistency_archived.v1",
+  "archived_at_utc": "2026-06-30T10:17:21Z",
+  "prior_closure": "evidence/GO_phase3_production_entry_review/LOCAL-STAGING-RUNTIME-CONSISTENCY-CLOSED.v1.json",
+  "verdict": "ARCHIVED",
+  "verdict_alias": "CLOSED",
+  "runtime_baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "no_reaudit_policy": {
+    "summary": "\u9664\u975e\u53d1\u751f\u65b0\u7684\u8fd0\u884c\u65f6\u4ee3\u7801\u6216\u914d\u7f6e\u53d8\u66f4\u5e76\u5b8c\u6210\u65b0\u7684 staging \u90e8\u7f72\uff0c\u5426\u5219 Runtime Consistency \u4e0d\u518d\u91cd\u65b0\u5ba1\u8ba1\u3002",
+    "triggers_reaudit": [
+      "staging_runtime_code_change_deployed_via_S5",
+      "staging_config_change_deployed_via_S5_or_secrets_sync_with_new_baseline",
+      "Owner_explicit_DEPLOY_GOVERNANCE_FORCE_RUNTIME_with_new_baseline_record"
+    ],
+    "never_triggers_reaudit": [
+      "docs_commit",
+      "evidence_commit",
+      "runbook_update",
+      "repository_hygiene",
+      "manual_validation_work",
+      "production_entry_review_prep",
+      "legacy_tn_p1_009_010_reference"
+    ],
+    "forbidden_framing": [
+      "consistency_fix for hygiene",
+      "consistency_fix for evidence-only HEAD ahead",
+      "phase2_reopen via runtime audit"
+    ]
+  },
+  "machine_keys": {
+    "TT_LOCAL_STAGING_RUNTIME_CONSISTENCY": "ARCHIVED",
+    "TT_LOCAL_STAGING_RUNTIME_CONSISTENCY_REAUDIT": "FORBIDDEN_UNLESS_NEW_STAGING_DEPLOY",
+    "TT_LOCAL_FIRST_RUNTIME_DRIFT": "NONE",
+    "TT_PHASE2_CLOSED": "YES",
+    "TT_PHASE2_REOPEN": "NO"
+  },
+  "frozen_runtime_baseline": "evidence/GO_phase3_production_entry_review/FROZEN-RUNTIME-BASELINE.v1.json",
+  "baseline_mutation": "FORBIDDEN_UNLESS_S5_S6_CHAIN",
+  "updated_at_utc": "2026-06-30T10:34:40Z",
+  "audit_closure_policy": [
+    "Phase\u2460 Audit",
+    "Phase\u2461 Audit",
+    "Runtime Consistency Audit",
+    "enterprise local-staging consistency re-audit (without post-deploy chain)"
+  ],
+  "fixed_response_zh": "Runtime Consistency \u5df2\u4e8e d5aa447f Frozen Baseline \u5b8c\u6210\u5e76\u5f52\u6863\uff08ARCHIVED\uff09\u3002\u9664\u975e\u53d1\u751f\u65b0\u7684\u8fd0\u884c\u65f6\u4ee3\u7801/\u914d\u7f6e\u90e8\u7f72\u5e76\u5b8c\u6210 S5\u2192S6\uff0c\u5426\u5219\u4e0d\u518d\u91cd\u5ba1\u3002"
+}

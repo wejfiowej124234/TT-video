@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.freeze_recommendation.v1",
+  "recommendation": "NO_GO",
+  "band": "NO_GO",
+  "score": 77,
+  "phase2_review_allowed": false
+}

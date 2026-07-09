@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.p2fc_soak_superseded.v1",
+  "superseded_at_utc": "2026-06-24T06:02:36.435Z",
+  "reason": "STRAT-F final candidate pre-soak pivot — invalidate pre-backlog 72h soak",
+  "previous_strategy": "STRAT-A_PLUS_MR12",
+  "new_strategy": "STRAT-F_FINAL_CANDIDATE_PRE_SOAK",
+  "archive_dir": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/superseded-20260624T060234Z-final-candidate-pivot",
+  "prior_freeze_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "next_steps": [
+    "lift freeze",
+    "fix open items",
+    "staging validate",
+    "engage freeze @ HEAD",
+    "fresh 72h soak"
+  ]
+}

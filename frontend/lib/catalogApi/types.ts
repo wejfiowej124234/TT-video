@@ -67,13 +67,29 @@ export const CATALOG_GUIDE_LEVEL_KEYS = [
   "expert",
 ] as const;
 
-/** Adapter 读源标记（S2b Phase 3） */
-export type CatalogResolveSource = "ts" | "catalog-api";
+/** Adapter 读源标记（S2b Phase 3 · City Hero WP4 扩展 catalog-api-fallback） */
+export type CatalogResolveSource = "ts" | "catalog-api" | "catalog-api-fallback";
 
 export interface CatalogResolveResult<T> {
   data: T;
   source: CatalogResolveSource;
 }
+
+/** City Hero resolver 结果（Contract V1 · WP4） */
+export interface CityHeroResolveResult extends CatalogResolveResult<string> {
+  asset_key?: string | null;
+  fallback_key?: string | null;
+  fallback_used: boolean;
+}
+
+export type CityHeroResolveInput = {
+  countryIso: string;
+  citySlug: string;
+  /** TS ③ 与 landing_ambient 语义回退 */
+  countryZh?: string;
+  /** Matrix fallback_key · 例 hero_japan */
+  fallbackKey?: string;
+};
 
 /** 与 `geoOptions.COUNTRY_OPTIONS` 同形 */
 export type CatalogCountryOption = { value: string; label: string };

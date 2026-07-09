@@ -1,0 +1,773 @@
+{
+  "verdict": "PASS",
+  "recorded_at": "2026-06-07T04:44:02.992987+00:00",
+  "targets": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev",
+    "admin_email": "tourist@test.com"
+  },
+  "meta_git_sha": "bc5a939cd89c624be7c128b551306da177bf6016",
+  "summary": {
+    "p0": 0,
+    "p1": 4,
+    "p2": 0,
+    "routes": 71,
+    "issues": 4,
+    "api_pass": 66,
+    "api_warn": 1,
+    "api_fail": 3,
+    "api_skip": 1
+  },
+  "feature_matrix": [
+    {
+      "route": "/admin",
+      "domain": "工作台",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/capabilities → 200; GET /api/v1/admin/metrics/home-overview → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/alerts/incidents",
+      "domain": "审计观测",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/observability/overview → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/alerts/incidents/00000000-0000-4000-8000-0000000000ad",
+      "domain": "审计观测",
+      "permission": "admin.read",
+      "api_status": "FAIL",
+      "api_detail": "GET /api/v1/admin/alerts/incidents/00000000-0000-4000-8000-0000000000ad → 401",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/api-versions",
+      "domain": "平台配置",
+      "permission": "admin.platform.read",
+      "api_status": "FAIL",
+      "api_detail": "GET /api/v1/admin/api-versions → 401",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/approvals",
+      "domain": "入驻审核",
+      "permission": "admin.approve",
+      "api_status": "FAIL",
+      "api_detail": "GET /api/v1/admin/approvals?limit=3 → 401",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/approvals/00000000-0000-4000-8000-0000000000ad",
+      "domain": "入驻审核",
+      "permission": "admin.approve",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/approvals/00000000-0000-4000-8000-0000000000ad → 404 (placeholder 404 OK)",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/audit",
+      "domain": "审计观测",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/audit-logs?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/audit/logs/00000000-0000-4000-8000-0000000000ad",
+      "domain": "审计观测",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/audit-logs/00000000-0000-4000-8000-0000000000ad → 404 (placeholder 404 OK)",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/audit/operations",
+      "domain": "审计观测",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/audit/operations?limit=10 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/auth-audit-events",
+      "domain": "审计观测",
+      "permission": "admin.read",
+      "api_status": "WARN",
+      "api_detail": "GET /api/v1/admin/auth-audit-events?limit=3 → 404",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/community/abuse-policy",
+      "domain": "社区治理",
+      "permission": "admin.community.super",
+      "api_status": "SKIP",
+      "api_detail": "无映射读 API（纯导航/写壳页）",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/community/appeals",
+      "domain": "社区治理",
+      "permission": "admin.community.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/community/appeals?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/community/appeals/review",
+      "domain": "社区治理",
+      "permission": "admin.community.super",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/community/appeals?limit=3&status=pending → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/community/comments/visibility",
+      "domain": "社区治理",
+      "permission": "admin.community.moderate",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/community/reports?limit=1 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/community/moderation/cases",
+      "domain": "社区治理",
+      "permission": "admin.community.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/community/moderation/cases?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/community/penalties",
+      "domain": "社区治理",
+      "permission": "admin.community.moderate",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/community/penalties?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/community/policy-change-logs",
+      "domain": "社区治理",
+      "permission": "admin.community.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/community/policy-change-logs?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/community/ranking/snapshots",
+      "domain": "社区治理",
+      "permission": "admin.community.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/community/ranking/snapshots?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/community/reports",
+      "domain": "社区治理",
+      "permission": "admin.community.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/community/reports?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/community/risk-signals",
+      "domain": "社区治理",
+      "permission": "admin.community.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/community/risk-signals?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/compliance",
+      "domain": "平台配置",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/compliance/data-requests?limit=1 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/compliance/requests",
+      "domain": "平台配置",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/compliance/data-requests?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/compliance/requests/00000000-0000-4000-8000-0000000000ad/events",
+      "domain": "平台配置",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/compliance/data-requests?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/compliance/requests/00000000-0000-4000-8000-0000000000ad/update",
+      "domain": "平台配置",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/compliance/data-requests?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/config",
+      "domain": "平台配置",
+      "permission": "admin.platform.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/flags?limit=1 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/config/releases",
+      "domain": "平台配置",
+      "permission": "admin.platform.publish",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/config/releases?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/config/releases/00000000-0000-4000-8000-0000000000ad",
+      "domain": "平台配置",
+      "permission": "admin.platform.publish",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/config/releases/00000000-0000-4000-8000-0000000000ad → 404 (placeholder 404 OK)",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/cross-check",
+      "domain": "对账治理",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/cross-check → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/disputes",
+      "domain": "经营运维",
+      "permission": "admin.orders.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/disputes?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/disputes/00000000-0000-4000-8000-0000000000ad",
+      "domain": "经营运维",
+      "permission": "admin.orders.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/disputes/00000000-0000-4000-8000-0000000000ad → 404 (placeholder 404 OK)",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/drift-summary",
+      "domain": "对账治理",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/drift-summary → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/fee-router",
+      "domain": "财务链上",
+      "permission": "admin.finance.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/fee-router/routed-events?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/finance",
+      "domain": "财务链上",
+      "permission": "admin.finance.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/finance/summary → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/finance-reconciliation",
+      "domain": "财务链上",
+      "permission": "admin.finance.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/finance/summary → 200; GET /api/v1/admin/cross-check → 200; GET /api/v1/admin/drift-summary → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/finance-suite",
+      "domain": "财务链上",
+      "permission": "admin.finance.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/finance/summary → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/flags",
+      "domain": "平台配置",
+      "permission": "admin.platform.publish",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/flags?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/guides",
+      "domain": "经营运维",
+      "permission": "admin.users.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/guides?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/guides/00000000-0000-4000-8000-0000000000ad",
+      "domain": "经营运维",
+      "permission": "admin.users.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/guides/00000000-0000-4000-8000-0000000000ad → 404 (placeholder 404 OK)",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/inbox",
+      "domain": "入驻审核",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/capabilities → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/indexer",
+      "domain": "财务链上",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/indexer/health → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/indexer/reconcile-reports",
+      "domain": "财务链上",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/indexer/reconcile-reports?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/indexer/reconcile/00000000-0000-4000-8000-0000000000ad",
+      "domain": "财务链上",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/indexer/reconcile-report/00000000-0000-4000-8000-0000000000ad → 404 (placeholder 404 OK)",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/internal-tools/audits",
+      "domain": "审计观测",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/internal-tools/audits?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/jobs",
+      "domain": "平台配置",
+      "permission": "admin.platform.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/jobs?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/lifecycle",
+      "domain": "平台配置",
+      "permission": "admin.platform.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/lifecycle/state-machines → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/media/access-logs",
+      "domain": "平台配置",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/media/access-logs?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/media/signed-url-tokens",
+      "domain": "平台配置",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/media/signed-url-tokens?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/observability",
+      "domain": "审计观测",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/observability/overview → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/onboarding",
+      "domain": "入驻审核",
+      "permission": "admin.onboarding.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/onboarding/entitlements?limit=1 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/onboarding/compliance-audit",
+      "domain": "入驻审核",
+      "permission": "admin.onboarding.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/onboarding/compliance-audit-events?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/onboarding/entitlements",
+      "domain": "入驻审核",
+      "permission": "admin.onboarding.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/onboarding/entitlements?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/onboarding/entitlements/00000000-0000-4000-8000-0000000000ad",
+      "domain": "入驻审核",
+      "permission": "admin.onboarding.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/onboarding/entitlements/00000000-0000-4000-8000-0000000000ad → 404 (placeholder 404 OK)",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/onboarding/payment-events",
+      "domain": "入驻审核",
+      "permission": "admin.onboarding.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/onboarding/payment-events?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/onboarding/webhook-jobs",
+      "domain": "入驻审核",
+      "permission": "admin.onboarding.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/onboarding/webhook-jobs?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/operator-guide",
+      "domain": "工作台",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/capabilities → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/orders",
+      "domain": "经营运维",
+      "permission": "admin.orders.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/orders?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/orders/00000000-0000-4000-8000-0000000000ad",
+      "domain": "经营运维",
+      "permission": "admin.orders.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/orders/00000000-0000-4000-8000-0000000000ad → 404 (placeholder 404 OK)",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/permissions",
+      "domain": "平台配置",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/capabilities → 200; GET /api/v1/admin/rbac/route-matrix → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/policies",
+      "domain": "平台配置",
+      "permission": "admin.platform.publish",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/policies?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/provider-applications",
+      "domain": "入驻审核",
+      "permission": "admin.onboarding.provider_review",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/provider-applications?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/region-vault",
+      "domain": "财务链上",
+      "permission": "admin.finance.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/region-vault/forwarded-events?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/reviews",
+      "domain": "经营运维",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/reviews?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/reviews/00000000-0000-4000-8000-0000000000ad",
+      "domain": "经营运维",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/reviews/00000000-0000-4000-8000-0000000000ad → 404 (placeholder 404 OK)",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/scheduler/jobs",
+      "domain": "平台配置",
+      "permission": "admin.approve",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/scheduler/jobs?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/schema",
+      "domain": "审计观测",
+      "permission": "admin.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/schema/migrations?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/secrets/metadata",
+      "domain": "平台配置",
+      "permission": "admin.platform.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/secrets/metadata?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/steward-applications",
+      "domain": "入驻审核",
+      "permission": "admin.onboarding.steward_review",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/steward-applications?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/tenants/scopes",
+      "domain": "平台配置",
+      "permission": "admin.platform.publish",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/tenants/scopes?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/trust-growth",
+      "domain": "对账治理",
+      "permission": "admin.trust_growth.write",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/trust-growth/observability → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/users",
+      "domain": "经营运维",
+      "permission": "admin.users.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/users?limit=3 → 200",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    },
+    {
+      "route": "/admin/users/00000000-0000-4000-8000-0000000000ad",
+      "domain": "经营运维",
+      "permission": "admin.users.read",
+      "api_status": "PASS",
+      "api_detail": "GET /api/v1/admin/users/00000000-0000-4000-8000-0000000000ad → 404 (placeholder 404 OK)",
+      "ui_probe": "PENDING",
+      "rbac_note": ""
+    }
+  ],
+  "permission_matrix": [
+    {
+      "probe": "旅行者→用户台账",
+      "actor": "旅行者(非admin)",
+      "method": "GET",
+      "path": "/api/v1/admin/users?limit=1",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "probe": "旅行者→订单台账",
+      "actor": "旅行者(非admin)",
+      "method": "GET",
+      "path": "/api/v1/admin/orders?limit=1",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "probe": "旅行者→capabilities",
+      "actor": "旅行者(非admin)",
+      "method": "GET",
+      "path": "/api/v1/admin/capabilities",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "probe": "旅行者→举报",
+      "actor": "旅行者(非admin)",
+      "method": "GET",
+      "path": "/api/v1/admin/community/reports?limit=1",
+      "http": 403,
+      "verdict": "PASS"
+    },
+    {
+      "probe": "旅行者→写 flags",
+      "actor": "旅行者(非admin)",
+      "method": "POST",
+      "path": "/api/v1/admin/flags",
+      "http": 405,
+      "verdict": "PASS"
+    },
+    {
+      "probe": "管理员 capabilities",
+      "actor": "tourist@test.com",
+      "method": "GET",
+      "path": "/api/v1/admin/capabilities",
+      "http": 200,
+      "verdict": "PASS"
+    },
+    {
+      "probe": "effective_permissions",
+      "count": 18,
+      "verdict": "INFO"
+    }
+  ],
+  "issues": [
+    {
+      "id": "AFDA-1-001",
+      "category": "API连通性",
+      "flow_step": "管理员读",
+      "route": "/admin/alerts/incidents/00000000-0000-4000-8000-0000000000ad",
+      "priority": "P1",
+      "title": "管理员无法读 /api/v1/admin/alerts/incidents/00000000-0000-4000-8000-0000000000ad",
+      "observation": "HTTP 401",
+      "human_impact": "页面可见但数据 API 拒绝，真人看到空态/错误",
+      "repro": ""
+    },
+    {
+      "id": "AFDA-1-002",
+      "category": "API连通性",
+      "flow_step": "管理员读",
+      "route": "/admin/api-versions",
+      "priority": "P1",
+      "title": "管理员无法读 /api/v1/admin/api-versions",
+      "observation": "HTTP 401",
+      "human_impact": "页面可见但数据 API 拒绝，真人看到空态/错误",
+      "repro": ""
+    },
+    {
+      "id": "AFDA-1-003",
+      "category": "API连通性",
+      "flow_step": "管理员读",
+      "route": "/admin/approvals",
+      "priority": "P1",
+      "title": "管理员无法读 /api/v1/admin/approvals?limit=3",
+      "observation": "HTTP 401",
+      "human_impact": "页面可见但数据 API 拒绝，真人看到空态/错误",
+      "repro": ""
+    },
+    {
+      "id": "AFDA-1-004",
+      "category": "API连通性",
+      "flow_step": "读路径",
+      "route": "/admin/auth-audit-events",
+      "priority": "P1",
+      "title": "API 404: /api/v1/admin/auth-audit-events?limit=3",
+      "observation": "",
+      "human_impact": "路由存在但后端未挂载或路径漂移",
+      "repro": ""
+    }
+  ],
+  "categories": [
+    "权限边界",
+    "API连通性",
+    "状态机一致性",
+    "错误提示缺失",
+    "异常流程",
+    "边界条件",
+    "会话恢复",
+    "数据一致性"
+  ]
+}

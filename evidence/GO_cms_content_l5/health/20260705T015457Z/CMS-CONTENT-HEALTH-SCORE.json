@@ -1,0 +1,334 @@
+{
+  "schema": "traveltrust.cms_content_health_score.v2",
+  "stamp_utc": "20260705T015457Z",
+  "layer": "CMS_OPERATION",
+  "product_name": "Destination Ambient",
+  "matrix_path": "data/catalog/destination-ambient-matrix.v1.yaml",
+  "content_health": {
+    "display_title": "Content Health",
+    "countries_total": 10,
+    "live_assets": {
+      "live": 0,
+      "total": 10,
+      "display": "0/10"
+    },
+    "pending_review": 0,
+    "published": 0,
+    "pending_publish": 0,
+    "rejected": 0,
+    "draft": 10,
+    "average_review_time_hours": null,
+    "average_publish_time_hours": null,
+    "revision_rollback_success": {
+      "pct": 100,
+      "ready": 0,
+      "live": 0,
+      "label": "Rollback Readiness",
+      "note": "governance rollback runbook ready"
+    },
+    "last_publish": null,
+    "last_verify": null,
+    "ops_board": {
+      "live": [],
+      "review": [],
+      "pending": [],
+      "published": [],
+      "draft": [
+        "JP",
+        "KR",
+        "TH",
+        "SG",
+        "FR",
+        "US",
+        "AU",
+        "ES",
+        "AE",
+        "CN"
+      ],
+      "rejected": []
+    },
+    "ops_board_detail": {
+      "live": [],
+      "review": [],
+      "pending": [],
+      "published": [],
+      "draft": [
+        {
+          "matrix_id": "DA-JP-HOME",
+          "country_iso": "JP",
+          "country_zh": "日本",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-KR-HOME",
+          "country_iso": "KR",
+          "country_zh": "韩国",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-TH-HOME",
+          "country_iso": "TH",
+          "country_zh": "泰国",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-SG-HOME",
+          "country_iso": "SG",
+          "country_zh": "新加坡",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-FR-HOME",
+          "country_iso": "FR",
+          "country_zh": "法国",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-US-HOME",
+          "country_iso": "US",
+          "country_zh": "美国",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-AU-HOME",
+          "country_iso": "AU",
+          "country_zh": "澳大利亚",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-ES-HOME",
+          "country_iso": "ES",
+          "country_zh": "西班牙",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-AE-HOME",
+          "country_iso": "AE",
+          "country_zh": "阿联酋",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-CN-HOME",
+          "country_iso": "CN",
+          "country_zh": "中国",
+          "asset_lifecycle": "draft"
+        }
+      ],
+      "rejected": [],
+      "archived": []
+    }
+  },
+  "governance_metrics": {
+    "live_assets": {
+      "live": 0,
+      "total": 10,
+      "display": "0/10",
+      "pct": 0
+    },
+    "review_sla": {
+      "pct": 100,
+      "in_review": 0,
+      "sla_days": 7,
+      "note": "no rows in review"
+    },
+    "verify_pass_rate": {
+      "pct": 100,
+      "pass": 0,
+      "attempts": 0,
+      "note": "no verify attempts yet"
+    },
+    "revision_rollback_success": {
+      "pct": 100,
+      "ready": 0,
+      "live": 0,
+      "label": "Rollback Readiness",
+      "note": "governance rollback runbook ready"
+    },
+    "evidence_completeness": {
+      "pct": 100,
+      "complete": 0,
+      "live": 0,
+      "note": "no live rows requiring evidence"
+    },
+    "overall": {
+      "status": "BASELINE_ESTABLISHED",
+      "label": "BASELINE ESTABLISHED",
+      "score_pct": null
+    }
+  },
+  "metrics": {
+    "live_assets": {
+      "live": 0,
+      "total": 10,
+      "display": "0/10",
+      "pct": 0
+    },
+    "review_sla": {
+      "pct": 100,
+      "in_review": 0,
+      "sla_days": 7,
+      "note": "no rows in review"
+    },
+    "verify_pass_rate": {
+      "pct": 100,
+      "pass": 0,
+      "attempts": 0,
+      "note": "no verify attempts yet"
+    },
+    "revision_rollback_success": {
+      "pct": 100,
+      "ready": 0,
+      "live": 0,
+      "label": "Rollback Readiness",
+      "note": "governance rollback runbook ready"
+    },
+    "evidence_completeness": {
+      "pct": 100,
+      "complete": 0,
+      "live": 0,
+      "note": "no live rows requiring evidence"
+    },
+    "overall": {
+      "status": "BASELINE_ESTABLISHED",
+      "label": "BASELINE ESTABLISHED",
+      "score_pct": null
+    }
+  },
+  "TT_CMS_CONTENT_HEALTH": {
+    "display_title": "Content Health",
+    "countries_total": 10,
+    "live_assets": {
+      "live": 0,
+      "total": 10,
+      "display": "0/10"
+    },
+    "pending_review": 0,
+    "published": 0,
+    "pending_publish": 0,
+    "rejected": 0,
+    "draft": 10,
+    "average_review_time_hours": null,
+    "average_publish_time_hours": null,
+    "revision_rollback_success": {
+      "pct": 100,
+      "ready": 0,
+      "live": 0,
+      "label": "Rollback Readiness",
+      "note": "governance rollback runbook ready"
+    },
+    "last_publish": null,
+    "last_verify": null,
+    "ops_board": {
+      "live": [],
+      "review": [],
+      "pending": [],
+      "published": [],
+      "draft": [
+        "JP",
+        "KR",
+        "TH",
+        "SG",
+        "FR",
+        "US",
+        "AU",
+        "ES",
+        "AE",
+        "CN"
+      ],
+      "rejected": []
+    },
+    "ops_board_detail": {
+      "live": [],
+      "review": [],
+      "pending": [],
+      "published": [],
+      "draft": [
+        {
+          "matrix_id": "DA-JP-HOME",
+          "country_iso": "JP",
+          "country_zh": "日本",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-KR-HOME",
+          "country_iso": "KR",
+          "country_zh": "韩国",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-TH-HOME",
+          "country_iso": "TH",
+          "country_zh": "泰国",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-SG-HOME",
+          "country_iso": "SG",
+          "country_zh": "新加坡",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-FR-HOME",
+          "country_iso": "FR",
+          "country_zh": "法国",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-US-HOME",
+          "country_iso": "US",
+          "country_zh": "美国",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-AU-HOME",
+          "country_iso": "AU",
+          "country_zh": "澳大利亚",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-ES-HOME",
+          "country_iso": "ES",
+          "country_zh": "西班牙",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-AE-HOME",
+          "country_iso": "AE",
+          "country_zh": "阿联酋",
+          "asset_lifecycle": "draft"
+        },
+        {
+          "matrix_id": "DA-CN-HOME",
+          "country_iso": "CN",
+          "country_zh": "中国",
+          "asset_lifecycle": "draft"
+        }
+      ],
+      "rejected": [],
+      "archived": []
+    }
+  },
+  "TT_CMS_CONTENT_HEALTH_SCORE": "BASELINE ESTABLISHED",
+  "TT_CMS_CONTENT_HEALTH_STATUS": "BASELINE_ESTABLISHED",
+  "TT_CMS_LIVE_ASSETS": "0/10",
+  "cms_asset_matrix": {
+    "path": "evidence/GO_cms_operation/CMS-ASSET-MATRIX-LATEST.json",
+    "stamp_utc": "20260705T015446Z",
+    "source_aligned": 3,
+    "rows": 8,
+    "wave_1_jp_ambient": {
+      "current_source": "unsplash_fallback",
+      "target_source": "catalog",
+      "jp_catalog_live": false,
+      "countries_catalog_live": 0
+    },
+    "by_current_source": {
+      "catalog": 0,
+      "catalog_partial": 0,
+      "unsplash_fallback": 1,
+      "official_cold_start": 3,
+      "placeholder": 4
+    }
+  },
+  "honest_boundary": "Content Health = ops dashboard data; ≠ Production GO; Wave 1 validates process not JP image"
+}

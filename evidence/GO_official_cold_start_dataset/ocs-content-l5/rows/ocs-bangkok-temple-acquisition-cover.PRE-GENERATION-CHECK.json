@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T134730Z",
+  "filename": "ocs-bangkok-temple-acquisition-cover.jpg",
+  "chain_id": "bangkok-temple",
+  "row": 21,
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "no_quality_regression_acknowledged": true,
+  "checks": {
+    "manifest_full_field_alignment": { "pass": true, "notes": "泰国手工丝绸·收购 · craft · 围巾桌旗工艺说明" },
+    "destination_authenticity_9dim_plan": { "pass": true, "notes": "泰丝织物纹理静物 · 非河景非寺庙" },
+    "country_consistency_th_only": { "pass": true },
+    "acquisition_product_identity_plan": {
+      "pass": true,
+      "vs_tokyo": "泰丝 craft vs 镜头 collectibles",
+      "vs_kyoto": "丝绸织物 vs 和纸",
+      "vs_seoul": "手工织物 vs 零食 food",
+      "vs_bangkok_provider": "商品静物 vs 河船晚宴"
+    },
+    "global_visual_diversity_plan": { "pass": true, "notes": "织物纹理平铺；非镜头/和纸/零食/河景" },
+    "brand_consistency_l5": { "pass": true },
+    "consumer_experience": { "pass": true, "notes": "悬赏/收购标的清晰" },
+    "copyright_watermark_anatomy": { "pass": true },
+    "surface_identity_acquisition_only": { "pass": true, "notes": "无人物/河景/Guide/Provider/Community/Official" },
+    "narrative_continuity": { "pass": true, "notes": "Arun→河船→泰丝收购→官方路线→社区" },
+    "business_authenticity": { "pass": true, "notes": "泰国手工丝绸收购语义" },
+    "commercial_realism": { "pass": true, "notes": "craft bounty 非硬广" },
+    "no_duplicate_with_completed_cities": { "pass": true }
+  }
+}

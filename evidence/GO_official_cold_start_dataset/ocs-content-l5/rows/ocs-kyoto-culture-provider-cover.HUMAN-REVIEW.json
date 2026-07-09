@@ -1,0 +1,34 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T124430Z",
+  "filename": "ocs-kyoto-culture-provider-cover.jpg",
+  "chain_id": "kyoto-culture",
+  "city": "京都",
+  "country_code": "JP",
+  "slot": "provider-cover",
+  "surface": "Provider",
+  "copy_label": "京都茶道体验 · 私享包场",
+  "manifest_copy": {
+    "chain.city": "京都",
+    "chain.tags": ["文化", "茶道"],
+    "provider.title": "京都茶道体验 · 私享包场",
+    "provider.category": "experience",
+    "provider.description": "传统茶室 90 分钟体验，含和果子与英文讲解。",
+    "provider.cover_url": "/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg"
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 73369 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "私享茶室+茶道具与 title/description/category 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "室内茶室空间；与 Row7 人物肖像、未来和纸/岚山/茶道瞬间 slot 不同。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "京都同 chain；无东京/他国元素。" },
+    "G5_brand_visual": { "pass": true, "notes": "安静木质暖色禅意；与 kyoto chain 品牌统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "可售茶道包场 Provider 封面；非硬广摆拍。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光柔和、白平衡自然、640x480 无低清块。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "HUMAN-REVIEW + chain 2/6 + row verify 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "京都茶室语义正确；无水印/Logo/畸形；② AI 素材。" },
+    "G10_content_diversity": { "pass": true, "notes": "室内体验空间 slot；chain 场景类型扩展。" }
+  },
+  "consumer_experience": { "pass": true, "notes": "用户可感知真实私享茶道服务环境。" },
+  "narrative_continuity": { "pass": true, "notes": "Yuki 向导(祇园) → 可预订茶室包场；文化主题连贯。" },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

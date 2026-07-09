@@ -1,0 +1,391 @@
+{
+  "schema": "community-c11-route-gate.v1",
+  "generated_at": "20260606T001039Z",
+  "phase": "② testnet C11",
+  "verdict": "PASS",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "check_04_routes_gate": {
+    "command": "bash scripts/run-check-04-routes.sh",
+    "exit_code": 0,
+    "ok": true,
+    "source": "check-04-routes-result.json"
+  },
+  "static_consistency": {
+    "ok": true,
+    "counts": {
+      "doc_04": 42,
+      "axum": 42,
+      "api_ts": 29,
+      "frontend_pages": 18
+    },
+    "missing_in_axum_vs_doc": [],
+    "orphan_axum_not_in_doc": [],
+    "api_ts_not_mounted": [],
+    "axum_missing_from_api_ts": [
+      "/api/v1/community/conversations/{id}/messages",
+      "/api/v1/community/media-assets/sessions/{id}/complete",
+      "/api/v1/community/media-assets/sessions/{id}/parts",
+      "/api/v1/community/media-assets/{id}",
+      "/api/v1/community/posts/{id}",
+      "/api/v1/community/posts/{id}/collect",
+      "/api/v1/community/posts/{id}/comments",
+      "/api/v1/community/posts/{id}/like",
+      "/api/v1/community/reports/{id}",
+      "/api/v1/community/reports/{id}/appeals",
+      "/api/v1/community/users/{id}/follow",
+      "/api/v1/community/users/{id}/posts",
+      "/api/v1/uploads/community-posts/{id}",
+      "/api/v1/uploads/profile-avatars/{id}"
+    ],
+    "frontend_routes": [
+      {
+        "path": "/community/activity",
+        "page": "community/activity/page.tsx"
+      },
+      {
+        "path": "/community/explore",
+        "page": "community/explore/page.tsx"
+      },
+      {
+        "path": "/community/feedback",
+        "page": "community/feedback/page.tsx"
+      },
+      {
+        "path": "/community/friends",
+        "page": "community/friends/page.tsx"
+      },
+      {
+        "path": "/community/guidelines",
+        "page": "community/guidelines/page.tsx"
+      },
+      {
+        "path": "/community/me/collects",
+        "page": "community/me/collects/page.tsx"
+      },
+      {
+        "path": "/community/me/likes",
+        "page": "community/me/likes/page.tsx"
+      },
+      {
+        "path": "/community/me",
+        "page": "community/me/page.tsx"
+      },
+      {
+        "path": "/community/me/posts",
+        "page": "community/me/posts/page.tsx"
+      },
+      {
+        "path": "/community/me/reports/{id}",
+        "page": "community/me/reports/[id]/page.tsx"
+      },
+      {
+        "path": "/community/me/reports",
+        "page": "community/me/reports/page.tsx"
+      },
+      {
+        "path": "/community/messages/{id}",
+        "page": "community/messages/[id]/page.tsx"
+      },
+      {
+        "path": "/community/messages",
+        "page": "community/messages/page.tsx"
+      },
+      {
+        "path": "/community",
+        "page": "community/page.tsx"
+      },
+      {
+        "path": "/community/post/{id}",
+        "page": "community/post/[id]/page.tsx"
+      },
+      {
+        "path": "/community/topic/{tag}",
+        "page": "community/topic/[tag]/page.tsx"
+      },
+      {
+        "path": "/community/tt",
+        "page": "community/tt/page.tsx"
+      },
+      {
+        "path": "/community/user/{id}",
+        "page": "community/user/[id]/page.tsx"
+      }
+    ]
+  },
+  "staging_api_probes": [
+    {
+      "method": "GET",
+      "path": "/api/v1/community/feed",
+      "auth": false,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/media/capabilities",
+      "auth": false,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/stats/posts-by-tag?tag=travel",
+      "auth": false,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/feedback",
+      "auth": false,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/me/posts",
+      "auth": false,
+      "http_status": 401,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/conversations",
+      "auth": false,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/me/following",
+      "auth": false,
+      "http_status": 401,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/posts/00000000-0000-4000-8000-000000000099",
+      "auth": false,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/users/de8a6cd1-d251-426b-ac3c-85c7a98816f1/posts",
+      "auth": false,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/uploads/community-posts/00000000-0000-4000-8000-000000000099.png",
+      "auth": false,
+      "http_status": 404,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/uploads/profile-avatars/de8a6cd1-d251-426b-ac3c-85c7a98816f1.jpg",
+      "auth": false,
+      "http_status": 404,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/me/posts",
+      "auth": true,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/conversations",
+      "auth": true,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/me/following",
+      "auth": true,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/me/followers",
+      "auth": true,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/me/collects",
+      "auth": true,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/me/likes-received",
+      "auth": true,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/me/reports",
+      "auth": true,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/friends/list",
+      "auth": true,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/friends/requests",
+      "auth": true,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/conversations/00000000-0000-4000-8000-000000000088/messages",
+      "auth": true,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/community/reports/00000000-0000-4000-8000-000000000099",
+      "auth": true,
+      "http_status": 200,
+      "ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/profile-avatar/presign",
+      "auth": true,
+      "http_status": 415,
+      "ok": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/me/profile-avatar/commit",
+      "auth": true,
+      "http_status": 415,
+      "ok": true
+    }
+  ],
+  "browser_route_probes": {
+    "ok": true,
+    "total": 18,
+    "passed": 18,
+    "routes": [
+      {
+        "id": "feed",
+        "path": "/community",
+        "ok": true
+      },
+      {
+        "id": "tt",
+        "path": "/community/tt",
+        "ok": true
+      },
+      {
+        "id": "explore",
+        "path": "/community/explore",
+        "ok": true
+      },
+      {
+        "id": "activity",
+        "path": "/community/activity",
+        "ok": true
+      },
+      {
+        "id": "friends",
+        "path": "/community/friends",
+        "ok": true
+      },
+      {
+        "id": "messages",
+        "path": "/community/messages",
+        "ok": true
+      },
+      {
+        "id": "messages-thread",
+        "path": "/community/messages/00000000-0000-4000-8000-000000000001",
+        "ok": true
+      },
+      {
+        "id": "me",
+        "path": "/community/me",
+        "ok": true
+      },
+      {
+        "id": "me-posts",
+        "path": "/community/me/posts",
+        "ok": true
+      },
+      {
+        "id": "me-collects",
+        "path": "/community/me/collects",
+        "ok": true
+      },
+      {
+        "id": "me-reports",
+        "path": "/community/me/reports",
+        "ok": true
+      },
+      {
+        "id": "me-report-ticket",
+        "path": "/community/me/reports/00000000-0000-4000-8000-000000000001",
+        "ok": true
+      },
+      {
+        "id": "user-profile",
+        "path": "/community/user/00000000-0000-4000-8000-000000000001",
+        "ok": true
+      },
+      {
+        "id": "topic",
+        "path": "/community/topic/%E6%97%85%E8%A1%8C",
+        "ok": true
+      },
+      {
+        "id": "feedback",
+        "path": "/community/feedback",
+        "ok": true
+      },
+      {
+        "id": "guidelines",
+        "path": "/community/guidelines",
+        "ok": true
+      },
+      {
+        "id": "post-deeplink",
+        "path": "/community/post/00000000-0000-4000-8000-000000000099",
+        "ok": true
+      },
+      {
+        "id": "me-likes",
+        "path": "/community/me/likes",
+        "ok": true
+      }
+    ]
+  },
+  "summary": {
+    "check_04_exit_0": true,
+    "static_ok": true,
+    "staging_api_ok": true,
+    "browser_ok": true,
+    "orphan_routes": 0,
+    "unregistered_routes": 0,
+    "failed_staging_probes": []
+  }
+}

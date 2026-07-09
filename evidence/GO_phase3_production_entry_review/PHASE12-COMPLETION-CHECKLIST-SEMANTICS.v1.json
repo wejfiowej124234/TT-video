@@ -1,0 +1,130 @@
+{
+  "schema": "traveltrust.phase12_completion_checklist_semantics.v1",
+  "effective_at_utc": "2026-06-30T10:26:47Z",
+  "purpose": "Prevent misreading Phase\u2460/\u2461 completion; HEAD-ahead, Legacy, FRCA are not Phase\u2461 open items.",
+  "phase12_completion_summary": {
+    "phase1_local": {
+      "status": "COMPLETE",
+      "mode": "FROZEN_MAINTENANCE"
+    },
+    "phase2_testnet": {
+      "status": "CLOSED",
+      "artifact": "evidence/GO_phase2_testnet_graduation/PHASE2-CLOSED.latest.json"
+    },
+    "runtime_baseline": {
+      "status": "FROZEN_ASSET",
+      "sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6"
+    },
+    "runtime_consistency": {
+      "status": "ARCHIVED"
+    }
+  },
+  "checklist_items": [
+    {
+      "id": 1,
+      "item": "Phase\u2460 \u672c\u5730\u5c01\u7248 / \u7eff\u96c6 / \u4e94\u4e3b UI \u51bb\u7ed3",
+      "status": "COMPLETE",
+      "phase": "\u2460",
+      "note": "\u7ef4\u62a4\u6001\uff1b\u4ec5 bugfix / \u6570\u636e\u94fe / \u8bc1\u636e"
+    },
+    {
+      "id": 2,
+      "item": "Phase\u2461 L0\u2192L6\u2192S5\u2192S6\u2192H1",
+      "status": "COMPLETE",
+      "phase": "\u2461",
+      "note": "evidence/GO_phase2_testnet_graduation/"
+    },
+    {
+      "id": 3,
+      "item": "Phase\u2461 CLOSED",
+      "status": "COMPLETE",
+      "phase": "\u2461",
+      "note": "TT_PHASE2_REOPEN: NO"
+    },
+    {
+      "id": 4,
+      "item": "Runtime Baseline \u51bb\u7ed3\u8d44\u4ea7",
+      "status": "FROZEN",
+      "phase": "\u2461\u2192\u2462 boundary",
+      "note": "FROZEN-RUNTIME-BASELINE.v1.json @ d5aa447f"
+    },
+    {
+      "id": 5,
+      "item": "Runtime Consistency",
+      "status": "ARCHIVED",
+      "phase": "\u2461\u2192\u2462 boundary",
+      "note": "No re-audit unless S5\u2192S6\u2192baseline update chain"
+    },
+    {
+      "id": 6,
+      "item": "Staging API = Web SHA @ baseline",
+      "status": "COMPLETE",
+      "phase": "\u2461 runtime",
+      "note": "G01 PASS @ d5aa447f"
+    },
+    {
+      "id": 7,
+      "item": "Deep Gate G01\u2013G08",
+      "status": "COMPLETE",
+      "phase": "\u2461",
+      "note": "release_gate=GO @ baseline"
+    },
+    {
+      "id": 8,
+      "item": "HAT \u63a2\u9488 P0/P1",
+      "status": "COMPLETE",
+      "phase": "\u2461",
+      "note": "P0=0 P1=0 @ baseline"
+    },
+    {
+      "id": 9,
+      "item": "\u672c\u5730 HEAD \u4e0e staging \u540c SHA",
+      "status": "N/A",
+      "status_label": "N/A\uff08\u6309\u6cbb\u7406\u7b56\u7565\u4e0d\u8981\u6c42\uff09",
+      "phase": "\u2014",
+      "note": "HEAD \u53ef\u9886\u5148 Runtime Baseline\uff08evidence/governance/docs\uff09\uff1b\u4e0d\u5c5e\u4e8e Runtime Consistency\uff0c\u4e5f\u4e0d\u4f5c\u4e3a Phase\u2461 \u672a\u5b8c\u6210\u9879",
+      "forbidden_framing": [
+        "Phase\u2461 \u672a\u5b8c\u6210",
+        "Runtime \u4e0d\u4e00\u81f4",
+        "\u5fc5\u987b S5 \u5bf9\u9f50 HEAD"
+      ]
+    },
+    {
+      "id": 10,
+      "item": "Legacy\uff08TN-P1-009 / TN-P1-010\uff09",
+      "status": "PARKED",
+      "phase": "Legacy off-path",
+      "note": "\u5386\u53f2\u8f68\u9053\uff0c\u4ec5 Owner \u5f15\u7528\uff1b\u4e0d\u5f71\u54cd Phase\u2461 CLOSED\uff0c\u4e5f\u4e0d\u5f71\u54cd Phase\u2462 \u4e3b\u6d41\u7a0b",
+      "forbidden_framing": [
+        "Phase\u2461 \u672a\u5b8c\u6210",
+        "\u963b\u585e Production Entry Review \u5f00\u5de5"
+      ]
+    },
+    {
+      "id": 11,
+      "item": "FRCA \u4eba\u5de5\u5168\u94fe\u624b\u64cd",
+      "status": "PENDING",
+      "status_label": "PENDING\uff08Phase\u2462\uff09",
+      "phase": "\u2462 Manual Validation",
+      "note": "\u5c5e\u4e8e Phase\u2462 Production Entry Review\uff08Manual Validation \u8f68\uff09\uff1b\u4e0d\u5c5e\u4e8e Phase\u2460/\u2461 \u5b8c\u6210\u5ea6",
+      "forbidden_framing": [
+        "Phase\u2461 \u672a\u5b8c\u6210",
+        "Runtime \u4e0d\u4e00\u81f4"
+      ]
+    },
+    {
+      "id": 12,
+      "item": "Production GO",
+      "status": "OPEN",
+      "phase": "\u2462",
+      "note": "PRODUCTION_GO_DECISION: NO_GO"
+    }
+  ],
+  "machine_keys": {
+    "TT_PHASE1_LOCAL": "COMPLETE",
+    "TT_PHASE2_CLOSED": "YES",
+    "TT_HEAD_STAGING_SHA_PARITY": "NOT_REQUIRED",
+    "TT_LEGACY_TN_P1": "PARKED",
+    "TT_FRCA_MANUAL_VALIDATION": "PENDING_PHASE3"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.doa_ssot_drift.v1",
+  "items": [
+    {
+      "path": "registry/spec-path-dependencies.v1.yaml",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "path": "docs/spec-path-dependency-migration-inventory.md",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "path": "AGENTS.md",
+      "exists": true,
+      "verdict": "KEEP"
+    },
+    {
+      "path": "docs/spec/04-后端与API.md",
+      "exists": true,
+      "verdict": "KEEP"
+    }
+  ]
+}

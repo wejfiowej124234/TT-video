@@ -1,0 +1,2588 @@
+{
+  "schema": "traveltrust.cms_l5_visual_gap_report.v1",
+  "stamp_utc": "20260705T035257Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "title": "CMS L5 Visual Gap Report",
+  "ssot": "runtime_dom_only",
+  "excluded_from_judgement": [
+    "matrix",
+    "inventory",
+    "registry",
+    "runbook",
+    "evidence_json"
+  ],
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "pages_audited": [
+    {
+      "page_path": "/",
+      "url": "https://tt-web-staging.fly.dev/",
+      "http": 200,
+      "runtime_images": 5
+    },
+    {
+      "page_path": "/market",
+      "url": "https://tt-web-staging.fly.dev/market",
+      "http": 200,
+      "runtime_images": 11
+    },
+    {
+      "page_path": "/market/provider",
+      "url": "https://tt-web-staging.fly.dev/market/provider",
+      "http": 200,
+      "runtime_images": 10
+    },
+    {
+      "page_path": "/market/acquisition",
+      "url": "https://tt-web-staging.fly.dev/market/acquisition",
+      "http": 200,
+      "runtime_images": 10
+    },
+    {
+      "page_path": "/traveltrust",
+      "url": "https://tt-web-staging.fly.dev/traveltrust",
+      "http": 200,
+      "runtime_images": 1
+    }
+  ],
+  "summary": {
+    "total_runtime_assets": 37,
+    "l5_compliant": 0,
+    "gaps": 37,
+    "gap_pct": 100,
+    "by_asset_family": {
+      "destination_ambient": 1,
+      "unknown": 4,
+      "hotel": 1,
+      "poi": 9,
+      "food": 1,
+      "provider_listing": 10,
+      "acquisition_listing": 10,
+      "video_poster": 1
+    },
+    "by_page": {
+      "/": 5,
+      "/market": 11,
+      "/market/provider": 10,
+      "/market/acquisition": 10,
+      "/traveltrust": 1
+    },
+    "family_stats": {
+      "destination_ambient": {
+        "runtime_assets_seen": 1,
+        "l5_compliant": 0,
+        "gaps": 1,
+        "pct": 0
+      },
+      "unknown": {
+        "runtime_assets_seen": 4,
+        "l5_compliant": 0,
+        "gaps": 4,
+        "pct": 0
+      },
+      "hotel": {
+        "runtime_assets_seen": 1,
+        "l5_compliant": 0,
+        "gaps": 1,
+        "pct": 0
+      },
+      "poi": {
+        "runtime_assets_seen": 9,
+        "l5_compliant": 0,
+        "gaps": 9,
+        "pct": 0
+      },
+      "food": {
+        "runtime_assets_seen": 1,
+        "l5_compliant": 0,
+        "gaps": 1,
+        "pct": 0
+      },
+      "provider_listing": {
+        "runtime_assets_seen": 10,
+        "l5_compliant": 0,
+        "gaps": 10,
+        "pct": 0
+      },
+      "acquisition_listing": {
+        "runtime_assets_seen": 10,
+        "l5_compliant": 0,
+        "gaps": 10,
+        "pct": 0
+      },
+      "video_poster": {
+        "runtime_assets_seen": 1,
+        "l5_compliant": 0,
+        "gaps": 1,
+        "pct": 0
+      }
+    },
+    "p0_gaps": 11,
+    "p1_gaps": 21,
+    "p2_gaps": 5
+  },
+  "assets": [
+    {
+      "page_path": "/",
+      "asset_family": "destination_ambient",
+      "asset_label": "h-full w-full object-cover object-center",
+      "runtime_image_url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=max&w=3840&q=90",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": false,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产",
+        "国家背景图未走 catalog landing_ambient"
+      ],
+      "suggested_cms_asset": "CMS Destination Ambient · 按当前页面国家 publish landing_ambient · page /",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 3840,
+        "natural_height": 2560,
+        "display_width": 1601,
+        "display_height": 1126,
+        "http": 200,
+        "bytes": 1320909,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/",
+      "asset_family": "unknown",
+      "asset_label": "AI 行程规划选目的地与偏好，一键生成可预览的行程草案。开始规划",
+      "runtime_image_url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": false,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产",
+        "画质/尺寸不足 600x400（L5 ≥640x480）"
+      ],
+      "suggested_cms_asset": "CMS asset mapping TBD · assign family then publish · page /",
+      "affects_production": true,
+      "priority": "P2",
+      "runtime_probe": {
+        "natural_width": 600,
+        "natural_height": 400,
+        "display_width": 237,
+        "display_height": 158,
+        "http": 200,
+        "bytes": 40061,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/",
+      "asset_family": "unknown",
+      "asset_label": "认证向导在自由市场挑选向导，沟通细节后下单。浏览向导",
+      "runtime_image_url": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": false,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产",
+        "画质/尺寸不足 600x400（L5 ≥640x480）"
+      ],
+      "suggested_cms_asset": "CMS asset mapping TBD · assign family then publish · page /",
+      "affects_production": true,
+      "priority": "P2",
+      "runtime_probe": {
+        "natural_width": 600,
+        "natural_height": 400,
+        "display_width": 237,
+        "display_height": 158,
+        "http": 200,
+        "bytes": 70564,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/",
+      "asset_family": "unknown",
+      "asset_label": "旅行灵感看真实游记与官方精选，找到下一站灵感。逛社区",
+      "runtime_image_url": "https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=600&q=80",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": false,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产",
+        "画质/尺寸不足 600x400（L5 ≥640x480）"
+      ],
+      "suggested_cms_asset": "CMS asset mapping TBD · assign family then publish · page /",
+      "affects_production": true,
+      "priority": "P2",
+      "runtime_probe": {
+        "natural_width": 600,
+        "natural_height": 400,
+        "display_width": 237,
+        "display_height": 158,
+        "http": 200,
+        "bytes": 70855,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/",
+      "asset_family": "unknown",
+      "asset_label": "官方社区东京摄影一日路线 · 官方精选官方认证来自官方账号的社区精选，获取真实出行灵感。东京阅读内容",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS asset mapping TBD · assign family then publish · page /",
+      "affects_production": true,
+      "priority": "P2",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 136,
+        "display_height": 120,
+        "http": 200,
+        "bytes": 88885,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "hotel",
+      "asset_label": "行程图：日本 · 东京",
+      "runtime_image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Hotel Stock · hotel-tiers stock_image_url publish · page /market",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 800,
+        "natural_height": 632,
+        "display_width": 274,
+        "display_height": 205,
+        "http": 200,
+        "bytes": 148051,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "迪拜 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 56250,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "巴塞罗那 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 83508,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "悉尼 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 105178,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "纽约 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 56685,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "巴黎 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 56416,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "新加坡 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 91448,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "曼谷 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 76981,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "food",
+      "asset_label": "首尔 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · poi_type=food · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 61768,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "京都 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 66416,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "东京 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 61826,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "迪拜沙漠豪华 Safari · 含晚宴",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 85017,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "高迪三件套联票 · 含导览",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 608,
+        "http": 200,
+        "bytes": 105068,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "悉尼海港皮划艇 · 半日",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 583,
+        "http": 200,
+        "bytes": 102550,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "纽约观景台联票 · 官方合作",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 119821,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "巴黎博物馆免排队 · 小团",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 608,
+        "http": 200,
+        "bytes": 81046,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "新加坡亲子通票 · 官方合作",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 583,
+        "http": 200,
+        "bytes": 83836,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "湄南河 sunset 游船 · 含晚餐",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 101680,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "首尔深夜美食团 · 4 小时",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 608,
+        "http": 200,
+        "bytes": 124901,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "京都茶道体验 · 私享包场",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 583,
+        "http": 200,
+        "bytes": 73369,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "东京旅拍写真 · 半日套餐",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 83004,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "迪拜定制香氛 · 悬赏",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 115171,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "巴塞罗那马赛克瓷砖 · 收购",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 608,
+        "http": 200,
+        "bytes": 152326,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "澳洲手工冲浪板 · 收购",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 583,
+        "http": 200,
+        "bytes": 76826,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "纽约独立黑胶 · 悬赏",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 75296,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "巴黎中古海报 · 收购",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 486,
+        "display_height": 608,
+        "http": 200,
+        "bytes": 78485,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "新加坡设计周边 · 悬赏",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 583,
+        "http": 200,
+        "bytes": 74394,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "泰国手工丝绸 · 收购",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 135921,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "韩国限定零食礼包 · 悬赏",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 608,
+        "http": 200,
+        "bytes": 126383,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "京都手工和纸 · 收购",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 583,
+        "http": 200,
+        "bytes": 108760,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "东京限定镜头代购 · 悬赏",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 71791,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/traveltrust",
+      "asset_family": "video_poster",
+      "asset_label": "video poster",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/media/traveltrust/roles/traveler.poster.svg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": false,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产",
+        "文件过小 506 bytes（L5 min 16KB）"
+      ],
+      "suggested_cms_asset": "CMS Video Poster · media-assets publish · page /traveltrust",
+      "affects_production": true,
+      "priority": "P2",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 536,
+        "display_height": 301,
+        "http": 200,
+        "bytes": 506,
+        "kind": "video_poster"
+      }
+    }
+  ],
+  "gaps": [
+    {
+      "page_path": "/",
+      "asset_family": "destination_ambient",
+      "asset_label": "h-full w-full object-cover object-center",
+      "runtime_image_url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=max&w=3840&q=90",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": false,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产",
+        "国家背景图未走 catalog landing_ambient"
+      ],
+      "suggested_cms_asset": "CMS Destination Ambient · 按当前页面国家 publish landing_ambient · page /",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 3840,
+        "natural_height": 2560,
+        "display_width": 1601,
+        "display_height": 1126,
+        "http": 200,
+        "bytes": 1320909,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/",
+      "asset_family": "unknown",
+      "asset_label": "AI 行程规划选目的地与偏好，一键生成可预览的行程草案。开始规划",
+      "runtime_image_url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": false,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产",
+        "画质/尺寸不足 600x400（L5 ≥640x480）"
+      ],
+      "suggested_cms_asset": "CMS asset mapping TBD · assign family then publish · page /",
+      "affects_production": true,
+      "priority": "P2",
+      "runtime_probe": {
+        "natural_width": 600,
+        "natural_height": 400,
+        "display_width": 237,
+        "display_height": 158,
+        "http": 200,
+        "bytes": 40061,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/",
+      "asset_family": "unknown",
+      "asset_label": "认证向导在自由市场挑选向导，沟通细节后下单。浏览向导",
+      "runtime_image_url": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": false,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产",
+        "画质/尺寸不足 600x400（L5 ≥640x480）"
+      ],
+      "suggested_cms_asset": "CMS asset mapping TBD · assign family then publish · page /",
+      "affects_production": true,
+      "priority": "P2",
+      "runtime_probe": {
+        "natural_width": 600,
+        "natural_height": 400,
+        "display_width": 237,
+        "display_height": 158,
+        "http": 200,
+        "bytes": 70564,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/",
+      "asset_family": "unknown",
+      "asset_label": "旅行灵感看真实游记与官方精选，找到下一站灵感。逛社区",
+      "runtime_image_url": "https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=600&q=80",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": false,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产",
+        "画质/尺寸不足 600x400（L5 ≥640x480）"
+      ],
+      "suggested_cms_asset": "CMS asset mapping TBD · assign family then publish · page /",
+      "affects_production": true,
+      "priority": "P2",
+      "runtime_probe": {
+        "natural_width": 600,
+        "natural_height": 400,
+        "display_width": 237,
+        "display_height": 158,
+        "http": 200,
+        "bytes": 70855,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/",
+      "asset_family": "unknown",
+      "asset_label": "官方社区东京摄影一日路线 · 官方精选官方认证来自官方账号的社区精选，获取真实出行灵感。东京阅读内容",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS asset mapping TBD · assign family then publish · page /",
+      "affects_production": true,
+      "priority": "P2",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 136,
+        "display_height": 120,
+        "http": 200,
+        "bytes": 88885,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "hotel",
+      "asset_label": "行程图：日本 · 东京",
+      "runtime_image_url": "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Hotel Stock · hotel-tiers stock_image_url publish · page /market",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 800,
+        "natural_height": 632,
+        "display_width": 274,
+        "display_height": 205,
+        "http": 200,
+        "bytes": 148051,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "迪拜 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 56250,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "巴塞罗那 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 83508,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "悉尼 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 105178,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "纽约 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 56685,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "巴黎 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 56416,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "新加坡 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 91448,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "曼谷 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 76981,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "food",
+      "asset_label": "首尔 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · poi_type=food · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 61768,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "京都 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 66416,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market",
+      "asset_family": "poi",
+      "asset_label": "东京 向导头像",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS POI Hero · 对应 city × legacy_value · poi-images publish · page /market",
+      "affects_production": true,
+      "priority": "P0",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 300,
+        "display_height": 119,
+        "http": 200,
+        "bytes": 61826,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "迪拜沙漠豪华 Safari · 含晚宴",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 85017,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "高迪三件套联票 · 含导览",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 608,
+        "http": 200,
+        "bytes": 105068,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "悉尼海港皮划艇 · 半日",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 583,
+        "http": 200,
+        "bytes": 102550,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "纽约观景台联票 · 官方合作",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 119821,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "巴黎博物馆免排队 · 小团",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 608,
+        "http": 200,
+        "bytes": 81046,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "新加坡亲子通票 · 官方合作",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 583,
+        "http": 200,
+        "bytes": 83836,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "湄南河 sunset 游船 · 含晚餐",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 101680,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "首尔深夜美食团 · 4 小时",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 608,
+        "http": 200,
+        "bytes": 124901,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "京都茶道体验 · 私享包场",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 583,
+        "http": 200,
+        "bytes": 73369,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/provider",
+      "asset_family": "provider_listing",
+      "asset_label": "东京旅拍写真 · 半日套餐",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Provider Listing cover · market listing publish · page /market/provider",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 83004,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "迪拜定制香氛 · 悬赏",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 115171,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "巴塞罗那马赛克瓷砖 · 收购",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-barcelona-arch-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 608,
+        "http": 200,
+        "bytes": 152326,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "澳洲手工冲浪板 · 收购",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-sydney-coast-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 583,
+        "http": 200,
+        "bytes": 76826,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "纽约独立黑胶 · 悬赏",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-nyc-skyline-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 75296,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "巴黎中古海报 · 收购",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 486,
+        "display_height": 608,
+        "http": 200,
+        "bytes": 78485,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "新加坡设计周边 · 悬赏",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 583,
+        "http": 200,
+        "bytes": 74394,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "泰国手工丝绸 · 收购",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 135921,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "韩国限定零食礼包 · 悬赏",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 608,
+        "http": 200,
+        "bytes": 126383,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "京都手工和纸 · 收购",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 640,
+        "natural_height": 480,
+        "display_width": 486,
+        "display_height": 583,
+        "http": 200,
+        "bytes": 108760,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/market/acquisition",
+      "asset_family": "acquisition_listing",
+      "asset_label": "东京限定镜头代购 · 悬赏",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": true,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产"
+      ],
+      "suggested_cms_asset": "CMS Acquisition Listing cover · market listing publish · page /market/acquisition",
+      "affects_production": true,
+      "priority": "P1",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 486,
+        "display_height": 648,
+        "http": 200,
+        "bytes": 71791,
+        "kind": "img"
+      }
+    },
+    {
+      "page_path": "/traveltrust",
+      "asset_family": "video_poster",
+      "asset_label": "video poster",
+      "runtime_image_url": "https://tt-web-staging.fly.dev/media/traveltrust/roles/traveler.poster.svg",
+      "current_source": "old_external",
+      "l5_compliant": false,
+      "l5_checks": {
+        "country": null,
+        "city": null,
+        "culture_brand": null,
+        "image_quality": false,
+        "no_placeholder": true,
+        "no_wrong_external": false,
+        "catalog_effective": false
+      },
+      "issues": [
+        "仍为 Unsplash/Pexels 或外部 stock · 非 CMS catalog",
+        "Catalog 未生效 · Runtime 未消费 published CMS 资产",
+        "文件过小 506 bytes（L5 min 16KB）"
+      ],
+      "suggested_cms_asset": "CMS Video Poster · media-assets publish · page /traveltrust",
+      "affects_production": true,
+      "priority": "P2",
+      "runtime_probe": {
+        "natural_width": 0,
+        "natural_height": 0,
+        "display_width": 536,
+        "display_height": 301,
+        "http": 200,
+        "bytes": 506,
+        "kind": "video_poster"
+      }
+    }
+  ],
+  "completion_gate": {
+    "all_runtime_assets_l5": false,
+    "target": "Need Review 0 · Need Replace 0 · Need Publish 0 · Need Verify 0 · Need Evidence 0"
+  },
+  "TT_CMS_L5_VISUAL_GAP_REPORT": "GAPS_OPEN",
+  "TT_CMS_L5_RUNTIME_GAPS": 37
+}

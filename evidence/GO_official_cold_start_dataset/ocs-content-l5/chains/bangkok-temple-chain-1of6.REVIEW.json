@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_review.v1",
+  "stamp_utc": "20260704T133930Z",
+  "chain_id": "bangkok-temple",
+  "slots_completed": 1,
+  "slots_total": 6,
+  "TT_BANGKOK_TEMPLE_CHAIN_REVIEW": "PASS",
+  "regression_check": { "pass": true, "notes": "新 TH chain；3 CLOSED chains 稳定。" },
+  "gate_to_row20": "PASS"
+}

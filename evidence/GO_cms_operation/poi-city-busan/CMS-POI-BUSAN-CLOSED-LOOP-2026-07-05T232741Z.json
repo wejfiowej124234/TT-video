@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T23:27:41Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "釜山",
+    "city_en": "Busan",
+    "matrix_ids": [
+      "PH-KR-045-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-KR-045-ATR",
+      "legacy_value": "广安里大桥",
+      "poi_id": "c8c94aeb-13f7-4315-a324-720663294b91",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-busan-coast-provider-cover.jpg",
+      "hero_file": "ocs-busan-coast-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-045-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

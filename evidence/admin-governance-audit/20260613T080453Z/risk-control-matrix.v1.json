@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust.risk_control_matrix.v1",
+  "routes": [
+    "/admin/alerts/incidents",
+    "/admin/alerts/incidents/[id]",
+    "/admin/community/risk-signals",
+    "/admin/compliance",
+    "/admin/compliance/requests",
+    "/admin/compliance/requests/[requestId]/events",
+    "/admin/compliance/requests/[requestId]/update",
+    "/admin/growth/anti-fraud",
+    "/admin/onboarding/compliance-audit"
+  ]
+}

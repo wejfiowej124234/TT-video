@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.local_first_alignment_audit.v1",
+  "at": "20260615T021020Z",
+  "head": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+  "staging_api_sha": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+  "staging_web_sha": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+  "verdict": "NOT_100_PERCENT_ALIGNED",
+  "tt_marker": "TT_LOCAL_FIRST_ALIGNMENT: NOT_100_PERCENT_ALIGNED",
+  "gaps": [
+    {
+      "id": "GAP-DEEP-GATE",
+      "sev": "P0",
+      "note": "Deep gate not PASS/GO @ HEAD"
+    },
+    {
+      "id": "GAP-DEEP-GATE-G04",
+      "sev": "P0",
+      "note": "G04 ADM-U01 not PASS inline"
+    },
+    {
+      "id": "GAP-ADM-U01",
+      "sev": "P0",
+      "note": "GO_staging_admin_rbac_matrix latest not GO"
+    },
+    {
+      "id": "GAP-EVIDENCE",
+      "sev": "P0",
+      "note": "TN-P1-010/D24/D6 not all PASS @ HEAD"
+    },
+    {
+      "id": "GAP-HAT",
+      "sev": "P0",
+      "note": "Phase28 HAT not PASS"
+    }
+  ],
+  "probes": {
+    "D6": false,
+    "D24": false,
+    "TN-P1-010": false,
+    "DEEP_GATE": false,
+    "G04": false,
+    "ADM_U01": false
+  },
+  "wt": {
+    "porcelain_count": 21,
+    "closure_dirty": [],
+    "deploy_non_e2e_dirty": 0,
+    "non_exempt_dirty": 10
+  }
+}

@@ -1,0 +1,33 @@
+P2FC-P00-baseline-freeze	GO	12/12
+P2FC-T01-five-role-chain	FAIL	harness exit non-zero
+P2FC-T02-rov-wave1-pack	GO	ok
+P2FC-T03-rov-wave2-pack	GO	ok
+P2FC-T04-governance-gap	GO	ok
+TRACK-A-business	FAIL	track
+P2FC-E01-order-cancel	GO	ok
+P2FC-E02-duplicate-submit	GO	ok
+P2FC-E03-refund-webhook	GO	ok
+P2FC-E04-session-wallet-2fa	GO	ok
+P2FC-E05-network-interrupt	GO	ok
+P2FC-E06-cold-start-rollback	GO	ok
+TRACK-B-exceptions	GO	track
+P2FC-D01-cross-domain-pg	FAIL	harness exit non-zero
+P2FC-D02-order-escrow-pg	GO	ok
+P2FC-D03-community-pg	GO	ok
+P2FC-D04-growth-funnel	FAIL	harness exit non-zero
+TRACK-C-consistency	FAIL	track
+P2FC-W01-web3-itinerary	GO	ok
+P2FC-W02-governance-uat	GO	ok
+P2FC-W03-community-deep	FAIL	harness exit non-zero
+P2FC-W04-community-moderation	FAIL	harness exit non-zero
+TRACK-D-web3-community	FAIL	track
+P2FC-B01-chrome	FAIL	chromium
+P2FC-B02-edge	FAIL	chromium
+P2FC-B03-firefox	FAIL	firefox
+P2FC-B04-safari	FAIL	webkit
+TRACK-E-browser-mobile	FAIL	track
+P2FC-F01-deps-normal	GO	ok
+P2FC-F02-deps-recovery	GO	ok
+P2FC-F03-deps-finalize	FAIL	harness exit non-zero
+TRACK-F-fault-deps	FAIL	track
+P2FC-S01-soak-72h	FAIL	P2FC_INCLUDE_SOAK=0 not allowed in strict mode

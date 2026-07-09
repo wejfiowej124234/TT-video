@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T04:37:43Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "TH",
+    "city_zh": "普吉",
+    "city_en": "Phuket",
+    "matrix_ids": [
+      "PH-TH-090-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-TH-090-FOOD",
+      "legacy_value": "菠萝饭",
+      "poi_id": "2bdb0eb1-c62e-4fd6-8a68-4c17efb738e8",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-community-media.jpg",
+      "hero_file": "ocs-phuket-island-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-090-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "traveltrust.cms_phase1_single_asset_evidence.v1",
+  "product_name": "Market Listing Cover",
+  "matrix_id": "ML-WAVE1-009-PRV",
+  "variant": "provider",
+  "chain_slug": "kyoto-culture",
+  "listing_id": "80784772-af41-4d21-8faa-24dea081d0e6",
+  "scaffolded_at_utc": "2026-07-05T09:42:29Z",
+  "step_1_brief_review": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "reviewed_at_utc": "2026-07-05T09:42:29Z"
+  },
+  "step_2_designer_upload": {
+    "status": "COMPLETE",
+    "catalog_asset_id": "ca4c84c1-77e9-4254-a247-b303cf94e487",
+    "uploaded_at_utc": "2026-07-05T09:42:29Z",
+    "notes": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg"
+  },
+  "step_3_cms_review": {
+    "status": "COMPLETE",
+    "gates": {
+      "cms_review": "PASS",
+      "destination_authenticity": "PASS",
+      "brand_consistency": "PASS"
+    }
+  },
+  "step_4_catalog_publish": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "published_at_utc": "2026-07-05T09:42:29Z"
+  },
+  "step_5_verify": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "cover_catalog_asset_id": "ca4c84c1-77e9-4254-a247-b303cf94e487",
+    "cover_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg",
+    "verified_at_utc": "2026-07-05T09:42:29Z"
+  },
+  "step_6_evidence": {
+    "status": "COMPLETE",
+    "gate_result": "PASS",
+    "completed_at_utc": "2026-07-05T09:42:29Z"
+  },
+  "matrix_snapshot": {
+    "matrix_row_status": "pass",
+    "asset_lifecycle": "live",
+    "current_source": "catalog_api",
+    "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-kyoto-culture-provider-cover.jpg",
+    "listing_id": "80784772-af41-4d21-8faa-24dea081d0e6"
+  },
+  "TT_CMS_LISTINGS_WAVE1_ROW_VERIFY": "PASS",
+  "TT_CMS_PHASE1_SINGLE_ASSET_ROW": "COMPLETE"
+}

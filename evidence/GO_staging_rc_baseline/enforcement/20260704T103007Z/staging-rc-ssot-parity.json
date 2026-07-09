@@ -1,0 +1,46 @@
+{
+  "schema": "traveltrust.staging_rc_ssot_parity.v1",
+  "recorded_at": "2026-07-04T10:30:13.768Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "ocs_state": "D:\\TravelTrust-V1.1\\evidence\\GO_official_cold_start_dataset\\ocs-surface-expansion-staging\\20260704T073209Z\\state.json",
+  "release_candidate_ref": "evidence/manual-uat/signoff/RELEASE-CANDIDATE-SIGNOFF-20260702T144513Z.md",
+  "manifest_ssot": "data/official-cold-start/dataset.v1.json",
+  "assets_ssot": "data/official-cold-start/assets.v1.json",
+  "unified_baseline": "scripts/dev/lib/staging-rc-public-surface-unified.cjs",
+  "expected_public_surface": {
+    "community_feed": 10,
+    "public_guides": 10,
+    "market_provider": 10,
+    "market_acquisition": 10,
+    "official_guides_published": 10,
+    "campaigns_deployed": 10,
+    "corridor_smoke": 0,
+    "official_assets": 60
+  },
+  "verdict": "ALIGNED",
+  "machine_keys": {
+    "TT_STAGING_RC_SSOT_PARITY": "ALIGNED",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "passes": [
+    "ocs_state_10_posts",
+    "ocs_state_10_official_guides",
+    "ocs_state_10_campaigns",
+    "feed_count_10",
+    "feed_ocs_only",
+    "guides_ocs_only",
+    "market_provider_ocs_only",
+    "market_acquisition_ocs_only",
+    "official_guides_ocs_only",
+    "campaigns_ocs_only",
+    "web_rewrite_media_200"
+  ],
+  "failures": [],
+  "honest_boundary": "Staging ALIGNED to OCS SSOT + RC boundaries ≠ Production GO ≠ G3 CDN VERIFIED",
+  "forbidden_claims": [
+    "Production GO",
+    "Release published",
+    "G3 CDN VERIFIED"
+  ]
+}

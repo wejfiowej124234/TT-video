@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.frontend_api_consistency_audit_browser.v1",
+  "stamp": "20260702T021003Z",
+  "web": "https://tt-web-staging.fly.dev",
+  "api": "https://tt-api-staging.fly.dev",
+  "api_layer": {
+    "blocking": 0,
+    "warnings": 0,
+    "pass": true,
+    "strict": true
+  },
+  "browser_layer": {
+    "playwright": "frontend/e2e/frontend-api-consistency-audit.spec.ts",
+    "screenshots_dir": "D:/TravelTrust-V1.1/evidence/GO_frontend_api_consistency_audit/staging_browser_20260702T021003Z/screenshots"
+  },
+  "deploy_web": "tt-web-staging",
+  "verdict": "PASS"
+}

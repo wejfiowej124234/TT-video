@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_progress_review.v1",
+  "stamp_utc": "20260704T152130Z",
+  "chain_id": "barcelona-arch",
+  "progress": "3/6",
+  "completed_row": 51,
+  "completed_filename": "ocs-barcelona-arch-acquisition-cover.jpg",
+  "TT_CHAIN_PROGRESS_REVIEW": "PASS"
+}

@@ -1,0 +1,152 @@
+{
+  "schema": "traveltrust.freeze_lift_backlog.v1",
+  "at": "20260614T084000Z",
+  "items": [
+    {
+      "id": "FLB-001",
+      "priority": "P0",
+      "title": "Commit Indexer TN-P1-010 bundle",
+      "scope": [
+        "crates/api/src/chain/mod.rs",
+        "crates/api/src/chain/indexer.rs"
+      ],
+      "exit": "HEAD selectors match WT; cargo test -p traveltrust-api chain",
+      "blocks": [
+        "RECON-002",
+        "RECON-010"
+      ]
+    },
+    {
+      "id": "FLB-002",
+      "priority": "P0",
+      "title": "Track SQL migrations in git",
+      "scope": [
+        "crates/api/migrations/20260607120000_cms_catalog_p1.sql",
+        "crates/api/migrations/20260607120100_cms_official_ops_p2.sql",
+        "crates/api/migrations/20260607120200_cms_growth_p3.sql",
+        "crates/api/migrations/20260607130000_cms_catalog_s2_004_pricing_tiers_media.sql",
+        "crates/api/migrations/20260607140000_growth_early_bird_g_s3.sql",
+        "crates/api/migrations/20260607150000_growth_airdrop_g_s6.sql",
+        "crates/api/migrations/20260608120000_sprint168_business_expansion.sql",
+        "crates/api/migrations/20260609120000_guides_hourly_rate_avatar_url.sql",
+        "crates/api/migrations/20260612120000_guides_public_title.sql",
+        "crates/api/migrations/20260613120000_guide_exit_requests.sql"
+      ],
+      "exit": "10 migrations in git; staging _sqlx_migrations stamp recorded",
+      "blocks": [
+        "RECON-003"
+      ]
+    },
+    {
+      "id": "FLB-003",
+      "priority": "P0",
+      "title": "Commit CMS/Growth/Admin API + chain_off domain",
+      "scope": [
+        "crates/api/src/routes/admin/*",
+        "crates/api/src/routes/catalog/",
+        "crates/api/src/routes/growth/",
+        "crates/api/src/chain_off/*"
+      ],
+      "exit": "run-check-04-routes.sh exit 0; admin routes mounted",
+      "blocks": [
+        "RECON-004",
+        "RECON-012"
+      ]
+    },
+    {
+      "id": "FLB-004",
+      "priority": "P1",
+      "title": "Commit Admin + Governance frontend",
+      "scope": [
+        "frontend/app/admin/*",
+        "frontend/app/governance/*"
+      ],
+      "exit": "admin/governance vitest contracts pass (subset)",
+      "blocks": [
+        "RECON-005",
+        "RECON-006"
+      ]
+    },
+    {
+      "id": "FLB-005",
+      "priority": "P1",
+      "title": "Fly env sync · meta exposure",
+      "scope": [
+        "GOVERNANCE_VOTES_TOKEN_ADDRESS",
+        "STAKING_ADDRESS or REGION_STEWARD_STAKE_POOL_ADDRESS",
+        "TRAVELTRUST_DEPLOYED_AT"
+      ],
+      "exit": "/meta shows governance_votes_token_address + staking_address + deployed_at",
+      "blocks": [
+        "RECON-007",
+        "RECON-008",
+        "RECON-009"
+      ]
+    },
+    {
+      "id": "FLB-006",
+      "priority": "P1",
+      "title": "Deploy tt-api-staging from unified commit",
+      "scope": [
+        "scripts/dev/phase2-staging-fly-deploy-and-sync.sh"
+      ],
+      "exit": "staging /meta git_sha = new HEAD; reconcile compound_pass",
+      "blocks": [
+        "RECON-001"
+      ]
+    },
+    {
+      "id": "FLB-007",
+      "priority": "P1",
+      "title": "Deploy tt-web-staging from same SHA",
+      "scope": [
+        "scripts/dev/deploy-tt-web-staging.sh"
+      ],
+      "exit": "check-staging-web-alignment FAIL=0",
+      "blocks": [
+        "RECON-001",
+        "RECON-005"
+      ]
+    },
+    {
+      "id": "FLB-008",
+      "priority": "P2",
+      "title": "Commit contracts Phase② artifacts (if in scope)",
+      "scope": [
+        "contracts/src/*",
+        "contracts/abi/*",
+        "registry/*"
+      ],
+      "exit": "phase2-sepolia-spine-audit OK",
+      "blocks": [
+        "RECON-011"
+      ]
+    },
+    {
+      "id": "FLB-009",
+      "priority": "P2",
+      "title": "Reconciliation verification gate",
+      "scope": [
+        "scripts/dev/run-phase1-phase2-full-alignment-audit.sh",
+        "scripts/dev/emit-local-ssot-reconciliation-report.mjs"
+      ],
+      "exit": "TT_LOCAL_SSOT_RECONCILIATION: RECONCILED; non-soak alignment gaps=0",
+      "blocks": [
+        "all"
+      ]
+    },
+    {
+      "id": "FLB-010",
+      "priority": "P2",
+      "title": "Evidence SHA refresh (no closed-item rerun)",
+      "scope": [
+        "Append git_sha to TN-P1-010 STATUS",
+        "Update testnet-perfect-validation-manifest"
+      ],
+      "exit": "Evidence git_sha matches deployed HEAD post-FLB-006",
+      "blocks": [
+        "RECON-002"
+      ]
+    }
+  ]
+}

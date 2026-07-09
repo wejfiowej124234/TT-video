@@ -1,15 +1,8 @@
 "use client";
 
 import type { CommunityPostType } from "@/lib/communityMockData";
+import { l5CardMediaGradientShellClass } from "@/lib/l5CardMediaPlaceholder";
 import { TT_COMMUNITY_FEED_ACTION } from "@/lib/marketingUi";
-
-const TYPE_GRADIENT: Partial<Record<CommunityPostType, string>> = {
-  photo: "from-rose-900/40 via-ink-900 to-ink-950",
-  video: "from-sky-900/35 via-ink-900 to-ink-950",
-  food: "from-amber-900/35 via-ink-900 to-ink-950",
-  travel: "from-emerald-900/30 via-ink-900 to-ink-950",
-  text: "from-ink-800 via-ink-900 to-ink-950",
-};
 
 export function CommunityFeedMasonryMediaFallback({
   t,
@@ -17,6 +10,7 @@ export function CommunityFeedMasonryMediaFallback({
   postType,
   onRetry,
   loading = false,
+  fallbackSeed,
 }: {
   t: (key: string) => string;
   isVideo: boolean;
@@ -24,12 +18,14 @@ export function CommunityFeedMasonryMediaFallback({
   onRetry?: () => void;
   /** 媒体加载中（非失败） */
   loading?: boolean;
+  /** Guides parity · stable gradient seed (post id / destination) */
+  fallbackSeed?: string;
 }) {
-  const grad = TYPE_GRADIENT[postType ?? (isVideo ? "video" : "photo")] ?? TYPE_GRADIENT.photo;
+  const seed = fallbackSeed?.trim() || postType || (isVideo ? "video" : "photo");
 
   return (
     <div
-      className={`${TT_COMMUNITY_FEED_ACTION.masonryCardMediaFallback} bg-gradient-to-br ${grad}`}
+      className={`${TT_COMMUNITY_FEED_ACTION.masonryCardMediaFallback} ${l5CardMediaGradientShellClass(seed)}`}
       role="img"
     >
       <span className={TT_COMMUNITY_FEED_ACTION.masonryCardMediaFallbackIcon} aria-hidden>

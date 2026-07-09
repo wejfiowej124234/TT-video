@@ -1,0 +1,64 @@
+{
+  "schema": "traveltrust.p2fc_meta_503_rca.v1",
+  "recorded_at_utc": "2026-06-24T02:39:12Z",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "probes": {
+    "api_health": {
+      "url": "https://tt-api-staging.fly.dev/health",
+      "code": 200,
+      "elapsed_sec": 10.735,
+      "body_snippet": "ok",
+      "via": "urllib"
+    },
+    "api_meta": {
+      "url": "https://tt-api-staging.fly.dev/meta",
+      "code": 408,
+      "elapsed_sec": 40.695,
+      "body_snippet": "",
+      "via": "urllib"
+    },
+    "api_meta_build": {
+      "url": "https://tt-api-staging.fly.dev/meta/build",
+      "code": 200,
+      "elapsed_sec": 2.973,
+      "body_snippet": "{\"git_sha\":\"520abf396cce7baf3dcf39f71c1e77769e0086d8\",\"deployed_at\":null,\"rule\":\"120/140：预发/生产建议在容器或进程注入 TRAVELTRUST_GIT_SHA（或 GIT_COMMIT_SHA、SOURCE_VERSION）与 TRAVELTRUST_DEPLOYED_AT（UTC ISO8601）；镜像构建",
+      "via": "urllib"
+    },
+    "web_meta": {
+      "url": "https://tt-web-staging.fly.dev/meta",
+      "code": 503,
+      "elapsed_sec": 9.548,
+      "body_snippet": "{\"status\":\"error\",\"code\":\"meta_unavailable\"}",
+      "via": "urllib"
+    }
+  },
+  "root_cause_chain": [
+    "API_TIMEOUT_LAYER: GET /meta exceeds REQUEST_TIMEOUT_SECS (staging default 30)",
+    "WEB_PROXY_DEGRADED: app/meta/route.ts maps upstream non-200 to 503 meta_unavailable",
+    "EXEC_CHAIN_OK: /meta/build lightweight path unaffected"
+  ],
+  "remediation_waves": [
+    {
+      "layer": "L0_API",
+      "action": "Set REQUEST_TIMEOUT_SECS=120 on tt-api-staging (fly.toml [env] or secret)",
+      "artifact": "evidence/GO_phase2_deploy_backlog/meta-availability-hotfix.patch"
+    },
+    {
+      "layer": "L0_WEB",
+      "action": "Align app/meta/route.ts fetch timeout ≥ API timeout + 10s (META_ROUTE_FETCH_TIMEOUT_MS default 130000)",
+      "artifact": "frontend/app/meta/route.ts"
+    },
+    {
+      "layer": "L0_WEB",
+      "action": "Keep 408/502/503/504 retry (3x) before returning 503",
+      "artifact": "frontend/app/meta/route.ts"
+    },
+    {
+      "layer": "acceptance",
+      "action": "Post-soak: p2fc-verify-staging-meta-availability.sh --strict before Graduation",
+      "artifact": "scripts/ops/p2fc-verify-staging-meta-availability.sh"
+    }
+  ],
+  "honest_boundary": "② soak freeze: 408/503 non-blocking for exec chain; acceptance deferred until post-soak deploy"
+}

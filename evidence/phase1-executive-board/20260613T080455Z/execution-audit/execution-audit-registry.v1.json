@@ -1,0 +1,53 @@
+{
+  "schema": "traveltrust.execution_audit.v1",
+  "module": "EXECUTION_AUDIT",
+  "parent": "PHASE1_EXECUTIVE_BOARD",
+  "version": "1.14.0",
+  "generated_at": "2026-06-13T08:04:55.534340+00:00",
+  "artifacts": [
+    "open-findings-age-analysis.v1.json",
+    "backlog-analysis-p0-p1-p2.v1.json",
+    "domain-backlog-ranking.v1.json",
+    "domain-backlog-matrix.v1.json",
+    "root-cause-impact-ranking.v1.json",
+    "root-cause-findings-map.v1.json",
+    "top10-root-causes.v1.json",
+    "top20-highest-impact-fixes.v1.json",
+    "top-closure-opportunities.v1.json",
+    "top-execution-blockers.v1.json",
+    "long-unclosed-issues.v1.json",
+    "cross-domain-dependencies.v1.json",
+    "duplicate-regression-rate.v1.json",
+    "closure-rate.v1.json",
+    "execution-rate-trend.v1.json",
+    "sprint-completion-rates.v1.json",
+    "governance-roi.v1.json",
+    "complexity-reduction-rate.v1.json",
+    "redundancy-reduction-rate.v1.json",
+    "readiness-velocity.v1.json",
+    "execution-efficiency-score.v1.json",
+    "closure-velocity-score.v1.json",
+    "backlog-burndown-score.v1.json",
+    "phase1-exit-forecast.v1.json",
+    "p0-elimination-plan.v1.json",
+    "closure-roadmap.v1.json",
+    "execution-audit-registry.v1.json",
+    "EXECUTION-DASHBOARD.md",
+    "EXECUTIVE-CLOSURE-REPORT.md",
+    "CLOSURE-ROADMAP.md",
+    "P0-ELIMINATION-PLAN.md"
+  ],
+  "forecast": {
+    "current_score": 77,
+    "current_band": "NO_GO",
+    "days_to_FREEZE_CANDIDATE": 14,
+    "date_FREEZE_CANDIDATE_utc": "2026-06-27",
+    "days_to_PHASE1_EXIT_READY": 20,
+    "date_PHASE1_EXIT_READY_utc": "2026-07-03",
+    "assumed_readiness_points_per_week": 6.3,
+    "if_fix_top3_root_causes": {
+      "readiness_delta": 19,
+      "projected_score": 96
+    }
+  }
+}

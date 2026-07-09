@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T04:51:55Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "广州",
+    "city_en": "Guangzhou",
+    "matrix_ids": [
+      "PH-CN-276-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-276-FOOD",
+      "legacy_value": "早茶",
+      "poi_id": "92c2bce8-67fd-4a5c-a79c-80c783a130e2",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-276-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

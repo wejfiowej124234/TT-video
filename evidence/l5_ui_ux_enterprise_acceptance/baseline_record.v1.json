@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust_l5_ui_ux_enterprise_acceptance.v1",
+  "anchor": "L5-UI-UX-ENTERPRISE-ACCEPTANCE-V1",
+  "status": "PASS",
+  "baseline_refs": [
+    "145",
+    "150",
+    "157"
+  ],
+  "operations_l5_verdict": "OPERATIONS_L5_AUDIT_GO",
+  "operations_l5_score": 85,
+  "e2e_a01_verdict": "E2E_A_01_COLD_START_CAMPAIGN_CONSUMER_GO",
+  "ops_platform_freeze": "OPERATIONS_PLATFORM_GO",
+  "last_audit_matrix_path": "evidence/l5_ui_ux_enterprise_acceptance/audit_matrix.v1.json",
+  "target_score": 85,
+  "notes": "159 UI/UX sprint \u00b7 no product feature code \u00b7 157/145/150 baselines locked",
+  "last_audit_run_utc": "20260608T025953Z",
+  "audit_verdict": "UI_UX_L5_GO",
+  "ui_ux_score": 85,
+  "last_p0_closure_record_path": "evidence/l5_ui_ux_enterprise_acceptance/p0_closure_record.v1.json",
+  "last_p0_closure_run_utc": "20260608T025953Z",
+  "p0_closure_verdict": "GO"
+}

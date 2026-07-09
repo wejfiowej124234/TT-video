@@ -1,0 +1,86 @@
+[
+  {
+    "severity": "Critical",
+    "code": "G6_SURFACE_COUNT",
+    "message": "Expected 10 guides, got 0",
+    "chain_id": null,
+    "surface": "guide-avatar"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_SURFACE_COUNT",
+    "message": "Expected 10 provider listings, got 11",
+    "chain_id": null,
+    "surface": "provider-cover"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_GUIDE_MISSING",
+    "message": "No public guide for 东京",
+    "chain_id": "tokyo-photo",
+    "surface": "guide-avatar"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_GUIDE_MISSING",
+    "message": "No public guide for 京都",
+    "chain_id": "kyoto-culture",
+    "surface": "guide-avatar"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_GUIDE_MISSING",
+    "message": "No public guide for 首尔",
+    "chain_id": "seoul-food",
+    "surface": "guide-avatar"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_GUIDE_MISSING",
+    "message": "No public guide for 曼谷",
+    "chain_id": "bangkok-temple",
+    "surface": "guide-avatar"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_GUIDE_MISSING",
+    "message": "No public guide for 新加坡",
+    "chain_id": "singapore-family",
+    "surface": "guide-avatar"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_GUIDE_MISSING",
+    "message": "No public guide for 巴黎",
+    "chain_id": "paris-art",
+    "surface": "guide-avatar"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_GUIDE_MISSING",
+    "message": "No public guide for 纽约",
+    "chain_id": "nyc-skyline",
+    "surface": "guide-avatar"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_GUIDE_MISSING",
+    "message": "No public guide for 悉尼",
+    "chain_id": "sydney-coast",
+    "surface": "guide-avatar"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_GUIDE_MISSING",
+    "message": "No public guide for 巴塞罗那",
+    "chain_id": "barcelona-arch",
+    "surface": "guide-avatar"
+  },
+  {
+    "severity": "Critical",
+    "code": "G6_GUIDE_MISSING",
+    "message": "No public guide for 迪拜",
+    "chain_id": "dubai-luxury",
+    "surface": "guide-avatar"
+  }
+]

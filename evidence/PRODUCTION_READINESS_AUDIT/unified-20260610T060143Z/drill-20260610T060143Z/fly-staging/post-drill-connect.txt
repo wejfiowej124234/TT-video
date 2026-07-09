@@ -1,0 +1,5 @@
+ current_database |  current_user  |              now              
+------------------+----------------+-------------------------------
+ tt_api_staging   | tt_api_staging | 2026-06-10 07:05:08.059463+00
+(1 row)
+

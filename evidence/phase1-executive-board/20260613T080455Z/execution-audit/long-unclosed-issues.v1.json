@@ -1,0 +1,55 @@
+{
+  "schema": "traveltrust.long_unclosed.v1",
+  "issues": [
+    {
+      "id": "PF-SEED-001",
+      "domain": "PF",
+      "severity": "P0",
+      "title": "Duplicate profile edit surfaces",
+      "verdict": "MERGE",
+      "queue": "NOW",
+      "age_days": 45,
+      "status": "OPEN"
+    },
+    {
+      "id": "PF-SEED-002",
+      "domain": "PF",
+      "severity": "P0",
+      "title": "Merchant listing dual surfaces",
+      "verdict": "MERGE",
+      "queue": "NOW",
+      "age_days": 38,
+      "status": "OPEN"
+    },
+    {
+      "id": "PF-SEED-003",
+      "domain": "PF",
+      "severity": "P0",
+      "title": "Publish Hub nav proliferation",
+      "verdict": "MERGE",
+      "queue": "NOW",
+      "age_days": 30,
+      "status": "OPEN"
+    },
+    {
+      "id": "LFC-UXA-001",
+      "domain": "UXA",
+      "severity": "P1",
+      "title": "L5 spacing on settings hub",
+      "verdict": "KEEP",
+      "queue": "LATER",
+      "age_days": 40,
+      "status": "OPEN"
+    },
+    {
+      "id": "PF-SEED-004",
+      "domain": "PF",
+      "severity": "P1",
+      "title": "archive/ui-v1 retire backlog",
+      "verdict": "RETIRE",
+      "queue": "NEXT",
+      "age_days": 60,
+      "status": "OPEN"
+    }
+  ]
+}

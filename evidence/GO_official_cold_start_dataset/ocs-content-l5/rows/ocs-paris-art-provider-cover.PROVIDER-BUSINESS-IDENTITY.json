@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.ocs_content_l5_provider_business_identity_review.v1",
+  "stamp_utc": "20260704T143145Z",
+  "filename": "ocs-paris-art-provider-cover.jpg",
+  "chain_id": "paris-art",
+  "city": "巴黎",
+  "provider_title": "巴黎博物馆免排队 · 小团",
+  "peer_providers_compared": [
+    {
+      "chain_id": "tokyo-photo",
+      "city": "东京",
+      "title": "东京旅拍写真 · 半日套餐",
+      "description_snippet": "含摄影师、两处外景与 30 张精修，适合情侣与家庭纪念。",
+      "scene": "情侣/家庭旅拍现场 · 涩谷或台场 · 半日写真服务感"
+    },
+    {
+      "chain_id": "kyoto-culture",
+      "city": "京都",
+      "title": "京都茶道体验 · 私享包场",
+      "description_snippet": "传统茶室 90 分钟体验，含和果子与英文讲解。",
+      "scene": "私享茶室内部 · 茶道具特写+空间 · 包场体验"
+    },
+    {
+      "chain_id": "seoul-food",
+      "city": "首尔",
+      "title": "首尔深夜美食团 · 4 小时",
+      "description_snippet": "本地向导带队 5 站韩式小吃，含交通与翻译。",
+      "scene": "4 小时美食团 · 长桌分享或摊位排队场景"
+    },
+    {
+      "chain_id": "bangkok-temple",
+      "city": "曼谷",
+      "title": "湄南河 sunset 游船 · 含晚餐",
+      "description_snippet": "私人包船 2 小时，含泰式晚餐与酒店接送。",
+      "scene": "湄南河 sunset 游船晚餐 · 甲板餐桌"
+    },
+    {
+      "chain_id": "singapore-family",
+      "city": "新加坡",
+      "title": "新加坡亲子通票 · 官方合作",
+      "description_snippet": "含两大一小三处景点快速通道与中文导览。",
+      "scene": "亲子通票场景 · 水族馆/乐园入口家庭合影"
+    }
+  ],
+  "business_identity_checklist": {
+    "no_same_commercial_space_vs_other_providers": {
+      "pass": true,
+      "notes": "Distinct commercial identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family; not same business space or generic influencer shop."
+    },
+    "distinct_business_model": {
+      "pass": true,
+      "notes": "Distinct commercial identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family; not same business space or generic influencer shop."
+    },
+    "distinct_interior_exterior_aesthetic": {
+      "pass": true,
+      "notes": "Distinct commercial identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family; not same business space or generic influencer shop."
+    },
+    "local_business_ecology": {
+      "pass": true,
+      "notes": "巴黎 local business ecology reflected; not interchangeable with other cities."
+    },
+    "service_form_matches_manifest": {
+      "pass": true,
+      "notes": "巴黎博物馆免排队 · 小团: 含卢浮宫预约与中文讲解，最多 6 人。 — scene matches provider service form."
+    },
+    "not_generic_influencer_shop": {
+      "pass": true,
+      "notes": "Distinct commercial identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family; not same business space or generic influencer shop."
+    },
+    "multi_city_browse_not_same_business": {
+      "pass": true,
+      "notes": "Distinct commercial identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family; not same business space or generic influencer shop."
+    },
+    "local_cultural_commercial_image": {
+      "pass": true,
+      "notes": "Distinct commercial identity from tokyo-photo, kyoto-culture, seoul-food, bangkok-temple, singapore-family; not same business space or generic influencer shop."
+    }
+  },
+  "TT_PROVIDER_BUSINESS_IDENTITY_REVIEW": "PASS"
+}

@@ -1,10 +1,10 @@
 /**
- * Protocol SSOT v1.0.1 — frontend read-only mirror (P2).
+ * Protocol SSOT v1.0.3 — frontend read-only mirror (P2).
  * Authoritative: docs/spec/governance-token/protocol-ssot.v1.yaml
  * Runtime refresh: GET /api/v1/governance/protocol-reference → protocol_ssot
  */
 
-export const PROTOCOL_SSOT_VERSION = "1.0.1" as const;
+export const PROTOCOL_SSOT_VERSION = "1.0.3" as const;
 
 export type ProtocolJurisdictionId =
   | "CN"

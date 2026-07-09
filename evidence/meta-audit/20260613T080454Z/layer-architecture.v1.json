@@ -1,0 +1,63 @@
+{
+  "schema": "traveltrust.layer_architecture.v1",
+  "layers": {
+    "L1_FOUNDATION": {
+      "label": "基础系统层",
+      "scopes": [
+        "D01-D25",
+        "DOA",
+        "CA",
+        "§10-§12 subset"
+      ]
+    },
+    "L2_PRODUCT_EXPERIENCE": {
+      "label": "产品体验层",
+      "scopes": [
+        "PF",
+        "UXA",
+        "CX",
+        "D13",
+        "§13",
+        "§19"
+      ]
+    },
+    "L3_BUSINESS_OPERATIONS": {
+      "label": "业务运营层",
+      "scopes": [
+        "BA",
+        "OPS",
+        "TRUST",
+        "CS",
+        "§4 journeys"
+      ]
+    },
+    "L4_PLATFORM_GOVERNANCE": {
+      "label": "平台治理层",
+      "scopes": [
+        "PGX",
+        "AG",
+        "§25-§29",
+        "D16"
+      ]
+    },
+    "L5_LIFECYCLE_GOVERNANCE": {
+      "label": "生命周期治理层",
+      "scopes": [
+        "R",
+        "K",
+        "E",
+        "LFC",
+        "§15-§20"
+      ]
+    },
+    "L6_UPGRADE_GATES": {
+      "label": "升级总闸层",
+      "scopes": [
+        "U12",
+        "U23",
+        "MASTER",
+        "§3.1"
+      ]
+    }
+  }
+}

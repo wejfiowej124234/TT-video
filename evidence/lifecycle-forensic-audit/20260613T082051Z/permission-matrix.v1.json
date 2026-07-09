@@ -1,0 +1,5 @@
+{
+  "schema": "traveltrust.permission_matrix.v1",
+  "ssot": "GET /api/v1/admin/rbac/route-matrix",
+  "smoke": "scripts/dev/smoke-admin-rbac-matrix-local.sh"
+}

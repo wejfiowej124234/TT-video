@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.permission_escalation_report.v1",
+  "super_only": [
+    "admin.approve"
+  ],
+  "gates": [
+    "smoke-admin-rbac-matrix-local.sh",
+    "run-admin-security-closure-audit.sh"
+  ]
+}

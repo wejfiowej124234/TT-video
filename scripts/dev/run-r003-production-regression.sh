@@ -24,6 +24,9 @@ EXECUTOR="${R003_PROD_EXECUTOR:-pi3-004-owner@traveltrust.local}"
 mkdir -p "$OUT"
 exec > >(tee -a "$OUT/run.log") 2>&1
 
+PROD_API_BASE="${PROD_API}" bash "$ROOT/scripts/dev/bootstrap-prod-r003-account.sh" 2>&1 | tee "$OUT/bootstrap-account.log" || true
+R003_PROD_A_EMAIL="${R003_PROD_A_EMAIL:-r003.prod.interim2@traveltrust.test}"
+R003_PROD_A_PASSWORD="${R003_PROD_A_PASSWORD:-R003ProdPass9!}"
 echo "== R-003 production regression · ${STAMP} =="
 echo "api=${PROD_API} web=${PROD_WEB:-<unset>} scope=PRODUCTION_SCOPE_SEPOLIA"
 

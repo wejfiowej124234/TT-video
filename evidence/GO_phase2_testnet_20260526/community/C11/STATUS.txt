@@ -1,0 +1,11 @@
+phase: ② testnet C11 (route gate / 04 routes staging reconciliation)
+status: PASS
+last_run: 20260606T001039Z
+api_base: https://tt-api-staging.fly.dev
+route_gate_report: route-gate-report.json
+route_gate_summary: route-gate-summary.md
+staging_api_probes: 24/24
+browser_routes: 18/18
+report_verdict: PASS
+log: run-20260606T001039Z.log
+note: C11 slot PASS only — NOT Phase ② GO / NOT C12 GO / NOT Production GO

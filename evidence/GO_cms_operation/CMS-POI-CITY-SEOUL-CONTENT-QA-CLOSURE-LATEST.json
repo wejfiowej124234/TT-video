@@ -1,0 +1,128 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-05T17:01:25.216Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "首尔",
+    "city_en": "Seoul",
+    "poi_count": 9
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-SEOUL-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "JP Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "cross_region_remediated": "all_9_execution_plus_geo",
+  "checks": {
+    "assets_locked_9_9": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-KR-064-ATR",
+      "poi": "景福宫",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-seoul-food-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T16:14:39.594Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-065-ATR",
+      "poi": "北村韩屋村",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-seoul-food-community-media.jpg",
+      "locked_at_utc": "2026-07-05T16:19:40.606Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-066-ATR",
+      "poi": "明洞",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-seoul-food-community-cover.jpg",
+      "locked_at_utc": "2026-07-05T16:24:43.197Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-067-ATR",
+      "poi": "N首尔塔",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-seoul-food-provider-cover.jpg",
+      "locked_at_utc": "2026-07-05T16:29:42.702Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-068-ATR",
+      "poi": "汉江公园",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-seoul-food-acquisition-cover.jpg",
+      "locked_at_utc": "2026-07-05T16:34:43.545Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-069-FOOD",
+      "poi": "韩式烤肉",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-seoul-food-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-05T16:39:45.179Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-070-FOOD",
+      "poi": "拌饭",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-seoul-food-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-05T16:44:46.234Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-071-FOOD",
+      "poi": "炸鸡",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-seoul-food-community-media.jpg",
+      "locked_at_utc": "2026-07-05T16:49:47.052Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-KR-072-FOOD",
+      "poi": "参鸡汤",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-seoul-food-community-cover.jpg",
+      "locked_at_utc": "2026-07-05T16:54:47.991Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 9
+  },
+  "TT_CMS_POI_CITY_SEOUL_CONTENT_QA": "CLOSED"
+}

@@ -1,0 +1,25 @@
+{
+  "r003_staging_regression": {
+    "release_gate": "GO",
+    "cases": 12,
+    "report": "evidence/GO_phase2_testnet_20260526/report.json"
+  },
+  "adm_u01_staging": {
+    "release_gate": "GO",
+    "api_matrix": "102/102",
+    "playwright_shell": "GO",
+    "run_id": "adm_u01_localfirst_retest3_20260630",
+    "evidence": "evidence/GO_staging_admin_rbac_matrix/adm_u01_localfirst_retest3_20260630"
+  },
+  "uat_cross_domain": {
+    "test": "跨域 · meta 同源代理 + CORS /governance",
+    "verdict": "PASS"
+  },
+  "deep_release_gate": {
+    "verdict": "PASS",
+    "release_gate": "GO",
+    "evidence": "evidence/GO_phase2_testnet_20260526/local-staging-parity/20260630T041949Z/deep-release-gate"
+  },
+  "transient_failures_ruled_out": true,
+  "notes": "Prior SSL/ERR_CONNECTION_CLOSED failures reproduced as client-path flakes; stable-window retest all PASS."
+}

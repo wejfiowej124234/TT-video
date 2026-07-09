@@ -1,0 +1,97 @@
+{
+  "schema": "traveltrust.mainnet_deployment_package_prep.v1",
+  "recorded_utc": "2026-07-08T14:11:55.763Z",
+  "stamp": "2026-07-08T14-11-55",
+  "prep_dir": "evidence/GO_production_readiness/mainnet-deployment-package/prep-2026-07-08T14-11-55",
+  "verdict": "MAINNET_DEPLOYMENT_PACKAGE_PREP_COMPLETE",
+  "gate_impact": "NONE — does not change Prerequisite / Exit / Freeze gates",
+  "status": "PREP_NOT_GENERATED",
+  "components": {
+    "wave_1_escrow_factory": "wave-1-escrow-factory/ESCROW-FACTORY-WAVE1-MAINNET-PREP.md",
+    "mainnet_deployment_runbook": "runbook/MAINNET-DEPLOYMENT-EXECUTION-V1.md",
+    "owner_signoff_package": "owner-signoff/OWNER-SIGNOFF-PACKAGE.md",
+    "deployment_manifest_template": "MANIFEST/manifest.template.json",
+    "contract_verify_package": "verify/CONTRACT-VERIFY-PACKAGE.md",
+    "explorer_verify_package": "verify/EXPLORER-VERIFY-PACKAGE.md",
+    "rollback_package": "rollback/MAINNET-ROLLBACK-PREP-V1.md",
+    "emergency_recovery_package": "emergency-recovery/EMERGENCY-RECOVERY-PREP-V1.md"
+  },
+  "registry_snapshot": {
+    "registry/protocol-convergence-deployments.v1.yaml": {
+      "snapshotted": true,
+      "sha256": "aee0681e82004f84ccaad275dc2fbc2d084b50ff77b0d6b370814b5622dd5264"
+    },
+    "registry/escrow-bilateral-mainnet-policy.v1.yaml": {
+      "snapshotted": true,
+      "sha256": "17b130d0ad6bce8aa4d1c46cbac8f081bded7b2e40e1fe75413eff82d364572f"
+    },
+    "registry/mainnet-deployment-package.v1.yaml": {
+      "snapshotted": true,
+      "sha256": "c742ce3fe962a83e9929801b6656b506af11f16b7cb98b138d13fb4292dee733"
+    },
+    "registry/web3-three-phase-closure-discipline.v1.yaml": {
+      "snapshotted": true,
+      "sha256": "91523d609b821dbb7057692d1cc464eb3015b6246b15600c7139603c70c78f8b"
+    },
+    "registry/web3-system-master-map.v1.yaml": {
+      "snapshotted": true,
+      "sha256": "c68d05b052337dd35e4ff6c146983b4610dd1dd210cc15b334ef0ced425ab4ba"
+    }
+  },
+  "abi_snapshot": {
+    "CountryPoolLedgerV0.json": "b95bc1e860d65d9576921f872db8cc6733f8e92a831891babc07dc5ee62c8872",
+    "CountryPoolNetProfitGovernancePayload.json": "cb291c655eb969c9d42f6e9b5262edadcf6ba23df6c8826a477611ab9dfb98d0",
+    "CountryPoolNetProfitLedger.json": "7c57a2188a12de39dc11eb07dfa3b861d1283582d7ab37ff96252c8e4117db28",
+    "CountryPoolRedemptionEpochV0.json": "231365322097f3c583e330ff0c1f9b3b21d43736e11d71bca3bcad2b15a4176c",
+    "CountryPoolSubVaultsV0.json": "e6c0270fe29031d565b4717cb8c21196eaec32f26714f97558782073b9527bd0",
+    "Escrow.json": "f1b4a9fdf525d8540c60edf67abe6e6a34a4dcb31d0fd988770db7ad822e9ab5",
+    "EscrowFactory.json": "23712783b4e57816af165ec7d5ac1b981af5aa843b3fd144a4d15dd3a248215d",
+    "EscrowFactoryV2.json": "ae6aa1ccca3f6e0cccfc2b781aa29594c29ced96d5749c9ad949e6954cb8eefb",
+    "FeeRouter.json": "48abeff8c36d660004dbb31381dc5ee742683f7f71b5c51d660e651baeb226c6",
+    "GovernanceTimelock.json": "7457a2db13712c38ae24454bc9614971301606f2738c52978629c853de934cce",
+    "GovernanceTreasury.json": "c34c3eaace04cef6c13621a1b5b373815d3af3e4774ac26dd26a818396dc52be",
+    "GovernanceTreasuryP4Cap.json": "8488d672094c7e1ea3bce34ebc5309fc76346703f5cf126c04a8baefd2119109",
+    "GovernanceVotesToken.json": "ca760f51fd6eadc3c5d5345033339a12f85321de7e9cbd9d23169652762dfc5c",
+    "GuideIdentityStakingPool.json": "ab0579a749a41ce8ac2ed7df0f9d64f28a40c36cff8123c89ddba034d8074a15",
+    "IERC20.json": "0d3769761dbac05ec67791497062cbfe3b314c278899a8c1195e3a755181a2e7",
+    "InvestorDistributionClaim.json": "8507f652f556626dab3623442c5c744604af40e5a7d6271da48159d46a1da803",
+    "MockERC20.json": "eda6535e891fce3d552953a376f80920330c55fe2d973fb79a12fbfd603826e6",
+    "OnboardingFeeReceiver.json": "917b1a17e7571af6d6d2defca1e3b6cb06f81950456727ac3953b84643fbd4af",
+    "ProviderIdentityStakingPool.json": "ab0579a749a41ce8ac2ed7df0f9d64f28a40c36cff8123c89ddba034d8074a15",
+    "RegionDistributionClaim.json": "92ec3ad73b0a517f629308873716272e50fecd5c4e8dfbed73bdd08c36bb37e0",
+    "RegionStewardStakePool.json": "742e0b75ed21657021e9dd2b1755fd8e49fe579bb1b4fd51c75c72fb74c87f76",
+    "RegionVault.json": "8121502a149c0ba1cc1b47f7f6a5928398b13395cf8787ca7f1df8f84765e006",
+    "Registry.json": "e3bc1c0dd4b1ea3a0a9b3025391f019379b79a072504bcc14ab1ad7b96f44a7e",
+    "ReserveVault.json": "4461df3cdf9e134093c305419cee14e0db948fac70f09daaa2d4c7d5172f6d15",
+    "SlashRouter.json": "a1629d19e9bca5ecc9e7c4e4449aaf6265d9410d2c7598d42f268c23c862bc21",
+    "StewardPathVault.json": "98dccc129886393f90f8537be7e2edeaeb03733d092ab4aff6e64b69211c466c",
+    "TravelTrustGovernor.json": "c468bdcba35505f80fe76392711415dc7c43bce11cc34e1edbc7e7abc7f0d960",
+    "TtgPrimaryMarketV1.json": "8cbcd2a5d145b38a99126f5ccf5e6e942186c87fe6e039a0a5569e4974147c7a",
+    "TtgSeatConcentrationRegistry.json": "6e3d088682ebcf8ab4d5be405ff8866db03891f2be5ac3a3f9b6b9472ad1fa25",
+    "UnallocatedStewardPathVault.json": "e2c1f8aa69c444755842eef5fa4f1fdda99abd54ccae684c535f46ed9cc31a80"
+  },
+  "abi_forge_verify": {
+    "ok": true,
+    "exit": 0
+  },
+  "templates_copied": [
+    "emergency-recovery/EMERGENCY-RECOVERY-PREP-V1.md",
+    "env/mainnet.env.template",
+    "owner-signoff/OWNER-SIGNOFF-PACKAGE.md",
+    "rollback/MAINNET-ROLLBACK-PREP-V1.md",
+    "runbook/MAINNET-DEPLOYMENT-EXECUTION-V1.md",
+    "verify/CONTRACT-VERIFY-PACKAGE.md",
+    "verify/EXPLORER-VERIFY-PACKAGE.md",
+    "wave-1-escrow-factory/ESCROW-FACTORY-WAVE1-MAINNET-PREP.md"
+  ],
+  "refs": {
+    "registry": "registry/mainnet-deployment-package.v1.yaml",
+    "runbook": "docs/runbook/MAINNET-DEPLOYMENT-PACKAGE-V1.md",
+    "template_root": "docs/runbook/templates/mainnet-package/"
+  },
+  "next_after_freeze": [
+    "node scripts/dev/generate-mainnet-deployment-package.cjs",
+    "bash scripts/gates/check-mainnet-deployment-package-gate.sh",
+    "Owner signoff in owner-signoff/"
+  ]
+}

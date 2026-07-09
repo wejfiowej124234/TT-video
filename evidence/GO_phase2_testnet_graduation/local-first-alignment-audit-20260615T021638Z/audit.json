@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.local_first_alignment_audit.v1",
+  "at": "20260615T021638Z",
+  "head": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+  "staging_api_sha": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+  "staging_web_sha": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+  "verdict": "100_PERCENT_ALIGNED",
+  "tt_marker": "TT_LOCAL_FIRST_ALIGNMENT: 100_PERCENT_ALIGNED",
+  "gaps": [],
+  "probes": {
+    "D6": true,
+    "D24": true,
+    "TN-P1-010": true,
+    "DEEP_GATE": true,
+    "G04": true,
+    "ADM_U01": true,
+    "HAT": true
+  },
+  "wt": {
+    "porcelain_count": 402,
+    "closure_dirty": [],
+    "deploy_non_e2e_dirty": 0,
+    "non_exempt_dirty": 17
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_regression_review.v1",
+  "stamp_utc": "20260704T134730Z",
+  "trigger_row": 21,
+  "trigger_filename": "ocs-bangkok-temple-acquisition-cover.jpg",
+  "rows_reviewed": 21,
+  "TT_GLOBAL_REGRESSION_REVIEW": "PASS",
+  "no_quality_regression": true,
+  "checks": {
+    "all_21_rows_verified_pass": { "pass": true },
+    "acquisition_product_4_distinct": { "pass": true },
+    "guide_provider_portfolio_intact": { "pass": true },
+    "closed_chains_stable": { "pass": true },
+    "six_class_plus_portfolio_ready": { "pass": true }
+  },
+  "gate_to_row22": "PASS"
+}

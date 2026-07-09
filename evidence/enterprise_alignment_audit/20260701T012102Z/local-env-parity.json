@@ -1,0 +1,58 @@
+{
+  "local_stack_up": false,
+  "local_fe_chain": "31337",
+  "local_fe_api": "http://127.0.0.1:8080",
+  "local_fe_escrow": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "root_chain": "31337",
+  "root_fe_chain_match": true,
+  "migration_files": 116,
+  "staging_accounts": {
+    "C1": {
+      "http": 200,
+      "pass": true
+    },
+    "C2": {
+      "http": 200,
+      "pass": true
+    },
+    "C3": {
+      "http": 200,
+      "pass": true
+    },
+    "C4": {
+      "http": 200,
+      "pass": true
+    },
+    "E2": {
+      "http": 0,
+      "pass": false
+    }
+  },
+  "local_accounts": {
+    "C1": {
+      "http": 0,
+      "pass": false,
+      "skipped": true
+    },
+    "C2": {
+      "http": 0,
+      "pass": false,
+      "skipped": true
+    },
+    "C3": {
+      "http": 0,
+      "pass": false,
+      "skipped": true
+    },
+    "C4": {
+      "http": 0,
+      "pass": false,
+      "skipped": true
+    },
+    "E2": {
+      "http": 0,
+      "pass": false,
+      "skipped": true
+    }
+  }
+}

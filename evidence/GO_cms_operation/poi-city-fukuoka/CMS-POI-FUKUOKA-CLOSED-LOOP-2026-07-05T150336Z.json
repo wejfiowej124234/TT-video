@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T15:03:36Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "福冈",
+    "city_en": "Fukuoka",
+    "matrix_ids": [
+      "PH-JP-020-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-JP-020-ATR",
+      "legacy_value": "能古岛",
+      "poi_id": "e80d3c2e-3bf4-4e2e-b9d3-4d342a17ba25",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-fukuoka-nokonoshima-community-cover.jpg",
+      "hero_file": "ocs-fukuoka-nokonoshima-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-020-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

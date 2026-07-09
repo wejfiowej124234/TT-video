@@ -1,0 +1,32 @@
+{
+  "validation": "PCP_PHASE_1_FINAL_SIGNOFF",
+  "stamp": "20260703T231037Z",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "steps": [
+    {
+      "script": "scripts/dev/validate-pcp-phase1-market-batch-staging.cjs",
+      "pass": true
+    },
+    {
+      "script": "scripts/dev/validate-pcp-phase1-campaign-batch-staging.cjs",
+      "pass": true
+    },
+    {
+      "script": "scripts/dev/validate-pcp-phase0-5-staging.cjs",
+      "pass": true
+    },
+    {
+      "script": "scripts/dev/audit-pcp-phase1-full-alignment.cjs",
+      "pass": true
+    }
+  ],
+  "phase1_alignment": "IN_PROGRESS",
+  "domains_fully_aligned": "7/7",
+  "phase1_gaps": 1,
+  "blocking": 0,
+  "overall": "FAIL",
+  "TT_PCP_PHASE_1": "IN_PROGRESS",
+  "sign_off_allowed": false,
+  "sign_off_note": "Do NOT stamp COMPLETE — fix gaps and re-run",
+  "ssot_stamp": null
+}

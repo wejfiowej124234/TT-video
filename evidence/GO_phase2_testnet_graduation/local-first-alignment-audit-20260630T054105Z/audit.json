@@ -1,0 +1,87 @@
+{
+  "schema": "traveltrust.local_first_alignment_audit.v2",
+  "at": "20260630T054105Z",
+  "head": "042b320ce1c378296bcc74c78326e94674e1494c",
+  "staging_api_sha": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+  "staging_web_sha": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+  "local_first": {
+    "local_ahead_undeployed": true,
+    "runtime_drift": false,
+    "phase3_wip_isolated_count": 30
+  },
+  "verdict": "NOT_100_PERCENT_ALIGNED",
+  "tt_marker": "TT_LOCAL_FIRST_ALIGNMENT: NOT_100_PERCENT_ALIGNED",
+  "gaps": [
+    {
+      "id": "GAP-DEPLOY-SSOT",
+      "sev": "P1",
+      "count": 20,
+      "sample": [
+        "frontend/.i18n-coverage.json",
+        "frontend/components/auth/AuthLoginGovernanceRemediationProgress.tsx",
+        "frontend/components/governance/GovernanceConvergencePathGate.tsx",
+        "frontend/evidence/GO_local_phase1/site10-alignment-audit.latest.txt",
+        "frontend/evidence/staging-uat-six-domains/",
+        "frontend/lib/auth/authLoginGovernanceRemediationModel.ts",
+        "frontend/lib/complexityConvergenceSurface.test.ts",
+        "frontend/lib/complexityConvergenceSurface.ts"
+      ],
+      "note": "Phase② deploy-path uncommitted — not staging runtime drift until S5 deploy"
+    },
+    {
+      "id": "GAP-PHASE3-WIP-ISOLATED",
+      "sev": "INFO",
+      "count": 30,
+      "note": "Phase③ WIP in worktree — must stay isolated from Phase② deploy"
+    },
+    {
+      "id": "GAP-WT-TRACKED",
+      "sev": "P1",
+      "count": 9,
+      "sample": [
+        "AGENTS.md",
+        "data/indexer_audit.jsonl",
+        "data/indexer_state.json.runtime",
+        "frontend/.i18n-coverage.json",
+        "scripts/dev/run-local-first-convergence-gate.sh",
+        "scripts/gates/local-e2e-chromium-full-matrix.sh",
+        "scripts/ops/p2fc-launch-staging-soak-72h.sh",
+        "scripts/ops/p2fc-rerun-after-soak.sh",
+        "scripts/ops/p2fc-soak-attest.sh"
+      ],
+      "note": "scripts/docs tracked dirty — local convergence; ≠ staging runtime drift"
+    },
+    {
+      "id": "GAP-LOCAL-AHEAD-UNDEPLOYED",
+      "sev": "INFO",
+      "note": "head=042b320ce1c3 staging=9979b35efe56 — Local First; bring at S5 deploy only"
+    },
+    {
+      "id": "GAP-EVIDENCE-HISTORICAL",
+      "sev": "INFO",
+      "note": "TN-P1-010/D24/D6 historical gates · TN-P1-010: need post-soak TN-P1-010 @ freeze 8dcd304a (historical-only reports excluded)"
+    }
+  ],
+  "probes": {
+    "D6": true,
+    "D24": true,
+    "TN-P1-010": false,
+    "TN-P1-010_gate": {
+      "pass": false,
+      "state": "no",
+      "note": "need post-soak TN-P1-010 @ freeze 8dcd304a (historical-only reports excluded)",
+      "freeze_sha": "8dcd304afae1bafe5a4de738175e171256a9501e"
+    },
+    "DEEP_GATE": true,
+    "G04": true,
+    "ADM_U01": true,
+    "HAT": true
+  },
+  "wt": {
+    "porcelain_count": 804,
+    "closure_dirty": [],
+    "deploy_phase2_uncommitted": 20,
+    "deploy_phase3_isolated": 30,
+    "non_exempt_dirty": 191
+  }
+}

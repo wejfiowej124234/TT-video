@@ -24,7 +24,7 @@ test.describe("Guide workbench full L5 probes (① local)", () => {
 
     await page.goto("/auth/login?returnUrl=%2Fguide", { timeout: 60_000 });
     await page.getByRole("textbox", { name: /email|邮箱/i }).fill("guide@test.com");
-    await page.getByRole("textbox", { name: /password|密码/i }).fill("password123");
+    await page.getByRole("textbox", { name: /password|密码/i }).fill("Test123!");
     await page.getByRole("button", { name: /sign in|登录/i }).click();
     await page.waitForURL(/\/guide/, { timeout: 60_000 });
 

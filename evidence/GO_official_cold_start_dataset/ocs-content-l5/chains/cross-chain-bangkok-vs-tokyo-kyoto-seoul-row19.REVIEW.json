@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T133930Z",
+  "row": 19,
+  "new_chain": "bangkok-temple",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "guide_avatar_comparison": {
+    "tokyo-photo": "Ken 摄影师 浅草",
+    "kyoto-culture": "Yuki 和服 祇园",
+    "seoul-food": "Min 45+ 美食 夜市",
+    "bangkok-temple": "Arun 泰男 黎明寺台阶 金蓝晨光",
+    "distinct": true
+  },
+  "homogenization_risk": false
+}

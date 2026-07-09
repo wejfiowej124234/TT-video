@@ -1,0 +1,191 @@
+{
+  "audit_id": "TT_GOVERNANCE_ENTERPRISE_HAT",
+  "stamp_utc": "20260616T071420Z",
+  "layers": [
+    {
+      "id": "L1",
+      "title": "UI / UX \u5ba1\u6838",
+      "scope": "\u6cbb\u7406\u9996\u9875 \u00b7 3 \u79d2\u8ba4\u77e5",
+      "routes": [
+        "/governance",
+        "/governance/params",
+        "/governance/params#gov-params-overview"
+      ],
+      "items": [
+        "\u7528\u6237 3 \u79d2\u5185\u80fd\u5426\u7406\u89e3\uff1aTTG \u662f\u4ec0\u4e48",
+        "\u7528\u6237 3 \u79d2\u5185\u80fd\u5426\u7406\u89e3\uff1aCountry Pool \u662f\u4ec0\u4e48",
+        "\u7528\u6237 3 \u79d2\u5185\u80fd\u5426\u7406\u89e3\uff1a45/55 \u662f\u4ec0\u4e48",
+        "\u7528\u6237 3 \u79d2\u5185\u80fd\u5426\u7406\u89e3\uff1aSeat \u662f\u4ec0\u4e48",
+        "\u7528\u6237 3 \u79d2\u5185\u80fd\u5426\u7406\u89e3\uff1aTreasury \u662f\u4ec0\u4e48",
+        "\u662f\u5426\u8fd8\u6709\u65e7\u5206\u7ea2\u53d9\u4e8b",
+        "\u662f\u5426\u8fd8\u6709\u81ea\u52a8\u5206\u7ea2\u63cf\u8ff0",
+        "\u662f\u5426\u8fd8\u6709 Seat \u9000\u51fa\u8fd4 USDC \u63cf\u8ff0",
+        "\u662f\u5426\u8fd8\u6709\u65e7\u5355\u6c60\u6a21\u578b\u63cf\u8ff0",
+        "\u662f\u5426\u6240\u6709\u56fe\u90fd\u53d8\u6210\u591a\u56fd\u5bb6\u6c60",
+        "\u662f\u5426\u660e\u786e P1/P2/P3/P4"
+      ],
+      "human_verdict": null
+    },
+    {
+      "id": "L2",
+      "title": "TTG \u8d2d\u4e70\u6d41\u7a0b",
+      "scope": "\u6e38\u5ba2 \u00b7 \u666e\u901a\u6301\u5e01\u4eba \u00b7 \u7ba1\u7406\u5458",
+      "routes": [
+        "/governance/params#gov-params-tokenomics-freeze",
+        "/market \u6216 Primary Market \u5165\u53e3"
+      ],
+      "items": [
+        "\u8d2d\u4e70 TTG \u6d41\u7a0b\u53ef\u5b8c\u6210\u6216\u8bda\u5b9e blocked",
+        "\u67e5\u770b\u4f59\u989d\u6b63\u786e",
+        "\u67e5\u770b\u9501\u4ed3/vest \u8bf4\u660e\u6b63\u786e\uff08\u5982\u6709\uff09",
+        "\u67e5\u770b\u6cbb\u7406\u6743/delegate \u8bf4\u660e\u6b63\u786e",
+        "\u67e5\u770b\u94b1\u5305\u9650\u5236\u6587\u6848\u6b63\u786e",
+        "GOV-04 \u663e\u793a\u6b63\u786e",
+        "25000 TTG \u4e0a\u9650\u6b63\u786e",
+        "\u4e09\u8f6e\u89c4\u5219\u6b63\u786e",
+        "USDC \u6d41\u5411\u53d9\u4e8b\u6b63\u786e\uff08Primary Market \u2192 \u975e\u81ea\u52a8\u5206\u7ea2\uff09",
+        "\u9519\u8bef\u63d0\u793a\u6b63\u786e\uff08\u4f59\u989d\u4e0d\u8db3/\u8d85 cap \u7b49\uff09"
+      ],
+      "human_verdict": null
+    },
+    {
+      "id": "L3",
+      "title": "Seat \u4e3b\u7406\u4eba\u6d41\u7a0b",
+      "scope": "\u65e0 TTG \u00b7 \u6709 TTG \u00b7 \u6709 Seat \u00b7 \u9000\u51fa Seat",
+      "routes": [
+        "/governance/steward-region-workbench"
+      ],
+      "items": [
+        "Stake \u95e8\u69db\u663e\u793a\u6b63\u786e\uff08jurisdiction minStake\uff09",
+        "10 \u56fd\u53c2\u6570\u6b63\u786e",
+        "Seat \u7533\u8bf7\u6d41\u7a0b\u6b63\u786e",
+        "\u5ba1\u6838\u72b6\u6001\u6b63\u786e",
+        "Active \u72b6\u6001\u6b63\u786e",
+        "Release / requestRelease \u72b6\u6001\u6b63\u786e",
+        "180 \u5929\u9000\u51fa\u8bf4\u660e\u6b63\u786e"
+      ],
+      "human_verdict": null
+    },
+    {
+      "id": "L4",
+      "title": "\u6536\u76ca\u5206\u914d\u5ba1\u8ba1",
+      "scope": "Country Pool 45/55 \u00b7 Steward \u8def\u5f84 \u00b7 P4 \u6cbb\u7406",
+      "routes": [
+        "/governance/params#gov-params-overview",
+        "/governance/distribution-accruals",
+        "/governance/distribution-claim"
+      ],
+      "items": [
+        "\u56fd\u5bb6\u5229\u6da6 \u2192 45% StewardPath \u53d9\u4e8b/\u6570\u6b63\u786e",
+        "\u56fd\u5bb6\u5229\u6da6 \u2192 55% Global Treasury \u53d9\u4e8b/\u6570\u6b63\u786e",
+        "\u6570\u5b66\u6b63\u786e\uff08\u9875\u9762 bps/percent\uff09",
+        "\u9875\u9762\u6b63\u786e",
+        "API \u6b63\u786e\uff08protocol-reference / accruals\uff09",
+        "\u6570\u636e\u5e93\u6b63\u786e\uff08\u5982\u53ef\u7528\uff09",
+        "\u56fe\u8868\u6b63\u786e\uff08\u591a\u56fd\u5bb6\u6c60\uff09",
+        "Active Seat \u624d\u8d70 45% \u8def\u5f84\u6536\u76ca\u53d9\u4e8b",
+        "\u975e Seat \u4e0d\u80fd\u9886\u53d6 Steward \u8def\u5f84",
+        "Seat \u53d6\u6d88\u540e\u505c\u6b62\u9886\u53d6\u53d9\u4e8b\u6b63\u786e",
+        "\u591a Seat \u4e0d\u80fd\u8d85\u9650\uff08GOV-03\uff09",
+        "Unallocated \u903b\u8f91\u6b63\u786e",
+        "P4 \u65e0\u81ea\u52a8\u5206\u7ea2",
+        "P4 \u65e0\u76f4\u63a5\u6309\u6bd4\u4f8b\u5206\u94b1",
+        "P4 \u5fc5\u987b\u6cbb\u7406\u63d0\u6848",
+        "P4 \u5fc5\u987b Timelock",
+        "P4 \u5fc5\u987b Treasury \u6743\u9650"
+      ],
+      "human_verdict": null
+    },
+    {
+      "id": "L5",
+      "title": "Treasury \u5ba1\u8ba1",
+      "scope": "\u8c01\u80fd\u82b1 \u00b7 \u7533\u8bf7 \u00b7 \u6279\u51c6 \u00b7 \u6267\u884c \u00b7 \u67e5\u770b",
+      "routes": [
+        "/governance/params#gov-params-treasury-policy",
+        "/governance/proposals"
+      ],
+      "items": [
+        "USDC \u2192 Treasury \u2192 \u8fd0\u8425 \u53d9\u4e8b\u6b63\u786e",
+        "Admin \u4e0d\u80fd\u76f4\u63a5\u8f6c\u94b1",
+        "Seat \u4e0d\u80fd\u76f4\u63a5\u8f6c\u94b1",
+        "Governor \u63a7\u5236\u652f\u51fa\u63d0\u6848",
+        "Timelock \u63a7\u5236 execute",
+        "30% P4 deploy cap \u6587\u6848/\u53c2\u6570\u751f\u6548",
+        "Treasury Spend\uff1a\u63d0\u6848 \u2192 \u6295\u7968 \u2192 Queue \u2192 Execute \u2192 USDC \u652f\u51fa"
+      ],
+      "human_verdict": null
+    },
+    {
+      "id": "L6",
+      "title": "\u591a\u8eab\u4efd\u6c61\u67d3\u5ba1\u8ba1",
+      "scope": "Traveler \u00b7 Guide \u00b7 Merchant \u00b7 Steward \u00b7 Moderator \u00b7 Admin",
+      "routes": [
+        "\u5404\u89d2\u8272\u5de5\u4f5c\u53f0 \u00b7 /me \u00b7 /governance/*"
+      ],
+      "items": [
+        "\u8eab\u4efd\u5207\u6362\u6b63\u786e",
+        "\u6536\u76ca\u4e0d\u4e32",
+        "\u6743\u9650\u4e0d\u4e32",
+        "\u63d0\u6848\u4e0d\u4e32",
+        "Treasury \u4e0d\u4e32",
+        "Seat \u4e0d\u4e32"
+      ],
+      "human_verdict": null
+    },
+    {
+      "id": "L7",
+      "title": "\u7ba1\u7406\u5458\u7cfb\u7edf\u5ba1\u8ba1",
+      "scope": "Admin \u767b\u5f55",
+      "routes": [
+        "/admin \u6216 Admin \u9762\u677f"
+      ],
+      "items": [
+        "\u80fd\u770b\u5230\u4ec0\u4e48\u7b26\u5408 RBAC",
+        "\u80fd\u6539\u4ec0\u4e48\u7b26\u5408 RBAC",
+        "\u4e0d\u80fd\u6539\u4ec0\u4e48\u6709\u786c\u95f8/\u65e0\u5165\u53e3",
+        "\u4e0d\u80fd\u6539 Treasury \u4f59\u989d",
+        "\u4e0d\u80fd\u6539\u6295\u7968\u7ed3\u679c",
+        "\u4e0d\u80fd\u8df3\u8fc7 Timelock",
+        "\u4e0d\u80fd\u76f4\u63a5\u7ed9\u81ea\u5df1\u6536\u76ca",
+        "\u4e0d\u80fd\u76f4\u63a5\u6539 Seat \u6536\u76ca",
+        "\u4e0d\u80fd\u76f4\u63a5\u53d1 TTG"
+      ],
+      "human_verdict": null
+    },
+    {
+      "id": "L8",
+      "title": "\u5f02\u5e38\u8def\u5f84\u5ba1\u8ba1",
+      "scope": "\u6545\u610f\u5236\u9020\u9519\u8bef",
+      "routes": [
+        "\u8d2d\u4e70 \u00b7 Stake \u00b7 \u6295\u7968 \u00b7 \u9886\u53d6\u5404\u5165\u53e3"
+      ],
+      "items": [
+        "\u4f59\u989d\u4e0d\u8db3 \u2014 \u63d0\u793a\u6b63\u786e",
+        "\u6743\u9650\u4e0d\u8db3 \u2014 \u63d0\u793a\u6b63\u786e",
+        "\u91cd\u590d\u6295\u7968 \u2014  blocked + \u63d0\u793a",
+        "\u91cd\u590d\u7533\u8bf7 \u2014 blocked + \u63d0\u793a",
+        "\u91cd\u590d\u9886\u53d6 \u2014 blocked + \u63d0\u793a",
+        "\u91ca\u653e\u4e2d\u9000\u51fa \u2014 \u63d0\u793a\u6b63\u786e",
+        "\u4e0d\u5d29\u6e83",
+        "\u4e0d\u4e32\u6570\u636e"
+      ],
+      "human_verdict": null
+    },
+    {
+      "id": "L9",
+      "title": "\u8d22\u52a1\u95ed\u73af\u5ba1\u8ba1",
+      "scope": "\u56db\u8d26\u4e00\u81f4",
+      "routes": [
+        "\u62bd\u67e5\u811a\u672c\u89c1 checklist \u00a7L9 \u9644\u5f55"
+      ],
+      "items": [
+        "Primary Market\uff1a\u94fe\u4e0a = API = DB = \u9875\u9762",
+        "Country Pool\uff1a\u94fe\u4e0a = API = DB = \u9875\u9762",
+        "Treasury\uff1a\u94fe\u4e0a = API = DB = \u9875\u9762",
+        "Steward stake\uff1a\u94fe\u4e0a = API = DB = \u9875\u9762",
+        "TTG \u4f59\u989d/\u4f9b\u5e94\uff1a\u94fe\u4e0a = API = \u9875\u9762"
+      ],
+      "human_verdict": null
+    }
+  ]
+}

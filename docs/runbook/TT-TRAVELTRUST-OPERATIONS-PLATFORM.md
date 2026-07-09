@@ -172,15 +172,72 @@ Sign-off：`evidence/manual-uat/signoff/LOCAL-STAGING-OPS-PLATFORM-ALIGNMENT-SIG
 
 1. 打开 https://tt-web-staging.fly.dev/market/provider（或 `/market/acquisition`）
 2. DevTools → Elements → `<main data-testid="market-provider-page">`
-3. 期望：**`data-tt-subsite-country="all"`** · **`data-tt-subsite-list-count="10"`**
-4. 子站筛选条点 **「全部国家」** 后条数仍为 10；点 **日本** 后 provider=2 / acquisition=0
+3. 期望：**`data-tt-subsite-country="all"`** · **`data-tt-subsite-list-count="10"`** · **`data-tt-subsite-listings-query="all"`**
+4. 子站：点 **日本**（用户主动选择）→ provider=2 / acquisition=0，且 `_saved=1` 后下次才恢复 JP
+5. Hub `/market`：`<main data-testid="market-page">` → **`data-tt-market-country="all"`** · **`data-tt-market-orders-query="limit=30"`** · **`data-tt-market-guides-query="limit=30"`**（非阻塞诊断属性）
+
+### Market Default Filter Audit（默认筛选 · 20260703T125300Z · CLOSED）
+
+**分类：** `Market Default Filter State Audit` — 扩展 Market Runtime 收口，**不重开** OCS · DDG · SOPCP。
+
+**根因：** 孤儿 `localStorage` country（无用户主动 `_saved=1`）被当作有效筛选 → 首屏误走 `?country=JP`。
+
+**规则（三页统一）：** `URL country` → **用户主动保存**（`writeSubsiteCountryPref` + `_saved=1`）→ **默认 ALL**
+
+| 页面 | 默认 | 状态 SSOT |
+|------|------|-----------|
+| `/market` Hub（向导+行程） | ALL | **仅 URL**，不读子站 localStorage |
+| `/market/provider` | ALL | URL → explicit save → ALL |
+| `/market/acquisition` | ALL | URL → explicit save → ALL |
+
+**Browser truth 属性：**
+
+| 页面 | 属性 |
+|------|------|
+| 子站 | `data-tt-subsite-country` · `data-tt-subsite-list-count` · `data-tt-subsite-listings-query` |
+| Hub（非阻塞增强） | `data-tt-market-country` · `data-tt-market-orders-query` · `data-tt-market-guides-query` |
+
+**Evidence：** `evidence/GO_market_default_filter_audit/20260703T125300Z/default-filter-audit-closure.json`  
+**Sign-off：** `evidence/manual-uat/signoff/MARKET-DEFAULT-FILTER-AUDIT-SIGNOFF-20260703T125300Z.md`
+
+```bash
+# 默认筛选审计收口（unit + source-truth + API baseline）
+bash scripts/dev/close-market-default-filter-audit.sh
+# 含 Playwright @staging：
+bash scripts/dev/close-market-default-filter-audit.sh --with-playwright
+```
+
+**Market Runtime（本轮）：** API Truth · Frontend Runtime · Browser Runtime · Source Truth · Evidence — **全部 CLOSED · blocking_count=0**
+
+### Staging Console 基础设施（20260703T133800Z · **CLOSED** · blocking=0）
+
+**不重开：** Market Default Filter · OCS · DDG · SOPCP
+
+| Issue ID | 修复 | 状态 |
+|----------|------|------|
+| `C4-MEDIA-TUNNEL-UNAVAILABLE` | incident 短期 tunnel（**已 superseded**） | **CLOSED** |
+| `STAGING_API_DB_TRANSIENT_503` | pool + retry + `/health/ready` + metrics | **CLOSED** |
+| Issue ID | 状态 | 说明 |
+|----------|------|------|
+| `PI3-MEDIA-PERSISTENT-STAGING` | **CLOSED** | Infra · staging off loca.lt · Fly Tigris（**非 R2**） |
+| `PI3-MEDIA-R2-CDN-FINAL` | **WAITING_OWNER_CF** | **Infra** · R2 + CDN · Owner 清单 |
+| `MEDIA_CDN_PRODUCTION_ACCEPTANCE` | **PENDING** | **Infra** 验收 · Catalog Unsplash 不阻塞 |
+| `PI3-CATALOG-ASSET-MIGRATION` | **DEFERRED** | **Catalog** · Unsplash→自有素材 · [`TT-PI3-CATALOG-ASSET-MIGRATION.md`](TT-PI3-CATALOG-ASSET-MIGRATION.md) |
+
+**媒体 SSOT：** [`TT-MEDIA-THREE-TIER-ARCHITECTURE.md`](TT-MEDIA-THREE-TIER-ARCHITECTURE.md) · localtunnel **禁止** Staging 真源
+
+Evidence：`evidence/GO_staging_infra_fix/20260703T133800Z/`  
+Sign-off：`evidence/manual-uat/signoff/STAGING-INFRA-FIX-SIGNOFF-20260703T133800Z.md`  
+复跑：`bash scripts/dev/close-staging-infra-console-errors.sh` · C4 tunnel：`bash scripts/dev/restore-c4-staging-media-tunnel.sh`
 
 **Debug Procedure（仅运维 · 不得作为用户验收步骤）：**
 
 ```javascript
 // 仅当怀疑旧 prefs 污染时使用 — 见 Runbook Debug，非产品正常路径
 localStorage.removeItem('tt_market_subsite_country_pref_provider');
+localStorage.removeItem('tt_market_subsite_country_pref_provider_saved');
 localStorage.removeItem('tt_market_subsite_country_pref_acquisition');
+localStorage.removeItem('tt_market_subsite_country_pref_acquisition_saved');
 location.reload();
 ```
 

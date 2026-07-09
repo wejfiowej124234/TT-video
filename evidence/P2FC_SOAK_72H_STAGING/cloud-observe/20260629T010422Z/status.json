@@ -1,0 +1,13 @@
+{
+  "schema": "p2fc_cloud_soak_status.v1",
+  "updated_at": "2026-06-29T01:03:54.013Z",
+  "executor": "cloud",
+  "ok_polls": 3489,
+  "fail_polls": 0,
+  "required_sec": 259200,
+  "expect_git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "elapsed_sec": 209340,
+  "remaining_sec": 49860,
+  "policy": "read_only_no_redeploy",
+  "phase3_note": "Soak PASS does not grant Production GO — independent GO gate required"
+}

@@ -1,0 +1,106 @@
+{
+  "schema": "traveltrust.web3_dashboard.v1",
+  "title": "TravelTrust Web3 Dashboard",
+  "recorded_utc": "2026-07-08T11:48:13.511Z",
+  "cert": "0/12",
+  "modules": [
+    {
+      "name": "TTG",
+      "pct": 0,
+      "status": "IN_PROGRESS",
+      "pass": 0,
+      "total": 1
+    },
+    {
+      "name": "Governance",
+      "pct": 0,
+      "status": "IN_PROGRESS",
+      "pass": 0,
+      "total": 2
+    },
+    {
+      "name": "Treasury",
+      "pct": 50,
+      "status": "IN_PROGRESS",
+      "pass": 1,
+      "total": 2
+    },
+    {
+      "name": "Escrow",
+      "pct": 100,
+      "status": "PASS",
+      "pass": 1,
+      "total": 1
+    },
+    {
+      "name": "FeeRouter",
+      "pct": 100,
+      "status": "PASS",
+      "pass": 1,
+      "total": 1
+    },
+    {
+      "name": "CountryPool",
+      "pct": 100,
+      "status": "PASS",
+      "pass": 1,
+      "total": 1
+    },
+    {
+      "name": "Region Steward",
+      "pct": 50,
+      "status": "IN_PROGRESS",
+      "pass": 1,
+      "total": 2
+    },
+    {
+      "name": "Identity Stake",
+      "pct": 100,
+      "status": "PASS",
+      "pass": 1,
+      "total": 1
+    },
+    {
+      "name": "Primary Market",
+      "pct": 0,
+      "status": "IN_PROGRESS",
+      "pass": 0,
+      "total": 1
+    },
+    {
+      "name": "Settlement",
+      "pct": 100,
+      "status": "PASS",
+      "pass": 2,
+      "total": 2
+    },
+    {
+      "name": "Ledger",
+      "pct": 50,
+      "status": "IN_PROGRESS",
+      "pass": 1,
+      "total": 2
+    },
+    {
+      "name": "Protocol Audit",
+      "pct": 65,
+      "status": "WEB3_PROTOCOL_GRADE_IN_PROGRESS"
+    },
+    {
+      "name": "Mainnet Readiness",
+      "pct": 15,
+      "status": "WEB3_MAINNET_PRODUCTION_BLOCKED"
+    }
+  ],
+  "protocol_grade": "WEB3_PROTOCOL_GRADE_IN_PROGRESS",
+  "sepolia_lifecycle": "SEPOLIA_FULL_WEB3_LIFECYCLE_IN_PROGRESS",
+  "mainnet_readiness": "BLOCKED",
+  "today_focus": {
+    "focus": "②-D Web3",
+    "mission": "Governance Lifecycle",
+    "task": "Cert #8 Treasury Spend Execute",
+    "blocked_by": "Timelock",
+    "next": "Cert #9"
+  },
+  "overall_pct": 56
+}

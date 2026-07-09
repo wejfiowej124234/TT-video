@@ -1,0 +1,1182 @@
+{
+  "schema": "traveltrust.cms_sg_country_runtime_audit.v1",
+  "recorded_at_utc": "2026-07-06T06:42:41.255Z",
+  "phase": "② staging",
+  "country": {
+    "country_iso": "SG",
+    "country_zh": "新加坡",
+    "cities": [
+      "新加坡"
+    ]
+  },
+  "jp_lock_guard": {
+    "required": 41,
+    "unchanged": true
+  },
+  "kr_lock_guard": {
+    "required": 31,
+    "unchanged": true
+  },
+  "th_lock_guard": {
+    "required": 28,
+    "unchanged": true
+  },
+  "sg_lock_guard": {
+    "required": 10,
+    "unchanged": true
+  },
+  "next_country": "BLOCKED",
+  "production_go": "BLOCKED",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "runtime_tier": "national_runtime",
+  "consumer_surfaces": [
+    "home_singapore",
+    "market",
+    "market_itinerary_sg",
+    "market_provider",
+    "market_acquisition",
+    "traveltrust",
+    "community"
+  ],
+  "checks": [
+    {
+      "id": "jp_lock_registry_unchanged",
+      "label": "日本五城 LOCK 资产未改动 (41/41)",
+      "pass": true,
+      "locked_count": 41,
+      "total": 41,
+      "rows": [
+        {
+          "matrix_id": "PH-JP-009-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-010-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-011-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-012-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-013-ATR",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-014-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-015-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-016-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-017-FOOD",
+          "city_zh": "东京",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-001-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-002-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-003-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-004-ATR",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-005-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-006-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-007-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-008-FOOD",
+          "city_zh": "大阪",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-026-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-027-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-028-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-029-ATR",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-030-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-031-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-032-FOOD",
+          "city_zh": "京都",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-033-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-034-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-035-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-036-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-037-ATR",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-038-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-039-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-040-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-041-FOOD",
+          "city_zh": "札幌",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-018-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-019-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-020-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-021-ATR",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-022-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-023-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-024-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-JP-025-FOOD",
+          "city_zh": "福冈",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "kr_lock_registry_unchanged",
+      "label": "韩国四城 LOCK 资产未改动 (31/31)",
+      "pass": true,
+      "locked_count": 31,
+      "total": 31,
+      "rows": [
+        {
+          "matrix_id": "PH-KR-064-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-065-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-066-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-067-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-068-ATR",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-069-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-070-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-071-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-072-FOOD",
+          "city_zh": "首尔",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-042-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-043-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-044-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-045-ATR",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-046-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-047-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-048-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-049-FOOD",
+          "city_zh": "釜山",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-050-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-051-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-052-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-053-ATR",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-054-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-055-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-056-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-057-FOOD",
+          "city_zh": "济州",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-058-ATR",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-059-ATR",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-060-ATR",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-061-FOOD",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-062-FOOD",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-KR-063-FOOD",
+          "city_zh": "仁川",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "th_lock_registry_unchanged",
+      "label": "泰国三城 LOCK 资产未改动 (28/28)",
+      "pass": true,
+      "locked_count": 28,
+      "total": 28,
+      "rows": [
+        {
+          "matrix_id": "PH-TH-073-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-074-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-075-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-076-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-077-ATR",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-078-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-079-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-080-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-081-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-082-FOOD",
+          "city_zh": "曼谷",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-083-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-084-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-085-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-086-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-087-ATR",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-088-FOOD",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-089-FOOD",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-090-FOOD",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-091-FOOD",
+          "city_zh": "普吉",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-092-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-093-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-094-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-095-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-096-ATR",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-097-FOOD",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-098-FOOD",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-099-FOOD",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-TH-100-FOOD",
+          "city_zh": "清迈",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "sg_lock_registry_unchanged",
+      "label": "新加坡 SG LOCK 资产 (10/10)",
+      "pass": true,
+      "locked_count": 10,
+      "total": 10,
+      "rows": [
+        {
+          "matrix_id": "PH-SG-101-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-102-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-103-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-104-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-105-ATR",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-106-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-107-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-108-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-109-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        },
+        {
+          "matrix_id": "PH-SG-110-FOOD",
+          "city_zh": "新加坡",
+          "state": "LOCKED",
+          "replace_count": 1
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "sg_scope_lock",
+      "label": "SG POI Catalog Scope Lock · 10 POI / 1 city 不变",
+      "pass": true,
+      "doc": {
+        "poi_total": 10,
+        "city_count": 1,
+        "TT": "FROZEN"
+      },
+      "issues": []
+    },
+    {
+      "id": "singapore_city_execution_closed",
+      "label": "新加坡 Execution CLOSED",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "新加坡",
+          "execution_closure": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CLOSURE-LATEST.json",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "singapore_city_content_qa_closed",
+      "label": "新加坡 Content QA CLOSED · LOCK 不变",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "新加坡",
+          "content_qa_closure": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-CLOSURE-LATEST.json",
+          "locked": "10/10",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "singapore_city_exit_checks",
+      "label": "新加坡 Golden Template Exit Check · city_consumer_runtime",
+      "pass": true,
+      "rows": [
+        {
+          "city_zh": "新加坡",
+          "city_en": "Singapore",
+          "poi_count": 10,
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json",
+          "pass": true,
+          "runtime": "10/10",
+          "verdict": "CONTENT_QA_EXIT_PASS"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "singapore_ambient_runtime",
+      "label": "首页 Destination Ambient · 新加坡读 CMS · 无 Unsplash",
+      "pass": true,
+      "row": {
+        "country_zh": "新加坡",
+        "country_iso": "SG",
+        "page_path": "/?country=新加坡",
+        "cms_jurisdiction": true,
+        "catalog_has_data": true,
+        "catalog_published": true,
+        "catalog_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-sg-home-v1.jpg",
+        "runtime_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-sg-home-v1.jpg",
+        "runtime_reads_cms_catalog": true,
+        "runtime_cms_mismatch": false,
+        "still_unsplash": false,
+        "still_ts_fallback": false,
+        "l5_compliant": true,
+        "cms_ownership_ok": true,
+        "l5_issues": [],
+        "priority": "P0"
+      },
+      "ssot": "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+      "issues": []
+    },
+    {
+      "id": "catalog_api_sg_poi",
+      "label": "Catalog API SG POI 10/10 与 LOCK 一致",
+      "pass": true,
+      "pass_count": 10,
+      "required": 10,
+      "rows": [
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-101-ATR",
+          "expected": "ocs-singapore-family-official-guide-cover.jpg",
+          "catalog": "ocs-singapore-family-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-102-ATR",
+          "expected": "ocs-singapore-family-community-media.jpg",
+          "catalog": "ocs-singapore-family-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-103-ATR",
+          "expected": "ocs-singapore-family-community-cover.jpg",
+          "catalog": "ocs-singapore-family-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-104-ATR",
+          "expected": "ocs-singapore-family-provider-cover.jpg",
+          "catalog": "ocs-singapore-family-provider-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-105-ATR",
+          "expected": "ocs-singapore-family-acquisition-cover.jpg",
+          "catalog": "ocs-singapore-family-acquisition-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-106-FOOD",
+          "expected": "ocs-singapore-family-guide-avatar.jpg",
+          "catalog": "ocs-singapore-family-guide-avatar.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-107-FOOD",
+          "expected": "ocs-singapore-family-official-guide-cover.jpg",
+          "catalog": "ocs-singapore-family-official-guide-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-108-FOOD",
+          "expected": "ocs-singapore-family-community-media.jpg",
+          "catalog": "ocs-singapore-family-community-media.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-109-FOOD",
+          "expected": "ocs-singapore-family-community-cover.jpg",
+          "catalog": "ocs-singapore-family-community-cover.jpg",
+          "pass": true
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-110-FOOD",
+          "expected": "ocs-singapore-family-community-media.jpg",
+          "catalog": "ocs-singapore-family-community-media.jpg",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "sg_poi_runtime_exit_aggregate",
+      "label": "新加坡 Market POI Runtime · Exit Check Gate 4 聚合",
+      "pass": true,
+      "poi_runtime": {
+        "pass": 10,
+        "total": 10
+      },
+      "poi_rows": [
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-101-ATR",
+          "poi": "滨海湾",
+          "expected_fn": "ocs-singapore-family-official-guide-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-102-ATR",
+          "poi": "圣淘沙",
+          "expected_fn": "ocs-singapore-family-community-media.jpg",
+          "runtime_fn": "ocs-singapore-family-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-103-ATR",
+          "poi": "牛车水",
+          "expected_fn": "ocs-singapore-family-community-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-104-ATR",
+          "poi": "小印度",
+          "expected_fn": "ocs-singapore-family-provider-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-105-ATR",
+          "poi": "动物园",
+          "expected_fn": "ocs-singapore-family-acquisition-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-106-FOOD",
+          "poi": "海南鸡饭",
+          "expected_fn": "ocs-singapore-family-guide-avatar.jpg",
+          "runtime_fn": "ocs-singapore-family-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-107-FOOD",
+          "poi": "肉骨茶",
+          "expected_fn": "ocs-singapore-family-official-guide-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-108-FOOD",
+          "poi": "辣椒螃蟹",
+          "expected_fn": "ocs-singapore-family-community-media.jpg",
+          "runtime_fn": "ocs-singapore-family-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-109-FOOD",
+          "poi": "叻沙",
+          "expected_fn": "ocs-singapore-family-community-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-110-FOOD",
+          "poi": "椰浆饭",
+          "expected_fn": "ocs-singapore-family-community-media.jpg",
+          "runtime_fn": "ocs-singapore-family-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "live_consumer_runtime",
+      "label": "Live Consumer · 首页新加坡 Ambient + Market 壳 + 新加坡相关内容无 fallback",
+      "pass": true,
+      "catalog_api_requests": 2,
+      "poi_runtime": {
+        "pass": 10,
+        "total": 10
+      },
+      "poi_rows": [
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-101-ATR",
+          "poi": "滨海湾",
+          "expected_fn": "ocs-singapore-family-official-guide-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-102-ATR",
+          "poi": "圣淘沙",
+          "expected_fn": "ocs-singapore-family-community-media.jpg",
+          "runtime_fn": "ocs-singapore-family-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-103-ATR",
+          "poi": "牛车水",
+          "expected_fn": "ocs-singapore-family-community-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-104-ATR",
+          "poi": "小印度",
+          "expected_fn": "ocs-singapore-family-provider-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-provider-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-105-ATR",
+          "poi": "动物园",
+          "expected_fn": "ocs-singapore-family-acquisition-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-acquisition-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-106-FOOD",
+          "poi": "海南鸡饭",
+          "expected_fn": "ocs-singapore-family-guide-avatar.jpg",
+          "runtime_fn": "ocs-singapore-family-guide-avatar.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-107-FOOD",
+          "poi": "肉骨茶",
+          "expected_fn": "ocs-singapore-family-official-guide-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-official-guide-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-108-FOOD",
+          "poi": "辣椒螃蟹",
+          "expected_fn": "ocs-singapore-family-community-media.jpg",
+          "runtime_fn": "ocs-singapore-family-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-109-FOOD",
+          "poi": "叻沙",
+          "expected_fn": "ocs-singapore-family-community-cover.jpg",
+          "runtime_fn": "ocs-singapore-family-community-cover.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        },
+        {
+          "city_zh": "新加坡",
+          "matrix_id": "PH-SG-110-FOOD",
+          "poi": "椰浆饭",
+          "expected_fn": "ocs-singapore-family-community-media.jpg",
+          "runtime_fn": "ocs-singapore-family-community-media.jpg",
+          "cms_runtime_ok": true,
+          "source": "city_exit_check",
+          "exit_check": "evidence/GO_cms_operation/CMS-POI-CITY-SINGAPORE-CONTENT-QA-EXIT-CHECK-LATEST.json"
+        }
+      ],
+      "surface_rows": [
+        {
+          "surface": "home_singapore_ambient",
+          "pass": true,
+          "runtime_src": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-sg-home-v1.jpg"
+        },
+        {
+          "surface": "market_custom_itinerary_shell",
+          "pass": true
+        },
+        {
+          "surface": "market_provider",
+          "pass": true,
+          "image_count": 10,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "market_acquisition",
+          "pass": true,
+          "image_count": 10,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "traveltrust",
+          "pass": true,
+          "image_count": 0,
+          "forbidden_count": 0
+        },
+        {
+          "surface": "community",
+          "pass": true,
+          "image_count": 10,
+          "forbidden_count": 0
+        }
+      ],
+      "issues": [],
+      "attempt": 1
+    }
+  ],
+  "all_pass": true,
+  "poi_runtime_pass": 10,
+  "poi_runtime_required": 10,
+  "city_summary": [
+    {
+      "city_zh": "新加坡",
+      "exit_runtime": "10/10",
+      "catalog_pass": 10,
+      "catalog_total": 10,
+      "live_pass": 10,
+      "live_total": 10
+    }
+  ],
+  "verdict": "SG_COUNTRY_RUNTIME_PASS",
+  "TT_CMS_SG_COUNTRY_RUNTIME": "PASS",
+  "blockers": []
+}

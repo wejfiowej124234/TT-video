@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.ocs_content_l5_staging_uat_spotcheck.v1",
+  "stamp_utc": "20260704T155000Z",
+  "scope": "content_review_spotcheck_60_rows",
+  "phase": "① local Content L5 closure",
+  "sample_method": "all_60_rows_human_review_G6_G9_G10",
+  "G6_commercial_perception": {
+    "pass": true,
+    "rows_pass": 60,
+    "note": "Per-row human G6 pass archived · live staging blind ≥8/10 cities remains ②"
+  },
+  "G9_content_authenticity": {
+    "pass": true,
+    "rows_pass": 60
+  },
+  "G10_content_diversity": {
+    "pass": true,
+    "rows_pass": 60
+  },
+  "TT_STAGING_UAT_SPOTCHECK_CONTENT": "PASS",
+  "honest_boundary": "Content spotcheck PASS ≠ staging corridor GO ≠ Production GO"
+}

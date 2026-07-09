@@ -1,0 +1,145 @@
+{
+  "schema": "traveltrust.staging_full_site_display_governance.v2",
+  "api": "https://tt-api-staging.fly.dev",
+  "recorded_at": "2026-07-08T13:01:33.113Z",
+  "ocs_ddg_remediation_mode": false,
+  "verdict": "PASS",
+  "ddg_tiers": {
+    "FALSE_POSITIVE": 0,
+    "EXPECTED_OFFICIAL": 0,
+    "REAL_LEAK": 0
+  },
+  "ddg_tier_policy": {
+    "FALSE_POSITIVE": "Official Identity (@ocs.traveltrust.app · OCS state map) — not leakage",
+    "EXPECTED_OFFICIAL": "OCS CDN / Official upload paths — allowed",
+    "REAL_LEAK": "Unsplash · Showcase · Demo · Seed · sample hosts — blocking in production"
+  },
+  "surfaces": {
+    "provider": {
+      "surface": "provider",
+      "public_count": 10,
+      "leaks": 0,
+      "advisory": 0
+    },
+    "acquisition": {
+      "surface": "acquisition",
+      "public_count": 10,
+      "leaks": 0,
+      "advisory": 0
+    },
+    "guides": {
+      "surface": "guides",
+      "public_count": 10,
+      "leaks": 0,
+      "advisory": 0
+    },
+    "discover": {
+      "surface": "discover",
+      "public_count": 1,
+      "leaks": 0,
+      "advisory": 0
+    },
+    "community": {
+      "surface": "community",
+      "public_count": 10,
+      "leaks": 0,
+      "advisory": 0
+    },
+    "admin_guides": {
+      "entity_type": "guides",
+      "queue_total": 78,
+      "published": 10,
+      "smoke_published": 0,
+      "nonprod_published": 0
+    },
+    "admin_orders": {
+      "entity_type": "orders",
+      "queue_total": 98,
+      "published": 1,
+      "smoke_published": 0,
+      "nonprod_published": 0
+    },
+    "admin_market_listings": {
+      "entity_type": "market_listings",
+      "queue_total": 142,
+      "published": 20,
+      "smoke_published": 0,
+      "nonprod_published": 0
+    },
+    "admin_community_posts": {
+      "entity_type": "community_posts",
+      "queue_total": 132,
+      "published": 10,
+      "smoke_published": 0,
+      "nonprod_published": 0
+    },
+    "admin_stats": {
+      "status": "ok",
+      "filter_enabled": true,
+      "data_origin_counts": {
+        "guides": {
+          "demo": 28,
+          "production": 46,
+          "test": 4,
+          "total": 78
+        },
+        "orders": {
+          "production": 24,
+          "test": 74,
+          "total": 98
+        },
+        "market_listings": {
+          "demo": 27,
+          "production": 62,
+          "test": 53,
+          "total": 142
+        },
+        "market_listings_by_variant": {
+          "provider": {
+            "demo": 26,
+            "production": 32,
+            "test": 13,
+            "total": 71
+          },
+          "acquisition": {
+            "demo": 1,
+            "production": 30,
+            "test": 40,
+            "total": 71
+          }
+        },
+        "community_posts": {
+          "demo": 32,
+          "production": 99,
+          "test": 1,
+          "total": 132
+        }
+      },
+      "policy": {
+        "show_test_data": false,
+        "blocked_origins": [
+          "SMOKE"
+        ],
+        "updated_at": "2026-07-02T00:35:29.850727Z",
+        "updated_by": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+      }
+    },
+    "cms_publish_queue": {
+      "total": 0,
+      "draft": 0
+    },
+    "official_guides_admin": {
+      "total": 30
+    }
+  },
+  "issue_counts": {
+    "PRODUCT_DATA_DEFECT": 0,
+    "TEST_DATA_LEAKAGE": 0,
+    "EXPECTED_DIFFERENCE": 0,
+    "POST_GO_ENHANCEMENT": 0,
+    "ADVISORY": 0
+  },
+  "issues": [],
+  "c3_guide_id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+  "ocs_state": "D:\\TravelTrust-V1.1\\evidence\\GO_official_cold_start_dataset\\ocs-surface-expansion-staging\\20260704T073209Z\\state.json"
+}

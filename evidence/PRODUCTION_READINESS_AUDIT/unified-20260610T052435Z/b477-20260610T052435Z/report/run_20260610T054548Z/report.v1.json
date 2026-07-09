@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust_b477_pg_pool_stress_recovery.v1",
+  "verdict": "FAIL",
+  "error": "post-load snapshot failed: HTTP Error 408: Request Timeout",
+  "phases": {
+    "baseline": {
+      "metrics": {},
+      "meta_pool": null
+    },
+    "load": {
+      "started_unix": 1781070594.4894674,
+      "ended_unix": 1781070619.5301788,
+      "duration_wall_sec": 25.041,
+      "requests_ok": 4,
+      "requests_err": 4
+    }
+  },
+  "fix_suggestions": [
+    "确认 API 已配置 DATABASE_URL 且 chain_off 挂载 db_pool，使 GET /meta.database.pool 非 null。",
+    "恢复超时：压测后池未回落至目标利用率——检查是否有后台任务持连接或 PG 侧锁等待。"
+  ]
+}

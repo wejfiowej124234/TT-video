@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.audit_efficiency_score.v1",
+  "score": 100,
+  "raw_findings": 10,
+  "root_causes": 6,
+  "compression_ratio": 1.67,
+  "duplicate_groups": 0,
+  "conflict_pairs": 0
+}

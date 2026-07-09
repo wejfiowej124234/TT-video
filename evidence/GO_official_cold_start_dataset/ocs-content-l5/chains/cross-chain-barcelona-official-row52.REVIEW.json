@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T152330Z",
+  "trigger_row": 52,
+  "trigger_filename": "ocs-barcelona-arch-official-guide-cover.jpg",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "official_guide_comparison": {
+    "tokyo-photo": "台场摄影路线",
+    "kyoto-culture": "祇园文化路线",
+    "seoul-food": "明洞美食路线",
+    "bangkok-temple": "寺庙河景路线",
+    "singapore-family": "滨海湾亲子路线",
+    "paris-art": "左岸艺术路线",
+    "nyc-skyline": "大桥天际线摄影路线",
+    "sydney-coast": "邦迪-Coogee 海岸徒步",
+    "barcelona-arch": "圣家堂立面高迪一日",
+    "distinct": true
+  },
+  "no_quality_regression_prior_51": true
+}

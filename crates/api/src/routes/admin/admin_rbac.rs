@@ -60,6 +60,13 @@ pub const PERM_ACQUISITION_SUSPEND: &str = "admin.acquisition.suspend";
 pub const PERM_CONTENT_READ: &str = "admin.content.read";
 pub const PERM_CONTENT_WRITE: &str = "admin.content.write";
 pub const PERM_CONTENT_PUBLISH: &str = "admin.content.publish";
+/// CMS announcements · lane audience (registry `traveltrust-announcement-lane-governance.v1.yaml`)
+pub const PERM_ANNOUNCEMENT_AUDIENCE_PUBLIC_USER: &str =
+    "admin.content.announcement.audience.public_user";
+pub const PERM_ANNOUNCEMENT_AUDIENCE_TOKEN_HOLDER: &str =
+    "admin.content.announcement.audience.token_holder";
+pub const PERM_ANNOUNCEMENT_AUDIENCE_TECHNICAL_PUBLIC: &str =
+    "admin.content.announcement.audience.technical_public";
 pub const PERM_OFFICIAL_READ: &str = "admin.official.read";
 pub const PERM_OFFICIAL_WRITE: &str = "admin.official.write";
 pub const PERM_OFFICIAL_PUBLISH: &str = "admin.official.publish";
@@ -91,6 +98,9 @@ const SUPER_ADMIN_PERMS: &[&str] = &[
     PERM_CONTENT_READ,
     PERM_CONTENT_WRITE,
     PERM_CONTENT_PUBLISH,
+    PERM_ANNOUNCEMENT_AUDIENCE_PUBLIC_USER,
+    PERM_ANNOUNCEMENT_AUDIENCE_TOKEN_HOLDER,
+    PERM_ANNOUNCEMENT_AUDIENCE_TECHNICAL_PUBLIC,
     PERM_OFFICIAL_READ,
     PERM_OFFICIAL_WRITE,
     PERM_OFFICIAL_PUBLISH,
@@ -119,6 +129,8 @@ const OPS_PERMS: &[&str] = &[
     PERM_ACQUISITION_SUSPEND,
     PERM_CONTENT_READ,
     PERM_CONTENT_WRITE,
+    PERM_ANNOUNCEMENT_AUDIENCE_PUBLIC_USER,
+    PERM_ANNOUNCEMENT_AUDIENCE_TECHNICAL_PUBLIC,
     PERM_OFFICIAL_READ,
     PERM_OFFICIAL_WRITE,
     PERM_GROWTH_READ,

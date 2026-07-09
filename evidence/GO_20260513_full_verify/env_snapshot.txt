@@ -1,0 +1,2368 @@
+=== git ===
+b763c80 chore(win): refresh start-api-with-seed for local UI verification
+## main...origin/main
+ M .cursor/rules/traveltrust-ai-collab.mdc
+ M .cursorignore
+ M .env.example
+ M .github/PULL_REQUEST_TEMPLATE.md
+ M .github/workflows/ai-governance-gate.yml
+ M .github/workflows/auth-contract-gate.yml
+ M .github/workflows/build.yml
+ M .github/workflows/check-ai-task-card-index-overview.yml
+ M .github/workflows/community-governance-gate.yml
+ M .github/workflows/finance-reconcile-gate.yml
+ M .github/workflows/indexer-reconcile-gate.yml
+ M .github/workflows/internal-drill-gate.yml
+ M .gitignore
+ M AGENTS.md
+ M CONTRIBUTING.md
+ M Cargo.toml
+ M README.md
+ M contracts/planned/ONBOARDING_WEBHOOK_ASYNC_JOBS_MIGRATION_NOTES.md
+ M crates/api/Cargo.toml
+ M crates/api/migrations/20260420120000_market_listing_drafts.sql
+ M crates/api/src/auth_login_per_email_limit.rs
+ M crates/api/src/auth_login_risk_limits.rs
+ M crates/api/src/chain/balance_read.rs
+ M crates/api/src/chain/country_ledger.rs
+ D crates/api/src/chain/fee_router_verify.rs
+ D crates/api/src/chain/governor.rs
+ D crates/api/src/chain/indexer.rs
+ M crates/api/src/chain/mod.rs
+ D crates/api/src/chain/region_vault_verify.rs
+ M crates/api/src/chain/resolution_tx.rs
+ M crates/api/src/chain/timelock.rs
+ D crates/api/src/chain_off/auth.rs
+ M crates/api/src/chain_off/discover.rs
+ D crates/api/src/chain_off/disputes.rs
+ D crates/api/src/chain_off/evidence.rs
+RM crates/api/src/chain_off/governance_governor_token_timelock_ssot.rs -> crates/api/src/chain_off/governance_ssot/governance_governor_token_timelock_ssot.rs
+RD crates/api/src/chain_off/governance_proposal_count_ssot.rs -> crates/api/src/chain_off/governance_ssot/governance_proposal_count_ssot.rs
+RM crates/api/src/chain_off/governance_proposal_state_chain_vs_projection_b149.rs -> crates/api/src/chain_off/governance_ssot/governance_proposal_state_chain_vs_projection_b149.rs
+RM crates/api/src/chain_off/governance_proposal_tail_drift_b172.rs -> crates/api/src/chain_off/governance_ssot/governance_proposal_tail_drift_b172.rs
+RM crates/api/src/chain_off/governance_proposal_threshold_ssot.rs -> crates/api/src/chain_off/governance_ssot/governance_proposal_threshold_ssot.rs
+RM crates/api/src/chain_off/governance_timelock_delay_meta_mirror_b173.rs -> crates/api/src/chain_off/governance_ssot/governance_timelock_delay_meta_mirror_b173.rs
+RM crates/api/src/chain_off/governance_timelock_delay_ssot.rs -> crates/api/src/chain_off/governance_ssot/governance_timelock_delay_ssot.rs
+RM crates/api/src/chain_off/governance_timelock_governor_admin_ssot.rs -> crates/api/src/chain_off/governance_ssot/governance_timelock_governor_admin_ssot.rs
+RM crates/api/src/chain_off/governance_view_params_ssot.rs -> crates/api/src/chain_off/governance_ssot/governance_view_params_ssot.rs
+ D crates/api/src/chain_off/guides.rs
+ D crates/api/src/chain_off/itineraries.rs
+ D crates/api/src/chain_off/me.rs
+ M crates/api/src/chain_off/messages.rs
+ M crates/api/src/chain_off/mod.rs
+ D crates/api/src/chain_off/orders.rs
+ D crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs
+ D crates/api/src/chain_off/orders_flow/dispute_bilateral_rating.rs
+ M crates/api/src/chain_off/pagination.rs
+ M crates/api/src/chain_off/persistence_gate.rs
+ D crates/api/src/chain_off/reconcile.rs
+ M crates/api/src/chain_off/replay_orders_projection.rs
+ D crates/api/src/chain_off/reviews.rs
+ M crates/api/src/chain_off/tests_disputes.rs
+ D crates/api/src/chain_off/tests_events_itinerary.rs
+ M crates/api/src/chain_off/tests_evidence_messages_list_db_ssot.rs
+ D crates/api/src/chain_off/tests_guides_me_orders.rs
+ M crates/api/src/chain_off/tests_reviews_evidence.rs
+ M crates/api/src/db/auth_email_tokens.rs
+ D crates/api/src/db/community.rs
+ M crates/api/src/db/community_penalties.rs
+ M crates/api/src/db/correction_executor_audit.rs
+ D crates/api/src/db/disputes.rs
+ M crates/api/src/db/economic_aggregate.rs
+ D crates/api/src/db/event_log.rs
+ M crates/api/src/db/fee_router_events.rs
+ D crates/api/src/db/governance_proposals_projection.rs
+ M crates/api/src/db/guides.rs
+ D crates/api/src/db/investor_distribution.rs
+ M crates/api/src/db/investor_lock.rs
+ D crates/api/src/db/investor_share.rs
+ M crates/api/src/db/investor_stake.rs
+ M crates/api/src/db/jobs_scheduler_config.rs
+ M crates/api/src/db/me_stats.rs
+ M crates/api/src/db/mod.rs
+ M crates/api/src/db/multi_table_chain_observability.rs
+ D crates/api/src/db/onboarding.rs
+ M crates/api/src/db/onboarding_fee_paid_events.rs
+ D crates/api/src/db/orders.rs
+ D crates/api/src/db/orders_projection.rs
+ M crates/api/src/db/p5_country_ledger.rs
+ D crates/api/src/db/reconciliation_reports.rs
+ M crates/api/src/db/region_snapshot.rs
+ M crates/api/src/db/region_vault_events.rs
+ M crates/api/src/db/revenue_pipeline_bundle_cross_snapshot_obs.rs
+ M crates/api/src/db/revenue_pipeline_cross_snapshot_history_trend_obs.rs
+ M crates/api/src/db/revenue_pipeline_freshness_drift_suspect_obs.rs
+ M crates/api/src/db/revenue_pipeline_latest_persist_freshness_obs.rs
+ M crates/api/src/db/revenue_pipeline_log_count_chain_vs_db_bundle_obs.rs
+ M crates/api/src/db/revenue_pipeline_per_leg_projection_max_block_spread_obs.rs
+ M crates/api/src/db/revenue_pipeline_spread_dual_axis_dominance_concordance_obs.rs
+ D crates/api/src/db/revenue_pipeline_spread_dual_slack_triangulation_obs.rs
+ M crates/api/src/db/revenue_pipeline_spread_stratified_obs.rs
+ M crates/api/src/db/revenue_pipeline_spread_triangulation_concordance_bundle_freshness_suspect_obs.rs
+ M crates/api/src/db/revenue_pipeline_spread_vs_event_log_tail_obs.rs
+ M crates/api/src/db/revenue_pipeline_spread_vs_union_indexer_gap_obs.rs
+ M crates/api/src/db/revenue_pipeline_union_max_checkpoint_vs_event_log_tail_bundle_obs.rs
+ M crates/api/src/db/revenue_pipeline_union_max_projection_block_vs_indexer_checkpoint_obs.rs
+ M crates/api/src/db/revenue_pipeline_union_max_vs_event_log_max_block_tail_coverage_obs.rs
+ M crates/api/src/db/reviews.rs
+ M crates/api/src/db/stake_lock_projection_block_lag_obs.rs
+ D crates/api/src/db/trust_growth.rs
+ D crates/api/src/db/users_sessions.rs
+ M crates/api/src/idempotency_http_contract_tests.rs
+ M crates/api/src/jsonrpc_mock_server.rs
+ M crates/api/src/main.rs
+ M crates/api/src/middleware/auth_pause_metrics/mod.rs
+ D crates/api/src/middleware/auth_pause_metrics/tests.rs
+ M crates/api/src/middleware/mod.rs
+ M crates/api/src/middleware/onboarding_write_rate_limit.rs
+ D crates/api/src/middleware/rate_limit.rs
+ M crates/api/src/middleware/timeout_cors.rs
+ M crates/api/src/onboarding_counters.rs
+ D crates/api/src/routes/admin/admin_onboarding.rs
+ M crates/api/src/routes/admin/mod.rs
+ D crates/api/src/routes/admin/tests.rs
+ M crates/api/src/routes/admin/trust_growth_obs.rs
+ M crates/api/src/routes/admin_cross_check.rs
+ M crates/api/src/routes/admin_read_contract_contract_tests.rs
+ M crates/api/src/routes/auth.rs
+ D crates/api/src/routes/auth_register_login_logout_db_api_tests.rs
+ M crates/api/src/routes/auth_session_contract_b446.rs
+ D crates/api/src/routes/community/common.rs
+ D crates/api/src/routes/community/community_feed_like_collect_db_api_tests.rs
+ D crates/api/src/routes/community/community_report_me_posts_db_api_tests.rs
+ D crates/api/src/routes/community/dm_social.rs
+ D crates/api/src/routes/community/feedback_reports.rs
+ D crates/api/src/routes/community/media_upload.rs
+ M crates/api/src/routes/community/mod.rs
+ D crates/api/src/routes/community/posts.rs
+ M crates/api/src/routes/community/router.rs
+ M crates/api/src/routes/community/tests.rs
+ M crates/api/src/routes/community/tests_create_post_commerce_db.rs
+ M crates/api/src/routes/country_ledger_jurisdiction.rs
+ D crates/api/src/routes/did_rank.rs
+ M crates/api/src/routes/discover.rs
+ D crates/api/src/routes/disputes.rs
+ M crates/api/src/routes/evidence.rs
+ D crates/api/src/routes/f031_f032_f033_app_http_db_api_tests.rs
+ M crates/api/src/routes/governance/doc_params.rs
+ M crates/api/src/routes/governance/fee_pool_aggregate.rs
+ M crates/api/src/routes/governance/governance_pool_meta_alignment_b177.rs
+ M crates/api/src/routes/governance/governance_reads.rs
+ M crates/api/src/routes/governance/mod.rs
+ M crates/api/src/routes/governance/pool_chain.rs
+ D crates/api/src/routes/governance_country_ledger.rs
+ M crates/api/src/routes/governance_delegate.rs
+ M crates/api/src/routes/governance_doc_reference.rs
+ M crates/api/src/routes/governance_investor_share.rs
+ D crates/api/src/routes/governance_proposals.rs
+ M crates/api/src/routes/governance_read_contract_contract_tests.rs
+ D crates/api/src/routes/governance_voting_power.rs
+ M crates/api/src/routes/guides.rs
+ D crates/api/src/routes/guides_disputes_db_api_tests.rs
+ D crates/api/src/routes/health_meta/handlers.rs
+ D crates/api/src/routes/health_meta/meta_contract_keys.rs
+ M crates/api/src/routes/health_meta/meta_helpers.rs
+ M crates/api/src/routes/health_meta/mod.rs
+ M crates/api/src/routes/health_meta/pause_chain.rs
+ D crates/api/src/routes/health_meta/tests.rs
+ M crates/api/src/routes/intents.rs
+ D crates/api/src/routes/internal/common.rs
+ D crates/api/src/routes/internal/community.rs
+ M crates/api/src/routes/internal/indexer/mod.rs
+ M crates/api/src/routes/internal/indexer/reorg_execute.rs
+ M crates/api/src/routes/internal/indexer/reorg_rewind.rs
+ M crates/api/src/routes/internal/indexer/tick.rs
+ M crates/api/src/routes/internal/messages.rs
+ M crates/api/src/routes/internal/mod.rs
+ M crates/api/src/routes/internal/observability.rs
+ M crates/api/src/routes/internal/observability_shell.rs
+ D crates/api/src/routes/internal/onboarding.rs
+ M crates/api/src/routes/internal/reconcile/body.rs
+ M crates/api/src/routes/internal/reconcile/collectors.rs
+ M crates/api/src/routes/internal/reconcile/indexer_reconcile.rs
+ M crates/api/src/routes/internal/reconcile/mod.rs
+ D crates/api/src/routes/internal/reconcile_gates.rs
+ D crates/api/src/routes/internal/revenue_e2e_run_status.rs
+ M crates/api/src/routes/internal/tests/mod.rs
+ D crates/api/src/routes/internal/tests/suite_early.rs
+ D crates/api/src/routes/internal/tests/suite_late.rs
+ M crates/api/src/routes/internal/tests/support.rs
+ D crates/api/src/routes/internal_indexer_admin_db_api_tests.rs
+ D crates/api/src/routes/investor_distribution.rs
+ M crates/api/src/routes/itineraries.rs
+ D crates/api/src/routes/market_subsite.rs
+ D crates/api/src/routes/market_subsite_catalog_db_api_tests.rs
+ D crates/api/src/routes/me.rs
+ D crates/api/src/routes/me_market_bookmarks_db_api_tests.rs
+ D crates/api/src/routes/me_wallet_verify_db_api_tests.rs
+ D crates/api/src/routes/messages.rs
+ D crates/api/src/routes/messages_db_api_tests.rs
+ M crates/api/src/routes/mod.rs
+ M crates/api/src/routes/onboarding/mod.rs
+ D crates/api/src/routes/onboarding_app_stack_db_api_tests.rs
+ M crates/api/src/routes/orders/mod.rs
+ M crates/api/src/routes/orders/mutations.rs
+ M crates/api/src/routes/orders/reviews.rs
+ M crates/api/src/routes/orders/tests/apply_event_log_fields_tests.rs
+ M crates/api/src/routes/orders/tests/concurrent_review_submit_negative.rs
+ M crates/api/src/routes/orders/tests/duplicate_review_submit_negative.rs
+ M crates/api/src/routes/orders/tests/mod.rs
+ D crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests.rs
+ D crates/api/src/routes/orders/tests/orders_create_list_set_escrow_address_db_api_tests.rs
+ D crates/api/src/routes/orders/tests/review_json_contract_evolution_b451.rs
+ M crates/api/src/routes/orders/tests/review_submit_db_pool_idempotent_contract.rs
+ M crates/api/src/routes/orders/tests/review_weight_dual_path_parity_b447.rs
+ D crates/api/src/routes/orders/tests/review_weight_json_contract_b449.rs
+ D crates/api/src/routes/orders/tests/suite.rs
+ M crates/api/src/routes/read_contract_route_guard.rs
+ M crates/api/src/routes/traveltrust_page.rs
+ M crates/api/src/routes/trust_growth.rs
+ M crates/api/src/schedule_engine.rs
+ M crates/api/src/ssot.rs
+ M crates/api/src/startup/hydrate.rs
+ M crates/api/src/startup/ingest.rs
+ M crates/api/src/startup/mod.rs
+ M crates/api/src/startup/tests.rs
+ D crates/api/src/state.rs
+ D crates/api/src/stripe_onboarding.rs
+ M crates/api/src/test_auth_mail_env_mutex.rs
+ M crates/api/src/trust_growth_autopilot.rs
+ M crates/core/Cargo.toml
+ M crates/core/src/fee_route_country.rs
+ M crates/core/src/preset_cities.rs
+ M crates/core/src/product_countries.rs
+ M data/indexer_audit.jsonl
+ M "docs/00-\346\226\207\346\241\243\347\264\242\345\274\225.md"
+ M "docs/AI\344\273\273\345\212\241\345\215\241\347\264\242\345\274\225.from-stash.md"
+ M "docs/AI\344\273\273\345\212\241\345\215\241\347\264\242\345\274\225.md"
+ M "docs/AI\345\215\217\344\275\234\350\257\235\346\234\257-\345\207\217\350\264\237\344\270\216\350\276\271\347\225\214.md"
+ M docs/README.md
+ M docs/go-live-checklist.md
+ M "docs/handbook/00-\346\211\213\345\206\214\346\200\273\350\247\210\344\270\216\347\274\226\345\210\266\350\247\204\350\214\203.md"
+ M docs/handbook/README.md
+ M docs/handbook/corpus/README.md
+ M "docs/handbook/corpus/REG-01-\344\270\232\345\212\241\344\270\216\347\263\273\347\273\237\346\200\273\350\247\210.md"
+ M "docs/handbook/corpus/REG-02-\346\236\266\346\236\204\345\210\206\345\261\202\344\270\216\351\242\206\345\237\237.md"
+ M "docs/handbook/corpus/REG-03-\344\270\232\345\212\241\346\265\201\347\250\213\344\270\216\351\243\216\346\216\247.md"
+ M "docs/handbook/corpus/REG-04-API\345\217\231\344\272\213.md"
+ M docs/handbook/corpus/SPEC-MIGRATION-STATUS.md
+ M "docs/handbook/engineering/00-\347\263\273\347\273\237\345\205\250\345\261\200\345\234\260\345\233\276.md"
+ M "docs/handbook/engineering/01-\346\212\200\346\234\257\347\234\237\345\200\274\346\240\210-93-95-96-97\344\270\216\344\273\243\347\240\201\345\257\271\347\205\247.md"
+ M "docs/handbook/engineering/02-\347\224\237\344\272\247\347\272\247\346\226\207\346\241\243\347\272\246\346\235\237\344\270\216\345\220\210\345\205\245\351\227\250\347\246\201.md"
+ M "docs/handbook/engineering/03-\347\263\273\347\273\237\346\236\266\346\236\204\344\270\216\344\273\223\345\272\223\351\252\250\346\236\266.md"
+ M "docs/handbook/engineering/04-HTTP\344\270\216\350\267\257\347\224\261\345\245\221\347\272\246\345\257\274\350\257\273.md"
+ M "docs/handbook/engineering/05-\346\234\254\345\234\260\347\216\257\345\242\203\344\270\216\345\270\270\347\224\250\351\227\250\347\246\201\351\200\237\346\237\245.md"
+ M "docs/handbook/engineering/06-\345\267\245\347\250\213\346\250\241\345\235\227\346\212\200\346\234\257\346\226\207\346\241\243\347\274\226\345\210\266\345\245\221\347\272\246\344\270\216\351\252\214\350\257\201\351\227\255\347\216\257.md"
+ M "docs/handbook/engineering/07-\346\236\266\346\236\204\345\206\263\347\255\226\350\256\260\345\275\225ADR\350\247\204\350\214\203.md"
+ M "docs/handbook/engineering/08-\346\226\207\346\241\243\344\270\216spec\350\277\201\347\247\273\345\217\260\350\264\246.md"
+ M "docs/handbook/engineering/09-\346\226\207\346\241\243\350\277\201\347\247\273\350\246\206\347\233\226\345\256\241\350\256\241\346\212\245\345\221\212.md"
+ M "docs/handbook/engineering/10-A-\350\256\244\350\257\201\346\234\272\345\210\266.md"
+ M "docs/handbook/engineering/20-B-\350\256\242\345\215\225\346\234\272\345\210\266.md"
+ M "docs/handbook/engineering/21-B-\345\270\202\345\234\272\344\270\216\346\211\230\347\256\241\346\234\272\345\210\266.md"
+ M "docs/handbook/engineering/22-\346\250\252\345\210\207-\347\260\207\347\272\247verified\350\257\201\346\215\256\346\250\241\346\235\277.md"
+ M "docs/handbook/engineering/23-\346\250\252\345\210\207-07\345\274\200\345\217\221\346\265\201\347\250\213\345\257\274\350\257\273.md"
+ M "docs/handbook/engineering/24-\346\250\252\345\210\207-\345\211\215\347\253\257\344\270\216UI\345\256\252\346\263\225\345\257\274\350\257\273.md"
+ M "docs/handbook/engineering/25-\346\250\252\345\210\207-\345\217\221\347\211\210\345\244\226\351\252\214\345\256\241\350\256\241\344\270\216CI\347\234\237\346\272\220\345\217\212eng\346\233\277\344\273\243spec\350\267\257\345\276\204.md"
+ M "docs/handbook/engineering/30-C-\346\211\247\350\241\214\345\231\250\350\260\203\345\272\246\346\234\272\345\210\266.md"
+ M "docs/handbook/engineering/31-C-\346\262\273\347\220\206\344\270\216\350\264\250\346\212\274\345\217\252\350\257\273\345\257\274\350\257\273.md"
+ M "docs/handbook/engineering/32-\346\250\252\345\210\207-Wave\344\270\216\351\230\266\346\256\265\344\275\223\347\263\273\345\257\274\350\257\273.md"
+ M "docs/handbook/engineering/40-D-Admin\346\234\272\345\210\266.md"
+ M "docs/handbook/engineering/41-D-\347\264\242\345\274\225\344\270\216\345\257\271\350\264\246\345\257\274\350\257\273.md"
+ M "docs/handbook/engineering/42-D-Admin\345\256\241\350\256\241\345\220\210\350\247\204\344\270\216\345\256\241\346\211\271.md"
+ M "docs/handbook/engineering/50-\351\223\276\344\270\212\344\270\216ABI\345\257\274\350\257\273.md"
+ M docs/handbook/engineering/EVIDENCE-04-api-cluster-verified.md
+ M docs/handbook/engineering/EVIDENCE-07-devflow-cluster-verified.md
+ M docs/handbook/engineering/EVIDENCE-10-A-auth-cluster-verified.md
+ M docs/handbook/engineering/EVIDENCE-100-330-phase-cluster-verified.md
+ M docs/handbook/engineering/EVIDENCE-110-reconcile-cluster-verified.md
+ M docs/handbook/engineering/EVIDENCE-14-chain-abi-cluster-verified.md
+ M docs/handbook/engineering/EVIDENCE-20-B-orders-cluster-verified.md
+ M docs/handbook/engineering/EVIDENCE-30-C-async-cluster-verified.md
+ M docs/handbook/engineering/EVIDENCE-70-admin-cluster-verified.md
+ M docs/handbook/engineering/EVIDENCE-93-c-gov-cluster-verified.md
+ M docs/handbook/engineering/EVIDENCE-94-market-cluster-verified.md
+ M docs/handbook/engineering/README.md
+ M "docs/handbook/engineering/_TEMPLATE-\345\267\245\347\250\213\346\250\241\345\235\227\347\257\207.md"
+ M docs/handbook/engineering/adr/README.md
+ M "docs/handbook/learn/00-\345\255\246\344\271\240\350\267\257\345\276\204\346\200\273\350\247\210.md"
+ M "docs/handbook/learn/01-\344\273\223\345\272\223\345\234\260\345\233\276\344\270\216\351\246\226\346\254\241\345\205\213\351\232\206.md"
+ M docs/handbook/learn/README.md
+ M "docs/handbook/product-manager/01-\344\272\247\345\223\201\350\276\271\347\225\214\344\270\216\351\252\214\346\224\266\345\257\271\351\275\220\350\257\255\350\250\200.md"
+ M docs/handbook/product-manager/README.md
+ M docs/runbook/93-matrix-batch-tracker.md
+ M docs/runbook/95-batch-f001-f005-four-verify-20260422.md
+ M docs/runbook/95-batch-f006-f010-four-verify-20260422.md
+ M docs/runbook/95-batch-f021-f025-four-verify-20260422.md
+ M docs/runbook/COMMUNITY-ME-ENTERPRISE-AUDIT.md
+ M docs/runbook/Epic-A-governance-execution-ux-ladder.md
+ M docs/runbook/Epic-C-admin-cross-check-drift-ui-ladder.md
+ M docs/runbook/Epic-F-e2e-three-pack-ladder.md
+ M docs/runbook/GO_95_20260423_section8_2_f027_f028_f033_playwright_request.md
+ M docs/runbook/PROFILE-AVATAR-OBJECT-STORAGE.md
+ M docs/runbook/README.md
+ M docs/runbook/TT-93-guide-schedule-next-001.md
+ M docs/runbook/TT-9600-96-HUB-LOCAL-VERIFICATION-PACK.md
+ M docs/runbook/TT-9618-onboarding-local-testnet.md
+ M docs/runbook/TT-9621-master-order-96-backend-db-chain-frontend.md
+ M docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md
+ M docs/runbook/TT-ALIGN-DOCS-CODE-MOTHER-AUDIT-2026-04-19.md
+ M docs/runbook/TT-B320-NEXT-PUBLIC-ENV-DIFF-SPEC.md
+ M docs/runbook/TT-B322-CI-TSC-VITEST-BUDGET-DOC.md
+ M docs/runbook/TT-B325-EVIDENCE-MANIFEST-P15-SIGNOFF-MAP.md
+ M docs/runbook/TT-B383-FEE-ROUTER-PLATFORM-FEE-ROUTED-LOG-COUNT-CHAIN-VS-DB-VERIFY-001.md
+ M docs/runbook/TT-B388-REVENUE-PIPELINE-CROSS-SNAPSHOT-HISTORY-TREND-OBS-001.md
+ M docs/runbook/TT-B389-REVENUE-PIPELINE-LATEST-PERSIST-FRESHNESS-OBS-001.md
+ M docs/runbook/TT-B398-REVENUE-PIPELINE-SPREAD-DUAL-SLACK-TRIANGULATION-OBS-001.md
+ M docs/runbook/TT-B404-REVENUE-E2E-RUN-STATUS-L1-001.md
+ M docs/runbook/TT-B405-REAL-ORDER-DRIVEN-REVENUE-E2E-L2-001.md
+ M docs/runbook/TT-B409-ORDER-STATE-MACHINE-CHAIN-OFF-53-001.md
+ M docs/runbook/TT-B447-REVIEW-WEIGHT-BREAKDOWN-DB-POOL-MEMORY-PARITY-001.md
+ M docs/runbook/TT-B448-REVIEW-WEIGHT-BOUNDARY-JSON-CONTRACT-001.md
+ M docs/runbook/TT-B449-REVIEW-JSON-CONTRACT-VERSION-STABILITY-COMPAT-001.md
+ M docs/runbook/TT-B476-PG-POOL-RUNTIME-OBS-BACKOFF-001.md
+ M docs/runbook/TT-B480-PROD-FAULT-SLO-ACCEPTANCE-001.md
+ M docs/runbook/TT-B482-FINANCIAL-CORRECTNESS-ACCEPTANCE-001.md
+ M docs/runbook/TT-B483-AUDITABILITY-FORENSICS-ACCEPTANCE-001.md
+ M docs/runbook/TT-B484-GOVERNANCE-PROTOCOL-CONSISTENCY-ACCEPTANCE-001.md
+ M docs/runbook/TT-DOC-ENTERPRISE-AUDIT-CHECKLIST-001.md
+ M docs/runbook/TT-LOCAL-CI-DELIVERY-GATE-001.md
+ M docs/runbook/TT-SPEC-TO-HANDBOOK-FULL-REPLACEMENT-CHECKLIST.md
+ M docs/runbook/TT-TOURIST-JOURNEY-P01-AUTH-MARKET-001.md
+ M docs/runbook/TT-local-user-journey-full-audit.md
+ M docs/runbook/ai-template-read-only-api.md
+ M docs/runbook/evidence-gate.md
+ M docs/runbook/go-live-checklist.md
+ M docs/runbook/next-batch-gap-remediation-implementation-plan.md
+ M docs/solo-dev-rhythm.md
+ M docs/spec-path-dependency-migration-inventory.md
+ M "docs/spec/00-docs\346\225\264\347\220\206\346\226\271\346\241\210-\345\210\240\351\231\244\345\220\210\345\271\266\344\270\216\347\264\242\345\274\225\344\274\230\345\214\226.md"
+ M "docs/spec/00-\346\226\207\346\241\243\346\225\264\347\220\206\346\270\205\345\215\225-\345\210\206\347\261\273\344\270\216\351\207\215\346\216\222.md"
+ M "docs/spec/00-\346\226\207\346\241\243\347\264\242\345\274\225.md"
+ M "docs/spec/01-\346\200\273\345\272\223\346\200\273\350\247\210.md"
+ M "docs/spec/02-\346\236\266\346\236\204\350\256\276\350\256\241.md"
+ M "docs/spec/03-\344\270\232\345\212\241\346\265\201\347\250\213\344\270\216\351\243\216\346\216\247.md"
+ M "docs/spec/04-\345\220\216\347\253\257\344\270\216API.md"
+ M "docs/spec/04-\351\231\204\345\275\225-did-rank\345\257\271\346\216\245\350\257\264\346\230\216.md"
+ M "docs/spec/04-\351\231\204\345\275\225-\345\211\215\347\253\257\344\270\216\345\220\216\347\253\257\346\225\260\346\215\256\350\201\214\350\264\243\345\217\212\344\274\201\344\270\232\347\272\247\347\254\246\345\220\210\346\200\247.md"
+ M "docs/spec/04-\351\231\204\345\275\225-\345\225\206\345\256\266\344\270\273\347\220\206\344\272\272\345\207\206\345\205\245\350\264\271HTTP\345\245\221\347\272\246\350\215\211\346\241\210-\351\205\21596-18.md"
+ M "docs/spec/07-\345\274\200\345\217\221\346\265\201\347\250\213\344\270\216\351\241\272\345\272\217.md"
+ M "docs/spec/08-0-\347\263\273\345\210\227\345\256\241\350\256\241-\345\221\275\345\220\215\346\216\222\345\272\217\344\270\216\345\220\210\345\271\266\347\230\246\350\272\253.md"
+ M "docs/spec/08-3-\345\217\202\346\225\260\344\270\216\351\227\250\347\246\201\350\241\250.md"
+ M "docs/spec/08-4-\351\231\204\345\275\225-\346\224\266\347\233\212\346\265\201\351\227\255\347\216\257\345\233\276-FeeRouter-Target.md"
+ M "docs/spec/08-5-CI\344\270\216\344\270\200\350\207\264\346\200\247\350\220\275\345\234\260\350\257\264\346\230\216.md"
+ M "docs/spec/110-\351\230\266\346\256\265\345\274\200\345\217\221\351\223\276\344\270\212\347\264\242\345\274\225\345\231\250\344\270\216\344\272\213\344\273\266\345\220\214\346\255\245\345\231\250.md"
+ M "docs/spec/130-\351\230\266\346\256\265\345\274\200\345\217\221\346\265\213\350\257\225\344\275\223\347\263\273.md"
+ M "docs/spec/14-\345\220\210\347\272\246-API-ABI-\345\211\215\345\220\216\347\253\257\345\257\271\351\275\220.md"
+ M "docs/spec/14-\351\231\204\345\275\225-API\344\270\216ABI\345\257\271\351\275\220\346\243\200\346\237\245\346\212\245\345\221\212.md"
+ M "docs/spec/160-\351\230\266\346\256\265\345\274\200\345\217\221\345\206\205\345\256\271\344\270\216\347\244\276\345\214\272\347\263\273\347\273\237.md"
+ M "docs/spec/24-docs\344\274\201\344\270\232\347\272\247\346\225\264\347\220\206\347\273\223\350\256\272.md"
+ M "docs/spec/250-\351\230\266\346\256\265Job-Queue-\345\274\202\346\255\245\344\273\273\345\212\241\347\263\273\347\273\237.md"
+ M "docs/spec/26-docs\344\274\201\344\270\232\347\272\247\346\226\207\346\241\243\345\256\241\350\256\241\346\212\245\345\221\212.md"
+ M docs/spec/27-archived/07-6-4-snapshot-20260404-tail.md
+ M "docs/spec/27-archived/27-P10-02-\345\215\201\344\270\211\345\213\276\351\200\211\350\241\250.md"
+ M "docs/spec/27-archived/27-P34-\345\256\236\347\216\260\350\256\260\345\275\225.md"
+ M "docs/spec/27-archived/27-P42-\345\256\236\347\216\260\350\256\260\345\275\225.md"
+ M "docs/spec/27-archived/27-P48-\345\256\236\347\216\260\350\256\260\345\275\225.md"
+ M "docs/spec/27-archived/27-P8-\345\256\236\347\216\260\350\256\260\345\275\225.md"
+ M "docs/spec/30-DID\346\216\222\350\241\214\346\246\234-\351\241\265\351\235\242\350\247\204\350\214\203.md"
+ M "docs/spec/31-TT\347\244\276\345\214\272-\344\274\201\344\270\232\347\272\247UI\346\243\200\346\237\245-\346\234\252\345\256\214\346\210\220\344\270\216\345\276\205\344\274\230\345\214\226.md"
+ M "docs/spec/31-TT\347\244\276\345\214\272\351\241\265\351\235\242\350\256\276\350\256\241.md"
+ M "docs/spec/31-\351\231\204\345\275\225-Web3\344\272\244\346\265\201\347\244\276\345\214\272\345\212\237\350\203\275\346\211\251\345\261\225.md"
+ M "docs/spec/330-\351\230\266\346\256\265\346\225\260\346\215\256\350\277\201\347\247\273\344\270\216Schema\346\274\224\350\277\233\347\263\273\347\273\237.md"
+ M "docs/spec/34-\346\225\260\346\215\256\347\261\273\345\236\213\345\257\271\351\275\220\350\241\250-Rust\344\270\216TypeScript.md"
+ M "docs/spec/36-\345\214\272\345\235\227\351\223\276\344\272\213\344\273\266\344\270\216\347\212\266\346\200\201\346\234\272\345\256\214\346\225\264\346\226\207\346\241\243.md"
+ M "docs/spec/37-\346\267\261\345\272\246\345\244\232\347\273\264\345\272\246\345\256\241\350\256\241\345\256\214\346\210\220\346\212\245\345\221\212.md"
+ M "docs/spec/39-\345\211\215\345\220\216\347\253\257\346\225\260\346\215\256\345\245\221\347\272\246\351\252\214\350\257\201\346\226\207\346\241\243.md"
+ M "docs/spec/43-46-\351\230\266\346\256\265\346\212\200\346\234\257\346\226\207\346\241\243\346\225\264\345\220\210.md"
+ M "docs/spec/43-\351\230\266\346\256\265-\345\244\232\347\273\264\345\272\246\346\243\200\346\237\245\346\212\245\345\221\212.md"
+ M "docs/spec/43-\351\230\266\346\256\265-\351\252\214\346\224\266\344\270\216\346\234\252\345\256\214\346\210\220\346\270\205\345\215\225.md"
+ M "docs/spec/46-\344\274\201\344\270\232\347\272\247\345\244\215\346\237\245\346\212\245\345\221\212.md"
+ M "docs/spec/46-\345\211\215\347\253\257\345\210\206\345\261\202\350\247\204\345\210\222\344\270\216\344\276\235\350\265\226\350\247\204\350\214\203.md"
+ M "docs/spec/46-\345\211\215\347\253\257\346\250\241\345\235\227\345\214\226\347\216\260\347\212\266\344\270\216\345\217\257\346\213\206\345\210\206\351\241\271.md"
+ M "docs/spec/46-\345\211\215\347\253\257\350\247\204\350\214\203\344\270\216\346\270\205\345\215\225-\345\220\210\345\271\266\347\211\210.md"
+ M "docs/spec/46-\345\276\205\344\274\230\345\214\226\344\270\216\345\217\257\346\213\206\345\210\206\346\270\205\345\215\225.md"
+ M "docs/spec/47-0\350\207\26346\351\230\266\346\256\265\346\243\200\346\237\245\344\270\216\345\220\216\347\253\257\346\250\241\345\235\227\345\214\226\345\273\272\350\256\256.md"
+ M "docs/spec/48-\345\220\216\347\253\257\346\250\241\345\235\227\345\214\226\346\213\206\345\210\206\344\270\216\350\220\275\345\234\260\346\270\205\345\215\225.md"
+ M "docs/spec/48-\351\230\266\346\256\265\346\267\261\345\272\246\345\244\232\347\273\264\345\272\246\346\243\200\346\237\245\346\212\245\345\221\212.md"
+ M "docs/spec/49-\351\230\266\346\256\265\344\274\201\344\270\232\347\272\247\345\256\241\350\256\241\344\270\216\346\243\200\346\237\245\346\212\245\345\221\212.md"
+ M "docs/spec/49-\351\230\266\346\256\265\345\273\272\350\256\256-\344\270\213\344\270\200\351\230\266\346\256\265\346\226\271\345\220\221\344\270\216\344\274\230\345\205\210\347\272\247.md"
+ M "docs/spec/50-\351\230\266\346\256\265-\345\220\216\347\273\255\344\274\230\345\214\226\344\270\216\345\274\200\345\217\221\346\270\205\345\215\225.md"
+ M "docs/spec/51-\351\230\266\346\256\265\345\274\200\345\217\221\346\212\200\346\234\257\346\226\207\346\241\243.md"
+ M "docs/spec/52-\351\230\266\346\256\265\345\274\200\345\217\221\346\212\200\346\234\257\346\226\207\346\241\243.md"
+ M "docs/spec/53-API-ABI-\346\216\245\345\217\243\347\253\257\345\217\243\346\240\270\345\257\271\346\270\205\345\215\225.md"
+ M "docs/spec/53-E2E\347\216\257\345\242\203\344\270\216\346\211\247\350\241\214\350\257\264\346\230\216.md"
+ M "docs/spec/53-\351\230\266\346\256\265\345\274\200\345\217\221\346\212\200\346\234\257\346\226\207\346\241\243.md"
+ M "docs/spec/55-\351\230\266\346\256\265-\346\225\260\346\215\256\345\220\214\346\255\245\344\270\216\346\225\260\346\215\256\345\272\223\345\212\237\350\203\275\345\220\214\346\255\245.md"
+ M "docs/spec/63-\351\241\271\347\233\256\344\274\230\345\214\226\344\270\216\351\227\256\351\242\230\346\270\205\345\215\225.md"
+ M "docs/spec/64-\347\224\263\350\257\267\345\220\221\345\257\274-\350\241\214\344\270\232\346\240\207\345\207\206\344\270\216DID\346\243\200\346\237\245\346\270\205\345\215\225.md"
+ M "docs/spec/65-\344\274\201\344\270\232\347\272\247\345\256\241\350\256\241-\345\211\251\344\275\231\351\227\256\351\242\230\344\270\216\347\274\272\345\217\243-20250228.md"
+ M "docs/spec/66-\346\267\261\345\272\246\346\243\200\346\237\245-\347\274\272\345\217\243\344\270\216\351\201\227\347\225\231\351\227\256\351\242\230.md"
+ M "docs/spec/70-\347\256\241\347\220\206\345\221\230\347\263\273\347\273\237\345\274\200\345\217\221\346\226\207\346\241\243.md"
+ M "docs/spec/81-\347\273\217\346\265\216\346\250\241\345\236\213-\345\220\221\345\257\274\350\264\250\346\212\274\344\270\216\350\256\242\345\215\225\346\212\274\351\207\221.md"
+ M "docs/spec/84-\347\254\254\344\270\200\351\230\266\346\256\26510\345\233\275Country-Pool\345\217\221\350\241\214\345\217\202\346\225\260\346\200\273\350\241\250.md"
+ M "docs/spec/87-TravelTrust-\350\247\222\350\211\262\344\275\223\347\263\273\346\212\200\346\234\257\346\226\207\346\241\243-\350\236\215\345\220\210\346\236\266\346\236\204\347\211\210.md"
+ M "docs/spec/93-\345\205\250\347\253\231\345\212\237\350\203\275\351\252\214\350\257\201\347\237\251\351\230\265-\345\237\237\345\210\253\345\233\236\345\275\222\346\270\205\345\215\225.md"
+ M "docs/spec/95-\345\205\250\351\223\276\350\267\257\347\224\237\344\272\247\345\260\261\347\273\252\346\243\200\346\237\245\346\270\205\345\215\225\344\270\216\345\256\214\346\210\220\345\272\246\347\237\251\351\230\265.md"
+ M "docs/spec/95-\351\231\204\345\275\225-Next-Scope-EXT.md"
+ M "docs/spec/96-01-\346\200\273\345\210\231\344\270\21695\350\276\271\347\225\214\345\222\214\346\211\247\350\241\214\351\241\272\345\272\217.md"
+ M "docs/spec/96-10-\351\205\215\347\275\256\347\201\260\345\272\246\344\270\216\347\211\271\346\200\247\345\274\200\345\205\263.md"
+ M "docs/spec/96-11-\345\217\221\345\270\203\347\255\276\345\255\227\344\270\216\345\233\236\345\275\222\351\227\250\347\246\201.md"
+ M "docs/spec/96-13-UI-UX-i18n-a11y-\346\200\247\350\203\275\350\265\260\346\237\245.md"
+ M "docs/spec/96-15-\346\267\261\345\272\246\345\244\232\347\273\264\345\272\246\346\243\200\346\237\245\344\270\216\345\256\241\350\256\241\344\275\223\347\263\273.md"
+ M "docs/spec/96-16-\345\205\250\351\241\265\351\235\242UI-UX\344\274\230\345\214\226\346\226\271\346\241\210\346\200\273\345\206\214.md"
+ M "docs/spec/96-17-\345\244\232\351\207\215\350\272\253\344\273\275\344\270\216\351\222\261\345\214\205\347\234\237\345\200\274.md"
+ M "docs/spec/96-18-\345\225\206\345\256\266\344\270\216\344\270\273\347\220\206\344\272\272\345\207\206\345\205\245\350\264\271\347\224\250\344\270\216\346\262\273\347\220\206\345\270\201\345\205\221\346\215\242\350\256\276\350\256\241.md"
+ M "docs/spec/96-18-\346\234\252\345\256\214\346\210\220\346\270\205\345\215\225\344\270\216\345\244\232\347\273\264\346\243\200\346\237\245.md"
+ M "docs/spec/96-20-\345\211\215\345\220\216\347\253\257\351\241\265\351\235\242\345\257\271\351\275\220\344\270\216UI\347\224\237\344\272\247\347\272\247\345\256\241\350\256\241\346\212\245\345\221\212.md"
+ M "docs/spec/96-\347\264\242\345\274\225-\345\205\250\351\223\276\350\267\257\345\244\226\347\224\237\344\272\247\351\252\214\346\224\266\345\210\206\345\206\214.md"
+ M "docs/spec/97-\347\231\273\345\275\225\346\211\276\345\233\236\345\257\206\347\240\201\351\222\261\345\214\205\346\200\201\344\274\201\344\270\232\347\272\247\345\256\241\350\256\241\346\270\205\345\215\225.md"
+ M "docs/spec/98-\344\273\245\344\273\243\347\240\201\344\270\272\347\234\237\346\272\220\347\232\204\346\226\207\346\241\243\344\275\223\347\263\273\344\270\216\346\227\247\346\226\207\346\241\243\346\233\277\344\273\243\350\267\257\347\272\277\345\233\276.md"
+ M "docs/spec/R-001-\345\205\250\347\253\231\345\233\236\345\275\222\346\212\245\345\221\212\346\250\241\346\235\277\344\270\216\346\261\207\346\200\273JSON\347\273\223\346\236\204.md"
+ M "docs/spec/R-002-\345\233\236\345\275\222\346\211\247\350\241\214\351\227\255\347\216\257\344\270\216\345\217\221\345\270\203\345\207\206\345\205\245.md"
+ M "docs/spec/R-003-Staging\351\246\226\346\254\241\345\256\214\346\225\264\345\233\236\345\275\222-A-B\345\237\237-\346\211\247\350\241\214Runbook.md"
+ M "docs/spec/code-maps/05-\350\241\245\345\205\205-\345\211\215\347\253\257\345\256\236\347\216\260\347\273\206\350\212\202\344\270\216\344\273\243\347\240\201\346\230\240\345\260\204-20260306.md"
+ M "docs/spec/code-maps/21-\350\241\245\345\205\205-UI3D\350\236\215\345\220\210\350\247\204\350\214\203\344\273\243\347\240\201\346\230\240\345\260\204\344\270\216\345\267\256\350\267\235-20260306.md"
+ M "docs/spec/code-maps/57-UI-UX\344\270\216\345\205\250\345\237\237\344\273\243\347\240\201\346\230\240\345\260\204-\344\274\201\344\270\232\347\272\247\346\243\200\346\237\245\346\270\205\345\215\225-20260306.md"
+ M "docs/spec/code-maps/62-UI-UX\345\211\215\347\253\257100%\344\273\243\347\240\201\346\230\240\345\260\204\346\200\273\350\241\250-20260306.md"
+ M "docs/spec/code-maps/62-\350\241\245\345\205\205-01-Market\350\267\257\347\224\261\351\200\220\346\226\207\344\273\266\344\273\243\347\240\201\346\230\240\345\260\204-20260306.md"
+ M "docs/spec/code-maps/62-\350\241\245\345\205\205-02-Community\350\267\257\347\224\261\351\200\220\346\226\207\344\273\266\344\273\243\347\240\201\346\230\240\345\260\204-20260306.md"
+ M "docs/spec/code-maps/62-\350\241\245\345\205\205-03-Escrow\350\267\257\347\224\261\351\200\220\346\226\207\344\273\266\344\273\243\347\240\201\346\230\240\345\260\204-20260306.md"
+ M "docs/spec/code-maps/62-\350\241\245\345\205\205-04-Auth\344\270\216Me\350\267\257\347\224\261\351\200\220\346\226\207\344\273\266\344\273\243\347\240\201\346\230\240\345\260\204-20260306.md"
+ M "docs/spec/code-maps/62-\350\241\245\345\205\205-05-\345\211\251\344\275\231\350\267\257\347\224\261\345\237\237\351\200\220\346\226\207\344\273\266\344\273\243\347\240\201\346\230\240\345\260\204-20260306.md"
+ M "docs/spec/docs-\346\226\207\346\241\243\345\205\250\346\226\271\351\235\242\344\274\201\344\270\232\347\272\247\345\256\241\350\256\241\346\212\245\345\221\212.md"
+ M "docs/spec/governance-token/02-\345\257\271\345\206\205\346\212\200\346\234\257\350\247\204\346\240\274-\350\215\211\346\241\210.md"
+ M docs/spec/run-93-95-96-97/README.md
+ M "docs/spec/\344\274\201\344\270\232\347\272\247\346\226\207\346\241\243\345\256\241\350\256\241\346\212\245\345\221\212-20250306.md"
+ M "docs/spec/\347\274\272\345\217\243\344\270\216\345\276\205\350\241\245-\345\256\230\346\226\271\346\200\273\350\241\250.md"
+ M docs/verification-evidence/B-094-resolution-fixtures-SSOT.md
+ M "docs/\344\273\273\345\212\241\346\257\215\350\241\250.md"
+ M "docs/\346\267\261\345\272\246\346\243\200\346\237\245\346\212\245\345\221\212-\345\244\232\347\273\264\345\272\246.md"
+ M "docs/\350\267\257\347\272\277\345\233\276-1\344\272\272\345\274\200\345\217\221\346\236\201\347\256\200\347\211\210.md"
+ M evidence/93-batch-admin-deep-audit/README.md
+ M evidence/GO_local_r002_verify/e2e_core_report.json
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/A-AVA-001/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/A-ENV-001/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-DSP-001/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-DSP-002/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-DSP-003/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-ESC-001/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-ESC-002/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-ESC-003/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-ESC-004/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-GDE-001/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-GDE-002/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-GDE-003/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-IDM-001/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-MKT-002/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-MKT-004/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-MKT-005/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-MKT-006/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-MKT-007/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-MKT-008/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-MKT-009/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-MKT-010/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-MKT-013/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-MSG-002/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-MSG-002C/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-ORD-004/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-ORD-005/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-ORD-006/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-TGR-001/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/B-TRN-003/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-ADM-003/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-COM-001/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-COM-001C/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-COM-002/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-COM-003/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-COM-008/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-COM-009/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-COM-010/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-COM-011/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-IDX-001/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-ITN-001/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-ITN-001B/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-ITN-002/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/D-ITN-003/notes.md
+ M evidence/GO_local_r002_verify/r002_iss007_prereport/report.json
+ M evidence/README.md
+ M frontend/.env.example
+ M frontend/.i18n-coverage.json
+ M frontend/.regional-matrix.json
+ M frontend/app/(home)/loading.tsx
+ M frontend/app/(home)/page.tsx
+ M frontend/app/admin/alerts/incidents/[id]/page.tsx
+ M frontend/app/admin/alerts/incidents/page.tsx
+ M frontend/app/admin/api-versions/page.tsx
+ M frontend/app/admin/approvals/[id]/page.tsx
+ M frontend/app/admin/approvals/page.tsx
+ M frontend/app/admin/audit/logs/[id]/page.tsx
+ M frontend/app/admin/audit/operations/page.tsx
+ M frontend/app/admin/audit/page.tsx
+ M frontend/app/admin/community/abuse-policy/page.tsx
+ M frontend/app/admin/community/appeals/page.tsx
+ M frontend/app/admin/community/appeals/review/page.tsx
+ M frontend/app/admin/community/comments/visibility/page.tsx
+ M frontend/app/admin/community/moderation/cases/page.tsx
+ M frontend/app/admin/community/penalties/page.tsx
+ M frontend/app/admin/community/policy-change-logs/page.tsx
+ M frontend/app/admin/community/ranking/snapshots/page.tsx
+ M frontend/app/admin/community/reports/page.tsx
+ M frontend/app/admin/community/risk-signals/page.tsx
+ M frontend/app/admin/compliance/requests/[requestId]/events/page.tsx
+ M frontend/app/admin/compliance/requests/[requestId]/update/page.tsx
+ M frontend/app/admin/compliance/requests/page.tsx
+ M frontend/app/admin/config/page.tsx
+ M frontend/app/admin/config/releases/[id]/page.tsx
+ M frontend/app/admin/config/releases/page.tsx
+ M frontend/app/admin/cross-check/page.c08-contract.test.tsx
+ M frontend/app/admin/cross-check/page.tsx
+ M frontend/app/admin/disputes/[id]/page.tsx
+ M frontend/app/admin/disputes/page.tsx
+ M frontend/app/admin/drift-summary/page.c08-contract.test.tsx
+ M frontend/app/admin/drift-summary/page.tsx
+ M frontend/app/admin/fee-router/page.tsx
+ M frontend/app/admin/finance-reconciliation/page.tsx
+ M frontend/app/admin/finance/page.tsx
+ M frontend/app/admin/flags/page.tsx
+ M frontend/app/admin/guides/[id]/page.tsx
+ M frontend/app/admin/guides/page.tsx
+ M frontend/app/admin/indexer/page.tsx
+ M frontend/app/admin/indexer/reconcile-reports/page.tsx
+ M frontend/app/admin/indexer/reconcile/[id]/page.tsx
+ M frontend/app/admin/internal-tools/audits/page.tsx
+ M frontend/app/admin/jobs/page.tsx
+ M frontend/app/admin/lifecycle/page.tsx
+ M frontend/app/admin/media/access-logs/page.tsx
+ M frontend/app/admin/media/signed-url-tokens/page.tsx
+ M frontend/app/admin/observability/page.tsx
+ M frontend/app/admin/orders/[id]/page.tsx
+ M frontend/app/admin/orders/page.tsx
+ M frontend/app/admin/policies/page.tsx
+ M frontend/app/admin/region-vault/page.tsx
+ M frontend/app/admin/reviews/[id]/page.tsx
+ M frontend/app/admin/reviews/page.tsx
+ M frontend/app/admin/scheduler/jobs/page.tsx
+ M frontend/app/admin/schema/page.tsx
+ M frontend/app/admin/secrets/metadata/page.tsx
+ M frontend/app/admin/tenants/scopes/page.tsx
+ M frontend/app/admin/trust-growth/page.tsx
+ M frontend/app/admin/users/[id]/page.tsx
+ M frontend/app/admin/users/page.tsx
+ M frontend/app/auth/login/page.tsx
+ M frontend/app/auth/register/RegisterGuideForm.tsx
+ M frontend/app/auth/register/RegisterPageBackdrop.tsx
+ M frontend/app/auth/register/page.tsx
+ M frontend/app/auth/register/registerBackgrounds.ts
+ M frontend/app/community/activity/loading.tsx
+ M frontend/app/community/activity/page.tsx
+ M frontend/app/community/error.tsx
+ M frontend/app/community/explore/loading.tsx
+ M frontend/app/community/explore/page.tsx
+ M frontend/app/community/feedback/loading.tsx
+ M frontend/app/community/feedback/page.tsx
+ M frontend/app/community/friends/loading.tsx
+ M frontend/app/community/friends/page.tsx
+ M frontend/app/community/loading.tsx
+ M frontend/app/community/me/collects/loading.tsx
+ M frontend/app/community/me/collects/page.tsx
+ M frontend/app/community/me/loading.tsx
+ M frontend/app/community/me/page.tsx
+ M frontend/app/community/me/posts/loading.tsx
+ M frontend/app/community/me/posts/page.tsx
+ M frontend/app/community/me/reports/[id]/loading.tsx
+ M frontend/app/community/me/reports/[id]/page.tsx
+ M frontend/app/community/me/reports/loading.tsx
+ M frontend/app/community/me/reports/page.tsx
+ M frontend/app/community/messages/[id]/loading.tsx
+ M frontend/app/community/messages/[id]/page.tsx
+ M frontend/app/community/messages/loading.tsx
+ M frontend/app/community/messages/page.tsx
+ M frontend/app/community/topic/[tag]/layout.tsx
+ M frontend/app/community/topic/[tag]/loading.tsx
+ M frontend/app/community/topic/[tag]/page.tsx
+ M frontend/app/community/tt/loading.tsx
+ M frontend/app/community/tt/page.tsx
+ M frontend/app/community/user/[id]/loading.tsx
+ M frontend/app/community/user/[id]/page.tsx
+ M frontend/app/did-rank/error.tsx
+ M frontend/app/did-rank/loading.tsx
+ M frontend/app/did-rank/page.tsx
+ M frontend/app/discover/page.tsx
+ M frontend/app/disputes/[id]/DisputeDetailPageClient.tsx
+ M frontend/app/disputes/[id]/loading.tsx
+ M frontend/app/disputes/error.tsx
+ M frontend/app/disputes/loading.tsx
+ M frontend/app/disputes/page.tsx
+ D frontend/app/escrow/[id]/rate/EscrowRatePageClient.tsx
+ M frontend/app/escrow/[id]/rate/error.tsx
+ M frontend/app/escrow/[id]/rate/loading.tsx
+ M frontend/app/escrow/[id]/rate/page.tsx
+ M frontend/app/governance/delegate/loading.tsx
+ M frontend/app/governance/delegate/page.tsx
+ M frontend/app/governance/distribution-accruals/[id]/loading.tsx
+ M frontend/app/governance/distribution-accruals/[id]/page.tsx
+ M frontend/app/governance/distribution-accruals/distributionAccrualsPages.contract.test.ts
+ M frontend/app/governance/distribution-accruals/loading.tsx
+ M frontend/app/governance/distribution-accruals/page.tsx
+ M frontend/app/governance/distribution-claim/loading.tsx
+ M frontend/app/governance/distribution-claim/page.tsx
+ M frontend/app/governance/fee-routes/page.tsx
+ M frontend/app/governance/page.tsx
+ M frontend/app/governance/params/page.tsx
+ M frontend/app/governance/proposals/[id]/loading.tsx
+ M frontend/app/governance/proposals/[id]/page.tsx
+ M frontend/app/governance/proposals/governanceProposalDetailPage.contract.test.ts
+ M frontend/app/governance/proposals/governanceProposalsPage.contract.test.ts
+ M frontend/app/governance/proposals/page.tsx
+ M frontend/app/governance/vault-forwards/page.tsx
+ M frontend/app/guide/page.tsx
+ M frontend/app/guide/register/page.tsx
+ M frontend/app/guides/[id]/loading.tsx
+ M frontend/app/guides/[id]/page.tsx
+ M frontend/app/guides/loading.tsx
+ M frontend/app/guides/page.tsx
+ M frontend/app/help/page.tsx
+ D frontend/app/itinerary/new/AgreementSummaryAccordion.tsx
+ M frontend/app/itinerary/new/loading.tsx
+ M frontend/app/itinerary/new/page.tsx
+ D frontend/app/itinerary/new/types.ts
+ M frontend/app/layout.tsx
+ M frontend/app/market/page.tsx
+ M frontend/app/me/error.tsx
+ M frontend/app/me/identities/page.tsx
+ M frontend/app/me/onboarding/StripeOnboardingPayment.tsx
+ M frontend/app/me/onboarding/page.tsx
+ M frontend/app/me/page.tsx
+ M frontend/app/me/password/loading.tsx
+ M frontend/app/me/password/page.tsx
+ M frontend/app/me/security/page.tsx
+ M frontend/app/orders/error.tsx
+ M frontend/app/orders/new/page.tsx
+ M frontend/app/orders/page.tsx
+ M frontend/app/pay/loading.tsx
+ M frontend/app/pay/page.tsx
+ M frontend/app/privacy/page.tsx
+ M frontend/app/staking/loading.tsx
+ M frontend/app/staking/page.tsx
+ M frontend/app/terms/community-guidelines/page.tsx
+ M frontend/app/terms/page.tsx
+ M frontend/app/traveltrust/layout.tsx
+ M frontend/app/traveltrust/loading.tsx
+ M frontend/app/traveltrust/page.tsx
+ M frontend/app/trust/loading.tsx
+ M frontend/components/ApiErrorAlert.tsx
+ M frontend/components/Header.test.tsx
+ M frontend/components/Header.tsx
+ M frontend/components/LocaleProvider.tsx
+ M frontend/components/WalletSessionRevalidate.tsx
+ M frontend/components/admin/AdminHomeClient.tsx
+ M frontend/components/admin/AdminSubpageRouteLoading.tsx
+ M frontend/components/auth/AuthRouteErrorShell.tsx
+ M frontend/components/auth/AuthSearchParamsSuspense.tsx
+ M frontend/components/community/CommentDrawer.tsx
+ M frontend/components/community/CommunityExplorePhotoMasonry.tsx
+ M frontend/components/community/CommunityFeedCard.tsx
+ M frontend/components/community/CommunityFeedCardCompact.tsx
+ M frontend/components/community/CommunityFeedCardContent.tsx
+ M frontend/components/community/CommunityFeedCardMedia.tsx
+ M frontend/components/community/CommunityFeedDesktopAside.tsx
+ M frontend/components/community/CommunityFeedFilterBar.tsx
+ M frontend/components/community/CommunityFeedHeader.tsx
+ M frontend/components/community/CommunityFeedList.tsx
+ M frontend/components/community/CommunityFeedMain.tsx
+ M frontend/components/community/CommunityFeedRouteSuspense.tsx
+ M frontend/components/community/CommunityFriendsListSkeleton.tsx
+ M frontend/components/community/CommunityInteractionSummary.tsx
+ M frontend/components/community/CommunityLoginModal.test.tsx
+ M frontend/components/community/CommunityLoginModal.tsx
+ M frontend/components/community/CommunityMeQuickLinksDrawer.tsx
+ M frontend/components/community/CommunityMessagesListSkeleton.tsx
+ M frontend/components/community/CommunityParamRouteSuspense.tsx
+ M frontend/components/community/CommunityPostShareMenu.tsx
+ M frontend/components/community/CommunityReportDrawer.tsx
+ M frontend/components/community/CommunityRouteShell.tsx
+ M frontend/components/community/CommunityShareDmQuickPick.tsx
+ M frontend/components/community/CommunitySupportMenu.tsx
+ M frontend/components/community/CommunityTopicHero.tsx
+ M frontend/components/community/CommunityVideoOverlay.test.tsx
+ M frontend/components/community/CommunityVideoOverlay.tsx
+ M frontend/components/community/FeedSkeleton.tsx
+ M frontend/components/community/OrderChatContextCard.tsx
+ M frontend/components/community/PostDetailDrawer.tsx
+ M frontend/components/community/PublishDrawer/README.md
+ M frontend/components/community/PublishDrawer/constants.ts
+ M frontend/components/community/PublishDrawer/index.tsx
+ M frontend/components/community/PublishDrawer/types.ts
+ M frontend/components/community/PublishDrawer/usePublishForm.ts
+ M frontend/components/community/README.md
+ M frontend/components/community/communityFeedConstants.ts
+ D frontend/components/community/communityFeedMappers.test.ts
+ M frontend/components/community/communityFeedMappers.ts
+ D frontend/components/community/useCommunityFeed.test.ts
+ M frontend/components/community/useCommunityFeed.ts
+ M frontend/components/community/useCommunityFeedApi.ts
+ M frontend/components/community/useCommunityFeedFilters.ts
+ M frontend/components/community/useCommunityPostLikeCollect.ts
+ M frontend/components/community/useCommunityPostReport.ts
+ M frontend/components/did-rank/AcquisitionRankBlock.tsx
+ M frontend/components/did-rank/DidRankFetchErrorBanner.tsx
+ M frontend/components/did-rank/DidRankGuideModal.test.tsx
+ M frontend/components/did-rank/DidRankGuideModal.tsx
+ M frontend/components/did-rank/DidRankHeader.tsx
+ M frontend/components/did-rank/DidRankHeaderSkeleton.tsx
+ M frontend/components/did-rank/DidRankPrizePoolSection.tsx
+ M frontend/components/did-rank/DidRankPrizePoolSkeleton.tsx
+ M frontend/components/did-rank/DidRankRecordModal.test.tsx
+ M frontend/components/did-rank/DidRankRecordModal.tsx
+ M frontend/components/did-rank/DidRankRouteSuspense.tsx
+ M frontend/components/did-rank/DidRankSkeleton.tsx
+ M frontend/components/did-rank/GuideRankBlock.tsx
+ M frontend/components/did-rank/ItineraryRankBlock.tsx
+ M frontend/components/did-rank/ItineraryRankSkeleton.tsx
+ M frontend/components/did-rank/ProviderRankBlock.tsx
+ M frontend/components/did-rank/TravelerRankBlock.tsx
+ M frontend/components/did-rank/Web3SciFiBackground.tsx
+ M frontend/components/did-rank/didRankPanelShell.ts
+ M frontend/components/escrow/EscrowDetail/BilateralConfirmBlock.tsx
+ M frontend/components/escrow/EscrowDetail/ChainSyncStatusPanel.tsx
+ M frontend/components/escrow/EscrowDetail/ChatBlock.test.tsx
+ M frontend/components/escrow/EscrowDetail/ChatBlock.tsx
+ M frontend/components/escrow/EscrowDetail/ConfirmFinalPlanBlock.test.tsx
+ M frontend/components/escrow/EscrowDetail/ConfirmFinalPlanBlock.tsx
+ M frontend/components/escrow/EscrowDetail/CreateOnChainEscrowBlock.test.tsx
+ M frontend/components/escrow/EscrowDetail/CreateOnChainEscrowBlock.tsx
+ M frontend/components/escrow/EscrowDetail/DisputeResolutionFundBlock.tsx
+ M frontend/components/escrow/EscrowDetail/EscrowCancelPolicySection.tsx
+ M frontend/components/escrow/EscrowDetail/EscrowChainReadDegradedBanner.tsx
+ M frontend/components/escrow/EscrowDetail/EscrowDetailSkeleton.tsx
+ M frontend/components/escrow/EscrowDetail/EscrowOnChainActions.tsx
+ M frontend/components/escrow/EscrowDetail/EscrowRiskNotice.tsx
+ M frontend/components/escrow/EscrowDetail/EscrowTxModal.test.tsx
+ M frontend/components/escrow/EscrowDetail/EscrowTxModal.tsx
+ M frontend/components/escrow/EscrowDetail/IntentSignFacts.tsx
+ M frontend/components/escrow/EscrowDetail/OrderActionsBlock.test.tsx
+ M frontend/components/escrow/EscrowDetail/OrderActionsBlock.tsx
+ M frontend/components/escrow/EscrowDetail/OrderMessageLink.tsx
+ M frontend/components/escrow/EscrowDetail/QuoteSummaryCard.tsx
+ M frontend/components/escrow/EscrowDetail/README.md
+ M frontend/components/escrow/EscrowDetail/ReorgBanner.tsx
+ M frontend/components/escrow/EscrowDetail/ReviewBlock.tsx
+ M frontend/components/escrow/EscrowDetail/SetEscrowAddressBlock.tsx
+ M frontend/components/escrow/EscrowDetail/index.tsx
+ D frontend/components/escrow/EscrowDetail/types.chainSync.test.ts
+ M frontend/components/escrow/EscrowDetail/types.ts
+ M frontend/components/escrow/EscrowDetail/useEscrowDetail.ts
+ M frontend/components/escrow/EscrowDetailSection.tsx
+ M frontend/components/escrow/EscrowRateRouteSuspense.tsx
+ M frontend/components/escrow/FeeRouterWiringNotice.tsx
+ M frontend/components/escrow/OrderFlowSteps.test.tsx
+ M frontend/components/escrow/OrderFlowSteps.tsx
+ M frontend/components/governance/GovernancePreExecutionHint.tsx
+ M frontend/components/governance/GovernanceProposalExecStatusBadge.test.tsx
+ M frontend/components/governance/GovernanceProposalExecStatusBadge.tsx
+ M frontend/components/guide/GuideBillingPeriodCard.tsx
+ M frontend/components/guide/GuideDashboardStats.tsx
+ M frontend/components/guide/GuideRegistrationStatusBanner.tsx
+ M frontend/components/guides/GuideDetailRouteSuspense.tsx
+ M frontend/components/guides/GuideOccupiedScheduleBlock.tsx
+ M frontend/components/guides/GuidesRouteSuspense.tsx
+ M frontend/components/itinerary/ItineraryNewRouteSuspense.tsx
+ M frontend/components/itinerary/UnifiedItineraryList.test.tsx
+ M frontend/components/itinerary/UnifiedItineraryList.tsx
+ M frontend/components/landing/ItineraryResultsSection.tsx
+ M frontend/components/landing/LandingHeroForm.tsx
+ M frontend/components/landing/UnlockModal.test.tsx
+ M frontend/components/landing/UnlockModal.tsx
+ M frontend/components/landing/index.ts
+ M frontend/components/market/AcquisitionCarryStudioModal.test.tsx
+ M frontend/components/market/AcquisitionCarryStudioModal.tsx
+ M frontend/components/market/AcquisitionListingDetailBody.tsx
+ M frontend/components/market/AcquisitionListingDetailView.tsx
+ M frontend/components/market/BookGuideModal.test.tsx
+ M frontend/components/market/BookGuideModal.tsx
+ M frontend/components/market/CustomItineraryModal/DetailOverlay.test.tsx
+ M frontend/components/market/CustomItineraryModal/DetailOverlay.tsx
+ M frontend/components/market/CustomItineraryModal/README.md
+ M frontend/components/market/CustomItineraryModal/index.tsx
+ M frontend/components/market/CustomItineraryModal/sections/GuideDayCard.tsx
+ M frontend/components/market/CustomItineraryModal/sections/GuideDayCardAttractions.tsx
+ M frontend/components/market/CustomItineraryModal/sections/GuideDayCardFood.tsx
+ M frontend/components/market/CustomItineraryModal/sections/GuideDayCardTransportAndHotels.tsx
+ M frontend/components/market/CustomItineraryModal/sections/GuideFeeAndTransportSection.tsx
+ M frontend/components/market/CustomItineraryModal/sections/GuideForm.tsx
+ M frontend/components/market/CustomItineraryModal/sections/GuideFormQuoteAndCoverSection.tsx
+ M frontend/components/market/CustomItineraryModal/sections/TouristBudgetMetaFields.tsx
+ M frontend/components/market/CustomItineraryModal/sections/TouristCoverImageField.tsx
+ M frontend/components/market/CustomItineraryModal/sections/TouristDayCard.tsx
+ M frontend/components/market/CustomItineraryModal/sections/TouristGuideAndTransportSection.tsx
+ M frontend/components/market/CustomItineraryModal/sections/TouristQuoteSummaryBlock.tsx
+ M frontend/components/market/CustomItineraryModal/types.ts
+ M frontend/components/market/CustomItineraryModal/useItineraryForm.ts
+ M frontend/components/market/EmptyState.tsx
+ M frontend/components/market/GlassSelect.tsx
+ M frontend/components/market/GuideCard.tsx
+ M frontend/components/market/GuideDetailDrawer.test.tsx
+ M frontend/components/market/GuideDetailDrawer.tsx
+ M frontend/components/market/InviteGuideModal.tsx
+ M frontend/components/market/MarketAmbientBackdrop.tsx
+ M frontend/components/market/MarketContent.tsx
+ M frontend/components/market/MarketHubSubNav.tsx
+ M frontend/components/market/MarketLoadingFallback.tsx
+ M frontend/components/market/MarketPageFooter.tsx
+ M frontend/components/market/MarketRemoteListingImage.tsx
+ M frontend/components/market/MarketStandaloneBusinessPage.tsx
+ M frontend/components/market/MarketSubsiteFilterBar.tsx
+ M frontend/components/market/MarketSubsiteListingDetailDrawer.tsx
+ M frontend/components/market/MarketTravelFilterPanel.tsx
+ M frontend/components/market/MerchantShowcaseDetailBody.tsx
+ M frontend/components/market/MerchantShowcaseDetailView.tsx
+ M frontend/components/market/MerchantShowcaseStudioModal.test.tsx
+ M frontend/components/market/MerchantShowcaseStudioModal.tsx
+ M frontend/components/market/OrderCard.tsx
+ M frontend/components/market/OrderDetailDrawer.test.tsx
+ M frontend/components/market/OrderDetailDrawer.tsx
+ M frontend/components/market/StickyFilterBar.tsx
+ M frontend/components/market/ViewSwitcher.tsx
+ M frontend/components/market/index.ts
+ M frontend/components/market/marketDetailDrawerClasses.ts
+ M frontend/components/market/useMarketPage.ts
+ M frontend/components/me/CommunityMeAccountPanel.tsx
+ M frontend/components/me/CommunityMeAccountSecurityRow.test.tsx
+ M frontend/components/me/CommunityMeAccountSecurityRow.tsx
+ M frontend/components/me/CopyButton.tsx
+ M frontend/components/me/MePageFooter.tsx
+ M frontend/components/me/MePageSkeleton.tsx
+ M frontend/components/me/MeProfileSection.tsx
+ M frontend/components/me/MeQuickLinksSection.tsx
+ M frontend/components/me/MeStatsSection.tsx
+ M frontend/components/me/MeTrustSection.tsx
+ M frontend/components/me/communityMeNotes/CommunityMeCollectsExperience.tsx
+ M frontend/components/me/communityMeNotes/CommunityMeLikesExperience.tsx
+ M frontend/components/me/communityMeNotes/CommunityMeNotesGlassDrawer.tsx
+ M frontend/components/me/communityMeNotes/CommunityMeNotesOrderThumbGrid.tsx
+ M frontend/components/me/communityMeNotes/CommunityMeNotesPostThumbGrid.tsx
+ M frontend/components/me/communityMeNotes/CommunityMePostsExperience.tsx
+ M frontend/components/me/communityMeNotes/CommunityMePostsShowcaseThumbGrid.tsx
+ M frontend/components/me/constants.ts
+ M frontend/components/me/index.ts
+ M frontend/components/me/useMePage.ts
+ M frontend/components/nav/ProductCrossNav.tsx
+ M frontend/components/navigation/RoutePrefetcher.tsx
+ M frontend/components/staking/StakingStakePanel.tsx
+ M frontend/components/traveltrust/TravelTrustLiveStats.tsx
+ M frontend/components/traveltrust/TravelTrustNetworkParticles.tsx
+ M frontend/components/traveltrust/TravelTrustParticleLegend.tsx
+ M frontend/components/traveltrust/TravelTrustSectionNav.tsx
+ M frontend/components/traveltrust/TravelTrustStickyCta.tsx
+ M frontend/components/traveltrust/TravelTrustVideoBlock.tsx
+ M frontend/components/trust/ExternalVerificationPanel.tsx
+ M frontend/components/trust/InlineTransparencyVerification.tsx
+ M frontend/components/trust/TechnicalTransparencyDetails.tsx
+ M frontend/components/trust/TrustGrowthMomentBanner.tsx
+ M frontend/components/trust/TrustStatusCallout.tsx
+ M frontend/components/trust/TrustTransparencyHub.tsx
+ M frontend/components/trust/WalletStatusMini.tsx
+ M frontend/config/pgrow3-trust-autopilot-loop.json
+ M frontend/e2e/53-main-path.spec.ts
+ M frontend/e2e/93-matrix-admin-deep-batch.spec.ts
+ M frontend/e2e/93-matrix-admin-domain-batch.spec.ts
+ M frontend/e2e/93-matrix-enterprise-p1-batch.spec.ts
+ M frontend/e2e/93-matrix-path-community-feed-post.spec.ts
+ M frontend/e2e/93-matrix-path-did-rank-boards.spec.ts
+ M frontend/e2e/93-matrix-path-f1-f4.spec.ts
+ M frontend/e2e/93-matrix-path-p1-remediation.spec.ts
+ M frontend/e2e/96-17-header-identity-spine.spec.ts
+ M frontend/e2e/auth-forgot-password-api-happy.spec.ts
+ M frontend/e2e/auth-login-logout-me.spec.ts
+ M frontend/e2e/auth-register-login-market-chain.spec.ts
+ M frontend/e2e/auth-ui-logout-me.spec.ts
+ M frontend/e2e/b463-browser-reviews-contract.spec.ts
+ M frontend/e2e/b464-guide-order-review-journey.spec.ts
+ M frontend/e2e/b465-bilateral-review-ui-e2e.spec.ts
+ M frontend/e2e/b466-browser-chain-off-pay-complete.spec.ts
+ M frontend/e2e/b467-full-ui-order-journey.spec.ts
+ M frontend/e2e/b468-market-discovery-full-ui-journey.spec.ts
+ M frontend/e2e/b469-guides-drawer-booking-convergence.spec.ts
+ M frontend/e2e/community-me-data-state.spec.ts
+ M frontend/e2e/core-path.spec.ts
+ M frontend/e2e/epic-f-normal-release-real.spec.ts
+ M frontend/e2e/f007-f010-f032-request.spec.ts
+ M frontend/e2e/f012-f013-f014-request.spec.ts
+ M frontend/e2e/f015-f016-f017-request.spec.ts
+ M frontend/e2e/f018-f019-f020-request.spec.ts
+ M frontend/e2e/f021-f022-f023-request.spec.ts
+ M frontend/e2e/f024-f025-f026-request.spec.ts
+ M frontend/e2e/f027-f028-f033-request.spec.ts
+ M frontend/e2e/f029-f030-f031-request.spec.ts
+ M frontend/e2e/helpers/apiSession.ts
+ M frontend/e2e/helpers/bilateralEscrowE2e.ts
+ M frontend/e2e/helpers/clickLoginWaitClientNav.ts
+ M frontend/e2e/helpers/guideSeedGuideRowId.ts
+ M frontend/e2e/helpers/injectedWallet.ts
+ M frontend/e2e/helpers/metaChainGuard.ts
+ M frontend/e2e/helpers/metaFetchRetry.ts
+ M frontend/e2e/helpers/releaseSeedGuideSlot.ts
+ M frontend/e2e/helpers/skipUnlessOrderMockPayAvailable.ts
+ M frontend/e2e/helpers/smoke-nav.ts
+ M frontend/e2e/helpers/waitAuthRegisterFormReady.ts
+ M frontend/e2e/itinerary-52.spec.ts
+ M frontend/e2e/market-d8.spec.ts
+ M frontend/e2e/market-deep-link.spec.ts
+ M frontend/e2e/me-onboarding-96-18-shell.spec.ts
+ M frontend/e2e/me-security-community-hub.spec.ts
+ M frontend/e2e/orders-b-domain-request.spec.ts
+ M frontend/e2e/p01-login-market-auth.spec.ts
+ M frontend/e2e/p02-tourist-order-create-list.spec.ts
+ M frontend/e2e/p03-tourist-guide-accept.spec.ts
+ M frontend/e2e/p04-bilateral-confirm.spec.ts
+ M frontend/e2e/p05-confirm-final-escrow.spec.ts
+ M frontend/e2e/release-flow.spec.ts
+ M frontend/e2e/section10-5-login-community-feed.spec.ts
+ M frontend/e2e/setup/meta-chain-contracts.spec.ts
+ M frontend/e2e/smoke-admin.spec.ts
+ M frontend/e2e/smoke-community.spec.ts
+ M frontend/e2e/smoke-governance.spec.ts
+ M frontend/e2e/smoke.spec.ts
+ M frontend/e2e/trust-gate-dispute-evidence.spec.ts
+ M frontend/e2e/trust-gate-dispute-execute-intent.spec.ts
+ M frontend/e2e/trust-gate-dispute-resolve.spec.ts
+ M frontend/e2e/trust-gate-escrow.spec.ts
+ M frontend/e2e/tt-93-guide-order-accept-request.spec.ts
+ M frontend/evidence/GO_96_16_d1_d12_coverage_matrix_v1.json
+ M frontend/evidence/GO_96_16_d5_d6_d7_auth_me_guides_staking_legal_batch.json
+ M frontend/evidence/GO_96_16_d5_d6_d7_coverage_matrix_v1.json
+ M frontend/evidence/GO_96_16_evidence_aggregation_d1_d12.json
+ M frontend/lib/analytics.ts
+ D frontend/lib/api.test.ts
+ M frontend/lib/api.ts
+ D frontend/lib/apiClient.test.ts
+ D frontend/lib/apiClient/adminCrossCheck.test.ts
+ D frontend/lib/apiClient/adminCrossCheck.ts
+ D frontend/lib/apiClient/auth.api.test.ts
+ D frontend/lib/apiClient/auth.session.test.ts
+ D frontend/lib/apiClient/auth.ts
+ D frontend/lib/apiClient/community.posts.test.ts
+ D frontend/lib/apiClient/community.social.test.ts
+ D frontend/lib/apiClient/community.stats-reports.test.ts
+ D frontend/lib/apiClient/community.test.ts
+ D frontend/lib/apiClient/community.ts
+ D frontend/lib/apiClient/core.test.ts
+ D frontend/lib/apiClient/core.ts
+ D frontend/lib/apiClient/didRank.test.ts
+ D frontend/lib/apiClient/didRank.ts
+ D frontend/lib/apiClient/discover.test.ts
+ D frontend/lib/apiClient/discover.ts
+ D frontend/lib/apiClient/disputes.test.ts
+ D frontend/lib/apiClient/disputes.ts
+ D frontend/lib/apiClient/governance.proposal-status.test.ts
+ D frontend/lib/apiClient/governance.ts
+ D frontend/lib/apiClient/governanceDelegate.ts
+ D frontend/lib/apiClient/guides.test.ts
+ D frontend/lib/apiClient/guides.ts
+ M frontend/lib/apiClient/index.ts
+ D frontend/lib/apiClient/itineraries.http.test.ts
+ D frontend/lib/apiClient/itineraries.test.ts
+ D frontend/lib/apiClient/itineraries.ts
+ D frontend/lib/apiClient/listItemsEnvelope.test.ts
+ D frontend/lib/apiClient/listItemsEnvelope.ts
+ D frontend/lib/apiClient/marketSubsite.test.ts
+ D frontend/lib/apiClient/marketSubsite.ts
+ D frontend/lib/apiClient/marketTravelBookmarks.test.ts
+ D frontend/lib/apiClient/marketTravelBookmarks.ts
+ D frontend/lib/apiClient/me.test.ts
+ D frontend/lib/apiClient/me.ts
+ D frontend/lib/apiClient/meSecurity.ts
+ D frontend/lib/apiClient/media.test.ts
+ D frontend/lib/apiClient/media.ts
+ D frontend/lib/apiClient/messages.test.ts
+ D frontend/lib/apiClient/messages.ts
+ D frontend/lib/apiClient/meta.test.ts
+ D frontend/lib/apiClient/meta.ts
+ D frontend/lib/apiClient/onboarding.http.test.ts
+ D frontend/lib/apiClient/onboarding.ts
+ D frontend/lib/apiClient/orders.bilateral-rating-dispute.test.ts
+ D frontend/lib/apiClient/orders.cancel.test.ts
+ D frontend/lib/apiClient/orders.crud.test.ts
+ D frontend/lib/apiClient/orders.escrow-accept-finalplan.test.ts
+ D frontend/lib/apiClient/orders.intents.test.ts
+ D frontend/lib/apiClient/orders.itinerary-reviews.test.ts
+ D frontend/lib/apiClient/orders.list.test.ts
+ D frontend/lib/apiClient/orders.ts
+ D frontend/lib/buildEscrowCreateParams.test.ts
+ M frontend/lib/communityA11yFocus.ts
+ M frontend/lib/communityApiMessageKeys.test.ts
+ M frontend/lib/communityFeedSortUrl.test.ts
+ M frontend/lib/communityFeedSortUrl.ts
+ M frontend/lib/communityMeContentNav.test.ts
+ M frontend/lib/communityMeContentNav.ts
+ M frontend/lib/communityMeDrawerListCaps.ts
+ M frontend/lib/communityMeFeatureFlags.ts
+ M frontend/lib/communityMeLikesReceivedContract.test.ts
+ M frontend/lib/communityMeLikesReceivedContract.ts
+ M frontend/lib/communityMeOrdersDrawerModel.ts
+ M frontend/lib/communityMePostsDrawerFetch.ts
+ M frontend/lib/communityMockData.ts
+ M frontend/lib/communityMockData/index.ts
+ M frontend/lib/communityMockData/types.ts
+ M frontend/lib/communityReportLabels.test.ts
+ M frontend/lib/communityReportLabels.ts
+ M frontend/lib/communityShowcase.ts
+ M frontend/lib/customItineraryDraft.test.ts
+ M frontend/lib/customItineraryDraft.ts
+ D frontend/lib/dataState.test.ts
+ M frontend/lib/didRankResponseNormalize.ts
+ M frontend/lib/didRankTypes.ts
+ D frontend/lib/formatCommunityApiMessage.test.ts
+ M frontend/lib/formatCommunityApiMessage.ts
+ M frontend/lib/i18n.ts
+ D frontend/lib/mapApiReadError.test.ts
+ M frontend/lib/mapApiReadError.ts
+ M frontend/lib/mapAuthLoginSubmitError.test.ts
+ M frontend/lib/mapAuthLoginSubmitError.ts
+ D frontend/lib/mapOrderWriteError.test.ts
+ M frontend/lib/mapOrderWriteError.ts
+ M frontend/lib/marketDeepLink.ts
+ M frontend/lib/marketLoginReturnPath.test.ts
+ M frontend/lib/marketLoginReturnPath.ts
+ D frontend/lib/marketMockData.ts
+ M frontend/lib/marketProductCommunityPublish.ts
+ M frontend/lib/marketStudioDraft.ts
+ M frontend/lib/marketSubsiteDemo.ts
+ M frontend/lib/marketTypes.ts
+ M frontend/lib/meIdentitySlots.test.ts
+ M frontend/lib/meIdentitySlots.ts
+ M frontend/lib/meLogoutFlow.ts
+ M frontend/lib/meSecurityRoutes.test.ts
+ D frontend/lib/meTrust.test.ts
+ D frontend/lib/orderEscrowPrefetch.test.ts
+ M frontend/lib/orderEscrowPrefetch.ts
+ M frontend/lib/pickMetadataLocale.ts
+ M frontend/lib/readOrderMockPayFromMeta.ts
+ M frontend/lib/refTopThreeStyles.ts
+ M frontend/lib/safeInternalReturnPath.test.ts
+ M frontend/lib/safeInternalReturnPath.ts
+ M frontend/lib/travelLinkFocus.ts
+ M frontend/lib/travelTrustUiGuards.ts
+ M frontend/locales/en.ts
+ M frontend/locales/zh.ts
+ M frontend/middleware.ts
+ M frontend/next.config.js
+ M frontend/package.json
+ M frontend/playwright.config.ts
+ M frontend/scripts/check-forbidden-classes.mjs
+ M frontend/scripts/e2e-align-env-from-root.mjs
+ M frontend/scripts/matrix-96-16-shared.mjs
+ M frontend/scripts/run-e2e-96-17-identity-local.mjs
+ M frontend/scripts/run-e2e-api-auth-local.mjs
+ M frontend/scripts/run-e2e-api-b-gde-dsp-msg-024-026-local.mjs
+ M frontend/scripts/run-e2e-api-b-orders-local.mjs
+ M frontend/scripts/run-e2e-api-d-com-015-017-local.mjs
+ M frontend/scripts/run-e2e-api-d-com-018-020-local.mjs
+ M frontend/scripts/run-e2e-api-f007-f010-f032-local.mjs
+ M frontend/scripts/run-e2e-api-f027-f028-f033-local.mjs
+ M frontend/scripts/run-e2e-api-f029-f030-f031-local.mjs
+ M frontend/scripts/run-e2e-api-itin-feed-local.mjs
+ M frontend/scripts/run-e2e-api-mkt-guides-021-023-local.mjs
+ M frontend/scripts/run-e2e-auth-chain.mjs
+ M frontend/scripts/run-e2e-default.mjs
+ M frontend/scripts/run-e2e-sepolia.mjs
+ M frontend/scripts/search-params-suspense-components-allowlist.json
+ M frontend/scripts/sync-server-chunks.mjs
+ M frontend/tsconfig.tsbuildinfo
+ M ops/RUNBOOK.md
+ M registry/derived/96-booklets.v1.json
+ M registry/spec-path-dependencies.v1.yaml
+ M scripts/INDEX.md
+ M scripts/README.md
+ M scripts/check-spec93-routes-vs-app.py
+ M scripts/dev/check-55-quick-verify.ps1
+ M scripts/dev/check-55-quick-verify.sh
+ M scripts/dev/dev-preflight.sh
+ M scripts/dev/prepare-local-manual-test.ps1
+ M scripts/dev/smoke-ab-core-chain.sh
+ M scripts/dev/start-api-for-playwright.ps1
+ M scripts/dev/start-api-for-playwright.sh
+ M scripts/dev/sync-frontend-env-local-from-root.ps1
+ M scripts/dev/sync-frontend-env-local-from-root.sh
+ M scripts/dev/wait-for-api.sh
+ M scripts/gates/_http_smoke_retry.sh
+ M scripts/gates/check-04-routes-vs-code.py
+ M scripts/gates/check-b450-review-post-ssot-doc-anchors.py
+ M scripts/gates/check-b451-review-json-contract-evolution-gate.py
+ M scripts/gates/check-b452-review-json-contract-client-gate.py
+ M scripts/gates/check-b453-review-json-contract-observability-gate.py
+ M scripts/gates/check-doc-markdown-relative-links.py
+ M scripts/gates/doc-enterprise-audit-machine-phases.sh
+ M scripts/gates/e2e-stability-probe.sh
+ M scripts/gates/run-check-04-routes.sh
+ M scripts/gates/run-production-gate-local.sh
+ M scripts/gates/smoke-api-public-routes.ps1
+ M scripts/gates/smoke-api-public-routes.sh
+ M scripts/gates/ssot-guard-escrow-orders-detail.py
+ M scripts/gates/tt-9618-onboarding-pg-evidence.sh
+ M scripts/gates/vertical-slice-01-guides-catalog.sh
+ M scripts/gates/vertical-slice-02-main-spine.sh
+ M scripts/gates/vertical-slice-03-market-hub-public-smoke.sh
+ M scripts/gates/vertical-slice-04-community-explore-public-smoke.sh
+ M scripts/sync-from-stash-overview-with-main-index.py
+?? crates/api/migrations/20260529120000_users_bio.sql
+?? crates/api/src/chain/config.rs
+?? crates/api/src/chain/fee_router_verify/
+?? crates/api/src/chain/governor/
+?? crates/api/src/chain/indexer/
+?? crates/api/src/chain/region_vault_verify/
+?? crates/api/src/chain_off/auth/
+?? crates/api/src/chain_off/config.rs
+?? crates/api/src/chain_off/disputes/
+?? crates/api/src/chain_off/evidence/
+?? crates/api/src/chain_off/governance_ssot/governance_proposal_count_ssot/
+?? crates/api/src/chain_off/governance_ssot/mod.rs
+?? crates/api/src/chain_off/guides/
+?? crates/api/src/chain_off/itineraries/
+?? crates/api/src/chain_off/json_response.rs
+?? crates/api/src/chain_off/me/
+?? crates/api/src/chain_off/orders/
+?? crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete/
+?? crates/api/src/chain_off/orders_flow/dispute_bilateral_rating/
+?? crates/api/src/chain_off/reconcile/
+?? crates/api/src/chain_off/reviews/
+?? crates/api/src/chain_off/root_helpers.rs
+?? crates/api/src/chain_off/rows.rs
+?? crates/api/src/chain_off/tests_events_itinerary/
+?? crates/api/src/chain_off/tests_guides_me_orders/
+?? crates/api/src/chain_off/trust_gate_e2e_seed/
+?? crates/api/src/db/community/
+?? crates/api/src/db/disputes/
+?? crates/api/src/db/event_log/
+?? crates/api/src/db/governance_proposals_projection/
+?? crates/api/src/db/investor_distribution/
+?? crates/api/src/db/investor_share/
+?? crates/api/src/db/onboarding/
+?? crates/api/src/db/orders/
+?? crates/api/src/db/orders_projection/
+?? crates/api/src/db/reconciliation_reports/
+?? crates/api/src/db/revenue_pipeline_spread_dual_slack_triangulation_obs/
+?? crates/api/src/db/trust_growth/
+?? crates/api/src/db/users_sessions/
+?? crates/api/src/middleware/auth_pause_metrics/tests/
+?? crates/api/src/middleware/rate_limit/
+?? crates/api/src/routes/admin/admin_approvals_http.rs
+?? crates/api/src/routes/admin/admin_audit_http.rs
+?? crates/api/src/routes/admin/admin_community/
+?? crates/api/src/routes/admin/admin_compliance_http/
+?? crates/api/src/routes/admin/admin_config_api_lifecycle_http/
+?? crates/api/src/routes/admin/admin_cross_drift_http.rs
+?? crates/api/src/routes/admin/admin_data_policies_http.rs
+?? crates/api/src/routes/admin/admin_disputes_http.rs
+?? crates/api/src/routes/admin/admin_feature_flags_secrets_http/
+?? crates/api/src/routes/admin/admin_fee_router_routed_http.rs
+?? crates/api/src/routes/admin/admin_finance_summary_http.rs
+?? crates/api/src/routes/admin/admin_guides_http.rs
+?? crates/api/src/routes/admin/admin_handler_common.rs
+?? crates/api/src/routes/admin/admin_internal_media_http/
+?? crates/api/src/routes/admin/admin_jobs_scheduler.rs
+?? crates/api/src/routes/admin/admin_observability_alerts.rs
+?? crates/api/src/routes/admin/admin_observability_helpers.rs
+?? crates/api/src/routes/admin/admin_observability_overview/
+?? crates/api/src/routes/admin/admin_onboarding/
+?? crates/api/src/routes/admin/admin_orders_http.rs
+?? crates/api/src/routes/admin/admin_region_vault_forwarded_http.rs
+?? crates/api/src/routes/admin/admin_reviews_http.rs
+?? crates/api/src/routes/admin/admin_schema_http.rs
+?? crates/api/src/routes/admin/admin_tenant_scopes_http.rs
+?? crates/api/src/routes/admin/admin_users_http.rs
+?? crates/api/src/routes/admin/finance_summary.rs
+?? crates/api/src/routes/admin/indexer_reconcile/
+?? crates/api/src/routes/admin/query_types.rs
+?? crates/api/src/routes/admin/query_types_community.rs
+?? crates/api/src/routes/admin/reconcile_export_headers.rs
+?? crates/api/src/routes/admin/tests/
+?? crates/api/src/routes/auth_register_login_logout_db_api_tests/
+?? crates/api/src/routes/auth_trust_gate_e2e_seed_db_api_tests/
+?? crates/api/src/routes/community/common/
+?? crates/api/src/routes/community/community_feed_like_collect_db_api_tests/
+?? crates/api/src/routes/community/community_report_me_posts_db_api_tests/
+?? crates/api/src/routes/community/dm_social/
+?? crates/api/src/routes/community/feedback_reports/
+?? crates/api/src/routes/community/media_upload/
+?? crates/api/src/routes/community/posts/
+?? crates/api/src/routes/did_rank/
+?? crates/api/src/routes/disputes/
+?? crates/api/src/routes/f031_f032_f033_app_http_db_api_tests/
+?? crates/api/src/routes/governance/tests/
+?? crates/api/src/routes/governance_country_ledger/
+?? crates/api/src/routes/governance_proposals/
+?? crates/api/src/routes/governance_voting_power/
+?? crates/api/src/routes/guides_disputes_db_api_tests/
+?? crates/api/src/routes/health_meta/handlers/
+?? crates/api/src/routes/health_meta/meta_contract_keys/
+?? crates/api/src/routes/health_meta/tests/
+?? crates/api/src/routes/internal/common/
+?? crates/api/src/routes/internal/community/
+?? crates/api/src/routes/internal/indexer/tick_apply_batch.rs
+?? crates/api/src/routes/internal/indexer/tick_apply_inserted.rs
+?? crates/api/src/routes/internal/indexer/tick_apply_inserted_chain.rs
+?? crates/api/src/routes/internal/indexer/tick_apply_inserted_orders.rs
+?? crates/api/src/routes/internal/indexer/tick_b174.rs
+?? crates/api/src/routes/internal/indexer/tick_investor_sidecars.rs
+?? crates/api/src/routes/internal/indexer/tick_merge_logs.rs
+?? crates/api/src/routes/internal/indexer/tick_reorg.rs
+?? crates/api/src/routes/internal/indexer/tick_types.rs
+?? crates/api/src/routes/internal/onboarding/
+?? crates/api/src/routes/internal/reconcile/indexer_reconcile_b154.rs
+?? crates/api/src/routes/internal/reconcile/indexer_reconcile_ok.rs
+?? crates/api/src/routes/internal/reconcile/indexer_reconcile_ok_mutations.rs
+?? crates/api/src/routes/internal/reconcile/indexer_reconcile_ok_obs.rs
+?? crates/api/src/routes/internal/reconcile/indexer_reconcile_ok_resp.rs
+?? crates/api/src/routes/internal/reconcile/indexer_reconcile_ok_ssot.rs
+?? crates/api/src/routes/internal/reconcile/indexer_reconcile_ok_types.rs
+?? crates/api/src/routes/internal/reconcile_gates/
+?? crates/api/src/routes/internal/revenue_e2e_run_status/
+?? crates/api/src/routes/internal/tests/suite_early/
+?? crates/api/src/routes/internal/tests/suite_late/
+?? crates/api/src/routes/internal_indexer_admin_db_api_tests/
+?? crates/api/src/routes/investor_distribution/
+?? crates/api/src/routes/market_subsite/
+?? crates/api/src/routes/market_subsite_catalog_db_api_tests/
+?? crates/api/src/routes/me/
+?? crates/api/src/routes/me_market_bookmarks_db_api_tests/
+?? crates/api/src/routes/me_wallet_verify_db_api_tests/
+?? crates/api/src/routes/messages/
+?? crates/api/src/routes/messages_db_api_tests/
+?? crates/api/src/routes/onboarding/compliance.rs
+?? crates/api/src/routes/onboarding/entitlements.rs
+?? crates/api/src/routes/onboarding/helpers.rs
+?? crates/api/src/routes/onboarding/payment_intents.rs
+?? crates/api/src/routes/onboarding/payment_intents_stripe.rs
+?? crates/api/src/routes/onboarding/quote.rs
+?? crates/api/src/routes/onboarding/role_confirm.rs
+?? crates/api/src/routes/onboarding/tests.rs
+?? crates/api/src/routes/onboarding/types.rs
+?? crates/api/src/routes/onboarding_app_stack_db_api_tests/
+?? crates/api/src/routes/orders/chain_sync_contract.rs
+?? crates/api/src/routes/orders/chain_sync_status.rs
+?? crates/api/src/routes/orders/order_detail_chain_ssot.rs
+?? crates/api/src/routes/orders/tests/orders_accept_mock_pay_itinerary_confirm_db_api_tests/
+?? crates/api/src/routes/orders/tests/orders_create_list_set_escrow_address_db_api_tests/
+?? crates/api/src/routes/orders/tests/review_json_contract_evolution_b451/
+?? crates/api/src/routes/orders/tests/review_weight_json_contract_b449/
+?? crates/api/src/routes/orders/tests/suite/
+?? crates/api/src/startup/finality_floor.rs
+?? crates/api/src/startup/indexer_cli.rs
+?? crates/api/src/startup/run.rs
+?? crates/api/src/startup/run_indexer_audit.rs
+?? crates/api/src/startup/run_ssot_env.rs
+?? crates/api/src/state/
+?? crates/api/src/stripe_onboarding/
+?? data/outbox/
+?? docs/runbook/TT-31-STRUCTURED-GAP-CATALOG-001.md
+?? docs/runbook/TT-96-16-D3-hand-checklist-001.md
+?? docs/runbook/TT-96-20-E2E-COVERAGE-GAP-MAP-001.md
+?? docs/runbook/TT-96-20-P0-E2E-LADDER-001.md
+?? docs/runbook/TT-96-20-UI-UX-TEN-ROUND-DEEP-CHECKLIST-001.md
+?? docs/runbook/TT-ENTERPRISE-AUDIT-GAP-BATCH-CLOSURE-001.md
+?? docs/runbook/TT-GATE-COVERAGE-vs-96-15-GAP-REGISTRY-001.md
+?? docs/runbook/TT-LOCAL-AI-AGENT-BRIEF-001.md
+?? docs/runbook/TT-LOCAL-CONVERGENCE-PHASE-AD-001.md
+?? docs/runbook/TT-LOCAL-FULL-E2E-MATRIX-001.md
+?? docs/runbook/TT-NEXT-BATCH-BACKLOG-001.md
+?? "docs/spec/46-\346\250\241\345\235\227\345\214\226\345\256\241\350\256\241\344\270\216\346\213\206\345\210\206\347\231\273\350\256\260\350\241\250.md"
+?? evidence/96-16-d3-hand-checklist-POINTER.md
+?? evidence/GO_20260501/
+?? evidence/GO_20260501_TT9627_local_segment123/
+?? evidence/GO_20260501_agent_local_convergence/
+?? evidence/GO_20260501_local_delivery_closure/
+?? evidence/GO_20260501_tt9627_local_chain_001/
+?? evidence/GO_20260501_tt9627_strict_r002/
+?? evidence/GO_20260507/
+?? evidence/GO_20260512-playwright-triage/
+?? evidence/GO_20260512/
+?? evidence/GO_20260513_full_verify/
+?? evidence/_merge-a.csv
+?? evidence/_merge-b.csv
+?? evidence/_merge-out.csv
+?? evidence/_merge-out2.csv
+?? evidence/_tmp-validate-test.csv
+?? frontend/app/admin/alerts/incidents/AdminAlertIncidentsHubPageMain.tsx
+?? frontend/app/admin/alerts/incidents/[id]/AdminAlertIncidentDetailPageMain.tsx
+?? frontend/app/admin/alerts/incidents/[id]/adminAlertIncidentDetailPage.contract.test.ts
+?? frontend/app/admin/alerts/incidents/[id]/adminAlertIncidentDetailPageModel.ts
+?? frontend/app/admin/alerts/incidents/[id]/useAdminAlertIncidentDetailPage.ts
+?? frontend/app/admin/alerts/incidents/adminAlertIncidentsHubPage.contract.test.ts
+?? frontend/app/admin/alerts/incidents/adminAlertIncidentsHubPageModel.ts
+?? frontend/app/admin/alerts/incidents/useAdminAlertIncidentsHubPage.ts
+?? frontend/app/admin/api-versions/AdminApiVersionsFiltersCard.tsx
+?? frontend/app/admin/api-versions/AdminApiVersionsFiltersTail.tsx
+?? frontend/app/admin/api-versions/AdminApiVersionsMetaNote.tsx
+?? frontend/app/admin/api-versions/AdminApiVersionsPageHeader.tsx
+?? frontend/app/admin/api-versions/AdminApiVersionsPageMain.tsx
+?? frontend/app/admin/api-versions/AdminApiVersionsTableSection.tsx
+?? frontend/app/admin/api-versions/adminApiVersionsPage.contract.test.ts
+?? frontend/app/admin/api-versions/adminApiVersionsPageModel.ts
+?? frontend/app/admin/api-versions/useAdminApiVersionsPage.ts
+?? frontend/app/admin/approvals/AdminApprovalsAppliedFiltersSection.tsx
+?? frontend/app/admin/approvals/AdminApprovalsFiltersCard.tsx
+?? frontend/app/admin/approvals/AdminApprovalsMetaNote.tsx
+?? frontend/app/admin/approvals/AdminApprovalsPageHeader.tsx
+?? frontend/app/admin/approvals/AdminApprovalsPageMain.tsx
+?? frontend/app/admin/approvals/AdminApprovalsTableSection.tsx
+?? frontend/app/admin/approvals/[id]/AdminApprovalDetailPageMain.tsx
+?? frontend/app/admin/approvals/[id]/adminApprovalDetailPage.contract.test.ts
+?? frontend/app/admin/approvals/[id]/adminApprovalDetailPageModel.ts
+?? frontend/app/admin/approvals/[id]/useAdminApprovalDetailPage.ts
+?? frontend/app/admin/approvals/adminApprovalsPage.contract.test.ts
+?? frontend/app/admin/approvals/adminApprovalsPageModel.ts
+?? frontend/app/admin/approvals/useAdminApprovalsPage.ts
+?? frontend/app/admin/audit/AdminAuditFiltersBlock.tsx
+?? frontend/app/admin/audit/AdminAuditPageHeader.tsx
+?? frontend/app/admin/audit/AdminAuditPageMain.tsx
+?? frontend/app/admin/audit/AdminAuditTableSection.tsx
+?? frontend/app/admin/audit/adminAuditPageQuery.ts
+?? frontend/app/admin/audit/adminAuditPageTypes.ts
+?? frontend/app/admin/audit/logs/[id]/AdminAuditLogDetailPageMain.tsx
+?? frontend/app/admin/audit/logs/[id]/adminAuditLogDetailPage.contract.test.ts
+?? frontend/app/admin/audit/logs/[id]/adminAuditLogDetailPageModel.ts
+?? frontend/app/admin/audit/logs/[id]/useAdminAuditLogDetailPage.ts
+?? frontend/app/admin/audit/operations/AdminAuditOperationsPageMain.tsx
+?? frontend/app/admin/audit/operations/adminAuditOperationsPage.contract.test.ts
+?? frontend/app/admin/audit/operations/adminAuditOperationsPageModel.ts
+?? frontend/app/admin/audit/operations/useAdminAuditOperationsPage.ts
+?? frontend/app/admin/audit/useAdminAuditPage.ts
+?? frontend/app/admin/community/abuse-policy/AdminCommunityAbusePolicyPageMain.tsx
+?? frontend/app/admin/community/abuse-policy/adminCommunityAbusePolicyPage.contract.test.ts
+?? frontend/app/admin/community/abuse-policy/adminCommunityAbusePolicyPageModel.ts
+?? frontend/app/admin/community/abuse-policy/useAdminCommunityAbusePolicyPage.ts
+?? frontend/app/admin/community/appeals/AdminCommunityAppealsPageMain.tsx
+?? frontend/app/admin/community/appeals/adminCommunityAppealsPage.contract.test.ts
+?? frontend/app/admin/community/appeals/adminCommunityAppealsPageModel.ts
+?? frontend/app/admin/community/appeals/review/AdminCommunityAppealReviewPageMain.tsx
+?? frontend/app/admin/community/appeals/review/adminCommunityAppealReviewPage.contract.test.ts
+?? frontend/app/admin/community/appeals/review/adminCommunityAppealReviewPageModel.ts
+?? frontend/app/admin/community/appeals/review/useAdminCommunityAppealReviewPage.ts
+?? frontend/app/admin/community/appeals/useAdminCommunityAppealsPage.ts
+?? frontend/app/admin/community/comments/visibility/AdminCommunityCommentVisibilityPageMain.tsx
+?? frontend/app/admin/community/comments/visibility/adminCommunityCommentVisibilityPage.contract.test.ts
+?? frontend/app/admin/community/comments/visibility/adminCommunityCommentVisibilityPageModel.ts
+?? frontend/app/admin/community/comments/visibility/useAdminCommunityCommentVisibilityPage.ts
+?? frontend/app/admin/community/moderation/cases/AdminCommunityModerationCasesPageMain.tsx
+?? frontend/app/admin/community/moderation/cases/adminModerationCasesPageModel.ts
+?? frontend/app/admin/community/moderation/cases/adminModerationCasesPageTypes.ts
+?? frontend/app/admin/community/moderation/cases/useAdminModerationCasesPage.ts
+?? frontend/app/admin/community/penalties/AdminCommunityPenaltiesCreateModal.tsx
+?? frontend/app/admin/community/penalties/AdminCommunityPenaltiesFilterCard.tsx
+?? frontend/app/admin/community/penalties/AdminCommunityPenaltiesListSection.tsx
+?? frontend/app/admin/community/penalties/AdminCommunityPenaltiesPageMain.tsx
+?? frontend/app/admin/community/penalties/adminCommunityPenaltiesPageConstants.ts
+?? frontend/app/admin/community/penalties/adminCommunityPenaltiesPageHelpers.ts
+?? frontend/app/admin/community/penalties/adminCommunityPenaltiesPageQuery.ts
+?? frontend/app/admin/community/penalties/adminCommunityPenaltiesPageTypes.ts
+?? frontend/app/admin/community/penalties/useAdminCommunityPenaltiesPage.ts
+?? frontend/app/admin/community/policy-change-logs/AdminCommunityPolicyChangeLogsPageMain.tsx
+?? frontend/app/admin/community/policy-change-logs/adminCommunityPolicyChangeLogsPage.contract.test.ts
+?? frontend/app/admin/community/policy-change-logs/adminCommunityPolicyChangeLogsPageModel.ts
+?? frontend/app/admin/community/policy-change-logs/useAdminCommunityPolicyChangeLogsPage.ts
+?? frontend/app/admin/community/ranking/snapshots/AdminCommunityRankingSnapshotsPageMain.tsx
+?? frontend/app/admin/community/ranking/snapshots/adminCommunityRankingSnapshotsPage.contract.test.ts
+?? frontend/app/admin/community/ranking/snapshots/adminCommunityRankingSnapshotsPageModel.ts
+?? frontend/app/admin/community/ranking/snapshots/useAdminCommunityRankingSnapshotsPage.ts
+?? frontend/app/admin/community/reports/AdminCommunityReportsFilterCard.tsx
+?? frontend/app/admin/community/reports/AdminCommunityReportsHeaderLinks.tsx
+?? frontend/app/admin/community/reports/AdminCommunityReportsModerationModal.tsx
+?? frontend/app/admin/community/reports/AdminCommunityReportsPageInner.tsx
+?? frontend/app/admin/community/reports/AdminCommunityReportsTable.tsx
+?? frontend/app/admin/community/reports/adminCommunityReportsModerationErrors.ts
+?? frontend/app/admin/community/reports/adminCommunityReportsModerationPatchBody.ts
+?? frontend/app/admin/community/reports/adminCommunityReportsQuery.ts
+?? frontend/app/admin/community/reports/adminCommunityReportsTypes.ts
+?? frontend/app/admin/community/reports/useAdminCommunityReportsPage.ts
+?? frontend/app/admin/community/reports/useAdminCommunityReportsPageListFetch.ts
+?? frontend/app/admin/community/risk-signals/AdminCommunityRiskSignalsPageMain.tsx
+?? frontend/app/admin/community/risk-signals/adminRiskSignalsPageModel.ts
+?? frontend/app/admin/community/risk-signals/useAdminCommunityRiskSignalsPage.ts
+?? frontend/app/admin/compliance/requests/AdminComplianceRequestsAppliedFiltersInline.tsx
+?? frontend/app/admin/compliance/requests/AdminComplianceRequestsFiltersBlock.tsx
+?? frontend/app/admin/compliance/requests/AdminComplianceRequestsMetaSection.tsx
+?? frontend/app/admin/compliance/requests/AdminComplianceRequestsPageHeader.tsx
+?? frontend/app/admin/compliance/requests/AdminComplianceRequestsPageMain.tsx
+?? frontend/app/admin/compliance/requests/AdminComplianceRequestsStatusBlock.tsx
+?? frontend/app/admin/compliance/requests/AdminComplianceRequestsTableSection.tsx
+?? frontend/app/admin/compliance/requests/[requestId]/events/AdminComplianceRequestEventsPageMain.tsx
+?? frontend/app/admin/compliance/requests/[requestId]/events/adminComplianceRequestEventsPage.contract.test.ts
+?? frontend/app/admin/compliance/requests/[requestId]/events/adminComplianceRequestEventsPageModel.ts
+?? frontend/app/admin/compliance/requests/[requestId]/events/useAdminComplianceRequestEventsPage.ts
+?? frontend/app/admin/compliance/requests/[requestId]/update/AdminComplianceRequestUpdatePageMain.tsx
+?? frontend/app/admin/compliance/requests/[requestId]/update/adminComplianceRequestUpdatePage.contract.test.ts
+?? frontend/app/admin/compliance/requests/[requestId]/update/adminComplianceRequestUpdatePageModel.ts
+?? frontend/app/admin/compliance/requests/[requestId]/update/useAdminComplianceRequestUpdatePage.ts
+?? frontend/app/admin/compliance/requests/adminComplianceRequestsPage.contract.test.ts
+?? frontend/app/admin/compliance/requests/adminComplianceRequestsPageModel.ts
+?? frontend/app/admin/compliance/requests/useAdminComplianceRequestsPage.ts
+?? frontend/app/admin/config/AdminConfigHubPageMain.tsx
+?? frontend/app/admin/config/adminConfigHubPage.contract.test.ts
+?? frontend/app/admin/config/adminConfigHubPageModel.ts
+?? frontend/app/admin/config/releases/AdminConfigReleasesFiltersCard.tsx
+?? frontend/app/admin/config/releases/AdminConfigReleasesFiltersTail.tsx
+?? frontend/app/admin/config/releases/AdminConfigReleasesMetaNote.tsx
+?? frontend/app/admin/config/releases/AdminConfigReleasesPageHeader.tsx
+?? frontend/app/admin/config/releases/AdminConfigReleasesPageMain.tsx
+?? frontend/app/admin/config/releases/AdminConfigReleasesTableSection.tsx
+?? frontend/app/admin/config/releases/[id]/AdminConfigReleaseDetailPageMain.tsx
+?? frontend/app/admin/config/releases/[id]/adminConfigReleaseDetailPage.contract.test.ts
+?? frontend/app/admin/config/releases/[id]/adminConfigReleaseDetailPageModel.ts
+?? frontend/app/admin/config/releases/[id]/useAdminConfigReleaseDetailPage.ts
+?? frontend/app/admin/config/releases/adminConfigReleasesPage.contract.test.ts
+?? frontend/app/admin/config/releases/configReleasesPageModel.ts
+?? frontend/app/admin/config/releases/useAdminConfigReleasesPage.ts
+?? frontend/app/admin/config/useAdminConfigHubPage.ts
+?? frontend/app/admin/cross-check/AdminCrossCheckPageMain.tsx
+?? frontend/app/admin/cross-check/adminCrossCheckPage.contract.test.ts
+?? frontend/app/admin/cross-check/adminCrossCheckPageModel.ts
+?? frontend/app/admin/cross-check/useAdminCrossCheckPage.ts
+?? frontend/app/admin/disputes/AdminDisputesPageMain.tsx
+?? frontend/app/admin/disputes/[id]/AdminDisputeDetailPageMain.tsx
+?? frontend/app/admin/disputes/[id]/adminDisputeDetailPage.contract.test.ts
+?? frontend/app/admin/disputes/[id]/adminDisputeDetailPageModel.ts
+?? frontend/app/admin/disputes/[id]/useAdminDisputeDetailPage.ts
+?? frontend/app/admin/disputes/adminDisputesPage.contract.test.ts
+?? frontend/app/admin/disputes/adminDisputesPageModel.ts
+?? frontend/app/admin/disputes/useAdminDisputesPage.ts
+?? frontend/app/admin/drift-summary/AdminDriftSummaryPageMain.tsx
+?? frontend/app/admin/drift-summary/adminDriftSummaryPage.contract.test.ts
+?? frontend/app/admin/drift-summary/adminDriftSummaryPageModel.ts
+?? frontend/app/admin/drift-summary/useAdminDriftSummaryPage.ts
+?? frontend/app/admin/fee-router/AdminFeeRouterPageMain.tsx
+?? frontend/app/admin/fee-router/adminFeeRouterPage.contract.test.ts
+?? frontend/app/admin/fee-router/adminFeeRouterPageModel.ts
+?? frontend/app/admin/fee-router/useAdminFeeRouterPage.ts
+?? frontend/app/admin/finance-reconciliation/AdminFinanceReconciliationApiSection.tsx
+?? frontend/app/admin/finance-reconciliation/AdminFinanceReconciliationDriftSection.tsx
+?? frontend/app/admin/finance-reconciliation/AdminFinanceReconciliationNavSection.tsx
+?? frontend/app/admin/finance-reconciliation/AdminFinanceReconciliationPageHeader.tsx
+?? frontend/app/admin/finance-reconciliation/AdminFinanceReconciliationPageMain.tsx
+?? frontend/app/admin/finance-reconciliation/adminFinanceReconciliationPage.contract.test.ts
+?? frontend/app/admin/finance-reconciliation/adminFinanceReconciliationPageModel.ts
+?? frontend/app/admin/finance-reconciliation/useAdminFinanceReconciliationPage.ts
+?? frontend/app/admin/finance/AdminFinanceMetaLedgerSection.tsx
+?? frontend/app/admin/finance/AdminFinancePageHeader.tsx
+?? frontend/app/admin/finance/AdminFinancePageMain.tsx
+?? frontend/app/admin/finance/AdminFinanceSummaryGridSection.tsx
+?? frontend/app/admin/finance/adminFinancePageDerived.ts
+?? frontend/app/admin/finance/adminFinancePageTypes.ts
+?? frontend/app/admin/finance/useAdminFinancePage.ts
+?? frontend/app/admin/flags/AdminFlagsFilterCard.tsx
+?? frontend/app/admin/flags/AdminFlagsListSection.tsx
+?? frontend/app/admin/flags/AdminFlagsPageMain.tsx
+?? frontend/app/admin/flags/AdminFlagsPublishModal.tsx
+?? frontend/app/admin/flags/adminFlagsPage.contract.test.ts
+?? frontend/app/admin/flags/adminFlagsPageConstants.ts
+?? frontend/app/admin/flags/adminFlagsPageQuery.ts
+?? frontend/app/admin/flags/adminFlagsPageTypes.ts
+?? frontend/app/admin/flags/useAdminFlagsPage.ts
+?? frontend/app/admin/flags/useAdminFlagsPageListFetch.ts
+?? frontend/app/admin/guides/AdminGuidesPageMain.tsx
+?? frontend/app/admin/guides/[id]/AdminGuideDetailPageMain.tsx
+?? frontend/app/admin/guides/[id]/adminGuideDetailPage.contract.test.ts
+?? frontend/app/admin/guides/[id]/adminGuideDetailPageModel.ts
+?? frontend/app/admin/guides/[id]/useAdminGuideDetailPage.ts
+?? frontend/app/admin/guides/adminGuidesPage.contract.test.ts
+?? frontend/app/admin/guides/adminGuidesPageModel.ts
+?? frontend/app/admin/guides/useAdminGuidesPage.ts
+?? frontend/app/admin/indexer/AdminIndexerHealthPanel.tsx
+?? frontend/app/admin/indexer/AdminIndexerJsonBlock.tsx
+?? frontend/app/admin/indexer/AdminIndexerOpsHintCard.tsx
+?? frontend/app/admin/indexer/AdminIndexerPageHeader.tsx
+?? frontend/app/admin/indexer/AdminIndexerPageMain.tsx
+?? frontend/app/admin/indexer/AdminIndexerReconcileJumpSection.tsx
+?? frontend/app/admin/indexer/adminIndexerPage.contract.test.ts
+?? frontend/app/admin/indexer/indexerPageModel.ts
+?? frontend/app/admin/indexer/reconcile-reports/ReconcileReportsFilterCard.tsx
+?? frontend/app/admin/indexer/reconcile-reports/ReconcileReportsPageHeader.tsx
+?? frontend/app/admin/indexer/reconcile-reports/ReconcileReportsPageMain.tsx
+?? frontend/app/admin/indexer/reconcile-reports/ReconcileReportsTableSection.tsx
+?? frontend/app/admin/indexer/reconcile-reports/adminIndexerReconcileReportsPage.contract.test.ts
+?? frontend/app/admin/indexer/reconcile-reports/reconcileReportsPageExportDownload.ts
+?? frontend/app/admin/indexer/reconcile-reports/reconcileReportsPageModel.ts
+?? frontend/app/admin/indexer/reconcile-reports/reconcileReportsTableFormatters.ts
+?? frontend/app/admin/indexer/reconcile-reports/useAdminIndexerReconcileReportsPage.ts
+?? frontend/app/admin/indexer/reconcile-reports/useAdminIndexerReconcileReportsPageListFetch.ts
+?? frontend/app/admin/indexer/reconcile/[id]/AdminIndexerReconcileReportPageMain.tsx
+?? frontend/app/admin/indexer/reconcile/[id]/adminIndexerReconcileReportPage.contract.test.ts
+?? frontend/app/admin/indexer/reconcile/[id]/adminIndexerReconcileReportPageDigests.tsx
+?? frontend/app/admin/indexer/reconcile/[id]/adminIndexerReconcileReportPageModel.ts
+?? frontend/app/admin/indexer/reconcile/[id]/useAdminIndexerReconcileReportPage.ts
+?? frontend/app/admin/indexer/useAdminIndexerPage.ts
+?? frontend/app/admin/internal-tools/audits/AdminInternalToolAuditsAppliedFiltersInline.tsx
+?? frontend/app/admin/internal-tools/audits/AdminInternalToolAuditsFiltersBlock.tsx
+?? frontend/app/admin/internal-tools/audits/AdminInternalToolAuditsMetaSection.tsx
+?? frontend/app/admin/internal-tools/audits/AdminInternalToolAuditsPageHeader.tsx
+?? frontend/app/admin/internal-tools/audits/AdminInternalToolAuditsPageMain.tsx
+?? frontend/app/admin/internal-tools/audits/AdminInternalToolAuditsStatusBlock.tsx
+?? frontend/app/admin/internal-tools/audits/AdminInternalToolAuditsTableSection.tsx
+?? frontend/app/admin/internal-tools/audits/adminInternalToolAuditsPage.contract.test.ts
+?? frontend/app/admin/internal-tools/audits/adminInternalToolAuditsPageModel.ts
+?? frontend/app/admin/internal-tools/audits/useAdminInternalToolAuditsPage.ts
+?? frontend/app/admin/jobs/AdminJobsPageMain.tsx
+?? frontend/app/admin/jobs/adminJobsPage.contract.test.ts
+?? frontend/app/admin/jobs/adminJobsPageModel.ts
+?? frontend/app/admin/jobs/useAdminJobsPage.ts
+?? frontend/app/admin/lifecycle/AdminLifecycleAppliedFiltersInline.tsx
+?? frontend/app/admin/lifecycle/AdminLifecycleFiltersBlock.tsx
+?? frontend/app/admin/lifecycle/AdminLifecycleMetaAndNoteSection.tsx
+?? frontend/app/admin/lifecycle/AdminLifecyclePageHeader.tsx
+?? frontend/app/admin/lifecycle/AdminLifecyclePageMain.tsx
+?? frontend/app/admin/lifecycle/AdminLifecycleStatusBlock.tsx
+?? frontend/app/admin/lifecycle/AdminLifecycleTableSection.tsx
+?? frontend/app/admin/lifecycle/adminLifecyclePage.contract.test.ts
+?? frontend/app/admin/lifecycle/adminLifecyclePageModel.ts
+?? frontend/app/admin/lifecycle/useAdminLifecyclePage.ts
+?? frontend/app/admin/media/access-logs/AdminMediaAccessLogsFiltersCard.tsx
+?? frontend/app/admin/media/access-logs/AdminMediaAccessLogsFiltersTail.tsx
+?? frontend/app/admin/media/access-logs/AdminMediaAccessLogsMetaNote.tsx
+?? frontend/app/admin/media/access-logs/AdminMediaAccessLogsPageHeader.tsx
+?? frontend/app/admin/media/access-logs/AdminMediaAccessLogsPageMain.tsx
+?? frontend/app/admin/media/access-logs/AdminMediaAccessLogsTableSection.tsx
+?? frontend/app/admin/media/access-logs/adminMediaAccessLogsPage.contract.test.ts
+?? frontend/app/admin/media/access-logs/adminMediaAccessLogsPageModel.ts
+?? frontend/app/admin/media/access-logs/useAdminMediaAccessLogsPage.ts
+?? frontend/app/admin/media/signed-url-tokens/AdminMediaSignedUrlTokensFiltersCard.tsx
+?? frontend/app/admin/media/signed-url-tokens/AdminMediaSignedUrlTokensMetaNote.tsx
+?? frontend/app/admin/media/signed-url-tokens/AdminMediaSignedUrlTokensPageHeader.tsx
+?? frontend/app/admin/media/signed-url-tokens/AdminMediaSignedUrlTokensPageMain.tsx
+?? frontend/app/admin/media/signed-url-tokens/AdminMediaSignedUrlTokensTableSection.tsx
+?? frontend/app/admin/media/signed-url-tokens/adminMediaSignedUrlTokensPage.contract.test.ts
+?? frontend/app/admin/media/signed-url-tokens/adminMediaSignedUrlTokensPageModel.ts
+?? frontend/app/admin/media/signed-url-tokens/useAdminMediaSignedUrlTokensPage.ts
+?? frontend/app/admin/observability/AdminObservabilityJsonBlock.tsx
+?? frontend/app/admin/observability/AdminObservabilityOverviewSection.tsx
+?? frontend/app/admin/observability/AdminObservabilityPageHeader.tsx
+?? frontend/app/admin/observability/AdminObservabilityPageMain.tsx
+?? frontend/app/admin/observability/adminObservabilityPage.contract.test.ts
+?? frontend/app/admin/observability/observabilityPageModel.ts
+?? frontend/app/admin/observability/useAdminObservabilityPage.ts
+?? frontend/app/admin/orders/AdminOrdersPageMain.tsx
+?? frontend/app/admin/orders/[id]/AdminOrderDetailPageMain.tsx
+?? frontend/app/admin/orders/[id]/adminOrderDetailPage.contract.test.ts
+?? frontend/app/admin/orders/[id]/adminOrderDetailPageModel.ts
+?? frontend/app/admin/orders/[id]/useAdminOrderDetailPage.ts
+?? frontend/app/admin/orders/adminOrdersPage.contract.test.ts
+?? frontend/app/admin/orders/adminOrdersPageModel.ts
+?? frontend/app/admin/orders/useAdminOrdersPage.ts
+?? frontend/app/admin/policies/AdminPoliciesFilterCard.tsx
+?? frontend/app/admin/policies/AdminPoliciesListSection.tsx
+?? frontend/app/admin/policies/AdminPoliciesPageMain.tsx
+?? frontend/app/admin/policies/AdminPoliciesPublishModal.tsx
+?? frontend/app/admin/policies/adminPoliciesPageConstants.ts
+?? frontend/app/admin/policies/adminPoliciesPageHelpers.ts
+?? frontend/app/admin/policies/adminPoliciesPageQuery.ts
+?? frontend/app/admin/policies/adminPoliciesPageTypes.ts
+?? frontend/app/admin/policies/useAdminPoliciesPage.ts
+?? frontend/app/admin/policies/useAdminPoliciesPageListFetch.ts
+?? frontend/app/admin/region-vault/AdminRegionVaultPageMain.tsx
+?? frontend/app/admin/region-vault/adminRegionVaultPage.contract.test.ts
+?? frontend/app/admin/region-vault/adminRegionVaultPageModel.ts
+?? frontend/app/admin/region-vault/useAdminRegionVaultPage.ts
+?? frontend/app/admin/reviews/AdminReviewsFetchAlerts.tsx
+?? frontend/app/admin/reviews/AdminReviewsFiltersCard.tsx
+?? frontend/app/admin/reviews/AdminReviewsPageHeader.tsx
+?? frontend/app/admin/reviews/AdminReviewsPageMain.tsx
+?? frontend/app/admin/reviews/AdminReviewsTableSection.tsx
+?? frontend/app/admin/reviews/[id]/AdminReviewDetailPageMain.tsx
+?? frontend/app/admin/reviews/[id]/adminReviewDetailPage.contract.test.ts
+?? frontend/app/admin/reviews/[id]/adminReviewDetailPageModel.ts
+?? frontend/app/admin/reviews/[id]/useAdminReviewDetailPage.ts
+?? frontend/app/admin/reviews/adminReviewsPage.contract.test.ts
+?? frontend/app/admin/reviews/adminReviewsPageModel.ts
+?? frontend/app/admin/reviews/useAdminReviewsPage.ts
+?? frontend/app/admin/scheduler/jobs/AdminSchedulerJobsAppliedFiltersBanner.tsx
+?? frontend/app/admin/scheduler/jobs/AdminSchedulerJobsFiltersCard.tsx
+?? frontend/app/admin/scheduler/jobs/AdminSchedulerJobsMetaAndNoteSection.tsx
+?? frontend/app/admin/scheduler/jobs/AdminSchedulerJobsPageHeader.tsx
+?? frontend/app/admin/scheduler/jobs/AdminSchedulerJobsPageMain.tsx
+?? frontend/app/admin/scheduler/jobs/AdminSchedulerJobsRerunModal.tsx
+?? frontend/app/admin/scheduler/jobs/AdminSchedulerJobsStatusBlock.tsx
+?? frontend/app/admin/scheduler/jobs/AdminSchedulerJobsTableSection.tsx
+?? frontend/app/admin/scheduler/jobs/adminSchedulerJobsPageModel.ts
+?? frontend/app/admin/scheduler/jobs/useAdminSchedulerJobsPage.ts
+?? frontend/app/admin/schema/AdminSchemaPageMain.tsx
+?? frontend/app/admin/schema/adminSchemaPage.contract.test.ts
+?? frontend/app/admin/schema/adminSchemaPageModel.ts
+?? frontend/app/admin/schema/useAdminSchemaPage.ts
+?? frontend/app/admin/secrets/metadata/AdminSecretsMetadataFiltersCard.tsx
+?? frontend/app/admin/secrets/metadata/AdminSecretsMetadataFiltersTail.tsx
+?? frontend/app/admin/secrets/metadata/AdminSecretsMetadataMetaNote.tsx
+?? frontend/app/admin/secrets/metadata/AdminSecretsMetadataPageHeader.tsx
+?? frontend/app/admin/secrets/metadata/AdminSecretsMetadataPageMain.tsx
+?? frontend/app/admin/secrets/metadata/AdminSecretsMetadataTableSection.tsx
+?? frontend/app/admin/secrets/metadata/adminSecretsMetadataPage.contract.test.ts
+?? frontend/app/admin/secrets/metadata/adminSecretsMetadataPageModel.ts
+?? frontend/app/admin/secrets/metadata/useAdminSecretsMetadataPage.ts
+?? frontend/app/admin/tenants/scopes/AdminTenantScopesFilterCard.tsx
+?? frontend/app/admin/tenants/scopes/AdminTenantScopesListSection.tsx
+?? frontend/app/admin/tenants/scopes/AdminTenantScopesPageMain.tsx
+?? frontend/app/admin/tenants/scopes/AdminTenantScopesPublishModal.tsx
+?? frontend/app/admin/tenants/scopes/adminTenantScopesPage.contract.test.ts
+?? frontend/app/admin/tenants/scopes/adminTenantScopesPageConstants.ts
+?? frontend/app/admin/tenants/scopes/adminTenantScopesPageQuery.ts
+?? frontend/app/admin/tenants/scopes/adminTenantScopesPageTypes.ts
+?? frontend/app/admin/tenants/scopes/useAdminTenantScopesPage.ts
+?? frontend/app/admin/tenants/scopes/useAdminTenantScopesPageListFetch.ts
+?? frontend/app/admin/trust-growth/AdminTrustGrowthAlertsSection.tsx
+?? frontend/app/admin/trust-growth/AdminTrustGrowthControlSection.tsx
+?? frontend/app/admin/trust-growth/AdminTrustGrowthKpiSection.tsx
+?? frontend/app/admin/trust-growth/AdminTrustGrowthLoadErrorBlock.tsx
+?? frontend/app/admin/trust-growth/AdminTrustGrowthMetricsSection.tsx
+?? frontend/app/admin/trust-growth/AdminTrustGrowthPageHeader.tsx
+?? frontend/app/admin/trust-growth/AdminTrustGrowthPageMain.tsx
+?? frontend/app/admin/trust-growth/AdminTrustGrowthThresholdsSection.tsx
+?? frontend/app/admin/trust-growth/AdminTrustGrowthTimelineSection.tsx
+?? frontend/app/admin/trust-growth/AdminTrustGrowthWriteNoticeBanner.tsx
+?? frontend/app/admin/trust-growth/adminTrustGrowthPage.contract.test.ts
+?? frontend/app/admin/trust-growth/adminTrustGrowthPageModel.ts
+?? frontend/app/admin/trust-growth/useAdminTrustGrowthPage.ts
+?? frontend/app/admin/users/AdminUsersDataSection.tsx
+?? frontend/app/admin/users/AdminUsersFiltersCard.tsx
+?? frontend/app/admin/users/AdminUsersPageHeader.tsx
+?? frontend/app/admin/users/AdminUsersPageMain.tsx
+?? frontend/app/admin/users/AdminUsersRoleChangeModal.tsx
+?? frontend/app/admin/users/AdminUsersRoleSuccessBanner.tsx
+?? frontend/app/admin/users/[id]/AdminUserDetailPageMain.tsx
+?? frontend/app/admin/users/[id]/adminUserDetailPage.contract.test.ts
+?? frontend/app/admin/users/[id]/adminUserDetailPageModel.ts
+?? frontend/app/admin/users/[id]/useAdminUserDetailPage.ts
+?? frontend/app/admin/users/adminUsersPageModel.ts
+?? frontend/app/admin/users/adminUsersPageTypes.ts
+?? frontend/app/admin/users/useAdminUsersPage.ts
+?? frontend/app/auth/register/RegisterGuideFormAccountSection.tsx
+?? frontend/app/auth/register/RegisterGuideFormDidProfileSection.tsx
+?? frontend/app/auth/register/RegisterPageMain.tsx
+?? frontend/app/auth/register/registerGuideFormTypes.ts
+?? frontend/app/auth/register/registerPage.contract.test.ts
+?? frontend/app/auth/register/registerPageModel.ts
+?? frontend/app/auth/register/useRegisterPage.ts
+?? frontend/app/community/explore/CommunityExplorePageAuthorsSection.tsx
+?? frontend/app/community/explore/CommunityExplorePageDestinationsSection.tsx
+?? frontend/app/community/explore/CommunityExplorePageHeader.tsx
+?? frontend/app/community/explore/CommunityExplorePageMain.tsx
+?? frontend/app/community/explore/CommunityExplorePageMasonrySection.tsx
+?? frontend/app/community/explore/CommunityExplorePageTopicsSection.tsx
+?? frontend/app/community/explore/communityExplorePageConstants.ts
+?? frontend/app/community/explore/useCommunityExplorePage.ts
+?? frontend/app/community/feedback/CommunityFeedbackListPanel.tsx
+?? frontend/app/community/feedback/CommunityFeedbackPageHeader.tsx
+?? frontend/app/community/feedback/CommunityFeedbackPageMain.tsx
+?? frontend/app/community/feedback/CommunityFeedbackPostModal.tsx
+?? frontend/app/community/feedback/CommunityFeedbackToast.tsx
+?? frontend/app/community/feedback/communityFeedbackLocalDraftItem.ts
+?? frontend/app/community/feedback/communityFeedbackPage.contract.test.ts
+?? frontend/app/community/feedback/communityFeedbackPageConstants.ts
+?? frontend/app/community/feedback/communityFeedbackPageModel.ts
+?? frontend/app/community/feedback/communityFeedbackSubmitValidation.test.ts
+?? frontend/app/community/feedback/communityFeedbackSubmitValidation.ts
+?? frontend/app/community/feedback/useCommunityFeedbackPage.ts
+?? frontend/app/community/feedback/useCommunityFeedbackPageMedia.ts
+?? frontend/app/community/feedback/useCommunityFeedbackPageModalEffects.ts
+?? frontend/app/community/feedback/useCommunityFeedbackPageToast.ts
+?? frontend/app/community/feedback/useCommunityFeedbackRemoteList.ts
+?? frontend/app/community/friends/CommunityFriendsMainTabs.tsx
+?? frontend/app/community/friends/CommunityFriendsPageInner.tsx
+?? frontend/app/community/friends/CommunityFriendsRelationRow.tsx
+?? frontend/app/community/friends/CommunityFriendsRelationsPanel.tsx
+?? frontend/app/community/friends/CommunityFriendsRequestsPanel.tsx
+?? frontend/app/community/friends/FriendsRequestsEmptyPanel.tsx
+?? frontend/app/community/friends/FriendsSentRequestRow.tsx
+?? frontend/app/community/friends/RequestReceivedApiRow.tsx
+?? frontend/app/community/friends/communityFriendsPageMappers.ts
+?? frontend/app/community/friends/communityFriendsPageTypes.ts
+?? frontend/app/community/friends/useCommunityFriendsPageModel.ts
+?? frontend/app/community/guidelines/
+?? frontend/app/community/me/collects/CommunityMeCollectsPageMain.tsx
+?? frontend/app/community/me/collects/CommunityMeCollectsPortals.tsx
+?? frontend/app/community/me/collects/MeCollectsEmptyPanel.tsx
+?? frontend/app/community/me/collects/useCommunityMeCollectsPage.ts
+?? frontend/app/community/me/collects/useCommunityMeCollectsPageCommentSend.ts
+?? frontend/app/community/me/posts/CommunityMePostsGrid.tsx
+?? frontend/app/community/me/posts/CommunityMePostsPageMain.tsx
+?? frontend/app/community/me/posts/CommunityMePostsPortals.tsx
+?? frontend/app/community/me/posts/CommunityMePostsPostTile.tsx
+?? frontend/app/community/me/posts/MePostsEmptyPanel.tsx
+?? frontend/app/community/me/posts/communityMePostsPageConstants.ts
+?? frontend/app/community/me/posts/communityMePostsPageLocalState.test.ts
+?? frontend/app/community/me/posts/communityMePostsPageLocalState.ts
+?? frontend/app/community/me/posts/useCommunityMePostsPage.ts
+?? frontend/app/community/me/posts/useCommunityMePostsPageCommentSend.ts
+?? frontend/app/community/me/posts/useCommunityMePostsPageMyPostsQuery.ts
+?? frontend/app/community/me/useCommunityMePageCommentSend.ts
+?? frontend/app/community/messages/CommunityMessagesConversationRow.tsx
+?? frontend/app/community/messages/CommunityMessagesConversationsSection.tsx
+?? frontend/app/community/messages/CommunityMessagesPageMain.tsx
+?? frontend/app/community/messages/MessagesDmEmptyPanel.tsx
+?? frontend/app/community/messages/[id]/CommunityConversationPageComposer.tsx
+?? frontend/app/community/messages/[id]/CommunityConversationPageHeader.tsx
+?? frontend/app/community/messages/[id]/CommunityConversationPageMain.tsx
+?? frontend/app/community/messages/[id]/CommunityConversationPageThreadPanel.tsx
+?? frontend/app/community/messages/[id]/useCommunityConversationPage.ts
+?? frontend/app/community/messages/[id]/useCommunityConversationPagePeer.ts
+?? frontend/app/community/messages/[id]/useCommunityConversationPageSend.ts
+?? frontend/app/community/messages/[id]/useCommunityConversationPageSharePrefill.ts
+?? frontend/app/community/messages/[id]/useCommunityConversationPageThread.ts
+?? frontend/app/community/messages/communityMessagesPageMap.ts
+?? frontend/app/community/messages/communityMessagesPageTypes.ts
+?? frontend/app/community/messages/useCommunityMessagesPage.ts
+?? frontend/app/community/user/[id]/CommunityUserPageAlertsSection.tsx
+?? frontend/app/community/user/[id]/CommunityUserPageNotFoundView.tsx
+?? frontend/app/community/user/[id]/CommunityUserPageOverlays.tsx
+?? frontend/app/community/user/[id]/CommunityUserPostsFeedSection.tsx
+?? frontend/app/community/user/[id]/CommunityUserPostsVisibilityNav.tsx
+?? frontend/app/community/user/[id]/CommunityUserProfileHeader.tsx
+?? frontend/app/community/user/[id]/communityUserPageModel.ts
+?? frontend/app/community/user/[id]/useCommunityUserPageCommentDrawer.ts
+?? frontend/app/community/user/[id]/useCommunityUserPageCore.ts
+?? frontend/app/community/user/[id]/useCommunityUserPostMutations.ts
+?? frontend/app/community/user/[id]/useCommunityUserRemoteLists.ts
+?? frontend/app/did-rank/DidRankPageInner.tsx
+?? frontend/app/did-rank/useDidRankPage.ts
+?? frontend/app/disputes/[id]/DisputeDetailArbitratorSections.tsx
+?? frontend/app/disputes/[id]/DisputeDetailEvidenceSection.tsx
+?? frontend/app/disputes/[id]/DisputeDetailExecIntentSection.tsx
+?? frontend/app/disputes/[id]/DisputeDetailLoadedView.tsx
+?? frontend/app/disputes/[id]/DisputeDetailPageErrorView.tsx
+?? frontend/app/disputes/[id]/DisputeDetailPageHeader.tsx
+?? frontend/app/disputes/[id]/DisputeDetailPageInner.tsx
+?? frontend/app/disputes/[id]/DisputeDetailPageLoadingView.tsx
+?? frontend/app/disputes/[id]/DisputeDetailPageNotFoundView.tsx
+?? frontend/app/disputes/[id]/DisputeDetailResultSection.tsx
+?? frontend/app/disputes/[id]/DisputeDetailStatementsSection.tsx
+?? frontend/app/disputes/[id]/DisputeDetailTimelineSection.tsx
+?? frontend/app/disputes/[id]/DisputeDetailTraceableSection.tsx
+?? frontend/app/disputes/[id]/disputeDetailChrome.ts
+?? frontend/app/disputes/[id]/disputeDetailPageTypes.ts
+?? frontend/app/disputes/[id]/useDisputeDetailPage.ts
+?? frontend/app/disputes/[id]/useDisputeDetailPageCopyTx.ts
+?? frontend/app/disputes/[id]/useDisputeDetailPageOrderEvidence.ts
+?? frontend/app/disputes/[id]/useDisputeDetailPageResolvedOrderEscrow.ts
+?? frontend/app/escrow/[id]/rate/EscrowRatePageEmptyIdView.tsx
+?? frontend/app/escrow/[id]/rate/EscrowRatePageInner.tsx
+?? frontend/app/escrow/[id]/rate/EscrowRatePageLoadErrorView.tsx
+?? frontend/app/escrow/[id]/rate/EscrowRatePageMain.tsx
+?? frontend/app/escrow/[id]/rate/escrowRatePageModel.ts
+?? frontend/app/escrow/[id]/rate/useEscrowRatePage.ts
+?? frontend/app/governance/GovernanceHubPageMain.tsx
+?? frontend/app/governance/GovernanceHubPoolSection.tsx
+?? frontend/app/governance/GovernanceHubRewardsSection.tsx
+?? frontend/app/governance/delegate/GovernanceDelegatePageMain.tsx
+?? frontend/app/governance/delegate/governanceDelegatePage.contract.test.ts
+?? frontend/app/governance/delegate/governanceDelegatePageModel.ts
+?? frontend/app/governance/delegate/useGovernanceDelegatePage.ts
+?? frontend/app/governance/distribution-accruals/GovernanceDistributionAccrualsPageMain.tsx
+?? frontend/app/governance/distribution-accruals/[id]/GovernanceDistributionAccrualDetailPageMain.tsx
+?? frontend/app/governance/distribution-accruals/[id]/governanceDistributionAccrualDetailPageModel.ts
+?? frontend/app/governance/distribution-accruals/[id]/useGovernanceDistributionAccrualDetailPage.ts
+?? frontend/app/governance/distribution-accruals/governanceDistributionAccrualsPageModel.ts
+?? frontend/app/governance/distribution-accruals/useGovernanceDistributionAccrualsPage.ts
+?? frontend/app/governance/distribution-claim/GovernanceDistributionClaimPageMain.tsx
+?? frontend/app/governance/distribution-claim/governanceDistributionClaimPageModel.ts
+?? frontend/app/governance/distribution-claim/useGovernanceDistributionClaimPage.ts
+?? frontend/app/governance/fee-routes/GovernanceFeeRoutesEventsTable.tsx
+?? frontend/app/governance/fee-routes/GovernanceFeeRoutesLoadMoreSection.tsx
+?? frontend/app/governance/fee-routes/GovernanceFeeRoutesPageFooterNav.tsx
+?? frontend/app/governance/fee-routes/GovernanceFeeRoutesPageMain.tsx
+?? frontend/app/governance/fee-routes/governanceFeeRoutesPageModel.ts
+?? frontend/app/governance/fee-routes/useGovernanceFeeRoutesPage.ts
+?? frontend/app/governance/governanceHubPageModel.ts
+?? frontend/app/governance/params/GovernanceParamsPageMain.tsx
+?? frontend/app/governance/params/governanceParamsPageModel.ts
+?? frontend/app/governance/params/useGovernanceParamsPage.ts
+?? frontend/app/governance/proposals/GovernanceProposalsPageMain.tsx
+?? frontend/app/governance/proposals/[id]/GovernanceProposalDetailLoadedArticle.tsx
+?? frontend/app/governance/proposals/[id]/GovernanceProposalDetailPageMain.tsx
+?? frontend/app/governance/proposals/[id]/governanceProposalDetailPageModel.ts
+?? frontend/app/governance/proposals/[id]/useGovernanceProposalDetailPage.ts
+?? frontend/app/governance/proposals/governanceProposalsPageModel.ts
+?? frontend/app/governance/proposals/useGovernanceProposalsPage.ts
+?? frontend/app/governance/useGovernanceHubPage.ts
+?? frontend/app/governance/vault-forwards/GovernanceVaultForwardsPageMain.tsx
+?? frontend/app/governance/vault-forwards/governanceVaultForwardsPageModel.ts
+?? frontend/app/governance/vault-forwards/useGovernanceVaultForwardsPage.ts
+?? frontend/app/guide/GuideDashboardPageMain.tsx
+?? frontend/app/guide/register/GuideRegisterAlreadyGuidePanel.tsx
+?? frontend/app/guide/register/GuideRegisterDidIdentityCard.tsx
+?? frontend/app/guide/register/GuideRegisterDonePanel.tsx
+?? frontend/app/guide/register/GuideRegisterIntroBanners.tsx
+?? frontend/app/guide/register/GuideRegisterMainForm.tsx
+?? frontend/app/guide/register/GuideRegisterPageMain.tsx
+?? frontend/app/guide/register/guideRegisterPage.contract.test.ts
+?? frontend/app/guide/register/guideRegisterPageModel.ts
+?? frontend/app/guide/register/guideRegisterSubmitFlow.ts
+?? frontend/app/guide/register/guideRegisterUiClasses.ts
+?? frontend/app/guide/register/useGuideRegisterPage.ts
+?? frontend/app/guide/useGuideDashboardPage.ts
+?? frontend/app/guides/[id]/GuideDetailCredentialCard.tsx
+?? frontend/app/guides/[id]/GuideDetailPageErrorView.tsx
+?? frontend/app/guides/[id]/GuideDetailPageLoaded.tsx
+?? frontend/app/guides/[id]/GuideDetailPageLoadingView.tsx
+?? frontend/app/guides/[id]/GuideDetailPageMain.tsx
+?? frontend/app/guides/[id]/GuideDetailPageNotFoundView.tsx
+?? frontend/app/guides/[id]/guideDetailPageConstants.ts
+?? frontend/app/guides/[id]/guideDetailPageTypes.ts
+?? frontend/app/guides/[id]/useGuideDetailPage.ts
+?? frontend/app/itinerary/new/ItineraryNewPageMain.tsx
+?? frontend/app/itinerary/new/draftHydrateMap.test.ts
+?? frontend/app/itinerary/new/draftHydrateMap.ts
+?? frontend/app/itinerary/new/fromOrderPrefill.test.ts
+?? frontend/app/itinerary/new/fromOrderPrefill.ts
+?? frontend/app/itinerary/new/useItineraryNewPage.ts
+?? frontend/app/me/onboarding/MeOnboardingEntitlementsSection.tsx
+?? frontend/app/me/onboarding/MeOnboardingPageMain.tsx
+?? frontend/app/me/onboarding/MeOnboardingQuoteSection.tsx
+?? frontend/app/me/onboarding/MeOnboardingRolePick.tsx
+?? frontend/app/me/onboarding/MeOnboardingWritesSection.tsx
+?? frontend/app/me/onboarding/meOnboardingPageChrome.ts
+?? frontend/app/me/onboarding/meOnboardingPageHelpers.ts
+?? frontend/app/me/onboarding/useMeOnboardingPage.ts
+?? frontend/app/me/security/MeSecurityNotificationsSection.tsx
+?? frontend/app/me/security/MeSecurityPageMain.tsx
+?? frontend/app/me/security/MeSecuritySessionsSection.tsx
+?? frontend/app/me/security/meSecurityPageNotify.ts
+?? frontend/app/me/security/meSecurityPageTypes.ts
+?? frontend/app/me/security/useMeSecurityPage.ts
+?? frontend/app/orders/OrdersBookGuideBannerSection.tsx
+?? frontend/app/orders/OrdersListAlertsSection.tsx
+?? frontend/app/orders/OrdersListCards.tsx
+?? frontend/app/orders/OrdersListEmptyState.tsx
+?? frontend/app/orders/OrdersListLoadMoreSection.tsx
+?? frontend/app/orders/OrdersListPageFooter.tsx
+?? frontend/app/orders/OrdersListPageHeader.tsx
+?? frontend/app/orders/OrdersPageLoadingView.tsx
+?? frontend/app/orders/new/OrdersNewPageMain.tsx
+?? frontend/app/orders/new/ordersNewPageModel.ts
+?? frontend/app/orders/new/useOrdersNewPage.ts
+?? frontend/app/orders/ordersListPageModel.ts
+?? frontend/app/orders/useOrdersListBookGuideResolve.ts
+?? frontend/app/orders/useOrdersListExpectOrderBanner.ts
+?? frontend/app/orders/useOrdersListPageCore.ts
+?? frontend/app/pay/PayPageInner.tsx
+?? frontend/app/pay/PayPageMain.tsx
+?? frontend/app/pay/PayPagePrimaryCard.tsx
+?? frontend/app/pay/PayPagePrimaryCardActionLinks.tsx
+?? frontend/app/pay/PayPagePrimaryCardDeadlinePanel.tsx
+?? frontend/app/pay/PayPagePrimaryCardEscrowCallout.tsx
+?? frontend/app/pay/PayPagePrimaryCardFeeRouterSlot.tsx
+?? frontend/app/pay/PayPagePrimaryCardMockPaySurfaces.tsx
+?? frontend/app/pay/PayPagePrimaryCardOrderIdSection.tsx
+?? frontend/app/pay/PayPagePrimaryCardOrderLoadError.tsx
+?? frontend/app/pay/PayPagePrimaryCardStepsList.tsx
+?? frontend/app/pay/page.test.tsx
+?? frontend/app/pay/payPageConstants.ts
+?? frontend/app/pay/usePayFlowContextLines.ts
+?? frontend/app/pay/usePayPage.ts
+?? frontend/app/pay/usePayPageMockPay.ts
+?? frontend/app/pay/usePayPageOrderSliceLoad.ts
+?? frontend/app/traveltrust/TravelTrustNetworkPageClosingCta.tsx
+?? frontend/app/traveltrust/TravelTrustNetworkPageFaqSection.tsx
+?? frontend/app/traveltrust/TravelTrustNetworkPageHero.tsx
+?? frontend/app/traveltrust/TravelTrustNetworkPageLowerBody.tsx
+?? frontend/app/traveltrust/TravelTrustNetworkPageMain.tsx
+?? frontend/app/traveltrust/TravelTrustNetworkPageUpperBody.tsx
+?? frontend/app/traveltrust/traveltrustNetworkPage.contract.test.ts
+?? frontend/app/traveltrust/traveltrustNetworkPageModel.ts
+?? frontend/app/traveltrust/useTravelTrustNetworkPage.ts
+?? frontend/components/community/CommentDrawerCommentThreads.tsx
+?? frontend/components/community/CommentDrawerComposer.tsx
+?? frontend/components/community/CommentDrawerHeader.tsx
+?? frontend/components/community/CommentDrawerScrollBody.tsx
+?? frontend/components/community/CommentDrawerSortTabs.tsx
+?? frontend/components/community/CommunityFeedCardMediaRichViewport.tsx
+?? frontend/components/community/CommunityFeedCardMediaTextOnly.tsx
+?? frontend/components/community/CommunityFeedFilterBarChipFilters.tsx
+?? frontend/components/community/CommunityFeedFilterBarFeedError.tsx
+?? frontend/components/community/CommunityFeedFilterBarMobileToggle.tsx
+?? frontend/components/community/CommunityFeedFilterBarSearch.tsx
+?? frontend/components/community/CommunityFeedFilterBarSummary.tsx
+?? frontend/components/community/CommunityFeedFilterBarTabs.tsx
+?? frontend/components/community/CommunityFeedListEmptyState.tsx
+?? frontend/components/community/CommunityFeedListPostsSection.tsx
+?? frontend/components/community/CommunityFeedListSkeletons.tsx
+?? frontend/components/community/CommunityFeedMainCommentDrawerPortal.tsx
+?? frontend/components/community/CommunityFeedMainFeedColumn.tsx
+?? frontend/components/community/CommunityFeedMainPageChrome.tsx
+?? frontend/components/community/CommunityFeedMainPortals.tsx
+?? frontend/components/community/CommunityFeedMainPostDetailPortal.tsx
+?? frontend/components/community/CommunityFeedMainPostFilterAlerts.tsx
+?? frontend/components/community/CommunityFeedMainPreHeroAlerts.tsx
+?? frontend/components/community/CommunityFeedMainPublishDrawerPortal.tsx
+?? frontend/components/community/CommunityFeedMainPublishWideEntry.tsx
+?? frontend/components/community/CommunityFeedMainReportDrawerPortal.tsx
+?? frontend/components/community/CommunityFeedMainShell.tsx
+?? frontend/components/community/CommunityFeedMainToastPortal.tsx
+?? frontend/components/community/CommunityFeedMainVideoOverlayPortal.tsx
+?? frontend/components/community/CommunityInteractionSummary.test.tsx
+?? frontend/components/community/CommunityRouteShellInner.tsx
+?? frontend/components/community/CommunityRouteShellMobileBottomNav.tsx
+?? frontend/components/community/CommunityRouteShellTabLinks.tsx
+?? frontend/components/community/CommunityVideoOverlayStage.tsx
+?? frontend/components/community/CommunityVideoOverlayTopBar.tsx
+?? frontend/components/community/CommunityVideoOverlayView.tsx
+?? frontend/components/community/OrderChatContextCardDeepLinks.tsx
+?? frontend/components/community/OrderChatContextCardErrorPanel.tsx
+?? frontend/components/community/OrderChatContextCardLoadedBody.tsx
+?? frontend/components/community/OrderChatContextCardLoadingSkeleton.tsx
+?? frontend/components/community/PostDetailDrawerCommentsSection.tsx
+?? frontend/components/community/PostDetailDrawerFooterComposer.tsx
+?? frontend/components/community/PostDetailDrawerHeader.tsx
+?? frontend/components/community/PostDetailDrawerMediaZone.tsx
+?? frontend/components/community/PostDetailDrawerMetaSection.tsx
+?? frontend/components/community/PublishDrawer/PublishDrawerAlerts.tsx
+?? frontend/components/community/PublishDrawer/PublishDrawerBodyFieldSection.tsx
+?? frontend/components/community/PublishDrawer/PublishDrawerFooter.tsx
+?? frontend/components/community/PublishDrawer/PublishDrawerHeader.tsx
+?? frontend/components/community/PublishDrawer/PublishDrawerPhotoSection.tsx
+?? frontend/components/community/PublishDrawer/PublishDrawerTagsFieldSection.tsx
+?? frontend/components/community/PublishDrawer/PublishDrawerTextTypePanel.tsx
+?? frontend/components/community/PublishDrawer/PublishDrawerTypeSection.tsx
+?? frontend/components/community/PublishDrawer/PublishDrawerVideoSection.tsx
+?? frontend/components/community/PublishDrawer/constants.test.ts
+?? frontend/components/community/PublishDrawer/publishDrawerMergeRefs.ts
+?? frontend/components/community/PublishDrawer/publishFormMediaPersistence.ts
+?? frontend/components/community/PublishDrawer/publishFormVideoBlobProbe.ts
+?? frontend/components/community/PublishDrawer/usePublishForm.tags-utf8.test.tsx
+?? frontend/components/community/PublishDrawer/usePublishForm.video-duration.test.tsx
+?? frontend/components/community/PublishDrawer/usePublishFormDrawerEffects.ts
+?? frontend/components/community/commentDrawerModel.ts
+?? frontend/components/community/communityFeedBootstrapAssemble.ts
+?? frontend/components/community/communityFeedCardMediaTypes.ts
+?? frontend/components/community/communityFeedCardMediaUtils.ts
+?? frontend/components/community/communityFeedFilterBarTypes.ts
+?? frontend/components/community/communityFeedListConstants.ts
+?? frontend/components/community/communityFeedListTypes.ts
+?? frontend/components/community/communityFeedMainFeedColumnTypes.ts
+?? frontend/components/community/communityFeedMainPortalsTypes.ts
+?? frontend/components/community/communityFeedMainTypes.ts
+?? frontend/components/community/communityFeedMainVideoFeed.ts
+?? frontend/components/community/communityFeedMappers.commentsAndThreadCounts.test.ts
+?? frontend/components/community/communityFeedMappers.likeCollectDisplay.test.ts
+?? frontend/components/community/communityFeedMappers.postRoleMedia.test.ts
+?? frontend/components/community/communityFeedMappers.vitestShared.ts
+?? frontend/components/community/communityFeedMappersCounts.ts
+?? frontend/components/community/communityFeedMappersPostComment.ts
+?? frontend/components/community/communityFeedMappersRoleAndMedia.ts
+?? frontend/components/community/communityFeedTopicAndTailHookModel.ts
+?? frontend/components/community/communityRouteShellConstants.ts
+?? frontend/components/community/communityVideoOverlayControllerTypes.ts
+?? frontend/components/community/communityVideoOverlayTypes.ts
+?? frontend/components/community/communityVideoOverlayUtils.ts
+?? frontend/components/community/orderChatContextCardDerived.ts
+?? frontend/components/community/orderChatContextCardTypes.ts
+?? frontend/components/community/postDetailDrawerTypes.ts
+?? frontend/components/community/useCommunityDrawerCommentsQuery.ts
+?? frontend/components/community/useCommunityFeed.mapApiComment.test.ts
+?? frontend/components/community/useCommunityFeed.mapApiPost.test.ts
+?? frontend/components/community/useCommunityFeed.roleAndPill.test.ts
+?? frontend/components/community/useCommunityFeedApiDerivedSync.ts
+?? frontend/components/community/useCommunityFeedBootstrap.ts
+?? frontend/components/community/useCommunityFeedBootstrapFeedState.ts
+?? frontend/components/community/useCommunityFeedCardMediaController.ts
+?? frontend/components/community/useCommunityFeedCommentAndPublish.ts
+?? frontend/components/community/useCommunityFeedCommentSend.ts
+?? frontend/components/community/useCommunityFeedCommentsDerived.ts
+?? frontend/components/community/useCommunityFeedEscapeKeyHandlers.ts
+?? frontend/components/community/useCommunityFeedFilterBarChrome.ts
+?? frontend/components/community/useCommunityFeedFilters.test.tsx
+?? frontend/components/community/useCommunityFeedLikeCollectFollow.ts
+?? frontend/components/community/useCommunityFeedListLoadMoreSentinel.ts
+?? frontend/components/community/useCommunityFeedListRenderDesktopPost.tsx
+?? frontend/components/community/useCommunityFeedMeFollowingCollects.ts
+?? frontend/components/community/useCommunityFeedModals.ts
+?? frontend/components/community/useCommunityFeedPostDeepLink.ts
+?? frontend/components/community/useCommunityFeedPublishOpenAndClosers.ts
+?? frontend/components/community/useCommunityFeedPublishSubmit.ts
+?? frontend/components/community/useCommunityFeedRefreshAndLoadMore.ts
+?? frontend/components/community/useCommunityFeedReportAndCommentDrawer.ts
+?? frontend/components/community/useCommunityFeedSortAndUrlTag.ts
+?? frontend/components/community/useCommunityFeedTabSortAndFeedApi.ts
+?? frontend/components/community/useCommunityFeedTailInteractions.ts
+?? frontend/components/community/useCommunityFeedTopicDestinationUrl.ts
+?? frontend/components/community/useCommunityFeedTopicReportCommentChain.ts
+?? frontend/components/community/useCommunityFeedTouchPullRefresh.ts
+?? frontend/components/community/useCommunityRouteShellInner.ts
+?? frontend/components/community/useCommunityVideoOverlayController.ts
+?? frontend/components/community/useCommunityVideoOverlayFullscreenStage.ts
+?? frontend/components/community/useCommunityVideoOverlayGlobalShortcuts.ts
+?? frontend/components/community/useCommunityVideoOverlayNavInteractions.ts
+?? frontend/components/community/useCommunityVideoOverlayPlaybackControls.ts
+?? frontend/components/community/usePostDetailDrawerModel.ts
+?? frontend/components/did-rank/DidRankBoardShell.tsx
+?? frontend/components/did-rank/DidRankPageFooter.tsx
+?? frontend/components/did-rank/DidRankRouteAmbientDecor.tsx
+?? frontend/components/did-rank/DidRankTop10JsonLd.tsx
+?? frontend/components/did-rank/GuideRankBlockRow.tsx
+?? frontend/components/did-rank/GuideRankBlockTopCard.tsx
+?? frontend/components/did-rank/ItineraryRankBlockCreatorLine.tsx
+?? frontend/components/did-rank/ItineraryRankBlockTopCard.tsx
+?? frontend/components/did-rank/TravelerRankBlockRow.tsx
+?? frontend/components/did-rank/TravelerRankBlockTopCard.tsx
+?? frontend/components/did-rank/guideRankBlockTypes.ts
+?? frontend/components/did-rank/itineraryRankBlockTop3Styles.ts
+?? frontend/components/did-rank/itineraryRankBlockTypes.ts
+?? frontend/components/did-rank/travelerRankBlockCompletedOrdersDisplay.ts
+?? frontend/components/did-rank/travelerRankBlockTypes.ts
+?? frontend/components/did-rank/useDidRankBoardPagination.test.tsx
+?? frontend/components/did-rank/useDidRankBoardPagination.ts
+?? frontend/components/did-rank/useDidRankData.test.ts
+?? frontend/components/did-rank/useDidRankData.ts
+?? frontend/components/did-rank/useDidRankEmptyStateImpression.ts
+?? frontend/components/did-rank/useDidRankScrollToMyRank.ts
+?? frontend/components/did-rank/web3SciFiBackgroundScene.tsx
+?? frontend/components/did-rank/web3SciFiShaders.ts
+?? frontend/components/escrow/EscrowDetail/ChatBlockSenderAvatar.tsx
+?? frontend/components/escrow/EscrowDetail/ChatItineraryMicroRibbon.tsx
+?? frontend/components/escrow/EscrowDetail/CreateOnChainEscrowFactoryModal.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailEscrowOverviewPanel.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailItineraryBudgetZone.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailItineraryBudgetZoneDraftEditors.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailItineraryBudgetZoneItineraryChatQuoteGrid.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailItineraryBudgetZoneLockedPanel.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailItineraryBudgetZoneToolbar.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailLoadErrorView.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailLoaded.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailProtocolTail.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailProtocolTailBilateralAndMessage.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailProtocolTailFooter.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailProtocolTailOrderActionsEvidenceFund.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailProtocolTailRatingReviewChain.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowDetailProtocolTailTxModalAndEscrowCreation.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowOnChainActionsChainMismatchPanel.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowOnChainActionsConnectedCtaRow.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowOnChainActionsDisconnectedPanel.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowOnChainActionsTxErrorAlert.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowTxModalDetailsList.tsx
+?? frontend/components/escrow/EscrowDetail/EscrowTxModalDisputeSection.tsx
+?? frontend/components/escrow/EscrowDetail/OrderActionsBlockAlerts.tsx
+?? frontend/components/escrow/EscrowDetail/OrderActionsDisputeSection.tsx
+?? frontend/components/escrow/EscrowDetail/OrderActionsIntentConfirmPanel.tsx
+?? frontend/components/escrow/EscrowDetail/OrderActionsStandardForms.tsx
+?? frontend/components/escrow/EscrowDetail/ReviewBlockListPanel.tsx
+?? frontend/components/escrow/EscrowDetail/ReviewBlockSubmitBreakdownPanel.tsx
+?? frontend/components/escrow/EscrowDetail/ReviewBlockSubmitReviewForm.tsx
+?? frontend/components/escrow/EscrowDetail/chatBlockTypes.ts
+?? frontend/components/escrow/EscrowDetail/createOnChainEscrowBlockModel.ts
+?? frontend/components/escrow/EscrowDetail/escrowDetailChainSyncTypes.ts
+?? frontend/components/escrow/EscrowDetail/escrowDetailDerivedSlice.ts
+?? frontend/components/escrow/EscrowDetail/escrowDetailHookModel.ts
+?? frontend/components/escrow/EscrowDetail/escrowDetailItineraryBudgetZoneTypes.ts
+?? frontend/components/escrow/EscrowDetail/escrowDetailOrderTypes.ts
+?? frontend/components/escrow/EscrowDetail/escrowDetailProtocolTailTypes.ts
+?? frontend/components/escrow/EscrowDetail/escrowOnChainActionsTypes.ts
+?? frontend/components/escrow/EscrowDetail/escrowTxModalModel.ts
+?? frontend/components/escrow/EscrowDetail/orderActionsBlockHookTypes.ts
+?? frontend/components/escrow/EscrowDetail/orderActionsBlockIntentHandlers.ts
+?? frontend/components/escrow/EscrowDetail/orderActionsBlockModel.ts
+?? frontend/components/escrow/EscrowDetail/orderActionsBlockOffchainHandlers.ts
+?? frontend/components/escrow/EscrowDetail/orderActionsBlockPresentation.ts
+?? frontend/components/escrow/EscrowDetail/reviewBlockChrome.ts
+?? frontend/components/escrow/EscrowDetail/reviewBlockConstants.ts
+?? frontend/components/escrow/EscrowDetail/reviewBlockParseWeightBreakdown.ts
+?? frontend/components/escrow/EscrowDetail/types.chainSync.metaAnchors.test.ts
+?? frontend/components/escrow/EscrowDetail/types.chainSync.parseResponse.checkpointAndStatus.test.ts
+?? frontend/components/escrow/EscrowDetail/types.chainSync.parseResponse.eventLogSnapshot.test.ts
+?? frontend/components/escrow/EscrowDetail/types.chainSync.parseResponse.rootFieldsAndLastEvent.test.ts
+?? frontend/components/escrow/EscrowDetail/types.chainSync.testConstants.ts
+?? frontend/components/escrow/EscrowDetail/useCreateOnChainEscrowBlock.ts
+?? frontend/components/escrow/EscrowDetail/useEscrowDetailChainWriteMachines.ts
+?? frontend/components/escrow/EscrowDetail/useEscrowDetailMeSnapshot.ts
+?? frontend/components/escrow/EscrowDetail/useEscrowDetailOrderChainSyncLoad.ts
+?? frontend/components/escrow/EscrowDetail/useEscrowDetailPageOrchestration.ts
+?? frontend/components/escrow/EscrowDetail/useEscrowDetailSettlementTokenAndApproval.ts
+?? frontend/components/escrow/EscrowDetail/useEscrowTxModalContractSims.ts
+?? frontend/components/escrow/EscrowDetail/useOrderActionsBlock.ts
+?? frontend/components/header/
+?? frontend/components/itinerary/UnifiedItineraryListDayAttractions.tsx
+?? frontend/components/itinerary/UnifiedItineraryListDayDining.tsx
+?? frontend/components/itinerary/UnifiedItineraryListDayHotel.tsx
+?? frontend/components/itinerary/UnifiedItineraryListDayImagesRow.tsx
+?? frontend/components/itinerary/UnifiedItineraryListDayPricingCollapsible.tsx
+?? frontend/components/itinerary/UnifiedItineraryListDayPricingFlatMid.tsx
+?? frontend/components/itinerary/UnifiedItineraryListEscrowQuoteSummary.tsx
+?? frontend/components/itinerary/itineraryNewPage/
+?? frontend/components/itinerary/unifiedItineraryListChrome.ts
+?? frontend/components/itinerary/unifiedItineraryListConstants.ts
+?? frontend/components/landing/LandingHeroFormDateTripSubmitRow.tsx
+?? frontend/components/landing/LandingHeroFormHeroIntro.tsx
+?? frontend/components/landing/LandingHeroFormLocationSection.tsx
+?? frontend/components/landing/LandingHeroFormPreferencesSection.tsx
+?? frontend/components/landing/landingHeroFormDateRangeUtils.ts
+?? frontend/components/landing/landingHeroFormTypes.ts
+?? frontend/components/landing/useLandingHeroFormDateRangePicker.ts
+?? frontend/components/market/AcquisitionCarryStudioFormBriefBounty.tsx
+?? frontend/components/market/AcquisitionCarryStudioFormCopyStandards.tsx
+?? frontend/components/market/AcquisitionCarryStudioFormMedia.tsx
+?? frontend/components/market/AcquisitionCarryStudioModalFooter.tsx
+?? frontend/components/market/CustomItineraryModal/CustomItineraryGuideView.tsx
+?? frontend/components/market/CustomItineraryModal/CustomItineraryTouristView.tsx
+?? frontend/components/market/CustomItineraryModal/customItineraryBlockedKeys.test.ts
+?? frontend/components/market/CustomItineraryModal/customItineraryBlockedKeys.ts
+?? frontend/components/market/CustomItineraryModal/sections/GuideFormCoverImageFieldBlock.tsx
+?? frontend/components/market/CustomItineraryModal/sections/GuideFormCoverImagePreviewDialog.tsx
+?? frontend/components/market/CustomItineraryModal/sections/GuideFormDescriptionAmountHeadcountBlock.tsx
+?? frontend/components/market/CustomItineraryModal/sections/GuideFormQuoteListByCountryCard.tsx
+?? frontend/components/market/CustomItineraryModal/sections/GuideFormTripCostDetailCard.tsx
+?? frontend/components/market/CustomItineraryModal/sections/TouristDayCardAttractions.tsx
+?? frontend/components/market/CustomItineraryModal/sections/TouristDayCardCrossCityAndCity.tsx
+?? frontend/components/market/CustomItineraryModal/sections/TouristDayCardFood.tsx
+?? frontend/components/market/CustomItineraryModal/sections/TouristDayCardTransportAndHotels.tsx
+?? frontend/components/market/CustomItineraryModal/sections/guideFormQuoteAndCoverSectionTypes.ts
+?? frontend/components/market/GuideDetailDrawerCopyHealthUrlRow.tsx
+?? frontend/components/market/GuideDetailDrawerDetailPanel.tsx
+?? frontend/components/market/InviteGuideModal.test.tsx
+?? frontend/components/market/MarketContentApiErrorBanner.tsx
+?? frontend/components/market/MarketContentGuidesSection.tsx
+?? frontend/components/market/MarketContentOrdersSection.tsx
+?? frontend/components/market/MarketContentViewSortBar.tsx
+?? frontend/components/market/MarketDetailDrawerFrame.test.tsx
+?? frontend/components/market/MarketDetailDrawerFrame.tsx
+?? frontend/components/market/MarketGlassModalFrame.test.tsx
+?? frontend/components/market/MarketGlassModalFrame.tsx
+?? frontend/components/market/MarketPageAmbientLayers.tsx
+?? frontend/components/market/MarketSubsiteListingDetailDrawer.test.tsx
+?? frontend/components/market/MarketSubsiteListingDetailDrawerHeader.tsx
+?? frontend/components/market/MerchantShowcaseFormBasic.tsx
+?? frontend/components/market/MerchantShowcaseFormCopyPriceEscrow.tsx
+?? frontend/components/market/MerchantShowcaseFormMedia.tsx
+?? frontend/components/market/MerchantShowcaseStudioModalFooter.tsx
+?? frontend/components/market/OrderDetailDrawerAgreementCollapsible.tsx
+?? frontend/components/market/OrderDetailDrawerFooterActions.tsx
+?? frontend/components/market/OrderDetailDrawerLegacyBreakdown.tsx
+?? frontend/components/market/OrderDetailDrawerMediaAndSummary.tsx
+?? frontend/components/market/OrderDetailDrawerPricingSection.tsx
+?? frontend/components/market/acquisitionCarryStudioModel.ts
+?? frontend/components/market/guideDetailDrawerMerge.ts
+?? frontend/components/market/marketContentModel.ts
+?? frontend/components/market/marketStandaloneBusinessPageUtils.ts
+?? frontend/components/market/marketStudioModalLayout.ts
+?? frontend/components/market/merchantShowcaseStudioModel.ts
+?? frontend/components/market/orderDetailDrawerGetOrderMerge.ts
+?? frontend/components/market/orderDetailDrawerModel.ts
+?? frontend/components/market/useAcquisitionCarryStudioModal.ts
+?? frontend/components/market/useMarketFilters.ts
+?? frontend/components/market/useMarketPage.contract.test.ts
+?? frontend/components/market/useMarketPageAcceptAndItineraryDeepLinks.ts
+?? frontend/components/market/useMarketPageCommunityUserDeepLink.ts
+?? frontend/components/market/useMarketPageFavorites.ts
+?? frontend/components/market/useMarketPageLists.ts
+?? frontend/components/market/useMarketPageOrderGuideDeepLinks.ts
+?? frontend/components/market/useMarketPageRouterSync.ts
+?? frontend/components/market/useMarketStandaloneBusinessPage.ts
+?? frontend/components/market/useMarketSubsiteListingDetailDrawer.ts
+?? frontend/components/market/useMerchantShowcaseStudioModal.ts
+?? frontend/components/market/useOrderDetailDrawer.ts
+?? frontend/components/me/CommunityMeAccountPanelInner.tsx
+?? frontend/components/me/MeProfileSectionEditForm.tsx
+?? frontend/components/me/MeProfileSectionReadCompact.tsx
+?? frontend/components/me/MeProfileSectionReadFull.tsx
+?? frontend/components/me/MeTrustSectionExtras.tsx
+?? frontend/components/me/MeTrustSectionIdentityMatrix.tsx
+?? frontend/components/me/communityMeNotes/CommunityMeLikesEmptyPanel.tsx
+?? frontend/components/me/communityMeNotes/CommunityMeLikesExperienceMain.tsx
+?? frontend/components/me/communityMeNotes/CommunityMePostsExperienceMain.tsx
+?? frontend/components/me/communityMeNotes/CommunityMePostsShowcaseDrawerEmptyPanel.tsx
+?? frontend/components/me/communityMeNotes/useCommunityMeLikesExperience.ts
+?? frontend/components/me/communityMeNotes/useCommunityMePostsExperience.ts
+?? frontend/components/me/communityMePage/
+?? frontend/components/me/meProfileSectionLayout.ts
+?? frontend/components/me/meProfileSectionReadModel.ts
+?? frontend/components/me/meProfileSectionTypes.ts
+?? frontend/components/me/meTrustSectionLabels.ts
+?? frontend/components/shell/Web3PodiumSpotlightLayer.tsx
+?? frontend/components/staking/StakingStakePanelConnected.tsx
+?? frontend/components/staking/StakingStakePanelDisconnected.tsx
+?? frontend/components/staking/stakingStakeWriteErrorOpts.ts
+?? frontend/components/staking/useStakingStakePanel.ts
+?? frontend/components/traveltrust/TravelTrustRouteFixedAmbientLayers.tsx
+?? frontend/components/traveltrust/travelTrustNetworkParticlesConstants.ts
+?? frontend/components/traveltrust/travelTrustNetworkParticlesDraw.ts
+?? frontend/components/traveltrust/travelTrustNetworkParticlesMotion.ts
+?? frontend/components/traveltrust/travelTrustNetworkParticlesRuntime.ts
+?? frontend/components/ui/ActionGateChecklist.tsx
+?? frontend/e2e/93-matrix-admin-deep-batch.part1.ts
+?? frontend/e2e/93-matrix-admin-deep-batch.part2.ts
+?? frontend/e2e/community-me-hub-notes-drawer-ia.spec.ts
+?? frontend/e2e/f018-f019-request.body.ts
+?? frontend/e2e/f020-market-bookmarks-request.body.ts
+?? frontend/e2e/f024-guide-stake-request.body.ts
+?? frontend/e2e/f025-disputes-request.body.ts
+?? frontend/e2e/f026-order-messages-request.body.ts
+?? frontend/e2e/fixtures/
+?? frontend/e2e/helpers/adminDeepBatchShared.ts
+?? frontend/e2e/helpers/assertBookGuideModalDeepLinks.ts
+?? frontend/e2e/helpers/bearerSeedTouristTestCom.ts
+?? frontend/e2e/helpers/ensureTouristOrderCapHeadroom.ts
+?? frontend/e2e/helpers/gotoLoginWhenReady.ts
+?? frontend/e2e/helpers/headerUserMenu.ts
+?? frontend/e2e/helpers/idempotencyKey.ts
+?? frontend/e2e/helpers/marketSeedGuideCard.ts
+?? frontend/e2e/helpers/p0RealApiWaits.ts
+?? frontend/e2e/helpers/pageShells.ts
+?? frontend/e2e/helpers/playwright429Backoff.ts
+?? frontend/e2e/helpers/rateLimitBackoffMs.ts
+?? frontend/e2e/helpers/seedPaidMarketEntitlements.ts
+?? frontend/e2e/helpers/skipIfApiDown.ts
+?? frontend/e2e/helpers/trustGateE2eFixtures.ts
+?? frontend/e2e/helpers/uiAuthControlledForms.ts
+?? frontend/e2e/helpers/waitDisputeDetailHydrated.ts
+?? frontend/e2e/market-custom-itinerary-dual-role-ui.spec.ts
+?? frontend/e2e/market-subsite-community-gates.body.ts
+?? frontend/e2e/market-subsite-community-media.body.ts
+?? frontend/e2e/market-subsite-shared.ts
+?? frontend/e2e/market-subsite-studio-and-community-publish.spec.ts
+?? frontend/e2e/market-subsite-studios.body.ts
+?? frontend/e2e/p0-routes.v1.json
+?? frontend/e2e/p0-spine-real-api-public.spec.ts
+?? frontend/e2e/p0-spine-real-api-session.spec.ts
+?? frontend/e2e/smoke-admin-extended.spec.ts
+?? frontend/e2e/tsconfig.json
+?? frontend/e2e/tsconfig.tsbuildinfo
+?? frontend/lib/api.routesAdmin.community.test.ts
+?? frontend/lib/api.routesAdmin.lists.test.ts
+?? frontend/lib/api.routesAdmin.mediaCompliance.test.ts
+?? frontend/lib/api.routesAdmin.platform.test.ts
+?? frontend/lib/api.routesCore.test.ts
+?? frontend/lib/api/
+?? frontend/lib/apiClient/adminCrossCheck/
+?? frontend/lib/apiClient/auth/
+?? frontend/lib/apiClient/community/
+?? frontend/lib/apiClient/core/
+?? frontend/lib/apiClient/didRank/
+?? frontend/lib/apiClient/discover/
+?? frontend/lib/apiClient/disputes/
+?? frontend/lib/apiClient/governance/
+?? frontend/lib/apiClient/governanceDelegate/
+?? frontend/lib/apiClient/guides/
+?? frontend/lib/apiClient/itineraries/
+?? frontend/lib/apiClient/listItemsEnvelope/
+?? frontend/lib/apiClient/marketSubsite/
+?? frontend/lib/apiClient/marketTravelBookmarks/
+?? frontend/lib/apiClient/me/
+?? frontend/lib/apiClient/meSecurity/
+?? frontend/lib/apiClient/media/
+?? frontend/lib/apiClient/messages/
+?? frontend/lib/apiClient/meta/
+?? frontend/lib/apiClient/onboarding/
+?? frontend/lib/apiClient/orders/
+?? frontend/lib/apiClient/shim-entry.test.ts
+?? frontend/lib/buildEscrowCreateParams.amountsAndFees.test.ts
+?? frontend/lib/buildEscrowCreateParams.travelWindow.test.ts
+?? frontend/lib/buildEscrowCreateParams.validation.test.ts
+?? frontend/lib/buildEscrowCreateParams.vitestShared.ts
+?? frontend/lib/communityApiMessageCodes.test.ts
+?? frontend/lib/communityApiMessageCodes.ts
+?? frontend/lib/communityBrowseHistory.test.ts
+?? frontend/lib/communityBrowseHistory.ts
+?? frontend/lib/communityCommentPagesMerge.test.ts
+?? frontend/lib/communityCommentPagesMerge.ts
+?? frontend/lib/communityDrawerCommentSend.test.ts
+?? frontend/lib/communityDrawerCommentSend.ts
+?? frontend/lib/communityFeedbackMediaLimits.test.ts
+?? frontend/lib/communityFeedbackMediaLimits.ts
+?? frontend/lib/communityMeLikesMetricPrivacy.test.ts
+?? frontend/lib/communityMeLikesMetricPrivacy.ts
+?? frontend/lib/communityMediaClientUrl.test.ts
+?? frontend/lib/communityMediaClientUrl.ts
+?? frontend/lib/communityPostMediaEmbeddedUrlPolicy.test.ts
+?? frontend/lib/communityPostMediaEmbeddedUrlPolicy.ts
+?? frontend/lib/communityPostMediaLimits.test.ts
+?? frontend/lib/communityPostMediaLimits.ts
+?? frontend/lib/communityPostTagsPayload.test.ts
+?? frontend/lib/communityPostTagsPayload.ts
+?? frontend/lib/communityShowcase.gating.test.ts
+?? frontend/lib/communityShowcaseAuthors.ts
+?? frontend/lib/communityShowcaseMessaging.ts
+?? frontend/lib/communityShowcasePosts.ts
+?? frontend/lib/communityVideoPosterCapture.test.ts
+?? frontend/lib/communityVideoPosterCapture.ts
+?? frontend/lib/dataState.communitySocialStats.kind.test.ts
+?? frontend/lib/dataState.communitySocialStats.partialFlags.test.ts
+?? frontend/lib/dataState.deriveListAndAuth.test.ts
+?? frontend/lib/dataState.factories.test.ts
+?? frontend/lib/formatCommunityApiMessage.actionResponse.test.ts
+?? frontend/lib/formatCommunityApiMessage.formatAndParse.test.ts
+?? frontend/lib/formatCommunityApiMessage.interpretWriteError.abuseCommentCodes.test.ts
+?? frontend/lib/formatCommunityApiMessage.interpretWriteError.envelope.test.ts
+?? frontend/lib/formatCommunityApiMessage.interpretWriteError.mediaRetryAndTags.test.ts
+?? frontend/lib/formatCommunityApiMessage.vitestShared.ts
+?? frontend/lib/guideLicenseUrlScheme.test.ts
+?? frontend/lib/guideLicenseUrlScheme.ts
+?? frontend/lib/mapApiReadError.complianceAndFallback.test.ts
+?? frontend/lib/mapApiReadError.delegationToOrderWrite.test.ts
+?? frontend/lib/mapApiReadError.retryAfterAndI18n.test.ts
+?? frontend/lib/mapOrderWriteError.casesMatrix.test.ts
+?? frontend/lib/mapOrderWriteError.fallback.test.ts
+?? frontend/lib/mapOrderWriteError.localeHttpAndCommunity.test.ts
+?? frontend/lib/mapOrderWriteError.vitestShared.ts
+?? frontend/lib/marketDeepLink.test.ts
+?? frontend/lib/marketMockData/
+?? frontend/lib/marketProductCommunityPublish.test.ts
+?? frontend/lib/marketStudioMediaLimits.test.ts
+?? frontend/lib/marketStudioMediaLimits.ts
+?? frontend/lib/marketSubsiteDemoAcquisitionListings.ts
+?? frontend/lib/marketSubsiteDemoImageUrl.ts
+?? frontend/lib/marketSubsiteDemoMerchantListings.ts
+?? frontend/lib/marketSubsiteDemoTypes.ts
+?? frontend/lib/meTrust.formatGuideRegistrationStatus.test.ts
+?? frontend/lib/meTrust.parseFromMeResponse.test.ts
+?? frontend/lib/meTrust.userFromGetMePayload.test.ts
+?? frontend/lib/orderEscrowPrefetch.consumeAndMappers.test.ts
+?? frontend/lib/orderEscrowPrefetch.stashEdgeCases.test.ts
+?? frontend/lib/orderEscrowPrefetch.stashFromResponses.test.ts
+?? frontend/lib/orderEscrowPrefetch.vitestShared.ts
+?? frontend/lib/orderEscrowPrefetchMappers.ts
+?? frontend/lib/orderEscrowPrefetchSession.ts
+?? frontend/lib/publicApiHealthUrl.test.ts
+?? frontend/lib/publicApiHealthUrl.ts
+?? frontend/lib/publishActionBlockedKeys.test.ts
+?? frontend/lib/publishActionBlockedKeys.ts
+?? frontend/lib/useCommunityMeHideLikesReceivedMetric.ts
+?? frontend/lib/useCommunityMeLikesReceivedCachePurgeOnHide.test.tsx
+?? frontend/lib/useCommunityMeLikesReceivedCachePurgeOnHide.ts
+?? frontend/lib/utf8ByteLength.test.ts
+?? frontend/lib/utf8ByteLength.ts
+?? frontend/scripts/check-96-16-matrices.mjs
+?? frontend/scripts/lib/
+?? frontend/scripts/run-e2e-trust-gate.mjs
+?? frontend/test-utils/
+?? frontend/tsconfig.e2e-data-tt.json
+?? frontend/tsconfig.e2e-data-tt.tsbuildinfo
+?? scripts/_gen_auth_register_tests_split.py
+?? scripts/_resplit_auth_register_shards.py
+?? scripts/_split_admin_tests.py
+?? scripts/_split_community_posts.py
+?? scripts/check-e2e-waitforurl-smoke-convergence.sh
+?? scripts/dev/export-database-url-from-root-env.sh
+?? scripts/frontend_pre_deploy.ps1
+?? scripts/frontend_pre_deploy.sh
+?? scripts/gates/check-e2e-waitforurl-smoke-convergence.sh
+?? scripts/gates/local-delivery-expanded.sh
+?? scripts/gates/local-e2e-chromium-full-matrix.sh
+?? scripts/gates/local-tt9621-p0-stack-one-shot.sh
+?? scripts/gates/run-tt9628-doc-hygiene-rg-bundle.sh
+?? scripts/gates/tt-96-20-appendix-e-audit-controls-vs-source.py
+?? scripts/gates/tt-96-20-appendix-e-fill-controls-from-source.py
+?? scripts/gates/tt-96-20-appendix-e-fill-spec-matrix.py
+?? scripts/gates/tt-96-20-appendix-e-generate-machine-stub.py
+?? scripts/gates/tt-96-20-appendix-e-merge.py
+?? scripts/gates/tt-96-20-appendix-e-skeleton.sh
+?? scripts/gates/tt-96-20-appendix-e-validate.py
+?? scripts/gates/tt-9627-testnet-segment12-smoke-pack.sh
+?? scripts/local-delivery-expanded.sh
+?? scripts/tt-96-20-appendix-e-audit-controls-vs-source.sh
+?? scripts/tt-96-20-appendix-e-fill-controls-from-source.sh
+?? scripts/tt-96-20-appendix-e-fill-spec-matrix.sh
+?? scripts/tt-96-20-appendix-e-generate-machine-stub.sh
+?? scripts/tt-96-20-appendix-e-merge.sh
+?? scripts/tt-96-20-appendix-e-skeleton.sh
+?? scripts/tt-96-20-appendix-e-validate.sh
+=== toolchain ===
+rustc 1.92.0-nightly (b6f0945e4 2025-10-08)
+v22.22.0
+10.9.2
+forge Version: 1.5.1-stable
+=== DATABASE_URL ===
+no DATABASE_URL in .env or read failed

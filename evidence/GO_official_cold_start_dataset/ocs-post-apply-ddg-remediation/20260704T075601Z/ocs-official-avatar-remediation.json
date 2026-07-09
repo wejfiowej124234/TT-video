@@ -1,0 +1,91 @@
+{
+  "schema": "traveltrust.ocs_post_apply_ddg.avatar_remediation.v1",
+  "api": "https://tt-api-staging.fly.dev",
+  "manifest": "data/official-cold-start/dataset.v1.json",
+  "state_path": "evidence/GO_official_cold_start_dataset/ocs-surface-expansion-staging/20260704T073209Z/state.json",
+  "recorded_at": "2026-07-04T07:56:18.349Z",
+  "patched": 0,
+  "total": 10,
+  "results": [
+    {
+      "chain": "tokyo-photo",
+      "guide_id": "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+      "email": "tokyo-photo-guide@ocs.traveltrust.app",
+      "avatar_url": "https://tt-api-staging.fly.dev/api/v1/uploads/guides/ocs/tokyo-photo/v1-avatar.jpg",
+      "ok": false,
+      "http": 200
+    },
+    {
+      "chain": "kyoto-culture",
+      "guide_id": "2f51212f-6ac0-445e-bf94-8338738b2de3",
+      "email": "kyoto-tea-guide@ocs.traveltrust.app",
+      "avatar_url": "https://tt-api-staging.fly.dev/api/v1/uploads/guides/ocs/kyoto-culture/v1-avatar.jpg",
+      "ok": false,
+      "http": 200
+    },
+    {
+      "chain": "seoul-food",
+      "guide_id": "519d9067-f2b2-49aa-9f76-8665cb24e85b",
+      "email": "seoul-food-guide@ocs.traveltrust.app",
+      "avatar_url": "https://tt-api-staging.fly.dev/api/v1/uploads/guides/ocs/seoul-food/v1-avatar.jpg",
+      "ok": false,
+      "http": 200
+    },
+    {
+      "chain": "bangkok-temple",
+      "guide_id": "da75b617-64bf-4338-a5b2-daf32921d695",
+      "email": "bangkok-temple-guide@ocs.traveltrust.app",
+      "avatar_url": "https://tt-api-staging.fly.dev/api/v1/uploads/guides/ocs/bangkok-temple/v1-avatar.jpg",
+      "ok": false,
+      "http": 200
+    },
+    {
+      "chain": "singapore-family",
+      "guide_id": "ea732e91-f0f3-42da-b4ae-1a1f5f0f592c",
+      "email": "sg-family-guide@ocs.traveltrust.app",
+      "avatar_url": "https://tt-api-staging.fly.dev/api/v1/uploads/guides/ocs/singapore-family/v1-avatar.jpg",
+      "ok": false,
+      "http": 200
+    },
+    {
+      "chain": "paris-art",
+      "guide_id": "692a940e-1d25-452d-83f8-5b37f9141f60",
+      "email": "paris-art-guide@ocs.traveltrust.app",
+      "avatar_url": "https://tt-api-staging.fly.dev/api/v1/uploads/guides/ocs/paris-art/v1-avatar.jpg",
+      "ok": false,
+      "http": 200
+    },
+    {
+      "chain": "nyc-skyline",
+      "guide_id": "c5d963f9-e679-43a6-9b84-5f7073a51109",
+      "email": "nyc-skyline-guide@ocs.traveltrust.app",
+      "avatar_url": "https://tt-api-staging.fly.dev/api/v1/uploads/guides/ocs/nyc-skyline/v1-avatar.jpg",
+      "ok": false,
+      "http": 200
+    },
+    {
+      "chain": "sydney-coast",
+      "guide_id": "e551bed7-f455-4102-9fa3-b791a68e06d5",
+      "email": "sydney-coast-guide@ocs.traveltrust.app",
+      "avatar_url": "https://tt-api-staging.fly.dev/api/v1/uploads/guides/ocs/sydney-coast/v1-avatar.jpg",
+      "ok": false,
+      "http": 200
+    },
+    {
+      "chain": "barcelona-arch",
+      "guide_id": "dddf81f0-28b7-4aba-b744-70026d9fb148",
+      "email": "bcn-arch-guide@ocs.traveltrust.app",
+      "avatar_url": "https://tt-api-staging.fly.dev/api/v1/uploads/guides/ocs/barcelona-arch/v1-avatar.jpg",
+      "ok": false,
+      "http": 200
+    },
+    {
+      "chain": "dubai-luxury",
+      "guide_id": "cd69b54b-6407-4a34-90c6-f36c0c658dd7",
+      "email": "dubai-desert-guide@ocs.traveltrust.app",
+      "avatar_url": "https://tt-api-staging.fly.dev/api/v1/uploads/guides/ocs/dubai-luxury/v1-avatar.jpg",
+      "ok": false,
+      "http": 200
+    }
+  ]
+}

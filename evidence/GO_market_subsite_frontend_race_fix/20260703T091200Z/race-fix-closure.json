@@ -1,0 +1,73 @@
+{
+  "schema": "traveltrust.market_subsite_frontend_race_fix.v1",
+  "stamp": "20260703T091200Z",
+  "status": "CLOSED",
+  "classification": "Market Subsite Frontend Race Fix",
+  "not_data_governance": true,
+  "governance_gates": {
+    "OCS": "CLOSED",
+    "DDG": "CLOSED",
+    "SOPCP": "CLOSED",
+    "evidence_reuse": "ENFORCED"
+  },
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "web_deploy": {
+    "app": "tt-web-staging",
+    "release_version": "45",
+    "deployment_id": "deployment-01KWKHQBCBBDNG5DCM17WJ0QWK",
+    "note": "Final regression against already-deployed v45; no redeploy for this closure"
+  },
+  "api_baseline": {
+    "provider_all": 10,
+    "acquisition_all": 10,
+    "provider_jp": 2,
+    "acquisition_jp": 0
+  },
+  "fix_files": [
+    "frontend/components/market/useMarketStandaloneBusinessPage.ts",
+    "frontend/components/market/MarketSubsiteFilterBar.tsx",
+    "frontend/components/market/MarketSubsiteMasonry.tsx",
+    "frontend/e2e/market-subsite-catalog-race-regression.spec.ts"
+  ],
+  "regression": "frontend/e2e/market-subsite-catalog-race-regression.spec.ts",
+  "regression_matrix": {
+    "provider": [
+      "first_spa_entry",
+      "sub_nav_switch",
+      "country_jp",
+      "hard_refresh"
+    ],
+    "acquisition": [
+      "first_spa_entry",
+      "sub_nav_switch",
+      "country_jp",
+      "hard_refresh"
+    ]
+  },
+  "issue_taxonomy": {
+    "staging_cold_start": {
+      "classification": "Fixed",
+      "mitigation": "gotoStaging 3-attempt retry with backoff after deploy"
+    },
+    "duplicate_data_listing_id": {
+      "classification": "Fixed",
+      "mitigation": "e2e Set dedupe on [data-listing-id]; Masonry button duplicate attr removed in repo"
+    },
+    "acquisition_jp_zero": {
+      "classification": "Expected Difference",
+      "note": "API filters acquisition by destinationCountryIso; OCS payload carries countryIso — API returns 0, UI matches API at 0; not DDG"
+    },
+    "err_connection_closed": {
+      "classification": "Transient Flake",
+      "note": "Staging fly proxy disconnect on beforeEach; passes on retry; not product defect"
+    }
+  },
+  "playwright": {
+    "pass": 8,
+    "fail": 0,
+    "skipped_setup": 1,
+    "exit_code": 0
+  },
+  "verdict": "CLOSED"
+}

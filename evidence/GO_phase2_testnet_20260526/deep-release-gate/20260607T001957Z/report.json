@@ -1,0 +1,458 @@
+{
+  "schema_version": "1",
+  "kind": "traveltrust.phase2_deep_release_gate.v1",
+  "recorded_at": "2026-06-07T00:21:02.749Z",
+  "staging_api_base": "https://tt-api-staging.fly.dev",
+  "staging_web_base": "https://tt-web-staging.fly.dev",
+  "expect_git_sha": "7b86e58b04eb45b18e9528f63dfefb3efeabba70",
+  "evidence_dir": "D:/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/deep-release-gate/20260607T001957Z",
+  "duration_sec": 64.66,
+  "verdict": "PASS",
+  "release_gate": "GO",
+  "blocks_on_fail": [
+    "S6",
+    "HAT",
+    "PHASE3"
+  ],
+  "staging_only": true,
+  "summary": {
+    "gates_total": 8,
+    "p0_gate_fail": 0,
+    "warn_gates": 2,
+    "pass_gates": 6
+  },
+  "gates": [
+    {
+      "id": "G01_API_WEB_SHA",
+      "title": "API/Web SHA consistency",
+      "staging_only": true,
+      "verdict": "PASS",
+      "checks": [
+        {
+          "gate_id": "G01_API_WEB_SHA",
+          "check_id": "api_meta_200",
+          "title": "GET staging API /meta → 200",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "HTTP 200"
+        },
+        {
+          "gate_id": "G01_API_WEB_SHA",
+          "check_id": "web_meta_rewrite_200",
+          "title": "GET staging Web /meta (rewrite) → 200",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "HTTP 200"
+        },
+        {
+          "gate_id": "G01_API_WEB_SHA",
+          "check_id": "api_git_sha_present",
+          "title": "API build.git_sha non-empty and not unknown",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "7b86e58b04eb45b18e9528f63dfefb3efeabba70"
+        },
+        {
+          "gate_id": "G01_API_WEB_SHA",
+          "check_id": "web_api_sha_match",
+          "title": "Web /meta git_sha matches API /meta git_sha",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "api=7b86e58b04eb45b18e9528f63dfefb3efeabba70 web=7b86e58b04eb45b18e9528f63dfefb3efeabba70"
+        },
+        {
+          "gate_id": "G01_API_WEB_SHA",
+          "check_id": "meta_build_subresource",
+          "title": "/meta/build git_sha matches /meta.build",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "/meta/build HTTP 200 sha=7b86e58b04eb45b18e9528f63dfefb3efeabba70"
+        },
+        {
+          "gate_id": "G01_API_WEB_SHA",
+          "check_id": "expect_git_sha",
+          "title": "API git_sha matches PHASE2_EXPECT_GIT_SHA (7b86e58b04eb…)",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "api=7b86e58b04eb45b18e9528f63dfefb3efeabba70 expect=7b86e58b04eb45b18e9528f63dfefb3efeabba70"
+        }
+      ],
+      "notes": "Web SHA via /meta rewrite — same deployment spine as API.",
+      "p0_fail": 0,
+      "p1_fail": 0
+    },
+    {
+      "id": "G02_META_CONTRACT",
+      "title": "/meta contract (staging subset)",
+      "staging_only": true,
+      "verdict": "PASS",
+      "checks": [
+        {
+          "gate_id": "G02_META_CONTRACT",
+          "check_id": "service",
+          "title": "meta.service = traveltrust-api",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "traveltrust-api"
+        },
+        {
+          "gate_id": "G02_META_CONTRACT",
+          "check_id": "build_top_keys",
+          "title": "build.build_top_keys length = 5 (730)",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "5"
+        },
+        {
+          "gate_id": "G02_META_CONTRACT",
+          "check_id": "build_git_sha",
+          "title": "build.git_sha is non-empty string",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "7b86e58b04eb45b18e9528f63dfefb3efeabba70"
+        },
+        {
+          "gate_id": "G02_META_CONTRACT",
+          "check_id": "chain_id",
+          "title": "chain.chain_id = 11155111 (Sepolia)",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "11155111"
+        },
+        {
+          "gate_id": "G02_META_CONTRACT",
+          "check_id": "dual_write",
+          "title": "dual_write.failure_policy valid + strict_db_write_any boolean",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "policy=log_only strict_db_write_any=False"
+        },
+        {
+          "gate_id": "G02_META_CONTRACT",
+          "check_id": "indexer_checkpoint",
+          "title": "indexer.checkpoint source + numeric block/log_index",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "{\"block_number\": 0, \"log_index\": 0, \"source\": \"runtime\", \"rule\": \"\\u4e0e orders chain_sync.checkpoint\\u3001metrics trave"
+        },
+        {
+          "gate_id": "G02_META_CONTRACT",
+          "check_id": "meta_top_keys_728",
+          "title": "meta_top_keys length = 37",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "37"
+        },
+        {
+          "gate_id": "G02_META_CONTRACT",
+          "check_id": "database_top_keys_760",
+          "title": "database.database_top_keys length = 4",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "['connected', 'rule', 'database_top_keys', 'database_top_keys_contract_760']"
+        },
+        {
+          "gate_id": "G02_META_CONTRACT",
+          "check_id": "governance_top_keys_807",
+          "title": "governance.governance_top_keys length = 10",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "10"
+        },
+        {
+          "gate_id": "G02_META_CONTRACT",
+          "check_id": "product_roles_748",
+          "title": "product_roles.users_role_stored includes guide/provider",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "['admin', 'arbitrator', 'guide', 'provider', 'region_steward', 'super_admin', 'tourist', 'traveler']"
+        }
+      ],
+      "notes": "",
+      "p0_fail": 0,
+      "p1_fail": 0
+    },
+    {
+      "id": "G03_FIVE_ROLE_LOGIN",
+      "title": "Five-role login smoke (staging API)",
+      "staging_only": true,
+      "verdict": "WARN",
+      "checks": [
+        {
+          "gate_id": "G03_FIVE_ROLE_LOGIN",
+          "check_id": "seed_endpoint",
+          "title": "POST /auth/seed-test-accounts",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "HTTP 200 {'status': 'ok', 'message': 'seed_done'}"
+        },
+        {
+          "gate_id": "G03_FIVE_ROLE_LOGIN",
+          "check_id": "promote_admin",
+          "title": "POST seed-test-accounts promote_admin_email",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "HTTP 200"
+        },
+        {
+          "gate_id": "G03_FIVE_ROLE_LOGIN",
+          "check_id": "login_traveler",
+          "title": "traveler login (tourist@test.com)",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "HTTP 200 token=yes"
+        },
+        {
+          "gate_id": "G03_FIVE_ROLE_LOGIN",
+          "check_id": "login_guide",
+          "title": "guide login (guide@test.com)",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "HTTP 200 token=yes"
+        },
+        {
+          "gate_id": "G03_FIVE_ROLE_LOGIN",
+          "check_id": "guide_me_role",
+          "title": "guide /me exposes guide role",
+          "verdict": "FAIL",
+          "severity": "P1",
+          "detail": "[]"
+        },
+        {
+          "gate_id": "G03_FIVE_ROLE_LOGIN",
+          "check_id": "login_merchant",
+          "title": "merchant login (provider-did-rank-demo@test.com)",
+          "verdict": "FAIL",
+          "severity": "P1",
+          "detail": "HTTP 401 token=no"
+        },
+        {
+          "gate_id": "G03_FIVE_ROLE_LOGIN",
+          "check_id": "login_admin",
+          "title": "admin login (tourist@test.com)",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "HTTP 200 token=yes"
+        },
+        {
+          "gate_id": "G03_FIVE_ROLE_LOGIN",
+          "check_id": "admin_capabilities",
+          "title": "admin GET /admin/capabilities",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "HTTP 200"
+        },
+        {
+          "gate_id": "G03_FIVE_ROLE_LOGIN",
+          "check_id": "login_governance",
+          "title": "governance login (tourist@test.com)",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "HTTP 200 token=yes"
+        },
+        {
+          "gate_id": "G03_FIVE_ROLE_LOGIN",
+          "check_id": "governance_proposals",
+          "title": "governance GET /governance/proposals (authenticated)",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "HTTP 200"
+        }
+      ],
+      "notes": "merchant P1 if no staging seed — does not alone block if other roles PASS.",
+      "p0_fail": 0,
+      "p1_fail": 2
+    },
+    {
+      "id": "G04_ADMIN_RBAC",
+      "title": "Admin RBAC permission matrix (ADM-U01)",
+      "staging_only": true,
+      "verdict": "PASS",
+      "checks": [
+        {
+          "gate_id": "G04_ADMIN_RBAC",
+          "check_id": "skipped",
+          "title": "RBAC skipped via --skip-rbac",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "skip"
+        }
+      ],
+      "notes": "skipped",
+      "p0_fail": 0,
+      "p1_fail": 0
+    },
+    {
+      "id": "G05_DB_MIGRATE_ZERO",
+      "title": "DB migrate-from-zero / schema parity",
+      "staging_only": true,
+      "verdict": "PASS",
+      "checks": [
+        {
+          "gate_id": "G05_DB_MIGRATE_ZERO",
+          "check_id": "g2_evidence",
+          "title": "G-2 migrate-from-zero evidence (run.log PASS)",
+          "verdict": "PASS",
+          "severity": "P1",
+          "detail": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_testnet_20260526\\g2-staging-migrate\\latest\\run.log"
+        },
+        {
+          "gate_id": "G05_DB_MIGRATE_ZERO",
+          "check_id": "repo_latest_migration",
+          "title": "Repo latest sqlx migration version readable",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "20260603140000"
+        },
+        {
+          "gate_id": "G05_DB_MIGRATE_ZERO",
+          "check_id": "staging_db_probe",
+          "title": "Staging DB migrate probe (needs DATABASE_URL)",
+          "verdict": "PASS",
+          "severity": "P1",
+          "detail": "skipped live DB — rely on G-2 evidence"
+        }
+      ],
+      "notes": "Live empty→latest re-run: scripts/dev/record-phase2-g2-staging-sqlx-migrate-evidence.sh",
+      "p0_fail": 0,
+      "p1_fail": 0
+    },
+    {
+      "id": "G06_SEED_CONSISTENCY",
+      "title": "Seed data consistency",
+      "staging_only": true,
+      "verdict": "WARN",
+      "checks": [
+        {
+          "gate_id": "G06_SEED_CONSISTENCY",
+          "check_id": "seed_meta_enabled",
+          "title": "meta.seed_test_accounts.enabled true on staging",
+          "verdict": "FAIL",
+          "severity": "P1",
+          "detail": "None"
+        },
+        {
+          "gate_id": "G06_SEED_CONSISTENCY",
+          "check_id": "stable_user_ids",
+          "title": "Repeat login returns stable user_id per seed account",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "{\"traveler\": \"2760d445-cbf4-47d0-9461-fcba3db0516f\", \"guide\": \"4b389c45-bfca-4f3a-a897-42cf95c91a6e\"}"
+        },
+        {
+          "gate_id": "G06_SEED_CONSISTENCY",
+          "check_id": "tourist_me",
+          "title": "tourist /me HTTP 200 after seed",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "HTTP 200 keys=['status', 'user', 'guide', 'trust', 'stats', 'identity_slots']"
+        }
+      ],
+      "notes": "",
+      "p0_fail": 0,
+      "p1_fail": 1
+    },
+    {
+      "id": "G07_STAGING_ENV",
+      "title": "Staging env integrity",
+      "staging_only": true,
+      "verdict": "PASS",
+      "checks": [
+        {
+          "gate_id": "G07_STAGING_ENV",
+          "check_id": "no_local_chain",
+          "title": "R003_LOCAL_CHAIN off",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "ok"
+        },
+        {
+          "gate_id": "G07_STAGING_ENV",
+          "check_id": "r003_env_ready",
+          "title": "check_r003_staging_env_ready.py exit 0",
+          "verdict": "PASS",
+          "severity": "P1",
+          "detail": "OK: D:\\TravelTrust-V1.1\\scripts\\dev\\.env.r003.local looks ready for staging chain (R003_OUT=evidence/GO_phase2_testnet_20260526)."
+        },
+        {
+          "gate_id": "G07_STAGING_ENV",
+          "check_id": "api_health",
+          "title": "https://tt-api-staging.fly.dev/health → 200",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "HTTP 200"
+        },
+        {
+          "gate_id": "G07_STAGING_ENV",
+          "check_id": "web_home",
+          "title": "https://tt-web-staging.fly.dev/ → 200",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "HTTP 200"
+        },
+        {
+          "gate_id": "G07_STAGING_ENV",
+          "check_id": "cors_meta",
+          "title": "CORS allows https://tt-web-staging.fly.dev on /meta",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "https://tt-web-staging.fly.dev"
+        },
+        {
+          "gate_id": "G07_STAGING_ENV",
+          "check_id": "build_env_api",
+          "title": "build.env NEXT_PUBLIC_API_BASE_URL matches staging API",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "build=https://tt-api-staging.fly.dev api=https://tt-api-staging.fly.dev"
+        },
+        {
+          "gate_id": "G07_STAGING_ENV",
+          "check_id": "build_env_chain",
+          "title": "build.env NEXT_PUBLIC_CHAIN_ID = Sepolia",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "11155111"
+        }
+      ],
+      "notes": "",
+      "p0_fail": 0,
+      "p1_fail": 0
+    },
+    {
+      "id": "G08_HAT_PREREQ",
+      "title": "HAT prerequisite / downstream block policy",
+      "staging_only": true,
+      "verdict": "PASS",
+      "checks": [
+        {
+          "gate_id": "G08_HAT_PREREQ",
+          "check_id": "staging_hosts",
+          "title": "HAT targets are staging hosts (not localhost)",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "api=https://tt-api-staging.fly.dev web=https://tt-web-staging.fly.dev"
+        },
+        {
+          "gate_id": "G08_HAT_PREREQ",
+          "check_id": "upstream_gates_green",
+          "title": "G01–G07 all PASS (HAT blocked until green)",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "upstream_fail=False"
+        },
+        {
+          "gate_id": "G08_HAT_PREREQ",
+          "check_id": "blocks_documented",
+          "title": "On FAIL: S6 / HAT / Phase③ blocked (policy)",
+          "verdict": "PASS",
+          "severity": "P0",
+          "detail": "S6,HAT,PHASE3"
+        }
+      ],
+      "notes": "run-phase28-human-acceptance-test.sh reads deep-release-gate/latest/report.json",
+      "p0_fail": 0,
+      "p1_fail": 0
+    }
+  ]
+}

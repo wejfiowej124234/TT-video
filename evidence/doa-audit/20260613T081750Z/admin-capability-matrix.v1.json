@@ -1,0 +1,6 @@
+{
+  "schema": "traveltrust.doa_admin_capability_matrix.v1",
+  "ssot": "GET /api/v1/admin/rbac/route-matrix",
+  "smoke": "bash scripts/dev/smoke-admin-rbac-matrix-local.sh",
+  "ui": "frontend/lib/admin/adminShellSidebarModel.ts"
+}

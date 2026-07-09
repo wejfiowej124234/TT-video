@@ -1,0 +1,39 @@
+{
+  "probes": {
+    "E2": {
+      "verdict": "HOLD",
+      "mode": "live",
+      "recorded_utc": "D:/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/l5-p0-closure-exec-20260608T023212Z/probes/E2-20260608T023212Z.log",
+      "log_path": "20260608T023212Z",
+      "gate_script": "scripts/dev/l5-p0-e2-approval-chain-smoke.sh"
+    },
+    "E3": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "D:/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/l5-p0-closure-exec-20260608T023212Z/probes/E3-20260608T023220Z.log",
+      "log_path": "20260608T023220Z",
+      "gate_script": "scripts/dev/l5-p0-e3-2fa-coverage-smoke.sh"
+    },
+    "E4": {
+      "verdict": "GO",
+      "mode": "live",
+      "recorded_utc": "D:/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/l5-p0-closure-exec-20260608T023212Z/probes/E4-20260608T023226Z.log",
+      "log_path": "20260608T023226Z",
+      "gate_script": "scripts/dev/l5-p0-e4-rbac-escalation-smoke.sh"
+    },
+    "C5": {
+      "verdict": "HOLD",
+      "mode": "live",
+      "recorded_utc": "D:/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/l5-p0-closure-exec-20260608T023212Z/probes/C5-20260608T023229Z.log",
+      "log_path": "20260608T023229Z",
+      "gate_script": "scripts/dev/l5-p0-c5-growth-freeze-cross-smoke.sh"
+    },
+    "D3": {
+      "verdict": "HOLD",
+      "mode": "live",
+      "recorded_utc": "D:/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/l5-p0-closure-exec-20260608T023212Z/probes/D3-20260608T023236Z.log",
+      "log_path": "20260608T023236Z",
+      "gate_script": "scripts/dev/l5-p0-d3-cold-start-linkage-smoke.sh"
+    }
+  }
+}

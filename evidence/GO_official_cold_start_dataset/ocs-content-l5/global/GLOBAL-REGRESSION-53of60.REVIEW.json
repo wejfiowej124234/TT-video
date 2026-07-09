@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust.ocs_content_l5_global_regression_review.v1",
+  "stamp_utc": "20260704T152530Z",
+  "progress": "53/60",
+  "trigger_filename": "ocs-barcelona-arch-community-cover.jpg",
+  "TT_GLOBAL_REGRESSION_REVIEW": "PASS",
+  "no_quality_regression": true
+}

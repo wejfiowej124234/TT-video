@@ -1,0 +1,9 @@
+{
+  "stamp_utc": "20260616T042502Z",
+  "verdict": "APPLIED",
+  "baseline_id": "GOV-FREEZE-V2-CLEAN-BASELINE",
+  "evidence_append": "evidence/GO_phase2_gov_freeze_v2_clean_baseline/latest/phase2-env-append-20260616T041454Z.env",
+  "governor": "0xd5225bA81Af40600c9802d20888898193861f161",
+  "timelock": "0x462c2351971707A8CEEb3ce789F268B8326C76a0",
+  "stake_pool": "0xBf1F5B8c5b8A1cFC8E4458Eb43C1a0ab24012806"
+}

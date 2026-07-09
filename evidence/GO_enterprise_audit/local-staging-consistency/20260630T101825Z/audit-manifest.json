@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.enterprise_audit_snapshot.v1",
+  "stamp_utc": "20260630T101825Z",
+  "audit_type": "verification_snapshot",
+  "runtime_consistency": {
+    "status": "ARCHIVED",
+    "reaudit": "SKIPPED_BY_POLICY",
+    "open_issues": 0,
+    "baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6"
+  },
+  "live_probes": {
+    "api_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+    "web_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+    "alignment_pass": 14,
+    "alignment_fail": 0,
+    "alignment_warn": 2,
+    "runtime_drift": "NONE"
+  },
+  "taxonomy_open_counts": {
+    "repository_hygiene": 4,
+    "production_entry_review": 4,
+    "manual_validation": 4,
+    "mainnet_prep": 2,
+    "legacy_off_path": 2
+  },
+  "machine_keys": {
+    "TT_LOCAL_STAGING_RUNTIME_CONSISTENCY": "ARCHIVED",
+    "TT_LOCAL_FIRST_RUNTIME_DRIFT": "NONE",
+    "TT_RUNTIME_CONSISTENCY_REAUDIT_THIS_RUN": "SKIPPED"
+  }
+}

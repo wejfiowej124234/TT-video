@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.lifecycle_top20_refactor.v1",
+  "candidates": [
+    {
+      "id": "LFC-SEED-001",
+      "domain": "DOMAIN-R",
+      "dim": "R-10",
+      "object": "route",
+      "label": "93 §5 vs app routes",
+      "suggested_verdict": "UPDATE",
+      "severity": "P0",
+      "rationale": "check-spec93-routes WARN — sync 93 or heuristics"
+    },
+    {
+      "id": "LFC-SEED-002",
+      "domain": "DOMAIN-K",
+      "dim": "K-01",
+      "object": "knowledge",
+      "label": "Solo maintainer bus factor",
+      "suggested_verdict": "UPDATE",
+      "severity": "P0",
+      "rationale": "Document runbook handoff + SOLO-MAINTAINER index"
+    }
+  ]
+}

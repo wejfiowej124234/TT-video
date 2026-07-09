@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T142530Z",
+  "trigger_row": 27,
+  "trigger_filename": "ocs-singapore-family-acquisition-cover.jpg",
+  "TT_CROSS_CHAIN_ACQUISITION_REVIEW": "PASS",
+  "acquisition_comparison": {
+    "tokyo-photo": "限量镜头",
+    "kyoto-culture": "手工和纸",
+    "seoul-food": "限定零食",
+    "bangkok-temple": "泰国手工丝绸",
+    "singapore-family": "新加坡设计周边 · 礼品包装",
+    "distinct": true,
+    "no_product_duplication": true,
+    "no_packaging_style_duplication": true
+  },
+  "no_quality_regression_prior_26": true
+}

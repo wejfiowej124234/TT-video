@@ -1,0 +1,12 @@
+{
+  "ledger": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa",
+  "jurisdiction": "0x4445",
+  "settlement_token": "0x241948bE49a778490c8A4Ae8D98b7537fE001f63",
+  "bps_steward_path": 4500,
+  "bps_global_treasury": 5500,
+  "bps_sum_ok": true,
+  "steward_path_vault": "0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb",
+  "unallocated_vault": "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0",
+  "global_treasury": "0x904a6C4c6Aab698AfBF08EC6151D317c393520cC",
+  "contract_version": "\"country_pool_net_profit_ledger_v1\""
+}

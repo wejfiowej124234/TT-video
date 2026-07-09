@@ -1,0 +1,5 @@
+NO_GO
+phase3_entry_gate: HOLD
+phase3_entry_review: NO_GO
+freeze_commit: bc5a939cd89c624be7c128b551306da177bf6016
+deep_gate_evidence: deep-release-gate/20260607T015926Z

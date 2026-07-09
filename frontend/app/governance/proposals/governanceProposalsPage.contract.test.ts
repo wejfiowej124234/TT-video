@@ -36,6 +36,9 @@ describe("governance proposals list (Task A-1 · chain exec status)", () => {
     );
     expect(mainSrc).toContain("/governance/proposals/new");
     expect(mainSrc).toContain("GovernanceProposalsToolbar");
+    expect(mainSrc).toContain("showCreateCta={false}");
+    expect(mainSrc).not.toContain("ConversionFunnelRail");
+    expect(mainSrc).toContain("resolveGovernanceProposalDisplayTitle");
     expect(mainSrc).toContain("GovernanceProposalListCard");
     expect(listL5Src).toContain("data-tt-governance-proposals-l5");
     expect(shellSrc).toContain("governanceProposalsL5MainDataAttrs");

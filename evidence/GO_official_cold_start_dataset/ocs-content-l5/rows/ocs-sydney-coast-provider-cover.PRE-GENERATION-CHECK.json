@@ -1,0 +1,49 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T150300Z",
+  "filename": "ocs-sydney-coast-provider-cover.jpg",
+  "row": 44,
+  "chain_id": "sydney-coast",
+  "country_code": "AU",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "no_quality_regression_acknowledged": true,
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "brand_logos",
+      "celebrity_portraits",
+      "readable_trademarks",
+      "commercial_ad_posters"
+    ],
+    "safe_expression": "海港皮划艇装备+海面 · 教练协助 · 远景海港地标 · 无正面特写"
+  },
+  "checks": {
+    "manifest_full_field_alignment": {
+      "pass": true,
+      "notes": "悉尼海港皮划艇 · 半日 · 含装备教练安全简报"
+    },
+    "destination_authenticity_9dim_plan": {
+      "pass": true,
+      "notes": "悉尼海港皮划艇 · 装备+平静海面 · 澳洲户外"
+    },
+    "country_consistency_au_only": { "pass": true },
+    "provider_business_identity_plan": {
+      "pass": true,
+      "vs_tokyo": "海港皮划艇 vs 台场旅拍",
+      "vs_kyoto": "水上户外 vs 私享茶室",
+      "vs_seoul": "皮划艇 vs 夜市美食团",
+      "vs_bangkok": "海港 kayak vs 湄南河晚宴",
+      "vs_singapore": "成人水上 vs 亲子通票",
+      "vs_paris": "户外水上 vs 博物馆小团",
+      "vs_nyc": "海港皮划艇 vs 观景台联票",
+      "vs_row43": "服务场景 vs Mia 向导肖像"
+    },
+    "surface_boundary_plan": { "pass": true, "notes": "Provider 商业体验 · 非 Guide/Acquisition/Official/Community" },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row43": "皮划艇海面 vs 海岸步道肖像"
+    },
+    "nine_class_framework_frozen": true
+  }
+}

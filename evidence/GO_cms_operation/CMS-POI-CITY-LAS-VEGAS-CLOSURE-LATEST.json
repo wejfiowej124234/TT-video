@@ -1,0 +1,120 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-06T105723Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "US",
+    "country_zh": "美国",
+    "city_zh": "拉斯维加斯",
+    "city_en": "Las Vegas"
+  },
+  "poi_count": 7,
+  "matrix_ids": [
+    "PH-US-143-ATR",
+    "PH-US-144-ATR",
+    "PH-US-145-ATR",
+    "PH-US-146-ATR",
+    "PH-US-147-FOOD",
+    "PH-US-148-FOOD",
+    "PH-US-149-FOOD"
+  ],
+  "pois": [
+    "大道",
+    "百乐宫喷泉",
+    "大峡谷",
+    "秀",
+    "自助餐",
+    "牛排",
+    "buffet"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-US-143-ATR",
+      "legacy_value": "大道",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-144-ATR",
+      "legacy_value": "百乐宫喷泉",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-US-145-ATR",
+      "legacy_value": "大峡谷",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-146-ATR",
+      "legacy_value": "秀",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-147-FOOD",
+      "legacy_value": "自助餐",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-US-148-FOOD",
+      "legacy_value": "牛排",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-US-149-FOOD",
+      "legacy_value": "buffet",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-143-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-144-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-145-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-146-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-147-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-148-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-US-149-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=US&city=%E6%8B%89%E6%96%AF%E7%BB%B4%E5%8A%A0%E6%96%AF&limit=50",
+    "http": 200,
+    "count": 7
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-las vegas/CMS-POI-LAS VEGAS-CLOSED-LOOP-LATEST.json",
+  "next_city": {
+    "country_iso": "US",
+    "city_zh": "洛杉矶",
+    "city_en": "Los Angeles"
+  },
+  "closure_keys": {
+    "TT_CMS_POI_CITY_LAS_VEGAS": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": "US · 洛杉矶"
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_LAS_VEGAS": "CLOSED"
+}

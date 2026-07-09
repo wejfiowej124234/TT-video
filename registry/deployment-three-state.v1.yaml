@@ -1,0 +1,122 @@
+version: deployment-three-state-v1
+schema: traveltrust.deployment_three_state.v1
+updated_at_utc: '2026-06-26T00:00:00Z'
+ssot_runbook: docs/runbook/TT-DEPLOYMENT-THREE-STATE-GOVERNANCE.md
+phase_discipline:
+  order:
+  - phase1_local
+  - phase2_testnet
+  - phase3_production
+  no_skip: true
+rules:
+  declare_before_execute: true
+  allowed_states:
+  - sync
+  - fix
+  - freeze
+  forbid_mixed_mode: true
+  forbid_stateless_fly_deploy: true
+states:
+  sync:
+    label: Sync Deploy
+    phase: '②'
+    purpose: Align local HEAD with staging — version and config parity only; no business logic semantic change
+    fly_deploy: true
+    db_policy: forward_migrations_only_no_reset
+    orchestrator: scripts/ops/run-testnet-sync-package.sh
+    router_subcommand: sync
+    preconditions:
+    - gate_p1_01_25_25_phase1_closed
+    - testnet_freeze_override_when_active_freeze
+    forbidden:
+    - full_gate_rerun
+    - testnet_rebuild
+    - db_wipe
+    - new_behavior_fork
+    - freeze_soak_same_round
+    evidence_dirs:
+    - evidence/TESTNET_SYNC_PACKAGE/
+    - evidence/DEPLOYMENT_THREE_STATE/
+    env_required:
+    - DEPLOYMENT_STATE=sync
+    env_optional:
+    - TESTNET_FREEZE_OVERRIDE=1
+    - TESTNET_SYNC_ALLOW_DIRTY=1
+  fix:
+    label: Fix Deploy
+    phase: '②'
+    purpose: Deploy confirmed system-level defect fix in controlled staging after P0/P1 local convergence
+    fly_deploy: true
+    db_policy: forward_migrations_only_no_reset
+    orchestrator: scripts/ops/run-testnet-sync-package.sh
+    router_subcommand: fix
+    preconditions:
+    - fix_deploy_ledger_id_set
+    - ledger_item_phase1_gate_exit_0
+    - gate_p1_01_baseline_readable
+    - testnet_freeze_override_when_active_freeze
+    forbidden:
+    - new_behavior_fork
+    - scope_expansion
+    - sync_only_overlay_without_defect_id
+    - freeze_soak_same_round
+    - five_main_route_ui_regression
+    evidence_dirs:
+    - evidence/DEPLOYMENT_THREE_STATE/
+    - evidence/COMPLEXITY_CONVERGENCE/
+    env_required:
+    - DEPLOYMENT_STATE=fix
+    - FIX_DEPLOY_LEDGER_ID
+    env_optional:
+    - FIX_DEPLOY_LOCAL_GATE_PASS=1
+    - TESTNET_FREEZE_OVERRIDE=1
+    ledger_ssot: registry/complexity-convergence-fix-ledger.v1.yaml
+  freeze:
+    label: Freeze Deploy
+    phase: '②'
+    purpose: Lock GATE-P1-01 + TESTNET_SYNC_PACKAGE parity zero_drift stable baseline; enter 72h read-only soak
+    fly_deploy: false
+    db_policy: no_change
+    orchestrator: scripts/ops/run-testnet-sync-package.sh
+    router_subcommand: freeze
+    preconditions:
+    - gate_p1_01_25_25_phase1_closed
+    - testnet_sync_package_parity_zero_drift
+    - manual_verify_booking_core_itinerary_pass
+    - staging_sha_hard_match_local_head
+    forbidden:
+    - fly_redeploy
+    - fly_restart
+    - schema_migration
+    - ssot_structure_change
+    - full_gate_rerun
+    - testnet_rebuild
+    evidence_dirs:
+    - evidence/TESTNET_STAGING_FREEZE/
+    - evidence/P2FC_SOAK_72H_STAGING/
+    - evidence/TESTNET_SYNC_PACKAGE/
+    env_required:
+    - DEPLOYMENT_STATE=freeze
+    - TESTNET_MANUAL_VERIFY_PASS=1
+    env_optional:
+    - TESTNET_SYNC_EXPECT_SHA
+    soak:
+      script: scripts/ops/p2fc-launch-staging-soak-72h.sh
+      policy: read_only_no_redeploy
+      required_sec: 259200
+      attest: scripts/ops/p2fc-soak-attest.sh
+guarded_scripts:
+- scripts/dev/phase2-staging-fly-deploy-and-sync.sh
+- scripts/dev/deploy-tt-web-staging.sh
+- scripts/ops/run-testnet-sync-package.sh
+- scripts/dev/run-phase2-testnet-full-sync-deploy.sh
+entrypoint: scripts/ops/run-deployment-three-state.sh
+  cloud_soak_watcher:
+    fly_app: tt-soak-watcher-staging
+    fly_config: deploy/fly/tt-soak-watcher-staging/fly.toml
+    migrate: scripts/ops/p2fc-migrate-soak-to-cloud-watcher.sh
+    sync: scripts/ops/p2fc-sync-cloud-soak-evidence.sh
+    orchestrator: scripts/ops/p2fc-cloud-soak-orchestrator.sh
+    policy: read_only_no_staging_redeploy
+    phase3: independent_go_gate_only
+grep_pass_line: 'TT_DEPLOYMENT_THREE_STATE: PASS state='

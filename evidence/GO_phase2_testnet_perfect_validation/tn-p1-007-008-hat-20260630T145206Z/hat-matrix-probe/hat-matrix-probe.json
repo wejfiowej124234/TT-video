@@ -1,0 +1,339 @@
+{
+  "schema": "tn_p1_hat_matrix_probe.v1",
+  "phase": "\u2461 testnet",
+  "api": "https://tt-api-staging.fly.dev",
+  "personas": [
+    "traveler",
+    "guide",
+    "merchant",
+    "steward",
+    "moderator",
+    "admin"
+  ],
+  "traveler_email": "hat-probe-447117df2b@traveltrust.testnet",
+  "probes": [
+    {
+      "role": "traveler",
+      "probe_id": "allow_me",
+      "method": "GET",
+      "path": "/api/v1/me",
+      "http": 0,
+      "expect": [
+        200
+      ],
+      "pass": false,
+      "deny": false,
+      "body_sample": "curl_failed"
+    },
+    {
+      "role": "traveler",
+      "probe_id": "deny_admin_capabilities",
+      "method": "GET",
+      "path": "/api/v1/admin/capabilities",
+      "http": 403,
+      "expect": [
+        401,
+        403
+      ],
+      "pass": true,
+      "deny": true,
+      "body_sample": {
+        "error": "admin_required",
+        "message": "admin_required"
+      }
+    },
+    {
+      "role": "guide",
+      "probe_id": "allow_me",
+      "method": "GET",
+      "path": "/api/v1/me",
+      "http": 0,
+      "expect": [
+        200
+      ],
+      "pass": false,
+      "deny": false,
+      "body_sample": "curl_failed"
+    },
+    {
+      "role": "guide",
+      "probe_id": "deny_admin_users",
+      "method": "GET",
+      "path": "/api/v1/admin/users?limit=1",
+      "http": 403,
+      "expect": [
+        401,
+        403
+      ],
+      "pass": true,
+      "deny": true,
+      "body_sample": {
+        "error": "admin_required",
+        "message": "admin_required"
+      }
+    },
+    {
+      "role": "merchant",
+      "probe_id": "allow_merchant_listings",
+      "method": "GET",
+      "path": "/api/v1/me/merchant-listings",
+      "http": 200,
+      "expect": [
+        200
+      ],
+      "pass": true,
+      "deny": false,
+      "body_sample": {
+        "status": "ok",
+        "published": [
+          {
+            "id": "3a34421f-dc1d-4807-ba51-6f937889cb9f",
+            "title": "Smoke Shop Listing 1781453219",
+            "status": "published",
+            "updated_at": "2026-06-14T16:07:17.598258+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "b4a04a5c-8ef6-41ef-baaf-e56121e28a10",
+            "title": "Smoke Shop Listing 1781408893",
+            "status": "published",
+            "updated_at": "2026-06-14T03:48:32.363517+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "93e26203-56b1-4c81-af99-2da8e2e1a4d7",
+            "title": "Smoke Shop Listing 1781089343",
+            "status": "published",
+            "updated_at": "2026-06-10T11:02:38.770222+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "a3b017fe-eadc-4556-9b51-3513c66be1d8",
+            "title": "Smoke Shop Listing 1781071332",
+            "status": "published",
+            "updated_at": "2026-06-10T06:02:31.731568+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "e62cf69f-b6a1-4990-90b0-13deef686b4f",
+            "title": "Smoke Shop Listing 1781070301",
+            "status": "published",
+            "updated_at": "2026-06-10T05:45:15.896941+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "b44acc6e-9b07-45e2-98c3-3667d8484d91",
+            "title": "Smoke Shop Listing 1781066875",
+            "status": "published",
+            "updated_at": "2026-06-10T04:48:08.256581+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "ef1ebf75-392a-4942-9218-8d2e92961048",
+            "title": "Smoke Shop Listing 1780914377",
+            "status": "published",
+            "updated_at": "2026-06-08T10:26:32.525086+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "d82f3a49-c022-4dc1-98b8-6da862511e41",
+            "title": "Smoke Shop Listing 1780913810",
+            "status": "published",
+            "updated_at": "2026-06-08T10:17:10.943120+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "8ea1c300-7981-4280-b190-e78e05da510e",
+            "title": "Smoke Shop Listing 1780913024",
+            "status": "published",
+            "updated_at": "2026-06-08T10:04:00.981009+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "9b00b9cd-e4df-4139-be70-4c995fd1e4a0",
+            "title": "Smoke Shop Listing 1780910712",
+            "status": "published",
+            "updated_at": "2026-06-08T09:25:32.216353+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "b613e43c-05c0-4f4a-affa-0a36d54efc28",
+            "title": "Smoke Shop Listing 1780902946",
+            "status": "published",
+            "updated_at": "2026-06-08T07:16:03.377896+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "a9da4c3f-fa71-414f-8f5e-bc79e1d0c962",
+            "title": "Smoke Shop Listing 1780900378",
+            "status": "published",
+            "updated_at": "2026-06-08T06:33:14.085163+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "033762b8-d3ea-4561-9d42-0a14614a580e",
+            "title": "Smoke Shop Listing 1780899011",
+            "status": "published",
+            "updated_at": "2026-06-08T06:10:31.979849+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "7efccba6-725f-4e2e-88e0-7adc4ed85c74",
+            "title": "Smoke Shop Listing 1780898829",
+            "status": "published",
+            "updated_at": "2026-06-08T06:07:32.403370+00:00",
+            "cover_url": null
+          },
+          {
+            "id": "fda9ca23-dd1f-4ad6-bca9-fdeb2608ed78",
+            "title": "Smoke Shop Listing 1780804182",
+            "status": "published",
+            "updated_at": "2026-06-07T03:50:07.354098+00:00",
+            "cover_url": null
+          }
+        ],
+        "drafts": [],
+        "meta": {
+          "implementation_status": "me_merchant_listings_v1",
+          "source": "postgres_catalog",
+          "variant": "provider"
+        }
+      }
+    },
+    {
+      "role": "merchant",
+      "probe_id": "deny_admin_users",
+      "method": "GET",
+      "path": "/api/v1/admin/users?limit=1",
+      "http": 403,
+      "expect": [
+        401,
+        403
+      ],
+      "pass": true,
+      "deny": true,
+      "body_sample": {
+        "error": "admin_required",
+        "message": "admin_required"
+      }
+    },
+    {
+      "role": "steward",
+      "probe_id": "allow_governance_mine",
+      "method": "GET",
+      "path": "/api/v1/governance/proposals?mine=1",
+      "http": 200,
+      "expect": [
+        200
+      ],
+      "pass": true,
+      "deny": false,
+      "body_sample": {
+        "status": "ok",
+        "items": [
+          {
+            "id": "1",
+            "title": "",
+            "status": "queued"
+          }
+        ],
+        "data_source": "governance_proposals_projection",
+        "chain_id": 11155111,
+        "mine": true,
+        "note": "Filtered by session user default_wallet_address (proposer)"
+      }
+    },
+    {
+      "role": "steward",
+      "probe_id": "deny_admin_users",
+      "method": "GET",
+      "path": "/api/v1/admin/users?limit=1",
+      "http": 403,
+      "expect": [
+        401,
+        403
+      ],
+      "pass": true,
+      "deny": true,
+      "body_sample": {
+        "error": "admin_required",
+        "message": "admin_required"
+      }
+    },
+    {
+      "role": "steward",
+      "probe_id": "allow_identity_slots",
+      "method": "GET",
+      "path": "/api/v1/me",
+      "http": 0,
+      "expect": [
+        200
+      ],
+      "pass": false,
+      "deny": false,
+      "body_sample": "curl_failed"
+    },
+    {
+      "role": "admin",
+      "probe_id": "allow_admin_capabilities",
+      "method": "GET",
+      "path": "/api/v1/admin/capabilities",
+      "http": 0,
+      "expect": [
+        200
+      ],
+      "pass": false,
+      "deny": false,
+      "body_sample": "curl_failed"
+    },
+    {
+      "role": "admin",
+      "probe_id": "allow_admin_users",
+      "method": "GET",
+      "path": "/api/v1/admin/users?limit=1",
+      "http": 0,
+      "expect": [
+        200
+      ],
+      "pass": false,
+      "deny": false,
+      "body_sample": "curl_failed"
+    },
+    {
+      "role": "moderator",
+      "probe_id": "allow_community_cases",
+      "method": "GET",
+      "path": "/api/v1/admin/community/moderation/cases?limit=1",
+      "http": 0,
+      "expect": [
+        200,
+        404
+      ],
+      "pass": false,
+      "deny": false,
+      "body_sample": "curl_failed"
+    },
+    {
+      "role": "guide",
+      "probe_id": "cross_deny_finance_write",
+      "method": "POST",
+      "path": "/api/v1/admin/onboarding/entitlements/00000000-0000-0000-0000-000000000001/approve",
+      "http": 404,
+      "expect": [
+        401,
+        403,
+        404
+      ],
+      "pass": true,
+      "deny": false,
+      "body_sample": {}
+    }
+  ],
+  "summary": {
+    "total": 13,
+    "passed": 7,
+    "failed": 6,
+    "deny_probes": 4
+  },
+  "release_gate": "FAIL"
+}

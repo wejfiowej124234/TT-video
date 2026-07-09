@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_narrative_plan.v1",
+  "stamp_utc": "20260704T153500Z",
+  "chain_id": "dubai-luxury",
+  "city": "迪拜",
+  "country_code": "AE",
+  "theme": "沙漠 Safari · 哈利法塔 · luxury 都市",
+  "six_slot_plan": [
+    { "row": 55, "slot": "guide-avatar", "scene": "Omar luxury desert guide @ desert camp" },
+    { "row": 56, "slot": "provider-cover", "scene": "Desert luxury safari dinner sunset dunes" },
+    { "row": 57, "slot": "acquisition-cover", "scene": "Custom perfume luxury gift still life" },
+    { "row": 58, "slot": "official-guide-cover", "scene": "Burj Khalifa + desert dual theme wide hero" },
+    { "row": 59, "slot": "community-cover", "scene": "Dune bashing SUV or sand curves Feed" },
+    { "row": 60, "slot": "community-media", "scene": "Burj Khalifa night skyline detail" }
+  ],
+  "TT_NARRATIVE_PLANNING": "PASS"
+}

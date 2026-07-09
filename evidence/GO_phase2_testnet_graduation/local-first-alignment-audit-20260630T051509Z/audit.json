@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.local_first_alignment_audit.v1",
+  "at": "20260630T051509Z",
+  "head": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+  "staging_api_sha": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+  "staging_web_sha": "9979b35efe562e8dd200e9f1a1e17fcc8182d170",
+  "verdict": "NOT_100_PERCENT_ALIGNED",
+  "tt_marker": "TT_LOCAL_FIRST_ALIGNMENT: NOT_100_PERCENT_ALIGNED",
+  "gaps": [
+    {
+      "id": "GAP-DEPLOY-SSOT",
+      "sev": "P0",
+      "count": 51
+    },
+    {
+      "id": "GAP-WT-TRACKED",
+      "sev": "P0",
+      "count": 44,
+      "sample": [
+        "AGENTS.md",
+        "data/indexer_audit.jsonl",
+        "data/indexer_state.json.runtime",
+        "deploy/fly/tt-web-staging/build.env.local",
+        "frontend/.i18n-coverage.json",
+        "scripts/dev/deploy-tt-web-staging.sh",
+        "scripts/dev/gen-phase2-baseline-consistency-audit.py",
+        "scripts/dev/l5-p0-closure-lib.sh",
+        "scripts/dev/lib/release-seed-guide-slot.sh",
+        "scripts/dev/lib/tt-patch-order-assignable-guide.sh"
+      ]
+    },
+    {
+      "id": "GAP-EVIDENCE",
+      "sev": "P0",
+      "note": "TN-P1-010/D24/D6 not all PASS @ HEAD · TN-P1-010: need post-soak TN-P1-010 @ freeze 8dcd304a (historical-only reports excluded)"
+    }
+  ],
+  "probes": {
+    "D6": true,
+    "D24": true,
+    "TN-P1-010": false,
+    "TN-P1-010_gate": {
+      "pass": false,
+      "state": "no",
+      "note": "need post-soak TN-P1-010 @ freeze 8dcd304a (historical-only reports excluded)",
+      "freeze_sha": "8dcd304afae1bafe5a4de738175e171256a9501e"
+    },
+    "DEEP_GATE": true,
+    "G04": true,
+    "ADM_U01": true,
+    "HAT": true
+  },
+  "wt": {
+    "porcelain_count": 837,
+    "closure_dirty": [],
+    "deploy_non_e2e_dirty": 51,
+    "non_exempt_dirty": 230
+  }
+}

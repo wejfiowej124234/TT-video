@@ -1,0 +1,18 @@
+{
+  "captured_at_utc": "2026-06-16T13:55:31Z",
+  "recordings": [
+    "B1-hub-traveler.mp4",
+    "B2-steward-region.mp4",
+    "B3-guide-merchant-isolation.mp4",
+    "B4-investor-admin-boundaries.mp4"
+  ],
+  "screenshots": [
+    "role-traveler-hub.png",
+    "role-investor-governance-read.png",
+    "role-steward-region-workbench.png",
+    "role-guide-settings.png",
+    "role-merchant-settings.png",
+    "role-admin-governance-readonly.png"
+  ],
+  "isolation_snapshot": "ROLE-ISOLATION-SNAPSHOT.json"
+}

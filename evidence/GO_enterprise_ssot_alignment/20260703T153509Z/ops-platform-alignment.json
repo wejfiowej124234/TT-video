@@ -1,0 +1,438 @@
+{
+  "schema": "traveltrust.operations_platform_alignment_audit.v2",
+  "stamp": "20260703T153518Z",
+  "recorded_at": "2026-07-03T15:37:52.679Z",
+  "scope": {
+    "in": [
+      "operations_platform_six_domains",
+      "operations_workflow_fsm",
+      "OCS_SOPCP_OCIP",
+      "public_catalog_policy",
+      "rbac_admin_public_ops",
+      "registry_runbook_evidence"
+    ],
+    "out_of_scope": [
+      "RC_governance_rerun",
+      "DDG_governance_rerun",
+      "OCS_orchestrator_rerun",
+      "production_ops_baseline_pi3"
+    ]
+  },
+  "apis": {
+    "local": "http://127.0.0.1:8080",
+    "staging": "https://tt-api-staging.fly.dev"
+  },
+  "sections": {
+    "model_alignment": {
+      "registry": {
+        "principle": "Local and Staging share repo SSOT — registry identical by definition",
+        "files": {
+          "registry/traveltrust-operations-platform.v1.yaml": {
+            "exists": true,
+            "sha16": "318448723810b12d"
+          },
+          "registry/traveltrust-operations-workflow.v1.yaml": {
+            "exists": true,
+            "sha16": "90ffc325d1193366"
+          },
+          "registry/single-official-public-catalog-policy.v1.yaml": {
+            "exists": true,
+            "sha16": "10dba8bfda91e209"
+          },
+          "registry/official-catalog-identity-policy.v1.yaml": {
+            "exists": true,
+            "sha16": "d3aa4cc3f7de4b8b"
+          },
+          "registry/official-cold-start-dataset.v1.yaml": {
+            "exists": true,
+            "sha16": "604e10de215568e9"
+          },
+          "registry/display-data-governance.v1.yaml": {
+            "exists": true,
+            "sha16": "5745eece0148abb5"
+          }
+        },
+        "operations_platform_version": "v2",
+        "operations_workflow_version": "v1",
+        "governance": {
+          "evidence_reuse_policy": "ENFORCED",
+          "policy": "CLOSED_UNLESS_TOUCHED",
+          "gates": {
+            "RC": {
+              "status": "CLOSED",
+              "mode": "Evidence Reused"
+            },
+            "DDG": {
+              "status": "CLOSED",
+              "mode": "Evidence Reused"
+            },
+            "OCS": {
+              "status": "CLOSED",
+              "mode": "Evidence Reused"
+            }
+          }
+        },
+        "ocs_status": "CLOSED"
+      },
+      "six_domains_local": {
+        "content_operations": {
+          "ui_route": "/admin/content/countries",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/content/countries?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "catalog_operations": {
+          "ui_route": "/admin/official/public-operations",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/official/public-operations/publish-queue?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "campaign_operations": {
+          "ui_route": "/admin/official/cold-start",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/official/public-operations/campaigns?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "moderation_operations": {
+          "ui_route": "/admin/community/reports",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/community/reports?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "business_operations": {
+          "ui_route": "/admin/disputes",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/disputes?limit=1",
+              "status": 200,
+              "ok": true
+            },
+            {
+              "route": "/api/v1/admin/orders?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "analytics_growth": {
+          "ui_route": "/admin/growth",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/growth/analytics/overview?window_days=7",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        }
+      },
+      "six_domains_staging": {
+        "content_operations": {
+          "ui_route": "/admin/content/countries",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/content/countries?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "catalog_operations": {
+          "ui_route": "/admin/official/public-operations",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/official/public-operations/publish-queue?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "campaign_operations": {
+          "ui_route": "/admin/official/cold-start",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/official/public-operations/campaigns?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "moderation_operations": {
+          "ui_route": "/admin/community/reports",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/community/reports?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "business_operations": {
+          "ui_route": "/admin/disputes",
+          "verdict": "PASS",
+          "routes": [
+            {
+              "route": "/api/v1/admin/disputes?limit=1",
+              "status": 200,
+              "ok": true
+            },
+            {
+              "route": "/api/v1/admin/orders?limit=1",
+              "status": 200,
+              "ok": true
+            }
+          ]
+        },
+        "analytics_growth": {
+          "ui_route": "/admin/growth",
+          "verdict": "FAIL",
+          "routes": [
+            {
+              "route": "/api/v1/admin/growth/analytics/overview?window_days=7",
+              "status": 404,
+              "ok": false
+            }
+          ]
+        }
+      }
+    },
+    "behavior_alignment": {
+      "workflow_fsm_local": {
+        "content_draft_to_publish_blocked": true,
+        "catalog_hidden_featured_blocked": true,
+        "verdict": "PASS"
+      },
+      "workflow_fsm_staging": {
+        "content_draft_to_publish_blocked": true,
+        "catalog_hidden_featured_blocked": true,
+        "verdict": "PASS"
+      },
+      "workflow_validation_evidence": {
+        "stamp": "20260703T064100Z",
+        "verdict": "PASS",
+        "domains": {
+          "content_operations": "PASS",
+          "catalog_operations": "PASS",
+          "campaign_operations": "PASS",
+          "moderation_operations": "PASS",
+          "business_operations": "PASS"
+        }
+      }
+    },
+    "data_alignment": {
+      "sopcp_local": {
+        "verdict": "PASS",
+        "ocs_on_public": 10,
+        "ocs_expected": 10,
+        "non_ocs_count": 0,
+        "duplicate_cities": []
+      },
+      "sopcp_staging": {
+        "verdict": "PASS",
+        "ocs_on_public": 10,
+        "ocs_expected": 10,
+        "non_ocs_count": 0,
+        "duplicate_cities": []
+      },
+      "ocip_local": {
+        "checked": 5,
+        "found": 5,
+        "missing": [],
+        "verdict": "PASS"
+      },
+      "ocip_staging": {
+        "checked": 5,
+        "found": 5,
+        "missing": [],
+        "verdict": "PASS"
+      },
+      "public_catalog_local": {
+        "guides_public_count": 10,
+        "cities_public": [
+          "东京",
+          "京都",
+          "巴塞罗那",
+          "巴黎",
+          "悉尼",
+          "新加坡",
+          "曼谷",
+          "纽约",
+          "迪拜",
+          "首尔"
+        ],
+        "duplicate_cities_public": [],
+        "data_origin_breakdown": {
+          "production": 10
+        },
+        "ocs_on_public": 10,
+        "ocs_expected": 10,
+        "non_ocs_public": [],
+        "publish_queue_sample": [
+          {
+            "id": "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+            "display_status": "published",
+            "featured": false,
+            "display_surfaces": [
+              "market_feed",
+              "market_provider"
+            ]
+          },
+          {
+            "id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+            "display_status": "hidden",
+            "featured": false,
+            "display_surfaces": []
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000311",
+            "display_status": "hidden",
+            "featured": false,
+            "display_surfaces": []
+          }
+        ],
+        "provider_public_count": 10,
+        "acquisition_public_count": 10,
+        "ocs_provider_on_public": 10,
+        "ocs_acquisition_on_public": 10
+      },
+      "public_catalog_staging": {
+        "guides_public_count": 10,
+        "cities_public": [
+          "东京",
+          "京都",
+          "巴塞罗那",
+          "巴黎",
+          "悉尼",
+          "新加坡",
+          "曼谷",
+          "纽约",
+          "迪拜",
+          "首尔"
+        ],
+        "duplicate_cities_public": [],
+        "data_origin_breakdown": {
+          "production": 10
+        },
+        "ocs_on_public": 10,
+        "ocs_expected": 10,
+        "non_ocs_public": [],
+        "publish_queue_sample": [
+          {
+            "id": "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+            "display_status": "published",
+            "featured": false,
+            "display_surfaces": [
+              "market_feed",
+              "market_provider"
+            ]
+          },
+          {
+            "id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+            "display_status": "hidden",
+            "featured": false,
+            "display_surfaces": []
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000311",
+            "display_status": "hidden",
+            "featured": false,
+            "display_surfaces": []
+          }
+        ],
+        "provider_public_count": 10,
+        "acquisition_public_count": 10,
+        "ocs_provider_on_public": 10,
+        "ocs_acquisition_on_public": 10
+      }
+    },
+    "runtime_alignment": {
+      "meta_local": {
+        "status": 401,
+        "freeze_active": null,
+        "deployment_profile": null
+      },
+      "meta_staging": {
+        "status": 401,
+        "freeze_active": null,
+        "deployment_profile": null
+      },
+      "public_ops_policy_local": {
+        "show_test_data": false,
+        "blocked_origins": [
+          "SMOKE"
+        ],
+        "updated_at": "2026-07-02T00:35:29.850727Z",
+        "updated_by": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+      },
+      "public_ops_policy_staging": {
+        "show_test_data": false,
+        "blocked_origins": [
+          "SMOKE"
+        ],
+        "updated_at": "2026-07-02T00:35:29.850727Z",
+        "updated_by": "2760d445-cbf4-47d0-9461-fcba3db0516f"
+      },
+      "evidence": {
+        "workflow_validation_staging": {
+          "stamp": "20260703T064100Z",
+          "verdict": "PASS",
+          "domains": {
+            "content_operations": "PASS",
+            "catalog_operations": "PASS",
+            "campaign_operations": "PASS",
+            "moderation_operations": "PASS",
+            "business_operations": "PASS"
+          }
+        },
+        "ocs_state": "evidence/GO_official_cold_start_dataset/20260703T044855Z/state.json",
+        "ocs_stamp": "20260703T044855Z"
+      }
+    }
+  },
+  "differences": [
+    {
+      "category": "model",
+      "id": "six_domain_analytics_growth",
+      "local": "PASS",
+      "staging": "FAIL",
+      "classification": "Expected Difference",
+      "note": "Growth routes omitted on staging when complexity_convergence freeze is active",
+      "fix": null
+    }
+  ],
+  "verdict": {
+    "phase2_staging_ops_baseline": "PASS",
+    "phase2_local_staging_alignment": "PASS",
+    "blocking_count": 0,
+    "major_count": 0,
+    "minor_count": 0,
+    "expected_count": 1,
+    "staging_authoritative": true,
+    "note": "Local and Staging run the same operations model, workflow FSM, and OCS public baseline."
+  }
+}

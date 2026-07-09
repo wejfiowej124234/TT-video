@@ -13,6 +13,11 @@ const MISSING_PAGE_CONTRACTS: { rel: string; mainRel?: string; needles: string[]
     needles: ["AdminComplianceHubPageMain", "data-tt-admin-compliance-hub", "ADMIN_PERM.READ"],
   },
   { rel: "finance-suite/page.tsx", mainRel: "finance-suite/AdminFinanceSuitePageMain.tsx", needles: ["AdminFinanceSuitePageMain", "AdminPermissionDeniedBanner"] },
+  {
+    rel: "vacancy-ledger/page.tsx",
+    mainRel: "vacancy-ledger/AdminVacancyLedgerOpsPageMain.tsx",
+    needles: ["AdminVacancyLedgerOpsPageMain", "AdminPermissionDeniedBanner", "routes.adminVacancyLedgerOps"],
+  },
   { rel: "onboarding/page.tsx", mainRel: "onboarding/AdminOnboardingHubPageMain.tsx", needles: ["AdminOnboardingHubPageMain", "data-tt-admin-onboarding-hub"] },
   {
     rel: "onboarding/entitlements/page.tsx",

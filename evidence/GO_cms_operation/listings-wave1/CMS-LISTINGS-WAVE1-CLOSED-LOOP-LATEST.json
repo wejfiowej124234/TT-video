@@ -1,0 +1,43 @@
+{
+  "schema": "traveltrust.cms_listings_wave1_closed_loop.v1",
+  "recorded_at_utc": "2026-07-05T09:44:37Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "wave_id": "LISTINGS-WAVE-1",
+  "rows_closed": 4,
+  "results": [
+    {
+      "matrix_id": "ML-WAVE1-017-ACQ",
+      "variant": "acquisition",
+      "listing_id": "83b7cb80-c17d-494e-9cd3-48cdd1b96940",
+      "catalog_asset_id": "67c53ac5-e0a0-4f6d-9fc1-634b214aa718",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/listings-wave1/rows/ML-WAVE1-017-ACQ.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "ML-WAVE1-018-ACQ",
+      "variant": "acquisition",
+      "listing_id": "62173ab8-b657-4b8c-9654-6dbac09b3ced",
+      "catalog_asset_id": "db4af6ed-c2e8-4096-85d0-485830d8b5b7",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/listings-wave1/rows/ML-WAVE1-018-ACQ.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "ML-WAVE1-019-ACQ",
+      "variant": "acquisition",
+      "listing_id": "a110921b-af3b-49a0-923c-52f201e9134e",
+      "catalog_asset_id": "0bac6714-70be-43cc-82bf-d3785f120033",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/listings-wave1/rows/ML-WAVE1-019-ACQ.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "ML-WAVE1-020-ACQ",
+      "variant": "acquisition",
+      "listing_id": "c3a45398-9677-4cf4-879b-011d1f1323b1",
+      "catalog_asset_id": "f36e6e03-a6d4-47d0-b38a-bd16365de968",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/listings-wave1/rows/ML-WAVE1-020-ACQ.EVIDENCE.json"
+    }
+  ],
+  "matrix_ssot": "data/catalog/listings-wave1-matrix.v1.yaml",
+  "TT_CMS_LISTINGS_WAVE1": "PASS"
+}

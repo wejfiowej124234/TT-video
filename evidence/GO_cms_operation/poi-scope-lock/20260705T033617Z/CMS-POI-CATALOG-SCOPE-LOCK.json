@@ -1,0 +1,299 @@
+{
+  "schema": "traveltrust.cms_poi_catalog_scope_lock.v1",
+  "stamp_utc": "20260705T033617Z",
+  "layer": "CMS_OPERATION",
+  "role": "poi_catalog_scope_lock_frozen",
+  "not_governance": true,
+  "phase": "② staging",
+  "probe_api": "https://tt-api-staging.fly.dev",
+  "ssot": {
+    "city_to_region": "frontend/lib/cityDetails/constants.ts",
+    "attractions": [
+      "frontend/lib/cityDetails/attractions.ts",
+      "frontend/lib/cityDetails/productCountryPoi.ts"
+    ],
+    "food": [
+      "frontend/lib/cityDetails/food.ts",
+      "frontend/lib/cityDetails/productCountryPoi.ts"
+    ],
+    "product_countries": "frontend/lib/productCountries.ts"
+  },
+  "product_countries": [
+    {
+      "iso": "CN",
+      "country_zh": "中国"
+    },
+    {
+      "iso": "JP",
+      "country_zh": "日本"
+    },
+    {
+      "iso": "KR",
+      "country_zh": "韩国"
+    },
+    {
+      "iso": "SG",
+      "country_zh": "新加坡"
+    },
+    {
+      "iso": "TH",
+      "country_zh": "泰国"
+    },
+    {
+      "iso": "AE",
+      "country_zh": "阿联酋"
+    },
+    {
+      "iso": "US",
+      "country_zh": "美国"
+    },
+    {
+      "iso": "AU",
+      "country_zh": "澳大利亚"
+    },
+    {
+      "iso": "FR",
+      "country_zh": "法国"
+    },
+    {
+      "iso": "ES",
+      "country_zh": "西班牙"
+    }
+  ],
+  "denominator": {
+    "description": "Each catalog_pois row (city × poi_type × legacy_value) in ten product countries · not IMG-FAM-POI-* family slots",
+    "cities": 38,
+    "attraction": 169,
+    "food": 161,
+    "total": 330,
+    "cms_lock_categories": {
+      "poi": 169,
+      "food": 161,
+      "note": "After catalog ingest · run-cms-denominator-lock re-probes /api/v1/catalog/poi-images"
+    }
+  },
+  "by_country": [
+    {
+      "country_iso": "CN",
+      "country_zh": "中国",
+      "cities": 9,
+      "city_names": [
+        "北京",
+        "成都",
+        "大理",
+        "广州",
+        "杭州",
+        "青岛",
+        "厦门",
+        "上海",
+        "西安"
+      ],
+      "attraction": 46,
+      "food": 45,
+      "total": 91
+    },
+    {
+      "country_iso": "JP",
+      "country_zh": "日本",
+      "cities": 5,
+      "city_names": [
+        "大阪",
+        "东京",
+        "福冈",
+        "京都",
+        "札幌"
+      ],
+      "attraction": 22,
+      "food": 19,
+      "total": 41
+    },
+    {
+      "country_iso": "KR",
+      "country_zh": "韩国",
+      "cities": 4,
+      "city_names": [
+        "釜山",
+        "济州",
+        "仁川",
+        "首尔"
+      ],
+      "attraction": 16,
+      "food": 15,
+      "total": 31
+    },
+    {
+      "country_iso": "SG",
+      "country_zh": "新加坡",
+      "cities": 1,
+      "city_names": [
+        "新加坡"
+      ],
+      "attraction": 5,
+      "food": 5,
+      "total": 10
+    },
+    {
+      "country_iso": "TH",
+      "country_zh": "泰国",
+      "cities": 3,
+      "city_names": [
+        "曼谷",
+        "普吉",
+        "清迈"
+      ],
+      "attraction": 15,
+      "food": 13,
+      "total": 28
+    },
+    {
+      "country_iso": "AE",
+      "country_zh": "阿联酋",
+      "cities": 3,
+      "city_names": [
+        "阿布扎比",
+        "迪拜",
+        "沙迦"
+      ],
+      "attraction": 12,
+      "food": 12,
+      "total": 24
+    },
+    {
+      "country_iso": "US",
+      "country_zh": "美国",
+      "cities": 4,
+      "city_names": [
+        "旧金山",
+        "拉斯维加斯",
+        "洛杉矶",
+        "纽约"
+      ],
+      "attraction": 17,
+      "food": 16,
+      "total": 33
+    },
+    {
+      "country_iso": "AU",
+      "country_zh": "澳大利亚",
+      "cities": 3,
+      "city_names": [
+        "黄金海岸",
+        "墨尔本",
+        "悉尼"
+      ],
+      "attraction": 12,
+      "food": 12,
+      "total": 24
+    },
+    {
+      "country_iso": "FR",
+      "country_zh": "法国",
+      "cities": 3,
+      "city_names": [
+        "巴黎",
+        "里昂",
+        "尼斯"
+      ],
+      "attraction": 12,
+      "food": 12,
+      "total": 24
+    },
+    {
+      "country_iso": "ES",
+      "country_zh": "西班牙",
+      "cities": 3,
+      "city_names": [
+        "巴塞罗那",
+        "马德里",
+        "塞维利亚"
+      ],
+      "attraction": 12,
+      "food": 12,
+      "total": 24
+    }
+  ],
+  "excluded_outside_product": {
+    "rule": "GB/IT cities in frontend TS · excluded from Phase 1 product denominator",
+    "count": 7
+  },
+  "catalog_probe": {
+    "probe_api": "https://tt-api-staging.fly.dev",
+    "catalog_cities": {
+      "http": 200,
+      "count": 0
+    },
+    "catalog_poi_attraction": {
+      "http": 200,
+      "count": 0
+    },
+    "catalog_poi_food": {
+      "http": 200,
+      "count": 0
+    },
+    "catalog_empty": true,
+    "upload_allowed": false,
+    "upload_gate": "POI Upload forbidden until scope locked AND catalog ingest creates catalog_pois rows · then Review → Replace (not bare Upload)"
+  },
+  "matrix_ssot": "data/catalog/poi-hero-matrix.v1.yaml",
+  "matrix_rows": 330,
+  "wave_1_pilot": {
+    "matrix_id": "PH-JP-100-ATR",
+    "execution_order": 100,
+    "country_iso": "JP",
+    "country_zh": "日本",
+    "city_zh": "东京",
+    "poi_type": "attraction",
+    "legacy_value": "浅草寺",
+    "slug": "浅草寺",
+    "catalog_slot": {
+      "entity": "catalog_pois",
+      "unique_key": "(city_id, poi_type, slug)",
+      "asset_kind": "poi_hero",
+      "admin_route": "/admin/content/poi-images"
+    },
+    "matrix_row_status": "pending",
+    "asset_lifecycle": "draft",
+    "current_source": "ts_unsplash_fallback"
+  },
+  "execution_sequence": [
+    "1_poi_catalog_scope_lock_frozen",
+    "2_catalog_cities_and_pois_ingest",
+    "3_re_run_denominator_lock",
+    "4_first_poi_review_replace_publish_verify_evidence_live",
+    "5_refresh_after_each_item"
+  ],
+  "forbidden": [
+    "poi_upload_while_catalog_empty",
+    "poi_upload_before_scope_lock",
+    "batch_upload_before_denominator_re_lock"
+  ],
+  "ambient_contrast": {
+    "ambient": "Country slot existed · Upload replaced landing_ambient content",
+    "poi": "catalog_pois = 0 · must build catalog rows first · then Review → Replace per POI matrix row"
+  },
+  "cms_denominator_lock_snapshot": {
+    "stamp_utc": "20260705T032308Z",
+    "poi": {
+      "label": "POI",
+      "total": 0,
+      "live": 0,
+      "pending": 0,
+      "completion": "0/0 (catalog_empty)",
+      "catalog_empty": true,
+      "target": "re_lock_after_catalog_ingest"
+    },
+    "food": {
+      "label": "Food",
+      "total": 0,
+      "live": 0,
+      "pending": 0,
+      "completion": "0/0 (catalog_empty)",
+      "catalog_empty": true,
+      "target": "re_lock_after_catalog_ingest"
+    }
+  },
+  "TT_CMS_POI_CATALOG_SCOPE_LOCK": "FROZEN",
+  "TT_CMS_POI_DENOMINATOR_TOTAL": 330,
+  "TT_CMS_POI_DENOMINATOR_CITIES": 38,
+  "TT_CMS_POI_UPLOAD_ALLOWED": false
+}

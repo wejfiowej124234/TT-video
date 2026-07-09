@@ -1,0 +1,2394 @@
+{
+  "schema": "traveltrust.cms_l5_visual_scan.v1",
+  "stamp_utc": "20260706T003945Z",
+  "layer": "CMS_OPERATION",
+  "role": "read_only_visual_scan",
+  "not_governance": true,
+  "scan_mode": "read_only",
+  "ssot_inputs": {
+    "content_ownership_inventory": "data/catalog/content-ownership-inventory.v1.yaml",
+    "cms_asset_matrix": "data/catalog/cms-asset-matrix.v1.yaml",
+    "cms_image_inventory": "data/catalog/cms-image-inventory.v1.yaml",
+    "image_inventory_latest": "evidence/GO_cms_operation/CMS-IMAGE-INVENTORY-LATEST.json"
+  },
+  "probe_api": "https://tt-api-staging.fly.dev",
+  "probe_skipped": false,
+  "ops_priority_wave": "P0 Destination Ambient (JP→KR→TH→SG→FR→US→AU→ES→AE→CN) · P1 POI/Hotel/Transport · P2 listing covers split by source",
+  "pages_in_scope": [
+    "/",
+    "/market",
+    "/market/provider",
+    "/market/acquisition",
+    "/itinerary/new",
+    "/traveltrust",
+    "POI adapters",
+    "hotel/transport stock",
+    "did-rank (reference only)"
+  ],
+  "forbidden": [
+    "batch_replace_without_l5",
+    "route_back_to_ocs",
+    "business_code_changes",
+    "db_schema_changes"
+  ],
+  "workflow": [
+    "upload",
+    "review",
+    "publish",
+    "verify",
+    "evidence",
+    "live"
+  ],
+  "cms_queues": [
+    "destination_ambient",
+    "poi",
+    "hotel",
+    "transport",
+    "provider_listing",
+    "acquisition_listing",
+    "guide_listing",
+    "discover_listing",
+    "video"
+  ],
+  "summary": {
+    "ownership_modules_scanned": 33,
+    "visual_findings_total": 14,
+    "cms_scope": 13,
+    "needs_cms_l5_workflow": 3,
+    "l5_compliant_partial": 10,
+    "excluded_ocs_count": 12,
+    "reference_non_cms_count": 5,
+    "by_current_source": {
+      "catalog": 10,
+      "placeholder": 3
+    },
+    "by_cms_queue": {
+      "destination_ambient": 10,
+      "poi": 1,
+      "hotel": 1,
+      "transport": 1
+    },
+    "by_l5_status": {
+      "PASS": 0,
+      "REVIEW_REQUIRED": 3,
+      "VERIFIED": 0,
+      "LIVE": 10
+    },
+    "flag_counts": {
+      "unsplash": 0,
+      "pexels": 0,
+      "placeholder": 3,
+      "old_external": 0,
+      "region_review_required": 0
+    },
+    "ops_priority_tiers": {
+      "P0": {
+        "label": "首页第一印象 · Wave 1",
+        "description": "Destination Ambient · 十国完成后首页质感明显提升",
+        "total": 10,
+        "pending": 0,
+        "tracked_total": 10,
+        "wave_order": [
+          "JP",
+          "KR",
+          "TH",
+          "SG",
+          "FR",
+          "US",
+          "AU",
+          "ES",
+          "AE",
+          "CN"
+        ],
+        "subqueues": {
+          "destination_ambient": {
+            "total": 10,
+            "cms_total": 10,
+            "pending": 0,
+            "owners": [
+              "CMS"
+            ]
+          }
+        }
+      },
+      "P1": {
+        "label": "业务展示 · CMS POI / Hotel / Transport",
+        "description": "定制旅行 · 行程详情直接受益",
+        "total": 3,
+        "pending": 3,
+        "tracked_total": 3,
+        "subqueues": {
+          "poi": {
+            "total": 1,
+            "cms_total": 1,
+            "pending": 1,
+            "owners": [
+              "CMS"
+            ]
+          },
+          "hotel": {
+            "total": 1,
+            "cms_total": 1,
+            "pending": 1,
+            "owners": [
+              "CMS"
+            ]
+          },
+          "transport": {
+            "total": 1,
+            "cms_total": 1,
+            "pending": 1,
+            "owners": [
+              "CMS"
+            ]
+          }
+        }
+      },
+      "P2": {
+        "label": "运营内容 · Market Listing Covers",
+        "description": "按来源分子队列 · 避免 Banner 混排",
+        "total": 0,
+        "pending": 0,
+        "tracked_total": 1,
+        "subqueues": {
+          "video": {
+            "total": 1,
+            "cms_total": 0,
+            "pending": 0,
+            "owners": [
+              "Media"
+            ]
+          }
+        }
+      }
+    },
+    "todays_review": [],
+    "cms_operation_wave_1": {
+      "id": "wave_1",
+      "label": "CMS Operation Wave 1",
+      "closed_loop_queues": [
+        "destination_ambient",
+        "poi",
+        "hotel",
+        "transport",
+        "provider_listing",
+        "acquisition_listing"
+      ],
+      "tracking_only": [
+        {
+          "queue": "guide_listing",
+          "owner": "OCS",
+          "note": "跟踪 · 不纳入 CMS 闭环"
+        },
+        {
+          "queue": "discover_listing",
+          "owner": "API",
+          "note": "跟踪 · 不纳入 CMS 闭环"
+        }
+      ],
+      "phases": [
+        {
+          "priority": "P0",
+          "queues": [
+            "destination_ambient"
+          ],
+          "label": "Destination Ambient · 10 国",
+          "next_step": "逐国完成 JP→KR→TH→SG→FR→US→AU→ES→AE→CN"
+        },
+        {
+          "priority": "P1",
+          "queues": [
+            "poi",
+            "hotel",
+            "transport"
+          ],
+          "label": "POI · Hotel · Transport",
+          "next_step": "各家族完成 L5 替换"
+        },
+        {
+          "priority": "P2",
+          "queues": [
+            "provider_listing",
+            "acquisition_listing"
+          ],
+          "label": "Provider · Acquisition Listing",
+          "next_step": "逐项替换"
+        }
+      ],
+      "current_phase": {
+        "priority": "P1",
+        "label": "POI · Hotel · Transport",
+        "next_step": "各家族完成 L5 替换",
+        "next_asset": {
+          "scan_id": "VIS-POI-FAMILY",
+          "cms_queue": "poi",
+          "modify_entry": "/admin/content/poi-images"
+        },
+        "complete": false
+      },
+      "queue_completion": {
+        "destination_ambient": {
+          "label": "Destination Ambient",
+          "priority": "P0",
+          "live": 10,
+          "total": 10,
+          "pending": 0,
+          "rate_pct": 100,
+          "display": "10/10 (100%)"
+        },
+        "poi": {
+          "label": "POI",
+          "priority": "P1",
+          "live": 0,
+          "total": 1,
+          "pending": 1,
+          "rate_pct": 0,
+          "display": "0/1 (0%)"
+        },
+        "hotel": {
+          "label": "Hotel",
+          "priority": "P1",
+          "live": 0,
+          "total": 1,
+          "pending": 1,
+          "rate_pct": 0,
+          "display": "0/1 (0%)"
+        },
+        "transport": {
+          "label": "Transport",
+          "priority": "P1",
+          "live": 0,
+          "total": 1,
+          "pending": 1,
+          "rate_pct": 0,
+          "display": "0/1 (0%)"
+        },
+        "provider_listing": {
+          "label": "Provider Listing",
+          "priority": "P2",
+          "live": 0,
+          "total": 0,
+          "pending": 0,
+          "rate_pct": 0,
+          "display": "0/0 (0%)"
+        },
+        "acquisition_listing": {
+          "label": "Acquisition Listing",
+          "priority": "P2",
+          "live": 0,
+          "total": 0,
+          "pending": 0,
+          "rate_pct": 0,
+          "display": "0/0 (0%)"
+        }
+      },
+      "work_plan": [
+        {
+          "priority": "P0",
+          "queue": "destination_ambient",
+          "label": "Destination Ambient",
+          "count": 10,
+          "completion": "10/10 (100%)",
+          "next_step": "逐国完成 JP→KR→TH→SG→FR→US→AU→ES→AE→CN"
+        },
+        {
+          "priority": "P1",
+          "queue": "poi",
+          "label": "POI",
+          "count": 1,
+          "completion": "0/1 (0%)",
+          "next_step": "各家族完成 L5 替换"
+        },
+        {
+          "priority": "P1",
+          "queue": "hotel",
+          "label": "Hotel",
+          "count": 1,
+          "completion": "0/1 (0%)",
+          "next_step": "各家族完成 L5 替换"
+        },
+        {
+          "priority": "P1",
+          "queue": "transport",
+          "label": "Transport",
+          "count": 1,
+          "completion": "0/1 (0%)",
+          "next_step": "各家族完成 L5 替换"
+        },
+        {
+          "priority": "P2",
+          "queue": "provider_listing",
+          "label": "Provider Listing",
+          "count": 0,
+          "completion": "0/0 (0%)",
+          "next_step": "逐项替换"
+        },
+        {
+          "priority": "P2",
+          "queue": "acquisition_listing",
+          "label": "Acquisition Listing",
+          "count": 0,
+          "completion": "0/0 (0%)",
+          "next_step": "逐项替换"
+        }
+      ],
+      "wave_progress": {
+        "live": 10,
+        "total": 13,
+        "pending": 3,
+        "rate_pct": 77,
+        "display": "10/13 (77%)"
+      },
+      "milestone": {
+        "label": "CMS Operation Wave 1",
+        "subtitle": "33 项里程碑 · Wave 1 全部完成后启动下一波",
+        "item_total": 13,
+        "rows": [
+          {
+            "priority": "P0",
+            "queue": "destination_ambient",
+            "label": "Destination Ambient",
+            "total": 10,
+            "live": 10,
+            "completion": "10/10 (100%)"
+          },
+          {
+            "priority": "P1",
+            "queue": "poi",
+            "label": "POI",
+            "total": 1,
+            "live": 0,
+            "completion": "0/1 (0%)"
+          },
+          {
+            "priority": "P1",
+            "queue": "hotel",
+            "label": "Hotel",
+            "total": 1,
+            "live": 0,
+            "completion": "0/1 (0%)"
+          },
+          {
+            "priority": "P1",
+            "queue": "transport",
+            "label": "Transport",
+            "total": 1,
+            "live": 0,
+            "completion": "0/1 (0%)"
+          },
+          {
+            "priority": "P2",
+            "queue": "provider_listing",
+            "label": "Provider Listing",
+            "total": 0,
+            "live": 0,
+            "completion": "0/0 (0%)"
+          },
+          {
+            "priority": "P2",
+            "queue": "acquisition_listing",
+            "label": "Acquisition Listing",
+            "total": 0,
+            "live": 0,
+            "completion": "0/0 (0%)"
+          }
+        ],
+        "totals": {
+          "label": "CMS Wave 1",
+          "live": 10,
+          "total": 13,
+          "pending": 3,
+          "rate_pct": 77,
+          "display": "10/13 (77%)"
+        }
+      },
+      "blocked": [
+        {
+          "label": "POI",
+          "scan_id": "VIS-POI-FAMILY",
+          "ops_priority": "P1",
+          "waiting": "Waiting Upload"
+        },
+        {
+          "label": "Hotel",
+          "scan_id": "VIS-HOTEL-FAMILY",
+          "ops_priority": "P1",
+          "waiting": "Waiting Upload"
+        },
+        {
+          "label": "Transport",
+          "scan_id": "VIS-TRANSPORT-FAMILY",
+          "ops_priority": "P1",
+          "waiting": "Waiting Upload"
+        }
+      ],
+      "daily_headline": {
+        "overall": "10/13 (77%)",
+        "p0_ambient": "10/10 (100%)",
+        "next": "POI"
+      },
+      "tracking_only_note": "Guide Listing (OCS) · Discover Listing (API) — 跟踪即可，不纳入 CMS 闭环"
+    },
+    "next_single_asset": {
+      "scan_id": "VIS-HOTEL-FAMILY",
+      "current_source": "placeholder",
+      "cms_queue": "hotel",
+      "ops_priority": "P1",
+      "l5_status": "REVIEW_REQUIRED",
+      "modify_entry": "/admin/content/hotel-tiers"
+    }
+  },
+  "ops_priority": {
+    "P0": {
+      "label": "首页第一印象 · Wave 1",
+      "description": "Destination Ambient · 十国完成后首页质感明显提升",
+      "queues": [
+        "destination_ambient"
+      ]
+    },
+    "P1": {
+      "label": "业务展示 · CMS POI / Hotel / Transport",
+      "description": "定制旅行 · 行程详情直接受益",
+      "queues": [
+        "poi",
+        "hotel",
+        "transport"
+      ]
+    },
+    "P2": {
+      "label": "运营内容 · Market Listing Covers",
+      "description": "按来源分子队列 · 避免 Banner 混排",
+      "queues": [
+        "provider_listing",
+        "acquisition_listing",
+        "guide_listing",
+        "discover_listing",
+        "video"
+      ]
+    }
+  },
+  "queue_pending_total": 14,
+  "cms_queue_pending_total": 3,
+  "queues": {
+    "destination_ambient": [
+      {
+        "scan_id": "VIS-DA-AE-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-AE-HOME",
+        "matrix_id": "DA-AE-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-ae-home-v1.jpg",
+        "flags": {
+          "is_placeholder": false,
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-AU-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-AU-HOME",
+        "matrix_id": "DA-AU-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-au-home-v1.jpg",
+        "flags": {
+          "is_placeholder": false,
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-CN-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-CN-HOME",
+        "matrix_id": "DA-CN-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-cn-home-v1.jpg",
+        "flags": {
+          "is_placeholder": false,
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-ES-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-ES-HOME",
+        "matrix_id": "DA-ES-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-es-home-v1.jpg",
+        "flags": {
+          "is_placeholder": false,
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-FR-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-FR-HOME",
+        "matrix_id": "DA-FR-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-fr-home-v1.jpg",
+        "flags": {
+          "is_placeholder": false,
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-JP-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-JP-HOME",
+        "matrix_id": "DA-JP-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-jp-home-v1.jpg",
+        "flags": {
+          "is_placeholder": false,
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-KR-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-KR-HOME",
+        "matrix_id": "DA-KR-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-kr-home-v1.jpg",
+        "flags": {
+          "is_placeholder": false,
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-SG-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-SG-HOME",
+        "matrix_id": "DA-SG-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-sg-home-v1.jpg",
+        "flags": {
+          "is_placeholder": false,
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-TH-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-TH-HOME",
+        "matrix_id": "DA-TH-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-th-home-v1.jpg",
+        "flags": {
+          "is_placeholder": false,
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      },
+      {
+        "scan_id": "VIS-DA-US-HOME",
+        "ownership_id": "home-destination-ambient",
+        "inventory_id": "IMG-DA-US-HOME",
+        "matrix_id": "DA-US-HOME",
+        "ops_priority": "P0",
+        "page_entry": {
+          "route": "/",
+          "page_module": "首页国家背景 · Destination Ambient",
+          "modify_entry": "/admin/content/landing-ambient"
+        },
+        "owner": "CMS",
+        "current_source": "catalog",
+        "target_source": "catalog",
+        "l5_status": "LIVE",
+        "operational_action": "Live · monitor only",
+        "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-us-home-v1.jpg",
+        "flags": {
+          "is_placeholder": false,
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      }
+    ],
+    "poi": [
+      {
+        "scan_id": "VIS-POI-FAMILY",
+        "ownership_id": "dest-poi-images",
+        "inventory_id": "IMG-FAM-POI-CITY",
+        "ops_priority": "P1",
+        "page_entry": {
+          "route": "/ · /itinerary/new · /escrow/[id]",
+          "page_module": "POI family · no published images",
+          "modify_entry": "/admin/content/poi-images"
+        },
+        "owner": "CMS",
+        "current_source": "placeholder",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": null,
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": true,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      }
+    ],
+    "hotel": [
+      {
+        "scan_id": "VIS-HOTEL-FAMILY",
+        "ownership_id": "hotel-transport-stock",
+        "inventory_id": "IMG-FAM-HOTEL",
+        "ops_priority": "P1",
+        "page_entry": {
+          "route": "market/itinerary/escrow adapters",
+          "page_module": "Hotel tier stock · empty",
+          "modify_entry": "/admin/content/hotel-tiers"
+        },
+        "owner": "CMS",
+        "current_source": "placeholder",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": null,
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": true,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      }
+    ],
+    "transport": [
+      {
+        "scan_id": "VIS-TRANSPORT-FAMILY",
+        "ownership_id": "hotel-transport-stock",
+        "inventory_id": "IMG-FAM-TRANSPORT",
+        "ops_priority": "P1",
+        "page_entry": {
+          "route": "market/itinerary/escrow adapters",
+          "page_module": "Transport stock · empty",
+          "modify_entry": "/admin/content/transport"
+        },
+        "owner": "CMS",
+        "current_source": "placeholder",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": null,
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": true,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [
+          "upload",
+          "review",
+          "publish",
+          "verify",
+          "evidence",
+          "live"
+        ],
+        "needs_cms_l5_workflow": true
+      }
+    ],
+    "provider_listing": [],
+    "acquisition_listing": [],
+    "guide_listing": [],
+    "discover_listing": [],
+    "video": [
+      {
+        "scan_id": "VIS-TT-VIDEO-FAMILY",
+        "ownership_id": "traveltrust-video",
+        "inventory_id": null,
+        "ops_priority": "P2",
+        "page_entry": {
+          "route": "/ · /traveltrust",
+          "page_module": "品牌视频 / Poster",
+          "modify_entry": "deploy media · Media Platform (future)"
+        },
+        "owner": "Media",
+        "current_source": "media_platform",
+        "target_source": "catalog",
+        "l5_status": "REVIEW_REQUIRED",
+        "operational_action": "Upload → Review → Publish → Verify → Evidence → Live",
+        "url": null,
+        "flags": {
+          "is_unsplash": false,
+          "is_pexels": false,
+          "is_placeholder": false,
+          "is_old_external": false,
+          "region_review_required": false
+        },
+        "workflow": [],
+        "needs_cms_l5_workflow": false
+      }
+    ]
+  },
+  "todays_review": [],
+  "cms_operation_wave_1": {
+    "id": "wave_1",
+    "label": "CMS Operation Wave 1",
+    "closed_loop_queues": [
+      "destination_ambient",
+      "poi",
+      "hotel",
+      "transport",
+      "provider_listing",
+      "acquisition_listing"
+    ],
+    "tracking_only": [
+      {
+        "queue": "guide_listing",
+        "owner": "OCS",
+        "note": "跟踪 · 不纳入 CMS 闭环"
+      },
+      {
+        "queue": "discover_listing",
+        "owner": "API",
+        "note": "跟踪 · 不纳入 CMS 闭环"
+      }
+    ],
+    "phases": [
+      {
+        "priority": "P0",
+        "queues": [
+          "destination_ambient"
+        ],
+        "label": "Destination Ambient · 10 国",
+        "next_step": "逐国完成 JP→KR→TH→SG→FR→US→AU→ES→AE→CN"
+      },
+      {
+        "priority": "P1",
+        "queues": [
+          "poi",
+          "hotel",
+          "transport"
+        ],
+        "label": "POI · Hotel · Transport",
+        "next_step": "各家族完成 L5 替换"
+      },
+      {
+        "priority": "P2",
+        "queues": [
+          "provider_listing",
+          "acquisition_listing"
+        ],
+        "label": "Provider · Acquisition Listing",
+        "next_step": "逐项替换"
+      }
+    ],
+    "current_phase": {
+      "priority": "P1",
+      "label": "POI · Hotel · Transport",
+      "next_step": "各家族完成 L5 替换",
+      "next_asset": {
+        "scan_id": "VIS-POI-FAMILY",
+        "cms_queue": "poi",
+        "modify_entry": "/admin/content/poi-images"
+      },
+      "complete": false
+    },
+    "queue_completion": {
+      "destination_ambient": {
+        "label": "Destination Ambient",
+        "priority": "P0",
+        "live": 10,
+        "total": 10,
+        "pending": 0,
+        "rate_pct": 100,
+        "display": "10/10 (100%)"
+      },
+      "poi": {
+        "label": "POI",
+        "priority": "P1",
+        "live": 0,
+        "total": 1,
+        "pending": 1,
+        "rate_pct": 0,
+        "display": "0/1 (0%)"
+      },
+      "hotel": {
+        "label": "Hotel",
+        "priority": "P1",
+        "live": 0,
+        "total": 1,
+        "pending": 1,
+        "rate_pct": 0,
+        "display": "0/1 (0%)"
+      },
+      "transport": {
+        "label": "Transport",
+        "priority": "P1",
+        "live": 0,
+        "total": 1,
+        "pending": 1,
+        "rate_pct": 0,
+        "display": "0/1 (0%)"
+      },
+      "provider_listing": {
+        "label": "Provider Listing",
+        "priority": "P2",
+        "live": 0,
+        "total": 0,
+        "pending": 0,
+        "rate_pct": 0,
+        "display": "0/0 (0%)"
+      },
+      "acquisition_listing": {
+        "label": "Acquisition Listing",
+        "priority": "P2",
+        "live": 0,
+        "total": 0,
+        "pending": 0,
+        "rate_pct": 0,
+        "display": "0/0 (0%)"
+      }
+    },
+    "work_plan": [
+      {
+        "priority": "P0",
+        "queue": "destination_ambient",
+        "label": "Destination Ambient",
+        "count": 10,
+        "completion": "10/10 (100%)",
+        "next_step": "逐国完成 JP→KR→TH→SG→FR→US→AU→ES→AE→CN"
+      },
+      {
+        "priority": "P1",
+        "queue": "poi",
+        "label": "POI",
+        "count": 1,
+        "completion": "0/1 (0%)",
+        "next_step": "各家族完成 L5 替换"
+      },
+      {
+        "priority": "P1",
+        "queue": "hotel",
+        "label": "Hotel",
+        "count": 1,
+        "completion": "0/1 (0%)",
+        "next_step": "各家族完成 L5 替换"
+      },
+      {
+        "priority": "P1",
+        "queue": "transport",
+        "label": "Transport",
+        "count": 1,
+        "completion": "0/1 (0%)",
+        "next_step": "各家族完成 L5 替换"
+      },
+      {
+        "priority": "P2",
+        "queue": "provider_listing",
+        "label": "Provider Listing",
+        "count": 0,
+        "completion": "0/0 (0%)",
+        "next_step": "逐项替换"
+      },
+      {
+        "priority": "P2",
+        "queue": "acquisition_listing",
+        "label": "Acquisition Listing",
+        "count": 0,
+        "completion": "0/0 (0%)",
+        "next_step": "逐项替换"
+      }
+    ],
+    "wave_progress": {
+      "live": 10,
+      "total": 13,
+      "pending": 3,
+      "rate_pct": 77,
+      "display": "10/13 (77%)"
+    },
+    "milestone": {
+      "label": "CMS Operation Wave 1",
+      "subtitle": "33 项里程碑 · Wave 1 全部完成后启动下一波",
+      "item_total": 13,
+      "rows": [
+        {
+          "priority": "P0",
+          "queue": "destination_ambient",
+          "label": "Destination Ambient",
+          "total": 10,
+          "live": 10,
+          "completion": "10/10 (100%)"
+        },
+        {
+          "priority": "P1",
+          "queue": "poi",
+          "label": "POI",
+          "total": 1,
+          "live": 0,
+          "completion": "0/1 (0%)"
+        },
+        {
+          "priority": "P1",
+          "queue": "hotel",
+          "label": "Hotel",
+          "total": 1,
+          "live": 0,
+          "completion": "0/1 (0%)"
+        },
+        {
+          "priority": "P1",
+          "queue": "transport",
+          "label": "Transport",
+          "total": 1,
+          "live": 0,
+          "completion": "0/1 (0%)"
+        },
+        {
+          "priority": "P2",
+          "queue": "provider_listing",
+          "label": "Provider Listing",
+          "total": 0,
+          "live": 0,
+          "completion": "0/0 (0%)"
+        },
+        {
+          "priority": "P2",
+          "queue": "acquisition_listing",
+          "label": "Acquisition Listing",
+          "total": 0,
+          "live": 0,
+          "completion": "0/0 (0%)"
+        }
+      ],
+      "totals": {
+        "label": "CMS Wave 1",
+        "live": 10,
+        "total": 13,
+        "pending": 3,
+        "rate_pct": 77,
+        "display": "10/13 (77%)"
+      }
+    },
+    "blocked": [
+      {
+        "label": "POI",
+        "scan_id": "VIS-POI-FAMILY",
+        "ops_priority": "P1",
+        "waiting": "Waiting Upload"
+      },
+      {
+        "label": "Hotel",
+        "scan_id": "VIS-HOTEL-FAMILY",
+        "ops_priority": "P1",
+        "waiting": "Waiting Upload"
+      },
+      {
+        "label": "Transport",
+        "scan_id": "VIS-TRANSPORT-FAMILY",
+        "ops_priority": "P1",
+        "waiting": "Waiting Upload"
+      }
+    ],
+    "daily_headline": {
+      "overall": "10/13 (77%)",
+      "p0_ambient": "10/10 (100%)",
+      "next": "POI"
+    },
+    "tracking_only_note": "Guide Listing (OCS) · Discover Listing (API) — 跟踪即可，不纳入 CMS 闭环"
+  },
+  "ownership_modules": [
+    {
+      "ownership_id": "home-destination-ambient",
+      "page_module": "首页国家背景 · Destination Ambient",
+      "route": "/",
+      "owner": "CMS",
+      "image_owner": "CMS landing_ambient · ① fallback Unsplash TS",
+      "modify_entry": "/admin/content/landing-ambient",
+      "current_status": "draft",
+      "business_criticality": "P0",
+      "cms_queue_hint": "destination_ambient",
+      "ops_priority": "P0"
+    },
+    {
+      "ownership_id": "home-itinerary-preview",
+      "page_module": "创新行程预览卡",
+      "route": "/",
+      "owner": "API",
+      "image_owner": "API daily_itinerary images · ambient until unlock",
+      "modify_entry": "Backend itineraries mock · locales",
+      "current_status": "live",
+      "business_criticality": "P0",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "market-order-cover",
+      "page_module": "订单卡封面",
+      "route": "/market",
+      "owner": "API",
+      "image_owner": "API image · Unsplash fallback",
+      "modify_entry": "Backend discover seed · marketMediaFallback.ts",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P0",
+      "cms_queue_hint": "discover_listing",
+      "ops_priority": "P2"
+    },
+    {
+      "ownership_id": "market-provider-listing",
+      "page_module": "商家橱窗 Listing",
+      "route": "/market/provider",
+      "owner": "CMS",
+      "image_owner": "PG payload · demo Unsplash",
+      "modify_entry": "MerchantShowcaseStudio · /admin/content",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P1",
+      "cms_queue_hint": "provider_listing",
+      "ops_priority": "P2"
+    },
+    {
+      "ownership_id": "market-acquisition-listing",
+      "page_module": "收购 Listing",
+      "route": "/market/acquisition",
+      "owner": "CMS",
+      "image_owner": "PG payload · demo Unsplash",
+      "modify_entry": "AcquisitionCarryStudio",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P1",
+      "cms_queue_hint": "acquisition_listing",
+      "ops_priority": "P2"
+    },
+    {
+      "ownership_id": "itinerary-new",
+      "page_module": "独立行程创建",
+      "route": "/itinerary/new",
+      "owner": "API",
+      "image_owner": "API itinerary images",
+      "modify_entry": "Backend mock · /admin/official/itinerary-templates",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P1",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "community-main",
+      "page_module": "Community 主 Feed",
+      "route": "/community",
+      "owner": "API",
+      "image_owner": "UGC uploads · media multipart",
+      "modify_entry": "PublishDrawer · /admin/community",
+      "current_status": "live",
+      "business_criticality": "P0",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "community-explore",
+      "page_module": "Explore",
+      "route": "/community/explore",
+      "owner": "API",
+      "image_owner": "Feed thumbs + dest blocks",
+      "modify_entry": "CMS geo backend · frozen UI",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P0",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "community-detail-media",
+      "page_module": "Post / User 媒体",
+      "route": "/community/post/[id] · /community/user/[id]",
+      "owner": "API",
+      "image_owner": "API media URLs",
+      "modify_entry": "User publish · /admin/community",
+      "current_status": "live",
+      "business_criticality": "P0",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "guide-workbench",
+      "page_module": "向导工作台",
+      "route": "/guide",
+      "owner": "API",
+      "image_owner": "Profile preview API",
+      "modify_entry": "/guide/* operator UI",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P1",
+      "cms_queue_hint": "guide_listing",
+      "ops_priority": "P2"
+    },
+    {
+      "ownership_id": "dest-ambient-all-countries",
+      "page_module": "十国 Destination Ambient",
+      "route": "/ (country selection)",
+      "owner": "CMS",
+      "image_owner": "CMS landing_ambient · Unsplash fallback",
+      "modify_entry": "/admin/content/landing-ambient",
+      "current_status": "draft",
+      "business_criticality": "P0",
+      "cms_queue_hint": "destination_ambient",
+      "ops_priority": "P0"
+    },
+    {
+      "ownership_id": "dest-poi-images",
+      "page_module": "行程/POI 配图",
+      "route": "/ · /itinerary/new · /escrow/[id]",
+      "owner": "CMS",
+      "image_owner": "CMS poi_hero · API fallback",
+      "modify_entry": "/admin/content/poi-images · pois",
+      "current_status": "not_started",
+      "business_criticality": "P1",
+      "cms_queue_hint": "poi",
+      "ops_priority": "P1"
+    },
+    {
+      "ownership_id": "traveltrust-page",
+      "page_module": "/traveltrust 品牌页",
+      "route": "/traveltrust",
+      "owner": "API",
+      "image_owner": "page-brief media keys · cinematic static",
+      "modify_entry": "locales · env deploy (UI frozen)",
+      "current_status": "frozen",
+      "business_criticality": "P2",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "traveltrust-video",
+      "page_module": "品牌视频 / Poster",
+      "route": "/ · /traveltrust",
+      "owner": "Media",
+      "image_owner": "public/media/landing static",
+      "modify_entry": "deploy media · Media Platform (future)",
+      "current_status": "not_started",
+      "business_criticality": "P2",
+      "cms_queue_hint": "video",
+      "ops_priority": "P2"
+    },
+    {
+      "ownership_id": "did-rank-boards",
+      "page_module": "DID Rank 各榜",
+      "route": "/did-rank",
+      "owner": "API",
+      "image_owner": "API rank avatars",
+      "modify_entry": "Backend rank compute",
+      "current_status": "live",
+      "business_criticality": "P2",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "did-rank-trust",
+      "page_module": "Trust 深链",
+      "route": "/did-rank → /community/user/[id]",
+      "owner": "API",
+      "image_owner": "Community avatars",
+      "modify_entry": "Backend · community profile",
+      "current_status": "live",
+      "business_criticality": "P2",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "escrow-order",
+      "page_module": "Escrow 订单页",
+      "route": "/escrow/[id]",
+      "owner": "API",
+      "image_owner": "Order/itinerary images",
+      "modify_entry": "Backend orders",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P0",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    },
+    {
+      "ownership_id": "provider-register",
+      "page_module": "商家入驻",
+      "route": "/provider/register",
+      "owner": "API",
+      "image_owner": "KYC uploads",
+      "modify_entry": "/provider/register · /admin/provider-applications",
+      "current_status": "frozen",
+      "business_criticality": "P0",
+      "cms_queue_hint": "provider_listing",
+      "ops_priority": "P2"
+    },
+    {
+      "ownership_id": "hotel-transport-stock",
+      "page_module": "酒店/交通库存图",
+      "route": "market/itinerary/escrow adapters",
+      "owner": "CMS",
+      "image_owner": "CMS hotel_tier_stock · transport_stock",
+      "modify_entry": "/admin/content/hotel-tiers · transport-region-rules",
+      "current_status": "not_started",
+      "business_criticality": "P1",
+      "cms_queue_hint": "hotel",
+      "ops_priority": "P1"
+    },
+    {
+      "ownership_id": "admin-cms-hub",
+      "page_module": "CMS Admin",
+      "route": "/admin/content/*",
+      "owner": "CMS",
+      "image_owner": "CMS media assets",
+      "modify_entry": "/admin/content/*",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P1",
+      "cms_queue_hint": "destination_ambient",
+      "ops_priority": "P0"
+    },
+    {
+      "ownership_id": "admin-community-mod",
+      "page_module": "Community 审核",
+      "route": "/admin/community/*",
+      "owner": "API",
+      "image_owner": "UGC refs",
+      "modify_entry": "/admin/community/*",
+      "current_status": "ops_maintenance",
+      "business_criticality": "P1",
+      "cms_queue_hint": null,
+      "ops_priority": null
+    }
+  ],
+  "visual_findings": [
+    {
+      "scan_id": "VIS-DA-JP-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-JP-HOME",
+      "matrix_id": "DA-JP-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "JP",
+      "country_label": "JP Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-jp-home-v1.jpg",
+      "probe": {
+        "http": 429,
+        "catalog_items": 0
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_placeholder": false,
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "ambient runtime wiring SSOT · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only",
+      "ssot_ambient_wiring": true
+    },
+    {
+      "scan_id": "VIS-DA-KR-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-KR-HOME",
+      "matrix_id": "DA-KR-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "KR",
+      "country_label": "KR Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-kr-home-v1.jpg",
+      "probe": {
+        "http": 429,
+        "catalog_items": 0
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_placeholder": false,
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "ambient runtime wiring SSOT · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only",
+      "ssot_ambient_wiring": true
+    },
+    {
+      "scan_id": "VIS-DA-TH-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-TH-HOME",
+      "matrix_id": "DA-TH-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "TH",
+      "country_label": "TH Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-th-home-v1.jpg",
+      "probe": {
+        "http": 429,
+        "catalog_items": 0
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_placeholder": false,
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "ambient runtime wiring SSOT · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only",
+      "ssot_ambient_wiring": true
+    },
+    {
+      "scan_id": "VIS-DA-SG-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-SG-HOME",
+      "matrix_id": "DA-SG-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "SG",
+      "country_label": "SG Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-sg-home-v1.jpg",
+      "probe": {
+        "http": 429,
+        "catalog_items": 0
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_placeholder": false,
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "ambient runtime wiring SSOT · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only",
+      "ssot_ambient_wiring": true
+    },
+    {
+      "scan_id": "VIS-DA-FR-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-FR-HOME",
+      "matrix_id": "DA-FR-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "FR",
+      "country_label": "FR Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-fr-home-v1.jpg",
+      "probe": {
+        "http": 429,
+        "catalog_items": 0
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_placeholder": false,
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "ambient runtime wiring SSOT · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only",
+      "ssot_ambient_wiring": true
+    },
+    {
+      "scan_id": "VIS-DA-US-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-US-HOME",
+      "matrix_id": "DA-US-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "US",
+      "country_label": "US Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-us-home-v1.jpg",
+      "probe": {
+        "http": 429,
+        "catalog_items": 0
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_placeholder": false,
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "ambient runtime wiring SSOT · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only",
+      "ssot_ambient_wiring": true
+    },
+    {
+      "scan_id": "VIS-DA-AU-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-AU-HOME",
+      "matrix_id": "DA-AU-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "AU",
+      "country_label": "AU Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-au-home-v1.jpg",
+      "probe": {
+        "http": 429,
+        "catalog_items": 0
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_placeholder": false,
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "ambient runtime wiring SSOT · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only",
+      "ssot_ambient_wiring": true
+    },
+    {
+      "scan_id": "VIS-DA-ES-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-ES-HOME",
+      "matrix_id": "DA-ES-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "ES",
+      "country_label": "ES Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-es-home-v1.jpg",
+      "probe": {
+        "http": 429,
+        "catalog_items": 0
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_placeholder": false,
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "ambient runtime wiring SSOT · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only",
+      "ssot_ambient_wiring": true
+    },
+    {
+      "scan_id": "VIS-DA-AE-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-AE-HOME",
+      "matrix_id": "DA-AE-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "AE",
+      "country_label": "AE Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-ae-home-v1.jpg",
+      "probe": {
+        "http": 429,
+        "catalog_items": 0
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_placeholder": false,
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "ambient runtime wiring SSOT · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only",
+      "ssot_ambient_wiring": true
+    },
+    {
+      "scan_id": "VIS-DA-CN-HOME",
+      "ownership_id": "home-destination-ambient",
+      "inventory_id": "IMG-DA-CN-HOME",
+      "matrix_id": "DA-CN-HOME",
+      "page_entry": {
+        "route": "/",
+        "page_module": "首页国家背景 · Destination Ambient",
+        "modify_entry": "/admin/content/landing-ambient"
+      },
+      "owner": "CMS",
+      "cms_queue": "destination_ambient",
+      "ops_priority": "P0",
+      "asset_kind": "landing_ambient",
+      "country_iso": "CN",
+      "country_label": "CN Ambient",
+      "url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/da-hero-cn-home-v1.jpg",
+      "probe": {
+        "http": 429,
+        "catalog_items": 0
+      },
+      "current_source": "catalog",
+      "flags": {
+        "is_placeholder": false,
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "asset_lifecycle": "live",
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "PASS_PARTIAL",
+        "note": "ambient runtime wiring SSOT · manual L5 checklist still required"
+      },
+      "l5_compliant": true,
+      "needs_cms_l5_workflow": false,
+      "workflow": [],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "LIVE",
+      "operational_action": "Live · monitor only",
+      "ssot_ambient_wiring": true
+    },
+    {
+      "scan_id": "VIS-POI-FAMILY",
+      "ownership_id": "dest-poi-images",
+      "inventory_id": "IMG-FAM-POI-CITY",
+      "page_entry": {
+        "route": "/ · /itinerary/new · /escrow/[id]",
+        "page_module": "POI family · no published images",
+        "modify_entry": "/admin/content/poi-images"
+      },
+      "owner": "CMS",
+      "cms_queue": "poi",
+      "ops_priority": "P1",
+      "asset_kind": "poi_hero",
+      "url": null,
+      "current_source": "placeholder",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": true,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "probe": {
+        "http": 429,
+        "catalog_items": 0
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-HOTEL-FAMILY",
+      "ownership_id": "hotel-transport-stock",
+      "inventory_id": "IMG-FAM-HOTEL",
+      "page_entry": {
+        "route": "market/itinerary/escrow adapters",
+        "page_module": "Hotel tier stock · empty",
+        "modify_entry": "/admin/content/hotel-tiers"
+      },
+      "owner": "CMS",
+      "cms_queue": "hotel",
+      "ops_priority": "P1",
+      "asset_kind": "hotel_tier_stock",
+      "url": null,
+      "current_source": "placeholder",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": true,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "probe": {
+        "http": 429,
+        "catalog_items": 0
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-TRANSPORT-FAMILY",
+      "ownership_id": "hotel-transport-stock",
+      "inventory_id": "IMG-FAM-TRANSPORT",
+      "page_entry": {
+        "route": "market/itinerary/escrow adapters",
+        "page_module": "Transport stock · empty",
+        "modify_entry": "/admin/content/transport"
+      },
+      "owner": "CMS",
+      "cms_queue": "transport",
+      "ops_priority": "P1",
+      "asset_kind": "transport_stock",
+      "url": null,
+      "current_source": "placeholder",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": true,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "probe": {
+        "http": 429,
+        "catalog_items": 0
+      },
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "needs_cms_l5_workflow": true,
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    },
+    {
+      "scan_id": "VIS-TT-VIDEO-FAMILY",
+      "ownership_id": "traveltrust-video",
+      "inventory_id": null,
+      "page_entry": {
+        "route": "/ · /traveltrust",
+        "page_module": "品牌视频 / Poster",
+        "modify_entry": "deploy media · Media Platform (future)"
+      },
+      "owner": "Media",
+      "cms_queue": "video",
+      "ops_priority": "P2",
+      "asset_kind": "brand_video",
+      "url": null,
+      "current_source": "media_platform",
+      "flags": {
+        "is_unsplash": false,
+        "is_pexels": false,
+        "is_placeholder": false,
+        "is_old_external": false,
+        "region_review_required": false
+      },
+      "probe": {
+        "http": 429,
+        "static_refs": []
+      },
+      "needs_cms_l5_workflow": false,
+      "l5_compliant": false,
+      "workflow": [],
+      "target_source": "catalog",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "l5_status": "REVIEW_REQUIRED",
+      "operational_action": "Upload → Review → Publish → Verify → Evidence → Live"
+    }
+  ],
+  "excluded_ocs": [
+    {
+      "ownership_id": "home-hero-ocs",
+      "page_module": "Home Hero / Campaign Highlights",
+      "route": "/",
+      "owner": "OPS",
+      "image_owner": "OCS",
+      "modify_entry": "/admin/official/public-operations · /admin/official/cold-start",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "home-featured-ocs",
+      "page_module": "Featured / 冷启动展示条",
+      "route": "/",
+      "owner": "OPS",
+      "image_owner": "OCS campaign item covers",
+      "modify_entry": "/admin/official/public-operations",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "market-guide-avatar",
+      "page_module": "向导卡头像",
+      "route": "/market",
+      "owner": "OCS",
+      "image_owner": "OCS seed URLs · API avatar_url",
+      "modify_entry": "/admin/official/guides · OCS manifest (frozen)",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "market-ocs-feed",
+      "page_module": "Market Feed 冷启动",
+      "route": "/market",
+      "owner": "OPS",
+      "image_owner": "OCS market_feed surface",
+      "modify_entry": "/admin/official/public-operations",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "community-feed-ocs-promo",
+      "page_module": "Feed OCS 推广条",
+      "route": "/community",
+      "owner": "OPS",
+      "image_owner": "OCS community_feed surface",
+      "modify_entry": "/admin/official/public-operations",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "guides-list-avatar",
+      "page_module": "向导列表",
+      "route": "/guides",
+      "owner": "OCS",
+      "image_owner": "OCS URLs · API avatar",
+      "modify_entry": "/admin/official/guides (frozen)",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "guide-detail",
+      "page_module": "向导详情",
+      "route": "/guides/[id]",
+      "owner": "OCS",
+      "image_owner": "OCS + credential URLs",
+      "modify_entry": "/me/identities/guide/settings · /admin/guides",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "official-guide-community",
+      "page_module": "官方向导 Community 贴",
+      "route": "/community?official_guide=",
+      "owner": "OCS",
+      "image_owner": "OCS manifest cover",
+      "modify_entry": "/admin/official/guides",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "auth-login",
+      "page_module": "登录",
+      "route": "/auth/login",
+      "owner": "API",
+      "image_owner": "N/A (UI frozen)",
+      "modify_entry": "locales · backend auth (AUTH-LOGIN-UI-FREEZE)",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "auth-register",
+      "page_module": "注册",
+      "route": "/auth/register",
+      "owner": "API",
+      "image_owner": "N/A (UI frozen)",
+      "modify_entry": "locales · backend auth",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "admin-public-ops",
+      "page_module": "Public Operations",
+      "route": "/admin/official/public-operations",
+      "owner": "OPS",
+      "image_owner": "OCS previews",
+      "modify_entry": "/admin/official/public-operations",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    },
+    {
+      "ownership_id": "admin-ocs-cold-start",
+      "page_module": "OCS Cold Start",
+      "route": "/admin/official/cold-start",
+      "owner": "OCS",
+      "image_owner": "OCS manifest refs",
+      "modify_entry": "/admin/official/cold-start (frozen)",
+      "note": "OCS/OPS/CSS-frozen · scan records ownership only · no CMS queue"
+    }
+  ],
+  "reference_non_cms": [
+    {
+      "ownership_id": "market-order-cover",
+      "page_entry": {
+        "route": "/market",
+        "page_module": "订单卡封面",
+        "modify_entry": "Backend discover seed · marketMediaFallback.ts"
+      },
+      "owner": "API",
+      "image_owner": "API image · Unsplash fallback",
+      "scan_note": "API/runtime reference · tracked in P2 subqueues where applicable",
+      "excluded_from_cms_queue": true
+    },
+    {
+      "ownership_id": "itinerary-new",
+      "page_entry": {
+        "route": "/itinerary/new",
+        "page_module": "独立行程创建",
+        "modify_entry": "Backend mock · /admin/official/itinerary-templates"
+      },
+      "owner": "API",
+      "image_owner": "API itinerary images",
+      "scan_note": "API/runtime reference · tracked in P2 subqueues where applicable",
+      "excluded_from_cms_queue": true
+    },
+    {
+      "ownership_id": "did-rank-boards",
+      "page_entry": {
+        "route": "/did-rank",
+        "page_module": "DID Rank 各榜",
+        "modify_entry": "Backend rank compute"
+      },
+      "owner": "API",
+      "image_owner": "API rank avatars",
+      "scan_note": "API/runtime reference · tracked in P2 subqueues where applicable",
+      "excluded_from_cms_queue": true
+    },
+    {
+      "ownership_id": "traveltrust-page",
+      "page_entry": {
+        "route": "/traveltrust",
+        "page_module": "/traveltrust 品牌页",
+        "modify_entry": "locales · env deploy (UI frozen)"
+      },
+      "owner": "API",
+      "image_owner": "page-brief media keys · cinematic static",
+      "scan_note": "API/runtime reference · tracked in P2 subqueues where applicable",
+      "excluded_from_cms_queue": true
+    },
+    {
+      "ownership_id": "home-itinerary-preview",
+      "page_entry": {
+        "route": "/",
+        "page_module": "创新行程预览卡",
+        "modify_entry": "Backend itineraries mock · locales"
+      },
+      "owner": "API",
+      "image_owner": "API daily_itinerary images · ambient until unlock",
+      "scan_note": "API/runtime reference · tracked in P2 subqueues where applicable",
+      "excluded_from_cms_queue": true
+    }
+  ],
+  "audit_ssot": {
+    "unified_live_criteria": {
+      "destination_ambient": {
+        "ssot": "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+        "producer": "scripts/dev/run-cms-ambient-runtime-wiring-audit.cjs",
+        "live_when": "catalog_published && runtime_reads_cms_catalog && !still_unsplash && l5_compliant (per-country row in ambient wiring evidence)",
+        "family_board_closed_when": "TT_CMS_AMBIENT_RUNTIME_WIRING === PASS && pass_count >= 10"
+      },
+      "other_families": {
+        "note": "POI · Hotel · Transport · Listing — per-asset CMS Publish + Runtime catalog consumption (pending Wave 1 closure)"
+      }
+    },
+    "destination_ambient_runtime": {
+      "ssot": "evidence/GO_cms_operation/CMS-AMBIENT-RUNTIME-WIRING-LATEST.json",
+      "loaded": true,
+      "verdict": "PASS",
+      "pass_count": 10,
+      "total": 10,
+      "is_closed": true,
+      "stamp_utc": "20260705T110818Z"
+    }
+  },
+  "correct_flow_reminder": [
+    "one_by_one_upload",
+    "no_batch_replace",
+    "no_ocs_fallback",
+    "manual_l5_all_checks_before_live"
+  ],
+  "TT_CMS_L5_VISUAL_SCAN": "COMPLETE",
+  "TT_CMS_L5_VISUAL_NEEDS": 3,
+  "TT_CMS_L5_VISUAL_CMS_SCOPE": 13,
+  "honest_boundary": "Read-only staging probe + ownership cross-ref · manual L5 per asset before Live · ② staging ≠ ③ Production GO",
+  "denominator_lock_alignment": {
+    "stamp_utc": "20260706T003938Z",
+    "ssot": "evidence/GO_cms_operation/CMS-DENOMINATOR-LOCK-LATEST.json",
+    "cms_total": 99,
+    "cms_live": 76,
+    "review_required": 23,
+    "completion": "76/99 (77%)",
+    "destination_ambient": {
+      "label": "Destination Ambient",
+      "total": 10,
+      "live": 10,
+      "pending": 0,
+      "completion": "10/10 (100%)",
+      "catalog_empty": false,
+      "target": "100% Live"
+    },
+    "ambient_wave_closure": {
+      "status": "COMPLETE",
+      "live": 10,
+      "total": 10,
+      "display": "10/10 (100%)",
+      "next_asset_family": "POI"
+    },
+    "by_l5_status": {
+      "LIVE": 76,
+      "REVIEW_REQUIRED": 23,
+      "PASS": 0,
+      "VERIFIED": 0
+    },
+    "note": "Ops SSOT when lock refreshed · raw scan findings may include catalog_empty POI/Hotel/Transport"
+  },
+  "TT_CMS_L5_STATUS": {
+    "LIVE": 76,
+    "REVIEW_REQUIRED": 23,
+    "PASS": 0,
+    "VERIFIED": 0
+  }
+}

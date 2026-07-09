@@ -1,0 +1,96 @@
+{
+  "schema": "staging_local_full_diff.v1",
+  "stamp_utc": "20260624T012155Z",
+  "local_HEAD": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "live_probes": {
+    "api_health": 0,
+    "api_meta": 408,
+    "api_meta_build": 200,
+    "web_meta": 503
+  },
+  "staging_git_sha": {
+    "meta_build": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+    "meta": "",
+    "web_meta": ""
+  },
+  "s6_deep_gate": {
+    "expect": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+    "release": "GO",
+    "g01": "PASS",
+    "g02": "PASS"
+  },
+  "freeze_ACTIVE_git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "soak_expect_git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "soak_metadata_patched_at": null,
+  "dirty_deploy_path_count": 350,
+  "diff_count": 1,
+  "risk_count": 7,
+  "version_fork": false,
+  "evidence_lag": false,
+  "runtime_availability_diff": true,
+  "findings": [
+    {
+      "domain": "运行时可用性",
+      "item": "GET /health",
+      "local": "200",
+      "staging_or_evidence": "0",
+      "severity": "DIFF",
+      "note": ""
+    }
+  ],
+  "risks": [
+    {
+      "domain": "API schema",
+      "item": "GET /meta full contract",
+      "local": "37 meta_top_keys (S6 G02 PASS)",
+      "staging_or_evidence": "unavailable (HTTP 408)",
+      "severity": "RISK",
+      "note": "runtime availability · not version drift"
+    },
+    {
+      "domain": "工作区",
+      "item": "deploy-path 未提交变更",
+      "local": "clean @ 520abf396cce…",
+      "staging_or_evidence": "350 paths",
+      "severity": "RISK",
+      "note": "staging mirrors committed tree only"
+    },
+    {
+      "domain": "工作区",
+      "item": "key API dirty file",
+      "local": "M crates/api/src/db/mod.rs",
+      "staging_or_evidence": "not deployed",
+      "severity": "RISK"
+    },
+    {
+      "domain": "工作区",
+      "item": "key API dirty file",
+      "local": "M crates/api/src/middleware/auth_pause_metrics/mod.rs",
+      "staging_or_evidence": "not deployed",
+      "severity": "RISK"
+    },
+    {
+      "domain": "工作区",
+      "item": "key API dirty file",
+      "local": "M crates/api/src/routes/itineraries.rs",
+      "staging_or_evidence": "not deployed",
+      "severity": "RISK"
+    },
+    {
+      "domain": "运行时可用性",
+      "item": "GET /meta",
+      "local": "200",
+      "staging_or_evidence": "408",
+      "severity": "RISK",
+      "note": "stability · not version drift"
+    },
+    {
+      "domain": "运行时可用性",
+      "item": "GET web /meta",
+      "local": "200",
+      "staging_or_evidence": "503",
+      "severity": "RISK",
+      "note": ""
+    }
+  ]
+}

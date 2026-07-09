@@ -1,0 +1,108 @@
+{
+  "verdict": "PASS",
+  "exit_code": 0,
+  "stdout_tail": "TT_CERT4_SAFE_MATRIX: PASS out=D:\\TravelTrust-V1.1\\evidence\\GO_ttg_cert\\.cert4-matrix-checks.json\nsmoke-cert4-safe-walkthrough-machine: OK GovFreeze V2 + GORP + cutover evidence chain\nTT_CERT4_SAFE_WALKTHROUGH_MACHINE: OK",
+  "stderr_tail": "",
+  "three_role_matrix": {
+    "schema": "traveltrust.cert4-safe-three-role-matrix.v1",
+    "verdict": "PASS",
+    "phase": "②",
+    "baseline": "GovFreeze V2 Clean Baseline",
+    "roles": [
+      "Safe Signer",
+      "Treasury Operator",
+      "Finance Operator"
+    ],
+    "checks": {
+      "baseline_addresses": {
+        "ok": true,
+        "hits": {
+          "v2_timelock": true,
+          "de_ledger": true
+        }
+      },
+      "evidence_anchors": {
+        "ok": true,
+        "dirs": [
+          {
+            "anchor": "cutover_drill",
+            "path": "evidence/GO_tt_country_pool_revenue_enterprise_hat/cutover-drill/20260616T082259Z",
+            "exists": true
+          },
+          {
+            "anchor": "four_ledger",
+            "path": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z",
+            "exists": true
+          },
+          {
+            "anchor": "hat_r1_phase_a",
+            "path": "evidence/GO_hat_r1_sepolia/20260616T063612Z",
+            "exists": true
+          }
+        ],
+        "cutover_exec_logs": 8
+      },
+      "gorp_safe_timelock_treasury": {
+        "ok": true,
+        "s_steps": {
+          "S-01": true,
+          "S-02": true,
+          "S-03": true,
+          "S-04": true,
+          "S-05": true,
+          "S-06": true
+        },
+        "sections": {
+          "dual_timelock_2_2": true,
+          "treasury_2_4": true,
+          "finance_op_2_6": true,
+          "treasury_op_2_7": true,
+          "execute_fail_3_1": true,
+          "treasury_mis_3_2": true,
+          "gorp_06": true,
+          "gorp_08": true,
+          "rb_g_09": true,
+          "forbid_admin_api": true,
+          "chain_id_sepolia": true
+        }
+      },
+      "three_role_boundaries": {
+        "ok": true,
+        "roles": [
+          {
+            "role": "Safe Signer",
+            "allow": "N-of-M signature collection (S-04)",
+            "deny": "solo schedule without quorum · Admin API",
+            "ok": true
+          },
+          {
+            "role": "Treasury Operator",
+            "allow": "Safe calldata draft · Legacy TL schedule/execute coord (S-01～S-06)",
+            "deny": "mixed TL batch · unallowlisted target",
+            "ok": true
+          },
+          {
+            "role": "Finance Operator",
+            "allow": "fundingSource.approve · accrual · four-ledger reconcile",
+            "deny": "Timelock key · Admin POST spend · bypass Governor spend",
+            "ok": true
+          }
+        ]
+      },
+      "assert_govfreeze_baseline_only": {
+        "ok": true,
+        "skipped": false,
+        "exit_code": 0,
+        "stdout_tail": "GOV_FREEZE_V2_ACTIVE_BASELINE: OK ttg=0x2837ea0c50e27d59b88af617abbb231a040062c5 governor=0x847b00ddb6ffed71812abc358a407dad4b099fcb pool=0x3a89378bfad12d1028707dd37055294854c8784e",
+        "stderr_tail": ""
+      }
+    },
+    "dual_timelock_matrix": "evidence/GO_ttg_cert/.cert4-dual-timelock-matrix.json",
+    "mtm_ids": [
+      "CHK-CORE-17",
+      "CHK-OPS-03",
+      "CHK-ID-10",
+      "CHK-SC-12"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T08:23:57Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "FR",
+    "city_zh": "里昂",
+    "city_en": "Lyon",
+    "matrix_ids": [
+      "PH-FR-124-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-FR-124-FOOD",
+      "legacy_value": "猪肠",
+      "poi_id": "5798e292-58dc-46f3-a8c2-6fdfb9b624c0",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-124-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

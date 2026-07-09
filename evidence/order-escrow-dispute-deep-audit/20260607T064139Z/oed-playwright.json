@@ -1,0 +1,30 @@
+{
+  "passed": false,
+  "exit_code": 1,
+  "ui_corridor_matrix": [
+    {
+      "probe_id": "ui.f024",
+      "spec": "f024-f025-f026-request.spec.ts",
+      "step": "F-024 guides stake list",
+      "status": "FAIL"
+    },
+    {
+      "probe_id": "ui.f025",
+      "spec": "f024-f025-f026-request.spec.ts",
+      "step": "F-025 dispute open list detail",
+      "status": "FAIL"
+    },
+    {
+      "probe_id": "ui.f025.bdsp003",
+      "spec": "f024-f025-f026-request.spec.ts",
+      "step": "F-025 B-DSP-003 resolve",
+      "status": "FAIL"
+    },
+    {
+      "probe_id": "ui.f026",
+      "spec": "f024-f025-f026-request.spec.ts",
+      "step": "F-026 order messages",
+      "status": "FAIL"
+    }
+  ]
+}

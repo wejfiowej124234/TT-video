@@ -8,6 +8,7 @@
 
 mod common;
 mod doc_params;
+mod governance_vacancy_ledger;
 mod fee_pool_aggregate;
 mod governance_pool;
 mod governance_reads;

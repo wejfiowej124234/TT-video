@@ -1,0 +1,65 @@
+{
+  "schema": "traveltrust.cms_announcements_staging_uat.v1",
+  "phase": "②_staging_uat",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "generated_utc": "2026-07-09T14:20:45.286Z",
+  "slug": "cms-uat-1783606845286",
+  "steps": {
+    "preflight_public_unauthenticated": {
+      "status": "PASS",
+      "detail": "HTTP 200"
+    },
+    "preflight_health": {
+      "status": "PASS"
+    },
+    "A_admin_login": {
+      "status": "PASS",
+      "detail": "tourist@test.com"
+    },
+    "A_pre_cleanup": {
+      "status": "PASS",
+      "detail": "no stale cms-uat-* rows"
+    },
+    "A_create_draft": {
+      "status": "PASS",
+      "detail": "8aafeb28-77b9-49ed-965b-5ff89b17d86b"
+    },
+    "A_submit_review": {
+      "status": "PASS"
+    },
+    "A_publish": {
+      "status": "PASS"
+    },
+    "A_db_published": {
+      "status": "SKIP",
+      "detail": "DATABASE_URL not set"
+    },
+    "B_public_hygiene": {
+      "status": "PASS",
+      "detail": "cms-uat slug excluded (4 public product rows)"
+    },
+    "B_admin_published": {
+      "status": "PASS",
+      "detail": "published in admin · release_at=2026-07-15"
+    },
+    "C_pulse_api": {
+      "status": "PASS",
+      "detail": "4 items · product lane only"
+    },
+    "D_ops_governance_denied": {
+      "status": "SKIP",
+      "detail": "could not provision Ops session (need DATABASE_URL for console role)"
+    },
+    "E_audit_publish": {
+      "status": "PASS",
+      "detail": "17559cd4-58de-443c-b6a4-e5acd73dc190"
+    },
+    "F_post_cleanup": {
+      "status": "PASS",
+      "detail": "archived 1 UAT artifact(s) incl. cms-uat-1783606845286"
+    }
+  },
+  "gaps": [],
+  "verdict": "PASS"
+}

@@ -8,6 +8,7 @@ const TOK = (process.env.TOK || '').trim();
 const C3_ID = (process.env.C3_ID || '').trim();
 const DRY_RUN = process.env.DRY_RUN === '1';
 const ENV_LABEL = process.env.ENV_LABEL || 'auto';
+const POST_OCS_BASELINE = process.env.POST_OCS_BASELINE !== '0';
 
 if (!API || !TOK) {
   console.error('display-data-governance: missing API or TOK');
@@ -27,6 +28,12 @@ function isCanonicalProduction(id) {
   if (CANONICAL_EXACT.has(id)) return true;
   return PREFIXES.some((p) => id.startsWith(p));
 }
+
+const {
+  isSmokeContent: isSmokeMarketListing,
+  isNonProductionOrigin,
+  isTestEmail,
+} = require('./lib/smoke-data-heuristics.cjs');
 
 function client(url) {
   return url.startsWith('https') ? https : http;
@@ -107,7 +114,7 @@ function pubGet(path) {
     const origin = it.data_origin || '';
     let drop = false;
     if (origin === 'test') {
-      drop = !(C3_ID && it.id === C3_ID);
+      drop = true;
     } else if (origin === 'production') {
       drop = !isCanonicalProduction(it.id);
     } else if (origin === 'demo' || origin === 'smoke') {
@@ -132,7 +139,96 @@ function pubGet(path) {
     }
   }
 
-  if (C3_ID) {
+  const pqListings = JSON.parse(
+    (await req('GET', '/api/v1/admin/official/public-operations/publish-queue?entity_type=market_listings&limit=500')).body
+  );
+  const listingItems = pqListings.items || [];
+  for (const it of listingItems) {
+    if (it.display_status !== 'published') continue;
+    const origin = it.data_origin || '';
+    if (origin === 'demo' || origin === 'smoke' || origin === 'test' || isSmokeMarketListing(it)) {
+      report.unpublish.push({ id: it.id, origin, label: it.label, entity: 'market_listings' });
+    }
+  }
+  console.log(
+    'display-data-governance: market_listings unpublish candidates:',
+    report.unpublish.filter((r) => r.entity === 'market_listings').length
+  );
+  for (const row of report.unpublish.filter((r) => r.entity === 'market_listings')) {
+    if (DRY_RUN) {
+      console.log('DRY unpublish listing', row.id, row.origin);
+      continue;
+    }
+    const r = await req(
+      'POST',
+      `/api/v1/admin/official/public-operations/entities/market_listings/${row.id}/unpublish`,
+      {}
+    );
+    if (r.status < 200 || r.status >= 300) {
+      console.log('WARN unpublish listing', row.id, r.status, r.body.slice(0, 120));
+    }
+  }
+
+  async function sweepPublishQueue(entityType, predicate) {
+    const pq = JSON.parse(
+      (await req('GET', `/api/v1/admin/official/public-operations/publish-queue?entity_type=${entityType}&limit=500`)).body
+    );
+    const rows = (pq.items || []).filter((it) => it.display_status === 'published' && predicate(it));
+    console.log(`display-data-governance: ${entityType} unpublish candidates:`, rows.length);
+    for (const it of rows) {
+      report.unpublish.push({ id: it.id, origin: it.data_origin, label: it.label, entity: entityType });
+      if (DRY_RUN) {
+        console.log('DRY unpublish', entityType, it.id);
+        continue;
+      }
+      const r = await req(
+        'POST',
+        `/api/v1/admin/official/public-operations/entities/${entityType}/${it.id}/unpublish`,
+        {}
+      );
+      if (r.status < 200 || r.status >= 300) {
+        console.log('WARN unpublish', entityType, it.id, r.status, r.body.slice(0, 120));
+      }
+    }
+  }
+
+  await sweepPublishQueue('orders', (it) => isNonProductionOrigin(it.data_origin) || isSmokeMarketListing(it));
+  await sweepPublishQueue('community_posts', (it) => isNonProductionOrigin(it.data_origin) || isSmokeMarketListing(it));
+
+  // Discover / community public leak verification
+  const disc = await pubGet('/api/v1/discover/orders?limit=100');
+  const discRows = disc.items || [];
+  const discBad = discRows.filter((o) => isNonProductionOrigin(o.data_origin) || isSmokeMarketListing(o));
+  report.discover_public_leaks = discBad.length;
+  if (discBad.length) {
+    console.error('FAIL discover public leaks', discBad.length);
+    report.pass = false;
+  }
+
+  const feed = await pubGet('/api/v1/community/feed?limit=100');
+  const feedRows = feed.posts || feed.items || [];
+  const feedBad = feedRows.filter((p) => isNonProductionOrigin(p.data_origin) || isSmokeMarketListing(p));
+  report.community_public_leaks = feedBad.length;
+  if (feedBad.length) {
+    console.error('FAIL community feed public leaks', feedBad.length);
+    report.pass = false;
+  }
+
+  const guidesPub = await pubGet('/api/v1/guides?limit=500');
+  const guideItems = guidesPub.items || guidesPub.guides || [];
+  if (C3_ID && guideItems.some((g) => g.id === C3_ID)) {
+    console.error('FAIL TEST_DATA_LEAKAGE: C3 guide@test.com on public GET /guides');
+    report.c3_public_leak = true;
+    report.pass = false;
+  }
+  for (const g of guideItems) {
+    if (isNonProductionOrigin(g.data_origin) || isTestEmail(g.owner_email || g.email)) {
+      console.error('FAIL TEST_DATA_LEAKAGE: test/non-prod guide on public catalog', g.id);
+      report.pass = false;
+    }
+  }
+
+  if (!POST_OCS_BASELINE && C3_ID) {
     const c3Row = items.find((i) => i.id === C3_ID);
     if (!c3Row || c3Row.display_status !== 'published') {
       report.publish.push(C3_ID);
@@ -150,10 +246,11 @@ function pubGet(path) {
         }
       }
     }
-  } else {
-    console.log('WARN: C3 guide id not resolved — skip publish');
+  } else if (!POST_OCS_BASELINE) {
+    console.log('WARN: C3 guide id not resolved — skip legacy publish');
   }
 
+  if (!POST_OCS_BASELINE) {
   const cityChecks = [
     { queries: ['Hangzhou', '杭州'], minProd: 1, maxProd: 3, needC3: true },
     { queries: ['Beijing', '北京'], minProd: 1, maxProd: 1, needC3: false },
@@ -200,6 +297,9 @@ function pubGet(path) {
       console.error('FAIL non-canonical production in market', label, badProd.map((x) => x.id).join(','));
       report.pass = false;
     }
+  }
+  } else {
+    console.log('POST_OCS_BASELINE: skip legacy C3 publish + canonical city matrix (SOPCP/OCS owns Public Catalog)');
   }
 
   const outPath = process.env.EVIDENCE_JSON;

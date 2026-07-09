@@ -1,0 +1,12 @@
+{
+  "frontend_base": "http://127.0.0.1:3012",
+  "routes": [
+    "/governance",
+    "/governance/params",
+    "/governance/distribution-accruals",
+    "/governance/distribution-claim",
+    "/market",
+    "/traveltrust"
+  ],
+  "identities": ["guest", "traveler", "steward", "merchant", "guide", "moderator", "admin"]
+}

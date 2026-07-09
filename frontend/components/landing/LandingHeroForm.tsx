@@ -409,14 +409,19 @@ function LandingHeroForm({
               <div className="flex flex-wrap gap-2" role="group" aria-labelledby={countryFieldId}>
                 {countryOptions.map((c) => {
                   const selected = country === c.value;
+                  const pickCountry = () => {
+                    setCountry(c.value);
+                    setCities([]);
+                  };
                   return (
                     <button
                       key={c.value}
                       type="button"
-                      onClick={() => {
-                        setCountry(c.value);
-                        setCities([]);
+                      onPointerDown={(e) => {
+                        if (e.button !== 0) return;
+                        pickCountry();
                       }}
+                      onClick={pickCountry}
                       className={ttMarketingHomeFilterPillClasses(selected, "country")}
                     >
                       {c.label}

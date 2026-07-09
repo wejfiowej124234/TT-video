@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.local_deploy_backlog_active.v1",
+  "frozen_at_utc": "2026-06-24T01:38:52Z",
+  "stamp": "20260624T013808Z",
+  "dirty_path_count": 354,
+  "local_HEAD_at_freeze": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "staging_runtime_git_sha_at_freeze": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "apply_after": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+  "apply_script": "scripts/ops/p2fc-post-soak-deploy-backlog-and-graduate.sh",
+  "artifacts": {
+    "porcelain": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\20260624T013808Z\\dirty-paths.porcelain",
+    "diff_stat": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\20260624T013808Z\\diff-stat.txt",
+    "patch": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\20260624T013808Z\\deploy-backlog.patch"
+  },
+  "clean_summary": {
+    "dirty_before": 354,
+    "dirty_after": 104
+  },
+  "policy": "soak_inflight_no_staging_redeploy_until_completed",
+  "meta_availability_hotfix_patch": "evidence/GO_phase2_deploy_backlog/meta-availability-hotfix.patch",
+  "clean_note": "tracked backlog in deploy-backlog.patch (250 files); untracked ?? paths removed at clean — re-archive script now copies untracked for future runs"
+}

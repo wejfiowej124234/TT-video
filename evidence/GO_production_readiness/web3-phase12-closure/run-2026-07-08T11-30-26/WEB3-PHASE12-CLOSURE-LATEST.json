@@ -1,0 +1,122 @@
+{
+  "verdict": "WEB3_PHASE12_CLOSURE_IN_PROGRESS",
+  "stamp": "2026-07-08T11-30-26",
+  "active_phases": [
+    1,
+    2
+  ],
+  "phase3_mainnet": "NOT_STARTED — requires separate Owner authorization",
+  "discipline": "registry/web3-three-phase-closure-discipline.v1.yaml",
+  "checks": [
+    {
+      "id": "PHASE-BOUNDARY",
+      "pass": true,
+      "detail": "Mainnet broadcast blocked without Phase ③ auth"
+    },
+    {
+      "id": "ESCROW-V2-FORGE",
+      "pass": true,
+      "detail": "EscrowV2 bilateral release tests"
+    },
+    {
+      "id": "LAYER-A",
+      "pass": true,
+      "detail": "Off-chain bilateral service completion"
+    },
+    {
+      "id": "LAYER-B",
+      "pass": true,
+      "detail": "EscrowV2/FactoryV2 design + tests"
+    },
+    {
+      "id": "ESCROW-SETTLEMENT",
+      "pass": true,
+      "detail": "ESCROW_SETTLEMENT_MODEL_ALIGNED"
+    },
+    {
+      "id": "PROTOCOL-GRADE-P0",
+      "pass": true,
+      "detail": "WEB3_PROTOCOL_GRADE_IN_PROGRESS"
+    },
+    {
+      "id": "CERT-8-12",
+      "pass": false,
+      "detail": "TTG Cert 0/12"
+    },
+    {
+      "id": "MAINNET-NOT-STARTED",
+      "pass": true,
+      "detail": "Phase ③ deferred — no mainnet broadcast in this orchestrator"
+    }
+  ],
+  "steps": [
+    {
+      "label": "phase_boundary_gate",
+      "ok": true,
+      "status": 0,
+      "stdout": "check-web3-phase-boundary: OK mainnet blocked without TRAVELTRUST_MAINNET_PHASE3_AUTHORIZED\ncheck-web3-phase-boundary: OK phase3 script refuses without auth\ncheck-web3-phase-boundary: PASS\n",
+      "stderr": ""
+    },
+    {
+      "label": "forge_EscrowV2",
+      "ok": true,
+      "status": 0,
+      "stdout": "No files changed, compilation skipped\n\nRan 2 tests for test/EscrowV2.t.sol:EscrowV2Test\n[PASS] test_confirmTwiceReverts() (gas: 1225502)\n[PASS] test_releaseRevertsUntilBothConfirm() (gas: 1267965)\nSuite result: ok. 2 passed; 0 failed; 0 skipped; finished in 989.10µs (518.10µs CPU time)\n\nRan 1 test suite in 5.95ms (989.10µs CPU time): 2 tests passed, 0 failed, 0 skipped (2 total tests)\n",
+      "stderr": ""
+    },
+    {
+      "label": "layer_a_evidence",
+      "ok": false,
+      "status": 1,
+      "stdout": "",
+      "stderr": "'C:\\Program' �����ڲ����ⲿ���Ҳ���ǿ����еĳ���\r\n���������ļ���\r\n"
+    },
+    {
+      "label": "layer_b_evidence",
+      "ok": false,
+      "status": 1,
+      "stdout": "",
+      "stderr": "'C:\\Program' �����ڲ����ⲿ���Ҳ���ǿ����еĳ���\r\n���������ļ���\r\n"
+    },
+    {
+      "label": "escrow_settlement_audit",
+      "ok": false,
+      "status": 1,
+      "stdout": "",
+      "stderr": "'C:\\Program' �����ڲ����ⲿ���Ҳ���ǿ����еĳ���\r\n���������ļ���\r\n"
+    },
+    {
+      "label": "protocol_grade_audit",
+      "ok": false,
+      "status": 1,
+      "stdout": "",
+      "stderr": "'C:\\Program' �����ڲ����ⲿ���Ҳ���ǿ����еĳ���\r\n���������ļ���\r\n"
+    },
+    {
+      "label": "web3_system_closure",
+      "ok": false,
+      "status": 1,
+      "stdout": "",
+      "stderr": "'C:\\Program' �����ڲ����ⲿ���Ҳ���ǿ����еĳ���\r\n���������ļ���\r\n"
+    }
+  ],
+  "cert": {
+    "signed": 0,
+    "total": 12
+  },
+  "escrow_settlement": "ESCROW_SETTLEMENT_MODEL_ALIGNED",
+  "protocol_grade": "WEB3_PROTOCOL_GRADE_IN_PROGRESS",
+  "next_phase2_actions": [
+    "bash scripts/dev/deploy-escrow-factory-v2-anvil-local.sh (Phase ①)",
+    "TRAVELTRUST_PHASE2_SEPOLIA_BROADCAST_OK=1 bash scripts/dev/phase2-sepolia-broadcast-escrow-factory-v2.sh",
+    "Complete TTG Cert #8–12 on Sepolia",
+    "node scripts/dev/run-web3-system-closure.cjs until WEB3_SYSTEM_CLOSURE_PASS"
+  ],
+  "phase3_prerequisites": [
+    "WEB3_PHASE12_CLOSURE_PASS",
+    "R-01 third-party audit",
+    "Shadow Launch + G6",
+    "Owner signoff + Mainnet Registry Matrix",
+    "TRAVELTRUST_MAINNET_PHASE3_AUTHORIZED=1"
+  ]
+}

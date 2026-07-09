@@ -1,0 +1,13 @@
+{
+  "schema": "tn_p1_010_indexer_reconcile_staging.v1",
+  "stamp": "20260614T091301Z",
+  "phase": "② testnet",
+  "api": "https://tt-api-staging.fly.dev",
+  "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
+  "distribute_skipped": true,
+  "reconcile_compound_pass": true,
+  "missing_projection": 0,
+  "projection_reconcile_clean": true,
+  "release_gate": "GO",
+  "honest_boundary": "Sepolia staging indexer tick/replay/reconcile compound clean · FeeRouter.distribute only when router balance>0 and B407_OWNER_PK=Timelock owner · ≠ ③ mainnet"
+}

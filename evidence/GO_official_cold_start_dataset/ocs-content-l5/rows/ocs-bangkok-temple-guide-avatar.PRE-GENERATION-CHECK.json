@@ -1,0 +1,28 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T133930Z",
+  "filename": "ocs-bangkok-temple-guide-avatar.jpg",
+  "chain_id": "bangkok-temple",
+  "row": 19,
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "checks": {
+    "manifest_full_field_alignment": { "pass": true, "notes": "nickname Arun · bio 大皇宫/郑王庙/湄南河 · TH · 曼谷" },
+    "destination_authenticity_9dim_plan": { "pass": true, "notes": "黎明寺台阶 · 泰式寺庙建筑 · 晨光金蓝 · 得体着装" },
+    "country_consistency_th_only": { "pass": true, "notes": "禁止 JP/KR/CN/他国元素" },
+    "guide_identity_diversity_plan": {
+      "pass": true,
+      "vs_ken": "泰男30s 文化向导 vs 日男摄影师",
+      "vs_yuki": "男性便装 vs 女性和服茶道",
+      "vs_min": "寺庙文化 vs 45+美食专家"
+    },
+    "global_visual_diversity_plan": { "pass": true, "notes": "金+蓝晨光寺庙台阶；非日韩构图/色调" },
+    "brand_consistency_l5": { "pass": true },
+    "consumer_experience_real_guide": { "pass": true, "notes": "真实文化向导非广告模特" },
+    "copyright_watermark_anatomy": { "pass": true, "notes": "生成后复检" },
+    "surface_identity_guide_only": { "pass": true, "notes": "无 Provider/Community/Official/Acquisition 语义" },
+    "narrative_planning_6slot": {
+      "pass": true,
+      "arc": "Arun(黎明寺) → 游船晚餐 → 泰丝收购 → 寺庙河景一日 → 晨光尖塔 Feed → 河面游船详情"
+    }
+  }
+}

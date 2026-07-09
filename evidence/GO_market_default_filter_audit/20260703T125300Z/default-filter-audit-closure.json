@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust.market_default_filter_audit.v1",
+  "stamp": "20260703T125300Z",
+  "status": "CLOSED",
+  "classification": "Market Default Filter State Audit",
+  "extends": "market_subsite_frontend_race_fix",
+  "not_data_governance": true,
+  "governance_gates": {
+    "OCS": "CLOSED",
+    "DDG": "CLOSED",
+    "SOPCP": "CLOSED",
+    "evidence_reuse": "ENFORCED"
+  },
+  "root_cause": "Default Filter State — orphan localStorage country pref applied without explicit user save",
+  "fix_summary": "URL → explicit user save (_saved=1) → default ALL; Hub uses URL-only (no subsite localStorage)",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "web_deploy": {
+    "app": "tt-web-staging",
+    "release_note": "v50 default-filter ALL + Hub browser-truth attrs"
+  },
+  "pages_audited": [
+    {"route": "/market", "label": "旅行预约 Hub", "default_filter": "ALL", "state_ssot": "URL query only", "localStorage_country": false},
+    {"route": "/market/provider", "label": "商家橱窗", "default_filter": "ALL", "state_ssot": "URL → explicit save → ALL", "localStorage_country": "explicit_save_only"},
+    {"route": "/market/acquisition", "label": "旅行收购", "default_filter": "ALL", "state_ssot": "URL → explicit save → ALL", "localStorage_country": "explicit_save_only"}
+  ],
+  "api_truth": {"provider_all": 10, "provider_jp": 2, "acquisition_all": 10, "acquisition_jp": 0, "discover_orders": 1, "guides": 10},
+  "browser_truth_attrs": {
+    "subsite": ["data-tt-subsite-country", "data-tt-subsite-list-count", "data-tt-subsite-listings-query"],
+    "hub_non_blocking": ["data-tt-market-country", "data-tt-market-orders-query", "data-tt-market-guides-query"]
+  },
+  "fix_files": [
+    "frontend/lib/marketSubsiteFilters.ts",
+    "frontend/lib/useEffectiveSubsiteCountry.ts",
+    "frontend/lib/marketHubBrowserTruth.ts",
+    "frontend/app/market/MarketPageClient.tsx",
+    "frontend/e2e/market-subsite-catalog-race-regression.spec.ts"
+  ],
+  "regression": "frontend/e2e/market-subsite-catalog-race-regression.spec.ts",
+  "multi_route_probe": "evidence/GO_market_default_filter_audit/20260703T125300Z/multi-route-staging-probe.json",
+  "market_runtime": {"api_truth": "PASS", "frontend_runtime": "PASS", "browser_runtime": "PASS", "source_truth": "PASS", "evidence": "CLOSED"},
+  "blocking_count": 0,
+  "verdict": "CLOSED"
+}

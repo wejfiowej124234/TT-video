@@ -1,0 +1,9 @@
+# GovFreeze V1 · governance UI route inventory
+/governance
+/governance/params
+/governance/proposals
+/governance/delegate
+/governance/distribution-claim
+/governance/distribution-accruals
+/governance/fee-routes
+/governance/vault-forwards

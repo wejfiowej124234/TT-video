@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_review.v1",
+  "stamp_utc": "20260704T142030Z",
+  "chain_id": "singapore-family",
+  "slots_completed": 2,
+  "slots_total": 6,
+  "row26_filename": "ocs-singapore-family-provider-cover.jpg",
+  "TT_SINGAPORE_FAMILY_CHAIN_REVIEW": "PASS",
+  "gate_to_row27": "PASS"
+}

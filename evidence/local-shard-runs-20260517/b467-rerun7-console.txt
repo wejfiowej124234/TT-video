@@ -1,0 +1,691 @@
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] DATABASE_URL loaded from repo root .env
+[e2e] P3_CHAIN_OFF loaded from repo root .env
+[e2e] TRAVELTRUST_EMAIL_TRANSPORT=log (auth forgot/verify; resend incomplete or transport off)
+[e2e] TRAVELTRUST_AUTH_TOKEN_PEPPER set (Playwright dev default; set in root .env to override)
+[e2e] P3_CHAIN_OFF=1 (chromium mock-pay contract; root .env had "0"; use PLAYWRIGHT_PRESERVE_ROOT_P3_CHAIN_OFF=1 + run-e2e-sepolia for chain-on)
+sync-frontend-env: wrote D:\TravelTrust\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080 + NEXT_PUBLIC_SKIP_ME_FETCH=0 + NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI=1
+[e2e] PLAYWRIGHT_REUSE_FE_SERVER=0 + reclaimed FE listen port (default for PLAYWRIGHT_FULL_STACK=1 so Next picks .env.local SKIP_ME; set PLAYWRIGHT_REUSE_FE_SERVER=1 to reuse)
+[e2e] PLAYWRIGHT_FE_USE_PRODUCTION_START=1 — reuse existing .next production build (delete .next or unset PLAYWRIGHT_SKIP_FE_BUILD to force rebuild)
+[e2e] NODE_OPTIONS += --max-old-space-size=16384 (full-stack local; long suite / Next dev OOM guard; PLAYWRIGHT_SKIP_E2E_NODE_HEAP=1 to opt out)
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.30s
+[1A[2K[WebServer]     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.30s
+
+[1A[2K[WebServer]      Running `target\debug\traveltrust-api.exe`
+
+[1A[2K[WebServer] [req] x-request-id=fa266751-d3d0-4c72-84ab-281c069f018d path=/health status=200
+[WebServer] [req] x-message-id=1b8eb6b5-6ed3-4fd7-933e-f05a4239080c path=/health status=200
+
+
+Running 3 tests using 1 worker
+
+[1A[2K(node:16624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:16624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/3] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:27:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K[WebServer] [req] x-request-id=4c2cfb10-8024-4532-800f-c4ae37796c4f path=/meta status=200
+[WebServer] [req] x-message-id=4aa14695-634b-4603-8e58-3e0f50544590 path=/meta status=200
+
+[1A[2K[2/3] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:39:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K[WebServer] [req] x-request-id=48245b69-4c42-4464-9f0d-2edba024b7df path=/meta status=200
+[WebServer] [req] x-message-id=92303799-0a12-4d94-ba15-e672704d744c path=/meta status=200
+
+[1A[2K(node:21420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:21420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[3/3] [chromium] › e2e\b467-full-ui-order-journey.spec.ts:58:7 › B-467 · full UI journey (create on /orders/new → pay → complete → review) › 建单→接单→模拟入金→确认完成→评价→向导可见 @e2e-chain-off-mock-pay
+[1A[2K[WebServer] [req] x-request-id=3145a324-334c-41d7-abce-f558cb1e6619 path=/health status=200
+[WebServer] [req] x-message-id=151e4173-9783-4357-8c3f-da636cbbf5d7 path=
+
+[1A[2K[WebServer] /health status=200
+
+[1A[2K[WebServer] [req] x-request-id=0d522604-d093-4fc3-a1d7-e3cc830aa1d6 path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=350c817f-b8a1-413b-b800-9a3d987f30a5 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=b0c848a1-20f3-4d2c-8884-de0a4913492d path=/auth/login status=200
+[WebServer] [req] x-message-id=03016343-c926-4456-b34e-1ba201da47fc path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=b3ce5ce9-a9c2-4c39-a7d0-a90feae26e17 path=/auth/login status=200
+[WebServer] [req] x-message-id=78e12f6c-1b1c-4fbb-a62b-5f52bd26eb52 path=/auth/login status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=7390f3c6-a1d4-48d9-9ff2-944fc670a0c7 path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=d0346f7d-2b59-4f73-be81-93b1988064e4 path=/api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=fe429ca5-663a-4ab9-bdf6-3956aad51f5b path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=0e91fe9c-708d-4402-ae15-5d788dc8270d path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=16b0954c-c2be-450d-984c-ff1aad75ce33 path=/api/v1/orders/dafd853e-023b-435d-90d0-87256ea02b97/cancel status=403
+[WebServer] [req] x-message-id=034e3e03-3d27-484f-8bd7-9c9833ba08b4 path=/api/v1/orders/dafd853e-023b-435d-90d0-87256ea02b97/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=ce80dc54-6b55-4a78-97af-441f315a3a68 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+[WebServer] [req] x-message-id=c89b2cbd-225a-4a67-821f-58115678041f path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+
+[1A[2K[WebServer] audit_key_write op=order_cancel request_id=- user_id=bf7e90f7-207d-4b01-9666-fc67b73fef79 order_id=201b2d8f-bd03-4d7f-9307-6b647b0a5191
+
+[1A[2K[WebServer] [req] x-request-id=3706609a-a8ae-438a-b4d4-7a437eca5e0e path=/api/v1/orders/201b2d8f-bd03-4d7f-9307-6b647b0a5191/cancel status=200
+[WebServer] [req] x-message-id=bfdcf68c-2630-42f4-b108-a84309a23ac2 path=/api/v1/orders/201b2d8f-bd03-4d7f-9307-6b647b0a5191/cancel status=200
+
+[1A[2K[WebServer] [req] x-request-id=3b681cd2-aa79-4e75-a982-8e6ac66070d0 path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+[WebServer] [req] x-message-id=bb8222c4-d423-43ac-a0f7-a8dba928c798 path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=070315fc-413e-41a4-a1ac-8a582950cdfa path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+[WebServer] [req] x-message-id=489c6c79-d0ce-476d-b85e-cb4a471e4b22 path=
+
+[1A[2K[WebServer] /api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=c1542a5d-c267-45ae-a06c-1bf650662cd7 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+[WebServer] [req] x-message-id=b08840bc-7b3f-40b0-9a71-08bfe25b94d6 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=a75a4349-276d-4934-974f-1d4a4534ac7d path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+[WebServer] [req] x-message-id=b5bc4e5c-463d-42a3-a4c1-aebcbab1f429 path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=57d71577-a32a-45c3-9228-e76e8d168b97 path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+[WebServer] [req] x-message-id=9c9d0e41-23b2-44e5-b634-b4c571cc03cc path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=c30c3f71-52e4-411b-bd1f-5314c5f92dae path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+[WebServer] [req] x-message-id=6526358a-d145-4ecc-aa26-b9ad6b05be8d path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=39da97b4-428a-494d-8afd-579cc8b8a8e5 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+[WebServer] [req] x-message-id=1b5df9a0-cc06-4d38-8327-39081abddcdd path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=81032a24-5fc3-48c7-a9c6-7b3179d31c99 path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+[WebServer] [req] x-message-id=1a48f2b1-ba7b-4afa-9c65-9cbb2ca29e73 path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=3206cdd0-edd0-4e57-b367-b0cf7a5ce710 path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+[WebServer] [req] x-message-id=095be679-4b46-4eb2-b706-8ad2d1e3936e path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=
+
+[1A[2K[WebServer] 403
+
+[1A[2K[WebServer] [req] x-request-id=1e365067-f3a2-4ba4-ae87-330922f3fd6f path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=e3e9f367-48e2-494c-a95a-aa5b8fa4eb7d path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=680a7a7b-1b4c-40cf-bc5c-eb292cd48b67 path=/auth/login status=200
+[WebServer] [req] x-message-id=faa9944a-8ba3-4986-add2-985e5d8eb117 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=f0d73df6-31cb-44dd-a52a-130005dadd0e path=/auth/login status=200
+[WebServer] [req] x-message-id=d66e8bee-8522-470b-a672-937a4fe48355 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=f7cfc88e-a13c-4474-87d0-def48501862b path=/api/v1/me status=200
+[WebServer] [req] x-message-id=1b540c6a-301a-4300-9541-ff45eb826432 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=31c2b653-7194-4e00-a46b-1400de5ea851 path=/meta status=200
+[WebServer] [req] x-message-id=1b45c58a-e73d-4da5-a578-996ee30a3a30 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=6d4a5748-102f-4d2d-a5f6-0b5cdbe49b08 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=16cb94d4-0cc8-4eb6-92c0-5dfbc5428274 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=6b00b22a-232b-4776-ac9f-218a23ce4fd0 path=/api/v1/guides/6a893ba7-2241-4efd-93a5-556200676145 status=200
+[WebServer] [req] x-message-id=da61c9a8-13c0-4f81-954d-c9005123d2f9 path=/api/v1/guides/6a893ba7-2241-4efd-93a5-556200676145 status=200
+
+[1A[2K[WebServer] [req] x-request-id=838cb498-3d30-43a1-af19-1f45a8f3166a path=/api/v1/me status=200
+[WebServer] [req] x-message-id=16058a44-3000-400c-ab0a-bcd36639d39b path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=28c8be97-7192-46aa-b44d-8ed582581f83 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=f386be54-4db4-4510-963e-2817677e3f67 path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-request-id=1ea58f4a-89b5-48c8-b1f2-ea2d9e4b4047 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=40ab65bf-c923-485b-bc10-3692d180ca80 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=e8d1e77d-4300-4eea-9f1f-4761a7438c73 path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=894493ec-0905-4e2e-8b64-52856c8b239e path=/api/v1/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=37ed51f7-6655-46be-8718-fd25f2465f4a path=/auth/logout status=200
+[WebServer] [req] x-message-id=6eb05cb6-d17d-4e8c-a9a3-f6aba903a672 path=/auth/logout status=200
+
+[1A[2K[WebServer] [req] x-request-id=867370ca-eb72-44fa-86bd-e2c14b150a51 path=/auth/logout status=200
+[WebServer] [req] x-message-id=552ffba8-9419-441a-805c-0a92c1f6fb5c path=/auth/logout status=200
+
+[1A[2K[WebServer] [req] x-request-id=96aa5bbf-f5be-4583-be71-660466819907 path=/auth/login status=200
+[WebServer] [req] x-message-id=59dab388-e01d-49f7-8fbf-f41adb3a28a1 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=3b8e584c-c302-47d2-be0f-10d6733a6ccf path=/meta status=200
+[WebServer] [req] x-message-id=2dffc800-0ffd-42b9-81b7-8c7653383cd0 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=c1ce3271-2c94-4eaa-84b9-6e5516f39ec6 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=1c8bfe2c-417d-456c-b924-d4a0f144f8e2 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=04e06007-db22-4076-b618-c40e3d77ec52 path=/meta status=200
+[WebServer] [req] x-message-id=6b2aef7e-4ace-42ca-bbca-2f26457d6ae8 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=9a14288c-99d6-4606-80e7-9aa5fe3df5fa path=/api/v1/me status=200
+[WebServer] [req] x-message-id=ee4bce33-82bf-4a3d-abb1-7d3937d81227 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=f55af9ce-79de-45c8-9ab8-8e47766052ef path=/api/v1/me status=200
+[WebServer] [req] x-message-id=b16c2c1e-222f-426a-bba8-bf669b1b65a7 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=6d7fa8a8-c751-469b-8abb-be32d08dab9b path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/chain-sync-status status=200
+[WebServer] [req] x-message-id=235ecc71-aeaa-4e35-86ed-c04a440be571 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/chain-sync-status status=200
+
+[1A[2K[WebServer] [req] x-request-id=641ac7a4-7a75-4a3a-82f7-cc36c42bd5fd path=/meta status=200
+[WebServer] [req] x-message-id=67711171-af5a-400d-a35f-49f3ccffee59 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=8bafe33c-84c3-4fe7-8892-93204c001176 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=f438d542-2d77-4bd1-900d-705cb29ce34d path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=b2d96531-3469-426e-b266-d695aa7cf72e path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/chain-sync-status status=200
+[WebServer] [req] x-message-id=dd742e8d-d7a8-41ac-8385-a650cb4dcd8c path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/chain-sync-status status=200
+
+[1A[2K[WebServer] [req] x-request-id=9370948e-a533-4656-9869-e099ea939553 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=200
+[WebServer] [req] x-message-id=d0986692-0dab-4486-9d76-00ae00a5afc1 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=200
+
+[1A[2K[WebServer] [req] x-request-id=effb46e5-6f3c-471b-bc20-8372db7bfa12 path=/api/v1/trust-growth/config status=200
+[WebServer] [req] x-message-id=d55d7679-38ba-418f-a58f-cf248f1ab4d3 path=/api/v1/trust-growth/config status=200
+
+[1A[2K[WebServer] [req] x-request-id=e7d03998-0994-4df7-882d-8df6a4b17388 path=/meta status=200
+[WebServer] [req] x-message-id=6811cef4-59e8-4751-8d06-5d41b8d9fdc6 path=
+
+[1A[2K[WebServer] /meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=f3cc0692-1609-43ca-a754-cc8ac85c3400 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/messages status=200
+[WebServer] [req] x-message-id=05e93cb2-9793-4d5d-b631-3513b571d309 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/messages status=200
+
+[1A[2K[WebServer] [req] x-request-id=29523207-7cd7-415e-a3ac-188cfd6e01a5 path=/api/v1/guides/6a893ba7-2241-4efd-93a5-556200676145 status=200
+[WebServer] [req] x-message-id=b6ea6a1a-aeca-4acf-9e09-ae344c490b80 path=/api/v1/guides/6a893ba7-2241-4efd-93a5-556200676145 status=200
+
+[1A[2K[WebServer] [req] x-request-id=2f8a546f-b9a9-442c-a79d-fd70356ba939 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/evidence status=200
+[WebServer] [req] x-message-id=9d8d9c18-f1a5-425f-8fb9-4a9fad05a3d8 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/evidence status=200
+
+[1A[2K[WebServer] audit_key_write op=order_accept request_id=02f8db1f-080e-4ece-ad2a-31efa4d7faa8 user_id=ead53f61-ab53-4d58-a976-1831ca1641ce order_id=b7e4b1ec-3b12-45b0-818f-2a15da2348c5
+
+[1A[2K[WebServer] [req] x-request-id=02f8db1f-080e-4ece-ad2a-31efa4d7faa8 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/accept status=200
+[WebServer] [req] x-message-id=a04bc0d6-d617-40b5-926a-fb7bf11f09cb path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/accept status=200
+
+[1A[2K[WebServer] [req] x-request-id=84ba94cc-7799-4128-80b0-61d3ee636305 path=/api/v1/trust-growth/ingest status=200
+
+[1A[2K[WebServer] [req] x-message-id=2aa07da0-934f-4ae7-9230-8d66c1d94078 path=/api/v1/trust-growth/ingest status=200
+
+[1A[2K[WebServer] [req] x-request-id=be8b0839-b473-4597-bf1d-0423dd7ab239 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=200
+[WebServer] [req] x-message-id=980ca43b-6366-4223-a33a-898ef2955aa5 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=200
+
+[1A[2K[WebServer] [req] x-request-id=3ed4ebc3-b76b-4211-81b6-f835defad120 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/chain-sync-status status=200
+[WebServer] [req] x-message-id=b57b27da-bd09-4cef-9da4-484fbf77f4d7 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/chain-sync-status status=200
+
+[1A[2K[WebServer] [req] x-request-id=40139fd5-2f40-4de8-aaed-f0d53522e0c6 path=/auth/logout status=200
+[WebServer] [req] x-message-id=b6099fe6-fe03-45d5-a97e-e70c05b298cf path=/auth/logout status=200
+
+[1A[2K[WebServer] [req] x-request-id=0ad83c00-0dad-40a3-afa8-134e19e2bab7 path=/auth/logout status=200
+[WebServer] [req] x-message-id=77ed5311-ce1a-49b3-8cdc-046b512d00f4 path=/auth/logout status=200
+
+[1A[2K[WebServer] [req] x-request-id=09714ef3-0d17-4835-a795-cf03d4fa49df path=/auth/login status=200
+[WebServer] [req] x-message-id=7d2b5589-ea25-4532-910c-3842a93ec113 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=876db8ba-5467-4fcd-bfeb-af3374b4b8e4 path=/auth/login status=200
+[WebServer] [req] x-message-id=00776787-d2a3-48ce-8de9-9973e797753e path=/auth/login status=200
+
+[1A[2K[WebServer] audit_key_write op=order_confirm_bilateral request_id=- user_id=bf7e90f7-207d-4b01-9666-fc67b73fef79 order_id=b7e4b1ec-3b12-45b0-818f-2a15da2348c5
+
+[1A[2K[WebServer] [req] x-request-id=1fe5bf81-6f5d-4c77-8c28-8b50698c6e44 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/confirm-bilateral status=200
+[WebServer] [req] x-message-id=2b6000a6-1c16-4e90-bf78-cccdc73a6808 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/confirm-bilateral status=200
+
+[1A[2K[WebServer] audit_key_write op=order_confirm_bilateral request_id=- user_id=ead53f61-ab53-4d58-a976-1831ca1641ce order_id=b7e4b1ec-3b12-45b0-818f-2a15da2348c5
+
+[1A[2K[WebServer] [req] x-request-id=3abf7d8e-df9b-4eee-874c-544d13feeb73 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/confirm-bilateral status=200
+[WebServer] [req] x-message-id=46774a0f-45b3-438c-acb5-951f0251b337 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/confirm-bilateral status=200
+
+[1A[2K[WebServer] [req] x-request-id=198e99d3-ab39-405b-bd2d-f0765a271ac3 path=/meta status=200
+[WebServer] [req] x-message-id=702be3c6-665a-45fe-8973-4b87f5ab5748 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=0ed20c6e-c192-407c-8c75-426cb35dc482 path=/meta status=200
+[WebServer] [req] x-message-id=c9d449e6-bf10-4e1d-8a8b-7d6811e64cdc path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=6c095a5f-dbbe-4442-9f8f-caf95c1b1c30 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=9077fd98-321c-428b-9779-19b2492a84dc path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=ddf8679d-5732-499f-8e25-42a0c1325d7e path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=200
+
+[1A[2K[WebServer] [req] x-message-id=76add4ea-1882-4058-944f-15d6cedf74e0 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=200
+
+[1A[2K[WebServer] [req] x-request-id=5abba8ec-9c77-4d0b-9a7c-da3f1c367c03 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=bcaad9d9-1037-4402-90f9-b6e06fad9b17 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=3dc9db19-768c-4ba2-81c9-1ccd84b10975 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=5b553fa7-8ae0-49d9-ac2c-860162b63e4b path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=cfce2ce9-11ae-4ecd-9d0b-b64fcabf9479 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=79c97258-cd3c-46a8-b9d4-679bc64dc9fd path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=2595a383-7f32-48d7-acfb-2caa088fedf4 path=/meta status=200
+[WebServer] [req] x-message-id=8b817d5a-b6c0-43aa-8fed-506647b2c7f4 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=bc74b7bf-8a04-4a78-995c-4e57d494dbe8 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=ab0e5e51-41e8-4ddb-a0f4-0231d0b0e568 path=/api/v1/me status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=3ee890b2-f3d6-4744-b1fd-2b291d137ef8 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=200
+[WebServer] [req] x-message-id=111a34d3-a489-4394-b144-69d62fa79cd9 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=200
+
+[1A[2K[WebServer] [req] x-request-id=daf1fc53-9f8d-47d9-8f33-10493d91fb89 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=ef891c5b-78e8-4057-84ce-bbb16bfbdca6 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=a83181e8-1287-4ded-815f-06d7fbd1fe97 path=/meta status=200
+[WebServer] [req] x-message-id=dbb55f0c-3675-4759-b68c-c5a66342d000 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=65ecaa13-8273-452c-a021-5b605618e236 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] b332d8c4-4f73-4914-b0f8-78ebc0366483 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=296a2b69-959d-47ed-8731-6d7a9e300810 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=200
+[WebServer] [req] x-message-id=dbec405d-0f90-4349-a702-fe2dad694135 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=200
+
+[1A[2K[WebServer] [req] x-request-id=58e1b135-adc2-46ba-9858-58b50ec5eee1 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=d556d104-d313-467f-81b1-c2cc51a408f4 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=73705317-b598-4331-9da1-3f3a865e4300 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/mock-pay status=200
+
+[1A[2K[WebServer] [req] x-message-id=c69208e5-0e30-4378-a511-36516de5a654 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5/mock-pay status=200
+
+[1A[2K[WebServer] [req] x-request-id=8fbe7c4c-52d7-46d7-9669-8dedb78590d1 path=/auth/logout status=200
+[WebServer] [req] x-message-id=b0abe54f-a959-47cb-9065-9dead60d9c7f path=/auth/logout status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=8b3f472e-e529-454b-a24b-07be6fcc993b path=/auth/logout status=200
+[WebServer] [req] x-message-id=49522d58-18a1-437a-816d-322884656323 path=/auth/logout status=200
+
+[1A[2K[WebServer] [req] x-request-id=8319c329-6332-45f4-84a2-60affcb076ff path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-message-id=447ad72c-d50b-4990-b2be-18811d14a601 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=9ec4a390-aa27-40dc-8599-aed6d7244036 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=baa6973a-bc75-4368-a8e9-0940357f3920 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=03a3fb51-9bd7-41d9-809a-b51515d6b080 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 4bad4338-5452-43d1-afdd-a9f0341704e4 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=03ad4507-3c6f-4118-bfd9-ef5f7cdf9413 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=bbae488a-6f72-4ddc-ada3-0205b6a10c87 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=
+
+[1A[2K[WebServer] 401
+
+[1A[2K[WebServer] [req] x-request-id=700eeb33-b983-46f8-85ec-cdbcc6778ceb path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=66ef6b14-eedd-4818-b677-ba25979d21f1 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=438d906a-08b6-408e-8eaa-a9818b82c389 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=ffd30122-8e30-4155-8013-b09115a10541 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=ed1dbaea-5f2b-4687-be3f-e60675b8d25e path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=a69fc870-d8a8-4409-90c6-7e77ef24b547 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5
+
+[1A[2K[WebServer]  status=401
+
+[1A[2K[WebServer] [req] x-request-id=87481faa-fa8a-4e69-a4c0-826a160aafe3 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=d724bdcc-b126-48fb-8c3f-bceb0cf0b265 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=dbc21070-5098-4ccc-9df4-3d1b0601fed7 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=456f211a-c474-4a24-ac12-7cdb1fbf5c66 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=48544b3b-19a2-4a9d-8131-a09374d3e56f path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=ddfaa56e-6180-4ed2-a016-e5dfe5c13dc5
+
+[1A[2K[WebServer]  path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=8b781958-6b0e-46ed-b757-fb9fa51f1457 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=6b137c07-21b3-4d05-bf85-52109c5b1112 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=b375f193-4e73-4752-937f-cb3f78a8a253 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=2c738dc2-0537-40ef-b959-d3cf1de59b8c path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=f164792f-efa7-49bc-93e6-415bb520eff6 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=35db8deb-441b-4f1d-bcb1-7b3a99487582 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=1a6ef763-85cb-422c-997c-ba8d0929c6f8 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=959d88b6-e454-49cb-a0cc-beb1b141cd1f path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=0778dbef-b7ca-45f1-b2ad-efb5c9795040 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=81eb84f3-6e68-4e15-992b-e5ab4db07d1a path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=
+
+[1A[2K[WebServer] 401
+
+[1A[2K[WebServer] [req] x-request-id=eb2f3932-68b6-408c-86ae-e73205721d4b path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=bdc94bc3-5ae7-4a58-a4bf-5c988acff53c path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=b5c56389-1ded-477f-b3ba-b89bd0151bdf path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=a2b1206a-0e1a-46c8-ba34-a0de4d575017 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=732cd639-d54f-4216-8e5c-720932e9cd8b path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=ff0ab2c7-3048-49ec-8c4d-1a98020009b8 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=1b878c46-9b32-43d7-b9fa-bcd1f6d872bd path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=e7c70733-143b-49a8-a066-3110c4aa7a3a path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=b0e131f5-810c-4a6b-bd74-f479fc6f4378 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 2e4080c4-cdd9-4c90-af7b-082d4c6ef7c3 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=ef00efdb-cab0-481c-9a63-d5b74b4c256a path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=ef1af084-2858-400d-9e60-d2edf055b3f5 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=b5abeda8-3e92-4a68-8a5c-6561081e4c12 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=b4fb89fb-5f6a-4049-b8b5-35a90fc44b67 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=8ae209af-0f1e-4867-90e7-51dfaad53771 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=dde7a4e3-38dd-4de6-a2cb-ff0a130fc10a path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=f7b08856-0ad3-4488-b531-e37ae5268e62 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=ad5474c8-5bd7-4b9c-a98c-fa9269d5cd44 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=36ecb000-9c65-4613-a399-1f3523cf5bf1 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=543308fb-78f2-47a1-97f4-89789a48f098 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=940a3d23-ea1d-4a17-b0e4-d2320ef2f07b path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=911f7ba7-26b4-431c-b114-20ec591e4935 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=34093a53-a050-4f8e-8f3c-736f67464b88 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-message-id=f9041e76-f370-4ab1-959f-92a260d1eabc path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=5823c70c-c82f-49a5-80e8-c5eea7f5aa35 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] 
+[WebServer] [req] x-message-id=c63b0a2e-541f-4e28-b6db-6e9d22b9e2a2 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=241e7630-95f0-4a3b-927b-597595acdc29 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=c9964ed0-0e99-45c8-91e9-0eb12b8ead0b path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=664b38a2-9056-4f27-add6-24db17dbc485 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=3212279d-55e5-46b6-8a70-6f9adc3d8c1b path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=f7171600-479a-4926-9ea3-b3856cfb7ecb path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=4130c88d-c643-4981-8c4b-7d278ccbc95f path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=
+
+[1A[2K[WebServer] 401
+
+[1A[2K[WebServer] [req] x-request-id=1e23f4c4-5900-41bd-a54a-5c0b2364f8bc path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=ee8020a5-acde-478b-80d1-7a0db063b9cc path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=a6f014a0-955e-4b97-8db1-786c4e6e532d path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=cb08c121-c978-4352-b261-1e77213db542 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=0cb4889a-4730-4d1a-9518-ceb8293edc8e path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=c274aeb0-861d-49db-820e-8c0e922f3545 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=3c615b0f-1963-4678-b0dc-de6a1c8be090 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=72e88eb8-3bd1-466e-90ca-dfeb13d28813 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=bfbecd65-fa1b-4e89-b846-92c4653f8dd4 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=22b58250-b6b7-493a-bbd5-7f88d9256298 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=1453298c-01f9-406e-b0c9-ef0794f0dccd path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=31897133-9896-48e3-a41e-2af7e5bfa2ba path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=625e9da2-7589-4e73-ac43-8ea6832db56d path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] a94cd005-58ff-46db-b66f-6c77b95d9665 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=459f3a25-6ce0-423b-8d74-d7c9bf2a11d1 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=a7a93ab8-f807-436d-9c72-6db34644684b path=
+
+[1A[2K[WebServer] /api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=638062fe-64db-4de0-8ed5-c243f5e65d45 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] d0f88be9-b592-44e5-bfc7-8ea1cd855068 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=0deef99e-9c1a-420e-b5d0-1abdc8dd8316 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=400132d8-fbd5-468f-a5fc-0ac515ec5c65 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=749459c1-1a1c-4ba4-ab7d-36ccd7fe4bc4 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-message-id=f7e603a5-4769-4f62-8875-9030e6e21f80 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=e3cad46a-19a6-4f9c-a1b0-4a036ad9efb5 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=3f8c2e30-2053-4f65-b0f4-29409a1cbd2f path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=e09966be-be60-4f2d-9dcb-ed21495553e5 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=64bc19cd-e869-47c9-9c79-f5c799dfeb70 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=07b650d6-5d94-429b-91ec-835ff97aec10 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=f4acdb16-6f9f-4803-9191-93227a09f457 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=d3fdd936-8d7f-41cd-a809-161e61625e04 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=60229057-1b2e-4685-814c-05676a74e008
+
+[1A[2K[WebServer]  path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=ca5eb5fc-27ad-4309-a55b-8f3d5227e30d path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=562c11de-50d0-4da4-8e27-d4dc41747968 path=
+
+[1A[2K[WebServer] /api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=48a30409-e33f-418d-bfbe-88c8ec84dba0 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=93a67a39-b8a2-49ac-95fd-9d37c6b671d9 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=3f5929af-9d25-4a15-92d4-a8be1ed172f1 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=a8e7c9e1-c581-4c45-b16c-edd7dec15c8f path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=1043d5bb-e85d-4fd2-b7ee-a6c42ece74b0 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=d7cfa31b-ae63-48f6-9f17-5bcffbbc8906 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=12358591-7dea-4448-95c5-580e6b81dcee path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=ac7ffb3b-aac3-40c9-8003-bbbd911c7b27 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=e4b13b11-07e6-40a2-ac6d-d9d89ad6d096 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=5c764689-fa17-429c-b24f-c392902e1483 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=
+
+[1A[2K[WebServer] 401
+
+[1A[2K[WebServer] [req] x-request-id=55227c2c-6a7e-475d-8bf3-8f803618bf41 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=5118a439-79f6-44ba-b0de-83cfdd844590 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=2dde677c-a3f1-4b85-8150-586da2af174e path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=0adbe54f-5f60-43b6-8c63-87e80831ec00 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=23947594-eeba-42a4-87c0-6a967e1a6995 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=d5ef84cd-00e2-429f-8225-2ad43ddbb178 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=990d3e61-5c0a-4258-862a-696bda829dfd path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=e79b9ae7-619a-4a7d-b8d4-16a6ccde82c4
+
+[1A[2K[WebServer]  path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=af3c045b-31b4-4026-b7af-7cdfc9c18c47 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=322127cb-6c57-4189-8835-3890b11ef402 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=3e8ba69c-43c7-4161-b0ac-adf534a51b92 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=02f83aae-8131-414d-94e7-745f39b76fff path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=4099ff92-f8aa-4e8f-99b6-0e410f3c5feb path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=2f738460-270f-415a-8d2a-602196efeb03 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=c1ff5d5f-d0bb-4bbd-a308-c3c467f1ff30 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=81cba70b-79aa-4ca6-b6b6-99282e29e3ff path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=b0d39ec2-25cd-46bc-98e2-95af06a1569f path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=f01924e7-0cee-4dea-be8b-c054accba86c path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=b6534cec-4de6-4b92-ba3e-3227c3dbd99f path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=023f3899-82f0-4caa-a3b8-bfcb578f10ac path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=891ca980-04c8-4e94-9d7d-bb20968976c8 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=8c116929-d61d-451a-a8c8-fe2dfcb6f1a1 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=376c35ed-797a-49d4-876b-f97960de8c45 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=c608cfe4-41f3-43d3-9f5e-59a80690c8f5 path=
+
+[1A[2K[WebServer] /api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=08de13d7-ea99-43df-94a2-da9f8753be97 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=cf25634c-7997-4c92-97bc-e24cb9f30542 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=
+
+[1A[2K[WebServer] 401
+
+[1A[2K[WebServer] [req] x-request-id=16169cc7-8b04-424d-a87b-d86c2dafc794 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=5efdab08-59b4-439e-b659-c3cd41e962d3 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=66c73fe2-2b39-43dd-a091-d07861dfb669 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=41152bf0-0cbc-47d6-9051-ebe56c1cd883 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=b9df8a5b-fac5-4962-962c-a63d0feb3ec7 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=fe201d25-3fc3-4add-b971-96f29813b1d2 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=
+
+[1A[2K[WebServer] 401
+
+[1A[2K[WebServer] [req] x-request-id=f91b46a7-db3d-481f-a3d8-de4f19b4f2ff path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=8eabf05a-3ae1-4c79-8a46-ab8658f214eb path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=b34f0f30-84dc-4cc5-af73-114f37b29c15 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=c3bd206a-d37b-43c3-bdfa-46a1ba610d50 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=94c99afc-9de4-40fb-8784-f0a420e58173 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=0d210d8c-b4ff-4590-addb-ba33b84c7e4b path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5
+
+[1A[2K[WebServer]  status=401
+
+[1A[2K[WebServer] [req] x-request-id=2d7a13fb-ae8e-4d0b-85a8-181d0bff62ae path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 74cdd8a7-c5b6-436f-8090-7f1d6e0d0f11 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=b24bc5ba-9424-4d01-96e0-e03e6d400078 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=92d56cf2-b162-401c-a53a-b53c0b2e8669 path=
+
+[1A[2K[WebServer] /api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=caa9687f-a3dc-4186-b285-da17865fc460 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=bd80ec7a-9ce0-435e-bc68-b6a6c2350a48 path=
+
+[1A[2K[WebServer] /api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=e49e2770-ba63-43fb-b39a-1b1ac83944a1 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=e4fc4826-0ff5-4bad-8f83-1713abd6fe14
+
+[1A[2K[WebServer]  path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=12194140-07a8-4e3d-8078-4782828d84c9 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=f0b295f7-559a-41f3-b68b-0b29bdde1a4c path=
+
+[1A[2K[WebServer] /api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=dc436e2e-e7e0-4f80-8a7b-75ca61f43f9f path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=b923c87c-e4f1-4854-b396-ebf296b9e8e2
+
+[1A[2K[WebServer]  path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=3ba5cd6c-f124-4f8b-8c41-1ff1f288f3cc path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=87421a8e-e97f-434e-bb0c-2c7c4637dced path=
+
+[1A[2K[WebServer] /api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=b49bc4c7-7880-4fd0-a3df-d71f26c07b80 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 1827ac07-060b-410c-9968-83ba2fd01f69 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=fbc9eccd-67e8-45bb-b229-7f6b0c6003b4 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=f27334d3-db64-44d2-b3b1-d8f07e8fd54b path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=1d54c643-9148-4d33-9c6c-28d1b55c1b11 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=ddf5c3d2-969d-4991-8358-6eab511ba4a9 path=
+
+[1A[2K[WebServer] /api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=5b2ba48e-a813-4238-9a8f-9a8b8748c865 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-message-id=ef6b3ba0-8c59-4965-89c7-6bba47c7a508 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=d1d72522-8bd6-4772-baab-eaf680d29a78 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=fbee1fe8-98da-4dc0-93d1-716e867b2342 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=738f0ee6-b248-4fea-964f-a1ec5a7bd3c8 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=797fac1f-48d7-4224-9967-7febec36c8aa path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=d9b74d8b-8065-4abd-a95c-b06fc655373c path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 7835e48c-7d94-401b-a72a-83830c39be7d path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=2df68a96-83d2-4b0e-932b-edaa8d806afb path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-message-id=93a4c789-ea40-4753-a6d9-3b9441afd03b path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=7e5c550d-2891-41a1-827a-c50991bbdc16 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-message-id=d774d7b8-6c09-4e65-9b79-2bdccd4452ec path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=c1252041-689b-442b-955b-48c40c3ebce8 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-message-id=e3715902-1d1f-471b-80b8-17e7554090cc path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=11e61803-976b-4f89-9469-09098a58451e path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=bc7d5c5e-3429-4303-a848-e61dfec7a8d0
+
+[1A[2K[WebServer]  path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=227332f1-ac8a-4639-af68-5224dd50239b path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] 65050666-1b50-43ed-b121-4a658019df37 path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K[WebServer] [req] x-request-id=b4a3ce44-1dc7-4c6d-b25b-87dbfc932c9a path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] ffbed13d-d24f-47d4-88f3-545401cf567f path=/api/v1/orders/b7e4b1ec-3b12-45b0-818f-2a15da2348c5 status=401
+
+[1A[2K  1) [chromium] › e2e\b467-full-ui-order-journey.spec.ts:58:7 › B-467 · full UI journey (create on /orders/new → pay → complete → review) › 建单→接单→模拟入金→确认完成→评价→向导可见 @e2e-chain-off-mock-pay 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+
+    Expected: [32mtrue[39m
+    Received: [31mfalse[39m
+
+    Call Log:
+    - Timeout 90000ms exceeded while waiting on the predicate
+
+      170 |     await uiLogout(page);
+      171 |
+    > 172 |     await expect
+          |     ^
+      173 |       .poll(async () => {
+      174 |         const r = await requestGetWith429Retry(
+      175 |           request,
+        at D:\TravelTrust\frontend\e2e\b467-full-ui-order-journey.spec.ts:172:5
+
+    Error Context: test-results\b467-full-ui-order-journey-0ecfe-iew-建单→接单→模拟入金→确认完成→评价→向导可见-chromium\error-context.md
+
+
+[1A[2K  1 failed
+    [chromium] › e2e\b467-full-ui-order-journey.spec.ts:58:7 › B-467 · full UI journey (create on /orders/new → pay → complete → review) › 建单→接单→模拟入金→确认完成→评价→向导可见 @e2e-chain-off-mock-pay 
+  2 passed (1.7m)
+
+[e2e] Playwright exited non-zero with PLAYWRIGHT_FULL_STACK=1.
+  If many failures are `net::ERR_CONNECTION_REFUSED` to :3012, Next dev likely died mid-suite (OOM or crash); later tests cascade red.
+  If failures mention :8080 / ECONNREFUSED, API is not listening — ensure `traveltrust-api` is up (Playwright webServer starts it by default) or match PLAYWRIGHT_API_PORT / PLAYWRIGHT_API_HEALTH_URL.
+  If webServer logs `pool timed out while waiting for an open connection`, Postgres is unreachable or exhausted — fix DATABASE_URL (see scripts/dev/export-database-url-from-root-env.sh), run migrations, and ensure PG is listening before full-stack E2E.
+  Try: smaller slices `npm run e2e:chromium:smoke-surface`, `e2e:chromium:smoke-admin-all`, `e2e:chromium:core-release`, `e2e:chromium:p0-spine`, `e2e:chromium:trust-gate`, `e2e:chromium:93-admin-matrix`; full matrix: `bash scripts/gates/local-e2e-chromium-full-matrix.sh` (sets PLAYWRIGHT_FE_USE_PRODUCTION_START=1 → next start); or `npm run e2e:full-chromium:list` to see where green stops; optional `PLAYWRIGHT_SKIP_E2E_NODE_HEAP=1` to test without extra heap (not a fix for OOM).
+  Solo / independent dev: keep local exit-0 evidence per docs/solo-dev-rhythm.md and CONTRIBUTING.md (GitHub Actions green is not the sole bar).
+

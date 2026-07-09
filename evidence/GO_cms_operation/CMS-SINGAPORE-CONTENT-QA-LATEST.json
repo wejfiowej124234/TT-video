@@ -1,0 +1,621 @@
+{
+  "schema": "traveltrust.cms_france_content_qa.v1",
+  "stamp_utc": "2026-07-06T07:21:58.841Z",
+  "phase": "② staging",
+  "layer": "CONTENT_QA",
+  "template_countries": [
+    {
+      "country_iso": "JP",
+      "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "KR",
+      "closure_ssot": "evidence/GO_cms_operation/CMS-KR-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "TH",
+      "closure_ssot": "evidence/GO_cms_operation/CMS-TH-COUNTRY-CLOSURE-LATEST.json"
+    },
+    {
+      "country_iso": "SG",
+      "closure_ssot": "evidence/GO_cms_operation/CMS-SG-COUNTRY-CLOSURE-LATEST.json"
+    }
+  ],
+  "not_execution": true,
+  "standard_ssot": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "content_qa_dimensions": [
+    {
+      "id": "execution",
+      "label": "Execution",
+      "phase": 2,
+      "note": "已基本完成 · 仅作上下文 · 不重复劳动"
+    },
+    {
+      "id": "cms_ownership",
+      "label": "CMS Ownership",
+      "phase": 3
+    },
+    {
+      "id": "runtime_consumer",
+      "label": "Runtime Consumer",
+      "phase": 3
+    },
+    {
+      "id": "geo_matching",
+      "label": "Geo Matching",
+      "phase": 3
+    },
+    {
+      "id": "content_accuracy",
+      "label": "Content Accuracy",
+      "phase": 3
+    },
+    {
+      "id": "l5_quality",
+      "label": "L5 Quality",
+      "phase": 3
+    }
+  ],
+  "content_accuracy_checks": [
+    {
+      "id": "geo",
+      "label": "Geo",
+      "example": "东京是不是东京"
+    },
+    {
+      "id": "culture",
+      "label": "Culture",
+      "example": "是否符合当地文化"
+    },
+    {
+      "id": "landmark",
+      "label": "Landmark",
+      "example": "地标是否正确",
+      "applies": "attraction"
+    },
+    {
+      "id": "food",
+      "label": "Food",
+      "example": "美食是否属于当地",
+      "applies": "food"
+    },
+    {
+      "id": "hotel",
+      "label": "Hotel",
+      "example": "酒店风格是否正确",
+      "applies": "hotel"
+    },
+    {
+      "id": "transport",
+      "label": "Transport",
+      "example": "是否是当地交通",
+      "applies": "transport"
+    },
+    {
+      "id": "season",
+      "label": "Season",
+      "example": "是否符合当地场景",
+      "optional": true
+    }
+  ],
+  "frozen_standard": {
+    "schema": "traveltrust.cms_content_qa_standard.v1",
+    "status": "FROZEN",
+    "frozen_at_utc": "2026-07-05T11:52:36.073Z",
+    "phase_model": {
+      "phase_1_cms_system": {
+        "label": "CMS 系统",
+        "status": "FROZEN",
+        "scope": [
+          "Catalog",
+          "Runtime Wiring",
+          "Ownership",
+          "Matrix",
+          "Daily Board",
+          "Pipeline"
+        ],
+        "rule": "不再投入架构"
+      },
+      "phase_2_execution": {
+        "label": "Execution",
+        "status": "SUBSTANTIALLY_COMPLETE",
+        "proves": "CMS 能把内容发布出去",
+        "rule": "禁止因 Execution 重复劳动"
+      },
+      "phase_3_content_qa": {
+        "label": "Content QA",
+        "status": "ACTIVE",
+        "proves": "用户看到的是否 L5 · 内容准确性",
+        "rule": "不叫 Audit · 检查内容非程序"
+      }
+    },
+    "country_workflow": {
+      "order": [
+        "execution",
+        "content_qa",
+        "country_closed",
+        "next_country"
+      ],
+      "forbidden": "execution → next_country",
+      "template": "Execution → Content QA → Country CLOSED"
+    },
+    "asset_states": [
+      "OPEN",
+      "LOCKED"
+    ],
+    "one_replace_rule": {
+      "summary": "任何一张图片，只允许更换一次",
+      "pipeline": [
+        "Review",
+        "Replace",
+        "Publish",
+        "Verify",
+        "Execution PASS",
+        "Content QA 六维",
+        "PASS",
+        "LOCK"
+      ],
+      "after_lock": {
+        "forbidden": [
+          "找到更漂亮的图而重新替换",
+          "AI 推荐更好的图而重新进入流程"
+        ],
+        "allowed_unlock": [
+          "国家错",
+          "城市错",
+          "版权",
+          "其他真实错误"
+        ],
+        "unlock_requires": "--unlock-real-error + 书面原因"
+      }
+    },
+    "content_qa_dimensions": [
+      "execution",
+      "cms_ownership",
+      "runtime_consumer",
+      "geo_matching",
+      "content_accuracy",
+      "l5_quality"
+    ],
+    "content_accuracy_checks": [
+      {
+        "id": "geo",
+        "example": "东京是不是东京"
+      },
+      {
+        "id": "culture",
+        "example": "是否符合当地文化"
+      },
+      {
+        "id": "landmark",
+        "example": "地标是否正确"
+      },
+      {
+        "id": "food",
+        "example": "美食是否属于当地"
+      },
+      {
+        "id": "hotel",
+        "example": "酒店风格是否正确"
+      },
+      {
+        "id": "transport",
+        "example": "是否是当地交通"
+      },
+      {
+        "id": "season",
+        "example": "是否符合当地场景",
+        "optional": true
+      }
+    ],
+    "city_closure": {
+      "label": "City Content QA CLOSED",
+      "not": "City Execution CLOSED",
+      "when": "该城全部 POI LOCKED + 六维城市级 PASS"
+    },
+    "country_closure": {
+      "key": "TT_CMS_JP_COUNTRY",
+      "when": "全部 City Content QA CLOSED + Golden Template 城市集 + national_runtime PASS"
+    },
+    "remediation_unit": "single_poi",
+    "forbidden_bulk": "禁止一次替换整城所有 POI",
+    "runtime_tiers": {
+      "city": {
+        "id": "city_consumer_runtime",
+        "label": "City Runtime",
+        "scope": [
+          "该城 Consumer 页面",
+          "该城 Catalog",
+          "该城 POI preview"
+        ],
+        "consumer_surface": "/market → Custom Itinerary → country → city → POI preview",
+        "gate_2_equals_gate_4": true,
+        "exit_check_evidence": "CMS-POI-CITY-{CITY_EN}-CONTENT-QA-EXIT-CHECK-LATEST.json",
+        "keys": [
+          "TT_CMS_POI_CITY_{CITY}_CONTENT_QA: CLOSED",
+          "TT_CMS_POI_CITY_{CITY}_GOLDEN_TEMPLATE: YES"
+        ],
+        "not_vetoed_by": "national_poi_family_board"
+      },
+      "country": {
+        "id": "national_runtime",
+        "label": "Country Runtime",
+        "scope": [
+          "全站 Consumer",
+          "POI 族",
+          "首页/市场/推荐/搜索/Listing 等"
+        ],
+        "when": "TT_CMS_{ISO}_COUNTRY: CLOSED",
+        "ssot": "CMS-L5-VISUAL-GAP-REPORT-LATEST.json",
+        "not_veto_city_golden_template": true
+      },
+      "rule": "城市不依赖全国 Runtime · 全国 Runtime 才依赖所有城市 Content QA CLOSED",
+      "workflow": [
+        "City Execution CLOSED",
+        "City Content QA CLOSED",
+        "Golden Template (City)",
+        "复制到本国其它城市",
+        "Country Runtime 全站验收",
+        "Country CLOSED"
+      ]
+    },
+    "golden_template": {
+      "label": "Golden Template (City)",
+      "when": "Exit Check 5/5 PASS · city_consumer_runtime",
+      "after": "冻结该城 LOCK · 原样复制流程 · 不新增标准",
+      "not_blocked_by": "national_runtime OPEN"
+    }
+  },
+  "country": {
+    "verdict": "OPEN",
+    "country_iso": "FR",
+    "country_zh": "法国",
+    "TT_CMS_FR_COUNTRY": "OPEN",
+    "runtime_tiers": {
+      "city": {
+        "tier": "city_consumer_runtime",
+        "note": "City Golden Template Exit Check"
+      },
+      "country": {
+        "tier": "national_runtime",
+        "ssot": "CMS-FR-COUNTRY-RUNTIME-AUDIT-LATEST.json"
+      },
+      "rule": "City Golden Template 不依赖 national_runtime · Country CLOSED 才验 national_runtime"
+    },
+    "country_runtime_consumer": {
+      "verdict": "UNKNOWN",
+      "reason": "缺少 FR Country Runtime audit · 先跑 run-cms-fr-country-runtime-audit.cjs",
+      "tier": "national_runtime"
+    },
+    "criteria": [
+      {
+        "id": "all_city_execution_closed",
+        "label": "所有 City Execution CLOSED",
+        "key": "all_city_execution_closed",
+        "pass": false,
+        "verdict": "FAIL"
+      },
+      {
+        "id": "content_accuracy_100",
+        "label": "Content Accuracy = 100%",
+        "key": "content_accuracy_100",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "runtime_consumer_cms",
+        "label": "Runtime Consumer = CMS",
+        "key": "runtime_consumer_cms",
+        "pass": false,
+        "verdict": "FAIL"
+      },
+      {
+        "id": "geo_matching_100",
+        "label": "Geo Matching = 100%",
+        "key": "geo_matching_100",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "l5_visual_pass",
+        "label": "L5 Visual = PASS",
+        "key": "l5_visual_pass",
+        "pass": false,
+        "verdict": "FAIL"
+      },
+      {
+        "id": "cross_region_images_0",
+        "label": "Cross-region Images = 0",
+        "key": "cross_region_images_0",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "unsplash_0",
+        "label": "Unsplash = 0（CMS 管辖 POI 范围）",
+        "key": "unsplash_0",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "ocs_runtime_0",
+        "label": "OCS Runtime = 0（CMS 管辖 POI 范围）",
+        "key": "ocs_runtime_0",
+        "pass": false,
+        "verdict": "FAIL"
+      }
+    ],
+    "cross_region_total": 0,
+    "content_accuracy_issues": 0,
+    "cities_execution_closed": 0,
+    "cities_content_qa_closed": 0,
+    "next_country": "BLOCKED",
+    "production_go": "BLOCKED"
+  },
+  "cities": [
+    {
+      "city_zh": "巴黎",
+      "city_en": "Paris",
+      "country_iso": "JP",
+      "poi_count": 8,
+      "execution": {
+        "verdict": "FAIL",
+        "reason": "City Execution 未完成"
+      },
+      "cms_ownership": {
+        "verdict": "FAIL",
+        "live": 1,
+        "total": 8,
+        "missing_matrix_ids": [
+          "PH-FR-112-ATR",
+          "PH-FR-113-ATR",
+          "PH-FR-114-ATR",
+          "PH-FR-115-FOOD",
+          "PH-FR-116-FOOD",
+          "PH-FR-117-FOOD",
+          "PH-FR-118-FOOD"
+        ]
+      },
+      "runtime_consumer": {
+        "verdict": "FAIL",
+        "reason": "City Consumer Runtime 须全部 LOCK 后跑 Exit Check",
+        "tier": "city_consumer_runtime",
+        "consumer_surface": "/market → Custom Itinerary → country → city → POI preview",
+        "gate_2_equals_gate_4": true,
+        "not_vetoed_by": "national_poi_family_board",
+        "country_tier": "national_runtime · TT_CMS_JP_COUNTRY only",
+        "required_command": "node scripts/dev/run-cms-poi-city-paris-content-qa-exit-check.cjs"
+      },
+      "geo_matching": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 8,
+        "issues": []
+      },
+      "content_accuracy": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 8,
+        "items": [],
+        "checks_schema": [
+          "geo",
+          "culture",
+          "landmark",
+          "food",
+          "hotel",
+          "transport",
+          "season"
+        ]
+      },
+      "l5_quality": {
+        "verdict": "FAIL",
+        "reason": "CMS catalog 未全部 LIVE",
+        "blocked_by": "cms_ownership"
+      },
+      "backlog_items": [],
+      "locked_items": [
+        {
+          "matrix_id": "PH-FR-111-ATR",
+          "poi": "埃菲尔铁塔",
+          "lock_state": "LOCKED",
+          "display_line": "LOCKED",
+          "hero_file": "ocs-paris-art-official-guide-cover.jpg"
+        }
+      ],
+      "backlog_issue_count": 0,
+      "locked_count": 1,
+      "content_qa_closed": false
+    },
+    {
+      "city_zh": "里昂",
+      "city_en": "Lyon",
+      "country_iso": "JP",
+      "poi_count": 8,
+      "execution": {
+        "verdict": "FAIL",
+        "reason": "City Execution 未完成"
+      },
+      "cms_ownership": {
+        "verdict": "FAIL",
+        "live": 0,
+        "total": 8,
+        "missing_matrix_ids": [
+          "PH-FR-119-ATR",
+          "PH-FR-120-ATR",
+          "PH-FR-121-ATR",
+          "PH-FR-122-ATR",
+          "PH-FR-123-FOOD",
+          "PH-FR-124-FOOD",
+          "PH-FR-125-FOOD",
+          "PH-FR-126-FOOD"
+        ]
+      },
+      "runtime_consumer": {
+        "verdict": "FAIL",
+        "reason": "City Consumer Runtime 须全部 LOCK 后跑 Exit Check",
+        "tier": "city_consumer_runtime",
+        "consumer_surface": "/market → Custom Itinerary → country → city → POI preview",
+        "gate_2_equals_gate_4": true,
+        "not_vetoed_by": "national_poi_family_board",
+        "country_tier": "national_runtime · TT_CMS_JP_COUNTRY only",
+        "required_command": "node scripts/dev/run-cms-poi-city-lyon-content-qa-exit-check.cjs"
+      },
+      "geo_matching": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 8,
+        "issues": []
+      },
+      "content_accuracy": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 8,
+        "items": [],
+        "checks_schema": [
+          "geo",
+          "culture",
+          "landmark",
+          "food",
+          "hotel",
+          "transport",
+          "season"
+        ]
+      },
+      "l5_quality": {
+        "verdict": "FAIL",
+        "reason": "CMS catalog 未全部 LIVE",
+        "blocked_by": "cms_ownership"
+      },
+      "backlog_items": [],
+      "locked_items": [],
+      "backlog_issue_count": 0,
+      "locked_count": 0,
+      "content_qa_closed": false
+    },
+    {
+      "city_zh": "尼斯",
+      "city_en": "Nice",
+      "country_iso": "JP",
+      "poi_count": 8,
+      "execution": {
+        "verdict": "FAIL",
+        "reason": "City Execution 未完成"
+      },
+      "cms_ownership": {
+        "verdict": "FAIL",
+        "live": 0,
+        "total": 8,
+        "missing_matrix_ids": [
+          "PH-FR-127-ATR",
+          "PH-FR-128-ATR",
+          "PH-FR-129-ATR",
+          "PH-FR-130-ATR",
+          "PH-FR-131-FOOD",
+          "PH-FR-132-FOOD",
+          "PH-FR-133-FOOD",
+          "PH-FR-134-FOOD"
+        ]
+      },
+      "runtime_consumer": {
+        "verdict": "FAIL",
+        "reason": "City Consumer Runtime 须全部 LOCK 后跑 Exit Check",
+        "tier": "city_consumer_runtime",
+        "consumer_surface": "/market → Custom Itinerary → country → city → POI preview",
+        "gate_2_equals_gate_4": true,
+        "not_vetoed_by": "national_poi_family_board",
+        "country_tier": "national_runtime · TT_CMS_JP_COUNTRY only",
+        "required_command": "node scripts/dev/run-cms-poi-city-nice-content-qa-exit-check.cjs"
+      },
+      "geo_matching": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 8,
+        "issues": []
+      },
+      "content_accuracy": {
+        "verdict": "PASS",
+        "issue_count": 0,
+        "total": 8,
+        "items": [],
+        "checks_schema": [
+          "geo",
+          "culture",
+          "landmark",
+          "food",
+          "hotel",
+          "transport",
+          "season"
+        ]
+      },
+      "l5_quality": {
+        "verdict": "FAIL",
+        "reason": "CMS catalog 未全部 LIVE",
+        "blocked_by": "cms_ownership"
+      },
+      "backlog_items": [],
+      "locked_items": [],
+      "backlog_issue_count": 0,
+      "locked_count": 0,
+      "content_qa_closed": false
+    }
+  ],
+  "backlog": {
+    "tree": {
+      "巴黎": {
+        "city_en": "Paris",
+        "execution": "FAIL",
+        "content_qa_closed": false,
+        "issue_count": 0,
+        "locked_count": 1,
+        "poi_total": 8,
+        "status": "review",
+        "items": [],
+        "locked_items": [
+          {
+            "matrix_id": "PH-FR-111-ATR",
+            "poi": "埃菲尔铁塔",
+            "lock_state": "LOCKED",
+            "display_line": "LOCKED",
+            "hero_file": "ocs-paris-art-official-guide-cover.jpg"
+          }
+        ]
+      },
+      "里昂": {
+        "city_en": "Lyon",
+        "execution": "FAIL",
+        "content_qa_closed": false,
+        "issue_count": 0,
+        "locked_count": 0,
+        "poi_total": 8,
+        "status": "review",
+        "items": [],
+        "locked_items": []
+      },
+      "尼斯": {
+        "city_en": "Nice",
+        "execution": "FAIL",
+        "content_qa_closed": false,
+        "issue_count": 0,
+        "locked_count": 0,
+        "poi_total": 8,
+        "status": "review",
+        "items": [],
+        "locked_items": []
+      }
+    },
+    "total_issues": 0
+  },
+  "summary": {
+    "cities_execution_pass": 0,
+    "cities_content_qa_closed": 0,
+    "total_content_accuracy_issues": 0,
+    "active_city": {
+      "country_iso": "FR",
+      "city_zh": "巴黎",
+      "city_en": "Paris",
+      "status": "ACTIVE"
+    }
+  },
+  "TT_CMS_FR_CONTENT_QA": "OPEN",
+  "TT_CMS_FR_COUNTRY": "OPEN"
+}

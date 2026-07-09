@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_progress_review.v1",
+  "stamp_utc": "20260704T145830Z",
+  "chain_id": "nyc-skyline",
+  "progress": "6/6",
+  "completed_row": 42,
+  "completed_filename": "ocs-nyc-skyline-community-media.jpg",
+  "TT_CHAIN_PROGRESS_REVIEW": "PASS",
+  "chain_final_review": "evidence/GO_official_cold_start_dataset/ocs-content-l5/chains/nyc-skyline-chain-FINAL.REVIEW.json"
+}

@@ -1,0 +1,175 @@
+{
+  "schema": "traveltrust.executive_top20_blockers.v1",
+  "blockers": [
+    {
+      "id": "AG-SEED-001",
+      "domain": "AG",
+      "severity": "P0",
+      "title": "Admin route permission guard coverage",
+      "verdict": "REFACTOR",
+      "queue": "NOW",
+      "age_days": 18,
+      "status": "CLOSED"
+    },
+    {
+      "id": "AG-SEED-002",
+      "domain": "AG",
+      "severity": "P0",
+      "title": "Dangerous action audit trail",
+      "verdict": "KEEP",
+      "queue": "NOW",
+      "age_days": 4,
+      "status": "CLOSED"
+    },
+    {
+      "id": "DOA-SEED-002",
+      "domain": "DOA",
+      "severity": "P0",
+      "title": "ABI alignment gate SSOT",
+      "verdict": "KEEP",
+      "queue": "NOW",
+      "age_days": 5,
+      "status": "CLOSED"
+    },
+    {
+      "id": "DOA-SEED-003",
+      "domain": "DOA",
+      "severity": "P0",
+      "title": "04 routes vs Axum mount",
+      "verdict": "KEEP",
+      "queue": "NOW",
+      "age_days": 3,
+      "status": "CLOSED"
+    },
+    {
+      "id": "DOA-SEED-004",
+      "domain": "DOA",
+      "severity": "P0",
+      "title": "spec-path-dependencies registry sync",
+      "verdict": "UPDATE",
+      "queue": "NOW",
+      "age_days": 14,
+      "status": "CLOSED"
+    },
+    {
+      "id": "LFC-CA-002",
+      "domain": "CA",
+      "severity": "P0",
+      "title": "API spine single entry SSOT",
+      "verdict": "KEEP",
+      "queue": "NOW",
+      "age_days": 2,
+      "status": "CLOSED"
+    },
+    {
+      "id": "LFC-UXA-002",
+      "domain": "UXA",
+      "severity": "P0",
+      "title": "Five-main route UI freeze compliance",
+      "verdict": "KEEP",
+      "queue": "NOW",
+      "age_days": 1,
+      "status": "CLOSED"
+    },
+    {
+      "id": "PF-SEED-001",
+      "domain": "PF",
+      "severity": "P0",
+      "title": "Duplicate profile edit surfaces",
+      "verdict": "MERGE",
+      "queue": "NOW",
+      "age_days": 45,
+      "status": "CLOSED"
+    },
+    {
+      "id": "PF-SEED-002",
+      "domain": "PF",
+      "severity": "P0",
+      "title": "Merchant listing dual surfaces",
+      "verdict": "MERGE",
+      "queue": "NOW",
+      "age_days": 38,
+      "status": "CLOSED"
+    },
+    {
+      "id": "PF-SEED-003",
+      "domain": "PF",
+      "severity": "P0",
+      "title": "Publish Hub nav proliferation",
+      "verdict": "MERGE",
+      "queue": "NOW",
+      "age_days": 30,
+      "status": "CLOSED"
+    },
+    {
+      "id": "PGX-CX-001",
+      "domain": "CX",
+      "severity": "P0",
+      "title": "Traveler CUJ unlock→escrow continuity",
+      "verdict": "KEEP",
+      "queue": "NOW",
+      "age_days": 2,
+      "status": "CLOSED"
+    },
+    {
+      "id": "AG-SEED-003",
+      "domain": "AG",
+      "severity": "P1",
+      "title": "RBAC boundary matrix drift",
+      "verdict": "UPDATE",
+      "queue": "NEXT",
+      "age_days": 22,
+      "status": "CLOSED"
+    },
+    {
+      "id": "DOA-SEED-001",
+      "domain": "DOA",
+      "severity": "P1",
+      "title": "README port narrative drift",
+      "verdict": "UPDATE",
+      "queue": "NEXT",
+      "age_days": 21,
+      "status": "CLOSED"
+    },
+    {
+      "id": "LFC-CA-001",
+      "domain": "CA",
+      "severity": "P1",
+      "title": "Module boundary doc vs crate graph",
+      "verdict": "UPDATE",
+      "queue": "NEXT",
+      "age_days": 28,
+      "status": "CLOSED"
+    },
+    {
+      "id": "LFC-UXA-001",
+      "domain": "UXA",
+      "severity": "P1",
+      "title": "L5 spacing on settings hub",
+      "verdict": "KEEP",
+      "queue": "LATER",
+      "age_days": 40,
+      "status": "CLOSED"
+    },
+    {
+      "id": "PF-SEED-004",
+      "domain": "PF",
+      "severity": "P1",
+      "title": "archive/ui-v1 retire backlog",
+      "verdict": "RETIRE",
+      "queue": "NEXT",
+      "age_days": 60,
+      "status": "CLOSED"
+    },
+    {
+      "id": "PGX-CX-002",
+      "domain": "CX",
+      "severity": "P1",
+      "title": "Market debounce UX consistency",
+      "verdict": "KEEP",
+      "queue": "NEXT",
+      "age_days": 12,
+      "status": "CLOSED"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "stamp_utc": "20260616T035617Z",
+  "pool": "0xeb0e4a8517EC478d6B386a13D28115357AA6d112",
+  "timelock": "0x777E532636c53BDc034B9FE73c44E1B2c3113060",
+  "use_bootstrap_once": false,
+  "timelock_delay_sec": 172800,
+  "operations": [
+    {
+      "id": "0x698cc036cae4d68da7d3b53c9bd7e2cbd1b53bf37f5e87d6e1aeb94f13ab9f88",
+      "label": "configureJurisdiction:CN:400",
+      "ready_at_unix": 1781755056,
+      "done": false
+    },
+    {
+      "id": "0x828c80f4ba7ada9580581d8fc1a1852527472fbff9162ef79fef96c1070009fb",
+      "label": "configureJurisdiction:US:400",
+      "ready_at_unix": 1781755056,
+      "done": false
+    },
+    {
+      "id": "0xcef428e6444b7a55278810cc17a9b5f17dc1ef3543165cd07b52733fe3548f09",
+      "label": "configureJurisdiction:FR:450",
+      "ready_at_unix": 1781755056,
+      "done": false
+    },
+    {
+      "id": "0xb1be90e7e9b9f552ec815de2b795693981bb9c791aa8bb72e370f5c2d110ef4a",
+      "label": "configureJurisdiction:ES:450",
+      "ready_at_unix": 1781755056,
+      "done": false
+    },
+    {
+      "id": "0x6e2045c5857affeb9e8be81a91a60350a59ae9c4555aceaa570beb01332f30cb",
+      "label": "configureJurisdiction:JP:250",
+      "ready_at_unix": 1781755056,
+      "done": false
+    },
+    {
+      "id": "0x1c477cd90bea67bc7060624d8a285b53ade76ad50f4eb8490b092184f7a137b7",
+      "label": "configureJurisdiction:TH:250",
+      "ready_at_unix": 1781755056,
+      "done": false
+    },
+    {
+      "id": "0xb2777f1493ca6c56ffdbd30c48fe1072a5794b8d23370e3225b0d79fe4900b10",
+      "label": "configureJurisdiction:SG:200",
+      "ready_at_unix": 1781755056,
+      "done": false
+    },
+    {
+      "id": "0xb00fa8c56cf0b842ad7c7f7f6e669773ac720d5fae7e4e489f1d0fd15b9b3166",
+      "label": "configureJurisdiction:KR:200",
+      "ready_at_unix": 1781755056,
+      "done": false
+    },
+    {
+      "id": "0xdace39abfc1743fb48215e3249033dba5d8bf8c7b232c8f9270d3970b8f29651",
+      "label": "configureJurisdiction:AU:150",
+      "ready_at_unix": 1781755056,
+      "done": false
+    },
+    {
+      "id": "0x6b87cec1ae5272842bcd48653ff302e9c203e4617fb76b127c9d9fe5ee9a0136",
+      "label": "configureJurisdiction:AE:150",
+      "ready_at_unix": 1781755056,
+      "done": false
+    }
+  ]
+}

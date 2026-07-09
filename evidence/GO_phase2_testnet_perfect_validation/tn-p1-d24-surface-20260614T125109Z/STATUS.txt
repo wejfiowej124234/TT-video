@@ -1,0 +1,5 @@
+status: PASS
+phase: ②
+artifact: D24 Full Surface Coverage (5 surfaces)
+at: 20260614T125109Z
+surface_ids: T-P11 M-P07 O-P02 O-P03 O-P06

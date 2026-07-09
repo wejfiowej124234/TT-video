@@ -1,0 +1,157 @@
+# Protocol Convergence · ② 测试网部署登记（ABI + SSOT hash + 地址 · R-03 对拍）
+# LEGACY · READ-ONLY: `environments.sepolia.addresses` = pre-convergence 快照 · 非现行 runtime 读口
+# ACTIVE ② SSOT: `environments.gov_freeze_v2_clean_baseline` + `scripts/dev/.env.phase2-chain-deploy.local`
+# 真源：docs/spec/governance-token/protocol-ssot.v1.yaml
+# 机读闸：bash scripts/gates/check-protocol-convergence-pregate.sh
+#         bash scripts/gates/check-phase2-chain-deployment-gate.sh
+# 对拍：bash scripts/gates/check-protocol-quote-parity.sh
+
+schema_version: "1"
+updated: "2026-06-16T05:45:55Z"
+
+protocol_ssot:
+  version: "1.0.1"
+  md_ref: docs/spec/governance-token/protocol-ssot.v1.md
+  yaml_ref: docs/spec/governance-token/protocol-ssot.v1.yaml
+  content_sha256: "cd114ba2bb1f25de83e879db5babeb100b7235da9472239a09d86072533bc4fc"
+
+# 控制面 env（R-02 · 与 contracts/script/Phase2ControlPlane.sol 同源）
+control_plane_env:
+  timelock_admin: TIMELOCK_ADMIN_ADDRESS
+  chain_owner: PHASE2_CHAIN_OWNER_ADDRESS
+  chain_owner_fallback: TIMELOCK_ADDRESS
+  escrow_factory_guardian: ESCROW_FACTORY_GUARDIAN_ADDRESS
+  escrow_factory_guardian_fallback: TIMELOCK_ADDRESS
+
+contracts:
+  GovernanceVotesToken:
+    source: contracts/src/GovernanceVotesToken.sol
+    deploy_script: contracts/script/DeployGovernanceStack.s.sol
+    env_address_key: GOVERNANCE_TOKEN_ADDRESS
+  GovernanceTimelock:
+    source: contracts/src/GovernanceTimelock.sol
+    deploy_script: contracts/script/DeployGovernanceStack.s.sol
+    env_address_key: TIMELOCK_ADDRESS
+  TravelTrustGovernor:
+    source: contracts/src/TravelTrustGovernor.sol
+    deploy_script: contracts/script/DeployGovernanceStack.s.sol
+    env_address_key: GOVERNOR_ADDRESS
+  EscrowFactory:
+    source: contracts/src/EscrowFactory.sol
+    deploy_script: contracts/script/DeployFundStackUnderTimelock.s.sol
+    env_address_key: ESCROW_FACTORY_ADDRESS
+    mainnet_deploy: FORBIDDEN
+    note: Sepolia/testnet legacy only — PG-P0-ESC · registry/escrow-bilateral-mainnet-policy.v1.yaml
+  EscrowFactoryV2:
+    source: contracts/src/EscrowFactoryV2.sol
+    deploy_script: contracts/script/DeployEscrowFactoryV2.s.sol
+    env_address_key: ESCROW_FACTORY_V2_ADDRESS
+    registry_key: escrow_factory_v2_address
+    mainnet_path: REQUIRED
+    note: Bilateral Confirmation Settlement Model — mainnet new orders only via V2
+  FeeRouter:
+    source: contracts/src/FeeRouter.sol
+    deploy_script: contracts/script/DeployFundStackUnderTimelock.s.sol
+    env_address_key: FEE_ROUTER_ADDRESS
+  RegionStewardStakePool:
+    source: contracts/src/RegionStewardStakePool.sol
+    abi: contracts/abi/RegionStewardStakePool.json
+    deploy_script: contracts/script/DeployRegionStewardStakePool.s.sol
+    env_address_key: REGION_STEWARD_STAKE_POOL_ADDRESS
+  CountryPoolRedemptionEpochV0:
+    source: contracts/src/CountryPoolRedemptionEpochV0.sol
+    abi: contracts/abi/CountryPoolRedemptionEpochV0.json
+    deploy_script: contracts/script/DeployCountryPoolRedemptionEpochV0.s.sol
+    env_address_key: COUNTRY_POOL_REDEMPTION_EPOCH_CN_ADDRESS
+  CountryPoolLedgerV0:
+    source: contracts/src/CountryPoolLedgerV0.sol
+    deploy_script: contracts/script/DeployP51CountryLedger.s.sol
+    env_address_key: COUNTRY_POOL_LEDGER_PILOT_ADDRESS
+
+api_quote_routes:
+  steward_stake_quote: GET /api/v1/steward/stake-quote
+  steward_stake_status: GET /api/v1/steward/stake-status
+  redemption_quote: GET /api/v1/redemption/quote
+  country_ledger: GET /api/v1/governance/country-ledger/:jurisdiction
+  protocol_reference: GET /api/v1/governance/protocol-reference
+
+environments:
+  local_anvil:
+    chain_id: 31337
+    notes: "bash scripts/dev/smoke-steward-stake-anvil.sh · deployer EOA fallback allowed"
+
+  sepolia:
+    chain_id: 11155111
+    rpc_env: CHAIN_RPC_URL
+    deploy_order:
+      - DeployGovernanceStack.s.sol
+      - DeployFundStackUnderTimelock.s.sol
+      - DeployRegionStewardStakePool.s.sol
+      - DeployCountryPoolRedemptionEpochV0.s.sol
+      - DeployP51CountryLedger.s.sol
+    required_env_before_broadcast:
+      - TIMELOCK_ADMIN_ADDRESS
+      - TIMELOCK_ADDRESS
+      - PRIVATE_KEY
+      - CHAIN_RPC_URL
+      - CHAIN_ID
+    # Active Sepolia SSOT · GovFreeze V2 (20260616T054554Z) · LEGACY V1 → gov_freeze_v1_baseline
+    addresses:
+      governance_token_address: "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+      governor_address: "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+      timelock_address: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+      escrow_factory_address: "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
+      fee_router_address: "0x81A8009210c5215100564c6E4123F672c4459306"
+      region_steward_stake_pool_address: "0x3a89378bfad12d1028707dd37055294854c8784e"
+      country_pool_redemption_epoch_cn_address: "0x712050e4b1517C3f3ab39B32Cabb70CC0E1C0829"
+      country_pool_ledger_pilot_address: "0x63bd7d5ee5c5dde707e5e65303f3876267c78e97"
+    env_to_registry:
+      GOVERNANCE_TOKEN_ADDRESS: governance_token_address
+      GOVERNOR_ADDRESS: governor_address
+      TIMELOCK_ADDRESS: timelock_address
+      ESCROW_FACTORY_ADDRESS: escrow_factory_address
+      FEE_ROUTER_ADDRESS: fee_router_address
+      REGION_STEWARD_STAKE_POOL_ADDRESS: region_steward_stake_pool_address
+      COUNTRY_POOL_REDEMPTION_EPOCH_CN_ADDRESS: country_pool_redemption_epoch_cn_address
+      COUNTRY_POOL_LEDGER_PILOT_ADDRESS: country_pool_ledger_pilot_address
+      # ESCROW_FACTORY_V2_ADDRESS: escrow_factory_v2_address — populate after Sepolia V2 broadcast
+    notes: |
+      部署后填 addresses.* 并同步根 .env · 禁止在 R-01/R-02/R-03 未清零前 broadcast。
+      escrow_factory_v2_address: PENDING — Sepolia prod still V1 factory · merge after phase2-sepolia-broadcast-escrow-factory-v2.sh
+      见 docs/runbook/TT-PHASE2-CHAIN-DEPLOYMENT-GATE.md
+
+
+  gov_freeze_v1_baseline:
+    stamp: "20260616T030117Z"
+    evidence: evidence/GO_phase2_gov_freeze_v1_sepolia/latest/
+    addresses:
+      timelock_address: "0x462c2351971707A8CEEb3ce789F268B8326C76a0"
+      governor_address: "0xd5225bA81Af40600c9802d20888898193861f161"
+      treasury_p4_cap_address: "0xc0FbFc9A50f551273F5748EB2e45B49719dDc796"
+      primary_market_address: "0x2216A416462366b65d4F6Cc96bE50Db1f6e9fbAc"
+      seat_registry_address: "0x75bF993402eb9aCc6145CBdac0EBd322548317d3"
+      region_steward_stake_pool_proxy_address: "0xBf1F5B8c5b8A1cFC8E4458Eb43C1a0ab24012806"
+      country_pool_net_profit_ledger_address: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+    notes: |
+      治理唯一链上基线 · GOV-01～04 Proxy · admin=Timelock · ② Sepolia only
+
+  gov_freeze_v2_clean_baseline:
+    stamp: "20260616T054554Z"
+    evidence: evidence/GO_phase2_gov_freeze_v2_clean_baseline/latest/
+    supersedes: gov_freeze_v1_baseline
+    addresses:
+      timelock_address: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
+      governor_address: "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+      treasury_p4_cap_address: "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
+      primary_market_address: "0x7af15f98622b9282298ca3070a698ca4a96a4016"
+      seat_registry_address: "0xc99776e980d33f1857d5bb9a57b35ab7669aad1f"
+      region_steward_stake_pool_proxy_address: "0x3a89378bfad12d1028707dd37055294854c8784e"
+      governance_token_address: "0x2837ea0c50e27d59b88af617abbb231a040062c5"
+      country_pool_net_profit_ledger_address: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+    notes: |
+      G24-CLEAN-BASELINE-01 · 全新 Timelock+Proxy · 10国 Stake init · allow×5 · ② Sepolia only
+  testnet_template:
+    chain_id: null
+    region_steward_stake_pool_address: null
+    country_pool_redemption_epoch_cn_address: null
+    notes: "deprecated alias — use environments.sepolia"

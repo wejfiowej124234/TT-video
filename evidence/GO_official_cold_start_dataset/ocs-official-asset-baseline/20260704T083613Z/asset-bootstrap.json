@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.ocs_official_asset_bootstrap.v1",
+  "recorded_at": "2026-07-04T08:36:16.669Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "fly_app": "tt-api-staging",
+  "local_dir": "D:/TravelTrust-V1.1/data/community_post_media",
+  "local_count": 60,
+  "remote_ok": 0,
+  "remote_fail": 60,
+  "remote_log": [
+    {
+      "ok": false,
+      "error": "tar (child): Cannot connect to D: resolve failed\ntar: Child returned status 128\ntar: Error is not recoverable: exiting now\n"
+    }
+  ],
+  "asset_count": 60
+}

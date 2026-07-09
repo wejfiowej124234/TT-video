@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_review.v1",
+  "stamp_utc": "20260704T145500Z",
+  "chain_id": "paris-art",
+  "slots_completed": 2,
+  "slots_total": 6,
+  "row32_filename": "ocs-paris-art-provider-cover.jpg",
+  "TT_PARIS_ART_CHAIN_REVIEW": "PASS",
+  "gate_to_row33": "PASS"
+}

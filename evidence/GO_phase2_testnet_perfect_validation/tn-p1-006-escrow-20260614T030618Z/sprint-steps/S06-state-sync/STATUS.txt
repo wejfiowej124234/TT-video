@@ -1,0 +1,5 @@
+step: S06-state-sync
+status: PASS
+api: https://tt-api-staging.fly.dev
+at: 2026-06-14T03:14:31Z
+note: indexer-tick + chain-sync-status + GET order

@@ -1,0 +1,28 @@
+{
+  "schema": "traveltrust.local_deploy_backlog.v1",
+  "archived_at_utc": "2026-06-24T01:38:52Z",
+  "local_HEAD": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "branch": "feature/g23-04-abi-event-freeze",
+  "staging_runtime_git_sha": "520abf396cce7baf3dcf39f71c1e77769e0086d8",
+  "dirty_path_count": 354,
+  "key_paths": [
+    {
+      "status": "M",
+      "path": "crates/api/src/db/mod.rs"
+    },
+    {
+      "status": "M",
+      "path": "crates/api/src/middleware/auth_pause_metrics/mod.rs"
+    },
+    {
+      "status": "M",
+      "path": "crates/api/src/routes/itineraries.rs"
+    }
+  ],
+  "policy": "backlog_only · staging not redeployed · apply on next S5 after soak graduation",
+  "artifacts": {
+    "porcelain": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\20260624T013808Z\\dirty-paths.porcelain",
+    "diff_stat": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\20260624T013808Z\\diff-stat.txt",
+    "patch": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\20260624T013808Z\\deploy-backlog.patch"
+  }
+}

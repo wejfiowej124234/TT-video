@@ -1,0 +1,11 @@
+{
+  "happy_order_id": "8413194c-0943-4928-a128-17b7f444752a",
+  "dispute_order_id": "a08bfc1f-2b70-4db4-bfea-15be6d25af84",
+  "dispute_id": "0ab717b9-46a1-4886-8166-50185f2d29c8",
+  "guide_row_id": "6e2e55af-4e60-4e0c-a310-493939c1fc72",
+  "arbitrator_user_id": "1d7f6614-68fc-4137-9394-97c2987309ce",
+  "arbitrator_email": "oed-arbitrator-20260607T064611Z@traveltrust.test",
+  "traveler_token": "tts_128b9044-95ff-4533-8f40-e9c87042fb35",
+  "api_base": "http://127.0.0.1:8080",
+  "stamp": 1780814837
+}

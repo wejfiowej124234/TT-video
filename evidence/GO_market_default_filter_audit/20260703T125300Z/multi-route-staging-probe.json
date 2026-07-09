@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.market_default_filter_probe.v1",
+  "stamp": "20260703T125300Z",
+  "environment": "tt-web-staging.fly.dev",
+  "verdict": "PASS",
+  "scenarios": [
+    {"label": "hub-default-with-orphan-ls", "path": "/market", "data_tt_market_country": "all", "network_orders": "limit=30"},
+    {"label": "provider-orphan-jp-ls", "path": "/market/provider", "data_tt_subsite_country": "all", "data_tt_subsite_list_count": "10"},
+    {"label": "acquisition-orphan-jp-ls", "path": "/market/acquisition", "data_tt_subsite_country": "all", "data_tt_subsite_list_count": "10"},
+    {"label": "provider-explicit-jp-ls", "path": "/market/provider", "data_tt_subsite_country": "JP", "data_tt_subsite_list_count": "2"},
+    {"label": "hub-after-provider-explicit-jp", "path": "/market", "data_tt_market_country": "all", "isolation": "provider JP save does not leak to Hub"}
+  ]
+}

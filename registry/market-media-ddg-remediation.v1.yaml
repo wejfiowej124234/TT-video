@@ -1,0 +1,47 @@
+schema: traveltrust.market_media_ddg_remediation.v1
+version: 1
+effective_utc: "2026-07-04"
+label: Market Media DDG Remediation
+machine_key: TT_MARKET_MEDIA_DDG
+track: Data Governance
+placement: Independent Track
+not_under: [G3, OCS, PCP]
+scope: 数据治理收尾
+not_ocs_surface_expansion: true
+not_a_g_phase: true
+not_new_platform_capability: true
+relationship_to_ocs:
+  ocs_surface_expansion: CLOSED_VERIFIED
+  ocs_post_apply_ddg: PASS
+  official_content_baseline: READY
+  note: >-
+    41 条 legacy Unsplash listing cover 不属于 OCS Surface Expansion；
+    本轨单独收尾，完成后 strict 全站 DDG 一致。
+prerequisite:
+  - TT_OCS_SURFACE_EXPANSION VERIFIED
+  - TT_OCS_POST_APPLY_DDG PASS
+  - TT_OCS_OFFICIAL_CONTENT_BASELINE READY
+status_machine:
+  current: PLANNED
+  allowed: [PLANNED, IMPLEMENTING, READY_FOR_REMEDIATION, PASS]
+goal: >-
+  将遗留 Listing Cover 从历史 URL（Unsplash 等）迁移到正式 OCS/CDN 路径；
+  完成后 strict 模式全站 DDG PASS。
+manifest_media_paths:
+  provider_cover: /api/v1/uploads/market/ocs/{chain_id}/provider-cover.jpg
+  acquisition_cover: /api/v1/uploads/market/ocs/{chain_id}/acquisition-cover.jpg
+strict_ddg_gate:
+  env: OCS_DDG_REMEDIATION_MODE=0
+  audit: scripts/dev/staging-full-site-display-governance-audit.cjs
+  pass_when: verdict PASS and blocking 0
+shell: scripts/dev/run-market-media-ddg-remediation.sh
+evidence_root: evidence/GO_market_media_ddg_remediation
+runbook: docs/runbook/TT-MARKET-MEDIA-DDG-REMEDIATION.md
+release_train_position:
+  independent_track: true
+  blocks_g3: false
+  blocks_production_go: false
+  parallel_to: G3-01 Production Network
+  note: >-
+    Market Media DDG Remediation → Data Governance → Independent Track。
+    不挂 G3 · OCS · PCP。可与 G3-01 并行，不阻塞生产基础设施。

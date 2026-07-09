@@ -1,0 +1,9 @@
+phase: ② testnet C9 (shell token / visual sign-off)
+status: PASS
+last_run: 20260605T151358Z
+api_base: https://tt-api-staging.fly.dev
+showcase_user_id: 00000000-0000-4000-8000-000000000401
+visual_review: visual-review.md
+screenshots: screenshots/
+log: run-20260605T151358Z.log
+note: C9 slot PASS only — NOT Phase ② GO / NOT C10-C12 GO / NOT Production GO

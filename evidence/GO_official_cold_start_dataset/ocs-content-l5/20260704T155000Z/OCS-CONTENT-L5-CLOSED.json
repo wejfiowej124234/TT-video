@@ -1,0 +1,40 @@
+{
+  "schema": "traveltrust.ocs_content_l5_closed.v1",
+  "stamp_utc": "20260704T155000Z",
+  "phase": "Phase② OCS Content L5",
+  "closure_batch": "four_key_simultaneous",
+  "machine_keys": {
+    "TT_OCS_CONTENT_L5": "CLOSED",
+    "TT_OCS_CONTENT_L5_EXECUTION": "CLOSED",
+    "TT_OCS_CONTENT_L5_READY": "YES",
+    "TT_CONTENT_PRODUCTION_MATRIX": "PASS",
+    "TT_CONTENT_BRAND_CONSISTENCY": "PASS"
+  },
+  "l5_score": {
+    "weighted": 93.5,
+    "min_total": 85,
+    "min_per_dimension": 75,
+    "pass": true
+  },
+  "matrix_progress": "60/60 verified+pass",
+  "chains_closed": 10,
+  "evidence_bundle": "evidence/GO_official_cold_start_dataset/ocs-content-l5/20260704T155000Z/",
+  "validation_commands_exit_0": [
+    "node scripts/dev/validate-ocs-content-l5-brief.cjs",
+    "node scripts/dev/validate-ocs-content-production-matrix.cjs --require-ready"
+  ],
+  "owner_attestation": {
+    "maintainer": "Sebastian Ward",
+    "role": "Solo Maintainer / Owner self-attestation",
+    "phase_scope": "① local Content L5 four-key closure",
+    "not_equivalent_to": [
+      "② staging full-matrix GO",
+      "③ Production GO"
+    ]
+  },
+  "downstream_unblock": {
+    "production_preparation": "may_enter",
+    "production_go": "still_blocked"
+  },
+  "honest_boundary": "OCS Content L5 CLOSED（①）解闸 Production Preparation 入口；仍须 ② 测试网验收与 ③ Production GO 分线推进。"
+}

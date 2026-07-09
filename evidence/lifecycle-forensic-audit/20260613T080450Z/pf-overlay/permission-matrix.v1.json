@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.product_forensic_permission_matrix.v1",
+  "admin_sidebar_links": 72,
+  "admin_sidebar_unique_hrefs": 72,
+  "note": "Full route-matrix rows require API smoke-admin-rbac-matrix-local.sh",
+  "pf": "PF-09"
+}

@@ -1,0 +1,139 @@
+{
+  "schema": "traveltrust.official_cold_start_dataset.validation.v1",
+  "api": "https://tt-api-prod.fly.dev",
+  "web": "https://tt-web-prod.fly.dev",
+  "recorded_at": "2026-07-08T06:51:27.266Z",
+  "verdict": "PASS",
+  "coverage": {
+    "ops_accounts": "5/5",
+    "chains_complete": "10/10",
+    "campaigns": "10/10"
+  },
+  "chain_report": [
+    {
+      "chain": "tokyo-photo",
+      "guide": "17f3f0b1-4277-4180-872f-65704fb65531",
+      "provider": "60a0fce4-ae59-48a6-a93c-bd39ce39a259",
+      "acquisition": "de2e86d9-cb03-4d7c-a57c-3a776dec6a7b",
+      "official_guide": "2e3c1b19-e5d4-4340-b03e-ed7e74ae1ebe",
+      "community_post": "9f66ae74-55b1-4429-b022-09b086a1080a",
+      "complete": true
+    },
+    {
+      "chain": "kyoto-culture",
+      "guide": "8b417a00-128a-45ba-8fac-b25db6299f10",
+      "provider": "3b940f9a-b2ff-4309-8183-9cb467c5b544",
+      "acquisition": "46bd9fac-7209-4825-8727-922c0dcc5664",
+      "official_guide": "135e6fbe-188c-4653-acd3-db845f8e6fda",
+      "community_post": "30b94bc6-14a5-4eac-9c9a-7deaf4deb6a5",
+      "complete": true
+    },
+    {
+      "chain": "seoul-food",
+      "guide": "3ac0d9db-9cdc-4f5c-b4f4-502f9fee1ca3",
+      "provider": "d42a9a54-fc92-40cf-8e78-94eaf742be73",
+      "acquisition": "338f0225-a5ff-458a-8f10-3d1ac4b5c4df",
+      "official_guide": "502a493a-500b-447e-9c71-a76dccd4e588",
+      "community_post": "78536f4a-49f6-4a0a-a753-3186f6f84d25",
+      "complete": true
+    },
+    {
+      "chain": "bangkok-temple",
+      "guide": "c1824bc2-4241-490d-96ae-72a70a57331f",
+      "provider": "c4e7fcd0-0eee-48ca-9f3a-b8f66a88908d",
+      "acquisition": "f28040d4-4263-455c-ad5a-707f0c2bda70",
+      "official_guide": "be84822b-a414-4559-857c-8ed2a8a177cf",
+      "community_post": "708ae509-b2ed-48cd-97e8-8f3184cd5670",
+      "complete": true
+    },
+    {
+      "chain": "singapore-family",
+      "guide": "9b93b6ac-fcec-489f-af6e-88e01d50e337",
+      "provider": "64123bda-ee92-4d3d-82b4-a6912ec3491c",
+      "acquisition": "aa80403b-db61-4edf-849f-ed06094669bc",
+      "official_guide": "af7855b9-140a-431f-9bfe-92119bdd92c8",
+      "community_post": "e67b7c13-cf06-4ea4-a6da-af20a942618c",
+      "complete": true
+    },
+    {
+      "chain": "paris-art",
+      "guide": "f444b9f9-a312-4db9-b504-ccd428172f7e",
+      "provider": "54bb451b-fc95-4c04-9a64-41c12e109100",
+      "acquisition": "2d3cf893-a81c-4a6e-b747-95b1ddd94e42",
+      "official_guide": "b6f01271-6640-4d29-bdbd-73c499716cbf",
+      "community_post": "0b4c87b9-df17-4b32-9acc-7f9879e7e2e5",
+      "complete": true
+    },
+    {
+      "chain": "nyc-skyline",
+      "guide": "54493d8e-6358-4526-9b43-2cee2a759e3f",
+      "provider": "c5e2c767-49eb-4862-ae67-0eb5588dfb6b",
+      "acquisition": "41e19d23-094f-447b-8cec-2945bd5c63a1",
+      "official_guide": "8616fa51-ab2c-4a3e-916b-5ad65b56c16f",
+      "community_post": "a4b97049-d09c-4c78-b572-0e5575e1ef81",
+      "complete": true
+    },
+    {
+      "chain": "sydney-coast",
+      "guide": "f55601f5-c21d-4dfd-b729-4b949eaac41b",
+      "provider": "9562d235-e514-42d3-9d81-093dab90b044",
+      "acquisition": "db3dc45a-adcb-4f68-983f-6bd59fc3c6c3",
+      "official_guide": "ea1d0524-6a98-4d5e-a77e-a8cf95aa0520",
+      "community_post": "72aa161f-3f51-4082-a72d-6ef826a73a60",
+      "complete": true
+    },
+    {
+      "chain": "barcelona-arch",
+      "guide": "f26abd6c-b225-4010-8c65-23ce4ef81de8",
+      "provider": "bc3bfde9-2407-4d3c-a5f3-fc2bcec72453",
+      "acquisition": "f3ad356e-2a6f-4258-9c50-0f653aba8eb6",
+      "official_guide": "36652840-54af-458c-9636-6664e9ac249b",
+      "community_post": "78cd9220-48de-4e30-b3c4-8354c4663f89",
+      "complete": true
+    },
+    {
+      "chain": "dubai-luxury",
+      "guide": "9ccab777-3e3f-4711-af42-75203b639670",
+      "provider": "35a7f26f-bcf2-4967-8d2a-2fd402fce43e",
+      "acquisition": "a3c80f40-3763-4d2b-9ab0-7a5990ae297e",
+      "official_guide": "59888020-0126-43e3-be00-0d30c7132e6d",
+      "community_post": "7c5f4809-603b-4eab-aae0-7db46f973cfe",
+      "complete": true
+    }
+  ],
+  "surfaces": {
+    "guides_public": {
+      "count": 10,
+      "production": 10,
+      "ok": true
+    },
+    "provider_public": {
+      "count": 10,
+      "production": 10,
+      "ok": true
+    },
+    "acquisition_public": {
+      "count": 10,
+      "production": 10,
+      "ok": true
+    },
+    "campaigns_deployed": {
+      "count": 13,
+      "ok": true
+    },
+    "community_feed": {
+      "count": 10,
+      "production": 10,
+      "expected_ocs_min": 10,
+      "ok": true
+    },
+    "cold_start_home": {
+      "ok": true,
+      "status": 200
+    },
+    "admin_stats": {
+      "ok": true
+    }
+  },
+  "issues": []
+}

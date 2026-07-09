@@ -1,5 +1,5 @@
 import { useParams } from "next/navigation";
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
 import { useAdminStandardDetailFetch } from "@/lib/admin/useAdminStandardDetailFetch";
@@ -11,6 +11,7 @@ export function useAdminGuideDetailPage() {
   const params = useParams();
   const rawId = typeof params?.id === "string" ? params.id : "";
   const guideId = decodeURIComponent(rawId.trim());
+  const [refreshToken, setRefreshToken] = useState(0);
 
   const detailUrl = useMemo(() => (guideId ? routes.admin.guideById(guideId) : ""), [guideId]);
 
@@ -19,10 +20,15 @@ export function useAdminGuideDetailPage() {
     context: "AdminGuideDetailPage",
     detailUrl,
     resourceId: guideId,
+    refreshToken,
   });
+
+  const reload = useCallback(async () => {
+    setRefreshToken((t) => t + 1);
+  }, []);
 
   const guide = body?.guide && typeof body.guide === "object" ? body.guide : null;
   const meta = body && isAdminMetaRecord(body.meta) ? body.meta : null;
 
-  return { guideId, loading, refreshing, error, body, guide, meta };
+  return { guideId, loading, refreshing, error, body, guide, meta, reload };
 }

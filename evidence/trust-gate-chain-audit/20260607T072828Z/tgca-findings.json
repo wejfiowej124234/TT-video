@@ -1,0 +1,175 @@
+{
+  "artifact": "trust-gate-chain-audit",
+  "generated_at": "2026-06-07T07:29:25.692526+00:00",
+  "api_base": "http://127.0.0.1:8080",
+  "git_sha": "bc5a939cd89c624be7c128b551306da177bf6016",
+  "verdict": "PASS",
+  "summary": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 0,
+    "pass": 7,
+    "total": 7
+  },
+  "trust_gate_matrix": [
+    {
+      "probe_id": "tg.seed",
+      "step": "\u79cd\u5b50",
+      "method": "POST",
+      "path": "/auth/seed-trust-gate-e2e",
+      "http": 200,
+      "expected": "200+ok",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "probe_id": "tg.trust_risk_reflect",
+      "step": "\u4e89\u8bae\u2192risk",
+      "method": "GET",
+      "path": "/api/v1/me",
+      "http": 200,
+      "expected": "risk_high",
+      "status": "PASS",
+      "notes": "open_disputes_as_party:4"
+    },
+    {
+      "probe_id": "tg.trust_identity_pending",
+      "step": "KYC\u2192trust",
+      "method": "GET",
+      "path": "/api/v1/me",
+      "http": 200,
+      "expected": "pending_review",
+      "status": "PASS",
+      "notes": "pending_review"
+    },
+    {
+      "probe_id": "tg.risk_gate_pay",
+      "step": "risk\u95f8",
+      "method": "POST",
+      "path": "/api/v1/orders/f0e0c201-0001-4001-8001-000000000003/mock-pay",
+      "http": 403,
+      "expected": "403",
+      "status": "PASS",
+      "notes": "trust_risk_too_high"
+    },
+    {
+      "probe_id": "tg.identity_gate_order",
+      "step": "\u8eab\u4efd\u95f8",
+      "method": "POST",
+      "path": "/api/v1/orders",
+      "http": 403,
+      "expected": "403",
+      "status": "PASS",
+      "notes": "trust_verification_pending"
+    },
+    {
+      "probe_id": "tg.rbac_arbitrator",
+      "step": "\u88c1\u51b3\u5458RBAC",
+      "method": "GET",
+      "path": "/api/v1/me",
+      "http": 200,
+      "expected": "arbitrator",
+      "status": "PASS",
+      "notes": "arbitrator"
+    },
+    {
+      "probe_id": "tg.clean_user_read",
+      "step": "\u5e72\u51c0\u7528\u6237\u8bfb",
+      "method": "GET",
+      "path": "/api/v1/me",
+      "http": 200,
+      "expected": "200",
+      "status": "PASS",
+      "notes": ""
+    }
+  ],
+  "issues": [],
+  "trace": {
+    "seed": {
+      "status": "ok",
+      "password": "Test123!",
+      "users": {
+        "tourist_pending": {
+          "id": "f0e0a001-0001-4001-8001-000000000001",
+          "email": "tg_tourist_pending@trustgate-e2e.local"
+        },
+        "tourist_restricted": {
+          "id": "f0e0a001-0001-4001-8001-000000000002",
+          "email": "tg_tourist_restricted@trustgate-e2e.local"
+        },
+        "tourist_risk": {
+          "id": "f0e0a001-0001-4001-8001-000000000003",
+          "email": "tg_tourist_risk@trustgate-e2e.local"
+        },
+        "tourist_clean": {
+          "id": "f0e0a001-0001-4001-8001-000000000004",
+          "email": "tg_tourist_clean@trustgate-e2e.local"
+        },
+        "tourist_stranger": {
+          "id": "f0e0a001-0001-4001-8001-000000000005",
+          "email": "tg_tourist_stranger@trustgate-e2e.local"
+        },
+        "guide_main": {
+          "id": "f0e0a001-0001-4001-8001-000000000006",
+          "email": "tg_guide_main@trustgate-e2e.local"
+        },
+        "guide_second": {
+          "id": "f0e0a001-0001-4001-8001-000000000007",
+          "email": "tg_guide_second@trustgate-e2e.local"
+        },
+        "guide_pending": {
+          "id": "f0e0a001-0001-4001-8001-000000000008",
+          "email": "tg_guide_pending@trustgate-e2e.local"
+        },
+        "guide_accept_trust": {
+          "id": "f0e0a001-0001-4001-8001-000000000012",
+          "email": "tg_guide_accept_trust@trustgate-e2e.local"
+        },
+        "guide_invalid": {
+          "id": "f0e0a001-0001-4001-8001-000000000010",
+          "email": "tg_guide_invalid@trustgate-e2e.local"
+        },
+        "arbitrator": {
+          "id": "f0e0a001-0001-4001-8001-000000000009",
+          "email": "tg_arbitrator@trustgate-e2e.local"
+        }
+      },
+      "guide_rows": {
+        "main": "f0e0b101-0001-4001-8001-000000000001",
+        "second": "f0e0b101-0001-4001-8001-000000000002",
+        "pending": "f0e0b101-0001-4001-8001-000000000003",
+        "invalid_accept": "f0e0b101-0001-4001-8001-000000000016"
+      },
+      "orders": {
+        "cancel_trust_pending": "f0e0c201-0001-4001-8001-000000000001",
+        "cancel_identity_restricted": "f0e0c201-0001-4001-8001-000000000002",
+        "cancel_risk_too_high": "f0e0c201-0001-4001-8001-000000000003",
+        "cancel_forbidden_same": "f0e0c201-0001-4001-8001-000000000001",
+        "tourist_accept_not_guide": "f0e0c201-0001-4001-8001-000000000004",
+        "guide_accept_trust": "f0e0c201-0001-4001-8001-000000000005",
+        "accept_window_expired": "f0e0c201-0001-4001-8001-000000000006",
+        "accept_schedule_conflict": "f0e0c201-0001-4001-8001-000000000007",
+        "accept_invalid_state": "f0e0c201-0001-4001-8001-000000000009",
+        "confirm_completion_trust": "f0e0c201-0001-4001-8001-00000000000a",
+        "guide_bilateral_trust": "f0e0c201-0001-4001-8001-00000000000b",
+        "chat_draft_trust": "f0e0c201-0001-4001-8001-00000000000c",
+        "review_completed_trust": "f0e0c201-0001-4001-8001-00000000000d",
+        "dispute_offchain_trust": "f0e0c201-0001-4001-8001-00000000000e",
+        "evidence_trust_order": "f0e0c201-0001-4001-8001-00000000000f",
+        "resolve_carrier": "f0e0c201-0001-4001-8001-000000000010",
+        "execute_intent_resolved": "f0e0c201-0001-4001-8001-000000000011"
+      },
+      "disputes": {
+        "evidence_open": "f0e0d301-0001-4001-8001-000000000005",
+        "evidence_rate_limit": "f0e0d301-0001-4001-8001-000000000008",
+        "evidence_hex": "f0e0d301-0001-4001-8001-000000000009",
+        "resolve_open": "f0e0d301-0001-4001-8001-000000000006",
+        "execute_resolved": "f0e0d301-0001-4001-8001-000000000007"
+      }
+    },
+    "risk_user_id": "f0e0a001-0001-4001-8001-000000000003",
+    "risk_order_id": "f0e0c201-0001-4001-8001-000000000003",
+    "arbitrator_user_id": "f0e0a001-0001-4001-8001-000000000009"
+  },
+  "closes": "CDIA-2-001"
+}

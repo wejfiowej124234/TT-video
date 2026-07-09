@@ -1,0 +1,141 @@
+{
+  "schema": "traveltrust.p2fc_failure_propagation_chains.v1",
+  "chains": [
+    {
+      "root_bp": "BP-TN-02",
+      "chain": [
+        {
+          "node": "COMPLETED.json",
+          "event": "trigger"
+        },
+        {
+          "node": "db/mod.rs backlog",
+          "event": "latent drift"
+        },
+        {
+          "node": "internal/indexer reconcile",
+          "event": "read failure risk"
+        },
+        {
+          "node": "BP-TN-02",
+          "event": "step-1 FAIL"
+        },
+        {
+          "node": "wave1_api_deploy",
+          "event": "blocked or proceeds with stale state"
+        },
+        {
+          "node": "G07_indexer",
+          "event": "graduation FAIL"
+        }
+      ],
+      "downstream_gates": [
+        "G07_indexer",
+        "graduation"
+      ],
+      "correlation": {
+        "BP-W1-02": 0.62,
+        "BP-META-01": 0.15
+      }
+    },
+    {
+      "root_bp": "BP-W1-02",
+      "chain": [
+        {
+          "node": "apply_patches",
+          "event": "full backlog incl itineraries.rs"
+        },
+        {
+          "node": "wave1_api_deploy",
+          "event": "fly deploy compile/OOM"
+        },
+        {
+          "node": "BP-W1-02",
+          "event": "step-4 FAIL"
+        },
+        {
+          "node": "wave2_web_deploy",
+          "event": "blocked"
+        },
+        {
+          "node": "BP-META-01",
+          "event": "never reached with hotfix live"
+        },
+        {
+          "node": "graduation",
+          "event": "blocked cascade"
+        }
+      ],
+      "downstream_gates": [
+        "meta_availability",
+        "g02_deep_gate",
+        "graduation"
+      ],
+      "mr12_mitigation": "MR-02 defer hub from wave1"
+    },
+    {
+      "root_bp": "BP-META-01",
+      "chain": [
+        {
+          "node": "L1_API_META",
+          "event": "408 soak (30s timeout)"
+        },
+        {
+          "node": "L2_WEB_META",
+          "event": "503 propagation"
+        },
+        {
+          "node": "L3_META_BUILD",
+          "event": "exec chain OK (soak only)"
+        },
+        {
+          "node": "wave1/2 deploy",
+          "event": "must land MR-01 before strict"
+        },
+        {
+          "node": "BP-META-01",
+          "event": "step-6 --strict FAIL if 30s still live"
+        },
+        {
+          "node": "L5_G02",
+          "event": "blocked"
+        },
+        {
+          "node": "G06-G08",
+          "event": "blocked cascade"
+        }
+      ],
+      "downstream_gates": [
+        "g02_deep_gate",
+        "graduation",
+        "G06-G08"
+      ],
+      "soak_edges": [
+        {
+          "from": "L1_API_META",
+          "to": "L2_WEB_META",
+          "relation": "408→503 propagation",
+          "soak_ratio": null
+        },
+        {
+          "from": "L3_META_BUILD",
+          "to": "EXEC_CHAIN",
+          "relation": "soak probe SSOT",
+          "observability_only": true
+        },
+        {
+          "from": "L4_STRICT_GATE",
+          "to": "L5_G02",
+          "relation": "acceptance chain starts",
+          "blocked_until": "REQUEST_TIMEOUT_SECS=120 deployed"
+        },
+        {
+          "from": "L5_G02",
+          "to": "L6_GRADUATION",
+          "relation": "G03-G08 AND"
+        }
+      ]
+    }
+  ],
+  "meta_dominant_soak_chain": "408>503>exec_ok>accept_deferred"
+}

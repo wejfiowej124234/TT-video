@@ -156,6 +156,8 @@ async fn post_reviews_db_pool_insert_conflict_returns_200_idempotent_persisted_n
         None,
         None,
         None,
+        None,
+        None,
     )
     .await
     .expect("upsert_order");
@@ -258,6 +260,8 @@ async fn post_reviews_db_pool_insert_conflict_returns_200_idempotent_persisted_n
             guide_confirmed: None,
             rating_tourist_confirmed: None,
             rating_guide_confirmed: None,
+            service_tourist_confirmed: None,
+            service_guide_confirmed: None,
             chain_id: None,
             data_origin: "production".into(),
         order_kind: None,

@@ -55,7 +55,8 @@
 
 ```bash
 export INTERNAL_API_SECRET=…
-export API_BASE_URL=http://127.0.0.1:8080   # 测试网改为 https://你的 API
+export API_BASE_URL=http://127.0.0.1:8080   # 测试网改为 https://你的 API · 前端 NEXT_PUBLIC 须 :8080 非 :3012（CFG-004）
+# 配置漂移登记：evidence/manual-uat/summary/CFG-REGISTRY.md
 # 可选：export ONBOARDING_WEBHOOK_HMAC_SECRET=…
 bash scripts/dev/onboarding-webhook-local.sh "<idempotency_key>"
 ```

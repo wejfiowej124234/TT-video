@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { allowGovernanceOpsAdminNavLinks } from "@/lib/travelTrustUiGuards";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
 const linkClass = `inline-flex min-h-[44px] items-center justify-start text-travel-500 hover:underline ${travelFocusRingOffset2Classes}`;
@@ -12,6 +13,7 @@ const linkClass = `inline-flex min-h-[44px] items-center justify-start text-trav
  */
 export function GovernanceOpsAdminLinks() {
   const { t } = useTranslation();
+  if (!allowGovernanceOpsAdminNavLinks()) return null;
   return (
     <>
       <Link href="/admin/finance" className={linkClass}>

@@ -121,6 +121,8 @@ export function MerchantShowcaseDetailBody({
 
           priority={!embed}
 
+          fallbackSeed={listing.id}
+
         />
 
       </div>

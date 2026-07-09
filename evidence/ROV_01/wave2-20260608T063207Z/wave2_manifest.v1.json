@@ -1,0 +1,11 @@
+{
+  "program_id": "ROV-01",
+  "wave": 2,
+  "phase": "②",
+  "completed_at": "2026-06-08T06:32:28.777Z",
+  "tracks": {
+    "ROV-T4": "TT_ROV_T4: GO",
+    "ROV-T5": "TT_ROV_T5: GO iso=CN phase=live"
+  },
+  "evidence_dir": "D:/TravelTrust-V1.1/evidence/ROV_01/wave2-20260608T063207Z"
+}

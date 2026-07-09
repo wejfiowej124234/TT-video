@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T04:56:56Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "广州",
+    "city_en": "Guangzhou",
+    "matrix_ids": [
+      "PH-CN-277-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-277-FOOD",
+      "legacy_value": "烧鹅",
+      "poi_id": "d6f22a86-b6b2-41e7-bb36-9c999c227094",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-277-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

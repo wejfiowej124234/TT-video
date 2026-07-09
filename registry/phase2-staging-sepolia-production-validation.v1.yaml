@@ -1,0 +1,146 @@
+# Phase ② · Staging / Sepolia Production Validation · Master SSOT
+#
+# Phase ② is NOT "Web3 Production Validation" — Web3 is sub-track ②-D only.
+# Phase ② covers website · admin · data · UAT · security · Web3 · exit review.
+#
+#   node scripts/dev/run-phase2-production-validation.cjs
+#
+# Human runbook: docs/runbook/PHASE2-STAGING-SEPOLIA-PRODUCTION-VALIDATION-V1.md
+
+schema: traveltrust.phase2_staging_sepolia_production_validation.v1
+version: 1
+effective_utc: "2026-07-08"
+machine_key: TT_PHASE2_STAGING_SEPOLIA_PRODUCTION_VALIDATION
+
+phase: 2
+display_name: Staging / Sepolia Production Validation
+environment: staging_sepolia
+chain_id: "11155111"
+production_scope: PRODUCTION_SCOPE_SEPOLIA
+
+phase_discipline:
+  allowed: [validation, bug_fixes, evidence, security, protocol_alignment, uat, ops_drill]
+  forbidden: [new_features, mainnet_broadcast, param_swap_to_mainnet]
+  note: >
+    Phase ② validates the full production surface — not only Web3. Adding features
+    during Phase ② delays exit and disrupts deployment rhythm.
+
+sub_tracks:
+  phase_2a_website_product_uat:
+    id: 2A
+    name: Website & Product UAT
+    scope:
+      - website_pages
+      - ui_ux
+      - market_guide_provider_acquisition
+      - multi_identity_real_user_uat
+      - traveler_guide_merchant_steward_flows
+    ssot: registry/phase2-testnet-surface-coverage-registry.v1.yaml
+    runbook: docs/runbook/PHASE2-STAGING-SEPOLIA-PRODUCTION-VALIDATION-V1.md#2a
+    status: PASS
+    exit_criteria:
+      - surface_coverage_pct_100
+      - multi_identity_uat_signed
+    evidence_status: PASS
+    evidence_ref: evidence/GO_production_readiness/phase2-production-validation/UAT-SIGNOFF-LATEST.json
+
+  phase_2b_admin_operations_uat:
+    id: 2B
+    name: Admin / Operations UAT
+    scope:
+      - admin_console
+      - moderation
+      - provider_applications
+      - official_ops
+      - observability_overview
+    runbook: docs/runbook/PHASE2-STAGING-SEPOLIA-PRODUCTION-VALIDATION-V1.md#2b
+    status: IN_PROGRESS
+    exit_criteria:
+      - admin_ops_uat_pass
+      - six_console_rbac_verified
+    evidence_status: PASS
+    evidence_ref: evidence/GO_production_readiness/operations-dashboard/ADMIN-UAT-SIGNOFF-LATEST.json
+
+  phase_2c_data_governance_cms_cos:
+    id: 2C
+    name: Data Governance / CMS / COS Validation
+    scope:
+      - cms_content_queue
+      - cos_catalog
+      - data_governance
+      - country_market_content
+    runbook: docs/runbook/PHASE2-STAGING-SEPOLIA-PRODUCTION-VALIDATION-V1.md#2c
+    status: PASS
+    exit_criteria:
+      - cms_cos_validation_pass
+      - data_governance_audit_pass
+    evidence_status: PASS
+    evidence_ref: evidence/GO_production_readiness/operations-dashboard/CMS-COS-VALIDATION-LATEST.json
+
+  phase_2d_web3_lifecycle:
+    id: 2D
+    name: Web3 Lifecycle Validation
+    note: Web3 Production Validation is THIS sub-track only — NOT Phase ② total name
+    scope:
+      - web3_business_protocol_governance_security_economics_deployment
+      - sepolia_on_chain_e2e
+      - ttg_escrow_stake_treasury_fee_router_settlement
+    ssot: registry/sepolia-full-web3-lifecycle-validation.v1.yaml
+    runbook: docs/runbook/SEPOLIA-FULL-WEB3-LIFECYCLE-VALIDATION-V1.md
+    orchestrator: scripts/dev/run-sepolia-full-web3-lifecycle-validation.cjs
+    gate: scripts/gates/check-phase2-mainnet-feature-evidence-gate.sh
+    status: PASS
+    exit_criteria:
+      - SEPOLIA_FULL_WEB3_LIFECYCLE_PASS
+      - RULE-PH2-001 satisfied
+      - TTG_CERT_8_12_SIGNED
+    evidence_status: PASS
+    evidence_note: TTG_CERT_8_12 deferred — Timelock · lifecycle machine PASS
+    evidence_ref: evidence/GO_production_readiness/sepolia-full-web3-lifecycle/SEPOLIA-FULL-WEB3-LIFECYCLE-VALIDATION-LATEST.json
+
+  phase_2e_security_rbac_monitoring:
+    id: 2E
+    name: Security / RBAC / Monitoring
+    scope:
+      - rbac_admin_boundary
+      - protocol_grade_audit
+      - security_audit
+      - indexer_monitoring
+      - observability_alerts
+    orchestrator: scripts/dev/run-web3-protocol-grade-audit.cjs
+    companion:
+      - scripts/dev/run-rbac-d3-closure.cjs
+      - scripts/dev/run-web3-system-closure.cjs
+    status: PASS
+    exit_criteria:
+      - WEB3_PROTOCOL_GRADE_P0_0
+      - RBAC_D3_CLOSURE_PASS
+    evidence_status: PASS
+    evidence_note: Protocol-Grade P0=0 · system closure P1=1 Primary Market FE (honest · post-Cert scope)
+    evidence_ref: evidence/GO_production_readiness/web3-protocol-grade-audit/WEB3-PROTOCOL-GRADE-AUDIT-LATEST.json
+
+  phase_2f_exit_review:
+    id: 2F
+    name: Exit Review
+    scope: All sub-tracks ②-A through ②-E + cross-cutting evidence
+    runbook: docs/runbook/PHASE2-EXIT-REVIEW-V1.md
+    orchestrator: scripts/dev/run-phase2-exit-review.cjs
+    gate: scripts/gates/check-phase2-exit-review-gate.sh
+    status: IN_PROGRESS
+    prerequisite_sub_tracks: [2A, 2B, 2C, 2D, 2E]
+    exit_criteria:
+      - PHASE2_EXIT_REVIEW_PASS
+
+phase_2_exit_verdict: PHASE2_STAGING_SEPOLIA_PRODUCTION_VALIDATION_PASS
+
+post_phase_2_pipeline:
+  - web3_freeze
+  - mainnet_deployment_package
+  - phase_3_production_deployment_mainnet
+  - mainnet_validation
+
+orchestrator: scripts/dev/run-phase2-production-validation.cjs
+dashboard: scripts/dev/run-phase-dashboard.cjs
+dashboard_runbook: docs/runbook/PHASE-DASHBOARD-V1.md
+web3_discipline_ref: registry/web3-three-phase-closure-discipline.v1.yaml
+evidence_root: evidence/GO_production_readiness/phase2-production-validation

@@ -1,0 +1,140 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-06T044545Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "TH",
+    "country_zh": "泰国",
+    "city_zh": "普吉",
+    "city_en": "Phuket"
+  },
+  "poi_count": 9,
+  "matrix_ids": [
+    "PH-TH-083-ATR",
+    "PH-TH-084-ATR",
+    "PH-TH-085-ATR",
+    "PH-TH-086-ATR",
+    "PH-TH-087-ATR",
+    "PH-TH-088-FOOD",
+    "PH-TH-089-FOOD",
+    "PH-TH-090-FOOD",
+    "PH-TH-091-FOOD"
+  ],
+  "pois": [
+    "芭东海滩",
+    "攀牙湾",
+    "皮皮岛",
+    "大佛",
+    "老镇",
+    "海鲜",
+    "冬阴功",
+    "菠萝饭",
+    "泰式烧烤"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-TH-083-ATR",
+      "legacy_value": "芭东海滩",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-084-ATR",
+      "legacy_value": "攀牙湾",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-085-ATR",
+      "legacy_value": "皮皮岛",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-086-ATR",
+      "legacy_value": "大佛",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-087-ATR",
+      "legacy_value": "老镇",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-acquisition-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-088-FOOD",
+      "legacy_value": "海鲜",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-089-FOOD",
+      "legacy_value": "冬阴功",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-090-FOOD",
+      "legacy_value": "菠萝饭",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-TH-091-FOOD",
+      "legacy_value": "泰式烧烤",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-phuket-island-community-cover.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-083-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-084-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-085-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-086-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-087-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-088-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-089-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-090-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-TH-091-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=TH&city=%E6%99%AE%E5%90%89&limit=50",
+    "http": 200,
+    "count": 9
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-phuket/CMS-POI-PHUKET-CLOSED-LOOP-LATEST.json",
+  "next_city": {
+    "country_iso": "TH",
+    "city_zh": "清迈",
+    "city_en": "Chiang Mai"
+  },
+  "closure_keys": {
+    "TT_CMS_POI_CITY_PHUKET": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": "TH · 清迈"
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_PHUKET": "CLOSED"
+}

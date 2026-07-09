@@ -1,0 +1,288 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_exit_check.v1",
+  "recorded_at_utc": "2026-07-06T00:41:22.875Z",
+  "city": {
+    "city_zh": "济州",
+    "city_en": "Jeju",
+    "country_iso": "KR",
+    "poi_count": 8
+  },
+  "replicated_from": "JP Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "checks": [
+    {
+      "id": "assets_locked_8_8",
+      "label": "8/8 Asset 全部 LOCKED · 无 Unlock",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-KR-050-ATR",
+          "poi": "城山日出峰",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-051-ATR",
+          "poi": "涉地可支",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-052-ATR",
+          "poi": "汉拿山",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-053-ATR",
+          "poi": "橘子园",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-054-FOOD",
+          "poi": "黑猪肉",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-055-FOOD",
+          "poi": "海鲜面",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-056-FOOD",
+          "poi": "橘子甜品",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        },
+        {
+          "matrix_id": "PH-KR-057-FOOD",
+          "poi": "鲍鱼粥",
+          "state": "LOCKED",
+          "replace_count": 1,
+          "unlock_reason": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "six_dimensions_pass",
+      "label": "六维全部 PASS（City Runtime = Gate 4 同源 · 非 national）",
+      "pass": true,
+      "runtime_scope": "city_consumer_runtime",
+      "city_snapshot": {
+        "execution": "PASS",
+        "cms_ownership": "PASS",
+        "runtime_consumer": "PASS",
+        "geo_matching": "PASS",
+        "content_accuracy": "PASS",
+        "l5_quality": "PASS",
+        "content_qa_closed": true
+      },
+      "issues": []
+    },
+    {
+      "id": "catalog_api_jeju",
+      "label": "Catalog API 8/8 与 LOCK 一致",
+      "pass": true,
+      "rows": [
+        {
+          "matrix_id": "PH-KR-050-ATR",
+          "poi": "城山日出峰",
+          "expected": "ocs-jeju-island-official-guide-cover.jpg",
+          "catalog": "ocs-jeju-island-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-051-ATR",
+          "poi": "涉地可支",
+          "expected": "ocs-jeju-island-community-media.jpg",
+          "catalog": "ocs-jeju-island-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-052-ATR",
+          "poi": "汉拿山",
+          "expected": "ocs-jeju-island-community-cover.jpg",
+          "catalog": "ocs-jeju-island-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-053-ATR",
+          "poi": "橘子园",
+          "expected": "ocs-jeju-island-provider-cover.jpg",
+          "catalog": "ocs-jeju-island-provider-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-054-FOOD",
+          "poi": "黑猪肉",
+          "expected": "ocs-jeju-island-guide-avatar.jpg",
+          "catalog": "ocs-jeju-island-guide-avatar.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-055-FOOD",
+          "poi": "海鲜面",
+          "expected": "ocs-jeju-island-official-guide-cover.jpg",
+          "catalog": "ocs-jeju-island-official-guide-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-056-FOOD",
+          "poi": "橘子甜品",
+          "expected": "ocs-jeju-island-community-media.jpg",
+          "catalog": "ocs-jeju-island-community-media.jpg",
+          "image_source": "payload",
+          "pass": true
+        },
+        {
+          "matrix_id": "PH-KR-057-FOOD",
+          "poi": "鲍鱼粥",
+          "expected": "ocs-jeju-island-community-cover.jpg",
+          "catalog": "ocs-jeju-island-community-cover.jpg",
+          "image_source": "payload",
+          "pass": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "consumer_runtime_cms",
+      "label": "Consumer Runtime 实际页面读取 CMS（非仅 Verify）",
+      "pass": true,
+      "catalog_api_requests": 4,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/jeju/jeju-poi-runtime-20260706T004122Z.png",
+      "rows": [
+        {
+          "matrix_id": "PH-KR-050-ATR",
+          "poi": "城山日出峰",
+          "expected_fn": "ocs-jeju-island-official-guide-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-jeju-island-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-051-ATR",
+          "poi": "涉地可支",
+          "expected_fn": "ocs-jeju-island-community-media.jpg",
+          "runtime_fn": "ocs-jeju-island-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-jeju-island-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-052-ATR",
+          "poi": "汉拿山",
+          "expected_fn": "ocs-jeju-island-community-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-jeju-island-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-053-ATR",
+          "poi": "橘子园",
+          "expected_fn": "ocs-jeju-island-provider-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-provider-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-jeju-island-provider-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-054-FOOD",
+          "poi": "黑猪肉",
+          "expected_fn": "ocs-jeju-island-guide-avatar.jpg",
+          "runtime_fn": "ocs-jeju-island-guide-avatar.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-jeju-island-guide-avatar.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-055-FOOD",
+          "poi": "海鲜面",
+          "expected_fn": "ocs-jeju-island-official-guide-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-official-guide-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-jeju-island-official-guide-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-056-FOOD",
+          "poi": "橘子甜品",
+          "expected_fn": "ocs-jeju-island-community-media.jpg",
+          "runtime_fn": "ocs-jeju-island-community-media.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-jeju-island-community-media.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        },
+        {
+          "matrix_id": "PH-KR-057-FOOD",
+          "poi": "鲍鱼粥",
+          "expected_fn": "ocs-jeju-island-community-cover.jpg",
+          "runtime_fn": "ocs-jeju-island-community-cover.jpg",
+          "runtime_src": "https://tt-web-staging.fly.dev/api/v1/uploads/community-posts/ocs-jeju-island-community-cover.jpg",
+          "source_lane": "official",
+          "cms_runtime_ok": true,
+          "found_in_dom": true
+        }
+      ],
+      "issues": []
+    },
+    {
+      "id": "visual_screenshot",
+      "label": "页面截图/DOM · 无旧图/错图/Fallback",
+      "pass": true,
+      "screenshot": "evidence/GO_cms_operation/content-qa-exit-check/jeju/jeju-poi-runtime-20260706T004122Z.png",
+      "issues": []
+    },
+    {
+      "id": "no_backlog_unlock",
+      "label": "无 Open Backlog · 无 Unlock",
+      "pass": true,
+      "issues": []
+    }
+  ],
+  "all_pass": true,
+  "city_runtime_pass_count": 8,
+  "city_runtime_required": 8,
+  "verdict": "CONTENT_QA_EXIT_PASS",
+  "TT_CMS_POI_CITY_JEJU_CONTENT_QA": "CLOSED",
+  "TT_CMS_POI_CITY_JEJU_CONTENT_QA_EXIT": "PASS",
+  "runtime_tiers": {
+    "city": {
+      "tier": "city_consumer_runtime",
+      "gate_2_equals_gate_4": true
+    },
+    "country": {
+      "tier": "national_runtime",
+      "when": "TT_CMS_KR_COUNTRY: CLOSED",
+      "not_in_scope": true
+    }
+  },
+  "blockers": []
+}

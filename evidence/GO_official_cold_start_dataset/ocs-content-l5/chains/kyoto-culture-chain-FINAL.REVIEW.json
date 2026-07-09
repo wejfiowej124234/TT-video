@@ -1,0 +1,46 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_final_review.v1",
+  "stamp_utc": "20260704T130130Z",
+  "chain_id": "kyoto-culture",
+  "city": "京都",
+  "country_code": "JP",
+  "slots_completed": 6,
+  "slots_total": 6,
+  "TT_KYOTO_CULTURE_CHAIN": "CLOSED",
+  "kyoto_chain_content_score": {
+    "value": 92.8,
+    "scale": "0-100",
+    "pass_threshold": 85,
+    "result": "PASS"
+  },
+  "g1_g10_summary": { "all_pass": true },
+  "destination_authenticity": { "result": "PASS", "all_rows": 6 },
+  "destination_experience": {
+    "result": "PASS",
+    "summary": "茶道·和服·和纸·岚山·祇园文化路线完整可浏览"
+  },
+  "consumer_experience": {
+    "result": "PASS",
+    "summary": "Feed(奉茶)→详情(竹林行人)+Market+Official 形成京都文化生态"
+  },
+  "brand_consistency": { "result": "PASS" },
+  "narrative_continuity": {
+    "result": "PASS",
+    "arc": "Yuki(祇园)→茶室包场→和纸收购→官方慢游攻略→社区日志(茶道+竹林)"
+  },
+  "cross_chain_vs_tokyo": { "result": "PASS", "distinct": true },
+  "regression_check": { "pass": true },
+  "surfaces_all_verified": [
+    "ocs-kyoto-culture-guide-avatar.jpg",
+    "ocs-kyoto-culture-provider-cover.jpg",
+    "ocs-kyoto-culture-acquisition-cover.jpg",
+    "ocs-kyoto-culture-official-guide-cover.jpg",
+    "ocs-kyoto-culture-community-cover.jpg",
+    "ocs-kyoto-culture-community-media.jpg"
+  ],
+  "production_readiness": {
+    "kyoto_chain": "CLOSED",
+    "next_matrix_row": 13,
+    "next_chain_id": "seoul-food"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_review.v1",
+  "stamp_utc": "20260704T131830Z",
+  "chain_id": "seoul-food",
+  "slots_completed": 3,
+  "slots_total": 6,
+  "TT_SEOUL_FOOD_CHAIN_REVIEW": "PASS",
+  "slots_done": ["guide-avatar", "provider-cover", "acquisition-cover"],
+  "regression_check": { "pass": true, "notes": "Rows 1-14 + Row15 无 Guide/Provider 回归。" },
+  "gate_to_row16": "PASS"
+}

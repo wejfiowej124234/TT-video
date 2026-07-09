@@ -25,6 +25,7 @@ import {
 } from "@/lib/traveltrustLiquidityGatewayModel";
 import { traveltrustLiquidityContractFromBrief } from "@/lib/traveltrustLiquidityContract";
 import { useTravelTrustPageBriefContext } from "@/app/traveltrust/TravelTrustPageBriefContext";
+import { allowChainOffMockPayUi } from "@/lib/travelTrustUiGuards";
 
 import {
   quoteTtgMockSwapFromUsdc,
@@ -53,6 +54,7 @@ export function TravelTrustStablecoinGateway() {
   const { isConnected } = useAccount();
   const { connect, connectors, isPending } = useConnect();
   const pair = traveltrustTtgAcquirePreviewPair(payStable);
+  const showMockSwapUi = allowChainOffMockPayUi();
 
   const onRefreshQuote = async () => {
     if (!localQuote) {
@@ -124,7 +126,7 @@ export function TravelTrustStablecoinGateway() {
       aria-labelledby={titleId}
       data-tt-traveltrust-stable-gateway="1"
       data-tt-traveltrust-ttg-gateway-preview="1"
-      data-tt-traveltrust-ttg-mock-swap-v1="1"
+      {...(showMockSwapUi ? { "data-tt-traveltrust-ttg-mock-swap-v1": "1" } : {})}
       data-tt-traveltrust-liquidity-l5-defer="illustrative-only"
       {...traveltrustSectionL5DataAttrs("liquidity")}
     >
@@ -377,18 +379,20 @@ export function TravelTrustStablecoinGateway() {
               >
                 {quoteLoading ? t("traveltrust_liquidity_quote_loading") : t("traveltrust_liquidity_quote_refresh")}
               </motion.button>
-              <motion.button
-                type="button"
-                disabled={mockSwapping || !localQuote}
-                whileHover={reduceMotion ? undefined : { y: -2 }}
-                whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-                onClick={() => void onMockSwap()}
-                aria-describedby="traveltrust-liquidity-preview-note"
-                className={TT_STABLECOIN_GATEWAY_L5.ctaSwapClass}
-                data-tt-traveltrust-ttg-mock-swap="1"
-              >
-                {mockSwapping ? t("traveltrust_liquidity_quote_loading") : t("traveltrust_liquidity_mock_swap")}
-              </motion.button>
+              {showMockSwapUi ? (
+                <motion.button
+                  type="button"
+                  disabled={mockSwapping || !localQuote}
+                  whileHover={reduceMotion ? undefined : { y: -2 }}
+                  whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+                  onClick={() => void onMockSwap()}
+                  aria-describedby="traveltrust-liquidity-preview-note"
+                  className={TT_STABLECOIN_GATEWAY_L5.ctaSwapClass}
+                  data-tt-traveltrust-ttg-mock-swap="1"
+                >
+                  {mockSwapping ? t("traveltrust_liquidity_quote_loading") : t("traveltrust_liquidity_mock_swap")}
+                </motion.button>
+              ) : null}
             </>
           )}
         </motion.div>

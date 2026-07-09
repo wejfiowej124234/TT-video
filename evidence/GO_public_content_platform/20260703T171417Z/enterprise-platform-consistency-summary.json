@@ -1,0 +1,84 @@
+{
+  "audit": "ENTERPRISE_PLATFORM_CONSISTENCY",
+  "stamp": "20260703T171417Z",
+  "pcp_phase1_stamp": "20260703T171417Z",
+  "enterprise_ssot": "PASS",
+  "pcp_sub_audits": {
+    "architecture_compliance": "PASS",
+    "full_pipeline": "PASS",
+    "phase_0_5_staging": "PASS",
+    "enterprise_ssot": "PASS"
+  },
+  "blocking_gaps": [],
+  "phase1_gaps": [
+    {
+      "severity": "PHASE1",
+      "domain": "market",
+      "layer": "governance",
+      "id": "OLD-MKT-001",
+      "note": "Inline display_status filter in MarketBuilder reference path",
+      "fix": "governed_market_* SQL view + pcp/market_builder.rs",
+      "classification": "OLD_READ_PATH"
+    },
+    {
+      "severity": "PHASE1",
+      "domain": "market",
+      "layer": "governance",
+      "id": "OLD-MKT-002",
+      "note": "Raw display_status predicate on market_listings",
+      "fix": "Read governed_market_listings_v1 in public catalog queries",
+      "classification": "OLD_READ_PATH"
+    },
+    {
+      "severity": "PHASE1",
+      "domain": "campaign",
+      "layer": "governance",
+      "id": "OLD-CAM-001",
+      "note": "Campaign public surface via ops_cold_start consumer (not pcp/campaign_builder)",
+      "fix": "pcp/campaign_builder.rs + governed campaign surfaces",
+      "classification": "OLD_READ_PATH"
+    },
+    {
+      "severity": "PHASE1",
+      "domain": "market",
+      "layer": "governance",
+      "id": "P1-MKT-GOV-001",
+      "note": "No governed_market_* SQL views — public reads use inline display_status (REFERENCE_IMPL)",
+      "fix": "Add migrations + wire public API to governed views",
+      "classification": "REFERENCE_IMPL"
+    },
+    {
+      "severity": "PHASE1",
+      "domain": "market",
+      "layer": "builder",
+      "id": "P1-MKT-BLD-001",
+      "note": "MarketBuilder still in chain_off/market_public_surface.rs",
+      "fix": "Create pcp/market_builder.rs and re-export public surface builders",
+      "classification": "REFERENCE_IMPL"
+    },
+    {
+      "severity": "PHASE1",
+      "domain": "official_guide",
+      "layer": "governance",
+      "id": "P1-GUI-GOV-001",
+      "note": "Guides public catalog lacks governed SQL view",
+      "fix": "governed_guides_v1 migration + wire GET /guides",
+      "classification": "REFERENCE_IMPL"
+    },
+    {
+      "severity": "PHASE1",
+      "domain": "campaign",
+      "layer": "builder",
+      "id": "P1-CAM-BLD-001",
+      "note": "CampaignBuilder not under pcp/ — ops_cold_start consumer",
+      "fix": "pcp/campaign_builder.rs + governed campaign surfaces",
+      "classification": "PARTIAL"
+    }
+  ],
+  "verdict": {
+    "phase1_alignment": "IN_PROGRESS",
+    "community_baseline": "PASS",
+    "sign_off_allowed": false,
+    "note": "Phase 1 IN_PROGRESS — eliminate REFERENCE_IMPL / PARTIAL / OLD_READ_PATH per domain"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T16:59:43Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "首尔",
+    "city_en": "Seoul",
+    "matrix_ids": [
+      "PH-KR-064-ATR",
+      "PH-KR-065-ATR",
+      "PH-KR-066-ATR",
+      "PH-KR-067-ATR",
+      "PH-KR-068-ATR",
+      "PH-KR-069-FOOD",
+      "PH-KR-070-FOOD",
+      "PH-KR-071-FOOD",
+      "PH-KR-072-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-KR-064-ATR",
+      "legacy_value": "景福宫",
+      "poi_id": "4ab6b040-1a0b-4f49-8c3c-7be5c837c64b",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "hero_file": "ocs-seoul-food-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-064-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-065-ATR",
+      "legacy_value": "北村韩屋村",
+      "poi_id": "2446034e-8fcd-4562-9926-0cc25f9549e2",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-community-media.jpg",
+      "hero_file": "ocs-seoul-food-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-065-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-066-ATR",
+      "legacy_value": "明洞",
+      "poi_id": "94b497c2-9619-4ce2-8a1e-57e047247864",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-community-cover.jpg",
+      "hero_file": "ocs-seoul-food-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-066-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-067-ATR",
+      "legacy_value": "N首尔塔",
+      "poi_id": "5dd20971-b0a7-48dc-8cb9-c1dc186ae814",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-provider-cover.jpg",
+      "hero_file": "ocs-seoul-food-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-067-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-068-ATR",
+      "legacy_value": "汉江公园",
+      "poi_id": "9c0d43dd-19f9-4296-b651-a65a53b2bcc0",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg",
+      "hero_file": "ocs-seoul-food-acquisition-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-068-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-069-FOOD",
+      "legacy_value": "韩式烤肉",
+      "poi_id": "d9821a6a-e6cc-402b-a1f5-07754e5404cd",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-guide-avatar.jpg",
+      "hero_file": "ocs-seoul-food-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-069-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-070-FOOD",
+      "legacy_value": "拌饭",
+      "poi_id": "ebddbf7f-d742-4db7-a7b0-0cab8df4145b",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "hero_file": "ocs-seoul-food-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-070-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-071-FOOD",
+      "legacy_value": "炸鸡",
+      "poi_id": "a64640bd-ef6f-47fd-a220-d2aebc4eda17",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-community-media.jpg",
+      "hero_file": "ocs-seoul-food-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-071-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-KR-072-FOOD",
+      "legacy_value": "参鸡汤",
+      "poi_id": "7eb793b6-52cc-42c8-88f7-2d64ec2c9361",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-community-cover.jpg",
+      "hero_file": "ocs-seoul-food-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-072-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

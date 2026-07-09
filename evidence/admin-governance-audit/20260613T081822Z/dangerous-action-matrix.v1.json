@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.dangerous_action_matrix.v1",
+  "high_risk_permissions": [
+    "admin.users.write",
+    "admin.disputes.write",
+    "admin.growth.publish",
+    "admin.content.publish",
+    "admin.official.publish",
+    "admin.acquisition.suspend",
+    "admin.community.super"
+  ]
+}

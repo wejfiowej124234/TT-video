@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.closure_roadmap.v1",
+  "phases": [
+    {
+      "phase": 1,
+      "root_causes": [
+        "RC-01",
+        "RC-02",
+        "RC-03"
+      ]
+    },
+    {
+      "phase": 2,
+      "root_causes": [
+        "RC-04",
+        "RC-05",
+        "RC-06"
+      ]
+    }
+  ]
+}

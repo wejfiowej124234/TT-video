@@ -1,0 +1,71 @@
+{
+  "schema": "traveltrust_b477_pg_pool_stress_recovery.v1",
+  "verdict": "FAIL",
+  "api_base": "http://127.0.0.1:8080",
+  "run_dir": "evidence\\b477_pg_pool_stress_recovery\\run_20260608T061104Z",
+  "params": {
+    "workers": 16,
+    "duration_sec": 15.0,
+    "stress_mode": "mixed",
+    "auth_bearer_set": false,
+    "max_acquire_timeout_delta": 0,
+    "max_slow_acquire_delta": 999999,
+    "peak_utilization_max": 0.98,
+    "recovery_target_util": 0.55,
+    "recovery_timeout_sec": 300.0,
+    "recovery_poll_ms": 500,
+    "max_http_error_ratio": 0.02,
+    "run_seal": false,
+    "b478_baseline_file": "D:\\TravelTrust-V1.1\\config\\b478_pg_pool_release_gate_thresholds.v1.json"
+  },
+  "phases": {
+    "baseline": {
+      "metrics": {},
+      "meta_pool": null
+    },
+    "load": {
+      "started_unix": 1780899064.2340488,
+      "ended_unix": 1780899079.4361477,
+      "duration_wall_sec": 15.202,
+      "requests_ok": 1670,
+      "requests_err": 0,
+      "http_error_ratio": 0.0
+    },
+    "post_load": {
+      "metrics": {},
+      "meta_pool": null,
+      "deltas": {
+        "acquire_timeout_total": 0,
+        "slow_acquire_total": 0,
+        "peak_utilization_ratio": 0.0
+      }
+    },
+    "recovery": {
+      "recovery_time_sec": null,
+      "recovery_time_ms": null,
+      "target_util": 0.55,
+      "utilization_threshold_used": 0.55,
+      "last_sample_metrics": {}
+    }
+  },
+  "threshold_hits": [
+    "recovery_timeout_sec:300.0"
+  ],
+  "fix_suggestions": [
+    "确认 API 已配置 DATABASE_URL 且 chain_off 挂载 db_pool，使 GET /meta.database.pool 非 null。",
+    "恢复超时：压测后池未回落至目标利用率——检查是否有后台任务持连接或 PG 侧锁等待。"
+  ],
+  "b473_seal": {
+    "run": "skipped",
+    "exit_code": null,
+    "log_hint": "evidence/b473_seal_b460_tt_u03/seal-run.log"
+  },
+  "parity": {
+    "meta_pool_utilization": null,
+    "metrics_utilization_ratio": null,
+    "note": "B-476：meta.database.pool 与 traveltrust_pg_pool_utilization_ratio 同源；压测后应接近"
+  },
+  "notes": [
+    "未设置 B477_AUTH_BEARER：压测以 /meta + /metrics 为主，对 sqlx 池占用较弱；完整验收请提供有效 Bearer 并采用 mixed。"
+  ]
+}

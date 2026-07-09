@@ -1,0 +1,8 @@
+{
+  "rpc_url": "https://ethereum-sepolia-rpc.publicnode.com",
+  "escrow": "0xb4091bF2fF4831848d3D51D4b03EB5bD20f43722",
+  "fee_router": "0x81A8009210c5215100564c6E4123F672c4459306",
+  "token": "0x241948be49a778490c8a4ae8d98b7537fe001f63",
+  "release_tx_hash": "0x481a4c048a0dbf43edf61fe4180eb6a99cd5f98c9a3369fa97e72b592f1103d6",
+  "distribute_tx_hash": null
+}

@@ -1,0 +1,67 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T122130Z",
+  "filename": "ocs-tokyo-photo-provider-cover.jpg",
+  "chain_id": "tokyo-photo",
+  "city": "东京",
+  "slot": "provider-cover",
+  "surface": "Provider",
+  "copy_label": "东京旅拍写真 · 半日套餐",
+  "manifest_copy": {
+    "provider.title": "东京旅拍写真 · 半日套餐",
+    "provider.description": "含摄影师、两处外景与 30 张精修，适合情侣与家庭纪念。",
+    "provider.cover_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-provider-cover.jpg"
+  },
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG 83004 bytes；非纯色块占位；可解码真图。"
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "情侣旅拍现场+摄影师服务感，与 title/description 半日写真套餐、情侣与家庭纪念一致。"
+    },
+    "G3_slot_differentiation": {
+      "pass": true,
+      "notes": "环境广角服务现场；与 Row1 guide-avatar 人物肖像+浅草雷门 bokeh 构图/场景类型明显不同。"
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "东京台场 Rainbow Bridge + Tokyo Tower 天际线；同 chain 城市主题一致。"
+    },
+    "G5_brand_visual": {
+      "pass": true,
+      "notes": "暖色黄金时刻、自然纪实旅拍风格；与 Row1 东京摄影 chain 品牌调性统一。"
+    },
+    "G6_commercial_platform": {
+      "pass": true,
+      "notes": "呈现可售半日旅拍服务现场，适合 Provider 列表封面；无业余/ stock 违和感。"
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true,
+      "notes": "清晰对焦、曝光均衡、640x480 无马赛克；主体与背景层次分明。"
+    },
+    "G8_evidence_matrix": {
+      "pass": true,
+      "notes": "本 HUMAN-REVIEW + row verify evidence 归档；Matrix 行将更新 verified/pass。"
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "notes": "东京 Odaiba 地标正确；无美国/欧洲元素；无水印/Logo/错字；人物手脸自然；AI 生成素材用于 ② 内容工程，无已知版权冲突。"
+    },
+    "G10_content_diversity": {
+      "pass": true,
+      "notes": "情侣+摄影师+海滨外景场景类型；区别于 Row1 单人向导肖像，为 chain 6 slot 多样性贡献。"
+    }
+  },
+  "negative_checks": {
+    "no_us_europe_landmarks": true,
+    "no_solid_color_placeholder": true,
+    "no_watermark_logo_text": true,
+    "no_duplicate_composition_vs_row1": true,
+    "no_anatomy_defects": true,
+    "no_heavy_filter": true
+  },
+  "reviewer": "agent-human-review",
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

@@ -1,0 +1,28 @@
+{
+  "schema": "traveltrust.p2fc_post_soak_execute_active.v1",
+  "prepared_at_utc": "2026-06-24T05:31:29.909Z",
+  "soak_dir": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING",
+  "apply_after": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+  "entrypoint": "scripts/ops/p2fc-post-soak-one-shot-execute.sh",
+  "legacy_entrypoint": "scripts/ops/p2fc-post-soak-deploy-backlog-and-graduate.sh",
+  "execution_order": [
+    "TN-P1-010 independent (internal/indexer spine)",
+    "fly rollback snapshot capture",
+    "MR-01: meta-availability-hotfix.patch BEFORE backlog · MR-02: defer itineraries.rs from wave1 deploy surface",
+    "Wave1 tt-api-staging (MR-02 subset — no itineraries hub in first deploy)",
+    "Wave2 tt-web-staging (MR-01 web /meta timeout 130s)",
+    "p2fc-verify-staging-meta-availability.sh --strict (MR-01 REQUEST_TIMEOUT_SECS=120 live)",
+    "run-phase2-deep-release-gate.sh --require-meta-green",
+    "run-phase2-testnet-post-soak-graduation-closure.sh"
+  ],
+  "execution_strategy": "STRAT-A_PLUS_MR12",
+  "execution_strategy_rejected": [
+    "STRAT-B_WAVE0_FIRST"
+  ],
+  "mr12_execution_lock": "evidence/GO_phase2_deploy_backlog/MR12-EXECUTION-LOCK.json",
+  "mr_changes": [
+    "MR-01",
+    "MR-02"
+  ],
+  "lock_synced_at_utc": "2026-06-25T16:04:01Z"
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.p2fc_final_candidate_execution_lock.v1",
+  "lock_status": "ACTIVE",
+  "locked_at_utc": "2026-06-24T06:02:36.504Z",
+  "phase": "②",
+  "locked_strategy": "STRAT-F_FINAL_CANDIDATE_PRE_SOAK",
+  "superseded_strategy": "STRAT-A_PLUS_MR12",
+  "policy": "fix_all_open_blockers_and_d_risks → local → staging live → human acceptance → freeze → fresh 72h soak",
+  "execution_order": [
+    "lift TESTNET_STAGING_FREEZE",
+    "apply MR-01 MR-02 backlog deploy to staging",
+    "TN-P1-010 + wave1/wave2 + G02/meta",
+    "ADM-U01 live GO + P0 runtime CONFIRMED",
+    "B1-B4 cleared + ADM-U02 GO",
+    "D3 + D1/D2/D4 live convergence",
+    "human acceptance evidence",
+    "engage TESTNET_STAGING_FREEZE @ HEAD",
+    "P2FC_SOAK_SUPERSEDE=1 launch 72h soak"
+  ],
+  "adjudication_ssot": [
+    "TT_ADMIN_STAGING_GO_CLAIM",
+    "TT_LIVE_CLOSURE_CHAIN_VERDICT"
+  ],
+  "soak_target": "final_candidate_git_sha_at_freeze"
+}

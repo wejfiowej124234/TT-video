@@ -1,0 +1,118 @@
+{
+  "program_id": "ROV-01",
+  "wave": 1,
+  "phase": "②",
+  "completed_at": "2026-06-08T04:59:39.371Z",
+  "evidence_dir": "D:/TravelTrust-V1.1/evidence/ROV_01/wave1-20260608T045822Z",
+  "tracks": {
+    "ROV-T1": {
+      "status": "TT_ROV_T1: GO registered=32 with_ref=15 referral=TT-69L96N",
+      "summary": true
+    },
+    "ROV-T2": {
+      "status": "TT_ROV_T2: GO",
+      "summary": true
+    },
+    "ROV-T3": {
+      "status": "TT_ROV_T3: GO referral=TT-69L96N",
+      "summary": true
+    }
+  },
+  "metrics": {
+    "program": "ROV-01",
+    "wave": 1,
+    "phase": "②",
+    "collected_at": "2026-06-08T04:59:39.017Z",
+    "evidence_dir": "D:/TravelTrust-V1.1/evidence/ROV_01/wave1-20260608T045822Z",
+    "registrations_non_seed": 32,
+    "registrations_total_api": 32,
+    "referral_bound": 15,
+    "early_bird_assigned": 31,
+    "activated_users": 31,
+    "wau": null,
+    "d1_retention_pct": null,
+    "d7_retention_pct": null,
+    "click_to_register_pct": 100,
+    "activation_rate_pct": 46.9,
+    "conversion_funnel_steps": [
+      {
+        "step": "registrations",
+        "count": 280,
+        "rate_from_start_pct": 100,
+        "rate_from_previous_pct": null
+      },
+      {
+        "step": "with_referral",
+        "count": 90,
+        "rate_from_start_pct": 32.142857142857146,
+        "rate_from_previous_pct": 32.142857142857146
+      },
+      {
+        "step": "referral_events",
+        "count": 90,
+        "rate_from_start_pct": 32.142857142857146,
+        "rate_from_previous_pct": 100
+      },
+      {
+        "step": "with_points",
+        "count": 5,
+        "rate_from_start_pct": 1.7857142857142856,
+        "rate_from_previous_pct": 5.555555555555555
+      }
+    ],
+    "growth_overview": {
+      "status": "ok",
+      "read_only": true,
+      "summary": {
+        "window": {
+          "from": "2026-06-08T00:00:00Z",
+          "to": "2026-06-08T04:59:30Z"
+        },
+        "registrations_total": 280,
+        "registrations_with_referral": 90,
+        "referral_events_total": 90,
+        "users_with_points": 5,
+        "total_growth_points": 500,
+        "referral_code_active_count": 278,
+        "referral_code_conversion_uses": 90,
+        "fraud_breakdown": [
+          {
+            "growth_fraud_status": "normal",
+            "user_count": 1749
+          },
+          {
+            "growth_fraud_status": "points_frozen",
+            "user_count": 3
+          }
+        ],
+        "frozen_or_ineligible_count": 3,
+        "frozen_or_ineligible_pct": 0.17123287671232876,
+        "early_bird_distribution": [
+          {
+            "early_bird_stage": 2,
+            "user_count": 280,
+            "points_sum": 500
+          },
+          {
+            "early_bird_stage": null,
+            "user_count": 1472,
+            "points_sum": 0
+          }
+        ],
+        "airdrop": {
+          "campaign_count": 0,
+          "snapshot_locked_count": 0,
+          "calculated_count": 0,
+          "total_snapshot_rows": 0,
+          "total_eligible_rows": 0,
+          "latest_campaign_name": null,
+          "latest_campaign_status": null
+        }
+      }
+    },
+    "ops_cost_usd": null,
+    "ops_cost_notes": "Wave-1 Week-1: local spine API; Fly staging Growth 404 — ops hours/bills TBD",
+    "user_feedback_samples": 0
+  },
+  "report_ssot": "docs/handbook/engineering/174-Real-Operations-Validation-Report.md"
+}

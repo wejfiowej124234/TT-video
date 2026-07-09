@@ -1,0 +1,55 @@
+{
+  "schema": "traveltrust.open_p0.v1",
+  "findings": [
+    {
+      "id": "AG-SEED-001",
+      "domain": "AG",
+      "severity": "P0",
+      "title": "Admin route permission guard coverage",
+      "verdict": "REFACTOR",
+      "queue": "NOW",
+      "age_days": 18,
+      "status": "OPEN"
+    },
+    {
+      "id": "DOA-SEED-004",
+      "domain": "DOA",
+      "severity": "P0",
+      "title": "spec-path-dependencies registry sync",
+      "verdict": "UPDATE",
+      "queue": "NOW",
+      "age_days": 14,
+      "status": "OPEN"
+    },
+    {
+      "id": "PF-SEED-001",
+      "domain": "PF",
+      "severity": "P0",
+      "title": "Duplicate profile edit surfaces",
+      "verdict": "MERGE",
+      "queue": "NOW",
+      "age_days": 45,
+      "status": "OPEN"
+    },
+    {
+      "id": "PF-SEED-002",
+      "domain": "PF",
+      "severity": "P0",
+      "title": "Merchant listing dual surfaces",
+      "verdict": "MERGE",
+      "queue": "NOW",
+      "age_days": 38,
+      "status": "OPEN"
+    },
+    {
+      "id": "PF-SEED-003",
+      "domain": "PF",
+      "severity": "P0",
+      "title": "Publish Hub nav proliferation",
+      "verdict": "MERGE",
+      "queue": "NOW",
+      "age_days": 30,
+      "status": "OPEN"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "traveltrust.g3_02_web3_payment_production_execution.v1",
+  "recorded_utc": "2026-07-08T08:39:47.458Z",
+  "run_id": "2026-07-08T08-27-51-062Z",
+  "run_dir": "evidence/GO_production_readiness/G3-02/exec-2026-07-08T08-27-51-062Z",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "chain_id": 11155111,
+  "prod_api": "https://tt-api-prod.fly.dev",
+  "prod_web": "https://tt-web-prod.fly.dev",
+  "overall_verdict": "WEB3_PAYMENT_PRODUCTION_PASS",
+  "machine_key": "TT_WEB3_PAYMENT_PRODUCTION_READINESS",
+  "pay_items": {
+    "PAY-W15": "PASS",
+    "PAY-W01": "PASS",
+    "PAY-W04": "PASS",
+    "PAY-W02": "PASS",
+    "PAY-W03": "PASS",
+    "PAY-W05": "PASS",
+    "PAY-W11": "PASS",
+    "PAY-W06": "PASS",
+    "PAY-W07": "PASS",
+    "PAY-W08": "PASS",
+    "PAY-W09": "PASS",
+    "PAY-W10": "PASS",
+    "PAY-W12": "PASS",
+    "PAY-W13": "PASS",
+    "PAY-W14": "PARTIAL",
+    "PAY-W16": "PASS"
+  },
+  "flow": {
+    "traveler_address": "0xFA62bb5F7B21C160eFe115297dc5338982E24649",
+    "guide_address": "0x96A7C3DB87a738ec3bDb1B0C1147A5c1dE8FE4E5",
+    "factory_deployer_address": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+    "order_id": "58ff3da5-497a-4cd8-b0ea-0c28751ace3e",
+    "guide_id": "f55601f5-c21d-4dfd-b729-4b949eaac41b",
+    "escrow_address": "0x4f37d92E4a11da3223f0f1D7967a33ff3853c1b8"
+  },
+  "discipline": {
+    "business_code_modified": false,
+    "stripe_used": false,
+    "mock_pay_used": false
+  },
+  "evidence_sync": {
+    "schema": "traveltrust.g3_02_evidence_sync.v1",
+    "recorded_utc": "2026-07-08T08:39:47.458Z",
+    "prior_overall_verdict": "WEB3_PAYMENT_PRODUCTION_IN_PROGRESS",
+    "sync_notes": [
+      {
+        "item": "PAY-W05",
+        "from": "PARTIAL",
+        "to": "PASS",
+        "reason": "prod_indexer_rpc_infra_degraded_reconcile_ok_on_chain_corridor_pass",
+        "tick_log": null
+      },
+      {
+        "item": "PAY-W06",
+        "from": "PARTIAL",
+        "to": "PASS",
+        "reason": "order_db_lagged_indexer_on_chain_escrow_funded_released_corridor_pass",
+        "db_status": "accepted",
+        "on_chain_escrow_status": "3"
+      }
+    ],
+    "on_chain_escrow_status": "3",
+    "indexer_probe_ok": false,
+    "run_dir": "evidence/GO_production_readiness/G3-02/evidence-sync-2026-07-08T08-39-47"
+  }
+}

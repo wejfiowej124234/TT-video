@@ -32,7 +32,11 @@ p2b407_order_uuid_to_bytes32() {
 p2b407_load_env() {
   local root f line key val
   root="$(p2b407_root)"
-  for f in "$root/.env" "$root/scripts/dev/.env.staging-onboarding.local"; do
+  for f in \
+    "$root/.env" \
+    "$root/scripts/dev/.env.staging-onboarding.local" \
+    "$root/scripts/dev/.env.phase2-chain-deploy.local" \
+    "$root/scripts/dev/.env.staging-secrets.local"; do
     [[ -f "$f" ]] || continue
     while IFS= read -r line || [[ -n "$line" ]]; do
       line="${line%%#*}"
@@ -42,11 +46,25 @@ p2b407_load_env() {
       val="${line#*=}"
       val="${val%\"}"
       val="${val#\"}"
-      # Staging overlay / parent exports win over .env Anvil defaults.
-      [[ -n "${!key:-}" ]] && continue
+      val="${val%\'}"
+      val="${val#\'}"
+      # Later files override; skip placeholder private keys from root .env
+      if [[ "$key" == "PRIVATE_KEY" || "$key" == B407_*_PK ]]; then
+        if p2b407_is_placeholder_val "$val"; then
+          continue
+        fi
+      fi
       export "$key=$val"
     done <"$f"
   done
+}
+
+p2b407_is_placeholder_val() {
+  local v="${1,,}"
+  [[ -z "$v" ]] && return 0
+  [[ "$v" == *replace* || "$v" == *changeme* || "$v" == *your_* || "$v" == *xxx* ]] && return 0
+  [[ ${#v} -lt 64 ]] && [[ "$v" != 0x* ]] && return 0
+  return 1
 }
 
 p2b407_rpc_url() {
@@ -106,7 +124,7 @@ p2b407_preflight_chain_keys() {
   local pk_t pk_g pk_deploy token factory fee_router rpc
   pk_t="$(p2b407_normalize_hex_pk "${B407_TRAVELER_PK:-${P2B407_TRAVELER_PK:-${PRIVATE_KEY:-}}}")"
   pk_g="$(p2b407_normalize_hex_pk "${B407_GUIDE_PK:-${P2B407_GUIDE_PK:-}}")"
-  pk_deploy="$(p2b407_normalize_hex_pk "${B407_FACTORY_DEPLOYER_PK:-${B407_RELAYER_PK:-${P2B407_FACTORY_DEPLOYER_PK:-}}}")"
+  pk_deploy="$(p2b407_normalize_hex_pk "${B407_FACTORY_DEPLOYER_PK:-${B407_RELAYER_PK:-${P2B407_FACTORY_DEPLOYER_PK:-${PRIVATE_KEY:-}}}}")"
   token="$(p2b407_payment_token)"
   factory="$(p2b407_strip_cr "${ESCROW_FACTORY_ADDRESS:-}")"
   fee_router="$(p2b407_strip_cr "${FEE_ROUTER_ADDRESS:-${B407_FEE_ROUTER:-}}")"

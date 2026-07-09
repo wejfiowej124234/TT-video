@@ -1,0 +1,149 @@
+{
+  "schema": "traveltrust.p2fc_mr12_execution_lock_verification.v1",
+  "lock_status": "FROZEN",
+  "lock_path": "D:/TravelTrust-V1.1/evidence/GO_phase2_deploy_backlog/MR12-EXECUTION-LOCK.json",
+  "ready_manifest_synced": "D:/TravelTrust-V1.1/evidence/GO_phase2_deploy_backlog/POST_SOAK_EXECUTE_READY.json",
+  "shell_verify_rc": 0,
+  "shell_verify_line": "TT_MR12_EXECUTION_LOCK: FROZEN strategy=STRAT-A_PLUS_MR12 reject=STRAT-B entrypoint=one-shot",
+  "checks_passed": 11,
+  "checks_total": 11,
+  "unique_convergence": {
+    "only_allowed_strategy": "STRAT-A_PLUS_MR12",
+    "strat_b_fork_blocked": true,
+    "extra_deploy_blocked": true
+  },
+  "lock_payload_ref": {
+    "schema": "traveltrust.p2fc_mr12_execution_lock.v1",
+    "lock_status": "FROZEN",
+    "frozen_at_utc": "2026-06-25T16:04:01Z",
+    "phase": "②",
+    "locked_strategy": "STRAT-A_PLUS_MR12",
+    "base_strategy": "STRAT-A_DEFAULT",
+    "mr_changes": [
+      "MR-01",
+      "MR-02"
+    ],
+    "rejected_strategies": [
+      "STRAT-B_WAVE0_FIRST",
+      "STRAT-A_DEFAULT_NAIVE",
+      "STRAT-C_SPLIT_ITINERARIES_STANDALONE"
+    ],
+    "forbidden_execution_patterns": [
+      "extra deploy cycle (hotfix-only pre-deploy before backlog)",
+      "STRAT-B hotfix-first re-sequence",
+      "wave1 full backlog including itineraries.rs hub without MR-02 defer",
+      "meta --strict before MR-01 timeout live"
+    ],
+    "entrypoint": "scripts/ops/p2fc-post-soak-one-shot-execute.sh",
+    "legacy_entrypoint": "scripts/ops/p2fc-post-soak-deploy-backlog-and-graduate.sh",
+    "trigger": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+    "execution_sequence_locked": [
+      {
+        "step": 1,
+        "phase": "tn_p1_010",
+        "action": "TN-P1-010 independent (internal/indexer spine)"
+      },
+      {
+        "step": 2,
+        "phase": "rollback_snapshot",
+        "action": "fly rollback snapshot capture"
+      },
+      {
+        "step": 3,
+        "phase": "apply_patches",
+        "action": "MR-01: meta-availability-hotfix.patch BEFORE backlog · MR-02: defer itineraries.rs from wave1 deploy surface",
+        "mr": [
+          "MR-01",
+          "MR-02"
+        ]
+      },
+      {
+        "step": 4,
+        "phase": "wave1_api_deploy",
+        "action": "Wave1 tt-api-staging (MR-02 subset — no itineraries hub in first deploy)"
+      },
+      {
+        "step": 5,
+        "phase": "wave2_web_deploy",
+        "action": "Wave2 tt-web-staging (MR-01 web /meta timeout 130s)"
+      },
+      {
+        "step": 6,
+        "phase": "meta_availability",
+        "action": "p2fc-verify-staging-meta-availability.sh --strict (MR-01 REQUEST_TIMEOUT_SECS=120 live)"
+      },
+      {
+        "step": 7,
+        "phase": "g02_deep_gate",
+        "action": "run-phase2-deep-release-gate.sh --require-meta-green"
+      },
+      {
+        "step": 8,
+        "phase": "graduation",
+        "action": "run-phase2-testnet-post-soak-graduation-closure.sh"
+      }
+    ],
+    "decision_ref": {
+      "verdict": "KEEP_DEFAULT_ONE_SHOT_APPLY_MR12",
+      "summary": "MR-01+02 on existing 8-step one-shot beats STRAT-B extra cycle — do not replace watcher entrypoint",
+      "confidence": "high"
+    },
+    "modeled_success_score": {
+      "baseline": 11.1,
+      "mr12": 35.6,
+      "strat_b_rejected": 17.2
+    },
+    "verification_checks": [
+      {
+        "id": "CHK-DECISION",
+        "pass": true,
+        "note": "KEEP_DEFAULT_ONE_SHOT_APPLY_MR12"
+      },
+      {
+        "id": "CHK-MR12-SUPERIOR",
+        "pass": true,
+        "note": "delta_pp=7.3"
+      },
+      {
+        "id": "CHK-HOTFIX",
+        "pass": true,
+        "path": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\meta-availability-hotfix.patch"
+      },
+      {
+        "id": "CHK-ACTIVE",
+        "pass": true,
+        "path": "D:\\TravelTrust-V1.1\\evidence\\GO_phase2_deploy_backlog\\ACTIVE.json"
+      },
+      {
+        "id": "CHK-LOCK-STRATEGY",
+        "pass": true
+      },
+      {
+        "id": "CHK-REJECT-STRAT-B",
+        "pass": true
+      },
+      {
+        "id": "CHK-LOCK-STATUS",
+        "pass": true
+      },
+      {
+        "id": "CHK-ENTRYPOINT",
+        "pass": true
+      },
+      {
+        "id": "CHK-MR-CHANGES",
+        "pass": true
+      },
+      {
+        "id": "CHK-READY-SYNC",
+        "pass": true
+      },
+      {
+        "id": "CHK-MR-EVAL-DECISION",
+        "pass": true,
+        "note": "KEEP_DEFAULT_ONE_SHOT_APPLY_MR12"
+      }
+    ],
+    "honest_boundary": "execution lock ≠ deploy · soak window read-only · unique convergence at COMPLETED trigger"
+  }
+}

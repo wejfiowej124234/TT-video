@@ -9,15 +9,21 @@ import {
   filterPgSeedDuplicatesWhenShowcaseActive,
   shouldUseCommunityShowcaseOnEmpty,
 } from "@/lib/communityShowcase";
+import { filterCommunityProductionReadyPosts } from "@/lib/communityContentProductionProfile";
 
 /** ① C4/C5 烟测 · staging slug 帖（非用户可读 UGC，默认 Feed 不展示） */
 export function isStagingSmokeCommunityPost(post: Pick<CommunityPost, "content" | "author" | "tags">): boolean {
   const body = (post.content ?? "").trim();
   if (!body) return false;
+  const bodyLow = body.toLowerCase();
+  if (/^c3-moderation-staging/i.test(body)) return true;
+  if (/^c10-/i.test(body)) return true;
+  if (/^c12-/i.test(body)) return true;
   if (/^(c4|c5)[-_]staging/i.test(body)) return true;
+  if (/^c4_/i.test(body) || /^c5_/i.test(body)) return true;
   if (/^c5-img-\d+/i.test((post.tags ?? [])[0]?.trim() ?? "")) return true;
   const nick = (post.author?.nickname ?? "").trim();
-  if (nick === "C4 Video" || nick === "C5 Image") return true;
+  if (nick === "C4 Video" || nick === "C5 Image" || nick === "C10 Hero") return true;
   return communityFeedIsStagingSlug(body);
 }
 
@@ -36,9 +42,11 @@ export function filterProductionCommunityPosts(posts: CommunityPost[]): Communit
   return posts.filter((p) => !isAutomationCommunityPostBody(p.content));
 }
 
-/** 公众 Feed 可读帖：production · 非 E2E · 非 C4/C5 staging 烟测 */
+/** 公众 Feed 可读帖：production · 非 E2E · 非 C4/C5 staging 烟测 · 非 B 层 seed/demo 媒体 */
 export function filterRealisticCommunityFeedPosts(posts: CommunityPost[]): CommunityPost[] {
-  return filterProductionCommunityPosts(posts).filter((p) => !isStagingSmokeCommunityPost(p));
+  return filterCommunityProductionReadyPosts(
+    filterProductionCommunityPosts(posts).filter((p) => !isStagingSmokeCommunityPost(p)),
+  );
 }
 
 const FEED_REALISTIC_MERGE_MIN = 8;

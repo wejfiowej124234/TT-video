@@ -1,0 +1,128 @@
+{
+  "schema": "traveltrust.cms_poi_city_content_qa_closure.v1",
+  "recorded_at_utc": "2026-07-06T04:46:14.278Z",
+  "layer": "CONTENT_QA",
+  "not_execution": true,
+  "city": {
+    "country_iso": "TH",
+    "city_zh": "普吉",
+    "city_en": "Phuket",
+    "poi_count": 9
+  },
+  "execution_closure_ssot": "evidence/GO_cms_operation/CMS-POI-CITY-PHUKET-CLOSURE-LATEST.json",
+  "content_qa_standard": "evidence/GO_cms_operation/CMS-CONTENT-QA-STANDARD-FROZEN.v1.json",
+  "asset_lock_registry": "evidence/GO_cms_operation/CMS-CONTENT-QA-ASSET-LOCK-REGISTRY-LATEST.json",
+  "replicated_from": "JP Golden Template (TT_CMS_JP_COUNTRY: CLOSED)",
+  "cross_region_remediated": "all_9_execution_plus_geo",
+  "checks": {
+    "assets_locked_9_9": true,
+    "no_open_backlog": true,
+    "no_unlock": true,
+    "per_asset_dimensions": true,
+    "cross_region_open": true,
+    "execution_was_closed": true,
+    "golden_template_source": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "locked_assets": [
+    {
+      "matrix_id": "PH-TH-083-ATR",
+      "poi": "芭东海滩",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-phuket-island-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-06T04:20:24.481Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-084-ATR",
+      "poi": "攀牙湾",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-phuket-island-community-media.jpg",
+      "locked_at_utc": "2026-07-06T04:22:45.298Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-085-ATR",
+      "poi": "皮皮岛",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-phuket-island-community-cover.jpg",
+      "locked_at_utc": "2026-07-06T04:25:25.516Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-086-ATR",
+      "poi": "大佛",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-phuket-island-provider-cover.jpg",
+      "locked_at_utc": "2026-07-06T04:27:46.200Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-087-ATR",
+      "poi": "老镇",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-phuket-island-acquisition-cover.jpg",
+      "locked_at_utc": "2026-07-06T04:30:26.654Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-088-FOOD",
+      "poi": "海鲜",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-phuket-island-guide-avatar.jpg",
+      "locked_at_utc": "2026-07-06T04:32:47.950Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-089-FOOD",
+      "poi": "冬阴功",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-phuket-island-official-guide-cover.jpg",
+      "locked_at_utc": "2026-07-06T04:35:27.324Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-090-FOOD",
+      "poi": "菠萝饭",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-phuket-island-community-media.jpg",
+      "locked_at_utc": "2026-07-06T04:37:48.954Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    },
+    {
+      "matrix_id": "PH-TH-091-FOOD",
+      "poi": "泰式烧烤",
+      "state": "LOCKED",
+      "replace_count": 1,
+      "hero_file": "ocs-phuket-island-community-cover.jpg",
+      "locked_at_utc": "2026-07-06T04:40:28.349Z",
+      "unlock_reason": null,
+      "dimensions_pass": true
+    }
+  ],
+  "city_qa_snapshot": {
+    "execution": "PASS",
+    "cms_ownership": "PASS",
+    "runtime_consumer": "FAIL",
+    "geo_matching": "PASS",
+    "content_accuracy": "PASS",
+    "l5_quality": "PASS",
+    "locked_count": 9
+  },
+  "TT_CMS_POI_CITY_PHUKET_CONTENT_QA": "CLOSED"
+}

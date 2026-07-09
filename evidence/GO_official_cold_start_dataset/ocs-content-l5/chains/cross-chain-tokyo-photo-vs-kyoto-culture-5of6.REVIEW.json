@@ -1,0 +1,11 @@
+{
+  "schema": "traveltrust.ocs_content_l5_cross_chain_review.v1",
+  "stamp_utc": "20260704T125330Z",
+  "TT_CROSS_CHAIN_REVIEW": "PASS",
+  "community_cover_slot": {
+    "tokyo": "涩谷十字路口街景",
+    "kyoto": "茶道奉茶手势",
+    "distinct": true
+  },
+  "homogenization_risk": false
+}

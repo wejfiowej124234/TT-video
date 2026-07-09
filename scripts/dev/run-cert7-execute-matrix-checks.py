@@ -103,7 +103,7 @@ def check_execute_evidence() -> dict:
     if state.is_file():
         st = json.loads(state.read_text(encoding="utf-8"))
         state_val = st.get("state")
-        state_ok = st.get("state") == "5" and st.get("no_force_execute") is True
+        state_ok = st.get("state") in ("6", "5") and st.get("no_force_execute") is True
     ok = hash_ok and len(receipts) >= 1 and state_ok
     return {
         "ok": ok,
@@ -111,7 +111,7 @@ def check_execute_evidence() -> dict:
         "receipt_count": len(receipts),
         "events_count": len(events),
         "post_execute_state": state_val,
-        "want_state": "5",
+        "want_state": "6",
     }
 
 

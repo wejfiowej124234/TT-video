@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_review.v1",
+  "stamp_utc": "20260704T125330Z",
+  "chain_id": "kyoto-culture",
+  "slots_completed": 5,
+  "slots_total": 6,
+  "TT_KYOTO_CULTURE_CHAIN_REVIEW": "PASS",
+  "regression_check": { "pass": true, "notes": "Row11 未导致 Row7–10 回归。" },
+  "gate_to_row12": "PASS"
+}

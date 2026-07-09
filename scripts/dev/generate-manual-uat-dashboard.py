@@ -58,6 +58,24 @@ def latest_session_dir() -> Path | None:
     return stamps[0] if stamps else None
 
 
+def latest_testnet_session_dir() -> Path | None:
+    stamps = sorted(
+        (p for p in SESSIONS.iterdir() if p.is_dir() and p.name != "latest"),
+        key=lambda p: p.name,
+        reverse=True,
+    )
+    for p in stamps:
+        sp = p / "SUMMARY.json"
+        if sp.is_file():
+            try:
+                data = json.loads(sp.read_text(encoding="utf-8"))
+                if data.get("track") == "testnet-signoff":
+                    return p
+            except (json.JSONDecodeError, OSError):
+                continue
+    return None
+
+
 def parse_utc(s: str | None) -> datetime | None:
     if not s:
         return None
@@ -92,8 +110,51 @@ def main() -> int:
 
     sess_dir = latest_session_dir()
     summary = load_json(sess_dir / "SUMMARY.json") if sess_dir else {}
+    tn_dir = latest_testnet_session_dir()
+    tn_summary = load_json(tn_dir / "SUMMARY.json") if tn_dir else {}
     session_id = summary.get("session_id", "—")
     session_stamp = summary.get("session_stamp", sess_dir.name if sess_dir else "—")
+    track = summary.get("track", "manual-uat-c1e2")
+
+    tn = tn_summary.get("testnet_signoff", {})
+    tn_pass = tn.get("pass", 0)
+    tn_fail = tn.get("fail", 0)
+    tn_blocked = tn.get("blocked", 0)
+    tn_partial = tn.get("partial", 0)
+    tn_total = tn.get("total", 0)
+    tn_cov = f"{round(100 * (tn_pass + tn_partial * 0.5) / tn_total)}%" if tn_total else "—"
+    tn_session = tn_summary.get("session_id", "—")
+    tn_signoff_verdict = tn_summary.get("testnet_signoff_verdict", "")
+    if not tn_signoff_verdict and tn_total and tn_pass == tn_total and tn_fail == 0 and tn_blocked == 0 and tn_partial == 0:
+        tn_signoff_verdict = "CLOSED"
+    tn_grad_verdict = tn_summary.get("tt_testnet_graduation_verdict", "")
+    grad_evid = ROOT / "evidence" / "GO_phase2_testnet_graduation"
+    if not tn_grad_verdict and grad_evid.is_dir():
+        for d in sorted(grad_evid.iterdir(), key=lambda p: p.name, reverse=True):
+            matrix = d / "graduation-matrix.v1.json"
+            if matrix.is_file():
+                try:
+                    gm = json.loads(matrix.read_text(encoding="utf-8"))
+                    if gm.get("graduation_verdict") == "CLOSED":
+                        tn_grad_verdict = "CLOSED"
+                        break
+                except (json.JSONDecodeError, OSError):
+                    continue
+    tn_signoff_status = tn_signoff_verdict or "OPEN"
+    tn_grad_status = tn_grad_verdict or "OPEN"
+
+    # Phase ③ machine keys (runbook SSOT)
+    prep_md = ROOT / "docs" / "runbook" / "PHASE3-PRODUCTION-PREPARATION.md"
+    prep_text = prep_md.read_text(encoding="utf-8", errors="replace") if prep_md.is_file() else ""
+    def key_from_prep(key: str, default: str = "—") -> str:
+        import re
+        m = re.search(rf"^{re.escape(key)}:\s*(\S+)", prep_text, re.M)
+        return m.group(1) if m else default
+
+    p3_prep = key_from_prep("PHASE3_PRODUCTION_PREP", "ACTIVE")
+    p3_ops = key_from_prep("PHASE3_OPS_VALIDATION", "—")
+    p3_conv = key_from_prep("PHASE3_PRODUCTION_CONVERGENCE", "—")
+    p3_go = key_from_prep("PHASE3_PRODUCTION_GO", "NO_GO")
 
     open_by_sev = {"P0": 0, "P1": 0, "P2": 0, "P3": 0}
     closed = 0
@@ -185,6 +246,37 @@ def main() -> int:
         f"| Overdue P1 (>24h OPEN) | {overdue_p1} |",
         f"| Overdue P2 (>7d OPEN) | {overdue_p2} |",
         f"| Closed Bugs (累计) | {closed} |",
+        "",
+        f"## ② Testnet Sign-off（{'CLOSED' if tn_signoff_status == 'CLOSED' else 'ACTIVE'}）",
+        "",
+        "| 指标 | 值 |",
+        "|------|-----|",
+        f"| **Testnet Sign-off Coverage** | {tn_cov} ({tn_pass}/{tn_total} PASS · {tn_partial} PARTIAL · {tn_fail} FAIL · {tn_blocked} blocked) |",
+        f"| **TT_TESTNET_SIGNOFF** | **{tn_signoff_status}** |",
+        f"| **TT_TESTNET_GRADUATION** | **{tn_grad_status}** |",
+        f"| **Testnet Session** | {tn_session} |",
+        f"| **Checklist SSOT** | [TT-TESTNET-SIGNOFF-CHECKLIST](../../docs/runbook/TT-TESTNET-SIGNOFF-CHECKLIST.md) |",
+        f"| **Test accounts（一页）** | [TT-TEST-ACCOUNTS-QUICK-REFERENCE](../../docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md) · Immutable C1–E2 |",
+        f"| **① Baseline** | Manual UAT 27/27 · `{tn_summary.get('manual_uat_baseline', '—')}` |",
+        "",
+        (
+            "> **纪律：** ② Sign-off + Graduation **CLOSED** · ③ Production GO 须 **独立 GO gate**（禁止从 Graduation 直接推导）。"
+            if tn_signoff_status == "CLOSED" and tn_grad_status == "CLOSED"
+            else "> **纪律：** ② 进度 **≠** `TT_TESTNET_GRADUATION: CLOSED` **≠** ③ Production GO。"
+        ),
+        "",
+        f"## ③ Production Convergence（{p3_conv}）",
+        "",
+        "| 机读键 | 值 |",
+        "|--------|-----|",
+        f"| **PHASE3_PRODUCTION_PREP** | **{p3_prep}** |",
+        f"| **PHASE3_OPS_VALIDATION** | **{p3_ops}** |",
+        f"| **PHASE3_PRODUCTION_CONVERGENCE** | **{p3_conv}** |",
+        f"| **PHASE3_PRODUCTION_GO** | **{p3_go}** |",
+        f"| **Runbook SSOT** | [PHASE3-PRODUCTION-PREPARATION](../../docs/runbook/PHASE3-PRODUCTION-PREPARATION.md) |",
+        f"| **Canonical ② Sign-off** | [TESTNET-SIGNOFF-20260701T002252Z.md](../signoff/TESTNET-SIGNOFF-20260701T002252Z.md) |",
+        "",
+        "> **纪律：** Convergence **仅** 收敛 SSOT/文档 · **不** 关闭生产专属 BLOCKER · Production GO 仍为独立 gate。",
         "",
         "> **纪律：** 配置漂移复发 = **Regression**（DEFECT + REG）· **非** Configuration Sprint。见 [TT-CONFIGURATION-ZERO-DRIFT-FROZEN](../../docs/runbook/TT-CONFIGURATION-ZERO-DRIFT-FROZEN.md)。",
         "",

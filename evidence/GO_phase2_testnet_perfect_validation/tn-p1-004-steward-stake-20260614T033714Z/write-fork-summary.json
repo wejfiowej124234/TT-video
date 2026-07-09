@@ -1,0 +1,15 @@
+{
+  "mode": "sepolia_fork_deploy_write",
+  "fork_upstream": "https://ethereum-sepolia-rpc.publicnode.com",
+  "live_registry_pool": "0x16F914f3D50f7Aa02665589e715F94CA3b7Ab47c",
+  "fork_pool": "0x0AfE607eF780601df6cDC02AB319F4151005fdF3",
+  "fork_mock_ttg": "0x4EBcBE4b79eF51E5B5616a5F7A2D9fbb7bA7D281",
+  "jurisdiction": "CN",
+  "staker": "0xFA62bb5F7B21C160eFe115297dc5338982E24649",
+  "min_stake": "400000000000000000000000",
+  "approve_allowance": "400000000000000000000000",
+  "stake_tx": "0xc8b98cf229783ab5e6cfa3589d5a4d175ff5bf28889dce08b41c3d55f1cbc2c6",
+  "request_release_tx": "0x5111704267df73657c54948f2e49e645718e7b017bda761f5d61c3d33ad32949",
+  "releasable_amount": "0",
+  "honest_boundary": "Write on fork-deployed pool; live Sepolia registry pool readonly-only until GovernanceVotesToken redeploy with approve"
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust_l5_ux_p0_closure_record.v1",
+  "recorded_utc": "20260608T025953Z",
+  "baseline_refs": [
+    "159"
+  ],
+  "targets": [
+    "UX-P0-01",
+    "UX-P0-02",
+    "UX-P0-03"
+  ],
+  "verdict": "GO",
+  "checks": {
+    "UX-P0-01": {
+      "verdict": "GO",
+      "evidence": "ColdStartCampaignSurfaceSection + ConsumerSurfaceStatePanel"
+    },
+    "UX-P0-02": {
+      "verdict": "GO",
+      "evidence": "scripts/dev/run-admin-l5-green.sh ops-plane bundle"
+    },
+    "UX-P0-03": {
+      "verdict": "GO",
+      "evidence": "AdminGrowthHubMain ops console nav grid"
+    },
+    "ops_plane_kit": {
+      "verdict": "GO",
+      "evidence": "OpsPlaneFetchStates unified admin states"
+    }
+  }
+}

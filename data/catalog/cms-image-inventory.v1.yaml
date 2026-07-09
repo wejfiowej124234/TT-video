@@ -1,0 +1,259 @@
+# CMS Image Inventory · 全站非 OCS 图片运营清单（operational · not governance）
+# Pack: node scripts/dev/run-cms-image-inventory-pack.cjs
+# 流程：Inventory → current_source → L5 门 → Matrix 排队 → 逐张 Upload→Live（禁止批量 · 禁止回 OCS）
+
+schema: traveltrust.cms_image_inventory.v1
+version: 1
+effective_utc: "2026-07-05"
+machine_key: TT_CMS_IMAGE_INVENTORY
+role: operations_inventory
+not_governance: true
+
+current_source_enum:
+  - catalog
+  - catalog_partial
+  - unsplash_fallback
+  - placeholder
+  - old_external
+  - official_cold_start
+
+target_source_default: catalog
+
+forbidden:
+  - batch_replace_without_l5
+  - route_back_to_ocs
+  - skip_review
+  - skip_verify
+
+asset_type_owners:
+  destination_ambient: { owner: CMS, admin_route: /admin/content/landing-ambient, asset_kind: landing_ambient }
+  poi_city: { owner: CMS, admin_route: /admin/content/poi-images, asset_kind: poi_hero, scope: city_poi_attraction }
+  poi_food: { owner: CMS, admin_route: /admin/content/poi-images, asset_kind: poi_hero, scope: food_poi }
+  hotel: { owner: CMS, admin_route: /admin/content/hotel-tiers, asset_kind: hotel_tier_stock }
+  transport: { owner: CMS, admin_route: /admin/content/transport, asset_kind: transport_stock }
+  brand_video: { owner: Media, note: media_platform_later }
+  campaign_banner: { owner: Public Ops, note: schedule_public_ops_visuals_case_by_case }
+
+l5_manual_checks:
+  - country_correct
+  - city_correct
+  - copy_correct
+  - scene_correct
+  - image_quality
+  - no_watermark_logo_copyright_risk
+  - not_old_unsplash_pexels_external
+  - not_placeholder
+  - page_renders_catalog_not_fallback
+
+correct_flow:
+  - full_site_cms_image_inventory
+  - mark_current_source
+  - l5_gate
+  - non_compliant_enter_asset_matrix
+  - upload
+  - review
+  - publish
+  - verify
+  - evidence
+  - live
+
+pack_script: scripts/dev/run-cms-image-inventory-pack.cjs
+latest_evidence: evidence/GO_cms_operation/CMS-IMAGE-INVENTORY-LATEST.json
+asset_matrix_ssot: data/catalog/cms-asset-matrix.v1.yaml
+destination_ambient_matrix: data/catalog/destination-ambient-matrix.v1.yaml
+
+items:
+  - id: IMG-DA-JP-HOME
+    asset_type: destination_ambient
+    owner: CMS
+    matrix_id: DA-JP-HOME
+    country_iso: JP
+    country_zh: 日本
+    execution_order: 1
+    asset_kind: landing_ambient
+    admin_route: /admin/content/landing-ambient
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: home_destination_ambient
+    probe: catalog_media_by_country
+
+  - id: IMG-DA-KR-HOME
+    asset_type: destination_ambient
+    owner: CMS
+    matrix_id: DA-KR-HOME
+    country_iso: KR
+    country_zh: 韩国
+    execution_order: 2
+    asset_kind: landing_ambient
+    admin_route: /admin/content/landing-ambient
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: home_destination_ambient
+    probe: catalog_media_by_country
+
+  - id: IMG-DA-TH-HOME
+    asset_type: destination_ambient
+    owner: CMS
+    matrix_id: DA-TH-HOME
+    country_iso: TH
+    country_zh: 泰国
+    execution_order: 3
+    asset_kind: landing_ambient
+    admin_route: /admin/content/landing-ambient
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: home_destination_ambient
+    probe: catalog_media_by_country
+
+  - id: IMG-DA-SG-HOME
+    asset_type: destination_ambient
+    owner: CMS
+    matrix_id: DA-SG-HOME
+    country_iso: SG
+    country_zh: 新加坡
+    execution_order: 4
+    asset_kind: landing_ambient
+    admin_route: /admin/content/landing-ambient
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: home_destination_ambient
+    probe: catalog_media_by_country
+
+  - id: IMG-DA-FR-HOME
+    asset_type: destination_ambient
+    owner: CMS
+    matrix_id: DA-FR-HOME
+    country_iso: FR
+    country_zh: 法国
+    execution_order: 5
+    asset_kind: landing_ambient
+    admin_route: /admin/content/landing-ambient
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: home_destination_ambient
+    probe: catalog_media_by_country
+
+  - id: IMG-DA-US-HOME
+    asset_type: destination_ambient
+    owner: CMS
+    matrix_id: DA-US-HOME
+    country_iso: US
+    country_zh: 美国
+    execution_order: 6
+    asset_kind: landing_ambient
+    admin_route: /admin/content/landing-ambient
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: home_destination_ambient
+    probe: catalog_media_by_country
+
+  - id: IMG-DA-AU-HOME
+    asset_type: destination_ambient
+    owner: CMS
+    matrix_id: DA-AU-HOME
+    country_iso: AU
+    country_zh: 澳大利亚
+    execution_order: 7
+    asset_kind: landing_ambient
+    admin_route: /admin/content/landing-ambient
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: home_destination_ambient
+    probe: catalog_media_by_country
+
+  - id: IMG-DA-ES-HOME
+    asset_type: destination_ambient
+    owner: CMS
+    matrix_id: DA-ES-HOME
+    country_iso: ES
+    country_zh: 西班牙
+    execution_order: 8
+    asset_kind: landing_ambient
+    admin_route: /admin/content/landing-ambient
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: home_destination_ambient
+    probe: catalog_media_by_country
+
+  - id: IMG-DA-AE-HOME
+    asset_type: destination_ambient
+    owner: CMS
+    matrix_id: DA-AE-HOME
+    country_iso: AE
+    country_zh: 阿联酋
+    execution_order: 9
+    asset_kind: landing_ambient
+    admin_route: /admin/content/landing-ambient
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: home_destination_ambient
+    probe: catalog_media_by_country
+
+  - id: IMG-DA-CN-HOME
+    asset_type: destination_ambient
+    owner: CMS
+    matrix_id: DA-CN-HOME
+    country_iso: CN
+    country_zh: 中国
+    execution_order: 10
+    asset_kind: landing_ambient
+    admin_route: /admin/content/landing-ambient
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: home_destination_ambient
+    probe: catalog_media_by_country
+
+  - id: IMG-FAM-POI-CITY
+    asset_type: poi_city
+    owner: CMS
+    asset_kind: poi_hero
+    admin_route: /admin/content/poi-images
+    scope: catalog_pois_city_attraction
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: poi_images
+    probe: catalog_media_global
+
+  - id: IMG-FAM-POI-FOOD
+    asset_type: poi_food
+    owner: CMS
+    asset_kind: poi_hero
+    admin_route: /admin/content/poi-images
+    scope: catalog_pois_food
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: poi_images
+    probe: catalog_media_global
+
+  - id: IMG-FAM-HOTEL
+    asset_type: hotel
+    owner: CMS
+    asset_kind: hotel_tier_stock
+    admin_route: /admin/content/hotel-tiers
+    scope: catalog_hotel_tiers
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: hotel_images
+    probe: catalog_media_global
+
+  - id: IMG-FAM-TRANSPORT
+    asset_type: transport
+    owner: CMS
+    asset_kind: transport_stock
+    admin_route: /admin/content/transport
+    scope: catalog_transport_stock
+    target_source: catalog
+    in_cms_asset_matrix: true
+    asset_matrix_row: transport_images
+    probe: catalog_media_global
+
+excluded_reference:
+  note: 不在本 Inventory 逐张闭环 · Owner 另管
+  ocs:
+    - home_hero
+    - market_guide_avatar
+    - community_official
+  media:
+    - traveltrust_video
+  public_ops:
+    - campaign_banner_schedule

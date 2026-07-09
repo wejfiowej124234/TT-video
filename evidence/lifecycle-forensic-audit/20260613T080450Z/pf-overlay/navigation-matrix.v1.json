@@ -1,0 +1,39 @@
+{
+  "schema": "traveltrust.product_forensic_navigation_matrix.v1",
+  "hub_must_not_duplicate": [
+    "/orders",
+    "/me/settings/profile",
+    "/community/me",
+    "/community/me/posts",
+    "/community/me/collects",
+    "/community/me/likes",
+    "/community/me/reports",
+    "/me/identities"
+  ],
+  "settings_routes": [
+    "/me/settings",
+    "/me/settings/profile",
+    "/me/settings/privacy",
+    "/me/settings/language",
+    "/me/settings/data",
+    "/me/settings/notifications-prefs",
+    "/me/settings/trust",
+    "/trust",
+    "/me/password",
+    "/me/security",
+    "/provider/register",
+    "/steward/register",
+    "/guide",
+    "/privacy",
+    "/terms",
+    "/terms/community-guidelines",
+    "/help",
+    "/disputes",
+    "/community/feedback",
+    "/auth/verify-email",
+    "/me/onboarding",
+    "/disputes/[id]",
+    "/me/settings/error"
+  ],
+  "pf": "PF-11"
+}

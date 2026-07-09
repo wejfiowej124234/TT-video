@@ -1,0 +1,15 @@
+phase: ② testnet C1 (Fly tt-api-staging + tt-traveltrust-staging PG)
+status: PASS
+last_run: 20260605T123651Z
+api_base: https://tt-api-staging.fly.dev
+database: tt-traveltrust-staging.flycast (Fly Postgres · sin)
+feed_count=22
+automation_leak=0
+author_count=6
+destination_count=14
+media_post_count=20
+log: run-20260605T123651Z.log
+feed_sample: feed-sample-20260605T123651Z.json
+staging_probes: c1-staging-probes-20260605T123800Z.log
+report: docs/runbook/TT-PHASE2-C1-STAGING-EVIDENCE.md
+note: C1 slot PASS only — NOT C2-C12 PASS · NOT Phase ② GO · NOT Production GO

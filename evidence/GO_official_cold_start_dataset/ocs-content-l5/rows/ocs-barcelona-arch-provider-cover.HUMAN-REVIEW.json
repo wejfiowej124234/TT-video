@@ -1,0 +1,43 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T151930Z",
+  "filename": "ocs-barcelona-arch-provider-cover.jpg",
+  "chain_id": "barcelona-arch",
+  "city": "巴塞罗那",
+  "country_code": "ES",
+  "slot": "provider-cover",
+  "surface": "Provider",
+  "copy_label": "高迪三件套联票 · 含导览",
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 105068 bytes · decodable · non-placeholder." },
+    "G2_copy_alignment": { "pass": true, "notes": "桂尔公园马赛克前小团+联票 · 与 title/description 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "Provider 体验场景；非 Row49 肖像/非未来 slot。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "巴塞罗那 ES-only · 高迪/桂尔公园。" },
+    "G5_brand_visual": { "pass": true, "notes": "高迪彩+地中海光；chain 统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "真实联票小团；非硬广海报。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰可读。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "九类专项 + Provider Identity 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "桂尔公园马赛克语义正确。" },
+    "G10_content_diversity": { "pass": true, "notes": "vs 八城 Provider 业务各异。" }
+  },
+  "provider_business_identity_review": {
+    "pass": true,
+    "gaudi_trio_tickets_small_group": true,
+    "vs_closed_chain_providers": "distinct"
+  },
+  "surface_boundary_review": { "pass": true },
+  "visual_sequence_review": {
+    "pass": true,
+    "vs_row49_guide": "马赛克小团 vs 圣家堂向导肖像"
+  },
+  "destination_experience_review": { "pass": true },
+  "post_generation_technical_check": {
+    "pass": true,
+    "jpeg_decodable": true,
+    "dimensions_640x480": true,
+    "size_gt_16kb": true,
+    "not_placeholder": true
+  },
+  "regression_closed_chains": { "pass": true, "notes": "前 49 行无漂移。" },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

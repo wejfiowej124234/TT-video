@@ -1,0 +1,30 @@
+[
+  {
+    "id": "rollback-drill",
+    "evidence_path": "evidence/GO_phase2_testnet_20260526/phase3-production-prep/rollback-drill-20260607T035153Z",
+    "status": "READY",
+    "environment": "staging",
+    "verdict": "PASS"
+  },
+  {
+    "id": "db-restore-drill",
+    "evidence_path": "evidence/GO_phase2_testnet_20260526/phase3-production-prep/db-restore-drill-20260607T035120Z",
+    "status": "READY",
+    "environment": "staging",
+    "verdict": "PASS"
+  },
+  {
+    "id": "prod-rollback-drill",
+    "script": "scripts/dev/run-phase3-fly-release-rollback-drill-prod.sh",
+    "environment": "production",
+    "verdict": "NOT_RUN",
+    "notes": "Run after tt-api-prod / tt-web-prod exist"
+  },
+  {
+    "id": "prod-db-restore-drill",
+    "script": "scripts/dev/run-phase3-db-restore-drill-prod.sh",
+    "environment": "production",
+    "verdict": "NOT_RUN",
+    "notes": "Run after tt-traveltrust-prod backup plan enabled"
+  }
+]

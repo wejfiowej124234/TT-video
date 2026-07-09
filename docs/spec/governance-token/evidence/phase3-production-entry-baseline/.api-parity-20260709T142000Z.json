@@ -1,0 +1,31 @@
+{
+  "local": {
+    "/api/v1/public/announcements?limit=5": {
+      "status": 200,
+      "count": 5
+    },
+    "/api/v1/public/roadmap": {
+      "status": 200,
+      "count": 2
+    },
+    "/api/v1/guides?limit=3": {
+      "status": 200,
+      "count": 3
+    }
+  },
+  "staging": {
+    "/api/v1/public/announcements?limit=5": {
+      "status": 200,
+      "count": 5
+    },
+    "/api/v1/public/roadmap": {
+      "status": 200,
+      "count": 2
+    },
+    "/api/v1/guides?limit=3": {
+      "status": 200,
+      "count": 3
+    }
+  },
+  "count_drift": []
+}

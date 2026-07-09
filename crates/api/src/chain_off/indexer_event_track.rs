@@ -42,12 +42,24 @@ pub fn classify_event_log_track(
             | "ProposalQueued"
             | "ProposalExecuted"
             | "ProposalCanceled" => "B",
+            "VacancyEntered"
+            | "GraceStarted"
+            | "SweepExecuted"
+            | "ReserveReached"
+            | "StewardActivated"
+            | "JurisdictionReserveDisbursed" => "Vacancy",
             _ => {
                 return Err(format!("unmapped known event for rail: {name}"));
             }
         });
     }
 
+    if cfg_matches(&cfg.country_pool_ledger_address, log_address) {
+        return Ok("Vacancy");
+    }
+    if cfg_matches(&cfg.unallocated_steward_path_vault_address, log_address) {
+        return Ok("Vacancy");
+    }
     if cfg_matches(&cfg.fee_router_address, log_address)
         || cfg_matches(&cfg.country_pool_ledger_address, log_address)
     {

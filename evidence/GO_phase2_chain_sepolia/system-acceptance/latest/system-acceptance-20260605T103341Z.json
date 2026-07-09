@@ -1,0 +1,30 @@
+{
+  "schema": "phase2_sepolia_system_acceptance.v1",
+  "timestamp_utc": "20260605T103341Z",
+  "chain_id": 11155111,
+  "phase": "② Sepolia testnet",
+  "result": "PASS",
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "rpc": "https://sepolia.drpc.org",
+  "sequences_verified": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "domains": {
+    "governance_chain": "PASS",
+    "fee_router_four_legs": "PASS",
+    "escrow_factory_structure": "PASS",
+    "steward_stake_pool": "PASS",
+    "redemption_epoch_cn": "PASS",
+    "country_ledger_de": "PASS",
+    "registry_env_parity": "PASS",
+    "quote_parity": "PASS",
+    "api_static_routes": "PASS",
+    "http_live": "warn_version_drift"
+  },
+  "new_deployments": "PAUSED_BY_POLICY",
+  "ssot": "docs/runbook/TT-PHASE2-SEPOLIA-SYSTEM-ACCEPTANCE-REPORT.md"
+}

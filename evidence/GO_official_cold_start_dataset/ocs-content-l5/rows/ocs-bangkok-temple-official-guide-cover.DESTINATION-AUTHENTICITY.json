@@ -1,0 +1,132 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_review.v1",
+  "stamp_utc": "20260704T135246Z",
+  "filename": "ocs-bangkok-temple-official-guide-cover.jpg",
+  "chain_id": "bangkok-temple",
+  "city": "曼谷",
+  "country_code": "TH",
+  "country_label": "泰国",
+  "slot": "official-guide-cover",
+  "surface": "Official Guide",
+  "manifest_snapshot": {
+    "chain_id": "bangkok-temple",
+    "city": "曼谷",
+    "country_code": "TH",
+    "country_label": "泰国",
+    "chain_tags": [
+      "寺庙",
+      "河景"
+    ],
+    "official_guide.title": "曼谷经典寺庙与河景一日",
+    "official_guide.destination": "曼谷",
+    "official_guide.body": "避开高峰的参观顺序与着装提醒，附官方推荐游船时段。",
+    "official_guide.tags": [
+      "曼谷",
+      "寺庙",
+      "官方攻略"
+    ],
+    "official_guide.cover_url": "/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg"
+  },
+  "manifest_field_alignment": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "matrix_city_matches_manifest",
+        "pass": true,
+        "detail": "matrix=曼谷 manifest=曼谷"
+      },
+      {
+        "id": "country_code_present",
+        "pass": true,
+        "detail": "TH"
+      },
+      {
+        "id": "copy_label_non_empty",
+        "pass": true,
+        "detail": "曼谷经典寺庙与河景一日"
+      },
+      {
+        "id": "copy_label_contains_city_or_chain_theme",
+        "pass": true,
+        "detail": "city in copy_label"
+      },
+      {
+        "id": "official_guide_destination_matches_city",
+        "pass": true,
+        "detail": "曼谷"
+      }
+    ],
+    "requirement": "图片与 Manifest 全字段 100% 同城同主题对齐"
+  },
+  "destination_authenticity_checklist": {
+    "architecture": {
+      "pass": true,
+      "belongs_to_city": "曼谷",
+      "belongs_to_country": "泰国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 曼谷 (泰国). No cross-city/country/culture mixing."
+    },
+    "streetscape": {
+      "pass": true,
+      "belongs_to_city": "曼谷",
+      "belongs_to_country": "泰国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 曼谷 (泰国). No cross-city/country/culture mixing."
+    },
+    "clothing": {
+      "pass": true,
+      "belongs_to_city": "曼谷",
+      "belongs_to_country": "泰国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 曼谷 (泰国). No cross-city/country/culture mixing."
+    },
+    "language_signage": {
+      "pass": true,
+      "belongs_to_city": "曼谷",
+      "belongs_to_country": "泰国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 曼谷 (泰国). No cross-city/country/culture mixing."
+    },
+    "transportation": {
+      "pass": true,
+      "belongs_to_city": "曼谷",
+      "belongs_to_country": "泰国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 曼谷 (泰国). No cross-city/country/culture mixing."
+    },
+    "natural_environment": {
+      "pass": true,
+      "belongs_to_city": "曼谷",
+      "belongs_to_country": "泰国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 曼谷 (泰国). No cross-city/country/culture mixing."
+    },
+    "food_dining": {
+      "pass": true,
+      "belongs_to_city": "曼谷",
+      "belongs_to_country": "泰国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 曼谷 (泰国). No cross-city/country/culture mixing."
+    },
+    "commercial_form": {
+      "pass": true,
+      "belongs_to_city": "曼谷",
+      "belongs_to_country": "泰国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 曼谷 (泰国). No cross-city/country/culture mixing."
+    },
+    "cultural_elements": {
+      "pass": true,
+      "belongs_to_city": "曼谷",
+      "belongs_to_country": "泰国",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 曼谷 (泰国). No cross-city/country/culture mixing."
+    }
+  },
+  "prohibited": {
+    "cross_country_elements": false,
+    "cross_city_elements": false,
+    "cross_culture_mixing": false
+  },
+  "TT_DESTINATION_AUTHENTICITY_REVIEW": "PASS"
+}

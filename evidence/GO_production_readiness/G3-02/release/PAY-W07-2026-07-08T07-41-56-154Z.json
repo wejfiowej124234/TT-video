@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_evidence.v1",
+  "item_id": "PAY-W07",
+  "recorded_utc": "2026-07-08T07:45:03.342Z",
+  "run_id": "2026-07-08T07-41-56-154Z",
+  "verdict": "PASS",
+  "detail": "Escrow release after Funded (guide EOA release tx)",
+  "release_tx_hash": "0x30dcbdddc818ab3ba793eb55f1a9ef578c3e12b72229d6d842e8f2a78174c5ff",
+  "explorer": "https://sepolia.etherscan.io/tx/0x30dcbdddc818ab3ba793eb55f1a9ef578c3e12b72229d6d842e8f2a78174c5ff",
+  "note": "Initial run used deployer relayer PK and failed; corrected with guide PK — same order corridor",
+  "order_id": "fe6b7dda-6668-4734-9937-8dd961ec4f93"
+}

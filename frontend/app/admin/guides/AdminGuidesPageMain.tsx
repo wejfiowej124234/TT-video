@@ -198,6 +198,9 @@ export function AdminGuidesPageMain() {
                   onToggle={() => toggle("status")}
                 />
                 <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
+                  {t("admin_col_data_origin")}
+                </th>
+                <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
                   {t("admin_guides_colStake")}
                 </th>
                 <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
@@ -231,6 +234,7 @@ export function AdminGuidesPageMain() {
                     <td className="px-4 py-2">{row.city ?? t("admin_em_dash")}</td>
                     <td className="px-4 py-2">{row.country_code ?? t("admin_em_dash")}</td>
                     <td className="px-4 py-2">{row.status ?? t("admin_em_dash")}</td>
+                    <td className="px-4 py-2 font-mono text-meta text-ink-700">{row.data_origin ?? t("admin_em_dash")}</td>
                     <td className="px-4 py-2 tabular-nums">{row.stake_amount ?? t("admin_em_dash")}</td>
                     <td className="px-4 py-2 font-mono text-small text-ink-800">{w ? shortEvmAddress(w) : t("admin_em_dash")}</td>
                     <td className="px-4 py-2 text-meta">

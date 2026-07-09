@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.p2fc_cloud_soak_sync.v1",
+  "synced_at_utc": "2026-06-29T18:16:32.674Z",
+  "fly_app": "tt-soak-watcher-staging",
+  "ok_polls": 4317,
+  "fail_polls": 0,
+  "expect_git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "remaining_sec": 180,
+  "executor": "cloud"
+}

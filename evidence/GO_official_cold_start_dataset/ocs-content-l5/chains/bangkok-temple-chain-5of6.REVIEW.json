@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.ocs_content_l5_chain_review.v1",
+  "stamp_utc": "20260704T135830Z",
+  "chain_id": "bangkok-temple",
+  "slots_completed": 5,
+  "slots_total": 6,
+  "TT_BANGKOK_TEMPLE_CHAIN_REVIEW": "PASS",
+  "gate_to_row24": "PASS"
+}

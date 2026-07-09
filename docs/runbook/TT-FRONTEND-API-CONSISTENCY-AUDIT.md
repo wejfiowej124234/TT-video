@@ -118,6 +118,14 @@ STAGING_WEB_BASE=https://tt-web-staging.fly.dev \
   npx playwright test e2e/frontend-api-consistency-audit.spec.ts --project=chromium
 ```
 
+**一键（API strict + 浏览器 + 截图证据）：**
+
+```bash
+bash scripts/dev/record-frontend-api-consistency-audit-staging.sh
+```
+
+产物：`evidence/GO_frontend_api_consistency_audit/staging_browser_<UTC>/`（`audit-report.json` · `browser-report.json` · `screenshots/`）
+
 ---
 
 ## 5 · PASS / FAIL

@@ -1,0 +1,384 @@
+{
+  "audit": "TT_PCP_AUTHENTICITY_PHASE12_FINAL",
+  "stamp": "20260703T234311Z",
+  "machine_keys": {
+    "TT_PCP_ARCHITECTURE": "FROZEN",
+    "TT_PCP_PHASE_1": "COMPLETE",
+    "TT_PCP_AUTHENTICITY_PHASE12": "GAPS_REMAIN"
+  },
+  "pipeline": "Database → PCP Governance → Builder → Public API → Frontend",
+  "local_api": "http://127.0.0.1:8080",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "domains": [
+    "community",
+    "market",
+    "provider",
+    "acquisition",
+    "official_guide",
+    "campaign",
+    "admin_public_content_center"
+  ],
+  "checks": [
+    {
+      "id": "LEG-COM-001",
+      "domain": "community",
+      "phase": "phase1",
+      "capability": "legacy_read_path",
+      "status": "PASS",
+      "detail": "Community public reads use governed_community_posts_v1"
+    },
+    {
+      "id": "LEG-MKT-001",
+      "domain": "market",
+      "phase": "phase1",
+      "capability": "legacy_read_path",
+      "status": "PASS",
+      "detail": "Market catalog reads governed_market_listings_v1"
+    },
+    {
+      "id": "LEG-MKT-002",
+      "domain": "market",
+      "phase": "phase1",
+      "capability": "legacy_read_path",
+      "status": "EXPECTED",
+      "detail": "chain_off in-memory DDG fallback when db_pool unavailable"
+    },
+    {
+      "id": "LEG-GUI-001",
+      "domain": "official_guide",
+      "phase": "phase1",
+      "capability": "legacy_read_path",
+      "status": "PASS",
+      "detail": "Guides public catalog uses governed_market_guides path"
+    },
+    {
+      "id": "LEG-CAM-001",
+      "domain": "campaign",
+      "phase": "phase1",
+      "capability": "legacy_read_path",
+      "status": "PASS",
+      "detail": "Campaign catalog must not read raw ops_cold_start_campaigns"
+    },
+    {
+      "id": "LEG-CAM-002",
+      "domain": "campaign",
+      "phase": "phase1",
+      "capability": "legacy_read_path",
+      "status": "PASS",
+      "detail": "Consumer delegates to governed campaign catalog"
+    },
+    {
+      "id": "static_builder_community",
+      "domain": "community",
+      "phase": "phase1",
+      "capability": "builder_purity",
+      "status": "PASS",
+      "detail": "crates/api/src/pcp/feed_builder.rs — no inline governance"
+    },
+    {
+      "id": "static_builder_market",
+      "domain": "market",
+      "phase": "phase1",
+      "capability": "builder_purity",
+      "status": "PASS",
+      "detail": "crates/api/src/pcp/market_builder.rs — no inline governance"
+    },
+    {
+      "id": "static_builder_campaign",
+      "domain": "campaign",
+      "phase": "phase1",
+      "capability": "builder_purity",
+      "status": "PASS",
+      "detail": "crates/api/src/pcp/campaign_builder.rs — no inline governance"
+    },
+    {
+      "id": "static_gov_community",
+      "domain": "community",
+      "phase": "phase1",
+      "capability": "governance_migration",
+      "status": "PASS",
+      "detail": "crates/api/migrations/20260704100000_governed_community_posts_v1.sql"
+    },
+    {
+      "id": "static_gov_market",
+      "domain": "market",
+      "phase": "phase1",
+      "capability": "governance_migration",
+      "status": "PASS",
+      "detail": "crates/api/migrations/20260704110000_governed_market_catalog_v1.sql"
+    },
+    {
+      "id": "static_gov_campaign",
+      "domain": "campaign",
+      "phase": "phase1",
+      "capability": "governance_migration",
+      "status": "PASS",
+      "detail": "crates/api/migrations/20260704120000_governed_campaign_surfaces_v1.sql"
+    },
+    {
+      "id": "static_fe_community",
+      "domain": "community",
+      "phase": "phase1",
+      "capability": "frontend_contract",
+      "status": "PASS",
+      "detail": "frontend/lib/api.ts + frontend/app/community → /api/v1/community"
+    },
+    {
+      "id": "static_fe_official_guide",
+      "domain": "official_guide",
+      "phase": "phase1",
+      "capability": "frontend_contract",
+      "status": "PASS",
+      "detail": "frontend/lib/api.ts + frontend/app/guides → /api/v1/guides"
+    },
+    {
+      "id": "static_fe_provider",
+      "domain": "provider",
+      "phase": "phase1",
+      "capability": "frontend_contract",
+      "status": "PASS",
+      "detail": "frontend/lib/api.ts + frontend/app/market/provider → market/provider/listings"
+    },
+    {
+      "id": "static_fe_acquisition",
+      "domain": "acquisition",
+      "phase": "phase1",
+      "capability": "frontend_contract",
+      "status": "PASS",
+      "detail": "frontend/lib/api.ts + frontend/app/market/acquisition → market/acquisition/listings"
+    },
+    {
+      "id": "static_fe_admin_public_content_center",
+      "domain": "admin_public_content_center",
+      "phase": "phase1",
+      "capability": "frontend_contract",
+      "status": "PASS",
+      "detail": "frontend/lib/api/routes.ts + frontend/app/admin/official/public-operations → public-operations"
+    },
+    {
+      "id": "static_fe_campaign",
+      "domain": "campaign",
+      "phase": "phase1",
+      "capability": "frontend_contract",
+      "status": "PASS",
+      "detail": "frontend/e2e/frontend-api-consistency-audit.spec.ts → cold-start/surfaces"
+    },
+    {
+      "id": "sub_architecture_compliance",
+      "domain": "_sub_audit",
+      "phase": "phase1",
+      "capability": "sub_audit",
+      "status": "PASS",
+      "detail": "architecture_compliance"
+    },
+    {
+      "id": "sub_phase0_5",
+      "domain": "_sub_audit",
+      "phase": "phase1",
+      "capability": "sub_audit",
+      "status": "SKIPPED",
+      "detail": "phase0_5"
+    },
+    {
+      "id": "sub_market_batch",
+      "domain": "_sub_audit",
+      "phase": "phase1",
+      "capability": "sub_audit",
+      "status": "SKIPPED",
+      "detail": "market_batch"
+    },
+    {
+      "id": "sub_campaign_batch",
+      "domain": "_sub_audit",
+      "phase": "phase1",
+      "capability": "sub_audit",
+      "status": "SKIPPED",
+      "detail": "campaign_batch"
+    },
+    {
+      "id": "sub_phase1_full_alignment",
+      "domain": "_sub_audit",
+      "phase": "phase1",
+      "capability": "sub_audit",
+      "status": "PASS",
+      "detail": "phase1_full_alignment"
+    },
+    {
+      "id": "p1_local_api",
+      "domain": "_runtime",
+      "phase": "phase1",
+      "capability": "local_api",
+      "status": "SKIPPED",
+      "detail": "Local API not up at http://127.0.0.1:8080"
+    },
+    {
+      "id": "p2_staging",
+      "domain": "_runtime",
+      "phase": "phase2",
+      "capability": "staging",
+      "status": "SKIPPED",
+      "detail": "SKIP_STAGING=1"
+    }
+  ],
+  "gaps": [],
+  "fix_order": [],
+  "domain_summary": [
+    {
+      "domain": "community",
+      "passes": 4,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    },
+    {
+      "domain": "market",
+      "passes": 3,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    },
+    {
+      "domain": "provider",
+      "passes": 1,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    },
+    {
+      "domain": "acquisition",
+      "passes": 1,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    },
+    {
+      "domain": "official_guide",
+      "passes": 2,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    },
+    {
+      "domain": "campaign",
+      "passes": 5,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    },
+    {
+      "domain": "admin_public_content_center",
+      "passes": 1,
+      "fails": 0,
+      "blockers": 0,
+      "status": "🟢"
+    }
+  ],
+  "capability_summary": [
+    {
+      "capability": "legacy_read_path",
+      "pass": 5,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "governance_migration",
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "builder_purity",
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "publish_unpublish",
+      "pass": 0,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "surface",
+      "pass": 0,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "priority",
+      "pass": 0,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "schedule",
+      "pass": 0,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "feed",
+      "pass": 0,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "public_api",
+      "pass": 0,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "frontend_contract",
+      "pass": 6,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "capability": "ops_data_controllable",
+      "pass": 0,
+      "fail": 0,
+      "skipped": 0
+    }
+  ],
+  "sub_audits": {
+    "architecture_compliance": {
+      "pass": true,
+      "status": 0,
+      "tail": "\n=== TT_PCP_ARCHITECTURE_COMPLIANCE · PASS ===\n\n  [PASS] Community Feed\n  [PASS] Community Feed (hot)\n  [PASS] Community Feed (following)\n  [PASS] Community Post Detail (governed read)\n  [PASS] User Profile Timeline (public_only)\n  [PASS] Explore Destinations\n  [PASS] Posts-by-tag public count\n  [PASS] GET /posts/:id non-owner path\n  [PASS] FeedBuilder — no governance rules\n\nEvidence: evidence\\GO_public_content_platform\\20260703T234311Z\\phase0.5-architecture-validation.json\nPhase 1 deferred until validation PASS: SearchBuilder, RecommendationBuilder, trait PublicBuilder abstraction\n\n"
+    },
+    "phase0_5": {
+      "pass": null,
+      "skipped": true
+    },
+    "market_batch": {
+      "pass": null,
+      "skipped": true
+    },
+    "campaign_batch": {
+      "pass": null,
+      "skipped": true
+    },
+    "phase1_full_alignment": {
+      "pass": true,
+      "status": 0,
+      "tail": "\n=== PCP Phase 1 Full Platform Architecture Alignment ===\n\nRunning sub-audits…\nPhase 1 alignment: COMPLETE\nDomains fully aligned: 7/7\nPhase 1 gaps: 0 · Blocking: 0\nSub-audits: arch=PASS pipeline=PASS staging=SKIPPED market_batch=PASS campaign_batch=PASS enterprise=SKIPPED\n\nEvidence:\n  evidence\\GO_public_content_platform\\20260703T234311Z\\pcp-phase1-full-alignment.json\n  evidence\\GO_public_content_platform\\20260703T234311Z\\PCP-PHASE1-FULL-ALIGNMENT-REPORT.md\n  evidence\\GO_public_content_platform\\20260703T234311Z\\enterprise-platform-consistency-summary.json\n\n"
+    }
+  },
+  "summary": {
+    "checks_total": 25,
+    "checks_pass": 19,
+    "checks_fail": 0,
+    "blocker_gaps": 0,
+    "defect_gaps": 0,
+    "domains_green": 7,
+    "domains_red": 0
+  },
+  "verdict": {
+    "phase1_static": "PASS",
+    "phase1_runtime": "SKIPPED",
+    "phase2_staging": "SKIPPED",
+    "overall": "PHASE1_ONLY",
+    "sign_off_allowed": false
+  }
+}

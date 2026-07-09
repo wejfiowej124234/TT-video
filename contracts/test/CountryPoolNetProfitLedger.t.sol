@@ -5,7 +5,9 @@ import "forge-std/Test.sol";
 import "forge-std/StdStorage.sol";
 import "../src/CountryPoolNetProfitLedger.sol";
 import "../src/StewardPathVault.sol";
-import "../src/UnallocatedStewardPathVault.sol";
+import "../src/vacancy/UnallocatedStewardPathVault.sol";
+import "../src/vacancy/VacancyErrors.sol";
+import "./vacancy/VacancyTestParams.sol";
 import "../src/CountryPoolNetProfitGovernancePayload.sol";
 import "../src/GovernanceTimelock.sol";
 import "../src/GovernanceVotesToken.sol";
@@ -51,7 +53,13 @@ contract CountryPoolNetProfitLedgerTest is Test {
 
         stewardVault = new StewardPathVault(owner, J_DE, address(usdc), predictedLedger);
         unallocVault = new UnallocatedStewardPathVault(
-            owner, J_DE, address(usdc), predictedLedger, address(stewardVault)
+            owner,
+            J_DE,
+            address(usdc),
+            predictedLedger,
+            address(stewardVault),
+            treasury,
+            VacancyTestParams.ssotV1Defaults()
         );
         ledger = new CountryPoolNetProfitLedger(
             owner,
@@ -127,10 +135,14 @@ contract CountryPoolNetProfitLedgerTest is Test {
         usdc.approve(address(ledger), amount);
         vm.stopPrank();
         vm.startPrank(owner);
-        ledger.setActiveStewardConfig(steward, false, true, false, bytes32("prop1"));
         ledger.fundLedgerForSplit(epochId);
         ledger.splitNetProfit(epochId);
         vm.stopPrank();
+    }
+
+    function _preActivateSteward() internal {
+        vm.prank(owner);
+        ledger.setActiveStewardConfig(steward, false, true, false, bytes32("preActivate"));
     }
 
     // T-ACC-01 / T-ACC-02
@@ -386,6 +398,7 @@ contract CountryPoolNetProfitLedgerTest is Test {
 
     // T-CLS-01 / T-SPL-01 / T-SPL-03 / FIN-SPLIT-01
     function test_T_CLS_01_T_SPL_01_EligibleSplitConservation() public {
+        _preActivateSteward();
         (uint64 start, uint64 end) = _openEpoch1();
         uint256 profit = 1_000_000;
         _accrueProfit(1, int256(profit), 0, "d");
@@ -486,6 +499,7 @@ contract CountryPoolNetProfitLedgerTest is Test {
 
     // T-SPL-06
     function test_T_SPL_06_DoubleSplitReverts() public {
+        _preActivateSteward();
         (, uint64 end) = _openEpoch1();
         uint256 profit = 100_000;
         _accrueProfit(1, int256(profit), 0, "ds");
@@ -560,6 +574,7 @@ contract CountryPoolNetProfitLedgerTest is Test {
 
     // T-QLF-01
     function test_T_QLF_01_EligibleStewardReceivesStewardPath() public {
+        _preActivateSteward();
         (, uint64 end) = _openEpoch1();
         uint256 profit = 800_000;
         _accrueProfit(1, int256(profit), 0, "q1");
@@ -574,6 +589,7 @@ contract CountryPoolNetProfitLedgerTest is Test {
 
     // T-QLF-03 — Q-F05: no direct EOA payout on split
     function test_T_QLF_03_NoEoaReceivePathOnSplit() public {
+        _preActivateSteward();
         (, uint64 end) = _openEpoch1();
         uint256 profit = 600_000;
         _accrueProfit(1, int256(profit), 0, "q3");
@@ -753,8 +769,9 @@ contract CountryPoolNetProfitLedgerTest is Test {
         vm.startPrank(owner);
         ledger.fundLedgerForSplit(1);
         ledger.splitNetProfit(1);
+        ledger.setActiveStewardConfig(steward, false, true, false, bytes32("relAct"));
         (, uint256 unallocatedAmount,,) = _epochSplitAmounts(1);
-        unallocVault.releaseToStewardPath(unallocatedAmount, bytes32("relProp"));
+        unallocVault.releaseToStewardPath(unallocatedAmount, 2, bytes32("relProp"));
         vm.stopPrank();
         assertEq(usdc.balanceOf(address(stewardVault)), unallocatedAmount);
     }
@@ -762,15 +779,15 @@ contract CountryPoolNetProfitLedgerTest is Test {
     // T-UNA-03
     function test_T_UNA_03_ReleaseOverBalanceReverts() public {
         vm.prank(owner);
-        vm.expectRevert(UnallocatedStewardPathVault.InvalidAmount.selector);
-        unallocVault.releaseToStewardPath(1, bytes32("x"));
+        vm.expectRevert(VacancyErrors.InvalidAmount.selector);
+        unallocVault.releaseToStewardPath(1, 2, bytes32("x"));
     }
 
     // T-UNA-04
     function test_T_UNA_04_NonOwnerReleaseReverts() public {
         vm.prank(makeAddr("rando"));
-        vm.expectRevert(UnallocatedStewardPathVault.OnlyOwner.selector);
-        unallocVault.releaseToStewardPath(1, bytes32("x"));
+        vm.expectRevert(VacancyErrors.OnlyOwner.selector);
+        unallocVault.releaseToStewardPath(1, 2, bytes32("x"));
     }
 
     // T-UNA-05 — U-02: no treasury/global release hook on Unallocated vault

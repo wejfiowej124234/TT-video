@@ -1,0 +1,46 @@
+[
+  {
+    "id": "edge-staging-api",
+    "role": "api",
+    "base_url": "https://tt-api-staging.fly.dev",
+    "host": "tt-api-staging.fly.dev",
+    "health_http": "200",
+    "ssl_verify": "0",
+    "cors_preflight_ok": 0,
+    "verdict": "PASS",
+    "pi3": "staging-proxy"
+  },
+  {
+    "id": "edge-staging-web",
+    "role": "web",
+    "base_url": "https://tt-web-staging.fly.dev",
+    "host": "tt-web-staging.fly.dev",
+    "health_http": "200",
+    "ssl_verify": "0",
+    "cors_preflight_ok": 0,
+    "verdict": "PASS",
+    "pi3": "staging-proxy"
+  },
+  {
+    "id": "edge-prod",
+    "role": "api+web",
+    "base_url": null,
+    "verdict": "NOT_CONFIGURED",
+    "pi3": "PI3-002",
+    "notes": "Set PROD_API_BASE and PROD_WEB_BASE to audit prod TLS/DNS/CORS"
+  },
+  {
+    "id": "cdn-hls",
+    "component": "Production CDN / HLS",
+    "verdict": "NOT_STARTED",
+    "pi3": "PI3-007",
+    "notes": "P3-COM-1 — post-GA or greyscale; Fly *.fly.dev direct only today"
+  },
+  {
+    "id": "secrets-checklist",
+    "component": "Production secrets template",
+    "path": "scripts/dev/.env.production.example",
+    "verdict": "PASS",
+    "notes": "Owner fills .env.production.local — never commit"
+  }
+]

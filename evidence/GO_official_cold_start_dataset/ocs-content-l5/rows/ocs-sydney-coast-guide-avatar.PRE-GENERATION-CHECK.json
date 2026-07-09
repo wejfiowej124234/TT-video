@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T150100Z",
+  "filename": "ocs-sydney-coast-guide-avatar.jpg",
+  "row": 43,
+  "chain_id": "sydney-coast",
+  "country_code": "AU",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "celebrity_portraits",
+      "brand_logos",
+      "copyrighted_artworks",
+      "commercial_ad_posters"
+    ],
+    "safe_expression": "Mia 海岸步道户外向导肖像 · 防晒装备 · 海洋蓝阳光"
+  },
+  "checks": {
+    "manifest_full_field_alignment": {
+      "pass": true,
+      "notes": "nickname 悉尼海岸向导·Mia · bio 邦迪至 Coogee · AU · 悉尼"
+    },
+    "destination_authenticity_9dim_plan": {
+      "pass": true,
+      "notes": "海岸悬崖步道 · 太平洋侧光 · 防晒户外装备"
+    },
+    "country_consistency_au_only": {
+      "pass": true,
+      "notes": "禁 JP/KR/TH/SG/FR/US 元素 · AU 海岸视觉语言"
+    },
+    "guide_identity_diversity_plan": {
+      "pass": true,
+      "vs_ken": "澳女30s 户外海岸 vs 日男摄影",
+      "vs_yuki": "现代防晒徒步 vs 和服文化",
+      "vs_min": "自然海岸 vs 韩美食",
+      "vs_arun": "女户外 vs 泰男寺庙",
+      "vs_lee": "海岸徒步 vs 亲子花园",
+      "vs_claire": "户外阳光 vs 巴黎艺术",
+      "vs_alex": "海洋蓝 vs NYC 冷调都市"
+    },
+    "global_visual_diversity": { "pass": true },
+    "brand_consistency": { "pass": true },
+    "consumer_experience": { "pass": true, "notes": "真实海岸向导非广告模特" },
+    "surface_identity": { "pass": true, "notes": "纯 Guide · 无其它 Surface" },
+    "narrative_planning": { "pass": true },
+    "nine_class_framework_frozen": true
+  }
+}

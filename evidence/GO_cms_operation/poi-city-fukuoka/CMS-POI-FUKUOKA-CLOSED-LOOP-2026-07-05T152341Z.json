@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T15:23:41Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "JP",
+    "city_zh": "福冈",
+    "city_en": "Fukuoka",
+    "matrix_ids": [
+      "PH-JP-024-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-JP-024-FOOD",
+      "legacy_value": "水炊锅",
+      "poi_id": "e617e0d7-998e-411f-b180-8f7ebccd7b2d",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-fukuoka-mizutaki-official-guide-cover.jpg",
+      "hero_file": "ocs-fukuoka-mizutaki-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-JP-024-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust.domain_backlog_matrix.v1",
+  "matrix": [
+    {
+      "domain": "UXA",
+      "open_count": 1,
+      "p0": 0,
+      "p1": 1
+    },
+    {
+      "domain": "PF",
+      "open_count": 1,
+      "p0": 0,
+      "p1": 1
+    },
+    {
+      "domain": "CX",
+      "open_count": 1,
+      "p0": 0,
+      "p1": 1
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+# Escrow Bilateral Settlement — Mainnet Policy SSOT (PG-P0-ESC)
+#
+# Owner Decision: docs/runbook/ESCROW-BILATERAL-SETTLEMENT-OWNER-DECISION-RECORD-V1.md
+# Design: docs/spec/ESCROW-V2-FACTORY-V2-DESIGN-SPEC-V1.md
+
+schema: traveltrust.escrow_bilateral_mainnet_policy.v1
+version: 1
+effective_utc: "2026-07-08"
+machine_key: TT_ESCROW_BILATERAL_MAINNET_POLICY
+
+decision_path: B3_EscrowV2_FactoryV2
+target_model: Bilateral Confirmation Settlement Model
+
+v1_escrow:
+  contract: contracts/src/Escrow.sol
+  factory: contracts/src/EscrowFactory.sol
+  mainnet_deploy: FORBIDDEN
+  mainnet_new_orders: FORBIDDEN
+  sepolia_legacy: ALLOWED
+  note: >
+    V1 release() @ Funded without bilateral gate — testnet legacy only.
+    Existing Sepolia instances may complete; no new mainnet V1 factory or instances.
+
+v2_escrow:
+  contract: contracts/src/EscrowV2.sol
+  factory: contracts/src/EscrowFactoryV2.sol
+  deploy_script: contracts/script/DeployEscrowFactoryV2.s.sol
+  broadcast_shell: scripts/dev/phase2-sepolia-broadcast-escrow-factory-v2.sh
+  mainnet_path: REQUIRED
+  registry_key: escrow_factory_v2_address
+  env_keys:
+    - ESCROW_FACTORY_V2_ADDRESS
+    - NEXT_PUBLIC_ESCROW_FACTORY_V2_ADDRESS
+  on_chain_gate:
+    confirm: confirmServiceComplete() per traveler + guide
+    release: permissionless after both flags @ Funded
+
+layer_a:
+  api: POST /api/v1/orders/:id/confirm-service-completion
+  db_columns:
+    - service_tourist_confirmed
+    - service_guide_confirmed
+  evidence_script: scripts/dev/run-escrow-bilateral-layer-a-evidence.cjs
+
+layer_b:
+  evidence_script: scripts/dev/run-escrow-bilateral-layer-b-evidence.cjs
+  forge_test: contracts/test/EscrowV2.t.sol
+
+layer_c:
+  design: docs/runbook/ESCROW-KEEPER-LAYER-C-DESIGN-V1.md
+  role: automation_executor
+  not: business_authorization
+
+pg_p0_esc_closure_requires:
+  - layer_a_evidence_pass
+  - layer_b_design_and_tests_pass
+  - v1_mainnet_forbidden_documented
+  - escrow_factory_v2_deploy_script_ready
+  - owner_odr_signoff
+  - cert_8_through_12
+  - r01_third_party_audit
+  - shadow_launch_g6_no_rollback
+  - mainnet_registry_env_deploy_manifest
+
+mainnet_blockers_open:
+  - PG-P0-ESC escrow bilateral settlement (Phase ①② closure)
+  - mainnet_cutover_authorized false
+  - PRODUCTION_SCOPE_MAINNET NOT_SELECTED
+  - Phase ③ blocked until R-01 · Shadow Launch · G6 · Owner auth
+
+three_phase_discipline: registry/web3-three-phase-closure-discipline.v1.yaml
+phase12_orchestrator: scripts/dev/run-web3-phase12-closure.cjs

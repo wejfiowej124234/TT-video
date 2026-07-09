@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.execution_rate_trend.v1",
+  "trend": [
+    {
+      "week": "W-3",
+      "rate": 8.0
+    },
+    {
+      "week": "W-2",
+      "rate": 10.5
+    },
+    {
+      "week": "W-1",
+      "rate": 35.3
+    }
+  ]
+}

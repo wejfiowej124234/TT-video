@@ -1,0 +1,21 @@
+{
+  "audit_id": "gov-freeze-v1-governance-ui-local",
+  "phase": "\u2460",
+  "routes": [
+    "/governance",
+    "/governance/params",
+    "/governance/proposals",
+    "/governance/delegate",
+    "/governance/distribution-claim",
+    "/governance/distribution-accruals",
+    "/governance/fee-routes",
+    "/governance/vault-forwards"
+  ],
+  "vitest_suites": [
+    "governanceParamsPage.contract",
+    "governanceParamsTtgTokenomicsFreeze",
+    "stewardWorkbench.contract",
+    "governanceParamsPageL5FullClosure.contract"
+  ],
+  "verdict": "PASS"
+}

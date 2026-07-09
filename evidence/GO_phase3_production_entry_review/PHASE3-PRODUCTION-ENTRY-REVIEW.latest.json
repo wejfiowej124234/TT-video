@@ -2,7 +2,7 @@
   "schema": "traveltrust.phase3_production_entry_review.v1",
   "stamp": "20260630T095200Z",
   "opened_at_utc": "2026-06-30T09:52:37Z",
-  "phase": "③ production entry review",
+  "phase": "\u2462 production entry review",
   "status": "ACTIVE",
   "runtime_baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
   "phase2_closed_at": "2026-06-30T09:52:37Z",
@@ -22,11 +22,45 @@
     "TT_H1_HUMAN_ACCEPTANCE": "PASS",
     "TT_LOCAL_FIRST_RUNTIME_DRIFT": "NONE",
     "TT_PHASE3_PRODUCTION_ENTRY_REVIEW": "ACTIVE",
-    "TT_PHASE3_PRODUCTION_GO": "NO"
+    "TT_PHASE3_PRODUCTION_GO": "NO",
+    "TT_LOCAL_STAGING_RUNTIME_CONSISTENCY": "ARCHIVED",
+    "TT_PHASE3_WORK_TAXONOMY": "ACTIVE",
+    "TT_LOCAL_STAGING_RUNTIME_CONSISTENCY_REAUDIT": "FORBIDDEN_UNLESS_NEW_STAGING_DEPLOY",
+    "TT_PHASE3_PROGRAM_FLOW": "ACTIVE",
+    "TT_RUNTIME_BASELINE_FROZEN_ASSET": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6",
+    "TT_RUNTIME_BASELINE_MUTATION": "FORBIDDEN_UNLESS_S5_S6_CHAIN",
+    "TT_HEAD_STAGING_SHA_PARITY": "NOT_REQUIRED",
+    "TT_LEGACY_TN_P1": "PARKED",
+    "TT_FRCA_MANUAL_VALIDATION": "PENDING_PHASE3",
+    "TT_PHASE1_AUDIT_REGENERATE": "FORBIDDEN",
+    "TT_PHASE2_AUDIT_REGENERATE": "FORBIDDEN",
+    "TT_RUNTIME_CONSISTENCY_AUDIT_REGENERATE": "FORBIDDEN",
+    "TT_RUNTIME_CONSISTENCY_FIXED_ANSWER": "ACTIVE"
   },
-  "updated_at_utc": "2026-06-30T10:00:13Z",
+  "updated_at_utc": "2026-06-30T10:34:40Z",
   "phase2_reopen": "NO",
   "deploy_governance": "evidence/GO_phase3_production_entry_review/DEPLOY-GOVERNANCE-RUNTIME-BASELINE.v1.json",
   "deploy_path_isolation": "evidence/GO_phase3_production_entry_review/DEPLOY-PATH-ISOLATION.v1.json",
-  "entry_review_tracks": "evidence/GO_phase3_production_entry_review/PHASE3-ENTRY-REVIEW-TRACKS.v1.json"
+  "entry_review_tracks": "evidence/GO_phase3_production_entry_review/PHASE3-ENTRY-REVIEW-TRACKS.v1.json",
+  "unique_publish_ssot": "docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md",
+  "charter": "evidence\\GO_phase3_production_entry_review\\PHASE3-UNIQUE-PUBLISH-SSOT-CHARTER.md",
+  "deploy_guard": "scripts/ops/lib/deploy-governance-phase3-guard.sh",
+  "runtime_consistency": {
+    "verdict": "ARCHIVED",
+    "verdict_alias": "CLOSED",
+    "artifact": "evidence/GO_phase3_production_entry_review/LOCAL-STAGING-RUNTIME-CONSISTENCY-ARCHIVED.v1.json",
+    "reaudit": "FORBIDDEN_UNLESS_NEW_STAGING_DEPLOY"
+  },
+  "work_taxonomy": "evidence/GO_phase3_production_entry_review/PHASE3-WORK-TAXONOMY.v1.json",
+  "program_flow": "evidence/GO_phase3_production_entry_review/PHASE3-PROGRAM-FLOW.v1.json",
+  "frozen_runtime_baseline": "evidence/GO_phase3_production_entry_review/FROZEN-RUNTIME-BASELINE.v1.json",
+  "phase12_checklist_semantics": "evidence/GO_phase3_production_entry_review/PHASE12-COMPLETION-CHECKLIST-SEMANTICS.v1.json",
+  "audit_closure_policy": "evidence/GO_phase3_production_entry_review/PHASE12-AUDIT-CLOSURE-POLICY.v1.json",
+  "fixed_response": {
+    "question_zh": "\u672c\u5730\u548c\u6d4b\u8bd5\u7f51\u4e00\u81f4\u4e86\u5417\uff1f",
+    "question_en": "Are local and testnet consistent?",
+    "answer_zh": "Runtime Consistency \u5df2\u4e8e d5aa447f Frozen Baseline \u5b8c\u6210\u5e76\u5f52\u6863\uff08ARCHIVED\uff09\u3002\u9664\u975e\u53d1\u751f\u65b0\u7684\u8fd0\u884c\u65f6\u4ee3\u7801/\u914d\u7f6e\u90e8\u7f72\u5e76\u5b8c\u6210 S5\u2192S6\uff0c\u5426\u5219\u4e0d\u518d\u91cd\u5ba1\u3002",
+    "answer_en": "Runtime Consistency was completed and archived (ARCHIVED) at Frozen Baseline d5aa447f. No re-audit unless new runtime/config is deployed and S5\u2192S6 completes with baseline update.",
+    "baseline_sha": "d5aa447f1c9e2adecbcb4f3c19004eaa8b9348f6"
+  }
 }

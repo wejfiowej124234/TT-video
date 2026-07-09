@@ -1,0 +1,13 @@
+{
+  "epochs_split_completed": [
+    {
+      "epoch_id": 1,
+      "net_profit_prime": 1100000,
+      "steward_amount": 0,
+      "unallocated_amount": 495000,
+      "global_amount": 605000,
+      "math_ok": true
+    }
+  ],
+  "math_ok": true
+}

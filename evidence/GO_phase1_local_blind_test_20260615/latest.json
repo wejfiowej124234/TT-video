@@ -1,0 +1,19 @@
+{
+  "phase": "① local",
+  "chain": "B",
+  "tourist_email": "tourist@test.com",
+  "guide_email": "guide@test.com",
+  "order_id": "1f73075a-f5c7-40bd-9c61-9bb948f99c55",
+  "guide_id": "f4795aa4-167e-46e6-8476-8e071038071c",
+  "amount_usd": "88.23403",
+  "final_status": "completed",
+  "api_base": "http://127.0.0.1:8081",
+  "frontend_base": "http://127.0.0.1:3012",
+  "ui_urls": {
+    "orders_tourist": "http://127.0.0.1:3012/orders",
+    "escrow": "http://127.0.0.1:3012/escrow/1f73075a-f5c7-40bd-9c61-9bb948f99c55",
+    "market_guides": "http://127.0.0.1:3012/market?view=guides",
+    "login": "http://127.0.0.1:3012/auth/login"
+  },
+  "note": "mock-pay chain_off sandbox; not ② staging GO nor ③ production PSP"
+}

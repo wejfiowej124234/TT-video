@@ -257,6 +257,21 @@ export async function orderConfirmCompletion(orderId: string, idempotencyKey?: s
   return data;
 }
 
+/** Layer A：双边确认行程服务完成（POST confirm-service-completion） */
+export async function orderConfirmServiceCompletion(
+  orderId: string,
+  idempotencyKey?: string,
+): Promise<unknown> {
+  const res = await fetch(apiUrl(routes.orderConfirmServiceCompletion(orderId)), {
+    method: "POST",
+    headers: writeRequestHeaders(idempotencyKey),
+  });
+  const data = await parseResponse(res);
+  logApiJsonStatusNotOk("orderConfirmServiceCompletion", data);
+  throwUnlessApiOk(data);
+  return data;
+}
+
 /** 53 POST confirm-final-plan：须同时读 HTTP status 与 body（409 version_conflict / 503 等），故不经过 parseResponse */
 export async function postOrderConfirmFinalPlan(
   orderId: string,

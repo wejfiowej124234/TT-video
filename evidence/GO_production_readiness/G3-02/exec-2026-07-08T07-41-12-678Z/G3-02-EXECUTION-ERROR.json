@@ -1,0 +1,28 @@
+{
+  "error": "accept failed HTTP 403: {\"error\":\"not_assigned_guide\",\"message\":\"not_assigned_guide\"}",
+  "stack": "Error: accept failed HTTP 403: {\"error\":\"not_assigned_guide\",\"message\":\"not_assigned_guide\"}\n    at main (D:\\TravelTrust-V1.1\\scripts\\dev\\run-g3-02-web3-payment-production-verification.cjs:355:11)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+  "partial": {
+    "recorded_utc": "2026-07-08T07:41:12.679Z",
+    "run_dir": "D:\\TravelTrust-V1.1\\evidence\\GO_production_readiness\\G3-02\\exec-2026-07-08T07-41-12-678Z",
+    "prod_api": "https://tt-api-prod.fly.dev",
+    "prod_web": "https://tt-web-prod.fly.dev",
+    "chain_id": 11155111,
+    "items": {
+      "PAY-W15": {
+        "verdict": "PASS",
+        "detail": "Production mock-pay forbidden probe"
+      },
+      "PAY-W01": {
+        "verdict": "PASS",
+        "detail": "Prod session + on-chain traveler identity for deposit corridor"
+      }
+    },
+    "flow": {
+      "traveler_address": "0xFA62bb5F7B21C160eFe115297dc5338982E24649",
+      "guide_address": "0x96A7C3DB87a738ec3bDb1B0C1147A5c1dE8FE4E5",
+      "factory_deployer_address": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+      "order_id": "55ff07f4-05e4-411e-9b42-5a90f33783c9"
+    },
+    "errors": []
+  }
+}

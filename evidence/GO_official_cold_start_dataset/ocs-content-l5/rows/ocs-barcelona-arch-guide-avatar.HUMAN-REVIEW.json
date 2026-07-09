@@ -1,0 +1,49 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T151530Z",
+  "filename": "ocs-barcelona-arch-guide-avatar.jpg",
+  "chain_id": "barcelona-arch",
+  "city": "巴塞罗那",
+  "country_code": "ES",
+  "slot": "guide-avatar",
+  "surface": "Guide",
+  "copy_label": "巴塞罗那建筑向导·Carlos",
+  "manifest_copy": {
+    "guide.nickname": "巴塞罗那建筑向导·Carlos",
+    "guide.bio": "高迪建筑专题讲解，熟悉圣家堂与桂尔公园预约。",
+    "guide.languages": ["es", "en", "zh"],
+    "guide.service_types": ["culture", "walking"],
+    "chain.tags": ["建筑", "高迪"]
+  },
+  "pre_generation_check": { "pass": true, "evidence": "ocs-barcelona-arch-guide-avatar.PRE-GENERATION-CHECK.json" },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 83508 bytes · decodable · non-placeholder." },
+    "G2_copy_alignment": { "pass": true, "notes": "Carlos 圣家堂外讲解 · 与 nickname/bio 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "建筑向导肖像；未来 5 slot 已规划。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "巴塞罗那 ES-only · 高迪/圣家堂语义。" },
+    "G5_brand_visual": { "pass": true, "notes": "高迪彩+地中海光；TravelTrust L5 统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "真实建筑向导；非广告模特。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰曝光自然。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "预检查+Country+Guide Identity+Cross-Chain+chain 1/6 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "圣家堂外观语义正确；无水印/Logo/畸形。" },
+    "G10_content_diversity": { "pass": true, "notes": "新 ES chain 首行；与八城全局区分。" }
+  },
+  "destination_experience_review": {
+    "pass": true,
+    "notes": "用户可感知巴塞罗那高迪建筑向导专业可信。"
+  },
+  "guide_identity_diversity_review": {
+    "pass": true,
+    "vs_prior_eight_guides": "Carlos 西男建筑 vs Ken/Yuki/Min/Arun/Lee/Claire/Alex/Mia 均区分"
+  },
+  "consumer_experience": { "pass": true, "real_guide_not_model": true },
+  "regression_closed_chains": { "pass": true, "notes": "前 48 行无漂移。" },
+  "post_generation_technical_check": {
+    "pass": true,
+    "jpeg_decodable": true,
+    "dimensions_640x480": true,
+    "size_gt_16kb": true,
+    "not_placeholder": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

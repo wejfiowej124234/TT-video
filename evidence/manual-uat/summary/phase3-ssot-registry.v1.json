@@ -1,0 +1,69 @@
+{
+  "schema": "phase3_ssot_registry.v1",
+  "at": "20260701T004341Z",
+  "machine_keys": {
+    "TT_TESTNET_SIGNOFF": "CLOSED",
+    "TT_TESTNET_GRADUATION": "CLOSED",
+    "PHASE3_OPS_VALIDATION": "CLOSED",
+    "PHASE3_PRODUCTION_CONVERGENCE": "CLOSED",
+    "PHASE3_PRODUCTION_PREP": "ACTIVE",
+    "PHASE3_PRODUCTION_GO": "NO_GO",
+    "PHASE3_PRODUCTION_READINESS_REVIEW": "PENDING",
+    "PRODUCT_ENHANCEMENT_SPRINT": "ARCHIVED",
+    "ALIGNMENT_AUDIT_CLASSIFICATION": "EXPECTED_DIFFERENCE_VS_DRIFT",
+    "PRE_PRODUCTION_GO_CLOSURE": "FIX_REAL_ONLY_CONFIRM_EXPECTED",
+    "RISK_CLASSIFICATION": "BLOCKING_VS_NON_BLOCKING",
+    "TT_TEST_ACCOUNTS_BUSINESS_FROZEN": "C1,C2,C3,C4,E1,E2",
+    "TT_TEST_ACCOUNT_CHANGE": "REQUIRED_FOR_NEW_FIXED_ACCOUNTS",
+    "TT_TEST_ACCOUNTS_IMMUTABLE_IDS": "C1,C2,C3,C4,E1,E2",
+    "TT_TEST_ACCOUNTS_GOVERNANCE": "BACKWARD_COMPATIBLE_ADD_NEW_ID_ON_BREAK",
+    "TT_TEST_ACCOUNTS_SSOT_FULL_VALIDATION": "PASS",
+    "TT_TEST_ACCOUNTS_SSOT_CONVERGENCE": "PASS"
+  },
+  "canonical_documents": {
+    "testnet_signoff": "evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260701T002252Z.md",
+    "ops_validation_signoff": "evidence/manual-uat/signoff/PHASE3-OPS-VALIDATION-SIGNOFF-20260701T010000Z.md",
+    "production_convergence_signoff": "evidence/manual-uat/signoff/PHASE3-PRODUCTION-CONVERGENCE-SIGNOFF-20260701T004341Z.md",
+    "runbook": "docs/runbook/PHASE3-PRODUCTION-PREPARATION.md",
+    "dashboard": "evidence/manual-uat/dashboard/PHASE3-READINESS.md",
+    "go_live_checklist": "docs/go-live-checklist.md",
+    "alignment_audit_policy": "docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md",
+    "test_accounts_quick_reference": "docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md",
+    "test_accounts_matrix": "docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md",
+    "test_accounts_registry_yaml": "registry/test-accounts-business-immutable.v1.yaml",
+    "test_accounts_registry_json": "evidence/manual-uat/summary/test-accounts-registry.v1.json",
+    "test_account_change_gate": "docs/runbook/TT-TEST-ACCOUNT-CHANGE.md"
+  },
+  "superseded": [
+    "evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260630T154900Z.md",
+    "evidence/manual-uat/signoff/TESTNET-SIGNOFF-20260630T163100Z.md",
+    "docs/runbook/PRODUCT-ENHANCEMENT-SPRINT.md"
+  ],
+  "latest_go_audit": "evidence/GO_phase3_production_convergence/20260701T004341Z/p0-4-go-audit-rerun/go_no_go.json",
+  "pre_production_go_closure": {
+    "fix_before_go": [
+      "DEFECT",
+      "DRIFT",
+      "CONFLICT",
+      "RISK"
+    ],
+    "confirm_only": [
+      "EXPECTED_DIFFERENCE"
+    ],
+    "forbidden": "FIX_TO_MATCH_EXPECTED_DIFFERENCE",
+    "risk": {
+      "must_eliminate": true,
+      "blocking": {
+        "disposition": "FIX",
+        "accept_forbidden": true
+      },
+      "non_blocking": {
+        "disposition": "FIX_OR_OWNER_ACCEPT",
+        "requires_signoff": true
+      }
+    }
+  },
+  "test_accounts_ssot_convergence": "evidence/GO_test_accounts_ssot/20260701T013927Z/",
+  "test_accounts_ssot_evidence": "evidence/GO_test_accounts_ssot/20260701T014154Z/",
+  "test_accounts_validation_script": "scripts/dev/run-test-accounts-ssot-full-validation.sh"
+}

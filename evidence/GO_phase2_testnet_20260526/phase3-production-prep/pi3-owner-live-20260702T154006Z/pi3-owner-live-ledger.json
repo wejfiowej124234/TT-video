@@ -1,0 +1,37 @@
+{
+  "schema": "traveltrust.pi3_owner_live_wave_ledger.v1",
+  "stamp": "20260702T154006Z",
+  "generated_at_utc": "2026-07-02T15:49:49.198Z",
+  "items": [
+    {
+      "id": "PI3-002",
+      "verdict": "PI3-002_HOLD",
+      "owner_live": "OPEN"
+    },
+    {
+      "id": "PI3-001",
+      "verdict": "PI3-001_HOLD",
+      "owner_live": "OPEN"
+    },
+    {
+      "id": "PI3-003",
+      "verdict": "PI3-003_HOLD",
+      "owner_live": "OPEN"
+    },
+    {
+      "id": "PI3-004",
+      "verdict": "PI3-004_HOLD",
+      "owner_live": "OPEN"
+    }
+  ],
+  "machine_keys": {
+    "TT_PI3_PRODUCTION_INFRA_PREP": "ACTIVE",
+    "TT_RELEASE_DECISION": "NO_GO"
+  },
+  "blockers_remaining": [
+    "Brand domain if PROD_WEB_BASE uses *.fly.dev (P3-PROD-DOMAIN)",
+    "Stripe Live keys if PI3-003 HOLD",
+    "R-003 prod + six-domain UAT if PI3-004 HOLD",
+    "PI3-005 scope · PI3-006 go-live"
+  ]
+}

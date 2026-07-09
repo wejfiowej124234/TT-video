@@ -1,0 +1,1039 @@
+{
+  "schema": "traveltrust.cms_image_inventory_report.v1",
+  "stamp_utc": "20260707T102956Z",
+  "layer": "CMS_OPERATION",
+  "role": "operations_inventory",
+  "not_governance": true,
+  "inventory_path": "data/catalog/cms-image-inventory.v1.yaml",
+  "probe_api": "https://tt-api-staging.fly.dev",
+  "probe_skipped": false,
+  "summary": {
+    "total_items": 14,
+    "cms_scope": 14,
+    "needs_cms_l5_workflow": 14,
+    "l5_compliant_partial": 0,
+    "by_current_source": {
+      "unsplash_fallback": 10,
+      "placeholder": 4
+    },
+    "next_upload": {
+      "id": "IMG-DA-JP-HOME",
+      "matrix_id": "DA-JP-HOME",
+      "country_iso": "JP",
+      "admin_route": "/admin/content/landing-ambient",
+      "current_source": "unsplash_fallback"
+    }
+  },
+  "upload_queue": [
+    {
+      "id": "IMG-DA-JP-HOME",
+      "asset_type": "destination_ambient",
+      "matrix_id": "DA-JP-HOME",
+      "country_iso": "JP",
+      "current_source": "unsplash_fallback",
+      "asset_lifecycle": "live",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/landing-ambient",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    },
+    {
+      "id": "IMG-DA-KR-HOME",
+      "asset_type": "destination_ambient",
+      "matrix_id": "DA-KR-HOME",
+      "country_iso": "KR",
+      "current_source": "unsplash_fallback",
+      "asset_lifecycle": "live",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/landing-ambient",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    },
+    {
+      "id": "IMG-DA-TH-HOME",
+      "asset_type": "destination_ambient",
+      "matrix_id": "DA-TH-HOME",
+      "country_iso": "TH",
+      "current_source": "unsplash_fallback",
+      "asset_lifecycle": "live",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/landing-ambient",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    },
+    {
+      "id": "IMG-DA-SG-HOME",
+      "asset_type": "destination_ambient",
+      "matrix_id": "DA-SG-HOME",
+      "country_iso": "SG",
+      "current_source": "unsplash_fallback",
+      "asset_lifecycle": "live",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/landing-ambient",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    },
+    {
+      "id": "IMG-DA-FR-HOME",
+      "asset_type": "destination_ambient",
+      "matrix_id": "DA-FR-HOME",
+      "country_iso": "FR",
+      "current_source": "unsplash_fallback",
+      "asset_lifecycle": "live",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/landing-ambient",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    },
+    {
+      "id": "IMG-DA-US-HOME",
+      "asset_type": "destination_ambient",
+      "matrix_id": "DA-US-HOME",
+      "country_iso": "US",
+      "current_source": "unsplash_fallback",
+      "asset_lifecycle": "live",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/landing-ambient",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    },
+    {
+      "id": "IMG-DA-AU-HOME",
+      "asset_type": "destination_ambient",
+      "matrix_id": "DA-AU-HOME",
+      "country_iso": "AU",
+      "current_source": "unsplash_fallback",
+      "asset_lifecycle": "live",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/landing-ambient",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    },
+    {
+      "id": "IMG-DA-ES-HOME",
+      "asset_type": "destination_ambient",
+      "matrix_id": "DA-ES-HOME",
+      "country_iso": "ES",
+      "current_source": "unsplash_fallback",
+      "asset_lifecycle": "live",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/landing-ambient",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    },
+    {
+      "id": "IMG-DA-AE-HOME",
+      "asset_type": "destination_ambient",
+      "matrix_id": "DA-AE-HOME",
+      "country_iso": "AE",
+      "current_source": "unsplash_fallback",
+      "asset_lifecycle": "live",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/landing-ambient",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    },
+    {
+      "id": "IMG-DA-CN-HOME",
+      "asset_type": "destination_ambient",
+      "matrix_id": "DA-CN-HOME",
+      "country_iso": "CN",
+      "current_source": "unsplash_fallback",
+      "asset_lifecycle": "live",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/landing-ambient",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    },
+    {
+      "id": "IMG-FAM-POI-CITY",
+      "asset_type": "poi_city",
+      "matrix_id": null,
+      "country_iso": null,
+      "current_source": "placeholder",
+      "asset_lifecycle": "draft",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/poi-images",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    },
+    {
+      "id": "IMG-FAM-POI-FOOD",
+      "asset_type": "poi_food",
+      "matrix_id": null,
+      "country_iso": null,
+      "current_source": "placeholder",
+      "asset_lifecycle": "draft",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/poi-images",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    },
+    {
+      "id": "IMG-FAM-HOTEL",
+      "asset_type": "hotel",
+      "matrix_id": null,
+      "country_iso": null,
+      "current_source": "placeholder",
+      "asset_lifecycle": "draft",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/hotel-tiers",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    },
+    {
+      "id": "IMG-FAM-TRANSPORT",
+      "asset_type": "transport",
+      "matrix_id": null,
+      "country_iso": null,
+      "current_source": "placeholder",
+      "asset_lifecycle": "draft",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "admin_route": "/admin/content/transport",
+      "workflow": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "IMG-DA-JP-HOME",
+      "asset_type": "destination_ambient",
+      "owner": "CMS",
+      "matrix_id": "DA-JP-HOME",
+      "country_iso": "JP",
+      "country_zh": "日本",
+      "execution_order": 1,
+      "asset_kind": "landing_ambient",
+      "admin_route": "/admin/content/landing-ambient",
+      "scope": null,
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "home_destination_ambient",
+      "probe": "catalog_media_by_country",
+      "scene": "富士山·河口湖镜面或神社山景",
+      "asset_lifecycle": "live",
+      "current_source": "unsplash_fallback",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0,
+        "urls": []
+      }
+    },
+    {
+      "id": "IMG-DA-KR-HOME",
+      "asset_type": "destination_ambient",
+      "owner": "CMS",
+      "matrix_id": "DA-KR-HOME",
+      "country_iso": "KR",
+      "country_zh": "韩国",
+      "execution_order": 2,
+      "asset_kind": "landing_ambient",
+      "admin_route": "/admin/content/landing-ambient",
+      "scope": null,
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "home_destination_ambient",
+      "probe": "catalog_media_by_country",
+      "scene": "景福宫或韩屋框景",
+      "asset_lifecycle": "live",
+      "current_source": "unsplash_fallback",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0,
+        "urls": []
+      }
+    },
+    {
+      "id": "IMG-DA-TH-HOME",
+      "asset_type": "destination_ambient",
+      "owner": "CMS",
+      "matrix_id": "DA-TH-HOME",
+      "country_iso": "TH",
+      "country_zh": "泰国",
+      "execution_order": 3,
+      "asset_kind": "landing_ambient",
+      "admin_route": "/admin/content/landing-ambient",
+      "scope": null,
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "home_destination_ambient",
+      "probe": "catalog_media_by_country",
+      "scene": "海岛泻湖或曼谷文化地标",
+      "asset_lifecycle": "live",
+      "current_source": "unsplash_fallback",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0,
+        "urls": []
+      }
+    },
+    {
+      "id": "IMG-DA-SG-HOME",
+      "asset_type": "destination_ambient",
+      "owner": "CMS",
+      "matrix_id": "DA-SG-HOME",
+      "country_iso": "SG",
+      "country_zh": "新加坡",
+      "execution_order": 4,
+      "asset_kind": "landing_ambient",
+      "admin_route": "/admin/content/landing-ambient",
+      "scope": null,
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "home_destination_ambient",
+      "probe": "catalog_media_by_country",
+      "scene": "滨海湾金沙 · Blue Hour",
+      "asset_lifecycle": "live",
+      "current_source": "unsplash_fallback",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0,
+        "urls": []
+      }
+    },
+    {
+      "id": "IMG-DA-FR-HOME",
+      "asset_type": "destination_ambient",
+      "owner": "CMS",
+      "matrix_id": "DA-FR-HOME",
+      "country_iso": "FR",
+      "country_zh": "法国",
+      "execution_order": 5,
+      "asset_kind": "landing_ambient",
+      "admin_route": "/admin/content/landing-ambient",
+      "scope": null,
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "home_destination_ambient",
+      "probe": "catalog_media_by_country",
+      "scene": "巴黎埃菲尔或塞纳河暮色",
+      "asset_lifecycle": "live",
+      "current_source": "unsplash_fallback",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0,
+        "urls": []
+      }
+    },
+    {
+      "id": "IMG-DA-US-HOME",
+      "asset_type": "destination_ambient",
+      "owner": "CMS",
+      "matrix_id": "DA-US-HOME",
+      "country_iso": "US",
+      "country_zh": "美国",
+      "execution_order": 6,
+      "asset_kind": "landing_ambient",
+      "admin_route": "/admin/content/landing-ambient",
+      "scope": null,
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "home_destination_ambient",
+      "probe": "catalog_media_by_country",
+      "scene": "纽约曼哈顿或标志性天际",
+      "asset_lifecycle": "live",
+      "current_source": "unsplash_fallback",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0,
+        "urls": []
+      }
+    },
+    {
+      "id": "IMG-DA-AU-HOME",
+      "asset_type": "destination_ambient",
+      "owner": "CMS",
+      "matrix_id": "DA-AU-HOME",
+      "country_iso": "AU",
+      "country_zh": "澳大利亚",
+      "execution_order": 7,
+      "asset_kind": "landing_ambient",
+      "admin_route": "/admin/content/landing-ambient",
+      "scope": null,
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "home_destination_ambient",
+      "probe": "catalog_media_by_country",
+      "scene": "悉尼歌剧院港湾 · 晴天广角",
+      "asset_lifecycle": "live",
+      "current_source": "unsplash_fallback",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0,
+        "urls": []
+      }
+    },
+    {
+      "id": "IMG-DA-ES-HOME",
+      "asset_type": "destination_ambient",
+      "owner": "CMS",
+      "matrix_id": "DA-ES-HOME",
+      "country_iso": "ES",
+      "country_zh": "西班牙",
+      "execution_order": 8,
+      "asset_kind": "landing_ambient",
+      "admin_route": "/admin/content/landing-ambient",
+      "scope": null,
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "home_destination_ambient",
+      "probe": "catalog_media_by_country",
+      "scene": "巴塞罗那高迪建筑或城市天际",
+      "asset_lifecycle": "live",
+      "current_source": "unsplash_fallback",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0,
+        "urls": []
+      }
+    },
+    {
+      "id": "IMG-DA-AE-HOME",
+      "asset_type": "destination_ambient",
+      "owner": "CMS",
+      "matrix_id": "DA-AE-HOME",
+      "country_iso": "AE",
+      "country_zh": "阿联酋",
+      "execution_order": 9,
+      "asset_kind": "landing_ambient",
+      "admin_route": "/admin/content/landing-ambient",
+      "scope": null,
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "home_destination_ambient",
+      "probe": "catalog_media_by_country",
+      "scene": "哈利法塔夜景或沙漠城市天际",
+      "asset_lifecycle": "live",
+      "current_source": "unsplash_fallback",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0,
+        "urls": []
+      }
+    },
+    {
+      "id": "IMG-DA-CN-HOME",
+      "asset_type": "destination_ambient",
+      "owner": "CMS",
+      "matrix_id": "DA-CN-HOME",
+      "country_iso": "CN",
+      "country_zh": "中国",
+      "execution_order": 10,
+      "asset_kind": "landing_ambient",
+      "admin_route": "/admin/content/landing-ambient",
+      "scope": null,
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "home_destination_ambient",
+      "probe": "catalog_media_by_country",
+      "scene": "长城或同类山脊 · 暖色 foliage · 中低明度天空",
+      "asset_lifecycle": "live",
+      "current_source": "unsplash_fallback",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0,
+        "urls": []
+      }
+    },
+    {
+      "id": "IMG-FAM-POI-CITY",
+      "asset_type": "poi_city",
+      "owner": "CMS",
+      "matrix_id": null,
+      "country_iso": null,
+      "country_zh": null,
+      "execution_order": null,
+      "asset_kind": "poi_hero",
+      "admin_route": "/admin/content/poi-images",
+      "scope": "catalog_pois_city_attraction",
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "poi_images",
+      "probe": "catalog_media_global",
+      "asset_lifecycle": "draft",
+      "current_source": "placeholder",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0
+      }
+    },
+    {
+      "id": "IMG-FAM-POI-FOOD",
+      "asset_type": "poi_food",
+      "owner": "CMS",
+      "matrix_id": null,
+      "country_iso": null,
+      "country_zh": null,
+      "execution_order": null,
+      "asset_kind": "poi_hero",
+      "admin_route": "/admin/content/poi-images",
+      "scope": "catalog_pois_food",
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "poi_images",
+      "probe": "catalog_media_global",
+      "asset_lifecycle": "draft",
+      "current_source": "placeholder",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0
+      }
+    },
+    {
+      "id": "IMG-FAM-HOTEL",
+      "asset_type": "hotel",
+      "owner": "CMS",
+      "matrix_id": null,
+      "country_iso": null,
+      "country_zh": null,
+      "execution_order": null,
+      "asset_kind": "hotel_tier_stock",
+      "admin_route": "/admin/content/hotel-tiers",
+      "scope": "catalog_hotel_tiers",
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "hotel_images",
+      "probe": "catalog_media_global",
+      "asset_lifecycle": "draft",
+      "current_source": "placeholder",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0
+      }
+    },
+    {
+      "id": "IMG-FAM-TRANSPORT",
+      "asset_type": "transport",
+      "owner": "CMS",
+      "matrix_id": null,
+      "country_iso": null,
+      "country_zh": null,
+      "execution_order": null,
+      "asset_kind": "transport_stock",
+      "admin_route": "/admin/content/transport",
+      "scope": "catalog_transport_stock",
+      "target_source": "catalog",
+      "in_cms_asset_matrix": true,
+      "asset_matrix_row": "transport_images",
+      "probe": "catalog_media_global",
+      "asset_lifecycle": "draft",
+      "current_source": "placeholder",
+      "l5_automated": {
+        "gate": "FAIL",
+        "note": "non-catalog source · enter CMS L5 workflow one-by-one",
+        "enter_workflow": true
+      },
+      "l5_compliant": false,
+      "l5_manual_checks": {
+        "country_correct": "pending",
+        "city_correct": "pending",
+        "copy_correct": "pending",
+        "scene_correct": "pending",
+        "image_quality": "pending",
+        "no_watermark_logo_copyright_risk": "pending",
+        "not_old_unsplash_pexels_external": "pending",
+        "not_placeholder": "pending",
+        "page_renders_catalog_not_fallback": "pending"
+      },
+      "needs_cms_l5_workflow": true,
+      "workflow_next": [
+        "upload",
+        "review",
+        "publish",
+        "verify",
+        "evidence",
+        "live"
+      ],
+      "probe_detail": {
+        "http": 429,
+        "items": 0
+      }
+    }
+  ],
+  "correct_flow_reminder": [
+    "one_by_one_upload",
+    "no_batch_replace",
+    "no_ocs_fallback",
+    "manual_l5_all_checks_before_live"
+  ],
+  "TT_CMS_IMAGE_INVENTORY": "COMPLETE",
+  "honest_boundary": "Inventory + automated source probe · manual L5 checklist per asset before Live · ② staging"
+}

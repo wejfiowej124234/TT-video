@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.unified_verdict_model.v1",
+  "verdicts": [
+    "KEEP",
+    "MERGE",
+    "RETIRE",
+    "REFACTOR",
+    "UPDATE",
+    "DEPRECATE",
+    "REMOVE"
+  ]
+}

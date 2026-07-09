@@ -1,0 +1,16 @@
+{
+  "captured_at_utc": "2026-06-16T14:56:36Z",
+  "recordings": [
+    "C-SAFE-01-safe-signer-multisig.mp4",
+    "C-SAFE-02-treasury-timelock-chain.mp4",
+    "C-SAFE-03-finance-boundaries-recovery.mp4"
+  ],
+  "screenshots": [
+    "role-safe-signer-multisig.png",
+    "role-treasury-timelock-chain.png",
+    "role-finance-boundaries.png",
+    "role-dual-tl-matrix.png",
+    "role-recovery-paths.png"
+  ],
+  "honest_boundary": "Slide-based ffmpeg walkthrough; not live Safe UI screen capture"
+}

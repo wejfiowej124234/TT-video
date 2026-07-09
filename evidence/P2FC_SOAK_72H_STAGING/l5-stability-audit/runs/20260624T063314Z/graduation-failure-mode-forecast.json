@@ -1,0 +1,99 @@
+{
+  "schema": "traveltrust.p2fc_post_completed_failure_forecast.v1",
+  "trigger_file": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+  "execution_entrypoint": "scripts/ops/p2fc-post-soak-one-shot-execute.sh",
+  "failure_paths": [
+    {
+      "step": 1,
+      "phase": "tn_p1_010",
+      "failure_mode": "TN-P1-010 replay / reconcile read failure",
+      "likelihood": "low",
+      "trigger": "COMPLETED.json → p2fc-run-tn-p1-010-independent.sh",
+      "why": "internal spine isolated from /meta",
+      "precheck": "pass",
+      "mitigation": "use internal/indexer-* only; do not gate on GET /meta body"
+    },
+    {
+      "step": 2,
+      "phase": "rollback_snapshot",
+      "failure_mode": "fly snapshot capture fail",
+      "likelihood": "low",
+      "trigger": "p2fc_capture_fly_rollback_snapshot",
+      "why": "fly CLI auth / network",
+      "precheck": "pass",
+      "mitigation": "wave-rollback-plan/latest.json manual revert"
+    },
+    {
+      "step": 3,
+      "phase": "apply_patches",
+      "failure_mode": "meta hotfix + backlog patch conflict",
+      "likelihood": "medium",
+      "trigger": "p2fc_apply_backlog_patches wave-0 hotfix then deploy-backlog.patch",
+      "why": "overlapping middleware/mod.rs · health_meta · fly.toml hunks",
+      "precheck": "warn",
+      "mitigation": "apply hotfix first; resolve reject with git apply --3way; wave plan documents order"
+    },
+    {
+      "step": 4,
+      "phase": "wave1_api_deploy",
+      "failure_mode": "API deploy OOM / compile timeout / health≠200",
+      "likelihood": "high",
+      "trigger": "p2fc_deploy_api_wave tt-api-staging",
+      "why": "itineraries.rs Δ195 + L1 API backlog",
+      "precheck": "warn",
+      "mitigation": "fly rollback previous_image from fly-rollback-snapshot.json"
+    },
+    {
+      "step": 5,
+      "phase": "wave2_web_deploy",
+      "failure_mode": "Web deploy fail / meta route mismatch",
+      "likelihood": "medium",
+      "trigger": "p2fc_deploy_web_wave tt-web-staging",
+      "why": "app/meta/route.ts 130s timeout must align post hotfix",
+      "precheck": "warn",
+      "mitigation": "rollback tt-web-staging previous_image"
+    },
+    {
+      "step": 6,
+      "phase": "meta_availability",
+      "failure_mode": "G02 strict /meta still 408 — 30s legacy vs 120s hotfix not live",
+      "likelihood": "high",
+      "trigger": "p2fc-verify-staging-meta-availability.sh --strict",
+      "why": "staging REQUEST_TIMEOUT_SECS=30 until wave-0 deploy; GET /meta >30s → 408",
+      "precheck": "warn",
+      "mitigation": "confirm fly.toml REQUEST_TIMEOUT_SECS=120 + web META_ROUTE_FETCH_TIMEOUT_MS=130000 deployed before strict gate"
+    },
+    {
+      "step": 7,
+      "phase": "g02_deep_gate",
+      "failure_mode": "Deep Gate G02 fallback fail / non-meta G03·G08",
+      "likelihood": "medium",
+      "trigger": "run-phase2-deep-release-gate.sh --require-meta-green",
+      "why": "meta green necessary not sufficient; other gates may FAIL",
+      "precheck": "warn",
+      "mitigation": "fix meta first; rerun gate; accept non-meta items as separate backlog"
+    },
+    {
+      "step": 8,
+      "phase": "graduation",
+      "failure_mode": "Graduation closure partial / soak attestation mismatch",
+      "likelihood": "low",
+      "trigger": "run-phase2-testnet-post-soak-graduation-closure.sh",
+      "why": "prior step latent debt",
+      "precheck": "pass",
+      "mitigation": "checkpoint.json phase trace; do not claim CLOSED until TT_TESTNET_GRADUATION"
+    }
+  ],
+  "high_likelihood_count": 2,
+  "high_likelihood_phases": [
+    "wave1_api_deploy",
+    "meta_availability"
+  ],
+  "recommended_pre_completed_actions": [
+    "Review wave-rollback-plan + fly-rollback-snapshot before COMPLETED",
+    "Wave-0 hotfix must land before step-6 strict meta gate",
+    "TN-P1-010: confirm internal spine green locally",
+    "Wave1: stage itineraries.rs blast-radius review"
+  ],
+  "honest_boundary": "forecast only — no deploy until COMPLETED.json"
+}

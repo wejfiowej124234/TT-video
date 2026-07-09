@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.staging_community_feed_sql_purge.v1",
+  "recorded_at": "2026-07-04T09:38:21.235Z",
+  "ocs_post_ids": [
+    "236ac307-9528-4a8f-8671-ce79c56bed54",
+    "2441f1c7-4ed1-4cab-bfce-fe7b3c082666",
+    "6099293b-a895-4f67-a7d2-d3b409039f63",
+    "489787cb-2290-47d0-b684-c795a137e682",
+    "48a4aab3-c5d7-4c8d-a745-1752b5ee7ec5",
+    "c9178c1a-f280-4f24-8107-621d51ee4037",
+    "870e4872-96ba-4abc-8779-f5eb4a113e7d",
+    "83b1afc3-6aa4-42f1-ae83-a9b4f19d2dcf",
+    "82c660e2-3094-465c-b414-f8911067dfba",
+    "60dbee57-9175-4a50-8e07-433583716c9d"
+  ],
+  "dry_run": false,
+  "actions": []
+}

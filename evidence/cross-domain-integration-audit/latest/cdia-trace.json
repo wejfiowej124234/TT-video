@@ -1,0 +1,17 @@
+{
+  "arbitrator_user_id": "7d0ecd8e-a409-4edd-83b1-caf021840067",
+  "order_id": "a228d994-6348-46cb-a954-f4f3484ec75d",
+  "dispute_order_id": "801bbbb3-4c34-49ed-9f0f-bcb1d588885a",
+  "dispute_id": "482fc9ed-eceb-462e-b1d2-e4394af62b7a",
+  "dispute_traveler_token": "tts_ba00bca5-025a-4260-8bb1-254c303b5112",
+  "author_user_id": "83d11f79-0089-4c74-a412-f776ab2e9050",
+  "post_id": "2cf9b32e-5aee-4381-9f6a-90ce33476cac",
+  "report_id": "0f3a6d2d-f352-434c-a63c-ea0da68231bf",
+  "penalty_ok": true,
+  "governance_proposal_id": "911919911919911919911919911919911919",
+  "traveler_user_id": "c276ab74-71a8-47e2-9dc9-96c7fc813818",
+  "guide_row_id": "6c911c62-4aef-45a4-82fd-1a7b9f3b9b28",
+  "api_base": "http://127.0.0.1:8080",
+  "stamp": 1780816708,
+  "run_id": "2397194e"
+}

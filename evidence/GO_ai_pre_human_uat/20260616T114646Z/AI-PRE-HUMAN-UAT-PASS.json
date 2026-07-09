@@ -1,0 +1,10 @@
+{
+  "check_id": "AI_PRE_HUMAN_UAT_CHECK",
+  "stamp_utc": "20260616T114646Z",
+  "verdict": "PASS",
+  "fail_count": 0,
+  "skip_count": 0,
+  "report": "evidence/GO_ai_pre_human_uat/20260616T114646Z/AI-PRE-HUMAN-UAT-REPORT.md",
+  "cert1_gate": true,
+  "honest_boundary": "AI pre-check PASS \u2260 HUMAN_DONE"
+}

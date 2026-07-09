@@ -1,0 +1,53 @@
+{
+  "schema": "traveltrust.local_first_alignment_audit.v1",
+  "at": "20260615T020649Z",
+  "head": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+  "staging_api_sha": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+  "staging_web_sha": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+  "verdict": "NOT_100_PERCENT_ALIGNED",
+  "tt_marker": "TT_LOCAL_FIRST_ALIGNMENT: NOT_100_PERCENT_ALIGNED",
+  "gaps": [
+    {
+      "id": "GAP-CLOSURE-WT",
+      "sev": "P0",
+      "items": [
+        "scripts/dev/run-local-first-alignment-closure.sh",
+        "scripts/dev/emit-local-first-alignment-audit.mjs"
+      ]
+    },
+    {
+      "id": "GAP-WT-TRACKED",
+      "sev": "P0",
+      "count": 9,
+      "sample": [
+        "data/README.md",
+        "data/api_startup.log",
+        "data/indexer_audit.jsonl",
+        "data/indexer_state.json.runtime",
+        "data/profile_avatars/04ef705b-d85a-4b2e-b6c5-72b21bc34891.jpg",
+        "data/profile_avatars/6863fd89-84ce-45ff-85a5-74ebe52380c0.jpg",
+        "data/profile_avatars/83d35b3d-0ecc-4f0d-8daf-208b800785d6.jpg",
+        "data/profile_avatars/87cb6bad-e84a-4aad-b6e6-dc9875842e30.jpg",
+        "data/profile_avatars/97d61c3e-a229-4749-a2d2-b0a939009912.jpg"
+      ]
+    }
+  ],
+  "probes": {
+    "D6": true,
+    "D24": true,
+    "TN-P1-010": true,
+    "DEEP_GATE": true,
+    "G04": true,
+    "ADM_U01": true,
+    "HAT": true
+  },
+  "wt": {
+    "porcelain_count": 1151,
+    "closure_dirty": [
+      "scripts/dev/run-local-first-alignment-closure.sh",
+      "scripts/dev/emit-local-first-alignment-audit.mjs"
+    ],
+    "deploy_non_e2e_dirty": 0,
+    "non_exempt_dirty": 764
+  }
+}

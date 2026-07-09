@@ -1,0 +1,122 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_review.v1",
+  "stamp_utc": "20260704T150156Z",
+  "filename": "ocs-sydney-coast-provider-cover.jpg",
+  "chain_id": "sydney-coast",
+  "city": "悉尼",
+  "country_code": "AU",
+  "country_label": "澳大利亚",
+  "slot": "provider-cover",
+  "surface": "Provider",
+  "manifest_snapshot": {
+    "chain_id": "sydney-coast",
+    "city": "悉尼",
+    "country_code": "AU",
+    "country_label": "澳大利亚",
+    "chain_tags": [
+      "海岸",
+      "徒步"
+    ],
+    "provider.title": "悉尼海港皮划艇 · 半日",
+    "provider.category": "experience",
+    "provider.description": "含装备、教练与海港安全简报。",
+    "provider.cover_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-provider-cover.jpg"
+  },
+  "manifest_field_alignment": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "matrix_city_matches_manifest",
+        "pass": true,
+        "detail": "matrix=悉尼 manifest=悉尼"
+      },
+      {
+        "id": "country_code_present",
+        "pass": true,
+        "detail": "AU"
+      },
+      {
+        "id": "copy_label_non_empty",
+        "pass": true,
+        "detail": "悉尼海港皮划艇 · 半日"
+      },
+      {
+        "id": "copy_label_contains_city_or_chain_theme",
+        "pass": true,
+        "detail": "city in copy_label"
+      }
+    ],
+    "requirement": "图片与 Manifest 全字段 100% 同城同主题对齐"
+  },
+  "destination_authenticity_checklist": {
+    "architecture": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "streetscape": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "clothing": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "language_signage": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "transportation": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "natural_environment": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "food_dining": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "commercial_form": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "cultural_elements": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    }
+  },
+  "prohibited": {
+    "cross_country_elements": false,
+    "cross_city_elements": false,
+    "cross_culture_mixing": false
+  },
+  "TT_DESTINATION_AUTHENTICITY_REVIEW": "PASS"
+}

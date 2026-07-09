@@ -1,0 +1,267 @@
+{
+  "phase": "②.8 Human Acceptance Test",
+  "recorded_at": "2026-06-30T08:47:24.976Z",
+  "targets": {
+    "web": "https://tt-web-staging.fly.dev",
+    "api": "https://tt-api-staging.fly.dev"
+  },
+  "verdict": "PASS",
+  "summary": {
+    "p0": 0,
+    "p1": 2,
+    "p2": 2,
+    "admin_p1": 1,
+    "flows_pass": 26,
+    "flows_fail": 0,
+    "flows_partial": 2,
+    "flows_blocked": 1
+  },
+  "issues": [
+    {
+      "id": "HAT-B-001",
+      "role": "旅行者",
+      "area": "市场",
+      "route": "/market",
+      "priority": "P2",
+      "title": "搜索框不明显",
+      "observation": "no searchbox role",
+      "human_impact": "筛选/搜索体验弱"
+    },
+    {
+      "id": "HAT-B-002",
+      "role": "旅行者",
+      "area": "页面壳",
+      "route": "/me",
+      "priority": "P1",
+      "title": "L5 页壳不可见",
+      "observation": "data-tt shell missing",
+      "human_impact": "布局/导航可能未加载"
+    },
+    {
+      "id": "HAT-B-003",
+      "role": "商家",
+      "area": "测试账号",
+      "route": "/provider/register",
+      "priority": "P2",
+      "title": "无预置商家一键账号",
+      "observation": "staging seed 仅 tourist/guide",
+      "human_impact": "完整商家闭环需注册+Admin 审核，手测成本高"
+    },
+    {
+      "id": "HAT-B-004",
+      "role": "管理员",
+      "area": "主内容",
+      "route": "/admin/provider-applications",
+      "priority": "P1",
+      "title": "主区域文案不匹配",
+      "observation": "/Merchant|商家|Provider|Application|申请|onboarding/i",
+      "human_impact": "用户可能看到空列表或错误页"
+    }
+  ],
+  "flows": [
+    {
+      "role": "旅行者",
+      "flow": "登录表单",
+      "step": "/auth/login",
+      "status": "PASS",
+      "notes": "email+password+submit visible"
+    },
+    {
+      "role": "旅行者",
+      "flow": "注册",
+      "step": "/auth/register",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "旅行者",
+      "flow": "首页",
+      "step": "/",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "旅行者",
+      "flow": "市场",
+      "step": "/market",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面壳",
+      "step": "/me",
+      "status": "PARTIAL",
+      "notes": ""
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面",
+      "step": "/me/settings",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面",
+      "step": "/me/identities",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面",
+      "step": "/community/messages",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面",
+      "step": "/orders",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面壳",
+      "step": "/governance/proposals",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "旅行者",
+      "flow": "页面",
+      "step": "/market/acquisition",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "向导",
+      "flow": "页面",
+      "step": "/guide",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "向导",
+      "flow": "页面",
+      "step": "/orders",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "商家",
+      "flow": "注册入口",
+      "step": "provider register step0",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "商家",
+      "flow": "入驻表单",
+      "step": "/provider/register",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "商家",
+      "flow": "橱窗",
+      "step": "/market/provider",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "商家",
+      "flow": "完整闭环",
+      "step": "publish listing",
+      "status": "BLOCKED",
+      "notes": "需新注册+审核"
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/orders",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/users",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/finance",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/disputes",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/community/reports",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/inbox",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/provider-applications",
+      "status": "PARTIAL",
+      "notes": ""
+    },
+    {
+      "role": "治理",
+      "flow": "治理首页",
+      "step": "/governance",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "治理",
+      "flow": "页面",
+      "step": "/governance/delegate",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "治理",
+      "flow": "页面",
+      "step": "/governance/distribution-claim",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "治理",
+      "flow": "页面",
+      "step": "/staking",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "旅行者",
+      "flow": "社区 Feed",
+      "step": "/community",
+      "status": "PASS",
+      "notes": ""
+    }
+  ],
+  "boundary": "Human-visible HAT · browser + API probe · not Production GO"
+}

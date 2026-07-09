@@ -264,6 +264,8 @@ npx vitest run \
   app/admin/content/adminContentCs4.contract.test.ts \
   app/admin/content/adminContentCs5.contract.test.ts \
   app/admin/content/adminContentCs6.contract.test.ts \
+  app/admin/content/adminContentCs7.contract.test.ts \
+  app/admin/content/adminContentCs8.contract.test.ts \
   app/admin/official/adminOfficialOs1.contract.test.ts \
   app/admin/official/adminOfficialOs2.contract.test.ts \
   app/admin/official/adminOfficialOs3.contract.test.ts \

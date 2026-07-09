@@ -1,0 +1,73 @@
+{
+  "schema": "traveltrust.qa2_execution_priority.v1",
+  "weights": {
+    "P0": 4,
+    "P1": 2,
+    "P2": 1,
+    "P3": 0.5
+  },
+  "NOW": [
+    {
+      "id": "RC-02",
+      "title": "Runbook ↔ scripts path drift (DOA SSOT)",
+      "merged_findings": [
+        "F-003",
+        "F-004"
+      ],
+      "verdict": "UPDATE",
+      "queue": "NOW"
+    },
+    {
+      "id": "RC-03",
+      "title": "Admin governance boundary overlap AG vs PGX-ADMIN",
+      "merged_findings": [
+        "F-005",
+        "F-006"
+      ],
+      "verdict": "REFACTOR",
+      "queue": "NOW"
+    },
+    {
+      "id": "RC-04",
+      "title": "U12 / MASTER bundle narrative misalignment",
+      "merged_findings": [
+        "F-007"
+      ],
+      "verdict": "KEEP",
+      "queue": "NOW"
+    }
+  ],
+  "NEXT": [
+    {
+      "id": "RC-01",
+      "title": "Navigation / IA duplication across PF · PGX · UXA",
+      "merged_findings": [
+        "F-001",
+        "F-002",
+        "F-010"
+      ],
+      "verdict": "MERGE",
+      "queue": "NEXT"
+    },
+    {
+      "id": "RC-05",
+      "title": "Acquisition lifecycle traceability gap",
+      "merged_findings": [
+        "F-008"
+      ],
+      "verdict": "UPDATE",
+      "queue": "NEXT"
+    }
+  ],
+  "LATER": [
+    {
+      "id": "RC-06",
+      "title": "L5 token drift on account/settings surfaces",
+      "merged_findings": [
+        "F-009"
+      ],
+      "verdict": "KEEP",
+      "queue": "LATER"
+    }
+  ]
+}

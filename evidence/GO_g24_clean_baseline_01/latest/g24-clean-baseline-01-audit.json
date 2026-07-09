@@ -1,0 +1,92 @@
+{
+  "audit_id": "G24-CLEAN-BASELINE-01",
+  "stamp_utc": "20260616T040721Z",
+  "phase": "\u2461",
+  "verdict": "FAIL_CLEAN_BASELINE",
+  "recommendation": "REDEPLOY_GOVFREEZE_V2_CLEAN_BASELINE",
+  "clean_baseline_criteria": [
+    {
+      "id": "CB-C1",
+      "status": "FAIL",
+      "note": "patch_pending_ops=10"
+    },
+    {
+      "id": "CB-C2",
+      "status": "PASS",
+      "note": "proxy_failures=0"
+    },
+    {
+      "id": "CB-C3",
+      "status": "FAIL",
+      "note": "jurisdiction_init_failures=10/10"
+    },
+    {
+      "id": "CB-C4",
+      "status": "FAIL",
+      "note": "{\"governor\": true, \"primary_market\": false, \"treasury_p4_cap\": true, \"seat_registry\": false, \"stake_pool\": true}"
+    },
+    {
+      "id": "CB-C5",
+      "status": "PASS",
+      "note": "env_registry_p0=0 legacy_keys=0"
+    },
+    {
+      "id": "CB-C6",
+      "status": "PARTIAL",
+      "note": "ui=PASS gov_verify=?"
+    }
+  ],
+  "p0_findings": [
+    {
+      "id": "CB-02",
+      "severity": "P0",
+      "title": "allowedExecutionTarget(primary_market)",
+      "detail": {
+        "expected": true,
+        "actual": false
+      }
+    },
+    {
+      "id": "CB-02",
+      "severity": "P0",
+      "title": "allowedExecutionTarget(seat_registry)",
+      "detail": {
+        "expected": true,
+        "actual": false
+      }
+    },
+    {
+      "id": "CB-03",
+      "severity": "P0",
+      "title": "Stake Pool 10\u56fd\u4e00\u6b21\u521d\u59cb\u5316\u4e0d\u5b8c\u6574",
+      "detail": {
+        "failures": 10,
+        "note": "minStake=0 / bps=0 \u2014 \u975e deploy-time bootstrap"
+      }
+    },
+    {
+      "id": "CB-06",
+      "severity": "P0",
+      "title": "\u8865\u4e01\u5f0f Timelock schedule \u5f85 execute\uff08\u975e\u5e72\u51c0\u57fa\u7ebf\uff09",
+      "detail": {
+        "pending_ops": 10,
+        "path": "10x configureJurisdiction"
+      }
+    }
+  ],
+  "onchain_summary": {
+    "patch_pending_count": 10,
+    "stake_pool_jurisdiction_failures": 10,
+    "allowed_execution_target": {
+      "governor": true,
+      "primary_market": false,
+      "treasury_p4_cap": true,
+      "seat_registry": false,
+      "stake_pool": true
+    }
+  },
+  "paused_workstreams": [
+    "HAT-R1 Phase A",
+    "bootstrap-stake-pool-jurisdictions-sepolia schedule/execute patch"
+  ]
+}

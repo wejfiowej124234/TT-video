@@ -1,0 +1,338 @@
+{
+  "schema": "traveltrust.official_cold_start_dataset.l5_enterprise_audit.v1",
+  "stamp": "20260703T051500Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "recorded_at": "2026-07-03T05:19:47.098Z",
+  "verdict": "PASS",
+  "baseline_recommendation": "APPROVED_AS_STAGING_OFFICIAL_COLD_START_BASELINE",
+  "l5_score": {
+    "total": 120,
+    "max": 120,
+    "percent": 100,
+    "tier": "L5_ENTERPRISE_BASELINE"
+  },
+  "dimensions": [
+    {
+      "id": "D1_data_source",
+      "name": "数据源 · @ocs.traveltrust.app · 非 smoke/demo",
+      "score": 20,
+      "max": 20,
+      "status": "PASS",
+      "detail": {
+        "ocs_accounts_total": 35,
+        "domain": "ocs.traveltrust.app",
+        "orchestrator": "Admin Public Operations only"
+      }
+    },
+    {
+      "id": "D2_admin_pub_ops",
+      "name": "Admin Public Operations 创建/发布链路",
+      "score": 15,
+      "max": 15,
+      "status": "PASS",
+      "detail": {
+        "guides": {
+          "ocs_published": 10,
+          "production": 10,
+          "bad_origin": 0,
+          "smoke": 0
+        },
+        "market_listings": {
+          "ocs_published": 20,
+          "production": 20,
+          "bad_origin": 0,
+          "smoke": 0
+        },
+        "community_posts": {
+          "ocs_published": 0,
+          "production": 0,
+          "bad_origin": 0,
+          "smoke": 0
+        },
+        "official_guides": {
+          "ocs_total": 10,
+          "bad_origin": 0
+        }
+      }
+    },
+    {
+      "id": "D3_rbac",
+      "name": "RBAC · Admin 编排 / Official 账号用户写",
+      "score": 10,
+      "max": 10,
+      "status": "PASS",
+      "detail": {
+        "admin_login": "tourist@test.com (SuperAdmin seed)",
+        "official_account_kinds": [
+          "community_author",
+          "guide",
+          "merchant"
+        ],
+        "merchant_bootstrap": "POST …/bootstrap-market (Admin-only)",
+        "note": "No direct SQL in orchestrator; RBAC enforced on Admin HTTP"
+      }
+    },
+    {
+      "id": "D4_data_origin_catalog",
+      "name": "data_origin=production · public_catalog_only",
+      "score": 15,
+      "max": 15,
+      "status": "PASS",
+      "detail": {
+        "guides_public_ocs": 10,
+        "provider_public_ocs": 10,
+        "acquisition_public_ocs": 10
+      }
+    },
+    {
+      "id": "D5_coverage",
+      "name": "Coverage · 10 链 / 5 ops / 10 campaigns",
+      "score": 15,
+      "max": 15,
+      "status": "PASS",
+      "detail": {
+        "chains": "10/10",
+        "ops": "5/5",
+        "campaigns": "10/10",
+        "guides": 10,
+        "listings": 20,
+        "official_guides": 10
+      }
+    },
+    {
+      "id": "D6_surface_coverage",
+      "name": "Surface Coverage · 各展示面 ≥1 OCS",
+      "score": 10,
+      "max": 10,
+      "status": "PASS",
+      "detail": {
+        "guides": true,
+        "provider": true,
+        "acquisition": true,
+        "cold_start_home": true,
+        "campaigns": true,
+        "campaigns_deployed": 10,
+        "provider_count": 10,
+        "acquisition_count": 10
+      }
+    },
+    {
+      "id": "D7_chain_integrity",
+      "name": "运营链抽查 · Guide→Provider→Acquisition→OG",
+      "score": 10,
+      "max": 10,
+      "status": "PASS",
+      "detail": [
+        {
+          "chain": "tokyo-photo",
+          "guide": true,
+          "provider": true,
+          "acquisition": true,
+          "official_guide": true
+        },
+        {
+          "chain": "paris-art",
+          "guide": true,
+          "provider": true,
+          "acquisition": true,
+          "official_guide": true
+        },
+        {
+          "chain": "dubai-luxury",
+          "guide": true,
+          "provider": true,
+          "acquisition": true,
+          "official_guide": true
+        }
+      ]
+    },
+    {
+      "id": "D8_governance_reuse",
+      "name": "DDG / Validate · CLOSED_UNLESS_TOUCHED 复用",
+      "score": 10,
+      "max": 10,
+      "status": "PASS",
+      "detail": {
+        "ddg_evidence": "evidence/GO_official_cold_start_dataset/20260703T044855Z/fs-dg-post.json",
+        "ddg_verdict": "PASS",
+        "validate_evidence": "evidence/GO_official_cold_start_dataset/20260703T044855Z/ocs-validate.json",
+        "validate_verdict": "PASS",
+        "rc_ddg_reopen": false,
+        "fe_api_err_vmarket": "REUSE STAGING-FULL-SITE-DDG 20260703T033727Z pipeline (CLOSED)"
+      }
+    },
+    {
+      "id": "D9_operability",
+      "name": "运营可维护性 · state 幂等 · runbook · CLOSED_UNLESS_TOUCHED",
+      "score": 10,
+      "max": 10,
+      "status": "PASS",
+      "detail": {
+        "state_json": "d:/TravelTrust-V1.1/evidence/GO_official_cold_start_dataset/20260703T044855Z/state.json",
+        "rerun_policy": "CLOSED_UNLESS_TOUCHED",
+        "runbook": "docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md",
+        "registry": "registry/official-cold-start-dataset.v1.yaml"
+      }
+    },
+    {
+      "id": "D10_post_go",
+      "name": "Post-GO 差距 · deferred 项",
+      "score": 5,
+      "max": 5,
+      "status": "ACCEPTED_DEFERRED",
+      "detail": {
+        "enhancements": 4,
+        "blocking_from_deferred": 0
+      }
+    }
+  ],
+  "coverage": {
+    "guides": 10,
+    "providers": 10,
+    "acquisitions": 10,
+    "official_guides": 10,
+    "campaigns": 10,
+    "ops_accounts": 5,
+    "chains_complete": "10/10"
+  },
+  "chain_report": [
+    {
+      "chain": "tokyo-photo",
+      "guide": "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+      "provider": "0b222fa9-f283-45a6-85a9-41da343c841d",
+      "acquisition": "7bfea606-6481-4499-b88f-4864d3946396",
+      "official_guide": "bd518b74-4e5c-4da3-b41e-586f3bd14afe",
+      "complete": true
+    },
+    {
+      "chain": "kyoto-culture",
+      "guide": "2f51212f-6ac0-445e-bf94-8338738b2de3",
+      "provider": "29eedfb5-5e23-4adf-a28e-6f395dfe1ee7",
+      "acquisition": "e7a3ada1-2547-4d7c-b900-23802aac99d6",
+      "official_guide": "8d29ca44-bf62-4e0c-9ff6-c76150dfc720",
+      "complete": true
+    },
+    {
+      "chain": "seoul-food",
+      "guide": "519d9067-f2b2-49aa-9f76-8665cb24e85b",
+      "provider": "471173e0-8c08-4dac-9332-6a9cdd1fdbd5",
+      "acquisition": "6f512a7b-6c0a-45c5-a8e4-4d90fe7f523c",
+      "official_guide": "21d483ea-a565-4ba4-b2b8-11da28891e07",
+      "complete": true
+    },
+    {
+      "chain": "bangkok-temple",
+      "guide": "da75b617-64bf-4338-a5b2-daf32921d695",
+      "provider": "5ed30bdd-08d9-4e60-af0d-266abfb5929e",
+      "acquisition": "78618d20-982b-4948-9bfa-f4a22d086959",
+      "official_guide": "766dcf9f-2954-4547-b949-b1282dcce989",
+      "complete": true
+    },
+    {
+      "chain": "singapore-family",
+      "guide": "ea732e91-f0f3-42da-b4ae-1a1f5f0f592c",
+      "provider": "2deb3bd8-5d3e-4451-b44a-79c2587ebb41",
+      "acquisition": "490078e3-57f4-4d78-b01c-ed817a3f2df6",
+      "official_guide": "2b30657f-4fce-4b9b-adca-eacfc96af650",
+      "complete": true
+    },
+    {
+      "chain": "paris-art",
+      "guide": "692a940e-1d25-452d-83f8-5b37f9141f60",
+      "provider": "cf6462c7-37b5-41b4-b9ee-a8c07bcc8412",
+      "acquisition": "7991a8bf-c358-48df-98e8-c6a3048abb8d",
+      "official_guide": "ed68cdc7-bd9c-4aa3-a117-8191479ca92d",
+      "complete": true
+    },
+    {
+      "chain": "nyc-skyline",
+      "guide": "c5d963f9-e679-43a6-9b84-5f7073a51109",
+      "provider": "2f8cfdf7-417d-4c9a-b3da-45a22237eac0",
+      "acquisition": "8885e2b7-f51d-432d-858c-cbe83140a3d8",
+      "official_guide": "108e8182-5c94-4f87-9043-f26394d394e5",
+      "complete": true
+    },
+    {
+      "chain": "sydney-coast",
+      "guide": "e551bed7-f455-4102-9fa3-b791a68e06d5",
+      "provider": "1693a76b-8b0e-4526-b0f8-6b22c10594f5",
+      "acquisition": "fa3bed24-d8eb-4270-ada9-08eec8358648",
+      "official_guide": "a9037477-cfd1-4219-8750-af607c5ec119",
+      "complete": true
+    },
+    {
+      "chain": "barcelona-arch",
+      "guide": "dddf81f0-28b7-4aba-b744-70026d9fb148",
+      "provider": "4832bced-9f95-4459-9a54-0744e37fb642",
+      "acquisition": "59ac5a99-0504-43ff-8904-37bab0a093e0",
+      "official_guide": "ab59943c-7558-4ac9-b1a6-9ea614b2968d",
+      "complete": true
+    },
+    {
+      "chain": "dubai-luxury",
+      "guide": "cd69b54b-6407-4a34-90c6-f36c0c658dd7",
+      "provider": "d92ea03e-35b5-4c1e-803e-44e43ee748d8",
+      "acquisition": "dd638810-8074-47ef-80ae-92da6c89cf06",
+      "official_guide": "205d73cd-1bd6-45cb-a99e-00b28321f42c",
+      "complete": true
+    }
+  ],
+  "chain_spot_checks": [
+    {
+      "chain": "tokyo-photo",
+      "guide": true,
+      "provider": true,
+      "acquisition": true,
+      "official_guide": true
+    },
+    {
+      "chain": "paris-art",
+      "guide": true,
+      "provider": true,
+      "acquisition": true,
+      "official_guide": true
+    },
+    {
+      "chain": "dubai-luxury",
+      "guide": true,
+      "provider": true,
+      "acquisition": true,
+      "official_guide": true
+    }
+  ],
+  "issues": [],
+  "enhancements": [
+    {
+      "id": "POST_GO_COMMUNITY",
+      "severity": "post_go_enhancement",
+      "msg": "Community 100 posts deferred",
+      "detail": "No Admin bulk write API — manifest phase deferred_post_mvp"
+    },
+    {
+      "id": "POST_GO_ORDERS",
+      "severity": "post_go_enhancement",
+      "msg": "Historical orders 20 deferred",
+      "detail": "No Admin order seed API — manifest phase deferred_post_mvp"
+    },
+    {
+      "id": "POST_GO_CAMPAIGN_ITEMS",
+      "severity": "post_go_enhancement",
+      "msg": "Some campaign item_refs used pre-fix slugs at first deploy",
+      "detail": "Manifest corrected to chain ids; optional idempotent campaign item re-deploy"
+    },
+    {
+      "id": "POST_GO_BROWSER_UAT",
+      "severity": "post_go_enhancement",
+      "msg": "Full browser walkthrough not re-run in this audit",
+      "detail": "API-level surface + chain checks PASS; recommend spot browser UAT before Production apply"
+    }
+  ],
+  "evidence_reuse": {
+    "ocs_apply_stamp": "20260703T044855Z",
+    "ddg_post": "evidence/GO_official_cold_start_dataset/20260703T044855Z/fs-dg-post.json",
+    "validate": "evidence/GO_official_cold_start_dataset/20260703T044855Z/ocs-validate.json",
+    "rc_reopen": false,
+    "ddg_full_site_rerun": false
+  }
+}

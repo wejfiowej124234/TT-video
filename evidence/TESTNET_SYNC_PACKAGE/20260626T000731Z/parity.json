@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.testnet_sync_package_parity.v1",
+  "checked_at_utc": "2026-06-26T00:08:19.479Z",
+  "local_git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "api_staging_git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "sha_hard_match": true,
+  "zero_drift": true,
+  "checks": [
+    "04_routes",
+    "matrix_93",
+    "oed_p0_smoke",
+    "web3_l5_green",
+    "baseline_consistency_audit"
+  ]
+}

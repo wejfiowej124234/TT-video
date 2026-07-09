@@ -1,0 +1,14 @@
+{
+  "schema": "traveltrust_l5_frca_static_record.v1",
+  "recordedUtc": "2026-06-08T03:32:28Z",
+  "mode": "static",
+  "harness": "scripts/dev/five-role-full-chain-audit.py",
+  "roles": [
+    "traveler",
+    "guide",
+    "merchant",
+    "ops",
+    "admin"
+  ],
+  "status": "BASELINE_CAPTURED"
+}

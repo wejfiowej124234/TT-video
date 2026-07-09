@@ -1,0 +1,1 @@
+"# Phase① Convergence Baseline\n\n**Readiness:** 77 · **Band:** NO_GO\n**Open P0:** 5 · **Open P1:** 3\n**Captured:** 2026-06-13T08:03:25.726231+00:00\n\n**grep:** `TT_PHASE1_CONVERGENCE_BASELINE: ACTIVE`\n"

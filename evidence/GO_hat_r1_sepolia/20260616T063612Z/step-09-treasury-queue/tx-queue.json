@@ -1,0 +1,8 @@
+{
+  "step": "step-09-treasury-queue",
+  "label": "queue",
+  "tx_hash": "0xb69c04e9dae65de478e20b168623582cc96954df1e9616a7c4bfb33afc8a3c52",
+  "recorded_at": "2026-07-08T09:20:20.166Z",
+  "replaced_reverted_tx": "0xb55ef0d8d0578f30bc21bca79e7bb618356a823b17ce7c0d062d738d2c9e1f5c",
+  "note": "first queue attempt reverted RPC race; second tx confirmed Queued state=5"
+}

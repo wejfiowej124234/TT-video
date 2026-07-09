@@ -1,0 +1,270 @@
+# CMS Asset Matrix · Operations Workbench (not governance)
+# Answers: 归谁 · 去哪改 · 能不能改 · 现在读什么 (current_source → target_source)
+# Pack: node scripts/dev/run-cms-asset-matrix-pack.cjs
+
+schema: traveltrust.cms_asset_matrix.v1
+version: 1
+effective_utc: "2026-07-05"
+machine_key: TT_CMS_ASSET_MATRIX
+role: operations_workbench
+not_governance: true
+
+# Production Preparation · current phase (ops north star · not a new runbook)
+production_preparation:
+  phase: Production Preparation
+  honest_boundary: ② content ops on staging ≠ ③ Production GO
+  mainline_1_per:
+    status: FROZEN
+    completed: five_items_signed
+    reopen_only_when:
+      - production_env_config_change
+      - psp_live_integration
+      - production_domain_or_tls_change
+      - new_production_grade_incident
+    do_not: add_per_checks_by_default
+  mainline_2_cms_operation:
+    status: ACTIVE_ONLY_PROGRESS
+    daily_entry: scripts/dev/run-cms-daily-ops-board.cjs
+    loop_end: scripts/dev/run-cms-ops-refresh.cjs
+    daily_flow:
+      - todays_tasks
+      - upload
+      - publish
+      - verify
+      - evidence
+      - live
+      - run_cms_ops_refresh
+    asset_wave:
+      - destination_ambient_10_countries
+      - poi
+      - hotel
+      - transport
+      - video
+    country_gate_after_each_live:
+      - daily_board_live_plus_one
+      - source_alignment_as_expected
+      - homepage_reads_catalog_not_fallback
+    do_not: expand_cms_infrastructure
+  long_term_convergence:
+    goal: non_business_visual_assets_to_cms
+    cms_examples:
+      - home_country_ambient
+      - poi_images
+      - hotel_images
+      - transport_images
+      - brand_video
+      - landing_banner
+      - campaign_banner_visuals
+    stay_outside_cms:
+      ocs: official_entity_content
+      api: orders_users_guides_merchants
+      public_ops: campaign_scheduling
+  new_asset_gate_three_questions:
+    - owner_clear_ocs_cms_public_ops_api_media
+    - reuses_upload_publish_verify_evidence_live
+    - improves_product_ops_capability
+    if_all_yes: proceed
+    else: defer_no_infra_expansion
+
+current_source_enum:
+  - unsplash_fallback
+  - catalog
+  - catalog_partial
+  - official_cold_start
+  - placeholder
+  - media_platform
+
+target_source_enum:
+  - catalog
+  - official_cold_start
+  - media_platform
+
+related_ssot:
+  cms_image_inventory: data/catalog/cms-image-inventory.v1.yaml
+  cms_image_inventory_pack: scripts/dev/run-cms-image-inventory-pack.cjs
+  cms_l5_visual_scan_pack: scripts/dev/run-cms-l5-visual-asset-scan.cjs
+  cms_l5_visual_scan_latest: evidence/GO_cms_operation/CMS-L5-VISUAL-SCAN-LATEST.json
+  destination_ambient_execution: data/catalog/destination-ambient-matrix.v1.yaml
+  ownership_inventory: data/catalog/content-ownership-inventory.v1.yaml
+  content_brief: data/catalog/cms-content-brief.v1.yaml
+
+pack_script: scripts/dev/run-cms-asset-matrix-pack.cjs
+health_score_script: scripts/dev/run-cms-content-health-score.cjs
+ops_refresh_script: scripts/dev/run-cms-ops-refresh.cjs
+daily_board_script: scripts/dev/run-cms-daily-ops-board.cjs
+daily_snapshot_dir: evidence/GO_cms_operation/daily
+daily_report_latest: evidence/GO_cms_operation/daily/CMS-DAILY-REPORT-LATEST.json
+
+ssot_hierarchy:
+  ssot: asset_matrix_pack
+  projections:
+    - health_score
+    - daily_ops_board
+  rule: only update Asset Matrix · projections follow automatically
+  forbidden: [new_health_indicators, new_ops_scores, new_dashboards]
+
+operations_kpi:
+  ssot: asset_matrix_pack
+  health_score_role: passthrough
+  daily_board_role: daily_summary
+  long_term_only:
+    - source_alignment
+    - live_assets
+    - verify_failed
+  note: no additional KPI layers
+
+cms_operation:
+  mode: operations_pipeline
+  country_wave_order: [JP, KR, TH, SG, FR, US, AU, ES, AE, CN]
+  priority_1: destination_ambient_10_countries
+  priority_2: [poi, hotel, transport, video]
+  execution_phases:
+    phase_1_immediate: { country: JP, matrix_id: DA-JP-HOME, kpi_goal: "3/8 → 4/8" }
+    phase_2: { country: KR, matrix_id: DA-KR-HOME, goal: replicate_pipeline }
+    phase_3: { countries: [TH, SG, FR, US, AU, ES, AE, CN], goal: same_loop_no_change }
+    phase_4: { assets: [poi, hotel, transport, video], goal: same_loop }
+  operational_loop:
+    - upload
+    - publish
+    - verify
+    - evidence
+    - asset_matrix_pack
+    - health_score
+  forbidden: [new_registry, new_runbook, new_review, new_matrix, new_policy]
+
+asset_lifecycle_pipeline:
+  - draft
+  - review
+  - approved
+  - published
+  - verified
+  - live
+
+daily_ops_questions:
+  - new_live_assets_today
+  - source_alignment_delta
+  - verify_failures
+  - rollback_needed
+
+daily_report_table:
+  - live_assets
+  - source_alignment
+  - verify_fail
+  - rollback
+  - pending_review
+  - pending_publish
+
+daily_board_sections:
+  - todays_tasks
+  - four_questions
+  - kpi_table
+
+latest_evidence: evidence/GO_cms_operation/CMS-ASSET-MATRIX-LATEST.json
+health_score_evidence: evidence/GO_cms_content_l5/CMS-CONTENT-HEALTH-SCORE-LATEST.json
+
+operator_table_columns:
+  - page_module
+  - current_source
+  - target_source
+  - owner
+  - modify_entry
+
+rows:
+  - id: home_destination_ambient
+    page_module: 首页 Ambient
+    owner: CMS
+    modify_entry: /admin/content/landing-ambient
+    cms_operable: true
+    asset_family: destination_ambient
+    asset_kind: landing_ambient
+    wave: 1
+    matrix_ref: DA-JP-HOME
+    current_source: unsplash_fallback
+    target_source: catalog
+    probe: catalog_media_by_country
+
+  - id: poi_images
+    page_module: POI
+    owner: CMS
+    modify_entry: /admin/content/poi-images
+    cms_operable: true
+    asset_family: poi_hero
+    asset_kind: poi_hero
+    current_source: placeholder
+    target_source: catalog
+    probe: catalog_media_global
+
+  - id: hotel_images
+    page_module: Hotel
+    owner: CMS
+    modify_entry: /admin/content/hotel-tiers
+    cms_operable: true
+    asset_family: hotel_tier_stock
+    asset_kind: hotel_tier_stock
+    current_source: placeholder
+    target_source: catalog
+    probe: catalog_media_global
+
+  - id: transport_images
+    page_module: Transport
+    owner: CMS
+    modify_entry: /admin/content/transport
+    cms_operable: true
+    asset_family: transport_stock
+    asset_kind: transport_stock
+    current_source: placeholder
+    target_source: catalog
+    probe: catalog_media_global
+
+  - id: home_hero
+    page_module: 首页 Hero
+    owner: OCS / OPS
+    modify_entry: do_not_modify
+    cms_operable: false
+    current_source: official_cold_start
+    target_source: official_cold_start
+    probe: ocs_surface_home_hero
+
+  - id: market_guide_avatar
+    page_module: Market Guide
+    owner: OCS
+    modify_entry: do_not_modify
+    cms_operable: false
+    current_source: official_cold_start
+    target_source: official_cold_start
+    probe: ocs_guides_list
+
+  - id: community_official
+    page_module: Community Official
+    owner: OCS
+    modify_entry: do_not_modify
+    cms_operable: false
+    current_source: official_cold_start
+    target_source: official_cold_start
+    probe: ocs_community_feed
+
+  - id: traveltrust_video
+    page_module: TravelTrust Video
+    owner: Media
+    modify_entry: later
+    cms_operable: false
+    current_source: placeholder
+    target_source: media_platform
+    probe: none
+
+wave_1_jp_flow:
+  - unsplash_fallback
+  - upload
+  - publish
+  - verify
+  - evidence
+  - health_score
+  - asset_matrix_current_source_update
+
+operational_loop:
+  - upload
+  - publish
+  - verify
+  - evidence
+  - asset_matrix_pack
+  - health_score

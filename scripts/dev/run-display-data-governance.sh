@@ -36,6 +36,7 @@ C3_ID="$(curl -sS -H "Authorization: Bearer $GTOK" "$API/api/v1/me" \
   | node -e "let s='';try{const j=JSON.parse(require('fs').readFileSync(0,'utf8'));s=String(j.guide?.id||'').trim()}catch(e){}process.stdout.write(s)")"
 [[ -n "$C3_ID" ]] || fail "resolve C3 guide id via GET /api/v1/me ($C3_EMAIL)"
 
-env API="$API" TOK="$TOK" C3_ID="$C3_ID" DRY_RUN="$DRY_RUN" ENV_LABEL="$ENV_LABEL" EVIDENCE_JSON="${EVIDENCE_JSON:-}" \
+env API="$API" TOK="$TOK" C3_ID="$C3_ID" DRY_RUN="$DRY_RUN" ENV_LABEL="$ENV_LABEL" \
+  POST_OCS_BASELINE="${POST_OCS_BASELINE:-1}" EVIDENCE_JSON="${EVIDENCE_JSON:-}" \
   node "$ROOT/scripts/dev/display-data-governance-run.cjs"
 log "exit 0"

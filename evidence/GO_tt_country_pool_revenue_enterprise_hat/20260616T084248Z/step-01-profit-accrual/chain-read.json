@@ -1,0 +1,10 @@
+{
+  "latest_epoch_id": 1,
+  "funding_source": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "owner": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+  "rpc": "https://sepolia.drpc.org",
+  "epoch_1": {
+    "status": 4,
+    "net_profit_prime": 1100000
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T140100Z",
+  "filename": "ocs-bangkok-temple-community-media.jpg",
+  "row": 24,
+  "chain_id": "bangkok-temple",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "checks": {
+    "manifest_alignment": { "pass": true, "notes": "copy_label/body/tags 与 brief 100% 对齐" },
+    "destination_authenticity_9dim": { "pass": true, "notes": "湄南河游船 POV · 郑王庙/黎明寺河景 · TH-only" },
+    "country_consistency_th": { "pass": true },
+    "community_authenticity_plan": { "pass": true, "notes": "详情页环境纪实 · 非广告海报" },
+    "surface_boundary_plan": { "pass": true, "notes": "Community Media 河船 POV · 非 Official/Guide/Provider/Acquisition" },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row23_cover": "河面游船 POV 广角 vs Row23 尖塔晨光剪影 Feed",
+      "vs_row22": "动态河景 vs Official 静态路线宽幅",
+      "vs_row20": "日间河面 vs Provider 日落晚宴甲板"
+    },
+    "cover_media_complement_plan": {
+      "pass": true,
+      "row23": "尖塔剪影 · 静态 · 晨光 · 垂直构图",
+      "row24": "游船 POV · 动态 · 河面反光 · 水平广角",
+      "different_subject_angle_light_mood": true
+    },
+    "copyright_logo_watermark_ai": { "pass": true, "no_watermark": true, "no_logo": true, "no_ai_artifacts": true },
+    "nine_class_framework_frozen": true
+  }
+}

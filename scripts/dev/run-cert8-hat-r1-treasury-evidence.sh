@@ -46,9 +46,11 @@ case "$PK" in 0x*) ;; *) PK="0x${PK}" ;; esac
 export HAT_R1_PK="$PK"
 export PRIVATE_KEY="$PK"
 WALLET="$(cast wallet address --private-key "$PK")"
-RPC="${CHAIN_RPC_URL:-https://ethereum-sepolia-rpc.publicnode.com}"
+RPC="${HAT_R1_CHAIN_RPC_URL:-${CHAIN_RPC_URL:-https://sepolia.gateway.tenderly.co}}"
 export CHAIN_RPC_URL="$RPC"
 export GOVERNOR_ADDRESS="${GOVERNOR_ADDRESS:-${GOV_FREEZE_V2_GOVERNOR_ADDRESS:-}}"
+GOVERNOR_ADDRESS="$(echo "$GOVERNOR_ADDRESS" | tr -d '\r\n')"
+export GOVERNOR_ADDRESS
 [[ -n "$GOVERNOR_ADDRESS" ]] || fail "GOVERNOR_ADDRESS unset"
 [[ -n "$TREASURY_ADDRESS" ]] || fail "TREASURY_ADDRESS unset"
 
@@ -102,7 +104,7 @@ if [[ "${HAT_R1_TREASURY_QUEUE_ONLY:-0}" != "1" && "$NOW" -ge "$T_ETA" && ! -f "
   ST2="$(cast call "$GOVERNOR_ADDRESS" "state(uint256)(uint8)" "$TREASURY_PID" --rpc-url "$RPC" | awk '{print $1}')"
   hat_r1_save_json "$HAT_EVID/step-10-treasury-execute/post-execute-state.json" "$(jq -n \
     --arg pid "$TREASURY_PID" --arg st "$ST2" --arg tx "$EXEC_TX" \
-    '{proposal_id:$pid,state:$st,want:"5=Executed",execute_tx:$tx}')"
+    '{proposal_id:$pid,state:$st,want:"6=Executed",execute_tx:$tx}')"
   hat_r1_db_snapshot "step-10-treasury-execute"
   echo "CERT8_HAT_R1_TREASURY: execute tx=${EXEC_TX} state=${ST2}"
   fi

@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T13:30:53Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AU",
+    "city_zh": "悉尼",
+    "city_en": "Sydney",
+    "matrix_ids": [
+      "PH-AU-186-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AU-186-ATR",
+      "legacy_value": "邦迪海滩",
+      "poi_id": "629c53fc-8fdd-423e-8083-46f40bfb9ae9",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-186-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

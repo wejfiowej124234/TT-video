@@ -1,0 +1,34 @@
+# Registry switch rehearsal v1 — DRY RUN ONLY · do not apply to production registry
+
+schema: traveltrust.vacancy_registry_switch_rehearsal.v1
+status: REHEARSAL_PASS_NOT_APPLIED
+production_registry_mutations: false
+fork_rpc: https://1rpc.io/sepolia
+rehearsal_utc: "2026-07-09T04:55:00Z"
+
+order_verified:
+  - deploy_new_triplet
+  - capability_probe_pass
+  - migration_pass
+  - balance_reconcile_pass
+  - registry_active_switch
+  - indexer_live_mode
+  - live_reconcile_pass
+
+forbidden_order_verified:
+  registry_before_deploy: false
+
+legacy_addresses:
+  country_pool_net_profit_ledger: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
+  steward_path_vault: "0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb"
+  unallocated_steward_path_vault: "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0"
+
+proposed_new_addresses:
+  country_pool_net_profit_ledger: "0xc0Da7c66C39C154a11F307e10070E44DEFeec1ED"
+  steward_path_vault: "0xD351078d4677a063F8608cC27E4C58499CdB0210"
+  unallocated_steward_path_vault: "0x367571A4bb72DE563F7fc7E9e785eA2E9DE8488c"
+  note: fork-only predicted addresses · W7 broadcast addresses will differ
+
+rollback:
+  revert_to: legacy_read_only_addresses
+  documented: true

@@ -1,0 +1,37 @@
+{
+  "base": "http://127.0.0.1:3012",
+  "mode": "hat-r1",
+  "step": null,
+  "shots": [
+    {
+      "route": "/governance",
+      "ok": false,
+      "error": "TimeoutError: page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"http://127.0.0.1:3012/governance\", waiting until \"networkidle\"\n"
+    },
+    {
+      "route": "/governance/params#gov-params-tokenomics-freeze",
+      "file": "evidence\\GO_hat_r1_sepolia\\20260616T063612Z\\screenshots\\governance-params-freeze.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/params#gov-params-treasury-policy",
+      "file": "evidence\\GO_hat_r1_sepolia\\20260616T063612Z\\screenshots\\governance-params-treasury.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/proposals",
+      "file": "evidence\\GO_hat_r1_sepolia\\20260616T063612Z\\screenshots\\governance-proposals.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/steward-region-workbench",
+      "file": "evidence\\GO_hat_r1_sepolia\\20260616T063612Z\\screenshots\\steward-workbench.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/distribution-claim",
+      "ok": false,
+      "error": "TimeoutError: page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"http://127.0.0.1:3012/governance/distribution-claim\", waiting until \"networkidle\"\n"
+    }
+  ]
+}

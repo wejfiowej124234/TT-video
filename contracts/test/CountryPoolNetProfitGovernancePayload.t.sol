@@ -3,7 +3,7 @@ pragma solidity 0.8.19;
 
 import "forge-std/Test.sol";
 import "../src/CountryPoolNetProfitLedger.sol";
-import "../src/UnallocatedStewardPathVault.sol";
+import "../src/vacancy/UnallocatedStewardPathVault.sol";
 import "../src/CountryPoolNetProfitGovernancePayload.sol";
 
 contract CountryPoolNetProfitGovernancePayloadTest is Test {
@@ -46,6 +46,14 @@ contract CountryPoolNetProfitGovernancePayloadTest is Test {
         assertEq(
             CountryPoolNetProfitGovernancePayload.CPNP_RELEASE_UNALLOCATED,
             UnallocatedStewardPathVault.releaseToStewardPath.selector
+        );
+        assertEq(
+            CountryPoolNetProfitGovernancePayload.CPNP_DISBURSE_JURISDICTION_RESERVE,
+            UnallocatedStewardPathVault.disburseJurisdictionReserve.selector
+        );
+        assertEq(
+            CountryPoolNetProfitGovernancePayload.CPNP_SET_DISBURSE_RECIPIENT,
+            UnallocatedStewardPathVault.setDisburseRecipientAllowed.selector
         );
     }
 }

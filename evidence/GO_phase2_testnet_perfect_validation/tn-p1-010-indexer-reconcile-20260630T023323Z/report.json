@@ -1,0 +1,15 @@
+{
+  "schema": "tn_p1_010_indexer_reconcile_staging.v1",
+  "stamp": "20260630T023323Z",
+  "phase": "② testnet",
+  "api": "https://tt-api-staging.fly.dev",
+  "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
+  "distribute_skipped": true,
+  "reconcile_compound_pass": true,
+  "missing_projection": 0,
+  "projection_reconcile_clean": true,
+  "freeze_git_sha": "fc9266ce94f18810420e720bb933946c086ce909",
+  "soak_completed_after": "2026-06-29T18:17:13.697Z",
+  "release_gate": "GO",
+  "honest_boundary": "Sepolia staging indexer tick/replay/reconcile compound clean · post-soak @ freeze SHA · FeeRouter.distribute only when router balance>0 · ≠ ③ mainnet"
+}

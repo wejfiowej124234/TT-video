@@ -1,0 +1,150 @@
+{
+  "phase": "②.8 Human Acceptance Test",
+  "recorded_at": "2026-06-06T17:45:38.345Z",
+  "targets": {
+    "web": "https://tt-web-staging.fly.dev",
+    "api": "https://tt-api-staging.fly.dev"
+  },
+  "verdict": "CONDITIONAL",
+  "summary": {
+    "p0": 0,
+    "p1": 7,
+    "p2": 0,
+    "admin_p1": 7,
+    "flows_pass": 1,
+    "flows_fail": 0,
+    "flows_partial": 7,
+    "flows_blocked": 0
+  },
+  "issues": [
+    {
+      "id": "HAT-B-001",
+      "role": "管理员",
+      "area": "主内容",
+      "route": "/admin/orders",
+      "priority": "P1",
+      "title": "主区域文案不匹配",
+      "observation": "/Orders|订单/i",
+      "human_impact": "用户可能看到空列表或错误页"
+    },
+    {
+      "id": "HAT-B-002",
+      "role": "管理员",
+      "area": "主内容",
+      "route": "/admin/users",
+      "priority": "P1",
+      "title": "主区域文案不匹配",
+      "observation": "/Users|用户|User/i",
+      "human_impact": "用户可能看到空列表或错误页"
+    },
+    {
+      "id": "HAT-B-003",
+      "role": "管理员",
+      "area": "主内容",
+      "route": "/admin/finance",
+      "priority": "P1",
+      "title": "主区域文案不匹配",
+      "observation": "/Finance|财务|finance|摘要/i",
+      "human_impact": "用户可能看到空列表或错误页"
+    },
+    {
+      "id": "HAT-B-004",
+      "role": "管理员",
+      "area": "主内容",
+      "route": "/admin/disputes",
+      "priority": "P1",
+      "title": "主区域文案不匹配",
+      "observation": "/Disputes|争议/i",
+      "human_impact": "用户可能看到空列表或错误页"
+    },
+    {
+      "id": "HAT-B-005",
+      "role": "管理员",
+      "area": "主内容",
+      "route": "/admin/community/reports",
+      "priority": "P1",
+      "title": "主区域文案不匹配",
+      "observation": "/Community reports|社区举报|Report|举报/i",
+      "human_impact": "用户可能看到空列表或错误页"
+    },
+    {
+      "id": "HAT-B-006",
+      "role": "管理员",
+      "area": "主内容",
+      "route": "/admin/inbox",
+      "priority": "P1",
+      "title": "主区域文案不匹配",
+      "observation": "/Task inbox|Inbox|收件|任务/i",
+      "human_impact": "用户可能看到空列表或错误页"
+    },
+    {
+      "id": "HAT-B-007",
+      "role": "管理员",
+      "area": "主内容",
+      "route": "/admin/provider-applications",
+      "priority": "P1",
+      "title": "主区域文案不匹配",
+      "observation": "/Merchant|商家|Provider|Application|申请|onboarding/i",
+      "human_impact": "用户可能看到空列表或错误页"
+    }
+  ],
+  "flows": [
+    {
+      "role": "管理员",
+      "flow": "页面壳",
+      "step": "/admin",
+      "status": "PASS",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/orders",
+      "status": "PARTIAL",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/users",
+      "status": "PARTIAL",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/finance",
+      "status": "PARTIAL",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/disputes",
+      "status": "PARTIAL",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/community/reports",
+      "status": "PARTIAL",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/inbox",
+      "status": "PARTIAL",
+      "notes": ""
+    },
+    {
+      "role": "管理员",
+      "flow": "页面",
+      "step": "/admin/provider-applications",
+      "status": "PARTIAL",
+      "notes": ""
+    }
+  ],
+  "boundary": "Human-visible HAT · browser + API probe · not Production GO"
+}

@@ -1,0 +1,67 @@
+{
+  "base": "http://127.0.0.1:3012",
+  "mode": "browser-acceptance",
+  "step": null,
+  "shots": [
+    {
+      "route": "/governance",
+      "ok": false,
+      "error": "TimeoutError: page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"http://127.0.0.1:3012/governance\", waiting until \"networkidle\"\n"
+    },
+    {
+      "route": "/governance/params#gov-params-tokenomics-freeze",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_tt_governance_enterprise_hat\\20260616T071420Z\\screenshots\\gov-params-freeze.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/params#gov-params-treasury-policy",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_tt_governance_enterprise_hat\\20260616T071420Z\\screenshots\\gov-params-treasury.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/params#gov-params-overview",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_tt_governance_enterprise_hat\\20260616T071420Z\\screenshots\\gov-params-overview.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/proposals",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_tt_governance_enterprise_hat\\20260616T071420Z\\screenshots\\governance-proposals.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/proposals/create",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_tt_governance_enterprise_hat\\20260616T071420Z\\screenshots\\governance-proposals-create.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/delegate",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_tt_governance_enterprise_hat\\20260616T071420Z\\screenshots\\governance-delegate.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/steward-region-workbench",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_tt_governance_enterprise_hat\\20260616T071420Z\\screenshots\\steward-workbench.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/distribution-claim",
+      "ok": false,
+      "error": "TimeoutError: page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"http://127.0.0.1:3012/governance/distribution-claim\", waiting until \"networkidle\"\n"
+    },
+    {
+      "route": "/governance/distribution-accruals",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_tt_governance_enterprise_hat\\20260616T071420Z\\screenshots\\distribution-accruals.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/fee-routes",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_tt_governance_enterprise_hat\\20260616T071420Z\\screenshots\\fee-routes.png",
+      "ok": true
+    },
+    {
+      "route": "/governance/vault-forwards",
+      "file": "D:\\TravelTrust-V1.1\\evidence\\GO_tt_governance_enterprise_hat\\20260616T071420Z\\screenshots\\vault-forwards.png",
+      "ok": true
+    }
+  ]
+}

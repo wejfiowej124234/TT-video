@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust_l5_operations_deep_audit.v1",
+  "status": "PASS",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "audit_verdict": "OPERATIONS_L5_AUDIT_GO",
+  "enterprise_score": 85,
+  "last_audit_matrix_path": "evidence/l5_operations_deep_audit/audit_matrix.v1.json",
+  "last_audit_run_utc": "20260608T015217Z",
+  "baseline_refs": [
+    "120",
+    "133",
+    "145",
+    "146",
+    "150",
+    "155"
+  ],
+  "notes": "L5 Operations Deep Audit baseline. PASS requires OPERATIONS_L5_AUDIT_GO, enterprise_score>=85, P0 items closed, and live deep harness evidence.",
+  "last_p0_closure_record_path": "evidence/l5_operations_deep_audit/p0_closure_record.v1.json",
+  "last_p0_closure_run_utc": "20260608T023656Z",
+  "p0_closure_verdict": "OPERATIONS_L5_AUDIT_GO"
+}

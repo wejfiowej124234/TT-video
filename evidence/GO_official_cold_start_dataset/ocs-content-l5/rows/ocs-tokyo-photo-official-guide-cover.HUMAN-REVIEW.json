@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T123130Z",
+  "filename": "ocs-tokyo-photo-official-guide-cover.jpg",
+  "chain_id": "tokyo-photo",
+  "city": "东京",
+  "country_code": "JP",
+  "slot": "official-guide-cover",
+  "surface": "Official Guide",
+  "copy_label": "东京摄影一日路线 · 官方精选",
+  "manifest_copy": {
+    "official_guide.title": "东京摄影一日路线 · 官方精选",
+    "official_guide.destination": "东京",
+    "official_guide.body": "从浅草寺到晴空塔，串联最佳拍摄时段与交通换乘，附官方推荐机位清单。",
+    "official_guide.tags": ["东京", "摄影", "官方精选"],
+    "official_guide.cover_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg"
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 88885 bytes；非纯色占位。" },
+    "G2_copy_alignment": { "pass": true, "notes": "浅草五重塔+隅田川+晴空塔宽幅路线，与 title/body/destination/tags 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "史诗宽幅路线封面；区别于 Row1 肖像、Row2 台场情侣、Row3 店内产品静物。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "东京同 chain；无他国地标。" },
+    "G5_brand_visual": { "pass": true, "notes": "略暖黄金时刻、纪实旅拍路线感；与 tokyo-photo chain 品牌统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "官方攻略封面观感，适合 Official Guide / Home Hero。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光均衡、白平衡自然、640x480 无低清块。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "HUMAN-REVIEW + row verify + chain review 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "东京地标正确；无人物畸形；无水印/Logo/错字；② AI 素材。" },
+    "G10_content_diversity": { "pass": true, "notes": "路线宽幅 landscape slot；chain 内场景类型独立。" }
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

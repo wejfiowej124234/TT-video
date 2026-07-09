@@ -1,0 +1,143 @@
+{
+  "schema": "traveltrust.p2fc_web3_live_risk_convergence.v1",
+  "generated_at_utc": "2026-06-30T02:50:52Z",
+  "phase": "②",
+  "prerequisites": {
+    "adm_u01_live_go": true,
+    "adm_u02_live_go": true,
+    "p0_runtime_confirmed": true,
+    "mr12_one_shot_pass": true,
+    "mr12_lock_frozen": true
+  },
+  "domain_verdicts": {
+    "D1": "PASS",
+    "D2": "PASS",
+    "D3": "PASS",
+    "D4": "PASS"
+  },
+  "findings_merged": {
+    "D1": [
+      {
+        "id": "D1-F01",
+        "severity": "info",
+        "note": "Proxy upgrade gated by admin slot (expected = Timelock)",
+        "live_status": "ACCEPTED"
+      },
+      {
+        "id": "D1-F02",
+        "severity": "info",
+        "note": "Deploy scripts may expose bare implementation paths — formal baseline must use Proxy",
+        "artifacts": [
+          "contracts/script/ConfigureFundStackTimelockViaSafe.s.sol",
+          "contracts/script/ConfigureGovernanceTimelockViaSafe.s.sol",
+          "contracts/script/Deploy.s.sol",
+          "contracts/script/DeployCountryPoolNetProfitStack.s.sol",
+          "contracts/script/DeployCountryPoolRedemptionEpochV0.s.sol",
+          "contracts/script/DeployFundStackUnderTimelock.s.sol",
+          "contracts/script/DeployGovernanceStack.s.sol",
+          "contracts/script/DeployP51CountryLedger.s.sol"
+        ],
+        "live_status": "CLEARED",
+        "live_evidence": "MR12 FROZEN + one-shot PASS · soak execution path API/Web only (no bare impl deploy)"
+      },
+      {
+        "id": "D1-F03",
+        "severity": "info",
+        "note": "Proxy architecture tests present",
+        "artifact": "TtgGovFreezeV1ProxyArchitecture.t.sol",
+        "live_status": "ACCEPTED"
+      },
+      {
+        "id": "D1-F04",
+        "severity": "info",
+        "note": "delegatecall/upgradeToAndCall surfaces — timelock delay is primary mitigation",
+        "files": [
+          "contracts/src/GovernanceTreasuryP4Cap.sol",
+          "contracts/src/TtgPrimaryMarketV1.sol",
+          "contracts/src/upgrade/TimelockUpgradeableProxy.sol"
+        ],
+        "live_status": "CLEARED",
+        "live_evidence": "TimelockUpgradeableProxy + TtgGovFreezeV1ProxyArchitecture.t.sol · MR12 API-only soak"
+      }
+    ],
+    "D2": [
+      {
+        "id": "D2-F01",
+        "severity": "info",
+        "note": "Timelock delay frozen: 48 hours",
+        "live_status": "ACCEPTED"
+      },
+      {
+        "id": "D2-F02",
+        "severity": "info",
+        "note": "Per-address voting cap in TtgGovFreezeConstants (400 bps)",
+        "live_status": "ACCEPTED"
+      },
+      {
+        "id": "D2-F03",
+        "severity": "info",
+        "note": "Review Governor privileged modifiers — manual follow-up",
+        "live_status": "CLEARED",
+        "live_evidence": "TravelTrustGovernor timelock queue/execute path in source"
+      }
+    ],
+    "D3": [
+      {
+        "id": "D3-F01",
+        "severity": "info",
+        "note": "Rust/YAML/TS permission IDs aligned",
+        "live_status": "ACCEPTED"
+      },
+      {
+        "id": "D3-F02",
+        "severity": "info",
+        "note": "Direct console-role write bypass path exists when env enabled",
+        "artifacts": [
+          "crates/api/src/routes/admin/admin_rbac.rs"
+        ],
+        "bypass": "PUT /console-role without approval workflow",
+        "live_status": "CLEARED",
+        "live_evidence": "P0 runtime: bypass env not active on persistent staging"
+      },
+      {
+        "id": "D3-F04",
+        "severity": "info",
+        "note": "Staging RBAC matrix live GO recorded — D3-F04 cleared by runtime evidence",
+        "live_status": "CLEARED",
+        "live_evidence": "ADM-U01 release_gate=GO run="
+      }
+    ],
+    "D4": [
+      {
+        "id": "D4-F01",
+        "severity": "medium",
+        "note": "Admin RBAC (CeFi ops) ≠ on-chain governance roles — intentional split · accepted split documented in ADM-U01 live matrix",
+        "gap": "SuperAdmin API role does not map 1:1 to on-chain proposer",
+        "live_status": "ACCEPTED"
+      },
+      {
+        "id": "D4-F02",
+        "severity": "info",
+        "note": "Governance UI routes exist — chain wallet is authority for vote/stake",
+        "live_status": "ACCEPTED"
+      },
+      {
+        "id": "D4-F03",
+        "severity": "info",
+        "note": "16 UI permission checks — must mirror API deny matrix",
+        "sample": [
+          "frontend/components/admin/AdminActorCapabilityStrip.tsx",
+          "frontend/components/admin/AdminCommandPalette.tsx",
+          "frontend/components/admin/AdminFinanceSuiteHubDepthSection.tsx",
+          "frontend/components/admin/AdminHomeCardSearch.tsx",
+          "frontend/components/admin/AdminHomeClient.tsx"
+        ],
+        "live_status": "CLEARED",
+        "live_evidence": "ADM-U01 matrix GO + ADM-U02 approval/2FA live PASS"
+      }
+    ]
+  },
+  "open_warn_count": 0,
+  "verdict": "PASS",
+  "honest_boundary": "static audit findings merged with live ADM-U01/P0 only — not ③ Production GO"
+}

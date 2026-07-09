@@ -1,0 +1,40 @@
+{
+  "schema": "traveltrust.staging_rc_baseline.signoff.v1",
+  "stamp": "20260704T100947Z",
+  "environment": "staging",
+  "recorded_at": "2026-07-04T10:11:09Z",
+  "verdict": "BASELINE_READY",
+  "machine_keys": {
+    "TT_STAGING_RC_BASELINE": "READY",
+    "TT_STAGING_RC_SSOT_PARITY": "ALIGNED",
+    "TT_OCS_SURFACE_EXPANSION": "VERIFIED",
+    "TT_OCS_OFFICIAL_ASSET_BASELINE_V1": "VERIFIED",
+    "TT_PRODUCTION_GO": "NO_GO",
+    "TT_G3_PRODUCTION_CDN_VERIFIED": "PLANNED"
+  },
+  "ssot_unified": {
+    "official_catalog": "data/official-cold-start/dataset.v1.json",
+    "official_asset": "data/official-cold-start/assets.v1.json + media/",
+    "public_surface": "governed views + OCS publish queue",
+    "release_candidate": "evidence/manual-uat/signoff/RELEASE-CANDIDATE-SIGNOFF-20260702T144513Z.md",
+    "ocs_state": "evidence/GO_staging_rc_ssot_alignment/20260704T091605Z/ocs-asset-baseline/state.json"
+  },
+  "expected_runtime": {
+    "community_feed": 10,
+    "public_guides": 10,
+    "market_provider": 10,
+    "market_acquisition": 10,
+    "official_guides_published": 10,
+    "campaigns_deployed": 10,
+    "smoke_posts": 0,
+    "official_assets": 60
+  },
+  "unified_baseline": "scripts/dev/lib/staging-rc-public-surface-unified.cjs",
+  "evidence": {
+    "ssot_alignment": "evidence/GO_staging_rc_ssot_alignment/20260704T100947Z",
+    "ocs_surface": "evidence/GO_staging_rc_baseline/20260704T100947Z/ocs-surface-expansion-signoff.json",
+    "ddg_audit": "evidence/GO_staging_rc_baseline/20260704T100947Z/fs-dg-audit.json"
+  },
+  "honest_boundary": "Staging RC baseline READY — not Production GO — not public release",
+  "forbidden_claims": ["Production GO", "Release published", "G3 CDN VERIFIED"]
+}

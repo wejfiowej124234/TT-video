@@ -1,0 +1,23 @@
+---
+description: Immutable test account IDs C1-E2 — never reassign business_role
+alwaysApply: true
+---
+
+# Test Accounts · Immutable IDs
+
+**Registry SSOT:** [registry/test-accounts-business-immutable.v1.yaml](../registry/test-accounts-business-immutable.v1.yaml)  
+**Daily use:** [TT-TEST-ACCOUNTS-QUICK-REFERENCE.md](../docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md)
+
+## Immutable IDs（写死）
+
+`C1` `C2` `C3` `C4` `E1` `E2` — **business_role 永久** · 仅 **email** 可经 TT_TEST_ACCOUNT_CHANGE 变更
+
+## 治理
+
+- 向后兼容 · 破坏性调整 → **新增 ID** · 禁止 C2 改承担 Merchant 等
+- 脚本/文档引用 **ID** · 邮箱读 Registry
+- **6b5:** C1 C2 C3 C4 E2 · **6b4:** E1 Local only · Staging 探针 **跳过 E1**
+
+## 禁止
+
+× 平行账号表 × Business/Admin 混验 × E1 on Staging

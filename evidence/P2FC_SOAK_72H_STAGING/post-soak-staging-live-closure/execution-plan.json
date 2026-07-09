@@ -1,0 +1,108 @@
+{
+  "schema": "traveltrust.p2fc_post_soak_staging_live_closure_plan.v1",
+  "prepared_at_utc": "2026-06-29T01:03:30.169Z",
+  "mr12_unchanged": true,
+  "prep_is_not_go": true,
+  "trigger": "D:/TravelTrust-V1.1/evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+  "execution_order": [
+    {
+      "step": 0,
+      "gate": "evidence/P2FC_SOAK_72H_STAGING/COMPLETED.json",
+      "note": "S0 Soak complete"
+    },
+    {
+      "step": 1,
+      "script": "scripts/ops/p2fc-post-soak-one-shot-execute.sh",
+      "gate": "TT_P2FC_POST_SOAK_ONE_SHOT: PASS",
+      "note": "S1 MR12"
+    },
+    {
+      "step": 2,
+      "script": "scripts/dev/record-adm-u01-staging-evidence.sh",
+      "gate": "ADM-U01 release_gate GO",
+      "note": "S2 ADM-U01 live"
+    },
+    {
+      "step": 3,
+      "script": "scripts/ops/p2fc-verify-p0-rbac-bypass-runtime.sh",
+      "gate": "TT_P2FC_P0_RBAC_BYPASS_RUNTIME: CONFIRMED",
+      "note": "S3 P0 runtime"
+    },
+    {
+      "step": 4,
+      "script": "scripts/dev/gen-p2fc-post-soak-staging-live-closure-evidence.py",
+      "gate": "open_blocker_count=0",
+      "note": "S4 B1-B4"
+    },
+    {
+      "step": 5,
+      "script": "scripts/dev/record-adm-u02-staging-evidence.sh",
+      "gate": "TT_ADM_U02_STAGING_EVIDENCE PASS + GO",
+      "note": "S5 ADM-U02 live"
+    },
+    {
+      "step": 6,
+      "script": "scripts/dev/gen-p2fc-web3-live-risk-convergence.py",
+      "gate": "D3 verdict PASS",
+      "note": "S6 D3"
+    },
+    {
+      "step": 7,
+      "script": "scripts/dev/gen-p2fc-web3-live-risk-convergence.py",
+      "gate": "D124 open_warn_count=0",
+      "note": "S7 D1/D2/D4"
+    },
+    {
+      "step": 8,
+      "script": "scripts/ops/p2fc-gate-admin-staging-go-claim.sh",
+      "gate": "TT_ADMIN_STAGING_GO_CLAIM ALLOWED",
+      "note": "runtime adjudication only"
+    }
+  ],
+  "execution_order_summary": "S0 COMPLETED → S1 MR12 → S2 ADM-U01 → S3 P0 → S4 B1-B4 → S5 ADM-U02 → S6 D3 → S7 D1/D2/D4 → TT_ADMIN_STAGING_GO_CLAIM + TT_LIVE_CLOSURE_CHAIN_VERDICT",
+  "unique_closure_loop": [
+    "COMPLETED.json",
+    "MR12 one-shot PASS",
+    "ADM-U01 live release_gate=GO (persistent_host)",
+    "P0 Runtime CONFIRMED",
+    "TT_ADMIN_STAGING_GO_CLAIM=ALLOWED"
+  ],
+  "forbidden_as_admin_go_or_phase2_closure_or_production_go": [
+    "prep_ready",
+    "static_p0_confirmed",
+    "tunnel_ephemeral",
+    "local_smoke",
+    "watcher_alive",
+    "health_200_only",
+    "meta_unreachable",
+    "mr12_prep_only"
+  ],
+  "discipline_audit": "scripts/ops/p2fc-audit-admin-go-closure-discipline-readonly.sh",
+  "admin_go_ssot": "TT_ADMIN_STAGING_GO_CLAIM",
+  "admin_go_ssot_registry": "registry/admin-staging-go-claim-ssot.v1.yaml",
+  "admin_go_query": "scripts/ops/p2fc-query-admin-staging-go-claim.sh",
+  "live_closure_chain_ssot": "registry/live-closure-chain-ssot.v1.yaml",
+  "live_closure_verdict_query": "scripts/ops/p2fc-query-live-closure-verdict.sh",
+  "runtime_adjudication_query": "scripts/ops/p2fc-query-runtime-adjudication.sh",
+  "runtime_adjudication_ssot": [
+    "TT_LIVE_CLOSURE_CHAIN_VERDICT",
+    "TT_ADMIN_STAGING_GO_CLAIM"
+  ],
+  "post_completed_only_entrypoint": "scripts/ops/p2fc-post-soak-staging-live-closure-chain.sh --watch",
+  "default_verdicts": {
+    "admin_go": "NO",
+    "phase2_closure": "NO",
+    "production_go": "NO"
+  },
+  "adjudication_basis_only": [
+    "release_gate",
+    "runtime_evidence",
+    "closure_ssot"
+  ],
+  "orchestrators": {
+    "one_shot_watcher": "scripts/ops/p2fc-post-soak-one-shot-execute.sh --watch",
+    "priority_sequential": "scripts/ops/p2fc-post-soak-priority-closure-sequential.sh --execute",
+    "master": "scripts/ops/p2fc-post-soak-staging-live-closure-chain.sh --watch"
+  },
+  "honest_boundary": "① prep/static CONFIRMED ≠ ② live GO"
+}

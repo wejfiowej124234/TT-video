@@ -1,0 +1,5 @@
+{
+  "schema": "traveltrust.rbac_expansion_report.v1",
+  "route_matrix_api": "/api/v1/admin/rbac/route-matrix",
+  "note": "Compare ① baseline vs ③ — permission count hand-fill in registry"
+}

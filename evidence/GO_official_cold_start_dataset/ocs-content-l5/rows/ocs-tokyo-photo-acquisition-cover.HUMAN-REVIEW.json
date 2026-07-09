@@ -1,0 +1,87 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T122830Z",
+  "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+  "chain_id": "tokyo-photo",
+  "city": "东京",
+  "country_code": "JP",
+  "slot": "acquisition-cover",
+  "surface": "Acquisition",
+  "copy_label": "东京限定镜头代购 · 悬赏",
+  "manifest_copy": {
+    "chain.city": "东京",
+    "chain.country_code": "JP",
+    "chain.tags": ["摄影", "城市漫步"],
+    "acquisition.slug": "tokyo-lens-bounty",
+    "acquisition.title": "东京限定镜头代购 · 悬赏",
+    "acquisition.category": "collectibles",
+    "acquisition.description": "求购日本本土限量镜头，需原包装与小票。",
+    "acquisition.bounty_min_usdc": 120,
+    "acquisition.bounty_max_usdc": 480,
+    "acquisition.cover_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-acquisition-cover.jpg"
+  },
+  "alignment_checklist": {
+    "city_100pct": true,
+    "destination_100pct": true,
+    "tags_100pct": true,
+    "title_body_100pct": true,
+    "no_foreign_city_landmarks": true,
+    "acquisition_semantics_not_guide_or_provider": true
+  },
+  "gates_human_review": {
+    "G1_real_assets": {
+      "pass": true,
+      "notes": "640x480 JPEG 71791 bytes；非 5KB 纯色占位；可解码真图。"
+    },
+    "G2_copy_alignment": {
+      "pass": true,
+      "notes": "镜头原包装/店内陈列与 title「东京限定镜头代购·悬赏」及 description「日本本土限量镜头、原包装与小票」100% 对齐；chain 城市东京、tags 摄影一致。"
+    },
+    "G3_slot_differentiation": {
+      "pass": true,
+      "notes": "产品/店内陈列静物；与 Row1 人物肖像+雷门、Row2 情侣外景+天际线构图/主体/色调均不同。"
+    },
+    "G4_cross_surface_city": {
+      "pass": true,
+      "notes": "东京摄影 chain 同城主题；无其它国家城市地标；Acquisition 语义独立。"
+    },
+    "G5_brand_visual": {
+      "pass": true,
+      "notes": "中性产品光、纪实商业质感；与 TravelTrust 旅游平台封面风格一致。"
+    },
+    "G6_commercial_platform": {
+      "pass": true,
+      "notes": "真实相机店陈列观感，适合 Acquisition 悬赏列表封面。"
+    },
+    "G7_wcag_visual_quality": {
+      "pass": true,
+      "notes": "清晰对焦、曝光均衡、白平衡自然、640x480 无马赛克/压缩块。"
+    },
+    "G8_evidence_matrix": {
+      "pass": true,
+      "notes": "HUMAN-REVIEW + row verify evidence 归档；Matrix 行更新 verified/pass。"
+    },
+    "G9_content_authenticity": {
+      "pass": true,
+      "notes": "无人物/手脸畸形；无水印/Logo/可读错字；无政治/成人内容；无版权风险品牌标识；② 内容工程 AI 素材。"
+    },
+    "G10_content_diversity": {
+      "pass": true,
+      "notes": "器材产品 slot 为 chain 6 slot 多样性贡献；非换角度复用 Row1/2。"
+    }
+  },
+  "negative_checks": {
+    "no_skyline": true,
+    "no_people": true,
+    "no_us_europe_landmarks": true,
+    "no_solid_color_placeholder": true,
+    "no_watermark_logo_text": true,
+    "no_duplicate_vs_row1_row2": true,
+    "no_guide_provider_scene_misuse": true,
+    "no_anatomy_defects": true,
+    "no_heavy_filter": true,
+    "no_inappropriate_public_content": true
+  },
+  "reviewer": "agent-human-review",
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

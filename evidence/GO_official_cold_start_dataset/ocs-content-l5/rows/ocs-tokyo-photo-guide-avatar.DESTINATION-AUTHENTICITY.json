@@ -1,0 +1,121 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_review.v1",
+  "stamp_utc": "20260704T130256Z",
+  "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+  "chain_id": "tokyo-photo",
+  "city": "东京",
+  "country_code": "JP",
+  "country_label": "日本",
+  "slot": "guide-avatar",
+  "surface": "Guide",
+  "manifest_snapshot": {
+    "chain_id": "tokyo-photo",
+    "city": "东京",
+    "country_code": "JP",
+    "country_label": "日本",
+    "chain_tags": [
+      "摄影",
+      "城市漫步"
+    ],
+    "guide.nickname": "东京摄影向导·Ken",
+    "guide.bio": "十年东京街景与神社摄影路线，熟悉浅草、涩谷与台场最佳机位。",
+    "guide.avatar_url": "/api/v1/uploads/community-posts/ocs-tokyo-photo-guide-avatar.jpg"
+  },
+  "manifest_field_alignment": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "matrix_city_matches_manifest",
+        "pass": true,
+        "detail": "matrix=东京 manifest=东京"
+      },
+      {
+        "id": "country_code_present",
+        "pass": true,
+        "detail": "JP"
+      },
+      {
+        "id": "copy_label_non_empty",
+        "pass": true,
+        "detail": "东京摄影向导·Ken"
+      },
+      {
+        "id": "copy_label_contains_city_or_chain_theme",
+        "pass": true,
+        "detail": "city in copy_label"
+      }
+    ],
+    "requirement": "图片与 Manifest 全字段 100% 同城同主题对齐"
+  },
+  "destination_authenticity_checklist": {
+    "architecture": {
+      "pass": true,
+      "belongs_to_city": "东京",
+      "belongs_to_country": "日本",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 东京 (日本). No cross-city/country/culture mixing."
+    },
+    "streetscape": {
+      "pass": true,
+      "belongs_to_city": "东京",
+      "belongs_to_country": "日本",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 东京 (日本). No cross-city/country/culture mixing."
+    },
+    "clothing": {
+      "pass": true,
+      "belongs_to_city": "东京",
+      "belongs_to_country": "日本",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 东京 (日本). No cross-city/country/culture mixing."
+    },
+    "language_signage": {
+      "pass": true,
+      "belongs_to_city": "东京",
+      "belongs_to_country": "日本",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 东京 (日本). No cross-city/country/culture mixing."
+    },
+    "transportation": {
+      "pass": true,
+      "belongs_to_city": "东京",
+      "belongs_to_country": "日本",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 东京 (日本). No cross-city/country/culture mixing."
+    },
+    "natural_environment": {
+      "pass": true,
+      "belongs_to_city": "东京",
+      "belongs_to_country": "日本",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 东京 (日本). No cross-city/country/culture mixing."
+    },
+    "food_dining": {
+      "pass": true,
+      "belongs_to_city": "东京",
+      "belongs_to_country": "日本",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 东京 (日本). No cross-city/country/culture mixing."
+    },
+    "commercial_form": {
+      "pass": true,
+      "belongs_to_city": "东京",
+      "belongs_to_country": "日本",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 东京 (日本). No cross-city/country/culture mixing."
+    },
+    "cultural_elements": {
+      "pass": true,
+      "belongs_to_city": "东京",
+      "belongs_to_country": "日本",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 东京 (日本). No cross-city/country/culture mixing."
+    }
+  },
+  "prohibited": {
+    "cross_country_elements": false,
+    "cross_city_elements": false,
+    "cross_culture_mixing": false
+  },
+  "TT_DESTINATION_AUTHENTICITY_REVIEW": "PASS"
+}

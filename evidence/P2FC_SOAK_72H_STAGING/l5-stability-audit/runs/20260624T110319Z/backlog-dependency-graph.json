@@ -1,0 +1,600 @@
+{
+  "schema": "traveltrust.p2fc_backlog_dependency_impact_graph.v2",
+  "generated_at_utc": "2026-06-24T11:03:19Z",
+  "backlog_stamp": "20260624T013808Z",
+  "hotfix_patch_bytes": 5964,
+  "verdict": "WARN",
+  "nodes": [
+    {
+      "id": "SYS_META_G02",
+      "title": "G02 /meta 验收链",
+      "file_count": 3,
+      "total_delta": 23,
+      "gates_impacted": [
+        "G01_WEB",
+        "G02_META",
+        "SOAK_EXEC"
+      ],
+      "top_files": [
+        {
+          "path": "crates/api/src/middleware/mod.rs",
+          "delta": 12,
+          "subsystem": "SYS_META_G02",
+          "gates": [
+            "G02_META"
+          ]
+        },
+        {
+          "path": "frontend/app/meta/route.ts",
+          "delta": 9,
+          "subsystem": "SYS_META_G02",
+          "gates": [
+            "G02_META",
+            "G01_WEB"
+          ]
+        },
+        {
+          "path": "crates/api/src/routes/health_meta/handlers.rs",
+          "delta": 2,
+          "subsystem": "SYS_META_G02",
+          "gates": [
+            "G02_META",
+            "SOAK_EXEC"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SYS_API_DB",
+      "title": "API 数据面 / PG",
+      "file_count": 1,
+      "total_delta": 2,
+      "gates_impacted": [
+        "TN_P1_010"
+      ],
+      "top_files": [
+        {
+          "path": "crates/api/src/db/mod.rs",
+          "delta": 2,
+          "subsystem": "SYS_API_DB",
+          "gates": [
+            "TN_P1_010"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SYS_API_ROUTES",
+      "title": "API 路由域",
+      "file_count": 1,
+      "total_delta": 195,
+      "gates_impacted": [
+        "ESCROW_CHAIN"
+      ],
+      "top_files": [
+        {
+          "path": "crates/api/src/routes/itineraries.rs",
+          "delta": 195,
+          "subsystem": "SYS_API_ROUTES",
+          "gates": [
+            "ESCROW_CHAIN"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SYS_API_CORE",
+      "title": "API 核心 router",
+      "file_count": 1,
+      "total_delta": 2,
+      "gates_impacted": [],
+      "top_files": [
+        {
+          "path": "crates/api/src/router.rs",
+          "delta": 2,
+          "subsystem": "SYS_API_CORE",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SYS_ADMIN_UI",
+      "title": "Admin 运营面",
+      "file_count": 1,
+      "total_delta": 32,
+      "gates_impacted": [],
+      "top_files": [
+        {
+          "path": "frontend/components/admin/AdminMainBootGate.tsx",
+          "delta": 32,
+          "subsystem": "SYS_ADMIN_UI",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SYS_CONSUMER_UI",
+      "title": "Consumer / 五主 adjacent",
+      "file_count": 1,
+      "total_delta": 4,
+      "gates_impacted": [],
+      "top_files": [
+        {
+          "path": "frontend/app/market/MarketPageClient.tsx",
+          "delta": 4,
+          "subsystem": "SYS_CONSUMER_UI",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SYS_FRONTEND_LIB",
+      "title": "Frontend lib / hooks",
+      "file_count": 5,
+      "total_delta": 49,
+      "gates_impacted": [
+        "ESCROW_CHAIN"
+      ],
+      "top_files": [
+        {
+          "path": "frontend/lib/orders/ordersListL5.contract.test.ts",
+          "delta": 29,
+          "subsystem": "SYS_FRONTEND_LIB",
+          "gates": [
+            "ESCROW_CHAIN"
+          ]
+        },
+        {
+          "path": "frontend/lib/traveltrust/home/visualQaManifest.ts",
+          "delta": 10,
+          "subsystem": "SYS_FRONTEND_LIB",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        },
+        {
+          "path": "frontend/lib/admin/adminNavPerfL5.contract.test.ts",
+          "delta": 5,
+          "subsystem": "SYS_FRONTEND_LIB",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        },
+        {
+          "path": "frontend/lib/apiClient/marketSubsite/http.ts",
+          "delta": 3,
+          "subsystem": "SYS_FRONTEND_LIB",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        },
+        {
+          "path": "frontend/lib/marketingUi.ts",
+          "delta": 2,
+          "subsystem": "SYS_FRONTEND_LIB",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SYS_E2E",
+      "title": "E2E / 烟测（非镜像关键路径）",
+      "file_count": 80,
+      "total_delta": 4342,
+      "gates_impacted": [
+        "ESCROW_CHAIN"
+      ],
+      "top_files": [
+        {
+          "path": "frontend/e2e/smoke.spec.ts",
+          "delta": 401,
+          "subsystem": "SYS_E2E",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        },
+        {
+          "path": "frontend/e2e/trust-gate-escrow.spec.ts",
+          "delta": 281,
+          "subsystem": "SYS_E2E",
+          "gates": [
+            "ESCROW_CHAIN"
+          ]
+        },
+        {
+          "path": "frontend/e2e/market-subsite-shared.ts",
+          "delta": 240,
+          "subsystem": "SYS_E2E",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        },
+        {
+          "path": "frontend/e2e/53-main-path.spec.ts",
+          "delta": 237,
+          "subsystem": "SYS_E2E",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        },
+        {
+          "path": "frontend/e2e/helpers/communityMePageReady.ts",
+          "delta": 198,
+          "subsystem": "SYS_E2E",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SYS_FRONTEND_OTHER",
+      "title": "SYS_FRONTEND_OTHER",
+      "file_count": 13,
+      "total_delta": 335,
+      "gates_impacted": [
+        "ESCROW_CHAIN",
+        "LOW_SURFACE"
+      ],
+      "top_files": [
+        {
+          "path": "frontend/components/market/useMarketPage.ts",
+          "delta": 119,
+          "subsystem": "SYS_FRONTEND_OTHER",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        },
+        {
+          "path": "frontend/playwright.config.ts",
+          "delta": 53,
+          "subsystem": "SYS_FRONTEND_OTHER",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        },
+        {
+          "path": "frontend/evidence/GO_local_phase1/README.md",
+          "delta": 45,
+          "subsystem": "SYS_FRONTEND_OTHER",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        },
+        {
+          "path": "frontend/app/orders/OrdersListCards.tsx",
+          "delta": 33,
+          "subsystem": "SYS_FRONTEND_OTHER",
+          "gates": [
+            "ESCROW_CHAIN"
+          ]
+        },
+        {
+          "path": "frontend/scripts/run-e2e-default.mjs",
+          "delta": 21,
+          "subsystem": "SYS_FRONTEND_OTHER",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SYS_OTHER",
+      "title": "SYS_OTHER",
+      "file_count": 74,
+      "total_delta": 9613,
+      "gates_impacted": [
+        "ESCROW_CHAIN",
+        "LOW_SURFACE"
+      ],
+      "top_files": [
+        {
+          "path": ".../dom-compositor-audit.json",
+          "delta": 6889,
+          "subsystem": "SYS_OTHER",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        },
+        {
+          "path": ".../layer-kill-audit/kill-matrix.json",
+          "delta": 397,
+          "subsystem": "SYS_OTHER",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        },
+        {
+          "path": ".../b468-market-discovery-full-ui-journey.spec.ts",
+          "delta": 222,
+          "subsystem": "SYS_OTHER",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        },
+        {
+          "path": ".../e2e/auth-register-login-market-chain.spec.ts",
+          "delta": 198,
+          "subsystem": "SYS_OTHER",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        },
+        {
+          "path": ".../b469-guides-drawer-booking-convergence.spec.ts",
+          "delta": 126,
+          "subsystem": "SYS_OTHER",
+          "gates": [
+            "LOW_SURFACE"
+          ]
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "SYS_META_G02",
+      "to": "G02_META",
+      "relation": "L0 hotfix unblocks acceptance /meta"
+    },
+    {
+      "from": "SYS_API_DB",
+      "to": "TN_P1_010",
+      "relation": "DB/indexer state affects reconcile read"
+    },
+    {
+      "from": "SYS_API_ROUTES",
+      "to": "ESCROW_CHAIN",
+      "relation": "itineraries/orders routes"
+    },
+    {
+      "from": "SYS_API_MW",
+      "to": "G02_META",
+      "relation": "TimeoutLayer on all routes incl /meta"
+    },
+    {
+      "from": "SYS_ADMIN_UI",
+      "to": "ADMIN_OPS",
+      "relation": "post-soak UI deploy wave-2"
+    },
+    {
+      "from": "SYS_CONSUMER_UI",
+      "to": "G01_WEB",
+      "relation": "consumer pages depend web deploy"
+    },
+    {
+      "from": "SYS_INDEXER",
+      "to": "TN_P1_010",
+      "relation": "indexer drift vs chain"
+    },
+    {
+      "from": "SYS_API_CORE",
+      "to": "SOAK_EXEC",
+      "relation": "router mounts health/meta paths"
+    }
+  ],
+  "gate_file_index": {
+    "ESCROW_CHAIN": [
+      "crates/api/src/routes/itineraries.rs",
+      "frontend/app/orders/OrdersListCardItem.tsx",
+      "frontend/app/orders/OrdersListCards.tsx",
+      "frontend/app/orders/useOrdersListPageCore.ts",
+      ".../e2e/escrow-bilateral-experience-l5.spec.ts",
+      ".../e2e/escrow-p03-p04-itinerary-first.spec.ts",
+      "frontend/e2e/orders-list-filters-search.spec.ts",
+      "frontend/e2e/orders-list-keyboard.spec.ts",
+      "frontend/e2e/orders-list-to-escrow.spec.ts",
+      "frontend/e2e/orders-list-to-pay.spec.ts",
+      "frontend/e2e/trust-gate-escrow.spec.ts",
+      "frontend/lib/orders/ordersListL5.contract.test.ts"
+    ],
+    "G01_WEB": [
+      "frontend/app/meta/route.ts"
+    ],
+    "G02_META": [
+      "crates/api/src/middleware/mod.rs",
+      "crates/api/src/routes/health_meta/handlers.rs",
+      "frontend/app/meta/route.ts"
+    ],
+    "LOW_SURFACE": [
+      ".../api/src/middleware/auth_pause_metrics/mod.rs",
+      "crates/api/src/router.rs",
+      "frontend/.i18n-coverage.json",
+      ".../AdminAirdropCampaignsPageMain.tsx",
+      ".../analytics/AdminGrowthAnalyticsPageMain.tsx",
+      ".../growth/early-bird/AdminEarlyBirdPageMain.tsx",
+      ".../growth/kol-center/AdminKolCenterPageMain.tsx",
+      ".../referral-codes/AdminReferralCodesPageMain.tsx",
+      ".../reward-ledger/AdminRewardLedgerPageMain.tsx",
+      ".../accounts/AdminOfficialAccountsPageMain.tsx",
+      ".../cold-start/AdminOfficialColdStartPageMain.tsx",
+      ".../guides/AdminOfficialGuidesPageMain.tsx",
+      ".../AdminOfficialItineraryTemplatesPageMain.tsx",
+      "frontend/app/guides/page.tsx",
+      "frontend/app/market/MarketPageClient.tsx",
+      "frontend/app/terms/community-guidelines/page.tsx",
+      "frontend/components/admin/AdminMainBootGate.tsx",
+      ".../components/admin/AdminNavContentTransition.tsx",
+      ".../components/community/PublishDrawer/index.tsx",
+      ".../community/useCommunityFeedPostDeepLink.ts"
+    ],
+    "SOAK_EXEC": [
+      "crates/api/src/routes/health_meta/handlers.rs"
+    ],
+    "TN_P1_010": [
+      "crates/api/src/db/mod.rs"
+    ]
+  },
+  "large_delta_files": [
+    {
+      "path": "crates/api/src/routes/itineraries.rs",
+      "delta": 195,
+      "subsystem": "SYS_API_ROUTES",
+      "gates": [
+        "ESCROW_CHAIN"
+      ]
+    },
+    {
+      "path": ".../components/admin/AdminNavContentTransition.tsx",
+      "delta": 98,
+      "subsystem": "SYS_OTHER",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "path": ".../market/marketStandaloneBusinessPageUtils.ts",
+      "delta": 50,
+      "subsystem": "SYS_OTHER",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "path": "frontend/components/market/useMarketPage.ts",
+      "delta": 119,
+      "subsystem": "SYS_FRONTEND_OTHER",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "path": "frontend/e2e/53-main-path.spec.ts",
+      "delta": 237,
+      "subsystem": "SYS_E2E",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "path": "frontend/e2e/93-matrix-path-p1-remediation.spec.ts",
+      "delta": 97,
+      "subsystem": "SYS_E2E",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "path": ".../e2e/auth-register-login-market-chain.spec.ts",
+      "delta": 198,
+      "subsystem": "SYS_OTHER",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "path": ".../b468-market-discovery-full-ui-journey.spec.ts",
+      "delta": 222,
+      "subsystem": "SYS_OTHER",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "path": ".../b469-guides-drawer-booking-convergence.spec.ts",
+      "delta": 126,
+      "subsystem": "SYS_OTHER",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "path": "frontend/e2e/community-me-data-state.spec.ts",
+      "delta": 176,
+      "subsystem": "SYS_E2E",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "path": ".../e2e/community-me-l5-a-parity-closeout.spec.ts",
+      "delta": 66,
+      "subsystem": "SYS_OTHER",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "path": "frontend/e2e/community-modals-interaction.spec.ts",
+      "delta": 61,
+      "subsystem": "SYS_E2E",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "path": "frontend/e2e/community-phase1-narrow-flows.spec.ts",
+      "delta": 136,
+      "subsystem": "SYS_E2E",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "path": ".../e2e/community-post-detail-comment-sort.spec.ts",
+      "delta": 115,
+      "subsystem": "SYS_OTHER",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    },
+    {
+      "path": ".../e2e/community-subroutes-l5-markers.spec.ts",
+      "delta": 70,
+      "subsystem": "SYS_OTHER",
+      "gates": [
+        "LOW_SURFACE"
+      ]
+    }
+  ],
+  "hidden_stability_risks": [
+    {
+      "id": "HR_LARGE_DIFF_BLOB",
+      "severity": "medium",
+      "note": "42 files with delta≥50 — review blast radius before wave-1",
+      "files": [
+        "crates/api/src/routes/itineraries.rs",
+        ".../components/admin/AdminNavContentTransition.tsx",
+        ".../market/marketStandaloneBusinessPageUtils.ts",
+        "frontend/components/market/useMarketPage.ts",
+        "frontend/e2e/53-main-path.spec.ts",
+        "frontend/e2e/93-matrix-path-p1-remediation.spec.ts",
+        ".../e2e/auth-register-login-market-chain.spec.ts",
+        ".../b468-market-discovery-full-ui-journey.spec.ts"
+      ]
+    },
+    {
+      "id": "HR_ITINERARIES_HUB",
+      "severity": "high",
+      "note": "itineraries.rs hub change — impacts market/escrow/guide consumer paths",
+      "files": [
+        "crates/api/src/routes/itineraries.rs"
+      ]
+    }
+  ],
+  "summary": {
+    "total_files": 180,
+    "subsystem_count": 10,
+    "edge_count": 8,
+    "high_severity_risks": 1
+  },
+  "risk_diffusion": {
+    "gate_fanout_score": 11,
+    "max_gates_per_subsystem": 3,
+    "wave_blast_radius": 21,
+    "diffusion_score": 1.1,
+    "new_risks_vs_prior": [],
+    "resolved_risks_vs_prior": [],
+    "prior_snapshot_present": true,
+    "verdict": "stable"
+  }
+}

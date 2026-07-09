@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.ocs_staging_community_feed_align.v1",
+  "recorded_at": "2026-07-04T09:35:29.276Z",
+  "ocs_post_count": 10,
+  "published_before": 10,
+  "unpublish_candidates": [],
+  "unpublish": [],
+  "errors": [],
+  "dry_run": false,
+  "feed_after": {
+    "count": 10,
+    "ocs_only": true,
+    "smoke_in_feed": 0,
+    "non_ocs": []
+  }
+}

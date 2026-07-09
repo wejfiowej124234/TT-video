@@ -1,0 +1,8 @@
+# TravelTrust CMS Ownership Matrix V1.1 · FROZEN
+schema: traveltrust.cms_ownership_matrix.v1.1
+status: FROZEN
+frozen_at_utc: "2026-07-07"
+baseline_review: CMS-BASELINE-REVIEW-LATEST.json
+columns: [page, element, owner, edit_policy, cms, api, db, contract]
+edit_policy: [Direct, Verify, "L5 QA", Immutable]
+governance_order: [Registry, Ownership Matrix, Evidence, Script, Development]

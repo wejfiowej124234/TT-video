@@ -1,0 +1,11 @@
+=== в┘ env / frontend /meta alignment ===
+OK       GUIDE_STAKING_ADDRESS: root=0x9fE46736679d2D9aбн fe=0x9fE46736679d2D9aбн meta=0x9fE46736679d2D9aбн
+OK       STAKING_PROVIDER_ADDRESS: root=0xCf7Ed3AccA5a467eбн fe=0xCf7Ed3AccA5a467eбн meta=0xCf7Ed3AccA5a467eбн
+OK       FEE_ROUTER_ADDRESS: root=0x8A791620dd626007бн fe=0x8A791620dd626007бн meta=0x8A791620dd626007бн
+OK       GOVERNANCE_TOKEN_ADDRESS: root=0x0E801D84Fa97b507бн fe=0x0E801D84Fa97b507бн meta=0x0E801D84Fa97b507бн
+OK       ESCROW_FACTORY_ADDRESS: root=0x5FbDB2315678afecбн fe=0x5FbDB2315678afecбн meta=-бн
+OK       REGISTRY_ADDRESS: root=0xDc64a140Aa3E9811бн fe=0xDc64a140Aa3E9811бн meta=-бн
+OK       REGION_STEWARD_STAKE_POOL_ADDRESS: root=0x8f86403A4DE0BB57бн fe=0x8f86403A4DE0BB57бн meta=-бн
+chain_id root 31337 fe 31337 meta 31337
+759 keys ['guide_staking_address', 'staking_provider_address', 'governor_address', 'timelock_address', 'governance_token_address', 'fee_router_address', 'treasury_address', 'rule', 'chain_contracts_top_keys', 'chain_contracts_top_keys_contract_759']
+ALIGNMENT PASS

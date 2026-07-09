@@ -393,6 +393,42 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
             }
         }
     }
+    // S4a · UnallocatedStewardPathVault — SweepExecuted / ReserveReached / JurisdictionReserveDisbursed
+    if let Some(ref vault_a) = config.unallocated_steward_path_vault_address {
+        let vault_a = vault_a.trim();
+        if !vault_a.is_empty() {
+            match chain::indexer::fetch_logs_from_addresses(
+                &config.rpc_url,
+                &[vault_a.to_string()],
+                from_block,
+                to_block,
+            )
+            .await
+            {
+                Ok(vault_logs) => {
+                    logs.extend(vault_logs);
+                    logs.sort_by_key(|t| (t.0, t.1));
+                }
+                Err(e) => {
+                    if strict_supplemental_logs {
+                        return (
+                            StatusCode::INTERNAL_SERVER_ERROR,
+                            Json(crate::api_json::err_key_detail(
+                                "fetch_supplemental_logs_failed",
+                                format!("unallocated_steward_path_vault: {}", e),
+                            )),
+                        )
+                            .into_response();
+                    }
+                    logs_fetch_skipped.push(json!({
+                        "scope": "unallocated_steward_path_vault",
+                        "address": vault_a,
+                        "error": e
+                    }));
+                }
+            }
+        }
+    }
     // Governor：**ProposalCreated / VoteCast / …** → **`event_log`** + **`governance_proposals_projection`**（B-089 Completion）
     if let Some(ref gov_a) = config.governor_address {
         let gov_a = gov_a.trim();
@@ -685,6 +721,60 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
                     }
                 }
             }
+            if let Some(ref co) = state.chain_off.as_ref() {
+                if let Some(pool) = co.db_pool.as_ref() {
+                    if let Some(vacancy_ev) = chain::vacancy_ledger_indexer::parse_vacancy_event(
+                        &kind,
+                        &topics,
+                        &data_for_fee_parse,
+                    ) {
+                        let chain_id_i64 = (config.chain_id.min(i64::MAX as u64)) as i64;
+                        let jurisdiction = match &vacancy_ev {
+                            chain::vacancy_ledger_indexer::VacancyIndexerEvent::VacancyEntered {
+                                jurisdiction, ..
+                            }
+                            | chain::vacancy_ledger_indexer::VacancyIndexerEvent::GraceStarted {
+                                jurisdiction,
+                            }
+                            | chain::vacancy_ledger_indexer::VacancyIndexerEvent::SweepExecuted {
+                                jurisdiction, ..
+                            }
+                            | chain::vacancy_ledger_indexer::VacancyIndexerEvent::ReserveReached {
+                                jurisdiction, ..
+                            }
+                            | chain::vacancy_ledger_indexer::VacancyIndexerEvent::StewardActivated {
+                                jurisdiction, ..
+                            }
+                            | chain::vacancy_ledger_indexer::VacancyIndexerEvent::JurisdictionReserveDisbursed {
+                                jurisdiction, ..
+                            } => jurisdiction.clone(),
+                        };
+                        let mut snap = db::get_vacancy_ledger_projection(pool, chain_id_i64, &jurisdiction)
+                            .await
+                            .unwrap_or(None)
+                            .unwrap_or_default();
+                        chain::vacancy_ledger_indexer::apply_vacancy_event(
+                            &mut snap,
+                            &vacancy_ev,
+                            block_number,
+                            log_index,
+                        );
+                        if db::upsert_vacancy_ledger_projection(pool, chain_id_i64, &snap)
+                            .await
+                            .is_err()
+                        {
+                            return (
+                                StatusCode::INTERNAL_SERVER_ERROR,
+                                Json(crate::api_json::err_key_detail(
+                                    "upsert_vacancy_ledger_projection_failed",
+                                    jurisdiction,
+                                )),
+                            )
+                                .into_response();
+                        }
+                    }
+                }
+            }
             if let Some(ref co) = state.chain_off {
                 if let Some(event_name) = chain_off::event_name_from_topic0(&kind) {
                     if !matches!(
@@ -693,6 +783,12 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
                             | "RegionVaultForwarded"
                             | "CountryLedgerCredited"
                             | "RegionShareSnapshotLine"
+                            | "VacancyEntered"
+                            | "GraceStarted"
+                            | "SweepExecuted"
+                            | "ReserveReached"
+                            | "StewardActivated"
+                            | "JurisdictionReserveDisbursed"
                     ) {
                         let want_escrow = event_name == "EscrowCreated";
                         if let Some((order_id, escrow_addr)) =

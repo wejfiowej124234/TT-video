@@ -1,0 +1,58 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T131830Z",
+  "filename": "ocs-seoul-food-acquisition-cover.jpg",
+  "chain_id": "seoul-food",
+  "city": "首尔",
+  "country_code": "KR",
+  "slot": "acquisition-cover",
+  "surface": "Acquisition",
+  "copy_label": "韩国限定零食礼包 · 悬赏",
+  "manifest_copy": {
+    "chain.city": "首尔",
+    "chain.tags": ["美食", "夜市"],
+    "acquisition.slug": "seoul-snack-bounty",
+    "acquisition.title": "韩国限定零食礼包 · 悬赏",
+    "acquisition.category": "food",
+    "acquisition.description": "求购当季限定零食组合，需保质期 60 天以上。",
+    "acquisition.bounty_min_usdc": 40,
+    "acquisition.bounty_max_usdc": 120,
+    "acquisition.cover_url": "/api/v1/uploads/community-posts/ocs-seoul-food-acquisition-cover.jpg"
+  },
+  "alignment_checklist": {
+    "city_100pct": true,
+    "destination_100pct": true,
+    "tags_100pct": true,
+    "title_body_100pct": true,
+    "no_foreign_elements": true,
+    "acquisition_semantics_not_guide_or_provider": true,
+    "no_portrait_no_street_scene": true
+  },
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG 126383 bytes。" },
+    "G2_copy_alignment": { "pass": true, "notes": "韩式限定零食礼包平铺与 title/description/category food 100% 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "商品静物平铺；与 Row13 人物、Row14 夜市组团、未来 official/community 场景类型不同。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "首尔 KR 零食伴手礼；Hangul 包装；无日/中/他国元素。" },
+    "G5_brand_visual": { "pass": true, "notes": "中性产品光、平台悬赏列表质感。" },
+    "G6_commercial_platform": { "pass": true, "notes": "可读作 bounty/代购标的封面。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰、曝光均衡、640x480 无低清块。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "HUMAN-REVIEW + Acquisition Product Identity + chain 3/6 归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "韩式零食包装语义正确；无人物/街景/水印。" },
+    "G10_content_diversity": { "pass": true, "notes": "food 类商品静物；与 Tokyo collectibles 镜头、Kyoto 和纸工艺明显不同。" }
+  },
+  "destination_experience_review": {
+    "pass": true,
+    "notes": "用户可感知韩国限定零食悬赏/代购业务价值。"
+  },
+  "acquisition_product_identity_review": {
+    "pass": true,
+    "vs_tokyo_photo": "Tokyo 限量镜头 collectibles vs Seoul 韩式零食 food — 完全不同品类",
+    "vs_kyoto_culture": "Kyoto 和纸工艺 vs Seoul 彩色零食礼包 — 完全不同商品形态",
+    "surface_isolation": "无 Guide/Provider/Official/Community 场景混入"
+  },
+  "guide_provider_regression": {
+    "pass": true,
+    "notes": "Tokyo/Kyoto/Seoul Rows 1-14 无回归、冲突或品牌漂移。"
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

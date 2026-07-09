@@ -1,6 +1,6 @@
-# Verify SEED_TEST_ACCOUNTS tourist + guide can POST /auth/login (manual acceptance preflight).
-
-# Matrix IDs: docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md (Step 6b5 probes C2+C3+C4+E2+C1).
+# Verify SEED_TEST_ACCOUNTS · Step 6b5 (Immutable IDs C1 C2 C3 C4 E2).
+# E1 (TrustGate catalog guide) is Step 6b4 — POST /auth/seed-trust-gate-e2e — NOT in 6b5.
+# Registry: registry/test-accounts-business-immutable.v1.yaml
 
 # When TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=1 (start-api-with-seed default), also probes
 

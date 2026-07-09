@@ -1,0 +1,9 @@
+{
+  "schema": "p2fc_soak_job.v1",
+  "pid": 118335,
+  "started_at": "2026-06-14T07:01:55.263Z",
+  "required_sec": 259200,
+  "actual_sec": 259200,
+  "api": "https://tt-api-staging.fly.dev",
+  "job_dir": "evidence/P2FC_SOAK_72H_STAGING/job-20260614T070154Z"
+}

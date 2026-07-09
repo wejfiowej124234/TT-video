@@ -1,0 +1,18 @@
+{
+  "gate_id": "G24-P-UPGRADE-01",
+  "stamp_utc": "20260616T023325Z",
+  "verdict": "PASS",
+  "registry": "registry/g24-p-upgrade-01-contract-posture.v1.yaml",
+  "deploy_script": "contracts/script/DeployGovFreezeV1Stack.s.sol",
+  "contracts_audited": [
+    "TravelTrustGovernor",
+    "GovernanceTimelock",
+    "GovernanceTreasuryP4Cap",
+    "TtgPrimaryMarketV1",
+    "TtgSeatConcentrationRegistry",
+    "RegionStewardStakePool",
+    "CountryPoolNetProfitLedger",
+    "CountryPoolSettlement"
+  ],
+  "policy": "PROXY_REQUIRED shells via TimelockUpgradeableProxy admin=Timelock; IMMUTABLE_EXEMPT CountryPool/Settlement; CONTROLLER_NON_UPGRADEABLE Timelock"
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "traveltrust.cms_poi_pilot_catalog_build.v1",
+  "recorded_at": "2026-07-05T16:11:16Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "pilot": {
+    "country_iso": "KR",
+    "city_zh": "首尔",
+    "matrix_ids": [
+      "PH-KR-064-ATR",
+      "PH-KR-065-ATR",
+      "PH-KR-066-ATR",
+      "PH-KR-067-ATR",
+      "PH-KR-068-ATR",
+      "PH-KR-069-FOOD",
+      "PH-KR-070-FOOD",
+      "PH-KR-071-FOOD",
+      "PH-KR-072-FOOD"
+    ]
+  },
+  "interim_image": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-community-media.jpg",
+  "results": [
+    {
+      "matrix_id": "PH-KR-064-ATR",
+      "poi_id": "4ab6b040-1a0b-4f49-8c3c-7be5c837c64b"
+    },
+    {
+      "matrix_id": "PH-KR-065-ATR",
+      "poi_id": "2446034e-8fcd-4562-9926-0cc25f9549e2"
+    },
+    {
+      "matrix_id": "PH-KR-066-ATR",
+      "poi_id": "94b497c2-9619-4ce2-8a1e-57e047247864"
+    },
+    {
+      "matrix_id": "PH-KR-067-ATR",
+      "poi_id": "5dd20971-b0a7-48dc-8cb9-c1dc186ae814"
+    },
+    {
+      "matrix_id": "PH-KR-068-ATR",
+      "poi_id": "9c0d43dd-19f9-4296-b651-a65a53b2bcc0"
+    },
+    {
+      "matrix_id": "PH-KR-069-FOOD",
+      "poi_id": "d9821a6a-e6cc-402b-a1f5-07754e5404cd"
+    },
+    {
+      "matrix_id": "PH-KR-070-FOOD",
+      "poi_id": "ebddbf7f-d742-4db7-a7b0-0cab8df4145b"
+    },
+    {
+      "matrix_id": "PH-KR-071-FOOD",
+      "poi_id": "a64640bd-ef6f-47fd-a220-d2aebc4eda17"
+    },
+    {
+      "matrix_id": "PH-KR-072-FOOD",
+      "poi_id": "7eb793b6-52cc-42c8-88f7-2d64ec2c9361"
+    }
+  ],
+  "verify": {
+    "catalog_poi_images": 9,
+    "expected": 9
+  },
+  "TT_CMS_POI_PILOT_CATALOG_BUILD": "PASS"
+}

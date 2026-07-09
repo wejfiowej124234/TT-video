@@ -14,7 +14,7 @@ import {
   marketSubsiteListingsQueryFromSearchParams,
   pushWithListingParam,
 } from "./marketStandaloneBusinessPageUtils";
-import { useEffectiveSubsiteCountry } from "@/lib/marketSubsiteFilters";
+import { useEffectiveSubsiteCountry } from "@/lib/useEffectiveSubsiteCountry";
 import { buildPathnameSearchHref } from "@/lib/marketLoginReturnPath";
 
 export type MarketStandaloneBusinessVariant = "provider" | "acquisition";
@@ -126,7 +126,7 @@ export function useMarketStandaloneBusinessPage(variant: MarketStandaloneBusines
   const listingsFetchGeneration = useRef(0);
   const syncedCountryToUrlRef = useRef<string | null>(null);
 
-  /** Mirror effective country into URL (bookmark/share); catalog fetch already uses effectiveCountry synchronously. */
+  /** Mirror explicit user save into URL (bookmark/share); never auto-persist country on init. */
   useLayoutEffect(() => {
     if (typeof window === "undefined") return;
     if (searchParams.get("country")?.trim()) return;
@@ -208,5 +208,6 @@ export function useMarketStandaloneBusinessPage(variant: MarketStandaloneBusines
     refetchCatalog,
     searchParams,
     effectiveCountry,
+    listingsQuery,
   };
 }

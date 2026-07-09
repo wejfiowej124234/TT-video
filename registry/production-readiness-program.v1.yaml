@@ -1,0 +1,392 @@
+# TravelTrust · Production Readiness Program · Machine SSOT
+# Human: docs/runbook/TT-PRODUCTION-READINESS-PROGRAM.md
+# Scope: Production layer only — NOT PCP architecture (see TT_PCP_ARCHITECTURE: FROZEN)
+
+schema: traveltrust.production_readiness_program.v1
+version: 1
+effective_utc: "2026-07-04"
+updated_utc: "2026-07-04T08:08:00Z"
+
+supreme_principle:
+  en: Production GO is earned by evidence, not by implementation.
+  zh: Production GO 由证据获得，而不是由代码完成获得。
+  not_go:
+    - feature_shipped
+    - tests_passing
+    - docs_complete
+  go_rule: >
+    Master Matrix G1 + G2 + G3 all CLOSED with evidence attachments only then TT_PRODUCTION_GO GO
+
+operating_principles:
+  effective_utc: "2026-07-04"
+  principle_1_no_look_back:
+    en: Closed tracks stay in maintenance — do not re-discuss unless new requirement, architecture review, or production incident
+    zh: 不回头 — PCP 与 Community G1 默认维护态；仅新需求 / 架构评审 / 线上事故可重开
+    maintenance_tracks:
+      - pcp
+      - community_production_ready_g1_domain
+    reopen_triggers: [new_requirement, architecture_review, production_incident]
+    closed_gap_policy: never_reopen — new gaps use new PRM-* IDs
+  principle_2_matrix_first:
+    en: Any bug, requirement, or optimization enters Master Matrix before fix — single Release Train
+    zh: 只看 Master Matrix — 第一件事不是修，是登记 Matrix
+    workflow: intake → master_matrix → fix_or_confirm → evidence → close
+  principle_3_go_by_evidence_only:
+    en: No subjective go-live opinions — only Evidence → Matrix → G1 → G2 → G3 → Production GO
+    zh: GO 只看 Evidence — 禁止「我觉得可以上线」
+    chain: [evidence, master_matrix, g1_pass, g2_pass, g3_pass, production_go]
+  principle_4_content_governance_non_blocking:
+    en: >
+      Content/Data Governance must NOT block Production Infrastructure.
+      Only issues that directly affect Production GO may block the current G3 Domain.
+    zh: >
+      任何运营数据治理（Content/Data Governance）不得阻塞生产基础设施（Production Infrastructure）；
+      只有直接影响 Production GO 的问题才能阻塞当前 G3 Domain。
+    blocks_current_g3_domain:
+      - dns
+      - tls
+      - cdn
+      - waf
+      - stripe_live
+      - disaster_recovery
+      - production_monitoring
+      - production_evidence
+    does_not_block_g3:
+      - market_media_ddg_remediation
+      - ocs_manifest_optimization
+      - new_official_content
+      - content_richness
+      - community_ops_campaigns
+      - new_campaigns
+    does_not_block_g3_unless: directly_affects_production_go
+    machine_key: TT_CONTENT_GOVERNANCE_NON_BLOCKING_G3
+  principle_5_configuration_over_code:
+    en: >
+      In G3, resolve via configuration surfaces (Fly secrets, DNS, CDN, Stripe Dashboard,
+      Cloudflare, WAF, env vars, deploy params) before any code change. Code work is allowed
+      only after Capability is confirmed missing.
+    zh: >
+      G3 阶段：若问题可通过 Fly Secrets · DNS · CDN · Stripe Dashboard · Cloudflare · WAF ·
+      环境变量 · 部署参数解决，禁止先改代码；仅当 Capability 确认缺失时才允许进入开发。
+    configuration_surfaces:
+      - fly_secrets
+      - dns
+      - cdn
+      - stripe_dashboard
+      - cloudflare
+      - waf
+      - environment_variables
+      - deploy_parameters
+    code_change_allowed_only_when: capability_confirmed_missing
+    machine_key: TT_CONFIGURATION_CHANGES_OVER_CODE_CHANGES
+
+g3_ccv_pre_implementation_gate:
+  status: ENFORCED
+  machine_key: TT_G3_CCV_PRE_IMPLEMENTATION_GATE
+  rule: >
+    Before any G3 Domain enters Implementation, answer three questions — do not start
+    DNS/Stripe/DR work until CCV is recorded per domain.
+  dimensions:
+    capability:
+      question_en: Does this capability already exist?
+      question_zh: 这个能力是否已经存在？
+    configuration:
+      question_en: Is it only not configured yet?
+      question_zh: 是否只是没有配置？
+    verification:
+      question_en: Is it only not verified yet?
+      question_zh: 是否只是没有验收？
+  dimension_status: [VERIFIED, PLANNED, IMPLEMENTING]
+  formal_lane: PLANNED
+  interpretation:
+    capability_verified_configuration_planned: no_platform_development — configuration and verification only
+    capability_missing: register_matrix_gap — then and only then code or platform work
+  required_before: g3_domain_implementation
+  ssot_human: docs/runbook/G3-PRODUCTION-DOMAINS.md#tt-g3-ccv-pre-implementation-gate
+
+progress_reporting:
+  forbidden:
+    - percentage_completion
+    - subjective_go_live_opinion
+  default_one_line: >
+    Platform COMPLETE · Production Readiness ACTIVE · G1 IN_PROGRESS ·
+    G2 NOT_STARTED · G3 NOT_STARTED · Production GO NO_GO
+  rule: Report Gate status and Matrix closures — not % complete
+
+machine_keys:
+  TT_PRODUCTION_GO_SUPREME_PRINCIPLE: ENFORCED
+  TT_PROJECT_PLATFORM_A: COMPLETE
+  TT_PRODUCTION_READINESS_SOLE_EXECUTION_ENTRY: ENFORCED
+  TT_RELEASE_TRAIN: ACTIVE
+  TT_PRODUCTION_READINESS_MASTER_MATRIX: ACTIVE
+  TT_PRODUCTION_READINESS_MASTER_GAP_REVIEW: COMPLETE
+  TT_PRODUCTION_READINESS_PROGRAM: ACTIVE
+  TT_CURRENT_PROGRAM_MAINLINE: PRODUCTION_READINESS
+  TT_PRODUCTION_READINESS_G1_GATE: IN_PROGRESS
+  TT_PRODUCTION_READINESS_G2_GATE: NOT_STARTED
+  TT_PRODUCTION_READINESS_G3_GATE: NOT_STARTED
+  TT_PCP_PLATFORM: CLOSED
+  TT_PCP_ACTIVE_DEVELOPMENT: false
+  TT_PCP_ARCHITECTURE: FROZEN
+  TT_PCP_PHASE_2: NOT_STARTED
+  TT_COMMUNITY_PRODUCTION_READY_G1_DOMAIN: PASS
+  TT_COMMUNITY_CONTENT_READINESS_DOMAIN: MAINTENANCE
+  TT_COMMUNITY_MEDIA_RUNTIME_READINESS_G1: PASS
+  TT_COMMUNITY_PLATFORM: MAINTENANCE
+  TT_COMMUNITY_MEDIA_GUARD: ENFORCED
+  TT_COMMUNITY_G1_STAGING_ALIGNMENT: PASS
+  TT_PRODUCTION_READINESS_OPERATING_PRINCIPLES: ENFORCED
+  TT_CONTENT_GOVERNANCE_NON_BLOCKING_G3: ENFORCED
+  TT_CONFIGURATION_CHANGES_OVER_CODE_CHANGES: ENFORCED
+  TT_G3_CCV_PRE_IMPLEMENTATION_GATE: ENFORCED
+  TT_PRODUCTION_GO: NO_GO
+
+# ── 唯一执行入口（写死） ─────────────────────────────────────────────────────
+
+sole_execution_entry:
+  status: ENFORCED
+  rule: >
+    Production Readiness is the ONLY execution entry. Any bug, requirement, or fix
+    MUST enter the Master Matrix before work starts — never fix-first.
+  forbidden:
+    - direct_fix_without_matrix_registration
+    - parallel_ad_hoc_backlog
+    - new_architecture_lines_before_production_go
+    - pcp_feature_work_without_architecture_review
+  workflow:
+    - discover_or_intake
+    - master_matrix_register
+    - locate_domain
+    - assign_go_gate
+    - classify_blocking
+    - fix_or_confirm
+    - attach_evidence
+    - close_in_matrix
+    - advance_wave_and_gate
+
+release_train:
+  status: ACTIVE
+  chain: Master Matrix → Wave → Gate → Evidence → Production GO
+  go_rule: G1 PASS + G2 PASS + G3 PASS → TT_PRODUCTION_GO GO
+  active_wave: "1.1"
+  active_gate: G1
+  waves:
+    - wave: "1.1"
+      gate: G1
+      execute: bash scripts/dev/run-production-readiness-wave-1-1-g1.sh
+    - wave: "2"
+      gate: G2
+    - wave: "3"
+      gate: G3
+
+one_line_progress_answer: >
+  Platform COMPLETE · Production Readiness ACTIVE · G1 IN_PROGRESS ·
+  G2 NOT_STARTED · G3 NOT_STARTED · Production GO NO_GO
+
+one_line_status_answer: >
+  Platform COMPLETE · Production Readiness ACTIVE · G1 IN_PROGRESS ·
+  G2 NOT_STARTED · G3 NOT_STARTED · Production GO NO_GO
+
+enterprise_status_answer:
+  en: >
+    Platform Complete · PCP Frozen Verified Aligned Closed ·
+    Community Production Ready (G1 Domain) PASS ·
+    Production Readiness Active · G1 IN_PROGRESS · G2/G3 NOT_STARTED ·
+    Production GO NO_GO — TravelTrust whole product not GO yet
+  zh: >
+    平台已完成 · PCP 已冻结验证对齐关卷 ·
+    Community Production Ready（G1 域）已通过 ·
+    生产准备进行中 · G1 进行中 · G2/G3 未启动 ·
+    Production GO 仍为 NO_GO — 全站尚未 GO
+
+project_state_banner: |
+  TravelTrust
+  ────────────────────
+  Platform          COMPLETE
+  ────────────────────
+  PCP               FROZEN · VERIFIED · ALIGNED · CLOSED
+  ────────────────────
+  Community         Production Ready (G1 Domain) · PASS
+  ────────────────────
+  Production Readiness   ACTIVE
+                        G1  IN_PROGRESS
+                        G2  NOT_STARTED
+                        G3  NOT_STARTED
+  ────────────────────
+  Production GO     NO_GO
+
+project_state:
+  traveltrust:
+    platform_a:
+      label: Trust & Settlement
+      status: COMPLETE
+    platform_b_pcp:
+      label: PCP Public Content
+      status: CLOSED
+      architecture: FROZEN
+      implementation: COMPLETE
+      alignment: VERIFIED
+      runtime_staging: VERIFIED
+      runtime_local: SKIPPED
+      unified_answer: "PCP · FROZEN · VERIFIED · ALIGNED · CLOSED"
+      status_doc: docs/runbook/PCP-PLATFORM-STATUS.md
+    community_content_g1:
+      label: Community Content Readiness
+      verdict: Community Production Ready (G1 Domain)
+      unified_answer: "Community = Production Ready (G1 Domain) · Maintenance"
+      status: PASS
+      maintenance_mode: true
+      active_development: false
+      release_train: MAINTENANCE
+      closed_gaps: [PRM-CONTENT-B001, PRM-MEDIA-B001]
+      gap_policy: do_not_reopen — new issues PRM-CONTENT-B00X / PRM-MEDIA-B00X
+      evidence_lines:
+        architecture: docs/runbook/PCP-PLATFORM-STATUS.md
+        runtime: evidence/GO_production_readiness/community-production-ready/20260704T000527Z/
+        content: docs/runbook/COMMUNITY-PRODUCTION-READY-L5-CHECKLIST.md
+        media: docs/runbook/COMMUNITY-MEDIA-RUNTIME-READINESS-G1.md
+      status_doc: docs/runbook/COMMUNITY-PLATFORM-MAINTENANCE.md
+      guardrail: scripts/gates/run-community-media-guard.sh
+      guardrail_key: TT_COMMUNITY_MEDIA_GUARD
+      staging_alignment_gap: PRM-CONTENT-B002
+      staging_alignment_status: CLOSED
+      staging_alignment_evidence: evidence/GO_production_readiness/community-g1-staging-alignment/20260704T005621Z/
+      narrative_policy: do_not_discuss_showcase_demo_legacy_unless_production_regression
+      note: G1 domain PASS does not imply TravelTrust Production GO
+    production_readiness:
+      status: ACTIVE
+      master_matrix: ACTIVE
+      go_gates: ACTIVE
+      release_train: ACTIVE
+      sole_execution_entry: ENFORCED
+    production_go:
+      status: NO_GO
+  current_mainline: PRODUCTION_READINESS
+
+platform_tiers:
+  platform_a:
+    label: Trust & Settlement
+    status: COMPLETE
+    capabilities: [Identity, Wallet, Settlement, RBAC, On_chain_Governance]
+    active_development: false
+    pcp_touch: forbidden_unless_architecture_review
+  platform_b:
+    label: PCP Public Content
+    capabilities: [Governance, Builder, Public_Content, Evidence]
+    machine_key: TT_PCP_ARCHITECTURE
+    status: CLOSED
+    architecture: FROZEN
+    implementation: COMPLETE
+    alignment: VERIFIED
+    runtime_staging: VERIFIED
+    runtime_local: SKIPPED
+    active_development: false
+    change_gate: docs/runbook/PCP-ARCHITECTURE-REVIEW-GATE.md
+    closure_docs:
+      - docs/runbook/PCP-ARCHITECTURE-FINAL.md
+      - docs/runbook/PCP-MIGRATION-HISTORY.md
+      - docs/runbook/PCP-PLATFORM-CAPABILITY-MATRIX.md
+      - docs/runbook/PCP-DEVELOPER-GUIDE.md
+  production:
+    label: Production Readiness
+    capabilities:
+      - Security
+      - Observability
+      - Performance
+      - Disaster_Recovery
+      - Deployment
+      - Browser_UAT
+      - Live_Services
+      - Domain_CDN
+      - Stripe_Live
+      - Monitoring
+      - Regression_R002
+      - Production_GO
+    active_development: true
+
+program_chain:
+  - step: architecture_closure
+    status: COMPLETE
+    key: TT_PCP_ARCHITECTURE_CLOSURE
+  - step: production_readiness_program
+    status: ACTIVE
+    key: TT_PRODUCTION_READINESS_PROGRAM
+    runbook: docs/runbook/TT-PRODUCTION-READINESS-PROGRAM.md
+    master_matrix: docs/runbook/TT-PRODUCTION-READINESS-MASTER-MATRIX.md
+    master_matrix_registry: registry/production-readiness-master-matrix.v1.yaml
+    gap_report: docs/runbook/PRODUCTION-READINESS-MASTER-GAP-REPORT.md
+  - step: production_go
+    status: NO_GO
+    key: TT_PRODUCTION_GO
+    runbook: docs/runbook/PRODUCTION-GO-DECISION-PACKAGE.md
+  - step: public_launch
+    status: NOT_STARTED
+    phase: "③"
+
+deferred:
+  pcp_phase_2:
+    items: [SearchBuilder, RecommendationBuilder, VideoBuilder, LiveBuilder, AIBuilder]
+    status: NOT_STARTED
+    unlock_requires:
+      - TT_PCP_ARCHITECTURE remains FROZEN unless Architecture Review
+      - Owner_written_phase2_scope
+      - Production_Readiness_progress_review
+
+ssot_map:
+  master_matrix: docs/runbook/TT-PRODUCTION-READINESS-MASTER-MATRIX.md
+  master_matrix_registry: registry/production-readiness-master-matrix.v1.yaml
+  master_gap_report: docs/runbook/PRODUCTION-READINESS-MASTER-GAP-REPORT.md
+  release_governance: docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md
+  product_verification: docs/runbook/TT-PROJECT-MAINLINE-PRODUCT-VERIFICATION.md
+  phase3_prep: docs/runbook/PHASE3-PRODUCTION-PREPARATION.md
+  readiness_report: docs/runbook/PRODUCTION-READINESS-REPORT.md
+  go_decision: docs/runbook/PRODUCTION-GO-DECISION-PACKAGE.md
+  go_live_checklist: docs/go-live-checklist.md
+  alignment_policy: docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md
+  pcp_hub: docs/runbook/TT-PUBLIC-CONTENT-PLATFORM.md
+  pcp_platform_status: docs/runbook/PCP-PLATFORM-STATUS.md
+  pcp_review_gate: docs/runbook/PCP-ARCHITECTURE-REVIEW-GATE.md
+  market_media_ddg: docs/runbook/TT-MARKET-MEDIA-DDG-REMEDIATION.md
+  official_cold_start: docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md
+
+official_content_baseline:
+  version: V1
+  status: READY
+  machine_key: TT_OCS_OFFICIAL_CONTENT_BASELINE
+  versioned_status_rule: >
+    Content changes bump version (V1 → V1.1 → V2); do not mutate READY in place.
+    Production GO references a pinned baseline version, not "current latest".
+  manifest: data/official-cold-start/dataset.v1.json
+  staging_evidence:
+    ocs_surface_expansion: evidence/GO_official_cold_start_dataset/ocs-surface-expansion-staging/20260704T073209Z
+    ocs_post_apply_ddg: evidence/GO_official_cold_start_dataset/ocs-post-apply-ddg-remediation/20260704T075847Z
+  registry: registry/official-cold-start-dataset.v1.yaml
+
+independent_data_governance_tracks:
+  market_media_ddg_remediation:
+    label: Market Media DDG Remediation
+    track: Data Governance
+    placement: Independent Track
+    not_under: [G3, OCS, PCP]
+    registry: registry/market-media-ddg-remediation.v1.yaml
+    machine_key: TT_MARKET_MEDIA_DDG
+    status: PLANNED
+    blocks_g3: false
+    blocks_production_go: false
+
+project_phase:
+  en: From platform construction to operating production systems
+  zh: 项目已从「建设平台」正式转入「运营生产系统」
+  prior_focus: [Builder, Registry, Guard, Runtime, Verification]
+  current_focus:
+    - Production_Network
+    - Production_Payment
+    - Production_DR
+    - Production_Monitoring
+    - Production_Cutover
+    - Production_Evidence
+
+honest_boundary: >
+  ① Local product verification and PCP freeze regression ≠ ② Testnet sign-off ≠ ③ Production GO.
+  PCP 7/7 ALIGNED does not imply Production READY.
+  Content/Data Governance tracks do not block G3 Infrastructure unless they directly affect Production GO.

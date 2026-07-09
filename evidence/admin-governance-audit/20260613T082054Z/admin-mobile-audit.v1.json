@@ -1,0 +1,5 @@
+{
+  "schema": "traveltrust.admin_mobile_audit.v1",
+  "score": 75,
+  "gate": "l5-pe-mobile-responsive-audit.sh admin fold"
+}

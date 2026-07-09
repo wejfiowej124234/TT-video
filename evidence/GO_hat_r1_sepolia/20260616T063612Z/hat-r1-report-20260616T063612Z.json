@@ -1,0 +1,19 @@
+{
+  "hat_id": "HAT-R1",
+  "stamp_utc": "20260616T063612Z",
+  "phase": "a",
+  "evidence_dir": "evidence\\GO_hat_r1_sepolia\\20260616T063612Z",
+  "verdict": "PASS",
+  "baseline": {
+    "ttg": "0x2837ea0c50e27d59b88af617abbb231a040062c5",
+    "governor": "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
+  },
+  "browser_signoff": "evidence/GO_hat_r1_sepolia/browser-signoff/20260616T060848Z/HUMAN-BROWSER-SIGNOFF.json",
+  "wallet": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "steps": {
+    "step-02-stake": "0xae072e1fe38b81e03e7b4200ff862c3aea2090074ef28cb7238b0899eb941c6b",
+    "step-06-queue": "0xcfd052923a0188b732c505520d9c99773697e4e7b57181d55ce28b416776d2a2"
+  },
+  "execute_earliest_unix": "1781765044",
+  "honest_boundary": "Phase B after 48h Timelock; \u2461 only"
+}

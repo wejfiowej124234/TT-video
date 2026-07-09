@@ -1,0 +1,391 @@
+{
+  "schema": "traveltrust.cms_baseline_review.v1",
+  "review_date": "2026-07-07",
+  "recorded_at_utc": "2026-07-07T12:16:08.877Z",
+  "matrix_version": "V1.1",
+  "matrix_status": "FROZEN",
+  "TT_CMS_BASELINE_REVIEW": "PASS",
+  "TT_CMS_OWNERSHIP_MATRIX": "FROZEN",
+  "verdict_summary": "**全部 CMS 元素已登记或明确排除。** 无遗漏 gap。locales/OCS/API 内容已标注为「非 CMS」，Registry Backlog 项已预登记。Matrix V1.1 可冻结。",
+  "matrix_stats": {
+    "elements": 58,
+    "cms_owned": 22,
+    "pages": 10
+  },
+  "checklist_stats": {
+    "covered": 34,
+    "planned": 2,
+    "not_cms": 15,
+    "gaps": 0,
+    "total": 51
+  },
+  "pages": [
+    "Home",
+    "Travel",
+    "Guide",
+    "Provider",
+    "Acquisition",
+    "Community",
+    "Market",
+    "Governance",
+    "Me",
+    "Admin"
+  ],
+  "checklist": {
+    "Home": [
+      {
+        "check": "Hero",
+        "status": "covered",
+        "matrix_element": "Campaign Hero · Destination Hero",
+        "owner": "OCS + CMS"
+      },
+      {
+        "check": "Background / Ambient",
+        "status": "covered",
+        "matrix_element": "Destination Ambient",
+        "owner": "CMS"
+      },
+      {
+        "check": "Banner",
+        "status": "not_cms",
+        "note": "无独立 Banner · Featured=OCS Public Ops"
+      },
+      {
+        "check": "CTA 文案",
+        "status": "not_cms",
+        "note": "locales · landing_hero_* · 非 CMS"
+      },
+      {
+        "check": "SEO",
+        "status": "covered",
+        "matrix_element": "SEO Metadata",
+        "owner": "CMS",
+        "note": "Registry P2 · consumer 未接 catalog SEO"
+      },
+      {
+        "check": "国家介绍",
+        "status": "planned",
+        "matrix_element": "国家介绍文案",
+        "owner": "CMS",
+        "note": "Registry country_city_copy Backlog · UI 未接"
+      },
+      {
+        "check": "城市介绍",
+        "status": "planned",
+        "matrix_element": "城市介绍文案",
+        "owner": "CMS",
+        "note": "同上"
+      },
+      {
+        "check": "活动卡片",
+        "status": "covered",
+        "matrix_element": "创新行程预览卡",
+        "owner": "API Runtime"
+      },
+      {
+        "check": "首页推荐",
+        "status": "covered",
+        "matrix_element": "Featured / 冷启动展示条",
+        "owner": "OCS Public Ops"
+      },
+      {
+        "check": "Footer CMS 文案",
+        "status": "not_cms",
+        "note": "LandingFooter · locales · 非 CMS"
+      },
+      {
+        "check": "Consumer Value 卡片区",
+        "status": "not_cms",
+        "note": "HomeConsumerValueSection · locales + 静态 TS 图"
+      },
+      {
+        "check": "Catalog 国家/城市标签",
+        "status": "covered",
+        "matrix_element": "Catalog 国家/城市标签",
+        "owner": "CMS"
+      }
+    ],
+    "Travel": [
+      {
+        "check": "Hero",
+        "status": "covered",
+        "matrix_element": "品牌页 Hero / 视觉",
+        "owner": "CMS (Registry P2)",
+        "note": "当前 page-brief + FE frozen · Video Poster Backlog"
+      },
+      {
+        "check": "Background",
+        "status": "covered",
+        "matrix_element": "品牌页 Hero / 视觉",
+        "owner": "同上"
+      },
+      {
+        "check": "Ambient",
+        "status": "not_cms",
+        "note": "cinematic CSS · FE frozen"
+      },
+      {
+        "check": "Banner",
+        "status": "not_cms",
+        "note": "Pulse ticker · static TS"
+      },
+      {
+        "check": "CTA / 叙事文案",
+        "status": "covered",
+        "matrix_element": "品牌文案 / Web3 叙事",
+        "owner": "locales + page-brief"
+      },
+      {
+        "check": "SEO",
+        "status": "not_cms",
+        "note": "layout static locales · SEO admin 未接"
+      },
+      {
+        "check": "Video Poster",
+        "status": "covered",
+        "matrix_element": "Video Poster",
+        "owner": "CMS",
+        "note": "Registry P2 Backlog"
+      },
+      {
+        "check": "Announcements",
+        "status": "covered",
+        "matrix_element": "Announcements 列表",
+        "owner": "API"
+      }
+    ],
+    "Guide": [
+      {
+        "check": "Hero / Background",
+        "status": "covered",
+        "matrix_element": "Hero / Background",
+        "owner": "CMS/CSS",
+        "note": "destination ambient on guide_detail=planned"
+      },
+      {
+        "check": "POI 配图",
+        "status": "covered",
+        "matrix_element": "POI 配图",
+        "owner": "CMS"
+      },
+      {
+        "check": "Profile 数据",
+        "status": "covered",
+        "matrix_element": "Guide Name / Bio · Rating · …",
+        "owner": "API/OCS"
+      },
+      {
+        "check": "List 页 Header 文案",
+        "status": "not_cms",
+        "note": "guides_title · locales"
+      }
+    ],
+    "Provider": [
+      {
+        "check": "Listing Cover",
+        "status": "covered",
+        "matrix_element": "Listing Cover 图片",
+        "owner": "CMS"
+      },
+      {
+        "check": "商家文案",
+        "status": "covered",
+        "matrix_element": "商家名称 / 描述",
+        "owner": "API/DB"
+      },
+      {
+        "check": "Subsite Hero 文案",
+        "status": "not_cms",
+        "note": "locales market_segment_provider_*"
+      }
+    ],
+    "Acquisition": [
+      {
+        "check": "Listing Cover",
+        "status": "covered",
+        "matrix_element": "Listing Cover 图片",
+        "owner": "CMS"
+      },
+      {
+        "check": "收购文案",
+        "status": "covered",
+        "matrix_element": "收购条目文案",
+        "owner": "API/DB"
+      },
+      {
+        "check": "Subsite Hero 文案",
+        "status": "not_cms",
+        "note": "locales"
+      }
+    ],
+    "Community": [
+      {
+        "check": "Official Banner",
+        "status": "covered",
+        "matrix_element": "Official Feed Banner",
+        "owner": "OCS"
+      },
+      {
+        "check": "UGC",
+        "status": "covered",
+        "matrix_element": "UGC 帖子 / 媒体",
+        "owner": "API"
+      },
+      {
+        "check": "Explore 目的地块",
+        "status": "covered",
+        "matrix_element": "Explore 目的地块",
+        "owner": "CMS+API"
+      },
+      {
+        "check": "Feed Header 文案",
+        "status": "not_cms",
+        "note": "locales"
+      }
+    ],
+    "Market": [
+      {
+        "check": "POI Hero / Food",
+        "status": "covered",
+        "matrix_element": "POI Hero / Food 图片",
+        "owner": "CMS"
+      },
+      {
+        "check": "City Hero",
+        "status": "covered",
+        "matrix_element": "City Hero",
+        "owner": "CMS",
+        "note": "Registry P1 Pilot · consumer 未接"
+      },
+      {
+        "check": "Hotel / Transport 图",
+        "status": "covered",
+        "matrix_element": "Hotel / Transport 库存图",
+        "owner": "CMS"
+      },
+      {
+        "check": "Banner",
+        "status": "covered",
+        "matrix_element": "Banner / Campaign 视觉",
+        "owner": "CMS/OCS"
+      },
+      {
+        "check": "Pricing / Routes",
+        "status": "covered",
+        "matrix_element": "Pricing · Intercity Routes",
+        "owner": "CMS"
+      },
+      {
+        "check": "Hero 区文案",
+        "status": "not_cms",
+        "note": "MarketPageHero · locales"
+      },
+      {
+        "check": "Flow Banner 文案",
+        "status": "not_cms",
+        "note": "MarketFlowContextBanner · locales"
+      },
+      {
+        "check": "页身 CSS",
+        "status": "covered",
+        "matrix_element": "页身 CSS 氛围",
+        "owner": "FE frozen"
+      }
+    ],
+    "Governance": [
+      {
+        "check": "提案 Banner",
+        "status": "covered",
+        "matrix_element": "提案 Banner / 视觉",
+        "owner": "CMS",
+        "note": "营销 art · 链上数据=Contract"
+      },
+      {
+        "check": "Proposal / Vote",
+        "status": "covered",
+        "matrix_element": "Proposal · Vote",
+        "owner": "Contract"
+      },
+      {
+        "check": "Hub 静态文案",
+        "status": "not_cms",
+        "note": "locales governance_*"
+      }
+    ],
+    "Me": [
+      {
+        "check": "Profile / 钱包 / 订单",
+        "status": "covered",
+        "matrix_element": "用户资料 … 消息",
+        "owner": "API"
+      },
+      {
+        "check": "Identities Hub 文案",
+        "status": "not_cms",
+        "note": "locales me_identities_*"
+      }
+    ],
+    "Admin": [
+      {
+        "check": "CMS Content Hub",
+        "status": "covered",
+        "matrix_element": "CMS Content + Translation + SEO + Pricing + Routes",
+        "owner": "CMS"
+      },
+      {
+        "check": "OCS Public Ops",
+        "status": "covered",
+        "matrix_element": "OCS Public Ops",
+        "owner": "OPS/API"
+      },
+      {
+        "check": "Community 审核",
+        "status": "covered",
+        "matrix_element": "Community 审核",
+        "owner": "API"
+      },
+      {
+        "check": "Governance 运维",
+        "status": "covered",
+        "matrix_element": "Governance 运维",
+        "owner": "Contract/API"
+      }
+    ]
+  },
+  "excluded_planes": [
+    "LOCALES",
+    "OCS",
+    "PUBLIC_OPS",
+    "API",
+    "CONTRACT",
+    "UGC",
+    "FE_CSS_FROZEN"
+  ],
+  "registry_planned": [
+    {
+      "matrix": "国家介绍文案 / 城市介绍文案",
+      "registry": "country_city_copy",
+      "status": "Backlog P2"
+    },
+    {
+      "matrix": "SEO Metadata",
+      "registry": "seo_metadata",
+      "status": "Backlog P2"
+    },
+    {
+      "matrix": "City Hero",
+      "registry": "city_hero",
+      "status": "Pilot P1"
+    },
+    {
+      "matrix": "Travel Video Poster",
+      "registry": "video_poster",
+      "status": "Backlog P2"
+    }
+  ],
+  "sources": [
+    "evidence/GO_cms_operation/CMS-OWNERSHIP-MATRIX-LATEST.json",
+    "data/catalog/content-ownership-inventory.v1.yaml",
+    "registry/cms-master-registry.v1.yaml"
+  ]
+}

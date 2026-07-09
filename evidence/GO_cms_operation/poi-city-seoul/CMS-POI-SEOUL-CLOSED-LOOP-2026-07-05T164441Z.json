@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-05T16:44:41Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "KR",
+    "city_zh": "首尔",
+    "city_en": "Seoul",
+    "matrix_ids": [
+      "PH-KR-070-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-KR-070-FOOD",
+      "legacy_value": "拌饭",
+      "poi_id": "ebddbf7f-d742-4db7-a7b0-0cab8df4145b",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "hero_file": "ocs-seoul-food-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-KR-070-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T152500Z",
+  "filename": "ocs-barcelona-arch-community-cover.jpg",
+  "row": 53,
+  "chain_id": "barcelona-arch",
+  "country_code": "ES",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "content_safety_pre_check": {
+    "pass": true,
+    "prompt_reviewed_before_generate": true,
+    "blocked_elements_avoided": [
+      "brand_logos",
+      "celebrity_portraits",
+      "commercial_ad_posters",
+      "recognizable_faces"
+    ],
+    "safe_expression": "桂尔公园马赛克蜥蜴/细节特写 · Feed playful color · 无正面人脸"
+  },
+  "checks": {
+    "manifest_alignment": { "pass": true, "notes": "body 圣家堂-桂尔公园高迪一日 · tags 巴塞罗那/建筑/官方旅行日志" },
+    "destination_authenticity_9dim": { "pass": true, "notes": "Park Guell trencadis 蜥蜴/马赛克细节 · 高迪彩" },
+    "country_consistency_es": { "pass": true },
+    "community_authenticity_plan": { "pass": true, "notes": "UGC 分享感 · 非广告海报" },
+    "surface_boundary_plan": { "pass": true, "notes": "非 Official 宽幅/Guide/Provider/Acquisition" },
+    "visual_sequence_plan": {
+      "pass": true,
+      "vs_row52": "马赛克蜥蜴 Feed 特写 vs Official 圣家堂宽幅 Hero",
+      "vs_row50": "雕塑/细节特写 vs 小团联票 Provider",
+      "vs_row54_plan": "Cover=细节/蜥蜴 · Media=桂尔公园全景台"
+    },
+    "cross_chain_community_plan": { "pass": true },
+    "nine_class_framework_frozen": true
+  }
+}

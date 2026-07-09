@@ -1,0 +1,146 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-06T064348Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "SG",
+    "country_zh": "新加坡",
+    "city_zh": "新加坡",
+    "city_en": "Singapore"
+  },
+  "poi_count": 10,
+  "matrix_ids": [
+    "PH-SG-101-ATR",
+    "PH-SG-102-ATR",
+    "PH-SG-103-ATR",
+    "PH-SG-104-ATR",
+    "PH-SG-105-ATR",
+    "PH-SG-106-FOOD",
+    "PH-SG-107-FOOD",
+    "PH-SG-108-FOOD",
+    "PH-SG-109-FOOD",
+    "PH-SG-110-FOOD"
+  ],
+  "pois": [
+    "滨海湾",
+    "圣淘沙",
+    "牛车水",
+    "小印度",
+    "动物园",
+    "海南鸡饭",
+    "肉骨茶",
+    "辣椒螃蟹",
+    "叻沙",
+    "椰浆饭"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-SG-101-ATR",
+      "legacy_value": "滨海湾",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-SG-102-ATR",
+      "legacy_value": "圣淘沙",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-SG-103-ATR",
+      "legacy_value": "牛车水",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-SG-104-ATR",
+      "legacy_value": "小印度",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-SG-105-ATR",
+      "legacy_value": "动物园",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-acquisition-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-SG-106-FOOD",
+      "legacy_value": "海南鸡饭",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-SG-107-FOOD",
+      "legacy_value": "肉骨茶",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-SG-108-FOOD",
+      "legacy_value": "辣椒螃蟹",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-SG-109-FOOD",
+      "legacy_value": "叻沙",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-SG-110-FOOD",
+      "legacy_value": "椰浆饭",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-singapore-family-community-media.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-SG-101-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-SG-102-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-SG-103-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-SG-104-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-SG-105-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-SG-106-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-SG-107-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-SG-108-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-SG-109-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-SG-110-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=SG&city=%E6%96%B0%E5%8A%A0%E5%9D%A1&limit=50",
+    "http": 200,
+    "count": 10
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-singapore/CMS-POI-SINGAPORE-CLOSED-LOOP-LATEST.json",
+  "next_city": null,
+  "closure_keys": {
+    "TT_CMS_POI_CITY_SINGAPORE": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": null
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_SINGAPORE": "CLOSED"
+}

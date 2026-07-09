@@ -1,0 +1,56 @@
+UTC 2026-05-07T03:42:30Z
+==> L1 cargo test -p traveltrust-api
+test routes::internal::tests::suite_early::indexer_status_live_reconcile_chain_ready_dead_db_reports_reconcile_orders_projection_failed ... ok
+test routes::orders::tests::suite::b095_get_order_by_id_split_addresses_ssot_matches_get_meta_chain_contracts ... ok
+
+test result: ok. 1241 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.25s
+
+L1_exit=0
+==> L2 dev-preflight
+check-b453: OK (B453-REVIEW-JSON-CONTRACT-OBSERVABILITY-GATE-V1)
+check-b454: OK (B454-REVIEW-JSON-CONTRACT-DEGRADE-EVIDENCE-GATE-V1)
+check-b455: OK (B455-REVIEW-JSON-CONTRACT-ROLLOUT-GATE-V1)
+check-b456: OK (B456-REVIEW-JSON-CONTRACT-RELEASE-CONTROLLER-GATE-V1)
+check-b457: OK (B457-REVIEW-JSON-CONTRACT-RELEASE-ADAPTER-GATE-V1)
+OK: no files changed in diff main..HEAD — skip crates/metadata gate.
+==> check-ai-task-card-index-overview (docs/AI任务卡索引.md differs vs HEAD and/or main..HEAD)
+==> check-ai-task-card-index-overview (docs/AI任务卡索引.from-stash.md differs vs HEAD and/or main..HEAD)
+L2_exit=0
+==> L3 ci-local-delivery-minimum
+check-b457: OK (B457-REVIEW-JSON-CONTRACT-RELEASE-ADAPTER-GATE-V1)
+==> check-pr-crates-needs-metadata (main..HEAD)
+OK: no files changed in diff main..HEAD — skip crates/metadata gate.
+==> check-ai-task-card-index-overview (docs/AI任务卡索引.md differs vs HEAD and/or main..HEAD)
+==> check-ai-task-card-index-overview (docs/AI任务卡索引.from-stash.md differs vs HEAD and/or main..HEAD)
+OK: ci-local-delivery-minimum
+L3_exit=0
+==> L4 local-delivery-expanded (skip MC E2E)
+
+==> [local-delivery-expanded] Vitest · PublishDrawer（TT-LOCAL §2.1）
+
+ RUN  v2.1.9 D:/TravelTrust/frontend
+
+ ✓ components/community/PublishDrawer/constants.test.ts (2 tests) 2ms
+ ✓ components/community/PublishDrawer/usePublishForm.video-duration.test.tsx (2 tests) 29ms
+
+ Test Files  2 passed (2)
+      Tests  4 passed (4)
+   Start at  11:43:58
+   Duration  1.74s (transform 228ms, setup 35ms, collect 803ms, tests 31ms, environment 809ms, prepare 193ms)
+
+SKIP: Playwright market-community — CI_LOCAL_SKIP_MARKET_COMMUNITY_E2E=1
+OK: local-delivery-expanded
+L4_exit=0
+==> optional: local-tt9621-p0-stack-one-shot (no P0 E2E)
+one_shot_exit=1
+
+==> optional L5b: local-tt9621-p0-stack-one-shot (Docker PG + API + vertical-slice-01)
+exit=0 (wait-for-api 1 attempt; vertical-slice-01 pass chain_off_mounted=true)
+修复摘要（本机）：wait-for-api.sh 去 CRLF；one-shot 强制 PORT=8080；等日志 listening 后再探活。
+L5 Playwright p0-spine：本轮未跑（需 LOCAL_TT9621_RUN_P0_E2E=1 或 npm run e2e 全栈）。
+阶次：仅①本地；ci-local/expanded 绿不等价 ②③ 或 93/96-15 穷举。
+
+==> L5 P0 spine（LOCAL_TT9621_RUN_P0_E2E=1，真栈 Playwright，无 page.route mock）
+local-tt9621-p0-stack-one-shot: exit=0
+Playwright: 21 passed (p0-spine-real-api.spec.ts + setup-meta-chain)，日志见 L5-p0-spine-full-stack.log
+阶次：仍仅①本地；②③ 须在目标环境单独举证。

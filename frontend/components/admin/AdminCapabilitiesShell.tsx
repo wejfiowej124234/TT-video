@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { AdminActorCapabilityStrip } from "@/components/admin/AdminActorCapabilityStrip";
+import { AdminBusinessSuperAdminShortcutBanner } from "@/components/admin/AdminBusinessSuperAdminShortcutBanner";
 import { AdminCommandPaletteLazyGate } from "@/components/admin/AdminCommandPaletteLazyGate";
 import { AdminLayoutSubpageNav } from "@/components/admin/AdminLayoutSubpageNav";
 import { AdminRoutePermissionBanner } from "@/components/admin/AdminRoutePermissionBanner";
@@ -53,6 +54,7 @@ export function AdminCapabilitiesShell({ children }: { children: React.ReactNode
       <AdminRecentVisitsTracker />
       <AdminSessionCookieSync />
       <AdminShellBar />
+      <AdminBusinessSuperAdminShortcutBanner />
       <AdminShellPreviewNotice />
       <AdminShellApproveBanner />
       <AdminActorCapabilityStrip />

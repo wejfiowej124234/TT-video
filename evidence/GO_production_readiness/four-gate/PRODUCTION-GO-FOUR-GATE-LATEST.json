@@ -1,0 +1,38 @@
+{
+  "kind": "traveltrust.production_go_four_gate.v1",
+  "recorded_utc": "20260708T075812Z",
+  "stamp": "20260708T075812Z",
+  "framework": "registry/production-go-four-gate-framework.v1.yaml",
+  "gates": {
+    "business": {
+      "machine_key": "TT_PRODUCTION_BUSINESS_READY",
+      "verdict": "TT_PRODUCTION_BUSINESS_PASS"
+    },
+    "web3": {
+      "machine_key": "TT_PRODUCTION_WEB3_READY",
+      "verdict": "TT_PRODUCTION_WEB3_PASS",
+      "detail": "WEB3_PAYMENT_PRODUCTION_PASS"
+    },
+    "infrastructure": {
+      "machine_key": "TT_PRODUCTION_INFRASTRUCTURE_READY",
+      "verdict": "TT_PRODUCTION_INFRASTRUCTURE_IN_PROGRESS"
+    },
+    "operations": {
+      "machine_key": "TT_PRODUCTION_OPERATIONS_READY",
+      "verdict": "TT_PRODUCTION_OPERATIONS_IN_PROGRESS"
+    },
+    "owner_signoff": {
+      "machine_key": "TT_OWNER_FINAL_SIGNOFF",
+      "verdict": "PENDING"
+    },
+    "production_go": {
+      "machine_key": "TT_PRODUCTION_GO",
+      "verdict": "NO_GO"
+    }
+  },
+  "payment_architecture": {
+    "core": "Web3 Escrow USDC",
+    "stripe": "Optional Fiat Onboarding P1 not in gates"
+  },
+  "evidence_dir": "evidence/GO_production_readiness/four-gate/four-gate-20260708T075812Z"
+}

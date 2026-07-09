@@ -2,7 +2,7 @@ import type { FormEvent, MutableRefObject } from "react";
 import {
   orderAccept,
   orderCancel,
-  orderConfirmCompletion,
+  orderConfirmServiceCompletion,
   postOrderDispute,
   getIdempotencyKey,
 } from "@/lib/apiClient";
@@ -82,7 +82,7 @@ export function buildOrderActionsBlockOffchainHandlers(input: OrderActionsBlockO
       (confirmCompletionIdempotencyKeyRef.current = getIdempotencyKey());
     run(
       "confirmCompletion",
-      () => orderConfirmCompletion(orderId, key),
+      () => orderConfirmServiceCompletion(orderId, key),
       "order_error_confirm_completion_failed",
     );
   };

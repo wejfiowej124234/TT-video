@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T143000Z",
+  "filename": "ocs-singapore-family-official-guide-cover.jpg",
+  "row": 28,
+  "chain_id": "singapore-family",
+  "country_code": "SG",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "checks": {
+    "manifest_alignment": { "pass": true, "notes": "title/body/tags/destination 与 brief+dataset 100%" },
+    "destination_authenticity_9dim": { "pass": true, "notes": "滨海湾天际线+家庭周末 SG-only" },
+    "country_consistency_sg": { "pass": true },
+    "official_guide_destination_plan": {
+      "pass": true,
+      "vs_tokyo": "亲子周末 vs 摄影一日",
+      "vs_kyoto": "现代都市家庭 vs 文化慢游",
+      "vs_seoul": "两天亲子 vs 48h 美食地图",
+      "vs_bangkok": "滨海湾家庭 vs 寺庙河景一日",
+      "wide_route_narrative": true
+    },
+    "cross_chain_official_guide_plan": { "pass": true, "no_route_landmark_duplication": true },
+    "global_visual_diversity_plan": { "pass": true, "notes": "现代天际线+家庭剪影宽幅" },
+    "brand_consistency_plan": { "pass": true },
+    "consumer_experience_plan": { "pass": true, "notes": "Official Guide Hero 可信周末路线" },
+    "surface_identity_plan": { "pass": true, "notes": "Official Guide only · 非 Guide/Provider/Acquisition/Community" },
+    "narrative_continuity_plan": { "pass": true, "notes": "Row25-27 亲子生态 → 官方两天周末路线" },
+    "business_authenticity": { "pass": true, "4-10岁家庭 · 午休室内备选" },
+    "commercial_realism": { "pass": true },
+    "copyright_logo_watermark_ai": { "pass": true, "no_watermark": true, "no_logo": true, "no_ai_artifacts": true },
+    "nine_class_framework_frozen": true
+  }
+}

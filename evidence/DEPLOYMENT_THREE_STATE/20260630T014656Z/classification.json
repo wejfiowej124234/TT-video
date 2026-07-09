@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.deployment_three_state_classification.v1",
+  "classified_at_utc": "2026-06-30T01:46:56.756Z",
+  "stamp": "20260630T014656Z",
+  "deployment_state": "fix",
+  "git_sha": "3bbedda776b2cf2666efaac055ce9e13d98127b7",
+  "fix_deploy_ledger_id": "STRAT-S2",
+  "policy": "single_state_no_mixed_mode",
+  "ssot": "docs/runbook/TT-DEPLOYMENT-THREE-STATE-GOVERNANCE.md",
+  "forbidden": [
+    "stateless_deploy",
+    "mixed_sync_fix_freeze",
+    "freeze_fly_redeploy"
+  ]
+}

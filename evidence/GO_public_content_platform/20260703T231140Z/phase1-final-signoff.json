@@ -1,0 +1,40 @@
+{
+  "validation": "PCP_PHASE_1_FINAL_SIGNOFF",
+  "stamp": "20260703T231140Z",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "steps": [
+    {
+      "script": "scripts/dev/validate-pcp-phase1-market-batch-staging.cjs",
+      "pass": true
+    },
+    {
+      "script": "scripts/dev/validate-pcp-phase1-campaign-batch-staging.cjs",
+      "pass": true
+    },
+    {
+      "script": "scripts/dev/validate-pcp-phase0-5-staging.cjs",
+      "pass": true
+    },
+    {
+      "script": "scripts/dev/audit-pcp-phase1-full-alignment.cjs",
+      "pass": true
+    }
+  ],
+  "phase1_alignment": "COMPLETE",
+  "domains_fully_aligned": "7/7",
+  "phase1_gaps": 0,
+  "blocking": 0,
+  "overall": "PASS",
+  "TT_PCP_PHASE_1": "COMPLETE",
+  "sign_off_allowed": true,
+  "sign_off_note": "All domains 7/7 ALIGNED — TT_PCP_PHASE_1 stamped COMPLETE in registry + runbook",
+  "ssot_stamp": {
+    "registry": "D:\\TravelTrust-V1.1\\registry\\public-content-platform.v1.yaml",
+    "runbook": "D:\\TravelTrust-V1.1\\docs\\runbook\\TT-PUBLIC-CONTENT-PLATFORM.md",
+    "evidence": {
+      "phase1_full_alignment": "evidence/GO_public_content_platform/20260703T231140Z/pcp-phase1-full-alignment.json",
+      "market_batch": "evidence/GO_public_content_platform/20260703T231140Z/phase1-market-batch-validation-chain.json",
+      "campaign_batch": "evidence/GO_public_content_platform/20260703T231140Z/phase1-campaign-batch-validation-chain.json"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "captured_at_utc": "2026-06-16T14:47:14Z",
+  "recordings": [
+    "C1-admin-finance-ops-boundaries.mp4",
+    "C2-risk-auditor-community-audit.mp4"
+  ],
+  "screenshots": [
+    "role-superadmin-c1.png",
+    "role-finance-read.png",
+    "role-ops-onboarding.png",
+    "role-risk-community.png",
+    "role-auditor-readonly.png"
+  ],
+  "honest_boundary": "Slide-based ffmpeg walkthrough; not full browser screen capture"
+}

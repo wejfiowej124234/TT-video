@@ -121,7 +121,11 @@ export default function CommunityFeedDesktopAside({
                       <span className={TT_COMMUNITY_FEED_ACTION.asideDestRowInner}>
                         {row.thumbSrc ? (
                           <span className={TT_COMMUNITY_FEED_ACTION.asideDestRowThumb} aria-hidden>
-                            <CommunityFeedPromoThumb src={row.thumbSrc} sizes="32px" />
+                            <CommunityFeedPromoThumb
+                              src={row.thumbSrc}
+                              sizes="32px"
+                              fallbackSeed={row.destination}
+                            />
                           </span>
                         ) : null}
                         <span className="min-w-0 flex-1">

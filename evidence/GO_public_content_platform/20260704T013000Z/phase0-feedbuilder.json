@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.pcp_phase0_feedbuilder.v1",
+  "stamp": "20260704T013000Z",
+  "verdict": "COMPLETE",
+  "scope": "community_feed_governance_read_path_only",
+  "reopen_closed_gates": false,
+  "gates_untouched": ["DDG", "OCS", "SOPCP", "OCIP", "Market_Runtime"],
+  "market_builder_modified": false,
+  "pipeline": "Database → PCP Governance → FeedBuilder → Public API → Frontend",
+  "artifacts": {
+    "view": "governed_community_posts_v1",
+    "migration": "crates/api/migrations/20260704100000_governed_community_posts_v1.sql",
+    "governed_module": "crates/api/src/db/governed_community_posts.rs",
+    "feed_builder": "crates/api/src/pcp/feed_builder.rs",
+    "routes": "crates/api/src/routes/community/posts.rs"
+  },
+  "blocking_count": 0
+}

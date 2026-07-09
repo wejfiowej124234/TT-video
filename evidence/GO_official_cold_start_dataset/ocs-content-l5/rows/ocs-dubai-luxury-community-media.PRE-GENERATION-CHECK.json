@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.ocs_content_l5_pre_generation_check.v1",
+  "stamp_utc": "20260704T154700Z",
+  "filename": "ocs-dubai-luxury-community-media.jpg",
+  "row": 60,
+  "chain_id": "dubai-luxury",
+  "country_code": "AE",
+  "TT_PRE_GENERATION_CHECK": "PASS",
+  "no_quality_regression_acknowledged": true,
+  "content_safety_pre_check": { "pass": true, "prompt_reviewed_before_generate": true },
+  "checks": {
+    "manifest_full_field_alignment": { "pass": true, "notes": "Burj Khalifa 夜景 community media" },
+    "destination_authenticity_9dim_plan": { "pass": true },
+    "country_consistency_ae_only": { "pass": true },
+    "surface_boundary_plan": { "pass": true },
+    "visual_sequence_plan": { "pass": true },
+    "nine_class_framework_frozen": true
+  }
+}

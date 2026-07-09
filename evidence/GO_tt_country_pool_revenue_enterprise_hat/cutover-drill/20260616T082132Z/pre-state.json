@@ -1,0 +1,16 @@
+{
+  "ledger": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa",
+  "global_treasury": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+  "govfreeze_v2_timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+  "global_treasury_v2_match": false,
+  "funding_source": "0x0000000000000000000000000000000000000000",
+  "latest_epoch_id": 0,
+  "bps_steward": 4500,
+  "bps_global": 5500,
+  "balances": {
+    "steward_vault": 0,
+    "unallocated_vault": 0,
+    "global_treasury": 0,
+    "ledger": 0
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T01:57:22Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AE",
+    "city_zh": "沙迦",
+    "city_en": "Sharjah",
+    "matrix_ids": [
+      "PH-AE-233-ATR",
+      "PH-AE-234-ATR",
+      "PH-AE-235-ATR",
+      "PH-AE-236-FOOD",
+      "PH-AE-237-FOOD",
+      "PH-AE-238-FOOD",
+      "PH-AE-239-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AE-233-ATR",
+      "legacy_value": "遗产区",
+      "poi_id": "1fa5d867-3d73-4334-88d8-e7e2dcf1f7b8",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-233-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-234-ATR",
+      "legacy_value": "蓝色市场",
+      "poi_id": "58920809-113d-46f9-ba2f-1280b3850f72",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-234-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-235-ATR",
+      "legacy_value": "艺术博物馆",
+      "poi_id": "b72ad389-b41d-43c2-bbfe-2b99f1edc134",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-235-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-236-FOOD",
+      "legacy_value": "中东烤肉",
+      "poi_id": "2ac8ad71-70d0-4a74-8e17-b1ea6043aa75",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-236-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-237-FOOD",
+      "legacy_value": "库斯库斯",
+      "poi_id": "b2d51c95-5d45-464a-80cb-36709b003f3c",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-237-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-238-FOOD",
+      "legacy_value": "薄荷茶",
+      "poi_id": "ae739e13-506d-4f9a-a7ab-e890f7f9f58d",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-238-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-239-FOOD",
+      "legacy_value": "炸蚕豆",
+      "poi_id": "6a5c432e-2ab0-4108-b0cb-0e3f83a38754",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-239-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

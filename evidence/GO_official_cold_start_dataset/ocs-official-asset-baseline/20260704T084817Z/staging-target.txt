@@ -1,0 +1,3 @@
+staging_api=https://tt-api-staging.fly.dev
+stamp=20260704T084817Z
+state_seed=D:/TravelTrust-V1.1/evidence/GO_official_cold_start_dataset/ocs-surface-expansion-staging/20260704T073209Z/state.json

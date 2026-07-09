@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.ocs_content_l5_country_consistency_review.v1",
+  "stamp_utc": "20260704T144530Z",
+  "chain_id": "paris-art",
+  "city": "巴黎",
+  "country_code": "FR",
+  "country_label": "法国",
+  "theme_locked": "博物馆 · 卢浮宫 · 奥赛 · 艺术",
+  "TT_COUNTRY_CONSISTENCY_REVIEW": "PASS",
+  "isolation_rules": {
+    "no_japan_elements": true,
+    "no_korea_elements": true,
+    "no_thailand_elements": true,
+    "no_singapore_elements": true,
+    "no_other_country_landmarks": true,
+    "fr_paris_art_visual_language": true
+  },
+  "future_slots_require": [
+    "provider: 博物馆免排队小团",
+    "acquisition: 中古海报艺术印刷",
+    "official_guide: 卢浮宫/塞纳河艺术路线",
+    "community: 名画细节+奥赛钟面"
+  ],
+  "gate_paris_chain_completion": "6/6 must maintain FR-only art visual language"
+}

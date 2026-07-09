@@ -1,0 +1,140 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-07T012512Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "AE",
+    "country_zh": "阿联酋",
+    "city_zh": "迪拜",
+    "city_en": "Dubai"
+  },
+  "poi_count": 9,
+  "matrix_ids": [
+    "PH-AE-224-ATR",
+    "PH-AE-225-ATR",
+    "PH-AE-226-ATR",
+    "PH-AE-227-ATR",
+    "PH-AE-228-ATR",
+    "PH-AE-229-FOOD",
+    "PH-AE-230-FOOD",
+    "PH-AE-231-FOOD",
+    "PH-AE-232-FOOD"
+  ],
+  "pois": [
+    "哈利法塔",
+    "迪拜购物中心",
+    "棕榈岛",
+    "阿法迪历史区",
+    "沙漠冲沙",
+    "阿拉伯烤肉",
+    "沙威玛",
+    "椰枣甜品",
+    "阿拉伯咖啡"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-AE-224-ATR",
+      "legacy_value": "哈利法塔",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-AE-225-ATR",
+      "legacy_value": "迪拜购物中心",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-AE-226-ATR",
+      "legacy_value": "棕榈岛",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-AE-227-ATR",
+      "legacy_value": "阿法迪历史区",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-AE-228-ATR",
+      "legacy_value": "沙漠冲沙",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-AE-229-FOOD",
+      "legacy_value": "阿拉伯烤肉",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-AE-230-FOOD",
+      "legacy_value": "沙威玛",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-AE-231-FOOD",
+      "legacy_value": "椰枣甜品",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-AE-232-FOOD",
+      "legacy_value": "阿拉伯咖啡",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-224-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-225-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-226-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-227-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-228-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-229-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-230-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-231-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-232-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=AE&city=%E8%BF%AA%E6%8B%9C&limit=50",
+    "http": 200,
+    "count": 9
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-dubai/CMS-POI-DUBAI-CLOSED-LOOP-LATEST.json",
+  "next_city": {
+    "country_iso": "AE",
+    "city_zh": "沙迦",
+    "city_en": "Sharjah"
+  },
+  "closure_keys": {
+    "TT_CMS_POI_CITY_DUBAI": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": "AE · 沙迦"
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_DUBAI": "CLOSED"
+}

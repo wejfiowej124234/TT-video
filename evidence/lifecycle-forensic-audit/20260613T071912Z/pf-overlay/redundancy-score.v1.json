@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.product_forensic_redundancy_score.v1",
+  "score": 100,
+  "band": "HIGH",
+  "merge_candidates": 51,
+  "retire_candidates": 1
+}

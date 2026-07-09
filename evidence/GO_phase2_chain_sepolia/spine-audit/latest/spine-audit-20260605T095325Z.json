@@ -1,0 +1,29 @@
+{
+  "schema": "phase2_sepolia_deployed_spine_audit.v1",
+  "timestamp_utc": "20260605T095325Z",
+  "chain_id": 11155111,
+  "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "timelock": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+  "timelock_admin_safe": "0x7c018293396325077bb4D039930dcEe11B7Fb1Cf",
+  "sequences_verified": [1, 2, 3, 4],
+  "env_registry_pairs_ok": true,
+  "fundstack_verify": "phase2-sepolia-fundstack-verify-bindings.sh",
+  "steward_verify": "phase2-sepolia-steward-pool-verify-bindings.sh",
+  "redemption_verify": "phase2-sepolia-redemption-epoch-verify-bindings.sh",
+  "addresses": {
+    "governance_token": "0xaC2E29AC7089e4863C21dAF232cF8bbb025d91ca",
+    "governor": "0xa79c8df5C225825f6d04a497043dB0F1995B55ae",
+    "timelock": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f",
+    "fee_router": "0x81A8009210c5215100564c6E4123F672c4459306",
+    "region_vault": "0x2Ea061d50393c09af2f607Ee9f89679642A3a65B",
+    "treasury": "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be",
+    "reserve_vault": "0xbC541FAf26e139eF1f0AC22b52c4b4F85FFF7855",
+    "escrow_factory": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+    "region_steward_stake_pool": "0x16F914f3D50f7Aa02665589e715F94CA3b7Ab47c",
+    "steward_ttg": "0xaC2E29AC7089e4863C21dAF232cF8bbb025d91ca",
+    "country_pool_redemption_epoch_cn": "0x712050e4b1517C3f3ab39B32Cabb70CC0E1C0829",
+    "redemption_asset": "0x4825693A7B333B8b2b73ad5632C60A9b7cAa51F9"
+  },
+  "ssot": "docs/runbook/TT-PHASE2-SEPOLIA-DEPLOYED-SPINE-SUMMARY.md"
+}

@@ -1,0 +1,279 @@
+{
+  "schema": "traveltrust.cms_phase1_single_asset_evidence.v1",
+  "template_version": "1.0.0",
+  "template_runbook": "docs/runbook/TT-CMS-PHASE1-SINGLE-ASSET-TEMPLATE.md",
+  "phase_discipline": "① local → ② staging → ③ production",
+  "forbidden_shortcuts": [
+    "upload_direct_to_live",
+    "skip_review",
+    "skip_verify",
+    "batch_upload_then_accept",
+    "mark_pass_without_evidence"
+  ],
+  "matrix_id": "DA-TH-HOME",
+  "product_name": "Destination Ambient",
+  "country_iso": "TH",
+  "execution_order": 3,
+  "step_1_brief_review": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "draft",
+    "gate": "brief_review",
+    "gate_result": "PASS",
+    "checks": {
+      "destination": "TH · 海岛泻湖或曼谷文化地标",
+      "business_theme": "bangkok-temple · Destination Ambient home",
+      "brand_tone": "cms-content-brief destination_ambient",
+      "composition": "home surface hero ambient",
+      "lighting": "natural daylight per brief prefer",
+      "forbidden_elements_clear": true
+    },
+    "reviewer": "CMS Operation Owner",
+    "reviewed_at_utc": "2026-07-05T02:51:14Z",
+    "notes": "Brief aligned DA-TH-HOME"
+  },
+  "step_2_designer_upload": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "review",
+    "catalog_asset_id": "600e3b64-7c78-40fc-b3b0-3cb2b46957c2",
+    "upload_format": "image/jpeg",
+    "uploaded_by": "CMS Operation via Admin media-assets",
+    "uploaded_at_utc": "2026-07-05T02:51:14Z",
+    "notes": "OCS owned URL · bangkok-temple"
+  },
+  "step_3_cms_review": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "approved",
+    "gates": {
+      "cms_review": "PASS",
+      "destination_authenticity": "PASS",
+      "brand_consistency": "PASS"
+    },
+    "reviewer": "CMS Operation Owner",
+    "reviewed_at_utc": "2026-07-05T02:51:14Z",
+    "notes": "Same closed loop as JP/KR"
+  },
+  "step_4_catalog_publish": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "published",
+    "gate": "catalog_publish",
+    "gate_result": "PASS",
+    "admin_route": "/admin/content/landing-ambient",
+    "published_by": "tourist@test.com",
+    "published_at_utc": "2026-07-05T02:51:14Z",
+    "revision": {
+      "revision_number": 4,
+      "revision_label": "v1",
+      "rollback_target_revision": 1
+    }
+  },
+  "step_5_verify": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "live",
+    "gate": "verify",
+    "gate_result": "PASS",
+    "script": "scripts/dev/run-cms-content-l5-destination-ambient-verify.cjs",
+    "api_base": "https://tt-api-staging.fly.dev",
+    "checks": [
+      {
+        "id": "asset_lifecycle_live",
+        "pass": true,
+        "detail": "live"
+      },
+      {
+        "id": "matrix_row_status_pass",
+        "pass": true,
+        "detail": "pass"
+      },
+      {
+        "id": "consumer_not_ts_fallback",
+        "pass": true,
+        "detail": "catalog_api"
+      },
+      {
+        "id": "asset_version_revision_number",
+        "pass": true,
+        "detail": "4"
+      },
+      {
+        "id": "asset_version_rollback_target",
+        "pass": true,
+        "detail": "1"
+      },
+      {
+        "id": "execution_gate_brief_review",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_cms_review",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_destination_authenticity",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_brand_consistency",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_catalog_publish",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "execution_gate_verify",
+        "pass": true,
+        "detail": "PASS"
+      },
+      {
+        "id": "catalog_api_url",
+        "pass": true,
+        "detail": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg"
+      },
+      {
+        "id": "public_http_200",
+        "pass": true,
+        "detail": "200"
+      },
+      {
+        "id": "public_min_bytes_16kb",
+        "pass": true,
+        "detail": "90578B"
+      },
+      {
+        "id": "public_mime_image",
+        "pass": true,
+        "detail": "image/jpeg"
+      },
+      {
+        "id": "no_production_external_host",
+        "pass": true,
+        "detail": "owned or catalog url"
+      }
+    ],
+    "verified_at_utc": "2026-07-05T02:51:24.466Z"
+  },
+  "step_6_evidence": {
+    "status": "COMPLETE",
+    "gate": "evidence_complete",
+    "gate_result": "PASS",
+    "sections_present": {
+      "review": true,
+      "publish": true,
+      "revision": true,
+      "verify": true,
+      "matrix": true
+    },
+    "completed_at_utc": "2026-07-05T02:51:14Z"
+  },
+  "matrix_snapshot": {
+    "matrix_row_status": "pass",
+    "asset_lifecycle": "live",
+    "current_source": "catalog_api",
+    "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-bangkok-temple-community-media.jpg",
+    "country_zh": "泰国",
+    "scene": "海岛泻湖或曼谷文化地标",
+    "copy_label": "泰国·Destination Ambient",
+    "surface": "home",
+    "matrix_id": "DA-TH-HOME",
+    "execution_order": "3",
+    "country_iso": "TH",
+    "execution_gates": {
+      "brief_review": "PASS",
+      "cms_review": "PASS",
+      "destination_authenticity": "PASS",
+      "brand_consistency": "PASS",
+      "catalog_publish": "PASS",
+      "verify": "PASS",
+      "evidence_complete": "PASS"
+    },
+    "catalog_asset_id": "600e3b64-7c78-40fc-b3b0-3cb2b46957c2",
+    "asset_version": {
+      "revision_number": "4",
+      "revision_label": "v1",
+      "rollback_target_revision": "1"
+    }
+  },
+  "change_record": {
+    "change_type": "initial_publish",
+    "change_reason": "DA-TH-HOME Wave 1 ambient closed loop",
+    "new_revision": 4,
+    "approved_by": "CMS Operation Owner"
+  },
+  "definition_of_done": {
+    "brief_review_pass": true,
+    "cms_review_pass": true,
+    "destination_authenticity_pass": true,
+    "brand_consistency_pass": true,
+    "catalog_publish_pass": true,
+    "verify_pass": true,
+    "evidence_complete": true,
+    "matrix_row_pass": true,
+    "asset_lifecycle_live": true
+  },
+  "TT_CMS_DESTINATION_AMBIENT_ROW_VERIFY": "PASS",
+  "TT_CMS_PHASE1_SINGLE_ASSET_ROW": "COMPLETE",
+  "scaffolded_at_utc": "2026-07-05T02:51:14Z",
+  "dod_checked_at_utc": "2026-07-05T02:51:24.514Z",
+  "dod_checks": [
+    {
+      "id": "execution_gate_brief_review",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_cms_review",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_destination_authenticity",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_brand_consistency",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_catalog_publish",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_verify",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "execution_gate_evidence_complete",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "matrix_row_status_pass",
+      "pass": true,
+      "detail": "pass"
+    },
+    {
+      "id": "asset_lifecycle_live",
+      "pass": true,
+      "detail": "live"
+    },
+    {
+      "id": "evidence_file_exists",
+      "pass": true,
+      "detail": "D:/TravelTrust-V1.1/evidence/GO_cms_content_l5/destination-ambient/rows/DA-TH-HOME.EVIDENCE.json"
+    },
+    {
+      "id": "evidence_row_verify_pass",
+      "pass": true,
+      "detail": "PASS"
+    }
+  ]
+}

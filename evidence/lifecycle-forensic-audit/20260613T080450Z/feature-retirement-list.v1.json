@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.feature_retirement_list.v1",
+  "candidates": [
+    {
+      "path": "frontend/archive/ui-v1",
+      "suggested_verdict": "DEPRECATE",
+      "owner": "Engineering"
+    }
+  ]
+}

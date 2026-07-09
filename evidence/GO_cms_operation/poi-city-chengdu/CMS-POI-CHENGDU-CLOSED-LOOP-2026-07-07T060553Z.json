@@ -1,0 +1,115 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T06:05:53Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "成都",
+    "city_en": "Chengdu",
+    "matrix_ids": [
+      "PH-CN-251-ATR",
+      "PH-CN-252-ATR",
+      "PH-CN-253-ATR",
+      "PH-CN-254-ATR",
+      "PH-CN-255-ATR",
+      "PH-CN-256-FOOD",
+      "PH-CN-257-FOOD",
+      "PH-CN-258-FOOD",
+      "PH-CN-259-FOOD",
+      "PH-CN-260-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-251-ATR",
+      "legacy_value": "宽窄巷子",
+      "poi_id": "2e4bd3b2-b7a1-4260-854f-e8e26ff129b7",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-251-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-CN-252-ATR",
+      "legacy_value": "大熊猫基地",
+      "poi_id": "035b501b-52b8-4437-9798-2ab01e593572",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-252-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-CN-253-ATR",
+      "legacy_value": "锦里",
+      "poi_id": "2fb4c54f-5a03-42d2-b033-8a349de93f63",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-253-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-CN-254-ATR",
+      "legacy_value": "都江堰",
+      "poi_id": "cc1dd26d-35d9-4b34-bc77-04726966bcc5",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-254-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-CN-255-ATR",
+      "legacy_value": "武侯祠",
+      "poi_id": "3945f398-4f46-4dfc-a61c-ae2d869b1c54",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-255-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-CN-256-FOOD",
+      "legacy_value": "火锅",
+      "poi_id": "7591c901-5adf-49b2-a495-d3b109bb5a06",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-256-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-CN-257-FOOD",
+      "legacy_value": "串串",
+      "poi_id": "965bc491-b5da-4ba6-9c67-614aa59124b4",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-257-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-CN-258-FOOD",
+      "legacy_value": "担担面",
+      "poi_id": "27a64dd4-aa1c-4307-a2e8-01c85c9e9822",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-258-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-CN-259-FOOD",
+      "legacy_value": "龙抄手",
+      "poi_id": "7623a295-e6e8-485e-b0d6-74770a29318b",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-259-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-CN-260-FOOD",
+      "legacy_value": "兔头",
+      "poi_id": "3df5ff3b-4ee1-4280-a488-8270bca2da86",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-260-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

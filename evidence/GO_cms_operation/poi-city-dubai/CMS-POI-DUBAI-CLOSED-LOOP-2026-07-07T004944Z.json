@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T00:49:44Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AE",
+    "city_zh": "迪拜",
+    "city_en": "Dubai",
+    "matrix_ids": [
+      "PH-AE-226-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AE-226-ATR",
+      "legacy_value": "棕榈岛",
+      "poi_id": "a2191b09-9006-41c7-842d-0f192dad1686",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-226-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

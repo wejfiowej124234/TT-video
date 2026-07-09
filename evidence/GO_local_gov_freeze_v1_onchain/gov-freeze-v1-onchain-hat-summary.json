@@ -1,0 +1,19 @@
+{
+  "document_id": "TTG-TOKENOMICS-FREEZE-V1",
+  "phase": "①",
+  "hat_stamp_utc": "20260616T015622Z",
+  "git_head": "d32b4813",
+  "summary": "PASS",
+  "failures": 0,
+  "contracts": {
+    "GovernanceTreasuryP4Cap": "contracts/src/GovernanceTreasuryP4Cap.sol",
+    "TtgPrimaryMarketV1": "contracts/src/TtgPrimaryMarketV1.sol",
+    "TtgSeatConcentrationRegistry": "contracts/src/TtgSeatConcentrationRegistry.sol",
+    "TravelTrustGovernor": "contracts/src/TravelTrustGovernor.sol",
+    "GovernanceTimelock": "contracts/src/GovernanceTimelock.sol"
+  },
+  "gov_rules_verified_local": ["GOV-01", "GOV-02", "GOV-03", "GOV-04"],
+  "log_file": "/d/TravelTrust-V1.1/evidence/GO_local_gov_freeze_v1_onchain/gov_freeze_v1_onchain_hat_forge.log",
+  "audit_report": "evidence/GO_local_gov_freeze_v1_onchain/GOV-FREEZE-V1-ONCHAIN-ALIGNMENT-AUDIT.md",
+  "honest_boundary": "① forge HAT ≠ ② Sepolia broadcast ≠ ③ legal GO"
+}

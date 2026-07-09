@@ -1,0 +1,17 @@
+{
+  "baseline_id": "GOV-FREEZE-V2-CLEAN-BASELINE",
+  "ssot_doc": "docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md",
+  "execution_ssot": "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+  "phase_a": "evidence/GO_hat_r1_sepolia/20260616T063612Z",
+  "four_ledger": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z",
+  "ai_pre_human_uat": "evidence/GO_ai_pre_human_uat/latest-stamp.txt",
+  "cert_session": "evidence/GO_ttg_cert/latest-stamp.txt",
+  "repo_alignment_link": "REPOSITORY-ALIGNMENT-INVENTORY-LINK.v1.json",
+  "forbidden_rerun": [
+    "governance token design audit",
+    "Tokenomics matrix",
+    "GovFreeze V2 assert re-audit",
+    "MTM 146 logic re-audit",
+    "Enterprise HAT re-audit"
+  ]
+}

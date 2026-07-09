@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T06:08:58Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "CN",
+    "city_zh": "杭州",
+    "city_en": "Hangzhou",
+    "matrix_ids": [
+      "PH-CN-281-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-CN-281-ATR",
+      "legacy_value": "西湖",
+      "poi_id": "46fc5bcb-4c56-41ef-8636-f56549f76497",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-CN-281-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "traveltrust.governance-doc-drift-cleanup-d1-d10.v1",
+  "program": "Governance Documentation Drift Cleanup Program",
+  "phase": "②",
+  "stamp_utc": "20260617T005532Z",
+  "scope": "D1～D10 machine keys · Gate-2.4 snapshots · GovFreeze baseline · §14 doc sync · registry index · apply-tier",
+  "forbidden_in_program": [
+    "business logic",
+    "tokenomics",
+    "govfreeze parameters",
+    "cert status overrides"
+  ],
+  "d_items": {
+    "D1": "Gate-2.4 G24-MTM-01",
+    "D2": "Gate-2.4 G24-FCC-01",
+    "D3": "Gate-2.4 G24-GECP-01",
+    "D4": "G24-ENT100-01 / G24-360-01 CLOSURE_ENT",
+    "D5": "GOV-FREEZE-V2 baseline L15-17",
+    "D6": "Final Closure §14 Cert #6 checkbox",
+    "D7": "Final Closure §13 OPS stats",
+    "D8": "CONTRIBUTING pre-push TTG Cert row",
+    "D9": "registry/README ttg-governance-cert-gates",
+    "D10": "apply-ttg-cert-tier-upgrades.py patches"
+  },
+  "machine_keys": {
+    "mtm": "TTG_GOV_MTM: ROWS=146 DEV=63 TN=40 HUMAN=43 OPS=13 DR=0",
+    "final_closure": "TTG_GOV_FINAL_CLOSURE: MODE=CERT_ONLY DEV=100 TN=40 HUMAN=43 OPS=13 DR=0 ENT=99 CERT_QUEUE=6/12",
+    "fcc": "TTG_GOV_FCC: GFC=146 DEV=63 TN=40 HUMAN=43 OPS=13 DR=0 ENT=99 CERT=6/12"
+  },
+  "gates": {
+    "apply_tier": "PASS",
+    "triple_sync": "PASS",
+    "registry_validate": "PASS"
+  },
+  "cert_queue_note": "D1～D10 不修改 cert_queue_completed · active Cert #7 由 Phase B 轨推进",
+  "recorded_at_unix": 1781657741
+}

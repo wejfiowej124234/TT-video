@@ -17,6 +17,11 @@ export const ADMIN_SHELL_ONBOARDING_NAV_LINKS: readonly AdminShellOnboardingNavL
     permission: ADMIN_PERM.ONBOARDING_PROVIDER_REVIEW,
   },
   {
+    href: "/admin/guide-applications",
+    labelKey: "admin_guide_list_title",
+    permission: ADMIN_PERM.USERS_READ,
+  },
+  {
     href: ADMIN_INBOX_QUEUE_HREFS.steward,
     labelKey: "admin_shell_nav_steward_queue",
     permission: ADMIN_PERM.ONBOARDING_STEWARD_REVIEW,

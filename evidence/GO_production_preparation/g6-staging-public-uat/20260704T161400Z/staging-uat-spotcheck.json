@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.ocs_content_l5_staging_uat_spotcheck.v1",
+  "stamp_utc": "20260704T161400Z",
+  "scope": "g6_staging_public_uat_blind_review_60_cells",
+  "phase": "② Production Preparation",
+  "G6_commercial_perception": {
+    "pass": true,
+    "method": "10_city_x_6_surface_blind_review",
+    "cities": 10,
+    "cells": 60
+  },
+  "G9_content_authenticity": {
+    "pass": true
+  },
+  "G10_content_diversity": {
+    "pass": true,
+    "minor_notes": 9
+  },
+  "TT_STAGING_UAT_SPOTCHECK_CONTENT": "PASS",
+  "evidence": "evidence/GO_production_preparation/g6-staging-public-uat/20260704T161400Z/G6-STAGING-PUBLIC-UAT-BLIND-REVIEW.json",
+  "honest_boundary": "G6 blind UAT PASS ≠ Production GO"
+}

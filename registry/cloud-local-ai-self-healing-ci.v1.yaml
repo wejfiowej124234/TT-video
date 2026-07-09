@@ -1,0 +1,97 @@
+version: cloud-local-ai-self-healing-ci-v1
+schema: traveltrust.cloud_local_ai_self_healing_ci.v1
+system_name: Cloud-to-Local AI Self-Healing CI System
+system_name_zh: 云端驱动本地自动修复系统
+updated_at_utc: '2026-06-26T00:00:00Z'
+ssot_runbook: docs/runbook/TT-CLOUD-LOCAL-AI-SELF-HEALING-CI.md
+core_goal: >-
+  Cloud detects issues, generates fix suggestions and patches; local safely
+  applies patches, validates, and syncs testnet; cloud re-checks to close the loop.
+phase_discipline:
+  order: [phase1_local, phase2_testnet, phase3_production]
+  no_skip: true
+  production_go: independent_gate_only
+layers:
+  - id: L1
+    name: Cloud Layer
+    color: green
+    responsibility: detect
+    outputs: [ISSUE-REPORT.json]
+    scripts:
+      - scripts/ops/p2fc-sync-cloud-soak-evidence.sh
+      - scripts/ops/cloud-local-healing/cloud-detect-and-report.sh
+    grep_pass: 'TT_CLOUD_LAYER_ISSUE:'
+    soak_escalation:
+      streak_abort_default: 3
+      env_streak_abort: P2FC_CLOUD_ISSUE_REPORT_STREAK_ABORT
+      p0_severities: [critical]
+      p0_issue_ids: [SOAK-FAIL-POLLS, SHA-DRIFT]
+      p1_issue_ids: [HEALTH-NON-200, CHAIN-DRIFT]
+      pause_on: consecutive_report_ge_n_or_p0
+      pause_script: scripts/ops/cloud-local-healing/cloud-soak-pause-on-escalation.sh
+      resume_script: scripts/ops/cloud-local-healing/cloud-soak-resume-owner-ack.sh
+      owner_ack_env: CLOUD_SOAK_OWNER_ACK
+      grep_pause: 'TT_CLOUD_SOAK_PAUSE: ACTIVE'
+      grep_resume: 'TT_CLOUD_SOAK_RESUME: PASS'
+  - id: L2
+    name: AI Fix Engine
+    color: yellow
+    responsibility: propose_patch
+    outputs: [FIX-PROPOSAL.json, patch.diff]
+    schema: registry/artifacts/fix-proposal.v1.schema.json
+    grep_pass: 'TT_AI_FIX_PROPOSAL:'
+    rules:
+      - ai_never_direct_prod_or_staging_deploy
+      - proposal_must_list_gate_subset
+  - id: L3
+    name: Local Fix Executor
+    color: blue
+    responsibility: execute_patch_safely
+    outputs: [EXECUTION-RESULT.json]
+    scripts:
+      - scripts/ops/cloud-local-healing/local-fix-executor.sh
+    grep_pass: 'TT_LOCAL_FIX_EXECUTOR:'
+    rules:
+      - local_never_guess_issue_without_cloud_report
+      - deployment_state_fix_when_staging_deploy
+  - id: L4
+    name: Testnet Sync Validator
+    color: purple
+    responsibility: validate_consistency_only
+    outputs: [VALIDATION-RESULT.json]
+    scripts:
+      - scripts/ops/cloud-local-healing/testnet-sync-validator.sh
+      - scripts/ops/run-deployment-three-state.sh
+    grep_pass: 'TT_TESTNET_SYNC_VALIDATOR:'
+    rules:
+      - testnet_no_feature_development
+      - sync_or_fix_deploy_only_via_three_state
+  - id: L5
+    name: Cloud Re-check
+    color: red
+    responsibility: close_loop
+    outputs: [RECHECK-RESULT.json]
+    scripts:
+      - scripts/ops/cloud-local-healing/cloud-recheck.sh
+    grep_pass: 'TT_CLOUD_RECHECK:'
+soak_integration:
+  cloud_watcher_app: tt-soak-watcher-staging
+  runtime_ssot: fly_cloud_watcher
+  runtime_ssot_paths:
+    - /data/soak/status.json
+    - /data/soak/COMPLETED.json
+  local_mirror: evidence/P2FC_SOAK_72H_STAGING/cloud-observe/latest.json
+  observe_readonly: scripts/ops/cloud-local-healing/observe-cloud-soak-readonly.sh
+  sync: scripts/ops/p2fc-sync-cloud-soak-evidence.sh
+  orchestrator: scripts/ops/p2fc-cloud-soak-orchestrator.sh
+  post_soak_phase2_chain: scripts/ops/p2fc-post-soak-staging-live-closure-chain.sh
+  local_soak_log_not_ssot: true
+  during_soak_inflight:
+    allow: [L1_detect, L5_readonly_recheck]
+    forbid: [staging_redeploy_without_fix_window, schema_ssot_change, full_gate_rerun]
+  post_soak:
+    handoff: phase2_gap_ledger_18_items
+    phase3: go_live_checklist_independent
+cycle_orchestrator: scripts/ops/run-cloud-local-healing-cycle.sh
+evidence_root: evidence/CLOUD_LOCAL_HEALING_CI
+deployment_three_state_ssot: docs/runbook/TT-DEPLOYMENT-THREE-STATE-GOVERNANCE.md

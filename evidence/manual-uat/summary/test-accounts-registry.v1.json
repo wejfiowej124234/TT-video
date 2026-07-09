@@ -1,0 +1,84 @@
+{
+  "schema": "traveltrust.test_accounts_registry.v1",
+  "ssot_yaml": "registry/test-accounts-business-immutable.v1.yaml",
+  "immutable_ids": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "E1",
+    "E2"
+  ],
+  "governance": {
+    "backward_compatible_only": true,
+    "breaking_semantic_change_policy": "ADD_NEW_ID",
+    "email_change_allowed": true,
+    "role_reassignment_forbidden": true,
+    "change_gate": "TT_TEST_ACCOUNT_CHANGE"
+  },
+  "probe_matrix": {
+    "immutable_logical_ids": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "E1",
+      "E2"
+    ]
+  },
+  "accounts": {
+    "C1": {
+      "business_role": "MultiIdentityHubSteward",
+      "storage_role": "guide",
+      "escrow_chain": null,
+      "email": "multi-demo@test.com",
+      "password_default": "Test123!",
+      "lifecycle": "Permanent",
+      "owner": "Seed Script"
+    },
+    "C2": {
+      "business_role": "TouristTraveler",
+      "storage_role": "tourist",
+      "escrow_chain": "A_and_B_traveler",
+      "email": "tourist@test.com",
+      "password_default": "Test123!",
+      "lifecycle": "Permanent",
+      "owner": "Seed Script",
+      "notes": "Admin SuperAdmin dev shortcut via Step 6b2 \u2014 separate Admin persona"
+    },
+    "C3": {
+      "business_role": "GuideWorkbench",
+      "storage_role": "guide",
+      "escrow_chain": "B",
+      "email": "guide@test.com",
+      "password_default": "Test123!",
+      "lifecycle": "Permanent",
+      "owner": "Seed Script"
+    },
+    "C4": {
+      "business_role": "MerchantProvider",
+      "storage_role": "provider",
+      "escrow_chain": null,
+      "email": "merchant@test.com",
+      "password_default": "Test123!",
+      "lifecycle": "Permanent",
+      "owner": "Seed Script"
+    },
+    "E1": {
+      "business_role": "TrustGateCatalogGuide",
+      "storage_role": "guide",
+      "escrow_chain": "A",
+      "email": "tg_guide_main@trustgate-e2e.local",
+      "password_default": "Test123!",
+      "lifecycle": "Permanent",
+      "owner": "Seed Script",
+      "environments": [
+        "local"
+      ],
+      "seed_step": "6b4 POST /auth/seed-trust-gate-e2e"
+    }
+  },
+  "quick_reference": "docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md",
+  "matrix": "docs/runbook/TT-LOCAL-TEST-ACCOUNTS-MATRIX.md",
+  "change_gate": "docs/runbook/TT-TEST-ACCOUNT-CHANGE.md"
+}

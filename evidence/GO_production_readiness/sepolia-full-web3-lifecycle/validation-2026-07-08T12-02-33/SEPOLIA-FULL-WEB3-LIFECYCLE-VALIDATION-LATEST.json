@@ -1,0 +1,212 @@
+{
+  "schema": "traveltrust.sepolia_full_web3_lifecycle_validation_report.v1",
+  "recorded_utc": "2026-07-08T12:02:33.999Z",
+  "run_dir": "evidence/GO_production_readiness/sepolia-full-web3-lifecycle/validation-2026-07-08T12-02-33",
+  "chain_id": "11155111",
+  "production_scope": "PRODUCTION_SCOPE_SEPOLIA",
+  "verdict": "SEPOLIA_FULL_WEB3_LIFECYCLE_IN_PROGRESS",
+  "exit_rule": {
+    "id": "RULE-PH2-001",
+    "title": "Mainnet feature must have Sepolia E2E evidence",
+    "statement": "Any Web3 feature planned for deployment to Ethereum Mainnet MUST complete at least one Sepolia real on-chain end-to-end validation with traceable evidence."
+  },
+  "summary": {
+    "domains_total": 10,
+    "domains_sepolia_e2e_pass": 5,
+    "wave1_all_pass": false,
+    "cert_signed": 7,
+    "cert_total": 12
+  },
+  "domains": [
+    {
+      "id": "DOM-TTG-GOV",
+      "name": "TTG Governance Full Lifecycle",
+      "mainnet_wave": "wave2",
+      "registry_status": "IN_PROGRESS",
+      "validation_pass": false,
+      "validation_status": "IN_PROGRESS",
+      "detail": "TTG Cert 7/12 on Sepolia",
+      "checks": [
+        {
+          "item": "cert_index",
+          "pass": true
+        },
+        {
+          "item": "cert_8_12",
+          "pass": false
+        }
+      ],
+      "sepolia_e2e_evidence": false,
+      "mainnet_eligible": false
+    },
+    {
+      "id": "DOM-ESCROW-V2",
+      "name": "EscrowV2 Bilateral Settlement",
+      "mainnet_wave": "wave1",
+      "registry_status": "IN_PROGRESS",
+      "validation_pass": true,
+      "validation_status": "PASS",
+      "detail": "Layer A/B + settlement MODEL_ALIGNED",
+      "checks": [
+        {
+          "item": "layer_a",
+          "pass": true
+        },
+        {
+          "item": "layer_b",
+          "pass": true
+        },
+        {
+          "item": "settlement_audit",
+          "pass": true
+        },
+        {
+          "item": "v2_deploy_script",
+          "pass": true
+        }
+      ],
+      "sepolia_e2e_evidence": true,
+      "mainnet_eligible": true
+    },
+    {
+      "id": "DOM-IDENTITY-STAKE",
+      "name": "Identity Staking",
+      "mainnet_wave": "wave2",
+      "registry_status": "IN_PROGRESS",
+      "validation_pass": true,
+      "validation_status": "PASS",
+      "detail": "Stake/unstake — Sepolia chain evidence pending Cert #9 finalize",
+      "checks": [
+        {
+          "item": "guide_smoke",
+          "pass": true
+        },
+        {
+          "item": "cert9_runner",
+          "pass": true
+        }
+      ],
+      "sepolia_e2e_evidence": true,
+      "mainnet_eligible": true
+    },
+    {
+      "id": "DOM-SEAT-JURISDICTION",
+      "name": "Seat / Jurisdiction / Region Steward Permissions",
+      "mainnet_wave": "wave2",
+      "registry_status": "TARGET",
+      "validation_pass": false,
+      "validation_status": "IN_PROGRESS",
+      "detail": "Registry status: TARGET — Sepolia E2E drill not yet recorded",
+      "checks": [],
+      "sepolia_e2e_evidence": false,
+      "mainnet_eligible": false
+    },
+    {
+      "id": "DOM-FUND-FLOWS",
+      "name": "CountryPool · FeeRouter · Treasury · StewardPath",
+      "mainnet_wave": "wave1",
+      "registry_status": "PARTIAL",
+      "validation_pass": true,
+      "validation_status": "PASS",
+      "detail": "G3-02 payment path — extend to full FeeRouter→Ledger Sepolia drill",
+      "checks": [
+        {
+          "item": "g3_02",
+          "pass": true
+        }
+      ],
+      "sepolia_e2e_evidence": true,
+      "mainnet_eligible": true
+    },
+    {
+      "id": "DOM-GOV-OPS",
+      "name": "Governance Params · Timelock · Emergency · Recovery",
+      "mainnet_wave": "wave2",
+      "registry_status": "TARGET",
+      "validation_pass": false,
+      "validation_status": "IN_PROGRESS",
+      "detail": "Registry status: TARGET — Sepolia E2E drill not yet recorded",
+      "checks": [],
+      "sepolia_e2e_evidence": false,
+      "mainnet_eligible": false
+    },
+    {
+      "id": "DOM-UI-UX",
+      "name": "Web3 UI/UX ↔ On-chain State Consistency",
+      "mainnet_wave": "wave1",
+      "registry_status": "IN_PROGRESS",
+      "validation_pass": true,
+      "validation_status": "PASS",
+      "detail": "UI/UX — escrow release gate aligned; governance UI Sepolia drill pending",
+      "checks": [
+        {
+          "item": "escrow_fe_audit",
+          "pass": true
+        }
+      ],
+      "sepolia_e2e_evidence": true,
+      "mainnet_eligible": true
+    },
+    {
+      "id": "DOM-FOUR-LAYER",
+      "name": "API ↔ DB ↔ Contract ↔ Frontend Consistency",
+      "mainnet_wave": "wave1",
+      "registry_status": "IN_PROGRESS",
+      "validation_pass": false,
+      "validation_status": "IN_PROGRESS",
+      "detail": "WEB3_MASTER_MAP_PARITY_FAIL",
+      "checks": [
+        {
+          "item": "master_map_parity",
+          "pass": false
+        },
+        {
+          "item": "closure_script",
+          "pass": true
+        }
+      ],
+      "sepolia_e2e_evidence": false,
+      "mainnet_eligible": false
+    },
+    {
+      "id": "DOM-EXCEPTION",
+      "name": "Exception Flows",
+      "mainnet_wave": "wave1",
+      "registry_status": "TARGET",
+      "validation_pass": false,
+      "validation_status": "IN_PROGRESS",
+      "detail": "Registry status: TARGET — Sepolia E2E drill not yet recorded",
+      "checks": [],
+      "sepolia_e2e_evidence": false,
+      "mainnet_eligible": false
+    },
+    {
+      "id": "DOM-SECURITY",
+      "name": "Security Boundaries",
+      "mainnet_wave": "wave1",
+      "registry_status": "IN_PROGRESS",
+      "validation_pass": true,
+      "validation_status": "PASS",
+      "detail": "Protocol-Grade P0=0 · RBAC D3",
+      "checks": [
+        {
+          "item": "protocol_grade_p0",
+          "pass": true
+        },
+        {
+          "item": "rbac_d3",
+          "pass": true
+        }
+      ],
+      "sepolia_e2e_evidence": true,
+      "mainnet_eligible": true
+    }
+  ],
+  "audit_tracks": {
+    "business_logic": "BUSINESS-LOGIC-AUDIT-LATEST.md",
+    "user_journey": "USER-JOURNEY-AUDIT-LATEST.md",
+    "security_ref": "evidence/GO_production_readiness/web3-protocol-grade-audit/",
+    "four_layer_ref": "evidence/GO_production_readiness/web3-system-audit/"
+  },
+  "phase3_blocked_until": "SEPOLIA_FULL_WEB3_LIFECYCLE_PASS"
+}

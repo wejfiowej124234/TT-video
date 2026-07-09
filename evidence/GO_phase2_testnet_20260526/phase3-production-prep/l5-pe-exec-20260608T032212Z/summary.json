@@ -1,0 +1,20 @@
+{
+  "kind": "traveltrust.l5_product_excellence_execution.v1",
+  "recorded_utc": "20260608T032212Z",
+  "verdict": "L5_PRODUCT_EXCELLENCE_GO",
+  "audit_matrix_verdict": "L5_PRODUCT_EXCELLENCE_GO",
+  "excellence_score": 93,
+  "target_score": 85,
+  "track_targets": [
+    "USER_JOURNEY_L5_GO",
+    "IA_L5_GO",
+    "DESIGN_SYSTEM_L5_GO",
+    "CONVERSION_L5_GO",
+    "MOBILE_L5_GO",
+    "ACCESSIBILITY_L5_GO"
+  ],
+  "baseline_refs": [
+    "160",
+    "161"
+  ]
+}

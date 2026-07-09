@@ -1,0 +1,380 @@
+{
+  "audit_id": "TTG-TOKENOMICS-FULL-SYSTEM-AUDIT",
+  "ssot_document_id": "TTG-TOKENOMICS-FREEZE-V1",
+  "stamp_utc": "20260616T032637Z",
+  "phase": "②",
+  "verdict": "PASS_WITH_PARTIAL",
+  "gov_mirror_rows": [
+    {
+      "layer": "protocol-ssot.v1.yaml",
+      "rule": "GOV-01",
+      "param": "treasury_p4_deploy_cap_bps",
+      "expected": 3000,
+      "actual": 3000,
+      "status": "PASS"
+    },
+    {
+      "layer": "protocol-ssot.v1.yaml",
+      "rule": "GOV-02",
+      "param": "governance_quorum_bps",
+      "expected": 400,
+      "actual": 400,
+      "status": "PASS"
+    },
+    {
+      "layer": "protocol-ssot.v1.yaml",
+      "rule": "GOV-02",
+      "param": "governance_approval_threshold_bps",
+      "expected": 5000,
+      "actual": 5000,
+      "status": "PASS"
+    },
+    {
+      "layer": "protocol-ssot.v1.yaml",
+      "rule": "GOV-02",
+      "param": "governance_timelock_delay_hours",
+      "expected": 48,
+      "actual": 48,
+      "status": "PASS"
+    },
+    {
+      "layer": "protocol-ssot.v1.yaml",
+      "rule": "GOV-03",
+      "param": "max_active_seats_per_controlling_entity",
+      "expected": 1,
+      "actual": 1,
+      "status": "PASS"
+    },
+    {
+      "layer": "protocol-ssot.v1.yaml",
+      "rule": "GOV-03",
+      "param": "max_voting_power_per_address_bps",
+      "expected": 400,
+      "actual": 400,
+      "status": "PASS"
+    },
+    {
+      "layer": "protocol-ssot.v1.yaml",
+      "rule": "GOV-03",
+      "param": "max_aggregate_seat_stake_per_entity_bps",
+      "expected": 400,
+      "actual": 400,
+      "status": "PASS"
+    },
+    {
+      "layer": "protocol-ssot.v1.yaml",
+      "rule": "GOV-04",
+      "param": "public_sale_per_wallet_cap_ttg",
+      "expected": 25000,
+      "actual": 25000,
+      "status": "PASS"
+    },
+    {
+      "layer": "protocol-ssot.v1.yaml",
+      "rule": "GOV-04",
+      "param": "public_sale_min_purchase_usdc",
+      "expected": 100,
+      "actual": 100,
+      "status": "PASS"
+    },
+    {
+      "layer": "frontend/governanceParamsTtgTokenomicsFreeze.ts",
+      "rule": "GOV-01",
+      "param": "treasury_p4_deploy_cap_bps",
+      "expected": 3000,
+      "actual": 3000,
+      "status": "PASS"
+    },
+    {
+      "layer": "frontend/governanceParamsTtgTokenomicsFreeze.ts",
+      "rule": "GOV-02",
+      "param": "governance_quorum_bps",
+      "expected": 400,
+      "actual": 400,
+      "status": "PASS"
+    },
+    {
+      "layer": "frontend/governanceParamsTtgTokenomicsFreeze.ts",
+      "rule": "GOV-02",
+      "param": "governance_approval_threshold_bps",
+      "expected": 5000,
+      "actual": 5000,
+      "status": "PASS"
+    },
+    {
+      "layer": "frontend/governanceParamsTtgTokenomicsFreeze.ts",
+      "rule": "GOV-02",
+      "param": "governance_timelock_delay_hours",
+      "expected": 48,
+      "actual": 48,
+      "status": "PASS"
+    },
+    {
+      "layer": "frontend/governanceParamsTtgTokenomicsFreeze.ts",
+      "rule": "GOV-03",
+      "param": "max_active_seats_per_controlling_entity",
+      "expected": 1,
+      "actual": 1,
+      "status": "PASS"
+    },
+    {
+      "layer": "frontend/governanceParamsTtgTokenomicsFreeze.ts",
+      "rule": "GOV-03",
+      "param": "max_voting_power_per_address_bps",
+      "expected": 400,
+      "actual": 400,
+      "status": "PASS"
+    },
+    {
+      "layer": "frontend/governanceParamsTtgTokenomicsFreeze.ts",
+      "rule": "GOV-03",
+      "param": "max_aggregate_seat_stake_per_entity_bps",
+      "expected": 400,
+      "actual": 400,
+      "status": "PASS"
+    },
+    {
+      "layer": "frontend/governanceParamsTtgTokenomicsFreeze.ts",
+      "rule": "GOV-04",
+      "param": "public_sale_per_wallet_cap_ttg",
+      "expected": 25000,
+      "actual": 25000,
+      "status": "PASS"
+    },
+    {
+      "layer": "frontend/governanceParamsTtgTokenomicsFreeze.ts",
+      "rule": "GOV-04",
+      "param": "public_sale_min_purchase_usdc",
+      "expected": 100,
+      "actual": 100,
+      "status": "PASS"
+    }
+  ],
+  "forbidden_narrative_scan": [],
+  "on_chain_summary": {
+    "checks_pass": 16,
+    "verdict": "PASS",
+    "baseline_stamp": "20260616T032604Z"
+  },
+  "country_pool_de": {
+    "jurisdiction": "DE",
+    "ledger": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa",
+    "bps_steward_path": 4500,
+    "bps_global_treasury": 5500,
+    "expected": {
+      "steward": 4500,
+      "global": 5500
+    },
+    "triplet": {
+      "steward_path_vault": "0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb",
+      "unallocated_vault": "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0",
+      "settlement_token": "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
+    },
+    "verdict": "PASS"
+  },
+  "ui_audit": {
+    "audit_id": "gov-freeze-v1-governance-ui-local",
+    "phase": "①",
+    "routes": [
+      "/governance",
+      "/governance/params",
+      "/governance/proposals",
+      "/governance/delegate",
+      "/governance/distribution-claim",
+      "/governance/distribution-accruals",
+      "/governance/fee-routes",
+      "/governance/vault-forwards",
+      "/governance/steward-region-workbench"
+    ],
+    "vitest_suites": [
+      "governanceHubPage.contract",
+      "governanceParamsPage.contract",
+      "governanceParamsTtgTokenomicsFreeze",
+      "governanceParamsTreasuryPolicy",
+      "governanceParamsGlobalTreasuryUsagePolicy",
+      "countryPoolFundraiseGovernanceV1",
+      "stewardWorkbench.contract",
+      "governanceParamsPageL5FullClosure.contract",
+      "governanceProposalsL5",
+      "ttgExchange (Primary Market quote)",
+      "protocolSsot.v1.contract",
+      "distributionClaimPage.contract",
+      "distributionAccrualsPages.contract",
+      "p5-4GovernanceRoutes.smoke"
+    ],
+    "verdict": "PASS"
+  },
+  "domains": [
+    {
+      "id": "primary_market",
+      "name": "Primary Market (USDC→TTG)",
+      "ssot": "GOV-04 · ttg-primary-market §3",
+      "contract": "TtgPrimaryMarketV1 Proxy",
+      "ui": "/governance/params · ttgExchange",
+      "status": "PASS"
+    },
+    {
+      "id": "global_treasury",
+      "name": "Global Treasury · P1–P4",
+      "ssot": "§1 · GOV-01",
+      "contract": "GovernanceTreasuryP4Cap",
+      "ui": "#gov-params-treasury-policy",
+      "status": "PASS"
+    },
+    {
+      "id": "governor_timelock",
+      "name": "Governor / Timelock",
+      "ssot": "GOV-02",
+      "contract": "TravelTrustGovernor Proxy + TimelockUpgradeable",
+      "ui": "/governance/proposals",
+      "status": "PASS"
+    },
+    {
+      "id": "country_pool",
+      "name": "Country Pool（每国独立）",
+      "ssot": "45% Steward / 55% Global · G23-04 frozen ABI",
+      "contract": "CountryPoolNetProfitLedger + vaults",
+      "ui": "params 45/55 资金流",
+      "status": "PASS"
+    },
+    {
+      "id": "steward_45",
+      "name": "Steward 45% 路径",
+      "ssot": "country-revenue-model §2",
+      "contract": "StewardPathVault / UnallocatedStewardPathVault",
+      "ui": "steward workbench",
+      "status": "PASS"
+    },
+    {
+      "id": "global_55",
+      "name": "Global 55% 路径",
+      "ssot": "country-revenue-model §2 · Treasury 顺序",
+      "contract": "ledger.globalTreasury",
+      "ui": "treasury policy section",
+      "status": "PASS"
+    },
+    {
+      "id": "treasury_spend",
+      "name": "Treasury Spend 权限",
+      "ssot": "GOV-01 · 须治理投票",
+      "contract": "GovernanceTreasuryP4Cap 3000 bps",
+      "ui": "P4 deploy cap 文案",
+      "status": "PASS"
+    },
+    {
+      "id": "proposals",
+      "name": "提案 · 投票 · 执行",
+      "ssot": "GOV-02 · 48h Timelock",
+      "contract": "Governor.proposalCount (read)",
+      "ui": "/governance/proposals",
+      "status": "PARTIAL",
+      "note": "execute 须 48h · ② read-only HAT"
+    },
+    {
+      "id": "exit",
+      "name": "退出机制",
+      "ssot": "ttg-primary-market §2 · 180d · 不退 USDC",
+      "contract": "RegionStewardStakePool Proxy",
+      "ui": "locales + steward workbench",
+      "status": "PASS"
+    },
+    {
+      "id": "buyback_burn",
+      "name": "Buyback / Burn",
+      "ssot": "GOV-01 可选项 A/B · 非默认",
+      "contract": "须 Governor 提案（② 未 tx 验）",
+      "ui": "treasury policy options",
+      "status": "PARTIAL",
+      "note": "UI/SSOT 对齐 · 链上执行留真人测试"
+    },
+    {
+      "id": "ui_flow",
+      "name": "UI 文案与资金流图",
+      "ssot": "TTG-TOKENOMICS-FREEZE-V1 §6",
+      "contract": "—",
+      "ui": "GovernanceParamsProfitFlowVisual",
+      "status": "PASS"
+    }
+  ],
+  "pages": [
+    {
+      "route": "/governance",
+      "purpose": "治理 Hub · 入口与资金流摘要"
+    },
+    {
+      "route": "/governance/params#gov-params-tokenomics-freeze",
+      "purpose": "GOV-01～04 公示"
+    },
+    {
+      "route": "/governance/params#gov-params-treasury-policy",
+      "purpose": "Global Treasury · P1–P4 · Buyback/Burn 选项"
+    },
+    {
+      "route": "/governance/params",
+      "purpose": "净利润 45/55 资金流图"
+    },
+    {
+      "route": "/governance/proposals",
+      "purpose": "提案 · 投票 · Timelock 执行"
+    },
+    {
+      "route": "/governance/delegate",
+      "purpose": "委托投票权"
+    },
+    {
+      "route": "/governance/distribution-claim",
+      "purpose": "投资者分配领取（非自动分红）"
+    },
+    {
+      "route": "/governance/distribution-accruals",
+      "purpose": "应计分配（措辞：非「分红」主叙事）"
+    },
+    {
+      "route": "/governance/fee-routes",
+      "purpose": "FeeRouter 层（正交 · 非 NetProfit 45/55）"
+    },
+    {
+      "route": "/governance/vault-forwards",
+      "purpose": "Vault 转发审计"
+    },
+    {
+      "route": "/governance/steward-region-workbench",
+      "purpose": "主理人 · Seat · 质押/退出"
+    }
+  ],
+  "full_chain_narrative": [
+    {
+      "step": "1_purchase",
+      "title": "用户购买 TTG",
+      "scope": "Primary Market USDC→TTG · GOV-04 cap/min/rounds"
+    },
+    {
+      "step": "2_governance",
+      "title": "治理参与",
+      "scope": "Governor/Timelock · GOV-02 quorum · Seat GOV-03"
+    },
+    {
+      "step": "3_revenue",
+      "title": "国家池收益",
+      "scope": "Country Pool NetProfit · 45% Steward / 55% Global"
+    },
+    {
+      "step": "4_treasury",
+      "title": "Global Treasury",
+      "scope": "P1→P2→P3→P4 · GOV-01 30% deploy cap"
+    },
+    {
+      "step": "5_proposal_spend",
+      "title": "提案支出",
+      "scope": "P4 动用 · Buyback/Burn/生态/国家池 · 须投票"
+    },
+    {
+      "step": "6_exit",
+      "title": "退出机制",
+      "scope": "Seat 180d 冷静 · 解锁 TTG · 不退 USDC · redemption 窗口正交"
+    }
+  ],
+  "failures": [],
+  "human_test_gate": true,
+  "honest_boundary": "② Full-System Audit ≠ ③ Production GO · proposal execute/buyback tx = 真人测试"
+}

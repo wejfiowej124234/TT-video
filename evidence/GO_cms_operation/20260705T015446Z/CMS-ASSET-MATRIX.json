@@ -1,0 +1,318 @@
+{
+  "schema": "traveltrust.cms_asset_matrix_report.v1",
+  "stamp_utc": "20260705T015446Z",
+  "layer": "CMS_OPERATION",
+  "role": "operations_workbench",
+  "not_governance": true,
+  "matrix_path": "data/catalog/cms-asset-matrix.v1.yaml",
+  "matrix_schema": "traveltrust.cms_asset_matrix.v1",
+  "probe_api": "https://tt-api-staging.fly.dev",
+  "probe_skipped": false,
+  "operator_table": [
+    {
+      "page_module": "首页国家背景",
+      "current_source": "unsplash_fallback",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/landing-ambient"
+    },
+    {
+      "page_module": "POI 图",
+      "current_source": "placeholder",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/poi-images"
+    },
+    {
+      "page_module": "Hotel 图",
+      "current_source": "placeholder",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/hotel-tiers"
+    },
+    {
+      "page_module": "Transport 图",
+      "current_source": "placeholder",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/transport"
+    },
+    {
+      "page_module": "首页 Hero",
+      "current_source": "official_cold_start",
+      "owner": "OCS / OPS",
+      "modify_entry": "不修改"
+    },
+    {
+      "page_module": "Market Guide",
+      "current_source": "official_cold_start",
+      "owner": "OCS",
+      "modify_entry": "不修改"
+    },
+    {
+      "page_module": "Community Official",
+      "current_source": "official_cold_start",
+      "owner": "OCS",
+      "modify_entry": "不修改"
+    },
+    {
+      "page_module": "TravelTrust 视频",
+      "current_source": "placeholder",
+      "owner": "Media",
+      "modify_entry": "后续"
+    }
+  ],
+  "summary": {
+    "rows": 8,
+    "cms_operable": 4,
+    "ocs_frozen": 3,
+    "source_aligned": 3,
+    "by_current_source": {
+      "catalog": 0,
+      "catalog_partial": 0,
+      "unsplash_fallback": 1,
+      "official_cold_start": 3,
+      "placeholder": 4
+    },
+    "wave_1_jp_ambient": {
+      "current_source": "unsplash_fallback",
+      "target_source": "catalog",
+      "jp_catalog_live": false,
+      "countries_catalog_live": 0
+    }
+  },
+  "rows": [
+    {
+      "id": "home_destination_ambient",
+      "page_module": "首页国家背景",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/landing-ambient",
+      "modify_entry_label": "/admin/content/landing-ambient",
+      "cms_operable": true,
+      "current_source": "unsplash_fallback",
+      "declared_current_source": "unsplash_fallback",
+      "target_source": "catalog",
+      "source_aligned": false,
+      "asset_kind": "landing_ambient",
+      "wave": 1,
+      "matrix_ref": "DA-JP-HOME",
+      "probe": "catalog_media_by_country",
+      "live_current_source": "unsplash_fallback",
+      "probe_detail": {
+        "source": "unsplash_fallback",
+        "live_countries": 0,
+        "total_countries": 10,
+        "by_country": {
+          "JP": {
+            "http": 200,
+            "live": false,
+            "items": 0
+          },
+          "KR": {
+            "http": 200,
+            "live": false,
+            "items": 0
+          },
+          "TH": {
+            "http": 200,
+            "live": false,
+            "items": 0
+          },
+          "SG": {
+            "http": 200,
+            "live": false,
+            "items": 0
+          },
+          "FR": {
+            "http": 200,
+            "live": false,
+            "items": 0
+          },
+          "US": {
+            "http": 200,
+            "live": false,
+            "items": 0
+          },
+          "AU": {
+            "http": 200,
+            "live": false,
+            "items": 0
+          },
+          "ES": {
+            "http": 200,
+            "live": false,
+            "items": 0
+          },
+          "AE": {
+            "http": 200,
+            "live": false,
+            "items": 0
+          },
+          "CN": {
+            "http": 200,
+            "live": false,
+            "items": 0
+          }
+        }
+      },
+      "wave_1_jp": {
+        "http": 200,
+        "live": false,
+        "items": 0
+      }
+    },
+    {
+      "id": "poi_images",
+      "page_module": "POI 图",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/poi-images",
+      "modify_entry_label": "/admin/content/poi-images",
+      "cms_operable": true,
+      "current_source": "placeholder",
+      "declared_current_source": "placeholder",
+      "target_source": "catalog",
+      "source_aligned": false,
+      "asset_kind": "poi_hero",
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "catalog_media_global",
+      "live_current_source": "placeholder",
+      "probe_detail": {
+        "source": "placeholder",
+        "http": 200,
+        "items": 0
+      }
+    },
+    {
+      "id": "hotel_images",
+      "page_module": "Hotel 图",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/hotel-tiers",
+      "modify_entry_label": "/admin/content/hotel-tiers",
+      "cms_operable": true,
+      "current_source": "placeholder",
+      "declared_current_source": "placeholder",
+      "target_source": "catalog",
+      "source_aligned": false,
+      "asset_kind": "hotel_tier_stock",
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "catalog_media_global",
+      "live_current_source": "placeholder",
+      "probe_detail": {
+        "source": "placeholder",
+        "http": 200,
+        "items": 0
+      }
+    },
+    {
+      "id": "transport_images",
+      "page_module": "Transport 图",
+      "owner": "CMS",
+      "modify_entry": "/admin/content/transport",
+      "modify_entry_label": "/admin/content/transport",
+      "cms_operable": true,
+      "current_source": "placeholder",
+      "declared_current_source": "placeholder",
+      "target_source": "catalog",
+      "source_aligned": false,
+      "asset_kind": "transport_stock",
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "catalog_media_global",
+      "live_current_source": "placeholder",
+      "probe_detail": {
+        "source": "placeholder",
+        "http": 200,
+        "items": 0
+      }
+    },
+    {
+      "id": "home_hero",
+      "page_module": "首页 Hero",
+      "owner": "OCS / OPS",
+      "modify_entry": "do_not_modify",
+      "modify_entry_label": "不修改",
+      "cms_operable": false,
+      "current_source": "official_cold_start",
+      "declared_current_source": "official_cold_start",
+      "target_source": "official_cold_start",
+      "source_aligned": true,
+      "asset_kind": null,
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "ocs_surface_home_hero",
+      "live_current_source": "official_cold_start",
+      "probe_detail": {
+        "source": "official_cold_start",
+        "http": 200,
+        "status": "ok"
+      }
+    },
+    {
+      "id": "market_guide_avatar",
+      "page_module": "Market Guide",
+      "owner": "OCS",
+      "modify_entry": "do_not_modify",
+      "modify_entry_label": "不修改",
+      "cms_operable": false,
+      "current_source": "official_cold_start",
+      "declared_current_source": "official_cold_start",
+      "target_source": "official_cold_start",
+      "source_aligned": true,
+      "asset_kind": null,
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "ocs_guides_list",
+      "live_current_source": "official_cold_start",
+      "probe_detail": {
+        "source": "official_cold_start",
+        "http": 200,
+        "guides": 5
+      }
+    },
+    {
+      "id": "community_official",
+      "page_module": "Community Official",
+      "owner": "OCS",
+      "modify_entry": "do_not_modify",
+      "modify_entry_label": "不修改",
+      "cms_operable": false,
+      "current_source": "official_cold_start",
+      "declared_current_source": "official_cold_start",
+      "target_source": "official_cold_start",
+      "source_aligned": true,
+      "asset_kind": null,
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "ocs_community_feed",
+      "live_current_source": "official_cold_start",
+      "probe_detail": {
+        "source": "official_cold_start",
+        "http": 200,
+        "posts": 5
+      }
+    },
+    {
+      "id": "traveltrust_video",
+      "page_module": "TravelTrust 视频",
+      "owner": "Media",
+      "modify_entry": "later",
+      "modify_entry_label": "后续",
+      "cms_operable": false,
+      "current_source": "placeholder",
+      "declared_current_source": "placeholder",
+      "target_source": "media_platform",
+      "source_aligned": false,
+      "asset_kind": null,
+      "wave": null,
+      "matrix_ref": null,
+      "probe": "none",
+      "live_current_source": "placeholder",
+      "probe_skipped": true
+    }
+  ],
+  "wave_1_next_action": "JP Ambient: Upload → Catalog → Verify → current_source=catalog",
+  "related_ssot": {
+    "destination_ambient_matrix": "data/catalog/destination-ambient-matrix.v1.yaml",
+    "health_score_script": "scripts/dev/run-cms-content-health-score.cjs"
+  },
+  "TT_CMS_ASSET_MATRIX": "COMPLETE",
+  "honest_boundary": "Ops workbench only · ① staging probe ≠ ③ Production GO · OCS rows intentionally do_not_modify"
+}

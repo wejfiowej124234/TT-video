@@ -1,0 +1,27 @@
+{
+  "schema": "traveltrust.cms_fr_poi_wave_kickoff.v1",
+  "stamp_utc": "2026-07-06T092458Z",
+  "country_iso": "FR",
+  "status": "FR_CITY_PILOT_COMPLETE",
+  "active_city": "巴黎",
+  "template": "JP + KR + TH + SG Golden Template",
+  "TT_CMS_FR_POI_WAVE": "NICE_CLOSED",
+  "next_stage": null,
+  "paris_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-PARIS-CLOSURE-LATEST.json"
+  },
+  "active_catalog_build": null,
+  "TT_CMS_POI_CITY_PARIS": "CLOSED",
+  "TT_CMS_POI_ACTIVE_CITY": null,
+  "lyon_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-LYON-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_LYON": "CLOSED",
+  "nice_city_closure": {
+    "status": "CLOSED",
+    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-NICE-CLOSURE-LATEST.json"
+  },
+  "TT_CMS_POI_CITY_NICE": "CLOSED"
+}

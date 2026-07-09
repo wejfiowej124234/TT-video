@@ -1,0 +1,134 @@
+{
+  "schema": "traveltrust.cms_city_hero_ssot_verification.v1",
+  "recorded_at_utc": "2026-07-07T12:19:35.331Z",
+  "question": "Registry City Hero = A（已完成）还是 B（独立模块未做）？",
+  "verdict": "B",
+  "verdict_label": "独立 CMS 模块 · 尚未实现 · Registry Pilot 正确 · 不应改为 Frozen",
+  "TT_CMS_CITY_HERO_SSOT": "INDEPENDENT_MODULE_NOT_STARTED",
+  "registry_module": {
+    "id": "city_hero",
+    "name": "City Hero",
+    "status": "Pilot",
+    "business_critical": "P1",
+    "l5_pass": false,
+    "next": "建立 L5 流程"
+  },
+  "naming_collision": {
+    "summary": "十国流水线里的 Hero / City Runtime 不等于 Registry 的 city_hero 模块",
+    "pipeline_hero_means": "destination_ambient_hero（国家级）+ poi_hero（POI 级 · 按 city 跑 runtime）",
+    "registry_city_hero_means": "独立 asset_kind=city_hero · 按城市一张主视觉（如东京 Hero）· 不依赖 POI"
+  },
+  "already_frozen_not_city_hero": [
+    {
+      "id": "destination_ambient_hero",
+      "registry_name": "Hero Assets",
+      "meaning": "十国 Home 全屏 Hero · da-hero-{iso}-home · asset_kind=landing_ambient",
+      "evidence": [
+        "data/catalog/destination-ambient-hero-matrix.v1.yaml",
+        "evidence/GO_cms_operation/CMS-DESTINATION-AMBIENT-RUNTIME-CLOSURE-LATEST.json"
+      ],
+      "status": "FROZEN P0"
+    },
+    {
+      "id": "poi_content_qa",
+      "registry_name": "POI Content QA",
+      "meaning": "按 City 跑 Execution → Content QA → Runtime · poi_hero 配图",
+      "evidence": [
+        "evidence/GO_cms_operation/CMS-TEN-COUNTRY-FINAL-CLOSURE-REPORT-LATEST.json",
+        "data/catalog/cms-image-inventory.v1.yaml · asset_type poi_city"
+      ],
+      "status": "FROZEN P0 · 330/330 LOCK"
+    },
+    {
+      "id": "destination_ambient",
+      "registry_name": "Destination Ambient",
+      "meaning": "十国氛围背景 · landing_ambient",
+      "evidence": [
+        "data/catalog/destination-ambient-matrix.v1.yaml"
+      ],
+      "status": "FROZEN P0"
+    }
+  ],
+  "city_hero_signals": {
+    "cms_content_brief_asset_family": false,
+    "cms_image_inventory_row": false,
+    "admin_route": false,
+    "frontend_consumer": false,
+    "catalog_asset_kind": "city_hero",
+    "catalog_probe": {
+      "ok": true,
+      "count": 0,
+      "items": []
+    },
+    "denominator_lock": {
+      "label": "City",
+      "total": 0,
+      "live": 0,
+      "pending": 0,
+      "completion": "0/0 (catalog_empty)",
+      "catalog_empty": true,
+      "target": "re_lock_after_catalog_ingest"
+    },
+    "content_execution": {
+      "order": 4,
+      "id": "city",
+      "label": "City Hero",
+      "content_pct": 0,
+      "progress_bar": "░░░░░░░░░░ 0%",
+      "lock_completion": "0/0 (catalog_empty)",
+      "catalog_empty": true,
+      "live": 0,
+      "total": 0,
+      "execution_status": "WAITING",
+      "display": "WAITING"
+    },
+    "l5_gap_report": {
+      "priority": "P1",
+      "total_assets": 0,
+      "cms_taken_over": 0,
+      "runtime_cms_effective": 0,
+      "l5_pass": 0,
+      "unmigrated": 0,
+      "text_image_mismatch": 0,
+      "country_errors": 0,
+      "city_errors": 0,
+      "suggest_replace": 0,
+      "cms_takeover_pct": 0,
+      "runtime_cms_pct": 0,
+      "l5_pass_pct": 0,
+      "text_consistency_pct": 0,
+      "geo_consistency_pct": 0,
+      "status": "NOT_SEEN"
+    }
+  },
+  "ten_country_closure": {
+    "scope": "POI Content QA per country/city",
+    "poi_locked": 330,
+    "poi_expected": 330,
+    "includes_city_hero_module": false,
+    "evidence": "evidence/GO_cms_operation/CMS-TEN-COUNTRY-FINAL-CLOSURE-REPORT-LATEST.json"
+  },
+  "recommendation": {
+    "registry_action": "KEEP Pilot · 不改为 Frozen",
+    "do_not": [
+      "重复十国验收",
+      "引用 POI/Ambient/Hero Evidence 作为 City Hero 完成证明"
+    ],
+    "when_ready": [
+      "cms-content-brief 增加 city_hero asset family",
+      "Admin route + catalog ingest",
+      "Matrix/Registry Evidence 走 Replace→Publish→Verify→Exit Check"
+    ],
+    "next_p1_after_clarification": "Hotel（或先定义 City Hero brief 再开发）"
+  },
+  "sources": [
+    "registry/cms-master-registry.v1.yaml",
+    "data/catalog/cms-content-brief.v1.yaml",
+    "data/catalog/cms-image-inventory.v1.yaml",
+    "scripts/dev/lib/cms-infrastructure-freeze.cjs",
+    "evidence/GO_cms_operation/CMS-CONTENT-EXECUTION-LATEST.json",
+    "evidence/GO_cms_operation/CMS-DENOMINATOR-LOCK-LATEST.json",
+    "evidence/GO_cms_operation/CMS-L5-CONTENT-GAP-REPORT-LATEST.json",
+    "https://tt-api-staging.fly.dev/api/v1/catalog/media?asset_kind=city_hero"
+  ]
+}

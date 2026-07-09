@@ -1,0 +1,10 @@
+phase: ② testnet C5 (CDN image delivery staging)
+status: PASS
+last_run: 20260605T143234Z
+api_base: https://tt-api-staging.fly.dev
+image_delivery: staging image delivery PASS
+production_cdn: pending (no production CDN edge GO)
+image_it: image-it-20260605T143234Z.log
+staging_image_e2e: staging-image-e2e-20260605T143234Z.log
+log: run-20260605T143234Z.log
+note: C5 slot PASS only — NOT Phase ② GO / NOT C6-C12 GO / NOT Production CDN GO

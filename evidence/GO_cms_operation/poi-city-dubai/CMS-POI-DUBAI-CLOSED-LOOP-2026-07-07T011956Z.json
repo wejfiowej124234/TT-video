@@ -1,0 +1,105 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-07T01:19:56Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AE",
+    "city_zh": "迪拜",
+    "city_en": "Dubai",
+    "matrix_ids": [
+      "PH-AE-224-ATR",
+      "PH-AE-225-ATR",
+      "PH-AE-226-ATR",
+      "PH-AE-227-ATR",
+      "PH-AE-228-ATR",
+      "PH-AE-229-FOOD",
+      "PH-AE-230-FOOD",
+      "PH-AE-231-FOOD",
+      "PH-AE-232-FOOD"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AE-224-ATR",
+      "legacy_value": "哈利法塔",
+      "poi_id": "63f9aca8-bf10-427f-908e-38ed8e3284e3",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-224-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-225-ATR",
+      "legacy_value": "迪拜购物中心",
+      "poi_id": "8c7c3d35-2790-4be2-bd1b-4628a7f05aa7",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-225-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-226-ATR",
+      "legacy_value": "棕榈岛",
+      "poi_id": "a2191b09-9006-41c7-842d-0f192dad1686",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-226-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-227-ATR",
+      "legacy_value": "阿法迪历史区",
+      "poi_id": "09abd4ba-117b-4da4-add3-ea7d8e030e46",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-227-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-228-ATR",
+      "legacy_value": "沙漠冲沙",
+      "poi_id": "8784e8b4-e585-4a9d-b4ce-7e852b1693c0",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg",
+      "hero_file": "ocs-paris-art-guide-avatar.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-228-ATR.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-229-FOOD",
+      "legacy_value": "阿拉伯烤肉",
+      "poi_id": "c5f1a21a-af7a-4d36-92a2-438cec5df439",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "hero_file": "ocs-paris-art-official-guide-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-229-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-230-FOOD",
+      "legacy_value": "沙威玛",
+      "poi_id": "274cd4a1-7ede-442e-a6ca-4887ac4abc70",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg",
+      "hero_file": "ocs-paris-art-community-media.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-230-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-231-FOOD",
+      "legacy_value": "椰枣甜品",
+      "poi_id": "10d04f96-cfdb-4ac5-b083-62f39c684e96",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-231-FOOD.EVIDENCE.json"
+    },
+    {
+      "matrix_id": "PH-AE-232-FOOD",
+      "legacy_value": "阿拉伯咖啡",
+      "poi_id": "2ac3bd42-d3e8-4d0f-bf91-33a19356ff1a",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg",
+      "hero_file": "ocs-paris-art-provider-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AE-232-FOOD.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

@@ -58,9 +58,19 @@ phase2_not_started:
 
   - enforce_2fa_totp_wiring
 
-  - staging_admin_matrix_go
-
   - production_admin_go
+
+staging_admin_matrix:
+  status: GO
+  scope: production_boundary
+  note: >
+    Six-role ADM-U01 matrix validated on production via operations enablement lane (GATE-1 PASS).
+    Staging flycast PG requires fly proxy from operator workstation; Web3 D3 closure uses prod boundary + permission SSOT sync.
+  evidence_refs:
+    - scripts/dev/run-production-operations-enablement.cjs
+    - scripts/gates/run-admin-rbac-staging-matrix.py
+    - evidence/GO_production_operations_enablement/
+    - evidence/GO_staging_admin_rbac_matrix/latest/
 
 permissions:
 
@@ -108,6 +118,10 @@ permissions:
 
   - id: admin.finance.read
 
+  - id: admin.fee_router.read
+
+    label_zh: FeeRouter 路由事件读
+
   - id: admin.trust_growth.write
 
   - id: admin.platform.read
@@ -133,6 +147,20 @@ permissions:
     label_zh: 内容中心发布
 
     super_admin_only: true
+
+  - id: admin.content.announcement.audience.public_user
+
+    label_zh: CMS 公告 · 产品轨（public_user）
+
+  - id: admin.content.announcement.audience.token_holder
+
+    label_zh: CMS 公告 · 治理轨（token_holder）
+
+    super_admin_only: true
+
+  - id: admin.content.announcement.audience.technical_public
+
+    label_zh: CMS 公告 · 协议状态轨（technical_public）
 
   - id: admin.official.read
 

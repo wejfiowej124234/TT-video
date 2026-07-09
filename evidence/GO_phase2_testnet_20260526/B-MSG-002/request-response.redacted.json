@@ -1,0 +1,34 @@
+{
+  "post": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "message": {
+        "id": "bc53b799-8545-4f50-8569-d4fc4ba9ccdf",
+        "order_id": "4c11dde1-3e95-4f72-9ceb-04b985ec6147",
+        "sender_id": "fc4dcc7c-8fd3-43d4-bed2-9e90eedfd1f2",
+        "content": "r003 staging message",
+        "created_at": "2026-06-30T05:03:18.404160042+00:00"
+      },
+      "tourist_id": "fc4dcc7c-8fd3-43d4-bed2-9e90eedfd1f2",
+      "traveler_id": "fc4dcc7c-8fd3-43d4-bed2-9e90eedfd1f2"
+    }
+  },
+  "get": {
+    "http_status": 200,
+    "body": {
+      "status": "ok",
+      "items": [
+        {
+          "id": "bc53b799-8545-4f50-8569-d4fc4ba9ccdf",
+          "order_id": "4c11dde1-3e95-4f72-9ceb-04b985ec6147",
+          "sender_id": "fc4dcc7c-8fd3-43d4-bed2-9e90eedfd1f2",
+          "content": "r003 staging message",
+          "created_at": "2026-06-30T05:03:18.404160042+00:00"
+        }
+      ],
+      "tourist_id": "fc4dcc7c-8fd3-43d4-bed2-9e90eedfd1f2",
+      "traveler_id": "fc4dcc7c-8fd3-43d4-bed2-9e90eedfd1f2"
+    }
+  }
+}

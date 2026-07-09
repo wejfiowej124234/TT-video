@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.finance-ops-flow-map.v1",
+  "phase": "②",
+  "baseline": "GovFreeze V2 · DE NetProfit Ledger",
+  "chain_id": 11155111,
+  "nodes": [
+    {
+      "id": "fee_router",
+      "label": "FeeRouter (escrow 65/20/15)",
+      "role_read": [
+        "Finance Op",
+        "Auditor"
+      ],
+      "role_write": [],
+      "orthogonal_to": "country_pool_4555",
+      "api_read": "GET /governance/fee-pool-aggregates · fee-router admin read"
+    },
+    {
+      "id": "country_pool",
+      "label": "Country Pool DE Ledger",
+      "contract": "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa",
+      "role_read": [
+        "Finance Op",
+        "Treasury Op",
+        "Auditor"
+      ],
+      "role_write_batch": [
+        "Treasury Op via Legacy TL",
+        "Finance Op fundingSource EOA"
+      ],
+      "epoch_flow": "openEpoch → recordAccrual → closeEpoch → fundLedgerForSplit → splitNetProfit"
+    },
+    {
+      "id": "split_4555",
+      "label": "45/55 Net Profit Split",
+      "split": "45% steward vault · 55% globalTreasury (V2 Timelock)",
+      "evidence": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z/step-03-split-4555/",
+      "finance_op": "four-ledger reconcile after split",
+      "treasury_op": "Legacy TL batch execute + receipt archive"
+    },
+    {
+      "id": "distribution_ledger",
+      "label": "Distribution / Investor Accruals",
+      "role_read": [
+        "Finance Op",
+        "Auditor",
+        "Investor"
+      ],
+      "role_write": [
+        "Finance Op internal register · not P4 cash"
+      ],
+      "api_read": "GET /governance/distribution-accruals"
+    },
+    {
+      "id": "treasury_accounting",
+      "label": "Treasury Accounting (Global · P4 path)",
+      "treasury": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+      "role_read": [
+        "Finance Op",
+        "Auditor"
+      ],
+      "role_write": "Governor queue → V2 Timelock execute (not Admin API)"
+    },
+    {
+      "id": "four_ledger",
+      "label": "Four-Ledger Reconcile",
+      "artifact": "evidence/GO_tt_country_pool_revenue_enterprise_hat/20260616T084248Z/four-ledger-reconcile.json",
+      "roles": {
+        "Finance Op": "run reconcile · triage §3.6 · monthly sign",
+        "Treasury Op": "post-split receipt + handoff",
+        "Auditor": "read-only trace · no fundingSource · no batch schedule"
+      }
+    }
+  ],
+  "recovery": {
+    "four_ledger_fail": "GORP §3.6 — env/API/indexer triage",
+    "split_not_funded": "GORP §3.3 — Finance approve + fund batch",
+    "settlement_paused": "GORP §3.3 — Owner approved unpause batch"
+  }
+}

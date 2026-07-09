@@ -1,0 +1,136 @@
+{
+  "schema": "traveltrust.ocs_content_l5_destination_authenticity_review.v1",
+  "stamp_utc": "20260704T151409Z",
+  "filename": "ocs-sydney-coast-community-media.jpg",
+  "chain_id": "sydney-coast",
+  "city": "悉尼",
+  "country_code": "AU",
+  "country_label": "澳大利亚",
+  "slot": "community-media",
+  "surface": "Community Media",
+  "manifest_snapshot": {
+    "chain_id": "sydney-coast",
+    "city": "悉尼",
+    "country_code": "AU",
+    "country_label": "澳大利亚",
+    "chain_tags": [
+      "海岸",
+      "徒步"
+    ],
+    "community_post.destination_slug": "sydney",
+    "community_post.destination_label": "悉尼",
+    "community_post.post_type": "photo",
+    "community_post.tags": [
+      "悉尼",
+      "海岸",
+      "官方旅行日志"
+    ],
+    "community_post.body_markdown": "邦迪到 Coogee 海岸步道——官方一日徒步与潮汐窗口记录。",
+    "community_post.cover_url": "/api/v1/uploads/community-posts/ocs-sydney-coast-community-cover.jpg",
+    "community_post.media_urls": [
+      "/api/v1/uploads/community-posts/ocs-sydney-coast-community-media.jpg"
+    ]
+  },
+  "manifest_field_alignment": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "matrix_city_matches_manifest",
+        "pass": true,
+        "detail": "matrix=悉尼 manifest=悉尼"
+      },
+      {
+        "id": "country_code_present",
+        "pass": true,
+        "detail": "AU"
+      },
+      {
+        "id": "copy_label_non_empty",
+        "pass": true,
+        "detail": "邦迪到 Coogee 海岸步道——官方一日徒步与潮汐窗口记录。"
+      },
+      {
+        "id": "copy_label_contains_city_or_chain_theme",
+        "pass": true,
+        "detail": "community shared body ok"
+      },
+      {
+        "id": "community_destination_label_matches_city",
+        "pass": true,
+        "detail": "悉尼"
+      }
+    ],
+    "requirement": "图片与 Manifest 全字段 100% 同城同主题对齐"
+  },
+  "destination_authenticity_checklist": {
+    "architecture": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "streetscape": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "clothing": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "language_signage": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "transportation": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "natural_environment": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "food_dining": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "commercial_form": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    },
+    "cultural_elements": {
+      "pass": true,
+      "belongs_to_city": "悉尼",
+      "belongs_to_country": "澳大利亚",
+      "cross_contamination": false,
+      "notes": "Visual attestation: all elements belong to 悉尼 (澳大利亚). No cross-city/country/culture mixing."
+    }
+  },
+  "prohibited": {
+    "cross_country_elements": false,
+    "cross_city_elements": false,
+    "cross_culture_mixing": false
+  },
+  "TT_DESTINATION_AUTHENTICITY_REVIEW": "PASS"
+}

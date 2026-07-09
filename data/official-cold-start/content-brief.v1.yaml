@@ -1,0 +1,478 @@
+# OCS Content L5 · 10 城 × 6 Slot Content Brief
+# 唯一内容 SSOT（Content Supply · 非 Official Ops 控制面）
+# Phase: Phase② OCS Content L5 · Content Engineering
+# 技术 SSOT 不变: dataset.v1.json · assets.v1.json · 文件名不可改（仅替换 media/ 二进制）
+# Human: docs/runbook/TT-OCS-CONTENT-L5.md
+
+schema: traveltrust.ocs_content_brief.v1
+version: 1
+effective_utc: "2026-07-04"
+machine_key: TT_OCS_CONTENT_L5_CONTENT_BRIEF
+
+status: ACTIVE
+replacement_policy: >-
+  仅替换 data/official-cold-start/media/{filename} 二进制；
+  文案微调仅允许同 chain 内 dataset.v1.json 字段；
+  禁止改 API/DB schema、禁止改 assets 文件名、禁止第二套媒体 URL。
+
+global_rules:
+  manifest_first: >-
+    任何官方图片、文案、标签、城市信息变更：先更新本 Brief → 同步 Production Matrix 行 →
+    再改 dataset.v1.json 与 media/ 二进制；禁止绕过 Content SSOT 直接换线上资源。
+  content_authenticity_g9: >-
+    每张图须符合城市、场景、业务角色；禁止地理/角色错误、AI 明显失真、版权风险、品牌冲突。
+  content_diversity_g10: >-
+    同 chain 6 Slot 须覆盖不同场景类型（地标/街景/体验/产品/人物等）；禁止仅换角度或色调重复。
+  no_duplicate_across_slots: >-
+    同一 chain 的 6 张图必须不同构图/场景；禁止同色块、禁止同一张图缩放复用、禁止跨 chain 复用。
+  no_duplicate_across_chains: >-
+    10 城之间禁止复用同一摄影素材（含裁剪/滤镜变体）。
+  copy_image_lock: >-
+    画面须与 copy_mapping 所列 manifest 文案同城、同主题；禁止巴黎文案配东京图。
+  brand_visual:
+    palette: 暖色旅行纪实 · 与 TravelTrust L5 深壳 + ref-sun Accent 协调
+    avoid: [纯色素块,  stock watermark,  unrelated landmark,  oversaturated HDR]
+    prefer: [natural light,  readable subject,  4:5 or 3:4 crop-safe center]
+  technical:
+    min_width_px: 640
+    min_height_px: 480
+    format: JPEG
+    aspect_safe: center-weighted for masonry crop
+  wcag_visual:
+    contrast_subject: 主体与背景可区分；避免大面积低对比雾面
+    no_text_in_image: 图片内禁止嵌入大段文字（文案由 UI 渲染）
+  campaign_inheritance: >-
+    Campaign/Home Hero 不新增第 7 文件；引用 item_refs 对应 slot 封面，须满足该 slot brief 且 Hero 优先选 official-guide-cover 或 provider-cover 宽幅构图。
+
+slots:
+  guide-avatar:
+    surface: [market_guides, guide_catalog, community_profile]
+    composition: 1:1 肖像 · 肩部以上 · 面向镜头 · 专业向导气质
+  provider-cover:
+    surface: [market_provider, market_feed]
+    composition: 4:5 竖构图 · 服务场景/产品场景 · 商家橱窗感
+  acquisition-cover:
+    surface: [market_acquisition, market_feed]
+    composition: 4:5 · 悬赏标的/商品/包装 · 非风景主图
+  official-guide-cover:
+    surface: [official_guide, community_official, home_hero, destination_hub]
+    composition: 16:9 或 3:4 宽幅路线感 · 地标序列/一日路线封面
+  community-cover:
+    surface: [community_feed, community_featured]
+    composition: 4:5 瀑布流缩略 · 生活化瞬间 · 与 community-media 不同场景
+  community-media:
+    surface: [community_feed_detail, community_post_body]
+    composition: 4:5 详情主图 · 更深叙事场景 · 与 community-cover 不同机位/时段
+
+chains:
+  - chain_id: tokyo-photo
+    city: 东京
+    country_code: JP
+    theme: 城市摄影 · 浅草 · 晴空塔 · 街景
+    assets:
+      - slot: guide-avatar
+        filename: ocs-tokyo-photo-guide-avatar.jpg
+        recommended_scene: 持相机向导 · 浅草寺红门或隅田川畔 · 清晨侧光
+        tone: 暖金 · 纪实
+        copy_mapping: [guide.nickname, guide.bio]
+      - slot: provider-cover
+        filename: ocs-tokyo-photo-provider-cover.jpg
+        recommended_scene: 情侣/家庭旅拍现场 · 涩谷或台场 · 半日写真服务感
+        tone: 明亮 · 商业可信
+        copy_mapping: [provider.title, provider.description]
+      - slot: acquisition-cover
+        filename: ocs-tokyo-photo-acquisition-cover.jpg
+        recommended_scene: 相机镜头/限定器材 · 店内陈列或包装 · 非天际线
+        tone: 中性产品光
+        copy_mapping: [acquisition.title, acquisition.description]
+      - slot: official-guide-cover
+        filename: ocs-tokyo-photo-official-guide-cover.jpg
+        recommended_scene: 浅草寺 → 晴空塔路线宽幅 · 河景+塔 · 官方攻略封面
+        tone: 史诗路线感 · 略暖
+        copy_mapping: [official_guide.title, official_guide.body]
+      - slot: community-cover
+        filename: ocs-tokyo-photo-community-cover.jpg
+        recommended_scene: 街景摄影瞬间 · 交叉路口或神社鸟居 · Feed 缩略
+        tone: 生活化 · 略高饱和
+        copy_mapping: [community_post.body_markdown, community_post.tags]
+        no_duplicate_with: [community-media, official-guide-cover]
+      - slot: community-media
+        filename: ocs-tokyo-photo-community-media.jpg
+        recommended_scene: 晴空塔日落或隅田川步行道 · 与 cover 不同机位
+        tone: 黄金时刻
+        copy_mapping: [community_post.body_markdown]
+        no_duplicate_with: [community-cover, official-guide-cover]
+
+  - chain_id: kyoto-culture
+    city: 京都
+    country_code: JP
+    theme: 茶道 · 祇园 · 岚山 · 和服文化
+    assets:
+      - slot: guide-avatar
+        filename: ocs-kyoto-culture-guide-avatar.jpg
+        recommended_scene: 和服或正装向导 · 祇园石阶 · 柔和晨雾
+        tone: 低饱和 · 禅意
+        copy_mapping: [guide.nickname, guide.bio]
+      - slot: provider-cover
+        filename: ocs-kyoto-culture-provider-cover.jpg
+        recommended_scene: 私享茶室内部 · 茶道具特写+空间 · 包场体验
+        tone: 安静 · 木质暖
+        copy_mapping: [provider.title, provider.description]
+      - slot: acquisition-cover
+        filename: ocs-kyoto-culture-acquisition-cover.jpg
+        recommended_scene: 和纸/手工纸品 · 工艺细节 · 非寺庙全景
+        tone: 工艺质感
+        copy_mapping: [acquisition.title, acquisition.description]
+      - slot: official-guide-cover
+        filename: ocs-kyoto-culture-official-guide-cover.jpg
+        recommended_scene: 岚山竹林或祇园坡道宽幅 · 两日慢游封面
+        tone: 青绿+暖木
+        copy_mapping: [official_guide.title, official_guide.body]
+      - slot: community-cover
+        filename: ocs-kyoto-culture-community-cover.jpg
+        recommended_scene: 茶道体验瞬间 · 奉茶手势 · Feed 缩略
+        tone:  intimate
+        copy_mapping: [community_post.body_markdown, community_post.tags]
+        no_duplicate_with: [community-media]
+      - slot: community-media
+        filename: ocs-kyoto-culture-community-media.jpg
+        recommended_scene: 岚山竹林小径行人 · 与 cover 不同场景
+        tone: 午后柔光
+        copy_mapping: [community_post.body_markdown]
+        no_duplicate_with: [community-cover]
+
+  - chain_id: seoul-food
+    city: 首尔
+    country_code: KR
+    theme: 深夜美食 · 明洞 · 广藏市场
+    assets:
+      - slot: guide-avatar
+        filename: ocs-seoul-food-guide-avatar.jpg
+        recommended_scene: 美食向导 · 市场摊位前 · 夜间霓虹反射
+        tone: 暖色夜市
+        copy_mapping: [guide.nickname, guide.bio]
+      - slot: provider-cover
+        filename: ocs-seoul-food-provider-cover.jpg
+        recommended_scene: 4 小时美食团 · 长桌分享或摊位排队场景
+        tone: 热闹 · 食欲感
+        copy_mapping: [provider.title, provider.description]
+      - slot: acquisition-cover
+        filename: ocs-seoul-food-acquisition-cover.jpg
+        recommended_scene: 韩国限定零食礼包平铺 · 包装色彩 · 非街景
+        tone: 产品陈列
+        copy_mapping: [acquisition.title, acquisition.description]
+      - slot: official-guide-cover
+        filename: ocs-seoul-food-official-guide-cover.jpg
+        recommended_scene: 明洞街景到广藏市场 · 48h 美食地图封面
+        tone: 霓虹+暖食
+        copy_mapping: [official_guide.title, official_guide.body]
+      - slot: community-cover
+        filename: ocs-seoul-food-community-cover.jpg
+        recommended_scene: 单道代表菜特写+筷子 · Feed 缩略
+        tone: 高食欲近景
+        copy_mapping: [community_post.body_markdown, community_post.tags]
+        no_duplicate_with: [community-media]
+      - slot: community-media
+        filename: ocs-seoul-food-community-media.jpg
+        recommended_scene: 市场过道人群与摊位 · 与 cover 不同尺度
+        tone: 纪实夜市
+        copy_mapping: [community_post.body_markdown]
+        no_duplicate_with: [community-cover]
+
+  - chain_id: bangkok-temple
+    city: 曼谷
+    country_code: TH
+    theme: 寺庙 · 湄南河 · 游船日落
+    assets:
+      - slot: guide-avatar
+        filename: ocs-bangkok-temple-guide-avatar.jpg
+        recommended_scene: 向导于黎明寺台阶 · 晨光 · 得体着装
+        tone: 金+蓝晨空
+        copy_mapping: [guide.nickname, guide.bio]
+      - slot: provider-cover
+        filename: ocs-bangkok-temple-provider-cover.jpg
+        recommended_scene: 湄南河 sunset 游船晚餐 · 甲板餐桌
+        tone: 日落暖橙
+        copy_mapping: [provider.title, provider.description]
+      - slot: acquisition-cover
+        filename: ocs-bangkok-temple-acquisition-cover.jpg
+        recommended_scene: 泰丝/手工织物细节 · 非河景
+        tone: 织物纹理
+        copy_mapping: [acquisition.title, acquisition.description]
+      - slot: official-guide-cover
+        filename: ocs-bangkok-temple-official-guide-cover.jpg
+        recommended_scene: 黎明寺尖塔+河景宽幅 · 一日寺庙路线
+        tone: 金庙史诗
+        copy_mapping: [official_guide.title, official_guide.body]
+      - slot: community-cover
+        filename: ocs-bangkok-temple-community-cover.jpg
+        recommended_scene: 寺庙晨光细节 · 尖塔剪影 · Feed
+        tone: 清晨宁静
+        copy_mapping: [community_post.body_markdown, community_post.tags]
+        no_duplicate_with: [community-media]
+      - slot: community-media
+        filename: ocs-bangkok-temple-community-media.jpg
+        recommended_scene: 湄南河游船视角 · 与 cover 不同
+        tone: 河面反光
+        copy_mapping: [community_post.body_markdown]
+        no_duplicate_with: [community-cover]
+
+  - chain_id: singapore-family
+    city: 新加坡
+    country_code: SG
+    theme: 亲子 · 滨海湾 · 圣淘沙
+    assets:
+      - slot: guide-avatar
+        filename: ocs-singapore-family-guide-avatar.jpg
+        recommended_scene: 亲子向导与儿童互动 · 滨海湾花园背景
+        tone: 明亮家庭友好
+        copy_mapping: [guide.nickname, guide.bio]
+      - slot: provider-cover
+        filename: ocs-singapore-family-provider-cover.jpg
+        recommended_scene: 亲子通票场景 · 水族馆/乐园入口家庭合影
+        tone: 清爽日间
+        copy_mapping: [provider.title, provider.description]
+      - slot: acquisition-cover
+        filename: ocs-singapore-family-acquisition-cover.jpg
+        recommended_scene: 新加坡设计周边/礼品包装 · 非全景
+        tone: 现代设计品
+        copy_mapping: [acquisition.title, acquisition.description]
+      - slot: official-guide-cover
+        filename: ocs-singapore-family-official-guide-cover.jpg
+        recommended_scene: 滨海湾天际线+家庭剪影宽幅 · 周末路线
+        tone: 现代都市家庭
+        copy_mapping: [official_guide.title, official_guide.body]
+      - slot: community-cover
+        filename: ocs-singapore-family-community-cover.jpg
+        recommended_scene: 儿童在景点开心瞬间 · Feed
+        tone:  joyful
+        copy_mapping: [community_post.body_markdown, community_post.tags]
+        no_duplicate_with: [community-media]
+      - slot: community-media
+        filename: ocs-singapore-family-community-media.jpg
+        recommended_scene: 圣淘沙海滩或花园超级树 · 与 cover 不同
+        tone: 下午柔光
+        copy_mapping: [community_post.body_markdown]
+        no_duplicate_with: [community-cover]
+
+  - chain_id: paris-art
+    city: 巴黎
+    country_code: FR
+    theme: 博物馆 · 卢浮宫 · 奥赛 · 艺术
+    assets:
+      - slot: guide-avatar
+        filename: ocs-paris-art-guide-avatar.jpg
+        recommended_scene: 艺术向导 · 博物馆外立面或雕塑前
+        tone: 经典巴黎灰+金
+        copy_mapping: [guide.nickname, guide.bio]
+      - slot: provider-cover
+        filename: ocs-paris-art-provider-cover.jpg
+        recommended_scene: 小团免排队入馆 · 馆内名画前讲解
+        tone: 室内博物馆光
+        copy_mapping: [provider.title, provider.description]
+      - slot: acquisition-cover
+        filename: ocs-paris-art-acquisition-cover.jpg
+        recommended_scene: 中古海报/艺术印刷品平铺 · 非埃菲尔
+        tone: 复古纸品
+        copy_mapping: [acquisition.title, acquisition.description]
+      - slot: official-guide-cover
+        filename: ocs-paris-art-official-guide-cover.jpg
+        recommended_scene: 卢浮宫金字塔 dusk 或塞纳河+博物馆宽幅
+        tone: 经典艺术封面
+        copy_mapping: [official_guide.title, official_guide.body]
+      - slot: community-cover
+        filename: ocs-paris-art-community-cover.jpg
+        recommended_scene: 名画细节或展厅透视 · Feed
+        tone: 艺术 intimate
+        copy_mapping: [community_post.body_markdown, community_post.tags]
+        no_duplicate_with: [community-media]
+      - slot: community-media
+        filename: ocs-paris-art-community-media.jpg
+        recommended_scene: 奥赛钟面或雕塑厅 · 与 cover 不同馆/角度
+        tone: 自然博物馆光
+        copy_mapping: [community_post.body_markdown]
+        no_duplicate_with: [community-cover]
+
+  - chain_id: nyc-skyline
+    city: 纽约
+    country_code: US
+    theme: 天际线 · 布鲁克林大桥 · 帝国大厦
+    assets:
+      - slot: guide-avatar
+        filename: ocs-nyc-skyline-guide-avatar.jpg
+        recommended_scene: 摄影向导 · 布鲁克林大桥视角 · 都市风
+        tone: 冷调都市
+        copy_mapping: [guide.nickname, guide.bio]
+      - slot: provider-cover
+        filename: ocs-nyc-skyline-provider-cover.jpg
+        recommended_scene: 观景台联票 · Top of the Rock 或类似 · 游客剪影
+        tone: 蓝调黄昏
+        copy_mapping: [provider.title, provider.description]
+      - slot: acquisition-cover
+        filename: ocs-nyc-skyline-acquisition-cover.jpg
+        recommended_scene: 黑胶唱片/独立音乐周边 · 非天际线
+        tone: 产品特写
+        copy_mapping: [acquisition.title, acquisition.description]
+      - slot: official-guide-cover
+        filename: ocs-nyc-skyline-official-guide-cover.jpg
+        recommended_scene: 曼哈顿天际线全景 · 大桥+塔 · 摄影路线封面
+        tone:  iconic NYC
+        copy_mapping: [official_guide.title, official_guide.body]
+      - slot: community-cover
+        filename: ocs-nyc-skyline-community-cover.jpg
+        recommended_scene: 大桥钢索细节或街头仰拍 · Feed
+        tone: 纪实都市
+        copy_mapping: [community_post.body_markdown, community_post.tags]
+        no_duplicate_with: [community-media]
+      - slot: community-media
+        filename: ocs-nyc-skyline-community-media.jpg
+        recommended_scene: 帝国大厦夜景或哈德逊河视角 · 与 cover 不同
+        tone:  blue hour
+        copy_mapping: [community_post.body_markdown]
+        no_duplicate_with: [community-cover]
+
+  - chain_id: sydney-coast
+    city: 悉尼
+    country_code: AU
+    theme: 海岸徒步 · 邦迪 · Coogee · 海港
+    assets:
+      - slot: guide-avatar
+        filename: ocs-sydney-coast-guide-avatar.jpg
+        recommended_scene: 户外向导 · 海岸步道 · 防晒装备
+        tone: 海洋蓝+阳光
+        copy_mapping: [guide.nickname, guide.bio]
+      - slot: provider-cover
+        filename: ocs-sydney-coast-provider-cover.jpg
+        recommended_scene: 海港皮划艇 · 半日体验 · 装备+海面
+        tone: 活力户外
+        copy_mapping: [provider.title, provider.description]
+      - slot: acquisition-cover
+        filename: ocs-sydney-coast-acquisition-cover.jpg
+        recommended_scene: 手工冲浪板/海岸 craft · 非歌剧院全景
+        tone:  craft 质感
+        copy_mapping: [acquisition.title, acquisition.description]
+      - slot: official-guide-cover
+        filename: ocs-sydney-coast-official-guide-cover.jpg
+        recommended_scene: 邦迪到 Coogee 海岸步道宽幅 · 悬崖+海
+        tone: 经典海岸
+        copy_mapping: [official_guide.title, official_guide.body]
+      - slot: community-cover
+        filename: ocs-sydney-coast-community-cover.jpg
+        recommended_scene: 海滩浪花或泳者剪影 · Feed
+        tone:  夏日明亮
+        copy_mapping: [community_post.body_markdown, community_post.tags]
+        no_duplicate_with: [community-media]
+      - slot: community-media
+        filename: ocs-sydney-coast-community-media.jpg
+        recommended_scene: 步道俯瞰海湾 · 与 cover 不同机位
+        tone:  下午侧光
+        copy_mapping: [community_post.body_markdown]
+        no_duplicate_with: [community-cover]
+
+  - chain_id: barcelona-arch
+    city: 巴塞罗那
+    country_code: ES
+    theme: 高迪 · 圣家堂 · 桂尔公园 · 马赛克
+    assets:
+      - slot: guide-avatar
+        filename: ocs-barcelona-arch-guide-avatar.jpg
+        recommended_scene: 建筑向导 · 圣家堂外 · 专业讲解姿态
+        tone: 高迪彩+地中海光
+        copy_mapping: [guide.nickname, guide.bio]
+      - slot: provider-cover
+        filename: ocs-barcelona-arch-provider-cover.jpg
+        recommended_scene: 高迪三件套小团 · 桂尔公园马赛克前
+        tone:  vibrant mosaic
+        copy_mapping: [provider.title, provider.description]
+      - slot: acquisition-cover
+        filename: ocs-barcelona-arch-acquisition-cover.jpg
+        recommended_scene: 马赛克瓷砖/建筑纪念品 · 非全景
+        tone:  craft 色彩
+        copy_mapping: [acquisition.title, acquisition.description]
+      - slot: official-guide-cover
+        filename: ocs-barcelona-arch-official-guide-cover.jpg
+        recommended_scene: 圣家堂立面宽幅 · 官方一日封面
+        tone:  epic facade
+        copy_mapping: [official_guide.title, official_guide.body]
+      - slot: community-cover
+        filename: ocs-barcelona-arch-community-cover.jpg
+        recommended_scene: 马赛克细节或公园蜥蜴雕塑 · Feed
+        tone:  playful color
+        copy_mapping: [community_post.body_markdown, community_post.tags]
+        no_duplicate_with: [community-media]
+      - slot: community-media
+        filename: ocs-barcelona-arch-community-media.jpg
+        recommended_scene: 桂尔公园全景台 · 与 cover 不同构图
+        tone:  日间通透
+        copy_mapping: [community_post.body_markdown]
+        no_duplicate_with: [community-cover]
+
+  - chain_id: dubai-luxury
+    city: 迪拜
+    country_code: AE
+    theme: 沙漠 Safari · 哈利法塔 ·  luxury 都市
+    assets:
+      - slot: guide-avatar
+        filename: ocs-dubai-luxury-guide-avatar.jpg
+        recommended_scene:  luxury 向导 · 沙漠 camp 或塔前 · 得体长袍/商务休闲
+        tone: 金+沙漠暖
+        copy_mapping: [guide.nickname, guide.bio]
+      - slot: provider-cover
+        filename: ocs-dubai-luxury-provider-cover.jpg
+        recommended_scene: 沙漠豪华 Safari 晚宴 · 沙丘 sunset 餐桌
+        tone:  luxury warm
+        copy_mapping: [provider.title, provider.description]
+      - slot: acquisition-cover
+        filename: ocs-dubai-luxury-acquisition-cover.jpg
+        recommended_scene: 定制香氛/ luxury 小物 · 非塔全景
+        tone:  product luxury
+        copy_mapping: [acquisition.title, acquisition.description]
+      - slot: official-guide-cover
+        filename: ocs-dubai-luxury-official-guide-cover.jpg
+        recommended_scene: 哈利法塔+沙漠双主题拼感宽幅 · 两日封面
+        tone:  desert+city contrast
+        copy_mapping: [official_guide.title, official_guide.body]
+      - slot: community-cover
+        filename: ocs-dubai-luxury-community-cover.jpg
+        recommended_scene: 冲沙 SUV 或沙丘曲线 · Feed
+        tone:  adventure
+        copy_mapping: [community_post.body_markdown, community_post.tags]
+        no_duplicate_with: [community-media]
+      - slot: community-media
+        filename: ocs-dubai-luxury-community-media.jpg
+        recommended_scene: 哈利法塔夜景 · 与 cover 不同场景
+        tone:  city neon
+        copy_mapping: [community_post.body_markdown]
+        no_duplicate_with: [community-cover]
+
+campaign_refs:
+  note: Campaign 不新增媒体文件；下列 ref 须满足对应 slot brief
+  home-hero: [guide:tokyo-photo→guide-avatar, official_guide:tokyo-photo→official-guide-cover]
+  hot-guides: [guide:kyoto-culture, guide:seoul-food, guide:paris-art]
+  hot-providers: [provider:tokyo-photo, provider:barcelona-arch, provider:dubai-luxury]
+  hot-acquisition: [acquisition:tokyo-photo, acquisition:paris-art]
+  official-picks: [community_post×3, official_guide×2]
+  city-tokyo: [guide, provider, official_guide → tokyo-photo slots]
+  summer: [guide:bangkok-temple, provider:bangkok-temple]
+  festival: [guide:barcelona-arch, official_guide:barcelona-arch]
+  weekly-picks: [provider:seoul-food, provider:paris-art, acquisition:seoul-food]
+
+production_workflow:
+  - step: brief_signoff
+    owner: content
+    output: content-brief.v1.yaml signed
+  - step: asset_production
+    owner: content
+    output: 60 JPEG in data/official-cold-start/media/
+  - step: copy_alignment
+    owner: content
+    output: dataset.v1.json copy audit per chain
+  - step: technical_bootstrap
+    owner: engineering
+    output: run-ocs-official-asset-baseline.sh PASS
+  - step: staging_uat
+    owner: content+engineering
+    output: public surface spot-check + matrix score
+  - step: evidence
+    owner: engineering
+    output: evidence/GO_official_cold_start_dataset/ocs-content-l5/<UTC>/

@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.g3_02_pay_item_latest.v1",
+  "item_id": "PAY-W03",
+  "latest_run_id": "2026-07-08T08-27-51-062Z",
+  "recorded_utc": "2026-07-08T08:39:47.458Z",
+  "verdict": "PASS",
+  "artifact": "deposit/PAY-W03-2026-07-08T08-27-51-062Z.json",
+  "sync_applied": false
+}

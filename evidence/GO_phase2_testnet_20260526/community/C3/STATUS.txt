@@ -1,0 +1,9 @@
+phase: ② testnet C3 (moderation flow · Fly tt-api-staging)
+status: PASS
+last_run: 20260605T125712Z
+api_base: https://tt-api-staging.fly.dev
+moderation_it: moderation-it-20260605T125712Z.log
+staging_moderation_e2e: staging-moderation-e2e-20260605T125712Z.log
+log: run-20260605T125712Z.log
+report: docs/runbook/TT-PHASE2-C3-STAGING-EVIDENCE.md
+note: C3 slot PASS only — NOT community matrix GO · NOT Phase ② GO · NOT C4-C12 GO

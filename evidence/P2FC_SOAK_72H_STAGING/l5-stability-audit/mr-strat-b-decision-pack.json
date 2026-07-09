@@ -1,0 +1,116 @@
+{
+  "schema": "traveltrust.p2fc_mr_strat_b_decision_pack.v1",
+  "decision": {
+    "verdict": "KEEP_DEFAULT_ONE_SHOT_APPLY_MR12",
+    "summary": "MR-01+02 on existing 8-step one-shot beats STRAT-B extra cycle — do not replace watcher entrypoint",
+    "recommended_at_completed": "p2fc-post-soak-one-shot-execute.sh with MR patch scope (hotfix-first apply + defer itineraries wave1)",
+    "reject": "STRAT-B_WAVE0_FIRST full re-sequence",
+    "confidence": "high"
+  },
+  "gain_confirmation": {
+    "mr01_confirmed": true,
+    "mr02_confirmed": true,
+    "mr12_confirmed": true,
+    "strat_b_superior_to_mr12": false
+  },
+  "scenario_comparison": [
+    {
+      "id": "STRAT-A_DEFAULT",
+      "label": "默认 one-shot（当前 watcher）",
+      "mr_applied": [],
+      "wave1_g02_grad_p": 0.1613,
+      "success_score": 11.1,
+      "gain_vs_baseline_pp": 0.0,
+      "gain_wgg_vs_baseline_pp": 0.0,
+      "extra_deploy_cycles": 0,
+      "estimated_extra_min": 0
+    },
+    {
+      "id": "MR-01_ONLY",
+      "label": "仅 MR-01 meta hotfix 先行",
+      "mr_applied": [
+        "MR-01"
+      ],
+      "wave1_g02_grad_p": 0.2309,
+      "success_score": 17.1,
+      "gain_vs_baseline_pp": 6.0,
+      "gain_wgg_vs_baseline_pp": 7.0,
+      "phase_gains": {
+        "meta_availability": 0.25
+      },
+      "extra_deploy_cycles": 0,
+      "estimated_extra_min": 0,
+      "addresses_fc": [
+        "FC-01_TIMEOUT_MISMATCH"
+      ]
+    },
+    {
+      "id": "MR-02_ONLY",
+      "label": "仅 MR-02 defer itineraries",
+      "mr_applied": [
+        "MR-02"
+      ],
+      "wave1_g02_grad_p": 0.249,
+      "success_score": 17.2,
+      "gain_vs_baseline_pp": 6.1,
+      "gain_wgg_vs_baseline_pp": 8.8,
+      "phase_gains": {
+        "wave1_api_deploy": 0.27
+      },
+      "extra_deploy_cycles": 0,
+      "estimated_extra_min": 0,
+      "addresses_fc": [
+        "FC-02_ITINERARIES_HUB",
+        "FC-03_LARGE_DIFF_BLOB"
+      ]
+    },
+    {
+      "id": "STRAT-A_PLUS_MR12",
+      "label": "默认 one-shot + MR-01 + MR-02",
+      "mr_applied": [
+        "MR-01",
+        "MR-02"
+      ],
+      "wave1_g02_grad_p": 0.3563,
+      "success_score": 35.6,
+      "gain_vs_baseline_pp": 24.5,
+      "gain_wgg_vs_baseline_pp": 19.5,
+      "phase_gains": {
+        "wave1_api_deploy": 0.27,
+        "meta_availability": 0.25
+      },
+      "extra_deploy_cycles": 0,
+      "estimated_extra_min": 0,
+      "addresses_fc": [
+        "FC-01",
+        "FC-02",
+        "FC-03"
+      ]
+    },
+    {
+      "id": "STRAT-B_WAVE0_FIRST",
+      "label": "STRAT-B hotfix-first 额外 deploy 周期",
+      "mr_applied": [
+        "MR-01",
+        "MR-02",
+        "STRAT-B-sequencing"
+      ],
+      "wave1_g02_grad_p": 0.3479,
+      "success_score": 28.3,
+      "gain_vs_baseline_pp": 17.2,
+      "gain_wgg_vs_baseline_pp": 18.7,
+      "extra_deploy_cycles": 1,
+      "estimated_extra_min": 18,
+      "addresses_fc": [
+        "FC-01",
+        "FC-02",
+        "FC-03"
+      ]
+    }
+  ],
+  "recommended_core_mr": [
+    "MR-01",
+    "MR-02"
+  ],
+  "execution_lock": "FROZEN"
+}

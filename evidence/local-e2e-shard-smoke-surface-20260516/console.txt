@@ -1,0 +1,453 @@
+
+> traveltrust-frontend@0.1.0 e2e:chromium:smoke-surface
+> node ./scripts/run-e2e-default.mjs --project=chromium e2e/smoke.spec.ts e2e/smoke-governance.spec.ts e2e/smoke-community.spec.ts
+
+[e2e] INTERNAL_API_SECRET aligned from root .env (internal/*)
+[e2e] P3_CHAIN_OFF loaded from repo root .env
+[e2e] TRAVELTRUST_EMAIL_TRANSPORT=log (auth forgot/verify; resend incomplete or transport off)
+[e2e] TRAVELTRUST_AUTH_TOKEN_PEPPER set (Playwright dev default; set in root .env to override)
+[e2e] P3_CHAIN_OFF=1 (chromium mock-pay contract; root .env had "0"; use PLAYWRIGHT_PRESERVE_ROOT_P3_CHAIN_OFF=1 + run-e2e-sepolia for chain-on)
+sync-frontend-env: wrote D:\TravelTrust\frontend\.env.local (NEXT_PUBLIC aligned with root .env)
+[e2e] D:\TravelTrust\frontend\.env.local → NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8080 + NEXT_PUBLIC_SKIP_ME_FETCH=0
+[e2e] PLAYWRIGHT_REUSE_FE_SERVER=0 + reclaimed FE listen port (default for PLAYWRIGHT_FULL_STACK=1 so Next picks .env.local SKIP_ME; set PLAYWRIGHT_REUSE_FE_SERVER=1 to reuse)
+[e2e] NODE_OPTIONS += --max-old-space-size=16384 (full-stack local; long suite / Next dev OOM guard; PLAYWRIGHT_SKIP_E2E_NODE_HEAP=1 to opt out)
+[e2e] TRAVELTRUST_GATE_ENSURE_FRESH_API=1 — reclaim port / rebuild so API inherits current env
+[e2e] cargo build -p traveltrust-api (Playwright webServer runs target/debug binary)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.28s
+[1A[2K[WebServer]     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.28s
+
+[1A[2K[WebServer]      Running `target\debug\traveltrust-api.exe`
+
+[1A[2K[WebServer] [req] x-request-id=d4403685-1e15-4d0b-a557-6cd0d19f12da path=/health status=200
+[WebServer] [req] x-message-id=65fe2591-16be-403c-85be-6987ac1b97dd path=/health status=200
+
+[1A[2K[WebServer] [traveltrust] dev: Webpack on Windows (avoid Turbopack HMR manifest races). Use `npm run dev:turbopack` or TRAVELTRUST_DEV_TURBO=1 for Turbopack.
+
+
+Running 60 tests using 1 worker
+
+[1A[2K(node:20408) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:20408) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/60] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:27:7 › setup: GET /meta chain.contracts › API /meta satisfies chain guard
+[1A[2K[WebServer] [req] x-request-id=ee80c572-9bcf-4f05-bede-ee92f5df56f0 path=/meta status=200
+[WebServer] [req] x-message-id=463d430a-17fc-4814-911e-3fe8f60223f2
+
+[1A[2K[WebServer]  path=/meta status=200
+
+[1A[2K[2/60] [setup-meta-chain] › e2e\setup\meta-chain-contracts.spec.ts:39:7 › setup: GET /meta chain.contracts › Next rewrites /meta to API (full stack only)
+[1A[2K[WebServer] [req] x-request-id=4b157b34-6ef6-4058-9a70-a2fa2ef2a26b path=/meta status=200
+[WebServer] [req] x-message-id=9f44adff-6db3-4229-9c00-a5b4f57a0de6 path=/meta status=200
+
+[1A[2K(node:16168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:16168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[3/60] [chromium] › e2e\smoke-community.spec.ts:39:5 › 社区 Feed 可访问
+[1A[2K[WebServer] [req] x-request-id=0d0ba8f2-b438-418d-adb0-89e849b657d9 path=/health status=200
+[WebServer] [req] x-message-id=f7750eab-05bc-48ee-95d9-73a1dc24903c path=/health
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=6d081983-25e3-4d55-8975-b9d61579297c path=/meta status=200
+[WebServer] [req] x-message-id=4a7fd38f-2610-4893-af8c-8eeb3cf7ff36 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=2f905011-9a7a-462c-b136-a742b5fa2777 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=0a458786-4301-4501-9c4a-86789d7e5a18 path=/api/v1/community/feed status=200
+
+[1A[2K[4/60] [chromium] › e2e\smoke-community.spec.ts:49:5 › 社区发现页可访问
+[1A[2K[WebServer] [req] x-request-id=9be969b1-4a6e-4651-b7d8-4ef2f8d18fad path=/health status=200
+[WebServer] [req] x-message-id=a10ba429-db52-4b53-8548-0545c9846df6 path=
+
+[1A[2K[WebServer] /health status=200
+
+[1A[2K[WebServer] [req] x-request-id=827a55d2-7092-4817-b9d5-b97daf37ce82 path=/meta status=200
+[WebServer] [req] x-message-id=1d463686-6ad0-40f9-8c83-6f9c20984fb7 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=35c17ffc-0bf4-4c19-995f-677b98258bc3 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=642f185b-92aa-475c-b3d3-6e9e254991fd path=/api/v1/community/feed status=200
+
+[1A[2K[5/60] [chromium] › e2e\smoke-community.spec.ts:59:5 › 社区活动中心可访问
+[1A[2K[WebServer] [req] x-request-id=85868c08-48af-44d9-bc15-6d9d7403ba0d path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=cadf1ba5-d29d-4164-8f1c-2989247b06ab path=/health status=200
+
+[1A[2K[6/60] [chromium] › e2e\smoke-community.spec.ts:68:5 › TT 社区介绍页可访问
+[1A[2K[WebServer] [req] x-request-id=8374a027-0950-42f6-93a1-a14b1d56ec34 path=/health status=200
+[WebServer] [req] x-message-id=1a98f7cf-9ca9-44bd-b5b4-5a79e47438b5 path=/health status=200
+
+[1A[2K[7/60] [chromium] › e2e\smoke-community.spec.ts:76:5 › 社区话题聚合页可访问
+[1A[2K[WebServer] [req] x-request-id=12953c6d-b32d-4577-aedf-07ade70ad7b7 path=/health status=200
+[WebServer] [req] x-message-id=eefa3b1d-a8a2-444c-b954-4511551dcb26 path=/health status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[WebServer] [req] x-request-id=0e29e5ce-a9da-42b4-a6ee-87a169cebb2f path=/meta status=200
+[WebServer] [req] x-message-id=27c96ad1-0f6b-423c-974c-2006c857b40e path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=bfc4cb34-64b7-4691-8486-bd060e2b7926 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=084bfaa7-52c6-47c6-8380-f64c53f8edc9 path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=a98179a1-c626-454b-866b-b86f4917b07e path=/api/v1/community/stats/posts-by-tag status=200
+[WebServer] [req] x-message-id=d86ff4a7-8c05-4d29-aba0-65c3e5aac2bb path=/api/v1/community/stats/posts-by-tag status=200
+
+[1A[2K[8/60] [chromium] › e2e\smoke-community.spec.ts:86:5 › 社区好友页可访问
+[1A[2K[WebServer] [req] x-request-id=6d7643ce-7f33-4f02-9b89-0dfacdbdbf00 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=9c471967-444a-4284-a9b9-c179fd5877d6 path=/health status=200
+
+[1A[2K[9/60] [chromium] › e2e\smoke-community.spec.ts:94:5 › 社区消息页可访问
+[1A[2K[WebServer] [req] x-request-id=39e25507-544c-488f-bff2-9a0a0af22cc6 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=8f4afe0c-1750-4670-9d14-7b45f1a16982 path=/health status=200
+
+[1A[2K[10/60] [chromium] › e2e\smoke-community.spec.ts:103:5 › 社区消息页带 orderId 展示订单摘要区（53-S7）
+[1A[2K[WebServer] [req] x-request-id=9188f3a3-92b2-4e1f-bc63-75c90a0ce59c path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=e1657ad2-d156-445a-80f9-973dbb1cdc64 path=/health status=200
+
+[1A[2K[11/60] [chromium] › e2e\smoke-community.spec.ts:119:5 › 社区反馈页可访问
+[1A[2K[WebServer] [req] x-request-id=1179bfca-e7d8-4ee5-b260-e66739b15dcc path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=e6c9fa04-be24-474e-80a7-f5ea4d6e27f8 path=/health status=200
+
+[1A[2K[12/60] [chromium] › e2e\smoke-community.spec.ts:127:5 › 社区我的页可访问
+[1A[2K[WebServer] [req] x-request-id=387fb67b-6778-4e52-9829-9956789e1ab2 path=/health status=200
+[WebServer] [req] x-message-id=7534677b-e0cd-49f5-a5b1-19adfc57c46e path=/health status=200
+
+[1A[2K[13/60] [chromium] › e2e\smoke-community.spec.ts:134:5 › 社区我的收藏页可访问
+[1A[2K[WebServer] [req] x-request-id=49d281ac-139d-430d-bed1-639f043d1e27 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=2242e559-9c0d-40d1-9638-75b24d26bd56 path=/health status=200
+
+[1A[2K[14/60] [chromium] › e2e\smoke-community.spec.ts:140:5 › 社区我的帖子页可访问
+[1A[2K[WebServer] [req] x-request-id=64cb98fb-7930-4194-886a-68259756c427 path=/health status=200
+[WebServer] [req] x-message-id=df71ceb2-df11-42b4-acfa-91f6aaa361fd path=
+
+[1A[2K[WebServer] /health status=200
+
+[1A[2K[15/60] [chromium] › e2e\smoke-community.spec.ts:146:5 › 社区我的举报列表页可访问
+[1A[2K[WebServer] [req] x-request-id=5c1efaa5-f711-47ed-bdba-a34811230df0 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=747b0db0-d8da-4b0e-9da6-ea50a68e4466 path=/health status=200
+
+[1A[2K[16/60] [chromium] › e2e\smoke-community.spec.ts:152:5 › 社区 Feed 带 post 查询可访问
+[1A[2K[WebServer] [req] x-request-id=b5c7e112-c668-46eb-9c23-c064c17ab28f path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=2e232801-b555-4c7f-a341-0f8fa77bcd18 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=54149516-ee5c-49bd-8004-a573fc855257 path=/meta status=200
+[WebServer] [req] x-message-id=26083ab5-716a-4ab8-8a35-0056fd1e4792 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=ed09415b-732d-4be3-be16-de1dcbd7b03d path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=f25ad2c6-a983-4c9c-a8c4-71f3dceafd52 path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=dd3bbefa-c82d-4c80-826b-2b208346af84 path=/api/v1/community/posts/00000000-0000-4000-8000-000000000001 status=200
+[WebServer] [req] x-message-id=bf2b3f1f-2eb7-425e-af07-365fecfd4136 path=/api/v1/community/posts/00000000-0000-4000-8000-000000000001 status=200
+
+[1A[2K[WebServer] [req] x-request-id=63ba534f-5732-48c1-8dc1-6e88e6450dc3 path=/api/v1/community/posts/00000000-0000-4000-8000-000000000001 status=200
+[WebServer] [req] x-message-id=3a2199fa-7084-4e63-8841-5b88ec034a0b path=/api/v1/community/posts/00000000-0000-4000-8000-000000000001 status=200
+
+[1A[2K[WebServer] [req] x-request-id=86de3c06-2155-45c2-a73e-4aa6f3e96276 path=/api/v1/community/posts/00000000-0000-4000-8000-000000000001 status=200
+[WebServer] [req] x-message-id=34af2a1a-b17d-4618-9298-c423e2be7041 path=/api/v1/community/posts/00000000-0000-4000-8000-000000000001 status=200
+
+[1A[2K[17/60] [chromium] › e2e\smoke-community.spec.ts:163:5 › 社区分享路径 /community/post/[id] 可访问（B-055 redirect）
+[1A[2K[WebServer] [req] x-request-id=e9286efa-331a-4a6a-a2fe-a3b25fc4861d path=/health status=
+
+[1A[2K[WebServer] 200
+[WebServer] [req] x-message-id=dc553959-9619-46f9-af2c-b2dc96c11a7e path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=84ce5f0c-8907-4639-baac-1d0942565ce7 path=/meta status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] d0c024e5-35f3-4ab2-9177-61dcf3183049 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=2c021ffc-d507-4455-a286-8b3317da32e9 path=/meta status=200
+[WebServer] [req] x-message-id=c1468b02-6a6c-4129-890b-ec89c0c1caba path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=dd097842-0ad0-4172-860f-4fe936dd4504 path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=ae0b9492-a56f-4191-8d28-14632001f3cc path=/api/v1/community/feed status=200
+
+[1A[2K[WebServer] [req] x-request-id=6d31d1ef-660b-4f58-9409-e0f915d29718 path=/api/v1/community/posts/00000000-0000-4000-8000-000000000001 status=200
+[WebServer] [req] x-message-id=c18327b5-bd00-4d91-a549-bcd20b23dee9 path=/api/v1/community/posts/00000000-0000-4000-8000-000000000001 status=200
+
+[1A[2K[WebServer] [req] x-request-id=ae64b750-7bb5-4cb9-8424-d2b2057ea192 path=/api/v1/community/posts/00000000-0000-4000-8000-000000000001 status=200
+[WebServer] [req] x-message-id=203194d0-fdbc-421c-9aba-68bec652db72 path=/api/v1/community/posts/00000000-0000-4000-8000-000000000001 status=200
+
+[1A[2K[WebServer] [req] x-request-id=d8184784-6a11-4c08-b0dc-47bfd8398d69 path=/api/v1/community/posts/00000000-0000-4000-8000-000000000001 status=200
+[WebServer] [req] x-message-id=03455445-8923-4849-9e97-0b6a8781b423 path=/api/v1/community/posts/00000000-0000-4000-8000-000000000001 status=200
+
+[1A[2K[18/60] [chromium] › e2e\smoke-community.spec.ts:176:5 › 社区用户主页可访问（占位 UUID）
+[1A[2K[WebServer] [req] x-request-id=d68e1ca6-c032-4188-980a-bc3bcd8b94da path=/health status=200
+[WebServer] [req] x-message-id=
+
+[1A[2K[WebServer] f48bf84b-abcd-4d89-96a6-91d0bd2f5c6d path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=2f4cbcfd-d35e-4bc2-b469-bf89277cb0d2 path=/meta status=200
+[WebServer] [req] x-message-id=a070a384-71d6-4e45-9689-ab9ce49a5e96 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=2e6f1eb7-07c6-4633-892f-1fc037ce54d6 path=/api/v1/community/users/00000000-0000-4000-8000-000000000001/posts status=200
+
+[1A[2K[WebServer] [req] x-message-id=7e77b492-ab62-4e2f-9a9b-4b889d304251 path=/api/v1/community/users/00000000-0000-4000-8000-000000000001/posts status=200
+
+[1A[2K[19/60] [chromium] › e2e\smoke-community.spec.ts:189:5 › 社区用户主页非法 id 可访问
+[1A[2K[WebServer] [req] x-request-id=aaae2485-a4ff-4bb9-9a47-af6d96970435 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=55e58903-9943-4976-a1d1-3273b6fc3c6a path=/health status=200
+
+[1A[2K[20/60] [chromium] › e2e\smoke-community.spec.ts:197:5 › 社区私信会话页可访问（占位会话 id）
+[1A[2K[WebServer] [req] x-request-id=b271a316-28e2-42fa-acf3-15baf242b0a5 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=f7805e7c-d988-46aa-91e3-b6d8b39b2efc path=/health status=200
+
+[1A[2K[21/60] [chromium] › e2e\smoke-community.spec.ts:208:5 › 社区私信会话页带 orderId 展示订单摘要区（53-S7）
+[1A[2K[WebServer] [req] x-request-id=7fb96a50-5938-42f8-b296-72743b16d450 path=/health status=200
+[WebServer] [req] x-message-id=80735198-c7dc-44ea-ac9b-5f11d265a4ce path=/health status=200
+
+[1A[2K[22/60] [chromium] › e2e\smoke-community.spec.ts:220:5 › 社区举报工单详情可访问（未登录提示）
+[1A[2K[WebServer] [req] x-request-id=5c836418-8539-4c37-9233-e3526b0b7c06 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=99e1092e-09be-4b75-aaf4-168258ecc8c6 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=7d7a4725-2799-4da1-91ef-cd7d6a03c10b path=/meta status=200
+[WebServer] [req] x-message-id=be4b8eec-2321-4afa-b2dd-65025c588088 path=/meta status=200
+
+[1A[2K[23/60] [chromium] › e2e\smoke-community.spec.ts:232:5 › 社区 Feed ?publish=1 未登录展示发帖登录引导
+[1A[2K[WebServer] [req] x-request-id=0d193469-6ddc-4fb2-8438-5f48a0f03922 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=8b87759c-053e-4dbb-bf56-b538a2c5345a path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=a5c36d0a-0ede-4de7-85f0-e8ef181cd0ae path=/meta status=200
+[WebServer] [req] x-message-id=25f7f20e-ca1e-4b84-ab39-8bea4ecde4e4 path=
+
+[1A[2K[WebServer] /meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=e7653bfc-8048-4e2c-8dba-d6596b219d3b path=/api/v1/community/feed status=200
+[WebServer] [req] x-message-id=9ac050dc-8791-4b16-a580-0803d0509274 path=/api/v1/community/feed status=200
+
+[1A[2K[24/60] [chromium] › e2e\smoke-governance.spec.ts:10:5 › 治理页可访问
+[1A[2K[25/60] [chromium] › e2e\smoke-governance.spec.ts:20:5 › 向导质押页可访问
+[1A[2K[26/60] [chromium] › e2e\smoke-governance.spec.ts:29:5 › 治理提案页可访问
+[1A[2K[27/60] [chromium] › e2e\smoke-governance.spec.ts:39:5 › 治理提案详情页可访问（B-072 种子 id）
+[1A[2K[28/60] [chromium] › e2e\smoke-governance.spec.ts:50:5 › 治理投票委托页可访问（B-073）
+[1A[2K[29/60] [chromium] › e2e\smoke-governance.spec.ts:61:5 › 治理参数页可访问
+[1A[2K[30/60] [chromium] › e2e\smoke-governance.spec.ts:74:5 › 治理费用路由页可访问
+[1A[2K[31/60] [chromium] › e2e\smoke-governance.spec.ts:86:5 › 治理国家桶转出页可访问（vault-forwards）
+[1A[2K[32/60] [chromium] › e2e\smoke.spec.ts:46:5 › 首页可访问
+[1A[2K[33/60] [chromium] › e2e\smoke.spec.ts:54:5 › DID 排行榜可访问
+[1A[2K[34/60] [chromium] › e2e\smoke.spec.ts:62:5 › 社区规范页可访问
+[1A[2K[35/60] [chromium] › e2e\smoke.spec.ts:72:5 › 服务条款页可访问
+[1A[2K[36/60] [chromium] › e2e\smoke.spec.ts:80:5 › 隐私政策页可访问
+[1A[2K[37/60] [chromium] › e2e\smoke.spec.ts:88:5 › 帮助中心可访问
+[1A[2K[38/60] [chromium] › e2e\smoke.spec.ts:96:5 › 登录页可访问
+[1A[2K[WebServer] [req] x-request-id=96f50305-0cf4-458a-976f-b80e92e2a248 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=eb160107-607f-4d13-bc06-8011f2df96c5 path=/health status=200
+
+[1A[2K[39/60] [chromium] › e2e\smoke.spec.ts:105:5 › 注册入口页可访问
+[1A[2K[WebServer] [req] x-request-id=c641616b-dafc-4330-a483-12753c1686be path=/health status=200
+[WebServer] [req] x-message-id=85fcfc70-19bf-442f-81f7-88b4b0519d41 path=/health
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[40/60] [chromium] › e2e\smoke.spec.ts:114:5 › 自由市场页可访问
+[1A[2K[WebServer] [req] x-request-id=3e7ede8d-1190-44f6-934c-9cf76dbe88d6 path=/health status=200
+[WebServer] [req] x-message-id=25fe03a8-afe3-40ab-8a11-8b11453f38c1
+
+[1A[2K[WebServer]  path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=5fb7f4e2-cee0-4ce1-84c3-68ab942b2672 path=/meta status=200
+[WebServer] [req] x-message-id=49106355-5533-4433-9168-db8e50102f99 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=69d1121a-6810-4320-a227-7b7bdf4dcc9d path=/api/v1/discover/orders status=200
+[WebServer] [req] x-message-id=3bcd9bbf-8968-4cd8-a7a8-abcb1bb84b9b path=/api/v1/discover/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=8ed30784-fa17-42f4-b616-43710ad4a686 path=/api/v1/guides status=200
+
+[1A[2K[WebServer] [req] x-message-id=ef826e59-6dcf-4334-b8bb-bc9faf4aca05 path=/api/v1/guides status=200
+
+[1A[2K[41/60] [chromium] › e2e\smoke.spec.ts:126:5 › 发现页重定向至自由市场
+[1A[2K[WebServer] [req] x-request-id=5f66e748-6637-4b5e-9a0d-a07ae3815a2d path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=3adb8030-fef1-4a09-967c-67b2e6eeda21 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=52f15431-0115-4d33-9360-c3390d1ff824 path=/meta status=200
+[WebServer] [req] x-message-id=1e89816a-a03d-48cf-bfa2-298dd2bbe709 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=b765e846-a619-41e3-96eb-c15487908aa3 path=/api/v1/discover/orders status=200
+[WebServer] [req] x-message-id=fddabe27-8b4e-4b02-8951-3b5e7fdfa51a path=
+
+[1A[2K[WebServer] /api/v1/discover/orders status=200
+
+[1A[2K[WebServer] [req] x-request-id=89ff0d00-2d9b-4783-851f-d3860e6e3b71 path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=e2477c2a-1f25-415a-843c-573d343f1150 path=/api/v1/guides status=200
+
+[1A[2K[42/60] [chromium] › e2e\smoke.spec.ts:138:5 › 向导列表页可访问
+[1A[2K[WebServer] [req] x-request-id=0d69b429-c963-4593-abbc-51a61d2e58a1 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=530f07e6-86d3-4144-9d12-7f0e7c84ab61 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=a423849e-9b0e-4f6b-9c79-f1693862b48d path=/meta status=200
+[WebServer] [req] x-message-id=2215efa1-00c5-422e-9275-b199d9526470 path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=8e9dd1d8-8d3d-467e-94ea-50fdae04faa5 path=/meta status=200
+[WebServer] [req] x-message-id=dd8029ac-1bdb-4601-a143-50d795dcec9a path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=2df352b8-3364-423a-9808-4cc0b677d3bd path=/api/v1/guides status=200
+[WebServer] [req] x-message-id=f87f9f5e-ac46-43d1-a9af-a48d1af2dd06 path=/api/v1/guides status=
+
+[1A[2K[WebServer] 200
+
+[1A[2K[43/60] [chromium] › e2e\smoke.spec.ts:148:5 › 我的页可访问（未登录回登录或已登录留个人中心）
+[1A[2K[WebServer] [req] x-request-id=144c3ad5-a977-4523-843d-2170f8e84199 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=78d2e3d7-97f9-42e7-bb55-07b544d30e50 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=06e44a3f-f3c8-42b7-bdf2-79ffcc3d3036 path=/meta status=200
+[WebServer] [req] x-message-id=25a1e8d8-97ef-4053-8994-253b387d7c59 path=/meta status=200
+
+[1A[2K[44/60] [chromium] › e2e\smoke.spec.ts:168:5 › 我的订单页可访问（未登录回登录或已登录留订单列表）
+[1A[2K[WebServer] [req] x-request-id=bb37ad9f-d2c8-40ac-a2b6-3a90d9b1ddff path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=912464cf-0bb9-4b36-a877-d2562747b260 path=/health status=200
+
+[1A[2K[45/60] [chromium] › e2e\smoke.spec.ts:188:5 › 支付与托管页可访问
+[1A[2K[46/60] [chromium] › e2e\smoke.spec.ts:196:5 › 新建行程页可访问
+[1A[2K[47/60] [chromium] › e2e\smoke.spec.ts:204:5 › 创建订单页可访问
+[1A[2K[WebServer] [req] x-request-id=695f9641-48ea-4827-b0df-2a32410a6456 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=5b04f0d8-50c1-4b0f-9f97-19a79631498c path=/health status=200
+
+[1A[2K[48/60] [chromium] › e2e\smoke.spec.ts:214:5 › 争议列表页可访问
+[1A[2K[WebServer] [req] x-request-id=495db490-478f-45ba-a335-d26d21830d87 path=/meta status=200
+[WebServer] [req] x-message-id=131ec0e4-cf5d-482e-9be4-1906d81f8a45 path=/meta status=200
+
+[1A[2K[49/60] [chromium] › e2e\smoke.spec.ts:223:5 › TravelTrust 网络落地页可访问
+[1A[2K[WebServer] [req] x-request-id=0a295292-4cd5-436a-a0f2-a2c9fd9a5df1 path=/meta status=200
+[WebServer] [req] x-message-id=61bd3250-dda7-4603-80d4-30eeed4f0484 path=/meta status=200
+
+[1A[2K[50/60] [chromium] › e2e\smoke.spec.ts:251:5 › /network 别名重定向至 TravelTrust 落地页（85 / 04 §3.4）
+[1A[2K[WebServer] [req] x-request-id=4ae1cd48-2ca9-416e-8c55-f89c22d6a600 path=/meta status=200
+[WebServer] [req] x-message-id=9fbc2ad0-e7e1-4e96-a11d-d93c33932f88 path=/meta
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[51/60] [chromium] › e2e\smoke.spec.ts:261:5 › 托管详情页可访问（占位订单 UUID）
+[1A[2K[WebServer] [req] x-request-id=e2d44fcd-1e1b-494d-857e-eb4dfc79159d path=/meta status=200
+[WebServer] [req] x-message-id=23c430e3-d2c0-4da4-8cb7-508b830f5085 path=/meta status=200
+
+[1A[2K[52/60] [chromium] › e2e\smoke.spec.ts:268:5 › 行程评分页可访问（占位订单 UUID）
+[1A[2K[53/60] [chromium] › e2e\smoke.spec.ts:280:5 › 向导注册页可访问
+[1A[2K[54/60] [chromium] › e2e\smoke.spec.ts:290:5 › 向导工作台页可访问（07 §5.0）
+[1A[2K[WebServer] [req] x-request-id=14b368ed-18d1-4200-879f-7375b023d162 path=/health status=200
+
+[1A[2K[WebServer] [req] x-message-id=9c6b5af1-bc26-469c-b2c8-44385f68ef49 path=/health status=200
+
+[1A[2K[WebServer] [req] x-request-id=cf3aa0f1-29b5-46bc-aec3-c2ad94944deb path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=553f95f5-9e4e-4ce5-8f12-d54774231f0a path=
+
+[1A[2K[WebServer] /auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=7c10bd19-d673-42e9-99d9-def10af0ebe3 path=/auth/login status=200
+[WebServer] [req] x-message-id=16d1ea88-021a-49be-8354-4ae64a40a2dc path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=de42ede9-4ba1-4109-9b58-fe31f64115f1 path=/auth/login status=200
+[WebServer] [req] x-message-id=3e37f521-e7e2-4b54-b387-f929b427bb0f path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=7c234b88-ec5a-45e7-9883-083d1f35d42b path=/api/v1/orders status=200
+[WebServer] [req] x-message-id=7b4353ca-09fc-43c0-8bf8-2059ce36b69f path=/api/v1/orders status=200
+
+[1A[2K[WebServer] 
+
+[1A[2K[WebServer] [req] x-request-id=73d0fa4d-32da-4d71-81f4-585fe029791d path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+[WebServer] [req] x-message-id=d3be6a4f-467c-4a79-aab7-74fbb2597034 path=/api/v1/orders/11934d8a-38d5-4806-8948-09dc06da342b/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=dd773533-847c-42b0-9eb3-760d2d860b6a path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=dab7af2f-40d8-4a2b-a67b-571e3ea6f768 path=/api/v1/orders/5ff54f48-3ec6-4b31-ac05-0e3ac9d4c16a/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=c5abc36d-b89e-4a6a-b291-077e40bb10ff path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=
+
+[1A[2K[WebServer] 403
+[WebServer] [req] x-message-id=d9ca5644-07e3-4862-bc4c-8e1c5da9f4f1 path=/api/v1/orders/48f1aa03-06eb-40e8-8d0e-1c2e7c0f581c/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=b93b429b-692b-438c-884d-5f4ee895b3aa path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+[WebServer] [req] x-message-id=e9455235-7de1-40f2-90e1-240cc417b639 path=/api/v1/orders/caef06a5-d526-489d-9e53-bc250103b6d2/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=0be89719-7a40-4fc3-ae69-a0b8c7b82649 path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=e25f3db8-fc08-4fef-920e-404fdc324f98 path=/api/v1/orders/1a4e2979-ac79-4e36-bb92-fa2e497992f6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=2f0556a6-ef35-4691-b67d-3910f4d63b5a path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=7904e6e1-6424-4eda-8b14-55863a64cc83 path=/api/v1/orders/18bdab29-5599-4ca1-8e3a-bf81c0c8bd4f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=71cb9549-aa8d-469e-a945-0981d7f7c689 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+[WebServer] [req] x-message-id=73f5ded5-3ca4-476d-bb39-a5eed6a7c7f7 path=/api/v1/orders/19960397-ea9e-4a79-86de-93d55417d864/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=c85ea3f1-5dbe-40ba-bffb-c12612d8c35e path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+[WebServer] [req] x-message-id=1127b48f-f911-4d4c-9da6-04a9ef24fa02 path=/api/v1/orders/2783b8c6-f68b-4288-b748-62a1d0bb0c2d/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=a27aa963-2174-4581-9e1f-22996cdaa5b8 path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+[WebServer] [req] x-message-id=6377c2ad-0c48-40a1-85b6-b521cb709102 path=/api/v1/orders/283259b9-5f5a-4a45-b0c1-9400e82a2c7f/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=866868ed-c3b7-4d69-9c1b-df1b3f542401 path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+[WebServer] [req] x-message-id=5d331203-76dc-4b5f-88f1-b570faa4f19b path=/api/v1/orders/71132dd8-ac54-481f-b54a-6c564897d163/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=7fd0d351-bc05-49ec-b395-597ba50a2386 path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=403
+[WebServer] [req] x-message-id=523f0ed4-0743-4c99-827e-0455495cf1a3 path=/api/v1/orders/1de7ec5a-3b35-4162-9c31-0ede2e57bf95/cancel status=
+
+[1A[2K[WebServer] 403
+
+[1A[2K[WebServer] [req] x-request-id=05eed935-46e2-4fdf-9550-b26e15083fc6 path=/api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+[WebServer] [req] x-message-id=e7437be1-7fa5-4832-a02a-cc0d845c3348 path=
+
+[1A[2K[WebServer] /api/v1/orders/c5e3db7f-cce5-4dd2-9ed0-619bae526ac6/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=5a107955-b2f6-4fc3-bc48-846ccb423401 path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-message-id=fda21f80-6d9c-4bd7-bf34-7b82298783b4 path=/api/v1/orders/4311a6e2-0b94-42ff-9169-4c3604ed0926/cancel status=403
+
+[1A[2K[WebServer] [req] x-request-id=e78aa133-5682-49de-91fb-b45cee0a9b3a path=/auth/seed-test-accounts status=200
+[WebServer] [req] x-message-id=29d97d9c-1169-4604-ba3e-2f5a575cd383 path=/auth/seed-test-accounts status=200
+
+[1A[2K[WebServer] [req] x-request-id=cb56afe3-eb62-4b9f-8945-8f312999793d path=/auth/login status=200
+[WebServer] [req] x-message-id=21779d4a-3b04-4c0f-bda5-67fe2e794328 path=/auth/login status=200
+
+[1A[2K[WebServer] [req] x-request-id=4f2dcbb4-7d89-4ee2-8635-1ce4afa1bd33 path=/meta status=200
+[WebServer] [req] x-message-id=8adca97c-931c-4048-9ff3-d7421524d4ef path=/meta status=200
+
+[1A[2K[WebServer] [req] x-request-id=644f3872-f2fd-4115-831f-6605ced20448 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=e353aa2f-9b5a-4721-907d-29f4b8c07e79 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=1f680046-bf00-42cc-a2dd-d98d78a67784 path=/api/v1/me status=200
+[WebServer] [req] x-message-id=4baa397e-3339-4329-888a-970905eee8ae path=/api/v1/me
+
+[1A[2K[WebServer]  status=200
+
+[1A[2K[WebServer] [req] x-request-id=6277766e-c033-4eaa-9054-a9459c1c8fc1 path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-message-id=5d3837ef-6168-4236-88cb-3e3fe3dcf6cb path=/api/v1/me status=200
+
+[1A[2K[WebServer] [req] x-request-id=c51955cb-eb88-46df-b1ce-9db2e0fc72db path=/api/v1/me status=200
+[WebServer] [req] x-message-id=d1151993-7e4a-4410-a13e-a6408bd0a5eb path=/api/v1/me status=200
+
+[1A[2K[55/60] [chromium] › e2e\smoke.spec.ts:310:5 › 修改密码页可访问
+[1A[2K[56/60] [chromium] › e2e\smoke.spec.ts:318:5 › 忘记密码页可访问
+[1A[2K[57/60] [chromium] › e2e\smoke.spec.ts:326:5 › 重置密码页可访问
+[1A[2K[58/60] [chromium] › e2e\smoke.spec.ts:334:5 › 邮箱验证页可访问
+[1A[2K[59/60] [chromium] › e2e\smoke.spec.ts:342:5 › 争议详情页可访问（占位 UUID）
+[1A[2K[WebServer] [req] x-request-id=08fb7318-b2fb-4c60-8cc1-c5e38794937b path=/meta status=200
+[WebServer] [req] x-message-id=4bb395d3-1966-4db8-995d-59b9aee82060 path=/meta status=200
+
+[1A[2K[60/60] [chromium] › e2e\smoke.spec.ts:360:5 › 向导详情页可访问（占位 UUID）
+[1A[2K  60 passed (5.8m)

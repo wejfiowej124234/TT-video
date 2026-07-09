@@ -1,0 +1,1315 @@
+{
+  "ui_matrix": [
+    {
+      "route": "/admin",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/inbox",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/inbox",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/operator-guide",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/operator-guide",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/provider-applications",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/provider-applications",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/steward-applications",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/steward-applications",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/approvals",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/approvals",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/onboarding",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/onboarding",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/onboarding/entitlements",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/onboarding/payment-events",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/onboarding/webhook-jobs",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/onboarding/compliance-audit",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/permissions",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/permissions",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/users",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/users",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/guides",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/guides",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/orders",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/orders",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/disputes",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/disputes",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/reviews",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/trust-growth",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/trust-growth",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/cross-check",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/cross-check",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/drift-summary",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/drift-summary",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/finance-reconciliation",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/finance-reconciliation",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/finance-suite",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/finance-suite",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/region-vault",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/region-vault",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/fee-router",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/fee-router",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/finance",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-tt-admin-capability-strip=\"1\"][data-tt-admin-capabilities-loaded=\"1\"]')\nE"
+    },
+    {
+      "route": "/admin/indexer",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/indexer",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/indexer/reconcile-reports",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/indexer/reconcile-reports",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/observability",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/observability",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/audit",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/audit",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/audit/operations",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/audit/operations",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/auth-audit-events",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/alerts/incidents",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/alerts/incidents",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/schema",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/schema",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/api-versions",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/jobs",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/jobs",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/scheduler/jobs",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/scheduler/jobs",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/lifecycle",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/policies",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/policies",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/internal-tools/audits",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/config",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/config",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/config/releases",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/flags",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/flags",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/secrets/metadata",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/tenants/scopes",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/tenants/scopes",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/compliance",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/compliance",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/compliance/requests",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/reports",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/reports",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/community/appeals",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/appeals",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/community/appeals/review",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/appeals/review",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/community/moderation/cases",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/moderation/cases",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/community/risk-signals",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/policy-change-logs",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/ranking/snapshots",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/ranking/snapshots",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/community/penalties",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/penalties",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/community/comments/visibility",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/community/comments/visibility",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/community/abuse-policy",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/media/access-logs",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/media/signed-url-tokens",
+      "ui_reach": "PARTIAL",
+      "shell": "h1_only",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/orders/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/orders/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/disputes/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/disputes/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/users/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/users/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/guides/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/guides/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/reviews/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/reviews/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/approvals/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/approvals/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/audit/logs/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/audit/logs/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/indexer/reconcile/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/indexer/reconcile/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/config/releases/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/config/releases/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/alerts/incidents/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/alerts/incidents/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    },
+    {
+      "route": "/admin/onboarding/entitlements/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "PASS",
+      "shell": "admin_app_page",
+      "error_surface": "alert",
+      "note": "capabilities_ok"
+    },
+    {
+      "route": "/admin/onboarding/entitlements/00000000-0000-4000-8000-0000000000ad",
+      "ui_reach": "FAIL",
+      "shell": "error",
+      "error_surface": "throw",
+      "note": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode viol"
+    }
+  ],
+  "gaps": [
+    {
+      "id": "AFDA-UI--admin",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-inbox",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/inbox",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-operator-guide",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/operator-guide",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-provider-applications",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/provider-applications",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-steward-applications",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/steward-applications",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-approvals",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/approvals",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-onboarding",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/onboarding",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-permissions",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/permissions",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-users",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/users",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-guides",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/guides",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-orders",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/orders",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-disputes",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/disputes",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-trust-growth",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/trust-growth",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-cross-check",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/cross-check",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-drift-summary",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/drift-summary",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-finance-reconciliation",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/finance-reconciliation",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-finance-suite",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/finance-suite",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-region-vault",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/region-vault",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-fee-router",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/fee-router",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-finance",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/finance",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-tt-admin-capability-strip=\"1\"][data-tt-admin-capabilities-loaded=\"1\"]')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[3",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-indexer",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/indexer",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-indexer-reconcile-reports",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/indexer/reconcile-reports",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-observability",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/observability",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-audit",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/audit",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-audit-operations",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/audit/operations",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-alerts-incidents",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/alerts/incidents",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-schema",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/schema",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-jobs",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/jobs",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-scheduler-jobs",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/scheduler/jobs",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-policies",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/policies",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-config",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/config",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-flags",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/flags",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-tenants-scopes",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/tenants/scopes",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-compliance",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/compliance",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-community-reports",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/community/reports",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-community-appeals",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/community/appeals",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-community-appeals-review",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/community/appeals/review",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-community-moderation-cases",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/community/moderation/cases",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-community-ranking-snapshots",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/community/ranking/snapshots",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-community-penalties",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/community/penalties",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-community-comments-visibility",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/community/comments/visibility",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-orders-00000000-0000-4000-8000-0000000000ad",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/orders/00000000-0000-4000-8000-0000000000ad",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-disputes-00000000-0000-4000-8000-0000000000ad",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/disputes/00000000-0000-4000-8000-0000000000ad",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-users-00000000-0000-4000-8000-0000000000ad",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/users/00000000-0000-4000-8000-0000000000ad",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-guides-00000000-0000-4000-8000-0000000000ad",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/guides/00000000-0000-4000-8000-0000000000ad",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-reviews-00000000-0000-4000-8000-0000000000ad",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/reviews/00000000-0000-4000-8000-0000000000ad",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-approvals-00000000-0000-4000-8000-0000000000ad",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/approvals/00000000-0000-4000-8000-0000000000ad",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-audit-logs-00000000-0000-4000-8000-0000000000ad",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/audit/logs/00000000-0000-4000-8000-0000000000ad",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-indexer-reconcile-00000000-0000-4000-8000-0000000000ad",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/indexer/reconcile/00000000-0000-4000-8000-0000000000ad",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-config-releases-00000000-0000-4000-8000-0000000000ad",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/config/releases/00000000-0000-4000-8000-0000000000ad",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-alerts-incidents-00000000-0000-4000-8000-0000000000ad",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/alerts/incidents/00000000-0000-4000-8000-0000000000ad",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    },
+    {
+      "id": "AFDA-UI--admin-onboarding-entitlements-00000000-0000-4000-8000-0000000000ad",
+      "category": "UI可达性",
+      "priority": "P1",
+      "route": "/admin/onboarding/entitlements/00000000-0000-4000-8000-0000000000ad",
+      "title": "页面探针异常",
+      "observation": "\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-tt-admin-app-page=\"1\"]').or(locator('h1').first())\nExpected: visible\nError: strict mode violation: locator('[data-tt-admin-app-page=",
+      "human_impact": "真人访问可能白屏或超时"
+    }
+  ],
+  "recorded_at": "2026-06-07T04:35:21.472Z"
+}

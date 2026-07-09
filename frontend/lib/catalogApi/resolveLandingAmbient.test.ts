@@ -25,6 +25,13 @@ describe("resolveLandingAmbientUrl", () => {
     expect(fetchMedia).not.toHaveBeenCalled();
   });
 
+  it("flag=1 empty country skips catalog fetch (no unfiltered list)", async () => {
+    const fetchMedia = vi.fn();
+    const r = await resolveLandingAmbientUrl("", deps(true, fetchMedia));
+    expect(r.source).toBe("ts");
+    expect(fetchMedia).not.toHaveBeenCalled();
+  });
+
   it("flag=1 API success returns catalog-api url", async () => {
     const fetchMedia = vi.fn().mockResolvedValue({
       status: "ok",

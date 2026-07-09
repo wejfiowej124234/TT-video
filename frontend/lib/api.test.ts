@@ -70,6 +70,8 @@ describe("lib/api", () => {
     expect(routes.governanceRewards).toBe("/api/v1/governance/rewards");
     expect(routes.governanceFeeRoutes).toBe("/api/v1/governance/fee-routes");
     expect(routes.governanceVaultForwards).toBe("/api/v1/governance/vault-forwards");
+    expect(routes.governanceVacancyLedger).toBe("/api/v1/governance/vacancy-ledger");
+    expect(routes.adminVacancyLedgerOps).toBe("/api/v1/admin/vacancy-ledger");
     expect(routes.governanceProtocolReference).toBe("/api/v1/governance/protocol-reference");
     expect(routes.governanceProtocolReferencePending).toBe(
       "/api/v1/governance/protocol-reference/pending",

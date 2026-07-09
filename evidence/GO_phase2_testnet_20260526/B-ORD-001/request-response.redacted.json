@@ -1,0 +1,16 @@
+{
+  "http_status": 200,
+  "body": {
+    "status": "ok",
+    "order": {
+      "id": "4c11dde1-3e95-4f72-9ceb-04b985ec6147",
+      "tourist_id": "fc4dcc7c-8fd3-43d4-bed2-9e90eedfd1f2",
+      "traveler_id": "fc4dcc7c-8fd3-43d4-bed2-9e90eedfd1f2",
+      "guide_id": "7e7ebbd3-01fa-404c-8921-c23cf1cff125",
+      "amount": "100",
+      "currency": "USD",
+      "status": "created",
+      "created_at": "2026-06-30T05:03:12.663382086+00:00"
+    }
+  }
+}

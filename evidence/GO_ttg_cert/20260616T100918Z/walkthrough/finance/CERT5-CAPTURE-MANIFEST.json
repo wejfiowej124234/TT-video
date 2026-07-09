@@ -1,0 +1,17 @@
+{
+  "captured_at_utc": "2026-06-16T15:05:13Z",
+  "recordings": [
+    "C-FIN-01-finance-operator-four-ledger.mp4",
+    "C-FIN-02-treasury-split-treasury-accounting.mp4",
+    "C-FIN-03-auditor-traceability-recovery.mp4"
+  ],
+  "screenshots": [
+    "role-finance-four-ledger.png",
+    "role-fee-router-4555.png",
+    "role-treasury-split-accounting.png",
+    "role-distribution-ledger.png",
+    "role-auditor-traceability.png",
+    "role-recovery-paths.png"
+  ],
+  "honest_boundary": "Slide-based ffmpeg walkthrough; not live ERP/chain UI screen capture"
+}

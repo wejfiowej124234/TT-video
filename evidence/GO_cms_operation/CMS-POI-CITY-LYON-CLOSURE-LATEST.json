@@ -1,0 +1,130 @@
+{
+  "schema": "traveltrust.cms_poi_city_closure.v1",
+  "stamp_utc": "2026-07-06T083920Z",
+  "layer": "CMS_OPERATION",
+  "not_governance": true,
+  "phase": "② staging",
+  "acceptance_unit": "city",
+  "template_country": {
+    "country_iso": "JP",
+    "closure_ssot": "evidence/GO_cms_operation/CMS-JP-COUNTRY-CLOSURE-LATEST.json"
+  },
+  "city": {
+    "country_iso": "FR",
+    "country_zh": "法国",
+    "city_zh": "里昂",
+    "city_en": "Lyon"
+  },
+  "poi_count": 8,
+  "matrix_ids": [
+    "PH-FR-119-ATR",
+    "PH-FR-120-ATR",
+    "PH-FR-121-ATR",
+    "PH-FR-122-ATR",
+    "PH-FR-123-FOOD",
+    "PH-FR-124-FOOD",
+    "PH-FR-125-FOOD",
+    "PH-FR-126-FOOD"
+  ],
+  "pois": [
+    "富维耶",
+    "老城",
+    "壁画",
+    "金头公园",
+    "里昂菜",
+    "猪肠",
+    "可丽饼",
+    "红酒"
+  ],
+  "checks": {
+    "matrix_pass_live": true,
+    "evidence_complete": true,
+    "catalog_readable": true,
+    "city_closed_loop": true
+  },
+  "matrix_rows": [
+    {
+      "matrix_id": "PH-FR-119-ATR",
+      "legacy_value": "富维耶",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-120-ATR",
+      "legacy_value": "老城",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-121-ATR",
+      "legacy_value": "壁画",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-122-ATR",
+      "legacy_value": "金头公园",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-provider-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-123-FOOD",
+      "legacy_value": "里昂菜",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-guide-avatar.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-124-FOOD",
+      "legacy_value": "猪肠",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-125-FOOD",
+      "legacy_value": "可丽饼",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-media.jpg"
+    },
+    {
+      "matrix_id": "PH-FR-126-FOOD",
+      "legacy_value": "红酒",
+      "asset_lifecycle": "live",
+      "matrix_row_status": "pass",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg"
+    }
+  ],
+  "evidence_refs": [
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-119-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-120-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-121-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-122-ATR.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-123-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-124-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-125-FOOD.EVIDENCE.json",
+    "evidence/GO_cms_content_l5/poi-hero/rows/PH-FR-126-FOOD.EVIDENCE.json"
+  ],
+  "catalog_probe": {
+    "api": "https://tt-api-staging.fly.dev/api/v1/catalog/poi-images?country_iso=FR&city=%E9%87%8C%E6%98%82&limit=50",
+    "http": 200,
+    "count": 8
+  },
+  "closed_loop_evidence": "evidence/GO_cms_operation/poi-city-lyon/CMS-POI-LYON-CLOSED-LOOP-LATEST.json",
+  "next_city": {
+    "country_iso": "FR",
+    "city_zh": "尼斯",
+    "city_en": "Nice"
+  },
+  "closure_keys": {
+    "TT_CMS_POI_CITY_LYON": "CLOSED",
+    "TT_CMS_POI_ACTIVE_CITY": "FR · 尼斯"
+  },
+  "frozen": true,
+  "TT_CMS_POI_CITY_LYON": "CLOSED"
+}

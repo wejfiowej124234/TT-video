@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.open_issue_evidence.v1",
+  "issue_id": "STAGING_API_DB_TRANSIENT_503",
+  "stamp": "20260703T130900Z",
+  "status": "OPEN",
+  "category": "Production Infrastructure",
+  "severity": "LOW",
+  "blocking": false,
+  "target_gate": "PI3_PRODUCTION_INFRASTRUCTURE",
+  "not_market_runtime": true,
+  "not_ocs_ddg_sopcp_reopen": true,
+  "symptoms": [
+    "GET /api/v1/market/acquisition/listings → 503 market_listings_catalog_db_read_failed",
+    "GET /api/v1/official/cold-start/surfaces/market_feed → net::ERR_CONNECTION_CLOSED (browser)"
+  ],
+  "log_excerpt": "market_listings_list_failed variant=acquisition: error communicating with database: expected to read 5 bytes, got 0 bytes at EOF",
+  "log_utc": "2026-07-03T13:03:07Z",
+  "recovery_probe": {
+    "acquisition_listings": {"http": 200, "items": 10},
+    "market_feed": {"http": 200},
+    "probe_utc": "2026-07-03T13:10:23Z"
+  },
+  "mitigation_track": "Pg pool reconnect/retry, health probes, observability alerts",
+  "runbook": "docs/runbook/TT-STAGING-API-DB-TRANSIENT-503.md"
+}

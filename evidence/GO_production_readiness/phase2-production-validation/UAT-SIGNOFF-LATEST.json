@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.phase2_uat_signoff.v1",
+  "recorded_utc": "2026-07-08T14:05:32.846Z",
+  "phase": "②-A",
+  "verdict": "PHASE2_WEBSITE_PRODUCT_UAT_PASS",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "layer_a": "LAYER_A_EVIDENCE_PASS",
+  "probes": "business-manual-uat-probes.cjs PASS"
+}

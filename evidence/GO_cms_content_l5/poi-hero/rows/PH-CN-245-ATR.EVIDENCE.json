@@ -1,0 +1,85 @@
+{
+  "schema": "traveltrust.cms_phase1_single_asset_evidence.v1",
+  "product_name": "POI Hero",
+  "matrix_id": "PH-CN-245-ATR",
+  "country_iso": "CN",
+  "city_zh": "北京",
+  "legacy_value": "南锣鼓巷",
+  "poi_type": "attraction",
+  "scaffolded_at_utc": "2026-07-07T03:17:27Z",
+  "step_1_brief_review": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "draft",
+    "gate": "brief_review",
+    "gate_result": "PASS",
+    "checks": {
+      "destination": "北京 · 南锣鼓巷",
+      "business_theme": "attraction · POI Hero",
+      "brand_tone": "cms-content-brief poi_hero",
+      "composition": "POI card hero · itinerary context",
+      "lighting": "natural per brief",
+      "forbidden_elements_clear": true
+    },
+    "reviewer": "CMS Operation Owner",
+    "reviewed_at_utc": "2026-07-07T03:17:27Z"
+  },
+  "step_2_designer_upload": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "review",
+    "catalog_poi_id": "9207ce90-54d9-40d1-9d3a-983d84e2d513",
+    "upload_format": "image/jpeg",
+    "uploaded_by": "CMS Operation via POI payload image_url",
+    "uploaded_at_utc": "2026-07-07T03:17:27Z",
+    "notes": "Dedicated hero · ocs-paris-art-official-guide-cover.jpg"
+  },
+  "step_3_cms_review": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "approved",
+    "gates": {
+      "cms_review": "PASS",
+      "destination_authenticity": "PASS",
+      "brand_consistency": "PASS"
+    },
+    "reviewer": "CMS Operation Owner",
+    "reviewed_at_utc": "2026-07-07T03:17:27Z"
+  },
+  "step_4_catalog_publish": {
+    "status": "COMPLETE",
+    "asset_lifecycle_out": "published",
+    "gate": "catalog_publish",
+    "gate_result": "PASS",
+    "admin_route": "/admin/content/pois",
+    "published_by": "tourist@test.com",
+    "published_at_utc": "2026-07-07T03:17:27Z",
+    "revision": {
+      "revision_number": 11,
+      "revision_label": "v1",
+      "rollback_target_revision": 1
+    }
+  },
+  "step_5_verify": {
+    "status": "COMPLETE",
+    "gate": "verify",
+    "gate_result": "PASS",
+    "catalog_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+    "head_ok": true,
+    "verified_at_utc": "2026-07-07T03:17:27Z"
+  },
+  "step_6_evidence": {
+    "status": "COMPLETE",
+    "gate": "evidence_complete",
+    "gate_result": "PASS",
+    "completed_at_utc": "2026-07-07T03:17:27Z"
+  },
+  "matrix_snapshot": {
+    "matrix_row_status": "pass",
+    "asset_lifecycle": "live",
+    "current_source": "catalog_api",
+    "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+    "city_zh": "北京",
+    "legacy_value": "南锣鼓巷",
+    "copy_label": "南锣鼓巷 · 北京 POI Hero"
+  },
+  "TT_CMS_POI_HERO_ROW_VERIFY": "PASS",
+  "TT_CMS_PHASE1_SINGLE_ASSET_ROW": "COMPLETE"
+}

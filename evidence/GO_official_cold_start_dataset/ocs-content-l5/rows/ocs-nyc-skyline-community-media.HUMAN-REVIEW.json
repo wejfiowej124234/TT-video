@@ -1,0 +1,42 @@
+{
+  "schema": "traveltrust.ocs_content_l5_row_human_review.v1",
+  "stamp_utc": "20260704T145830Z",
+  "filename": "ocs-nyc-skyline-community-media.jpg",
+  "chain_id": "nyc-skyline",
+  "city": "纽约",
+  "country_code": "US",
+  "slot": "community-media",
+  "surface": "Community Media",
+  "copy_label": "布鲁克林大桥到帝国大厦——官方天际线摄影一日路线与光线时段记录。",
+  "gates_human_review": {
+    "G1_real_assets": { "pass": true, "notes": "640x480 JPEG decodable · >16KB · non-placeholder." },
+    "G2_copy_alignment": { "pass": true, "notes": "帝国大厦 blue hour 与摄影路线 body 对齐。" },
+    "G3_slot_differentiation": { "pass": true, "notes": "夜景详情 vs Row41 钢索 Cover vs Row40 Hero。" },
+    "G4_cross_surface_city": { "pass": true, "notes": "纽约 US-only。" },
+    "G5_brand_visual": { "pass": true, "notes": "冷调 blue hour；chain 统一。" },
+    "G6_commercial_platform": { "pass": true, "notes": "Community 详情；非硬广。" },
+    "G7_wcag_visual_quality": { "pass": true, "notes": "清晰可读。" },
+    "G8_evidence_matrix": { "pass": true, "notes": "九类专项归档。" },
+    "G9_content_authenticity": { "pass": true, "notes": "Empire State 语义正确。" },
+    "G10_content_diversity": { "pass": true, "notes": "vs 六城 Community Media 不同。" }
+  },
+  "community_authenticity_review": {
+    "pass": true,
+    "environment_narrative_complement": true,
+    "vs_row41_cover": "夜景天际线 vs 钢索细节 — 情绪/环境互补"
+  },
+  "surface_boundary_review": { "pass": true },
+  "visual_sequence_review": {
+    "pass": true,
+    "chain_six_slot_complete": true
+  },
+  "destination_experience_review": { "pass": true },
+  "post_generation_technical_check": {
+    "pass": true,
+    "jpeg_decodable": true,
+    "dimensions_640x480": true,
+    "size_gt_16kb": true,
+    "not_placeholder": true
+  },
+  "TT_OCS_CONTENT_L5_ROW_HUMAN_REVIEW": "PASS"
+}

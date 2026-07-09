@@ -1,0 +1,203 @@
+{
+  "schema": "traveltrust.ttg-cert6-phase-b-unpause.v1",
+  "program": "TT_GOVERNANCE_CERT_06_PHASE_B_UNPAUSE",
+  "phase": "②",
+  "stamp_utc": "20260616T100918Z",
+  "cert_session": "evidence/GO_ttg_cert/20260616T100918Z",
+  "baseline_ssot": "docs/spec/governance-token/GOV-FREEZE-V2-SEPOLIA-BASELINE-FREEZE.md",
+  "hat_r1_evidence": "evidence/GO_hat_r1_sepolia/20260616T063612Z",
+  "gorp_ssot": "docs/runbook/TTG-GOVERNANCE-OPERATIONAL-READINESS-PROGRAM.md",
+  "mtm_ssot": "docs/spec/governance-token/TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md",
+  "mtm_ids": [
+    "CHK-OPS-11",
+    "CHK-BASE-05",
+    "CHK-CORE-04",
+    "CHK-CORE-05",
+    "CHK-CORE-06"
+  ],
+  "target_tier": "OPS_DONE",
+  "mtm_rows": [
+    {
+      "id": "CHK-OPS-11",
+      "name": "Phase B evidence GORP-07",
+      "tier": "DEV_DONE",
+      "page": "/governance/proposals/[id]"
+    },
+    {
+      "id": "CHK-BASE-05",
+      "name": "HAT-R1 Phase A chain",
+      "tier": "TESTNET_DONE",
+      "page": "/governance/proposals/*"
+    },
+    {
+      "id": "CHK-CORE-04",
+      "name": "提案",
+      "tier": "TESTNET_DONE",
+      "page": "/governance/proposals/new"
+    },
+    {
+      "id": "CHK-CORE-05",
+      "name": "投票",
+      "tier": "TESTNET_DONE",
+      "page": "/governance/proposals/[id]"
+    },
+    {
+      "id": "CHK-CORE-06",
+      "name": "Queue",
+      "tier": "TESTNET_DONE",
+      "page": "/governance/proposals/[id]"
+    }
+  ],
+  "roles": [
+    {
+      "role": "owner",
+      "label": "Owner",
+      "mtm_ids": [
+        "CHK-OPS-11",
+        "CHK-BASE-05"
+      ],
+      "gorp_walk": [
+        "GORP-07",
+        "HAT_R1_PHASE_B_PAUSED=0",
+        "Enterprise HAT L9 gate"
+      ],
+      "verifications": [
+        "unpause_env_export",
+        "phase_a_to_b_handoff",
+        "prerequisite_chain_cert1_5",
+        "four_ledger_enterprise_hat"
+      ],
+      "recording_hint": "Owner unpause · UAT+Timelock readiness · export HAT_R1_PHASE_B_PAUSED=0",
+      "screenshot": "screenshots/role-owner-unpause-gate.png"
+    },
+    {
+      "role": "treasury_operator",
+      "label": "Treasury Operator",
+      "mtm_ids": [
+        "CHK-OPS-11"
+      ],
+      "gorp_walk": [
+        "S-01～S-06",
+        "dual Timelock §2.2",
+        "Phase B prerequisites"
+      ],
+      "verifications": [
+        "eta_execute_earliest_unix",
+        "v2_timelock_execute_path",
+        "legacy_tl_cp_path_separate",
+        "execute_spend_unstake_order"
+      ],
+      "recording_hint": "ETA wait · V2 Execute path · Legacy CP path 不混用",
+      "screenshot": "screenshots/role-treasury-timelock-eta.png"
+    },
+    {
+      "role": "governor_path",
+      "label": "Governor / Phase A chain",
+      "mtm_ids": [
+        "CHK-CORE-04",
+        "CHK-CORE-05",
+        "CHK-CORE-06",
+        "CHK-BASE-05"
+      ],
+      "gorp_walk": [
+        "proposal",
+        "vote",
+        "queue",
+        "HAT-R1 Phase A evidence"
+      ],
+      "verifications": [
+        "proposal_create_tx",
+        "vote_tx",
+        "queue_tx_execute_earliest",
+        "timelock_state_migration"
+      ],
+      "recording_hint": "Phase A proposal→vote→queue · EXECUTE_EARLIEST_UNIX · handoff to Phase B",
+      "screenshot": "screenshots/role-governor-phase-a-handoff.png"
+    }
+  ],
+  "machine_checks": {
+    "verdict": "PASS",
+    "exit_code": 0,
+    "stdout_tail": "smoke-cert6-phase-b-unpause-machine: OK Cert #5 + HAT-R1 Phase A anchors\nTT_CERT6_PHASE_B_MATRIX: PASS out=D:\\TravelTrust-V1.1\\evidence\\GO_ttg_cert\\.cert6-matrix-checks.json\nTT_CERT6_PHASE_B_UNPAUSE_MACHINE: OK",
+    "stderr_tail": "",
+    "phase_b_matrix": {
+      "schema": "traveltrust.cert6-phase-b-unpause-matrix.v1",
+      "verdict": "PASS",
+      "phase": "②",
+      "baseline": "GovFreeze V2 · HAT-R1 Phase A",
+      "roles": [
+        "Owner",
+        "Treasury Operator",
+        "Governor voter path"
+      ],
+      "checks": {
+        "hat_phase_a": {
+          "ok": true,
+          "verdict": "PASS",
+          "execute_earliest_unix": 1781765044,
+          "timelock_elapsed": false,
+          "remaining_seconds": 142366,
+          "queue_tx": "0xcfd052923a0188b732c505520d9c99773697e4e7b57181d55ce28b416776d2a2"
+        },
+        "prerequisites": {
+          "ok": true,
+          "four_ledger_pass": true,
+          "enterprise_hat_l9": true,
+          "baseline_unpause_documented": true
+        },
+        "unpause_gate": {
+          "ok": true,
+          "paused_blocks": {
+            "paused": "1",
+            "exit_code": 4,
+            "summary": "PAUSED_HUMAN_UAT",
+            "stdout_tail": "HAT_R1_PHASE_B: PAUSED — GovFreeze V2 acceptance-only window\n  1) bash scripts/dev/run-govfreeze-v2-human-screen-acceptance-prep.sh\n  2) record screen + bash scripts/dev/record-govfreeze-v2-human-screen-acceptance.sh\n  3) export HAT_R1_PHASE_B_PAUSED=0  # Owner after human UAT + Timelock ready\n  docs/runbook/TT-GOVFREEZE-V2-ECONOMIC-BASELINE-ACCEPTANCE-ONLY.md\nTT_HAT_R1_PHASE_B_SUMMARY: PAUSED_HUMAN_UAT"
+          },
+          "unpaused_probe": {
+            "paused": "0",
+            "exit_code": 0,
+            "summary": "WAIT_TIMelock",
+            "stdout_tail": "HAT_R1_PHASE_B: WAIT timelock not elapsed remaining=142366s (~1d 15h 32m) execute_earliest_unix=1781765044\nTT_HAT_R1_PHASE_B_SUMMARY: WAIT_TIMelock\nHAT_R1_PHASE_B_NOTE: human screen acceptance while waiting — bash scripts/dev/run-govfreeze-v2-human-screen-acceptance-prep.sh"
+          },
+          "expected_next_certs": [
+            "#7 Execute",
+            "#8 Treasury Spend",
+            "#9 Unstake"
+          ]
+        },
+        "gorp_phase_b": {
+          "ok": true,
+          "sections": {
+            "gorp_07": true,
+            "execute_fail_3_1": true,
+            "timelock_3_5": true,
+            "dual_timelock_2_2": true,
+            "execute_earliest": true,
+            "phase_b_chain": true,
+            "forbid_force_execute": true
+          }
+        },
+        "dual_timelock_recovery": {
+          "ok": true,
+          "v2_timelock": "0x904a6c4c6aab698afbf08ec6151d317c393520cc",
+          "legacy_timelock": "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
+        }
+      },
+      "phase_b_unpause_flow_map": "evidence/GO_ttg_cert/.cert6-phase-b-flow-map.json",
+      "mtm_ids": [
+        "CHK-OPS-11",
+        "CHK-BASE-05",
+        "CHK-CORE-04",
+        "CHK-CORE-05",
+        "CHK-CORE-06"
+      ]
+    }
+  },
+  "prepared_at_utc": "2026-06-16T15:11:18Z",
+  "forbidden": [
+    "new features",
+    "govfreeze re-audit",
+    "docs/spec expansion"
+  ],
+  "honest_boundary": "Cert #6 unpause walkthrough ≠ Execute/Spend/Unstake on-chain (Cert #7–9) ≠ ③ GO"
+}

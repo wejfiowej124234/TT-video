@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.p2fc_future_certain_failure_register.v1",
+  "register": [
+    {
+      "id": "FC-01_TIMEOUT_MISMATCH",
+      "severity": "critical",
+      "category": "config_drift",
+      "current_state": "staging REQUEST_TIMEOUT_SECS=30 (live)",
+      "future_state_required": "120 API + 130s web proxy after wave-0",
+      "fails_at": "step-6 meta_availability --strict",
+      "not_failing_now_because": "observability_only policy defers acceptance",
+      "pre_convergence": "wave-0 hotfix in meta-availability-hotfix.patch — apply before strict gate"
+    },
+    {
+      "id": "FC-02_ITINERARIES_HUB",
+      "severity": "high",
+      "category": "backlog_blast",
+      "current_state": "itineraries.rs hub change — impacts market/escrow/guide consumer paths",
+      "future_state_required": "wave-1 deploy without consumer regression",
+      "fails_at": "step-4 wave1_api_deploy or post-deploy market/escrow",
+      "not_failing_now_because": "soak freeze — staging still on pre-backlog build",
+      "pre_convergence": "blast-radius review + rollback snapshot"
+    },
+    {
+      "id": "FC-03_LARGE_DIFF_BLOB",
+      "severity": "medium",
+      "category": "backlog_blast",
+      "current_state": "42 files with delta≥50 — review blast radius before wave-1",
+      "future_state_required": "controlled wave-1/2 deploy",
+      "fails_at": "step-4/5 deploy OOM or runtime error",
+      "not_failing_now_because": "backlog not applied",
+      "pre_convergence": "wave plan + fly rollback"
+    }
+  ],
+  "critical_count": 1,
+  "high_count": 1,
+  "honest_boundary": "registered failures are post-soak unless soak exec chain breaks"
+}

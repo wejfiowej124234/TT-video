@@ -41,7 +41,7 @@ export function ProductCrossNavCore({
   linkClassName = PRODUCT_CROSS_NAV_DEFAULT_LINK,
   separatorClassName = "text-ink-300",
   showGuides = false,
-  hideFeeRouterLinks = false,
+  hideFeeRouterLinks = true,
   errorBoundaryCrossNavMarker = false,
 }: ProductCrossNavCoreProps) {
   return (
@@ -97,7 +97,7 @@ export function ProductCrossNavCore({
   );
 }
 
-/** 全站主链交叉入口：市场 / 订单 / 支付 / 帮助 / 治理费路由 / TravelTrust FeeRouter（Target 叙事） */
+/** 全站主链交叉入口：市场 / 订单 / 支付 / 帮助 / 信任（Consumer · 费路由链默认隐藏，与 LandingFooter 同源） */
 export function ProductCrossNav({ ariaLabelKey, ...rest }: ProductCrossNavProps) {
   const { t } = useTranslation();
   return <ProductCrossNavCore navAriaLabel={t(ariaLabelKey)} t={t} {...rest} />;

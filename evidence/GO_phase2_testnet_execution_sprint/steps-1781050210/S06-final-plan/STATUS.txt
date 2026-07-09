@@ -1,0 +1,5 @@
+step: S06-final-plan
+status: PASS
+api: https://tt-api-staging.fly.dev
+at: 2026-06-10T00:10:46Z
+note: 终版 snapshot

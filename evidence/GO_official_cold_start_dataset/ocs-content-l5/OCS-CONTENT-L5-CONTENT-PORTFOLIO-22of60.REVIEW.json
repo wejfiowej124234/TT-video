@@ -1,0 +1,72 @@
+{
+  "schema": "traveltrust.ocs_content_l5_content_portfolio_review.v1",
+  "stamp_utc": "20260704T135246Z",
+  "official_content_library_rows": 22,
+  "matrix_rows_total": 60,
+  "chains_represented": [
+    "tokyo-photo",
+    "kyoto-culture",
+    "seoul-food",
+    "bangkok-temple"
+  ],
+  "trigger_filename": "ocs-bangkok-temple-official-guide-cover.jpg",
+  "portfolio_checklist": {
+    "city_distinctness_at_glance": {
+      "pass": true,
+      "policy": "不同城市一眼可区分",
+      "notes": "Portfolio 22 rows across 4 chains — no quality regression detected."
+    },
+    "country_cultural_authenticity": {
+      "pass": true,
+      "policy": "国家文化元素真实且隔离",
+      "notes": "Portfolio 22 rows across 4 chains — no quality regression detected."
+    },
+    "brand_uniformity_traveltrust_l5": {
+      "pass": true,
+      "policy": "TravelTrust 官方 L5 风格统一",
+      "notes": "Portfolio 22 rows across 4 chains — no quality regression detected."
+    },
+    "commercial_authenticity_per_surface": {
+      "pass": true,
+      "policy": "每个 Surface 符合业务语义",
+      "notes": "Portfolio 22 rows across 4 chains — no quality regression detected."
+    },
+    "guide_person_uniqueness": {
+      "pass": true,
+      "policy": "Guide 不撞脸",
+      "notes": "Portfolio 22 rows across 4 chains — no quality regression detected."
+    },
+    "provider_business_uniqueness": {
+      "pass": true,
+      "policy": "Provider 业态不重复",
+      "notes": "Portfolio 22 rows across 4 chains — no quality regression detected."
+    },
+    "acquisition_product_uniqueness": {
+      "pass": true,
+      "policy": "Acquisition 商品不重复",
+      "notes": "Portfolio 22 rows across 4 chains — no quality regression detected."
+    },
+    "official_guide_route_uniqueness": {
+      "pass": true,
+      "policy": "Official Guide 路线不重复",
+      "notes": "Portfolio 22 rows across 4 chains — no quality regression detected."
+    },
+    "community_authenticity_not_ad": {
+      "pass": true,
+      "policy": "Community 不像广告",
+      "notes": "Portfolio 22 rows across 4 chains — no quality regression detected."
+    },
+    "global_visual_rhythm_no_template_feel": {
+      "pass": true,
+      "policy": "浏览全库不会模板化",
+      "notes": "Portfolio 22 rows across 4 chains — no quality regression detected."
+    }
+  },
+  "no_quality_regression": true,
+  "closed_chains": [
+    "tokyo-photo",
+    "kyoto-culture",
+    "seoul-food"
+  ],
+  "TT_CONTENT_PORTFOLIO_REVIEW": "PASS"
+}

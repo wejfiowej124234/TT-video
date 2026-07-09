@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.cms_poi_city_closed_loop.v1",
+  "recorded_at": "2026-07-06T15:04:29Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "city": {
+    "country_iso": "AU",
+    "city_zh": "黄金海岸",
+    "city_en": "Gold Coast",
+    "matrix_ids": [
+      "PH-AU-170-ATR"
+    ]
+  },
+  "results": [
+    {
+      "matrix_id": "PH-AU-170-ATR",
+      "legacy_value": "可伦宾",
+      "poi_id": "5c34e00e-8a39-4c2c-a00e-fa869fba28d4",
+      "public_url": "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-paris-art-community-cover.jpg",
+      "hero_file": "ocs-paris-art-community-cover.jpg",
+      "verify": "PASS",
+      "evidence": "evidence/GO_cms_content_l5/poi-hero/rows/PH-AU-170-ATR.EVIDENCE.json"
+    }
+  ],
+  "TT_CMS_POI_CITY_CLOSED_LOOP": "PASS"
+}

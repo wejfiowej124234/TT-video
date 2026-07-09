@@ -1,0 +1,84 @@
+# Web3 Gate Layering · Payment Rail vs Entire Web3 System · Machine SSOT
+#
+# Governance correction (2026-07-08): TT_PRODUCTION_WEB3_READY MUST NOT be inferred from
+# payment rail alone. Payment = one module (M25). Full Web3 System = M01–M24.
+#
+# Human: docs/runbook/WEB3-GATE-LAYERING.md
+# Audit: scripts/dev/run-web3-system-deep-audit.cjs
+
+schema: traveltrust.web3_gate_layering.v1
+version: 1
+effective_utc: "2026-07-08"
+
+forbidden_misclassification:
+  - TT_PRODUCTION_WEB3_READY_from_payment_rail_only
+  - TT_WEB3_PAYMENT_PRODUCTION_READY_equals_full_system
+  - g3_02_pass_implies_governance_timelock_prod_wired
+
+machine_keys:
+  # --- Payment Rail (subset · M25 · G3-02) ---
+  TT_WEB3_PAYMENT_PRODUCTION_READY:
+    canonical: true
+    alias_of: TT_WEB3_PAYMENT_PRODUCTION_READINESS
+    scope: Payment Rail only — USDC + Wallet + Escrow + FeeRouter + Settlement corridor
+    checklist: PAY-W01..PAY-W16
+    gate_registry: registry/web3-payment-production-gate.v1.yaml
+    g3_domain: G3-02
+    blocks_production_go_alone: false
+    current: WEB3_PAYMENT_PRODUCTION_PASS
+
+  TT_WEB3_PAYMENT_PRODUCTION_READINESS:
+    deprecated_alias: true
+    superseded_display_name: TT_WEB3_PAYMENT_PRODUCTION_READY
+    scope: Same as TT_WEB3_PAYMENT_PRODUCTION_READY
+    current: WEB3_PAYMENT_PRODUCTION_PASS
+
+  # --- Entire Web3 System (M01–M24 · Production GO standard) ---
+  TT_WEB3_SYSTEM_PRODUCTION_READY:
+    canonical: true
+    scope: >
+      Smart Contracts · Upgradeability · Storage Layout · TTG · Primary Market ·
+      Governance · Timelock · Treasury · FeeRouter · Escrow · Settlement · Staking ·
+      Seat · Jurisdiction · RBAC · Wallet · Indexer · Ledger · Tokenomics ·
+      Frontend Web3 UX · Admin Web3 · Registry · Evidence · Security
+    gate_registry: registry/web3-system-production-gate.v1.yaml
+    audit_script: scripts/dev/run-web3-system-deep-audit.cjs
+    closure_script: scripts/dev/run-web3-system-closure.cjs
+    evidence_root: evidence/GO_production_readiness/web3-system-audit
+    blocks_production_go: true
+    current: WEB3_SYSTEM_PRODUCTION_NOT_STARTED
+    requires:
+      - TT_WEB3_PAYMENT_PRODUCTION_READY
+      - prod_meta_contracts_10_of_10
+      - G24_P_UPGRADE_01_PASS
+      - TTG_CERT_SIGNOFFS_COMPLETE
+      - RBAC_D3_PRODUCTION_BOUNDARY_CLOSED
+
+  # --- Four-Gate L2 aggregate (derived · not payment-only) ---
+  TT_PRODUCTION_WEB3_READY:
+    scope: L2 Web3 layer aggregate for Production GO Four-Gate Framework
+    derivation_rule: >
+      PASS only when TT_WEB3_PAYMENT_PRODUCTION_READY=PASS AND
+      TT_WEB3_SYSTEM_PRODUCTION_READY=PASS. Payment PASS alone → IN_PROGRESS.
+    current: IN_PROGRESS
+    previous_misclassification: "PASS from G3-02 payment rail only (corrected 2026-07-08)"
+
+gate_relationship:
+  payment_rail:
+    machine_key: TT_WEB3_PAYMENT_PRODUCTION_READY
+    module: M25
+    status: PASS
+  full_system:
+    machine_key: TT_WEB3_SYSTEM_PRODUCTION_READY
+    modules: M01-M24
+    status: NOT_STARTED
+  four_gate_l2:
+    machine_key: TT_PRODUCTION_WEB3_READY
+    status: IN_PROGRESS
+    note: Waiting on TT_WEB3_SYSTEM_PRODUCTION_READY
+
+evidence:
+  system_audit_latest: evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-DEEP-AUDIT-LATEST.json
+  system_closure_latest: evidence/GO_production_readiness/web3-system-audit/WEB3-SYSTEM-CLOSURE-LATEST.json
+  payment_audit_latest: evidence/GO_production_readiness/payment-deep-audit/PAYMENT-USDC-WEB3-DEEP-AUDIT-LATEST.json
+  g3_02: evidence/GO_production_readiness/G3-02/WEB3-PAYMENT-PRODUCTION-READINESS-LATEST.json

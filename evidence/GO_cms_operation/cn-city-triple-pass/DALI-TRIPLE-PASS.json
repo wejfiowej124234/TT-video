@@ -1,0 +1,9 @@
+{
+  "schema": "traveltrust.cms_cn_city_triple_pass_report.v1",
+  "city_zh": "大理",
+  "recorded_at_utc": "2026-07-07T11:31:10.760Z",
+  "poi_locked": "10/10",
+  "TT_CMS_POI_CITY_DALI": "CLOSED",
+  "TT_CMS_POI_CITY_DALI_CONTENT_QA": "CLOSED",
+  "TT_CMS_POI_CITY_DALI_CONTENT_QA_EXIT": "PASS"
+}

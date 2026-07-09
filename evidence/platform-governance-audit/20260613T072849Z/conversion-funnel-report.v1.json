@@ -1,0 +1,11 @@
+{
+  "schema": "traveltrust.conversion_funnel.v1",
+  "stages": [
+    "landing",
+    "register/login",
+    "market view",
+    "itinerary unlock",
+    "escrow create",
+    "payment mock"
+  ]
+}

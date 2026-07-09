@@ -136,6 +136,13 @@ async fn ensure_guide_in_store(state: &ChainOffState, guide_id: Uuid) -> Result<
         rejection_codes: row.rejection_codes.clone(),
         rejection_message: row.rejection_message.clone(),
         data_origin: row.data_origin.clone(),
+        display_status: row.display_status.clone(),
+        display_origin: row.display_origin.clone(),
+        featured: row.featured,
+        display_priority: row.display_priority,
+        display_surfaces: row.display_surfaces.clone(),
+        display_start_at: row.display_start_at,
+        display_end_at: row.display_end_at,
         created_at: row.created_at,
         updated_at: row.updated_at,
     };
@@ -382,10 +389,13 @@ pub async fn market_listing_order_create_impl(
         guide_confirmed: None,
         rating_tourist_confirmed: None,
         rating_guide_confirmed: None,
+        service_tourist_confirmed: None,
+        service_guide_confirmed: None,
         chain_id: state.config.business_chain_id,
         order_kind: Some(order_kind.to_string()),
         market_listing_id: Some(listing_id),
         data_origin: super::data_origin_production_string(),
+        ..Default::default()
     });
     bundle.destination = listing_title_for_itinerary(&listing.payload);
     let tourist_email = {
@@ -419,10 +429,13 @@ pub async fn market_listing_order_create_impl(
         guide_confirmed: None,
         rating_tourist_confirmed: None,
         rating_guide_confirmed: None,
+        service_tourist_confirmed: None,
+        service_guide_confirmed: None,
         chain_id: state.config.business_chain_id,
         order_kind: Some(order_kind.to_string()),
         market_listing_id: Some(listing_id),
         data_origin,
+        ..Default::default()
     };
     let mut store = state.store.write().await;
     store.orders.insert(id, order.clone());

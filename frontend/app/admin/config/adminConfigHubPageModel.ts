@@ -10,6 +10,7 @@ export const CONFIG_HUB_LINKS: AdminConfigHubLink[] = [
   { href: "/admin/lifecycle", titleKey: "admin_lifecycle_title", descKey: "admin_config_hub_desc_lifecycle" },
   { href: "/admin/api-versions", titleKey: "admin_api_versions_title", descKey: "admin_config_hub_desc_api_versions" },
   { href: "/admin/jobs", titleKey: "admin_jobs_title", descKey: "admin_config_hub_desc_jobs" },
+  { href: "/admin/backup", titleKey: "admin_backup_title", descKey: "admin_config_hub_desc_backup" },
   { href: "/admin/approvals", titleKey: "admin_approvals_title", descKey: "admin_config_hub_desc_approvals" },
 ];
 
