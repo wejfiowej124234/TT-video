@@ -1,0 +1,18 @@
+{
+  "timestamp_utc": "2026-07-09T23:27:10.105Z",
+  "gate_results": [
+    {
+      "gate": "scripts/gates/five-main-routes-ui-antiregression-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "   Start at  07:27:11 |    Duration  2.67s (transform 1.04s, setup 310ms, collect 2.82s, tests 343ms, environment 12.93s, prepare 2.25s) | TT_FIVE_MAIN_ROUTES_UI_GATE_SUMMARY: OK phase=local-1 files=12"
+    },
+    {
+      "gate": "scripts/dev/run-web3-itinerary-l5-green.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "   Duration  4.81s (transform 3.75s, setup 681ms, collect 10.30s, tests 1.64s, environment 44.24s, prepare 6.18s) | TT_WEB3_ITINERARY_L5_GREEN: OK (① local · preview unlock · escrow draft experience) |   SSOT: frontend/evidence/GO_local_web3_itinerary_l5/README.md"
+    }
+  ],
+  "findings": []
+}

@@ -1,0 +1,100 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B02",
+  "title": "Five-main marketing corridor (UI freeze + data chain)",
+  "layer": "L1-L3",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-09T23:27:10.105Z",
+  "verifier": "run-fpc-batch-b02-five-main.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "c5de5acce0ab5651cf92c8755891edd8f456da46",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B01"
+  ],
+  "routes": [
+    "/",
+    "/traveltrust",
+    "/market",
+    "/did-rank",
+    "/community/*"
+  ],
+  "gates": [
+    "scripts/gates/five-main-routes-ui-antiregression-gate.sh",
+    "scripts/dev/run-web3-itinerary-l5-green.sh"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/gates/five-main-routes-ui-antiregression-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "   Start at  07:27:11 |    Duration  2.67s (transform 1.04s, setup 310ms, collect 2.82s, tests 343ms, environment 12.93s, prepare 2.25s) | TT_FIVE_MAIN_ROUTES_UI_GATE_SUMMARY: OK phase=local-1 files=12"
+    },
+    {
+      "gate": "scripts/dev/run-web3-itinerary-l5-green.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "   Duration  4.81s (transform 3.75s, setup 681ms, collect 10.30s, tests 1.64s, environment 44.24s, prepare 6.18s) | TT_WEB3_ITINERARY_L5_GREEN: OK (① local · preview unlock · escrow draft experience) |   SSOT: frontend/evidence/GO_local_web3_itinerary_l5/README.md"
+    }
+  ],
+  "gate_pass": true,
+  "findings": [],
+  "verdict": "IN_PROGRESS",
+  "pass": false,
+  "release_blocker": "NO",
+  "next_batch": "B03",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-09",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Five-main UI freeze + landing/market data chain — ② staging cross-device bookmark SLA deferred",
+  "traceability": {
+    "requirements": [
+      "FIVE-MAIN-ROUTES-PHASE1-FREEZE respected",
+      "LANDING-MARKET-PAGES-CODE-SSOT data chain green"
+    ],
+    "spec_refs": [
+      "frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md",
+      "frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md",
+      "FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md § B02"
+    ],
+    "code_paths": [
+      "frontend/app/(home)/page.tsx",
+      "frontend/components/landing/useLandingPage.ts",
+      "frontend/lib/landingItinerarySession.ts",
+      "frontend/components/market/useMarketPage.ts"
+    ],
+    "tests": [
+      "five-main-routes-ui-antiregression-gate.sh",
+      "run-web3-itinerary-l5-green.sh"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B02-LATEST.json",
+    "certification_batch": "B02",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-09T23:27:10.105Z",
+  "expires_at_utc": "2026-10-07T23:27:10.105Z",
+  "expiry_policy_days": 90,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-09T23:27:10.105Z",
+  "frozen_git_sha": "c5de5acce0ab5651cf92c8755891edd8f456da46",
+  "dod": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": false,
+    "working_tree_clean": false,
+    "all_met": false,
+    "checked_at_utc": "2026-07-09T23:27:26.165Z",
+    "committed_sha": "c5de5acce0ab5651cf92c8755891edd8f456da46",
+    "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
+  }
+}

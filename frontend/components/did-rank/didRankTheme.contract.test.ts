@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { TT_MARKETING_DID_RANK_TAB_ACTIVE } from "@/lib/marketingUi";
 
 const root = join(import.meta.dirname);
 
@@ -49,10 +50,8 @@ describe("did-rank theme V1 (contract)", () => {
   });
 
   it("marketingUi DID_RANK_TAB_ACTIVE uses matte hub-style fill (PR-C)", () => {
-    const ui = readFileSync(join(root, "../../lib/marketingUi.ts"), "utf8");
-    const block = ui.match(/export const TT_MARKETING_DID_RANK_TAB_ACTIVE =[\s\S]*?;\n/)?.[0] ?? "";
-    expect(block).toContain("bg-ref-sun/12");
-    expect(block).not.toContain("TT_MARKETING_ACTION_GRADIENT_FILL");
+    expect(TT_MARKETING_DID_RANK_TAB_ACTIVE).toContain("bg-ref-sun/12");
+    expect(TT_MARKETING_DID_RANK_TAB_ACTIVE).not.toContain("TT_MARKETING_ACTION_GRADIENT_FILL");
   });
 
   it("DidRankFetchErrorBanner retry uses market primary CTA", () => {
