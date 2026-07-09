@@ -153,6 +153,20 @@ async function fetchJson(url) {
     next_batch: pass ? 'B01' : 'B00-remediation',
   };
 
+  if (pass) {
+    const expiryDays = 30;
+    report.certified_at_utc = stamp;
+    report.expires_at_utc = new Date(Date.parse(stamp) + expiryDays * 86400000).toISOString();
+    report.expiry_policy_days = expiryDays;
+    report.certification_frozen = true;
+    report.frozen_at_utc = stamp;
+    report.frozen_git_sha = head;
+    report.release_blocker = 'NO';
+    report.human_verified = false;
+    report.human_verifier = null;
+    report.human_note = 'Machine-only anchor; human verification deferred to B01+';
+  }
+
   fs.mkdirSync(EVID, { recursive: true });
   fs.writeFileSync(OUT, JSON.stringify(report, null, 2) + '\n');
   console.log(`TT_FPC_100_BATCH_B00: ${report.verdict}`);

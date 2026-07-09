@@ -1,8 +1,9 @@
 # FPC-100 · Full Production Certification（发布认证 · 非检查清单）
 
-**Version:** 3.0.0  
-**Status:** **ACTIVE · CERTIFICATION · 五层模型**  
-**Release Dashboard:** [`FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.md`](FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.md) · **`TT_FULL_PRODUCTION_CERTIFICATION`**  
+**Version:** 4.0.0  
+**Status:** **ACTIVE · Certification Framework v4**  
+**Governance:** [`FPC-CERTIFICATION-GOVERNANCE-v1.md`](FPC-CERTIFICATION-GOVERNANCE-v1.md)  
+**Release Dashboard:** [`FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.md`](FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.md)  
 **Machine SSOT:** [`registry/full-production-certification-checklist.v1.yaml`](../../../../registry/full-production-certification-checklist.v1.yaml)  
 **Page matrix:** [`FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json`](FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json)  
 **Execution runbook:** [`docs/runbook/FPC-100-PRE-RELEASE-EXECUTION-PLAN-v1.md`](../../../../runbook/FPC-100-PRE-RELEASE-EXECUTION-PLAN-v1.md)  
@@ -84,6 +85,25 @@ L5   运营与真实 ★★★★★       Content · Lineage · API Contract ·
 | Environment Diff | PASS（②） |
 
 **终态一行：** `TT_FULL_PRODUCTION_CERTIFICATION: PASS` — 非「基本查了」
+
+---
+
+## 治理机制（v4 · 长期维护）
+
+详见 [`FPC-CERTIFICATION-GOVERNANCE-v1.md`](FPC-CERTIFICATION-GOVERNANCE-v1.md)
+
+| 机制 | 要点 |
+|------|------|
+| **Certification Freeze** | Batch PASS → 证据冻结 · 改 SSOT → INVALIDATED · 须重认证 |
+| **Risk Register** | `registry/fpc-100-risk-register.v1.yaml` · Accepted vs Pending |
+| **Evidence Expiry** | certified_at / expires_at · Perf 30d · A11y 60d · Sec 90d |
+| **Release Blocker** | 每批 `release_blocker: YES/NO` · Truthfulness Mock = Block |
+| **Evidence Coverage** | Pages · API · Corridors · RBAC — Dashboard 100% 可见 |
+| **Human Certification** | `human_verified` · UX/Ops/Deploy/Business 必填 |
+| **Deployment Cert** | **B40** · 独立于 Local · Deploy→Health→Meta→Diff→Rollback |
+| **Business Readiness** | **B41** · Logo/法务/域名/Sitemap/Analytics |
+
+**多柱 Dashboard：** Technical · Product · Operations · Content · Business · Security · Performance · Truthfulness · Deployment · Human Verification → **`TT_FULL_PRODUCTION_CERTIFICATION`**
 
 ---
 

@@ -1,9 +1,12 @@
 # schema: traveltrust.full_production_certification_checklist.v1
-version: 3
+version: 4
 status: ACTIVE_CERTIFICATION
-frozen_utc: "2026-07-09T15:55:00Z"
+frozen_utc: "2026-07-09T16:00:00Z"
 machine_key: TT_FPC_100
 mode: certification
+framework_name: TravelTrust Full Production Certification Framework
+governance_ssot: docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-CERTIFICATION-GOVERNANCE-v1.md
+risk_register: registry/fpc-100-risk-register.v1.yaml
 # Certification ≠ Checklist: each item requires verdict + verifier + evidence + release eligibility.
 # PER Round 1 remains valid; FPC-100 is superset full-site certification.
 
@@ -165,9 +168,67 @@ honest_boundary: >-
   PER Round 1 Exit (15 CI closed) is prerequisite, not substitute for FPC-100 completion.
   VP-01..VP-09 map to Round 2 / FPC batches B14–B18 — not Round 1 Exit blockers.
 
-verdict_enum: [NOT_STARTED, IN_PROGRESS, PASS, PASS_WITH_WARN, FAIL, BLOCKED, N/A]
+verdict_enum: [NOT_STARTED, IN_PROGRESS, PASS, PASS_WITH_WARN, FAIL, BLOCKED, N/A, EXPIRED, INVALIDATED]
 severity_enum: [P0, P1, P2, P3]
 issue_class_enum: [DEFECT, DRIFT, CONFLICT, BLOCKING_RISK, NON_BLOCKING_RISK, EXPECTED_DIFFERENCE]
+
+certification_governance:
+  certification_freeze:
+    enabled: true
+    rule: >-
+      Batch PASS → evidence frozen (certification_frozen=true). Any change to covered SSOT
+      invalidates batch → must re-certify. Dashboard must not show PASS on STALE/INVALIDATED evidence.
+    check_script: scripts/dev/check-fpc-certification-freeze.cjs
+  evidence_expiry_days:
+    performance: 30
+    accessibility: 60
+    security: 90
+    anchor_meta: 30
+    truthfulness: 30
+    default: 90
+  release_blocker:
+    field: release_blocker
+    enum: [YES, NO]
+    rule: FAIL or release_blocker YES blocks TT_FULL_PRODUCTION_CERTIFICATION
+  human_certification:
+    field: human_verified
+    required_for_batches: [B25-C1, B25-C2, B25-C3, B25-C4, B25-C5, B25-C6, B26, B10, B33, B35, B40, B41]
+  evidence_coverage_targets:
+    pages: 202
+    api_contracts: 181
+    business_corridors: 23
+    rbac_probes: 102
+  deployment_certification:
+    batch: B40
+    phase: [staging]
+    chain: [deploy, health, meta_sha, environment_diff, rollback_probe]
+  business_readiness:
+    batch: B41
+    checks: [logo, icp_if_applicable, privacy, terms, contact, ops_email, email_templates, cdn, domain, sitemap, robots, analytics]
+
+batch_evidence_required_fields:
+  - certified_at_utc
+  - expires_at_utc
+  - certification_frozen
+  - frozen_at_utc
+  - frozen_git_sha
+  - release_blocker
+  - human_verified
+  - human_verifier
+  - verdict
+  - pass
+
+dashboard_pillars:
+  technical: { batches: [B00, B11, B23, B24, B32], description: Code · API · coverage · regression }
+  product: { batches: [B25-C1, B25-C2, B25-C3, B25-C4, B25-C5, B25-C6, B26], description: UI · UX · CX · pages }
+  operations: { batches: [B33, B09], description: Admin ops · RBAC }
+  content: { batches: [B30, B12], description: CMS · content ops }
+  business: { batches: [B41], description: Business readiness · legal · brand }
+  security: { batches: [B17], description: Security gates }
+  performance: { batches: [B16], description: Build · CWV }
+  truthfulness: { batches: [B36, B01], description: Mock-free · public surface }
+  deployment: { batches: [B40], description: Staging deploy · diff · rollback }
+  human_verification: { rule: all required_for_batches human_verified true }
 
 evidence_root: docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100
 evidence_naming:
@@ -816,10 +877,60 @@ batches:
       Zero mock/demo/placeholder/fake/todo/coming_soon on consumer surfaces; truthfulness 100% or N/A logged.
     evidence: FPC-100/B36-truthfulness
 
+  - id: B40
+    title: "Deployment Certification (② staging · one-shot)"
+    priority: P0
+    phase: [staging]
+    layer: deployment
+    depends_on: [B00, B01]
+    release_blocker_default: YES
+    human_verified_required: true
+    evidence_expiry_days: 30
+    acceptance: >-
+      One-shot deploy of code anchor; health/meta SHA match; environment diff PASS;
+      rollback probe documented. Local FPC alone does not satisfy this batch.
+    evidence: FPC-100/B40-deployment
+    owner_files:
+      - scripts/dev/phase2-staging-fly-deploy-and-sync.sh
+      - scripts/dev/run-local-staging-full-alignment-audit.sh
+
+  - id: B41
+    title: "Business Readiness Certification"
+    priority: P0
+    phase: [local, production_prep]
+    layer: business
+    depends_on: [B01]
+    human_verified_required: true
+    acceptance: >-
+      Logo, legal (privacy/terms), contact, ops email, email templates, CDN/domain,
+      sitemap/robots, analytics — product-ready not just tech-ready.
+    evidence: FPC-100/B41-business-readiness
+    owner_files:
+      - docs/go-live-checklist.md
+      - frontend/app/terms
+      - frontend/app/privacy
+
 rollup_exit_criteria:
   machine_verdict: TT_FULL_PRODUCTION_CERTIFICATION
   release_dashboard: FPC-100-RELEASE-DASHBOARD-LATEST.json
   dashboard_refresh_script: scripts/dev/refresh-fpc-100-release-dashboard.cjs
+  freeze_check_script: scripts/dev/check-fpc-certification-freeze.cjs
+  risk_register: registry/fpc-100-risk-register.v1.yaml
+  required_pillars_pass:
+    - technical
+    - product
+    - operations
+    - content
+    - business
+    - security
+    - performance
+    - truthfulness
+    - deployment
+    - human_verification
+  no_pending_high_risks: true
+  no_expired_batch_evidence: true
+  no_invalidated_frozen_batches: true
+  evidence_coverage_100_pct: [pages, api_contracts, business_corridors, rbac_probes]
   required_batches_p0_pass: [B00, B01, B04, B05, B09, B11, B17, B20, B23, B24, B26, B30, B31, B32, B33, B35, B36]
   l1_page_coverage: "202/202 pages layer1_surface_coverage = PASS or N/A with evidence"
   l2_page_certification: "202/202 pages production_ready in {YES, CONDITIONAL} with zero unresolved P0/P1"

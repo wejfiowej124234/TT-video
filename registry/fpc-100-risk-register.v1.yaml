@@ -1,0 +1,46 @@
+# schema: traveltrust.fpc_100_risk_register.v1
+version: 1
+status: ACTIVE
+machine_key: TT_FPC_100_RISK_REGISTER
+parent: registry/full-production-certification-checklist.v1.yaml
+human_ssot: docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-CERTIFICATION-GOVERNANCE-v1.md
+
+# Accepted risks appear on Release Dashboard — NOT bugs; Owner-signed deferrals.
+# Blocking risks MUST NOT be registered here — fix or FAIL batch.
+
+risk_level_enum: [LOW, MEDIUM, HIGH]
+acceptance_status_enum: [ACCEPTED, PENDING, REJECTED, EXPIRED]
+
+risks:
+  - id: FPC-RISK-VP-09
+    title: Production-build DevTools walk not completed (VP-09)
+    level: LOW
+    status: ACCEPTED
+    owner: Sebastian Ward
+    accepted_utc: "2026-07-09T16:00:00Z"
+    expires_utc: "2026-09-09T00:00:00Z"
+    scope: PER Round 2 · batch B18
+    note: Deferred to FPC B18; not a PER Round 1 Exit blocker.
+
+  - id: FPC-RISK-VP-01
+    title: Mobile 375px matrix incomplete (VP-01)
+    level: MEDIUM
+    status: PENDING
+    owner: Sebastian Ward
+    scope: batch B15
+    note: Accept only after spot-check sample or full matrix with written scope.
+
+  - id: FPC-RISK-CDN-GLOBAL
+    title: CDN global edge nodes not fully validated pre-launch
+    level: MEDIUM
+    status: ACCEPTED
+    owner: Sebastian Ward
+    accepted_utc: "2026-07-09T16:00:00Z"
+    expires_utc: "2026-12-31T00:00:00Z"
+    scope: ③ production entry · PER infra
+    note: Local/staging FPC PASS does not imply worldwide CDN SLA.
+
+acceptance_rules:
+  - HIGH risks require written Owner sign-off + expiry date
+  - PENDING risks block TT_FULL_PRODUCTION_CERTIFICATION unless explicitly carved out in dashboard
+  - EXPIRED acceptance triggers re-review — batch may revert to NOT_STARTED

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Refresh FPC-100 Release Dashboard — single rollup for TT_FULL_PRODUCTION_CERTIFICATION.
+ * TravelTrust Release Dashboard — multi-pillar TT_FULL_PRODUCTION_CERTIFICATION rollup.
  *
  *   node scripts/dev/refresh-fpc-100-release-dashboard.cjs
  */
@@ -8,126 +8,207 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '../..');
 const EVID = path.join(
   ROOT,
   'docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100'
 );
+const REGISTRY_PATH = path.join(ROOT, 'registry/full-production-certification-checklist.v1.yaml');
+const RISK_PATH = path.join(ROOT, 'registry/fpc-100-risk-register.v1.yaml');
+
 const MATRIX = path.join(EVID, 'FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json');
-const REGISTRY = path.join(EVID, 'FPC-100-REGISTRY-LATEST.json');
+const REGISTRY_ROLLUP = path.join(EVID, 'FPC-100-REGISTRY-LATEST.json');
 const OUT_JSON = path.join(EVID, 'FPC-100-RELEASE-DASHBOARD-LATEST.json');
 const OUT_MD = path.join(EVID, 'FPC-100-RELEASE-DASHBOARD-LATEST.md');
 
-function readJson(p, fallback = null) {
-  if (!fs.existsSync(p)) return fallback;
+function readJson(p, fb = null) {
+  if (!fs.existsSync(p)) return fb;
   return JSON.parse(fs.readFileSync(p, 'utf8'));
 }
 
-function pct(n, total) {
-  if (!total) return 0;
-  return Math.round((n / total) * 1000) / 10;
+function loadBatchVerdict(id) {
+  const f = path.join(EVID, `FPC-100-BATCH-${id}-LATEST.json`);
+  const b = readJson(f);
+  if (!b) return { verdict: 'NOT_STARTED', pass: false, human_verified: false, release_blocker: 'NO' };
+  return {
+    verdict: b.verdict || 'NOT_STARTED',
+    pass: !!b.pass,
+    human_verified: !!b.human_verified,
+    release_blocker: b.release_blocker || 'NO',
+    expires_at_utc: b.expires_at_utc,
+    certification_frozen: !!b.certification_frozen,
+  };
 }
 
-function row(label, done, total, verdict) {
-  const display = total != null ? `${done} / ${total}` : done;
-  return { label, done, total, display, verdict: verdict || 'NOT_STARTED' };
+function pillarFromBatches(batchIds) {
+  const states = batchIds.map((id) => loadBatchVerdict(id));
+  if (states.some((s) => s.verdict === 'FAIL' || s.verdict === 'INVALIDATED' || s.release_blocker === 'YES')) {
+    return 'FAIL';
+  }
+  if (states.some((s) => s.verdict === 'EXPIRED')) return 'EXPIRED';
+  if (states.every((s) => s.pass || s.verdict === 'PASS' || s.verdict === 'PASS_WITH_WARN')) return 'PASS';
+  if (states.some((s) => s.verdict !== 'NOT_STARTED')) return 'IN_PROGRESS';
+  return 'NOT_STARTED';
+}
+
+function parseSimpleYamlList(text, key) {
+  const m = text.match(new RegExp(`${key}:\\s*\\n([\\s\\S]*?)(\\n\\w|$)`));
+  return m ? m[1] : '';
+}
+
+function parseCoverageTargets() {
+  const t = fs.existsSync(REGISTRY_PATH) ? fs.readFileSync(REGISTRY_PATH, 'utf8') : '';
+  const g = (k) => {
+    const m = t.match(new RegExp(`${k}:\\s*(\\d+)`));
+    return m ? parseInt(m[1], 10) : 0;
+  };
+  return {
+    pages: g('pages'),
+    api_contracts: g('api_contracts'),
+    business_corridors: g('business_corridors'),
+    rbac_probes: g('rbac_probes'),
+  };
+}
+
+function parseRisks() {
+  if (!fs.existsSync(RISK_PATH)) return [];
+  const raw = fs.readFileSync(RISK_PATH, 'utf8');
+  const risks = [];
+  const blocks = raw.split(/\n  - id:/).slice(1);
+  for (const block of blocks) {
+    const id = block.match(/^ FPC-RISK-[^\n]+/)?.[0]?.trim();
+    const title = block.match(/title: ([^\n]+)/)?.[1];
+    const level = block.match(/level: (\w+)/)?.[1];
+    const status = block.match(/status: (\w+)/)?.[1];
+    if (id) risks.push({ id: id.replace(/^ /, ''), title, level, status });
+  }
+  return risks;
 }
 
 const matrix = readJson(MATRIX, { pages: [], coverage_summary: {} });
-const registry = readJson(REGISTRY, { batches: [], four_layers: {} });
-const total = matrix.coverage_summary?.pages_total || matrix.pages?.length || 202;
+const registry = readJson(REGISTRY_ROLLUP, { batches: [], l5_domains: {} });
+const targets = parseCoverageTargets();
+const totalPages = matrix.coverage_summary?.pages_total || matrix.pages?.length || targets.pages || 202;
 
+const l1Done = matrix.pages.filter((p) => p.layer1_surface_coverage?.page_tsx === 'PASS').length;
 const uiDone = matrix.pages.filter((p) => p.layer2_l5_scores?.ui != null).length;
-const uxDone = matrix.pages.filter((p) => p.layer2_l5_scores?.ux != null).length;
-const l1Done = matrix.pages.filter(
-  (p) =>
-    p.layer1_surface_coverage?.page_tsx === 'PASS' ||
-    p.certification_verdict === 'PASS'
-).length;
-const prodReady = matrix.coverage_summary?.production_ready_yes || 0;
 const cxPass = matrix.pages.filter(
   (p) => p.layer2_5_customer_experience?.certification_verdict === 'PASS'
 ).length;
-const truthPass = matrix.pages.filter(
-  (p) => p.layer5_operations_truth_per_page?.truthfulness?.verdict === 'PASS'
-).length;
-const lineagePass = matrix.pages.filter(
-  (p) => p.layer5_operations_truth_per_page?.data_lineage?.verdict === 'PASS'
-).length;
+const apiDone = parseInt(String(registry.l5_api_contract_pct || '0').replace('%', ''), 10) || 0;
+const rbacDone = registry.rbac_probes_certified || 0;
+const corridorsDone = registry.business_corridors_certified || 0;
 
-function batchVerdict(id) {
-  const b = (registry.batches || []).find((x) => x.id === id);
-  return b?.verdict || 'NOT_STARTED';
+const coverage = {
+  pages: { done: l1Done, target: targets.pages || totalPages, pct: targets.pages ? (l1Done / targets.pages) * 100 : 0 },
+  api_contracts: { done: apiDone, target: targets.api_contracts, pct: targets.api_contracts ? (apiDone / targets.api_contracts) * 100 : 0 },
+  business_corridors: { done: corridorsDone, target: targets.business_corridors, pct: targets.business_corridors ? (corridorsDone / targets.business_corridors) * 100 : 0 },
+  rbac_probes: { done: rbacDone, target: targets.rbac_probes, pct: targets.rbac_probes ? (rbacDone / targets.rbac_probes) * 100 : 0 },
+};
+
+const pillars = {
+  technical: pillarFromBatches(['B00', 'B11', 'B23', 'B24', 'B32']),
+  product: pillarFromBatches(['B25-C1', 'B26']),
+  operations: pillarFromBatches(['B33', 'B09']),
+  content: pillarFromBatches(['B30', 'B12']),
+  business: pillarFromBatches(['B41']),
+  security: pillarFromBatches(['B17']),
+  performance: pillarFromBatches(['B16']),
+  truthfulness: pillarFromBatches(['B36', 'B01']),
+  deployment: pillarFromBatches(['B40']),
+};
+
+const humanRequired = ['B26', 'B10', 'B33', 'B35', 'B40', 'B41'];
+const humanStates = humanRequired.map((id) => loadBatchVerdict(id));
+const humanPass = humanStates.every((s) => s.human_verified) && humanStates.some((s) => s.pass || s.verdict === 'PASS');
+pillars.human_verification = humanPass ? 'PASS' : humanStates.some((s) => s.human_verified) ? 'IN_PROGRESS' : 'NOT_STARTED';
+
+const risks = parseRisks();
+const pendingRisks = risks.filter((r) => r.status === 'PENDING');
+const acceptedRisks = risks.filter((r) => r.status === 'ACCEPTED');
+
+const expiredBatches = [];
+for (const f of fs.readdirSync(EVID).filter((x) => x.startsWith('FPC-100-BATCH-'))) {
+  const b = readJson(path.join(EVID, f));
+  if (!b?.expires_at_utc) continue;
+  if (Date.now() > Date.parse(b.expires_at_utc)) expiredBatches.push(b.batch_id);
 }
 
-const l5Domains = registry.l5_domains || {};
-function domainVerdict(key) {
-  return l5Domains[key]?.verdict || batchVerdict(key) || 'NOT_STARTED';
-}
+const pillarValues = Object.values(pillars);
+const allPillarsPass = pillarValues.every((v) => v === 'PASS');
+const coverage100 = Object.values(coverage).every((c) => c.done >= c.target && c.target > 0);
+const blockers = pillarValues.includes('FAIL') || pendingRisks.length > 0 || expiredBatches.length > 0;
 
-const rows = [
-  row('Pages (L1 coverage)', l1Done, total, l1Done === total ? 'PASS' : 'IN_PROGRESS'),
-  row('UI scored (L2)', uiDone, total, uiDone === total ? 'PASS' : 'NOT_STARTED'),
-  row('UX scored (L2)', uxDone, total, uxDone === total ? 'PASS' : 'NOT_STARTED'),
-  row('CX (L2.5)', cxPass, total, cxPass === total ? 'PASS' : 'NOT_STARTED'),
-  row('Production Ready (L2)', prodReady, total, prodReady === total ? 'PASS' : 'NOT_STARTED'),
-  row('API Contract', registry.l5_api_contract_pct ?? '0%', null, domainVerdict('api_contract')),
-  row('RBAC', batchVerdict('B09'), null, batchVerdict('B09')),
-  row('Data Lineage (L5)', lineagePass, total, lineagePass === total ? 'PASS' : 'NOT_STARTED'),
-  row('Content Operations (L5)', domainVerdict('content_operations'), null, domainVerdict('content_operations')),
-  row('Recovery (L5)', domainVerdict('recovery'), null, domainVerdict('recovery')),
-  row('Truthfulness (L5)', truthPass, total, truthPass === total ? 'PASS' : 'NOT_STARTED'),
-  row('Lifecycle (L5)', domainVerdict('lifecycle'), null, domainVerdict('lifecycle')),
-  row('Operations (L5)', domainVerdict('operations'), null, domainVerdict('operations')),
-  row('Mobile', batchVerdict('B15'), null, batchVerdict('B15')),
-  row('A11Y', batchVerdict('B14'), null, batchVerdict('B14')),
-  row('Performance', batchVerdict('B16'), null, batchVerdict('B16')),
-  row('Security', batchVerdict('B17'), null, batchVerdict('B17')),
-  row('Business Flows (L3)', registry.l3_business_flows?.verdict || 'NOT_STARTED', null, registry.l3_business_flows?.verdict),
-  row('Environment Diff', batchVerdict('B00-staging'), null, batchVerdict('B00-staging')),
-];
+const verdict = allPillarsPass && coverage100 && !blockers ? 'PASS' : pillarValues.some((v) => v === 'FAIL') ? 'FAIL' : 'NOT_STARTED';
 
-const blockers = rows.filter((r) => r.verdict === 'FAIL');
-const allPass = rows.every((r) => r.verdict === 'PASS' || r.verdict === 'N/A');
 const dashboard = {
-  schema: 'traveltrust.fpc_100_release_dashboard.v1',
+  schema: 'traveltrust.fpc_100_release_dashboard.v2',
+  framework: 'TravelTrust Full Production Certification Framework',
   machine_key: 'TT_FULL_PRODUCTION_CERTIFICATION',
   timestamp_utc: new Date().toISOString(),
   code_anchor_commit: registry.code_anchor_commit || 'e9df0a73f63b5ebccc7c17266f000c3bf867d872',
-  verdict: allPass ? 'PASS' : 'NOT_STARTED',
-  pass: allPass,
-  rows,
-  summary: {
-    pages_total: total,
-    open_p0_p1: registry.open_p0_p1 ?? 0,
-    fpc_exit_eligible: registry.fpc_exit_eligible ?? false,
+  verdict,
+  pass: verdict === 'PASS',
+  pillars,
+  evidence_coverage: coverage,
+  accepted_risks: acceptedRisks,
+  pending_risks: pendingRisks,
+  expired_batches: expiredBatches,
+  certification_governance: {
+    freeze_doc: 'FPC-CERTIFICATION-GOVERNANCE-v1.md',
+    risk_register: 'registry/fpc-100-risk-register.v1.yaml',
   },
-  five_layers: registry.five_layers || registry.four_layers || {},
-  l5_domains: registry.l5_domains || {},
+  detail_rows: [
+    { label: 'Pages (L1)', display: `${l1Done} / ${totalPages}`, verdict: l1Done === totalPages ? 'PASS' : 'IN_PROGRESS' },
+    { label: 'UI (L2)', display: `${uiDone} / ${totalPages}`, verdict: uiDone === totalPages ? 'PASS' : 'NOT_STARTED' },
+    { label: 'CX (L2.5)', display: `${cxPass} / ${totalPages}`, verdict: cxPass === totalPages ? 'PASS' : 'NOT_STARTED' },
+  ],
 };
 
 fs.mkdirSync(EVID, { recursive: true });
 fs.writeFileSync(OUT_JSON, JSON.stringify(dashboard, null, 2) + '\n');
 
 const md = [
-  '# TravelTrust · Full Production Certification Dashboard',
+  '# TravelTrust · Release Dashboard',
   '',
+  '**Framework:** TravelTrust Full Production Certification  ',
   `**Machine key:** \`TT_FULL_PRODUCTION_CERTIFICATION\`  `,
-  `**Verdict:** **${dashboard.verdict}**  `,
+  `**Verdict:** **${verdict}**  `,
   `**Updated:** ${dashboard.timestamp_utc}`,
   '',
-  '| 项 | 完成 | 判定 |',
-  '|---|------|------|',
-  ...rows.map((r) => `| ${r.label} | ${r.display} | ${r.verdict} |`),
+  '## Pillars',
   '',
+  '| Pillar | Verdict |',
+  '|--------|---------|',
+  ...Object.entries(pillars).map(([k, v]) => `| ${k.replace(/_/g, ' ')} | ${v} |`),
+  '',
+  '## Evidence Coverage',
+  '',
+  '| Dimension | Coverage |',
+  '|-----------|----------|',
+  ...Object.entries(coverage).map(([k, c]) => `| ${k} | ${c.done} / ${c.target} |`),
+  '',
+  '## Accepted Risks',
+  '',
+  ...(acceptedRisks.length
+    ? acceptedRisks.map((r) => `- **${r.id}** (${r.level}) · ${r.title} · ${r.status}`)
+    : ['- _(none)_']),
+  '',
+  '## Pending Risks',
+  '',
+  ...(pendingRisks.length
+    ? pendingRisks.map((r) => `- **${r.id}** (${r.level}) · ${r.title}`)
+    : ['- _(none)_']),
+  '',
+  ...(expiredBatches.length ? [`## Expired Batches (re-cert required)\n\n${expiredBatches.map((b) => `- ${b}`).join('\n')}\n`, ''] : []),
   '---',
   '',
-  `**TT_FULL_PRODUCTION_CERTIFICATION:** \`${dashboard.verdict}\``,
+  `**TT_FULL_PRODUCTION_CERTIFICATION:** \`${verdict}\``,
   '',
 ].join('\n');
 fs.writeFileSync(OUT_MD, md);
 
-console.log('TT_FULL_PRODUCTION_CERTIFICATION:', dashboard.verdict);
+console.log('TT_FULL_PRODUCTION_CERTIFICATION:', verdict);
 console.log('DASHBOARD_JSON:', OUT_JSON);
-console.log('DASHBOARD_MD:', OUT_MD);

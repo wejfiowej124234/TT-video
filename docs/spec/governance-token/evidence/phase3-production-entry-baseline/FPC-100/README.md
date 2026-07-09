@@ -3,15 +3,19 @@
 **Purpose:** Rolling evidence for Full Production Certification 100% batches.  
 **Checklist SSOT:** [`../FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md`](../FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md)  
 **Machine registry:** [`../../../../registry/full-production-certification-checklist.v1.yaml`](../../../../registry/full-production-certification-checklist.v1.yaml)  
+**Governance:** [`../FPC-CERTIFICATION-GOVERNANCE-v1.md`](../FPC-CERTIFICATION-GOVERNANCE-v1.md)  
+**Risk register:** [`../../../../registry/fpc-100-risk-register.v1.yaml`](../../../../registry/fpc-100-risk-register.v1.yaml)  
 **Local anchor:** `e9df0a73`
 
 ## Status
 
 | Field | Value |
 |-------|-------|
-| Mode | **B00 PASS** · **B01 next** |
+| Framework | **v4** · Certification Freeze · Risk · Expiry · Human · Deploy · Business |
+| Mode | **B00** · re-cert with v4 governance fields · **B01 next** |
 | PER Round 1 | EXIT ✅ |
 | Local freeze | ACTIVE (code anchor `e9df0a73`) |
+| Certification freeze | ACTIVE — PASS batches frozen · `check-fpc-certification-freeze.cjs` |
 | Page matrix | **202/202 scaffolded v2** · L2/L2.5/L5 per-page fields |
 | Release Dashboard | [`FPC-100-RELEASE-DASHBOARD-LATEST.md`](FPC-100-RELEASE-DASHBOARD-LATEST.md) |
 | `TT_FULL_PRODUCTION_CERTIFICATION` | **NOT_STARTED** |
