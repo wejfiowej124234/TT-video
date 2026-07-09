@@ -4,10 +4,10 @@
 
 | Metric | Value |
 |--------|-------|
-| **TT_RELEASE_READINESS** | **0%** |
+| **TT_RELEASE_READINESS** | **2.4%** |
 | **TT_RELEASE_DECISION** | **NO_GO** |
 
-_Next batch: B00 · v1.0_ · Governance FROZEN — no v5 expansion_
+_Next batch: B01 · v1.0_ · Governance FROZEN — no v5 expansion_
 
 > Feature Freeze does not mean Release Ready. Release Ready is earned only through completed certification evidence.
 > 功能冻结不代表可以发布；发布资格只能通过完整的认证证据获得。
@@ -16,9 +16,9 @@ _Next batch: B00 · v1.0_ · Governance FROZEN — no v5 expansion_
 
 | Metric | Value |
 |--------|-------|
-| Batches Completed | 0 / 41 |
-| Remaining | 41 |
-| Batch Coverage | 0% |
+| Batches Completed | 1 / 41 |
+| Remaining | 40 |
+| Batch Coverage | 2.4% |
 | Evidence Coverage (pages/API/…) | 0% |
 
 _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
@@ -28,19 +28,19 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 **Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
 **FPC verdict:** **NOT_STARTED**  
 **Release decision:** `TT_RELEASE_DECISION` = **NO_GO**  
-**Updated:** 2026-07-09T16:14:12.147Z
+**Updated:** 2026-07-09T16:16:50.091Z
 
 ## Release Health
 
 | Metric | Value |
 |--------|-------|
-| Certified | 2.4% |
+| Certified | 4.9% |
 | Expired | 0 |
 | Blocked | 0 |
 | Accepted Risks | 2 |
 | Coverage | 0% |
 | Human Verified | 0% |
-| AI Review PASS | 66.7% |
+| AI Review PASS | 50% |
 
 ## Release History (Version Certification)
 
@@ -79,6 +79,7 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 | B00 | PASS (Internal AI Review) | — |
 | B01 | PASS (Internal AI Review) | — |
 | B00 | NOT_STARTED (NOT_STARTED) | — |
+| B01 | NOT_STARTED (NOT_STARTED) | — |
 
 ## Accepted Risks
 
