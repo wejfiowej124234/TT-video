@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.fpc_daily_standup.v1",
+  "timestamp_utc": "2026-07-09T23:28:16.986Z",
+  "questions": {
+    "batch_completed_today": "B02",
+    "readiness_delta": "4.9% → 7.3%",
+    "new_blockers": "1（pending risk + release_blocker）",
+    "release_decision_change": "仍为 NO_GO"
+  },
+  "metrics": {
+    "TT_RELEASE_READINESS": "7.3%",
+    "TT_RELEASE_DECISION": "NO_GO",
+    "next_batch": "B03"
+  }
+}

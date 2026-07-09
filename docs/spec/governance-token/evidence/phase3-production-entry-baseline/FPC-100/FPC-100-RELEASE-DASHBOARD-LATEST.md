@@ -4,11 +4,11 @@
 
 | Metric | Value |
 |--------|-------|
-| **TT_RELEASE_READINESS** | **4.9%** _（发布能力成熟度）_ |
-| **Readiness Δ** | 4.9% → 4.9% |
+| **TT_RELEASE_READINESS** | **7.3%** _（发布能力成熟度）_ |
+| **Readiness Δ** | 4.9% → 7.3% |
 | **TT_RELEASE_DECISION** | **NO_GO** |
 
-_Next batch: B02 · Daily standup: `node scripts/dev/print-fpc-daily-standup.cjs`_
+_Next batch: B03 · Daily standup: `node scripts/dev/print-fpc-daily-standup.cjs`_
 
 > **Feature Freeze does not mean Release Ready.** Release Ready is earned only through completed certification evidence.
 > 功能冻结不代表可以发布；发布资格只能通过完整的认证证据获得。
@@ -20,9 +20,9 @@ _Next batch: B02 · Daily standup: `node scripts/dev/print-fpc-daily-standup.cjs
 
 | Metric | Value |
 |--------|-------|
-| Batches Completed | 2 / 41 |
-| Remaining | 39 |
-| Batch Coverage | 4.9% |
+| Batches Completed | 3 / 41 |
+| Remaining | 38 |
+| Batch Coverage | 7.3% |
 | Evidence Coverage (pages/API/…) | 0% |
 
 _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
@@ -32,19 +32,19 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 **Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
 **FPC verdict:** **NOT_STARTED**  
 **Release decision:** `TT_RELEASE_DECISION` = **NO_GO**  
-**Updated:** 2026-07-09T23:27:26.153Z
+**Updated:** 2026-07-09T23:28:16.929Z
 
 ## Release Health
 
 | Metric | Value |
 |--------|-------|
-| Certified | 12.2% |
+| Certified | 14.6% |
 | Expired | 0 |
 | Blocked | 0 |
 | Accepted Risks | 2 |
 | Coverage | 0% |
 | Human Verified | 0% |
-| AI Review PASS | 60% |
+| AI Review PASS | 50% |
 
 ## Release History (Version Certification)
 
@@ -85,6 +85,7 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 | B02 | PASS (Internal AI Review) | — |
 | B00 | NOT_STARTED (NOT_STARTED) | — |
 | B01 | NOT_STARTED (NOT_STARTED) | — |
+| B02 | NOT_STARTED (NOT_STARTED) | — |
 
 ## Accepted Risks
 

@@ -42,8 +42,8 @@
   ],
   "gate_pass": true,
   "findings": [],
-  "verdict": "IN_PROGRESS",
-  "pass": false,
+  "verdict": "PASS",
+  "pass": true,
   "release_blocker": "NO",
   "next_batch": "B03",
   "ai_review": {
@@ -85,16 +85,17 @@
   "expiry_policy_days": 90,
   "certification_frozen": true,
   "frozen_at_utc": "2026-07-09T23:27:10.105Z",
-  "frozen_git_sha": "c5de5acce0ab5651cf92c8755891edd8f456da46",
+  "frozen_git_sha": "f180930b7b0e2d15dc700492ff110f162de67175",
   "dod": {
     "gate_pass": true,
     "evidence_complete": true,
     "dashboard_refreshed": true,
-    "commit_complete": false,
-    "working_tree_clean": false,
-    "all_met": false,
-    "checked_at_utc": "2026-07-09T23:27:26.165Z",
-    "committed_sha": "c5de5acce0ab5651cf92c8755891edd8f456da46",
+    "commit_complete": true,
+    "working_tree_clean": true,
+    "all_met": true,
+    "checked_at_utc": "2026-07-09T23:28:10.714Z",
+    "committed_sha": "f180930b7b0e2d15dc700492ff110f162de67175",
     "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
-  }
+  },
+  "finalized_at_utc": "2026-07-09T23:28:10.714Z"
 }

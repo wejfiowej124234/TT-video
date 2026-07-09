@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust.fpc_100_readiness_snapshot.v1",
+  "timestamp_utc": "2026-07-09T23:28:16.929Z",
+  "release_readiness_pct": 7.3,
+  "tt_release_decision": "NO_GO",
+  "blockers": 1,
+  "last_contiguous_batch": "B02"
+}

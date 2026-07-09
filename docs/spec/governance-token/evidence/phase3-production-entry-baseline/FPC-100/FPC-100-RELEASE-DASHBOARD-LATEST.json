@@ -6,16 +6,16 @@
       "TT_RELEASE_READINESS",
       "TT_RELEASE_DECISION"
     ],
-    "release_readiness_pct": 4.9,
+    "release_readiness_pct": 7.3,
     "release_readiness_definition": "Release capability maturity (发布能力成熟度)",
     "readiness_previous_pct": 4.9,
-    "readiness_delta_display": "4.9% → 4.9%",
+    "readiness_delta_display": "4.9% → 7.3%",
     "release_readiness_key": "TT_RELEASE_READINESS",
     "release_decision": "NO_GO",
     "release_decision_previous": "NO_GO",
     "release_decision_key": "TT_RELEASE_DECISION",
     "product_version": "v1.0",
-    "next_required_batch": "B02",
+    "next_required_batch": "B03",
     "governance": "FROZEN @ v5 · Do not expand",
     "execution": "B02→B41 · Daily standup: print-fpc-daily-standup.cjs"
   },
@@ -24,7 +24,7 @@
   "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION",
   "release_decision_key": "TT_RELEASE_DECISION",
   "product_version": "v1.0",
-  "timestamp_utc": "2026-07-09T23:27:26.153Z",
+  "timestamp_utc": "2026-07-09T23:28:16.929Z",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "verdict": "NOT_STARTED",
   "pass": false,
@@ -32,18 +32,18 @@
   "release_readiness": {
     "machine_key": "TT_RELEASE_READINESS",
     "definition": "Release capability maturity (发布能力成熟度)",
-    "pct": 4.9,
+    "pct": 7.3,
     "previous_pct": 4.9,
-    "delta_display": "4.9% → 4.9%",
-    "contiguous_completed": 2,
+    "delta_display": "4.9% → 7.3%",
+    "contiguous_completed": 3,
     "total": 41
   },
   "burn_down": {
-    "completed": 2,
-    "remaining": 39,
+    "completed": 3,
+    "remaining": 38,
     "total": 41,
-    "coverage_pct": 4.9,
-    "next_required_batch": "B02",
+    "coverage_pct": 7.3,
+    "next_required_batch": "B03",
     "no_batch_skip_ok": true,
     "skip_violations": []
   },
@@ -60,14 +60,14 @@
     "human_verification": "NOT_STARTED"
   },
   "release_health": {
-    "certified_pct": 12.2,
+    "certified_pct": 14.6,
     "expired_count": 0,
     "blocked_count": 0,
     "accepted_risks_count": 2,
     "coverage_pct": 0,
     "human_verified_pct": 0,
     "human_required_verified_pct": 0,
-    "ai_review_pct": 60
+    "ai_review_pct": 50
   },
   "release_history": [
     {
@@ -179,6 +179,15 @@
     },
     {
       "batch_id": "B01",
+      "ai_review": {
+        "verdict": "NOT_STARTED"
+      },
+      "ai_display": "NOT_STARTED",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B02",
       "ai_review": {
         "verdict": "NOT_STARTED"
       },
