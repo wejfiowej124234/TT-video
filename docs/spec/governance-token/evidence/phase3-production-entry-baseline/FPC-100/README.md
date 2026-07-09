@@ -9,9 +9,10 @@
 
 | Field | Value |
 |-------|-------|
-| Mode | PLAN ONLY — batches **NOT STARTED** |
+| Mode | **B00 PASS** · **B01 next** |
 | PER Round 1 | EXIT ✅ |
-| Local freeze | ACTIVE |
+| Local freeze | ACTIVE (code anchor `e9df0a73`) |
+| Page matrix | **202/202 scaffolded** · L2 **0/202 certified** |
 
 ## Directory layout (created per batch)
 

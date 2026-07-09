@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.fpc_100_registry_rollup.v1",
+  "timestamp_utc": "2026-07-09T15:53:18.330Z",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "doc_head_commit": "9f98bd6f079cf705538923e3673045b47c88ba73",
+  "four_layers": {
+    "L1_page_coverage": { "target": 202, "inspected": 0, "pct": 0, "status": "SCAFFOLDED" },
+    "L2_page_certification": { "target": 202, "production_ready_yes": 0, "pct": 0, "status": "NOT_STARTED" },
+    "L3_business_flows": { "status": "NOT_STARTED", "registry": "business-flow-matrix.v1.yaml" },
+    "L4_enterprise": { "status": "NOT_STARTED" }
+  },
+  "batches": [
+    { "id": "B00", "verdict": "PASS", "evidence": "FPC-100-BATCH-B00-LATEST.json" },
+    { "id": "B01", "verdict": "NOT_STARTED" }
+  ],
+  "open_p0_p1": 0,
+  "fpc_exit_eligible": false,
+  "next_batch": "B01"
+}

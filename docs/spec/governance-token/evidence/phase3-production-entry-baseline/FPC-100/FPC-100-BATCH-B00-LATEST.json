@@ -1,0 +1,92 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B00",
+  "title": "Anchor · Meta · Health · Registry · Page matrix scaffold",
+  "layer": "L1",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-09T15:53:18.330Z",
+  "verifier": "run-fpc-batch-b00-anchor.cjs",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "9f98bd6f079cf705538923e3673045b47c88ba73",
+    "branch": "feature/g23-04-abi-event-freeze",
+    "working_tree_clean": true,
+    "porcelain_lines": 0,
+    "code_anchor_is_ancestor_of_head": "true"
+  },
+  "api_base": "http://127.0.0.1:8080",
+  "health": {
+    "status": 200,
+    "ok": true
+  },
+  "meta": {
+    "status": 200,
+    "git_sha_field": "unknown",
+    "body_keys": [
+      "service",
+      "api_version",
+      "build",
+      "chain",
+      "rate_limits",
+      "database_connected",
+      "database",
+      "dual_write",
+      "strict_mode",
+      "ssot_version",
+      "ssot",
+      "admin_exports",
+      "chargeback_policy",
+      "finality_n",
+      "indexer",
+      "authority",
+      "pause",
+      "evidence",
+      "order_messages",
+      "reviews",
+      "dispute_open",
+      "dispute_resolve",
+      "itineraries",
+      "orders",
+      "discover",
+      "product_countries",
+      "did_rank",
+      "product_roles",
+      "auth",
+      "seed_test_accounts"
+    ]
+  },
+  "registry_anchors": [
+    {
+      "path": "registry/full-production-certification-checklist.v1.yaml",
+      "exists": true
+    },
+    {
+      "path": "registry/per-wave-backlog.v1.yaml",
+      "exists": true
+    },
+    {
+      "path": "registry/test-accounts-business-immutable.v1.yaml",
+      "exists": true
+    },
+    {
+      "path": "registry/business-flow-matrix.v1.yaml",
+      "exists": true
+    }
+  ],
+  "page_matrix": {
+    "path": "FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+    "pages_total": 202,
+    "pages_not_started": 202,
+    "scaffolded": true
+  },
+  "per_round1_exit": {
+    "valid": true,
+    "doc": "PER-ROUND1-EXIT.md",
+    "note": "PER R1 remains valid; FPC-100 is superset certification"
+  },
+  "findings": [],
+  "warns": [],
+  "verdict": "PASS",
+  "pass": true,
+  "next_batch": "B01"
+}
