@@ -1,7 +1,11 @@
 # FPC-100 · Full Production Certification（发布认证 · 非检查清单）
 
 **Version:** 5.0.0  
-**Status:** **GOVERNANCE FROZEN @ v5** · Execution ACTIVE  
+**Status:** **GOVERNANCE FROZEN @ v5** · Execution ACTIVE · **禁止再扩展 v5**  
+
+> **Feature Freeze does not mean Release Ready.** Release Ready is earned only through completed certification evidence.  
+> 功能冻结不代表可以发布；发布资格只能通过完整的认证证据获得。
+
 **Governance freeze:** [`FPC-GOVERNANCE-FREEZE-v5.md`](FPC-GOVERNANCE-FREEZE-v5.md)
 **Governance:** [`FPC-CERTIFICATION-GOVERNANCE-v1.md`](FPC-CERTIFICATION-GOVERNANCE-v1.md)  
 **Release Dashboard:** [`FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.md`](FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.md)  
@@ -108,9 +112,8 @@ L5   运营与真实 ★★★★★       Content · Lineage · API Contract ·
 | **Evidence Coverage** | Pages · API · Corridors · RBAC — Dashboard 100% 可见 |
 | **Human + AI Review** | `human_verified` + `ai_review` · Dashboard 区分 Human/AI |
 | **Release Health** | Certified% · Expired · Blocked · Coverage% · 一屏总览 |
-| **Release Decision** | **`TT_RELEASE_DECISION`** · GO / CONDITIONAL_GO / NO_GO |
-| **No Batch Skip** | `execution_sequence` 线性 · 禁止跳批 |
-| **Release Readiness** | **`TT_RELEASE_READINESS`** · Owner 每日唯一数字 |
+| **Release Decision** | **`TT_RELEASE_DECISION`** · GO / NO_GO · Owner 每日数字之二 |
+| **Batch DoD** | 五项全满足才 PASS · `finalize-fpc-batch-dod.cjs` |
 | **Burn-down** | Completed / Remaining / Next Batch |
 | **Deployment Cert** | **B40** · 独立于 Local · Deploy→Health→Meta→Diff→Rollback |
 | **Business Readiness** | **B41** · Logo/法务/域名/Sitemap/Analytics |

@@ -41,7 +41,9 @@ B00 → B01 → B02 → … → B41
 
 Dashboard **Burn-down：** Completed · Remaining · Next Batch
 
-**每日 rhythm：** 1 Batch → refresh Dashboard → Commit（不重设计框架）
+**每日 rhythm：** 1 Batch → refresh Dashboard → Commit → **`finalize-fpc-batch-dod.cjs`** → 仅 DoD 全满足才 PASS
+
+**核心原则：** *Feature Freeze does not mean Release Ready.* — 功能冻结不代表可以发布；发布资格只能通过完整的认证证据获得。
 
 ---
 

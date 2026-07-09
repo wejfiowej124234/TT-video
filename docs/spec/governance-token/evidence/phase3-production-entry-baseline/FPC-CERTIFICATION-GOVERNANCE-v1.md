@@ -352,8 +352,29 @@ B00 → B01 → B02 → … → B41
 
 ### 每日 rhythm
 
-1. 执行 **一个** Batch（或 remediation 重跑同一批）  
+1. 执行 **一个** Batch（gates）→ evidence 可先 `IN_PROGRESS`  
 2. `refresh-fpc-100-release-dashboard.cjs`  
-3. Commit evidence + dashboard  
+3. Commit  
+4. `node scripts/dev/finalize-fpc-batch-dod.cjs --batch Bxx --refresh-dashboard`  
+5. 仅当 DoD 五项全满足 → **PASS**；否则 **IN_PROGRESS**
 
-**第三阶段（当前）：** 认证产品 — 每日目标 = 提高 `TT_RELEASE_READINESS`，不是写代码或扩框架。
+**Owner 每日只看两数：** `TT_RELEASE_READINESS` · `TT_RELEASE_DECISION`
+
+### Batch Definition of Done
+
+| # | 条件 | 不满足则 |
+|---|------|----------|
+| 1 | Gate PASS | FAIL / IN_PROGRESS |
+| 2 | Evidence 完整 | IN_PROGRESS |
+| 3 | Dashboard 已刷新 | IN_PROGRESS |
+| 4 | Commit 完成（HEAD = frozen_sha） | IN_PROGRESS |
+| 5 | Working tree clean | IN_PROGRESS |
+
+### 核心原则
+
+**Feature Freeze does not mean Release Ready.**  
+Release Ready is earned only through completed certification evidence.
+
+**中文：** 功能冻结不代表可以发布；发布资格只能通过完整的认证证据获得。
+
+**第三阶段（当前）：** 认证产品 — 每日目标 = 提高 `TT_RELEASE_READINESS`，不是写代码或扩框架。 **禁止再扩展 FPC v5** — 唯一目标 B02→B41。

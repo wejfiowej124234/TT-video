@@ -1,27 +1,24 @@
 # TravelTrust · Release Dashboard
 
-## Executive Summary
+# Owner Daily View
 
-## Release Readiness · **4.9%**
+| Metric | Value |
+|--------|-------|
+| **TT_RELEASE_READINESS** | **0%** |
+| **TT_RELEASE_DECISION** | **NO_GO** |
 
-_Owner daily metric · `TT_RELEASE_READINESS`_
+_Next batch: B00 · v1.0_ · Governance FROZEN — no v5 expansion_
 
-| | |
-|---|---|
-| **Release Readiness** | **4.9%** |
-| **Version** | v1.0 |
-| **Next Batch** | B02 |
-| **Blockers** | 0 |
-| **Accepted Risks** | 2 |
-| **Release Decision** | **NO_GO** |
+> Feature Freeze does not mean Release Ready. Release Ready is earned only through completed certification evidence.
+> 功能冻结不代表可以发布；发布资格只能通过完整的认证证据获得。
 
 ## Burn-down
 
 | Metric | Value |
 |--------|-------|
-| Batches Completed | 2 / 41 |
-| Remaining | 39 |
-| Batch Coverage | 4.9% |
+| Batches Completed | 0 / 41 |
+| Remaining | 41 |
+| Batch Coverage | 0% |
 | Evidence Coverage (pages/API/…) | 0% |
 
 _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
@@ -31,7 +28,7 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 **Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
 **FPC verdict:** **NOT_STARTED**  
 **Release decision:** `TT_RELEASE_DECISION` = **NO_GO**  
-**Updated:** 2026-07-09T16:09:20.756Z
+**Updated:** 2026-07-09T16:11:55.975Z
 
 ## Release Health
 

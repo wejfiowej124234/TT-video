@@ -37,7 +37,12 @@ function loadBatchPass(batchId) {
   if (!fs.existsSync(p)) return false;
   try {
     const b = JSON.parse(fs.readFileSync(p, 'utf8'));
-    return !!(b.pass && (b.verdict === 'PASS' || b.verdict === 'PASS_WITH_WARN'));
+    const dodOk = b.dod?.all_met === true;
+    return !!(
+      b.pass &&
+      dodOk &&
+      (b.verdict === 'PASS' || b.verdict === 'PASS_WITH_WARN')
+    );
   } catch {
     return false;
   }

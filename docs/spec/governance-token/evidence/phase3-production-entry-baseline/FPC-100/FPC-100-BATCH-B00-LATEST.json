@@ -86,8 +86,8 @@
   },
   "findings": [],
   "warns": [],
-  "verdict": "PASS",
-  "pass": true,
+  "verdict": "IN_PROGRESS",
+  "pass": false,
   "next_batch": "B01",
   "product_version": "v1.0",
   "certified_at_utc": "2026-07-09T15:59:15.916Z",
@@ -109,15 +109,34 @@
     "note": "Machine anchor batch — AI attests scaffold + registry presence only"
   },
   "traceability": {
-    "requirements": ["PER Round 1 Exit baseline", "FPC-100 anchor gate"],
+    "requirements": [
+      "PER Round 1 Exit baseline",
+      "FPC-100 anchor gate"
+    ],
     "spec_refs": [
       "registry/full-production-certification-checklist.v1.yaml",
       "FPC-CERTIFICATION-GOVERNANCE-v1.md"
     ],
-    "code_paths": ["scripts/dev/run-fpc-batch-b00-anchor.cjs", "registry/*.yaml"],
-    "tests": ["run-fpc-batch-b00-anchor.cjs (live /health /meta)"],
+    "code_paths": [
+      "scripts/dev/run-fpc-batch-b00-anchor.cjs",
+      "registry/*.yaml"
+    ],
+    "tests": [
+      "run-fpc-batch-b00-anchor.cjs (live /health /meta)"
+    ],
     "evidence_path": "FPC-100/FPC-100-BATCH-B00-LATEST.json",
     "certification_batch": "B00",
     "product_version": "v1.0"
+  },
+  "dod": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": false,
+    "working_tree_clean": false,
+    "all_met": false,
+    "checked_at_utc": "2026-07-09T16:11:56.157Z",
+    "committed_sha": "f6b0c37a0b4a6287d31bc8386cada99e2119fda1",
+    "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
   }
 }
