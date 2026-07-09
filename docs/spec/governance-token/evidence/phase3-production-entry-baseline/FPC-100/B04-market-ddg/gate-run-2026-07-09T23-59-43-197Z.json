@@ -1,0 +1,49 @@
+{
+  "timestamp_utc": "2026-07-09T23:59:43.197Z",
+  "gate_results": [
+    {
+      "gate": "scripts/gates/vertical-slice-01-guides-catalog.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "vertical-slice-01: BASE=http://127.0.0.1:8080 | ok: GET /health | meta.order_messages.chain_off_mounted=true | GET /api/v1/guides items.length=3 | pass: vertical-slice-01 guides catalog smoke (chain_off mounted)"
+    },
+    {
+      "gate": "scripts/gates/vertical-slice-03-market-hub-public-smoke.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "GET /api/v1/guides items.length=3 | guides: no seed/smoke bios in public catalog | guides: user_id dedupe OK | GET /internal/public-catalog-surface/stats filter_enabled=true | pass: vertical-slice-03 market hub public smoke (02 + GET /api/v1/guides + public-catalog ABI)"
+    },
+    {
+      "gate": "scripts/gates/check-display-data-governance-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "PASS: display-data-governance SSOT"
+    },
+    {
+      "gate": "scripts/dev/run-market-guide-catalog-parity.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_MARKET_GUIDE_CATALOG_PARITY: PASS | hangzhou api= 0 trust_gate= 0 dupes= 0 | TT_MARKET_GUIDE_CATALOG_PARITY_EVIDENCE: /d/TravelTrust-V1.1/docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-C-MARKET-GUIDE-PARITY-LATEST.json"
+    }
+  ],
+  "parity": {
+    "schema": "traveltrust.market_guide_catalog_parity.v1",
+    "api_base": "http://127.0.0.1:8080",
+    "timestamp_utc": "2026-07-09T23:59:45.059Z",
+    "hangzhou": {
+      "api_count": 0,
+      "trust_gate_fixture_count": 0,
+      "dev_bio_count": 0,
+      "duplicate_display_groups": [],
+      "ids": [],
+      "ui_projected_count": 0
+    },
+    "all_guides": {
+      "api_count": 3,
+      "trust_gate_fixture_count": 0
+    },
+    "pass": true,
+    "failures": []
+  },
+  "findings": []
+}

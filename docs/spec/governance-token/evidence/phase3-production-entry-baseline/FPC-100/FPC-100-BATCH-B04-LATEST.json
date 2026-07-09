@@ -1,0 +1,119 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B04",
+  "title": "Market · guides · catalog · DDG",
+  "layer": "L1-L3",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-09T23:59:43.197Z",
+  "verifier": "run-fpc-batch-b04-market-ddg.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "dd581746f355e78a70e2e709ab6eda161dbf9b21",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B01",
+    "B03"
+  ],
+  "routes": [
+    "/market",
+    "/market/*",
+    "/discover"
+  ],
+  "gates": [
+    "scripts/gates/vertical-slice-01-guides-catalog.sh",
+    "scripts/gates/vertical-slice-03-market-hub-public-smoke.sh",
+    "scripts/gates/check-display-data-governance-ssot.sh",
+    "scripts/dev/run-market-guide-catalog-parity.sh"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/gates/vertical-slice-01-guides-catalog.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "vertical-slice-01: BASE=http://127.0.0.1:8080 | ok: GET /health | meta.order_messages.chain_off_mounted=true | GET /api/v1/guides items.length=3 | pass: vertical-slice-01 guides catalog smoke (chain_off mounted)"
+    },
+    {
+      "gate": "scripts/gates/vertical-slice-03-market-hub-public-smoke.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "GET /api/v1/guides items.length=3 | guides: no seed/smoke bios in public catalog | guides: user_id dedupe OK | GET /internal/public-catalog-surface/stats filter_enabled=true | pass: vertical-slice-03 market hub public smoke (02 + GET /api/v1/guides + public-catalog ABI)"
+    },
+    {
+      "gate": "scripts/gates/check-display-data-governance-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "PASS: display-data-governance SSOT"
+    },
+    {
+      "gate": "scripts/dev/run-market-guide-catalog-parity.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_MARKET_GUIDE_CATALOG_PARITY: PASS | hangzhou api= 0 trust_gate= 0 dupes= 0 | TT_MARKET_GUIDE_CATALOG_PARITY_EVIDENCE: /d/TravelTrust-V1.1/docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-C-MARKET-GUIDE-PARITY-LATEST.json"
+    }
+  ],
+  "gate_pass": true,
+  "catalog_parity": {
+    "path": "PER-WAVE-C-MARKET-GUIDE-PARITY-LATEST.json",
+    "pass": true,
+    "api_guide_count": 3,
+    "trust_gate_fixture_count": 0,
+    "hangzhou_count": 0,
+    "duplicate_display_labels": 0
+  },
+  "ddg_ssot": {
+    "registry": "registry/display-data-governance.v1.yaml",
+    "policy": "registry/single-official-public-catalog-policy.v1.yaml",
+    "gate": "check-display-data-governance-ssot.sh"
+  },
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "release_blocker": "NO",
+  "next_batch": "B05",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-09",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Public catalog DB→API→projection parity; DDG lifecycle — ② staging cross-check deferred",
+  "traceability": {
+    "requirements": [
+      "Public guide list filtered per market_public_surface",
+      "No demo/trust-gate labels in consumer catalog",
+      "DDG registry surfaces PASS",
+      "API guide count parity (CI-10)"
+    ],
+    "spec_refs": [
+      "registry/display-data-governance.v1.yaml",
+      "registry/single-official-public-catalog-policy.v1.yaml",
+      "crates/api/src/chain_off/market_public_surface.rs",
+      "FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md § B04"
+    ],
+    "code_paths": [
+      "scripts/dev/run-market-guide-catalog-parity.cjs",
+      "scripts/gates/vertical-slice-01-guides-catalog.sh",
+      "scripts/gates/vertical-slice-03-market-hub-public-smoke.sh"
+    ],
+    "tests": [
+      "vertical-slice-01-guides-catalog.sh",
+      "vertical-slice-03-market-hub-public-smoke.sh",
+      "check-display-data-governance-ssot.sh",
+      "run-market-guide-catalog-parity.sh"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B04-LATEST.json",
+    "certification_batch": "B04",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-09T23:59:43.197Z",
+  "expires_at_utc": "2026-10-07T23:59:43.197Z",
+  "expiry_policy_days": 90,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-09T23:59:43.197Z",
+  "frozen_git_sha": "dd581746f355e78a70e2e709ab6eda161dbf9b21"
+}
