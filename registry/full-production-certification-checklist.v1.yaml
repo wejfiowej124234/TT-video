@@ -1,0 +1,642 @@
+# schema: traveltrust.full_production_certification_checklist.v1
+version: 2
+status: ACTIVE_CERTIFICATION
+frozen_utc: "2026-07-09T15:51:00Z"
+machine_key: TT_FPC_100
+mode: certification
+# Certification ≠ Checklist: each item requires verdict + verifier + evidence + release eligibility.
+# PER Round 1 remains valid; FPC-100 is superset full-site certification.
+
+certification_model:
+  distinction: >-
+    Checklist asks "was it inspected?" Certification asks "did it PASS?", "who verified?",
+    "what evidence?", "is release allowed?"
+  four_layers:
+    L1_page_coverage:
+      question: Was every surface inspected (100% coverage)?
+      scope:
+        - frontend/app/**/page.tsx
+        - frontend/app/**/layout.tsx
+        - dynamic_route_segments
+        - modals_drawers_dialogs_per_page
+        - empty_states
+        - error_pages_403_404_500
+        - loading_tsx
+      target: "202/202 pages + global not-found + global-error"
+      matrix_json: docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json
+      scaffold_script: scripts/dev/scaffold-fpc-100-page-certification-matrix.cjs
+      batches: [B00, B23]
+    L2_per_page_l5_ux_ui:
+      question: Does each page meet production-grade UI/UX/content/function?
+      page_card_fields: [ui_score, ux_score, content_score, function_flow_score, layer2_ux_states, layer2_ui_dimensions, ux_certification, l5_dimensions_96_16]
+      score_scale: "0-10 (null until verified)"
+      production_ready_enum: [YES, NO, CONDITIONAL]
+      rubric_ssot: docs/spec/96-16-全页面UI-UX优化方案总册.md
+      walkthrough_ssot: docs/spec/96-13-UI-UX-i18n-a11y-性能走查.md
+      batches: [B25-C1, B25-C2, B25-C3, B25-C4, B25-C5, B25-C6]
+    L3_business_flows:
+      question: Do end-to-end business paths work (not page-only)?
+      flows: [guide, provider, acquisition, governance_participation, escrow_golden_path]
+      registry: registry/business-flow-matrix.v1.yaml
+      batches: [B05, B08, B10]
+    L4_enterprise:
+      question: Do cross-cutting enterprise gates PASS?
+      dimensions: [seo, i18n, a11y, mobile, rbac, api, security, performance, observability, production_build]
+      batches: [B01, B11, B12, B13, B14, B15, B16, B17, B18, B19, B20, B21, B22, B24]
+  ux_certification_rubric:
+    ia_information_architecture: Unique nav · clear hierarchy · no dead ends
+    cta_unique_primary: One primary CTA per viewport band where applicable
+    l5_visual_quality: Token/spacing/typography per 22/86 · no draft chrome
+    user_comprehension_cost: No engineering jargon · mock/demo labels · internal spec IDs
+    industry_best_practice: Matches travel/marketplace/Web3 product norms
+    production_grade_product_feel: Would ship to paying users without apology
+
+local_ssot_anchor:
+  commit: e9df0a73f63b5ebccc7c17266f000c3bf867d872
+  branch: feature/g23-04-abi-event-freeze
+  per_round1_exit: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-ROUND1-EXIT.md
+  local_freeze: true
+
+human_ssot: docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md
+runbook: docs/runbook/FPC-100-PRE-RELEASE-EXECUTION-PLAN-v1.md
+
+phase_ladder:
+  completed:
+    - local_ssot
+    - per_round1_exit
+    - local_freeze_baseline_commit
+  active: fpc_100_batch_execution
+  next:
+    - one_shot_staging_deploy
+    - environment_diff
+    - staging_fpc_recheck
+    - production_entry_review
+
+honest_boundary: >-
+  FPC-100 PASS on ① local ≠ ② staging GO ≠ ③ Production GO.
+  PER Round 1 Exit (15 CI closed) is prerequisite, not substitute for FPC-100 completion.
+  VP-01..VP-09 map to Round 2 / FPC batches B14–B18 — not Round 1 Exit blockers.
+
+verdict_enum: [NOT_STARTED, IN_PROGRESS, PASS, PASS_WITH_WARN, FAIL, BLOCKED, N/A]
+severity_enum: [P0, P1, P2, P3]
+issue_class_enum: [DEFECT, DRIFT, CONFLICT, BLOCKING_RISK, NON_BLOCKING_RISK, EXPECTED_DIFFERENCE]
+
+evidence_root: docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100
+evidence_naming:
+  batch_json: "FPC-100-BATCH-{batch_id}-LATEST.json"
+  batch_closeout: "FPC-100-BATCH-{batch_id}-CLOSEOUT.md"
+  batch_log: "FPC-100-BATCH-{batch_id}-{stamp}.log"
+  rollup_json: FPC-100-REGISTRY-LATEST.json
+  rollup_md: FPC-100-REGISTRY-LATEST.md
+
+page_inventory:
+  scan_glob: frontend/app/**/page.tsx
+  count_as_of: "2026-07-09"
+  total_routes: 202
+  consumer_routes: 88
+  admin_routes: 114
+  layout_tsx: 74
+  loading_tsx: 132
+  error_tsx: 129
+  not_found_tsx: 1
+  global_error_tsx: 1
+  spec_matrix: docs/spec/96-20-前后端页面对齐与UI生产级审计报告.md
+  domain_regression: docs/spec/93-全站功能验证矩阵-域别回归清单.md
+  page_certification_matrix: docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json
+  per_page_evidence_glob: "FPC-100/pages/{page_id}/"
+
+personas:
+  registry: registry/test-accounts-business-immutable.v1.yaml
+  ids: [C1, C2, C3, C4, E1, E2]
+  hat_matrix: registry/hat-six-role-matrix.v1.yaml
+  admin_rbac: registry/admin-rbac-permissions.v1.yaml
+
+api_inventory:
+  contract_ssot: docs/spec/04-后端与API.md
+  ports_snapshot: docs/spec/38-端口与接口完整清单.md
+  code_router: crates/api/src/routes/mod.rs
+  frontend_routes: frontend/lib/api.ts
+
+execution_policy:
+  local_code_changes: forbidden_unless
+    - environment_diff_finds_drift
+    - staging_only_issue
+    - new_p0_p1_from_fpc_batch
+  deploy_policy: one_shot_after_fpc_local_batches_or_owner_scope
+  batch_gate: each_batch_must_record_evidence_before_next_batch
+
+batches:
+  - id: B00
+    title: Anchor · Meta · Health · Registry · Page matrix scaffold
+    priority: P0
+    phase: [local, staging]
+    layer: L1
+    depends_on: []
+    gates:
+      - scripts/dev/scaffold-fpc-100-page-certification-matrix.cjs
+      - scripts/dev/run-per-final-spot-check.sh
+    acceptance: >-
+      code_anchor e9df0a73 documented; working tree clean; /health /meta 200;
+      page matrix scaffolded 202/202 NOT_STARTED; registry anchors resolvable.
+    evidence: FPC-100/B00-anchor
+    owner_files:
+      - scripts/dev/scaffold-fpc-100-page-certification-matrix.cjs
+      - registry/full-production-certification-checklist.v1.yaml
+      - crates/api/src/routes/health_meta/handlers.rs
+
+  - id: B01
+    title: Public Surface Parity (PER carry-forward)
+    priority: P0
+    phase: [local, staging]
+    depends_on: [B00]
+    routes: [/, /traveltrust, /market, /help, /trust, /governance, /traveltrust/announcements]
+    gates:
+      - scripts/gates/check-production-ui-hygiene-gate.sh
+      - scripts/gates/check-public-surface-audit-gate.sh
+      - scripts/dev/run-per-final-spot-check.sh
+    acceptance: >-
+      PER Final Spot Check patterns PASS; guide count Hangzhou=1 trust_gate=0;
+      no fee-router self-check on consumer SSR; no engineering jargon on public copy.
+    evidence: FPC-100/B01-public-surface
+    owner_files:
+      - scripts/dev/run-per-final-spot-check.cjs
+      - registry/traveltrust-public-surface-audit.v1.yaml
+      - frontend/components/nav/ProductCrossNav.tsx
+
+  - id: B02
+    title: Five-main marketing corridor (UI freeze + data chain)
+    priority: P0
+    phase: [local]
+    depends_on: [B01]
+    routes: [/, /traveltrust, /market, /did-rank, /community/*]
+    gates:
+      - scripts/gates/five-main-routes-ui-antiregression-gate.sh
+      - scripts/dev/run-web3-itinerary-l5-green.sh
+    acceptance: >-
+      FIVE-MAIN freeze respected; landing/market data chain SSOT green;
+      vitest homeMarketing + communityShell contracts exit 0.
+    evidence: FPC-100/B02-five-main
+    owner_files:
+      - frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md
+      - frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md
+
+  - id: B03
+    title: Auth · register · session · onboarding
+    priority: P0
+    phase: [local, staging]
+    depends_on: [B00]
+    routes: [/auth/login, /auth/register, /me/onboarding, /provider/register, /steward/register, /guide/register]
+    personas: [C1, C2, C3, C4]
+    gates:
+      - scripts/gates/auth-contract-gate.sh
+      - scripts/gates/check-auth-session-hash-gate.sh
+      - scripts/dev/smoke-provider-onboarding-local.sh
+      - scripts/dev/smoke-onboarding-full-chain-local.sh
+    acceptance: >-
+      93 §1 A-domain cases PASS or NOT RUN logged; auth POST hits API not Next HTML;
+      provider/steward register L5 contracts green.
+    evidence: FPC-100/B03-auth-onboarding
+    owner_files:
+      - frontend/app/auth/login/README.md
+      - frontend/app/provider/register/README.md
+      - crates/api/src/routes/auth.rs
+
+  - id: B04
+    title: Market · guides · catalog · DDG
+    priority: P0
+    phase: [local, staging]
+    depends_on: [B01]
+    routes: [/market, /market/*, /discover]
+    gates:
+      - scripts/gates/vertical-slice-01-guides-catalog.sh
+      - scripts/gates/vertical-slice-03-market-hub-public-smoke.sh
+      - scripts/gates/check-display-data-governance-ssot.sh
+      - scripts/dev/run-market-guide-catalog-parity.sh
+    acceptance: >-
+      Public guide list filtered per market_public_surface; no demo labels;
+      DDG registry surfaces PASS; API/UI guide count parity.
+    evidence: FPC-100/B04-market-ddg
+    owner_files:
+      - crates/api/src/chain_off/market_public_surface.rs
+      - registry/display-data-governance.v1.yaml
+      - registry/single-official-public-catalog-policy.v1.yaml
+
+  - id: B05
+    title: Web3 itinerary golden path (landing → pay → orders → escrow)
+    priority: P0
+    phase: [local]
+    depends_on: [B02, B04]
+    routes: [/pay, /orders, /escrow/[id], /itinerary/*]
+    gates:
+      - scripts/dev/run-web3-itinerary-l5-green.sh
+      - scripts/dev/smoke-web3-itinerary-full-chain-local.sh
+      - scripts/dev/smoke-seed-tourist-guide-transaction-local.sh
+      - scripts/gates/check-web3-full-alignment-gate.sh
+    acceptance: >-
+      93 §2.0 B-domain P0 five-link PASS; escrow draft experience freeze respected;
+      bilateral confirm-completion evidence on seeded order.
+    evidence: FPC-100/B05-web3-itinerary
+    owner_files:
+      - frontend/app/escrow/[id]/README.md
+      - frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md
+
+  - id: B06
+    title: Governance · trust · TravelTrust network · announcements
+    priority: P1
+    phase: [local, staging]
+    depends_on: [B01]
+    routes: [/governance, /governance/*, /trust, /traveltrust, /traveltrust/announcements, /staking]
+    gates:
+      - scripts/dev/smoke-governance-proposals-l5-local.sh
+      - scripts/gates/governance-matrix-local-gate.sh
+      - scripts/gates/check-announcement-lane-governance-gate.sh
+    acceptance: >-
+      Public governance hub consumer-safe; no admin deep links; trust page no spec IDs;
+      announcement lane governance frozen.
+    evidence: FPC-100/B06-governance-trust
+    owner_files:
+      - frontend/app/governance/GovernanceHubPageMain.tsx
+      - frontend/components/trust/TrustTransparencyHub.tsx
+
+  - id: B07
+    title: Community corridor
+    priority: P1
+    phase: [local]
+    depends_on: [B02]
+    routes: [/community, /community/*]
+    gates:
+      - scripts/gates/vertical-slice-04-community-explore-public-smoke.sh
+      - scripts/gates/run-community-media-guard.sh
+    acceptance: >-
+      Community shell theme contract green; feed/public explore smoke PASS;
+      media URL policy per communityMediaClientUrl.
+    evidence: FPC-100/B07-community
+    owner_files:
+      - frontend/evidence/GO_local_community_phase1_narrow/COMMUNITY-PHASE1-FREEZE.md
+      - frontend/app/community/README.md
+
+  - id: B08
+    title: Me · identities · acquisition PD-009
+    priority: P1
+    phase: [local]
+    depends_on: [B03]
+    routes: [/me, /me/*, /market/acquisition]
+    maps_vp: [PER-R1-VP-05]
+    gates:
+      - scripts/dev/smoke-acquisition-pd009-local.sh
+      - scripts/gates/me-routes-local-gate.sh
+    acceptance: >-
+      /me/identities hub freeze; acquisition_publish_gate path green;
+      logged-in hub walk documented (VP-05 closure target).
+    evidence: FPC-100/B08-me-acquisition
+    owner_files:
+      - frontend/app/me/identities/README.md
+      - frontend/app/market/acquisition/README.md
+      - crates/api/src/chain_off/acquisition_publish_gate.rs
+
+  - id: B09
+    title: Admin workspace · RBAC · four centers (114 routes)
+    priority: P0
+    phase: [local, staging]
+    depends_on: [B00]
+    route_glob: frontend/app/admin/**/page.tsx
+    personas: [E1, E2]
+    gates:
+      - scripts/dev/smoke-admin-rbac-matrix-local.sh
+      - scripts/gates/smoke-admin-rbac-staging-matrix.sh
+      - scripts/gates/run-admin-platform-40-verification.sh
+      - scripts/gates/check-admin-functional-audit-mapping.py
+    acceptance: >-
+      admin-rbac-route-matrix probes PASS; deny matrix enforced;
+      four-centers governance SSOT aligned; staging matrix when on ②.
+    evidence: FPC-100/B09-admin-rbac
+    owner_files:
+      - registry/admin-rbac-route-matrix.v1.yaml
+      - registry/admin-rbac-permissions.v1.yaml
+      - crates/api/src/routes/admin/admin_rbac.rs
+      - frontend/app/admin/README.md
+
+  - id: B10
+    title: Business flow matrix (guide · provider · acquisition)
+    priority: P1
+    phase: [local]
+    depends_on: [B03, B04, B05, B08]
+    registry: registry/business-flow-matrix.v1.yaml
+    gates:
+      - scripts/dev/run-production-readiness-master-checklist.cjs
+    acceptance: >-
+      Each BFM flow step pass with human_click→api→db→page→outcome chain evidence;
+      or explicit FAIL with defect ID.
+    evidence: FPC-100/B10-business-flows
+    owner_files:
+      - registry/business-flow-matrix.v1.yaml
+      - evidence/manual-uat/README.md
+
+  - id: B11
+    title: API contract · route parity · public smoke
+    priority: P0
+    phase: [local]
+    depends_on: [B00]
+    gates:
+      - scripts/gates/run-check-04-routes.sh
+      - scripts/gates/smoke-api-public-routes.sh
+      - scripts/gates/check-frontend-api-consistency-audit-ssot.sh
+      - cargo test -p traveltrust-api
+    acceptance: >-
+      04 §3.4 ↔ routes/mod.rs ↔ frontend/lib/api.ts parity;
+      public route smoke PASS; no undocumented breaking drift.
+    evidence: FPC-100/B11-api-parity
+    owner_files:
+      - docs/spec/04-后端与API.md
+      - crates/api/src/routes/mod.rs
+      - frontend/lib/api.ts
+
+  - id: B12
+    title: Data governance · CMS runtime consumer · official ops
+    priority: P1
+    phase: [local, staging]
+    depends_on: [B04]
+    gates:
+      - scripts/gates/check-display-data-governance-ssot.sh
+      - scripts/gates/check-official-ops-public-operations-ssot.sh
+      - scripts/gates/check-cms-announcements-gate.sh
+      - scripts/dev/run-display-data-governance.sh
+    acceptance: >-
+      DDG surfaces PASS; homepage/market read catalog not fallback where Live;
+      OCS official entities separated from business API data.
+    evidence: FPC-100/B12-data-governance
+    owner_files:
+      - data/catalog/cms-asset-matrix.v1.yaml
+      - registry/display-data-governance.v1.yaml
+      - docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md
+
+  - id: B13
+    title: SEO · metadata · canonical · OG · i18n
+    priority: P1
+    phase: [local, staging]
+    depends_on: [B01]
+    maps_vp: [PER-R1-VP-02]
+    gates:
+      - scripts/gates/check-home-public-disclosure-alignment-gate.sh
+      - frontend/lib/siteMetadataBase.test.ts
+    acceptance: >-
+      No localhost in canonical/OG on public routes; zh/en title parity on walked pages;
+      full en sweep tracked as VP-02 sub-checklist within batch evidence.
+    evidence: FPC-100/B13-seo-i18n
+    owner_files:
+      - frontend/lib/siteMetadataBase.ts
+      - frontend/locales/zh.ts
+      - frontend/locales/en.ts
+
+  - id: B14
+    title: a11y · keyboard · axe (Round 2 depth)
+    priority: P2
+    phase: [local]
+    depends_on: [B02]
+    maps_vp: [PER-R1-VP-03]
+    gates:
+      - docs/spec/96-13-UI-UX-i18n-a11y-性能走查.md
+    acceptance: >-
+      Public corridor axe/keyboard sweep per 96-13 checklist;
+      critical a11y violations = P1; document N/A for admin-only surfaces.
+    evidence: FPC-100/B14-a11y
+    owner_files:
+      - docs/spec/96-13-UI-UX-i18n-a11y-性能走查.md
+      - frontend/lib/l5/l5ProductExcellence.contract.test.ts
+
+  - id: B15
+    title: Mobile 375px layout matrix
+    priority: P2
+    phase: [local, staging]
+    depends_on: [B01]
+    maps_vp: [PER-R1-VP-01]
+    acceptance: >-
+      375px screenshot/walk for public_corridor_10 + PER 7-page matrix;
+      horizontal overflow = P1 on consumer pages.
+    evidence: FPC-100/B15-mobile
+    owner_files:
+      - docs/spec/96-16-全页面UI-UX优化方案总册.md
+
+  - id: B16
+    title: Performance · build size · runtime budgets
+    priority: P2
+    phase: [local]
+    depends_on: [B02]
+    gates:
+      - scripts/gates/check-frontend-npm-build.sh
+    acceptance: >-
+      next build PASS; document LCP/CLS spot checks on five-main;
+      no regression vs baseline capture in evidence JSON.
+    evidence: FPC-100/B16-performance
+    owner_files:
+      - registry/production-readiness-master-matrix.v1.yaml
+
+  - id: B17
+    title: Security · secrets · internal routes · CSP
+    priority: P0
+    phase: [local, staging, production_prep]
+    depends_on: [B00, B09]
+    gates:
+      - scripts/gates/check-invariants.sh
+      - scripts/gates/audit-deps.sh
+      - scripts/gates/check-auth-email-resend-gate.sh
+    acceptance: >-
+      Internal routes 403 from public; no secrets in repo;
+      admin RBAC deny enforced; alignment policy OPEN_BLOCKING_RISKS=0 for GO track.
+    evidence: FPC-100/B17-security
+    owner_files:
+      - docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md
+      - registry/open-issues.v1.yaml
+
+  - id: B18
+    title: Production build · DevTools · mock surfaces
+    priority: P1
+    phase: [local]
+    depends_on: [B01]
+    maps_vp: [PER-R1-VP-09]
+    gates:
+      - scripts/gates/check-production-ui-hygiene-gate.sh
+      - scripts/gates/check-frontend-npm-build.sh
+    acceptance: >-
+      NODE_ENV=production next build + start: no DevTools affordance,
+      no mock-swap/spacing-debug/test-persona chrome without explicit opt-in flags.
+    evidence: FPC-100/B18-production-build
+    owner_files:
+      - scripts/gates/check-production-ui-hygiene-gate.sh
+      - frontend/lib/travelTrustUiGuards.ts
+
+  - id: B19
+    title: Observability · health · metrics · logging
+    priority: P1
+    phase: [local, staging]
+    depends_on: [B00]
+    gates:
+      - scripts/gates/check-api-build-health-gate.sh
+    acceptance: >-
+      /health 200 with dependency summary; /meta complete on both envs;
+      error paths log without PII leak (spot check).
+    evidence: FPC-100/B19-observability
+    owner_files:
+      - crates/api/src/routes/health_meta/handlers.rs
+      - registry/production-readiness-master-matrix.v1.yaml
+
+  - id: B20
+    title: Web3 · escrow · Sepolia alignment · vacancy stack
+    priority: P0
+    phase: [local, staging]
+    depends_on: [B05]
+    gates:
+      - scripts/gates/check-web3-deployment-truth-gate.sh
+      - scripts/gates/check-web3-runtime-activation-gate.sh
+      - scripts/gates/check-phase2-web3-runtime-alignment-gate.sh
+      - scripts/gates/check-vacancy-deployment-readiness-gate.sh
+    acceptance: >-
+      GET /meta.chain matches deployment profile; web3 phase boundary respected;
+      ② Sepolia honesty on governance surfaces only where policy allows.
+    evidence: FPC-100/B20-web3
+    owner_files:
+      - docs/spec/14-合约-API-ABI-前后端对齐.md
+      - registry/protocol-convergence-deployments.v1.yaml
+
+  - id: B21
+    title: Stripe · PSP · webhooks (② test mode)
+    priority: P1
+    phase: [staging]
+    depends_on: [B00]
+    gates:
+      - scripts/gates/check-pi3-003-stripe-live-baseline-record.py
+    acceptance: >-
+      Staging Stripe test mode webhooks verified; no live keys in non-prod;
+      payment corridor documented in staging evidence.
+    evidence: FPC-100/B21-stripe
+    owner_files:
+      - docs/runbook/TT-9618-onboarding-local-testnet.md
+      - registry/production-usdc-go-live-master-checklist.v1.yaml
+
+  - id: B22
+    title: DR · backup · infra · fly deploy SSOT
+    priority: P1
+    phase: [staging, production_prep]
+    depends_on: [B00]
+    gates:
+      - scripts/gates/check-phase3-production-infrastructure-ssot.sh
+      - scripts/dev/check-fly-pg-backup-status.sh
+    acceptance: >-
+      Staging deploy manifest matches commit; backup/PITR baseline recorded;
+      DR drill evidence path documented.
+    evidence: FPC-100/B22-infra-dr
+    owner_files:
+      - deploy/fly/tt-api-staging/fly.toml
+      - registry/phase3-production-infrastructure.v1.yaml
+
+  - id: B23
+    title: "L1 · 100% page coverage enumeration (202/202)"
+    priority: P0
+    phase: [local, staging]
+    layer: L1
+    depends_on: [B00]
+    gates:
+      - scripts/gates/check-04-frontend-routes-vs-app.py
+      - scripts/gates/check-13-1-table1-routes-vs-app.py
+      - scripts/dev/run-phase1-site-page-forensic.sh
+    acceptance: >-
+      Every page.tsx has layer1_surface_coverage completed (page/layout/loading/error/modals/empty);
+      global not-found + global-error verified; coverage_summary.coverage_pct = 100 for L1 inspection
+      (not L2 scores). Zero unchecked pages.
+    evidence: FPC-100/B23-full-page-coverage
+    owner_files:
+      - docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json
+      - docs/spec/96-20-前后端页面对齐与UI生产级审计报告.md
+
+  - id: B25-C1
+    title: "L2 · Page certification — marketing & brand cluster"
+    priority: P0
+    phase: [local]
+    layer: L2
+    depends_on: [B23]
+    route_clusters: [marketing_brand]
+    acceptance: >-
+      Each page card in cluster production_ready YES or documented CONDITIONAL with P2+ only;
+      ui/ux/content/function scores recorded; ux_certification six items PASS or WARN logged.
+    evidence: FPC-100/B25-C1-marketing-brand
+    owner_files:
+      - frontend/evidence/GO_local_marketing_front_closure/FIVE-PAGES-ENTERPRISE-CODE-AUDIT-20260603.md
+
+  - id: B25-C2
+    title: "L2 · Page certification — market & commerce cluster"
+    priority: P0
+    phase: [local]
+    layer: L2
+    depends_on: [B04, B23]
+    route_clusters: [market_commerce]
+    evidence: FPC-100/B25-C2-market-commerce
+
+  - id: B25-C3
+    title: "L2 · Page certification — transaction & escrow cluster"
+    priority: P0
+    phase: [local]
+    layer: L2
+    depends_on: [B05, B23]
+    route_clusters: [transaction_escrow]
+    evidence: FPC-100/B25-C3-transaction-escrow
+
+  - id: B25-C4
+    title: "L2 · Page certification — identity & onboarding cluster"
+    priority: P0
+    phase: [local]
+    layer: L2
+    depends_on: [B03, B08, B23]
+    route_clusters: [identity_onboarding]
+    evidence: FPC-100/B25-C4-identity-onboarding
+
+  - id: B25-C5
+    title: "L2 · Page certification — governance · community · trust/help cluster"
+    priority: P1
+    phase: [local]
+    layer: L2
+    depends_on: [B06, B07, B23]
+    route_clusters: [governance_economics, community, trust_legal_help]
+    evidence: FPC-100/B25-C5-governance-community-trust
+
+  - id: B25-C6
+    title: "L2 · Page certification — admin workspace (114 pages)"
+    priority: P0
+    phase: [local, staging]
+    layer: L2
+    depends_on: [B09, B23]
+    route_clusters: [admin_workspace]
+    acceptance: >-
+      All 114 admin pages carded; RBAC-gated pages verified with E1/E2; no consumer-grade UX debt on critical ops paths.
+    evidence: FPC-100/B25-C6-admin-workspace
+    owner_files:
+      - frontend/app/admin/README.md
+      - docs/spec/70-管理员系统开发文档.md
+
+  - id: B24
+    title: Domain regression · R-002 · 93 matrix · release gate
+    priority: P0
+    phase: [local, staging]
+    depends_on: [B10, B11, B23]
+    gates:
+      - scripts/gates/vertical-slice-tt9627-segment3-r002-validate.sh
+      - scripts/gates/ci-local-delivery-minimum.sh
+      - scripts/gates/check-go-no-go.sh
+    acceptance: >-
+      93 A-domain 100% PASS on executed set; B §2.0 five P0 PASS;
+      report.json recorded with release_gate_reason; PARTIAL_GO not mislabeled GO.
+    evidence: FPC-100/B24-regression
+    owner_files:
+      - docs/spec/93-全站功能验证矩阵-域别回归清单.md
+      - docs/spec/R-002-回归执行闭环与发布准入.md
+      - evidence/GO_local_r002_verify/README.md
+
+rollup_exit_criteria:
+  required_batches_p0_pass: [B00, B01, B04, B05, B09, B11, B17, B20, B23, B24]
+  l1_page_coverage: "202/202 pages layer1_surface_coverage = PASS or N/A with evidence"
+  l2_page_certification: "202/202 pages production_ready in {YES, CONDITIONAL} with zero unresolved P0/P1"
+  l3_business_flows: "business-flow-matrix.v1.yaml all flows PASS"
+  l4_enterprise: "required_batches_p0_pass satisfied"
+  page_matrix_rollup: FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json
+  staging_required_after_deploy: [B00, B01, B04, B21, B22]
+  production_entry_review_gate: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PRODUCTION-ENTRY-REVIEW.md
+  master_matrix: registry/production-readiness-master-matrix.v1.yaml
