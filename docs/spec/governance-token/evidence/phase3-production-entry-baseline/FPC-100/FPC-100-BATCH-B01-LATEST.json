@@ -1,0 +1,81 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B01",
+  "title": "Public Surface Parity (PER carry-forward)",
+  "layer": "L4",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-09T16:06:24.048Z",
+  "verifier": "run-fpc-batch-b01-public-surface.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "22fdd005d643ad142d3d199ebb5953596806f687",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B00"
+  ],
+  "routes": [
+    "/",
+    "/traveltrust",
+    "/market",
+    "/help",
+    "/trust",
+    "/governance",
+    "/traveltrust/announcements"
+  ],
+  "gates": [
+    "scripts/gates/check-production-ui-hygiene-gate.sh",
+    "scripts/gates/check-public-surface-audit-gate.sh",
+    "scripts/dev/run-per-final-spot-check.sh"
+  ],
+  "per_spot_check": {
+    "path": "PER-FINAL-SPOT-CHECK-LATEST.json",
+    "verdict": "PASS",
+    "pages_checked": 7,
+    "p0_p1_count": 0
+  },
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "release_blocker": "NO",
+  "next_batch": "B02",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-09",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Public surface — human spot walk recommended before ② staging",
+  "traceability": {
+    "requirements": [
+      "PER Round 1 Final Spot Check carry-forward",
+      "Public surface audit v1"
+    ],
+    "spec_refs": [
+      "registry/traveltrust-public-surface-audit.v1.yaml",
+      "FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md § B01"
+    ],
+    "code_paths": [
+      "scripts/dev/run-per-final-spot-check.cjs",
+      "frontend/components/nav/ProductCrossNav.tsx"
+    ],
+    "tests": [
+      "check-production-ui-hygiene-gate.sh",
+      "check-public-surface-audit-gate.sh",
+      "run-per-final-spot-check.sh"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B01-LATEST.json",
+    "certification_batch": "B01",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-09T16:06:24.048Z",
+  "expires_at_utc": "2026-10-07T16:06:24.048Z",
+  "expiry_policy_days": 90,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-09T16:06:24.048Z",
+  "frozen_git_sha": "22fdd005d643ad142d3d199ebb5953596806f687"
+}

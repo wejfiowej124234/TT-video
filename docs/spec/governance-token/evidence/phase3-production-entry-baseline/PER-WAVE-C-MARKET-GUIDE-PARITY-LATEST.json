@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.market_guide_catalog_parity.v1",
   "api_base": "http://127.0.0.1:8080",
-  "timestamp_utc": "2026-07-09T15:30:47.096Z",
+  "timestamp_utc": "2026-07-09T16:06:34.546Z",
   "hangzhou": {
     "api_count": 1,
     "trust_gate_fixture_count": 0,

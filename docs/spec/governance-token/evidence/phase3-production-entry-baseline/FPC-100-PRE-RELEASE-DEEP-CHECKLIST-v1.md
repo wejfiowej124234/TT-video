@@ -109,6 +109,9 @@ L5   运营与真实 ★★★★★       Content · Lineage · API Contract ·
 | **Human + AI Review** | `human_verified` + `ai_review` · Dashboard 区分 Human/AI |
 | **Release Health** | Certified% · Expired · Blocked · Coverage% · 一屏总览 |
 | **Release Decision** | **`TT_RELEASE_DECISION`** · GO / CONDITIONAL_GO / NO_GO |
+| **No Batch Skip** | `execution_sequence` 线性 · 禁止跳批 |
+| **Release Readiness** | **`TT_RELEASE_READINESS`** · Owner 每日唯一数字 |
+| **Burn-down** | Completed / Remaining / Next Batch |
 | **Deployment Cert** | **B40** · 独立于 Local · Deploy→Health→Meta→Diff→Rollback |
 | **Business Readiness** | **B41** · Logo/法务/域名/Sitemap/Analytics |
 

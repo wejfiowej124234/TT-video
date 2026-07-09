@@ -258,6 +258,66 @@ release_health_dashboard:
   metrics: [certified_pct, expired_count, blocked_count, accepted_risks_count, coverage_pct, human_verified_pct, ai_review_pct]
   script: scripts/dev/refresh-fpc-100-release-dashboard.cjs
 
+no_batch_skip_policy:
+  enabled: true
+  machine_key: TT_FPC_NO_BATCH_SKIP
+  rule: Batches MUST run in execution_sequence order — no B01→B04→B18→B02 jumps
+  script: scripts/dev/check-fpc-no-batch-skip.cjs
+  shared_lib: scripts/dev/lib/fpc-batch-sequence.cjs
+  owner_daily_metric: TT_RELEASE_READINESS
+
+release_readiness:
+  machine_key: TT_RELEASE_READINESS
+  formula: contiguous_pass_prefix / total_batches * 100
+  note: Owner daily single number — distance to GO; not evidence_coverage pages/API
+
+execution_sequence:
+  - B00
+  - B01
+  - B02
+  - B03
+  - B04
+  - B05
+  - B06
+  - B07
+  - B08
+  - B09
+  - B10
+  - B11
+  - B12
+  - B13
+  - B14
+  - B15
+  - B16
+  - B17
+  - B18
+  - B19
+  - B20
+  - B21
+  - B22
+  - B23
+  - B24
+  - B25-C1
+  - B25-C2
+  - B25-C3
+  - B25-C4
+  - B25-C5
+  - B25-C6
+  - B26
+  - B30
+  - B31
+  - B32
+  - B33
+  - B34
+  - B35
+  - B36
+  - B40
+  - B41
+
+daily_execution_rhythm:
+  rule: One batch per day max — Batch → Dashboard refresh → Commit
+  forbidden: framework_changes · batch_skip · multi_batch_same_day_unless_remediation
+
 batch_evidence_required_fields:
   - product_version
   - certified_at_utc
@@ -331,6 +391,9 @@ execution_policy:
     - new_p0_p1_from_fpc_batch
   deploy_policy: one_shot_after_fpc_local_batches_or_owner_scope
   batch_gate: each_batch_must_record_evidence_before_next_batch
+  no_batch_skip: true
+  daily_rhythm: one_batch_per_day_then_dashboard_then_commit
+  next_batch_script: scripts/dev/check-fpc-no-batch-skip.cjs
 
 batches:
   - id: B00

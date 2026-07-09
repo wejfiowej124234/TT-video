@@ -2,29 +2,47 @@
   "schema": "traveltrust.fpc_100_release_dashboard.v3",
   "executive_summary": {
     "title": "TravelTrust Release Summary",
+    "release_readiness_pct": 4.9,
+    "release_readiness_key": "TT_RELEASE_READINESS",
     "product_version": "v1.0",
-    "coverage_pct": 0,
-    "batches": "1 / 41",
-    "batches_pass": 1,
+    "evidence_coverage_pct": 0,
+    "batches": "2 / 41",
+    "batches_pass": 2,
     "batches_total": 41,
     "blockers": 0,
     "pending_risks": 1,
     "accepted_risks": 2,
+    "next_required_batch": "B02",
     "fpc_verdict": "NOT_STARTED",
     "release_decision": "NO_GO",
     "governance": "FROZEN @ v5",
-    "execution": "ACTIVE · B00–B41"
+    "execution": "ACTIVE · B00–B41 · No Batch Skip"
   },
   "framework": "TravelTrust Full Production Certification Framework",
   "framework_registry_version": 5,
   "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION",
   "release_decision_key": "TT_RELEASE_DECISION",
   "product_version": "v1.0",
-  "timestamp_utc": "2026-07-09T16:06:06.917Z",
+  "timestamp_utc": "2026-07-09T16:09:20.756Z",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "verdict": "NOT_STARTED",
   "pass": false,
   "tt_release_decision": "NO_GO",
+  "release_readiness": {
+    "machine_key": "TT_RELEASE_READINESS",
+    "pct": 4.9,
+    "contiguous_completed": 2,
+    "total": 41
+  },
+  "burn_down": {
+    "completed": 2,
+    "remaining": 39,
+    "total": 41,
+    "coverage_pct": 4.9,
+    "next_required_batch": "B02",
+    "no_batch_skip_ok": true,
+    "skip_violations": []
+  },
   "pillars": {
     "technical": "IN_PROGRESS",
     "product": "NOT_STARTED",
@@ -33,12 +51,12 @@
     "business": "NOT_STARTED",
     "security": "NOT_STARTED",
     "performance": "NOT_STARTED",
-    "truthfulness": "NOT_STARTED",
+    "truthfulness": "IN_PROGRESS",
     "deployment": "NOT_STARTED",
     "human_verification": "NOT_STARTED"
   },
   "release_health": {
-    "certified_pct": 2.4,
+    "certified_pct": 4.9,
     "expired_count": 0,
     "blocked_count": 0,
     "accepted_risks_count": 2,
@@ -115,6 +133,19 @@
         "review_date": "2026-07-09",
         "review_version": "v1",
         "note": "Machine anchor batch — AI attests scaffold + registry presence only"
+      },
+      "ai_display": "Internal AI Review",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B01",
+      "ai_review": {
+        "verdict": "PASS",
+        "ai_reviewer": "Internal AI Review",
+        "review_type": "Internal AI Review",
+        "review_date": "2026-07-09",
+        "review_version": "v1"
       },
       "ai_display": "Internal AI Review",
       "human_verified": false,

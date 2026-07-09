@@ -2,15 +2,27 @@
 
 ## Executive Summary
 
+## Release Readiness · **4.9%**
+
+_Owner daily metric · `TT_RELEASE_READINESS`_
+
 | | |
 |---|---|
+| **Release Readiness** | **4.9%** |
 | **Version** | v1.0 |
-| **Coverage** | 0% |
-| **Batches** | 1 / 41 |
+| **Next Batch** | B02 |
 | **Blockers** | 0 |
 | **Accepted Risks** | 2 |
-| **FPC Verdict** | NOT_STARTED |
 | **Release Decision** | **NO_GO** |
+
+## Burn-down
+
+| Metric | Value |
+|--------|-------|
+| Batches Completed | 2 / 41 |
+| Remaining | 39 |
+| Batch Coverage | 4.9% |
+| Evidence Coverage (pages/API/…) | 0% |
 
 _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 
@@ -19,13 +31,13 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 **Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
 **FPC verdict:** **NOT_STARTED**  
 **Release decision:** `TT_RELEASE_DECISION` = **NO_GO**  
-**Updated:** 2026-07-09T16:06:06.917Z
+**Updated:** 2026-07-09T16:09:20.756Z
 
 ## Release Health
 
 | Metric | Value |
 |--------|-------|
-| Certified | 2.4% |
+| Certified | 4.9% |
 | Expired | 0 |
 | Blocked | 0 |
 | Accepted Risks | 2 |
@@ -50,7 +62,7 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 | business | NOT_STARTED |
 | security | NOT_STARTED |
 | performance | NOT_STARTED |
-| truthfulness | NOT_STARTED |
+| truthfulness | IN_PROGRESS |
 | deployment | NOT_STARTED |
 | human verification | NOT_STARTED |
 
@@ -68,6 +80,7 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 | Batch | AI | Human |
 |-------|----|-------|
 | B00 | PASS (Internal AI Review) | — |
+| B01 | PASS (Internal AI Review) | — |
 
 ## Accepted Risks
 

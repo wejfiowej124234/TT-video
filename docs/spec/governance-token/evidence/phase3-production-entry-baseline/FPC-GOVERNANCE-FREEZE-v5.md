@@ -14,7 +14,34 @@
 | **① Governance** | FPC Framework · Registry · Governance docs · Dashboard schema | **FROZEN @ v5** | **不动** — 除非 P0 或 Version Upgrade |
 | **② Execution** | B00 → B01 → … → B41 · Evidence · Fixes · Dashboard refresh | **ACTIVE** | **主要时间在这里** |
 
-**禁止 Framework Inflation：** B41 完成前 **不得** 新增治理模块、新 pillar、新 batch 类型、新 Dashboard 区块（Executive Summary 除外 — 已纳入 v5 freeze）。
+**禁止 Framework Inflation：** B41 完成前 **不得** 新增治理模块、新 pillar、新 batch 类型。  
+**v5 最终执行纪律（已纳入 freeze）：** No Batch Skip · Burn-down · `TT_RELEASE_READINESS` · 每日一批 rhythm。
+
+---
+
+## No Batch Skip Policy（最终纪律）
+
+```
+B00 → B01 → B02 → … → B41
+```
+
+**禁止：** B01 → B04 → B18 → B02 跳跃执行。
+
+| 检查 | 路径 |
+|------|------|
+| Sequence SSOT | `registry/full-production-certification-checklist.v1.yaml` · `execution_sequence` |
+| Script | `scripts/dev/check-fpc-no-batch-skip.cjs` |
+| Batch runner | 必须先 `assertCanRun(batchId)` |
+
+---
+
+## Owner 每日唯一数字
+
+**`TT_RELEASE_READINESS`** = 从 B00 起连续 PASS 前缀 / 41 × 100%
+
+Dashboard **Burn-down：** Completed · Remaining · Next Batch
+
+**每日 rhythm：** 1 Batch → refresh Dashboard → Commit（不重设计框架）
 
 ---
 

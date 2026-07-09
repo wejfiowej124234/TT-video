@@ -17,6 +17,7 @@ const EVID = path.join(
 const REGISTRY_PATH = path.join(ROOT, 'registry/full-production-certification-checklist.v1.yaml');
 const RISK_PATH = path.join(ROOT, 'registry/fpc-100-risk-register.v1.yaml');
 const VERSION_REG_PATH = path.join(ROOT, 'registry/fpc-100-version-registry.v1.yaml');
+const { computeBurnDown, parseExecutionSequence } = require('./lib/fpc-batch-sequence.cjs');
 
 const MATRIX = path.join(EVID, 'FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json');
 const REGISTRY_ROLLUP = path.join(EVID, 'FPC-100-REGISTRY-LATEST.json');
@@ -236,6 +237,7 @@ const releaseHealth = {
 
 const changeImpact = readJson(path.join(EVID, 'FPC-100-CHANGE-IMPACT-LATEST.json'), null);
 const versionReg = parseVersionRegistry();
+const burnDown = computeBurnDown(parseExecutionSequence());
 
 const pillarValues = Object.values(pillars);
 const allPillarsPass = pillarValues.every((v) => v === 'PASS');
@@ -255,18 +257,21 @@ const ttReleaseDecision = computeReleaseDecision(
 
 const executiveSummary = {
   title: 'TravelTrust Release Summary',
+  release_readiness_pct: burnDown.release_readiness_pct,
+  release_readiness_key: 'TT_RELEASE_READINESS',
   product_version: versionReg.current_product_version,
-  coverage_pct: releaseHealth.coverage_pct,
-  batches: `${certifiedPassCount} / ${totalBatchesTracked}`,
-  batches_pass: certifiedPassCount,
-  batches_total: totalBatchesTracked,
+  evidence_coverage_pct: releaseHealth.coverage_pct,
+  batches: `${burnDown.contiguous_completed} / ${burnDown.total}`,
+  batches_pass: burnDown.contiguous_completed,
+  batches_total: burnDown.total,
   blockers: blockedBatches.length,
   pending_risks: pendingRisks.length,
   accepted_risks: acceptedRisks.length,
+  next_required_batch: burnDown.next_required_batch,
   fpc_verdict: fpcVerdict,
   release_decision: ttReleaseDecision,
   governance: 'FROZEN @ v5',
-  execution: 'ACTIVE · B00–B41',
+  execution: 'ACTIVE · B00–B41 · No Batch Skip',
 };
 
 const dashboard = {
@@ -282,6 +287,21 @@ const dashboard = {
   verdict: fpcVerdict,
   pass: fpcVerdict === 'PASS',
   tt_release_decision: ttReleaseDecision,
+  release_readiness: {
+    machine_key: 'TT_RELEASE_READINESS',
+    pct: burnDown.release_readiness_pct,
+    contiguous_completed: burnDown.contiguous_completed,
+    total: burnDown.total,
+  },
+  burn_down: {
+    completed: burnDown.completed,
+    remaining: burnDown.remaining,
+    total: burnDown.total,
+    coverage_pct: burnDown.coverage_pct,
+    next_required_batch: burnDown.next_required_batch,
+    no_batch_skip_ok: burnDown.sequence_ok,
+    skip_violations: burnDown.skip_violations,
+  },
   pillars,
   release_health: releaseHealth,
   release_history: versionReg.release_history,
@@ -336,15 +356,27 @@ const md = [
   '',
   '## Executive Summary',
   '',
+  `## Release Readiness · **${executiveSummary.release_readiness_pct}%**`,
+  '',
+  `_Owner daily metric · \`TT_RELEASE_READINESS\`_`,
+  '',
   '| | |',
   '|---|---|',
+  `| **Release Readiness** | **${executiveSummary.release_readiness_pct}%** |`,
   `| **Version** | ${executiveSummary.product_version} |`,
-  `| **Coverage** | ${executiveSummary.coverage_pct}% |`,
-  `| **Batches** | ${executiveSummary.batches} |`,
+  `| **Next Batch** | ${executiveSummary.next_required_batch || '—'} |`,
   `| **Blockers** | ${executiveSummary.blockers} |`,
   `| **Accepted Risks** | ${executiveSummary.accepted_risks} |`,
-  `| **FPC Verdict** | ${executiveSummary.fpc_verdict} |`,
   `| **Release Decision** | **${executiveSummary.release_decision}** |`,
+  '',
+  '## Burn-down',
+  '',
+  '| Metric | Value |',
+  '|--------|-------|',
+  `| Batches Completed | ${burnDown.contiguous_completed} / ${burnDown.total} |`,
+  `| Remaining | ${burnDown.total - burnDown.contiguous_completed} |`,
+  `| Batch Coverage | ${burnDown.coverage_pct}% |`,
+  `| Evidence Coverage (pages/API/…) | ${releaseHealth.coverage_pct}% |`,
   '',
   '_Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_',
   '',
@@ -430,5 +462,7 @@ fs.writeFileSync(OUT_MD, md);
 
 console.log('TT_FULL_PRODUCTION_CERTIFICATION:', fpcVerdict);
 console.log('TT_RELEASE_DECISION:', ttReleaseDecision);
+console.log('TT_RELEASE_READINESS:', `${burnDown.release_readiness_pct}%`);
+console.log('NEXT_BATCH:', burnDown.next_required_batch || 'ALL_DONE');
 console.log('DASHBOARD_JSON:', OUT_JSON);
 console.log('VERSION_CERT:', VERSION_OUT);

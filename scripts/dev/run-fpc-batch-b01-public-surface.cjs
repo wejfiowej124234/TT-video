@@ -26,9 +26,20 @@ function sh(cmd) {
   return execSync(cmd, { cwd: ROOT, encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'] });
 }
 
+const { assertCanRun } = require('./lib/fpc-batch-sequence.cjs');
+
 (async () => {
   const stamp = new Date().toISOString();
   const findings = [];
+
+  const gate = assertCanRun('B01');
+  if (!gate.ok) {
+    findings.push({
+      id: 'no_batch_skip',
+      severity: 'P0',
+      detail: `Cannot run B01 before ${gate.missing_prerequisites?.join(', ')}`,
+    });
+  }
 
   const b00Path = path.join(EVID, 'FPC-100-BATCH-B00-LATEST.json');
   if (!fs.existsSync(b00Path)) {

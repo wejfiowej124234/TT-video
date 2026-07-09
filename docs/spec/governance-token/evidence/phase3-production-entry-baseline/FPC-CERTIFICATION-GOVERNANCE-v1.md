@@ -318,4 +318,42 @@ Dashboard **AI Review · Human Verification** 表区分机读/真人。
 | **NO_GO** | FAIL · blocker · PENDING risk · EXPIRED |
 | **NOT_STARTED** | FPC 进行中 |
 
-**FPC verdict（PASS）≠ Release Decision（GO）** — Dashboard **Executive Summary** 第一眼展示 Release Decision。
+**FPC verdict（PASS）≠ Release Decision（GO）** — Dashboard **Executive Summary** 第一眼展示 **Release Readiness** 与 Release Decision。
+
+---
+
+## 15. No Batch Skip · Burn-down · Release Readiness（最终执行纪律）
+
+### No Batch Skip
+
+批次 **必须** 按 `execution_sequence` 线性执行 — 禁止跳批。
+
+```
+B00 → B01 → B02 → … → B41
+```
+
+**检查：** `node scripts/dev/check-fpc-no-batch-skip.cjs` · Batch runner 内嵌 `assertCanRun`
+
+### Burn-down（Dashboard）
+
+| 字段 | 含义 |
+|------|------|
+| Completed | 连续 PASS 前缀 / total |
+| Remaining | total − contiguous |
+| Next Batch | 下一个必须执行的 id |
+
+### Release Readiness（Owner 每日唯一数字）
+
+**Machine key:** `TT_RELEASE_READINESS`
+
+公式：从 B00 起 **连续 PASS** 批次数 / 41 × 100%
+
+**不是** Pages/API evidence coverage — 那是深度认证进度；Release Readiness 是 **离 GO 还有多远**。
+
+### 每日 rhythm
+
+1. 执行 **一个** Batch（或 remediation 重跑同一批）  
+2. `refresh-fpc-100-release-dashboard.cjs`  
+3. Commit evidence + dashboard  
+
+**第三阶段（当前）：** 认证产品 — 每日目标 = 提高 `TT_RELEASE_READINESS`，不是写代码或扩框架。

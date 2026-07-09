@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.per_final_spot_check.v1",
   "phase": "① local",
-  "timestamp_utc": "2026-07-09T15:30:47.214Z",
+  "timestamp_utc": "2026-07-09T16:06:34.662Z",
   "web_base": "http://127.0.0.1:3012",
   "api_base": "http://127.0.0.1:8080",
   "verdict": "PASS",
@@ -85,17 +85,6 @@
       "home_fee_router_hit": false
     }
   },
-  "gates": {
-    "production_ui_hygiene": "PASS",
-    "public_surface_audit": "PASS",
-    "market_guide_catalog_parity": "PASS"
-  },
-  "round1_exit_criteria": {
-    "confirmed_ci_open": 0,
-    "per_final_spot_check": "PASS",
-    "hygiene_gate": "PASS",
-    "public_surface_gate": "PASS",
-    "eligible_for_round1_exit": true
-  },
+  "gates": {},
   "pass": true
 }
