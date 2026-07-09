@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.fpc_100_freeze_check.v1",
+  "timestamp_utc": "2026-07-09T15:59:33.232Z",
+  "head": "4d482f256f83faa564ebafda551108eec5705480",
+  "results": [
+    {
+      "batch_id": "B00",
+      "status": "FROZEN_OK",
+      "frozen_git_sha": "4d482f256f83faa564ebafda551108eec5705480",
+      "head": "4d482f256f83faa564ebafda551108eec5705480"
+    }
+  ],
+  "any_invalidated": false,
+  "any_expired": false
+}

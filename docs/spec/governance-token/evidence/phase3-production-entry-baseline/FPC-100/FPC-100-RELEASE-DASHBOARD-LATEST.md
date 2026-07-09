@@ -1,30 +1,42 @@
-# TravelTrust · Full Production Certification Dashboard
+# TravelTrust · Release Dashboard
 
+**Framework:** TravelTrust Full Production Certification  
 **Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
 **Verdict:** **NOT_STARTED**  
-**Updated:** 2026-07-09T15:56:27.442Z
+**Updated:** 2026-07-09T15:59:33.150Z
 
-| 项 | 完成 | 判定 |
-|---|------|------|
-| Pages (L1 coverage) | 0 / 202 | IN_PROGRESS |
-| UI scored (L2) | 0 / 202 | NOT_STARTED |
-| UX scored (L2) | 0 / 202 | NOT_STARTED |
-| CX (L2.5) | 0 / 202 | NOT_STARTED |
-| Production Ready (L2) | 0 / 202 | NOT_STARTED |
-| API Contract | 0% | NOT_STARTED |
-| RBAC | NOT_STARTED | NOT_STARTED |
-| Data Lineage (L5) | 0 / 202 | NOT_STARTED |
-| Content Operations (L5) | NOT_STARTED | NOT_STARTED |
-| Recovery (L5) | NOT_STARTED | NOT_STARTED |
-| Truthfulness (L5) | 0 / 202 | NOT_STARTED |
-| Lifecycle (L5) | NOT_STARTED | NOT_STARTED |
-| Operations (L5) | NOT_STARTED | NOT_STARTED |
-| Mobile | NOT_STARTED | NOT_STARTED |
-| A11Y | NOT_STARTED | NOT_STARTED |
-| Performance | NOT_STARTED | NOT_STARTED |
-| Security | NOT_STARTED | NOT_STARTED |
-| Business Flows (L3) | NOT_STARTED | NOT_STARTED |
-| Environment Diff | NOT_STARTED | NOT_STARTED |
+## Pillars
+
+| Pillar | Verdict |
+|--------|---------|
+| technical | IN_PROGRESS |
+| product | NOT_STARTED |
+| operations | NOT_STARTED |
+| content | NOT_STARTED |
+| business | NOT_STARTED |
+| security | NOT_STARTED |
+| performance | NOT_STARTED |
+| truthfulness | NOT_STARTED |
+| deployment | NOT_STARTED |
+| human verification | NOT_STARTED |
+
+## Evidence Coverage
+
+| Dimension | Coverage |
+|-----------|----------|
+| pages | 0 / 202 |
+| api_contracts | 0 / 181 |
+| business_corridors | 0 / 23 |
+| rbac_probes | 0 / 102 |
+
+## Accepted Risks
+
+- **FPC-RISK-VP-09** (LOW) · Production-build DevTools walk not completed (VP-09) · ACCEPTED
+- **FPC-RISK-CDN-GLOBAL** (MEDIUM) · CDN global edge nodes not fully validated pre-launch · ACCEPTED
+
+## Pending Risks
+
+- **FPC-RISK-VP-01** (MEDIUM) · Mobile 375px matrix incomplete (VP-01)
 
 ---
 

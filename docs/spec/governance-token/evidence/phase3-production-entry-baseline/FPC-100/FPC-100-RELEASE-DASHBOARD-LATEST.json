@@ -1,214 +1,87 @@
 {
-  "schema": "traveltrust.fpc_100_release_dashboard.v1",
+  "schema": "traveltrust.fpc_100_release_dashboard.v2",
+  "framework": "TravelTrust Full Production Certification Framework",
   "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION",
-  "timestamp_utc": "2026-07-09T15:56:27.442Z",
+  "timestamp_utc": "2026-07-09T15:59:33.150Z",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "verdict": "NOT_STARTED",
   "pass": false,
-  "rows": [
-    {
-      "label": "Pages (L1 coverage)",
+  "pillars": {
+    "technical": "IN_PROGRESS",
+    "product": "NOT_STARTED",
+    "operations": "NOT_STARTED",
+    "content": "NOT_STARTED",
+    "business": "NOT_STARTED",
+    "security": "NOT_STARTED",
+    "performance": "NOT_STARTED",
+    "truthfulness": "NOT_STARTED",
+    "deployment": "NOT_STARTED",
+    "human_verification": "NOT_STARTED"
+  },
+  "evidence_coverage": {
+    "pages": {
       "done": 0,
-      "total": 202,
+      "target": 202,
+      "pct": 0
+    },
+    "api_contracts": {
+      "done": 0,
+      "target": 181,
+      "pct": 0
+    },
+    "business_corridors": {
+      "done": 0,
+      "target": 23,
+      "pct": 0
+    },
+    "rbac_probes": {
+      "done": 0,
+      "target": 102,
+      "pct": 0
+    }
+  },
+  "accepted_risks": [
+    {
+      "id": "FPC-RISK-VP-09",
+      "title": "Production-build DevTools walk not completed (VP-09)\r",
+      "level": "LOW",
+      "status": "ACCEPTED"
+    },
+    {
+      "id": "FPC-RISK-CDN-GLOBAL",
+      "title": "CDN global edge nodes not fully validated pre-launch\r",
+      "level": "MEDIUM",
+      "status": "ACCEPTED"
+    }
+  ],
+  "pending_risks": [
+    {
+      "id": "FPC-RISK-VP-01",
+      "title": "Mobile 375px matrix incomplete (VP-01)\r",
+      "level": "MEDIUM",
+      "status": "PENDING"
+    }
+  ],
+  "expired_batches": [],
+  "certification_governance": {
+    "freeze_doc": "FPC-CERTIFICATION-GOVERNANCE-v1.md",
+    "risk_register": "registry/fpc-100-risk-register.v1.yaml"
+  },
+  "detail_rows": [
+    {
+      "label": "Pages (L1)",
       "display": "0 / 202",
       "verdict": "IN_PROGRESS"
     },
     {
-      "label": "UI scored (L2)",
-      "done": 0,
-      "total": 202,
-      "display": "0 / 202",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "UX scored (L2)",
-      "done": 0,
-      "total": 202,
+      "label": "UI (L2)",
       "display": "0 / 202",
       "verdict": "NOT_STARTED"
     },
     {
       "label": "CX (L2.5)",
-      "done": 0,
-      "total": 202,
       "display": "0 / 202",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "Production Ready (L2)",
-      "done": 0,
-      "total": 202,
-      "display": "0 / 202",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "API Contract",
-      "done": "0%",
-      "total": null,
-      "display": "0%",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "RBAC",
-      "done": "NOT_STARTED",
-      "total": null,
-      "display": "NOT_STARTED",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "Data Lineage (L5)",
-      "done": 0,
-      "total": 202,
-      "display": "0 / 202",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "Content Operations (L5)",
-      "done": "NOT_STARTED",
-      "total": null,
-      "display": "NOT_STARTED",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "Recovery (L5)",
-      "done": "NOT_STARTED",
-      "total": null,
-      "display": "NOT_STARTED",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "Truthfulness (L5)",
-      "done": 0,
-      "total": 202,
-      "display": "0 / 202",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "Lifecycle (L5)",
-      "done": "NOT_STARTED",
-      "total": null,
-      "display": "NOT_STARTED",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "Operations (L5)",
-      "done": "NOT_STARTED",
-      "total": null,
-      "display": "NOT_STARTED",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "Mobile",
-      "done": "NOT_STARTED",
-      "total": null,
-      "display": "NOT_STARTED",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "A11Y",
-      "done": "NOT_STARTED",
-      "total": null,
-      "display": "NOT_STARTED",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "Performance",
-      "done": "NOT_STARTED",
-      "total": null,
-      "display": "NOT_STARTED",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "Security",
-      "done": "NOT_STARTED",
-      "total": null,
-      "display": "NOT_STARTED",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "Business Flows (L3)",
-      "done": "NOT_STARTED",
-      "total": null,
-      "display": "NOT_STARTED",
-      "verdict": "NOT_STARTED"
-    },
-    {
-      "label": "Environment Diff",
-      "done": "NOT_STARTED",
-      "total": null,
-      "display": "NOT_STARTED",
       "verdict": "NOT_STARTED"
     }
-  ],
-  "summary": {
-    "pages_total": 202,
-    "open_p0_p1": 0,
-    "fpc_exit_eligible": false
-  },
-  "five_layers": {
-    "L1_page_coverage": {
-      "target": 202,
-      "inspected": 0,
-      "pct": 0,
-      "status": "SCAFFOLDED"
-    },
-    "L2_page_certification": {
-      "target": 202,
-      "production_ready_yes": 0,
-      "pct": 0,
-      "status": "NOT_STARTED"
-    },
-    "L2_5_customer_experience": {
-      "target": 202,
-      "cx_pass": 0,
-      "pct": 0,
-      "status": "NOT_STARTED"
-    },
-    "L3_business_flows": {
-      "status": "NOT_STARTED",
-      "registry": "business-flow-matrix.v1.yaml"
-    },
-    "L4_enterprise": {
-      "status": "NOT_STARTED"
-    },
-    "L5_operations_truth": {
-      "status": "NOT_STARTED"
-    }
-  },
-  "l5_domains": {
-    "content_operations": {
-      "batch": "B30",
-      "verdict": "NOT_STARTED"
-    },
-    "data_lineage": {
-      "batch": "B31",
-      "verdict": "NOT_STARTED"
-    },
-    "api_contract": {
-      "batch": "B32",
-      "verdict": "NOT_STARTED",
-      "contract_pct": 0
-    },
-    "operations": {
-      "batch": "B33",
-      "verdict": "NOT_STARTED"
-    },
-    "lifecycle": {
-      "batch": "B34",
-      "verdict": "NOT_STARTED"
-    },
-    "recovery": {
-      "batch": "B35",
-      "verdict": "NOT_STARTED"
-    },
-    "truthfulness": {
-      "batch": "B36",
-      "verdict": "NOT_STARTED",
-      "target_pct": 100
-    },
-    "customer_experience": {
-      "batch": "B26",
-      "verdict": "NOT_STARTED"
-    }
-  }
+  ]
 }

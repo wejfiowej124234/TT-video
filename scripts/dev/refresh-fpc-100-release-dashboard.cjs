@@ -130,7 +130,7 @@ const pendingRisks = risks.filter((r) => r.status === 'PENDING');
 const acceptedRisks = risks.filter((r) => r.status === 'ACCEPTED');
 
 const expiredBatches = [];
-for (const f of fs.readdirSync(EVID).filter((x) => x.startsWith('FPC-100-BATCH-'))) {
+for (const f of fs.readdirSync(EVID).filter((x) => /^FPC-100-BATCH-.+-LATEST\.json$/.test(x))) {
   const b = readJson(path.join(EVID, f));
   if (!b?.expires_at_utc) continue;
   if (Date.now() > Date.parse(b.expires_at_utc)) expiredBatches.push(b.batch_id);

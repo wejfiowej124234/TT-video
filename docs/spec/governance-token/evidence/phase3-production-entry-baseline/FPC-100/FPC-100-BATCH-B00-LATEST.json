@@ -4,11 +4,11 @@
   "title": "Anchor · Meta · Health · Registry · Page matrix scaffold",
   "layer": "L1",
   "phase": "① local",
-  "timestamp_utc": "2026-07-09T15:53:18.330Z",
+  "timestamp_utc": "2026-07-09T15:59:15.916Z",
   "verifier": "run-fpc-batch-b00-anchor.cjs",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "git": {
-    "head": "9f98bd6f079cf705538923e3673045b47c88ba73",
+    "head": "4d482f256f83faa564ebafda551108eec5705480",
     "branch": "feature/g23-04-abi-event-freeze",
     "working_tree_clean": true,
     "porcelain_lines": 0,
@@ -88,5 +88,15 @@
   "warns": [],
   "verdict": "PASS",
   "pass": true,
-  "next_batch": "B01"
+  "next_batch": "B01",
+  "certified_at_utc": "2026-07-09T15:59:15.916Z",
+  "expires_at_utc": "2026-08-08T15:59:15.916Z",
+  "expiry_policy_days": 30,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-09T15:59:15.916Z",
+  "frozen_git_sha": "4d482f256f83faa564ebafda551108eec5705480",
+  "release_blocker": "NO",
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Machine-only anchor; human verification deferred to B01+"
 }
