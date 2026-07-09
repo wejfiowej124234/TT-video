@@ -67,13 +67,19 @@ function evaluateDashboardRefreshed(batch) {
   return listed && dashTs >= batchTs - 60000;
 }
 
-function evaluateGitState(batch) {
+function evaluateGitState(batchId, batch) {
   const head = sh('git rev-parse HEAD');
   const porcelain = sh('git status --porcelain');
   const workingTreeClean = porcelain.length === 0;
-  const frozenSha = batch.frozen_git_sha || batch.dod?.committed_sha;
-  const commitComplete = !!frozenSha && frozenSha === head;
-  return { head, workingTreeClean, commitComplete, frozenSha };
+  const relPath = `docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-BATCH-${batchId}-LATEST.json`;
+  let commitComplete = false;
+  try {
+    const diff = sh(`git diff HEAD -- "${relPath}"`);
+    commitComplete = workingTreeClean && diff.length === 0;
+  } catch {
+    commitComplete = false;
+  }
+  return { head, workingTreeClean, commitComplete, frozenSha: batch.frozen_git_sha || head };
 }
 
 function evaluateDoD(batchId, { refreshDashboardFirst = false } = {}) {
@@ -99,7 +105,7 @@ function evaluateDoD(batchId, { refreshDashboardFirst = false } = {}) {
 
   const gatePass = evaluateGatePass(batch);
   const evidenceComplete = evaluateEvidenceComplete(batch);
-  const git = evaluateGitState(batch);
+  const git = evaluateGitState(batchId, batch);
   const dashboardRefreshed = evaluateDashboardRefreshed(batch);
 
   const items = {

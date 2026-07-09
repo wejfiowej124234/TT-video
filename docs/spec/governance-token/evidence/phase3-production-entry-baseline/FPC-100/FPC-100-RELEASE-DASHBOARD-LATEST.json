@@ -20,7 +20,7 @@
   "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION",
   "release_decision_key": "TT_RELEASE_DECISION",
   "product_version": "v1.0",
-  "timestamp_utc": "2026-07-09T16:11:55.975Z",
+  "timestamp_utc": "2026-07-09T16:13:54.136Z",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "verdict": "NOT_STARTED",
   "pass": false,
@@ -53,14 +53,14 @@
     "human_verification": "NOT_STARTED"
   },
   "release_health": {
-    "certified_pct": 4.9,
+    "certified_pct": 2.4,
     "expired_count": 0,
     "blocked_count": 0,
     "accepted_risks_count": 2,
     "coverage_pct": 0,
     "human_verified_pct": 0,
     "human_required_verified_pct": 0,
-    "ai_review_pct": 100
+    "ai_review_pct": 66.7
   },
   "release_history": [
     {
@@ -145,6 +145,15 @@
         "review_version": "v1"
       },
       "ai_display": "Internal AI Review",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B00",
+      "ai_review": {
+        "verdict": "NOT_STARTED"
+      },
+      "ai_display": "NOT_STARTED",
       "human_verified": false,
       "human_verifier": null
     }
