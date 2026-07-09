@@ -1964,7 +1964,8 @@ mod orders_list_hat_tests {
             data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-        }
+            ..Default::default()
+            }
     }
 
     #[test]
@@ -2018,25 +2019,9 @@ mod orders_list_hat_tests {
                 user_id: merchant_user_id,
                 city: "杭州".into(),
                 country_code: "CN".into(),
-                languages: vec![],
-                service_types: vec![],
-                bio: None,
-                wallet_address: None,
-                real_name: None,
-                passport_number_hash: None,
-                id_photo_url: None,
-                language_cert_url: None,
-                guide_license_url: None,
-                stake_amount: "0".into(),
-                hourly_rate: None,
-                avatar_url: None,
-                public_title: None,
                 status: "active".into(),
-                rejection_codes: vec![],
-                rejection_message: None,
-                created_at: Utc::now(),
-                updated_at: Utc::now(),
                 data_origin: "production".into(),
+                ..Default::default()
             },
         );
         let mut seller_order = sample_order(buyer_id, guide_row_id);
@@ -2050,25 +2035,9 @@ mod orders_list_hat_tests {
                 user_id: other_merchant,
                 city: "上海".into(),
                 country_code: "CN".into(),
-                languages: vec![],
-                service_types: vec![],
-                bio: None,
-                wallet_address: None,
-                real_name: None,
-                passport_number_hash: None,
-                id_photo_url: None,
-                language_cert_url: None,
-                guide_license_url: None,
-                stake_amount: "0".into(),
-                hourly_rate: None,
-                avatar_url: None,
-                public_title: None,
                 status: "active".into(),
-                rejection_codes: vec![],
-                rejection_message: None,
-                created_at: Utc::now(),
-                updated_at: Utc::now(),
                 data_origin: "production".into(),
+                ..Default::default()
             },
         );
         assert!(order_matches_orders_list_hat(
@@ -2123,7 +2092,8 @@ mod patch_order_guide_tests {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        }
+            ..Default::default()
+            }
     }
 
     fn sample_created_order(order_id: Uuid, tourist_id: Uuid, guide_id: Uuid) -> OrderRow {
@@ -2156,7 +2126,8 @@ mod patch_order_guide_tests {
             data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-        }
+            ..Default::default()
+            }
     }
 
     #[tokio::test]
@@ -2261,7 +2232,8 @@ mod traveler_id_alias_tests {
             data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-        }
+            ..Default::default()
+            }
     }
 
     #[test]
@@ -2543,7 +2515,8 @@ mod traveler_id_alias_tests {
             executor_max_amount_per_tx: None,
             executor_max_amount_per_day: None,
             executor_retry_count: 3,
-        };
+            ..Default::default()
+            };
 
         let res =
             super::rating_review_window_resolution_for_orders_api(&co_cfg, Some(&chain)).await;
@@ -2607,7 +2580,8 @@ mod traveler_id_alias_tests {
             executor_max_amount_per_tx: None,
             executor_max_amount_per_day: None,
             executor_retry_count: 3,
-        };
+            ..Default::default()
+            };
 
         let res =
             super::rating_review_window_resolution_for_orders_api(&co_cfg, Some(&chain)).await;
@@ -2814,7 +2788,8 @@ mod traveler_id_alias_tests {
                 created_at: now,
                 updated_at: now,
                 data_origin: "production".into(),
-            },
+                ..Default::default()
+                },
         );
         let mut o = sample_order(tid);
         o.guide_id = gid;
@@ -2840,7 +2815,8 @@ mod traveler_id_alias_tests {
             executor_max_amount_per_tx: None,
             executor_max_amount_per_day: None,
             executor_retry_count: 3,
-        };
+            ..Default::default()
+            };
 
         let meta_recipient = chain.escrow_platform_fee_recipient();
         let split = order_split_addresses_ssot(&store, &o, Some(&chain));
@@ -2950,7 +2926,8 @@ mod traveler_id_alias_tests {
             executor_max_amount_per_tx: None,
             executor_max_amount_per_day: None,
             executor_retry_count: 3,
-        };
+            ..Default::default()
+            };
         let mut o = sample_order(Uuid::new_v4());
         o.chain_id = None;
         assert!(!order_chain_mismatch_for_public_read(&o, &chain));
@@ -3009,6 +2986,7 @@ mod b097_projection_terminal_order_get_tests {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
+            ..Default::default()
             },
         );
         let store = Arc::new(RwLock::new(store));

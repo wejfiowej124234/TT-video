@@ -412,7 +412,8 @@ async fn p21_order_create_accept_mock_pay_confirm() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_id, guide_row_id);
 
@@ -535,7 +536,8 @@ async fn order_accept_forbidden_when_guide_pending_review() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
     let order_id = Uuid::new_v4();
@@ -567,7 +569,8 @@ async fn order_accept_forbidden_when_guide_pending_review() {
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     let state = ChainOffState {
         store: Arc::new(RwLock::new(store)),
@@ -630,7 +633,8 @@ async fn order_accept_forbidden_when_trust_risk_high() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
     for i in 0..4u8 {
@@ -679,7 +683,8 @@ async fn order_accept_forbidden_when_trust_risk_high() {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-            },
+        ..Default::default()
+    },
         );
         let did = Uuid::new_v4();
         store.disputes.insert(
@@ -811,7 +816,8 @@ async fn order_create_forbidden_when_tourist_kyc_pending() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
     let state = ChainOffState {
@@ -903,7 +909,8 @@ async fn order_create_forbidden_when_tourist_risk_high() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
     for i in 0..4u8 {
@@ -936,7 +943,8 @@ async fn order_create_forbidden_when_tourist_risk_high() {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-            },
+        ..Default::default()
+    },
         );
         let did = Uuid::new_v4();
         store.disputes.insert(
@@ -1047,7 +1055,8 @@ async fn order_mock_pay_forbidden_when_tourist_becomes_restricted() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_id, guide_row_id);
     let state = ChainOffState {
@@ -1150,7 +1159,8 @@ async fn p21_order_cancel_created() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_id, guide_row_id);
     let order_id = Uuid::new_v4();
@@ -1182,7 +1192,8 @@ async fn p21_order_cancel_created() {
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     let state = ChainOffState {
         store: Arc::new(RwLock::new(store)),
@@ -1244,7 +1255,8 @@ async fn p21_get_me_trust_identity_and_risk_from_store() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(user_id, gid);
 
@@ -1278,7 +1290,8 @@ async fn p21_get_me_trust_identity_and_risk_from_store() {
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     let did = Uuid::new_v4();
     store.disputes.insert(
@@ -1373,7 +1386,8 @@ async fn p21_get_me_trust_medium_risk_recommended_actions() {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-            },
+        ..Default::default()
+    },
         );
         let did = Uuid::new_v4();
         store.disputes.insert(
@@ -1536,7 +1550,8 @@ async fn order_accept_forbidden_when_guide_exiting() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
     let order_id = Uuid::new_v4();
@@ -1568,7 +1583,8 @@ async fn order_accept_forbidden_when_guide_exiting() {
             data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     let state = ChainOffState {
         store: Arc::new(RwLock::new(store)),

@@ -218,7 +218,8 @@ mod tests {
             data_origin: "production".into(),
             order_kind: kind.map(str::to_string),
             market_listing_id: None,
-        }
+            ..Default::default()
+            }
     }
 
     #[test]
@@ -245,23 +246,9 @@ mod tests {
                 country_code: "CN".into(),
                 languages: vec!["zh".into()],
                 service_types: vec!["merchant".into()],
-                bio: None,
-                wallet_address: None,
-                real_name: None,
-                passport_number_hash: None,
-                id_photo_url: None,
-                language_cert_url: None,
-                guide_license_url: None,
-                stake_amount: "0".into(),
-                hourly_rate: None,
-                avatar_url: None,
-            public_title: None,
                 status: "active".into(),
-                rejection_codes: vec![],
-                rejection_message: None,
-                created_at: Utc::now(),
-                updated_at: Utc::now(),
                 data_origin: "production".into(),
+                ..Default::default()
             },
         );
         store.orders.insert(

@@ -4,17 +4,13 @@
 
 | Metric | Value |
 |--------|-------|
-| **TT_RELEASE_READINESS** | **7.3%** _（发布能力成熟度）_ |
-| **Readiness Δ** | 4.9% → 7.3% |
+| **TT_RELEASE_READINESS** | **7.3%** |
 | **TT_RELEASE_DECISION** | **NO_GO** |
 
-_Next batch: B03 · Daily standup: `node scripts/dev/print-fpc-daily-standup.cjs`_
+_Next batch: B03 · v1.0_ · Governance FROZEN — no v5 expansion_
 
-> **Feature Freeze does not mean Release Ready.** Release Ready is earned only through completed certification evidence.
+> Feature Freeze does not mean Release Ready. Release Ready is earned only through completed certification evidence.
 > 功能冻结不代表可以发布；发布资格只能通过完整的认证证据获得。
-
-> **Certification is not documentation. Certification is executable evidence.**
-> 认证不是文档，而是可执行、可验证、可复现的证据。
 
 ## Burn-down
 
@@ -32,19 +28,19 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 **Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
 **FPC verdict:** **NOT_STARTED**  
 **Release decision:** `TT_RELEASE_DECISION` = **NO_GO**  
-**Updated:** 2026-07-09T23:28:16.929Z
+**Updated:** 2026-07-09T23:57:06.228Z
 
 ## Release Health
 
 | Metric | Value |
 |--------|-------|
-| Certified | 14.6% |
+| Certified | 17.1% |
 | Expired | 0 |
 | Blocked | 0 |
 | Accepted Risks | 2 |
 | Coverage | 0% |
 | Human Verified | 0% |
-| AI Review PASS | 50% |
+| AI Review PASS | 57.1% |
 
 ## Release History (Version Certification)
 
@@ -83,6 +79,7 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 | B00 | PASS (Internal AI Review) | — |
 | B01 | PASS (Internal AI Review) | — |
 | B02 | PASS (Internal AI Review) | — |
+| B03 | PASS (Internal AI Review) | — |
 | B00 | NOT_STARTED (NOT_STARTED) | — |
 | B01 | NOT_STARTED (NOT_STARTED) | — |
 | B02 | NOT_STARTED (NOT_STARTED) | — |

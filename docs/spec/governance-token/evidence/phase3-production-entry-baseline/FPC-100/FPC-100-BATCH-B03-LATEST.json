@@ -1,0 +1,113 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B03",
+  "title": "Auth · register · session · onboarding",
+  "layer": "L3-L4",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-09T23:56:39.281Z",
+  "verifier": "run-fpc-batch-b03-auth-onboarding.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "3241db2b76ea034a2ca72ef723e79214026aceaf",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B00",
+    "B02"
+  ],
+  "routes": [
+    "/auth/login",
+    "/auth/register",
+    "/me/onboarding",
+    "/provider/register",
+    "/steward/register",
+    "/guide/register"
+  ],
+  "personas": [
+    "C1",
+    "C2",
+    "C3",
+    "C4"
+  ],
+  "gates": [
+    "scripts/gates/auth-contract-gate.sh",
+    "scripts/gates/check-auth-session-hash-gate.sh",
+    "scripts/dev/smoke-provider-onboarding-local.sh",
+    "scripts/dev/smoke-onboarding-full-chain-local.sh"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/gates/auth-contract-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.00s | running 0 tests | test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1227 filtered out; finished in 0.00s | [auth-contract-gate] ok"
+    },
+    {
+      "gate": "scripts/gates/check-auth-session-hash-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "auth_session_hash_gate: skipped (AUTH_SESSION_HASH_GATE_ENABLED!=1)"
+    },
+    {
+      "gate": "scripts/dev/smoke-provider-onboarding-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "  wallet:    0x4a62316623ad457F02cDC5D997deD67a383EC569 |   onboarding idem: 61b36455-05d6-4518-bd84-b75aea9125fa |   listing:   Smoke Shop Listing 1783641400 |   (② testnet / ③ production — not in this script)"
+    },
+    {
+      "gate": "scripts/dev/smoke-onboarding-full-chain-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "smoke-onboarding-full-chain: OK internal webhook → paid idem=ed07f42e-056c-4463-9441-10345bd5b155 | smoke-onboarding-full-chain: OK steward full chain → paid + role-confirm (①; stake 另链) | TT_SMOKE_ONBOARDING_FULL_CHAIN: OK (① local · no PSP · no on-chain) |   Phase ② Stripe/testnet PSP: backlog only — onboarding-fee-schedule.v1 §8.2"
+    }
+  ],
+  "gate_pass": true,
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "release_blocker": "NO",
+  "next_batch": "B04",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-09",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Auth/onboarding — ② staging session cookie domain deferred",
+  "traceability": {
+    "requirements": [
+      "93 §1 A-domain",
+      "Auth POST hits API not Next HTML",
+      "Provider register L5 contracts"
+    ],
+    "spec_refs": [
+      "frontend/app/auth/login/README.md",
+      "frontend/app/provider/register/README.md",
+      "FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md § B03"
+    ],
+    "code_paths": [
+      "crates/api/src/routes/auth.rs",
+      "frontend/app/auth/login",
+      "frontend/app/provider/register"
+    ],
+    "tests": [
+      "auth-contract-gate.sh",
+      "check-auth-session-hash-gate.sh",
+      "smoke-provider-onboarding-local.sh",
+      "smoke-onboarding-full-chain-local.sh"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B03-LATEST.json",
+    "certification_batch": "B03",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-09T23:56:39.281Z",
+  "expires_at_utc": "2026-10-07T23:56:39.281Z",
+  "expiry_policy_days": 90,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-09T23:56:39.281Z",
+  "frozen_git_sha": "3241db2b76ea034a2ca72ef723e79214026aceaf"
+}

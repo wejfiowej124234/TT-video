@@ -354,7 +354,8 @@ async fn itinerary_create_impl_with_guide_id_persists_guide_on_order() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     let state = ChainOffState {
         store: Arc::new(RwLock::new(store)),
@@ -719,7 +720,8 @@ async fn patch_order_itinerary_impl_non_product_destination_skips_city_validatio
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     store.itineraries.insert(
         order_id,
@@ -895,7 +897,8 @@ async fn itinerary_custom_create_impl_with_guide_id_persists_guide_on_order() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     let state = ChainOffState {
         store: Arc::new(RwLock::new(store)),

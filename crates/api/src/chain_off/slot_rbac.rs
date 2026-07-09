@@ -211,7 +211,8 @@ mod tests {
             data_origin: "production".into(),
             created_at: Utc::now(),
             updated_at: Utc::now(),
-        };
+            ..Default::default()
+            };
         let (st, ok) = guide_profile_patch_gate(&u, &g);
         assert_eq!(st, "pending");
         assert!(!ok);

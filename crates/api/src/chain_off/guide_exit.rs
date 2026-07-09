@@ -243,7 +243,8 @@ mod tests {
                 created_at: now,
                 updated_at: now,
                 data_origin: "test".into(),
-            },
+                ..Default::default()
+                },
         );
         store.guides_by_user.insert(user_id, guide_id);
         store

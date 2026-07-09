@@ -256,7 +256,8 @@ mod discover_participant_id_tests {
             data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-        };
+            ..Default::default()
+            };
         let card = discover_card_json(&o, &minimal_bundle(oid));
         assert_eq!(card["tourist_id"].as_str().unwrap(), tid.to_string());
         assert_eq!(card["traveler_id"].as_str().unwrap(), tid.to_string());

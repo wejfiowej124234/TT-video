@@ -75,7 +75,8 @@ async fn p21_reviews_list_submit() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_id, guide_row_id);
     let order_id = Uuid::new_v4();
@@ -107,7 +108,8 @@ async fn p21_reviews_list_submit() {
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     let state = ChainOffState {
         store: Arc::new(RwLock::new(store)),
@@ -219,7 +221,8 @@ async fn p21_review_low_score_requires_comment() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_id, guide_row_id);
     let order_id = Uuid::new_v4();
@@ -251,7 +254,8 @@ async fn p21_review_low_score_requires_comment() {
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     let state = ChainOffState {
         store: Arc::new(RwLock::new(store)),
@@ -352,7 +356,8 @@ async fn p21_evidence_list_post() {
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     let state = ChainOffState {
         store: Arc::new(RwLock::new(store)),

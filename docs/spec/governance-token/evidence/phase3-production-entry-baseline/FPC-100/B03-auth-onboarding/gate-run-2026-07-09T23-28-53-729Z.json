@@ -1,0 +1,49 @@
+{
+  "timestamp_utc": "2026-07-09T23:28:53.729Z",
+  "gate_results": [
+    {
+      "gate": "scripts/gates/auth-contract-gate.sh",
+      "exit_code": 101,
+      "pass": false,
+      "summary_line": "Some errors have detailed explanations: E0063, E0432. | For more information about an error, try `rustc --explain E0063`. | warning: `traveltrust-api` (bin \"traveltrust-api\" test) generated 7 warnings | error: could not compile `traveltrust-api` (bin \"traveltrust-api\" test) due to 115 previous errors; 7 warnings emitted"
+    },
+    {
+      "gate": "scripts/gates/check-auth-session-hash-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "auth_session_hash_gate: skipped (AUTH_SESSION_HASH_GATE_ENABLED!=1)"
+    },
+    {
+      "gate": "scripts/dev/smoke-provider-onboarding-local.sh",
+      "exit_code": 1,
+      "pass": false,
+      "summary_line": "== smoke-provider-onboarding-local (① only; ②③ out of scope) API=http://127.0.0.1:8080 == | curl: (7) Failed to connect to 127.0.0.1 port 8080 after 2056 ms: Could not connect to server\r | smoke-provider-onboarding: FAIL API /health not 200 (got 000). Start start-api-with-seed first."
+    },
+    {
+      "gate": "scripts/dev/smoke-onboarding-full-chain-local.sh",
+      "exit_code": 1,
+      "pass": false,
+      "summary_line": "== smoke-onboarding-full-chain-local (① only; ② Stripe/PSP paused — see onboarding-fee-schedule.v1 §8.2) == |    MARK_PAID_MODE=webhook API=http://127.0.0.1:8080 | smoke-onboarding-full-chain: FAIL API /health not 200 (got 000000)"
+    }
+  ],
+  "findings": [
+    {
+      "id": "gate_fail:auth-contract-gate.sh",
+      "severity": "P0",
+      "gate": "scripts/gates/auth-contract-gate.sh",
+      "detail": "   Compiling traveltrust-api v0.1.0 (D:\\TravelTrust-V1.1\\crates\\api)\nerror[E0432]: unresolved import `crate::vacancy_ledger_indexer`\n   --> crates\\api\\src\\chain\\vacancy_ledger_reconcile.rs:341:16\n    |\n341 |     use crate::vacancy_ledger_indexer::{\n    |                ^^^^^^^^^^^^^^^^^^^^^^\n    |                |\n    |                unresolved import\n    |                help: a similar path exists: `traveltrust_vacancy_indexer::vacancy_ledger_indexer`\n\nwarning: unused imports: `FEED_BUILDER_SURFACE`, `GOVERNED_VIEW`, and `list_viewer_own_non_production_feed_supplement`\n  --> crates\\api\\src\\pcp\\feed_builder.rs:10:55\n   |\n10 |     list_feed, list_feed_by_following, list_feed_hot, list_viewer_own_non_production_feed_supplement,\n   |                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n11 |     FEED_BUILDER_SURFACE, GOVERNED_VIEW,\n   |     ^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^\n   |\n   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default\n\nwarning: unused imports: `GOVERNED_DISCOVER_ORDERS_VIEW`, `GOVERNED_MARKET_GUIDES_VIEW`, `GOVERNED_MARKET_LISTINGS_VIEW`, `MARKET_GUIDES_SURFACE`, `get_governed_market_guide_by_id`"
+    },
+    {
+      "id": "gate_fail:smoke-provider-onboarding-local.sh",
+      "severity": "P0",
+      "gate": "scripts/dev/smoke-provider-onboarding-local.sh",
+      "detail": "curl: (7) Failed to connect to 127.0.0.1 port 8080 after 2056 ms: Could not connect to server\r\nsmoke-provider-onboarding: FAIL API /health not 200 (got 000). Start start-api-with-seed first.\n"
+    },
+    {
+      "id": "gate_fail:smoke-onboarding-full-chain-local.sh",
+      "severity": "P0",
+      "gate": "scripts/dev/smoke-onboarding-full-chain-local.sh",
+      "detail": "smoke-onboarding-full-chain: FAIL API /health not 200 (got 000000)\n"
+    }
+  ]
+}

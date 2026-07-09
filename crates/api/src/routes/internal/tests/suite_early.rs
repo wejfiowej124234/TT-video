@@ -521,20 +521,7 @@ async fn indexer_tick_persists_fee_router_and_region_vault_events_when_db_config
         escrow_factory_address: Some(FACTORY.to_string()),
         fee_router_address: Some(ROUTER.to_string()),
         region_vault_address: Some(VAULT.to_string()),
-        country_pool_ledger_address: None,
-        investor_share_token_addresses: vec![],
-        staking_address: None,
-        guide_staking_address: None,
-        staking_provider_address: None,
-        investor_lock_contract_addresses: vec![],
-        governor_address: None,
-        governance_timelock_address: None,
-        governance_votes_token_address: None,
-        treasury_address: None,
-        registry_address: None,
-        executor_max_amount_per_tx: None,
-        executor_max_amount_per_day: None,
-        executor_retry_count: 3,
+        ..Default::default()
     });
     state.finality_n = 12;
 
@@ -805,22 +792,8 @@ async fn indexer_tick_persists_region_share_snapshot_line_when_db_configured() {
         rpc_url: format!("http://127.0.0.1:{port}"),
         chain_id: CHAIN as u64,
         escrow_factory_address: Some(FACTORY.to_string()),
-        fee_router_address: None,
         region_vault_address: Some(VAULT.to_string()),
-        country_pool_ledger_address: None,
-        investor_share_token_addresses: vec![],
-        staking_address: None,
-        guide_staking_address: None,
-        staking_provider_address: None,
-        investor_lock_contract_addresses: vec![],
-        governor_address: None,
-        governance_timelock_address: None,
-        governance_votes_token_address: None,
-        treasury_address: None,
-        registry_address: None,
-        executor_max_amount_per_tx: None,
-        executor_max_amount_per_day: None,
-        executor_retry_count: 3,
+        ..Default::default()
     });
     state.finality_n = 12;
 
@@ -858,22 +831,8 @@ async fn indexer_tick_persists_region_share_snapshot_line_when_db_configured() {
         rpc_url: format!("http://127.0.0.1:{port}"),
         chain_id: CHAIN as u64,
         escrow_factory_address: Some(FACTORY.to_string()),
-        fee_router_address: None,
         region_vault_address: Some(VAULT.to_string()),
-        country_pool_ledger_address: None,
-        investor_share_token_addresses: vec![],
-        staking_address: None,
-        guide_staking_address: None,
-        staking_provider_address: None,
-        investor_lock_contract_addresses: vec![],
-        governor_address: None,
-        governance_timelock_address: None,
-        governance_votes_token_address: None,
-        treasury_address: None,
-        registry_address: None,
-        executor_max_amount_per_tx: None,
-        executor_max_amount_per_day: None,
-        executor_retry_count: 3,
+        ..Default::default()
     });
     state2.finality_n = 12;
     let runtime_path_str = format!("{}.runtime", idx_path_str);
@@ -1034,22 +993,8 @@ async fn indexer_tick_persists_country_ledger_credited_when_db_configured() {
         rpc_url: format!("http://127.0.0.1:{port}"),
         chain_id: CHAIN as u64,
         escrow_factory_address: Some(FACTORY.to_string()),
-        fee_router_address: None,
-        region_vault_address: None,
         country_pool_ledger_address: Some(LEDGER.to_string()),
-        investor_share_token_addresses: vec![],
-        staking_address: None,
-        guide_staking_address: None,
-        staking_provider_address: None,
-        investor_lock_contract_addresses: vec![],
-        governor_address: None,
-        governance_timelock_address: None,
-        governance_votes_token_address: None,
-        treasury_address: None,
-        registry_address: None,
-        executor_max_amount_per_tx: None,
-        executor_max_amount_per_day: None,
-        executor_retry_count: 3,
+        ..Default::default()
     });
     state.finality_n = 12;
 

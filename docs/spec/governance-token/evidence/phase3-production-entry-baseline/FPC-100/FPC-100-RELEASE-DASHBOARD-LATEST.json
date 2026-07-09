@@ -7,34 +7,27 @@
       "TT_RELEASE_DECISION"
     ],
     "release_readiness_pct": 7.3,
-    "release_readiness_definition": "Release capability maturity (发布能力成熟度)",
-    "readiness_previous_pct": 4.9,
-    "readiness_delta_display": "4.9% → 7.3%",
     "release_readiness_key": "TT_RELEASE_READINESS",
     "release_decision": "NO_GO",
-    "release_decision_previous": "NO_GO",
     "release_decision_key": "TT_RELEASE_DECISION",
     "product_version": "v1.0",
     "next_required_batch": "B03",
     "governance": "FROZEN @ v5 · Do not expand",
-    "execution": "B02→B41 · Daily standup: print-fpc-daily-standup.cjs"
+    "execution": "B02→B41 only"
   },
   "framework": "TravelTrust Full Production Certification Framework",
   "framework_registry_version": 5,
   "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION",
   "release_decision_key": "TT_RELEASE_DECISION",
   "product_version": "v1.0",
-  "timestamp_utc": "2026-07-09T23:28:16.929Z",
+  "timestamp_utc": "2026-07-09T23:57:06.228Z",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "verdict": "NOT_STARTED",
   "pass": false,
   "tt_release_decision": "NO_GO",
   "release_readiness": {
     "machine_key": "TT_RELEASE_READINESS",
-    "definition": "Release capability maturity (发布能力成熟度)",
     "pct": 7.3,
-    "previous_pct": 4.9,
-    "delta_display": "4.9% → 7.3%",
     "contiguous_completed": 3,
     "total": 41
   },
@@ -60,14 +53,14 @@
     "human_verification": "NOT_STARTED"
   },
   "release_health": {
-    "certified_pct": 14.6,
+    "certified_pct": 17.1,
     "expired_count": 0,
     "blocked_count": 0,
     "accepted_risks_count": 2,
     "coverage_pct": 0,
     "human_verified_pct": 0,
     "human_required_verified_pct": 0,
-    "ai_review_pct": 50
+    "ai_review_pct": 57.1
   },
   "release_history": [
     {
@@ -157,6 +150,19 @@
     },
     {
       "batch_id": "B02",
+      "ai_review": {
+        "verdict": "PASS",
+        "ai_reviewer": "Internal AI Review",
+        "review_type": "Internal AI Review",
+        "review_date": "2026-07-09",
+        "review_version": "v1"
+      },
+      "ai_display": "Internal AI Review",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B03",
       "ai_review": {
         "verdict": "PASS",
         "ai_reviewer": "Internal AI Review",

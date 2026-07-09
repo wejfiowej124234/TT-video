@@ -185,7 +185,8 @@ mod tests {
                 order_kind: Some("acquisition_listing".into()),
                 market_listing_id: None,
                 data_origin: "production".into(),
-            },
+                ..Default::default()
+                },
         );
         let o = store.orders.get(&oid).unwrap();
         assert!(order_is_acquisition_pool_memory(&store, o));
@@ -225,7 +226,8 @@ mod tests {
                 created_at: now,
                 updated_at: now,
                 data_origin: "production".into(),
-            },
+                ..Default::default()
+                },
         );
         store.guides_by_user.insert(carrier_user, guide_id);
         store.orders.insert(
@@ -256,7 +258,8 @@ mod tests {
                 order_kind: Some("acquisition_listing".into()),
                 market_listing_id: None,
                 data_origin: "production".into(),
-            },
+                ..Default::default()
+                },
         );
         store.reviews.push(ReviewRow {
             id: Uuid::new_v4(),

@@ -541,6 +541,7 @@ mod resolution_outbox_tests {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
+            ..Default::default()
             },
         );
         store.disputes.insert(

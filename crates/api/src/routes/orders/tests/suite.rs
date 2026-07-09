@@ -337,7 +337,8 @@ async fn b102_get_orders_chain_scope_matches_db_ssot_and_filters_rows() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
 
     let mk = |cid: Option<i64>| OrderRow {
@@ -366,6 +367,7 @@ async fn b102_get_orders_chain_scope_matches_db_ssot_and_filters_rows() {
         data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
+        ..Default::default()
     };
     let o_null = mk(None);
     let o137 = mk(Some(137));
@@ -478,7 +480,8 @@ async fn tt_b122_get_orders_strict_chain_scope_matches_backfill_dry_run_embed() 
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
 
     let mk = |cid: Option<i64>| OrderRow {
@@ -507,6 +510,7 @@ async fn tt_b122_get_orders_strict_chain_scope_matches_backfill_dry_run_embed() 
         data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
+        ..Default::default()
     };
     let o_null = mk(None);
     let o137 = mk(Some(137));
@@ -619,7 +623,8 @@ async fn b097_get_order_by_id_order_object_has_projection_terminal_key() {
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
 
     let mut state = build_state();
@@ -697,7 +702,8 @@ async fn b095_get_order_by_id_split_addresses_ssot_matches_get_meta_chain_contra
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.orders.insert(
         oid,
@@ -727,7 +733,8 @@ async fn b095_get_order_by_id_split_addresses_ssot_matches_get_meta_chain_contra
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
 
     let chain_cfg = chain::ChainConfig {
@@ -750,6 +757,7 @@ async fn b095_get_order_by_id_split_addresses_ssot_matches_get_meta_chain_contra
         executor_max_amount_per_tx: None,
         executor_max_amount_per_day: None,
         executor_retry_count: 3,
+        ..Default::default()
     };
 
     let mut state = build_state();
@@ -876,7 +884,8 @@ async fn b083_get_order_fee_route_country_aligns_meta_orders_ssot_mapped_and_rej
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     for (oid, dest) in [(oid_mapped, "中国"), (oid_reject, "意大利")] {
         store.itineraries.insert(oid, bundle_for(oid, dest));
@@ -908,7 +917,8 @@ async fn b083_get_order_fee_route_country_aligns_meta_orders_ssot_mapped_and_rej
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-            },
+        ..Default::default()
+    },
         );
     }
 

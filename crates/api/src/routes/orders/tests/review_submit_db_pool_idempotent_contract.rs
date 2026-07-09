@@ -233,7 +233,8 @@ async fn post_reviews_db_pool_insert_conflict_returns_200_idempotent_persisted_n
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
     store.orders.insert(
@@ -266,7 +267,8 @@ async fn post_reviews_db_pool_insert_conflict_returns_200_idempotent_persisted_n
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     // 故意不在内存 `reviews` 中放入该行 —— 模拟仅 DB 已有唯一键行。
 

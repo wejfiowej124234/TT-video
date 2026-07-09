@@ -1746,7 +1746,8 @@ async fn admin_guides_ok_for_admin_includes_guide_row() {
                 created_at: Utc::now(),
                 updated_at: Utc::now(),
                 data_origin: "production".into(),
-            },
+        ..Default::default()
+    },
         );
     }
     let resp = get_admin_guides(
@@ -1808,7 +1809,8 @@ async fn admin_orders_list_includes_traveler_id_mirror() {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-            },
+        ..Default::default()
+    },
         );
     }
     let resp = get_admin_orders(
@@ -1870,7 +1872,8 @@ async fn admin_disputes_list_includes_tourist_traveler_mirror() {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-            },
+        ..Default::default()
+    },
         );
         store.disputes.insert(
             did,
@@ -1951,7 +1954,8 @@ async fn admin_reviews_list_includes_tourist_traveler_mirror() {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-            },
+        ..Default::default()
+    },
         );
         store.reviews.push(ReviewRow {
             id: rid,
@@ -2062,7 +2066,8 @@ async fn admin_guide_detail_ok_matches_list_shape() {
                 created_at: Utc::now(),
                 updated_at: Utc::now(),
                 data_origin: "production".into(),
-            },
+        ..Default::default()
+    },
         );
     }
     let resp = get_admin_guide_by_id(State(st), Path(gid.to_string()), auth_headers(admin.id))
@@ -2158,7 +2163,8 @@ async fn admin_order_detail_ok_matches_public_order_shape() {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-            },
+        ..Default::default()
+    },
         );
     }
     let resp = get_admin_order_by_id(State(st), Path(oid.to_string()), auth_headers(admin.id))
@@ -2403,7 +2409,8 @@ async fn admin_review_detail_ok_from_memory() {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-            },
+        ..Default::default()
+    },
         );
         store.reviews.push(ReviewRow {
             id: rid,
@@ -2722,6 +2729,7 @@ async fn admin_observability_overview_orders_deadline_ssot_chain_read_success_hi
         executor_max_amount_per_tx: None,
         executor_max_amount_per_day: None,
         executor_retry_count: 3,
+        ..Default::default()
     };
 
     let admin = user_with_role("admin");
@@ -2799,6 +2807,7 @@ async fn admin_observability_overview_orders_deadline_ssot_old_governor_fallback
         executor_max_amount_per_tx: None,
         executor_max_amount_per_day: None,
         executor_retry_count: 3,
+        ..Default::default()
     };
 
     let admin = user_with_role("admin");
@@ -2857,6 +2866,7 @@ async fn admin_observability_overview_orders_deadline_ssot_rpc_failure_fallback_
         executor_max_amount_per_tx: None,
         executor_max_amount_per_day: None,
         executor_retry_count: 3,
+        ..Default::default()
     };
 
     let admin = user_with_role("admin");

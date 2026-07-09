@@ -1,0 +1,30 @@
+{
+  "timestamp_utc": "2026-07-09T23:56:39.281Z",
+  "gate_results": [
+    {
+      "gate": "scripts/gates/auth-contract-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.00s | running 0 tests | test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1227 filtered out; finished in 0.00s | [auth-contract-gate] ok"
+    },
+    {
+      "gate": "scripts/gates/check-auth-session-hash-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "auth_session_hash_gate: skipped (AUTH_SESSION_HASH_GATE_ENABLED!=1)"
+    },
+    {
+      "gate": "scripts/dev/smoke-provider-onboarding-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "  wallet:    0x4a62316623ad457F02cDC5D997deD67a383EC569 |   onboarding idem: 61b36455-05d6-4518-bd84-b75aea9125fa |   listing:   Smoke Shop Listing 1783641400 |   (② testnet / ③ production — not in this script)"
+    },
+    {
+      "gate": "scripts/dev/smoke-onboarding-full-chain-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "smoke-onboarding-full-chain: OK internal webhook → paid idem=ed07f42e-056c-4463-9441-10345bd5b155 | smoke-onboarding-full-chain: OK steward full chain → paid + role-confirm (①; stake 另链) | TT_SMOKE_ONBOARDING_FULL_CHAIN: OK (① local · no PSP · no on-chain) |   Phase ② Stripe/testnet PSP: backlog only — onboarding-fee-schedule.v1 §8.2"
+    }
+  ],
+  "findings": []
+}

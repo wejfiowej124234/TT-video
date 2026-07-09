@@ -470,29 +470,15 @@ mod tests {
     fn guide_with_types(types: &[&str]) -> GuideRow {
         let now = Utc::now();
         GuideRow {
-            id: Uuid::new_v4(),
-            user_id: Uuid::new_v4(),
             city: "Global".into(),
             country_code: "XX".into(),
             languages: vec!["en".into()],
             service_types: types.iter().map(|s| (*s).into()).collect(),
-            bio: None,
-            wallet_address: None,
-            real_name: None,
-            passport_number_hash: None,
-            id_photo_url: None,
-            language_cert_url: None,
-            guide_license_url: None,
-            stake_amount: "0".into(),
-            hourly_rate: None,
-            avatar_url: None,
-            public_title: None,
             status: "active".into(),
-            rejection_codes: vec![],
-            rejection_message: None,
             data_origin: "production".into(),
             created_at: now,
             updated_at: now,
+            ..Default::default()
         }
     }
 
@@ -600,19 +586,12 @@ mod tests {
             uuid::Uuid::parse_str("f0e0b101-0001-4001-8001-000000000001").expect("tg guide uuid");
         assert!(is_trust_gate_seeded_guide_id(tg_id));
         let mut store = ChainOffStore::default();
-        let g = GuideRow {
-            id: tg_id,
-            user_id: uuid::Uuid::new_v4(),
-            bio: Some("trust-gate e2e".into()),
-            ..guide_with_types(&["walking"])
-        };
+        let mut g = guide_with_types(&["walking"]);
+        g.id = tg_id;
+        g.bio = Some("trust-gate e2e".into());
         assert!(should_exclude_guide_from_public_list(&g, &store));
-        let prod = GuideRow {
-            id: uuid::Uuid::new_v4(),
-            user_id: uuid::Uuid::new_v4(),
-            bio: Some("西湖、灵隐与龙井茶乡深度讲解".into()),
-            ..guide_with_types(&["walking"])
-        };
+        let mut prod = guide_with_types(&["walking"]);
+        prod.bio = Some("西湖、灵隐与龙井茶乡深度讲解".into());
         assert!(!should_exclude_guide_from_public_list(&prod, &store));
     }
 
@@ -620,17 +599,17 @@ mod tests {
     fn dedupe_guides_latest_per_user_keeps_newest() {
         let now = Utc::now();
         let uid = Uuid::new_v4();
-        let older = GuideRow {
-            id: Uuid::new_v4(),
-            user_id: uid,
-            updated_at: now - chrono::Duration::hours(2),
-            ..guide_with_types(&["walking"])
+        let older = {
+            let mut row = guide_with_types(&["walking"]);
+            row.user_id = uid;
+            row.updated_at = now - chrono::Duration::hours(2);
+            row
         };
-        let newer = GuideRow {
-            id: Uuid::new_v4(),
-            user_id: uid,
-            updated_at: now,
-            ..guide_with_types(&["walking"])
+        let newer = {
+            let mut row = guide_with_types(&["walking"]);
+            row.user_id = uid;
+            row.updated_at = now;
+            row
         };
         let deduped = dedupe_guides_latest_per_user([&older, &newer]);
         assert_eq!(deduped.len(), 1);
@@ -930,7 +909,8 @@ mod tests {
             data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-        };
+            ..Default::default()
+            };
         let bundle = ItineraryBundle {
             order_id: oid,
             version: 1,

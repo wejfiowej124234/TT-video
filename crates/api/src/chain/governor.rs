@@ -772,7 +772,8 @@ mod tests {
             executor_max_amount_per_tx: None,
             executor_max_amount_per_day: None,
             executor_retry_count: 3,
-        };
+        ..Default::default()
+    };
         let p = probe_governor_order_rating_review_window_chain(Some(&cfg)).await;
         assert_eq!(p.probe_leg, "eth_call_ok");
         assert_eq!(p.chain_read_days, Some(42));
@@ -819,7 +820,8 @@ mod tests {
             executor_max_amount_per_tx: None,
             executor_max_amount_per_day: None,
             executor_retry_count: 3,
-        };
+        ..Default::default()
+    };
         let p = probe_governor_order_rating_review_window_chain(Some(&cfg)).await;
         assert_eq!(p.probe_leg, "eth_call_failed");
         assert!(p.eth_call_error.is_some());
@@ -849,7 +851,8 @@ mod tests {
                 executor_max_amount_per_tx: None,
                 executor_max_amount_per_day: None,
                 executor_retry_count: 3,
-            };
+        ..Default::default()
+    };
             let p = probe_governor_order_rating_review_window_chain(Some(&cfg)).await;
             assert_eq!(p.probe_leg, "skipped_no_governor");
         });
@@ -897,7 +900,8 @@ mod tests {
             executor_max_amount_per_tx: None,
             executor_max_amount_per_day: None,
             executor_retry_count: 3,
-        };
+        ..Default::default()
+    };
         let p = probe_governor_order_rating_review_window_chain(Some(&cfg)).await;
         assert_eq!(p.probe_leg, "value_out_of_range");
         assert_eq!(p.chain_read_days, Some(1_000_000));
@@ -925,7 +929,8 @@ mod tests {
             executor_max_amount_per_tx: None,
             executor_max_amount_per_day: None,
             executor_retry_count: 3,
-        };
+        ..Default::default()
+    };
         assert!(fetch_governor_order_rating_review_window_days(Some(&cfg))
             .await
             .is_none());

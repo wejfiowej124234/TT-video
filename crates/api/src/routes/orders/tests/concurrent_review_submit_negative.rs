@@ -82,7 +82,8 @@ fn chain_off_state_completed_order_with_users(
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
     store.orders.insert(
@@ -113,7 +114,8 @@ fn chain_off_state_completed_order_with_users(
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     ChainOffState {
         store: Arc::new(RwLock::new(store)),

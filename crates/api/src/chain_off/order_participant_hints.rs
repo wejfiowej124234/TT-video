@@ -132,7 +132,8 @@ mod tests {
             data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-        }
+            ..Default::default()
+            }
     }
 
     fn sample_guide_row(guide_row_id: Uuid, guide_user_id: Uuid) -> GuideRow {
@@ -161,7 +162,8 @@ mod tests {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        }
+            ..Default::default()
+            }
     }
 
     #[test]

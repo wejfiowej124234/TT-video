@@ -1249,6 +1249,7 @@ mod tests {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
+            ..Default::default()
             },
         );
         store.itineraries.insert(

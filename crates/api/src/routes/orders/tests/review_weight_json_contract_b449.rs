@@ -430,7 +430,8 @@ async fn b449_branch_b_db_pool_idempotent_weight_json_contract() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
     store.orders.insert(
@@ -463,7 +464,8 @@ async fn b449_branch_b_db_pool_idempotent_weight_json_contract() {
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
 
     let co = ChainOffState {

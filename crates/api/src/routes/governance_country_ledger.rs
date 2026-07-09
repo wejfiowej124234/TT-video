@@ -352,25 +352,10 @@ mod tests {
         st.chain_config = Some(crate::chain::ChainConfig {
             rpc_url: format!("http://127.0.0.1:{port}"),
             chain_id: 31337,
-            escrow_factory_address: None,
-            fee_router_address: None,
-            region_vault_address: None,
             country_pool_ledger_address: Some(
                 "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".to_string(),
             ),
-            investor_share_token_addresses: vec![],
-            staking_address: None,
-            guide_staking_address: None,
-            staking_provider_address: None,
-            investor_lock_contract_addresses: vec![],
-            governor_address: None,
-            governance_timelock_address: None,
-            governance_votes_token_address: None,
-            treasury_address: None,
-            registry_address: None,
-            executor_max_amount_per_tx: None,
-            executor_max_amount_per_day: None,
-            executor_retry_count: 3,
+            ..Default::default()
         });
 
         let app = Router::new()

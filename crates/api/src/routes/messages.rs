@@ -135,7 +135,8 @@ mod tests {
             data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
-        }
+            ..Default::default()
+            }
     }
 
     /// `guide_user_id` = 向导 **账户** UUID；订单 `guide_id` 存 **guides 行 id**（与 `POST /api/v1/orders` 一致）。
@@ -173,7 +174,8 @@ mod tests {
                 created_at: now,
                 updated_at: now,
                 data_origin: "production".into(),
-            },
+                ..Default::default()
+                },
         );
         store.guides_by_user.insert(guide_user_id, guide_row_id);
         store

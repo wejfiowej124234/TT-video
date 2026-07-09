@@ -23,23 +23,7 @@ pub(crate) fn build_state_chain_ready_no_db_pool() -> ApiMetaState {
     s.chain_config = Some(chain::ChainConfig {
         rpc_url: "http://127.0.0.1:8545".to_string(),
         chain_id: 137,
-        escrow_factory_address: None,
-        fee_router_address: None,
-        region_vault_address: None,
-        country_pool_ledger_address: None,
-        investor_share_token_addresses: vec![],
-        staking_address: None,
-        guide_staking_address: None,
-        staking_provider_address: None,
-        investor_lock_contract_addresses: vec![],
-        governor_address: None,
-        governance_timelock_address: None,
-        governance_votes_token_address: None,
-        treasury_address: None,
-        registry_address: None,
-        executor_max_amount_per_tx: None,
-        executor_max_amount_per_day: None,
-        executor_retry_count: 3,
+        ..Default::default()
     });
     s.indexer_state = Some(chain::indexer::new_indexer_state());
     s
@@ -52,22 +36,7 @@ pub(crate) fn build_state_chain_only_no_indexer_no_db_pool() -> ApiMetaState {
         rpc_url: "http://127.0.0.1:8545".to_string(),
         chain_id: 137,
         escrow_factory_address: Some("0x0000000000000000000000000000000000000001".to_string()),
-        fee_router_address: None,
-        region_vault_address: None,
-        country_pool_ledger_address: None,
-        investor_share_token_addresses: vec![],
-        staking_address: None,
-        guide_staking_address: None,
-        staking_provider_address: None,
-        investor_lock_contract_addresses: vec![],
-        governor_address: None,
-        governance_timelock_address: None,
-        governance_votes_token_address: None,
-        treasury_address: None,
-        registry_address: None,
-        executor_max_amount_per_tx: None,
-        executor_max_amount_per_day: None,
-        executor_retry_count: 3,
+        ..Default::default()
     });
     s.indexer_state = None;
     s

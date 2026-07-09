@@ -162,7 +162,8 @@ async fn b451_get_reviews_list_includes_meta_review_json_contract() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_id, guide_row_id);
     let order_id = Uuid::new_v4();
@@ -196,7 +197,8 @@ async fn b451_get_reviews_list_includes_meta_review_json_contract() {
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     let state = ChainOffState {
         store: Arc::new(RwLock::new(store)),
@@ -398,7 +400,8 @@ async fn b451_post_reviews_db_pool_idempotent_includes_meta_review_json_contract
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
     store.orders.insert(
@@ -431,7 +434,8 @@ async fn b451_post_reviews_db_pool_idempotent_includes_meta_review_json_contract
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
 
     let co = ChainOffState {

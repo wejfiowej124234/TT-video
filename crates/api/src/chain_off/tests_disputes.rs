@@ -91,7 +91,8 @@ async fn dispute_list_get_resolve_flow() {
             created_at: now,
             updated_at: now,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_id, guide_row_id);
     let order_id = Uuid::new_v4();
@@ -123,7 +124,8 @@ async fn dispute_list_get_resolve_flow() {
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     store.guide_slot.insert(guide_id, order_id);
 
@@ -256,7 +258,8 @@ async fn order_open_dispute_impl_insufficient_arb_fee_returns_400() {
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     let mut config = ChainOffConfig::default();
     config.arb_base_fee = 100.0;

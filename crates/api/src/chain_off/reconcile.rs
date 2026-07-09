@@ -424,6 +424,7 @@ mod tests {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
+            ..Default::default()
             },
         );
         assert!(project_chain_event_onto_order(
@@ -469,6 +470,7 @@ mod tests {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
+            ..Default::default()
             },
         );
         assert!(project_chain_event_onto_order(
@@ -512,6 +514,7 @@ mod tests {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
+            ..Default::default()
             },
         );
         assert!(project_chain_event_onto_order(
@@ -563,6 +566,7 @@ mod tests {
                 data_origin: "production".into(),
             order_kind: None,
             market_listing_id: None,
+            ..Default::default()
             },
         );
         assert!(project_chain_event_onto_order(

@@ -134,7 +134,8 @@ pub(in crate::routes::orders::tests) fn build_store(
             created_at: anchor,
             updated_at: anchor,
             data_origin: "production".into(),
-        },
+        ..Default::default()
+    },
     );
     store.guides_by_user.insert(guide_user_id, guide_row_id);
     store.orders.insert(
@@ -167,7 +168,8 @@ pub(in crate::routes::orders::tests) fn build_store(
             data_origin: "production".into(),
         order_kind: None,
         market_listing_id: None,
-        },
+        ..Default::default()
+    },
     );
     store
 }
