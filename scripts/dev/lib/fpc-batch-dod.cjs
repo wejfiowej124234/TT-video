@@ -83,14 +83,6 @@ function evaluateGitState(batchId, batch) {
 }
 
 function evaluateDoD(batchId, { refreshDashboardFirst = false } = {}) {
-  if (refreshDashboardFirst) {
-    try {
-      sh('node scripts/dev/refresh-fpc-100-release-dashboard.cjs');
-    } catch {
-      /* refresh failure recorded below */
-    }
-  }
-
   const batch = loadBatch(batchId);
   if (!batch) {
     return {
@@ -106,6 +98,14 @@ function evaluateDoD(batchId, { refreshDashboardFirst = false } = {}) {
   const gatePass = evaluateGatePass(batch);
   const evidenceComplete = evaluateEvidenceComplete(batch);
   const git = evaluateGitState(batchId, batch);
+
+  if (refreshDashboardFirst) {
+    try {
+      sh('node scripts/dev/refresh-fpc-100-release-dashboard.cjs');
+    } catch {
+      /* recorded via dashboard_refreshed */
+    }
+  }
   const dashboardRefreshed = evaluateDashboardRefreshed(batch);
 
   const items = {
