@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.fpc_100_change_impact.v1",
+  "timestamp_utc": "2026-07-09T16:02:45.998Z",
+  "head": "529f16fa10e582ef0564df49a1c5bfbcce0f6f0e",
+  "dry_run": true,
+  "batches": [
+    {
+      "batch_id": "B00",
+      "status": "FROZEN_OK",
+      "reason": "code_changed_outside_batch_impact_map",
+      "code_changes": 1
+    }
+  ],
+  "any_invalidated": false
+}

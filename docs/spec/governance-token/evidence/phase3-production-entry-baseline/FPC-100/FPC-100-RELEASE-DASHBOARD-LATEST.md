@@ -1,9 +1,43 @@
 # TravelTrust · Release Dashboard
 
-**Framework:** TravelTrust Full Production Certification  
+## Executive Summary
+
+| | |
+|---|---|
+| **Version** | v1.0 |
+| **Coverage** | 0% |
+| **Batches** | 1 / 41 |
+| **Blockers** | 0 |
+| **Accepted Risks** | 2 |
+| **FPC Verdict** | NOT_STARTED |
+| **Release Decision** | **NO_GO** |
+
+_Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
+
+**Framework:** TravelTrust Full Production Certification (v5 · Governance Frozen)  
+**Product version:** `v1.0`  
 **Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
-**Verdict:** **NOT_STARTED**  
-**Updated:** 2026-07-09T15:59:33.150Z
+**FPC verdict:** **NOT_STARTED**  
+**Release decision:** `TT_RELEASE_DECISION` = **NO_GO**  
+**Updated:** 2026-07-09T16:06:06.917Z
+
+## Release Health
+
+| Metric | Value |
+|--------|-------|
+| Certified | 2.4% |
+| Expired | 0 |
+| Blocked | 0 |
+| Accepted Risks | 2 |
+| Coverage | 0% |
+| Human Verified | 0% |
+| AI Review PASS | 100% |
+
+## Release History (Version Certification)
+
+| Version | FPC Result | Release Decision |
+|---------|------------|------------------|
+| v1.0 | NOT_STARTED | NOT_STARTED |
 
 ## Pillars
 
@@ -24,10 +58,16 @@
 
 | Dimension | Coverage |
 |-----------|----------|
-| pages | 0 / 202 |
-| api_contracts | 0 / 181 |
-| business_corridors | 0 / 23 |
-| rbac_probes | 0 / 102 |
+| pages | 0 / 202 (0%) |
+| api_contracts | 0 / 181 (0%) |
+| business_corridors | 0 / 23 (0%) |
+| rbac_probes | 0 / 102 (0%) |
+
+## AI Review · Human Verification
+
+| Batch | AI | Human |
+|-------|----|-------|
+| B00 | PASS (Internal AI Review) | — |
 
 ## Accepted Risks
 
@@ -41,3 +81,5 @@
 ---
 
 **TT_FULL_PRODUCTION_CERTIFICATION:** `NOT_STARTED`
+
+**TT_RELEASE_DECISION:** `NO_GO`

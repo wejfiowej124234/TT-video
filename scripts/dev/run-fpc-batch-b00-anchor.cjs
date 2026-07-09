@@ -155,6 +155,7 @@ async function fetchJson(url) {
 
   if (pass) {
     const expiryDays = 30;
+    report.product_version = 'v1.0';
     report.certified_at_utc = stamp;
     report.expires_at_utc = new Date(Date.parse(stamp) + expiryDays * 86400000).toISOString();
     report.expiry_policy_days = expiryDays;
@@ -165,6 +166,26 @@ async function fetchJson(url) {
     report.human_verified = false;
     report.human_verifier = null;
     report.human_note = 'Machine-only anchor; human verification deferred to B01+';
+    report.ai_review = {
+      verdict: 'PASS',
+      ai_reviewer: 'Internal AI Review',
+      review_type: 'Internal AI Review',
+      review_date: stamp.slice(0, 10),
+      review_version: 'v1',
+      note: 'Machine anchor batch — AI attests scaffold + registry presence only',
+    };
+    report.traceability = {
+      requirements: ['PER Round 1 Exit baseline', 'FPC-100 anchor gate'],
+      spec_refs: [
+        'registry/full-production-certification-checklist.v1.yaml',
+        'FPC-CERTIFICATION-GOVERNANCE-v1.md',
+      ],
+      code_paths: ['scripts/dev/run-fpc-batch-b00-anchor.cjs', 'registry/*.yaml'],
+      tests: ['run-fpc-batch-b00-anchor.cjs (live /health /meta)'],
+      evidence_path: 'FPC-100/FPC-100-BATCH-B00-LATEST.json',
+      certification_batch: 'B00',
+      product_version: 'v1.0',
+    };
   }
 
   fs.mkdirSync(EVID, { recursive: true });

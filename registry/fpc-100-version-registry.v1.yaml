@@ -1,0 +1,32 @@
+# schema: traveltrust.fpc_100_version_registry.v1
+version: 1
+status: ACTIVE
+machine_key: TT_FPC_VERSION_REGISTRY
+parent: registry/full-production-certification-checklist.v1.yaml
+evidence_json: docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-VERSION-CERTIFICATION-LATEST.json
+
+# Version-scoped FPC — each product release gets its own certification run + history row.
+current_product_version: v1.0
+current_code_anchor: e9df0a73f63b5ebccc7c17266f000c3bf867d872
+
+version_certification_flow: |
+  v1.x tagged → FPC full or delta batches → PASS → record in release_history
+  → TT_RELEASE_DECISION (GO | CONDITIONAL_GO | NO_GO) → deploy
+
+release_history:
+  - product_version: v1.0
+    status: IN_PROGRESS
+    code_anchor: e9df0a73f63b5ebccc7c17266f000c3bf867d872
+    fpc_started_utc: "2026-07-09T15:53:00Z"
+    fpc_verdict: NOT_STARTED
+    tt_release_decision: NOT_STARTED
+    dashboard_snapshot: FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.json
+    note: PER Round 1 Exit baseline · FPC-100 framework v5 · B00 PASS
+
+# Template for future rows:
+# - product_version: v1.1
+#   status: CLOSED
+#   fpc_verdict: PASS
+#   tt_release_decision: GO
+#   certified_at_utc: ...
+#   git_release_sha: ...

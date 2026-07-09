@@ -1,12 +1,21 @@
 # schema: traveltrust.full_production_certification_checklist.v1
-version: 4
-status: ACTIVE_CERTIFICATION
-frozen_utc: "2026-07-09T16:00:00Z"
+version: 5
+status: GOVERNANCE_FROZEN
+governance_freeze:
+  frozen_utc: "2026-07-09T16:30:00Z"
+  freeze_doc: docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-GOVERNANCE-FREEZE-v5.md
+  unlock: [P0_governance_defect, version_upgrade_v6_plus]
+  execution_mode: ACTIVE
+  frozen_scope: [registry_v5, governance_docs, dashboard_schema_v3, batch_evidence_schema]
+  active_scope: [batch_execution_B00_B41, evidence_collection, defect_fixes, dashboard_refresh]
+frozen_utc: "2026-07-09T16:30:00Z"
 machine_key: TT_FPC_100
 mode: certification
 framework_name: TravelTrust Full Production Certification Framework
 governance_ssot: docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-CERTIFICATION-GOVERNANCE-v1.md
 risk_register: registry/fpc-100-risk-register.v1.yaml
+version_registry: registry/fpc-100-version-registry.v1.yaml
+change_impact_map: registry/fpc-100-change-impact-map.v1.json
 # Certification ≠ Checklist: each item requires verdict + verifier + evidence + release eligibility.
 # PER Round 1 remains valid; FPC-100 is superset full-site certification.
 
@@ -206,7 +215,51 @@ certification_governance:
     batch: B41
     checks: [logo, icp_if_applicable, privacy, terms, contact, ops_email, email_templates, cdn, domain, sitemap, robots, analytics]
 
+version_certification:
+  enabled: true
+  registry: registry/fpc-100-version-registry.v1.yaml
+  evidence_json: FPC-100/FPC-100-VERSION-CERTIFICATION-LATEST.json
+  rule: Each product_version (v1.0, v1.1, …) gets independent FPC run + release_history row
+
+change_impact:
+  enabled: true
+  map: registry/fpc-100-change-impact-map.v1.json
+  script: scripts/dev/check-fpc-change-impact.cjs
+  rule: Code change invalidates only mapped batches — not full-system PASS wipe
+
+release_traceability:
+  enabled: true
+  chain: [requirement, spec, code, test, evidence, certification, release]
+  batch_field: traceability
+  template:
+    requirements: []
+    spec_refs: []
+    code_paths: []
+    tests: []
+    evidence_path: null
+    certification_batch: null
+    product_version: null
+
+ai_review:
+  enabled: true
+  batch_field: ai_review
+  required_fields: [verdict, ai_reviewer, review_type, review_date, review_version]
+  note: Do not record model slugs — use Internal AI Review + review_version for dashboard stability
+
+release_decision:
+  machine_key: TT_RELEASE_DECISION
+  enum: [GO, NO_GO, CONDITIONAL_GO, NOT_STARTED]
+  rules:
+    GO: All pillars PASS · coverage 100% · no pending risks · no blockers · human+ai complete on required batches
+    CONDITIONAL_GO: PASS with only ACCEPTED risks (no PENDING) · Owner sign-off recorded
+    NO_GO: FAIL pillar · release_blocker YES · pending risk · expired evidence without re-cert
+
+release_health_dashboard:
+  metrics: [certified_pct, expired_count, blocked_count, accepted_risks_count, coverage_pct, human_verified_pct, ai_review_pct]
+  script: scripts/dev/refresh-fpc-100-release-dashboard.cjs
+
 batch_evidence_required_fields:
+  - product_version
   - certified_at_utc
   - expires_at_utc
   - certification_frozen
@@ -215,6 +268,8 @@ batch_evidence_required_fields:
   - release_blocker
   - human_verified
   - human_verifier
+  - ai_review
+  - traceability
   - verdict
   - pass
 
@@ -915,7 +970,10 @@ rollup_exit_criteria:
   release_dashboard: FPC-100-RELEASE-DASHBOARD-LATEST.json
   dashboard_refresh_script: scripts/dev/refresh-fpc-100-release-dashboard.cjs
   freeze_check_script: scripts/dev/check-fpc-certification-freeze.cjs
+  change_impact_script: scripts/dev/check-fpc-change-impact.cjs
   risk_register: registry/fpc-100-risk-register.v1.yaml
+  version_registry: registry/fpc-100-version-registry.v1.yaml
+  release_decision_key: TT_RELEASE_DECISION
   required_pillars_pass:
     - technical
     - product

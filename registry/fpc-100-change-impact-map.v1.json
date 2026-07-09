@@ -1,0 +1,120 @@
+{
+  "schema": "traveltrust.fpc_100_change_impact_map.v1",
+  "version": 1,
+  "description": "Git path change → FPC batch invalidation (scoped, not full-system)",
+  "doc_only_prefixes": [
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/",
+    "docs/runbook/FPC-",
+    "registry/fpc-100-",
+    "registry/full-production-certification-checklist.v1.yaml"
+  ],
+  "catch_all_batches_on_any_code_change": ["B24"],
+  "rules": [
+    {
+      "id": "market",
+      "paths": [
+        "frontend/app/market/",
+        "frontend/components/market/",
+        "crates/api/src/chain_off/market_public_surface.rs",
+        "crates/api/src/db/guides.rs",
+        "crates/api/src/routes/guides.rs"
+      ],
+      "batches": ["B04", "B25-C2", "B26", "B31", "B36", "B01"]
+    },
+    {
+      "id": "public_surface",
+      "paths": [
+        "frontend/components/nav/",
+        "frontend/components/landing/",
+        "frontend/lib/travelTrustUiGuards.ts",
+        "frontend/lib/siteMetadataBase.ts",
+        "scripts/gates/check-production-ui-hygiene-gate.sh",
+        "scripts/gates/check-public-surface-audit-gate.sh"
+      ],
+      "batches": ["B01", "B36", "B26"]
+    },
+    {
+      "id": "five_main",
+      "paths": [
+        "frontend/app/(home)/",
+        "frontend/app/traveltrust/",
+        "frontend/app/did-rank/",
+        "frontend/app/community/",
+        "frontend/components/landing/"
+      ],
+      "batches": ["B02", "B25-C1", "B26", "B01"]
+    },
+    {
+      "id": "auth_onboarding",
+      "paths": [
+        "frontend/app/auth/",
+        "frontend/app/provider/register/",
+        "frontend/app/steward/register/",
+        "frontend/app/guide/register/",
+        "frontend/app/me/onboarding/",
+        "crates/api/src/routes/auth.rs",
+        "crates/api/src/routes/onboarding.rs"
+      ],
+      "batches": ["B03", "B25-C4", "B26", "B10"]
+    },
+    {
+      "id": "escrow_transaction",
+      "paths": [
+        "frontend/app/pay/",
+        "frontend/app/orders/",
+        "frontend/app/escrow/",
+        "frontend/components/escrow/",
+        "crates/api/src/routes/orders/"
+      ],
+      "batches": ["B05", "B25-C3", "B26", "B35", "B10"]
+    },
+    {
+      "id": "governance_trust",
+      "paths": [
+        "frontend/app/governance/",
+        "frontend/app/trust/",
+        "frontend/app/staking/",
+        "frontend/components/trust/"
+      ],
+      "batches": ["B06", "B25-C5", "B26", "B20"]
+    },
+    {
+      "id": "admin",
+      "paths": [
+        "frontend/app/admin/",
+        "crates/api/src/routes/admin/",
+        "registry/admin-rbac-"
+      ],
+      "batches": ["B09", "B25-C6", "B33"]
+    },
+    {
+      "id": "api_core",
+      "paths": [
+        "crates/api/src/routes/mod.rs",
+        "crates/api/src/routes/health_meta/",
+        "frontend/lib/api.ts",
+        "docs/spec/04-"
+      ],
+      "batches": ["B00", "B11", "B32", "B31"]
+    },
+    {
+      "id": "cms_content",
+      "paths": [
+        "data/catalog/",
+        "registry/cms-",
+        "scripts/gates/check-cms-"
+      ],
+      "batches": ["B30", "B12"]
+    },
+    {
+      "id": "locales",
+      "paths": ["frontend/locales/"],
+      "batches": ["B13", "B26", "B36", "B25-C1", "B25-C2", "B25-C3", "B25-C4", "B25-C5", "B25-C6"]
+    },
+    {
+      "id": "deploy",
+      "paths": ["deploy/fly/", "scripts/dev/phase2-staging-fly-deploy-and-sync.sh"],
+      "batches": ["B40", "B22"]
+    }
+  ]
+}

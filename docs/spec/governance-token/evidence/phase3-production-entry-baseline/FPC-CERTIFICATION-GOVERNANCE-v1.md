@@ -1,13 +1,17 @@
 # FPC-100 · Certification Governance（长期发布标准）
 
-**Version:** 1.0.0  
-**Status:** ACTIVE · 与 FPC-100 v4 registry 同源  
+**Version:** 1.2.0  
+**Status:** **FROZEN @ FPC v5** · 见 [`FPC-GOVERNANCE-FREEZE-v5.md`](FPC-GOVERNANCE-FREEZE-v5.md)  
+**Governance unlock:** P0 governance defect · Version Upgrade (v6+) only
 **Machine:** [`registry/full-production-certification-checklist.v1.yaml`](../../../../registry/full-production-certification-checklist.v1.yaml)  
 **Risk register:** [`registry/fpc-100-risk-register.v1.yaml`](../../../../registry/fpc-100-risk-register.v1.yaml)
 
 ---
 
 ## 0. 框架定位
+
+**Governance FREEZE（v5）：** 框架已冻结 — **Execution 线**（B00–B41）为唯一日常推进。  
+**禁止 Framework Inflation** — 见 [`FPC-GOVERNANCE-FREEZE-v5.md`](FPC-GOVERNANCE-FREEZE-v5.md)
 
 FPC-100 是 **TravelTrust Full Production Certification Framework** — 不仅是一次发布检查，而是 **每个版本（v1.1 · v1.2 · v2.0）可重复执行的长期发布标准**。
 
@@ -36,7 +40,7 @@ Evidence Freeze（certification_frozen: true · frozen_at_utc）
 **规则：**
 
 1. PASS 批次 JSON 写入 `certification_frozen: true` · `frozen_at_utc` · `frozen_git_sha`
-2. 覆盖范围内的 **代码/配置/内容** 变更 → 运行 `node scripts/dev/check-fpc-certification-freeze.cjs`（或 Dashboard refresh 内嵌检查）→ 标记 `STALE`
+2. 覆盖范围内的 **代码/配置/内容** 变更 → 运行 `node scripts/dev/check-fpc-change-impact.cjs`（精准映射失效）+ `check-fpc-certification-freeze.cjs`（expiry）→ 标记 `INVALIDATED`
 3. Dashboard **不得** 在 STALE 证据上显示 PASS — 显示 `INVALIDATED · RE-CERT REQUIRED`
 4. 文档-only commit **不** 自动失效技术批次，除非 Owner 显式 `FPC_FORCE_INVALIDATE=1`
 
@@ -217,3 +221,101 @@ TT_FULL_PRODUCTION_CERTIFICATION   PASS | NOT_STARTED | FAIL
 4. Risk register 复审过期项  
 
 **PER Round 1** 历史 closeout **只读** — 不删除；新轮 FPC 追加证据，不覆盖旧 PASS 文件（用新 stamp 文件或 `-LATEST` 滚动 + freeze 指针）。
+
+---
+
+## 11. Version Certification（版本认证历史）
+
+每个 **product_version**（v1.0 · v1.1 · v2.0）独立跑 FPC，并写入 **Release History**：
+
+```
+v1.0 → FPC batches → PASS → TT_RELEASE_DECISION
+v1.1 → delta/full FPC → PASS → GO
+```
+
+| SSOT | 路径 |
+|------|------|
+| Version registry | `registry/fpc-100-version-registry.v1.yaml` |
+| Evidence JSON | `FPC-100/FPC-100-VERSION-CERTIFICATION-LATEST.json` |
+| Dashboard 区块 | **Release History** — Version · Result · Release Decision |
+
+**规则：** 关闭版本时更新 registry `release_history` 行 + 刷新 Dashboard；**禁止** 用新版本 PASS 覆盖旧版本历史行。
+
+---
+
+## 12. Change Impact（精准失效）
+
+代码变更 **不再** 全系统失效 — 按路径映射只 invalidate 相关 Batch：
+
+| SSOT | 路径 |
+|------|------|
+| Impact map | `registry/fpc-100-change-impact-map.v1.json` |
+| Script | `scripts/dev/check-fpc-change-impact.cjs` |
+| Report | `FPC-100/FPC-100-CHANGE-IMPACT-LATEST.json` |
+
+**示例：** `frontend/app/market` 变更 → 仅 B04 · B25-C2 · B26 · B31 失效。
+
+`check-fpc-certification-freeze.cjs` 负责 **expiry**；path invalidation 委托 change-impact 脚本。
+
+---
+
+## 13. Release Traceability（发布追溯链）
+
+每个 Batch JSON 含 `traceability` 对象，链接完整链：
+
+```
+Requirement → Spec → Code → Test → Evidence → Certification → Release
+```
+
+必填字段：`requirements[]` · `spec_refs[]` · `code_paths[]` · `tests[]` · `evidence_path` · `certification_batch` · `product_version`
+
+Dashboard 与 Version Certification JSON 暴露 `traceability_chain` 供审计。
+
+---
+
+## 14. AI Review · Release Health · Release Decision
+
+### AI Review
+
+除 Human 外，每个 Batch 记录：
+
+```json
+{
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-09",
+    "review_version": "v1"
+  }
+}
+```
+
+**禁止** 在 evidence 中写入具体模型 slug（如 composer-*）— 用 `review_version` 表示审查协议版本。
+
+Dashboard **AI Review · Human Verification** 表区分机读/真人。
+
+### Release Health（一屏总览）
+
+| 指标 | 含义 |
+|------|------|
+| Certified % | PASS 批次数 / 跟踪批次数 |
+| Expired | 过期需 re-cert 数 |
+| Blocked | `release_blocker: YES` |
+| Accepted Risks | Risk register ACCEPTED |
+| Coverage % | Pages · API · Corridors · RBAC 均值 |
+| Human Verified % | human_verified 批次占比 |
+| AI Review PASS % | ai_review.verdict === PASS |
+
+### Release Decision（企业最终闸）
+
+**Machine key:** `TT_RELEASE_DECISION`
+
+| 值 | 条件 |
+|----|------|
+| **GO** | 全柱 PASS · Coverage 100% · 无 PENDING risk · 无 blocker |
+| **CONDITIONAL_GO** | 仅 ACCEPTED risks · Owner 书面签收 |
+| **NO_GO** | FAIL · blocker · PENDING risk · EXPIRED |
+| **NOT_STARTED** | FPC 进行中 |
+
+**FPC verdict（PASS）≠ Release Decision（GO）** — Dashboard **Executive Summary** 第一眼展示 Release Decision。

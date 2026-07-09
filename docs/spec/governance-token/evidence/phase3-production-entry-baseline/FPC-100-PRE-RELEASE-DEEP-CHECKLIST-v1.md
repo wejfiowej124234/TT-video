@@ -1,7 +1,8 @@
 # FPC-100 · Full Production Certification（发布认证 · 非检查清单）
 
-**Version:** 4.0.0  
-**Status:** **ACTIVE · Certification Framework v4**  
+**Version:** 5.0.0  
+**Status:** **GOVERNANCE FROZEN @ v5** · Execution ACTIVE  
+**Governance freeze:** [`FPC-GOVERNANCE-FREEZE-v5.md`](FPC-GOVERNANCE-FREEZE-v5.md)
 **Governance:** [`FPC-CERTIFICATION-GOVERNANCE-v1.md`](FPC-CERTIFICATION-GOVERNANCE-v1.md)  
 **Release Dashboard:** [`FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.md`](FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.md)  
 **Machine SSOT:** [`registry/full-production-certification-checklist.v1.yaml`](../../../../registry/full-production-certification-checklist.v1.yaml)  
@@ -84,26 +85,34 @@ L5   运营与真实 ★★★★★       Content · Lineage · API Contract ·
 | Mobile · A11Y · Performance · Security · RBAC | PASS |
 | Environment Diff | PASS（②） |
 
-**终态一行：** `TT_FULL_PRODUCTION_CERTIFICATION: PASS` — 非「基本查了」
+**终态两行：**
+
+- `TT_FULL_PRODUCTION_CERTIFICATION: PASS` — 技术/产品认证完成
+- `TT_RELEASE_DECISION: GO | CONDITIONAL_GO | NO_GO` — **企业发布决策**（非仅 PASS）
 
 ---
 
-## 治理机制（v4 · 长期维护）
+## 治理机制（v5 · 长期维护）
 
 详见 [`FPC-CERTIFICATION-GOVERNANCE-v1.md`](FPC-CERTIFICATION-GOVERNANCE-v1.md)
 
 | 机制 | 要点 |
 |------|------|
-| **Certification Freeze** | Batch PASS → 证据冻结 · 改 SSOT → INVALIDATED · 须重认证 |
+| **Certification Freeze** | Batch PASS → 证据冻结 · **Change Impact** 精准失效 · 须重认证 |
+| **Version Certification** | 每 product_version 独立 FPC · **Release History** 表 |
+| **Change Impact** | `fpc-100-change-impact-map.v1.json` · 改 market 只失效 B04/B25/B26/B31 |
+| **Release Traceability** | Requirement→Spec→Code→Test→Evidence→Certification→Release |
 | **Risk Register** | `registry/fpc-100-risk-register.v1.yaml` · Accepted vs Pending |
 | **Evidence Expiry** | certified_at / expires_at · Perf 30d · A11y 60d · Sec 90d |
 | **Release Blocker** | 每批 `release_blocker: YES/NO` · Truthfulness Mock = Block |
 | **Evidence Coverage** | Pages · API · Corridors · RBAC — Dashboard 100% 可见 |
-| **Human Certification** | `human_verified` · UX/Ops/Deploy/Business 必填 |
+| **Human + AI Review** | `human_verified` + `ai_review` · Dashboard 区分 Human/AI |
+| **Release Health** | Certified% · Expired · Blocked · Coverage% · 一屏总览 |
+| **Release Decision** | **`TT_RELEASE_DECISION`** · GO / CONDITIONAL_GO / NO_GO |
 | **Deployment Cert** | **B40** · 独立于 Local · Deploy→Health→Meta→Diff→Rollback |
 | **Business Readiness** | **B41** · Logo/法务/域名/Sitemap/Analytics |
 
-**多柱 Dashboard：** Technical · Product · Operations · Content · Business · Security · Performance · Truthfulness · Deployment · Human Verification → **`TT_FULL_PRODUCTION_CERTIFICATION`**
+**多柱 Dashboard：** Technical · Product · Operations · Content · Business · Security · Performance · Truthfulness · Deployment · Human Verification → **`TT_FULL_PRODUCTION_CERTIFICATION`** + **`TT_RELEASE_DECISION`**
 
 ---
 

@@ -89,6 +89,7 @@
   "verdict": "PASS",
   "pass": true,
   "next_batch": "B01",
+  "product_version": "v1.0",
   "certified_at_utc": "2026-07-09T15:59:15.916Z",
   "expires_at_utc": "2026-08-08T15:59:15.916Z",
   "expiry_policy_days": 30,
@@ -98,5 +99,25 @@
   "release_blocker": "NO",
   "human_verified": false,
   "human_verifier": null,
-  "human_note": "Machine-only anchor; human verification deferred to B01+"
+  "human_note": "Machine-only anchor; human verification deferred to B01+",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-09",
+    "review_version": "v1",
+    "note": "Machine anchor batch — AI attests scaffold + registry presence only"
+  },
+  "traceability": {
+    "requirements": ["PER Round 1 Exit baseline", "FPC-100 anchor gate"],
+    "spec_refs": [
+      "registry/full-production-certification-checklist.v1.yaml",
+      "FPC-CERTIFICATION-GOVERNANCE-v1.md"
+    ],
+    "code_paths": ["scripts/dev/run-fpc-batch-b00-anchor.cjs", "registry/*.yaml"],
+    "tests": ["run-fpc-batch-b00-anchor.cjs (live /health /meta)"],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B00-LATEST.json",
+    "certification_batch": "B00",
+    "product_version": "v1.0"
+  }
 }

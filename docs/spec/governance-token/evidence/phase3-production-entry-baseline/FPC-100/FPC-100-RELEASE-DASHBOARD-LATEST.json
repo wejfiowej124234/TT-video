@@ -1,11 +1,30 @@
 {
-  "schema": "traveltrust.fpc_100_release_dashboard.v2",
+  "schema": "traveltrust.fpc_100_release_dashboard.v3",
+  "executive_summary": {
+    "title": "TravelTrust Release Summary",
+    "product_version": "v1.0",
+    "coverage_pct": 0,
+    "batches": "1 / 41",
+    "batches_pass": 1,
+    "batches_total": 41,
+    "blockers": 0,
+    "pending_risks": 1,
+    "accepted_risks": 2,
+    "fpc_verdict": "NOT_STARTED",
+    "release_decision": "NO_GO",
+    "governance": "FROZEN @ v5",
+    "execution": "ACTIVE · B00–B41"
+  },
   "framework": "TravelTrust Full Production Certification Framework",
+  "framework_registry_version": 5,
   "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION",
-  "timestamp_utc": "2026-07-09T15:59:33.150Z",
+  "release_decision_key": "TT_RELEASE_DECISION",
+  "product_version": "v1.0",
+  "timestamp_utc": "2026-07-09T16:06:06.917Z",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "verdict": "NOT_STARTED",
   "pass": false,
+  "tt_release_decision": "NO_GO",
   "pillars": {
     "technical": "IN_PROGRESS",
     "product": "NOT_STARTED",
@@ -18,6 +37,24 @@
     "deployment": "NOT_STARTED",
     "human_verification": "NOT_STARTED"
   },
+  "release_health": {
+    "certified_pct": 2.4,
+    "expired_count": 0,
+    "blocked_count": 0,
+    "accepted_risks_count": 2,
+    "coverage_pct": 0,
+    "human_verified_pct": 0,
+    "human_required_verified_pct": 0,
+    "ai_review_pct": 100
+  },
+  "release_history": [
+    {
+      "product_version": "v1.0",
+      "status": "IN_PROGRESS",
+      "fpc_verdict": "NOT_STARTED",
+      "tt_release_decision": "NOT_STARTED"
+    }
+  ],
   "evidence_coverage": {
     "pages": {
       "done": 0,
@@ -63,10 +100,42 @@
     }
   ],
   "expired_batches": [],
+  "blocked_batches": [],
+  "change_impact": {
+    "any_invalidated": false,
+    "invalidated": []
+  },
+  "ai_review_summary": [
+    {
+      "batch_id": "B00",
+      "ai_review": {
+        "verdict": "PASS",
+        "ai_reviewer": "Internal AI Review",
+        "review_type": "Internal AI Review",
+        "review_date": "2026-07-09",
+        "review_version": "v1",
+        "note": "Machine anchor batch — AI attests scaffold + registry presence only"
+      },
+      "ai_display": "Internal AI Review",
+      "human_verified": false,
+      "human_verifier": null
+    }
+  ],
   "certification_governance": {
     "freeze_doc": "FPC-CERTIFICATION-GOVERNANCE-v1.md",
-    "risk_register": "registry/fpc-100-risk-register.v1.yaml"
+    "risk_register": "registry/fpc-100-risk-register.v1.yaml",
+    "version_registry": "registry/fpc-100-version-registry.v1.yaml",
+    "change_impact_map": "registry/fpc-100-change-impact-map.v1.json"
   },
+  "traceability_chain": [
+    "requirement",
+    "spec",
+    "code",
+    "test",
+    "evidence",
+    "certification",
+    "release"
+  ],
   "detail_rows": [
     {
       "label": "Pages (L1)",

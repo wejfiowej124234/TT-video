@@ -9,6 +9,7 @@
 
 ## 1. 执行纪律
 
+0. **Governance FROZEN @ v5** — 见 [`FPC-GOVERNANCE-FREEZE-v5.md`](../spec/governance-token/evidence/phase3-production-entry-baseline/FPC-GOVERNANCE-FREEZE-v5.md) · **只推进 Execution（B00–B41）**  
 1. **不改 Local** — 除非 Diff / Staging-only / 新 P0/P1  
 2. **一批一证据** — 无 `FPC-100-BATCH-{Bx}-LATEST.json` 不得标 PASS  
 3. **批间顺序** — 见 §2；P0 批 FAIL 则停止下游 P0  
