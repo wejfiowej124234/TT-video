@@ -144,6 +144,20 @@ const records = pages.map((pageFile) => {
       copy_consistency: NOT_STARTED,
       i18n_pairity: NOT_STARTED,
     },
+    layer2_5_customer_experience: {
+      user_goal: null,
+      primary_cta: null,
+      time_to_complete: null,
+      cognitive_load: null,
+      user_journey_score: null,
+      first_visit_next_step_clear: NOT_STARTED,
+      single_primary_cta: NOT_STARTED,
+      no_confusing_navigation: NOT_STARTED,
+      core_action_clicks_lte_3: NOT_STARTED,
+      loading_communicates_progress: NOT_STARTED,
+      error_states_actionable: NOT_STARTED,
+      certification_verdict: NOT_STARTED,
+    },
     layer3_business_flow_refs: [],
     layer4_enterprise: {
       seo: NOT_STARTED,
@@ -155,6 +169,39 @@ const records = pages.map((pageFile) => {
       security: NOT_STARTED,
       performance: NOT_STARTED,
       observability: NOT_STARTED,
+    },
+    layer5_operations_truth_per_page: {
+      data_lineage: {
+        chain_documented: NOT_STARTED,
+        db: null,
+        api: null,
+        projection: null,
+        frontend: null,
+        ui_field_map: null,
+        verdict: NOT_STARTED,
+      },
+      content_operations: {
+        cms_assets_on_page: NOT_STARTED,
+        publish_state_verified: NOT_STARTED,
+        verdict: NOT_STARTED,
+      },
+      recovery: {
+        api_500_graceful: NOT_STARTED,
+        network_offline: NOT_STARTED,
+        cdn_image_missing: NOT_STARTED,
+        wallet_timeout: NOT_STARTED,
+        verdict: NOT_STARTED,
+      },
+      truthfulness: {
+        no_mock: NOT_STARTED,
+        no_demo: NOT_STARTED,
+        no_placeholder: NOT_STARTED,
+        no_fake_data: NOT_STARTED,
+        no_todo: NOT_STARTED,
+        no_coming_soon: NOT_STARTED,
+        truthfulness_pct: null,
+        verdict: NOT_STARTED,
+      },
     },
     ux_certification: {
       ia_information_architecture: NOT_STARTED,
@@ -189,7 +236,7 @@ const records = pages.map((pageFile) => {
 });
 
 const matrix = {
-  schema: 'traveltrust.fpc_100_page_certification_matrix.v1',
+  schema: 'traveltrust.fpc_100_page_certification_matrix.v2',
   title: 'FPC-100 Page Certification Matrix',
   mode: 'certification_not_checklist',
   timestamp_utc: stamp,
@@ -206,12 +253,17 @@ const matrix = {
     pages_not_started: pages.length,
     coverage_pct: 0,
     production_ready_yes: 0,
+    cx_certified_pass: 0,
+    truthfulness_100_pct_pages: 0,
+    data_lineage_documented: 0,
   },
-  four_layers: {
+  five_layers: {
     L1_page_coverage: '202/202 routes enumerated — per-page surface sub-items PENDING',
-    L2_per_page_l5_ux_ui: 'NOT_STARTED — requires page card completion',
+    L2_per_page_l5_ux_ui: 'NOT_STARTED — page card UI/UX/content/function',
+    L2_5_customer_experience: 'NOT_STARTED — user goal · CTA · journey · cognitive load',
     L3_business_flows: 'registry/business-flow-matrix.v1.yaml — batch B10',
-    L4_enterprise: 'batches B12–B24',
+    L4_enterprise: 'batches B01–B24 cross-cutting gates',
+    L5_operations_truth: 'B30–B37 global + per-page layer5_operations_truth_per_page',
   },
   pages: records,
 };

@@ -1,7 +1,7 @@
 # schema: traveltrust.full_production_certification_checklist.v1
-version: 2
+version: 3
 status: ACTIVE_CERTIFICATION
-frozen_utc: "2026-07-09T15:51:00Z"
+frozen_utc: "2026-07-09T15:55:00Z"
 machine_key: TT_FPC_100
 mode: certification
 # Certification ≠ Checklist: each item requires verdict + verifier + evidence + release eligibility.
@@ -11,7 +11,7 @@ certification_model:
   distinction: >-
     Checklist asks "was it inspected?" Certification asks "did it PASS?", "who verified?",
     "what evidence?", "is release allowed?"
-  four_layers:
+  five_layers:
     L1_page_coverage:
       question: Was every surface inspected (100% coverage)?
       scope:
@@ -34,6 +34,23 @@ certification_model:
       rubric_ssot: docs/spec/96-16-全页面UI-UX优化方案总册.md
       walkthrough_ssot: docs/spec/96-13-UI-UX-i18n-a11y-性能走查.md
       batches: [B25-C1, B25-C2, B25-C3, B25-C4, B25-C5, B25-C6]
+    L2_5_customer_experience:
+      question: Does the real user know what to do next (not just pretty UI)?
+      priority: P0
+      per_page_fields:
+        - user_goal
+        - primary_cta
+        - time_to_complete
+        - cognitive_load
+        - user_journey_score
+      checks:
+        - first_visit_next_step_clear
+        - single_primary_cta
+        - no_confusing_navigation
+        - core_action_clicks_lte_3
+        - loading_communicates_progress
+        - error_states_actionable
+      batches: [B26]
     L3_business_flows:
       question: Do end-to-end business paths work (not page-only)?
       flows: [guide, provider, acquisition, governance_participation, escrow_golden_path]
@@ -41,8 +58,79 @@ certification_model:
       batches: [B05, B08, B10]
     L4_enterprise:
       question: Do cross-cutting enterprise gates PASS?
-      dimensions: [seo, i18n, a11y, mobile, rbac, api, security, performance, observability, production_build]
-      batches: [B01, B11, B12, B13, B14, B15, B16, B17, B18, B19, B20, B21, B22, B24]
+      dimensions: [seo, i18n, a11y, mobile, rbac, security, performance, observability, production_build]
+      batches: [B01, B13, B14, B15, B16, B17, B18, B19, B20, B21, B22, B24]
+    L5_operations_truth:
+      question: Can we operate, trust data, recover, and prove content truth at production grade?
+      sub_domains: [content_operations, data_lineage, api_contract, operations, lifecycle, recovery, truthfulness]
+      batches: [B30, B31, B32, B33, B34, B35, B36]
+      dashboard: docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.json
+      dashboard_script: scripts/dev/refresh-fpc-100-release-dashboard.cjs
+  l5_certification_domains:
+    - id: cx
+      layer: L2_5
+      title: Customer Experience Certification
+      priority: P0
+      batch: B26
+    - id: content_operations
+      layer: L5
+      title: Content Operations Certification
+      priority: P0
+      batch: B30
+      ssot: data/catalog/cms-asset-matrix.v1.yaml
+      checks: [announcements, country_ambient, banners, hero, images, videos, publish_state, seo, alt, i18n]
+    - id: data_lineage
+      layer: L5
+      title: Data Lineage Certification
+      priority: P0
+      batch: B31
+      chain: [db, api, projection, frontend, ui]
+      per_page_field: layer5_operations_truth_per_page.data_lineage
+    - id: api_contract
+      layer: L5
+      title: API Contract Certification
+      priority: P0
+      batch: B32
+      methods: [GET, POST, PATCH, DELETE]
+      contract_fields: [request, response, error, loading, empty]
+      ssot: docs/spec/04-后端与API.md
+      gates: [scripts/gates/run-check-04-routes.sh, scripts/gates/smoke-api-public-routes.sh]
+    - id: operations
+      layer: L5
+      title: Operations Certification
+      priority: P0
+      batch: B33
+      checks:
+        - admin_publish_announcement
+        - admin_unpublish_rollback
+        - admin_review_approve
+        - admin_disable_user
+        - admin_content_suspend
+        - admin_audit_logs_readable
+      personas: [E1, E2]
+    - id: lifecycle
+      layer: L5
+      title: Data Lifecycle Certification
+      priority: P0
+      batch: B34
+      entities: [guide, community_post, provider_listing, campaign]
+      stages: [create, review, publish, visible, archive, delete]
+    - id: recovery
+      layer: L5
+      title: Recovery Certification
+      priority: P0
+      batch: B35
+      failure_modes: [api_500, network_offline, cdn_fail, image_missing, wallet_timeout]
+      per_page_field: layer5_operations_truth_per_page.recovery
+    - id: truthfulness
+      layer: L5
+      title: Truthfulness Certification
+      priority: P0
+      batch: B36
+      target_pct: 100
+      forbidden: [mock, demo, placeholder, fake_data, todo, coming_soon]
+      per_page_field: layer5_operations_truth_per_page.truthfulness
+      traveltrust_note: Core differentiator — no fake surfaces on consumer paths
   ux_certification_rubric:
     ia_information_architecture: Unique nav · clear hierarchy · no dead ends
     cta_unique_primary: One primary CTA per viewport band where applicable
@@ -88,6 +176,9 @@ evidence_naming:
   batch_log: "FPC-100-BATCH-{batch_id}-{stamp}.log"
   rollup_json: FPC-100-REGISTRY-LATEST.json
   rollup_md: FPC-100-REGISTRY-LATEST.md
+  release_dashboard_json: FPC-100-RELEASE-DASHBOARD-LATEST.json
+  release_dashboard_md: FPC-100-RELEASE-DASHBOARD-LATEST.md
+  machine_verdict_key: TT_FULL_PRODUCTION_CERTIFICATION
 
 page_inventory:
   scan_glob: frontend/app/**/page.tsx
@@ -630,11 +721,111 @@ batches:
       - docs/spec/R-002-回归执行闭环与发布准入.md
       - evidence/GO_local_r002_verify/README.md
 
+  - id: B26
+    title: "L2.5 · Customer Experience Certification (202 pages)"
+    priority: P0
+    phase: [local]
+    layer: L2_5
+    depends_on: [B23]
+    acceptance: >-
+      Every page has user_goal, primary_cta, journey score; core action <=3 clicks;
+      loading/error actionable; layer2_5_customer_experience.certification_verdict PASS.
+    evidence: FPC-100/B26-customer-experience
+
+  - id: B30
+    title: "L5 · Content Operations Certification"
+    priority: P0
+    phase: [local, staging]
+    layer: L5
+    depends_on: [B12]
+    gates:
+      - scripts/gates/check-cms-announcements-gate.sh
+    acceptance: >-
+      CMS assets Live not empty on consumer surfaces; announcements/country/banner/hero/image/video
+      publish state · SEO · alt · i18n verified per cms-asset-matrix.
+    evidence: FPC-100/B30-content-operations
+    owner_files:
+      - data/catalog/cms-asset-matrix.v1.yaml
+
+  - id: B31
+    title: "L5 · Data Lineage Certification"
+    priority: P0
+    phase: [local]
+    layer: L5
+    depends_on: [B04, B11]
+    acceptance: >-
+      Per-page DB→API→Projection→Frontend→UI chain documented; any displayed number traceable.
+    evidence: FPC-100/B31-data-lineage
+    owner_files:
+      - registry/display-data-governance.v1.yaml
+      - docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md
+
+  - id: B32
+    title: "L5 · API Contract Certification (all methods)"
+    priority: P0
+    phase: [local]
+    layer: L5
+    depends_on: [B11]
+    gates:
+      - scripts/gates/run-check-04-routes.sh
+      - scripts/gates/smoke-api-public-routes.sh
+    acceptance: >-
+      Every consumed GET/POST/PATCH/DELETE contract-certified: request, response, error, loading, empty.
+    evidence: FPC-100/B32-api-contract
+
+  - id: B33
+    title: "L5 · Operations Certification (admin can operate)"
+    priority: P0
+    phase: [local, staging]
+    layer: L5
+    depends_on: [B09]
+    acceptance: >-
+      E1/E2 can publish/unpublish/rollback/review/suspend/read logs — human verified not API-only.
+    evidence: FPC-100/B33-operations
+
+  - id: B34
+    title: "L5 · Data Lifecycle Certification"
+    priority: P0
+    phase: [local]
+    layer: L5
+    depends_on: [B10]
+    acceptance: >-
+      Guide/community/provider/campaign entities pass create→review→publish→visible→archive→delete where applicable.
+    evidence: FPC-100/B34-lifecycle
+
+  - id: B35
+    title: "L5 · Recovery Certification"
+    priority: P0
+    phase: [local]
+    layer: L5
+    depends_on: [B05]
+    acceptance: >-
+      api_500, network, cdn, image missing, wallet timeout — pages degrade gracefully with recovery path.
+    evidence: FPC-100/B35-recovery
+
+  - id: B36
+    title: "L5 · Truthfulness Certification (100%)"
+    priority: P0
+    phase: [local, staging]
+    layer: L5
+    depends_on: [B01]
+    gates:
+      - scripts/gates/check-production-ui-hygiene-gate.sh
+      - scripts/gates/check-display-data-governance-ssot.sh
+    acceptance: >-
+      Zero mock/demo/placeholder/fake/todo/coming_soon on consumer surfaces; truthfulness 100% or N/A logged.
+    evidence: FPC-100/B36-truthfulness
+
 rollup_exit_criteria:
-  required_batches_p0_pass: [B00, B01, B04, B05, B09, B11, B17, B20, B23, B24]
+  machine_verdict: TT_FULL_PRODUCTION_CERTIFICATION
+  release_dashboard: FPC-100-RELEASE-DASHBOARD-LATEST.json
+  dashboard_refresh_script: scripts/dev/refresh-fpc-100-release-dashboard.cjs
+  required_batches_p0_pass: [B00, B01, B04, B05, B09, B11, B17, B20, B23, B24, B26, B30, B31, B32, B33, B35, B36]
   l1_page_coverage: "202/202 pages layer1_surface_coverage = PASS or N/A with evidence"
   l2_page_certification: "202/202 pages production_ready in {YES, CONDITIONAL} with zero unresolved P0/P1"
+  l2_5_cx: "202/202 pages CX certification PASS"
   l3_business_flows: "business-flow-matrix.v1.yaml all flows PASS"
+  l5_truthfulness: "Truthfulness 100% on consumer pages"
   l4_enterprise: "required_batches_p0_pass satisfied"
   page_matrix_rollup: FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json
   staging_required_after_deploy: [B00, B01, B04, B21, B22]

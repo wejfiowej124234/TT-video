@@ -12,7 +12,9 @@
 | Mode | **B00 PASS** · **B01 next** |
 | PER Round 1 | EXIT ✅ |
 | Local freeze | ACTIVE (code anchor `e9df0a73`) |
-| Page matrix | **202/202 scaffolded** · L2 **0/202 certified** |
+| Page matrix | **202/202 scaffolded v2** · L2/L2.5/L5 per-page fields |
+| Release Dashboard | [`FPC-100-RELEASE-DASHBOARD-LATEST.md`](FPC-100-RELEASE-DASHBOARD-LATEST.md) |
+| `TT_FULL_PRODUCTION_CERTIFICATION` | **NOT_STARTED** |
 
 ## Directory layout (created per batch)
 

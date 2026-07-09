@@ -1,7 +1,8 @@
 # FPC-100 · Full Production Certification（发布认证 · 非检查清单）
 
-**Version:** 2.0.0  
-**Status:** **ACTIVE · CERTIFICATION**（逐批认证 · 每页一张卡 · **202/202**）  
+**Version:** 3.0.0  
+**Status:** **ACTIVE · CERTIFICATION · 五层模型**  
+**Release Dashboard:** [`FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.md`](FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.md) · **`TT_FULL_PRODUCTION_CERTIFICATION`**  
 **Machine SSOT:** [`registry/full-production-certification-checklist.v1.yaml`](../../../../registry/full-production-certification-checklist.v1.yaml)  
 **Page matrix:** [`FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json`](FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json)  
 **Execution runbook:** [`docs/runbook/FPC-100-PRE-RELEASE-EXECUTION-PLAN-v1.md`](../../../../runbook/FPC-100-PRE-RELEASE-EXECUTION-PLAN-v1.md)  
@@ -22,22 +23,67 @@
 
 ---
 
-## 四层认证模型（写死）
+## 五层认证模型（写死 · v3）
+
+```
+L1   页面覆盖 100%          202 page + surfaces
+L2   每页 UI/UX L5          评分卡 · production_ready
+L2.5 客户体验 CX ★★★★★     用户目标 · 主 CTA · 旅程 · 认知负荷（不是只看页面）
+L3   业务流程               Guide/Provider/Acquisition/Escrow/Governance
+L4   企业横切               SEO · a11y · mobile · security · perf · obs
+L5   运营与真实 ★★★★★       Content · Lineage · API Contract · Ops · Lifecycle · Recovery · Truthfulness
+```
 
 | 层 | 回答的问题 | 完成判据 |
 |----|------------|----------|
-| **L1 页面覆盖** | 有没有查到**每一个**表面？ | **202/202** page.tsx + layout/loading/error/modal/empty/404/500/403 |
-| **L2 每页 L5 UI/UX** | 每页是否**发布品质**？ | 每页认证卡 · UI/UX/Content/Function · `production_ready` |
-| **L3 业务流程** | 业务是否**闭环**？ | Guide/Provider/Acquisition/Escrow/Governance 全链 |
-| **L4 企业级** | 横切闸是否 PASS？ | SEO · a11y · mobile · RBAC · API · security · perf · obs |
+| **L1** | 每一个表面都查了吗？ | **202/202** |
+| **L2** | 每页发布级 UI/UX？ | 每页卡 · UI/UX/Content/Function |
+| **L2.5 CX** | 用户知道下一步吗？ | User Goal · Primary CTA · ≤3 点击 · Loading/Error 可行动 |
+| **L3** | 业务闭环？ | BFM 全链 |
+| **L4** | 企业闸？ | Gate PASS |
+| **L5** | 能运营 · 数据可信 · 可恢复 · 100% 真实？ | 见下表 8 域 |
 
-**L2 每页卡示例（`/market`）：** UI 9.6 · UX 9.3 · Content 9.8 · Function PASS · SEO/A11Y/Perf/Security PASS · **Production Ready YES** · Evidence `FPC-100/pages/page-market/`
+### L2.5 · Customer Experience（每页字段）
 
-**UX Certification 六项（强制）：** IA · CTA 唯一 · L5 视觉 · 理解成本 · 行业最佳实践 · 像正式产品
+| 字段 | 说明 |
+|------|------|
+| `user_goal` | 用户来这页要达成什么 |
+| `primary_cta` | 唯一主行动 |
+| `time_to_complete` | 核心任务耗时 |
+| `cognitive_load` | 低/中/高 |
+| `user_journey_score` | 0–10 |
 
-**Rollup 终态：** 必须能陈述 **「TravelTrust 202 个页面已全部完成发布认证」** — 见 `FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json` · `coverage_summary`
+**必查：** 首次访问是否清楚下一步 · 是否只有一个主 CTA · 是否易迷路 · 核心操作是否 ≤3 次点击 · Loading 是否传达进度 · Error 是否告知下一步
 
-**96-16 D1–D12** 作为 L2 评分 rubric：[`96-16`](../../96-16-全页面UI-UX优化方案总册.md)
+### L5 · Operations & Truth — 8 个认证域
+
+| # | 域 | 批次 | 要点 |
+|---|-----|------|------|
+| 1 | **Content Operations** | B30 | 公告/国家/Banner/Hero/图/视频 · Publish · SEO · ALT · i18n |
+| 2 | **Data Lineage** | B31 | DB→API→Projection→Frontend→UI · 每个数字可追溯 |
+| 3 | **API Contract** | B32 | 每个 GET/POST/PATCH/DELETE · Request/Response/Error/Empty |
+| 4 | **Operations** | B33 | 管理员真能发公告/下架/回滚/审核/封禁/看日志 |
+| 5 | **Lifecycle** | B34 | Create→Review→Publish→Visible→Archive→Delete |
+| 6 | **Recovery** | B35 | API500/断网/CDN/缺图/Wallet 超时 · 页面仍可工作 |
+| 7 | **Truthfulness** | B36 | 无 Mock/Demo/Placeholder/Fake/TODO/Coming Soon · **100%** |
+| 8 | **CX** | B26 | （L2.5 全站收口） |
+
+### Release Dashboard（唯一总结果）
+
+**Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
+**刷新：** `node scripts/dev/refresh-fpc-100-release-dashboard.cjs`  
+**产物：** `FPC-100-RELEASE-DASHBOARD-LATEST.json` · `.md`
+
+| 项 | 目标 |
+|----|------|
+| 页面 | 202 / 202 |
+| UI · UX · CX | 202 / 202 |
+| API Contract | 100% |
+| Data Lineage · Content · Recovery · Truthfulness · Operations | PASS |
+| Mobile · A11Y · Performance · Security · RBAC | PASS |
+| Environment Diff | PASS（②） |
+
+**终态一行：** `TT_FULL_PRODUCTION_CERTIFICATION: PASS` — 非「基本查了」
 
 ---
 
@@ -338,15 +384,20 @@ API_BASE=https://tt-api-staging.fly.dev \
 
 ---
 
-## 7. FPC-100 总 Exit 判据（Certification Rollup）
+## 7. FPC-100 总 Exit 判据（`TT_FULL_PRODUCTION_CERTIFICATION: PASS`）
 
 ```
-L1: 202/202 pages layer1_surface_coverage complete
-AND L2: 202/202 pages production_ready ∈ {YES, CONDITIONAL-P2+}
-AND L3: business-flow-matrix all flows PASS
-AND L4: B00 B01 B04 B05 B09 B11 B17 B20 B23 B24 PASS
+L1: 202/202 coverage
+AND L2: 202/202 production_ready
+AND L2.5: 202/202 CX PASS
+AND L3: all business flows PASS
+AND L4: enterprise P0 batches PASS
+AND L5: Content · Lineage · API Contract · Ops · Lifecycle · Recovery · Truthfulness 100% PASS
+AND Environment Diff PASS (②)
 AND OPEN P0/P1 = 0
 ```
+
+刷新 Dashboard：`node scripts/dev/refresh-fpc-100-release-dashboard.cjs`
 
 **不等于：** Production GO · ③ 主网 · Stripe Live。
 
