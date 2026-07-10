@@ -73,7 +73,7 @@ release_readiness:
   rollup:
     closed: 1
     interim: 2
-    open: 2
+    open: 3
     note: Auto-derived from pi3_release_gates — run audit script to verify
   pi3_release_gates:
     - id: PI3-001

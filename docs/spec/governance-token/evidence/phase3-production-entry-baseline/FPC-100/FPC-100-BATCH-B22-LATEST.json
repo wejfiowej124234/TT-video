@@ -1,0 +1,297 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B22",
+  "title": "DR · backup · infra · fly deploy SSOT",
+  "layer": "L3",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T07:10:28.938Z",
+  "verifier": "run-fpc-batch-b22-infra-dr.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "0adb7c9d19c9c0163e62b88cfc36819fd3030d1c",
+  "git": {
+    "head": "0adb7c9d19c9c0163e62b88cfc36819fd3030d1c",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B21"
+  ],
+  "gates": [
+    "scripts/gates/check-phase3-production-infrastructure-ssot.sh",
+    "scripts/dev/check-fly-pg-backup-status.sh",
+    "scripts/check-pi3-001-fly-pg-backup-disaster-recovery-execution.sh",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-phase3-production-infrastructure-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "check-phase3-production-infrastructure-ssot: PASS"
+    },
+    {
+      "gate": "scripts/dev/check-fly-pg-backup-status.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "backup_1783658789_561641658e713fca\t2026-07-10T04:46:57Z\tcompleted\tincr\t | backup_1783655303_c43af61756fb4c4a\t2026-07-10T03:52:49Z\tcompleted\tdiff\t | check-fly-pg-backup-status: PASS=3 FAIL=0 WARN=0"
+    },
+    {
+      "gate": "scripts/check-pi3-001-fly-pg-backup-disaster-recovery-execution.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "pi3-002 execution baseline (151): OK | Evidence: /d/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-001-exec-20260710T071041Z | TT_PI3_001_FLY_PG_BACKUP_DISASTER_RECOVERY_EXECUTION: PI3-001_GO"
+    },
+    {
+      "gate": "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "blocking_count 0 | rollup {\"closed\":1,\"interim\":2,\"open\":3} | evidence evidence\\GO_executive_dashboard_gate_consistency\\20260703T093000Z\\gate-consistency-audit.json"
+    }
+  ],
+  "gate_pass": true,
+  "runtime_preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T07:10:29.141Z"
+  },
+  "infra_live_evidence": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "probes": [
+      {
+        "id": "live_meta_local_profile",
+        "domain": "meta_local_deployment_profile",
+        "pass": true,
+        "deployment_profile": "local"
+      },
+      {
+        "id": "live_health_ready",
+        "domain": "phase3_infra_registry_ssot",
+        "pass": true,
+        "http": 200
+      }
+    ],
+    "skipped": false
+  },
+  "infra_static_ssot": [
+    {
+      "id": "ssot_interim_host_app",
+      "domain": "fly_deploy_manifest_parity",
+      "pass": true,
+      "interim_api": "https://tt-api-prod.fly.dev",
+      "prod_app": "tt-api-prod"
+    },
+    {
+      "id": "ssot_staging_rc_app",
+      "domain": "fly_deploy_manifest_parity",
+      "pass": true,
+      "staging_app": "tt-api-staging"
+    },
+    {
+      "id": "ssot_b475_baseline",
+      "domain": "pg_backup_baseline_pitr",
+      "pass": true,
+      "path": "evidence/b475_pg_backup_pitr_baseline/baseline_record.v1.json"
+    },
+    {
+      "id": "ssot_request_timeout_parity",
+      "domain": "request_timeout_parity",
+      "pass": true,
+      "staging": "120",
+      "prod": "120"
+    },
+    {
+      "id": "ssot_admin_staging_api_consistent",
+      "domain": "registry_api_host_drift",
+      "pass": true,
+      "values": [
+        "https://tt-api-staging.fly.dev",
+        "https://tt-api-staging.fly.dev"
+      ]
+    },
+    {
+      "id": "ssot_registry_api_hosts",
+      "domain": "registry_api_host_drift",
+      "pass": true,
+      "hosts": [
+        "https://tt-api-staging.fly.dev"
+      ]
+    },
+    {
+      "id": "ssot_phase2_ui_api",
+      "domain": "registry_api_host_drift",
+      "pass": true,
+      "path": "frontend/lib/phase2/phase2StagingUiRealUserSprint.contract.test.ts"
+    }
+  ],
+  "business_certification": {
+    "verdict": "PASS",
+    "gate_pass": true
+  },
+  "quality_supplement": {
+    "verdict": "PASS",
+    "domains": [
+      "Q10",
+      "Q14"
+    ],
+    "checks": [
+      {
+        "id": "Q10_quality_matrix",
+        "domain": "Q10",
+        "pass": true,
+        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json",
+        "notes": []
+      },
+      {
+        "id": "Q10_registry_batch",
+        "domain": "Q10",
+        "pass": true,
+        "path": "registry/full-production-certification-checklist.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q10_infra_checklist",
+        "domain": "Q10",
+        "pass": true,
+        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B22-infra-dr/FPC-100-INFRA-CHECKLIST-BASELINE.v1.json",
+        "notes": []
+      },
+      {
+        "id": "Q10_phase3_registry",
+        "domain": "Q10",
+        "pass": true,
+        "path": "registry/phase3-production-infrastructure.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q14_quality_matrix",
+        "domain": "Q14",
+        "pass": true,
+        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json",
+        "notes": []
+      },
+      {
+        "id": "Q14_fly_staging_toml",
+        "domain": "Q14",
+        "pass": true,
+        "path": "deploy/fly/tt-api-staging/fly.toml",
+        "notes": []
+      },
+      {
+        "id": "Q14_audit_script",
+        "domain": "Q14",
+        "pass": true,
+        "path": "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+        "notes": []
+      },
+      {
+        "id": "Q10_live_infra_probes",
+        "domain": "Q10",
+        "pass": true,
+        "path": "scripts/dev/lib/fpc-infra-probes.cjs",
+        "notes": [
+          "live_meta_local_profile:true",
+          "live_health_ready:true"
+        ]
+      },
+      {
+        "id": "Q14_static_infra_ssot",
+        "domain": "Q14",
+        "pass": true,
+        "path": "fly.toml + registry host + b475 baseline",
+        "notes": [
+          "ssot_interim_host_app:true",
+          "ssot_staging_rc_app:true",
+          "ssot_b475_baseline:true",
+          "ssot_request_timeout_parity:true",
+          "ssot_admin_staging_api_consistent:true",
+          "ssot_registry_api_hosts:true",
+          "ssot_phase2_ui_api:true"
+        ]
+      },
+      {
+        "id": "Q14_vitest_phase2_staging",
+        "domain": "Q14",
+        "pass": true,
+        "path": "frontend/lib/phase2/phase2StagingUiRealUserSprint.contract.test.ts",
+        "notes": [
+          " "
+        ]
+      }
+    ]
+  },
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Phase3 infra SSOT + Fly backup + PI3-001 + executive dashboard gate audit"
+    },
+    "quality_meets_standard": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Q10 infra observability SSOT + Q14 recovery (REQUEST_TIMEOUT parity · registry host drift)"
+    },
+    "findings_identified": {
+      "answer": false,
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "items": []
+    },
+    "recertification_passed": {
+      "answer": true,
+      "notes": "Registry ↔ fly.toml ↔ baseline ↔ meta local profile consistency PASS at ①"
+    }
+  },
+  "overall_verdict": "PASS",
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B23",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Infra/DR ① — phase3 registry + fly.toml + PI3-001 + executive dashboard audit; B21 payment chain untouched; not ② deploy GO",
+  "traceability": {
+    "requirements": [
+      "check-phase3-production-infrastructure-ssot.sh PASS",
+      "check-fly-pg-backup-status.sh PASS or skip when fly unauth",
+      "PI3-001 execution gate PASS",
+      "executive dashboard gate audit PASS (rollup open=3 incl G3-02 NOT_STARTED)",
+      "registry staging API host single SSOT https://tt-api-staging.fly.dev",
+      "tt-api-prod + tt-api-staging REQUEST_TIMEOUT_SECS=120 parity"
+    ],
+    "spec_refs": [
+      "registry/phase3-production-infrastructure.v1.yaml",
+      "registry/executive-dashboard.v1.yaml",
+      "deploy/fly/tt-api-staging/fly.toml",
+      "deploy/fly/tt-api-prod/fly.toml",
+      "FPC-100/B22-infra-dr/FPC-100-INFRA-CHECKLIST-BASELINE.v1.json"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B22-LATEST.json",
+    "certification_batch": "B22",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T07:10:28.938Z",
+  "expires_at_utc": "2026-08-09T07:10:28.938Z",
+  "expiry_policy_days": 30,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T07:10:28.938Z",
+  "frozen_git_sha": "0adb7c9d19c9c0163e62b88cfc36819fd3030d1c"
+}

@@ -43,7 +43,7 @@ function parsePi3GateStatus(pi3Yaml, id) {
 
 const CLOSED = new Set(['CLOSED']);
 const INTERIM = new Set(['INTERIM_GO']);
-const OPEN = new Set(['WAITING_OWNER', 'IN_PROGRESS', 'PENDING', 'OPEN']);
+const OPEN = new Set(['WAITING_OWNER', 'IN_PROGRESS', 'PENDING', 'OPEN', 'NOT_STARTED']);
 
 function rollup(gates) {
   let closed = 0;

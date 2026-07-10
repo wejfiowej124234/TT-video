@@ -144,7 +144,7 @@ executive_dashboard_gates:
   rollup:
     closed: 1
     interim: 2
-    open: 2
+    open: 3
   rule: INTERIM_GO and WAITING_OWNER must not count as CLOSED
 
 latest_owner_live_closure:

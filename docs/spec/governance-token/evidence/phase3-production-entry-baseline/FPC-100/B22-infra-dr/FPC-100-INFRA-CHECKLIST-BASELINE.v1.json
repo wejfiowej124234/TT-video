@@ -1,0 +1,45 @@
+{
+  "schema": "traveltrust.fpc_100_infra_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B22",
+  "domains": ["Q10", "Q14"],
+  "note": "DR/infra/fly SSOT ① — registry ↔ fly.toml ↔ PI3 baseline parity; Fly backup probe optional live; not ② deploy GO",
+  "coverage_domains": [
+    "phase3_infra_registry_ssot",
+    "fly_deploy_manifest_parity",
+    "pg_backup_baseline_pitr",
+    "executive_dashboard_gate_consistency",
+    "registry_api_host_drift",
+    "meta_local_deployment_profile",
+    "request_timeout_parity"
+  ],
+  "severity_policy": {
+    "P0": "registry gate fail · rollup/gate audit fail · fly app/host drift · baseline cluster mismatch",
+    "P1": "missing SSOT anchor · prod/staging manifest inconsistency",
+    "P2": "Fly live backup skip when CLI unauthenticated · git_sha unknown at ① local"
+  },
+  "live_probes": {
+    "meta_local_profile": {
+      "path": "/meta",
+      "require_deployment_profile": "local"
+    },
+    "health_ready": {
+      "path": "/health/ready",
+      "allowed": [200]
+    }
+  },
+  "registry_gates": [
+    "scripts/gates/check-phase3-production-infrastructure-ssot.sh",
+    "scripts/dev/check-fly-pg-backup-status.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/check-pi3-001-fly-pg-backup-disaster-recovery-execution.sh",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs"
+  ],
+  "quality_gates": [
+    "registry/phase3-production-infrastructure.v1.yaml",
+    "registry/executive-dashboard.v1.yaml",
+    "deploy/fly/tt-api-staging/fly.toml",
+    "frontend/lib/phase2/phase2StagingUiRealUserSprint.contract.test.ts"
+  ]
+}

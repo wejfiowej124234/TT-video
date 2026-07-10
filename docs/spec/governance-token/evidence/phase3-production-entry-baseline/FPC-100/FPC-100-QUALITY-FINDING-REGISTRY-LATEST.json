@@ -3,7 +3,7 @@
   "phase": "① local",
   "product_version": "v1.0",
   "governance_note": "Evidence extension only · FPC v5 framework FROZEN · not dashboard schema change",
-  "timestamp_utc": "2026-07-10T07:10:00.000Z",
+  "timestamp_utc": "2026-07-10T07:20:00.000Z",
   "execution_model": {
     "b00_b15": "Business PASS (completed) · Quality Supplement deferred until after B41",
     "b16_b41": "Business + Quality + Fix + Re-cert per batch",
@@ -181,6 +181,56 @@
         "FPC-100/FPC-100-BATCH-B21-LATEST.json"
       ],
       "status": "CLOSED"
+    },
+    {
+      "id": "B22-Q-001",
+      "batch_id": "B22",
+      "domain": "Q14",
+      "title": "audit-executive-dashboard-gate-consistency.cjs unknown NOT_STARTED for G3-02-WEB3-PAYMENT",
+      "severity": "P0",
+      "discovered_at_utc": "2026-07-10T07:15:00.000Z",
+      "fix_summary": "Add NOT_STARTED to OPEN rollup set in audit-executive-dashboard-gate-consistency.cjs",
+      "re_test": "node scripts/dev/audit-executive-dashboard-gate-consistency.cjs exit 0",
+      "re_test_verdict": "PASS",
+      "evidence": [
+        "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+        "FPC-100/FPC-100-BATCH-B22-LATEST.json"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "id": "B22-Q-002",
+      "batch_id": "B22",
+      "domain": "Q10",
+      "title": "executive-dashboard + phase3 registry rollup open:2 drift vs pi3_release_gates (G3-02 NOT_STARTED)",
+      "severity": "P0",
+      "discovered_at_utc": "2026-07-10T07:15:00.000Z",
+      "fix_summary": "Sync rollup.open to 3 in registry/executive-dashboard.v1.yaml and phase3-production-infrastructure.v1.yaml",
+      "re_test": "audit-executive-dashboard-gate-consistency rollup declared=computed",
+      "re_test_verdict": "PASS",
+      "evidence": [
+        "registry/executive-dashboard.v1.yaml",
+        "registry/phase3-production-infrastructure.v1.yaml",
+        "FPC-100/FPC-100-BATCH-B22-LATEST.json"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "id": "B22-Q-003",
+      "batch_id": "B22",
+      "domain": "Q14",
+      "title": "tt-api-prod fly.toml missing REQUEST_TIMEOUT_SECS vs staging meta-availability SSOT",
+      "severity": "P1",
+      "discovered_at_utc": "2026-07-10T07:15:00.000Z",
+      "fix_summary": "Add REQUEST_TIMEOUT_SECS=120 to deploy/fly/tt-api-prod/fly.toml",
+      "re_test": "fpc-infra-probes ssot_request_timeout_parity PASS",
+      "re_test_verdict": "PASS",
+      "evidence": [
+        "deploy/fly/tt-api-prod/fly.toml",
+        "deploy/fly/tt-api-staging/fly.toml",
+        "FPC-100/FPC-100-BATCH-B22-LATEST.json"
+      ],
+      "status": "CLOSED"
     }
   ],
   "open_counts": {
@@ -190,7 +240,7 @@
     "P3": 0
   },
   "next_actions": [
-    "Finalize B21 DoD CLOSED · NEXT B22",
+    "Finalize B22 DoD CLOSED · NEXT B23",
     "P2 B17-Q-003 Owner acceptance before Production GO",
     "P2 prod_stripe_env STRIPE_ENABLED=0 at ① — deferred to ③ Production GO (B21 batch note)"
   ]
