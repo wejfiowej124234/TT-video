@@ -1,0 +1,231 @@
+{
+  "timestamp_utc": "2026-07-10T07:20:50.764Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T07:20:50.955Z"
+  },
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-04-frontend-routes-vs-app.py",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "check-04-frontend-routes-vs-app OK: 04 sec 3.4 frontend page routes match frontend/app.\r"
+    },
+    {
+      "gate": "scripts/gates/check-13-1-table1-routes-vs-app.py",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "check-13-1-table1-routes-vs-app OK: 13-1 sec 2 table 1 routes match frontend/app.\r"
+    },
+    {
+      "gate": "scripts/dev/run-phase1-site-page-forensic.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_PHASE1_SITE_PAGE_FORENSIC: pages=202 l1_complete=202 pct=100.0\r | OUT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\B23-full-page-coverage\\forensic-latest\r | Report: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\B23-full-page-coverage\\forensic-latest/SITE-PAGE-FORENSIC-REPORT.md"
+    }
+  ],
+  "forensic_apply": {
+    "pass": true,
+    "forensic_summary": "D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\B23-full-page-coverage\\forensic-latest\\forensic-summary.json"
+  },
+  "matrix_checks": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "matrix_page_count",
+        "domain": "page_matrix_202_enumeration",
+        "pass": true,
+        "matrix": 202,
+        "disk": 202
+      },
+      {
+        "id": "matrix_no_duplicate_routes",
+        "domain": "duplicate_route_drift",
+        "pass": true,
+        "duplicates": []
+      },
+      {
+        "id": "matrix_l1_coverage",
+        "domain": "layer1_surface_coverage",
+        "pass": true,
+        "l1_complete": 202,
+        "coverage_pct": 100
+      },
+      {
+        "id": "global_surfaces",
+        "domain": "global_not_found_error",
+        "pass": true,
+        "surfaces": {
+          "not_found": true,
+          "global_error": true,
+          "root_layout": true
+        }
+      },
+      {
+        "id": "b23_l1_apply",
+        "domain": "page_matrix_202_enumeration",
+        "pass": true,
+        "apply": {
+          "forensic_summary": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B23-full-page-coverage/forensic-latest/forensic-summary.json",
+          "updated": 202,
+          "missing_routes_in_forensic": 0,
+          "l1_complete": 202,
+          "applied_at_utc": "2026-07-10T07:20:51.412Z"
+        }
+      }
+    ],
+    "matrix_summary": {
+      "pages_total": 202,
+      "pages_certified_pass": 202,
+      "pages_certified_fail": 0,
+      "pages_not_started": 0,
+      "coverage_pct": 100,
+      "production_ready_yes": 0,
+      "cx_certified_pass": 0,
+      "truthfulness_100_pct_pages": 0,
+      "data_lineage_documented": 0
+    }
+  },
+  "forensic_parity": {
+    "pass": true,
+    "forensic_path": "D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\B23-full-page-coverage\\forensic-latest\\forensic-summary.json",
+    "l1_coverage_pct": 100,
+    "duplicate_routes": []
+  },
+  "static_ssot": [
+    {
+      "id": "ssot_96_20_index",
+      "domain": "route_registry_04_13_1_parity",
+      "pass": true,
+      "path": "docs/spec/96-20-前后端页面对齐与UI生产级审计报告.md"
+    },
+    {
+      "id": "ssot_page_matrix_schema",
+      "domain": "page_matrix_202_enumeration",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json"
+    },
+    {
+      "id": "ssot_fpc_registry_b23",
+      "domain": "route_registry_04_13_1_parity",
+      "pass": true,
+      "path": "registry/full-production-certification-checklist.v1.yaml"
+    }
+  ],
+  "vitest": {
+    "community": {
+      "pass": true,
+      "exit_code": 0,
+      "summary": " "
+    },
+    "admin": {
+      "pass": true,
+      "exit_code": 0,
+      "summary": " "
+    }
+  },
+  "qualityCheckResults": [
+    {
+      "id": "Q1_quality_matrix",
+      "domain": "Q1",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json",
+      "notes": []
+    },
+    {
+      "id": "Q1_registry_batch",
+      "domain": "Q1",
+      "pass": true,
+      "path": "registry/full-production-certification-checklist.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q1_page_checklist",
+      "domain": "Q1",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B23-full-page-coverage/FPC-100-PAGE-COVERAGE-CHECKLIST-BASELINE.v1.json",
+      "notes": []
+    },
+    {
+      "id": "Q1_page_matrix",
+      "domain": "Q1",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+      "notes": []
+    },
+    {
+      "id": "Q1_matrix_l1_coverage",
+      "domain": "Q1",
+      "pass": true,
+      "path": "FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+      "notes": [
+        "matrix_page_count:true",
+        "matrix_no_duplicate_routes:true",
+        "matrix_l1_coverage:true",
+        "global_surfaces:true",
+        "b23_l1_apply:true"
+      ]
+    },
+    {
+      "id": "Q1_forensic_parity",
+      "domain": "Q1",
+      "pass": true,
+      "path": "D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\B23-full-page-coverage\\forensic-latest\\forensic-summary.json",
+      "notes": [
+        "100"
+      ]
+    },
+    {
+      "id": "Q1_vitest_community_routes",
+      "domain": "Q1",
+      "pass": true,
+      "path": "communitySubRoutes.contract.test.ts",
+      "notes": [
+        " "
+      ]
+    },
+    {
+      "id": "Q1_vitest_admin_pages",
+      "domain": "Q1",
+      "pass": true,
+      "path": "adminMissingPages.contract.test.ts",
+      "notes": [
+        " "
+      ]
+    }
+  ],
+  "findings": [],
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "04/13-1 route gates + phase1 forensic + L1 matrix 202/202"
+    },
+    "quality_meets_standard": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Q1 product function — registry/matrix/frontend route contract SSOT"
+    },
+    "findings_identified": {
+      "answer": false,
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "items": []
+    },
+    "recertification_passed": {
+      "answer": true,
+      "notes": "202/202 L1 layer1_surface_coverage PASS/N/A · zero duplicate routes"
+    }
+  }
+}

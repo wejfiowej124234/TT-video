@@ -3,7 +3,7 @@
   "phase": "① local",
   "product_version": "v1.0",
   "governance_note": "Evidence extension only · FPC v5 framework FROZEN · not dashboard schema change",
-  "timestamp_utc": "2026-07-10T07:20:00.000Z",
+  "timestamp_utc": "2026-07-10T07:30:00.000Z",
   "execution_model": {
     "b00_b15": "Business PASS (completed) · Quality Supplement deferred until after B41",
     "b16_b41": "Business + Quality + Fix + Re-cert per batch",
@@ -231,6 +231,55 @@
         "FPC-100/FPC-100-BATCH-B22-LATEST.json"
       ],
       "status": "CLOSED"
+    },
+    {
+      "id": "B23-Q-001",
+      "batch_id": "B23",
+      "domain": "Q1",
+      "title": "run-phase1-site-page-forensic.sh referenced missing generate-phase1-site-page-forensic.py",
+      "severity": "P0",
+      "discovered_at_utc": "2026-07-10T07:25:00.000Z",
+      "fix_summary": "Add scripts/dev/generate-phase1-site-page-forensic.py + apply-fpc-l1-page-matrix-from-forensic.cjs; shell exit on python failure",
+      "re_test": "bash scripts/dev/run-phase1-site-page-forensic.sh exit 0",
+      "re_test_verdict": "PASS",
+      "evidence": [
+        "scripts/dev/generate-phase1-site-page-forensic.py",
+        "scripts/dev/apply-fpc-l1-page-matrix-from-forensic.cjs",
+        "FPC-100/FPC-100-BATCH-B23-LATEST.json"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "id": "B23-Q-002",
+      "batch_id": "B23",
+      "domain": "Q1",
+      "title": "PAGE-CERTIFICATION-MATRIX layer1 all PENDING — L1 coverage 0%",
+      "severity": "P0",
+      "discovered_at_utc": "2026-07-10T07:25:00.000Z",
+      "fix_summary": "Forensic L1 assess + apply to matrix → 202/202 coverage_pct=100",
+      "re_test": "run-fpc-batch-b23-full-page-coverage.cjs matrix_l1_coverage PASS",
+      "re_test_verdict": "PASS",
+      "evidence": [
+        "FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+        "FPC-100/B23-full-page-coverage/forensic-latest/forensic-summary.json"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "id": "B23-Q-003",
+      "batch_id": "B23",
+      "domain": "Q1",
+      "title": "fpc-page-coverage-probes ROOT path wrong (scripts/ vs repo root)",
+      "severity": "P1",
+      "discovered_at_utc": "2026-07-10T07:25:00.000Z",
+      "fix_summary": "ROOT = path.resolve(__dirname, '../../..') in fpc-page-coverage-probes.cjs",
+      "re_test": "run-fpc-batch-b23-full-page-coverage.cjs exit 0",
+      "re_test_verdict": "PASS",
+      "evidence": [
+        "scripts/dev/lib/fpc-page-coverage-probes.cjs",
+        "FPC-100/FPC-100-BATCH-B23-LATEST.json"
+      ],
+      "status": "CLOSED"
     }
   ],
   "open_counts": {
@@ -240,7 +289,7 @@
     "P3": 0
   },
   "next_actions": [
-    "Finalize B22 DoD CLOSED · NEXT B23",
+    "Finalize B23 DoD CLOSED · NEXT B24",
     "P2 B17-Q-003 Owner acceptance before Production GO",
     "P2 prod_stripe_env STRIPE_ENABLED=0 at ① — deferred to ③ Production GO (B21 batch note)"
   ]

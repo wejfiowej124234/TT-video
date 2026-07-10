@@ -9,4 +9,6 @@ OUT="${SITE_FORENSIC_OUT:-$ROOT/evidence/GO_phase1_convergence/site-page-forensi
 
 echo "== Phase① Site Page Forensic (v1.14.0 frozen scope) =="
 python "$ROOT/scripts/dev/generate-phase1-site-page-forensic.py" "$OUT"
+rc=$?
 echo "Report: $OUT/SITE-PAGE-FORENSIC-REPORT.md"
+exit "$rc"

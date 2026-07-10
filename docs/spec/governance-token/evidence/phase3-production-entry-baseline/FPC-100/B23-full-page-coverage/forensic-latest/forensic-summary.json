@@ -1,0 +1,2844 @@
+{
+  "schema": "traveltrust.phase1_site_page_forensic.v1",
+  "timestamp_utc": "2026-07-10T07:20:51.355019+00:00",
+  "pages_total": 202,
+  "l1_complete": 202,
+  "l1_coverage_pct": 100.0,
+  "duplicate_routes": [],
+  "global_surfaces": {
+    "not_found": true,
+    "global_error": true,
+    "root_layout": true
+  },
+  "global_surfaces_ok": true,
+  "pages": [
+    {
+      "route": "/",
+      "page": "frontend/app/(home)/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/alerts/incidents/[id]",
+      "page": "frontend/app/admin/alerts/incidents/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/alerts/incidents",
+      "page": "frontend/app/admin/alerts/incidents/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/api-versions",
+      "page": "frontend/app/admin/api-versions/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/approvals/[id]",
+      "page": "frontend/app/admin/approvals/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/approvals",
+      "page": "frontend/app/admin/approvals/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/audit/logs/[id]",
+      "page": "frontend/app/admin/audit/logs/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/audit/operations",
+      "page": "frontend/app/admin/audit/operations/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/audit",
+      "page": "frontend/app/admin/audit/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/auth-audit-events",
+      "page": "frontend/app/admin/auth-audit-events/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/backup",
+      "page": "frontend/app/admin/backup/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/community/abuse-policy",
+      "page": "frontend/app/admin/community/abuse-policy/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/community/appeals",
+      "page": "frontend/app/admin/community/appeals/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/community/appeals/review",
+      "page": "frontend/app/admin/community/appeals/review/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/community/comments/visibility",
+      "page": "frontend/app/admin/community/comments/visibility/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/community/moderation/cases",
+      "page": "frontend/app/admin/community/moderation/cases/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/community/penalties",
+      "page": "frontend/app/admin/community/penalties/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/community/policy-change-logs",
+      "page": "frontend/app/admin/community/policy-change-logs/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/community/ranking/snapshots",
+      "page": "frontend/app/admin/community/ranking/snapshots/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/community/reports",
+      "page": "frontend/app/admin/community/reports/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/community/risk-signals",
+      "page": "frontend/app/admin/community/risk-signals/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/compliance",
+      "page": "frontend/app/admin/compliance/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/compliance/requests/[requestId]/events",
+      "page": "frontend/app/admin/compliance/requests/[requestId]/events/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/compliance/requests/[requestId]/update",
+      "page": "frontend/app/admin/compliance/requests/[requestId]/update/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/compliance/requests",
+      "page": "frontend/app/admin/compliance/requests/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/config",
+      "page": "frontend/app/admin/config/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/config/releases/[id]",
+      "page": "frontend/app/admin/config/releases/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/config/releases",
+      "page": "frontend/app/admin/config/releases/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/announcements",
+      "page": "frontend/app/admin/content/announcements/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/catalog-dashboard",
+      "page": "frontend/app/admin/content/catalog-dashboard/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/cities",
+      "page": "frontend/app/admin/content/cities/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/countries",
+      "page": "frontend/app/admin/content/countries/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/country-market",
+      "page": "frontend/app/admin/content/country-market/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/geo-validation",
+      "page": "frontend/app/admin/content/geo-validation/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/hotel-tiers",
+      "page": "frontend/app/admin/content/hotel-tiers/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/import-operations",
+      "page": "frontend/app/admin/content/import-operations/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/intercity-routes",
+      "page": "frontend/app/admin/content/intercity-routes/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/landing-ambient",
+      "page": "frontend/app/admin/content/landing-ambient/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/media-assets",
+      "page": "frontend/app/admin/content/media-assets/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content",
+      "page": "frontend/app/admin/content/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/poi-images/batches/[id]",
+      "page": "frontend/app/admin/content/poi-images/batches/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/poi-images",
+      "page": "frontend/app/admin/content/poi-images/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/pois",
+      "page": "frontend/app/admin/content/pois/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/pricing",
+      "page": "frontend/app/admin/content/pricing/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/publish-queue",
+      "page": "frontend/app/admin/content/publish-queue/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/revisions/compare",
+      "page": "frontend/app/admin/content/revisions/compare/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/revisions",
+      "page": "frontend/app/admin/content/revisions/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/roadmap",
+      "page": "frontend/app/admin/content/roadmap/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/seo",
+      "page": "frontend/app/admin/content/seo/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/translation",
+      "page": "frontend/app/admin/content/translation/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/content/transport-region-rules",
+      "page": "frontend/app/admin/content/transport-region-rules/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/conversion-analytics",
+      "page": "frontend/app/admin/conversion-analytics/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/cross-check",
+      "page": "frontend/app/admin/cross-check/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/disputes/[id]",
+      "page": "frontend/app/admin/disputes/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/disputes",
+      "page": "frontend/app/admin/disputes/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/drift-summary",
+      "page": "frontend/app/admin/drift-summary/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/fee-router",
+      "page": "frontend/app/admin/fee-router/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/finance",
+      "page": "frontend/app/admin/finance/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/finance-reconciliation",
+      "page": "frontend/app/admin/finance-reconciliation/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/finance-suite",
+      "page": "frontend/app/admin/finance-suite/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/flags",
+      "page": "frontend/app/admin/flags/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/governance/execution-uat",
+      "page": "frontend/app/admin/governance/execution-uat/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/growth/airdrop-campaigns",
+      "page": "frontend/app/admin/growth/airdrop-campaigns/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/growth/analytics",
+      "page": "frontend/app/admin/growth/analytics/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/growth/anti-fraud",
+      "page": "frontend/app/admin/growth/anti-fraud/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/growth/early-bird",
+      "page": "frontend/app/admin/growth/early-bird/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/growth/kol-center",
+      "page": "frontend/app/admin/growth/kol-center/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/growth",
+      "page": "frontend/app/admin/growth/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/growth/referral-codes",
+      "page": "frontend/app/admin/growth/referral-codes/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/growth/reward-ledger",
+      "page": "frontend/app/admin/growth/reward-ledger/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/guide-applications",
+      "page": "frontend/app/admin/guide-applications/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/guides/[id]",
+      "page": "frontend/app/admin/guides/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/guides",
+      "page": "frontend/app/admin/guides/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/inbox",
+      "page": "frontend/app/admin/inbox/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/indexer",
+      "page": "frontend/app/admin/indexer/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/indexer/reconcile/[id]",
+      "page": "frontend/app/admin/indexer/reconcile/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/indexer/reconcile-reports",
+      "page": "frontend/app/admin/indexer/reconcile-reports/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/internal-tools/audits",
+      "page": "frontend/app/admin/internal-tools/audits/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/jobs",
+      "page": "frontend/app/admin/jobs/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/lifecycle",
+      "page": "frontend/app/admin/lifecycle/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/media/access-logs",
+      "page": "frontend/app/admin/media/access-logs/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/media/signed-url-tokens",
+      "page": "frontend/app/admin/media/signed-url-tokens/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/observability",
+      "page": "frontend/app/admin/observability/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/official/accounts",
+      "page": "frontend/app/admin/official/accounts/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/official/cold-start",
+      "page": "frontend/app/admin/official/cold-start/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/official/guides",
+      "page": "frontend/app/admin/official/guides/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/official/itinerary-templates",
+      "page": "frontend/app/admin/official/itinerary-templates/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/official",
+      "page": "frontend/app/admin/official/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/official/public-operations",
+      "page": "frontend/app/admin/official/public-operations/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/onboarding/compliance-audit",
+      "page": "frontend/app/admin/onboarding/compliance-audit/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/onboarding/entitlements/[id]",
+      "page": "frontend/app/admin/onboarding/entitlements/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/onboarding/entitlements",
+      "page": "frontend/app/admin/onboarding/entitlements/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/onboarding",
+      "page": "frontend/app/admin/onboarding/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/onboarding/payment-events",
+      "page": "frontend/app/admin/onboarding/payment-events/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/onboarding/webhook-jobs",
+      "page": "frontend/app/admin/onboarding/webhook-jobs/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/operator-guide",
+      "page": "frontend/app/admin/operator-guide/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/orders/[id]",
+      "page": "frontend/app/admin/orders/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/orders",
+      "page": "frontend/app/admin/orders/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin",
+      "page": "frontend/app/admin/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/permissions",
+      "page": "frontend/app/admin/permissions/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/policies",
+      "page": "frontend/app/admin/policies/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/provider-applications",
+      "page": "frontend/app/admin/provider-applications/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/region-share/reconcile",
+      "page": "frontend/app/admin/region-share/reconcile/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/region-vault",
+      "page": "frontend/app/admin/region-vault/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/reviews/[id]",
+      "page": "frontend/app/admin/reviews/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/reviews",
+      "page": "frontend/app/admin/reviews/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/scheduler/jobs",
+      "page": "frontend/app/admin/scheduler/jobs/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/schema",
+      "page": "frontend/app/admin/schema/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/secrets/metadata",
+      "page": "frontend/app/admin/secrets/metadata/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/steward-applications",
+      "page": "frontend/app/admin/steward-applications/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/tenants/scopes",
+      "page": "frontend/app/admin/tenants/scopes/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/trust-growth",
+      "page": "frontend/app/admin/trust-growth/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/users/[id]",
+      "page": "frontend/app/admin/users/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/users",
+      "page": "frontend/app/admin/users/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/admin/vacancy-ledger",
+      "page": "frontend/app/admin/vacancy-ledger/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "PASS"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/auth/forgot-password",
+      "page": "frontend/app/auth/forgot-password/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/auth/login",
+      "page": "frontend/app/auth/login/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/auth/register",
+      "page": "frontend/app/auth/register/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/auth/reset-password",
+      "page": "frontend/app/auth/reset-password/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/auth/verify-email",
+      "page": "frontend/app/auth/verify-email/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/activity",
+      "page": "frontend/app/community/activity/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/explore",
+      "page": "frontend/app/community/explore/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/feedback",
+      "page": "frontend/app/community/feedback/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/friends",
+      "page": "frontend/app/community/friends/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/guidelines",
+      "page": "frontend/app/community/guidelines/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/me/collects",
+      "page": "frontend/app/community/me/collects/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/me/likes",
+      "page": "frontend/app/community/me/likes/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/me",
+      "page": "frontend/app/community/me/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/me/posts",
+      "page": "frontend/app/community/me/posts/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/me/reports/[id]",
+      "page": "frontend/app/community/me/reports/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/me/reports",
+      "page": "frontend/app/community/me/reports/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/messages/[id]",
+      "page": "frontend/app/community/messages/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/messages",
+      "page": "frontend/app/community/messages/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community",
+      "page": "frontend/app/community/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/post/[id]",
+      "page": "frontend/app/community/post/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/topic/[tag]",
+      "page": "frontend/app/community/topic/[tag]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/tt",
+      "page": "frontend/app/community/tt/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/community/user/[id]",
+      "page": "frontend/app/community/user/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/did-rank",
+      "page": "frontend/app/did-rank/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/discover",
+      "page": "frontend/app/discover/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/disputes/[id]",
+      "page": "frontend/app/disputes/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/disputes",
+      "page": "frontend/app/disputes/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/escrow/[id]/chain",
+      "page": "frontend/app/escrow/[id]/chain/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/escrow/[id]",
+      "page": "frontend/app/escrow/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/escrow/[id]/proof",
+      "page": "frontend/app/escrow/[id]/proof/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/escrow/[id]/rate",
+      "page": "frontend/app/escrow/[id]/rate/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/governance/delegate",
+      "page": "frontend/app/governance/delegate/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/governance/distribution-accruals/[id]",
+      "page": "frontend/app/governance/distribution-accruals/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/governance/distribution-accruals",
+      "page": "frontend/app/governance/distribution-accruals/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/governance/distribution-claim",
+      "page": "frontend/app/governance/distribution-claim/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/governance/fee-routes",
+      "page": "frontend/app/governance/fee-routes/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/governance",
+      "page": "frontend/app/governance/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/governance/params",
+      "page": "frontend/app/governance/params/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/governance/proposals/[id]",
+      "page": "frontend/app/governance/proposals/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/governance/proposals/new",
+      "page": "frontend/app/governance/proposals/new/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/governance/proposals",
+      "page": "frontend/app/governance/proposals/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/governance/vacancy-ledger",
+      "page": "frontend/app/governance/vacancy-ledger/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/governance/vault-forwards",
+      "page": "frontend/app/governance/vault-forwards/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/guide",
+      "page": "frontend/app/guide/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/guide/register",
+      "page": "frontend/app/guide/register/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/guides/[id]",
+      "page": "frontend/app/guides/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/guides",
+      "page": "frontend/app/guides/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/help",
+      "page": "frontend/app/help/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/itinerary/new",
+      "page": "frontend/app/itinerary/new/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/market/acquisition/[id]",
+      "page": "frontend/app/market/acquisition/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/market/acquisition",
+      "page": "frontend/app/market/acquisition/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/market",
+      "page": "frontend/app/market/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/market/provider",
+      "page": "frontend/app/market/provider/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/market/provider/showcase/[id]",
+      "page": "frontend/app/market/provider/showcase/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/identities/acquisition/settings",
+      "page": "frontend/app/me/identities/acquisition/settings/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/identities/guide/settings",
+      "page": "frontend/app/me/identities/guide/settings/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/identities/merchant/settings",
+      "page": "frontend/app/me/identities/merchant/settings/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/identities",
+      "page": "frontend/app/me/identities/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/identities/region-steward/settings",
+      "page": "frontend/app/me/identities/region-steward/settings/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/onboarding",
+      "page": "frontend/app/me/onboarding/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me",
+      "page": "frontend/app/me/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/password",
+      "page": "frontend/app/me/password/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/publish",
+      "page": "frontend/app/me/publish/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/referrals",
+      "page": "frontend/app/me/referrals/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/security",
+      "page": "frontend/app/me/security/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/settings/data",
+      "page": "frontend/app/me/settings/data/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/settings/language",
+      "page": "frontend/app/me/settings/language/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/settings/notifications-prefs",
+      "page": "frontend/app/me/settings/notifications-prefs/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/settings",
+      "page": "frontend/app/me/settings/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/settings/privacy",
+      "page": "frontend/app/me/settings/privacy/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/settings/profile",
+      "page": "frontend/app/me/settings/profile/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/me/settings/trust",
+      "page": "frontend/app/me/settings/trust/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/network",
+      "page": "frontend/app/network/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/orders/[id]",
+      "page": "frontend/app/orders/[id]/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/orders/new",
+      "page": "frontend/app/orders/new/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/orders",
+      "page": "frontend/app/orders/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/pay",
+      "page": "frontend/app/pay/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/privacy",
+      "page": "frontend/app/privacy/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/provider",
+      "page": "frontend/app/provider/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/provider/register",
+      "page": "frontend/app/provider/register/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/staking",
+      "page": "frontend/app/staking/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/steward/register",
+      "page": "frontend/app/steward/register/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/terms/community-guidelines",
+      "page": "frontend/app/terms/community-guidelines/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/terms",
+      "page": "frontend/app/terms/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/traveltrust/announcements",
+      "page": "frontend/app/traveltrust/announcements/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "N/A",
+        "error_tsx": "N/A",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/traveltrust",
+      "page": "frontend/app/traveltrust/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    },
+    {
+      "route": "/trust",
+      "page": "frontend/app/trust/page.tsx",
+      "layer1_surface_coverage": {
+        "page_tsx": "PASS",
+        "layout_tsx": "PASS",
+        "loading_tsx": "PASS",
+        "error_tsx": "PASS",
+        "modals_drawers_dialogs": "PASS",
+        "empty_states": "PASS",
+        "forbidden_403_ui": "N/A"
+      },
+      "l1_complete": true
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "traveltrust.fpc_100_page_coverage_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B23",
+  "domains": ["Q1"],
+  "note": "L1 202/202 page coverage — route gates + forensic + matrix L1 PASS; not L2 page certification",
+  "coverage_domains": [
+    "route_registry_04_13_1_parity",
+    "page_matrix_202_enumeration",
+    "layer1_surface_coverage",
+    "global_not_found_error",
+    "duplicate_route_drift",
+    "frontend_contract_route_ssot"
+  ],
+  "severity_policy": {
+    "P0": "gate fail · matrix coverage < 100% · duplicate routes · global surfaces missing",
+    "P1": "matrix/forensic route mismatch · contract test fail",
+    "P2": "git_sha unknown in matrix anchor at ①"
+  },
+  "registry_gates": [
+    "scripts/gates/check-04-frontend-routes-vs-app.py",
+    "scripts/gates/check-13-1-table1-routes-vs-app.py",
+    "scripts/dev/run-phase1-site-page-forensic.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/apply-fpc-l1-page-matrix-from-forensic.cjs"
+  ],
+  "quality_gates": [
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+    "frontend/app/community/communitySubRoutes.contract.test.ts",
+    "frontend/app/admin/adminMissingPages.contract.test.ts"
+  ],
+  "matrix_targets": {
+    "pages_total": 202,
+    "l1_coverage_pct": 100
+  }
+}
