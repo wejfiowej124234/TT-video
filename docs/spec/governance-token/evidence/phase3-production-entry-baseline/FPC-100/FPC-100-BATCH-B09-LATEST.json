@@ -4,12 +4,12 @@
   "title": "Admin workspace · RBAC · four centers (114 routes)",
   "layer": "L1-L5",
   "phase": "① local",
-  "timestamp_utc": "2026-07-10T00:33:06.330Z",
+  "timestamp_utc": "2026-07-10T00:39:08.394Z",
   "verifier": "run-fpc-batch-b09-admin-rbac.cjs",
   "product_version": "v1.0",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "git": {
-    "head": "fedc5c15fda3f03d752768079241ede1e1287252",
+    "head": "bdf4b556b37da8446e9a7ea1590e6613c232dfc1",
     "branch": "feature/g23-04-abi-event-freeze"
   },
   "depends_on": [
@@ -42,7 +42,7 @@
       "gate": "scripts/gates/run-admin-platform-40-verification.sh",
       "exit_code": 0,
       "pass": true,
-      "summary_line": "verdict=PASS_MACHINE | OK: Admin Platform 40/40 machine verification complete | Evidence: /d/TravelTrust-V1.1/evidence/GO_admin_platform_40_complete/20260710T003313Z/report.json | Next: manual Admin testing (local → staging) per report.manual_next"
+      "summary_line": "verdict=PASS_MACHINE | OK: Admin Platform 40/40 machine verification complete | Evidence: /d/TravelTrust-V1.1/evidence/GO_admin_platform_40_complete/20260710T003915Z/report.json | Next: manual Admin testing (local → staging) per report.manual_next"
     },
     {
       "gate": "scripts/gates/check-admin-functional-audit-mapping.py",
@@ -118,8 +118,8 @@
     }
   ],
   "findings": [],
-  "verdict": "IN_PROGRESS",
-  "pass": false,
+  "verdict": "PASS",
+  "pass": true,
   "gate_verdict": "PASS",
   "release_blocker": "NO",
   "next_batch": "B10",
@@ -164,21 +164,10 @@
     "certification_batch": "B09",
     "product_version": "v1.0"
   },
-  "certified_at_utc": "2026-07-10T00:33:06.330Z",
-  "expires_at_utc": "2026-10-08T00:33:06.330Z",
+  "certified_at_utc": "2026-07-10T00:39:08.394Z",
+  "expires_at_utc": "2026-10-08T00:39:08.394Z",
   "expiry_policy_days": 90,
   "certification_frozen": true,
-  "frozen_at_utc": "2026-07-10T00:33:06.330Z",
-  "frozen_git_sha": "fedc5c15fda3f03d752768079241ede1e1287252",
-  "dod": {
-    "gate_pass": true,
-    "evidence_complete": true,
-    "dashboard_refreshed": true,
-    "commit_complete": false,
-    "working_tree_clean": false,
-    "all_met": false,
-    "checked_at_utc": "2026-07-10T00:37:43.366Z",
-    "committed_sha": "3ee8aed4f9de7336b34b17c866eafa70f72de6b2",
-    "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
-  }
+  "frozen_at_utc": "2026-07-10T00:39:08.394Z",
+  "frozen_git_sha": "bdf4b556b37da8446e9a7ea1590e6613c232dfc1"
 }
