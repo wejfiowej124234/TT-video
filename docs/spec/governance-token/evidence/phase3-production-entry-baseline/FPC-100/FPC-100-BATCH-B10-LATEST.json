@@ -1,0 +1,430 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B10",
+  "title": "Business Flow Matrix · Guide · Provider · Acquisition",
+  "layer": "L3",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T00:49:11.024Z",
+  "verifier": "run-fpc-batch-b10-business-flows.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "6e568c8def913482bc24e334ebe9339245f648d2",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B03",
+    "B04",
+    "B05",
+    "B08"
+  ],
+  "routes": [
+    "cross-domain · all product corridors"
+  ],
+  "gates": [
+    "scripts/dev/run-production-readiness-master-checklist.cjs"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/dev/run-production-readiness-master-checklist.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "Guide Business Data Ready: YES | TT_PRODUCTION_ENTRY_READY: YES | Evidence: D:\\TravelTrust-V1.1\\evidence\\GO_production_readiness\\PRODUCTION-READINESS-MASTER-CHECKLIST-LATEST.json | Daily: D:\\TravelTrust-V1.1\\evidence\\GO_production_readiness\\daily\\PRODUCTION-READINESS-DAILY-2026-07-10.json"
+    }
+  ],
+  "gate_pass": true,
+  "business_flow_matrix": {
+    "registry": "registry/business-flow-matrix.v1.yaml",
+    "verification_chain": [
+      "human_click",
+      "api",
+      "database",
+      "page",
+      "final_outcome"
+    ],
+    "flow_count": 3,
+    "total_steps": 17,
+    "master_checklist": "evidence/GO_production_readiness/PRODUCTION-READINESS-MASTER-CHECKLIST-LATEST.json",
+    "certifications": [
+      {
+        "flow_id": "guide",
+        "label": "Guide",
+        "verdict": "PASS",
+        "pass": true,
+        "step_count": 8,
+        "steps_pass": 8,
+        "flow_evidence": "evidence/GO_production_readiness/step3/bfm/BFM-GUIDE-FLOW-LATEST.json",
+        "flow_evidence_verdict": "PASS",
+        "steps": [
+          {
+            "step_id": "register",
+            "label": "注册",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/guide-register-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "profile",
+            "label": "资料",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/guide-profile-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "review",
+            "label": "审核",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/guide-review-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "list",
+            "label": "上架",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/guide-list-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "book",
+            "label": "预约",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/guide-book-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "order",
+            "label": "订单",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/guide-order-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "complete",
+            "label": "完成",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/guide-complete-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "review_post",
+            "label": "评价",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/guide-review_post-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          }
+        ]
+      },
+      {
+        "flow_id": "provider",
+        "label": "Provider",
+        "verdict": "PASS",
+        "pass": true,
+        "step_count": 5,
+        "steps_pass": 5,
+        "flow_evidence": "evidence/GO_production_readiness/step3/bfm/BFM-PROVIDER-FLOW-LATEST.json",
+        "flow_evidence_verdict": "PASS",
+        "steps": [
+          {
+            "step_id": "register",
+            "label": "注册",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/provider-register-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "product",
+            "label": "商品",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/provider-product-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "publish",
+            "label": "发布",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/provider-publish-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "order",
+            "label": "订单",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/provider-order-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "complete",
+            "label": "完成",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/provider-complete-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          }
+        ]
+      },
+      {
+        "flow_id": "acquisition",
+        "label": "Acquisition",
+        "verdict": "PASS",
+        "pass": true,
+        "step_count": 4,
+        "steps_pass": 4,
+        "flow_evidence": "evidence/GO_production_readiness/step3/bfm/BFM-ACQUISITION-FLOW-LATEST.json",
+        "flow_evidence_verdict": "PASS",
+        "steps": [
+          {
+            "step_id": "publish",
+            "label": "发布",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/acquisition-publish-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "respond",
+            "label": "响应",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/acquisition-respond-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "close_deal",
+            "label": "成交",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/acquisition-close_deal-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          },
+          {
+            "step_id": "complete",
+            "label": "完成",
+            "registry_verdict": "pass",
+            "evidence_path": "evidence/GO_production_readiness/step3/bfm/steps/acquisition-complete-LATEST.json",
+            "evidence_verdict": "PASS",
+            "pass": true
+          }
+        ]
+      }
+    ],
+    "matrix_verdict": "PASS",
+    "phase": "① local"
+  },
+  "cross_domain_consistency": {
+    "policy": "Individual FPC corridor batches must PASS before B10 certifies end-to-end platform flows",
+    "chains": [
+      {
+        "id": "guide_identity_market_escrow_review",
+        "flow": "guide",
+        "domains": [
+          "identity",
+          "market",
+          "escrow",
+          "review",
+          "trust"
+        ],
+        "fpc_batches": [
+          "B03",
+          "B04",
+          "B05"
+        ],
+        "note": "Guide 8-step chain spans auth/me, market subsite, web3 escrow, reviews/trust",
+        "batch_results": [
+          {
+            "batch_id": "B03",
+            "pass": true
+          },
+          {
+            "batch_id": "B04",
+            "pass": true
+          },
+          {
+            "batch_id": "B05",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "id": "provider_onboarding_catalog_order",
+        "flow": "provider",
+        "domains": [
+          "identity",
+          "provider",
+          "market",
+          "order",
+          "escrow"
+        ],
+        "fpc_batches": [
+          "B03",
+          "B04",
+          "B05"
+        ],
+        "note": "Provider 5-step chain spans onboarding, catalog, order completion",
+        "batch_results": [
+          {
+            "batch_id": "B03",
+            "pass": true
+          },
+          {
+            "batch_id": "B04",
+            "pass": true
+          },
+          {
+            "batch_id": "B05",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "id": "acquisition_trust_escrow",
+        "flow": "acquisition",
+        "domains": [
+          "identity",
+          "market",
+          "trust",
+          "escrow",
+          "review"
+        ],
+        "fpc_batches": [
+          "B03",
+          "B05",
+          "B08"
+        ],
+        "note": "Acquisition 4-step chain spans identities hub, acquisition smoke, bilateral confirm",
+        "batch_results": [
+          {
+            "batch_id": "B03",
+            "pass": true
+          },
+          {
+            "batch_id": "B05",
+            "pass": true
+          },
+          {
+            "batch_id": "B08",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "id": "governance_order_isolation",
+        "flow": "governance",
+        "domains": [
+          "governance",
+          "order"
+        ],
+        "fpc_batches": [
+          "B05",
+          "B06"
+        ],
+        "note": "Governance proposals must not mutate order state (orthogonal domains)",
+        "batch_results": [
+          {
+            "batch_id": "B05",
+            "pass": true
+          },
+          {
+            "batch_id": "B06",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "id": "community_trust_admin",
+        "flow": "community",
+        "domains": [
+          "community",
+          "trust",
+          "admin"
+        ],
+        "fpc_batches": [
+          "B07",
+          "B03",
+          "B09"
+        ],
+        "note": "Community corridor + trust projection + admin moderation RBAC",
+        "batch_results": [
+          {
+            "batch_id": "B07",
+            "pass": true
+          },
+          {
+            "batch_id": "B03",
+            "pass": true
+          },
+          {
+            "batch_id": "B09",
+            "pass": true
+          }
+        ],
+        "pass": true
+      }
+    ],
+    "cdia_note": "scripts/dev/cross-domain-integration-audit.py absent in tree — ① uses FPC batch chain + BFM human evidence; live CDIA → ②",
+    "phase": "① local"
+  },
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B11",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "BFM ① — registry + human 5-layer step evidence; governance/community/admin cross-domain via prior FPC batches; CDIA live probes → ②",
+  "traceability": {
+    "requirements": [
+      "Guide / Provider / Acquisition flows all steps PASS with evidence",
+      "Master checklist business_flow_matrix PASS",
+      "Cross-domain FPC corridor batches contiguous PASS",
+      "Business Flow Certification artifact per flow"
+    ],
+    "spec_refs": [
+      "registry/business-flow-matrix.v1.yaml",
+      "registry/cross-domain-integration-audit-probes.v1.yaml",
+      "FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md § B10",
+      "evidence/manual-uat/README.md"
+    ],
+    "code_paths": [
+      "scripts/dev/run-production-readiness-master-checklist.cjs",
+      "scripts/dev/run-bfm-session-b-guide.cjs",
+      "scripts/dev/run-bfm-session-a-provider.cjs",
+      "scripts/dev/run-bfm-session-c-acquisition.cjs"
+    ],
+    "tests": [
+      "run-production-readiness-master-checklist.cjs"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B10-LATEST.json",
+    "certification_batch": "B10",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T00:49:11.024Z",
+  "expires_at_utc": "2026-10-08T00:49:11.024Z",
+  "expiry_policy_days": 90,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T00:49:11.024Z",
+  "frozen_git_sha": "6e568c8def913482bc24e334ebe9339245f648d2"
+}

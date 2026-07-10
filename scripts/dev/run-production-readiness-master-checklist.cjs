@@ -78,12 +78,15 @@ function parseBfmFlows(text) {
     const id = block.match(/^(guide|provider|acquisition)/)?.[1];
     if (!id) continue;
     const label = block.match(/\n    label: (.+)/)?.[1];
-    const steps = [...block.matchAll(/\{ id: (\w+), label: ([^,]+), verdict: (\w+) \}/g)].map((m) => ({
+    const flowVerdict = block.match(/\n    verdict: (\w+)/)?.[1];
+    const steps = [
+      ...block.matchAll(/\{ id: (\w+), label: ([^,]+), verdict: (\w+)(?:, note: "[^"]*")? \}/g),
+    ].map((m) => ({
       id: m[1],
       label: m[2],
       verdict: m[3],
     }));
-    flows.push({ id, label, steps });
+    flows.push({ id, label, flow_verdict: flowVerdict, steps });
   }
   return flows;
 }
@@ -172,7 +175,15 @@ function allHatPass(hat) {
 }
 
 function allBfmPass(flows) {
-  return flows.length > 0 && flows.every((f) => f.steps.every((s) => gateVerdictPass(s.verdict)));
+  return (
+    flows.length > 0 &&
+    flows.every(
+      (f) =>
+        (!f.flow_verdict || gateVerdictPass(f.flow_verdict)) &&
+        f.steps.length > 0 &&
+        f.steps.every((s) => gateVerdictPass(s.verdict)),
+    )
+  );
 }
 
 function allManualPass(checks) {

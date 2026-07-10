@@ -1,6 +1,6 @@
 {
   "schema": "traveltrust.production_readiness_master_checklist_evidence.v9",
-  "recorded_at_utc": "2026-07-08T04:08:37.725Z",
+  "recorded_at_utc": "2026-07-10T00:49:11.070Z",
   "phase": "B",
   "phase_b_framework_status": "FROZEN",
   "phase_b_execution": "ACTIVE",
@@ -17,7 +17,7 @@
   },
   "active_sprint": null,
   "daily_delta": {
-    "date": "2026-07-08",
+    "date": "2026-07-10",
     "new_root_causes": {
       "count": 0,
       "ids": []
@@ -482,7 +482,7 @@
           },
           "pay": {
             "verdict": "pass",
-            "note": "HAT-EvidenceSync · API mock-pay PASS · UI deferred staging_configuration_gap · E: manual-pay_mock-LATEST · BFM mock-pay API"
+            "note": "HAT-EvidenceSync · ② staging chain_off mock-pay sandbox PASS (NOT prod USDC) · prod corridor = G3-02 USDC escrow · E: manual-pay_mock-LATEST"
           },
           "complete": {
             "verdict": "pass",
@@ -513,11 +513,11 @@
           },
           "order": {
             "verdict": "pass",
-            "note": "Sprint A · 迪拜 pilot · create→accept→mock-pay→completed · e8be4517"
+            "note": "Sprint A · 迪拜 pilot · create→accept→② mock-pay sandbox→completed · prod pay = USDC escrow G3-02"
           },
           "pay": {
             "verdict": "pass",
-            "note": "mock-pay escrowed"
+            "note": "② chain_off mock-pay escrowed (sandbox) · core rail = USDC wallet deposit"
           },
           "complete": {
             "verdict": "pass",
@@ -552,7 +552,7 @@
           },
           "pay": {
             "verdict": "pass",
-            "note": "BD-005 · mock_pay 200 · escrowed"
+            "note": "BD-005 · ② mock_pay sandbox 200 · escrowed · NOT prod USDC path"
           },
           "complete": {
             "verdict": "pass",
@@ -587,7 +587,7 @@
           },
           "pay": {
             "verdict": "pass",
-            "note": "HAT-HumanQueue · owner mock-pay escrowed · E: hat-acquisition-pay-LATEST · Session C close_deal"
+            "note": "HAT · ② owner mock-pay sandbox escrowed · acquisition prod pay = USDC escrow · E: hat-acquisition-pay-LATEST"
           },
           "complete": {
             "verdict": "pass",
@@ -677,17 +677,108 @@
       {
         "id": "guide",
         "label": "Guide",
-        "steps": []
+        "flow_verdict": "pass",
+        "steps": [
+          {
+            "id": "register",
+            "label": "注册",
+            "verdict": "pass"
+          },
+          {
+            "id": "profile",
+            "label": "资料",
+            "verdict": "pass"
+          },
+          {
+            "id": "review",
+            "label": "审核",
+            "verdict": "pass"
+          },
+          {
+            "id": "list",
+            "label": "上架",
+            "verdict": "pass"
+          },
+          {
+            "id": "book",
+            "label": "预约",
+            "verdict": "pass"
+          },
+          {
+            "id": "order",
+            "label": "订单",
+            "verdict": "pass"
+          },
+          {
+            "id": "complete",
+            "label": "完成",
+            "verdict": "pass"
+          },
+          {
+            "id": "review_post",
+            "label": "评价",
+            "verdict": "pass"
+          }
+        ]
       },
       {
         "id": "provider",
         "label": "Provider",
-        "steps": []
+        "flow_verdict": "pass",
+        "steps": [
+          {
+            "id": "register",
+            "label": "注册",
+            "verdict": "pass"
+          },
+          {
+            "id": "product",
+            "label": "商品",
+            "verdict": "pass"
+          },
+          {
+            "id": "publish",
+            "label": "发布",
+            "verdict": "pass"
+          },
+          {
+            "id": "order",
+            "label": "订单",
+            "verdict": "pass"
+          },
+          {
+            "id": "complete",
+            "label": "完成",
+            "verdict": "pass"
+          }
+        ]
       },
       {
         "id": "acquisition",
         "label": "Acquisition",
-        "steps": []
+        "flow_verdict": "pass",
+        "steps": [
+          {
+            "id": "publish",
+            "label": "发布",
+            "verdict": "pass"
+          },
+          {
+            "id": "respond",
+            "label": "响应",
+            "verdict": "pass"
+          },
+          {
+            "id": "close_deal",
+            "label": "成交",
+            "verdict": "pass"
+          },
+          {
+            "id": "complete",
+            "label": "完成",
+            "verdict": "pass"
+          }
+        ]
       }
     ]
   },
