@@ -1,0 +1,300 @@
+{
+  "schema": "traveltrust.operations_workflow_validation.v1",
+  "stamp": "20260710T100705Z",
+  "recorded_at": "2026-07-10T10:07:05.206Z",
+  "api": "http://127.0.0.1:8080",
+  "workflow_ssot": "registry/traveltrust-operations-workflow.v1.yaml",
+  "skip_mutations": false,
+  "domains": {
+    "content_operations": {
+      "steps": [
+        {
+          "id": "planning_draft",
+          "transition": "create → draft",
+          "verdict": "PASS",
+          "api": {
+            "method": "POST",
+            "path": "/content/countries",
+            "status": 200
+          },
+          "state_after": {
+            "publish_status": "draft",
+            "version": 1
+          },
+          "ui_route": "/admin/content/countries",
+          "rbac": "admin.content.write"
+        },
+        {
+          "id": "draft_to_review",
+          "transition": "draft → in_review",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "state_after": {
+            "publish_status": "in_review",
+            "version": 2
+          },
+          "audit": "admin.content.country.submit (best-effort)"
+        },
+        {
+          "id": "review_to_published",
+          "transition": "in_review → published",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "state_after": {
+            "publish_status": "published",
+            "published_at": "2026-07-10T10:07:06.731654Z",
+            "version": 3
+          },
+          "timestamp": "2026-07-10T10:07:06.731654Z"
+        },
+        {
+          "id": "published_to_archived",
+          "transition": "published → archived",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "state_after": {
+            "publish_status": "archived",
+            "version": 4
+          },
+          "cleanup": true
+        },
+        {
+          "id": "illegal_jump_draft_to_published",
+          "transition": "draft → published (skip review)",
+          "verdict": "WARN",
+          "api": {
+            "status": 200
+          },
+          "note": "workflow gap: API allows draft→published without in_review",
+          "workflow_gap": true
+        }
+      ],
+      "verdict": "WARN"
+    },
+    "catalog_operations": {
+      "steps": [
+        {
+          "id": "online_to_retire",
+          "transition": "online → retire (unpublish)",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "state_after": {
+            "display_status": "hidden"
+          }
+        },
+        {
+          "id": "audit_history_unpublish",
+          "verdict": "PASS",
+          "history_count": 10,
+          "latest_action": "unpublish",
+          "operator": "3a5325fc-aaa5-4a5a-80d9-af8fe0892f29",
+          "timestamp": "2026-07-10T10:07:06.910296Z"
+        },
+        {
+          "id": "illegal_surface_before_publish",
+          "transition": "hidden → featured (before publish)",
+          "verdict": "PASS",
+          "api": {
+            "status": 409,
+            "error": "featured_requires_published"
+          },
+          "note": "API rejects featured while hidden"
+        },
+        {
+          "id": "publish_queue_to_published",
+          "transition": "publish_queue → published",
+          "verdict": "PASS",
+          "state_after": {
+            "display_status": "published"
+          }
+        },
+        {
+          "id": "published_to_surfaced",
+          "transition": "published → surfaced",
+          "verdict": "PASS",
+          "state_after": {
+            "display_surfaces": [
+              "market_feed",
+              "market_provider"
+            ]
+          }
+        },
+        {
+          "id": "surfaced_to_featured",
+          "transition": "surfaced → featured",
+          "verdict": "PASS",
+          "state_after": {
+            "featured": true,
+            "display_priority": 0
+          }
+        },
+        {
+          "id": "featured_to_online",
+          "transition": "featured → online (public catalog)",
+          "verdict": "PASS",
+          "public_catalog_count": 10
+        },
+        {
+          "id": "restore_ocs_baseline",
+          "transition": "restore staging OCS guide",
+          "verdict": "PASS",
+          "restored": {
+            "display_status": "published",
+            "featured": false,
+            "surfaces": [
+              "market_feed",
+              "market_provider"
+            ],
+            "updated_at": "2026-07-10T10:06:11.367565Z"
+          }
+        }
+      ],
+      "verdict": "PASS"
+    },
+    "campaign_operations": {
+      "steps": [
+        {
+          "id": "planning_editing",
+          "transition": "planning → editing (create)",
+          "verdict": "PASS",
+          "state_after": {
+            "publish_status": "draft",
+            "status": "draft"
+          }
+        },
+        {
+          "id": "illegal_jump_to_deploy",
+          "transition": "draft → deploy (skip review)",
+          "verdict": "PASS",
+          "api": {
+            "status": 409,
+            "error": "not_in_review"
+          }
+        },
+        {
+          "id": "editing_to_review",
+          "transition": "editing → in_review",
+          "verdict": "PASS",
+          "state_after": {
+            "publish_status": "in_review",
+            "status": "in_review"
+          }
+        },
+        {
+          "id": "review_to_deploy_running",
+          "transition": "review → deploy → running",
+          "verdict": "PASS",
+          "state_after": {
+            "publish_status": "published",
+            "status": "deployed",
+            "deployed_at": "2026-07-10T10:07:07.152884Z"
+          }
+        },
+        {
+          "id": "audit_deploy",
+          "verdict": "PASS",
+          "audit_action": "ops.cold_start.deployed",
+          "actor_id": "3a5325fc-aaa5-4a5a-80d9-af8fe0892f29",
+          "timestamp": "2026-07-10T10:07:07.152884Z"
+        },
+        {
+          "id": "running_to_completed_rollback",
+          "transition": "running → rolled_back (completed)",
+          "verdict": "PASS",
+          "state_after": {
+            "status": "rolled_back",
+            "publish_status": "published"
+          }
+        },
+        {
+          "id": "completed_to_archive",
+          "transition": "rolled_back → archive (cleanup)",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "state_after": {
+            "publish_status": "archived",
+            "status": "archived"
+          },
+          "cleanup": true
+        }
+      ],
+      "verdict": "PASS"
+    },
+    "moderation_operations": {
+      "steps": [
+        {
+          "id": "submitted_triage_list",
+          "transition": "submitted → triage (queue ingest)",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "rbac": "admin.community.read",
+          "ui_route": "/admin/community/reports"
+        },
+        {
+          "id": "state_catalog",
+          "transition": "triage → in_review → decision (read existing)",
+          "verdict": "PASS",
+          "note": "no open/in_review report to mutate; verified moderation read APIs",
+          "statuses_observed": [
+            "resolved",
+            "dismissed"
+          ]
+        }
+      ],
+      "verdict": "PASS"
+    },
+    "business_operations": {
+      "steps": [
+        {
+          "id": "onboarding_active_read",
+          "transition": "onboarding → active (corridor read)",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "rbac": "admin.disputes.read",
+          "ui_route": "/admin/disputes"
+        },
+        {
+          "id": "active_orders_read",
+          "transition": "active corridor",
+          "verdict": "PASS",
+          "order_count": 20,
+          "ui_route": "/admin/orders"
+        },
+        {
+          "id": "dispute_open_state",
+          "transition": "active → dispute_open",
+          "verdict": "PASS",
+          "note": "no open dispute on staging; state catalog only"
+        },
+        {
+          "id": "dispute_resolved_state",
+          "transition": "dispute_open → dispute_resolved",
+          "verdict": "PASS",
+          "note": "no resolved dispute sample on staging; corridor read APIs verified",
+          "statuses_observed": []
+        }
+      ],
+      "verdict": "PASS"
+    }
+  },
+  "summary": {
+    "pass": 25,
+    "fail": 0,
+    "warn": 1
+  },
+  "verdict": "PASS_WITH_WARN"
+}

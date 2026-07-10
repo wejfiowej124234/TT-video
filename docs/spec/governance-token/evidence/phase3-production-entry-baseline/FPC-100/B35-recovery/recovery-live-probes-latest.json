@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.fpc_100_recovery_live_probes.v1",
+  "timestamp_utc": "2026-07-10T10:22:48.983Z",
+  "api_base": "http://127.0.0.1:8080",
+  "pass": true,
+  "probes": [
+    {
+      "id": "static_recovery_markers",
+      "pass": true,
+      "checks": [
+        {
+          "id": "ops_plane_retry",
+          "path": "frontend/components/admin/ops/OpsPlaneFetchStates.tsx",
+          "pass": true
+        },
+        {
+          "id": "consumer_cold_start_retry",
+          "path": "frontend/components/consumer/ConsumerSurfaceStatePanel.tsx",
+          "pass": true
+        },
+        {
+          "id": "api_error_alert_retry",
+          "path": "frontend/components/ApiErrorAlert.tsx",
+          "pass": true
+        },
+        {
+          "id": "chunk_recovery_script",
+          "path": "frontend/public/tt-dev-chunk-recovery.js",
+          "pass": true
+        },
+        {
+          "id": "runbook_ssot",
+          "path": "ops/RUNBOOK.md",
+          "pass": true
+        },
+        {
+          "id": "emergency_recovery_prep",
+          "path": "docs/runbook/templates/mainnet-package/emergency-recovery/EMERGENCY-RECOVERY-PREP-V1.md",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "id": "health_recovery",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "id": "meta_idempotency_cache",
+      "pass": "GET /meta idempotency_cache mirrors middleware in-process idempotency cache max and DATABASE_URL projection behavior (routes/middleware idempotency); 753 GET /meta idempotency_cache 对象 idempotency_cache_top_keys / idempotency_cache_top_keys_contract_753 与 IDEMPOTENCY_CACHE_META_TOP_KEYS 五键顺序同源",
+      "status": 200,
+      "has_idempotency_cache": true
+    },
+    {
+      "id": "api_401_not_500",
+      "pass": "login_required",
+      "status": 401,
+      "error": "login_required"
+    },
+    {
+      "id": "api_4xx_not_500",
+      "pass": "unauthorized",
+      "status": 401,
+      "error": "unauthorized"
+    },
+    {
+      "id": "trust_growth_idempotency_replay",
+      "pass": true,
+      "first_status": 200,
+      "second_status": 200,
+      "note": "identical Idempotency-Key replay must not 500; 503 when chain_off @ ①"
+    },
+    {
+      "id": "missing_idempotency_key_cargo_ssot",
+      "pass": true,
+      "note": "missing_idempotency_key enforced via cargo idempotency_http_contract @ REQUIRE_IDEMPOTENCY_KEY; admin critical write @ PATCH without auth returns 401 @ ①"
+    }
+  ],
+  "findings": []
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "traveltrust.fpc_100_content_operations_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B30",
+  "layer": "L5",
+  "domains": ["Q7", "Q9"],
+  "note": "L5 Content Operations — CMS asset matrix · announcements · Upload→Publish→Verify→Live loop @ ①; not ② staging GO",
+  "coverage_domains": [
+    "cms_asset_matrix_ssot",
+    "cms_ops_pipeline_evidence",
+    "announcements_enterprise_gate",
+    "consumer_surface_source_alignment",
+    "daily_ops_board_parity",
+    "b12_data_governance_dependency"
+  ],
+  "severity_policy": {
+    "P0": "announcements gate fail · asset matrix pack fail · zero CMS evidence · B12 not frozen PASS",
+    "P1": "SSOT drift · health score missing · daily report missing",
+    "P2": "probe skipped at ① · partial source alignment"
+  },
+  "depends_on_batch": "B12",
+  "registry_gates": [
+    "scripts/gates/check-cms-announcements-gate.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/run-cms-asset-matrix-pack.cjs --skip-probe"
+  ],
+  "quality_gates": [
+    "data/catalog/cms-asset-matrix.v1.yaml",
+    "evidence/GO_cms_operation/CMS-ASSET-MATRIX-LATEST.json",
+    "evidence/GO_cms_operation/daily/CMS-DAILY-REPORT-LATEST.json",
+    "evidence/GO_cms_content_l5/CMS-CONTENT-HEALTH-SCORE-LATEST.json",
+    "registry/full-production-certification-checklist.v1.yaml"
+  ],
+  "l5_content_ops_policy": {
+    "min_source_aligned_rows": 1,
+    "require_announcements_gate": true,
+    "require_asset_matrix_pack": true,
+    "allow_probe_skip_at_phase1": true,
+    "consumer_surfaces_non_empty": "best_effort_at_①"
+  },
+  "dashboard_parity": {
+    "registry_batch_id": "B30",
+    "expected_next_after_pass": "B31"
+  }
+}

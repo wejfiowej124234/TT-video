@@ -1,0 +1,147 @@
+{
+  "env": "local",
+  "api": "http://127.0.0.1:8080",
+  "utc": "2026-07-10T09:59:15.845Z",
+  "strict_warnings": false,
+  "surfaces": {
+    "S01_MARKET_GUIDES": {
+      "checks": [],
+      "api_count": 10
+    },
+    "S02_MARKET_DISCOVER": {
+      "api_count": 26
+    },
+    "S03_COMMUNITY": {
+      "feed_count": 26
+    },
+    "S04_GOVERNANCE": {
+      "api_count": 2
+    },
+    "S05_OFFICIAL": {
+      "surfaces": {
+        "homepage": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "market": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "community": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "festival": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "holiday": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "regional": {
+          "status": 200,
+          "has_campaign": false
+        }
+      }
+    },
+    "S06_CONTENT": {
+      "catalog_countries": 0,
+      "admin_pois": 0
+    },
+    "S07_USER_CENTER": {
+      "role": "admin",
+      "email": "tourist@test.com",
+      "stats_ok": true
+    },
+    "S08_ORDERS": {
+      "api_count": 7,
+      "page": {
+        "limit": 50,
+        "next_cursor": null,
+        "has_more": false
+      }
+    },
+    "S09_MESSAGES": {
+      "api_count": 0
+    },
+    "S10_ADMIN_PUBLIC_OPS": {
+      "admin_published_guides": 0,
+      "public_api_guides": 10,
+      "stats_total": 147
+    },
+    "S11_GUIDE_DETAIL": {
+      "checked": 5,
+      "missing_availability": []
+    },
+    "S12_MARKET_LISTINGS": {
+      "provider": {
+        "api_count": 0,
+        "detail_checked": 0,
+        "admin_published": 0
+      },
+      "acquisition": {
+        "api_count": 0,
+        "detail_checked": 0,
+        "admin_published": 0
+      }
+    },
+    "S13_ITINERARY": {
+      "catalog_countries": 0,
+      "catalog_status": 200,
+      "itineraries_status": 405,
+      "itineraries_count": 0
+    },
+    "S14_WEB3_META": {
+      "status": 200,
+      "chain_id": "31337",
+      "has_contracts": true
+    }
+  },
+  "blocking": [],
+  "warnings": [
+    {
+      "id": "W001",
+      "surface": "S01_MARKET_GUIDES",
+      "code": "AVATAR_PLACEHOLDER_COLLISION",
+      "msg": "avatar:16 shared by 2 rows — visual duplicate risk in UI",
+      "detail": {
+        "ids": [
+          {
+            "id": "445c8499-47d3-481f-b576-2f88a0a7f2ea",
+            "city": "Shanghai"
+          },
+          {
+            "id": "e96fb8f0-d443-46ef-9d86-6389c9b9202b",
+            "city": "Shanghai"
+          }
+        ]
+      }
+    },
+    {
+      "id": "W002",
+      "surface": "S02_MARKET_DISCOVER",
+      "code": "ORDER_COVER_PLACEHOLDER_COLLISION",
+      "msg": "cover:0 shared by 2 rows — visual duplicate risk in UI",
+      "detail": {
+        "ids": [
+          {
+            "id": "60f5ea30-bb9a-47a6-9638-a7349ac3358c",
+            "city": "上海"
+          },
+          {
+            "id": "d1bbd888-90ec-4493-acab-adc77f187137",
+            "city": "上海"
+          }
+        ]
+      }
+    },
+    {
+      "id": "W003",
+      "surface": "S14_WEB3_META",
+      "code": "CONTRACT_GAP",
+      "msg": "missing chain.contracts.governor_address"
+    }
+  ],
+  "pass": true
+}

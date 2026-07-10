@@ -1,0 +1,48 @@
+{
+  "schema": "traveltrust.fpc_100_data_lineage_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B31",
+  "layer": "L5",
+  "domains": ["Q9", "Q12"],
+  "note": "L5 Data Lineage — DB→API→Projection→Frontend→UI per 202 pages; DDG SSOT @ ①; not ② staging GO",
+  "coverage_domains": [
+    "site_wide_data_lineage",
+    "display_data_governance_ssot",
+    "ddg_runtime_probe",
+    "b04_b11_dependency",
+    "page_matrix_b31_apply"
+  ],
+  "severity_policy": {
+    "P0": "any page missing lineage chain · DDG SSOT gate fail · B04/B11 not frozen PASS",
+    "P1": "SSOT path drift · registry/dashboard drift",
+    "P2": "ui_field_map generic cluster template @ ①"
+  },
+  "depends_on_batches": ["B04", "B11"],
+  "scope": "all_202_pages",
+  "registry_gates": [
+    "scripts/gates/check-display-data-governance-ssot.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/remediate-ddg-community-probe-leaks-local.cjs",
+    "scripts/dev/run-display-data-governance.sh",
+    "scripts/dev/apply-fpc-l5-data-lineage-matrix.cjs",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs"
+  ],
+  "quality_gates": [
+    "registry/display-data-governance.v1.yaml",
+    "docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md",
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+    "registry/full-production-certification-checklist.v1.yaml"
+  ],
+  "l5_lineage_policy": {
+    "require_chain_documented": "PASS",
+    "require_verdict": "PASS",
+    "required_fields": ["db", "api", "projection", "frontend", "ui_field_map"],
+    "min_pages_documented": 202
+  },
+  "dashboard_parity": {
+    "registry_batch_id": "B31",
+    "expected_next_after_pass": "B32"
+  }
+}

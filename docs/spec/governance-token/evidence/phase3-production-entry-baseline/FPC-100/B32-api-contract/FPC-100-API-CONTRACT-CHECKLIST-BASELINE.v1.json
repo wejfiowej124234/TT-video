@@ -1,0 +1,58 @@
+{
+  "schema": "traveltrust.fpc_100_api_contract_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B32",
+  "layer": "L5",
+  "domains": ["Q12", "Q14"],
+  "note": "L5 API Contract — 04↔mod.rs↔apiClient · public smoke · FA consistency · release gates @ ①; not ② GO",
+  "coverage_domains": [
+    "api_contract_04_routes",
+    "public_api_smoke",
+    "frontend_api_consistency_audit",
+    "cargo_api_contract_tests",
+    "release_gate_b453_b457",
+    "page_matrix_api_data_chain",
+    "b11_dependency_cross_check"
+  ],
+  "severity_policy": {
+    "P0": "04 routes gate fail · public smoke fail · FA audit blocking · cargo test fail · B11 not frozen",
+    "P1": "SSOT drift · page api_data_chain gap · dashboard drift",
+    "P2": "FA audit warnings · auth probe skipped when write-read smokes pass"
+  },
+  "depends_on_batches": ["B11"],
+  "registry_gates": [
+    "scripts/gates/run-check-04-routes.sh",
+    "scripts/gates/smoke-api-public-routes.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/remediate-fa-acquisition-listing-orphans-local.cjs",
+    "scripts/gates/check-frontend-api-consistency-audit-ssot.sh",
+    "scripts/dev/run-frontend-api-consistency-audit.sh",
+    "scripts/dev/apply-fpc-l5-api-contract-matrix.cjs",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs"
+  ],
+  "quality_gates": [
+    "registry/frontend-api-consistency-audit.v1.yaml",
+    "docs/spec/04-后端与API.md",
+    "frontend/lib/api/routes.ts",
+    "registry/full-production-certification-checklist.v1.yaml"
+  ],
+  "l5_api_contract_policy": {
+    "require_api_data_chain_pass_or_na": true,
+    "min_pages_certified": 202,
+    "require_cargo_test_traveltrust_api": true,
+    "api_base_default": "http://127.0.0.1:8080"
+  },
+  "release_gate_bundle": [
+    "check-b453-review-json-contract-observability-gate.py",
+    "check-b454-review-json-contract-degrade-evidence-gate.py",
+    "check-b455-review-json-contract-rollout-gate.py",
+    "check-b456-review-json-contract-release-controller-gate.py",
+    "check-b457-review-json-contract-release-adapter-gate.py"
+  ],
+  "dashboard_parity": {
+    "registry_batch_id": "B32",
+    "expected_next_after_pass": "B33"
+  }
+}

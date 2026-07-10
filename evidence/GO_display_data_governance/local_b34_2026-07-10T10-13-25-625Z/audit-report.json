@@ -1,0 +1,47 @@
+{
+  "env": "local",
+  "api": "http://127.0.0.1:8080",
+  "c3_id": "a49c7b2d-3352-4614-827b-c8e8f567c5e7",
+  "unpublish": [
+    {
+      "id": "344bd3f5-4acd-4d60-b224-40bdb2a8afd2",
+      "origin": "production",
+      "label": "Shanghai · CN"
+    }
+  ],
+  "publish": [],
+  "market": {},
+  "stats": {
+    "status": "ok",
+    "filter_enabled": true,
+    "data_origin_counts": {
+      "market_listings": {
+        "production": 42,
+        "test": 8,
+        "total": 50
+      },
+      "orders": {
+        "production": 177,
+        "test": 36,
+        "total": 213
+      },
+      "guides": {
+        "demo": 13,
+        "production": 113,
+        "test": 21,
+        "total": 147
+      }
+    },
+    "policy": {
+      "show_test_data": false,
+      "blocked_origins": [
+        "SMOKE"
+      ],
+      "updated_at": "2026-07-09T23:56:03.917677Z",
+      "updated_by": null
+    }
+  },
+  "pass": true,
+  "discover_public_leaks": 0,
+  "community_public_leaks": 0
+}

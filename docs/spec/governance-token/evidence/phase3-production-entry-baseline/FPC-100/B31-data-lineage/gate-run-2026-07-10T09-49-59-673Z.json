@@ -1,0 +1,1182 @@
+{
+  "timestamp_utc": "2026-07-10T09:49:59.673Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T09:49:59.906Z"
+  },
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-display-data-governance-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "PASS: display-data-governance SSOT"
+    },
+    {
+      "gate": "scripts/dev/remediate-ddg-community-probe-leaks-local.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_DDG_COMMUNITY_PROBE_REMEDIATE: PASS nothing_to_fix"
+    },
+    {
+      "gate": "scripts/dev/run-display-data-governance.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "POST_OCS_BASELINE: skip legacy C3 publish + canonical city matrix (SOPCP/OCS owns Public Catalog) | display-data-governance: PASS | display-data-governance: [local] exit 0"
+    },
+    {
+      "gate": "scripts/dev/apply-fpc-l5-data-lineage-matrix.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FPC_L5_DATA_LINEAGE_APPLY: updated=202 documented=202/202 all=true"
+    },
+    {
+      "gate": "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "NEXT_BATCH: B31 | DASHBOARD_JSON: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-RELEASE-DASHBOARD-LATEST.json | VERSION_CERT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-VERSION-CERTIFICATION-LATEST.json"
+    },
+    {
+      "gate": "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "blocking_count 0 | rollup {\"closed\":1,\"interim\":2,\"open\":3} | evidence evidence\\GO_executive_dashboard_gate_consistency\\20260703T093000Z\\gate-consistency-audit.json"
+    }
+  ],
+  "dependencies": {
+    "pass": true,
+    "rows": [
+      {
+        "batch_id": "B04",
+        "pass": true,
+        "verdict": "PASS",
+        "frozen": true
+      },
+      {
+        "batch_id": "B11",
+        "pass": true,
+        "verdict": "PASS",
+        "frozen": true
+      }
+    ]
+  },
+  "site_lineage": {
+    "pass": true,
+    "checks": [
+      {
+        "route": "/",
+        "cluster": "marketing_brand",
+        "pass": true
+      },
+      {
+        "route": "/admin/alerts/incidents/[id]",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/alerts/incidents",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/api-versions",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/approvals/[id]",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/approvals",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/audit/logs/[id]",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/audit/operations",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/audit",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/auth-audit-events",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/backup",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/community/abuse-policy",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/community/appeals",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/community/appeals/review",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/community/comments/visibility",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/community/moderation/cases",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/community/penalties",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/community/policy-change-logs",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/community/ranking/snapshots",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/community/reports",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/community/risk-signals",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/compliance",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/compliance/requests/[requestId]/events",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/compliance/requests/[requestId]/update",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/compliance/requests",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/config",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/config/releases/[id]",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/config/releases",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/announcements",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/catalog-dashboard",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/cities",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/countries",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/country-market",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/geo-validation",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/hotel-tiers",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/import-operations",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/intercity-routes",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/landing-ambient",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/media-assets",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/poi-images/batches/[id]",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/poi-images",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/pois",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/pricing",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/publish-queue",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/revisions/compare",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/revisions",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/roadmap",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/seo",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/translation",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/content/transport-region-rules",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/conversion-analytics",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/cross-check",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/disputes/[id]",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/disputes",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/drift-summary",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/fee-router",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/finance-reconciliation",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/finance-suite",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/finance",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/flags",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/governance/execution-uat",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/growth/airdrop-campaigns",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/growth/analytics",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/growth/anti-fraud",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/growth/early-bird",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/growth/kol-center",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/growth",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/growth/referral-codes",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/growth/reward-ledger",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/guide-applications",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/guides/[id]",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/guides",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/inbox",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/indexer",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/indexer/reconcile-reports",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/indexer/reconcile/[id]",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/internal-tools/audits",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/jobs",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/lifecycle",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/media/access-logs",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/media/signed-url-tokens",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/observability",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/official/accounts",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/official/cold-start",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/official/guides",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/official/itinerary-templates",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/official",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/official/public-operations",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/onboarding/compliance-audit",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/onboarding/entitlements/[id]",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/onboarding/entitlements",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/onboarding",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/onboarding/payment-events",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/onboarding/webhook-jobs",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/operator-guide",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/orders/[id]",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/orders",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/permissions",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/policies",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/provider-applications",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/region-share/reconcile",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/region-vault",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/reviews/[id]",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/reviews",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/scheduler/jobs",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/schema",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/secrets/metadata",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/steward-applications",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/tenants/scopes",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/trust-growth",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/users/[id]",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/users",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/admin/vacancy-ledger",
+        "cluster": "admin_workspace",
+        "pass": true
+      },
+      {
+        "route": "/auth/forgot-password",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/auth/login",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/auth/register",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/auth/reset-password",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/auth/verify-email",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/community/activity",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/explore",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/feedback",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/friends",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/guidelines",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/me/collects",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/me/likes",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/me",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/me/posts",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/me/reports/[id]",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/me/reports",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/messages/[id]",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/messages",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/post/[id]",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/topic/[tag]",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/tt",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/community/user/[id]",
+        "cluster": "community",
+        "pass": true
+      },
+      {
+        "route": "/did-rank",
+        "cluster": "marketing_brand",
+        "pass": true
+      },
+      {
+        "route": "/discover",
+        "cluster": "other_consumer",
+        "pass": true
+      },
+      {
+        "route": "/disputes/[id]",
+        "cluster": "other_consumer",
+        "pass": true
+      },
+      {
+        "route": "/disputes",
+        "cluster": "other_consumer",
+        "pass": true
+      },
+      {
+        "route": "/escrow/[id]/chain",
+        "cluster": "transaction_escrow",
+        "pass": true
+      },
+      {
+        "route": "/escrow/[id]",
+        "cluster": "transaction_escrow",
+        "pass": true
+      },
+      {
+        "route": "/escrow/[id]/proof",
+        "cluster": "transaction_escrow",
+        "pass": true
+      },
+      {
+        "route": "/escrow/[id]/rate",
+        "cluster": "transaction_escrow",
+        "pass": true
+      },
+      {
+        "route": "/governance/delegate",
+        "cluster": "governance_economics",
+        "pass": true
+      },
+      {
+        "route": "/governance/distribution-accruals/[id]",
+        "cluster": "governance_economics",
+        "pass": true
+      },
+      {
+        "route": "/governance/distribution-accruals",
+        "cluster": "governance_economics",
+        "pass": true
+      },
+      {
+        "route": "/governance/distribution-claim",
+        "cluster": "governance_economics",
+        "pass": true
+      },
+      {
+        "route": "/governance/fee-routes",
+        "cluster": "governance_economics",
+        "pass": true
+      },
+      {
+        "route": "/governance",
+        "cluster": "governance_economics",
+        "pass": true
+      },
+      {
+        "route": "/governance/params",
+        "cluster": "governance_economics",
+        "pass": true
+      },
+      {
+        "route": "/governance/proposals/[id]",
+        "cluster": "governance_economics",
+        "pass": true
+      },
+      {
+        "route": "/governance/proposals/new",
+        "cluster": "governance_economics",
+        "pass": true
+      },
+      {
+        "route": "/governance/proposals",
+        "cluster": "governance_economics",
+        "pass": true
+      },
+      {
+        "route": "/governance/vacancy-ledger",
+        "cluster": "governance_economics",
+        "pass": true
+      },
+      {
+        "route": "/governance/vault-forwards",
+        "cluster": "governance_economics",
+        "pass": true
+      },
+      {
+        "route": "/guide",
+        "cluster": "other_consumer",
+        "pass": true
+      },
+      {
+        "route": "/guide/register",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/guides/[id]",
+        "cluster": "other_consumer",
+        "pass": true
+      },
+      {
+        "route": "/guides",
+        "cluster": "other_consumer",
+        "pass": true
+      },
+      {
+        "route": "/help",
+        "cluster": "trust_legal_help",
+        "pass": true
+      },
+      {
+        "route": "/itinerary/new",
+        "cluster": "other_consumer",
+        "pass": true
+      },
+      {
+        "route": "/market/acquisition/[id]",
+        "cluster": "market_commerce",
+        "pass": true
+      },
+      {
+        "route": "/market/acquisition",
+        "cluster": "market_commerce",
+        "pass": true
+      },
+      {
+        "route": "/market",
+        "cluster": "market_commerce",
+        "pass": true
+      },
+      {
+        "route": "/market/provider",
+        "cluster": "market_commerce",
+        "pass": true
+      },
+      {
+        "route": "/market/provider/showcase/[id]",
+        "cluster": "market_commerce",
+        "pass": true
+      },
+      {
+        "route": "/me/identities/acquisition/settings",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/identities/guide/settings",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/identities/merchant/settings",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/identities",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/identities/region-steward/settings",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/onboarding",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/password",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/publish",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/referrals",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/security",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/settings/data",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/settings/language",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/settings/notifications-prefs",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/settings",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/settings/privacy",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/settings/profile",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/me/settings/trust",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/network",
+        "cluster": "other_consumer",
+        "pass": true
+      },
+      {
+        "route": "/orders/[id]",
+        "cluster": "transaction_escrow",
+        "pass": true
+      },
+      {
+        "route": "/orders/new",
+        "cluster": "transaction_escrow",
+        "pass": true
+      },
+      {
+        "route": "/orders",
+        "cluster": "transaction_escrow",
+        "pass": true
+      },
+      {
+        "route": "/pay",
+        "cluster": "transaction_escrow",
+        "pass": true
+      },
+      {
+        "route": "/privacy",
+        "cluster": "trust_legal_help",
+        "pass": true
+      },
+      {
+        "route": "/provider",
+        "cluster": "other_consumer",
+        "pass": true
+      },
+      {
+        "route": "/provider/register",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/staking",
+        "cluster": "governance_economics",
+        "pass": true
+      },
+      {
+        "route": "/steward/register",
+        "cluster": "identity_onboarding",
+        "pass": true
+      },
+      {
+        "route": "/terms/community-guidelines",
+        "cluster": "trust_legal_help",
+        "pass": true
+      },
+      {
+        "route": "/terms",
+        "cluster": "trust_legal_help",
+        "pass": true
+      },
+      {
+        "route": "/traveltrust/announcements",
+        "cluster": "marketing_brand",
+        "pass": true
+      },
+      {
+        "route": "/traveltrust",
+        "cluster": "marketing_brand",
+        "pass": true
+      },
+      {
+        "route": "/trust",
+        "cluster": "trust_legal_help",
+        "pass": true
+      }
+    ],
+    "pass_count": 202,
+    "total": 202,
+    "gaps": [],
+    "b31_apply": {
+      "scope": "all_202_pages",
+      "pages_updated": 202,
+      "lineage_documented": 202,
+      "all_lineage_pass": true,
+      "applied_at_utc": "2026-07-10T09:50:03.610Z"
+    }
+  },
+  "dashboard_parity": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "registry_b31",
+        "pass": true
+      },
+      {
+        "id": "dashboard_next_b31",
+        "pass": true,
+        "next": "B31"
+      }
+    ],
+    "readiness_pct": 80.5
+  },
+  "static_ssot": [
+    {
+      "id": "ddg_registry",
+      "path": "registry/display-data-governance.v1.yaml",
+      "must_contain": [
+        "TT_DISPLAY_DATA_GOVERNANCE: ENFORCED",
+        "surfaces:"
+      ],
+      "pass": true
+    },
+    {
+      "id": "ddg_runbook",
+      "path": "docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md",
+      "must_contain": [
+        "Display Data Governance",
+        "run-display-data-governance.sh"
+      ],
+      "pass": true
+    },
+    {
+      "id": "page_matrix_b31",
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+      "must_contain": [
+        "b31_apply",
+        "data_lineage"
+      ],
+      "pass": true
+    }
+  ],
+  "qualityCheckResults": [
+    {
+      "id": "Q9_ddg_registry",
+      "domain": "Q9",
+      "path": "registry/display-data-governance.v1.yaml",
+      "must_contain": [
+        "TT_DISPLAY_DATA_GOVERNANCE: ENFORCED",
+        "public_catalog_boundary:"
+      ],
+      "pass": true
+    },
+    {
+      "id": "Q12_registry_batch",
+      "domain": "Q12",
+      "path": "registry/full-production-certification-checklist.v1.yaml",
+      "must_contain": [
+        "id: B31",
+        "Data Lineage"
+      ],
+      "pass": true
+    },
+    {
+      "id": "Q9_b31_checklist",
+      "domain": "Q9",
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B31-data-lineage/FPC-100-DATA-LINEAGE-CHECKLIST-BASELINE.v1.json",
+      "must_contain": [
+        "fpc_100_data_lineage_checklist",
+        "all_202_pages"
+      ],
+      "pass": true
+    }
+  ],
+  "findings": [],
+  "certification_four_questions": {
+    "q1_can_user_complete_core_task": "YES — displayed fields traceable via lineage @ ①",
+    "q2_is_data_truth_consistent": "YES — DDG SSOT + per-page DB→UI chain",
+    "q3_is_release_blocker_absent": "YES",
+    "q4_is_evidence_traceable": "YES — B31 checklist + matrix b31_apply + gate-run",
+    "business_verdict": "PASS",
+    "quality_verdict": "PASS"
+  }
+}

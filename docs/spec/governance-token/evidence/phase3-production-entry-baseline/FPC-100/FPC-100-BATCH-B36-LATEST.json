@@ -1,0 +1,439 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B36",
+  "title": "L5 · Truthfulness Certification (100%)",
+  "layer": "L5",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T10:28:05.378Z",
+  "verifier": "run-fpc-batch-b36-truthfulness.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "7e546c845be1bd973db4dce4cbca99333ee82231",
+  "git": {
+    "head": "7e546c845be1bd973db4dce4cbca99333ee82231",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B01",
+    "B31",
+    "B34"
+  ],
+  "api_base": "http://127.0.0.1:8080",
+  "gates": [
+    "scripts/gates/check-production-ui-hygiene-gate.sh",
+    "scripts/gates/check-display-data-governance-ssot.sh",
+    "scripts/dev/run-display-data-governance.sh",
+    "scripts/dev/remediate-ddg-community-probe-leaks-local.cjs",
+    "scripts/dev/run-fpc-truthfulness-consumer-scan.cjs",
+    "scripts/dev/check-fpc-no-batch-skip.cjs",
+    "scripts/dev/apply-fpc-l5-truthfulness-matrix.cjs",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-production-ui-hygiene-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "check-production-ui-hygiene-gate: PASS PRODUCTION_UI_HYGIENE_WAVE_A"
+    },
+    {
+      "gate": "scripts/gates/check-display-data-governance-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "PASS: display-data-governance SSOT"
+    },
+    {
+      "gate": "scripts/dev/run-display-data-governance.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "POST_OCS_BASELINE: skip legacy C3 publish + canonical city matrix (SOPCP/OCS owns Public Catalog) | display-data-governance: PASS | display-data-governance: [local] exit 0"
+    },
+    {
+      "gate": "scripts/dev/remediate-ddg-community-probe-leaks-local.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_DDG_COMMUNITY_PROBE_REMEDIATE: PASS nothing_to_fix"
+    },
+    {
+      "gate": "scripts/dev/run-fpc-truthfulness-consumer-scan.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FPC_TRUTHFULNESS_SCAN: OK locale_violations=0 findings=0"
+    },
+    {
+      "gate": "scripts/dev/check-fpc-no-batch-skip.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_RELEASE_READINESS: 92.7% | NEXT_BATCH: B36 | OUT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-NO-BATCH-SKIP-LATEST.json"
+    },
+    {
+      "gate": "scripts/dev/apply-fpc-l5-truthfulness-matrix.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FPC_L5_TRUTHFULNESS_APPLY: updated=202 consumer_100=88/88 all=true"
+    },
+    {
+      "gate": "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "NEXT_BATCH: B36 | DASHBOARD_JSON: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-RELEASE-DASHBOARD-LATEST.json | VERSION_CERT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-VERSION-CERTIFICATION-LATEST.json"
+    },
+    {
+      "gate": "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "blocking_count 0 | rollup {\"closed\":1,\"interim\":2,\"open\":3} | evidence evidence\\GO_executive_dashboard_gate_consistency\\20260703T093000Z\\gate-consistency-audit.json"
+    }
+  ],
+  "gate_pass": true,
+  "runtime_preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T10:28:05.613Z"
+  },
+  "truthfulness_live": {
+    "dependencies": {
+      "pass": true,
+      "checks": [
+        {
+          "batch_id": "B01",
+          "pass": true,
+          "verdict": "PASS",
+          "frozen": true
+        },
+        {
+          "batch_id": "B31",
+          "pass": true,
+          "verdict": "PASS",
+          "frozen": true
+        },
+        {
+          "batch_id": "B34",
+          "pass": true,
+          "verdict": "PASS",
+          "frozen": true
+        }
+      ]
+    },
+    "frozen_chain": {
+      "pass": true,
+      "checks": [
+        {
+          "batch_id": "B21",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "batch_id": "B26",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "batch_id": "B30",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "batch_id": "B31",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "batch_id": "B32",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "batch_id": "B33",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "batch_id": "B34",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "batch_id": "B35",
+          "pass": true,
+          "verdict": "PASS"
+        }
+      ],
+      "chain_length": 8
+    },
+    "gate_aggregation": {
+      "pass": true,
+      "sequence_ok": true,
+      "release_readiness_pct": 92.7,
+      "next_required_batch": "B36"
+    },
+    "cross_module_regression": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "B01_foundation",
+          "batch": "B01",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "B31_data_lineage",
+          "batch": "B31",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "B34_entity_lifecycle",
+          "batch": "B34",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "B35_recovery",
+          "batch": "B35",
+          "pass": true,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    "consumer_scan": {
+      "pass": true,
+      "locale_violations": 0,
+      "mock_isolation": {
+        "pass": true,
+        "checks": [
+          {
+            "id": "mock_pay_ui_gated",
+            "pass": true
+          },
+          {
+            "id": "test_persona_sanitized",
+            "pass": true
+          },
+          {
+            "id": "spacing_debug_gated",
+            "pass": true
+          }
+        ]
+      },
+      "path": "D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\B36-truthfulness\\truthfulness-consumer-scan-latest.json"
+    },
+    "site_truthfulness": {
+      "pass": true,
+      "pass_count": 202,
+      "total": 202,
+      "consumer_pass": 88,
+      "consumer_total": 88,
+      "consumer_truthfulness_pct": 100,
+      "gaps": [],
+      "b36_apply": {
+        "scope": "all_202_pages",
+        "pages_updated": 202,
+        "truthfulness_certified": 202,
+        "all_truthfulness_pass": true,
+        "consumer_truthfulness_100_pct": 100,
+        "consumer_certified": 88,
+        "consumer_total": 88,
+        "applied_at_utc": "2026-07-10T10:28:16.408Z"
+      }
+    },
+    "release_gate": {
+      "pass": true,
+      "checks": [
+        {
+          "script": "check-b453-review-json-contract-observability-gate.py",
+          "pass": true
+        },
+        {
+          "script": "check-b454-review-json-contract-degrade-evidence-gate.py",
+          "pass": true
+        },
+        {
+          "script": "check-b455-review-json-contract-rollout-gate.py",
+          "pass": true
+        },
+        {
+          "script": "check-b456-review-json-contract-release-controller-gate.py",
+          "pass": true
+        },
+        {
+          "script": "check-b457-review-json-contract-release-adapter-gate.py",
+          "pass": true
+        }
+      ]
+    },
+    "dashboard_parity": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "registry_b36",
+          "pass": true
+        },
+        {
+          "id": "dashboard_next_b36",
+          "pass": true,
+          "next": "B36"
+        }
+      ],
+      "readiness_pct": 92.7
+    },
+    "consumer_truthfulness_pct": 100
+  },
+  "truthfulness_static_ssot": [
+    {
+      "id": "public_chrome_hygiene",
+      "path": "frontend/lib/publicChromeHygiene.ts",
+      "must_contain": [
+        "publicChromeDisplayName",
+        "isDevCatalogEmail"
+      ],
+      "pass": true
+    },
+    {
+      "id": "ddg_registry",
+      "path": "registry/display-data-governance.v1.yaml",
+      "must_contain": [
+        "TT_DISPLAY_DATA_GOVERNANCE: ENFORCED"
+      ],
+      "pass": true
+    },
+    {
+      "id": "ui_hygiene_gate",
+      "path": "scripts/gates/check-production-ui-hygiene-gate.sh",
+      "must_contain": [
+        "PRODUCTION_UI_HYGIENE_WAVE_A"
+      ],
+      "pass": true
+    },
+    {
+      "id": "edge_case_open_p0_p1",
+      "path": "frontend/lib/l5/l5EdgeCaseExceptionAuditModel.ts",
+      "must_contain": [
+        "L5_EDGE_CASE_OPEN_P0",
+        "L5_EDGE_CASE_OPEN_P1"
+      ],
+      "pass": true
+    },
+    {
+      "id": "edge_case_model_exports",
+      "pass": true
+    }
+  ],
+  "business_certification": {
+    "verdict": "PASS",
+    "gate_pass": true
+  },
+  "quality_supplement": {
+    "verdict": "PASS",
+    "domains": [
+      "Q9",
+      "Q12"
+    ],
+    "checks": [
+      {
+        "id": "Q9_ddg_registry",
+        "domain": "Q9",
+        "path": "registry/display-data-governance.v1.yaml",
+        "must_contain": [
+          "TT_DISPLAY_DATA_GOVERNANCE: ENFORCED"
+        ],
+        "pass": true
+      },
+      {
+        "id": "Q12_registry_batch",
+        "domain": "Q12",
+        "path": "registry/full-production-certification-checklist.v1.yaml",
+        "must_contain": [
+          "id: B36",
+          "Truthfulness Certification"
+        ],
+        "pass": true
+      },
+      {
+        "id": "Q12_b36_checklist",
+        "domain": "Q12",
+        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B36-truthfulness/FPC-100-TRUTHFULNESS-CHECKLIST-BASELINE.v1.json",
+        "must_contain": [
+          "fpc_100_truthfulness_checklist",
+          "consumer_surface_no_mock_demo"
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "certification_four_questions": {
+    "q1_can_user_complete_core_task": "YES — consumer surfaces show honest state · no mock/demo chrome @ ①",
+    "q2_is_data_truth_consistent": "YES — DDG + publicChrome + locale scan + frozen chain aligned",
+    "q3_is_release_blocker_absent": "YES",
+    "q4_is_evidence_traceable": "YES — B36 gate-run + consumer scan + matrix b36_apply",
+    "business_verdict": "PASS",
+    "quality_verdict": "PASS"
+  },
+  "overall_verdict": "PASS",
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B40",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Truthfulness ① — consumer 100% · mock isolation · DDG · hygiene gate · frozen chain; defer-commit",
+  "traceability": {
+    "requirements": [
+      "production UI hygiene + DDG SSOT/runtime PASS",
+      "consumer locale scan 0 violations",
+      "88 consumer pages truthfulness_pct=100 via b36_apply",
+      "B21-B35 frozen chain + no-batch-skip aggregation",
+      "mock-pay · test persona · spacing debug gated"
+    ],
+    "spec_refs": [
+      "registry/display-data-governance.v1.yaml",
+      "registry/full-production-certification-checklist.v1.yaml",
+      "FPC-100/B36-truthfulness/FPC-100-TRUTHFULNESS-CHECKLIST-BASELINE.v1.json"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B36-LATEST.json",
+    "certification_batch": "B36",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T10:28:05.378Z",
+  "expires_at_utc": "2026-08-09T10:28:05.378Z",
+  "expiry_policy_days": 30,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T10:28:05.378Z",
+  "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc",
+  "dod": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": true,
+    "working_tree_clean": true,
+    "all_met": true,
+    "checked_at_utc": "2026-07-10T10:33:45.180Z",
+    "committed_sha": "08fd715a96bac407ae3b099798de3e91e25337dc",
+    "anchor_head": "08fd715a96bac407ae3b099798de3e91e25337dc",
+    "policy": "B30-B36 unified defer-commit anchor"
+  },
+  "finalized_at_utc": "2026-07-10T10:33:46.640Z",
+  "defer_commit_anchor": {
+    "anchor_id": "B30-B36",
+    "committed_at_utc": "2026-07-10T10:33:45.180Z",
+    "immutable_head": "08fd715a96bac407ae3b099798de3e91e25337dc"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "schema": "traveltrust.fpc_100_defer_commit_anchor_gate.v1",
+  "timestamp_utc": "2026-07-10T10:30:53.474Z",
+  "phase": "① local",
+  "anchor_id": "B30-B36",
+  "anchor_batches": [
+    "B30",
+    "B31",
+    "B32",
+    "B33",
+    "B34",
+    "B35",
+    "B36"
+  ],
+  "batches": [
+    {
+      "batch_id": "B30",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B31",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B32",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B33",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B34",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B35",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B36",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    }
+  ],
+  "burn_down": {
+    "completed": 39,
+    "remaining": 2,
+    "total": 41,
+    "contiguous_completed": 39,
+    "release_readiness_pct": 95.1,
+    "coverage_pct": 95.1,
+    "next_required_batch": "B40",
+    "skip_violations": [],
+    "sequence_ok": true
+  },
+  "b40_unlock": true,
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true
+}

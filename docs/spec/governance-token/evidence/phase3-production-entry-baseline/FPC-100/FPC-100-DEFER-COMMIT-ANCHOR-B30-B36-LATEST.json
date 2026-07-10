@@ -1,0 +1,82 @@
+{
+  "schema": "traveltrust.fpc_100_defer_commit_anchor.v1",
+  "timestamp_utc": "2026-07-10T10:33:45.180Z",
+  "phase": "① local",
+  "anchor_id": "B30-B36",
+  "immutable_head": "08fd715a96bac407ae3b099798de3e91e25337dc",
+  "batches": [
+    "B30",
+    "B31",
+    "B32",
+    "B33",
+    "B34",
+    "B35",
+    "B36"
+  ],
+  "batch_dod": [
+    {
+      "batch_id": "B30",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B31",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B32",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B33",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B34",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B35",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B36",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    }
+  ],
+  "policy": {
+    "push": false,
+    "deploy": false,
+    "phase2_b40": "Owner authorization required — staging one-shot only",
+    "note": "Unified defer-commit anchor — L5 operations truth B30-B36 @ ①"
+  },
+  "next_batch": "B40",
+  "prior_anchor": "B21-B25-C6"
+}

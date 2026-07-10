@@ -1,0 +1,8 @@
+{
+  "schema": "traveltrust.fpc_100_b33_apply.v1",
+  "timestamp_utc": "2026-07-10T10:08:46.647Z",
+  "pages_updated": 114,
+  "operations_certified": 114,
+  "all_operations_pass": true,
+  "scope": "admin_workspace"
+}

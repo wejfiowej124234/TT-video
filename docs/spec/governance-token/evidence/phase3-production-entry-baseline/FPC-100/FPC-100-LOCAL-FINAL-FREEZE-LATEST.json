@@ -1,0 +1,192 @@
+{
+  "schema": "traveltrust.fpc_100_local_final_freeze.v1",
+  "timestamp_utc": "2026-07-10T10:33:25.518Z",
+  "phase": "① local",
+  "machine_key": "TT_LOCAL_FINAL_FREEZE",
+  "git": {
+    "head": "08fd715a96bac407ae3b099798de3e91e25337dc",
+    "branch": "feature/g23-04-abi-event-freeze",
+    "working_tree_clean": true
+  },
+  "authoritative_immutable_head": "5f1a8de07528928de7ae28e20c92f00d87163adb",
+  "freeze_chain": {
+    "batches": [
+      "B21",
+      "B22",
+      "B23",
+      "B24",
+      "B25-C1",
+      "B25-C2",
+      "B25-C3",
+      "B25-C4",
+      "B25-C5",
+      "B25-C6",
+      "B26",
+      "B30",
+      "B31",
+      "B32",
+      "B33",
+      "B34",
+      "B35",
+      "B36"
+    ],
+    "rows": [
+      {
+        "batch_id": "B21",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B22",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B23",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B24",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C1",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C2",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C3",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C4",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C5",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C6",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B26",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "21f830ffbf6afe8237dab1021e6113fd57ffcd3e"
+      },
+      {
+        "batch_id": "B30",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+      },
+      {
+        "batch_id": "B31",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+      },
+      {
+        "batch_id": "B32",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+      },
+      {
+        "batch_id": "B33",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+      },
+      {
+        "batch_id": "B34",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+      },
+      {
+        "batch_id": "B35",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+      },
+      {
+        "batch_id": "B36",
+        "pass": true,
+        "verdict": "PASS",
+        "certification_frozen": true,
+        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+      }
+    ],
+    "pass_count": 18,
+    "total": 18
+  },
+  "burn_down": {
+    "completed": 39,
+    "remaining": 2,
+    "total": 41,
+    "contiguous_completed": 39,
+    "release_readiness_pct": 95.1,
+    "coverage_pct": 95.1,
+    "next_required_batch": "B40",
+    "skip_violations": [],
+    "sequence_ok": true
+  },
+  "release_readiness_pct": 95.1,
+  "next_required_batch": "B40",
+  "anchor_b30_b36": false,
+  "b40_entry": {
+    "authorized": false,
+    "note": "B40 ② staging one-shot — requires explicit Owner authorization; no ① business code changes after freeze",
+    "phase": "②"
+  },
+  "findings": [
+    {
+      "severity": "P0",
+      "id": "anchor_head_drift",
+      "detail": "anchor=5f1a8de07528928de7ae28e20c92f00d87163adb head=08fd715a96bac407ae3b099798de3e91e25337dc"
+    }
+  ],
+  "verdict": "FAIL",
+  "pass": false
+}

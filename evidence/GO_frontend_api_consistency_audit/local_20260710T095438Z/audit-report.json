@@ -1,0 +1,406 @@
+{
+  "env": "local",
+  "api": "http://127.0.0.1:8080",
+  "utc": "2026-07-10T09:54:38.537Z",
+  "strict_warnings": false,
+  "surfaces": {
+    "S01_MARKET_GUIDES": {
+      "checks": [],
+      "api_count": 10
+    },
+    "S02_MARKET_DISCOVER": {
+      "api_count": 26
+    },
+    "S03_COMMUNITY": {
+      "feed_count": 26
+    },
+    "S04_GOVERNANCE": {
+      "api_count": 2
+    },
+    "S05_OFFICIAL": {
+      "surfaces": {
+        "homepage": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "market": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "community": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "festival": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "holiday": {
+          "status": 200,
+          "has_campaign": false
+        },
+        "regional": {
+          "status": 200,
+          "has_campaign": false
+        }
+      }
+    },
+    "S06_CONTENT": {
+      "catalog_countries": 0,
+      "admin_pois": 0
+    },
+    "S07_USER_CENTER": {
+      "role": "admin",
+      "email": "tourist@test.com",
+      "stats_ok": true
+    },
+    "S08_ORDERS": {
+      "api_count": 7,
+      "page": {
+        "limit": 50,
+        "next_cursor": null,
+        "has_more": false
+      }
+    },
+    "S09_MESSAGES": {
+      "api_count": 0
+    },
+    "S10_ADMIN_PUBLIC_OPS": {
+      "admin_published_guides": 0,
+      "public_api_guides": 10,
+      "stats_total": 147
+    },
+    "S11_GUIDE_DETAIL": {
+      "checked": 5,
+      "missing_availability": []
+    },
+    "S12_MARKET_LISTINGS": {
+      "provider": {
+        "api_count": 0,
+        "detail_checked": 0,
+        "admin_published": 0
+      },
+      "acquisition": {
+        "api_count": 42,
+        "detail_checked": 3,
+        "admin_published": 0,
+        "shared_placeholder_count": 42
+      }
+    },
+    "S13_ITINERARY": {
+      "catalog_countries": 0,
+      "catalog_status": 200,
+      "itineraries_status": 405,
+      "itineraries_count": 0
+    },
+    "S14_WEB3_META": {
+      "status": 200,
+      "chain_id": "31337",
+      "has_contracts": true
+    }
+  },
+  "blocking": [
+    {
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "ADMIN_DRIFT_ORPHAN",
+      "msg": "acquisition public not in admin queue: ab261b83-d455-4167-8e16-564f06851c9d,b0e21091-1cb0-48b4-85ae-dc55c6f05ade,9fe8b285-74c3-4dee-9aef-aaa76cdb01cf,a98352a9-ebd7-4de9-991c-74f489de3e63,d60a5b26-943e-4788-af88-0bb5b3c6ad09,555f2774-fc44-40ba-b790-bc8a2d72115d,f985efea-8beb-4c68-9b08-dc3807840c41,77e8f69d-6190-4f40-bbcf-931d1ac357bd,0ebf1c3a-22b1-4c09-8df9-cf1eba55ccae,8d7e3b4a-9450-4782-ae1c-42b345c5ef8a,3e7d557e-33f7-426f-a2fe-074fec8b5c6a,5e429ad8-4cc0-42c7-bc76-e8cb1bd77bfe,aede99b6-f036-4668-b608-fbe7ab63d8bf,2c3b1ea1-83aa-4b2b-8f61-b607c3120b1c,a378218b-bb11-41ed-ad4e-c6060bfc6115,ea95c62c-4d44-42cf-9bd7-358223fe589a,8b861fbe-2bb3-47d5-aa5c-3061bdc03390,dd097605-05bc-4143-8c33-62b8d5bbe456,feb03bba-7c2f-48c6-ba46-c9a250405273,044cc0b2-418f-42a1-857e-0ceed4912ae1,bf9d78dc-1c11-4cc6-9b8b-2f651866ee89,2c94c190-c0f6-41c1-bec3-c725cb1df0e0,10d1bec8-abb5-4765-803c-4db272350c4c,3bd4420b-73a4-4bdd-b9c2-843b62914c1f,294486e2-4d88-4f77-bae2-1893cddb492d,150dd1e0-2b32-412e-a7c3-5a5620e0a905,7f807aee-e436-4bfa-8c26-80d44af55af0,e71b8990-18da-414c-8edf-563872df7548,64c17b49-0343-4a18-b1b5-2f74b96b66c9,9d455b84-7710-4102-a5e9-d1404fb4827b,94c82ada-a88a-4f15-b52b-591ff5496580,5f78aa62-6c1c-478d-855b-76cdf653e091,19424152-cd77-4c10-a323-96402505ff8a,6a59fc57-1804-4433-863a-3482e4ef1321,9d6228f6-c66f-4209-b3a7-48bb0717b8a5,d0b3ff8b-96cb-4d2a-a700-c8869e3396b7,5e625983-5e65-4aac-b51a-5e3a50fd6a64,71aec2ba-cb15-4f98-b099-0185ddb8dba0,be607fca-471f-444e-bb08-6972a714e746,331fb761-f3a8-46ce-96a8-99456b6fdc14,8f341912-e950-42f0-9d02-55d00f21b909,c4f9c220-f5ba-4737-8587-bbada4040c44"
+    }
+  ],
+  "warnings": [
+    {
+      "id": "W001",
+      "surface": "S01_MARKET_GUIDES",
+      "code": "AVATAR_PLACEHOLDER_COLLISION",
+      "msg": "avatar:16 shared by 2 rows — visual duplicate risk in UI",
+      "detail": {
+        "ids": [
+          {
+            "id": "445c8499-47d3-481f-b576-2f88a0a7f2ea",
+            "city": "Shanghai"
+          },
+          {
+            "id": "e96fb8f0-d443-46ef-9d86-6389c9b9202b",
+            "city": "Shanghai"
+          }
+        ]
+      }
+    },
+    {
+      "id": "W002",
+      "surface": "S02_MARKET_DISCOVER",
+      "code": "ORDER_COVER_PLACEHOLDER_COLLISION",
+      "msg": "cover:0 shared by 2 rows — visual duplicate risk in UI",
+      "detail": {
+        "ids": [
+          {
+            "id": "60f5ea30-bb9a-47a6-9638-a7349ac3358c",
+            "city": "上海"
+          },
+          {
+            "id": "d1bbd888-90ec-4493-acab-adc77f187137",
+            "city": "上海"
+          }
+        ]
+      }
+    },
+    {
+      "id": "W003",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition ab261b83-d455-4167-8e16-564f06851c9d missing payload.title"
+    },
+    {
+      "id": "W004",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition b0e21091-1cb0-48b4-85ae-dc55c6f05ade missing payload.title"
+    },
+    {
+      "id": "W005",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 9fe8b285-74c3-4dee-9aef-aaa76cdb01cf missing payload.title"
+    },
+    {
+      "id": "W006",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition a98352a9-ebd7-4de9-991c-74f489de3e63 missing payload.title"
+    },
+    {
+      "id": "W007",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition d60a5b26-943e-4788-af88-0bb5b3c6ad09 missing payload.title"
+    },
+    {
+      "id": "W008",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 555f2774-fc44-40ba-b790-bc8a2d72115d missing payload.title"
+    },
+    {
+      "id": "W009",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition f985efea-8beb-4c68-9b08-dc3807840c41 missing payload.title"
+    },
+    {
+      "id": "W010",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 77e8f69d-6190-4f40-bbcf-931d1ac357bd missing payload.title"
+    },
+    {
+      "id": "W011",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 0ebf1c3a-22b1-4c09-8df9-cf1eba55ccae missing payload.title"
+    },
+    {
+      "id": "W012",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 8d7e3b4a-9450-4782-ae1c-42b345c5ef8a missing payload.title"
+    },
+    {
+      "id": "W013",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 3e7d557e-33f7-426f-a2fe-074fec8b5c6a missing payload.title"
+    },
+    {
+      "id": "W014",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 5e429ad8-4cc0-42c7-bc76-e8cb1bd77bfe missing payload.title"
+    },
+    {
+      "id": "W015",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition aede99b6-f036-4668-b608-fbe7ab63d8bf missing payload.title"
+    },
+    {
+      "id": "W016",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 2c3b1ea1-83aa-4b2b-8f61-b607c3120b1c missing payload.title"
+    },
+    {
+      "id": "W017",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition a378218b-bb11-41ed-ad4e-c6060bfc6115 missing payload.title"
+    },
+    {
+      "id": "W018",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition ea95c62c-4d44-42cf-9bd7-358223fe589a missing payload.title"
+    },
+    {
+      "id": "W019",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 8b861fbe-2bb3-47d5-aa5c-3061bdc03390 missing payload.title"
+    },
+    {
+      "id": "W020",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition dd097605-05bc-4143-8c33-62b8d5bbe456 missing payload.title"
+    },
+    {
+      "id": "W021",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition feb03bba-7c2f-48c6-ba46-c9a250405273 missing payload.title"
+    },
+    {
+      "id": "W022",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 044cc0b2-418f-42a1-857e-0ceed4912ae1 missing payload.title"
+    },
+    {
+      "id": "W023",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition bf9d78dc-1c11-4cc6-9b8b-2f651866ee89 missing payload.title"
+    },
+    {
+      "id": "W024",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 2c94c190-c0f6-41c1-bec3-c725cb1df0e0 missing payload.title"
+    },
+    {
+      "id": "W025",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 10d1bec8-abb5-4765-803c-4db272350c4c missing payload.title"
+    },
+    {
+      "id": "W026",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 3bd4420b-73a4-4bdd-b9c2-843b62914c1f missing payload.title"
+    },
+    {
+      "id": "W027",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 294486e2-4d88-4f77-bae2-1893cddb492d missing payload.title"
+    },
+    {
+      "id": "W028",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 150dd1e0-2b32-412e-a7c3-5a5620e0a905 missing payload.title"
+    },
+    {
+      "id": "W029",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 7f807aee-e436-4bfa-8c26-80d44af55af0 missing payload.title"
+    },
+    {
+      "id": "W030",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition e71b8990-18da-414c-8edf-563872df7548 missing payload.title"
+    },
+    {
+      "id": "W031",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 64c17b49-0343-4a18-b1b5-2f74b96b66c9 missing payload.title"
+    },
+    {
+      "id": "W032",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 9d455b84-7710-4102-a5e9-d1404fb4827b missing payload.title"
+    },
+    {
+      "id": "W033",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 94c82ada-a88a-4f15-b52b-591ff5496580 missing payload.title"
+    },
+    {
+      "id": "W034",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 5f78aa62-6c1c-478d-855b-76cdf653e091 missing payload.title"
+    },
+    {
+      "id": "W035",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 19424152-cd77-4c10-a323-96402505ff8a missing payload.title"
+    },
+    {
+      "id": "W036",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 6a59fc57-1804-4433-863a-3482e4ef1321 missing payload.title"
+    },
+    {
+      "id": "W037",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 9d6228f6-c66f-4209-b3a7-48bb0717b8a5 missing payload.title"
+    },
+    {
+      "id": "W038",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition d0b3ff8b-96cb-4d2a-a700-c8869e3396b7 missing payload.title"
+    },
+    {
+      "id": "W039",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 5e625983-5e65-4aac-b51a-5e3a50fd6a64 missing payload.title"
+    },
+    {
+      "id": "W040",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 71aec2ba-cb15-4f98-b099-0185ddb8dba0 missing payload.title"
+    },
+    {
+      "id": "W041",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition be607fca-471f-444e-bb08-6972a714e746 missing payload.title"
+    },
+    {
+      "id": "W042",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 331fb761-f3a8-46ce-96a8-99456b6fdc14 missing payload.title"
+    },
+    {
+      "id": "W043",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition 8f341912-e950-42f0-9d02-55d00f21b909 missing payload.title"
+    },
+    {
+      "id": "W044",
+      "surface": "S12_MARKET_LISTINGS",
+      "code": "MISSING_TITLE",
+      "msg": "acquisition c4f9c220-f5ba-4737-8587-bbada4040c44 missing payload.title"
+    },
+    {
+      "id": "W045",
+      "surface": "S14_WEB3_META",
+      "code": "CONTRACT_GAP",
+      "msg": "missing chain.contracts.governor_address"
+    }
+  ],
+  "pass": false
+}

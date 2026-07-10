@@ -1,0 +1,326 @@
+{
+  "timestamp_utc": "2026-07-10T10:12:41.111Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T10:12:41.369Z"
+  },
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-display-data-governance-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "PASS: display-data-governance SSOT"
+    },
+    {
+      "gate": "scripts/dev/run-display-data-governance.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "POST_OCS_BASELINE: skip legacy C3 publish + canonical city matrix (SOPCP/OCS owns Public Catalog) | display-data-governance: PASS | display-data-governance: [local] exit 0"
+    },
+    {
+      "gate": "scripts/dev/remediate-ddg-community-probe-leaks-local.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_DDG_COMMUNITY_PROBE_REMEDIATE: PASS nothing_to_fix"
+    },
+    {
+      "gate": "scripts/dev/remediate-fa-acquisition-listing-orphans-local.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FA_ACQ_ORPHAN_REMEDIATE: PASS nothing_to_fix"
+    },
+    {
+      "gate": "scripts/dev/run-fpc-operations-workflow-local-gate.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "  moderation_operations: PASS |   business_operations: PASS | TT_FPC_OPS_WORKFLOW_GATE: PASS verdict=PASS_WITH_WARN guide=344bd3f5-4acd-4d60-b224-40bdb2a8afd2 evidence=D:\\TravelTrust-V1.1\\evidence\\GO_operations_workflow_validation\\local_b33_2026-07-10T10-12-45-642Z\\workflow-validation.json"
+    },
+    {
+      "gate": "scripts/dev/check-fpc-no-batch-skip.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_RELEASE_READINESS: 87.8% | NEXT_BATCH: B34 | OUT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-NO-BATCH-SKIP-LATEST.json"
+    },
+    {
+      "gate": "scripts/dev/apply-fpc-l5-entity-lifecycle-matrix.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FPC_L5_ENTITY_LIFECYCLE_APPLY: updated=202 certified=202/202 all=true"
+    },
+    {
+      "gate": "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "NEXT_BATCH: B34 | DASHBOARD_JSON: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-RELEASE-DASHBOARD-LATEST.json | VERSION_CERT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-VERSION-CERTIFICATION-LATEST.json"
+    },
+    {
+      "gate": "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "blocking_count 0 | rollup {\"closed\":1,\"interim\":2,\"open\":3} | evidence evidence\\GO_executive_dashboard_gate_consistency\\20260703T093000Z\\gate-consistency-audit.json"
+    }
+  ],
+  "dependencies": {
+    "pass": true,
+    "checks": [
+      {
+        "batch_id": "B10",
+        "pass": true,
+        "verdict": "PASS",
+        "frozen": true
+      },
+      {
+        "batch_id": "B31",
+        "pass": true,
+        "verdict": "PASS",
+        "frozen": true
+      },
+      {
+        "batch_id": "B33",
+        "pass": true,
+        "verdict": "PASS",
+        "frozen": true
+      }
+    ]
+  },
+  "frozen_chain": {
+    "pass": true,
+    "checks": [
+      {
+        "batch_id": "B21",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B25-C6",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B26",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B30",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B31",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B32",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B33",
+        "pass": true,
+        "verdict": "PASS"
+      }
+    ],
+    "chain_length": 7
+  },
+  "gate_aggregation": {
+    "pass": true,
+    "sequence_ok": true,
+    "release_readiness_pct": 87.8,
+    "next_required_batch": "B34",
+    "completed": 36,
+    "total": 41
+  },
+  "cross_module": {
+    "pass": false,
+    "checks": [
+      {
+        "id": "B07_community",
+        "batch": "B07",
+        "field": "content_lifecycle",
+        "min_states": 4,
+        "pass": false
+      },
+      {
+        "id": "B10_business_flows",
+        "batch": "B10",
+        "field": "business_flow_matrix",
+        "min_flows": 3,
+        "pass": true
+      },
+      {
+        "id": "B33_operations_workflow",
+        "batch": "B33",
+        "field": "operations_live.workflow_validation",
+        "min_domains": 4,
+        "pass": true
+      }
+    ]
+  },
+  "workflow_parity": {
+    "pass": true,
+    "verdict": "PASS_WITH_WARN",
+    "path": "D:\\TravelTrust-V1.1\\evidence\\GO_operations_workflow_validation\\local_b33_2026-07-10T10-12-45-642Z\\workflow-validation.json",
+    "domains": {
+      "content_operations": "WARN",
+      "catalog_operations": "PASS",
+      "campaign_operations": "PASS",
+      "moderation_operations": "PASS",
+      "business_operations": "PASS"
+    }
+  },
+  "site_lifecycle": {
+    "pass": true,
+    "pass_count": 202,
+    "total": 202,
+    "page_count": 202,
+    "gaps": [],
+    "b34_apply": {
+      "scope": "all_202_pages",
+      "pages_updated": 202,
+      "entity_lifecycle_certified": 202,
+      "all_entity_lifecycle_pass": true,
+      "applied_at_utc": "2026-07-10T10:12:50.200Z"
+    }
+  },
+  "release_gate": {
+    "pass": true,
+    "checks": [
+      {
+        "script": "check-b453-review-json-contract-observability-gate.py",
+        "pass": true
+      },
+      {
+        "script": "check-b454-review-json-contract-degrade-evidence-gate.py",
+        "pass": true
+      },
+      {
+        "script": "check-b455-review-json-contract-rollout-gate.py",
+        "pass": true
+      },
+      {
+        "script": "check-b456-review-json-contract-release-controller-gate.py",
+        "pass": true
+      },
+      {
+        "script": "check-b457-review-json-contract-release-adapter-gate.py",
+        "pass": true
+      },
+      {
+        "id": "release_gate_wired_04",
+        "pass": true
+      }
+    ]
+  },
+  "dashboard_parity": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "registry_b34",
+        "pass": true
+      },
+      {
+        "id": "dashboard_next_b34",
+        "pass": true,
+        "next": "B34"
+      }
+    ],
+    "readiness_pct": 87.8,
+    "release_decision": "NO_GO"
+  },
+  "static_ssot": [
+    {
+      "id": "ddg_registry",
+      "path": "registry/display-data-governance.v1.yaml",
+      "must_contain": [
+        "TT_DISPLAY_DATA_GOVERNANCE: ENFORCED",
+        "public_catalog_boundary:"
+      ],
+      "pass": true
+    },
+    {
+      "id": "ops_workflow_registry",
+      "path": "registry/traveltrust-operations-workflow.v1.yaml",
+      "must_contain": [
+        "TT_OPERATIONS_WORKFLOW: ENFORCED",
+        "content_operations"
+      ],
+      "pass": true
+    },
+    {
+      "id": "business_flow_matrix",
+      "path": "registry/business-flow-matrix.v1.yaml",
+      "must_contain": [
+        "guide",
+        "provider"
+      ],
+      "pass": true
+    },
+    {
+      "id": "ddg_runbook",
+      "path": "docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md",
+      "must_contain": [
+        "Display Data Governance",
+        "public_catalog"
+      ],
+      "pass": true
+    }
+  ],
+  "qualityCheckResults": [
+    {
+      "id": "Q12_registry_batch",
+      "domain": "Q12",
+      "path": "registry/full-production-certification-checklist.v1.yaml",
+      "must_contain": [
+        "id: B34",
+        "Data Lifecycle"
+      ],
+      "pass": true
+    },
+    {
+      "id": "Q12_b34_checklist",
+      "domain": "Q12",
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B34-lifecycle/FPC-100-DATA-LIFECYCLE-CHECKLIST-BASELINE.v1.json",
+      "must_contain": [
+        "fpc_100_data_lifecycle_checklist",
+        "entity_lifecycle_transitions"
+      ],
+      "pass": true
+    },
+    {
+      "id": "Q9_ddg_registry",
+      "domain": "Q9",
+      "path": "registry/display-data-governance.v1.yaml",
+      "must_contain": [
+        "TT_DISPLAY_DATA_GOVERNANCE: ENFORCED"
+      ],
+      "pass": true
+    }
+  ],
+  "findings": [
+    {
+      "id": "cross_module_B07_community",
+      "severity": "P0",
+      "detail": "B07"
+    }
+  ],
+  "certification_four_questions": {
+    "q1_can_user_complete_core_task": "NO",
+    "q2_is_data_truth_consistent": "PARTIAL",
+    "q3_is_release_blocker_absent": "NO",
+    "q4_is_evidence_traceable": "PARTIAL",
+    "business_verdict": "FAIL",
+    "quality_verdict": "FAIL"
+  }
+}

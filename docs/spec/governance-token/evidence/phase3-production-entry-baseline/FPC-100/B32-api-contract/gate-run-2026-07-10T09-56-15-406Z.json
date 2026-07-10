@@ -1,0 +1,214 @@
+{
+  "timestamp_utc": "2026-07-10T09:56:15.406Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T09:56:15.636Z"
+  },
+  "gate_results": [
+    {
+      "gate": "scripts/gates/run-check-04-routes.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "check-13-1-table1-routes-vs-app OK: 13-1 sec 2 table 1 routes match frontend/app.\r | check-13-1-routes-covered-by-04-frontend-table OK: 13-1 table 1 routes are covered by 04 sec 3.4 frontend path table.\r | check-b432-governance-ui-ssot-surface OK: B-428/B-432 governance closeloop surface pinned.\r"
+    },
+    {
+      "gate": "scripts/gates/smoke-api-public-routes.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "smoke-api-public-routes: OK (http://127.0.0.1:8080 health + meta + metrics + meta.indexer.checkpoint + discover + discover?limit=1 + did-rank/itineraries + did-rank/guides + did-rank/travelers + community/stats/posts-by-tag; /meta order_chain_sync_status 722/723/724/725 + finality_discipline 726 + indexer 727 + indexer.memory 757 + indexer.checkpoint 758 top_keys + database 760 + rate_limits.guide_upload 761 + chain.rule 762/763/765/766/767/768/769/770/771/772/773/774/775/776/777/778/779/780/781/782/783/784/785/786/787/788/789/790/791/792/793/794/795/796/797/798/799/800/801/802/803/804/805/806 + build 730 + dual_write 732 + strict_mode 731 + ssot 733 + admin_exports 734 + chargeback_policy 735 + authority 736 + pause 737 + evidence 738 + order_messages 739 + reviews 740 + dispute_open 741 + dispute_resolve 742 + itineraries 743 + orders 744 + discover 745 + product_countries 746 + did_rank 747 + product_roles 748 + auth.registration 749 + auth 750 + chain 729 + chain.contracts 759 top_keys when object + root 728 lock when jq)"
+    },
+    {
+      "gate": "scripts/gates/check-frontend-api-consistency-audit-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "PASS: frontend-api-consistency-audit SSOT"
+    },
+    {
+      "gate": "scripts/dev/run-frontend-api-consistency-audit.sh",
+      "exit_code": 1,
+      "pass": false,
+      "summary_line": "WARN W043 S12_MARKET_LISTINGS MISSING_TITLE acquisition 8f341912-e950-42f0-9d02-55d00f21b909 missing payload.title | WARN W044 S12_MARKET_LISTINGS MISSING_TITLE acquisition c4f9c220-f5ba-4737-8587-bbada4040c44 missing payload.title | WARN W045 S14_WEB3_META CONTRACT_GAP missing chain.contracts.governor_address"
+    },
+    {
+      "gate": "scripts/dev/apply-fpc-l5-api-contract-matrix.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FPC_L5_API_CONTRACT_APPLY: updated=0 certified=202/202 all=true"
+    },
+    {
+      "gate": "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "NEXT_BATCH: B32 | DASHBOARD_JSON: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-RELEASE-DASHBOARD-LATEST.json | VERSION_CERT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-VERSION-CERTIFICATION-LATEST.json"
+    },
+    {
+      "gate": "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "blocking_count 0 | rollup {\"closed\":1,\"interim\":2,\"open\":3} | evidence evidence\\GO_executive_dashboard_gate_consistency\\20260703T093000Z\\gate-consistency-audit.json"
+    }
+  ],
+  "b11_cross_check": {
+    "pass": true,
+    "frozen": true,
+    "dimensions": {
+      "api_contract": true,
+      "api_read_model": true,
+      "api_write_model": true,
+      "api_state_parity": true
+    }
+  },
+  "site_contract": {
+    "pass": true,
+    "pass_count": 202,
+    "total": 202,
+    "gaps": [],
+    "b32_apply": {
+      "scope": "all_202_pages",
+      "pages_updated": 0,
+      "api_contract_certified": 202,
+      "all_api_contract_pass": true,
+      "applied_at_utc": "2026-07-10T09:56:32.143Z"
+    }
+  },
+  "release_gate": {
+    "pass": true,
+    "checks": [
+      {
+        "script": "check-b453-review-json-contract-observability-gate.py",
+        "pass": true
+      },
+      {
+        "script": "check-b454-review-json-contract-degrade-evidence-gate.py",
+        "pass": true
+      },
+      {
+        "script": "check-b455-review-json-contract-rollout-gate.py",
+        "pass": true
+      },
+      {
+        "script": "check-b456-review-json-contract-release-controller-gate.py",
+        "pass": true
+      },
+      {
+        "script": "check-b457-review-json-contract-release-adapter-gate.py",
+        "pass": true
+      },
+      {
+        "id": "release_gate_wired_04",
+        "pass": true
+      }
+    ]
+  },
+  "cargo_tests": {
+    "pass": false,
+    "tests_passed": 17,
+    "summary": "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s |  | "
+  },
+  "dashboard_parity": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "registry_b32",
+        "pass": true
+      },
+      {
+        "id": "dashboard_next_b32",
+        "pass": true,
+        "next": "B32"
+      }
+    ],
+    "readiness_pct": 82.9
+  },
+  "static_ssot": [
+    {
+      "id": "fa_audit_registry",
+      "path": "registry/frontend-api-consistency-audit.v1.yaml",
+      "must_contain": [
+        "TT_FRONTEND_API_CONSISTENCY_AUDIT: ENFORCED",
+        "S01_MARKET_GUIDES"
+      ],
+      "pass": true
+    },
+    {
+      "id": "api_routes_ts",
+      "path": "frontend/lib/api/routes.ts",
+      "must_contain": [
+        "publicAnnouncements:",
+        "/api/v1/"
+      ],
+      "pass": true
+    },
+    {
+      "id": "spec_04_api",
+      "path": "docs/spec/04-后端与API.md",
+      "must_contain": [
+        "§3.4",
+        "/api/v1/"
+      ],
+      "pass": true
+    }
+  ],
+  "qualityCheckResults": [
+    {
+      "id": "Q12_registry_batch",
+      "domain": "Q12",
+      "path": "registry/full-production-certification-checklist.v1.yaml",
+      "must_contain": [
+        "id: B32",
+        "API Contract"
+      ],
+      "pass": true
+    },
+    {
+      "id": "Q12_b32_checklist",
+      "domain": "Q12",
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B32-api-contract/FPC-100-API-CONTRACT-CHECKLIST-BASELINE.v1.json",
+      "must_contain": [
+        "fpc_100_api_contract_checklist",
+        "release_gate_bundle"
+      ],
+      "pass": true
+    },
+    {
+      "id": "Q14_fa_audit_registry",
+      "domain": "Q14",
+      "path": "registry/frontend-api-consistency-audit.v1.yaml",
+      "must_contain": [
+        "TT_FRONTEND_API_CONSISTENCY_AUDIT: ENFORCED"
+      ],
+      "pass": true
+    }
+  ],
+  "findings": [
+    {
+      "id": "gate_fail:run-frontend-api-consistency-audit.sh",
+      "severity": "P0",
+      "gate": "scripts/dev/run-frontend-api-consistency-audit.sh",
+      "detail": "frontend-api-consistency-audit: blocking 1 warnings 45 \nBLOCK S12_MARKET_LISTINGS ADMIN_DRIFT_ORPHAN acquisition public not in admin queue: ab261b83-d455-4167-8e16-564f06851c9d,b0e21091-1cb0-48b4-85ae-dc55c6f05ade,9fe8b285-74c3-4dee-9aef-aaa76cdb01cf,a98352a9-ebd7-4de9-991c-74f489de3e63,d60a5b26-943e-4788-af88-0bb5b3c6ad09,555f2774-fc44-40ba-b790-bc8a2d72115d,f985efea-8beb-4c68-9b08-dc3807840c41,77e8f69d-6190-4f40-bbcf-931d1ac357bd,0ebf1c3a-22b1-4c09-8df9-cf1eba55ccae,8d7e3b4a-9450-4782-ae1c-42b345c5ef8a,3e7d557e-33f7-426f-a2fe-074fec8b5c6a,5e429ad8-4cc0-42c7-bc76-e8cb1bd77bfe,aede99b6-f036-4668-b608-fbe7ab63d8bf,2c3b1ea1-83aa-4b2b-8f61-b607c3120b1c,a378218b-bb11-41ed-ad4e-c6060bfc6115,ea95c62c-4d44-42cf-9bd7-358223fe589a,8b861fbe-2bb3-47d5-aa5c-3061bdc03390,dd097605-05bc-4143-8c33-62b8d5bbe456,feb03bba-7c2f-48c6-ba46-c9a250405273,044cc0b2-418f-42a1-857e-0ceed4912ae1,bf9d78dc-1c11-4cc6-9b8b-2f651866ee89,2c94c190-c0f6-41c1-bec3-c725cb1df0e0,10d1bec8-abb5-4765-803c-4db272350c4c,3bd4420b-73a4-4bdd-b9c2-843b62914c1f,294486e2-4d88-4f77-bae2-1893cddb492d,150dd1e0-2b32-412e-a7c3-5a5620e0a905,7f807aee-e436-4bfa-8c26-80d44af55af0,e71b8990-18da-414c-8edf-563872df7548,64c17b49-0343-4a18-b1b5-2f74b96b66c9,9d455b84-7710-4102-a5e9-d1404fb4827b,94c82ada-a88a-4f15-b52b-591ff5496580,5f78aa62-6c1c-478d-855b-76cdf653e091,19424152-cd77-4c10-a323-96402505ff8a,6a59fc57-1804-4433-863a-3482e4ef1321,9d6228f6-c66f-4209-b3a7-48bb0717b8a5,d0b3ff8b-96cb-4d2a-a700-c8869e3396b7,5e625983-5e65-4aac-b51a-5e3a50fd6a64,71aec2ba-cb15-4f98-b099-0185ddb8dba0,be607fca-471f-444e-bb08-6972a714e746,331fb761-f3a8-46ce-96a8-99456b6fdc14,8f341912-e950-42f0-9d02-55d00f21b909,c4f9c220-f5ba-4737-8587-bbada4040c44\nWARN W001 S01_MARKET_GUIDES AVATAR_PLACEHOLDER_COLLISION avatar:16 shared by 2 rows — visual duplicate risk in UI\nWARN W002 S02_MARKET_DISCOVER ORDER_COVER_PLACEHOLDER_COLLISION cover:0 shared by 2 rows — visual duplicate risk in UI\nWARN W003 S12_MARKET_LISTINGS MISSING_TITLE acquisition ab261b83-d455-4167-8e16-564f06851c9d missing payload.title\nWARN W004 S12_MARKET_LISTINGS MISSING_TITLE acquisition b0e21091-1cb0-48b4-85ae-dc55c6f05ade missing payload.title\nWARN W005 S12_MARKET_LISTINGS MISSING_TITLE acquisition 9fe8b285-74c3-4dee-9aef-aaa76cdb01cf missing payload.title\nWARN W006 S12_MARKET_LISTINGS MISSING_TITLE acquisition a98352a9-ebd7-4de9-991c-74f489de3e63 missing payload.title\nWARN W007 S12_MARKET_LISTINGS MISSING_TITLE acquisition d60a5b26-943e-4788-af88-0bb5b3c6ad09 missing payload.titl"
+    },
+    {
+      "id": "cargo_test_low",
+      "severity": "P0",
+      "detail": "passed=17"
+    }
+  ],
+  "certification_four_questions": {
+    "q1_can_user_complete_core_task": "NO",
+    "q2_is_data_truth_consistent": "PARTIAL",
+    "q3_is_release_blocker_absent": "NO",
+    "q4_is_evidence_traceable": "PARTIAL",
+    "business_verdict": "FAIL",
+    "quality_verdict": "FAIL"
+  }
+}

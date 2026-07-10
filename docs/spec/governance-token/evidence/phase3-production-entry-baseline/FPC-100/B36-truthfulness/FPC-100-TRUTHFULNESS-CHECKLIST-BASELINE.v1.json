@@ -1,0 +1,62 @@
+{
+  "schema": "traveltrust.fpc_100_truthfulness_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B36",
+  "layer": "L5",
+  "domains": ["Q9", "Q12"],
+  "note": "L5 Truthfulness — mock-free consumer surfaces · DDG · public chrome · state honesty @ ①; not ② GO",
+  "coverage_domains": [
+    "consumer_surface_no_mock_demo",
+    "mock_test_data_isolation",
+    "display_data_governance_truth",
+    "public_chrome_persona_sanitization",
+    "registry_api_frontend_evidence_parity",
+    "frozen_batch_chain_b21_b35",
+    "page_matrix_truthfulness_100pct",
+    "production_ui_hygiene",
+    "state_mapping_honest_copy"
+  ],
+  "severity_policy": {
+    "P0": "hygiene gate fail · DDG fail · consumer scan fail · frozen chain break · truthfulness matrix gap",
+    "P1": "SSOT drift · dashboard drift · open P1 edge-case finding",
+    "P2": "admin internal surfaces N/A · human_verified false"
+  },
+  "depends_on_batches": ["B01", "B31", "B34"],
+  "registry_gates": [
+    "scripts/gates/check-production-ui-hygiene-gate.sh",
+    "scripts/gates/check-display-data-governance-ssot.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/run-display-data-governance.sh",
+    "scripts/dev/remediate-ddg-community-probe-leaks-local.cjs",
+    "scripts/dev/run-fpc-truthfulness-consumer-scan.cjs",
+    "scripts/dev/check-fpc-no-batch-skip.cjs",
+    "scripts/dev/apply-fpc-l5-truthfulness-matrix.cjs",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs"
+  ],
+  "quality_gates": [
+    "registry/display-data-governance.v1.yaml",
+    "registry/full-production-certification-checklist.v1.yaml",
+    "frontend/lib/publicChromeHygiene.ts",
+    "docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md"
+  ],
+  "l5_truthfulness_policy": {
+    "target_consumer_truthfulness_pct": 100,
+    "min_pages_certified": 202,
+    "forbidden_tokens": ["mock", "demo", "placeholder", "fake_data", "todo", "coming_soon"],
+    "consumer_locale_allowlist_prefixes": ["pay_mockPay_", "ui_placeholder_", "admin_"],
+    "frozen_chain_batches": ["B21", "B26", "B30", "B31", "B32", "B33", "B34", "B35"]
+  },
+  "release_gate_bundle": [
+    "check-b453-review-json-contract-observability-gate.py",
+    "check-b454-review-json-contract-degrade-evidence-gate.py",
+    "check-b455-review-json-contract-rollout-gate.py",
+    "check-b456-review-json-contract-release-controller-gate.py",
+    "check-b457-review-json-contract-release-adapter-gate.py"
+  ],
+  "dashboard_parity": {
+    "registry_batch_id": "B36",
+    "expected_next_after_pass": "B40"
+  }
+}

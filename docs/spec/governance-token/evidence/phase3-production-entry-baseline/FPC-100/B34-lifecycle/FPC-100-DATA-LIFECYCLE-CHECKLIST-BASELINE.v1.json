@@ -1,0 +1,61 @@
+{
+  "schema": "traveltrust.fpc_100_data_lifecycle_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B34",
+  "layer": "L5",
+  "domains": ["Q9", "Q12"],
+  "note": "L5 Data Lifecycle — entity create→review→publish→visible→archive→delete · SSOT + gate aggregation @ ①; not ② GO",
+  "coverage_domains": [
+    "entity_lifecycle_transitions",
+    "display_data_governance_ddg",
+    "operations_workflow_ttow",
+    "frozen_batch_chain_b21_b33",
+    "no_batch_skip_gate_aggregation",
+    "cross_module_lifecycle_regression",
+    "page_matrix_entity_lifecycle",
+    "release_gate_bundle",
+    "registry_dashboard_evidence_parity"
+  ],
+  "severity_policy": {
+    "P0": "DDG fail · workflow validation fail · frozen chain break · no-batch-skip fail · entity lifecycle matrix gap",
+    "P1": "SSOT drift · dashboard drift · release gate script missing",
+    "P2": "workflow WARN · orphan remediation noop @ ①"
+  },
+  "depends_on_batches": ["B10", "B31", "B33"],
+  "registry_gates": [
+    "scripts/gates/check-display-data-governance-ssot.sh",
+    "scripts/dev/run-display-data-governance.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/remediate-ddg-community-probe-leaks-local.cjs",
+    "scripts/dev/remediate-fa-acquisition-listing-orphans-local.cjs",
+    "scripts/dev/run-fpc-operations-workflow-local-gate.cjs",
+    "scripts/dev/check-fpc-no-batch-skip.cjs",
+    "scripts/dev/apply-fpc-l5-entity-lifecycle-matrix.cjs",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs"
+  ],
+  "quality_gates": [
+    "registry/display-data-governance.v1.yaml",
+    "registry/traveltrust-operations-workflow.v1.yaml",
+    "registry/business-flow-matrix.v1.yaml",
+    "registry/full-production-certification-checklist.v1.yaml"
+  ],
+  "l5_entity_lifecycle_policy": {
+    "require_entity_lifecycle_pass_or_na": true,
+    "min_pages_certified": 202,
+    "lifecycle_states": ["create", "review", "publish", "visible", "archive", "delete"],
+    "frozen_chain_batches": ["B21", "B25-C6", "B26", "B30", "B31", "B32", "B33"]
+  },
+  "release_gate_bundle": [
+    "check-b453-review-json-contract-observability-gate.py",
+    "check-b454-review-json-contract-degrade-evidence-gate.py",
+    "check-b455-review-json-contract-rollout-gate.py",
+    "check-b456-review-json-contract-release-controller-gate.py",
+    "check-b457-review-json-contract-release-adapter-gate.py"
+  ],
+  "dashboard_parity": {
+    "registry_batch_id": "B34",
+    "expected_next_after_pass": "B35"
+  }
+}

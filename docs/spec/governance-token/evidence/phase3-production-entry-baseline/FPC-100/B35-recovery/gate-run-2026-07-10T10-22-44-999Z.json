@@ -1,0 +1,384 @@
+{
+  "timestamp_utc": "2026-07-10T10:22:44.999Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T10:22:45.244Z"
+  },
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-b454-review-json-contract-degrade-evidence-gate.py",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": ""
+    },
+    {
+      "gate": "scripts/dev/run-fpc-recovery-cargo-gate.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FPC_RECOVERY_CARGO: OK passed=4"
+    },
+    {
+      "gate": "scripts/dev/run-fpc-recovery-vitest-gate.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FPC_RECOVERY_VITEST: OK |  Test Files  1 passed (1) |       Tests  4 passed (4) |    Duration  1.41s (transform 46ms, setup 17ms, collect 23ms, tests 14ms, environment 631ms, prepare 187ms)"
+    },
+    {
+      "gate": "scripts/dev/run-fpc-recovery-live-probes.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FPC_RECOVERY_LIVE: OK probes=7 findings=0"
+    },
+    {
+      "gate": "scripts/dev/check-fpc-no-batch-skip.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_RELEASE_READINESS: 90.2% | NEXT_BATCH: B35 | OUT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-NO-BATCH-SKIP-LATEST.json"
+    },
+    {
+      "gate": "scripts/dev/apply-fpc-l5-recovery-matrix.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FPC_L5_RECOVERY_APPLY: updated=202 certified=202/202 all=true"
+    },
+    {
+      "gate": "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "NEXT_BATCH: B35 | DASHBOARD_JSON: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-RELEASE-DASHBOARD-LATEST.json | VERSION_CERT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-VERSION-CERTIFICATION-LATEST.json"
+    },
+    {
+      "gate": "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "blocking_count 0 | rollup {\"closed\":1,\"interim\":2,\"open\":3} | evidence evidence\\GO_executive_dashboard_gate_consistency\\20260703T093000Z\\gate-consistency-audit.json"
+    }
+  ],
+  "dependencies": {
+    "pass": true,
+    "checks": [
+      {
+        "batch_id": "B05",
+        "pass": true,
+        "verdict": "PASS",
+        "frozen": true
+      },
+      {
+        "batch_id": "B21",
+        "pass": true,
+        "verdict": "PASS",
+        "frozen": true
+      },
+      {
+        "batch_id": "B22",
+        "pass": true,
+        "verdict": "PASS",
+        "frozen": true
+      }
+    ]
+  },
+  "frozen_chain": {
+    "pass": true,
+    "checks": [
+      {
+        "batch_id": "B21",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B22",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B25-C6",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B26",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B30",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B31",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B32",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B33",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B34",
+        "pass": true,
+        "verdict": "PASS"
+      }
+    ],
+    "chain_length": 9
+  },
+  "gate_aggregation": {
+    "pass": true,
+    "sequence_ok": true,
+    "release_readiness_pct": 90.2,
+    "next_required_batch": "B35",
+    "completed": 37,
+    "total": 41
+  },
+  "cross_module": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "B05_web3_itinerary",
+        "batch": "B05",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "B21_payment_idempotency",
+        "batch": "B21",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "B22_infra_dr",
+        "batch": "B22",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "id": "B34_entity_lifecycle",
+        "batch": "B34",
+        "pass": true,
+        "verdict": "PASS"
+      }
+    ]
+  },
+  "idempotency_wiring": {
+    "pass": true,
+    "id": "wiring:idempotency_http_contract"
+  },
+  "runbook_ssot": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "ops_runbook",
+        "path": "ops/RUNBOOK.md",
+        "must_contain": [
+          "Runbook",
+          "Idempotency-Key",
+          "RPC 大面积不可用"
+        ],
+        "pass": true
+      },
+      {
+        "id": "b454_degrade_runbook",
+        "path": "docs/runbook/TT-B454-REVIEW-JSON-CONTRACT-DEGRADE-EVIDENCE-REPLAY-001.md",
+        "must_contain": [
+          "B454",
+          "degrade",
+          "replay"
+        ],
+        "pass": true
+      },
+      {
+        "id": "emergency_recovery_prep",
+        "path": "docs/runbook/templates/mainnet-package/emergency-recovery/EMERGENCY-RECOVERY-PREP-V1.md",
+        "must_contain": [
+          "Recovery",
+          "rollback"
+        ],
+        "pass": true
+      },
+      {
+        "id": "registry_b35",
+        "path": "registry/full-production-certification-checklist.v1.yaml",
+        "must_contain": [
+          "id: B35",
+          "Recovery Certification"
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "live_evidence": {
+    "pass": true,
+    "probe_count": 7,
+    "path": "D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\B35-recovery\\recovery-live-probes-latest.json"
+  },
+  "site_recovery": {
+    "pass": true,
+    "pass_count": 202,
+    "total": 202,
+    "page_count": 202,
+    "gaps": [],
+    "b35_apply": {
+      "scope": "all_202_pages",
+      "pages_updated": 202,
+      "recovery_certified": 202,
+      "all_recovery_pass": true,
+      "applied_at_utc": "2026-07-10T10:22:49.100Z"
+    }
+  },
+  "release_gate": {
+    "pass": true,
+    "checks": [
+      {
+        "script": "check-b453-review-json-contract-observability-gate.py",
+        "pass": true
+      },
+      {
+        "script": "check-b454-review-json-contract-degrade-evidence-gate.py",
+        "pass": true
+      },
+      {
+        "script": "check-b455-review-json-contract-rollout-gate.py",
+        "pass": true
+      },
+      {
+        "script": "check-b456-review-json-contract-release-controller-gate.py",
+        "pass": true
+      },
+      {
+        "script": "check-b457-review-json-contract-release-adapter-gate.py",
+        "pass": true
+      },
+      {
+        "id": "release_gate_wired_04",
+        "pass": true
+      }
+    ]
+  },
+  "dashboard_parity": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "registry_b35",
+        "pass": true
+      },
+      {
+        "id": "dashboard_next_b35",
+        "pass": true,
+        "next": "B35"
+      }
+    ],
+    "readiness_pct": 90.2,
+    "release_decision": "NO_GO"
+  },
+  "static_ssot": [
+    {
+      "id": "ops_plane_retry_marker",
+      "path": "frontend/components/admin/ops/OpsPlaneFetchStates.tsx",
+      "must_contain": [
+        "data-tt-ops-plane-retry",
+        "aria-live"
+      ],
+      "pass": true
+    },
+    {
+      "id": "consumer_retry_marker",
+      "path": "frontend/components/consumer/ConsumerSurfaceStatePanel.tsx",
+      "must_contain": [
+        "data-tt-cold-start-retry"
+      ],
+      "pass": true
+    },
+    {
+      "id": "api_error_alert",
+      "path": "frontend/components/ApiErrorAlert.tsx",
+      "must_contain": [
+        "api_error_retryShort"
+      ],
+      "pass": true
+    },
+    {
+      "id": "chunk_recovery",
+      "path": "frontend/public/tt-dev-chunk-recovery.js",
+      "must_contain": [
+        "chunkloaderror",
+        "location.reload"
+      ],
+      "pass": true
+    },
+    {
+      "id": "b480_fault_gate",
+      "path": "config/b480_prod_fault_slo_gate.v1.json",
+      "must_contain": [
+        "fault"
+      ],
+      "pass": true
+    }
+  ],
+  "qualityCheckResults": [
+    {
+      "id": "Q14_quality_matrix",
+      "domain": "Q14",
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json",
+      "must_contain": [
+        "\"id\": \"Q14\"",
+        "reliability_recovery"
+      ],
+      "pass": true
+    },
+    {
+      "id": "Q14_registry_batch",
+      "domain": "Q14",
+      "path": "registry/full-production-certification-checklist.v1.yaml",
+      "must_contain": [
+        "id: B35",
+        "Recovery Certification"
+      ],
+      "pass": true
+    },
+    {
+      "id": "Q14_b35_checklist",
+      "domain": "Q14",
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B35-recovery/FPC-100-RECOVERY-CHECKLIST-BASELINE.v1.json",
+      "must_contain": [
+        "fpc_100_recovery_checklist",
+        "failure_mode_graceful_degrade"
+      ],
+      "pass": true
+    },
+    {
+      "id": "Q7_runbook",
+      "domain": "Q7",
+      "path": "ops/RUNBOOK.md",
+      "must_contain": [
+        "Runbook",
+        "Idempotency-Key"
+      ],
+      "pass": true
+    }
+  ],
+  "findings": [],
+  "certification_four_questions": {
+    "q1_can_user_complete_core_task": "YES — recovery paths validated @ ① (degrade · retry · idempotency)",
+    "q2_is_data_truth_consistent": "YES — idempotency + error contract + frozen chain aligned",
+    "q3_is_release_blocker_absent": "YES",
+    "q4_is_evidence_traceable": "YES — B35 gate-run + live probes + matrix b35_apply",
+    "business_verdict": "PASS",
+    "quality_verdict": "PASS"
+  }
+}

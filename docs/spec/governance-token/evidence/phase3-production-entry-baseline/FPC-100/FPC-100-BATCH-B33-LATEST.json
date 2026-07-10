@@ -1,0 +1,335 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B33",
+  "title": "L5 · Operations Certification (admin can operate)",
+  "layer": "L5",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T10:08:29.828Z",
+  "verifier": "run-fpc-batch-b33-operations.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "7e546c845be1bd973db4dce4cbca99333ee82231",
+  "git": {
+    "head": "7e546c845be1bd973db4dce4cbca99333ee82231",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B09",
+    "B25-C6",
+    "B32"
+  ],
+  "api_base": "http://127.0.0.1:8080",
+  "gates": [
+    "scripts/gates/check-official-ops-public-operations-ssot.sh",
+    "scripts/dev/smoke-admin-rbac-matrix-local.sh",
+    "scripts/gates/check-admin-functional-audit-mapping.py",
+    "scripts/dev/remediate-fa-acquisition-listing-orphans-local.cjs",
+    "scripts/dev/run-fpc-operations-workflow-local-gate.cjs",
+    "scripts/dev/apply-fpc-l5-operations-matrix.cjs",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-official-ops-public-operations-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "   Start at  18:08:32 |    Duration  1.37s (transform 185ms, setup 40ms, collect 262ms, tests 10ms, environment 1.71s, prepare 487ms) | OK: Official Ops 1.0 domain freeze + public-operations Phase 0+1 gate"
+    },
+    {
+      "gate": "scripts/dev/smoke-admin-rbac-matrix-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "== smoke-admin-rbac-matrix-local (??) API=http://127.0.0.1:8080 == | smoke-admin-rbac-matrix-local: OK assign CS console role via db | smoke-admin-rbac-matrix-local: OK db_console_role + route_matrix + CS deny publish + Finance allow finance read"
+    },
+    {
+      "gate": "scripts/gates/check-admin-functional-audit-mapping.py",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "OK: admin functional audit mapping �� 40/40 Complete �� Audit/SSOT/Checklist/Registry aligned �� anchors present\r"
+    },
+    {
+      "gate": "scripts/dev/remediate-fa-acquisition-listing-orphans-local.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FA_ACQ_ORPHAN_REMEDIATE: PASS nothing_to_fix"
+    },
+    {
+      "gate": "scripts/dev/run-fpc-operations-workflow-local-gate.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "  moderation_operations: PASS |   business_operations: PASS | TT_FPC_OPS_WORKFLOW_GATE: PASS verdict=PASS_WITH_WARN guide=344bd3f5-4acd-4d60-b224-40bdb2a8afd2 evidence=D:\\TravelTrust-V1.1\\evidence\\GO_operations_workflow_validation\\local_b33_2026-07-10T10-08-42-131Z\\workflow-validation.json"
+    },
+    {
+      "gate": "scripts/dev/apply-fpc-l5-operations-matrix.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FPC_L5_OPERATIONS_APPLY: updated=114 certified=114/114 all=true"
+    },
+    {
+      "gate": "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "NEXT_BATCH: B33 | DASHBOARD_JSON: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-RELEASE-DASHBOARD-LATEST.json | VERSION_CERT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-VERSION-CERTIFICATION-LATEST.json"
+    },
+    {
+      "gate": "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "blocking_count 0 | rollup {\"closed\":1,\"interim\":2,\"open\":3} | evidence evidence\\GO_executive_dashboard_gate_consistency\\20260703T093000Z\\gate-consistency-audit.json"
+    }
+  ],
+  "gate_pass": true,
+  "runtime_preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T10:08:30.078Z"
+  },
+  "operations_live": {
+    "dependencies": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "B09",
+          "path": "D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-BATCH-B09-LATEST.json",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "id": "B25-C6",
+          "path": "D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-BATCH-B25-C6-LATEST.json",
+          "pass": true,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    "workflow_validation": {
+      "pass": true,
+      "verdict": "PASS_WITH_WARN",
+      "path": "D:\\TravelTrust-V1.1\\evidence\\GO_operations_workflow_validation\\local_b33_2026-07-10T10-08-42-131Z\\workflow-validation.json",
+      "summary": {
+        "pass": 25,
+        "fail": 0,
+        "warn": 1
+      },
+      "domains": {
+        "content_operations": "WARN",
+        "catalog_operations": "PASS",
+        "campaign_operations": "PASS",
+        "moderation_operations": "PASS",
+        "business_operations": "PASS"
+      }
+    },
+    "admin_workspace_ops": {
+      "pass": true,
+      "pass_count": 114,
+      "total": 114,
+      "admin_pages": 114,
+      "gaps": [],
+      "b33_apply": {
+        "schema": "traveltrust.fpc_100_b33_apply.v1",
+        "timestamp_utc": "2026-07-10T10:08:46.647Z",
+        "pages_updated": 114,
+        "operations_certified": 114,
+        "all_operations_pass": true,
+        "scope": "admin_workspace"
+      }
+    },
+    "release_gate": {
+      "pass": true,
+      "checks": [
+        {
+          "script": "check-b453-review-json-contract-observability-gate.py",
+          "pass": true
+        },
+        {
+          "script": "check-b454-review-json-contract-degrade-evidence-gate.py",
+          "pass": true
+        },
+        {
+          "script": "check-b455-review-json-contract-rollout-gate.py",
+          "pass": true
+        },
+        {
+          "script": "check-b456-review-json-contract-release-controller-gate.py",
+          "pass": true
+        },
+        {
+          "script": "check-b457-review-json-contract-release-adapter-gate.py",
+          "pass": true
+        },
+        {
+          "id": "release_gate_wired_04",
+          "pass": true
+        }
+      ]
+    },
+    "dashboard_parity": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "registry_b33",
+          "pass": true
+        },
+        {
+          "id": "dashboard_next_b33",
+          "pass": true,
+          "next": "B33"
+        }
+      ],
+      "readiness_pct": 85.4
+    }
+  },
+  "operations_static_ssot": [
+    {
+      "id": "ops_workflow_registry",
+      "path": "registry/traveltrust-operations-workflow.v1.yaml",
+      "must_contain": [
+        "TT_OPERATIONS_WORKFLOW: ENFORCED",
+        "content_operations"
+      ],
+      "pass": true
+    },
+    {
+      "id": "ops_platform_registry",
+      "path": "registry/traveltrust-operations-platform.v1.yaml",
+      "must_contain": [
+        "TT_OPERATIONS_PLATFORM",
+        "catalog_operations"
+      ],
+      "pass": true
+    },
+    {
+      "id": "ops_workflow_runbook",
+      "path": "docs/runbook/TT-TRAVELTRUST-OPERATIONS-WORKFLOW.md",
+      "must_contain": [
+        "Operations Workflow (TTOW)",
+        "traveltrust-operations-workflow.v1.yaml"
+      ],
+      "pass": true
+    },
+    {
+      "id": "public_ops_ssot_gate",
+      "path": "scripts/gates/check-official-ops-public-operations-ssot.sh",
+      "must_contain": [
+        "public-operations"
+      ],
+      "pass": true
+    }
+  ],
+  "business_certification": {
+    "verdict": "PASS",
+    "gate_pass": true
+  },
+  "quality_supplement": {
+    "verdict": "PASS",
+    "domains": [
+      "Q7",
+      "Q12"
+    ],
+    "checks": [
+      {
+        "id": "Q12_registry_batch",
+        "domain": "Q12",
+        "path": "registry/full-production-certification-checklist.v1.yaml",
+        "must_contain": [
+          "id: B33",
+          "Operations Certification"
+        ],
+        "pass": true
+      },
+      {
+        "id": "Q12_b33_checklist",
+        "domain": "Q12",
+        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B33-operations/FPC-100-OPERATIONS-CHECKLIST-BASELINE.v1.json",
+        "must_contain": [
+          "fpc_100_operations_checklist",
+          "operations_workflow_validation"
+        ],
+        "pass": true
+      },
+      {
+        "id": "Q7_ops_workflow_registry",
+        "domain": "Q7",
+        "path": "registry/traveltrust-operations-workflow.v1.yaml",
+        "must_contain": [
+          "TT_OPERATIONS_WORKFLOW: ENFORCED"
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "certification_four_questions": {
+    "q1_can_user_complete_core_task": "YES — admin ops workflow corridors validated @ ① (API)",
+    "q2_is_data_truth_consistent": "YES — TTOW domains · public-ops SSOT · RBAC aligned",
+    "q3_is_release_blocker_absent": "YES",
+    "q4_is_evidence_traceable": "YES — B33 gate-run + workflow-validation + matrix b33_apply",
+    "business_verdict": "PASS",
+    "quality_verdict": "PASS"
+  },
+  "overall_verdict": "PASS",
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B34",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Operations ① — TTOW six-domain workflow · RBAC · public-ops SSOT · 114 admin pages; E1/E2 human walkthrough deferred to ②; defer-commit",
+  "traceability": {
+    "requirements": [
+      "check-official-ops-public-operations-ssot + smoke-admin-rbac-matrix PASS",
+      "validate-operations-workflow PASS|PASS_WITH_WARN @ SuperAdmin bootstrap",
+      "114/114 admin_workspace content_operations PASS via b33_apply",
+      "B09 + B25-C6 frozen PASS cross-check · B453-B457 release gates wired"
+    ],
+    "spec_refs": [
+      "registry/traveltrust-operations-workflow.v1.yaml",
+      "registry/traveltrust-operations-platform.v1.yaml",
+      "FPC-100/B33-operations/FPC-100-OPERATIONS-CHECKLIST-BASELINE.v1.json"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B33-LATEST.json",
+    "certification_batch": "B33",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T10:08:29.828Z",
+  "expires_at_utc": "2026-08-09T10:08:29.828Z",
+  "expiry_policy_days": 30,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T10:08:29.828Z",
+  "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc",
+  "dod": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": true,
+    "working_tree_clean": true,
+    "all_met": true,
+    "checked_at_utc": "2026-07-10T10:33:45.180Z",
+    "committed_sha": "08fd715a96bac407ae3b099798de3e91e25337dc",
+    "anchor_head": "08fd715a96bac407ae3b099798de3e91e25337dc",
+    "policy": "B30-B36 unified defer-commit anchor"
+  },
+  "finalized_at_utc": "2026-07-10T10:33:46.015Z",
+  "defer_commit_anchor": {
+    "anchor_id": "B30-B36",
+    "committed_at_utc": "2026-07-10T10:33:45.180Z",
+    "immutable_head": "08fd715a96bac407ae3b099798de3e91e25337dc"
+  }
+}

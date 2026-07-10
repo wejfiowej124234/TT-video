@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.fpc_100_truthfulness_consumer_scan.v1",
+  "timestamp_utc": "2026-07-10T10:28:16.294Z",
+  "pass": true,
+  "locale_violations": [],
+  "mock_isolation": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "mock_pay_ui_gated",
+        "pass": true
+      },
+      {
+        "id": "test_persona_sanitized",
+        "pass": true
+      },
+      {
+        "id": "spacing_debug_gated",
+        "pass": true
+      }
+    ]
+  },
+  "vitest_ok": true,
+  "findings": []
+}

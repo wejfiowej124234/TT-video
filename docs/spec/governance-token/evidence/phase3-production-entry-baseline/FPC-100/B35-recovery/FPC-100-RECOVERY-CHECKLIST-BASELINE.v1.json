@@ -1,0 +1,62 @@
+{
+  "schema": "traveltrust.fpc_100_recovery_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B35",
+  "layer": "L5",
+  "domains": ["Q7", "Q14"],
+  "note": "L5 Recovery — api_500 · network · CDN/image · wallet timeout · idempotency · runbook SSOT @ ①; not ② GO",
+  "coverage_domains": [
+    "failure_mode_graceful_degrade",
+    "state_rollback_idempotent_recovery",
+    "api_error_contract_recovery",
+    "frontend_recovery_markers",
+    "runbook_recovery_gate_ssot",
+    "frozen_batch_chain_b21_b34",
+    "no_batch_skip_gate_aggregation",
+    "cross_module_recovery_regression",
+    "page_matrix_recovery",
+    "release_gate_degrade_bundle",
+    "registry_dashboard_evidence_parity"
+  ],
+  "severity_policy": {
+    "P0": "idempotency cargo fail · live recovery probe fail · frozen chain break · recovery matrix gap · no-batch-skip fail",
+    "P1": "SSOT drift · dashboard drift · runbook anchor missing · degrade gate script missing",
+    "P2": "human_verified false · B22 DR live skip @ ①"
+  },
+  "depends_on_batches": ["B05", "B21", "B22"],
+  "registry_gates": [
+    "scripts/gates/check-b454-review-json-contract-degrade-evidence-gate.py"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/run-fpc-recovery-cargo-gate.cjs",
+    "scripts/dev/run-fpc-recovery-vitest-gate.cjs",
+    "scripts/dev/run-fpc-recovery-live-probes.cjs",
+    "scripts/dev/check-fpc-no-batch-skip.cjs",
+    "scripts/dev/apply-fpc-l5-recovery-matrix.cjs",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs"
+  ],
+  "quality_gates": [
+    "ops/RUNBOOK.md",
+    "registry/full-production-certification-checklist.v1.yaml",
+    "docs/runbook/templates/mainnet-package/emergency-recovery/EMERGENCY-RECOVERY-PREP-V1.md",
+    "frontend/public/tt-dev-chunk-recovery.js"
+  ],
+  "l5_recovery_policy": {
+    "require_recovery_pass_or_na": true,
+    "min_pages_certified": 202,
+    "failure_modes": ["api_500_graceful", "network_offline", "cdn_image_missing", "wallet_timeout"],
+    "frozen_chain_batches": ["B21", "B22", "B25-C6", "B26", "B30", "B31", "B32", "B33", "B34"]
+  },
+  "release_gate_bundle": [
+    "check-b453-review-json-contract-observability-gate.py",
+    "check-b454-review-json-contract-degrade-evidence-gate.py",
+    "check-b455-review-json-contract-rollout-gate.py",
+    "check-b456-review-json-contract-release-controller-gate.py",
+    "check-b457-review-json-contract-release-adapter-gate.py"
+  ],
+  "dashboard_parity": {
+    "registry_batch_id": "B35",
+    "expected_next_after_pass": "B36"
+  }
+}

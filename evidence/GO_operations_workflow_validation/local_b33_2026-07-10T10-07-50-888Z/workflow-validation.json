@@ -1,0 +1,253 @@
+{
+  "schema": "traveltrust.operations_workflow_validation.v1",
+  "stamp": "20260710T100753Z",
+  "recorded_at": "2026-07-10T10:07:53.135Z",
+  "api": "http://127.0.0.1:8080",
+  "workflow_ssot": "registry/traveltrust-operations-workflow.v1.yaml",
+  "skip_mutations": false,
+  "domains": {
+    "content_operations": {
+      "steps": [
+        {
+          "id": "reset_non_draft",
+          "transition": "reset → archived before rerun",
+          "verdict": "PASS",
+          "state_after": {
+            "publish_status": "archived"
+          }
+        },
+        {
+          "id": "reuse_non_draft",
+          "transition": "reuse existing (non-draft)",
+          "verdict": "FAIL",
+          "state_after": {
+            "publish_status": "archived",
+            "id": "17b2e85d-2e16-4cbb-9de4-132163005d5b",
+            "version": 3
+          },
+          "note": "could not obtain draft country for workflow run"
+        }
+      ],
+      "verdict": "FAIL"
+    },
+    "catalog_operations": {
+      "steps": [
+        {
+          "id": "online_to_retire",
+          "transition": "online → retire (unpublish)",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "state_after": {
+            "display_status": "hidden"
+          }
+        },
+        {
+          "id": "audit_history_unpublish",
+          "verdict": "PASS",
+          "history_count": 10,
+          "latest_action": "unpublish",
+          "operator": "fbae2a8a-9cd5-4776-ae8d-c0dc26380cc9",
+          "timestamp": "2026-07-10T10:07:54.684882Z"
+        },
+        {
+          "id": "illegal_surface_before_publish",
+          "transition": "hidden → featured (before publish)",
+          "verdict": "PASS",
+          "api": {
+            "status": 409,
+            "error": "featured_requires_published"
+          },
+          "note": "API rejects featured while hidden"
+        },
+        {
+          "id": "publish_queue_to_published",
+          "transition": "publish_queue → published",
+          "verdict": "PASS",
+          "state_after": {
+            "display_status": "published"
+          }
+        },
+        {
+          "id": "published_to_surfaced",
+          "transition": "published → surfaced",
+          "verdict": "PASS",
+          "state_after": {
+            "display_surfaces": [
+              "market_feed",
+              "market_provider"
+            ]
+          }
+        },
+        {
+          "id": "surfaced_to_featured",
+          "transition": "surfaced → featured",
+          "verdict": "PASS",
+          "state_after": {
+            "featured": true,
+            "display_priority": 0
+          }
+        },
+        {
+          "id": "featured_to_online",
+          "transition": "featured → online (public catalog)",
+          "verdict": "PASS",
+          "public_catalog_count": 10
+        },
+        {
+          "id": "restore_ocs_baseline",
+          "transition": "restore staging OCS guide",
+          "verdict": "PASS",
+          "restored": {
+            "display_status": "published",
+            "featured": false,
+            "surfaces": [
+              "market_feed",
+              "market_provider"
+            ],
+            "updated_at": "2026-07-10T10:07:07.065021Z"
+          }
+        }
+      ],
+      "verdict": "PASS"
+    },
+    "campaign_operations": {
+      "steps": [
+        {
+          "id": "planning_editing",
+          "transition": "planning → editing (create)",
+          "verdict": "PASS",
+          "state_after": {
+            "publish_status": "draft",
+            "status": "draft"
+          }
+        },
+        {
+          "id": "illegal_jump_to_deploy",
+          "transition": "draft → deploy (skip review)",
+          "verdict": "PASS",
+          "api": {
+            "status": 409,
+            "error": "not_in_review"
+          }
+        },
+        {
+          "id": "editing_to_review",
+          "transition": "editing → in_review",
+          "verdict": "PASS",
+          "state_after": {
+            "publish_status": "in_review",
+            "status": "in_review"
+          }
+        },
+        {
+          "id": "review_to_deploy_running",
+          "transition": "review → deploy → running",
+          "verdict": "PASS",
+          "state_after": {
+            "publish_status": "published",
+            "status": "deployed",
+            "deployed_at": "2026-07-10T10:07:54.937975Z"
+          }
+        },
+        {
+          "id": "audit_deploy",
+          "verdict": "PASS",
+          "audit_action": "ops.cold_start.deployed",
+          "actor_id": "fbae2a8a-9cd5-4776-ae8d-c0dc26380cc9",
+          "timestamp": "2026-07-10T10:07:54.937975Z"
+        },
+        {
+          "id": "running_to_completed_rollback",
+          "transition": "running → rolled_back (completed)",
+          "verdict": "PASS",
+          "state_after": {
+            "status": "rolled_back",
+            "publish_status": "published"
+          }
+        },
+        {
+          "id": "completed_to_archive",
+          "transition": "rolled_back → archive (cleanup)",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "state_after": {
+            "publish_status": "archived",
+            "status": "archived"
+          },
+          "cleanup": true
+        }
+      ],
+      "verdict": "PASS"
+    },
+    "moderation_operations": {
+      "steps": [
+        {
+          "id": "submitted_triage_list",
+          "transition": "submitted → triage (queue ingest)",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "rbac": "admin.community.read",
+          "ui_route": "/admin/community/reports"
+        },
+        {
+          "id": "state_catalog",
+          "transition": "triage → in_review → decision (read existing)",
+          "verdict": "PASS",
+          "note": "no open/in_review report to mutate; verified moderation read APIs",
+          "statuses_observed": [
+            "resolved",
+            "dismissed"
+          ]
+        }
+      ],
+      "verdict": "PASS"
+    },
+    "business_operations": {
+      "steps": [
+        {
+          "id": "onboarding_active_read",
+          "transition": "onboarding → active (corridor read)",
+          "verdict": "PASS",
+          "api": {
+            "status": 200
+          },
+          "rbac": "admin.disputes.read",
+          "ui_route": "/admin/disputes"
+        },
+        {
+          "id": "active_orders_read",
+          "transition": "active corridor",
+          "verdict": "PASS",
+          "order_count": 20,
+          "ui_route": "/admin/orders"
+        },
+        {
+          "id": "dispute_open_state",
+          "transition": "active → dispute_open",
+          "verdict": "PASS",
+          "note": "no open dispute on staging; state catalog only"
+        },
+        {
+          "id": "dispute_resolved_state",
+          "transition": "dispute_open → dispute_resolved",
+          "verdict": "PASS",
+          "note": "no resolved dispute sample on staging; corridor read APIs verified",
+          "statuses_observed": []
+        }
+      ],
+      "verdict": "PASS"
+    }
+  },
+  "summary": {
+    "pass": 22,
+    "fail": 1,
+    "warn": 0
+  },
+  "verdict": "FAIL"
+}

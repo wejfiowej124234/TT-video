@@ -4,10 +4,10 @@
 
 | Metric | Value |
 |--------|-------|
-| **TT_RELEASE_READINESS** | **78%** |
+| **TT_RELEASE_READINESS** | **95.1%** |
 | **TT_RELEASE_DECISION** | **NO_GO** |
 
-_Next batch: B30 · v1.0_ · Governance FROZEN — no v5 expansion_
+_Next batch: B40 · v1.0_ · Governance FROZEN — no v5 expansion_
 
 > Feature Freeze does not mean Release Ready. Release Ready is earned only through completed certification evidence.
 > 功能冻结不代表可以发布；发布资格只能通过完整的认证证据获得。
@@ -16,9 +16,9 @@ _Next batch: B30 · v1.0_ · Governance FROZEN — no v5 expansion_
 
 | Metric | Value |
 |--------|-------|
-| Batches Completed | 32 / 41 |
-| Remaining | 9 |
-| Batch Coverage | 78% |
+| Batches Completed | 39 / 41 |
+| Remaining | 2 |
+| Batch Coverage | 95.1% |
 | Evidence Coverage (pages/API/…) | 25% |
 
 _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
@@ -28,19 +28,19 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 **Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
 **FPC verdict:** **NOT_STARTED**  
 **Release decision:** `TT_RELEASE_DECISION` = **NO_GO**  
-**Updated:** 2026-07-10T09:41:31.447Z
+**Updated:** 2026-07-10T10:28:27.375Z
 
 ## Release Health
 
 | Metric | Value |
 |--------|-------|
-| Certified | 153.7% |
+| Certified | 170.7% |
 | Expired | 0 |
 | Blocked | 0 |
 | Accepted Risks | 2 |
 | Coverage | 25% |
 | Human Verified | 0% |
-| AI Review PASS | 50.8% |
+| AI Review PASS | 55.7% |
 
 ## Release History (Version Certification)
 
@@ -52,14 +52,14 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 
 | Pillar | Verdict |
 |--------|---------|
-| technical | IN_PROGRESS |
+| technical | PASS |
 | product | PASS |
-| operations | IN_PROGRESS |
-| content | IN_PROGRESS |
+| operations | PASS |
+| content | PASS |
 | business | NOT_STARTED |
 | security | PASS |
 | performance | PASS |
-| truthfulness | IN_PROGRESS |
+| truthfulness | PASS |
 | deployment | NOT_STARTED |
 | human verification | NOT_STARTED |
 
@@ -108,6 +108,13 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 | B25-C5 | PASS (Internal AI Review) | — |
 | B25-C6 | PASS (Internal AI Review) | — |
 | B26 | PASS (Internal AI Review) | — |
+| B30 | PASS (Internal AI Review) | — |
+| B31 | PASS (Internal AI Review) | — |
+| B32 | PASS (Internal AI Review) | — |
+| B33 | PASS (Internal AI Review) | — |
+| B34 | PASS (Internal AI Review) | — |
+| B35 | PASS (Internal AI Review) | — |
+| B36 | PASS (Internal AI Review) | — |
 | B00 | NOT_STARTED (NOT_STARTED) | — |
 | B01 | NOT_STARTED (NOT_STARTED) | — |
 | B02 | NOT_STARTED (NOT_STARTED) | — |

@@ -1,0 +1,65 @@
+{
+  "schema": "traveltrust.fpc_100_operations_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B33",
+  "layer": "L5",
+  "domains": ["Q7", "Q12"],
+  "note": "L5 Operations — TTOW six-domain workflow · E1/E2 RBAC · public-ops SSOT @ ①; human_verified deferred; not ② GO",
+  "coverage_domains": [
+    "operations_workflow_validation",
+    "admin_rbac_e1_e2",
+    "public_operations_ssot",
+    "release_gate_bundle",
+    "admin_workspace_ops_matrix",
+    "b09_b25_c6_dependency",
+    "registry_dashboard_evidence_parity"
+  ],
+  "severity_policy": {
+    "P0": "workflow validation FAIL · RBAC smoke fail · B09 not frozen · public-ops SSOT fail",
+    "P1": "SSOT drift · dashboard drift · release gate script missing",
+    "P2": "workflow WARN domains @ ① · human_verified false"
+  },
+  "depends_on_batches": ["B09", "B25-C6"],
+  "registry_gates": [
+    "scripts/gates/check-official-ops-public-operations-ssot.sh",
+    "scripts/dev/smoke-admin-rbac-matrix-local.sh",
+    "scripts/gates/check-admin-functional-audit-mapping.py"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/remediate-fa-acquisition-listing-orphans-local.cjs",
+    "scripts/dev/run-fpc-operations-workflow-local-gate.cjs",
+    "scripts/dev/apply-fpc-l5-operations-matrix.cjs",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs"
+  ],
+  "quality_gates": [
+    "registry/traveltrust-operations-workflow.v1.yaml",
+    "registry/traveltrust-operations-platform.v1.yaml",
+    "registry/full-production-certification-checklist.v1.yaml",
+    "docs/runbook/TT-TRAVELTRUST-OPERATIONS-WORKFLOW.md"
+  ],
+  "l5_operations_policy": {
+    "require_workflow_validation_pass": true,
+    "allow_workflow_pass_with_warn": true,
+    "min_admin_workspace_pages_certified": 114,
+    "human_verified_required_at": "② staging sign-off",
+    "workflow_domains": [
+      "content_operations",
+      "catalog_operations",
+      "campaign_operations",
+      "moderation_operations",
+      "business_operations"
+    ]
+  },
+  "release_gate_bundle": [
+    "check-b453-review-json-contract-observability-gate.py",
+    "check-b454-review-json-contract-degrade-evidence-gate.py",
+    "check-b455-review-json-contract-rollout-gate.py",
+    "check-b456-review-json-contract-release-controller-gate.py",
+    "check-b457-review-json-contract-release-adapter-gate.py"
+  ],
+  "dashboard_parity": {
+    "registry_batch_id": "B33",
+    "expected_next_after_pass": "B34"
+  }
+}
