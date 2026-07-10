@@ -253,8 +253,8 @@
   },
   "overall_verdict": "PASS",
   "findings": [],
-  "verdict": "PASS",
-  "pass": true,
+  "verdict": "IN_PROGRESS",
+  "pass": false,
   "gate_verdict": "PASS",
   "release_blocker": "NO",
   "next_batch": "B23",
@@ -293,5 +293,16 @@
   "expiry_policy_days": 30,
   "certification_frozen": true,
   "frozen_at_utc": "2026-07-10T07:13:51.751Z",
-  "frozen_git_sha": "b5d86caf5e7bcf4e0bb1e05db42a9538bb35c1a2"
+  "frozen_git_sha": "b5d86caf5e7bcf4e0bb1e05db42a9538bb35c1a2",
+  "dod": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": false,
+    "working_tree_clean": false,
+    "all_met": false,
+    "checked_at_utc": "2026-07-10T07:14:18.089Z",
+    "committed_sha": "49b73ac79bf455358bd1f0572e04d3bc40ebf7a0",
+    "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
+  }
 }
