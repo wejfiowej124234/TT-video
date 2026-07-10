@@ -233,6 +233,14 @@ L5   运营与真实 ★★★★★       Content · Lineage · API Contract ·
 | Staging 矩阵 | [`admin-rbac-staging-probes.v1.yaml`](../../../../registry/admin-rbac-staging-probes.v1.yaml) |
 | Runbook | [`ADM-U01-staging-rbac-matrix.md`](../../../../docs/runbook/ADM-U01-staging-rbac-matrix.md) |
 
+### 1.7 质量域认证矩阵（v1 · 认证内容扩展 · 不改 v5 治理）
+
+**Release Certification** 覆盖 Batch/Gate/Evidence；**Product + Operational + Engineering Quality** 由 **17 个质量域** 映射到现有 **B00–B41** 与 **202 页卡字段**（含 UX/性能/架构/可维护性/运营体验深度清单）。
+
+**发布标准：** 全量 **Coverage** + **P0=0 · P1=0 · Critical Risk=0** + P2 **FIX 或 Accepted Risk** — 见矩阵 **§0.1–0.2** 与本文 **§7.2**。
+
+→ [`FPC-100-QUALITY-DOMAIN-MATRIX-v1.md`](FPC-100-QUALITY-DOMAIN-MATRIX-v1.md) · 机读 [`FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json`](FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json)
+
 ---
 
 ## 2. 判定标准（全批次统一）
@@ -421,16 +429,35 @@ API_BASE=https://tt-api-staging.fly.dev \
 
 ## 7. FPC-100 总 Exit 判据（`TT_FULL_PRODUCTION_CERTIFICATION: PASS`）
 
+**企业级发布标准：** **阻断问题关闭 + 剩余风险明确接受** — **不是**「所有发现归零」。见 [`FPC-100-QUALITY-DOMAIN-MATRIX-v1.md` §0.1–0.2](FPC-100-QUALITY-DOMAIN-MATRIX-v1.md#01-企业级发布标准所有发现归零)。
+
+### 7.1 全量认证覆盖（FPC 技术/product 柱）
+
 ```
-L1: 202/202 coverage
-AND L2: 202/202 production_ready
-AND L2.5: 202/202 CX PASS
-AND L3: all business flows PASS
-AND L4: enterprise P0 batches PASS
-AND L5: Content · Lineage · API Contract · Ops · Lifecycle · Recovery · Truthfulness 100% PASS
-AND Environment Diff PASS (②)
-AND OPEN P0/P1 = 0
+L1: 202/202 coverage（检查已执行 · layer1 字段有 verdict）
+AND L2: 202/202 page certification（UI/UX/content/function 有 verdict）
+AND L2.5: 202/202 CX certification
+AND L3: all business flows PASS（Business Flow Certification）
+AND L4: enterprise batches PASS（含 PASS_WITH_WARN · 仅 P2/P3 accepted）
+AND L5: Content · Lineage · API Contract · Ops · Lifecycle · Recovery · Truthfulness PASS
+AND B00–B41 contiguous DoD PASS
+AND Evidence 完整（每批 frozen JSON · 可追溯 · 可复现）
 ```
+
+### 7.2 生产发布门槛（六条 AND · ③ 前最终闸）
+
+```
+TT_FULL_PRODUCTION_CERTIFICATION = PASS
+AND OPEN P0 = 0
+AND OPEN P1 = 0
+AND Critical Risk = 0          （OPEN_BLOCKING_RISKS · 见 TT-ALIGNMENT-AUDIT policy）
+AND Staging Diff = PASS        （② Environment Diff · local ↔ staging）
+AND Production Entry Review = PASS
+```
+
+**P2/P3：** 可 FIX 或登记 **Accepted Risk**（[`fpc-100-risk-register.v1.yaml`](../../../../registry/fpc-100-risk-register.v1.yaml)）— **不阻断** 上式，但须在 Dashboard 可见。
+
+**FPC 闭环：** 认证 → 发现 → 分级 → 修 P0/P1 → 再认证 → 直至 §7.2 满足。`TT_RELEASE_DECISION: GO` 见 [`FPC-CERTIFICATION-GOVERNANCE-v1.md`](FPC-CERTIFICATION-GOVERNANCE-v1.md) §Release Decision — **FPC PASS ≠ Production GO**（③ 另闸）。
 
 刷新 Dashboard：`node scripts/dev/refresh-fpc-100-release-dashboard.cjs`
 

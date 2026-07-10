@@ -1,0 +1,195 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B11",
+  "title": "API Parity Certification · Contract · Read · Write · State",
+  "layer": "L1-L4",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T01:14:20.901Z",
+  "verifier": "run-fpc-batch-b11-api-parity.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "1a3bdead2ae98dc03eff438bef5dfa91aa88c8c6",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B00",
+    "B10"
+  ],
+  "routes": [
+    "04 §3.4 · /api/v1/* · frontend/lib/api.ts"
+  ],
+  "gates": [
+    "scripts/gates/run-check-04-routes.sh",
+    "scripts/gates/smoke-api-public-routes.sh",
+    "scripts/gates/check-frontend-api-consistency-audit-ssot.sh",
+    "cargo test -p traveltrust-api",
+    "scripts/dev/run-frontend-api-consistency-audit.sh",
+    "scripts/dev/smoke-landing-itinerary-flow-local.sh"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/gates/run-check-04-routes.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "check-b455: OK (B455-REVIEW-JSON-CONTRACT-ROLLOUT-GATE-V1)\r | check-b456: OK (B456-REVIEW-JSON-CONTRACT-RELEASE-CONTROLLER-GATE-V1)\r | check-b457: OK (B457-REVIEW-JSON-CONTRACT-RELEASE-ADAPTER-GATE-V1)\r"
+    },
+    {
+      "gate": "scripts/gates/smoke-api-public-routes.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "smoke-api-public-routes: OK (http://127.0.0.1:8080 health + meta + metrics + meta.indexer.checkpoint + discover + discover?limit=1 + did-rank/itineraries + did-rank/guides + did-rank/travelers + community/stats/posts-by-tag; /meta order_chain_sync_status 722/723/724/725 + finality_discipline 726 + indexer 727 + indexer.memory 757 + indexer.checkpoint 758 top_keys + database 760 + rate_limits.guide_upload 761 + chain.rule 762/763/765/766/767/768/769/770/771/772/773/774/775/776/777/778/779/780/781/782/783/784/785/786/787/788/789/790/791/792/793/794/795/796/797/798/799/800/801/802/803/804/805/806 + build 730 + dual_write 732 + strict_mode 731 + ssot 733 + admin_exports 734 + chargeback_policy 735 + authority 736 + pause 737 + evidence 738 + order_messages 739 + reviews 740 + dispute_open 741 + dispute_resolve 742 + itineraries 743 + orders 744 + discover 745 + product_countries 746 + did_rank 747 + product_roles 748 + auth.registration 749 + auth 750 + chain 729 + chain.contracts 759 top_keys when object + root 728 lock when jq)"
+    },
+    {
+      "gate": "scripts/gates/check-frontend-api-consistency-audit-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "PASS: frontend-api-consistency-audit SSOT"
+    },
+    {
+      "gate": "cargo test -p traveltrust-api",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "running 0 tests | test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+    },
+    {
+      "gate": "scripts/dev/run-frontend-api-consistency-audit.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "frontend-api-consistency-audit: [local] report D:\\TravelTrust-V1.1\\evidence\\GO_frontend_api_consistency_audit\\local_2026-07-10T01-14-46-706Z\\audit-report.json | frontend-api-consistency-audit: [local] exit 0"
+    },
+    {
+      "gate": "scripts/dev/smoke-landing-itinerary-flow-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "smoke-landing-itinerary-flow: OK order=993084a3-7e6b-4452-a8b5-b89c242f3193 days=1 daily=1 budget=1800 published=created no_guide discover=ok | smoke-landing-itinerary-flow: PASS (phase ① · step1 create · no guide · publish · discover) |   next: /escrow/993084a3-7e6b-4452-a8b5-b89c242f3193 → 请选择向导 → /market?view=split&bindGuideToOrder=993084a3-7e6b-4452-a8b5-b89c242f3193"
+    }
+  ],
+  "gate_pass": true,
+  "api_parity_certification": {
+    "schema": "traveltrust.api_parity_certification.v1",
+    "phase": "① local",
+    "verification_chain": [
+      "frontend",
+      "api",
+      "database"
+    ],
+    "write_read_chain": [
+      "POST",
+      "database",
+      "GET",
+      "frontend_mapping",
+      "ui"
+    ],
+    "dimensions": {
+      "api_contract": {
+        "verdict": "PASS",
+        "pass": true,
+        "evidence": [
+          "docs/spec/04-后端与API.md §3.4",
+          "crates/api/src/routes/mod.rs",
+          "frontend/lib/api.ts",
+          "scripts/gates/run-check-04-routes.sh",
+          "cargo test -p traveltrust-api"
+        ],
+        "gates": [
+          "run-check-04-routes.sh",
+          "cargo test -p traveltrust-api"
+        ]
+      },
+      "api_read_model": {
+        "verdict": "PASS",
+        "pass": true,
+        "evidence": [
+          "scripts/gates/smoke-api-public-routes.sh",
+          "evidence/GO_frontend_api_consistency_audit/local_2026-07-10T01-14-46-706Z/audit-report.json"
+        ],
+        "note": "Public GET surfaces + Frontend↔API consistency audit (DB→API→mapping risk signals)"
+      },
+      "api_write_model": {
+        "verdict": "PASS",
+        "pass": true,
+        "probes": [
+          {
+            "pass": true,
+            "probe": "auth_login_put_me",
+            "chain": "POST /auth/login → PUT /me → GET /me",
+            "email": "tourist@test.com",
+            "me_id": "9ce54bc4-0c07-40b4-ab2c-d8a2ab7d69fc"
+          },
+          {
+            "id": "itinerary_order_discover",
+            "script": "scripts/dev/smoke-landing-itinerary-flow-local.sh",
+            "chain": "POST /itineraries → GET /orders/:id → PATCH publish → GET /discover/orders",
+            "pass": true
+          }
+        ],
+        "note": "POST persists → subsequent GET reflects write (landing-itinerary smoke + optional PUT /me probe)"
+      },
+      "api_state_parity": {
+        "verdict": "PASS",
+        "pass": true,
+        "chain": "POST → DB → GET → Frontend contract mapping → UI consistency",
+        "environment_diff_note": "Baseline for future Environment Diff (local vs staging)"
+      }
+    },
+    "ssot_alignment": {
+      "spec_04": "docs/spec/04-后端与API.md",
+      "routes_mod": "crates/api/src/routes/mod.rs",
+      "frontend_api": "frontend/lib/api.ts",
+      "fe_audit_registry": "registry/frontend-api-consistency-audit.v1.yaml"
+    }
+  },
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B12",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "API Parity ① — 04/mod.rs/api.ts contract + read smoke + write-read probes + FE consistency; staging Environment Diff → ②",
+  "traceability": {
+    "requirements": [
+      "04 §3.4 ↔ routes/mod.rs ↔ frontend/lib/api.ts parity",
+      "API Read Model public surfaces PASS",
+      "API Write Model POST→GET persistence",
+      "API State Parity Frontend↔API↔DB chain"
+    ],
+    "spec_refs": [
+      "docs/spec/04-后端与API.md",
+      "docs/spec/14-合约-API-ABI-前后端对齐.md",
+      "registry/frontend-api-consistency-audit.v1.yaml",
+      "FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md § B11"
+    ],
+    "code_paths": [
+      "crates/api/src/routes/mod.rs",
+      "frontend/lib/api.ts",
+      "scripts/gates/run-check-04-routes.sh",
+      "scripts/dev/frontend-api-consistency-audit.cjs"
+    ],
+    "tests": [
+      "run-check-04-routes.sh",
+      "smoke-api-public-routes.sh",
+      "cargo test -p traveltrust-api",
+      "frontend-api-consistency-audit",
+      "smoke-landing-itinerary-flow-local.sh"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B11-LATEST.json",
+    "certification_batch": "B11",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T01:14:20.901Z",
+  "expires_at_utc": "2026-10-08T01:14:20.901Z",
+  "expiry_policy_days": 90,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T01:14:20.901Z",
+  "frozen_git_sha": "1a3bdead2ae98dc03eff438bef5dfa91aa88c8c6"
+}

@@ -1,0 +1,356 @@
+{
+  "schema": "traveltrust.fpc_100_quality_domain_matrix.v1",
+  "title": "FPC-100 Quality Domain Matrix",
+  "mode": "certification_content_extension",
+  "governance": {
+    "framework_version": 5,
+    "framework_status": "GOVERNANCE_FROZEN",
+    "batch_order_changed": false,
+    "dashboard_schema_changed": false,
+    "new_batch_ids": [],
+    "parent_registry": "registry/full-production-certification-checklist.v1.yaml",
+    "parent_doc": "FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md"
+  },
+  "timestamp_utc": "2026-07-10T01:30:00.000Z",
+  "version": "1.0.1",
+  "release_standard": {
+    "principle": "blocking_issues_closed_and_residual_risks_explicitly_accepted",
+    "not_required": "all_findings_zero",
+    "production_release_gate": {
+      "all_required": true,
+      "conditions": [
+        { "key": "TT_FULL_PRODUCTION_CERTIFICATION", "value": "PASS" },
+        { "key": "OPEN_P0", "value": 0 },
+        { "key": "OPEN_P1", "value": 0 },
+        { "key": "Critical_Risk", "value": 0, "alias": "OPEN_BLOCKING_RISKS" },
+        { "key": "Staging_Diff", "value": "PASS", "phase": "②" },
+        { "key": "Production_Entry_Review", "value": "PASS" }
+      ]
+    },
+    "p2_p3": {
+      "blocks_release": false,
+      "allowed_disposition": ["FIX", "ACCEPTED_RISK"],
+      "risk_register": "registry/fpc-100-risk-register.v1.yaml"
+    }
+  },
+  "severity_model": {
+    "P0": {
+      "label_zh": "必须修复 · 阻断发布",
+      "examples": ["data_leak", "auth_bypass", "fund_safety", "core_flow_blocked", "severe_production_crash"],
+      "release_rule": "OPEN_P0 = 0"
+    },
+    "P1": {
+      "label_zh": "通常必须修复 · 阻断发布",
+      "examples": ["major_feature_broken", "large_user_impact", "core_experience_severely_degraded"],
+      "release_rule": "OPEN_P1 = 0"
+    },
+    "P2": {
+      "label_zh": "可评估 · 不默认阻断",
+      "examples": ["minor_ui", "copy", "non_critical_ux"],
+      "release_rule": "FIX or register ACCEPTED_RISK with Owner sign-off"
+    },
+    "P3": {
+      "label_zh": "Enhancement · 不阻断发布",
+      "examples": ["feature_suggestion", "ux_optimization"],
+      "release_rule": "backlog_only"
+    }
+  },
+  "certification_loop": {
+    "steps": [
+      "certify",
+      "discover_findings",
+      "classify_severity",
+      "fix_blocking_P0_P1_Critical",
+      "re_certify",
+      "repeat_until_release_gate"
+    ],
+    "role": "discovery_machine_and_proof_of_remediation_machine",
+    "proven_by_batches": ["B00", "B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10"],
+    "remaining_batches": "B11-B41 continue full-domain certification"
+  },
+  "coverage_vs_blocking": {
+    "coverage_100_pct": "all pages batches domains checked with verdict and evidence",
+    "findings_100_pct_zero": false,
+    "blocking_100_pct_zero": true,
+    "note": "enterprise standard = full coverage + P0/P1/Critical closed + P2 handled or accepted"
+  },
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "phase_default": "① local",
+  "problem_statement": {
+    "release_certification_strength": "Batch gates · evidence chain · BFM · API Parity · 202 page card scaffold",
+    "product_quality_gap": "UX depth · performance budgets · FE/BE architecture · maintainability · ops UX",
+    "resolution": "Map 17 quality domains to existing B00-B41 and page matrix fields; depth via batch-internal checklists"
+  },
+  "five_layer_alignment": {
+    "L1": { "domains": ["Q1"], "batches": ["B23"] },
+    "L2": { "domains": ["Q1", "Q2", "Q4"], "batches": ["B25-C1", "B25-C2", "B25-C3", "B25-C4", "B25-C5", "B25-C6", "B02"] },
+    "L2_5": { "domains": ["Q3"], "batches": ["B26"] },
+    "L3": { "domains": ["Q1", "Q15"], "batches": ["B10", "B05", "B08", "B03"] },
+    "L4": { "domains": ["Q4", "Q10", "Q11", "Q13", "Q16", "Q6"], "batches": ["B13", "B14", "B15", "B16", "B17", "B18", "B19", "B20", "B24"] },
+    "L5": { "domains": ["Q7", "Q9", "Q12", "Q14"], "batches": ["B30", "B31", "B32", "B33", "B34", "B35", "B36", "B12"] },
+    "engineering_cross_cut": { "domains": ["Q5", "Q8", "Q17"], "batches": ["B11", "B24", "B25", "B23"], "note": "depth_checklists inside batches — no new batch IDs" }
+  },
+  "domains": [
+    {
+      "id": "Q1",
+      "name": "product_function",
+      "label_zh": "产品功能",
+      "coverage": "partial_deep",
+      "priority_stars": 5,
+      "primary_batches": ["B23", "B25-C1", "B25-C2", "B25-C3", "B25-C4", "B25-C5", "B25-C6", "B10", "B24"],
+      "page_matrix_fields": ["layer1_surface_coverage", "layer2_l5_scores.function_flow", "layer3_business_flow_refs"],
+      "acceptance_①": "202/202 L1 PASS; per-page function_flow scored; BFM all flows Business Flow Certification PASS",
+      "evidence": ["FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json", "FPC-100-BATCH-B10-LATEST.json", "FPC-100-BATCH-B23-*"]
+    },
+    {
+      "id": "Q2",
+      "name": "ui_consistency",
+      "label_zh": "UI 一致性",
+      "coverage": "partial_deep",
+      "priority_stars": 5,
+      "primary_batches": ["B02", "B25-C1", "B25-C2", "B25-C3", "B25-C4", "B25-C5", "B25-C6", "B01", "B18"],
+      "page_matrix_fields": ["layer2_l5_scores.ui", "layer2_ui_dimensions", "l5_dimensions_96_16.D9_tokens"],
+      "acceptance_①": "FIVE-MAIN freeze green; D9 tokens PASS on certified pages; no production debug chrome",
+      "evidence": ["FIVE-MAIN-ROUTES-PHASE1-FREEZE.md", "check-production-ui-hygiene-gate.sh"]
+    },
+    {
+      "id": "Q3",
+      "name": "ux_customer_experience",
+      "label_zh": "UX / 客户体验",
+      "coverage": "partial",
+      "priority_stars": 5,
+      "primary_batches": ["B26", "B25-C1", "B25-C2", "B25-C3", "B25-C4", "B25-C5", "B25-C6", "B14"],
+      "page_matrix_fields": ["layer2_5_customer_experience", "layer2_ux_states", "ux_certification", "l5_dimensions_96_16.D2_ia_navigation", "l5_dimensions_96_16.D4_empty_load_error"],
+      "acceptance_①": "202/202 CX certification PASS: user_goal, primary_cta, <=3 clicks, actionable loading/error",
+      "evidence": ["FPC-100-BATCH-B26-*", "page cards layer2_5"]
+    },
+    {
+      "id": "Q4",
+      "name": "page_performance",
+      "label_zh": "页面性能",
+      "coverage": "partial",
+      "priority_stars": 5,
+      "primary_batches": ["B16", "B25-C1", "B25-C2", "B25-C3", "B25-C4", "B25-C5"],
+      "page_matrix_fields": ["layer4_enterprise.performance", "l5_dimensions_96_16.D7_performance"],
+      "acceptance_①": "next build PASS; five-main LCP spot documented; route transition budget; bundle baseline captured",
+      "evidence": ["FPC-100-BATCH-B16-*", "check-frontend-npm-build.sh"]
+    },
+    {
+      "id": "Q5",
+      "name": "frontend_architecture",
+      "label_zh": "前端架构",
+      "coverage": "missing_batch_shell",
+      "priority_stars": 5,
+      "primary_batches": ["B25-C1", "B25-C2", "B25-C3", "B25-C4", "B25-C5", "B25-C6", "B23", "B24"],
+      "depth_checklist_key": "frontend_architecture",
+      "acceptance_①": "No P1 god components; no circular deps; hooks/context boundaries documented per cluster",
+      "evidence": ["FPC-100/B25-C*/arch-review.md", "B23 forensic notes"]
+    },
+    {
+      "id": "Q6",
+      "name": "backend_architecture",
+      "label_zh": "后端架构",
+      "coverage": "partial",
+      "priority_stars": 5,
+      "primary_batches": ["B11", "B32", "B19", "B24"],
+      "depth_checklist_key": "backend_architecture",
+      "acceptance_①": "API Parity 4-dim PASS; module boundary spot review; write-read POST→GET parity",
+      "evidence": ["FPC-100-BATCH-B11-LATEST.json", "FPC-100-BATCH-B32-*"]
+    },
+    {
+      "id": "Q7",
+      "name": "operational_excellence",
+      "label_zh": "运维能力",
+      "coverage": "partial",
+      "priority_stars": 5,
+      "primary_batches": ["B33", "B25-C6", "B09", "B30", "B12"],
+      "acceptance_①": "E1/E2 human ops: publish/unpublish/review/suspend/logs — not API-only probes",
+      "evidence": ["FPC-100-BATCH-B33-*", "FPC-100/B25-C6-admin-workspace/"]
+    },
+    {
+      "id": "Q8",
+      "name": "maintainability",
+      "label_zh": "可维护性",
+      "coverage": "missing_batch_shell",
+      "priority_stars": 5,
+      "primary_batches": ["B00", "B24", "B18"],
+      "depth_checklist_key": "maintainability",
+      "acceptance_①": "README/owner_files resolvable; risk register current; config SSOT aligned",
+      "evidence": ["registry/fpc-100-risk-register.v1.yaml", "fpc-100-change-impact-map.v1.json"]
+    },
+    {
+      "id": "Q9",
+      "name": "data_quality",
+      "label_zh": "数据质量",
+      "coverage": "partial",
+      "priority_stars": 5,
+      "primary_batches": ["B31", "B12", "B34", "B36", "B04"],
+      "page_matrix_fields": ["layer5_operations_truth_per_page.data_lineage"],
+      "acceptance_①": "Per-page lineage documented; DDG PASS; lifecycle entities spot-clean",
+      "evidence": ["FPC-100-BATCH-B31-*", "check-display-data-governance-ssot.sh"]
+    },
+    {
+      "id": "Q10",
+      "name": "observability",
+      "label_zh": "可观测性",
+      "coverage": "partial",
+      "priority_stars": 5,
+      "primary_batches": ["B19", "B17", "B40"],
+      "page_matrix_fields": ["layer4_enterprise.observability", "l5_dimensions_96_16.D11_observability"],
+      "acceptance_①": "/health /meta /metrics PASS; logs without PII; ② alerting probe",
+      "evidence": ["FPC-100-BATCH-B19-*", "smoke-api-public-routes.sh"]
+    },
+    {
+      "id": "Q11",
+      "name": "security",
+      "label_zh": "安全",
+      "coverage": "partial",
+      "priority_stars": 5,
+      "primary_batches": ["B17", "B09", "B03", "B07"],
+      "page_matrix_fields": ["layer4_enterprise.security", "layer4_enterprise.rbac"],
+      "acceptance_①": "OPEN_BLOCKING_RISKS=0 track; RBAC deny; secrets scan; session policy documented",
+      "evidence": ["FPC-100-BATCH-B17-*", "check-invariants.sh"]
+    },
+    {
+      "id": "Q12",
+      "name": "business_readiness",
+      "label_zh": "商业准备",
+      "coverage": "partial",
+      "priority_stars": 5,
+      "primary_batches": ["B41", "B13", "B36"],
+      "page_matrix_fields": ["l5_dimensions_96_16.D12_legal_copy", "layer5_operations_truth_per_page.truthfulness"],
+      "acceptance_①": "Legal/support/analytics/sitemap human verified",
+      "evidence": ["FPC-100-BATCH-B41-*", "go-live-checklist.md"]
+    },
+    {
+      "id": "Q13",
+      "name": "i18n",
+      "label_zh": "国际化",
+      "coverage": "partial",
+      "priority_stars": 4,
+      "primary_batches": ["B13", "B14", "B30"],
+      "page_matrix_fields": ["layer4_enterprise.i18n", "l5_dimensions_96_16.D5_i18n"],
+      "acceptance_①": "Public corridor zh/en parity; CMS i18n fields on Live assets",
+      "evidence": ["FPC-100-BATCH-B13-*", "frontend/locales"]
+    },
+    {
+      "id": "Q14",
+      "name": "reliability_recovery",
+      "label_zh": "可靠性 / 恢复",
+      "coverage": "partial",
+      "priority_stars": 5,
+      "primary_batches": ["B35", "B20", "B05", "B03"],
+      "page_matrix_fields": ["layer5_operations_truth_per_page.recovery"],
+      "acceptance_①": "Fault scenarios degrade gracefully with recovery path per page cluster",
+      "evidence": ["FPC-100-BATCH-B35-*"]
+    },
+    {
+      "id": "Q15",
+      "name": "web3",
+      "label_zh": "Web3",
+      "coverage": "partial",
+      "priority_stars": 5,
+      "primary_batches": ["B20", "B05"],
+      "page_matrix_fields": ["l5_dimensions_96_16.D10_wallet_chain"],
+      "acceptance_①": "Golden path + deployment truth gates; wallet/RPC recovery documented",
+      "evidence": ["FPC-100-BATCH-B20-*", "smoke-web3-itinerary-full-chain-local.sh"]
+    },
+    {
+      "id": "Q16",
+      "name": "seo_growth",
+      "label_zh": "SEO / 增长",
+      "coverage": "partial",
+      "priority_stars": 4,
+      "primary_batches": ["B13", "B41", "B01"],
+      "page_matrix_fields": ["layer4_enterprise.seo"],
+      "acceptance_①": "No localhost canonical; OG/Twitter; sitemap/robots when B41 PASS",
+      "evidence": ["FPC-100-BATCH-B13-*"]
+    },
+    {
+      "id": "Q17",
+      "name": "code_quality",
+      "label_zh": "代码质量",
+      "coverage": "missing_batch_shell",
+      "priority_stars": 5,
+      "primary_batches": ["B24", "B11", "B16", "B02"],
+      "depth_checklist_key": "code_quality",
+      "acceptance_①": "Corridor test suites green; arch/code review checklist no P1",
+      "evidence": ["FPC-100-BATCH-B24-*", "cargo test / vitest logs"]
+    }
+  ],
+  "depth_checklists": {
+    "frontend_architecture": {
+      "items": [
+        "component_granularity_no_god_component",
+        "hooks_reuse_no_duplicate_state",
+        "context_boundary_documented",
+        "no_circular_dependency_p1",
+        "presentation_no_direct_db",
+        "dead_code_spot_rg"
+      ],
+      "execute_with_batches": ["B25-C1", "B25-C2", "B25-C3", "B25-C4", "B25-C5", "B25-C6"]
+    },
+    "backend_architecture": {
+      "items": [
+        "module_boundary_service_split",
+        "no_handler_direct_cross_domain_sql_p1",
+        "error_handling_retry_transaction",
+        "trait_layer_no_infra_to_presentation"
+      ],
+      "execute_with_batches": ["B11", "B32"]
+    },
+    "maintainability": {
+      "items": [
+        "route_readme_owner_files",
+        "config_centralization_env_example",
+        "feature_flag_production_hygiene",
+        "tech_debt_risk_register",
+        "change_impact_map_explained"
+      ],
+      "execute_with_batches": ["B00", "B24", "B18"]
+    },
+    "code_quality": {
+      "items": [
+        "fe_lint_test_green_affected_corridors",
+        "be_cargo_test_traveltrust_api",
+        "duplication_spot_no_p1",
+        "93_matrix_coverage_statement"
+      ],
+      "execute_with_batches": ["B24", "B11", "B02"]
+    }
+  },
+  "coverage_summary": {
+    "domains_total": 17,
+    "domains_pass": 0,
+    "domains_partial": 13,
+    "domains_missing_batch_shell": 4,
+    "note": "missing_batch_shell = covered via batch-internal depth_checklists + page matrix — not new B42+ batches",
+    "enterprise_release_requires": [
+      "202/202 page cards checked with verdict (PASS or documented N/A)",
+      "17/17 quality domains certification executed",
+      "B00-B41 contiguous DoD PASS",
+      "TT_FULL_PRODUCTION_CERTIFICATION PASS",
+      "OPEN_P0 = 0",
+      "OPEN_P1 = 0",
+      "Critical_Risk = 0",
+      "Staging_Diff PASS",
+      "Production_Entry_Review PASS",
+      "P2 either FIXED or ACCEPTED_RISK in risk register"
+    ]
+  },
+  "terminology": {
+    "business_flow_certification": "B10 — not informal Guide PASS",
+    "api_parity_certification": "B11 — api_contract · api_read_model · api_write_model · api_state_parity",
+    "page_certification": "B25 clusters — L2 per-page cards",
+    "customer_experience_certification": "B26 — L2.5"
+  },
+  "traceability": {
+    "spec_refs": [
+      "FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md",
+      "FPC-GOVERNANCE-FREEZE-v5.md",
+      "registry/full-production-certification-checklist.v1.yaml",
+      "FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json"
+    ],
+    "evidence_path": "FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json"
+  }
+}

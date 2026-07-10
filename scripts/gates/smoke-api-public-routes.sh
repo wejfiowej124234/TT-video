@@ -60,7 +60,7 @@ if command -v jq >/dev/null 2>&1; then
     || fail "/meta JSON .product_roles.users_role_stored must match 697 incl traveler (692/697/748)"
   pr748r=$(echo "$mb" | jq -r '.product_roles.rule // empty')
   [[ "$pr748r" == *"748"* ]] || fail "/meta JSON product_roles.rule must mention 748 (748), got \"$pr748r\""
-  pr748_sw=$(echo "$mb" | jq -c '.product_roles.strict_db_write // empty')
+  pr748_sw=$(printf '%s\n' "$mb" | jq -r '.product_roles.strict_db_write | if type == "boolean" then tostring else empty end')
   [[ "$pr748_sw" == "false" ]] || fail "/meta JSON product_roles.strict_db_write must be false (748), got \"$pr748_sw\""
   pr748_exp='["strict_db_write","dual_write_order","rule","users_role_stored","me_public_role_mapping","protocol_roles_target_87","provider_in_users_role","region_steward_in_users_role","product_roles_top_keys","product_roles_top_keys_contract_748"]'
   pr748_got=$(echo "$mb" | jq -c '.product_roles.product_roles_top_keys // empty')
@@ -96,7 +96,7 @@ if command -v jq >/dev/null 2>&1; then
     || fail "/meta JSON .auth.registration.request_role_aliases (697 empty)"
   ar749r=$(echo "$mb" | jq -r '.auth.registration.rule // empty')
   [[ "$ar749r" == *"749"* ]] || fail "/meta JSON auth.registration.rule must mention 749 (749), got \"$ar749r\""
-  ar749_sw=$(echo "$mb" | jq -c '.auth.registration.strict_db_write // empty')
+  ar749_sw=$(printf '%s\n' "$mb" | jq -r '.auth.registration.strict_db_write | if type == "boolean" then tostring else empty end')
   [[ "$ar749_sw" == "false" ]] || fail "/meta JSON auth.registration.strict_db_write must be false (749), got \"$ar749_sw\""
   ar749_exp='["strict_db_write","dual_write_order","rule","self_serve_roles_allowed","request_role_aliases","default_role","invalid_role_error_key","arbitrator_seed_env","guide_via_separate_flow_only","auth_registration_top_keys","auth_registration_top_keys_contract_749"]'
   ar749_got=$(echo "$mb" | jq -c '.auth.registration.auth_registration_top_keys // empty')
@@ -425,23 +425,24 @@ if command -v jq >/dev/null 2>&1; then
   if [[ "$ct" == "object" ]]; then
     cc759r=$(echo "$mb" | jq -r '.chain.contracts.rule // empty')
     [[ "$cc759r" == *"759"* ]] || fail "/meta JSON chain.contracts.rule must mention 759 (759), got \"$cc759r\""
-    c759_exp='["guide_staking_address","staking_provider_address","governor_address","timelock_address","governance_token_address","fee_router_address","treasury_address","rule","chain_contracts_top_keys","chain_contracts_top_keys_contract_759"]'
+    c759_exp='["guide_staking_address","staking_provider_address","governor_address","timelock_address","governance_token_address","fee_router_address","treasury_address","registry_address","escrow_factory_address","escrow_factory_v2_address","region_steward_stake_pool_address","rule","chain_contracts_top_keys","chain_contracts_top_keys_contract_759"]'
     c759_got=$(echo "$mb" | jq -c '.chain.contracts.chain_contracts_top_keys // empty')
     [[ "$c759_got" == "$c759_exp" ]] || fail "/meta JSON chain.contracts.chain_contracts_top_keys must equal CHAIN_CONTRACTS_META (759), got \"$c759_got\""
     sb759cc=$(echo "$mb" | jq -r '.chain.contracts.chain_contracts_top_keys_contract_759 // empty')
     [[ "$sb759cc" == *"759"* ]] || fail "/meta JSON chain_contracts_top_keys_contract_759 must mention 759 (759), got \"$sb759cc\""
     [[ "$sb759cc" == *"escrow_factory_address"* ]] || fail "/meta JSON chain_contracts_top_keys_contract_759 must embed escrow_factory_address (759), got \"$sb759cc\""
-    [[ "$sb759cc" == *"chain_id_configured"* ]] || fail "/meta JSON chain_contracts_top_keys_contract_759 must embed chain_id_configured (759), got \"$sb759cc\""
+    [[ "$sb759cc" == *"registry_address"* ]] || fail "/meta JSON chain_contracts_top_keys_contract_759 must embed registry_address (759), got \"$sb759cc\""
   fi
   br730=$(echo "$mb" | jq -r '.build.rule // empty')
   [[ "$br730" == *"730"* ]] || fail "/meta JSON build.rule must mention 730 (730), got \"$br730\""
-  b730_exp='["git_sha","deployed_at","rule","build_top_keys","build_top_keys_contract_730"]'
+  b730_exp='["git_sha","deployed_at","deployment_profile","rule","build_top_keys","build_top_keys_contract_730"]'
   b730_got=$(echo "$mb" | jq -c '.build.build_top_keys // empty')
   [[ "$b730_got" == "$b730_exp" ]] || fail "/meta JSON build.build_top_keys must equal SSOT (730), got \"$b730_got\""
   sb730=$(echo "$mb" | jq -r '.build.build_top_keys_contract_730 // empty')
   [[ "$sb730" == *"730"* ]] || fail "/meta JSON build_top_keys_contract_730 must mention 730 (730), got \"$sb730\""
   [[ "$sb730" == *"git_sha"* ]] || fail "/meta JSON build_top_keys_contract_730 must embed git_sha (730), got \"$sb730\""
   [[ "$sb730" == *"deployed_at"* ]] || fail "/meta JSON build_top_keys_contract_730 must embed deployed_at (730), got \"$sb730\""
+  [[ "$sb730" == *"deployment_profile"* ]] || fail "/meta JSON build_top_keys_contract_730 must embed deployment_profile (730), got \"$sb730\""
   dw732r=$(echo "$mb" | jq -r '.dual_write.rule // empty')
   [[ "$dw732r" == *"732"* ]] || fail "/meta JSON dual_write.rule must mention 732 (732), got \"$dw732r\""
   dw732_exp='["failure_policy","strict_db_write_any","rule","dual_write_top_keys","dual_write_top_keys_contract_732"]'
@@ -498,13 +499,14 @@ if command -v jq >/dev/null 2>&1; then
   [[ "$sb736au" == *"degraded_mode"* ]] || fail "/meta JSON authority_top_keys_contract_736 must embed degraded_mode (736), got \"$sb736au\""
   pu737r=$(echo "$mb" | jq -r '.pause.rule // empty')
   [[ "$pu737r" == *"737"* ]] || fail "/meta JSON pause.rule must mention 737 (737), got \"$pu737r\""
-  pu737_exp='["enabled","api_allowlist","rule","pause_top_keys","pause_top_keys_contract_737"]'
+  pu737_exp='["enabled","api_allowlist","factory_paused","distribute_paused","chain_pause_read","rule","pause_top_keys","pause_top_keys_contract_737"]'
   pu737_got=$(echo "$mb" | jq -c '.pause.pause_top_keys // empty')
   [[ "$pu737_got" == "$pu737_exp" ]] || fail "/meta JSON pause.pause_top_keys must equal PAUSE (737), got \"$pu737_got\""
   sb737pu=$(echo "$mb" | jq -r '.pause.pause_top_keys_contract_737 // empty')
   [[ "$sb737pu" == *"737"* ]] || fail "/meta JSON pause_top_keys_contract_737 must mention 737 (737), got \"$sb737pu\""
   [[ "$sb737pu" == *"enabled"* ]] || fail "/meta JSON pause_top_keys_contract_737 must embed enabled (737), got \"$sb737pu\""
   [[ "$sb737pu" == *"api_allowlist"* ]] || fail "/meta JSON pause_top_keys_contract_737 must embed api_allowlist (737), got \"$sb737pu\""
+  [[ "$sb737pu" == *"factory_paused"* ]] || fail "/meta JSON pause_top_keys_contract_737 must embed factory_paused (737), got \"$sb737pu\""
   ev738r=$(echo "$mb" | jq -r '.evidence.rule // empty')
   [[ "$ev738r" == *"738"* ]] || fail "/meta JSON evidence.rule must mention 738 (738), got \"$ev738r\""
   ev738_exp='["timestamp_policy","time_state_path","receipt_signature","rollback_detection","strict_db_write","dual_write_order","rule","evidence_top_keys","evidence_top_keys_contract_738"]'
@@ -561,7 +563,7 @@ if command -v jq >/dev/null 2>&1; then
   [[ "$sb743it" == *"dual_write_order"* ]] || fail "/meta JSON itineraries_top_keys_contract_743 must embed dual_write_order (743), got \"$sb743it\""
   ord744r=$(echo "$mb" | jq -r '.orders.rule // empty')
   [[ "$ord744r" == *"744"* ]] || fail "/meta JSON orders.rule must mention 744 (744), got \"$ord744r\""
-  ord744_exp='["strict_db_write","dual_write_order","rule","list_pagination","orders_top_keys","orders_top_keys_contract_744"]'
+  ord744_exp='["strict_db_write","dual_write_order","rule","list_pagination","fee_route_country_ssot","deadline_rating_observability","order_mock_pay_enabled","orders_top_keys","orders_top_keys_contract_744"]'
   ord744_got=$(echo "$mb" | jq -c '.orders.orders_top_keys // empty')
   [[ "$ord744_got" == "$ord744_exp" ]] || fail "/meta JSON orders.orders_top_keys must equal ORDERS (744), got \"$ord744_got\""
   sb744ord=$(echo "$mb" | jq -r '.orders.orders_top_keys_contract_744 // empty')
@@ -569,9 +571,10 @@ if command -v jq >/dev/null 2>&1; then
   [[ "$sb744ord" == *"strict_db_write"* ]] || fail "/meta JSON orders_top_keys_contract_744 must embed strict_db_write (744), got \"$sb744ord\""
   [[ "$sb744ord" == *"dual_write_order"* ]] || fail "/meta JSON orders_top_keys_contract_744 must embed dual_write_order (744), got \"$sb744ord\""
   [[ "$sb744ord" == *"list_pagination"* ]] || fail "/meta JSON orders_top_keys_contract_744 must embed list_pagination (744), got \"$sb744ord\""
+  [[ "$sb744ord" == *"fee_route_country_ssot"* ]] || fail "/meta JSON orders_top_keys_contract_744 must embed fee_route_country_ssot (744), got \"$sb744ord\""
   disc745r=$(echo "$mb" | jq -r '.discover.rule // empty')
   [[ "$disc745r" == *"745"* ]] || fail "/meta JSON discover.rule must mention 745 (745), got \"$disc745r\""
-  disc745_sw=$(echo "$mb" | jq -c '.discover.strict_db_write // empty')
+  disc745_sw=$(printf '%s\n' "$mb" | jq -r '.discover.strict_db_write | if type == "boolean" then tostring else empty end')
   [[ "$disc745_sw" == "false" ]] || fail "/meta JSON discover.strict_db_write must be false (745), got \"$disc745_sw\""
   disc745_exp='["strict_db_write","dual_write_order","rule","orders_pagination","discover_top_keys","discover_top_keys_contract_745"]'
   disc745_got=$(echo "$mb" | jq -c '.discover.discover_top_keys // empty')
@@ -583,7 +586,7 @@ if command -v jq >/dev/null 2>&1; then
   [[ "$sb745disc" == *"orders_pagination"* ]] || fail "/meta JSON discover_top_keys_contract_745 must embed orders_pagination (745), got \"$sb745disc\""
   pc746r=$(echo "$mb" | jq -r '.product_countries.rule // empty')
   [[ "$pc746r" == *"746"* ]] || fail "/meta JSON product_countries.rule must mention 746 (746), got \"$pc746r\""
-  pc746_sw=$(echo "$mb" | jq -c '.product_countries.strict_db_write // empty')
+  pc746_sw=$(printf '%s\n' "$mb" | jq -r '.product_countries.strict_db_write | if type == "boolean" then tostring else empty end')
   [[ "$pc746_sw" == "false" ]] || fail "/meta JSON product_countries.strict_db_write must be false (746), got \"$pc746_sw\""
   pc746_exp='["strict_db_write","dual_write_order","rule","iso3166_alpha2","name_zh","product_countries_top_keys","product_countries_top_keys_contract_746"]'
   pc746_got=$(echo "$mb" | jq -c '.product_countries.product_countries_top_keys // empty')
@@ -596,7 +599,7 @@ if command -v jq >/dev/null 2>&1; then
   [[ "$sb746pc" == *"name_zh"* ]] || fail "/meta JSON product_countries_top_keys_contract_746 must embed name_zh (746), got \"$sb746pc\""
   dr747r=$(echo "$mb" | jq -r '.did_rank.rule // empty')
   [[ "$dr747r" == *"747"* ]] || fail "/meta JSON did_rank.rule must mention 747 (747), got \"$dr747r\""
-  dr747_sw=$(echo "$mb" | jq -c '.did_rank.strict_db_write // empty')
+  dr747_sw=$(printf '%s\n' "$mb" | jq -r '.did_rank.strict_db_write | if type == "boolean" then tostring else empty end')
   [[ "$dr747_sw" == "false" ]] || fail "/meta JSON did_rank.strict_db_write must be false (747), got \"$dr747_sw\""
   dr747_exp='["strict_db_write","dual_write_order","rule","chain_off_mounted","chain_off_db_pool","guides_community_penalty_exclusion","did_rank_top_keys","did_rank_top_keys_contract_747"]'
   dr747_got=$(echo "$mb" | jq -c '.did_rank.did_rank_top_keys // empty')

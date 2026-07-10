@@ -1,0 +1,144 @@
+{
+  "timestamp_utc": "2026-07-10T00:52:08.545Z",
+  "gate_results": [
+    {
+      "gate": "scripts/gates/run-check-04-routes.sh",
+      "exit_code": 1,
+      "pass": false,
+      "summary_line": "  ? /api/v1/public/roadmap\r |   ? /api/v1/steward/finalize-resign\r |   ? /api/v1/steward/resign-notice\r"
+    },
+    {
+      "gate": "scripts/gates/smoke-api-public-routes.sh",
+      "exit_code": 1,
+      "pass": false,
+      "summary_line": "smoke-api-public-routes: FAIL /meta JSON product_roles.strict_db_write must be false (748), got \"\""
+    },
+    {
+      "gate": "scripts/gates/check-frontend-api-consistency-audit-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "PASS: frontend-api-consistency-audit SSOT"
+    }
+  ],
+  "cargo_result": {
+    "pass": false,
+    "exit_code": 101,
+    "summary_line": "    | |  62 | struct HistoryQuery { |     | ^^^^^^^^^^^^^^^^^^^ | error: test failed, to rerun pass `-p traveltrust-api --bin traveltrust-api`"
+  },
+  "write_read_results": [
+    {
+      "id": "itinerary_order_discover",
+      "script": "scripts/dev/smoke-landing-itinerary-flow-local.sh",
+      "chain": "POST /itineraries → GET /orders/:id → PATCH publish → GET /discover/orders",
+      "dimension": "api_write_model",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "smoke-landing-itinerary-flow: OK order=113efdaa-f112-4268-a3bd-f1509ac7043a days=1 daily=1 budget=1800 published=created no_guide discover=ok | smoke-landing-itinerary-flow: PASS (phase ① · step1 create · no guide · publish · discover) |   next: /escrow/113efdaa-f112-4268-a3bd-f1509ac7043a → 请选择向导 → /market?view=split&bindGuideToOrder=113efdaa-f112-4268-a3bd-f1509ac7043a"
+    }
+  ],
+  "auth_probe": {
+    "pass": false
+  },
+  "read_model_audit": {
+    "pass": true,
+    "blocking": 0,
+    "warnings": 1,
+    "evidence_path": "evidence/GO_frontend_api_consistency_audit/local_2026-07-10T00-53-31-596Z/audit-report.json",
+    "summary_line": "frontend-api-consistency-audit: [local] report D:\\TravelTrust-V1.1\\evidence\\GO_frontend_api_consistency_audit\\local_2026-07-10T00-53-31-596Z\\audit-report.json | frontend-api-consistency-audit: [local] exit 0"
+  },
+  "api_parity_certification": {
+    "schema": "traveltrust.api_parity_certification.v1",
+    "phase": "① local",
+    "verification_chain": [
+      "frontend",
+      "api",
+      "database"
+    ],
+    "write_read_chain": [
+      "POST",
+      "database",
+      "GET",
+      "frontend_mapping",
+      "ui"
+    ],
+    "dimensions": {
+      "api_contract": {
+        "verdict": "FAIL",
+        "pass": false,
+        "evidence": [
+          "docs/spec/04-后端与API.md §3.4",
+          "crates/api/src/routes/mod.rs",
+          "frontend/lib/api.ts",
+          "scripts/gates/run-check-04-routes.sh",
+          "cargo test -p traveltrust-api"
+        ],
+        "gates": [
+          "run-check-04-routes.sh",
+          "cargo test -p traveltrust-api"
+        ]
+      },
+      "api_read_model": {
+        "verdict": "FAIL",
+        "pass": false,
+        "evidence": [
+          "scripts/gates/smoke-api-public-routes.sh",
+          "evidence/GO_frontend_api_consistency_audit/local_2026-07-10T00-53-31-596Z/audit-report.json"
+        ],
+        "note": "Public GET surfaces + Frontend↔API consistency audit (DB→API→mapping risk signals)"
+      },
+      "api_write_model": {
+        "verdict": "FAIL",
+        "pass": false,
+        "probes": [
+          {
+            "pass": false
+          },
+          {
+            "id": "itinerary_order_discover",
+            "script": "scripts/dev/smoke-landing-itinerary-flow-local.sh",
+            "chain": "POST /itineraries → GET /orders/:id → PATCH publish → GET /discover/orders",
+            "pass": true
+          }
+        ],
+        "note": "POST persists → subsequent GET reflects write (not HTTP 200 alone)"
+      },
+      "api_state_parity": {
+        "verdict": "FAIL",
+        "pass": false,
+        "chain": "POST → DB → GET → Frontend contract mapping → UI consistency",
+        "environment_diff_note": "Baseline for future Environment Diff (local vs staging)"
+      }
+    },
+    "ssot_alignment": {
+      "spec_04": "docs/spec/04-后端与API.md",
+      "routes_mod": "crates/api/src/routes/mod.rs",
+      "frontend_api": "frontend/lib/api.ts",
+      "fe_audit_registry": "registry/frontend-api-consistency-audit.v1.yaml"
+    }
+  },
+  "findings": [
+    {
+      "id": "gate_fail:run-check-04-routes.sh",
+      "severity": "P0",
+      "gate": "scripts/gates/run-check-04-routes.sh",
+      "detail": "check-04-routes-vs-code WARN: mounted /api/v1 routes missing from 04 section 3.4 table (update 04 and 14 appendix):\r\n  ? /api/v1/governance/vacancy-ledger\r\n  ? /api/v1/market/acquisition/listings/:id/archive\r\n  ? /api/v1/market/provider/listings/:id/archive\r\n  ? /api/v1/me/acquisition-listings\r\n  ? /api/v1/me/guide-exit-request\r\n  ? /api/v1/me/guide-exit-status\r\n  ? /api/v1/me/merchant-listings\r\n  ? /api/v1/me/merchant-listings-summary\r\n  ? /api/v1/me/publish-summary\r\n  ? /api/v1/me/steward-seat\r\n  ? /api/v1/orders/:id/confirm-service-completion\r\n  ? /api/v1/orders/:id/trip-dates\r\n  ? /api/v1/public/announcements\r\n  ? /api/v1/public/announcements/:slug\r\n  ? /api/v1/public/announcements/pulse\r\n  ? /api/v1/public/roadmap\r\n  ? /api/v1/steward/finalize-resign\r\n  ? /api/v1/steward/resign-notice\r\n"
+    },
+    {
+      "id": "gate_fail:smoke-api-public-routes.sh",
+      "severity": "P0",
+      "gate": "scripts/gates/smoke-api-public-routes.sh",
+      "detail": "smoke-api-public-routes: FAIL /meta JSON product_roles.strict_db_write must be false (748), got \"\"\n"
+    },
+    {
+      "id": "gate_fail:cargo_test_traveltrust_api",
+      "severity": "P0",
+      "gate": "cargo test -p traveltrust-api",
+      "detail": "warning: unused imports: `FEED_BUILDER_SURFACE`, `GOVERNED_VIEW`, and `list_viewer_own_non_production_feed_supplement`\n  --> crates\\api\\src\\pcp\\feed_builder.rs:10:55\n   |\n10 |     list_feed, list_feed_by_following, list_feed_hot, list_viewer_own_non_production_feed_supplement,\n   |                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n11 |     FEED_BUILDER_SURFACE, GOVERNED_VIEW,\n   |     ^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^\n   |\n   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default\n\nwarning: unused imports: `GOVERNED_DISCOVER_ORDERS_VIEW`, `GOVERNED_MARKET_GUIDES_VIEW`, `GOVERNED_MARKET_LISTINGS_VIEW`, `MARKET_GUIDES_SURFACE`, `get_governed_market_guide_by_id`, `governed_discover_order_exists`, `governed_market_guide_exists`, `list_governed_market_guides`, `list_governed_market_listings_by_variant`, `market_listing_surface_key`, and `select_governed_public_market_listing_by_id`\n  --> crates\\api\\src\\pcp\\market_builder.rs:10:5\n   |\n10 |     get_governed_market_guide_by_id, governed_discover_order_exists, governed_market_guide_exists,\n   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n11 |     list_governed_market_guides, list_governed_market_listings_by_variant,\n   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n12 |     select_governed_public_market_listing_by_id, GOVERNED_DISCOVER_ORDERS_VIEW,\n   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n13 |     GOVERNED_MARKET_GUIDES_VIEW, GOVERNED_MARKET_LISTINGS_VIEW, MARKET_GUIDES_SURFACE,\n   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^\n14 |     market_listing_surface_key,\n   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^\n\nwarning: unused imports: `cmp_public_display_sort`, `dedupe_guides_latest_per_user`, `infer_market_listing_data_origin`, `is_dev_catalog_email`, `is_dev_market_listing_payload`, `is_non_production_market_listing`, and `public_catalog_surface_filter_enabled`\n  --> crates\\api\\src\\pcp\\market_builder.rs:19:5\n   |\n19 |     cmp_public_display_sort, dedupe_guides_latest_per_user, infer_market_listing_data_origin,\n   |     ^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n20 |     is_dev_catalog_email, is_dev_market_listing_payload, is_non_production_market_listing,\n   |     ^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    },
+    {
+      "id": "auth_write_register",
+      "severity": "P0",
+      "detail": "POST /auth/register HTTP 401"
+    }
+  ]
+}

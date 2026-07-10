@@ -211,6 +211,7 @@ mod tests {
 
     #[test]
     fn local_development_with_seed() {
+        let _env = crate::test_env_serial::lock();
         with_vars(
             &[
                 ("TRAVELTRUST_DEPLOYMENT_PROFILE", Some("local")),

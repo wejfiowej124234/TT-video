@@ -52,7 +52,7 @@ async fn p21_guides_create_list_get_stake() {
             country_code: Some("CN".to_string()),
             languages: Some(vec!["zh".to_string()]),
             service_types: Some(vec!["walking".to_string()]),
-            bio: Some("test guide".to_string()),
+            bio: Some("Hangzhou lake district walking tours".to_string()),
             wallet_address: None,
             real_name: None,
             passport_number: None,
@@ -453,10 +453,17 @@ async fn p21_order_create_accept_mock_pay_confirm() {
     };
     assert_eq!(pay_json["order"]["status"], "escrowed");
 
-    let Ok(Json(confirm_json)) =
+    let Ok(Json(guide_confirm)) =
         order_confirm_completion_impl(state.clone(), order_id, guide_id).await
     else {
-        panic!("order_confirm_completion");
+        panic!("order_confirm guide");
+    };
+    assert_eq!(guide_confirm["order"]["status"], "escrowed");
+
+    let Ok(Json(confirm_json)) =
+        order_confirm_completion_impl(state.clone(), order_id, tourist_id).await
+    else {
+        panic!("order_confirm tourist");
     };
     assert_eq!(confirm_json["order"]["status"], "completed");
 
