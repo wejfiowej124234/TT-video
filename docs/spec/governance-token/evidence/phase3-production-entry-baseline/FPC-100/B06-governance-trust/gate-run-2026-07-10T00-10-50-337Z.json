@@ -1,0 +1,89 @@
+{
+  "timestamp_utc": "2026-07-10T00:10:50.337Z",
+  "gate_results": [
+    {
+      "gate": "scripts/dev/smoke-governance-proposals-l5-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "   Duration  2.47s (transform 738ms, setup 159ms, collect 2.18s, tests 46ms, environment 9.78s, prepare 1.66s) | GP-PROP-L5-smoke: OK vitest contracts | TT_GOVERNANCE_PROPOSALS_L5_SMOKE: OK phase=① list+create+detail+steward-corridor | GP-PROP-L5-smoke: ALL PASS (① local · Governance Proposals L5 Closure)"
+    },
+    {
+      "gate": "scripts/gates/governance-matrix-local-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "      Tests  99 passed (99) |    Start at  08:10:55 |    Duration  5.01s (transform 3.08s, setup 1.43s, collect 6.12s, tests 262ms, environment 37.88s, prepare 4.65s) | TT_GOVERNANCE_MATRIX_LOCAL_GATE_SUMMARY: OK phase=local-1 matrix=93-C-GOV-slice"
+    },
+    {
+      "gate": "scripts/gates/check-announcement-lane-governance-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "registry-validate: OK\r | check-announcement-lane-governance-gate: PASS ANNOUNCEMENT_LANE_GOVERNANCE_FROZEN"
+    }
+  ],
+  "supplemental_results": [
+    {
+      "contract": "components/trust/trustTransparencyHub.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "app/governance/governanceHubPage.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "lib/publicSurfaceAudit.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    }
+  ],
+  "governance_flow": {
+    "lifecycle": [
+      "proposal",
+      "vote",
+      "queue",
+      "execute",
+      "state_change"
+    ],
+    "proposal_smoke": "smoke-governance-proposals-l5-local.sh (list · create · detail · steward corridor)",
+    "matrix_slice": "governance-matrix-local-gate.sh (93 C-GOV-001..011)",
+    "on_chain_actions": {
+      "vote": "GovernanceOnChainVotePanel + getPastVotes wallet gate",
+      "queue": "useGovernanceTimelockActions queue",
+      "execute": "GovernanceProposalExecutionActionsPanel",
+      "cancel": "useGovernanceCancelProposal",
+      "timelock": "travelTrustGovernorAbi queue + timelock writes"
+    },
+    "admin_public_separation": "governanceHubPage.contract.test.ts PER CI-13 (ops admin opt-in only)",
+    "phase": "① local · on-chain vote/execute deferred to ② unless wallet connected"
+  },
+  "trust_evidence": {
+    "hub_ssot": "frontend/components/trust/TrustTransparencyHub.tsx",
+    "route": "/trust",
+    "ci_14": "trustTransparencyHub.contract.test.ts — no D-4555 in public pillar copy",
+    "public_surface": "lib/publicSurfaceAudit.contract.test.ts — /trust registered",
+    "announcement_lane": "check-announcement-lane-governance-gate.sh ANNOUNCEMENT_LANE_GOVERNANCE_FROZEN",
+    "public_trust_vs_internal_spec": "Public Trust ≠ Internal Spec (locale governance params may retain draft IDs; trust hub body does not)"
+  },
+  "ui_evidence": {
+    "governance_proposals_l5": "GOVERNANCE-PROPOSALS-L5-FREEZE.md",
+    "vitest_governance_l5": 43,
+    "vitest_matrix_c_gov": 99,
+    "trust_contracts": [
+      "trustTransparencyHub.contract.test.ts",
+      "governanceHubPage.contract.test.ts",
+      "publicSurfaceAudit.contract.test.ts"
+    ],
+    "routes": [
+      "/governance",
+      "/governance/proposals",
+      "/governance/proposals/new",
+      "/governance/proposals/[id]",
+      "/trust",
+      "/traveltrust",
+      "/traveltrust/announcements",
+      "/staking"
+    ]
+  },
+  "findings": []
+}
