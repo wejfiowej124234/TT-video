@@ -1,0 +1,10 @@
+{"role":"traveler","route":"/","probe":"home","viewport":{"width":375,"height":812},"docScrollWidth":375,"docClientWidth":375,"bodyScrollWidth":375,"overflowPx":0,"ok":true}
+{"role":"traveler","route":"/traveltrust","probe":"traveltrust","viewport":{"width":375,"height":812},"docScrollWidth":375,"docClientWidth":375,"bodyScrollWidth":375,"overflowPx":0,"ok":true}
+{"role":"traveler","route":"/market","probe":"market","viewport":{"width":375,"height":812},"docScrollWidth":375,"docClientWidth":375,"bodyScrollWidth":375,"overflowPx":0,"ok":true}
+{"role":"traveler","route":"/did-rank","probe":"did-rank","viewport":{"width":375,"height":812},"docScrollWidth":375,"docClientWidth":375,"bodyScrollWidth":375,"overflowPx":0,"ok":true}
+{"role":"traveler","route":"/community","probe":"community","viewport":{"width":375,"height":812},"docScrollWidth":375,"docClientWidth":375,"bodyScrollWidth":375,"overflowPx":0,"ok":true}
+{"role":"traveler","route":"/auth/login","probe":"auth-login","viewport":{"width":375,"height":812},"docScrollWidth":375,"docClientWidth":375,"bodyScrollWidth":375,"overflowPx":0,"ok":true}
+{"role":"traveler","route":"/auth/register","probe":"auth-register","viewport":{"width":375,"height":812},"docScrollWidth":375,"docClientWidth":375,"bodyScrollWidth":375,"overflowPx":0,"ok":true}
+{"role":"guide","route":"/guide","probe":"guide","viewport":{"width":375,"height":812},"docScrollWidth":375,"docClientWidth":375,"bodyScrollWidth":375,"overflowPx":0,"ok":true}
+{"role":"merchant","route":"/provider/register","probe":"merchant","viewport":{"width":375,"height":812},"docScrollWidth":375,"docClientWidth":375,"bodyScrollWidth":375,"overflowPx":0,"ok":true}
+{"role":"traveler","route":"/terms","probe":"terms","viewport":{"width":375,"height":812},"docScrollWidth":375,"docClientWidth":375,"bodyScrollWidth":375,"overflowPx":0,"ok":true}

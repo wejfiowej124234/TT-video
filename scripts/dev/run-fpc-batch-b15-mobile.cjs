@@ -49,7 +49,7 @@ const QUALITY_CHECKS = [
     id: 'Q2_spec_96_16',
     domain: 'Q2',
     path: 'docs/spec/96-16-全页面UI-UX优化方案总册.md',
-    must_contain: ['D1', 'mobile', '375'],
+    must_contain: ['D1', 'D3', '横向溢出', '响应式'],
   },
   {
     id: 'Q2_five_main_freeze',
