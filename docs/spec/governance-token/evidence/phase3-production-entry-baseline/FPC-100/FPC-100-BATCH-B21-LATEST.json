@@ -308,8 +308,8 @@
       "detail": "① local: prod .env.production.local STRIPE_ENABLED=0 until ③ Production GO"
     }
   ],
-  "verdict": "PASS",
-  "pass": true,
+  "verdict": "IN_PROGRESS",
+  "pass": false,
   "gate_verdict": "PASS",
   "release_blocker": "NO",
   "next_batch": "B22",
@@ -347,5 +347,16 @@
   "expiry_policy_days": 30,
   "certification_frozen": true,
   "frozen_at_utc": "2026-07-10T07:00:07.886Z",
-  "frozen_git_sha": "cb5b83be82ac5b824f2c745698e972f14d9fe5a3"
+  "frozen_git_sha": "cb5b83be82ac5b824f2c745698e972f14d9fe5a3",
+  "dod": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": false,
+    "working_tree_clean": false,
+    "all_met": false,
+    "checked_at_utc": "2026-07-10T07:02:05.350Z",
+    "committed_sha": "76ff6d11a1cb3010b839e5f295c8fa14deff4f4d",
+    "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
+  }
 }
