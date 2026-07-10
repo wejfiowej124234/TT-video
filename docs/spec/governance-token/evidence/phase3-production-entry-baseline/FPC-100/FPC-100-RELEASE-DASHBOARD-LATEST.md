@@ -4,10 +4,10 @@
 
 | Metric | Value |
 |--------|-------|
-| **TT_RELEASE_READINESS** | **46.3%** |
+| **TT_RELEASE_READINESS** | **48.8%** |
 | **TT_RELEASE_DECISION** | **NO_GO** |
 
-_Next batch: B19 · v1.0_ · Governance FROZEN — no v5 expansion_
+_Next batch: B20 · v1.0_ · Governance FROZEN — no v5 expansion_
 
 > Feature Freeze does not mean Release Ready. Release Ready is earned only through completed certification evidence.
 > 功能冻结不代表可以发布；发布资格只能通过完整的认证证据获得。
@@ -16,9 +16,9 @@ _Next batch: B19 · v1.0_ · Governance FROZEN — no v5 expansion_
 
 | Metric | Value |
 |--------|-------|
-| Batches Completed | 19 / 41 |
-| Remaining | 22 |
-| Batch Coverage | 46.3% |
+| Batches Completed | 20 / 41 |
+| Remaining | 21 |
+| Batch Coverage | 48.8% |
 | Evidence Coverage (pages/API/…) | 0% |
 
 _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
@@ -28,13 +28,13 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 **Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
 **FPC verdict:** **NOT_STARTED**  
 **Release decision:** `TT_RELEASE_DECISION` = **NO_GO**  
-**Updated:** 2026-07-10T06:07:39.368Z
+**Updated:** 2026-07-10T06:08:58.341Z
 
 ## Release Health
 
 | Metric | Value |
 |--------|-------|
-| Certified | 92.7% |
+| Certified | 97.6% |
 | Expired | 0 |
 | Blocked | 0 |
 | Accepted Risks | 2 |
