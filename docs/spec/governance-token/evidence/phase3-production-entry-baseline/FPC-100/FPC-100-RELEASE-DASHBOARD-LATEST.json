@@ -6,12 +6,12 @@
       "TT_RELEASE_READINESS",
       "TT_RELEASE_DECISION"
     ],
-    "release_readiness_pct": 51.2,
+    "release_readiness_pct": 53.7,
     "release_readiness_key": "TT_RELEASE_READINESS",
     "release_decision": "NO_GO",
     "release_decision_key": "TT_RELEASE_DECISION",
     "product_version": "v1.0",
-    "next_required_batch": "B21",
+    "next_required_batch": "B22",
     "governance": "FROZEN @ v5 · Do not expand",
     "execution": "B02→B41 only"
   },
@@ -20,23 +20,23 @@
   "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION",
   "release_decision_key": "TT_RELEASE_DECISION",
   "product_version": "v1.0",
-  "timestamp_utc": "2026-07-10T07:03:55.707Z",
+  "timestamp_utc": "2026-07-10T07:04:50.387Z",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "verdict": "NOT_STARTED",
   "pass": false,
   "tt_release_decision": "NO_GO",
   "release_readiness": {
     "machine_key": "TT_RELEASE_READINESS",
-    "pct": 51.2,
-    "contiguous_completed": 21,
+    "pct": 53.7,
+    "contiguous_completed": 22,
     "total": 41
   },
   "burn_down": {
-    "completed": 21,
-    "remaining": 20,
+    "completed": 22,
+    "remaining": 19,
     "total": 41,
-    "coverage_pct": 51.2,
-    "next_required_batch": "B21",
+    "coverage_pct": 53.7,
+    "next_required_batch": "B22",
     "no_batch_skip_ok": true,
     "skip_violations": []
   },
@@ -53,7 +53,7 @@
     "human_verification": "NOT_STARTED"
   },
   "release_health": {
-    "certified_pct": 102.4,
+    "certified_pct": 107.3,
     "expired_count": 0,
     "blocked_count": 0,
     "accepted_risks_count": 2,
