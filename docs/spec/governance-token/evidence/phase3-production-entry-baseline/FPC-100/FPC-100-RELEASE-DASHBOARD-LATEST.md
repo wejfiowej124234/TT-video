@@ -4,10 +4,10 @@
 
 | Metric | Value |
 |--------|-------|
-| **TT_RELEASE_READINESS** | **14.6%** |
+| **TT_RELEASE_READINESS** | **17.1%** |
 | **TT_RELEASE_DECISION** | **NO_GO** |
 
-_Next batch: B06 · v1.0_ · Governance FROZEN — no v5 expansion_
+_Next batch: B07 · v1.0_ · Governance FROZEN — no v5 expansion_
 
 > Feature Freeze does not mean Release Ready. Release Ready is earned only through completed certification evidence.
 > 功能冻结不代表可以发布；发布资格只能通过完整的认证证据获得。
@@ -16,9 +16,9 @@ _Next batch: B06 · v1.0_ · Governance FROZEN — no v5 expansion_
 
 | Metric | Value |
 |--------|-------|
-| Batches Completed | 6 / 41 |
-| Remaining | 35 |
-| Batch Coverage | 14.6% |
+| Batches Completed | 7 / 41 |
+| Remaining | 34 |
+| Batch Coverage | 17.1% |
 | Evidence Coverage (pages/API/…) | 0% |
 
 _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
@@ -28,19 +28,19 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 **Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
 **FPC verdict:** **NOT_STARTED**  
 **Release decision:** `TT_RELEASE_DECISION` = **NO_GO**  
-**Updated:** 2026-07-10T00:11:31.384Z
+**Updated:** 2026-07-10T00:14:36.628Z
 
 ## Release Health
 
 | Metric | Value |
 |--------|-------|
-| Certified | 31.7% |
+| Certified | 36.6% |
 | Expired | 0 |
 | Blocked | 0 |
 | Accepted Risks | 2 |
 | Coverage | 0% |
 | Human Verified | 0% |
-| AI Review PASS | 53.8% |
+| AI Review PASS | 53.3% |
 
 ## Release History (Version Certification)
 
@@ -83,12 +83,14 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 | B04 | PASS (Internal AI Review) | — |
 | B05 | PASS (Internal AI Review) | — |
 | B06 | PASS (Internal AI Review) | — |
+| B07 | PASS (Internal AI Review) | — |
 | B00 | NOT_STARTED (NOT_STARTED) | — |
 | B01 | NOT_STARTED (NOT_STARTED) | — |
 | B02 | NOT_STARTED (NOT_STARTED) | — |
 | B03 | NOT_STARTED (NOT_STARTED) | — |
 | B04 | NOT_STARTED (NOT_STARTED) | — |
 | B05 | NOT_STARTED (NOT_STARTED) | — |
+| B06 | NOT_STARTED (NOT_STARTED) | — |
 
 ## Accepted Risks
 
