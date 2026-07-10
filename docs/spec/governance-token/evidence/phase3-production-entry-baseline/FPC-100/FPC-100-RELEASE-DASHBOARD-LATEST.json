@@ -6,12 +6,12 @@
       "TT_RELEASE_READINESS",
       "TT_RELEASE_DECISION"
     ],
-    "release_readiness_pct": 53.7,
+    "release_readiness_pct": 56.1,
     "release_readiness_key": "TT_RELEASE_READINESS",
     "release_decision": "NO_GO",
     "release_decision_key": "TT_RELEASE_DECISION",
     "product_version": "v1.0",
-    "next_required_batch": "B22",
+    "next_required_batch": "B23",
     "governance": "FROZEN @ v5 · Do not expand",
     "execution": "B02→B41 only"
   },
@@ -20,23 +20,23 @@
   "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION",
   "release_decision_key": "TT_RELEASE_DECISION",
   "product_version": "v1.0",
-  "timestamp_utc": "2026-07-10T07:16:56.573Z",
+  "timestamp_utc": "2026-07-10T07:22:02.416Z",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "verdict": "NOT_STARTED",
   "pass": false,
   "tt_release_decision": "NO_GO",
   "release_readiness": {
     "machine_key": "TT_RELEASE_READINESS",
-    "pct": 53.7,
-    "contiguous_completed": 22,
+    "pct": 56.1,
+    "contiguous_completed": 23,
     "total": 41
   },
   "burn_down": {
-    "completed": 22,
-    "remaining": 19,
+    "completed": 23,
+    "remaining": 18,
     "total": 41,
-    "coverage_pct": 53.7,
-    "next_required_batch": "B22",
+    "coverage_pct": 56.1,
+    "next_required_batch": "B23",
     "no_batch_skip_ok": true,
     "skip_violations": []
   },
@@ -53,14 +53,14 @@
     "human_verification": "NOT_STARTED"
   },
   "release_health": {
-    "certified_pct": 109.8,
+    "certified_pct": 114.6,
     "expired_count": 0,
     "blocked_count": 0,
     "accepted_risks_count": 2,
-    "coverage_pct": 0,
+    "coverage_pct": 25,
     "human_verified_pct": 0,
     "human_required_verified_pct": 0,
-    "ai_review_pct": 50
+    "ai_review_pct": 51.1
   },
   "release_history": [
     {
@@ -72,9 +72,9 @@
   ],
   "evidence_coverage": {
     "pages": {
-      "done": 0,
+      "done": 202,
       "target": 202,
-      "pct": 0
+      "pct": 100
     },
     "api_contracts": {
       "done": 0,
@@ -422,6 +422,19 @@
       "human_verifier": null
     },
     {
+      "batch_id": "B23",
+      "ai_review": {
+        "verdict": "PASS",
+        "ai_reviewer": "Internal AI Review",
+        "review_type": "Internal AI Review",
+        "review_date": "2026-07-10",
+        "review_version": "v1"
+      },
+      "ai_display": "Internal AI Review",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
       "batch_id": "B00",
       "ai_review": {
         "verdict": "NOT_STARTED"
@@ -647,8 +660,8 @@
   "detail_rows": [
     {
       "label": "Pages (L1)",
-      "display": "0 / 202",
-      "verdict": "IN_PROGRESS"
+      "display": "202 / 202",
+      "verdict": "PASS"
     },
     {
       "label": "UI (L2)",
