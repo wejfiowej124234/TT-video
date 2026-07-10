@@ -1,0 +1,100 @@
+{
+  "schema": "traveltrust.fpc_100_production_go_checklist.v1",
+  "phase": "③ public / production",
+  "title": "Production GO Checklist · Sole Candidate Version",
+  "note": "Authoritative immutable SHA is the only production candidate until superseded by explicit Owner revision. TT_PRODUCTION_GO requires all gates PASS + Owner sign-off.",
+  "authoritative_immutable_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+  "sole_candidate_policy": "Deploy, config, ops verification, and GO Gate must pin this SHA unless Owner opens a new candidate revision.",
+  "depends_on_phase2": [
+    "FPC-100-PHASE2-STAGING-FINAL-FREEZE-LATEST.json",
+    "FPC-100-BATCH-B40-LATEST.json",
+    "FPC-100-BATCH-B41-LATEST.json"
+  ],
+  "forbidden_declaration": "B40/B41 PASS or Phase ② CLOSED alone must not declare TT_PRODUCTION_GO",
+  "ssot": [
+    "docs/runbook/PRODUCTION-GO-FOUR-GATE-FRAMEWORK.md",
+    "registry/production-go-four-gate-framework.v1.yaml",
+    "registry/production-go-closure-sequence.v1.yaml",
+    "docs/go-live-checklist.md",
+    "docs/runbook/TT-PRODUCTION-GO-DECISION-PACKAGE.md"
+  ],
+  "runners": {
+    "four_gate": "scripts/check-production-go-four-gates.sh",
+    "phase3_audit": "scripts/dev/run-phase3-production-go-audit.sh",
+    "decision_package": "scripts/dev/assemble-production-go-decision-package.cjs",
+    "fpc_checklist": "scripts/dev/run-fpc-phase3-production-go-checklist.cjs"
+  },
+  "production_endpoints": {
+    "api_env": "PRODUCTION_API_BASE",
+    "web_env": "PRODUCTION_WEB_BASE",
+    "note": "Set prod bases for live verification; staging proxy acceptable for prep-only items marked staging_proxy_ok"
+  },
+  "gate_chain": [
+    {
+      "id": "GATE-1",
+      "machine_key": "TT_PRODUCTION_BUSINESS_READY",
+      "title": "Business Ready (L1)",
+      "items": [
+        { "id": "P3-PHASE2-LOCK", "probe": "phase2_staging_final_freeze_pass" },
+        { "id": "P3-B41-ENTRY", "probe": "b41_production_entry_review_pass" },
+        { "id": "P3-G1-REGISTRY", "probe": "production_readiness_g1_pass" }
+      ]
+    },
+    {
+      "id": "GATE-2",
+      "machine_key": "TT_PRODUCTION_WEB3_READY",
+      "title": "Web3 Ready (L2 · mainnet real funds)",
+      "owner_only": true,
+      "items": [
+        { "id": "P3-MAINNET-DEPLOY", "probe": "mainnet_governance_stack_deployed", "owner_only": true },
+        { "id": "P3-WEB3-PAYMENT", "probe": "web3_payment_production_pass" },
+        { "id": "P3-WEB3-SYSTEM", "probe": "web3_system_production_ready" }
+      ]
+    },
+    {
+      "id": "GATE-3",
+      "machine_key": "TT_PRODUCTION_INFRASTRUCTURE_READY",
+      "title": "Infrastructure Ready (L3)",
+      "items": [
+        { "id": "P3-PROD-API-DEPLOY", "probe": "production_api_deployed_at_candidate_sha", "owner_only": true },
+        { "id": "P3-PROD-WEB-DEPLOY", "probe": "production_web_deployed_at_candidate_sha", "owner_only": true },
+        { "id": "P3-DOMAIN-TLS", "probe": "domain_tls_cors_ready" },
+        { "id": "P3-CDN-MEDIA", "probe": "cdn_media_ready" },
+        { "id": "P3-PG-BACKUP", "probe": "production_pg_backup_pitr" },
+        { "id": "P3-MONITORING", "probe": "monitoring_alert_ready" }
+      ]
+    },
+    {
+      "id": "GATE-4",
+      "machine_key": "TT_PRODUCTION_OPERATIONS_READY",
+      "title": "Operations Ready (L4)",
+      "items": [
+        { "id": "P3-CMS-OPS", "probe": "cms_full_operations_go" },
+        { "id": "P3-OCS-PARITY", "probe": "ocs_production_parity_pass" },
+        { "id": "P3-SECURITY-REVIEW", "probe": "security_review_complete" },
+        { "id": "P3-FINAL-OPS-UAT", "probe": "final_ops_verification_pass", "owner_only": true }
+      ]
+    },
+    {
+      "id": "OWNER",
+      "machine_key": "TT_OWNER_FINAL_SIGNOFF",
+      "title": "Owner Final Sign-off",
+      "owner_only": true,
+      "items": [
+        { "id": "P3-OWNER-SIGNOFF", "probe": "owner_final_signoff_recorded", "owner_only": true }
+      ]
+    },
+    {
+      "id": "GO",
+      "machine_key": "TT_PRODUCTION_GO",
+      "title": "Production GO Decision",
+      "items": [
+        { "id": "P3-FOUR-GATE-UNION", "probe": "four_gate_framework_all_pass" },
+        { "id": "P3-CLOSURE-SEQUENCE", "probe": "closure_sequence_no_open_p0" },
+        { "id": "P3-GO-DECISION-PACKAGE", "probe": "production_go_decision_package_valid" }
+      ]
+    }
+  ],
+  "owner_auth_env": "TRAVELTRUST_FPC_PHASE3_PRODUCTION_GO_OK=1",
+  "owner_signoff_env": "TRAVELTRUST_FPC_PHASE3_OWNER_SIGNOFF_OK=1"
+}

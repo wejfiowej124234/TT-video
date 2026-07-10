@@ -1,0 +1,353 @@
+{
+  "timestamp_utc": "2026-07-10T12:09:52.494Z",
+  "phase": "② staging",
+  "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+  "governance_head": "8bee92f25c0182f84565a11d3c6874ea58051e7e",
+  "probes": {
+    "b40Anchor": {
+      "pass": true,
+      "manifest": {
+        "schema": "traveltrust.fpc_100_b40_deploy_manifest.v1",
+        "timestamp_utc": "2026-07-10T12:00:11.000Z",
+        "phase": "② staging",
+        "authoritative_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+        "staging_meta_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+        "sha_match": true,
+        "staging_api": "https://tt-api-staging.fly.dev",
+        "deploy_source": "git worktree detach @ authoritative SHA",
+        "owner_auth": "TRAVELTRUST_FPC_B40_STAGING_OK=1",
+        "deploy_log": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B40-deployment/deploy-from-anchor-20260710T115256Z.log",
+        "fly_image": "registry.fly.io/tt-api-staging:deployment-01KX5XZVKBCG3ZS4J3WTHFVB44",
+        "api_health_status": 200,
+        "web_deploy": "skipped (TT_STAGING_RC_BASELINE gate — API anchor deploy is B40 scope)",
+        "migration_ledger_reconciliation": "FPC-100-B40-MIGRATION-LEDGER-RECONCILIATION-LATEST.json",
+        "remediation_summary": "136 _sqlx_migrations checksum rows aligned to anchor LF; worktree binary LF normalize; Dockerfile in-builder LF strip; FLY_API_NO_CACHE=1"
+      },
+      "b40_batch": {
+        "verdict": "PASS",
+        "pass": true
+      }
+    },
+    "priorBatches": {
+      "pass": false,
+      "batches": [
+        {
+          "batch_id": "B00",
+          "pass": false,
+          "verdict": "INVALIDATED"
+        },
+        {
+          "batch_id": "B01",
+          "pass": false,
+          "verdict": "INVALIDATED"
+        },
+        {
+          "batch_id": "B04",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "batch_id": "B21",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "batch_id": "B22",
+          "pass": true,
+          "verdict": "PASS"
+        },
+        {
+          "batch_id": "B40",
+          "pass": true,
+          "verdict": "PASS"
+        }
+      ]
+    },
+    "perSsot": {
+      "pass": true,
+      "present": [
+        "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PRODUCTION-ENTRY-REVIEW.md",
+        "docs/go-live-checklist.md"
+      ]
+    },
+    "releaseGates": {
+      "pass": false,
+      "gates": [
+        {
+          "script": "scripts/dev/check-fpc-no-batch-skip.cjs",
+          "pass": false,
+          "detail": "TT_FPC_NO_BATCH_SKIP: SKIP_VIOLATION\nTT_RELEASE_READINESS: 75.6%\nNEXT_BATCH: B26\nOUT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-NO-BATCH-SKIP-LATEST.json\n"
+        }
+      ]
+    },
+    "anchorFreeze": {
+      "pass": true,
+      "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "head": "8bee92f25c0182f84565a11d3c6874ea58051e7e",
+      "changed_count": 18,
+      "disallowed_count": 0,
+      "policy": "Governance/evidence/FPC ops only after Local Final Freeze anchor"
+    },
+    "hygieneGates": {
+      "pass": true,
+      "gates": [
+        {
+          "script": "scripts/gates/check-production-ui-hygiene-gate.sh",
+          "pass": true,
+          "detail": null
+        },
+        {
+          "script": "scripts/gates/check-public-surface-audit-gate.sh",
+          "pass": true,
+          "detail": null
+        }
+      ]
+    },
+    "health": {
+      "pass": true,
+      "api": {
+        "url": "https://tt-api-staging.fly.dev/health",
+        "status": 200,
+        "body": {
+          "raw": "ok"
+        }
+      },
+      "web": {
+        "url": "https://tt-web-staging.fly.dev/",
+        "status": 200
+      }
+    },
+    "meta": {
+      "pass": true,
+      "meta_status": 200,
+      "staging_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "deployment_profile": "staging",
+      "sha_match": true
+    },
+    "envDiff": {
+      "pass": true,
+      "local_api_reachable": true,
+      "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "api_probes": {
+        "staging": {
+          "/api/v1/public/announcements?limit=3": {
+            "status": 200,
+            "count": 3
+          },
+          "/api/v1/public/roadmap": {
+            "status": 200,
+            "count": 2
+          },
+          "/api/v1/guides?limit=3": {
+            "status": 200,
+            "count": 3
+          }
+        },
+        "local": {
+          "/api/v1/public/announcements?limit=3": {
+            "status": 200,
+            "count": 3
+          },
+          "/api/v1/public/roadmap": {
+            "status": 200,
+            "count": 2
+          },
+          "/api/v1/guides?limit=3": {
+            "status": 200,
+            "count": 3
+          }
+        }
+      },
+      "count_drifts": [],
+      "expected_differences": [],
+      "staging_web_alignment": true
+    },
+    "registryParity": {
+      "pass": true,
+      "registry_anchor": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "staging_meta_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "parity": true
+    },
+    "stagingRecheck": {
+      "pass": true,
+      "batches": [
+        "B00",
+        "B01",
+        "B04",
+        "B21",
+        "B22"
+      ],
+      "results": [
+        {
+          "gate": "check-phase3-production-infrastructure-ssot.sh",
+          "pass": true
+        },
+        {
+          "gate": "B00_meta_contract",
+          "pass": true,
+          "detail": "meta.build.git_sha present"
+        }
+      ],
+      "note": "Full corridor gates run @ ① frozen; staging recheck = health/meta/infra SSOT only"
+    },
+    "businessPages": {
+      "pass": true,
+      "routes": [
+        {
+          "id": "terms",
+          "path": "/terms",
+          "url": "https://tt-web-staging.fly.dev/terms",
+          "status": 200,
+          "pass": true,
+          "forbidden_hits": []
+        },
+        {
+          "id": "privacy",
+          "path": "/privacy",
+          "url": "https://tt-web-staging.fly.dev/privacy",
+          "status": 200,
+          "pass": true,
+          "forbidden_hits": []
+        },
+        {
+          "id": "help",
+          "path": "/help",
+          "url": "https://tt-web-staging.fly.dev/help",
+          "status": 200,
+          "pass": true,
+          "forbidden_hits": []
+        },
+        {
+          "id": "home",
+          "path": "/",
+          "url": "https://tt-web-staging.fly.dev/",
+          "status": 200,
+          "pass": true,
+          "forbidden_hits": []
+        },
+        {
+          "id": "traveltrust",
+          "path": "/traveltrust",
+          "url": "https://tt-web-staging.fly.dev/traveltrust",
+          "status": 200,
+          "pass": true,
+          "forbidden_hits": []
+        }
+      ]
+    },
+    "seo": {
+      "pass": true,
+      "items": [
+        {
+          "id": "sitemap",
+          "path": "/sitemap.xml",
+          "status": 200,
+          "pass": true,
+          "bytes": 6990
+        },
+        {
+          "id": "robots",
+          "path": "/robots.txt",
+          "status": 200,
+          "pass": true,
+          "bytes": 93
+        }
+      ]
+    },
+    "webAlignment": {
+      "pass": true
+    },
+    "human": {
+      "human_verified": false,
+      "human_verifier": null,
+      "owner_sign_off": {
+        "status": "PENDING",
+        "env": "TRAVELTRUST_FPC_B41_OWNER_SIGNOFF_OK=1"
+      }
+    }
+  },
+  "findings": [
+    {
+      "id": "batch_sequence_blocked",
+      "severity": "P0",
+      "classification": "REAL_DEFECT",
+      "detail": "NO_BATCH_SKIP"
+    },
+    {
+      "id": "frozen_chain_break",
+      "severity": "P0",
+      "classification": "REAL_DEFECT",
+      "batch_id": "B24",
+      "detail": "frozen=true verdict=INVALIDATED"
+    },
+    {
+      "id": "frozen_chain_break",
+      "severity": "P0",
+      "classification": "REAL_DEFECT",
+      "batch_id": "B25-C1",
+      "detail": "frozen=true verdict=INVALIDATED"
+    },
+    {
+      "id": "frozen_chain_break",
+      "severity": "P0",
+      "classification": "REAL_DEFECT",
+      "batch_id": "B25-C2",
+      "detail": "frozen=true verdict=INVALIDATED"
+    },
+    {
+      "id": "frozen_chain_break",
+      "severity": "P0",
+      "classification": "REAL_DEFECT",
+      "batch_id": "B25-C3",
+      "detail": "frozen=true verdict=INVALIDATED"
+    },
+    {
+      "id": "frozen_chain_break",
+      "severity": "P0",
+      "classification": "REAL_DEFECT",
+      "batch_id": "B25-C4",
+      "detail": "frozen=true verdict=INVALIDATED"
+    },
+    {
+      "id": "frozen_chain_break",
+      "severity": "P0",
+      "classification": "REAL_DEFECT",
+      "batch_id": "B25-C5",
+      "detail": "frozen=true verdict=INVALIDATED"
+    },
+    {
+      "id": "frozen_chain_break",
+      "severity": "P0",
+      "classification": "REAL_DEFECT",
+      "batch_id": "B25-C6",
+      "detail": "frozen=true verdict=INVALIDATED"
+    },
+    {
+      "id": "frozen_chain_break",
+      "severity": "P0",
+      "classification": "REAL_DEFECT",
+      "batch_id": "B26",
+      "detail": "frozen=true verdict=INVALIDATED"
+    },
+    {
+      "id": "prior_batch_B00_not_pass",
+      "severity": "P0",
+      "classification": "REAL_DEFECT",
+      "detail": "B00 verdict=INVALIDATED"
+    },
+    {
+      "id": "prior_batch_B01_not_pass",
+      "severity": "P0",
+      "classification": "REAL_DEFECT",
+      "detail": "B01 verdict=INVALIDATED"
+    },
+    {
+      "id": "release_gate_check-fpc-no-batch-skip",
+      "severity": "P0",
+      "classification": "REAL_DEFECT",
+      "detail": "TT_FPC_NO_BATCH_SKIP: SKIP_VIOLATION\nTT_RELEASE_READINESS: 75.6%\nNEXT_BATCH: B26\nOUT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-NO-BATCH-SKIP-LATEST.json\n"
+    }
+  ]
+}

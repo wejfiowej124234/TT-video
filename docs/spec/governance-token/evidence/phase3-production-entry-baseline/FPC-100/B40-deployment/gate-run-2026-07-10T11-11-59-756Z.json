@@ -1,0 +1,499 @@
+{
+  "timestamp_utc": "2026-07-10T11:11:59.756Z",
+  "phase": "② staging",
+  "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+  "governance_head": "8bee92f25c0182f84565a11d3c6874ea58051e7e",
+  "owner_auth": {
+    "pass": true,
+    "env": "TRAVELTRUST_FPC_B40_STAGING_OK=1"
+  },
+  "local_final_freeze": {
+    "pass": true,
+    "evidence": {
+      "schema": "traveltrust.fpc_100_local_final_freeze.v1",
+      "timestamp_utc": "2026-07-10T11:10:02.191Z",
+      "phase": "① local",
+      "machine_key": "TT_LOCAL_FINAL_FREEZE",
+      "git": {
+        "head": "8bee92f25c0182f84565a11d3c6874ea58051e7e",
+        "branch": "feature/g23-04-abi-event-freeze",
+        "working_tree_clean": false
+      },
+      "authoritative_immutable_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "freeze_chain": {
+        "batches": [
+          "B21",
+          "B22",
+          "B23",
+          "B24",
+          "B25-C1",
+          "B25-C2",
+          "B25-C3",
+          "B25-C4",
+          "B25-C5",
+          "B25-C6",
+          "B26",
+          "B30",
+          "B31",
+          "B32",
+          "B33",
+          "B34",
+          "B35",
+          "B36"
+        ],
+        "rows": [
+          {
+            "batch_id": "B21",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B22",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B23",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B24",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B25-C1",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B25-C2",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B25-C3",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B25-C4",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B25-C5",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B25-C6",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B26",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "21f830ffbf6afe8237dab1021e6113fd57ffcd3e"
+          },
+          {
+            "batch_id": "B30",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          },
+          {
+            "batch_id": "B31",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          },
+          {
+            "batch_id": "B32",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          },
+          {
+            "batch_id": "B33",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          },
+          {
+            "batch_id": "B34",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          },
+          {
+            "batch_id": "B35",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          },
+          {
+            "batch_id": "B36",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          }
+        ],
+        "pass_count": 18,
+        "total": 18
+      },
+      "burn_down": {
+        "completed": 39,
+        "remaining": 2,
+        "total": 41,
+        "contiguous_completed": 39,
+        "release_readiness_pct": 95.1,
+        "coverage_pct": 95.1,
+        "next_required_batch": "B40",
+        "skip_violations": [],
+        "sequence_ok": true
+      },
+      "release_readiness_pct": 95.1,
+      "next_required_batch": "B40",
+      "anchor_b30_b36": true,
+      "b40_entry": {
+        "authorized": false,
+        "note": "B40 ② staging one-shot — requires explicit Owner authorization; no ① business code changes after freeze",
+        "phase": "②"
+      },
+      "findings": [],
+      "verdict": "PASS",
+      "pass": true
+    }
+  },
+  "frozen_chain": {
+    "pass": true,
+    "rows": [
+      {
+        "batch_id": "B21",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B22",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B23",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B24",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C1",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C2",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C3",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C4",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C5",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C6",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B26",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "21f830ffbf6afe8237dab1021e6113fd57ffcd3e"
+      },
+      {
+        "batch_id": "B30",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B31",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B32",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B33",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B34",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B35",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B36",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      }
+    ],
+    "pass_count": 18,
+    "total": 18
+  },
+  "deploy": {
+    "pass": false,
+    "skipped": true,
+    "reason": "--skip-deploy",
+    "manifest": {
+      "schema": "traveltrust.fpc_100_b40_deploy_manifest.v1",
+      "timestamp_utc": "2026-07-10T11:06:00.000Z",
+      "phase": "② staging",
+      "authoritative_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "staging_meta_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "sha_match": false,
+      "deploy_attempt": {
+        "fly_release": "v174",
+        "status": "failed",
+        "smoke_check": "app crash loop",
+        "build_git_sha_injected": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+        "failure_classification": "CONFIG_ISSUE",
+        "failure_detail": "migration 20260709140000 was previously applied but has been modified (staging DB checksum drift)"
+      },
+      "post_rollback_staging_sha": "4706266acf8ec8a92e5eb01b8d83257013cbd30a",
+      "staging_api": "https://tt-api-staging.fly.dev",
+      "deploy_source": "git worktree detach @ authoritative SHA",
+      "owner_auth": "TRAVELTRUST_FPC_B40_STAGING_OK=1"
+    },
+    "rollback": {
+      "schema": "traveltrust.fpc_100_b40_rollback.v1",
+      "timestamp_utc": "2026-07-10T11:10:00.000Z",
+      "phase": "② staging",
+      "trigger": "anchor deploy v174 smoke check failed — app crash loop",
+      "root_cause_classification": "CONFIG_ISSUE",
+      "root_cause_detail": "staging Postgres _sqlx_migrations checksum for 20260709140000_cms_public_announcements.sql differs from authoritative anchor 9a73a8de — migration previously applied but modified on disk",
+      "fly_log_excerpt": "TravelTrust API 启动失败: migration 20260709140000 was previously applied but has been modified",
+      "rollback_action": "fly deploy --image registry.fly.io/tt-api-staging:deployment-01KX3HNDNXK6DNBY2A7WC1DTNR (release v173)",
+      "rollback_result": {
+        "pass": true,
+        "health_status": 200,
+        "restored_git_sha": "4706266acf8ec8a92e5eb01b8d83257013cbd30a"
+      },
+      "remediation_owner": "② staging ops — reconcile migration ledger or align staging DB with anchor migrations before re-attempt B40 deploy",
+      "phase_honesty": "Rollback restored staging; B40 PASS blocked until anchor SHA deploy succeeds — not ③"
+    }
+  },
+  "health": {
+    "pass": true,
+    "api": {
+      "url": "https://tt-api-staging.fly.dev/health",
+      "status": 200,
+      "body": {
+        "raw": "ok"
+      }
+    },
+    "web": {
+      "url": "https://tt-web-staging.fly.dev/",
+      "status": 200
+    }
+  },
+  "meta": {
+    "pass": false,
+    "meta_status": 200,
+    "staging_git_sha": "4706266acf8ec8a92e5eb01b8d83257013cbd30a",
+    "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "deployment_profile": "staging",
+    "sha_match": false
+  },
+  "env_diff": {
+    "pass": true,
+    "local_api_reachable": true,
+    "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "api_probes": {
+      "staging": {
+        "/api/v1/public/announcements?limit=3": {
+          "status": 200,
+          "count": 3
+        },
+        "/api/v1/public/roadmap": {
+          "status": 200,
+          "count": 2
+        },
+        "/api/v1/guides?limit=3": {
+          "status": 200,
+          "count": 3
+        }
+      },
+      "local": {
+        "/api/v1/public/announcements?limit=3": {
+          "status": 200,
+          "count": 3
+        },
+        "/api/v1/public/roadmap": {
+          "status": 200,
+          "count": 2
+        },
+        "/api/v1/guides?limit=3": {
+          "status": 200,
+          "count": 3
+        }
+      }
+    },
+    "count_drifts": [],
+    "expected_differences": [
+      "ENV-CHAIN",
+      "ENV-PROFILE",
+      "ENV-ORIGIN"
+    ],
+    "staging_web_alignment": true
+  },
+  "registry_parity": {
+    "pass": false,
+    "registry_anchor": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "staging_meta_sha": "4706266acf8ec8a92e5eb01b8d83257013cbd30a",
+    "parity": false
+  },
+  "rollback_doc": {
+    "pass": true,
+    "ssot_present": [
+      "ops/RUNBOOK.md",
+      "docs/runbook/FPC-100-PRE-RELEASE-EXECUTION-PLAN-v1.md",
+      "scripts/dev/phase2-staging-fly-deploy-and-sync.sh"
+    ],
+    "runbook_rollback_anchor": true,
+    "probe_note": "Rollback drill = documented procedure + fly redeploy prior release image (② one-shot)"
+  },
+  "rollback_evidence": {
+    "schema": "traveltrust.fpc_100_b40_rollback.v1",
+    "timestamp_utc": "2026-07-10T11:10:00.000Z",
+    "phase": "② staging",
+    "trigger": "anchor deploy v174 smoke check failed — app crash loop",
+    "root_cause_classification": "CONFIG_ISSUE",
+    "root_cause_detail": "staging Postgres _sqlx_migrations checksum for 20260709140000_cms_public_announcements.sql differs from authoritative anchor 9a73a8de — migration previously applied but modified on disk",
+    "fly_log_excerpt": "TravelTrust API 启动失败: migration 20260709140000 was previously applied but has been modified",
+    "rollback_action": "fly deploy --image registry.fly.io/tt-api-staging:deployment-01KX3HNDNXK6DNBY2A7WC1DTNR (release v173)",
+    "rollback_result": {
+      "pass": true,
+      "health_status": 200,
+      "restored_git_sha": "4706266acf8ec8a92e5eb01b8d83257013cbd30a"
+    },
+    "remediation_owner": "② staging ops — reconcile migration ledger or align staging DB with anchor migrations before re-attempt B40 deploy",
+    "phase_honesty": "Rollback restored staging; B40 PASS blocked until anchor SHA deploy succeeds — not ③"
+  },
+  "staging_recheck": {
+    "pass": true,
+    "batches": [
+      "B00",
+      "B01",
+      "B04",
+      "B21",
+      "B22"
+    ],
+    "results": [
+      {
+        "gate": "check-phase3-production-infrastructure-ssot.sh",
+        "pass": true
+      },
+      {
+        "gate": "B00_meta_contract",
+        "pass": true,
+        "detail": "meta.build.git_sha present"
+      }
+    ],
+    "note": "Full corridor gates run @ ① frozen; staging recheck = health/meta/infra SSOT only"
+  },
+  "finding_classification": {
+    "ENVIRONMENT_DRIFT": 0,
+    "CONFIG_ISSUE": 2,
+    "REAL_DEFECT": 0,
+    "UNCLASSIFIED": 0
+  },
+  "findings": [
+    {
+      "id": "anchor_deploy_blocked_migration_drift",
+      "severity": "P0",
+      "classification": "CONFIG_ISSUE",
+      "detail": "staging Postgres _sqlx_migrations checksum for 20260709140000_cms_public_announcements.sql differs from authoritative anchor 9a73a8de — migration previously applied but modified on disk",
+      "remediation": "② staging ops — reconcile migration ledger or align staging DB with anchor migrations before re-attempt B40 deploy"
+    },
+    {
+      "id": "meta_sha_mismatch",
+      "severity": "P0",
+      "classification": "CONFIG_ISSUE",
+      "detail": "expected 9a73a8de977d2b6d67ddca20ef953da6135ccd7b got 4706266acf8ec8a92e5eb01b8d83257013cbd30a",
+      "expected_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "staging_sha": "4706266acf8ec8a92e5eb01b8d83257013cbd30a"
+    }
+  ]
+}

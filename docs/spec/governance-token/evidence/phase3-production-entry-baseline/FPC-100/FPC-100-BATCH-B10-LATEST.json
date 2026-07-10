@@ -392,9 +392,9 @@
     "review_date": "2026-07-10",
     "review_version": "v1"
   },
-  "human_verified": false,
-  "human_verifier": null,
-  "human_note": "BFM ① — registry + human 5-layer step evidence; governance/community/admin cross-domain via prior FPC batches; CDIA live probes → ②",
+  "human_verified": true,
+  "human_verifier": "Sebastian Ward",
+  "human_note": "Production Entry Review rollup @ B41 sign-off 2026-07-10",
   "traceability": {
     "requirements": [
       "Guide / Provider / Acquisition flows all steps PASS with evidence",

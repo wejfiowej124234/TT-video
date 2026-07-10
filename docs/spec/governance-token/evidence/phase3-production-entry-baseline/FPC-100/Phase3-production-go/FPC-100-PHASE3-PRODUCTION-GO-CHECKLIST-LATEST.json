@@ -1,0 +1,231 @@
+{
+  "schema": "traveltrust.fpc_100_phase3_production_go_checklist.v1",
+  "timestamp_utc": "2026-07-10T12:36:46.039Z",
+  "phase": "③ public / production",
+  "machine_key": "TT_PRODUCTION_GO_CHECKLIST",
+  "authoritative_immutable_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+  "sole_candidate": true,
+  "git": {
+    "head": "8bee92f25c0182f84565a11d3c6874ea58051e7e",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "checklist_ref": "Phase3-production-go/FPC-100-PRODUCTION-GO-CHECKLIST-BASELINE.v1.json",
+  "items": [
+    {
+      "id": "P3-PHASE2-LOCK",
+      "pass": true,
+      "detail": "PASS",
+      "ref": "FPC-100-PHASE2-STAGING-FINAL-FREEZE-LATEST.json"
+    },
+    {
+      "id": "P3-B41-ENTRY",
+      "pass": true,
+      "detail": "PASS",
+      "human_verified": true
+    },
+    {
+      "id": "P3-G1-REGISTRY",
+      "pass": true,
+      "detail": "G1=PASS"
+    },
+    {
+      "id": "P3-MAINNET-DEPLOY",
+      "pass": false,
+      "detail": "BLOCKED owner_only · Mainnet broadcast Owner-only; Sepolia spine ≠ mainnet GO",
+      "owner_only": true,
+      "staging_proxy_ok": false
+    },
+    {
+      "id": "P3-WEB3-PAYMENT",
+      "pass": true,
+      "detail": "WEB3_PAYMENT_PRODUCTION_PASS"
+    },
+    {
+      "id": "P3-WEB3-SYSTEM",
+      "pass": false,
+      "detail": "NOT_READY"
+    },
+    {
+      "id": "P3-PROD-API-DEPLOY",
+      "pass": false,
+      "detail": "PRODUCTION_API_BASE unset · prod deploy Owner-only @ candidate SHA 9a73a8de",
+      "owner_only": true
+    },
+    {
+      "id": "P3-PROD-WEB-DEPLOY",
+      "pass": false,
+      "detail": "PRODUCTION_WEB_BASE unset · prod deploy Owner-only @ candidate SHA 9a73a8de",
+      "owner_only": true
+    },
+    {
+      "id": "P3-DOMAIN-TLS",
+      "pass": false,
+      "detail": "DOMAIN_TLS_CORS=PLANNED"
+    },
+    {
+      "id": "P3-CDN-MEDIA",
+      "pass": false,
+      "detail": "CDN_MEDIA=PLANNED"
+    },
+    {
+      "id": "P3-PG-BACKUP",
+      "pass": true,
+      "detail": "PASS"
+    },
+    {
+      "id": "P3-MONITORING",
+      "pass": false,
+      "detail": "MONITORING_ALERT=PLANNED"
+    },
+    {
+      "id": "P3-CMS-OPS",
+      "pass": true,
+      "detail": "CMS_FULL_OPERATIONS=GO"
+    },
+    {
+      "id": "P3-OCS-PARITY",
+      "pass": true,
+      "detail": "OCS_PRODUCTION_PARITY_AUDIT=PASS per closure sequence"
+    },
+    {
+      "id": "P3-SECURITY-REVIEW",
+      "pass": false,
+      "detail": "SECURITY_REVIEW=PLANNED"
+    },
+    {
+      "id": "P3-FINAL-OPS-UAT",
+      "pass": false,
+      "detail": "OPEN · production final ops walkthrough Owner-only",
+      "owner_only": true
+    },
+    {
+      "id": "P3-OWNER-SIGNOFF",
+      "pass": false,
+      "detail": "PENDING owner_only",
+      "owner_only": true
+    },
+    {
+      "id": "P3-FOUR-GATE-UNION",
+      "pass": false,
+      "detail": "blockers=infrastructure,operations production_go=NO_GO",
+      "four_gate": {
+        "kind": "traveltrust.production_go_four_gate.v1",
+        "recorded_utc": "20260708T075812Z",
+        "stamp": "20260708T075812Z",
+        "framework": "registry/production-go-four-gate-framework.v1.yaml",
+        "gates": {
+          "business": {
+            "machine_key": "TT_PRODUCTION_BUSINESS_READY",
+            "verdict": "TT_PRODUCTION_BUSINESS_PASS"
+          },
+          "web3": {
+            "machine_key": "TT_PRODUCTION_WEB3_READY",
+            "verdict": "TT_PRODUCTION_WEB3_PASS",
+            "detail": "WEB3_PAYMENT_PRODUCTION_PASS"
+          },
+          "infrastructure": {
+            "machine_key": "TT_PRODUCTION_INFRASTRUCTURE_READY",
+            "verdict": "TT_PRODUCTION_INFRASTRUCTURE_IN_PROGRESS"
+          },
+          "operations": {
+            "machine_key": "TT_PRODUCTION_OPERATIONS_READY",
+            "verdict": "TT_PRODUCTION_OPERATIONS_IN_PROGRESS"
+          },
+          "owner_signoff": {
+            "machine_key": "TT_OWNER_FINAL_SIGNOFF",
+            "verdict": "PENDING"
+          },
+          "production_go": {
+            "machine_key": "TT_PRODUCTION_GO",
+            "verdict": "NO_GO"
+          }
+        },
+        "payment_architecture": {
+          "core": "Web3 Escrow USDC",
+          "stripe": "Optional Fiat Onboarding P1 not in gates"
+        },
+        "evidence_dir": "evidence/GO_production_readiness/four-gate/four-gate-20260708T075812Z"
+      }
+    },
+    {
+      "id": "P3-CLOSURE-SEQUENCE",
+      "pass": false,
+      "detail": "open: IN_PROGRESS, PLANNED, PLANNED, PLANNED, PLANNED, PLANNED"
+    },
+    {
+      "id": "P3-GO-DECISION-PACKAGE",
+      "pass": false,
+      "detail": "decision package not assembled"
+    }
+  ],
+  "summary": {
+    "pass_count": 7,
+    "total": 20,
+    "open_blockers": [
+      {
+        "id": "P3-MAINNET-DEPLOY",
+        "detail": "BLOCKED owner_only · Mainnet broadcast Owner-only; Sepolia spine ≠ mainnet GO"
+      },
+      {
+        "id": "P3-WEB3-SYSTEM",
+        "detail": "NOT_READY"
+      },
+      {
+        "id": "P3-PROD-API-DEPLOY",
+        "detail": "PRODUCTION_API_BASE unset · prod deploy Owner-only @ candidate SHA 9a73a8de"
+      },
+      {
+        "id": "P3-PROD-WEB-DEPLOY",
+        "detail": "PRODUCTION_WEB_BASE unset · prod deploy Owner-only @ candidate SHA 9a73a8de"
+      },
+      {
+        "id": "P3-DOMAIN-TLS",
+        "detail": "DOMAIN_TLS_CORS=PLANNED"
+      },
+      {
+        "id": "P3-CDN-MEDIA",
+        "detail": "CDN_MEDIA=PLANNED"
+      },
+      {
+        "id": "P3-MONITORING",
+        "detail": "MONITORING_ALERT=PLANNED"
+      },
+      {
+        "id": "P3-SECURITY-REVIEW",
+        "detail": "SECURITY_REVIEW=PLANNED"
+      },
+      {
+        "id": "P3-FINAL-OPS-UAT",
+        "detail": "OPEN · production final ops walkthrough Owner-only"
+      },
+      {
+        "id": "P3-OWNER-SIGNOFF",
+        "detail": "PENDING owner_only"
+      },
+      {
+        "id": "P3-FOUR-GATE-UNION",
+        "detail": "blockers=infrastructure,operations production_go=NO_GO"
+      },
+      {
+        "id": "P3-CLOSURE-SEQUENCE",
+        "detail": "open: IN_PROGRESS, PLANNED, PLANNED, PLANNED, PLANNED, PLANNED"
+      },
+      {
+        "id": "P3-GO-DECISION-PACKAGE",
+        "detail": "decision package not assembled"
+      }
+    ]
+  },
+  "tt_production_go": {
+    "declaration_allowed": false,
+    "verdict": "NO_GO",
+    "note": "Declaration forbidden until all checklist items PASS and Owner sign-off recorded"
+  },
+  "phase_boundary": {
+    "phase2_closed": true,
+    "phase3_complete": false,
+    "honest_boundary": "② B40/B41 PASS ≠ ③ Production GO"
+  },
+  "verdict": "NO_GO",
+  "pass": false
+}

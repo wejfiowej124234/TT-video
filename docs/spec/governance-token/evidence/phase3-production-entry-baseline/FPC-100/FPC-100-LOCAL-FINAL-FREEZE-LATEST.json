@@ -1,12 +1,12 @@
 {
   "schema": "traveltrust.fpc_100_local_final_freeze.v1",
-  "timestamp_utc": "2026-07-10T10:40:37.096Z",
+  "timestamp_utc": "2026-07-10T12:37:29.269Z",
   "phase": "① local",
   "machine_key": "TT_LOCAL_FINAL_FREEZE",
   "git": {
-    "head": "8121b9d5650e1cb1311f4eaf0ad7831ad77ed6da",
+    "head": "8bee92f25c0182f84565a11d3c6874ea58051e7e",
     "branch": "feature/g23-04-abi-event-freeze",
-    "working_tree_clean": true
+    "working_tree_clean": false
   },
   "authoritative_immutable_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
   "freeze_chain": {
@@ -162,23 +162,25 @@
     "total": 18
   },
   "burn_down": {
-    "completed": 39,
-    "remaining": 2,
+    "completed": 41,
+    "remaining": 0,
     "total": 41,
-    "contiguous_completed": 39,
-    "release_readiness_pct": 95.1,
-    "coverage_pct": 95.1,
-    "next_required_batch": "B40",
+    "contiguous_completed": 41,
+    "release_readiness_pct": 100,
+    "coverage_pct": 100,
+    "next_required_batch": null,
     "skip_violations": [],
     "sequence_ok": true
   },
-  "release_readiness_pct": 95.1,
-  "next_required_batch": "B40",
+  "release_readiness_pct": 100,
+  "next_required_batch": null,
   "anchor_b30_b36": true,
   "b40_entry": {
-    "authorized": false,
-    "note": "B40 ② staging one-shot — requires explicit Owner authorization; no ① business code changes after freeze",
-    "phase": "②"
+    "authorized": true,
+    "completed": true,
+    "phase": "②",
+    "ref": "FPC-100-PHASE2-STAGING-FINAL-FREEZE-LATEST.json",
+    "note": "B40+B41 ② staging closed — Phase ③ Production GO is separate"
   },
   "findings": [],
   "verdict": "PASS",

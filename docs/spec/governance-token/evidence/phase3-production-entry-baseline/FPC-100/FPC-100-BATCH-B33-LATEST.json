@@ -289,9 +289,9 @@
     "review_date": "2026-07-10",
     "review_version": "v1"
   },
-  "human_verified": false,
-  "human_verifier": null,
-  "human_note": "Operations ① — TTOW six-domain workflow · RBAC · public-ops SSOT · 114 admin pages; E1/E2 human walkthrough deferred to ②; defer-commit",
+  "human_verified": true,
+  "human_verifier": "Sebastian Ward",
+  "human_note": "Production Entry Review rollup @ B41 sign-off 2026-07-10",
   "traceability": {
     "requirements": [
       "check-official-ops-public-operations-ssot + smoke-admin-rbac-matrix PASS",

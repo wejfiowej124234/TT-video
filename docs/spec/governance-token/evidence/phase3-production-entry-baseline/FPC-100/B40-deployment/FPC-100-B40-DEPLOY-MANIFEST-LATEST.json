@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.fpc_100_b40_deploy_manifest.v1",
+  "timestamp_utc": "2026-07-10T12:00:11.000Z",
+  "phase": "② staging",
+  "authoritative_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+  "staging_meta_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+  "sha_match": true,
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "deploy_source": "git worktree detach @ authoritative SHA",
+  "owner_auth": "TRAVELTRUST_FPC_B40_STAGING_OK=1",
+  "deploy_log": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B40-deployment/deploy-from-anchor-20260710T115256Z.log",
+  "fly_image": "registry.fly.io/tt-api-staging:deployment-01KX5XZVKBCG3ZS4J3WTHFVB44",
+  "api_health_status": 200,
+  "web_deploy": "skipped (TT_STAGING_RC_BASELINE gate — API anchor deploy is B40 scope)",
+  "migration_ledger_reconciliation": "FPC-100-B40-MIGRATION-LEDGER-RECONCILIATION-LATEST.json",
+  "remediation_summary": "136 _sqlx_migrations checksum rows aligned to anchor LF; worktree binary LF normalize; Dockerfile in-builder LF strip; FLY_API_NO_CACHE=1"
+}

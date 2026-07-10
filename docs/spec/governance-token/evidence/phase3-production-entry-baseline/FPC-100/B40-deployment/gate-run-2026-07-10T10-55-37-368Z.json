@@ -1,0 +1,456 @@
+{
+  "timestamp_utc": "2026-07-10T10:55:37.368Z",
+  "phase": "② staging",
+  "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+  "governance_head": "8bee92f25c0182f84565a11d3c6874ea58051e7e",
+  "owner_auth": {
+    "pass": true,
+    "env": "TRAVELTRUST_FPC_B40_STAGING_OK=1"
+  },
+  "local_final_freeze": {
+    "pass": false,
+    "evidence": {
+      "schema": "traveltrust.fpc_100_local_final_freeze.v1",
+      "timestamp_utc": "2026-07-10T10:55:27.915Z",
+      "phase": "① local",
+      "machine_key": "TT_LOCAL_FINAL_FREEZE",
+      "git": {
+        "head": "8bee92f25c0182f84565a11d3c6874ea58051e7e",
+        "branch": "feature/g23-04-abi-event-freeze",
+        "working_tree_clean": false
+      },
+      "authoritative_immutable_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "freeze_chain": {
+        "batches": [
+          "B21",
+          "B22",
+          "B23",
+          "B24",
+          "B25-C1",
+          "B25-C2",
+          "B25-C3",
+          "B25-C4",
+          "B25-C5",
+          "B25-C6",
+          "B26",
+          "B30",
+          "B31",
+          "B32",
+          "B33",
+          "B34",
+          "B35",
+          "B36"
+        ],
+        "rows": [
+          {
+            "batch_id": "B21",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B22",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B23",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B24",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B25-C1",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B25-C2",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B25-C3",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B25-C4",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B25-C5",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B25-C6",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+          },
+          {
+            "batch_id": "B26",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "21f830ffbf6afe8237dab1021e6113fd57ffcd3e"
+          },
+          {
+            "batch_id": "B30",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          },
+          {
+            "batch_id": "B31",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          },
+          {
+            "batch_id": "B32",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          },
+          {
+            "batch_id": "B33",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          },
+          {
+            "batch_id": "B34",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          },
+          {
+            "batch_id": "B35",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          },
+          {
+            "batch_id": "B36",
+            "pass": true,
+            "verdict": "PASS",
+            "certification_frozen": true,
+            "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+          }
+        ],
+        "pass_count": 18,
+        "total": 18
+      },
+      "burn_down": {
+        "completed": 39,
+        "remaining": 2,
+        "total": 41,
+        "contiguous_completed": 39,
+        "release_readiness_pct": 95.1,
+        "coverage_pct": 95.1,
+        "next_required_batch": "B40",
+        "skip_violations": [],
+        "sequence_ok": true
+      },
+      "release_readiness_pct": 95.1,
+      "next_required_batch": "B40",
+      "anchor_b30_b36": true,
+      "b40_entry": {
+        "authorized": false,
+        "note": "B40 ② staging one-shot — requires explicit Owner authorization; no ① business code changes after freeze",
+        "phase": "②"
+      },
+      "findings": [
+        {
+          "severity": "P0",
+          "id": "working_tree_not_clean",
+          "detail": "?? docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B40-deployment/; ?? scripts/dev/lib/fpc-deployment-probes.cjs; ?? scripts/dev/run-fpc-b40-staging-deploy-from-anchor.sh; ?? scripts/dev/run-fpc-batch-b40-deployment.cjs"
+        }
+      ],
+      "verdict": "FAIL",
+      "pass": false
+    }
+  },
+  "frozen_chain": {
+    "pass": true,
+    "rows": [
+      {
+        "batch_id": "B21",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B22",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B23",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B24",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C1",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C2",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C3",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C4",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C5",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C6",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B26",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "21f830ffbf6afe8237dab1021e6113fd57ffcd3e"
+      },
+      {
+        "batch_id": "B30",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B31",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B32",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B33",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B34",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B35",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B36",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      }
+    ],
+    "pass_count": 18,
+    "total": 18
+  },
+  "deploy": {
+    "pass": false,
+    "skipped": false,
+    "detail": "TT_FPC_B40_STAGING_DEPLOY: START anchor=9a73a8de977d2b6d67ddca20ef953da6135ccd7b stamp=20260710T105537Z\n  governance_head=8bee92f25c0182f84565a11d3c6874ea58051e7e\n  policy: deploy build source = authoritative SHA only; B21-B36 frozen unchanged\nPreparing worktree (detached HEAD 9a73a8de)\nUpdating files:  12% (3945/31450)\rUpdating files:  13% (4089/31450)\rUpdating files:  14% (4403/31450)\rUpdating files:  15% (4718/31450)\rUpdating files:  16% (5032/31450)\rUpdating files:  17% (5347/31450)\rUpdating files:  18% (5661/31450)\rUpdating files:  19% (5976/31450)\rUpdating files:  19% (6046/31450)\rUpdating files:  20% (6290/31450)\rUpdating files:  21% (6605/31450)\rUpdating files:  22% (6919/31450)\rUpdating files:  23% (7234/31450)\rUpdating files:  24% (7548/31450)\rUpdating files:  25% (7863/31450)\rUpdating files:  26% (8177/31450)\rUpdating files:  27% (8492/31450)\rUpdating files:  28% (8806/31450)\rUpdating files:  28% (8815/31450)\rUpdating files:  29% (9121/31450)\rUpdating files:  30% (9435/31450)\rUpdating files:  31% (9750/31450)\rUpdating files:  32% (10064/31450)\rUpdating files:  33% (10379/31450)\rUpdating files:  34% (10693/31450)\rUpdating files:  35% (11008/31450)\rUpdating files:  36% (11322/31450)\rUpdating files:  37% (11637/31450)\rUpdating files:  38% (11951/31450)\rUpdating files:  39% (12266/31450)\rUpdating files:  40% (12580/31450)\rUpdating files:  41% (12895/31450)\rUpdating files:  42% (13209/31450)\rUpdating files:  43% (13524/31450)\rUpdating files:  44% (13838/31450)\rUpdating "
+  },
+  "health": {
+    "pass": true,
+    "api": {
+      "url": "https://tt-api-staging.fly.dev/health",
+      "status": 200,
+      "body": {
+        "raw": "ok"
+      }
+    },
+    "web": {
+      "url": "https://tt-web-staging.fly.dev/",
+      "status": 200
+    }
+  },
+  "meta": {
+    "pass": false,
+    "meta_status": 200,
+    "staging_git_sha": "4706266acf8ec8a92e5eb01b8d83257013cbd30a",
+    "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "deployment_profile": "staging",
+    "sha_match": false
+  },
+  "env_diff": {
+    "pass": true,
+    "local_api_reachable": true,
+    "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "api_probes": {
+      "staging": {
+        "/api/v1/public/announcements?limit=3": {
+          "status": 200,
+          "count": 3
+        },
+        "/api/v1/public/roadmap": {
+          "status": 200,
+          "count": 2
+        },
+        "/api/v1/guides?limit=3": {
+          "status": 200,
+          "count": 3
+        }
+      },
+      "local": {
+        "/api/v1/public/announcements?limit=3": {
+          "status": 200,
+          "count": 3
+        },
+        "/api/v1/public/roadmap": {
+          "status": 200,
+          "count": 2
+        },
+        "/api/v1/guides?limit=3": {
+          "status": 200,
+          "count": 3
+        }
+      }
+    },
+    "count_drifts": [],
+    "expected_differences": [
+      "ENV-CHAIN",
+      "ENV-PROFILE",
+      "ENV-ORIGIN"
+    ],
+    "staging_web_alignment": true
+  },
+  "registry_parity": {
+    "pass": false,
+    "registry_anchor": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "staging_meta_sha": "4706266acf8ec8a92e5eb01b8d83257013cbd30a",
+    "parity": false
+  },
+  "rollback": {
+    "pass": true,
+    "ssot_present": [
+      "ops/RUNBOOK.md",
+      "docs/runbook/FPC-100-PRE-RELEASE-EXECUTION-PLAN-v1.md",
+      "scripts/dev/phase2-staging-fly-deploy-and-sync.sh"
+    ],
+    "runbook_rollback_anchor": true,
+    "probe_note": "Rollback drill = documented procedure + fly redeploy prior release image (② one-shot)"
+  },
+  "staging_recheck": {
+    "pass": true,
+    "batches": [
+      "B00",
+      "B01",
+      "B04",
+      "B21",
+      "B22"
+    ],
+    "results": [
+      {
+        "gate": "check-phase3-production-infrastructure-ssot.sh",
+        "pass": true
+      },
+      {
+        "gate": "B00_meta_contract",
+        "pass": true,
+        "detail": "meta.build.git_sha present"
+      }
+    ],
+    "note": "Full corridor gates run @ ① frozen; staging recheck = health/meta/infra SSOT only"
+  },
+  "finding_classification": {
+    "ENVIRONMENT_DRIFT": 1,
+    "CONFIG_ISSUE": 1,
+    "REAL_DEFECT": 1,
+    "UNCLASSIFIED": 0
+  },
+  "findings": [
+    {
+      "id": "local_final_freeze_not_pass",
+      "severity": "P0",
+      "classification": "REAL_DEFECT",
+      "detail": "FAIL"
+    },
+    {
+      "id": "staging_deploy_fail",
+      "severity": "P0",
+      "classification": "CONFIG_ISSUE",
+      "detail": "TT_FPC_B40_STAGING_DEPLOY: START anchor=9a73a8de977d2b6d67ddca20ef953da6135ccd7b stamp=20260710T105537Z\n  governance_head=8bee92f25c0182f84565a11d3c6874ea58051e7e\n  policy: deploy build source = authoritative SHA only; B21-B36 frozen unchanged\nPreparing worktree (detached HEAD 9a73a8de)\nUpdating files:  12% (3945/31450)\rUpdating files:  13% (4089/31450)\rUpdating files:  14% (4403/31450)\rUpdating files:  15% (4718/31450)\rUpdating files:  16% (5032/31450)\rUpdating files:  17% (5347/31450)\rUpdating files:  18% (5661/31450)\rUpdating files:  19% (5976/31450)\rUpdating files:  19% (6046/31450)\rUpdating files:  20% (6290/31450)\rUpdating files:  21% (6605/31450)\rUpdating files:  22% (6919/31450)\rUpdating files:  23% (7234/31450)\rUpdating files:  24% (7548/31450)\rUpdating files:  25% (7863/31450)\rUpdating files:  26% (8177/31450)\rUpdating files:  27% (8492/31450)\rUpdating files:  28% (8806/31450)\rUpdating files:  28% (8815/31450)\rUpdating files:  29% (9121/31450)\rUpdating files:  30% (9435/31450)\rUpdating files:  31% (9750/31450)\rUpdating files:  32% (10064/31450)\rUpdating files:  33% (10379/31450)\rUpdating files:  34% (10693/31450)\rUpdating files:  35% (11008/31450)\rUpdating files:  36% (11322/31450)\rUpdating files:  37% (11637/31450)\rUpdating files:  38% (11951/31450)\rUpdating files:  39% (12266/31450)\rUpdating files:  40% (12580/31450)\rUpdating files:  41% (12895/31450)\rUpdating files:  42% (13209/31450)\rUpdating files:  43% (13524/31450)\rUpdating files:  44% (13838/31450)\rUpdating files:  44% (13881/31450)\rUpdating files:  45% (14153/31450)\rUpdating files:  46% (14467/31450)\rUpdating files:  47% (14782/31450)\rUpdating files:  48% (15096/31450)\rUpdating files:  49% (15411/31450)\rUpdating files:  50% (15725/31450)\rUpdating files:  51% (16040/31450)\rUpdating files:  52% (16354/31450)\rUpdating files:  53% (16669/31450)\rUpdating files:  54% (16983/31450)\rUpdating files:  55% (17298/31450)\rUpdating files:  56% (17612/31450)\rUpdating files:  57% (17927/31450)\rUpdating files:  58% (18241/31450)\rUpdating files:  59% (18556/31450)\rUpdating files:  60% (18870/31450)\rUpdating files:  61% (19185/31450)\rUpdating files:  61% (19411/31450)\rUpdating files:  62% (19499/31450)\rUpdating files:  63% (19814/31450)\rUpdating files:  64% (20128/31450)\rUpdating files:  65% (20443/31450)\rUpdating files:  66% (20757/31450)\rUpdating files:  67% (21072/31450)\rUpdating files:  68% (21386/31450)\rUpdating files:  69% (21701/31450)\rUpdating files:  70% (22015/31450)\rUpdating files:  71% (22330/31450)\rUpdating files:  71% (22587/31450)\rUpdating files:  72% (22644/31450)\rUpdating files:  73% (22959/31450)\rUpdating files:  74% (23273/31450)\rUpdating files:  75% (23588/31450)\rUpdating files:  76% (23902/31450)\rUpdating files:  77% (24217/31450)\rUpdating files:  78% (24531/31450)\rUpdating files:  79% (24846/31450)\rUpdating files:  80% (25160/31450)\rUpdating files:  81% (25475/31450)\rUpdating files:  82% (25789/31450)\rUpdating files:  83% (26104/31450)\rUpdating files:  84% (26418/31450)\rUpda"
+    },
+    {
+      "id": "meta_sha_mismatch",
+      "severity": "P0",
+      "classification": "ENVIRONMENT_DRIFT",
+      "detail": "expected 9a73a8de977d2b6d67ddca20ef953da6135ccd7b got 4706266acf8ec8a92e5eb01b8d83257013cbd30a",
+      "expected_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "staging_sha": "4706266acf8ec8a92e5eb01b8d83257013cbd30a"
+    }
+  ]
+}

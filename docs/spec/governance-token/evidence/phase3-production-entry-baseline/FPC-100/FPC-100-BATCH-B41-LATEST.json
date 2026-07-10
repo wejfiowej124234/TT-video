@@ -1,0 +1,476 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B41",
+  "title": "Production Entry Review · Business Readiness (② staging)",
+  "layer": "business",
+  "phase": "② staging",
+  "timestamp_utc": "2026-07-10T12:12:10.493Z",
+  "verifier": "run-fpc-batch-b41-production-entry-review.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+  "authoritative_immutable_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+  "git": {
+    "head": "8bee92f25c0182f84565a11d3c6874ea58051e7e",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B00",
+    "B01",
+    "B40"
+  ],
+  "owner_authorization": {
+    "env": "TRAVELTRUST_FPC_B41_STAGING_OK=1",
+    "authorized": true
+  },
+  "local_final_freeze_ref": "FPC-100-LOCAL-FINAL-FREEZE-LATEST.json",
+  "frozen_chain_readonly": {
+    "pass": true,
+    "rows": [
+      {
+        "batch_id": "B21",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B22",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B23",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B24",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C1",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C2",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C3",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C4",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C5",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C6",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B26",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "21f830ffbf6afe8237dab1021e6113fd57ffcd3e"
+      },
+      {
+        "batch_id": "B30",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B31",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B32",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B33",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B34",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B35",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B36",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      }
+    ],
+    "pass_count": 18,
+    "total": 18
+  },
+  "staging_endpoints": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev"
+  },
+  "b40_deploy_anchor": {
+    "pass": true,
+    "manifest": {
+      "schema": "traveltrust.fpc_100_b40_deploy_manifest.v1",
+      "timestamp_utc": "2026-07-10T12:00:11.000Z",
+      "phase": "② staging",
+      "authoritative_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "staging_meta_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "sha_match": true,
+      "staging_api": "https://tt-api-staging.fly.dev",
+      "deploy_source": "git worktree detach @ authoritative SHA",
+      "owner_auth": "TRAVELTRUST_FPC_B40_STAGING_OK=1",
+      "deploy_log": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B40-deployment/deploy-from-anchor-20260710T115256Z.log",
+      "fly_image": "registry.fly.io/tt-api-staging:deployment-01KX5XZVKBCG3ZS4J3WTHFVB44",
+      "api_health_status": 200,
+      "web_deploy": "skipped (TT_STAGING_RC_BASELINE gate — API anchor deploy is B40 scope)",
+      "migration_ledger_reconciliation": "FPC-100-B40-MIGRATION-LEDGER-RECONCILIATION-LATEST.json",
+      "remediation_summary": "136 _sqlx_migrations checksum rows aligned to anchor LF; worktree binary LF normalize; Dockerfile in-builder LF strip; FLY_API_NO_CACHE=1"
+    },
+    "b40_batch": {
+      "verdict": "PASS",
+      "pass": true
+    }
+  },
+  "prior_batches": {
+    "pass": true,
+    "batches": [
+      {
+        "batch_id": "B00",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B01",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B04",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B21",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B22",
+        "pass": true,
+        "verdict": "PASS"
+      },
+      {
+        "batch_id": "B40",
+        "pass": true,
+        "verdict": "PASS"
+      }
+    ]
+  },
+  "production_entry_review_ssot": {
+    "pass": true,
+    "present": [
+      "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PRODUCTION-ENTRY-REVIEW.md",
+      "docs/go-live-checklist.md"
+    ]
+  },
+  "release_gates": {
+    "pass": true,
+    "gates": [
+      {
+        "script": "scripts/dev/check-fpc-no-batch-skip.cjs",
+        "pass": true,
+        "detail": null
+      }
+    ]
+  },
+  "anchor_business_code_freeze": {
+    "pass": true,
+    "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "head": "8bee92f25c0182f84565a11d3c6874ea58051e7e",
+    "changed_count": 18,
+    "disallowed_count": 0,
+    "policy": "Governance/evidence/FPC ops only after Local Final Freeze anchor"
+  },
+  "hygiene_gates": {
+    "pass": true,
+    "gates": [
+      {
+        "script": "scripts/gates/check-production-ui-hygiene-gate.sh",
+        "pass": true,
+        "detail": null
+      },
+      {
+        "script": "scripts/gates/check-public-surface-audit-gate.sh",
+        "pass": true,
+        "detail": null
+      }
+    ]
+  },
+  "runtime_health": {
+    "pass": true,
+    "api": {
+      "url": "https://tt-api-staging.fly.dev/health",
+      "status": 200,
+      "body": {
+        "raw": "ok"
+      }
+    },
+    "web": {
+      "url": "https://tt-web-staging.fly.dev/",
+      "status": 200
+    }
+  },
+  "meta_sha": {
+    "pass": true,
+    "meta_status": 200,
+    "staging_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "deployment_profile": "staging",
+    "sha_match": true
+  },
+  "environment_diff": {
+    "pass": true,
+    "local_api_reachable": true,
+    "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "api_probes": {
+      "staging": {
+        "/api/v1/public/announcements?limit=3": {
+          "status": 200,
+          "count": 3
+        },
+        "/api/v1/public/roadmap": {
+          "status": 200,
+          "count": 2
+        },
+        "/api/v1/guides?limit=3": {
+          "status": 200,
+          "count": 3
+        }
+      },
+      "local": {
+        "/api/v1/public/announcements?limit=3": {
+          "status": 200,
+          "count": 3
+        },
+        "/api/v1/public/roadmap": {
+          "status": 200,
+          "count": 2
+        },
+        "/api/v1/guides?limit=3": {
+          "status": 200,
+          "count": 3
+        }
+      }
+    },
+    "count_drifts": [],
+    "expected_differences": [],
+    "staging_web_alignment": true
+  },
+  "registry_parity": {
+    "pass": true,
+    "registry_anchor": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "staging_meta_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "parity": true
+  },
+  "fpc_staging_recheck": {
+    "pass": true,
+    "batches": [
+      "B00",
+      "B01",
+      "B04",
+      "B21",
+      "B22"
+    ],
+    "results": [
+      {
+        "gate": "check-phase3-production-infrastructure-ssot.sh",
+        "pass": true
+      },
+      {
+        "gate": "B00_meta_contract",
+        "pass": true,
+        "detail": "meta.build.git_sha present"
+      }
+    ],
+    "note": "Full corridor gates run @ ① frozen; staging recheck = health/meta/infra SSOT only"
+  },
+  "business_readiness": {
+    "pass": true,
+    "routes": [
+      {
+        "id": "terms",
+        "path": "/terms",
+        "url": "https://tt-web-staging.fly.dev/terms",
+        "status": 200,
+        "pass": true,
+        "forbidden_hits": []
+      },
+      {
+        "id": "privacy",
+        "path": "/privacy",
+        "url": "https://tt-web-staging.fly.dev/privacy",
+        "status": 200,
+        "pass": true,
+        "forbidden_hits": []
+      },
+      {
+        "id": "help",
+        "path": "/help",
+        "url": "https://tt-web-staging.fly.dev/help",
+        "status": 200,
+        "pass": true,
+        "forbidden_hits": []
+      },
+      {
+        "id": "home",
+        "path": "/",
+        "url": "https://tt-web-staging.fly.dev/",
+        "status": 200,
+        "pass": true,
+        "forbidden_hits": []
+      },
+      {
+        "id": "traveltrust",
+        "path": "/traveltrust",
+        "url": "https://tt-web-staging.fly.dev/traveltrust",
+        "status": 200,
+        "pass": true,
+        "forbidden_hits": []
+      }
+    ]
+  },
+  "seo_discovery": {
+    "pass": true,
+    "items": [
+      {
+        "id": "sitemap",
+        "path": "/sitemap.xml",
+        "status": 200,
+        "pass": true,
+        "bytes": 6990
+      },
+      {
+        "id": "robots",
+        "path": "/robots.txt",
+        "status": 200,
+        "pass": true,
+        "bytes": 93
+      }
+    ]
+  },
+  "staging_full_chain_alignment": {
+    "pass": true
+  },
+  "finding_classification": {
+    "ENVIRONMENT_DRIFT": 0,
+    "CONFIG_ISSUE": 0,
+    "REAL_DEFECT": 0,
+    "UNCLASSIFIED": 0
+  },
+  "gate_pass": true,
+  "business_certification": {
+    "verdict": "PASS",
+    "gate_pass": true
+  },
+  "quality_supplement": {
+    "verdict": "PASS",
+    "domains": [
+      "Q12",
+      "Q16"
+    ]
+  },
+  "overall_verdict": "PASS",
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "release_blocker": "NO",
+  "next_batch": "B41",
+  "phase_honesty": "② Production Entry Review PASS ≠ ③ Production GO",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": true,
+  "human_verifier": "Sebastian Ward",
+  "owner_sign_off": {
+    "status": "SIGNED",
+    "signed_at_utc": "2026-07-10T12:13:29.523Z",
+    "signer": "Sebastian Ward",
+    "attestation": "Sebastian Ward · Solo maintainer · FPC B41 Production Entry Review @ ② staging · human corridor verified · Owner sign-off · not ③ Production GO",
+    "phase": "② staging · Production Entry Review",
+    "env": "TRAVELTRUST_FPC_B41_OWNER_SIGNOFF_OK=1"
+  },
+  "human_note": "Run sign-fpc-b41-owner-production-entry-review.cjs after machine PASS for human verification rollup",
+  "traceability": {
+    "requirements": [
+      "B40 API anchor unchanged · meta SHA match",
+      "Staging full-chain alignment (CORS · Sepolia · legal · SEO)",
+      "Release gates + PER SSOT + prior batch PASS chain",
+      "Human verification + Owner sign-off for final FPC rollup"
+    ],
+    "spec_refs": [
+      "FPC-100/B41-production-entry-review/FPC-100-PRODUCTION-ENTRY-REVIEW-CHECKLIST-BASELINE.v1.json",
+      "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PRODUCTION-ENTRY-REVIEW.md",
+      "registry/full-production-certification-checklist.v1.yaml",
+      "docs/go-live-checklist.md"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B41-LATEST.json",
+    "certification_batch": "B41",
+    "product_version": "v1.0"
+  },
+  "burn_down": {
+    "completed": 40,
+    "remaining": 1,
+    "total": 41,
+    "contiguous_completed": 40,
+    "release_readiness_pct": 97.6,
+    "coverage_pct": 97.6,
+    "next_required_batch": "B41",
+    "skip_violations": [],
+    "sequence_ok": true
+  },
+  "certified_at_utc": "2026-07-10T12:13:29.523Z",
+  "expires_at_utc": "2026-08-09T12:13:29.523Z",
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T12:13:29.523Z",
+  "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+}

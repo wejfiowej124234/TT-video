@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.fpc_100_b41_owner_signoff.v1",
+  "timestamp_utc": "2026-07-10T12:13:29.523Z",
+  "phase": "② staging",
+  "signer": "Sebastian Ward",
+  "attestation": "Sebastian Ward · Solo maintainer · FPC B41 Production Entry Review @ ② staging · human corridor verified · Owner sign-off · not ③ Production GO",
+  "b41_verdict": "PASS",
+  "human_rollup_batches": [
+    {
+      "batch_id": "B26",
+      "human_verified": true
+    },
+    {
+      "batch_id": "B10",
+      "human_verified": true
+    },
+    {
+      "batch_id": "B33",
+      "human_verified": true
+    },
+    {
+      "batch_id": "B35",
+      "human_verified": true
+    },
+    {
+      "batch_id": "B40",
+      "human_verified": true
+    },
+    {
+      "batch_id": "B41",
+      "human_verified": true
+    }
+  ],
+  "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION",
+  "phase_honesty": "② Production Entry Review sign-off ≠ ③ Production GO"
+}

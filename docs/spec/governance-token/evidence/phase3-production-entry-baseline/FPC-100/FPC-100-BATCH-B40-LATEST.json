@@ -1,0 +1,355 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B40",
+  "title": "Deployment Certification (② staging · one-shot)",
+  "layer": "deployment",
+  "phase": "② staging",
+  "timestamp_utc": "2026-07-10T12:02:28.464Z",
+  "verifier": "run-fpc-batch-b40-deployment.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+  "authoritative_immutable_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+  "git": {
+    "head": "8bee92f25c0182f84565a11d3c6874ea58051e7e",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B00",
+    "B01"
+  ],
+  "owner_authorization": {
+    "env": "TRAVELTRUST_FPC_B40_STAGING_OK=1",
+    "authorized": true
+  },
+  "local_final_freeze_ref": "FPC-100-LOCAL-FINAL-FREEZE-LATEST.json",
+  "frozen_chain_readonly": {
+    "pass": true,
+    "rows": [
+      {
+        "batch_id": "B21",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B22",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B23",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B24",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C1",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C2",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C3",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C4",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C5",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B25-C6",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+      },
+      {
+        "batch_id": "B26",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "21f830ffbf6afe8237dab1021e6113fd57ffcd3e"
+      },
+      {
+        "batch_id": "B30",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B31",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B32",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B33",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B34",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B35",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B36",
+        "pass": true,
+        "certification_frozen": true,
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      }
+    ],
+    "pass_count": 18,
+    "total": 18
+  },
+  "staging_endpoints": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev"
+  },
+  "deploy_pipeline": {
+    "pass": true,
+    "skipped": true,
+    "reason": "--skip-deploy",
+    "manifest": {
+      "schema": "traveltrust.fpc_100_b40_deploy_manifest.v1",
+      "timestamp_utc": "2026-07-10T12:00:11.000Z",
+      "phase": "② staging",
+      "authoritative_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "staging_meta_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "sha_match": true,
+      "staging_api": "https://tt-api-staging.fly.dev",
+      "deploy_source": "git worktree detach @ authoritative SHA",
+      "owner_auth": "TRAVELTRUST_FPC_B40_STAGING_OK=1",
+      "deploy_log": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B40-deployment/deploy-from-anchor-20260710T115256Z.log",
+      "fly_image": "registry.fly.io/tt-api-staging:deployment-01KX5XZVKBCG3ZS4J3WTHFVB44",
+      "api_health_status": 200,
+      "web_deploy": "skipped (TT_STAGING_RC_BASELINE gate — API anchor deploy is B40 scope)",
+      "migration_ledger_reconciliation": "FPC-100-B40-MIGRATION-LEDGER-RECONCILIATION-LATEST.json",
+      "remediation_summary": "136 _sqlx_migrations checksum rows aligned to anchor LF; worktree binary LF normalize; Dockerfile in-builder LF strip; FLY_API_NO_CACHE=1"
+    }
+  },
+  "runtime_health": {
+    "pass": true,
+    "api": {
+      "url": "https://tt-api-staging.fly.dev/health",
+      "status": 200,
+      "body": {
+        "raw": "ok"
+      }
+    },
+    "web": {
+      "url": "https://tt-web-staging.fly.dev/",
+      "status": 200
+    }
+  },
+  "meta_sha": {
+    "pass": true,
+    "meta_status": 200,
+    "staging_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "deployment_profile": "staging",
+    "sha_match": true
+  },
+  "environment_diff": {
+    "pass": true,
+    "local_api_reachable": true,
+    "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "api_probes": {
+      "staging": {
+        "/api/v1/public/announcements?limit=3": {
+          "status": 200,
+          "count": 3
+        },
+        "/api/v1/public/roadmap": {
+          "status": 200,
+          "count": 2
+        },
+        "/api/v1/guides?limit=3": {
+          "status": 200,
+          "count": 3
+        }
+      },
+      "local": {
+        "/api/v1/public/announcements?limit=3": {
+          "status": 200,
+          "count": 3
+        },
+        "/api/v1/public/roadmap": {
+          "status": 200,
+          "count": 2
+        },
+        "/api/v1/guides?limit=3": {
+          "status": 200,
+          "count": 3
+        }
+      }
+    },
+    "count_drifts": [],
+    "expected_differences": [
+      "ENV-CHAIN",
+      "ENV-PROFILE",
+      "ENV-ORIGIN"
+    ],
+    "staging_web_alignment": true
+  },
+  "registry_parity": {
+    "pass": true,
+    "registry_anchor": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "staging_meta_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "parity": true
+  },
+  "rollback_documentation": {
+    "pass": true,
+    "ssot_present": [
+      "ops/RUNBOOK.md",
+      "docs/runbook/FPC-100-PRE-RELEASE-EXECUTION-PLAN-v1.md",
+      "scripts/dev/phase2-staging-fly-deploy-and-sync.sh"
+    ],
+    "runbook_rollback_anchor": true,
+    "probe_note": "Rollback drill = documented procedure + fly redeploy prior release image (② one-shot)"
+  },
+  "rollback_evidence": {
+    "schema": "traveltrust.fpc_100_b40_rollback.v1",
+    "timestamp_utc": "2026-07-10T11:10:00.000Z",
+    "phase": "② staging",
+    "trigger": "anchor deploy v174 smoke check failed — app crash loop",
+    "root_cause_classification": "CONFIG_ISSUE",
+    "root_cause_detail": "staging Postgres _sqlx_migrations checksum for 20260709140000_cms_public_announcements.sql differs from authoritative anchor 9a73a8de — migration previously applied but modified on disk",
+    "fly_log_excerpt": "TravelTrust API 启动失败: migration 20260709140000 was previously applied but has been modified",
+    "rollback_action": "fly deploy --image registry.fly.io/tt-api-staging:deployment-01KX3HNDNXK6DNBY2A7WC1DTNR (release v173)",
+    "rollback_result": {
+      "pass": true,
+      "health_status": 200,
+      "restored_git_sha": "4706266acf8ec8a92e5eb01b8d83257013cbd30a"
+    },
+    "remediation_owner": "② staging ops — reconcile migration ledger or align staging DB with anchor migrations before re-attempt B40 deploy",
+    "phase_honesty": "Rollback restored staging; B40 PASS blocked until anchor SHA deploy succeeds — not ③"
+  },
+  "fpc_staging_recheck": {
+    "pass": true,
+    "batches": [
+      "B00",
+      "B01",
+      "B04",
+      "B21",
+      "B22"
+    ],
+    "results": [
+      {
+        "gate": "check-phase3-production-infrastructure-ssot.sh",
+        "pass": true
+      },
+      {
+        "gate": "B00_meta_contract",
+        "pass": true,
+        "detail": "meta.build.git_sha present"
+      }
+    ],
+    "note": "Full corridor gates run @ ① frozen; staging recheck = health/meta/infra SSOT only"
+  },
+  "finding_classification": {
+    "ENVIRONMENT_DRIFT": 0,
+    "CONFIG_ISSUE": 0,
+    "REAL_DEFECT": 0,
+    "UNCLASSIFIED": 0
+  },
+  "gate_pass": true,
+  "business_certification": {
+    "verdict": "PASS",
+    "gate_pass": true
+  },
+  "quality_supplement": {
+    "verdict": "PASS",
+    "domains": [
+      "Q10",
+      "Q14"
+    ]
+  },
+  "overall_verdict": "PASS",
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "release_blocker": "NO",
+  "next_batch": "B41",
+  "phase_honesty": "② staging one-shot PASS ≠ ③ Production GO",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": true,
+  "human_verifier": "Sebastian Ward",
+  "human_note": "Production Entry Review rollup @ B41 sign-off 2026-07-10",
+  "traceability": {
+    "requirements": [
+      "Deploy → Health 200 → Meta SHA = authoritative anchor",
+      "Environment diff + registry parity",
+      "Rollback documentation probe",
+      "staging_required_after_deploy recheck (B00/B01/B04/B21/B22 subset)",
+      "B21–B36 certification_frozen read-only unchanged"
+    ],
+    "spec_refs": [
+      "FPC-100/B40-deployment/FPC-100-DEPLOYMENT-CHECKLIST-BASELINE.v1.json",
+      "registry/full-production-certification-checklist.v1.yaml",
+      "docs/runbook/FPC-100-PRE-RELEASE-EXECUTION-PLAN-v1.md"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B40-LATEST.json",
+    "certification_batch": "B40",
+    "product_version": "v1.0"
+  },
+  "burn_down": {
+    "completed": 39,
+    "remaining": 2,
+    "total": 41,
+    "contiguous_completed": 39,
+    "release_readiness_pct": 95.1,
+    "coverage_pct": 95.1,
+    "next_required_batch": "B40",
+    "skip_violations": [],
+    "sequence_ok": true
+  },
+  "certified_at_utc": "2026-07-10T12:02:28.464Z",
+  "expires_at_utc": "2026-08-09T12:02:28.464Z",
+  "expiry_policy_days": 30,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T12:02:28.464Z",
+  "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+}

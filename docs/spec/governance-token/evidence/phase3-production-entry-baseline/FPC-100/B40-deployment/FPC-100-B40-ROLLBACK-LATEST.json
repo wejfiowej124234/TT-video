@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.fpc_100_b40_rollback.v1",
+  "timestamp_utc": "2026-07-10T11:10:00.000Z",
+  "phase": "② staging",
+  "trigger": "anchor deploy v174 smoke check failed — app crash loop",
+  "root_cause_classification": "CONFIG_ISSUE",
+  "root_cause_detail": "staging Postgres _sqlx_migrations checksum for 20260709140000_cms_public_announcements.sql differs from authoritative anchor 9a73a8de — migration previously applied but modified on disk",
+  "fly_log_excerpt": "TravelTrust API 启动失败: migration 20260709140000 was previously applied but has been modified",
+  "rollback_action": "fly deploy --image registry.fly.io/tt-api-staging:deployment-01KX3HNDNXK6DNBY2A7WC1DTNR (release v173)",
+  "rollback_result": {
+    "pass": true,
+    "health_status": 200,
+    "restored_git_sha": "4706266acf8ec8a92e5eb01b8d83257013cbd30a"
+  },
+  "remediation_owner": "② staging ops — reconcile migration ledger or align staging DB with anchor migrations before re-attempt B40 deploy",
+  "phase_honesty": "Rollback restored staging; B40 PASS blocked until anchor SHA deploy succeeds — not ③"
+}

@@ -1,0 +1,58 @@
+{
+  "schema": "traveltrust.fpc_100_deployment_checklist.v1",
+  "phase": "② staging",
+  "batch_id": "B40",
+  "layer": "deployment",
+  "domains": ["Q10", "Q14"],
+  "note": "B40 Deployment Certification — one-shot staging deploy from Local Final Freeze authoritative SHA only; B21–B36 frozen unchanged; not ③ Production GO",
+  "authoritative_sha_source": [
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-LOCAL-FINAL-FREEZE-LATEST.json",
+    "registry/full-production-certification-checklist.v1.yaml local_ssot_anchor.anchor_b30_b36"
+  ],
+  "finding_classification": {
+    "ENVIRONMENT_DRIFT": "Expected local vs staging delta (chain_id, deployment_profile, env-specific URLs)",
+    "CONFIG_ISSUE": "Staging secrets/env/build.env misconfiguration — fix in deploy path only",
+    "REAL_DEFECT": "Code or contract bug visible on staging — requires Owner decision; do not patch ① business code in B40 without explicit unlock"
+  },
+  "severity_policy": {
+    "P0": "deploy fail · health not 200 · meta SHA mismatch · frozen chain break · staging recheck fail",
+    "P1": "registry parity drift · rollback doc missing · env diff unexpected blocking drift",
+    "P2": "human_verified false · expected environment drift logged only"
+  },
+  "depends_on_batches": ["B00", "B01"],
+  "frozen_chain_readonly": [
+    "B21", "B22", "B23", "B24", "B25-C1", "B25-C2", "B25-C3", "B25-C4", "B25-C5", "B25-C6",
+    "B26", "B30", "B31", "B32", "B33", "B34", "B35", "B36"
+  ],
+  "deploy_pipeline": [
+    "scripts/dev/run-fpc-b40-staging-deploy-from-anchor.sh"
+  ],
+  "post_deploy_probes": [
+    "runtime_health",
+    "meta_sha_parity",
+    "environment_diff",
+    "registry_parity",
+    "rollback_documentation",
+    "fpc_staging_recheck"
+  ],
+  "staging_recheck_batches": ["B00", "B01", "B04", "B21", "B22"],
+  "staging_endpoints": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev"
+  },
+  "expected_environment_differences": [
+    { "id": "ENV-CHAIN", "note": "local chain_id 31337 vs staging 11155111 (Sepolia)" },
+    { "id": "ENV-PROFILE", "note": "deployment_profile local vs staging" },
+    { "id": "ENV-ORIGIN", "note": "CORS / web origin staging fly.dev vs localhost" }
+  ],
+  "rollback_ssot": [
+    "ops/RUNBOOK.md",
+    "docs/runbook/FPC-100-PRE-RELEASE-EXECUTION-PLAN-v1.md",
+    "scripts/dev/phase2-staging-fly-deploy-and-sync.sh"
+  ],
+  "owner_auth_env": "TRAVELTRUST_FPC_B40_STAGING_OK=1",
+  "dashboard_parity": {
+    "registry_batch_id": "B40",
+    "expected_next_after_pass": "B41"
+  }
+}

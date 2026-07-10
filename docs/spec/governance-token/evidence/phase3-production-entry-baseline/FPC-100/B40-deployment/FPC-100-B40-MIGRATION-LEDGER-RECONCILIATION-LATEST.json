@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.fpc_100_b40_migration_ledger_reconciliation.v1",
+  "timestamp_utc": "2026-07-10T12:03:20.332Z",
+  "phase": "② staging",
+  "authoritative_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+  "policy": "Ledger aligned to authoritative anchor LF git blobs; no ① SQL file edits",
+  "summary": {
+    "anchor_migration_count": 141,
+    "staging_ledger_count": 141,
+    "drift_rows": 0,
+    "aligned_rows": 141,
+    "ledger_aligned": true
+  },
+  "checksum_diff": [],
+  "execution_history_note": "Staging ledger mixed CRLF (Windows-era deploys) and LF (Fly Linux CMS migrations). Reconcile checksum column only."
+}

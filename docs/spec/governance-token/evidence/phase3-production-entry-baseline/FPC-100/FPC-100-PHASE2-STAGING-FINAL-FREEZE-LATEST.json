@@ -1,0 +1,82 @@
+{
+  "schema": "traveltrust.fpc_100_phase2_staging_final_freeze.v1",
+  "timestamp_utc": "2026-07-10T12:36:16.945Z",
+  "phase": "② staging",
+  "machine_key": "TT_PHASE2_STAGING_FINAL_FREEZE",
+  "git": {
+    "head": "8bee92f25c0182f84565a11d3c6874ea58051e7e",
+    "branch": "feature/g23-04-abi-event-freeze",
+    "working_tree_clean": false
+  },
+  "authoritative_immutable_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+  "sole_candidate_for_phase3": true,
+  "phase2_batches": {
+    "rows": [
+      {
+        "batch_id": "B40",
+        "pass": true,
+        "verdict": "PASS",
+        "human_verified": true,
+        "authoritative_immutable_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      },
+      {
+        "batch_id": "B41",
+        "pass": true,
+        "verdict": "PASS",
+        "human_verified": true,
+        "authoritative_immutable_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      }
+    ],
+    "pass_count": 2,
+    "total": 2
+  },
+  "local_final_freeze_ref": "FPC-100-LOCAL-FINAL-FREEZE-LATEST.json",
+  "burn_down": {
+    "completed": 41,
+    "remaining": 0,
+    "total": 41,
+    "contiguous_completed": 41,
+    "release_readiness_pct": 100,
+    "coverage_pct": 100,
+    "next_required_batch": null,
+    "skip_violations": [],
+    "sequence_ok": true
+  },
+  "staging": {
+    "api": "https://tt-api-staging.fly.dev",
+    "health": {
+      "pass": true,
+      "api": {
+        "url": "https://tt-api-staging.fly.dev/health",
+        "status": 200,
+        "body": {
+          "raw": "ok"
+        }
+      },
+      "web": {
+        "url": "https://tt-web-staging.fly.dev/",
+        "status": 200
+      }
+    },
+    "meta_sha": {
+      "pass": true,
+      "meta_status": 200,
+      "staging_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "authoritative_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "deployment_profile": "staging",
+      "sha_match": true
+    }
+  },
+  "phase3_entry": {
+    "authorized": true,
+    "note": "Phase ③ Production GO requires separate checklist; B40/B41 PASS does not declare Production GO",
+    "phase": "③"
+  },
+  "production_go_declaration": {
+    "allowed": false,
+    "reason": "Await Phase ③ all gates PASS + Owner sign-off"
+  },
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true
+}

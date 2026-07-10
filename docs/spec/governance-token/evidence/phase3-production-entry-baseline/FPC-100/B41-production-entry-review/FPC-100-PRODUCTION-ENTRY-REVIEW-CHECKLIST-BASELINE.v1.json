@@ -1,0 +1,57 @@
+{
+  "schema": "traveltrust.fpc_100_production_entry_review_checklist.v1",
+  "phase": "② staging",
+  "batch_id": "B41",
+  "layer": "business",
+  "domains": ["Q12", "Q16"],
+  "title": "Production Entry Review · Business Readiness Certification",
+  "note": "Final FPC batch @ ② staging — Business + Quality + Evidence; not ③ Production GO",
+  "authoritative_sha_source": [
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-LOCAL-FINAL-FREEZE-LATEST.json",
+    "registry/full-production-certification-checklist.v1.yaml local_ssot_anchor.anchor_b30_b36"
+  ],
+  "depends_on_batches": ["B00", "B01", "B40"],
+  "frozen_chain_readonly": [
+    "B21", "B22", "B23", "B24", "B25-C1", "B25-C2", "B25-C3", "B25-C4", "B25-C5", "B25-C6",
+    "B26", "B30", "B31", "B32", "B33", "B34", "B35", "B36"
+  ],
+  "staging_endpoints": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev"
+  },
+  "business_readiness_routes": [
+    { "id": "terms", "path": "/terms", "min_status": 200 },
+    { "id": "privacy", "path": "/privacy", "min_status": 200 },
+    { "id": "help", "path": "/help", "min_status": 200 },
+    { "id": "home", "path": "/", "min_status": 200 },
+    { "id": "traveltrust", "path": "/traveltrust", "min_status": 200 }
+  ],
+  "seo_discovery": [
+    { "id": "sitemap", "path": "/sitemap.xml", "min_status": 200 },
+    { "id": "robots", "path": "/robots.txt", "min_status": 200 }
+  ],
+  "forbidden_body_patterns": ["localhost:3012", "127.0.0.1:3012", "Lorem ipsum", "TODO: legal"],
+  "staging_recheck_batches": ["B00", "B01", "B04", "B21", "B22", "B40"],
+  "release_gates": [
+    "scripts/dev/check-fpc-no-batch-skip.cjs"
+  ],
+  "anchor_freeze_policy": "No ① business code changes since authoritative_immutable_head; governance/evidence/scripts ops only",
+  "per_ssot": [
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PRODUCTION-ENTRY-REVIEW.md",
+    "docs/go-live-checklist.md"
+  ],
+  "hygiene_gates": [
+    "scripts/gates/check-production-ui-hygiene-gate.sh",
+    "scripts/gates/check-public-surface-audit-gate.sh"
+  ],
+  "owner_auth_env": "TRAVELTRUST_FPC_B41_STAGING_OK=1",
+  "human_verification_env": "TRAVELTRUST_FPC_B41_HUMAN_VERIFIED_OK=1",
+  "owner_signoff_env": "TRAVELTRUST_FPC_B41_OWNER_SIGNOFF_OK=1",
+  "human_required_rollup_batches": ["B26", "B10", "B33", "B35", "B40", "B41"],
+  "dashboard_parity": {
+    "registry_batch_id": "B41",
+    "prior_batch_id": "B40",
+    "expected_next_after_pass": null,
+    "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION"
+  }
+}

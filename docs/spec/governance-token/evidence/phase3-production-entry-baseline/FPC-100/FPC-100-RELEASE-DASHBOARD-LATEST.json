@@ -6,12 +6,12 @@
       "TT_RELEASE_READINESS",
       "TT_RELEASE_DECISION"
     ],
-    "release_readiness_pct": 95.1,
+    "release_readiness_pct": 100,
     "release_readiness_key": "TT_RELEASE_READINESS",
     "release_decision": "NO_GO",
     "release_decision_key": "TT_RELEASE_DECISION",
     "product_version": "v1.0",
-    "next_required_batch": "B40",
+    "next_required_batch": null,
     "governance": "FROZEN @ v5 · Do not expand",
     "execution": "B02→B41 only"
   },
@@ -20,23 +20,23 @@
   "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION",
   "release_decision_key": "TT_RELEASE_DECISION",
   "product_version": "v1.0",
-  "timestamp_utc": "2026-07-10T10:28:27.375Z",
+  "timestamp_utc": "2026-07-10T12:37:29.582Z",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "verdict": "NOT_STARTED",
   "pass": false,
   "tt_release_decision": "NO_GO",
   "release_readiness": {
     "machine_key": "TT_RELEASE_READINESS",
-    "pct": 95.1,
-    "contiguous_completed": 39,
+    "pct": 100,
+    "contiguous_completed": 41,
     "total": 41
   },
   "burn_down": {
-    "completed": 39,
-    "remaining": 2,
+    "completed": 41,
+    "remaining": 0,
     "total": 41,
-    "coverage_pct": 95.1,
-    "next_required_batch": "B40",
+    "coverage_pct": 100,
+    "next_required_batch": null,
     "no_batch_skip_ok": true,
     "skip_violations": []
   },
@@ -45,22 +45,22 @@
     "product": "PASS",
     "operations": "PASS",
     "content": "PASS",
-    "business": "NOT_STARTED",
+    "business": "PASS",
     "security": "PASS",
     "performance": "PASS",
     "truthfulness": "PASS",
-    "deployment": "NOT_STARTED",
-    "human_verification": "NOT_STARTED"
+    "deployment": "PASS",
+    "human_verification": "PASS"
   },
   "release_health": {
-    "certified_pct": 170.7,
+    "certified_pct": 192.7,
     "expired_count": 0,
     "blocked_count": 0,
     "accepted_risks_count": 2,
     "coverage_pct": 25,
-    "human_verified_pct": 0,
-    "human_required_verified_pct": 0,
-    "ai_review_pct": 55.7
+    "human_verified_pct": 7.6,
+    "human_required_verified_pct": 100,
+    "ai_review_pct": 51.9
   },
   "release_history": [
     {
@@ -262,8 +262,8 @@
         "review_version": "v1"
       },
       "ai_display": "Internal AI Review",
-      "human_verified": false,
-      "human_verifier": null
+      "human_verified": true,
+      "human_verifier": "Sebastian Ward"
     },
     {
       "batch_id": "B11",
@@ -535,8 +535,8 @@
         "review_version": "v1"
       },
       "ai_display": "Internal AI Review",
-      "human_verified": false,
-      "human_verifier": null
+      "human_verified": true,
+      "human_verifier": "Sebastian Ward"
     },
     {
       "batch_id": "B30",
@@ -587,8 +587,8 @@
         "review_version": "v1"
       },
       "ai_display": "Internal AI Review",
-      "human_verified": false,
-      "human_verifier": null
+      "human_verified": true,
+      "human_verifier": "Sebastian Ward"
     },
     {
       "batch_id": "B34",
@@ -613,8 +613,8 @@
         "review_version": "v1"
       },
       "ai_display": "Internal AI Review",
-      "human_verified": false,
-      "human_verifier": null
+      "human_verified": true,
+      "human_verifier": "Sebastian Ward"
     },
     {
       "batch_id": "B36",
@@ -628,6 +628,32 @@
       "ai_display": "Internal AI Review",
       "human_verified": false,
       "human_verifier": null
+    },
+    {
+      "batch_id": "B40",
+      "ai_review": {
+        "verdict": "PASS",
+        "ai_reviewer": "Internal AI Review",
+        "review_type": "Internal AI Review",
+        "review_date": "2026-07-10",
+        "review_version": "v1"
+      },
+      "ai_display": "Internal AI Review",
+      "human_verified": true,
+      "human_verifier": "Sebastian Ward"
+    },
+    {
+      "batch_id": "B41",
+      "ai_review": {
+        "verdict": "PASS",
+        "ai_reviewer": "Internal AI Review",
+        "review_type": "Internal AI Review",
+        "review_date": "2026-07-10",
+        "review_version": "v1"
+      },
+      "ai_display": "Internal AI Review",
+      "human_verified": true,
+      "human_verifier": "Sebastian Ward"
     },
     {
       "batch_id": "B00",
@@ -901,6 +927,69 @@
     },
     {
       "batch_id": "B25-C6",
+      "ai_review": {
+        "verdict": "NOT_STARTED"
+      },
+      "ai_display": "NOT_STARTED",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B30",
+      "ai_review": {
+        "verdict": "NOT_STARTED"
+      },
+      "ai_display": "NOT_STARTED",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B31",
+      "ai_review": {
+        "verdict": "NOT_STARTED"
+      },
+      "ai_display": "NOT_STARTED",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B32",
+      "ai_review": {
+        "verdict": "NOT_STARTED"
+      },
+      "ai_display": "NOT_STARTED",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B33",
+      "ai_review": {
+        "verdict": "NOT_STARTED"
+      },
+      "ai_display": "NOT_STARTED",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B34",
+      "ai_review": {
+        "verdict": "NOT_STARTED"
+      },
+      "ai_display": "NOT_STARTED",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B35",
+      "ai_review": {
+        "verdict": "NOT_STARTED"
+      },
+      "ai_display": "NOT_STARTED",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B36",
       "ai_review": {
         "verdict": "NOT_STARTED"
       },

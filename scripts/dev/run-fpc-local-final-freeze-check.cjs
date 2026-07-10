@@ -98,11 +98,25 @@ function main() {
   }
 
   const burn = computeBurnDown(parseExecutionSequence());
-  if (burn.next_required_batch !== 'B40') {
+  const phase2FreezePath = path.join(EVID, 'FPC-100-PHASE2-STAGING-FINAL-FREEZE-LATEST.json');
+  const phase2Freeze = fs.existsSync(phase2FreezePath)
+    ? JSON.parse(fs.readFileSync(phase2FreezePath, 'utf8'))
+    : null;
+  const phase2Closed = phase2Freeze?.pass === true && phase2Freeze?.verdict === 'PASS';
+
+  if (burn.next_required_batch === 'B40') {
+    /* pre-B40: local freeze gates B40 entry — next must stay B40 */
+  } else if (burn.next_required_batch != null) {
     findings.push({
       severity: 'P0',
-      id: 'next_batch_not_b40',
+      id: 'unexpected_next_batch',
       detail: burn.next_required_batch,
+    });
+  } else if (!phase2Closed) {
+    findings.push({
+      severity: 'P0',
+      id: 'phase2_final_freeze_missing',
+      detail: 'FPC sequence complete — require FPC-100-PHASE2-STAGING-FINAL-FREEZE-LATEST.json PASS',
     });
   }
 
@@ -197,11 +211,19 @@ function main() {
         release_readiness_pct: readiness,
         next_required_batch: burn.next_required_batch,
         anchor_b30_b36: anchorOk,
-        b40_entry: {
-          authorized: false,
-          note: 'B40 ② staging one-shot — requires explicit Owner authorization; no ① business code changes after freeze',
-          phase: '②',
-        },
+        b40_entry: phase2Closed
+          ? {
+              authorized: true,
+              completed: true,
+              phase: '②',
+              ref: 'FPC-100-PHASE2-STAGING-FINAL-FREEZE-LATEST.json',
+              note: 'B40+B41 ② staging closed — Phase ③ Production GO is separate',
+            }
+          : {
+              authorized: false,
+              note: 'B40 ② staging one-shot — requires explicit Owner authorization; no ① business code changes after freeze',
+              phase: '②',
+            },
         findings,
         verdict: pass ? 'PASS' : 'FAIL',
         pass,
