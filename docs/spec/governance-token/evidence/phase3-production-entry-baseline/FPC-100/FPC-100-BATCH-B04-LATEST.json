@@ -68,8 +68,8 @@
     "gate": "check-display-data-governance-ssot.sh"
   },
   "findings": [],
-  "verdict": "PASS",
-  "pass": true,
+  "verdict": "IN_PROGRESS",
+  "pass": false,
   "release_blocker": "NO",
   "next_batch": "B05",
   "ai_review": {
@@ -115,5 +115,16 @@
   "expiry_policy_days": 90,
   "certification_frozen": true,
   "frozen_at_utc": "2026-07-09T23:59:43.197Z",
-  "frozen_git_sha": "dd581746f355e78a70e2e709ab6eda161dbf9b21"
+  "frozen_git_sha": "dd581746f355e78a70e2e709ab6eda161dbf9b21",
+  "dod": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": false,
+    "working_tree_clean": false,
+    "all_met": false,
+    "checked_at_utc": "2026-07-10T00:00:07.313Z",
+    "committed_sha": "a5386a05f43125c9654cb9ab3bc078bde725e618",
+    "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
+  }
 }
