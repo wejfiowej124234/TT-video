@@ -36,6 +36,8 @@ Business Certification → Quality Certification → Findings → P0/P1/P2/P3
 
 **禁止** 在本 Batch 内留下已知 P0/P1「以后再修」（P2 仅可通过 Accepted Risk · risk register）。
 
+**B13 起：** 每批开始前运行 [`check-fpc-runtime-preflight.cjs`](../../../../scripts/dev/check-fpc-runtime-preflight.cjs)（见 Governance §0.2）。
+
 ---
 
 ## 0. 定位（Release Certification → Production Quality）

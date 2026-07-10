@@ -19,6 +19,7 @@
     "forbidden": "treating_gate_run_or_findings_list_as_batch_closed"
   },
   "batch_lifecycle": [
+    "runtime_preflight",
     "business_certification",
     "quality_certification",
     "findings",
@@ -30,6 +31,25 @@
     "dod",
     "batch_closed"
   ],
+  "finding_event_taxonomy": {
+    "Business Finding": { "affects_batch": true, "examples": ["功能错误", "流程断裂", "权限错误"] },
+    "Quality Finding": { "affects_batch": true, "examples": ["UX", "性能", "安全", "数据质量"] },
+    "Runtime Event": {
+      "affects_batch": "depends_on_blocking",
+      "examples": ["API重启", "Docker重启", "端口占用", "进程替换"],
+      "not_a_product_bug": true
+    },
+    "Infrastructure Event": {
+      "affects_batch": false,
+      "examples": ["CI故障", "网络波动", "GitHub超时", "SSH重连"]
+    }
+  },
+  "runtime_preflight": {
+    "since_batch": "B13",
+    "script": "scripts/dev/check-fpc-runtime-preflight.cjs",
+    "checks": ["api_health_200", "api_meta_200", "db_reachable", "working_tree_clean", "expected_feature_flags"],
+    "not_governance_schema_change": true
+  },
   "release_standard": {
     "principle": "blocking_issues_closed_and_residual_risks_explicitly_accepted",
     "not_required": "all_findings_zero",

@@ -68,6 +68,43 @@ Batch CLOSED
 
 互指：[`FPC-100-QUALITY-DOMAIN-MATRIX-v1.md`](FPC-100-QUALITY-DOMAIN-MATRIX-v1.md) §0.1–0.3 · [`FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md`](FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md)
 
+### 0.2 Finding / Event 分类 · Runtime Preflight（执行辅助 · 非新治理框架）
+
+#### 四类记录（所有 Batch 统一）
+
+| 类型 | 是否影响 Batch | 示例 |
+|------|----------------|------|
+| **Business Finding** | ✅ 影响 | 功能错误 · 流程断裂 · 权限错误 |
+| **Quality Finding** | ✅ 影响 | UX · 性能 · 安全 · 数据质量 |
+| **Runtime Event** | ⚠️ 视影响而定 | API 重启 · Docker 重启 · 端口占用 · 进程替换 |
+| **Infrastructure Event** | ⚠️ 通常不影响 | CI 故障 · 网络波动 · GitHub 超时 · SSH 重连 |
+
+**Runtime Event ≠ 产品 Bug。** 须标注 **blocking / non-blocking** 与 **Closed** 状态；**non-blocking + Closed** 的事件 **不** 占用后续 Batch  remediation 槽。
+
+**示例（Closed）：** B12 `P3_CHAIN_OFF=1` 后台重启 exit 1 → 进程被 B12 重建替换 → 当前 `/health=200` → **No impact on B12** → [`FPC-100/B12-data-governance/RUNTIME-CONTEXT-NOTE.md`](FPC-100/B12-data-governance/RUNTIME-CONTEXT-NOTE.md)
+
+#### Runtime Preflight（每 Batch 开始前 · B13 起）
+
+轻量启动检查 — **不是** 新 Batch 类型 · **不** 改 Dashboard Schema：
+
+| 检查 | 通过条件 |
+|------|----------|
+| API `/health` | HTTP **200** |
+| API `/meta` | HTTP **200** |
+| DB | `/meta` 含 database ok 或 chain_off 信号 |
+| Working tree | `git status --porcelain` 空 |
+| Expected feature flags | 本批所需 env（如 `P3_CHAIN_OFF=1`）已设 |
+
+```bash
+node scripts/dev/check-fpc-runtime-preflight.cjs --batch B13
+# mock-pay 批次示例：
+node scripts/dev/check-fpc-runtime-preflight.cjs --batch Bxx --expect-env P3_CHAIN_OFF=1
+```
+
+Preflight **FAIL** → 记 **Runtime Event (blocking)** · 修环境后重试 · **不** 记为 Business/Quality Finding，除非 gate 在本批内仍失败。
+
+**v6 defer（不实现）：** Certification Metrics · Batch Health · Timeline → [`FPC-100-CERTIFICATION-METRICS-v6-BACKLOG.md`](FPC-100-CERTIFICATION-METRICS-v6-BACKLOG.md)
+
 与已有 Freeze 的关系：
 
 | Freeze | 范围 |
