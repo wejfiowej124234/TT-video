@@ -4,12 +4,12 @@
   "title": "Admin workspace · RBAC · four centers (114 routes)",
   "layer": "L1-L5",
   "phase": "① local",
-  "timestamp_utc": "2026-07-10T00:39:08.394Z",
+  "timestamp_utc": "2026-07-10T00:43:56.751Z",
   "verifier": "run-fpc-batch-b09-admin-rbac.cjs",
   "product_version": "v1.0",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "git": {
-    "head": "bdf4b556b37da8446e9a7ea1590e6613c232dfc1",
+    "head": "9a89cfc26f0baea403034010a8f262307c15cdf1",
     "branch": "feature/g23-04-abi-event-freeze"
   },
   "depends_on": [
@@ -42,7 +42,7 @@
       "gate": "scripts/gates/run-admin-platform-40-verification.sh",
       "exit_code": 0,
       "pass": true,
-      "summary_line": "verdict=PASS_MACHINE | OK: Admin Platform 40/40 machine verification complete | Evidence: /d/TravelTrust-V1.1/evidence/GO_admin_platform_40_complete/20260710T003915Z/report.json | Next: manual Admin testing (local → staging) per report.manual_next"
+      "summary_line": "verdict=PASS_MACHINE | OK: Admin Platform 40/40 machine verification complete | Evidence: /d/TravelTrust-V1.1/evidence/GO_admin_platform_40_complete/20260710T004404Z/report.json | Next: manual Admin testing (local → staging) per report.manual_next"
     },
     {
       "gate": "scripts/gates/check-admin-functional-audit-mapping.py",
@@ -164,10 +164,10 @@
     "certification_batch": "B09",
     "product_version": "v1.0"
   },
-  "certified_at_utc": "2026-07-10T00:39:08.394Z",
-  "expires_at_utc": "2026-10-08T00:39:08.394Z",
+  "certified_at_utc": "2026-07-10T00:43:56.751Z",
+  "expires_at_utc": "2026-10-08T00:43:56.751Z",
   "expiry_policy_days": 90,
   "certification_frozen": true,
-  "frozen_at_utc": "2026-07-10T00:39:08.394Z",
-  "frozen_git_sha": "bdf4b556b37da8446e9a7ea1590e6613c232dfc1"
+  "frozen_at_utc": "2026-07-10T00:43:56.751Z",
+  "frozen_git_sha": "9a89cfc26f0baea403034010a8f262307c15cdf1"
 }
