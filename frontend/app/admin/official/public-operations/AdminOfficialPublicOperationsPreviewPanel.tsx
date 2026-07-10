@@ -18,10 +18,8 @@ import {
   ADMIN_TABLE_TD_CELL_CLASS,
   adminTableRowPrimaryActionClass,
 } from "@/lib/adminUi";
-import {
-  getAdminOfficialPublicOperationsPreview,
-  type AdminPublicOpsPreviewResult,
-} from "@/lib/apiClient";
+import { getAdminOfficialPublicOperationsPreview } from "@/lib/apiClient";
+import type { AdminPublicOpsPreviewResult } from "@/lib/apiClient/official/http";
 
 import {
   useAdminOfficialPublicOperationsDisplayList,

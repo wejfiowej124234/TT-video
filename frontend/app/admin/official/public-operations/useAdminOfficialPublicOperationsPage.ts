@@ -2,10 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import {
-  getAdminOfficialPublicOperationsStats,
-  type AdminPublicOperationsStatsRes,
-} from "@/lib/apiClient";
+import { getAdminOfficialPublicOperationsStats } from "@/lib/apiClient";
+import type { AdminPublicOperationsStatsRes } from "@/lib/apiClient/official/http";
 
 export function useAdminOfficialPublicOperationsPage() {
   const [stats, setStats] = useState<AdminPublicOperationsStatsRes | null>(null);

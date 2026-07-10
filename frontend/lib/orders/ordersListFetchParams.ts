@@ -7,19 +7,29 @@ export type OrdersListFetchParamsInput = {
   cursor?: string;
   stateParam: string | null | undefined;
   searchQ?: string | null;
-  hat?: string | null;
+  hat?: "guide" | "merchant" | "traveler" | null;
 };
 
 /** `GET /api/v1/orders` 查询参数（列表首屏 / load-more / 静默轮询同源） */
-export function buildOrdersListGetParams(input: OrdersListFetchParamsInput) {
+export function buildOrdersListGetParams(input: OrdersListFetchParamsInput): {
+  limit: number;
+  cursor: string | undefined;
+  state: string | undefined;
+  orders_chain_id: number | undefined;
+  q: string | undefined;
+  hat: "guide" | "merchant" | "traveler" | undefined;
+} {
   const search = (input.searchQ ?? "").trim();
+  const rawHat = (input.hat ?? "").trim();
+  const hat =
+    rawHat === "guide" || rawHat === "merchant" || rawHat === "traveler" ? rawHat : undefined;
   return {
     limit: ORDERS_PAGE_SIZE,
     cursor: input.cursor,
     state: ordersListStateForApiQuery(input.stateParam),
     orders_chain_id: resolveOrdersListOrdersChainId(),
     q: search || undefined,
-    hat: (input.hat ?? "").trim() || undefined,
+    hat,
   };
 }
 

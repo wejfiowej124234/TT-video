@@ -1,0 +1,139 @@
+{
+  "schema": "traveltrust.fpc_100_performance_baseline.v1",
+  "captured_at_utc": "2026-07-10T05:11:41.619Z",
+  "bundle_disk": {
+    "js_total_disk_bytes": 14061241,
+    "css_total_bytes": 331341,
+    "largest_js_chunk_bytes": 1620704
+  },
+  "api": [
+    {
+      "key": "health",
+      "path": "/health",
+      "max": 1500,
+      "ms": 9,
+      "status": 200,
+      "pass": true,
+      "budget_ms_max": 1500
+    },
+    {
+      "key": "meta",
+      "path": "/meta",
+      "max": 2000,
+      "ms": 7,
+      "status": 200,
+      "pass": true,
+      "budget_ms_max": 2000
+    },
+    {
+      "key": "discover",
+      "path": "/api/v1/discover/orders?limit=1",
+      "max": 3000,
+      "ms": 1,
+      "status": 200,
+      "pass": true,
+      "budget_ms_max": 3000
+    },
+    {
+      "key": "meta_db",
+      "path": "/meta.database_connected",
+      "pass": true,
+      "connected": true
+    }
+  ],
+  "routes": {
+    "avg_navigation_ms": 2289.6,
+    "per_route": [
+      {
+        "route": "/",
+        "probe": "home",
+        "navigation_ms": 8488,
+        "initial_js_bytes": 6318462,
+        "duplicate_requests": 3,
+        "cls": 0,
+        "dom_content_loaded_ms": 77.5,
+        "load_event_end_ms": 8481.399999856949,
+        "tracked_requests": 183,
+        "static_asset_responses": 159,
+        "ok": true
+      },
+      {
+        "route": "/traveltrust",
+        "probe": "traveltrust",
+        "navigation_ms": 301,
+        "initial_js_bytes": 4246737,
+        "duplicate_requests": 0,
+        "cls": 0,
+        "dom_content_loaded_ms": 57.59999990463257,
+        "load_event_end_ms": 295.2999999523163,
+        "tracked_requests": 54,
+        "static_asset_responses": 54,
+        "ok": true
+      },
+      {
+        "route": "/market",
+        "probe": "market",
+        "navigation_ms": 2193,
+        "initial_js_bytes": 6676955,
+        "duplicate_requests": 1,
+        "cls": 0,
+        "dom_content_loaded_ms": 165.79999995231628,
+        "load_event_end_ms": 2190.9000000953674,
+        "tracked_requests": 208,
+        "static_asset_responses": 179,
+        "ok": true
+      },
+      {
+        "route": "/did-rank",
+        "probe": "did-rank",
+        "navigation_ms": 258,
+        "initial_js_bytes": 2838089,
+        "duplicate_requests": 0,
+        "cls": 0,
+        "dom_content_loaded_ms": 164.59999990463257,
+        "load_event_end_ms": 255.59999990463257,
+        "tracked_requests": 41,
+        "static_asset_responses": 41,
+        "ok": true
+      },
+      {
+        "route": "/community",
+        "probe": "community",
+        "navigation_ms": 208,
+        "initial_js_bytes": 2867093,
+        "duplicate_requests": 0,
+        "cls": 0,
+        "dom_content_loaded_ms": 85,
+        "load_event_end_ms": 193.70000004768372,
+        "tracked_requests": 47,
+        "static_asset_responses": 46,
+        "ok": true
+      }
+    ]
+  },
+  "bundle_checks": [
+    {
+      "key": "css_total_bytes",
+      "value": 331341,
+      "budget_max": 2000000,
+      "pass": true
+    },
+    {
+      "key": "js_total_disk_bytes",
+      "value": 14061241,
+      "budget_max": 450000000,
+      "pass": true
+    },
+    {
+      "key": "largest_js_chunk_bytes",
+      "value": 1620704,
+      "budget_max": 30000000,
+      "pass": true
+    },
+    {
+      "key": "build_present",
+      "value": true,
+      "pass": true
+    }
+  ]
+}

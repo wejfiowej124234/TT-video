@@ -17,10 +17,8 @@ import {
   ADMIN_TABLE_TD_CELL_CLASS,
   adminTableRowPrimaryActionClass,
 } from "@/lib/adminUi";
-import {
-  getAdminOfficialPublicOperationsHistory,
-  type AdminPublicOpsHistoryRow,
-} from "@/lib/apiClient";
+import { getAdminOfficialPublicOperationsHistory } from "@/lib/apiClient";
+import type { AdminPublicOpsHistoryRow } from "@/lib/apiClient/official/http";
 
 import { type PublicOpsEntityType } from "./useAdminOfficialPublicOperationsDisplayList";
 

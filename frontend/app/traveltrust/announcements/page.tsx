@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import zh from "@/locales/zh";
 import { localeMessagesFromAcceptLanguage } from "@/lib/pickMetadataLocale";
 import { TravelTrustAnnouncementsPage } from "@/components/traveltrust/cinematic/TravelTrustAnnouncementsPage";
 
@@ -37,9 +36,3 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function TravelTrustAnnouncementsRoutePage() {
   return <TravelTrustAnnouncementsPage />;
 }
-
-/** @internal zh mirror for i18n parity tests */
-export const traveltrustAnnouncementsMetadataZh = {
-  title: zh.traveltrust_announcements_title,
-  description: zh.traveltrust_announcements_meta_desc,
-};

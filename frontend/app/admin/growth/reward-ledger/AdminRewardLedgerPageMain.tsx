@@ -4,6 +4,8 @@ import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
+import { AdminOpsPlanePermissionBanners } from "@/components/admin/ops/AdminOpsPlanePermissionBanners";
+import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
 import { AdminOpsRiskBanner } from "@/components/admin/ops/AdminOpsRiskBanner";
 
@@ -150,7 +152,7 @@ export function AdminRewardLedgerPageMain() {
               <OfficialOpsTableTh>{t("admin_growth_reward_ledger_col_points")}</OfficialOpsTableTh>
               <OfficialOpsTableTh>{t("admin_growth_reward_ledger_col_fraud")}</OfficialOpsTableTh>
               <OfficialOpsTableTh>{t("admin_growth_reward_ledger_col_idempotency")}</OfficialOpsTableTh>
-              <OfficialOpsTableTh />
+              <OfficialOpsTableTh>{"\u00a0"}</OfficialOpsTableTh>
             </tr>
           </OfficialOpsTableHead>
           <OfficialOpsTableBody>

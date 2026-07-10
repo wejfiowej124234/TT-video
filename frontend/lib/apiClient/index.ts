@@ -367,6 +367,7 @@ export type {
   GovernanceProposalVoteResult,
   GovernanceVoteSemantics,
   GovernanceVotingPowerResponse,
+  GovernanceCastVoteCalldata,
 } from "./governance";
 export {
   getGovernanceDelegate,

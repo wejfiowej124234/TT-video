@@ -116,7 +116,7 @@ export function AdminContentRoadmapPageMain() {
               <button type="button" className={ADMIN_PRIMARY_ACTION_BTN_CLASS} disabled={busy} onClick={() => void saveSectionDraft()}>
                 {t("admin_content_roadmap_save_draft")}
               </button>
-              <button type="button" className={adminTableRowPrimaryActionClass} disabled={busy} onClick={() => void sectionWorkflow("submit-review")}>
+              <button type="button" className={adminTableRowPrimaryActionClass()} disabled={busy} onClick={() => void sectionWorkflow("submit-review")}>
                 {t("admin_content_announcements_submit_review_btn")}
               </button>
             </div>
@@ -182,7 +182,7 @@ export function AdminContentRoadmapPageMain() {
               {t("admin_content_roadmap_save_draft")}
             </button>
             {editMilestoneId ? (
-              <button type="button" className={adminTableRowPrimaryActionClass} disabled={busy} onClick={resetMilestoneForm}>
+              <button type="button" className={adminTableRowPrimaryActionClass()} disabled={busy} onClick={resetMilestoneForm}>
                 {t("admin_content_announcements_cancel_edit")}
               </button>
             ) : null}
@@ -190,7 +190,7 @@ export function AdminContentRoadmapPageMain() {
         </OfficialOpsFormCard>
       ) : null}
 
-      <AdminContentDataTable>
+      <AdminContentDataTable className="mt-6" dataAttr="content-roadmap">
         <AdminContentTableHead>
           <AdminContentTableTh>{t("admin_content_announcements_slug")}</AdminContentTableTh>
           <AdminContentTableTh>{t("admin_content_announcements_col_title")}</AdminContentTableTh>
@@ -209,17 +209,17 @@ export function AdminContentRoadmapPageMain() {
               <td className={ADMIN_TABLE_TD_CELL_CLASS}>
                 <div className="flex flex-wrap gap-2">
                   {canWrite && row.publish_status !== "published" ? (
-                    <button type="button" className={adminTableRowPrimaryActionClass} onClick={() => loadMilestoneForEdit(row)}>
+                    <button type="button" className={adminTableRowPrimaryActionClass()} onClick={() => loadMilestoneForEdit(row)}>
                       {t("admin_content_announcements_edit_btn")}
                     </button>
                   ) : null}
                   {canWrite && row.publish_status === "draft" ? (
-                    <button type="button" className={adminTableRowPrimaryActionClass} disabled={busy} onClick={() => void milestoneWorkflow(row.id, "submit-review")}>
+                    <button type="button" className={adminTableRowPrimaryActionClass()} disabled={busy} onClick={() => void milestoneWorkflow(row.id, "submit-review")}>
                       {t("admin_content_announcements_submit_review_btn")}
                     </button>
                   ) : null}
                   {canPublish && row.publish_status === "in_review" ? (
-                    <button type="button" className={adminTableRowPrimaryActionClass} disabled={busy} onClick={() => void milestoneWorkflow(row.id, "publish")}>
+                    <button type="button" className={adminTableRowPrimaryActionClass()} disabled={busy} onClick={() => void milestoneWorkflow(row.id, "publish")}>
                       {t("admin_content_announcements_publish_btn")}
                     </button>
                   ) : null}

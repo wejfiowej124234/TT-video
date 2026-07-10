@@ -36,9 +36,8 @@ import {
   postAdminOfficialPublicOperationsCampaignRequestDeploy,
   postAdminOfficialPublicOperationsCampaignRollback,
   postAdminOfficialPublicOperationsCampaignSubmitReview,
-  type AdminPublicOpsCampaignPreview,
-  type AdminPublicOpsCampaignRow,
 } from "@/lib/apiClient";
+import type { AdminPublicOpsCampaignPreview, AdminPublicOpsCampaignRow } from "@/lib/apiClient/official/http";
 
 export function AdminOfficialPublicOperationsCampaignPanel() {
   const { t } = useTranslation();

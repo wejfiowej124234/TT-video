@@ -12,12 +12,33 @@ import {
   TRAVELTRUST_PLATFORM_LAUNCH_ISO,
   TRAVELTRUST_VACANCY_V1_ACTIVE_ISO,
 } from "./traveltrustAnnouncementDates";
-import type { TravelTrustAnnouncement } from "./traveltrustNetworkAnnouncements";
+import type {
+  TravelTrustAnnouncementCtaKind,
+  TravelTrustAnnouncementKind,
+  TravelTrustAnnouncementNetworkScope,
+  TravelTrustAnnouncementProductTemplate,
+  TravelTrustContentTier,
+} from "./traveltrustNetworkAnnouncements";
 
 export type TravelTrustAnnouncementLane = "product" | "governance" | "protocol_status";
 
-export type TravelTrustAnnouncementWithLane = TravelTrustAnnouncement & {
+export type TravelTrustAnnouncementWithLane = {
+  id: string;
   lane: TravelTrustAnnouncementLane;
+  kind: TravelTrustAnnouncementKind;
+  contentTier: TravelTrustContentTier;
+  messageKey: string;
+  effectiveAt?: string;
+  releaseAt?: string;
+  targetAt?: string;
+  targetLabelKey?: string;
+  href?: string;
+  ctaHref?: string;
+  ctaKind?: TravelTrustAnnouncementCtaKind;
+  pinned?: boolean;
+  networkScope?: TravelTrustAnnouncementNetworkScope;
+  productTemplate?: TravelTrustAnnouncementProductTemplate;
+  expiresAt?: string;
 };
 
 /** 第一层 · 产品公告（首页 Pulse 默认） */

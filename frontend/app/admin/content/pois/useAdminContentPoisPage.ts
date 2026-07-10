@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { getAdminContentPois, type AdminCatalogPoiRow } from "@/lib/apiClient";
+import { getAdminContentPois, type AdminCatalogPoiRow } from "@/lib/apiClient/content/http";
 
 export function useAdminContentPoisPage(poiType?: string) {
   const [items, setItems] = useState<AdminCatalogPoiRow[]>([]);

@@ -62,7 +62,7 @@ function StatsBucketTable({
       <p className="mt-1 text-small text-ink-500">
         {totalLabel}: <span className="font-mono tabular-nums">{total}</span>
       </p>
-      <OfficialOpsDataTable className="mt-3">
+      <OfficialOpsDataTable className="mt-3" dataAttr={`public-ops-stats-${track}`}>
         <OfficialOpsTableHead>
           <tr>
             <OfficialOpsTableTh>{t("admin_public_operations_stats_col_origin")}</OfficialOpsTableTh>

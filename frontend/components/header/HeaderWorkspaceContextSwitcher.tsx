@@ -17,7 +17,7 @@ import { workbenchHrefForWorkspaceContext } from "@/lib/header/workspaceContextW
 import { PUBLISH_HUB_PATH } from "@/lib/me/publishHubL5";
 import { parseIdentitySlotsFromMe } from "@/lib/meIdentitySlots";
 export function HeaderWorkspaceContextSwitcher(props: {
-  t: (key: string) => string;
+  t: (key: string, vars?: Record<string, string>) => string;
   mePayload?: unknown | null;
   onNavigate?: () => void;
 }) {

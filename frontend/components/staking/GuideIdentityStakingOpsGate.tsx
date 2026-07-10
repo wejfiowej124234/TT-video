@@ -30,7 +30,7 @@ export default function GuideIdentityStakingOpsGate({ children }: GuideIdentityS
       getMeFull({ force: true })
         .then((res) => {
           if (cancelled) return;
-          const user = res.user;
+          const user = (res as { user?: Parameters<typeof parseMeTrustFromMeResponse>[1] } | null)?.user;
           if (!user) {
             setAllowed(false);
             setPendingReview(false);

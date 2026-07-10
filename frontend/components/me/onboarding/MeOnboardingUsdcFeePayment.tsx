@@ -75,6 +75,12 @@ export function MeOnboardingUsdcFeePayment({
     balanceRead.data !== undefined && atomicAmount > 0n && balanceRead.data < atomicAmount;
   const canPay = configured && isConnected && address && receiver && token && atomicAmount > 0n && !exceedsBalance;
 
+  useEffect(() => {
+    if (!configured || !isSuccess) return;
+    reset();
+    onAfterSubmit?.();
+  }, [configured, isSuccess, reset, onAfterSubmit]);
+
   if (!configured) {
     return (
       <div
@@ -107,13 +113,6 @@ export function MeOnboardingUsdcFeePayment({
       args: [receiver, atomicAmount],
     });
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      reset();
-      onAfterSubmit?.();
-    }
-  }, [isSuccess, reset, onAfterSubmit]);
 
   const errMsg = mapWalletWriteError(writeErr as Error | undefined, t, TRANSFER_ERROR_OPTS);
 

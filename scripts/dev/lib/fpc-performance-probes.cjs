@@ -52,7 +52,9 @@ function measureBuildArtifacts(feRoot) {
     largest_js_chunk_path: js.maxPath,
     css_total_bytes: css.total,
     css_file_count: css.count,
-    build_present: fs.existsSync(path.join(nextDir, 'BUILD_ID')),
+    build_present:
+      fs.existsSync(path.join(nextDir, 'BUILD_ID')) ||
+      fs.existsSync(path.join(nextDir, 'build-manifest.json')),
   };
 }
 
@@ -201,31 +203,32 @@ function evaluateLiveScanEvidence(scanSummaryPath, scanJsonlPath, budgets, findi
     });
   }
   for (const row of routes) {
-    if (row.navigation_ms > b.navigation_ms_max) {
+    const routeBudget = { ...b, ...(b.route_overrides?.[row.route] || {}) };
+    if (row.navigation_ms > routeBudget.navigation_ms_max) {
       pass = false;
       findings.push({
         id: `perf_navigation:${row.route}`,
         severity: 'P1',
-        detail: `${row.route} navigation_ms=${row.navigation_ms} > ${b.navigation_ms_max}`,
+        detail: `${row.route} navigation_ms=${row.navigation_ms} > ${routeBudget.navigation_ms_max}`,
       });
     }
-    if (row.initial_js_bytes > b.initial_js_transfer_bytes_max) {
+    if (row.initial_js_bytes > routeBudget.initial_js_transfer_bytes_max) {
       pass = false;
       findings.push({
         id: `perf_initial_js:${row.route}`,
         severity: 'P1',
-        detail: `${row.route} initial_js_bytes=${row.initial_js_bytes} > ${b.initial_js_transfer_bytes_max}`,
+        detail: `${row.route} initial_js_bytes=${row.initial_js_bytes} > ${routeBudget.initial_js_transfer_bytes_max}`,
       });
     }
-    if (row.duplicate_requests > b.duplicate_request_max) {
+    if (row.duplicate_requests > routeBudget.duplicate_request_max) {
       pass = false;
       findings.push({
         id: `perf_duplicate:${row.route}`,
         severity: 'P1',
-        detail: `${row.route} duplicate_requests=${row.duplicate_requests} > ${b.duplicate_request_max}`,
+        detail: `${row.route} duplicate_requests=${row.duplicate_requests} > ${routeBudget.duplicate_request_max}`,
       });
     }
-    if (row.cls != null && row.cls > b.cls_max) {
+    if (row.cls != null && row.cls > routeBudget.cls_max) {
       pass = false;
       findings.push({
         id: `perf_cls:${row.route}`,

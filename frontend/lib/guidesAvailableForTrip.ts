@@ -2,7 +2,7 @@ import { fetchGuideAvailabilityForMany } from "@/lib/guideAvailabilityClient";
 import { tripRangeOverlapsOccupied, type GuideOccupiedRangeYmd } from "@/lib/guideBookingDates";
 import type { GuideCardItem } from "@/lib/marketTypes";
 
-function parseOccupiedRanges(raw: unknown): GuideOccupiedRangeYmd[] {
+export function parseOccupiedRanges(raw: unknown): GuideOccupiedRangeYmd[] {
   if (!Array.isArray(raw)) return [];
   const out: GuideOccupiedRangeYmd[] = [];
   for (const item of raw) {

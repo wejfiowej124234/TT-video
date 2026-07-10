@@ -1,0 +1,371 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B16",
+  "title": "Performance · build size · runtime budgets",
+  "layer": "L4",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T05:09:43.584Z",
+  "verifier": "run-fpc-batch-b16-performance.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "027ef38d3800925b4229cb49bb5dcf92e232e3d8",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B02",
+    "B15"
+  ],
+  "routes": [
+    "/",
+    "/traveltrust",
+    "/market",
+    "/did-rank",
+    "/community"
+  ],
+  "gates": [
+    "STRICT_FRONTEND_BUILD=1 scripts/gates/check-frontend-npm-build.sh",
+    "measureBuildArtifacts",
+    "probeApiLatencies",
+    "npx playwright test e2e/l5-performance-five-main-live-scan.spec.ts --project=chromium"
+  ],
+  "gate_results": [
+    {
+      "gate": "STRICT_FRONTEND_BUILD=1 check-frontend-npm-build.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "check-frontend-npm-build: OK"
+    },
+    {
+      "gate": "measureBuildArtifacts",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "js_disk=14061241 css=331341 largest_js=1620704"
+    },
+    {
+      "gate": "probeApiLatencies",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "health:9ms meta:7ms discover:1ms meta_db:truems"
+    },
+    {
+      "gate": "npx playwright test e2e/l5-performance-five-main-live-scan.spec.ts --project=chromium",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "l5-performance-five-main-live-scan PASS @ http://127.0.0.1:3013"
+    }
+  ],
+  "gate_pass": true,
+  "runtime_preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T05:09:43.818Z"
+  },
+  "performance_live_evidence": {
+    "budgets_path": "docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\B16-performance\\FPC-100-PERFORMANCE-BUDGETS-BASELINE.v1.json",
+    "bundle_artifacts": {
+      "js_total_bytes": 14061241,
+      "js_file_count": 836,
+      "largest_js_chunk_bytes": 1620704,
+      "largest_js_chunk_path": "D:\\TravelTrust-V1.1\\frontend\\.next\\static\\chunks\\39847-264b6f252b74645d.js",
+      "css_total_bytes": 331341,
+      "css_file_count": 1,
+      "build_present": true
+    },
+    "bundle_checks": [
+      {
+        "key": "css_total_bytes",
+        "value": 331341,
+        "budget_max": 2000000,
+        "pass": true
+      },
+      {
+        "key": "js_total_disk_bytes",
+        "value": 14061241,
+        "budget_max": 450000000,
+        "pass": true
+      },
+      {
+        "key": "largest_js_chunk_bytes",
+        "value": 1620704,
+        "budget_max": 30000000,
+        "pass": true
+      },
+      {
+        "key": "build_present",
+        "value": true,
+        "pass": true
+      }
+    ],
+    "api_latency": [
+      {
+        "key": "health",
+        "path": "/health",
+        "max": 1500,
+        "ms": 9,
+        "status": 200,
+        "pass": true,
+        "budget_ms_max": 1500
+      },
+      {
+        "key": "meta",
+        "path": "/meta",
+        "max": 2000,
+        "ms": 7,
+        "status": 200,
+        "pass": true,
+        "budget_ms_max": 2000
+      },
+      {
+        "key": "discover",
+        "path": "/api/v1/discover/orders?limit=1",
+        "max": 3000,
+        "ms": 1,
+        "status": 200,
+        "pass": true,
+        "budget_ms_max": 3000
+      },
+      {
+        "key": "meta_db",
+        "path": "/meta.database_connected",
+        "pass": true,
+        "connected": true
+      }
+    ],
+    "live_scan": {
+      "pass": true,
+      "summary": {
+        "schema": "traveltrust_l5_performance_five_main_summary.v1",
+        "routesScanned": 5,
+        "recordedUtc": "2026-07-10T05:11:41.459Z"
+      },
+      "routes": [
+        {
+          "route": "/",
+          "probe": "home",
+          "navigation_ms": 8488,
+          "initial_js_bytes": 6318462,
+          "duplicate_requests": 3,
+          "cls": 0,
+          "dom_content_loaded_ms": 77.5,
+          "load_event_end_ms": 8481.399999856949,
+          "tracked_requests": 183,
+          "static_asset_responses": 159,
+          "ok": true
+        },
+        {
+          "route": "/traveltrust",
+          "probe": "traveltrust",
+          "navigation_ms": 301,
+          "initial_js_bytes": 4246737,
+          "duplicate_requests": 0,
+          "cls": 0,
+          "dom_content_loaded_ms": 57.59999990463257,
+          "load_event_end_ms": 295.2999999523163,
+          "tracked_requests": 54,
+          "static_asset_responses": 54,
+          "ok": true
+        },
+        {
+          "route": "/market",
+          "probe": "market",
+          "navigation_ms": 2193,
+          "initial_js_bytes": 6676955,
+          "duplicate_requests": 1,
+          "cls": 0,
+          "dom_content_loaded_ms": 165.79999995231628,
+          "load_event_end_ms": 2190.9000000953674,
+          "tracked_requests": 208,
+          "static_asset_responses": 179,
+          "ok": true
+        },
+        {
+          "route": "/did-rank",
+          "probe": "did-rank",
+          "navigation_ms": 258,
+          "initial_js_bytes": 2838089,
+          "duplicate_requests": 0,
+          "cls": 0,
+          "dom_content_loaded_ms": 164.59999990463257,
+          "load_event_end_ms": 255.59999990463257,
+          "tracked_requests": 41,
+          "static_asset_responses": 41,
+          "ok": true
+        },
+        {
+          "route": "/community",
+          "probe": "community",
+          "navigation_ms": 208,
+          "initial_js_bytes": 2867093,
+          "duplicate_requests": 0,
+          "cls": 0,
+          "dom_content_loaded_ms": 85,
+          "load_event_end_ms": 193.70000004768372,
+          "tracked_requests": 47,
+          "static_asset_responses": 46,
+          "ok": true
+        }
+      ],
+      "notes": []
+    },
+    "regression": {
+      "pass": true,
+      "skipped": true,
+      "reason": "no_baseline_yet"
+    },
+    "production_server": "http://127.0.0.1:3013"
+  },
+  "business_certification": {
+    "verdict": "PASS",
+    "gate_pass": true
+  },
+  "quality_supplement": {
+    "verdict": "PASS",
+    "domains": [
+      "Q4",
+      "Q17"
+    ],
+    "checks": [
+      {
+        "id": "Q4_spec_96_16_d7",
+        "domain": "Q4",
+        "pass": true,
+        "path": "docs/spec/96-16-全页面UI-UX优化方案总册.md",
+        "notes": []
+      },
+      {
+        "id": "Q4_prm_matrix",
+        "domain": "Q4",
+        "pass": true,
+        "path": "registry/production-readiness-master-matrix.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q4_build_gate",
+        "domain": "Q4",
+        "pass": true,
+        "path": "scripts/gates/check-frontend-npm-build.sh",
+        "notes": []
+      },
+      {
+        "id": "Q4_lazy_images_landing",
+        "domain": "Q4",
+        "pass": true,
+        "path": "frontend/components/landing/ItineraryResultsSection.tsx",
+        "notes": []
+      },
+      {
+        "id": "Q4_perf_live_spec",
+        "domain": "Q4",
+        "pass": true,
+        "path": "frontend/e2e/l5-performance-five-main-live-scan.spec.ts",
+        "notes": []
+      },
+      {
+        "id": "Q17_budgets_ssot",
+        "domain": "Q17",
+        "pass": true,
+        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B16-performance/FPC-100-PERFORMANCE-BUDGETS-BASELINE.v1.json",
+        "notes": []
+      },
+      {
+        "id": "Q4_lazy_image_count",
+        "domain": "Q4",
+        "pass": true,
+        "path": "frontend/components/landing/*.tsx",
+        "notes": [
+          "lazy_count:4"
+        ]
+      },
+      {
+        "id": "Q4_live_perf_evidence",
+        "domain": "Q4",
+        "pass": true,
+        "path": "frontend/evidence/l5-performance-five-main-live-scan/",
+        "notes": []
+      }
+    ]
+  },
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Production build + bundle disk budgets + API latency + five-main live perf scan"
+    },
+    "quality_meets_standard": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Q4 performance SSOT · lazy assets · budgets baseline · regression capture"
+    },
+    "findings_identified": {
+      "answer": false,
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "items": []
+    },
+    "recertification_passed": {
+      "answer": true,
+      "notes": "All gates green after remediation (if any)"
+    }
+  },
+  "overall_verdict": "PASS",
+  "findings": [],
+  "verdict": "IN_PROGRESS",
+  "pass": false,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B17",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Performance ① — prod build + bundle/API budgets + five-main live scan on next start; full prod CWV SLO deferred ②",
+  "traceability": {
+    "requirements": [
+      "next build PASS (STRICT_FRONTEND_BUILD)",
+      "JS/CSS disk budgets vs FPC-100-PERFORMANCE-BUDGETS-BASELINE.v1.json",
+      "API /health /meta /discover latency ceilings",
+      "Five-main navigation · initial JS · duplicate request · CLS budgets"
+    ],
+    "spec_refs": [
+      "registry/production-readiness-master-matrix.v1.yaml",
+      "FPC-100-QUALITY-DOMAIN-MATRIX-v1.md",
+      "FPC-100/B16-performance/FPC-100-PERFORMANCE-BUDGETS-BASELINE.v1.json"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B16-LATEST.json",
+    "certification_batch": "B16",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T05:09:43.584Z",
+  "expires_at_utc": "2026-08-09T05:09:43.584Z",
+  "expiry_policy_days": 30,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T05:09:43.584Z",
+  "frozen_git_sha": "027ef38d3800925b4229cb49bb5dcf92e232e3d8",
+  "dod": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": false,
+    "working_tree_clean": false,
+    "all_met": false,
+    "checked_at_utc": "2026-07-10T05:11:54.843Z",
+    "committed_sha": "027ef38d3800925b4229cb49bb5dcf92e232e3d8",
+    "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
+  }
+}

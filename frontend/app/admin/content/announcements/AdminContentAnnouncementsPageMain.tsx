@@ -212,7 +212,7 @@ export function AdminContentAnnouncementsPageMain() {
               {t(editId ? "admin_content_announcements_update_btn" : "admin_content_announcements_create_btn")}
             </button>
             {editId ? (
-              <button type="button" className={adminTableRowPrimaryActionClass} disabled={busy} onClick={resetForm}>
+              <button type="button" className={adminTableRowPrimaryActionClass()} disabled={busy} onClick={resetForm}>
                 {t("admin_content_announcements_cancel_edit")}
               </button>
             ) : null}
@@ -243,7 +243,7 @@ export function AdminContentAnnouncementsPageMain() {
                 {canWriteLane(row.lane) && row.publish_status === "draft" ? (
                   <button
                     type="button"
-                    className={adminTableRowPrimaryActionClass}
+                    className={adminTableRowPrimaryActionClass()}
                     disabled={busy}
                     onClick={() => loadRowForEdit(row)}
                   >
@@ -253,7 +253,7 @@ export function AdminContentAnnouncementsPageMain() {
                 {canWriteLane(row.lane) && row.publish_status === "draft" ? (
                   <button
                     type="button"
-                    className={adminTableRowPrimaryActionClass}
+                    className={adminTableRowPrimaryActionClass()}
                     disabled={busy}
                     onClick={() => void workflow(row, "submit-review")}
                   >
@@ -273,7 +273,7 @@ export function AdminContentAnnouncementsPageMain() {
                 {canWriteLane(row.lane) && row.publish_status === "published" ? (
                   <button
                     type="button"
-                    className={adminTableRowPrimaryActionClass}
+                    className={adminTableRowPrimaryActionClass()}
                     disabled={busy}
                     onClick={() => void workflow(row, "unpublish")}
                   >
@@ -283,7 +283,7 @@ export function AdminContentAnnouncementsPageMain() {
                 {canWriteLane(row.lane) && row.publish_status !== "archived" ? (
                   <button
                     type="button"
-                    className={adminTableRowPrimaryActionClass}
+                    className={adminTableRowPrimaryActionClass()}
                     disabled={busy}
                     onClick={() => void workflow(row, "archive")}
                   >

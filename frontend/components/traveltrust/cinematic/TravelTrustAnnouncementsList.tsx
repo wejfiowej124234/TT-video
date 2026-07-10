@@ -10,6 +10,7 @@ import {
   traveltrustAnnouncementListLabelKey,
   traveltrustContentTierLabelKey,
   type TravelTrustAnnouncement,
+  type TravelTrustAnnouncementKind,
   type TravelTrustContentTier,
 } from "@/lib/traveltrustNetworkAnnouncements";
 import { traveltrustAnnouncementLaneLabelKey } from "@/lib/traveltrustAnnouncementCatalog";
@@ -27,6 +28,10 @@ import {
 } from "@/lib/traveltrust/l5";
 
 const KIND_STYLE = TT_PULSE_KIND_L5;
+
+function pulseKindStyleClass(kind: TravelTrustAnnouncementKind): string {
+  return KIND_STYLE[kind];
+}
 
 function tierBadgeClass(tier: TravelTrustContentTier): string {
   switch (tier) {
@@ -98,7 +103,7 @@ function AnnouncementRow({
         <div className={TT_ANNOUNCEMENTS_LIST_L5.tagRowClass}>
           <span className={TT_ANNOUNCEMENTS_LIST_L5.phaseChipClass}>{chipLabel}</span>
           {showKindChip ? (
-            <span className={`${TT_PULSE_UPDATES_PANEL_L5.rowKindClass} ${KIND_STYLE[item.kind]}`}>{kindLabel}</span>
+            <span className={`${TT_PULSE_UPDATES_PANEL_L5.rowKindClass} ${pulseKindStyleClass(item.kind)}`}>{kindLabel}</span>
           ) : null}
           <span className={`${TT_ROADMAP_L5.statusBadgeClass} ${tierBadgeClass(item.contentTier)}`}>
             {t(traveltrustContentTierLabelKey(item.contentTier))}

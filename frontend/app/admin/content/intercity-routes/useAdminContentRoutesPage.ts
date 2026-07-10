@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { getAdminContentIntercityRoutes, type AdminCatalogRouteRow } from "@/lib/apiClient";
+import { getAdminContentIntercityRoutes, type AdminCatalogRouteRow } from "@/lib/apiClient/content/http";
 
 export function useAdminContentRoutesPage() {
   const [items, setItems] = useState<AdminCatalogRouteRow[]>([]);

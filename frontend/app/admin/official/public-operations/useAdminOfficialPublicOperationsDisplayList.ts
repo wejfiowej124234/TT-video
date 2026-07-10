@@ -2,10 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import {
-  getAdminOfficialPublicOperationsPublishQueue,
-  type AdminPublicOpsDisplayRow,
-} from "@/lib/apiClient";
+import { getAdminOfficialPublicOperationsPublishQueue } from "@/lib/apiClient";
+import type { AdminPublicOpsDisplayRow } from "@/lib/apiClient/official/http";
 
 export type PublicOpsEntityType = "guides" | "orders" | "market_listings" | "community_posts";
 

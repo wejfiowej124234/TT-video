@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { getAdminContentPricing, type AdminCatalogPricingRow } from "@/lib/apiClient";
+import { getAdminContentPricing, type AdminCatalogPricingRow } from "@/lib/apiClient/content/http";
 
 export function useAdminContentPricingPage() {
   const [items, setItems] = useState<AdminCatalogPricingRow[]>([]);

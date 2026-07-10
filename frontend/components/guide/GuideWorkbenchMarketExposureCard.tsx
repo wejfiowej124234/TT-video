@@ -7,6 +7,7 @@ import ApiErrorAlert from "@/components/ApiErrorAlert";
 import { FOCUS_RING } from "@/components/me/constants";
 import type { MeGuideProfile } from "@/lib/apiClient/meGuideProfile";
 import { fetchGuideAvailabilityCached } from "@/lib/guideAvailabilityClient";
+import { parseOccupiedRanges } from "@/lib/guidesAvailableForTrip";
 import { countGuideOccupiedDaysThisMonth } from "@/lib/guide/guideWorkbenchAvailabilityModel";
 import { guideProfileSettingsHrefFromWorkbench } from "@/lib/guide/guideProfileSettingsNav";
 import { GUIDE_WORKBENCH_MARKET_EXPOSURE_ANCHOR } from "@/lib/guide/guideOrderCorridorModel";
@@ -63,10 +64,7 @@ export default function GuideWorkbenchMarketExposureCard({
     void fetchGuideAvailabilityCached(guideId)
       .then((payload) => {
         if (cancelled) return;
-        const ranges = (payload?.occupied_ranges ?? []).map((r) => ({
-          start_date: r.start_date,
-          end_date: r.end_date,
-        }));
+        const ranges = parseOccupiedRanges(payload?.occupied_ranges);
         setOccupiedThisMonth(countGuideOccupiedDaysThisMonth(ranges).occupied);
       })
       .catch(() => {

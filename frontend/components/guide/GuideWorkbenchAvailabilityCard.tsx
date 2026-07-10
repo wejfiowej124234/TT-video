@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { fetchGuideAvailabilityCached } from "@/lib/guideAvailabilityClient";
+import { parseOccupiedRanges } from "@/lib/guidesAvailableForTrip";
 import { countGuideOccupiedDaysThisMonth } from "@/lib/guide/guideWorkbenchAvailabilityModel";
 import { guidePublicDetailHref, guidePublicMarketBrowseHref } from "@/lib/guide/guideWorkbenchProfileSummaryModel";
 import type { MeGuideProfile } from "@/lib/apiClient/meGuideProfile";
@@ -35,10 +36,7 @@ export default function GuideWorkbenchAvailabilityCard({ t, profile }: GuideWork
     void fetchGuideAvailabilityCached(guideId)
       .then((payload) => {
         if (cancelled) return;
-        const ranges = (payload?.occupied_ranges ?? []).map((r) => ({
-          start_date: r.start_date,
-          end_date: r.end_date,
-        }));
+        const ranges = parseOccupiedRanges(payload?.occupied_ranges);
         setOccupiedThisMonth(countGuideOccupiedDaysThisMonth(ranges).occupied);
       })
       .catch(() => {

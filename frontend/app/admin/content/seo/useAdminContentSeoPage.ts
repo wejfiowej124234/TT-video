@@ -8,7 +8,7 @@ import {
   postAdminContentSeo,
   postAdminContentSeoWorkflow,
   type AdminCatalogSeoRow,
-} from "@/lib/apiClient";
+} from "@/lib/apiClient/content/http";
 
 export function useAdminContentSeoPage() {
   const [items, setItems] = useState<AdminCatalogSeoRow[]>([]);

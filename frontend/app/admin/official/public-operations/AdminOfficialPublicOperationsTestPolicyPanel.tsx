@@ -14,8 +14,8 @@ import {
 import {
   getAdminOfficialPublicOperationsPolicy,
   patchAdminOfficialPublicOperationsPolicy,
-  type AdminPublicOpsPolicy,
 } from "@/lib/apiClient";
+import type { AdminPublicOpsPolicy } from "@/lib/apiClient/official/http";
 
 const BLOCKED_ORIGIN_OPTIONS = ["REAL", "OFFICIAL", "SHOWCASE", "TEST", "SMOKE", "SYSTEM"] as const;
 
@@ -60,10 +60,8 @@ export function AdminOfficialPublicOperationsTestPolicyPanel() {
     );
   }
 
-  async function savePolicy() {
+  async function persistPolicy() {
     setSaveError(null);
-    const ok = await adminConfirmOfficialPublish(requestConfirm, t);
-    if (!ok) return;
     setBusy(true);
     try {
       const res = await patchAdminOfficialPublicOperationsPolicy({
@@ -82,6 +80,10 @@ export function AdminOfficialPublicOperationsTestPolicyPanel() {
     } finally {
       setBusy(false);
     }
+  }
+
+  function savePolicy() {
+    requestConfirm(adminConfirmOfficialPublish(() => void persistPolicy()));
   }
 
   const dirty =
@@ -144,7 +146,7 @@ export function AdminOfficialPublicOperationsTestPolicyPanel() {
             type="button"
             className={adminTableRowPrimaryActionClass()}
             disabled={busy || !dirty}
-            onClick={() => void savePolicy()}
+            onClick={savePolicy}
           >
             {t("admin_public_operations_policy_save")}
           </button>

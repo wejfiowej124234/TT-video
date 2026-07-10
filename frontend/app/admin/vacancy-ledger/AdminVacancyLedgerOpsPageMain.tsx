@@ -238,7 +238,7 @@ export function AdminVacancyLedgerOpsPageMain() {
 
             <section className="mb-6" aria-label={t("admin_vacancy_ledger_ops_jurisdictions_aria")}>
               <h2 className="text-body-m font-medium">{t("admin_vacancy_ledger_ops_jurisdictions_heading")}</h2>
-              <OfficialOpsDataTable className="mt-3">
+              <OfficialOpsDataTable className="mt-3" dataAttr="vacancy-ledger-jurisdictions">
                 <OfficialOpsTableHead>
                   <tr>
                     <OfficialOpsTableTh>{t("admin_vacancy_ledger_ops_col_jurisdiction")}</OfficialOpsTableTh>
@@ -264,7 +264,7 @@ export function AdminVacancyLedgerOpsPageMain() {
 
             <section aria-label={t("admin_vacancy_ledger_ops_events_aria")}>
               <h2 className="text-body-m font-medium">{t("admin_vacancy_ledger_ops_events_heading")}</h2>
-              <OfficialOpsDataTable className="mt-3">
+              <OfficialOpsDataTable className="mt-3" dataAttr="vacancy-ledger-events">
                 <OfficialOpsTableHead>
                   <tr>
                     <OfficialOpsTableTh>{t("admin_vacancy_ledger_ops_col_when")}</OfficialOpsTableTh>

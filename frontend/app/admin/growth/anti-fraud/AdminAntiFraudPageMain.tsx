@@ -155,7 +155,7 @@ export function AdminAntiFraudPageMain() {
                 <OfficialOpsTableTh>{t("admin_growth_anti_fraud_col_status")}</OfficialOpsTableTh>
                 <OfficialOpsTableTh>{t("admin_growth_anti_fraud_col_signals")}</OfficialOpsTableTh>
                 <OfficialOpsTableTh>{t("admin_growth_anti_fraud_col_points")}</OfficialOpsTableTh>
-                <OfficialOpsTableTh />
+                <OfficialOpsTableTh>{"\u00a0"}</OfficialOpsTableTh>
               </tr>
             </OfficialOpsTableHead>
             <OfficialOpsTableBody>

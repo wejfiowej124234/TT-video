@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { getAdminContentTransportRegionRules, type AdminCatalogTransportRuleRow } from "@/lib/apiClient";
+import { getAdminContentTransportRegionRules, type AdminCatalogTransportRuleRow } from "@/lib/apiClient/content/http";
 
 export function useAdminContentTransportRulesPage() {
   const [items, setItems] = useState<AdminCatalogTransportRuleRow[]>([]);

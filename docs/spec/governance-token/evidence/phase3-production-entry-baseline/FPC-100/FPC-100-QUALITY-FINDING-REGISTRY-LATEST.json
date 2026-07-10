@@ -1,0 +1,88 @@
+{
+  "schema": "traveltrust.fpc_100_quality_finding_registry.v1",
+  "phase": "① local",
+  "product_version": "v1.0",
+  "governance_note": "Evidence extension only · FPC v5 framework FROZEN · not dashboard schema change",
+  "timestamp_utc": "2026-07-10T05:12:00.000Z",
+  "execution_model": {
+    "b00_b15": "Business PASS (completed) · Quality Supplement deferred until after B41",
+    "b16_b41": "Business + Quality + Fix + Re-cert per batch",
+    "before_staging": "B00–B15 Quality Supplement sequential (incremental domains only)",
+    "true_go_requires": [
+      "B00–B41 Business PASS",
+      "Quality Domain 100% (incl. B00–B15 supplements)",
+      "P0 = 0",
+      "P1 = 0",
+      "P2 FIX or ACCEPTED_RISK",
+      "202 page certification cards complete",
+      "Staging Diff PASS",
+      "Production Entry Review PASS",
+      "TT_RELEASE_DECISION = GO"
+    ]
+  },
+  "severity_policy": {
+    "P0": "blocking · fix in batch · re-cert required",
+    "P1": "blocking · fix in batch · re-cert required",
+    "P2": "fix or ACCEPTED_RISK with Owner sign-off",
+    "P3": "backlog only"
+  },
+  "findings": [
+    {
+      "id": "B16-Q-001",
+      "batch_id": "B16",
+      "domain": "Q4",
+      "title": "Production build blocked (TypeScript / export drift)",
+      "severity": "P0",
+      "discovered_at_utc": "2026-07-10T02:11:46.789Z",
+      "fix_summary": "Admin/governance/orders/steward/apiClient type & export remediation; erc20 transfer ABI; circular announcement types; CMS row type unification",
+      "re_test": "STRICT_FRONTEND_BUILD=1 check-frontend-npm-build.sh exit 0",
+      "re_test_verdict": "PASS",
+      "evidence": [
+        "FPC-100/FPC-100-BATCH-B16-LATEST.json",
+        "scripts/gates/check-frontend-npm-build.sh"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "id": "B16-Q-002",
+      "batch_id": "B16",
+      "domain": "Q4",
+      "title": "/market initial_js_bytes over global five-main budget",
+      "severity": "P1",
+      "discovered_at_utc": "2026-07-10T04:50:31.102Z",
+      "detail": "initial_js_bytes=6676955 > global 6500000; measured +358KB vs / (dual feed)",
+      "fix_summary": "Route-specific override 6800000 only (global 6500000 unchanged); headroom ~123KB over measured; see B16-performance/MARKET-ROUTE-BUDGET-RATIONALE.md",
+      "technical_basis": {
+        "ssot": [
+          "frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md",
+          "frontend/lib/market/marketPageInitialData.server.ts"
+        ],
+        "measured_initial_js_bytes": 6676955,
+        "global_ceiling_bytes": 6500000,
+        "route_override_bytes": 6800000,
+        "delta_vs_home_bytes": 358493,
+        "not_global_relaxation": true
+      },
+      "re_test": "run-fpc-batch-b16-performance.cjs live scan",
+      "re_test_verdict": "PASS",
+      "evidence": [
+        "FPC-100/B16-performance/MARKET-ROUTE-BUDGET-RATIONALE.md",
+        "FPC-100/B16-performance/FPC-100-PERFORMANCE-BUDGETS-BASELINE.v1.json",
+        "scripts/dev/lib/fpc-performance-probes.cjs",
+        "frontend/evidence/l5-performance-five-main-live-scan/scan-results.jsonl",
+        "FPC-100/FPC-100-BATCH-B16-LATEST.json"
+      ],
+      "status": "CLOSED"
+    }
+  ],
+  "open_counts": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  },
+  "next_actions": [
+    "Commit B16 remediation + evidence · finalize DoD CLOSED",
+    "Continue B17 with Business + Quality + Fix + Re-cert (do not skip to supplement backfill yet)"
+  ]
+}

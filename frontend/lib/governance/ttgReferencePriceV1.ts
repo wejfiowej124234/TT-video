@@ -23,9 +23,19 @@ export function formatCnyFdvBillions(fdvCny: number, locale: string): string {
 
 export function quoteTtgMockSwapFromUsdc(
   payAmount: string,
-): { receiveTtg: string; payUsdc: number } | null {
+): {
+  receiveTtg: string;
+  payUsdc: number;
+  rateUsdcPerTtg: string;
+  referencePriceCnyPerTtg: number;
+} | null {
   const pay = Number.parseFloat(payAmount.trim());
   if (!Number.isFinite(pay) || pay <= 0) return null;
   const receive = pay / TTG_MOCK_USDC_PER_TTG;
-  return { receiveTtg: receive.toFixed(4), payUsdc: pay };
+  return {
+    receiveTtg: receive.toFixed(4),
+    payUsdc: pay,
+    rateUsdcPerTtg: formatUsdcRate(TTG_MOCK_USDC_PER_TTG),
+    referencePriceCnyPerTtg: TTG_REFERENCE_PRICE_V1.referencePriceCnyPerTtg,
+  };
 }

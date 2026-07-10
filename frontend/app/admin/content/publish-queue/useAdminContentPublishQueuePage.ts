@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { getAdminContentPublishQueue, postAdminCatalogEntityWorkflow, type AdminCatalogPublishQueueRow } from "@/lib/apiClient";
+import { getAdminContentPublishQueue, postAdminCatalogEntityWorkflow, type AdminCatalogPublishQueueRow } from "@/lib/apiClient/content/http";
 
 export function useAdminContentPublishQueuePage() {
   const [items, setItems] = useState<AdminCatalogPublishQueueRow[]>([]);

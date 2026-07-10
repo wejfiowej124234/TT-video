@@ -70,7 +70,10 @@ export function StewardStakeReleaseRow({
     address: pool ?? undefined,
     abi: regionStewardStakePoolAbi,
     functionName: "stakes",
-    args: userEnabled ? [expectedWallet as `0x${string}`, jurisdictionBytes] : undefined,
+    args:
+      userEnabled && jurisdictionBytes
+        ? [expectedWallet as `0x${string}`, jurisdictionBytes]
+        : undefined,
     query: { enabled: userEnabled },
   });
 
@@ -78,7 +81,10 @@ export function StewardStakeReleaseRow({
     address: pool ?? undefined,
     abi: regionStewardStakePoolAbi,
     functionName: "releasableAmount",
-    args: userEnabled ? [expectedWallet as `0x${string}`, jurisdictionBytes] : undefined,
+    args:
+      userEnabled && jurisdictionBytes
+        ? [expectedWallet as `0x${string}`, jurisdictionBytes]
+        : undefined,
     query: { enabled: userEnabled },
   });
 

@@ -1,4 +1,4 @@
-import type { CmsPublicAnnouncementRow } from "@/lib/server/cmsPublicAnnouncementsDb";
+import type { CmsPublicAnnouncementRow } from "@/lib/cmsPublicAnnouncementsTypes";
 
 type CacheEntry = { at: number; items: CmsPublicAnnouncementRow[]; pulse: CmsPublicAnnouncementRow[] };
 

@@ -43,7 +43,7 @@ export function AdminBackupPageMain() {
       {loading && !body ? (
         <AdminListLoadingStatus message={t("admin_loading")} className="mt-4 text-body text-ink-600" />
       ) : error && !body ? (
-        <AdminListFetchError errorKind="fetch_failed" message={t(error)} className="mt-4" />
+        <AdminListFetchError errorKind="failed" message={t(error)} className="mt-4" />
       ) : body ? (
         <div className="mt-6 space-y-6" data-tt-admin-backup-status="1">
           <section>

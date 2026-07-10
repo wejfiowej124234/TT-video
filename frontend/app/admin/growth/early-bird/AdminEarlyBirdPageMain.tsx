@@ -5,6 +5,8 @@ import { useId, useState } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
+import { AdminOpsPlanePermissionBanners } from "@/components/admin/ops/AdminOpsPlanePermissionBanners";
+import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import {
   OfficialOpsDataTable,
   OfficialOpsTableBody,

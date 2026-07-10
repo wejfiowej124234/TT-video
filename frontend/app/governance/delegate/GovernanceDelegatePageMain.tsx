@@ -5,6 +5,7 @@ import Link from "next/link";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import LoadingText from "@/components/LoadingText";
 import GovernanceTargetNotice from "@/components/governance/GovernanceTargetNotice";
+import { GovernanceSearchParamsRouteSuspense } from "@/components/governance/GovernanceSearchParamsRouteSuspense";
 import { GovernanceOpsAdminLinks } from "@/components/governance/GovernanceOpsAdminLinks";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";

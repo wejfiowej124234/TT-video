@@ -58,7 +58,7 @@ export async function getGuide(id: string): Promise<unknown> {
 export async function getGuideAvailability(id: string): Promise<{
   status?: string;
   guide_id?: string;
-  occupied_ranges?: unknown[];
+  occupied_ranges?: { start_date?: string; end_date?: string }[];
 }> {
   const res = await fetch(apiUrl(routes.guideAvailability(id)), {
     headers: { "x-request-id": requestId(), ...getAuthHeaders() },
@@ -66,7 +66,7 @@ export async function getGuideAvailability(id: string): Promise<{
   const data = (await parseResponse(res)) as {
     status?: string;
     guide_id?: string;
-    occupied_ranges?: unknown[];
+    occupied_ranges?: { start_date?: string; end_date?: string }[];
   };
   logApiJsonStatusNotOk("getGuideAvailability", data);
   throwUnlessApiOk(data);

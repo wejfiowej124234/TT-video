@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { getAdminContentCities, type AdminCatalogCityRow } from "@/lib/apiClient";
+import { getAdminContentCities, type AdminCatalogCityRow } from "@/lib/apiClient/content/http";
 
 export function useAdminContentCitiesPage() {
   const [items, setItems] = useState<AdminCatalogCityRow[]>([]);

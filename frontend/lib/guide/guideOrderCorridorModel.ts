@@ -23,7 +23,7 @@ export function parseOrdersListHat(raw: string | null | undefined): OrdersListHa
   return null;
 }
 
-export function isGuideOrdersListHat(hat: OrdersListHat): hat is typeof ORDERS_LIST_HAT_GUIDE {
+export function isGuideOrdersListHat(hat: string | null | undefined): hat is typeof ORDERS_LIST_HAT_GUIDE {
   return hat === ORDERS_LIST_HAT_GUIDE;
 }
 

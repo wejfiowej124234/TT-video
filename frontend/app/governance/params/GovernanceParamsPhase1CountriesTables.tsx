@@ -1,5 +1,6 @@
 "use client";
 
+import type { LocaleTranslateFn } from "@/lib/i18n";
 import { GOV_PARAMS_L5, GOV_PARAMS_TABLE } from "@/lib/governance/governanceParamsPageL5";
 import type { CountryRow84 } from "@/lib/governanceParams84Readonly";
 import {
@@ -18,7 +19,7 @@ export function GovernanceParamsPhase1CountriesTables({
   protocolTableCaptionId,
   fundraiseTableCaptionId,
 }: {
-  t: (key: string) => string;
+  t: LocaleTranslateFn;
   locale: string;
   dash: string;
   rows: CountryRow84[];

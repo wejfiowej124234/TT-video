@@ -4,6 +4,8 @@ import { useId, useState } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
+import { AdminOpsPlanePermissionBanners } from "@/components/admin/ops/AdminOpsPlanePermissionBanners";
+import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import {
   OfficialOpsDataTable,
   OfficialOpsTableBody,
@@ -13,7 +15,7 @@ import {
 import { OfficialOpsFormCard } from "@/components/admin/ops/OfficialOpsFormCard";
 
 import { AdminOpsRiskBanner } from "@/components/admin/ops/AdminOpsRiskBanner";
-import { OfficialOpsPublishRowActions } from "@/components/admin/ops/OfficialOpsPublishRowActions";
+import { OfficialOpsPublishRowActions, type OfficialOpsPublishAction } from "@/components/admin/ops/OfficialOpsPublishRowActions";
 import { OpsPlaneFetchStates } from "@/components/admin/ops/OpsPlaneFetchStates";
 import {
   ADMIN_FILTER_FIELD_LABEL_CLASS,
@@ -69,7 +71,7 @@ export function AdminOfficialItineraryTemplatesPageMain() {
     }
   }
 
-  async function runAction(id: string, action: "submit" | "request" | "publish") {
+  async function runAction(id: string, action: OfficialOpsPublishAction) {
     setBusy(true);
     try {
       if (action === "submit") await postAdminOfficialItineraryTemplateSubmitReview(id);

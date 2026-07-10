@@ -4,6 +4,8 @@ import { useId, useMemo, useState } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
+import { AdminOpsPlanePermissionBanners } from "@/components/admin/ops/AdminOpsPlanePermissionBanners";
+import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import {
   OfficialOpsDataTable,
   OfficialOpsTableBody,
@@ -12,7 +14,7 @@ import {
 } from "@/components/admin/ops/OfficialOpsDataTable";
 import { OfficialOpsFormCard } from "@/components/admin/ops/OfficialOpsFormCard";
 
-import { OfficialOpsPublishRowActions } from "@/components/admin/ops/OfficialOpsPublishRowActions";
+import { OfficialOpsPublishRowActions, type OfficialOpsPublishAction } from "@/components/admin/ops/OfficialOpsPublishRowActions";
 import { OpsPlaneFetchStates } from "@/components/admin/ops/OpsPlaneFetchStates";
 import { AdminOpsRiskBanner } from "@/components/admin/ops/AdminOpsRiskBanner";
 import {
@@ -91,7 +93,7 @@ export function AdminOfficialColdStartPageMain() {
     }
   }
 
-  async function runAction(id: string, action: "submit" | "request" | "deploy" | "rollback") {
+  async function runAction(id: string, action: OfficialOpsPublishAction) {
     setBusy(true);
     try {
       if (action === "submit") await postAdminOfficialColdStartCampaignSubmitReview(id);

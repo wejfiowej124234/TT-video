@@ -81,6 +81,35 @@ export const GOVERNANCE_TTG_SUPPLY_ROWS: readonly GovernanceParamsSupplyRow[] = 
   },
 ] as const;
 
+export type GovernanceParamsGlobalUsageRow = {
+  id: string;
+  labelKey: string;
+  hintKey: string;
+  sharePct: number;
+};
+
+/** HQ TTG beyond ten countries · 15/5/80 — product disclosure only */
+export const GOVERNANCE_TTG_GLOBAL_USAGE_ROWS: readonly GovernanceParamsGlobalUsageRow[] = [
+  {
+    id: "operations",
+    labelKey: "governance_params_ttg_global_usage_operations",
+    hintKey: "governance_params_ttg_global_usage_operations_hint",
+    sharePct: 15,
+  },
+  {
+    id: "airdrop",
+    labelKey: "governance_params_ttg_global_usage_airdrop",
+    hintKey: "governance_params_ttg_global_usage_airdrop_hint",
+    sharePct: 5,
+  },
+  {
+    id: "reserve",
+    labelKey: "governance_params_ttg_global_usage_reserve",
+    hintKey: "governance_params_ttg_global_usage_reserve_hint",
+    sharePct: 80,
+  },
+] as const;
+
 export type GovernanceParamsPublicRoundRow = {
   id: string;
   labelKey: string;

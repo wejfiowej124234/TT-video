@@ -18,6 +18,12 @@
     "routes_five_main": {
       "navigation_ms_max": 15000,
       "initial_js_transfer_bytes_max": 6500000,
+      "route_overrides": {
+        "/market": {
+          "initial_js_transfer_bytes_max": 6800000,
+          "note": "Dual discover+guides SSR/hydration · LANDING-MARKET SSOT · ① local calibrated"
+        }
+      },
       "duplicate_request_max": 6,
       "cls_max": 0.2
     },

@@ -17,7 +17,7 @@ export function parseMerchantOrdersListHat(raw: string | null | undefined): Merc
   return null;
 }
 
-export function isMerchantOrdersListHat(hat: MerchantOrdersListHat): hat is typeof ORDERS_LIST_HAT_MERCHANT {
+export function isMerchantOrdersListHat(hat: string | null | undefined): hat is typeof ORDERS_LIST_HAT_MERCHANT {
   return hat === ORDERS_LIST_HAT_MERCHANT;
 }
 

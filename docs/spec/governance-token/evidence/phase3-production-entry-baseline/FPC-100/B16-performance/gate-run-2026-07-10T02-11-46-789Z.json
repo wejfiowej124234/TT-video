@@ -1,0 +1,256 @@
+{
+  "timestamp_utc": "2026-07-10T02:11:46.789Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": true,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T02:11:46.942Z"
+  },
+  "gate_results": [
+    {
+      "gate": "STRICT_FRONTEND_BUILD=1 check-frontend-npm-build.sh",
+      "exit_code": 1,
+      "pass": false,
+      "summary_line": "production build FAIL"
+    },
+    {
+      "gate": "measureBuildArtifacts",
+      "exit_code": 1,
+      "pass": false,
+      "summary_line": "js_disk=14049959 css=331341 largest_js=1620704"
+    },
+    {
+      "gate": "probeApiLatencies",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "health:10ms meta:9ms discover:2ms meta_db:truems"
+    },
+    {
+      "gate": "npx playwright test e2e/l5-performance-five-main-live-scan.spec.ts --project=chromium",
+      "exit_code": 1,
+      "pass": false,
+      "summary_line": "l5-performance-five-main-live-scan FAIL"
+    }
+  ],
+  "perf_live_evidence": {
+    "budgets_path": "docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\B16-performance\\FPC-100-PERFORMANCE-BUDGETS-BASELINE.v1.json",
+    "bundle_artifacts": {
+      "js_total_bytes": 14049959,
+      "js_file_count": 836,
+      "largest_js_chunk_bytes": 1620704,
+      "largest_js_chunk_path": "D:\\TravelTrust-V1.1\\frontend\\.next\\static\\chunks\\39847-264b6f252b74645d.js",
+      "css_total_bytes": 331341,
+      "css_file_count": 1,
+      "build_present": false
+    },
+    "bundle_checks": [
+      {
+        "key": "css_total_bytes",
+        "value": 331341,
+        "budget_max": 2000000,
+        "pass": true
+      },
+      {
+        "key": "js_total_disk_bytes",
+        "value": 14049959,
+        "budget_max": 450000000,
+        "pass": true
+      },
+      {
+        "key": "largest_js_chunk_bytes",
+        "value": 1620704,
+        "budget_max": 30000000,
+        "pass": true
+      },
+      {
+        "key": "build_present",
+        "value": false,
+        "pass": false
+      }
+    ],
+    "api_latency": [
+      {
+        "key": "health",
+        "path": "/health",
+        "max": 1500,
+        "ms": 10,
+        "status": 200,
+        "pass": true,
+        "budget_ms_max": 1500
+      },
+      {
+        "key": "meta",
+        "path": "/meta",
+        "max": 2000,
+        "ms": 9,
+        "status": 200,
+        "pass": true,
+        "budget_ms_max": 2000
+      },
+      {
+        "key": "discover",
+        "path": "/api/v1/discover/orders?limit=1",
+        "max": 3000,
+        "ms": 2,
+        "status": 200,
+        "pass": true,
+        "budget_ms_max": 3000
+      },
+      {
+        "key": "meta_db",
+        "path": "/meta.database_connected",
+        "pass": true,
+        "connected": true
+      }
+    ],
+    "live_scan": {
+      "pass": false,
+      "routes": [],
+      "notes": []
+    },
+    "regression": {
+      "pass": true,
+      "skipped": true,
+      "reason": "no_baseline_yet"
+    },
+    "production_server": "http://127.0.0.1:3013"
+  },
+  "qualityCheckResults": [
+    {
+      "id": "Q4_spec_96_16_d7",
+      "domain": "Q4",
+      "pass": true,
+      "path": "docs/spec/96-16-全页面UI-UX优化方案总册.md",
+      "notes": []
+    },
+    {
+      "id": "Q4_prm_matrix",
+      "domain": "Q4",
+      "pass": true,
+      "path": "registry/production-readiness-master-matrix.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q4_build_gate",
+      "domain": "Q4",
+      "pass": true,
+      "path": "scripts/gates/check-frontend-npm-build.sh",
+      "notes": []
+    },
+    {
+      "id": "Q4_lazy_images_landing",
+      "domain": "Q4",
+      "pass": true,
+      "path": "frontend/components/landing/ItineraryResultsSection.tsx",
+      "notes": []
+    },
+    {
+      "id": "Q4_perf_live_spec",
+      "domain": "Q4",
+      "pass": true,
+      "path": "frontend/e2e/l5-performance-five-main-live-scan.spec.ts",
+      "notes": []
+    },
+    {
+      "id": "Q17_budgets_ssot",
+      "domain": "Q17",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B16-performance/FPC-100-PERFORMANCE-BUDGETS-BASELINE.v1.json",
+      "notes": []
+    },
+    {
+      "id": "Q4_lazy_image_count",
+      "domain": "Q4",
+      "pass": true,
+      "path": "frontend/components/landing/*.tsx",
+      "notes": [
+        "lazy_count:4"
+      ]
+    },
+    {
+      "id": "Q4_live_perf_evidence",
+      "domain": "Q4",
+      "pass": false,
+      "path": "frontend/evidence/l5-performance-five-main-live-scan/",
+      "notes": []
+    }
+  ],
+  "findings": [
+    {
+      "id": "gate_fail:frontend_build",
+      "severity": "P0",
+      "gate": "check-frontend-npm-build.sh",
+      "detail": "\nFailed to compile.\n\n./app/admin/approvals/useAdminApprovalsPage.ts\n257:6  Warning: React Hook useCallback has a missing dependency: 'batchApproveImpl'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n\n./app/admin/approvals/[id]/useAdminApprovalDetailPage.ts\n116:5  Warning: React Hook useCallback has a missing dependency: 'runActionImpl'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n\n./app/admin/community/penalties/useAdminCommunityPenaltiesPage.ts\n140:6  Warning: React Hook useCallback has a missing dependency: 'createFormError'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n209:6  Warning: React Hook useCallback has a missing dependency: 'createFormError'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n\n./app/admin/community/reports/useAdminCommunityReportsPage.ts\n255:6  Warning: React Hook useCallback has a missing dependency: 'modFormError'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n\n./app/admin/compliance/requests/[requestId]/update/useAdminComplianceRequestUpdatePage.ts\n167:6  Warning: React Hook useCallback has a missing dependency: 'submitImpl'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n\n./app/admin/flags/useAdminFlagsPage.ts\n119:6  Warning: React Hook useCallback has a missing dependency: 'publishFormError'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n229:6  Warning: React Hook useCallback has a missing dependency: 'publishFormError'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n\n./app/admin/growth/airdrop-campaigns/AdminAirdropCampaignsPageMain.tsx\n32:8  Error: 'AdminOpsPlanePermissionBanners' is not defined.  react/jsx-no-undef\n\n./app/admin/growth/analytics/AdminGrowthAnalyticsPageMain.tsx\n49:8  Error: 'AdminOpsPlanePermissionBanners' is not defined.  react/jsx-no-undef\n\n./app/admin/grow"
+    },
+    {
+      "id": "bundle_no_build",
+      "severity": "P0",
+      "detail": "frontend/.next/BUILD_ID missing"
+    },
+    {
+      "id": "gate_fail:l5-performance-live-scan",
+      "severity": "P0",
+      "gate": "npx playwright test e2e/l5-performance-five-main-live-scan.spec.ts --project=chromium",
+      "detail": "timeout waiting for http://127.0.0.1:3013/"
+    },
+    {
+      "id": "perf_live_scan_missing",
+      "severity": "P0",
+      "detail": "l5-performance-five-main-live-scan evidence missing"
+    }
+  ],
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": false,
+      "verdict": "FAIL",
+      "notes": "Production build + bundle disk budgets + API latency + five-main live perf scan"
+    },
+    "quality_meets_standard": {
+      "answer": false,
+      "verdict": "FAIL",
+      "notes": "Q4 performance SSOT · lazy assets · budgets baseline · regression capture"
+    },
+    "findings_identified": {
+      "answer": true,
+      "p0": 4,
+      "p1": 0,
+      "p2": 0,
+      "items": [
+        {
+          "id": "gate_fail:frontend_build",
+          "severity": "P0",
+          "gate": "check-frontend-npm-build.sh",
+          "detail": "\nFailed to compile.\n\n./app/admin/approvals/useAdminApprovalsPage.ts\n257:6  Warning: React Hook useCallback has a missing dependency: 'batchApproveImpl'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n\n./app/admin/approvals/[id]/useAdminApprovalDetailPage.ts\n116:5  Warning: React Hook useCallback has a missing dependency: 'runActionImpl'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n\n./app/admin/community/penalties/useAdminCommunityPenaltiesPage.ts\n140:6  Warning: React Hook useCallback has a missing dependency: 'createFormError'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n209:6  Warning: React Hook useCallback has a missing dependency: 'createFormError'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n\n./app/admin/community/reports/useAdminCommunityReportsPage.ts\n255:6  Warning: React Hook useCallback has a missing dependency: 'modFormError'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n\n./app/admin/compliance/requests/[requestId]/update/useAdminComplianceRequestUpdatePage.ts\n167:6  Warning: React Hook useCallback has a missing dependency: 'submitImpl'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n\n./app/admin/flags/useAdminFlagsPage.ts\n119:6  Warning: React Hook useCallback has a missing dependency: 'publishFormError'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n229:6  Warning: React Hook useCallback has a missing dependency: 'publishFormError'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps\n\n./app/admin/growth/airdrop-campaigns/AdminAirdropCampaignsPageMain.tsx\n32:8  Error: 'AdminOpsPlanePermissionBanners' is not defined.  react/jsx-no-undef\n\n./app/admin/growth/analytics/AdminGrowthAnalyticsPageMain.tsx\n49:8  Error: 'AdminOpsPlanePermissionBanners' is not defined.  react/jsx-no-undef\n\n./app/admin/grow"
+        },
+        {
+          "id": "bundle_no_build",
+          "severity": "P0",
+          "detail": "frontend/.next/BUILD_ID missing"
+        },
+        {
+          "id": "gate_fail:l5-performance-live-scan",
+          "severity": "P0",
+          "gate": "npx playwright test e2e/l5-performance-five-main-live-scan.spec.ts --project=chromium",
+          "detail": "timeout waiting for http://127.0.0.1:3013/"
+        },
+        {
+          "id": "perf_live_scan_missing",
+          "severity": "P0",
+          "detail": "l5-performance-five-main-live-scan evidence missing"
+        }
+      ]
+    },
+    "recertification_passed": {
+      "answer": false,
+      "notes": "Pending fix + re-run batch runner"
+    }
+  }
+}

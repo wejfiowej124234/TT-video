@@ -20,7 +20,7 @@
   "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION",
   "release_decision_key": "TT_RELEASE_DECISION",
   "product_version": "v1.0",
-  "timestamp_utc": "2026-07-10T02:06:02.453Z",
+  "timestamp_utc": "2026-07-10T05:11:54.829Z",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "verdict": "NOT_STARTED",
   "pass": false,
@@ -47,20 +47,20 @@
     "content": "IN_PROGRESS",
     "business": "NOT_STARTED",
     "security": "NOT_STARTED",
-    "performance": "NOT_STARTED",
+    "performance": "PASS",
     "truthfulness": "IN_PROGRESS",
     "deployment": "NOT_STARTED",
     "human_verification": "NOT_STARTED"
   },
   "release_health": {
-    "certified_pct": 78,
+    "certified_pct": 80.5,
     "expired_count": 0,
     "blocked_count": 0,
     "accepted_risks_count": 2,
     "coverage_pct": 0,
     "human_verified_pct": 0,
     "human_required_verified_pct": 0,
-    "ai_review_pct": 50
+    "ai_review_pct": 51.5
   },
   "release_history": [
     {
@@ -319,6 +319,19 @@
     },
     {
       "batch_id": "B15",
+      "ai_review": {
+        "verdict": "PASS",
+        "ai_reviewer": "Internal AI Review",
+        "review_type": "Internal AI Review",
+        "review_date": "2026-07-10",
+        "review_version": "v1"
+      },
+      "ai_display": "Internal AI Review",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B16",
       "ai_review": {
         "verdict": "PASS",
         "ai_reviewer": "Internal AI Review",

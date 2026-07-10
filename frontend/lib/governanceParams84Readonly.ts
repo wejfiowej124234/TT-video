@@ -29,8 +29,11 @@ export type ProtocolRef84Mirror = {
   };
   valuation_anchor?: {
     id?: string;
+    doc_ref?: string;
     reference_price_cny_per_ttg?: number;
     fdv_cny?: number;
+    total_supply_ttg?: number;
+    mock_usdc_cny_fx?: number;
     mock_usdc_per_ttg?: number;
     status?: string;
     fundraise_model?: string;

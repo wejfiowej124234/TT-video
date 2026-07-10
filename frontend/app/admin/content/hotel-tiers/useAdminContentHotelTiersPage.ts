@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { getAdminContentHotelTiers, type AdminCatalogHotelTierRow } from "@/lib/apiClient";
+import { getAdminContentHotelTiers, type AdminCatalogHotelTierRow } from "@/lib/apiClient/content/http";
 
 export function useAdminContentHotelTiersPage() {
   const [items, setItems] = useState<AdminCatalogHotelTierRow[]>([]);

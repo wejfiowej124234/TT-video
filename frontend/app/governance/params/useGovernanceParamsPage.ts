@@ -112,7 +112,7 @@ export function useGovernanceParamsPage() {
     };
   }, [t, retryTick]);
 
-  const { data, dataSource } = useMemo(
+  const { data, source: dataSource } = useMemo(
     () => resolveGovernanceParamsProtocolData(apiData, apiLoadFailed),
     [apiData, apiLoadFailed],
   );

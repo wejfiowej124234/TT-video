@@ -80,7 +80,10 @@ export function StewardStakeJurisdictionRow({
     address: pool ?? undefined,
     abi: regionStewardStakePoolAbi,
     functionName: "hasJurisdictionStake",
-    args: userEnabled ? [expectedWallet as `0x${string}`, jurisdictionBytes] : undefined,
+    args:
+      userEnabled && jurisdictionBytes
+        ? [expectedWallet as `0x${string}`, jurisdictionBytes]
+        : undefined,
     query: { enabled: userEnabled },
   });
 
@@ -88,7 +91,7 @@ export function StewardStakeJurisdictionRow({
     address: pool ?? undefined,
     abi: regionStewardStakePoolAbi,
     functionName: "minStakeAmount",
-    args: [jurisdictionBytes],
+    args: baseEnabled && jurisdictionBytes ? [jurisdictionBytes] : undefined,
     query: { enabled: baseEnabled },
   });
 

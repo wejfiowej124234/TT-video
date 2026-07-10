@@ -63,9 +63,13 @@ export async function getOrders(params?: {
   cursor?: string;
   /** B-071：与后端 `OrderState` 字符串一致，如 completed / cancelled / disputed */
   state?: string;
+  /** B-102：与 `CHAIN_ID` / `NEXT_PUBLIC_CHAIN_ID` 同源；省略则用默认链范围 */
+  orders_chain_id?: number;
+  /** 文本搜索：目的地/城市/国家/订单号/状态（服务端分页前过滤） */
+  q?: string;
   /** W4 Workspace：trip · merchant_service · acquisition */
   business_line?: "trip" | "merchant_service" | "acquisition";
-  /** Guide Order Corridor：`guide` · `traveler` */
+  /** Guide Order Corridor：`guide` · `merchant` · `traveler` */
   hat?: "guide" | "merchant" | "traveler";
 }): Promise<OrdersListResult> {
   const q = new URLSearchParams();
@@ -73,6 +77,10 @@ export async function getOrders(params?: {
   if (params?.cursor) q.set("cursor", params.cursor);
   const st = params?.state?.trim();
   if (st) q.set("state", st.toLowerCase());
+  const chainId = params?.orders_chain_id;
+  if (chainId != null && chainId > 0) q.set("orders_chain_id", String(chainId));
+  const search = params?.q?.trim();
+  if (search) q.set("q", search);
   const bl = params?.business_line?.trim();
   if (bl) q.set("business_line", bl);
   const hat = params?.hat?.trim();

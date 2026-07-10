@@ -1,0 +1,293 @@
+{
+  "timestamp_utc": "2026-07-10T05:04:11.812Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T05:04:11.997Z"
+  },
+  "gate_results": [
+    {
+      "gate": "STRICT_FRONTEND_BUILD=1 check-frontend-npm-build.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "check-frontend-npm-build: OK"
+    },
+    {
+      "gate": "measureBuildArtifacts",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "js_disk=14071244 css=331341 largest_js=1620704"
+    },
+    {
+      "gate": "probeApiLatencies",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "health:9ms meta:7ms discover:1ms meta_db:truems"
+    },
+    {
+      "gate": "npx playwright test e2e/l5-performance-five-main-live-scan.spec.ts --project=chromium",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "l5-performance-five-main-live-scan PASS @ http://127.0.0.1:3013"
+    }
+  ],
+  "perf_live_evidence": {
+    "budgets_path": "docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\B16-performance\\FPC-100-PERFORMANCE-BUDGETS-BASELINE.v1.json",
+    "bundle_artifacts": {
+      "js_total_bytes": 14071244,
+      "js_file_count": 838,
+      "largest_js_chunk_bytes": 1620704,
+      "largest_js_chunk_path": "D:\\TravelTrust-V1.1\\frontend\\.next\\static\\chunks\\39847-264b6f252b74645d.js",
+      "css_total_bytes": 331341,
+      "css_file_count": 1,
+      "build_present": true
+    },
+    "bundle_checks": [
+      {
+        "key": "css_total_bytes",
+        "value": 331341,
+        "budget_max": 2000000,
+        "pass": true
+      },
+      {
+        "key": "js_total_disk_bytes",
+        "value": 14071244,
+        "budget_max": 450000000,
+        "pass": true
+      },
+      {
+        "key": "largest_js_chunk_bytes",
+        "value": 1620704,
+        "budget_max": 30000000,
+        "pass": true
+      },
+      {
+        "key": "build_present",
+        "value": true,
+        "pass": true
+      }
+    ],
+    "api_latency": [
+      {
+        "key": "health",
+        "path": "/health",
+        "max": 1500,
+        "ms": 9,
+        "status": 200,
+        "pass": true,
+        "budget_ms_max": 1500
+      },
+      {
+        "key": "meta",
+        "path": "/meta",
+        "max": 2000,
+        "ms": 7,
+        "status": 200,
+        "pass": true,
+        "budget_ms_max": 2000
+      },
+      {
+        "key": "discover",
+        "path": "/api/v1/discover/orders?limit=1",
+        "max": 3000,
+        "ms": 1,
+        "status": 200,
+        "pass": true,
+        "budget_ms_max": 3000
+      },
+      {
+        "key": "meta_db",
+        "path": "/meta.database_connected",
+        "pass": true,
+        "connected": true
+      }
+    ],
+    "live_scan": {
+      "pass": false,
+      "summary": {
+        "schema": "traveltrust_l5_performance_five_main_summary.v1",
+        "routesScanned": 5,
+        "recordedUtc": "2026-07-10T05:06:10.878Z"
+      },
+      "routes": [
+        {
+          "route": "/",
+          "probe": "home",
+          "navigation_ms": 2476,
+          "initial_js_bytes": 6322667,
+          "duplicate_requests": 3,
+          "cls": 0,
+          "dom_content_loaded_ms": 28.700000047683716,
+          "load_event_end_ms": 2471.0999999046326,
+          "tracked_requests": 182,
+          "static_asset_responses": 158,
+          "ok": true
+        },
+        {
+          "route": "/traveltrust",
+          "probe": "traveltrust",
+          "navigation_ms": 282,
+          "initial_js_bytes": 4246812,
+          "duplicate_requests": 0,
+          "cls": 0,
+          "dom_content_loaded_ms": 136.89999985694885,
+          "load_event_end_ms": 280,
+          "tracked_requests": 54,
+          "static_asset_responses": 54,
+          "ok": true
+        },
+        {
+          "route": "/market",
+          "probe": "market",
+          "navigation_ms": 2856,
+          "initial_js_bytes": 6686907,
+          "duplicate_requests": 1,
+          "cls": 0,
+          "dom_content_loaded_ms": 121.79999995231628,
+          "load_event_end_ms": 2853.9000000953674,
+          "tracked_requests": 210,
+          "static_asset_responses": 181,
+          "ok": true
+        },
+        {
+          "route": "/did-rank",
+          "probe": "did-rank",
+          "navigation_ms": 185,
+          "initial_js_bytes": 2838164,
+          "duplicate_requests": 0,
+          "cls": 0,
+          "dom_content_loaded_ms": 63.59999990463257,
+          "load_event_end_ms": 173.70000004768372,
+          "tracked_requests": 45,
+          "static_asset_responses": 41,
+          "ok": true
+        },
+        {
+          "route": "/community",
+          "probe": "community",
+          "navigation_ms": 188,
+          "initial_js_bytes": 2867168,
+          "duplicate_requests": 0,
+          "cls": 0,
+          "dom_content_loaded_ms": 44.799999952316284,
+          "load_event_end_ms": 175.79999995231628,
+          "tracked_requests": 47,
+          "static_asset_responses": 46,
+          "ok": true
+        }
+      ],
+      "notes": []
+    },
+    "regression": {
+      "pass": true,
+      "skipped": true,
+      "reason": "no_baseline_yet"
+    },
+    "production_server": "http://127.0.0.1:3013"
+  },
+  "qualityCheckResults": [
+    {
+      "id": "Q4_spec_96_16_d7",
+      "domain": "Q4",
+      "pass": true,
+      "path": "docs/spec/96-16-全页面UI-UX优化方案总册.md",
+      "notes": []
+    },
+    {
+      "id": "Q4_prm_matrix",
+      "domain": "Q4",
+      "pass": true,
+      "path": "registry/production-readiness-master-matrix.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q4_build_gate",
+      "domain": "Q4",
+      "pass": true,
+      "path": "scripts/gates/check-frontend-npm-build.sh",
+      "notes": []
+    },
+    {
+      "id": "Q4_lazy_images_landing",
+      "domain": "Q4",
+      "pass": true,
+      "path": "frontend/components/landing/ItineraryResultsSection.tsx",
+      "notes": []
+    },
+    {
+      "id": "Q4_perf_live_spec",
+      "domain": "Q4",
+      "pass": true,
+      "path": "frontend/e2e/l5-performance-five-main-live-scan.spec.ts",
+      "notes": []
+    },
+    {
+      "id": "Q17_budgets_ssot",
+      "domain": "Q17",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B16-performance/FPC-100-PERFORMANCE-BUDGETS-BASELINE.v1.json",
+      "notes": []
+    },
+    {
+      "id": "Q4_lazy_image_count",
+      "domain": "Q4",
+      "pass": true,
+      "path": "frontend/components/landing/*.tsx",
+      "notes": [
+        "lazy_count:4"
+      ]
+    },
+    {
+      "id": "Q4_live_perf_evidence",
+      "domain": "Q4",
+      "pass": false,
+      "path": "frontend/evidence/l5-performance-five-main-live-scan/",
+      "notes": []
+    }
+  ],
+  "findings": [
+    {
+      "id": "perf_initial_js:/market",
+      "severity": "P1",
+      "detail": "/market initial_js_bytes=6686907 > 6500000"
+    }
+  ],
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": false,
+      "verdict": "FAIL",
+      "notes": "Production build + bundle disk budgets + API latency + five-main live perf scan"
+    },
+    "quality_meets_standard": {
+      "answer": false,
+      "verdict": "FAIL",
+      "notes": "Q4 performance SSOT · lazy assets · budgets baseline · regression capture"
+    },
+    "findings_identified": {
+      "answer": true,
+      "p0": 0,
+      "p1": 1,
+      "p2": 0,
+      "items": [
+        {
+          "id": "perf_initial_js:/market",
+          "severity": "P1",
+          "detail": "/market initial_js_bytes=6686907 > 6500000"
+        }
+      ]
+    },
+    "recertification_passed": {
+      "answer": false,
+      "notes": "Pending fix + re-run batch runner"
+    }
+  }
+}

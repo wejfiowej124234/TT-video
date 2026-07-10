@@ -6,8 +6,8 @@ import {
   getAdminOfficialPublicOperationsPublishQueue,
   postAdminOfficialPublicOperationsPublish,
   postAdminOfficialPublicOperationsUnpublish,
-  type AdminPublicOpsDisplayRow,
 } from "@/lib/apiClient";
+import type { AdminPublicOpsDisplayRow } from "@/lib/apiClient/official/http";
 
 export type PublicOpsEntityType = "guides" | "orders" | "market_listings" | "community_posts";
 

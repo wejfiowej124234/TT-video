@@ -8,7 +8,7 @@ import {
   postAdminContentTranslation,
   postAdminContentTranslationWorkflow,
   type AdminCatalogTranslationRow,
-} from "@/lib/apiClient";
+} from "@/lib/apiClient/content/http";
 
 export function useAdminContentTranslationPage() {
   const [items, setItems] = useState<AdminCatalogTranslationRow[]>([]);
