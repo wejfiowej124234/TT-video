@@ -355,8 +355,8 @@
     "commit_complete": false,
     "working_tree_clean": false,
     "all_met": false,
-    "checked_at_utc": "2026-07-10T07:03:09.766Z",
-    "committed_sha": "ad5193061592808acdf8b92850962053d46c2f4b",
+    "checked_at_utc": "2026-07-10T07:03:26.393Z",
+    "committed_sha": "fb9b069db546f1ab9a9cea42d373db3a89c7d574",
     "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
   }
 }
