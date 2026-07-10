@@ -1,17 +1,17 @@
 {
   "schema": "traveltrust.fpc_100_batch_dod.v1",
-  "timestamp_utc": "2026-07-10T07:03:39.647Z",
+  "timestamp_utc": "2026-07-10T07:03:55.722Z",
   "batch_id": "B21",
-  "ok": true,
-  "all_met": true,
+  "ok": false,
+  "all_met": false,
   "items": {
     "gate_pass": true,
     "evidence_complete": true,
     "dashboard_refreshed": true,
-    "commit_complete": true,
-    "working_tree_clean": true
+    "commit_complete": false,
+    "working_tree_clean": false
   },
-  "committed_sha": "b43f7f0b4b3913d2d9e331d278ebb561a3425a16",
-  "verdict": "PASS",
-  "pass": true
+  "committed_sha": "07cbad464b841c27d6a2588d9c1c07aa06d5e75a",
+  "verdict": "IN_PROGRESS",
+  "pass": false
 }

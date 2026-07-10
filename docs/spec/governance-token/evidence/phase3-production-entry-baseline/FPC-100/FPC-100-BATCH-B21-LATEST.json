@@ -308,8 +308,8 @@
       "detail": "① local: prod .env.production.local STRIPE_ENABLED=0 until ③ Production GO"
     }
   ],
-  "verdict": "PASS",
-  "pass": true,
+  "verdict": "IN_PROGRESS",
+  "pass": false,
   "gate_verdict": "PASS",
   "release_blocker": "NO",
   "next_batch": "B22",
@@ -352,11 +352,11 @@
     "gate_pass": true,
     "evidence_complete": true,
     "dashboard_refreshed": true,
-    "commit_complete": true,
-    "working_tree_clean": true,
-    "all_met": true,
-    "checked_at_utc": "2026-07-10T07:03:39.645Z",
-    "committed_sha": "b43f7f0b4b3913d2d9e331d278ebb561a3425a16",
+    "commit_complete": false,
+    "working_tree_clean": false,
+    "all_met": false,
+    "checked_at_utc": "2026-07-10T07:03:55.720Z",
+    "committed_sha": "07cbad464b841c27d6a2588d9c1c07aa06d5e75a",
     "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
   },
   "finalized_at_utc": "2026-07-10T07:03:39.645Z"
