@@ -214,3 +214,29 @@ Per-contract rows (Purpose · Proxy · Codehash · Owner) — refresh via deploy
 | MEDIUM | 0 |
 | LOW | 0 |
 
+
+## Latest gate run
+
+**Generated:** 2026-07-10T00:04:00Z
+**Result:** `WEB3_FULL_ALIGNMENT_GATE: PASS`
+
+| Severity | Open (this run) |
+|----------|-----------------|
+| CRITICAL | 0 |
+| HIGH | 0 |
+| MEDIUM | 0 |
+| LOW | 0 |
+
+
+## Latest gate run
+
+**Generated:** 2026-07-10T00:06:26Z
+**Result:** `WEB3_FULL_ALIGNMENT_GATE: PASS`
+
+| Severity | Open (this run) |
+|----------|-----------------|
+| CRITICAL | 0 |
+| HIGH | 0 |
+| MEDIUM | 0 |
+| LOW | 0 |
+

@@ -1,0 +1,88 @@
+{
+  "timestamp_utc": "2026-07-10T00:04:32.528Z",
+  "gate_results": [
+    {
+      "gate": "scripts/dev/run-web3-itinerary-l5-green.sh",
+      "exit_code": 0,
+      "pass": true,
+      "alignment_verdict": null,
+      "summary_line": " Test Files  31 passed (31) |       Tests  146 passed (146) |    Start at  08:04:34 |    Duration  5.40s (transform 3.29s, setup 840ms, collect 11.34s, tests 1.73s, environment 48.09s, prepare 5.97s) | TT_WEB3_ITINERARY_L5_GREEN: OK (① local · preview unlock · escrow draft experience) |   SSOT: frontend/evidence/GO_local_web3_itinerary_l5/README.md"
+    },
+    {
+      "gate": "scripts/dev/smoke-web3-itinerary-full-chain-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "alignment_verdict": null,
+      "summary_line": "== smoke-escrow-draft-guide-bind-local (① only) API=http://127.0.0.1:8080 == | smoke-escrow-draft-guide-bind: OK order=039c8018-9ce1-4cec-a8d0-5e45b4984785 guide1=384b65b6-2969-4346-9d63-7c966b116728 guide2=0e506a4f-4225-4bf4-8735-29ca6fcaf1af (no guide on create · bind · reassign) |   UI step2: /escrow/039c8018-9ce1-4cec-a8d0-5e45b4984785 — 请选择向导 |   UI step2: /market?view=split&bindGuideToOrder=039c8018-9ce1-4cec-a8d0-5e45b4984785 | smoke-escrow-draft-guide-bind: PASS (phase ① · itinerary-first · guide reassign) | TT_WEB3_ITINERARY_FULL_CHAIN_SMOKE: OK (① · create no guide · publish · bind · reassign)"
+    },
+    {
+      "gate": "scripts/dev/smoke-seed-tourist-guide-transaction-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "alignment_verdict": null,
+      "summary_line": "  [ ] 评价可见（游客视角订单详情或 reviews 区） | 勿与 Chain A 混用：tg_guide_main@trustgate-e2e.local 订单与本链无关。 | 证据：D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\B05-web3-itinerary\\seed-transaction/latest.json | ============================================================== | TT_SEED_TRANSACTION_SMOKE: OK (① local · order=9450e0e4-248c-4932-83cf-78ff70a2eaa8 · guide=a49c7b2d-3352-4614-827b-c8e8f567c5e7) |   phase: ① only (mock-pay sandbox · not ②③ GO)"
+    },
+    {
+      "gate": "scripts/gates/check-web3-full-alignment-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "alignment_verdict": "PASS",
+      "summary_line": "PHASE2_5_WEB3_HARDENING_READY: PASS | TT_PHASE2_WEB3_RUNTIME_READY: PASS |   critical=0 high=0 medium=0 low=0 checks=9 | SSOT: registry/web3-final-alignment-matrix.v2.yaml | Drift: docs/spec/governance-token/WEB3_ALIGNMENT_DRIFT_REPORT-v2.md | Audit: docs/spec/governance-token/TRAVELTRUST-WEB3-FULL-ALIGNMENT-AUDIT-v2.md"
+    }
+  ],
+  "business_flow": {
+    "lifecycle": [
+      "create",
+      "bind",
+      "reassign",
+      "confirm",
+      "complete"
+    ],
+    "itinerary_smoke": "smoke-web3-itinerary-full-chain-local.sh (create · bind · reassign)",
+    "seed_transaction": {
+      "order_id": "9450e0e4-248c-4932-83cf-78ff70a2eaa8",
+      "guide_id": "a49c7b2d-3352-4614-827b-c8e8f567c5e7",
+      "final_status": "completed",
+      "chain": "B",
+      "phase": "① local"
+    },
+    "bilateral_confirm": true
+  },
+  "chain_evidence": {
+    "meta_snapshot": {
+      "chain_id": "31337",
+      "p3_chain_off": true
+    },
+    "alignment_gate": {
+      "gate": "scripts/gates/check-web3-full-alignment-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "alignment_verdict": "PASS",
+      "summary_line": "PHASE2_5_WEB3_HARDENING_READY: PASS | TT_PHASE2_WEB3_RUNTIME_READY: PASS |   critical=0 high=0 medium=0 low=0 checks=9 | SSOT: registry/web3-final-alignment-matrix.v2.yaml | Drift: docs/spec/governance-token/WEB3_ALIGNMENT_DRIFT_REPORT-v2.md | Audit: docs/spec/governance-token/TRAVELTRUST-WEB3-FULL-ALIGNMENT-AUDIT-v2.md"
+    },
+    "wallet_boundary_note": "① mock-pay chain_off sandbox — wallet connect / wrong network / tx pending verified via L5 contracts + escrow draft freeze; ② on-chain deferred"
+  },
+  "api_evidence": {
+    "health": "http://127.0.0.1:8080/health",
+    "meta": "http://127.0.0.1:8080/meta",
+    "seed_transaction_path": "B05-web3-itinerary/seed-transaction/latest.json",
+    "full_chain_smoke": "smoke-web3-itinerary-full-chain-local.sh"
+  },
+  "ui_evidence": {
+    "l5_green": "run-web3-itinerary-l5-green.sh",
+    "escrow_draft_freeze_ssot": "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-DRAFT-EXPERIENCE-FREEZE.md",
+    "vitest_contracts": [
+      "homeMarketing.contract.test.ts",
+      "useLandingPage.contract.test.ts",
+      "escrowDraftExperienceUiFreeze.contract.test.ts",
+      "escrowExperienceUi.contract.test.ts"
+    ],
+    "manual_ui_urls": {
+      "orders_tourist": "http://127.0.0.1:3012/orders",
+      "escrow": "http://127.0.0.1:3012/escrow/9450e0e4-248c-4932-83cf-78ff70a2eaa8",
+      "market_guides": "http://127.0.0.1:3012/market?view=guides",
+      "login": "http://127.0.0.1:3012/auth/login"
+    }
+  },
+  "findings": []
+}

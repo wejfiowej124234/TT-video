@@ -11,10 +11,10 @@
   "rule_id": "i18n-key-parity-critical-prefix-and-key-routes",
   "severity": "none",
   "owner": "frontend-team",
-  "generated_at": "2026-07-01T00:31:47.916Z",
+  "generated_at": "2026-07-10T00:04:33.199Z",
   "totals": {
-    "zh_keys": 10711,
-    "en_keys": 10711
+    "zh_keys": 11438,
+    "en_keys": 11438
   },
   "missing_in_en": [],
   "missing_in_zh": [],
@@ -45,8 +45,8 @@
     },
     {
       "prefix": "escrow_",
-      "zh_count": 471,
-      "en_count": 471,
+      "zh_count": 472,
+      "en_count": 472,
       "passed": true
     }
   ],
