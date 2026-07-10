@@ -4,12 +4,12 @@
   "title": "DR · backup · infra · fly deploy SSOT",
   "layer": "L3",
   "phase": "① local",
-  "timestamp_utc": "2026-07-10T07:15:14.999Z",
+  "timestamp_utc": "2026-07-10T07:16:00.494Z",
   "verifier": "run-fpc-batch-b22-infra-dr.cjs",
   "product_version": "v1.0",
-  "code_anchor_commit": "2b4170323fbb3d0c4c67919b1c4e3a354bf1ddff",
+  "code_anchor_commit": "3d6a17c22f66302154e0576902c6729045a66a2c",
   "git": {
-    "head": "2b4170323fbb3d0c4c67919b1c4e3a354bf1ddff",
+    "head": "3d6a17c22f66302154e0576902c6729045a66a2c",
     "branch": "feature/g23-04-abi-event-freeze"
   },
   "depends_on": [
@@ -38,7 +38,7 @@
       "gate": "scripts/check-pi3-001-fly-pg-backup-disaster-recovery-execution.sh",
       "exit_code": 0,
       "pass": true,
-      "summary_line": "pi3-002 execution baseline (151): OK | Evidence: /d/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-001-exec-20260710T071525Z | TT_PI3_001_FLY_PG_BACKUP_DISASTER_RECOVERY_EXECUTION: PI3-001_GO"
+      "summary_line": "pi3-002 execution baseline (151): OK | Evidence: /d/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-001-exec-20260710T071611Z | TT_PI3_001_FLY_PG_BACKUP_DISASTER_RECOVERY_EXECUTION: PI3-001_GO"
     },
     {
       "gate": "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
@@ -60,7 +60,7 @@
     },
     "findings": [],
     "blockers": [],
-    "timestamp_utc": "2026-07-10T07:15:15.233Z"
+    "timestamp_utc": "2026-07-10T07:16:00.698Z"
   },
   "infra_live_evidence": {
     "pass": true,
@@ -288,10 +288,10 @@
     "certification_batch": "B22",
     "product_version": "v1.0"
   },
-  "certified_at_utc": "2026-07-10T07:15:14.999Z",
-  "expires_at_utc": "2026-08-09T07:15:14.999Z",
+  "certified_at_utc": "2026-07-10T07:16:00.494Z",
+  "expires_at_utc": "2026-08-09T07:16:00.494Z",
   "expiry_policy_days": 30,
   "certification_frozen": true,
-  "frozen_at_utc": "2026-07-10T07:15:14.999Z",
-  "frozen_git_sha": "2b4170323fbb3d0c4c67919b1c4e3a354bf1ddff"
+  "frozen_at_utc": "2026-07-10T07:16:00.494Z",
+  "frozen_git_sha": "3d6a17c22f66302154e0576902c6729045a66a2c"
 }
