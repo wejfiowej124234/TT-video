@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.fpc_100_performance_budgets.v1",
+  "phase": "① local",
+  "note": "B16 absolute ceilings · regression vs FPC-100-PERFORMANCE-BASELINE-LATEST.json when present",
+  "thresholds": {
+    "build_must_pass": true,
+    "api": {
+      "health_ms_max": 1500,
+      "meta_ms_max": 2000,
+      "discover_ms_max": 3000,
+      "meta_db_must_be_connected": true
+    },
+    "bundle_disk": {
+      "css_total_bytes_max": 2000000,
+      "js_total_disk_bytes_max": 450000000,
+      "largest_js_chunk_bytes_max": 30000000
+    },
+    "routes_five_main": {
+      "navigation_ms_max": 15000,
+      "initial_js_transfer_bytes_max": 6500000,
+      "duplicate_request_max": 6,
+      "cls_max": 0.2
+    },
+    "regression": {
+      "js_total_disk_pct_increase_max": 0.08,
+      "avg_navigation_ms_pct_increase_max": 0.12
+    },
+    "quality_ssot": {
+      "lazy_image_markers_min": 2
+    }
+  }
+}
