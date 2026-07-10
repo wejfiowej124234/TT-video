@@ -1,6 +1,6 @@
 {
   "schema": "traveltrust.fpc_100_batch_dod.v1",
-  "timestamp_utc": "2026-07-10T10:33:45.180Z",
+  "timestamp_utc": "2026-07-10T10:34:25.480Z",
   "batch_id": "B30",
   "ok": true,
   "all_met": true,
@@ -11,9 +11,9 @@
     "commit_complete": true,
     "working_tree_clean": true
   },
-  "committed_sha": "08fd715a96bac407ae3b099798de3e91e25337dc",
+  "committed_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
   "verdict": "PASS",
   "pass": true,
   "policy_note": "B30-B36 unified defer-commit anchor ① — no push · B40 requires ② Owner",
-  "anchor_head": "08fd715a96bac407ae3b099798de3e91e25337dc"
+  "anchor_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
 }

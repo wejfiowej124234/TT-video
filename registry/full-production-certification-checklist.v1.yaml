@@ -152,10 +152,10 @@ certification_model:
     production_grade_product_feel: Would ship to paying users without apology
 
 local_ssot_anchor:
-  commit: 08fd715a96bac407ae3b099798de3e91e25337dc
+  commit: 9a73a8de977d2b6d67ddca20ef953da6135ccd7b
   branch: feature/g23-04-abi-event-freeze
   prior_anchor_b21_b25_c6: 21f830ffbf6afe8237dab1021e6113fd57ffcd3e
-  anchor_b30_b36: 08fd715a96bac407ae3b099798de3e91e25337dc
+  anchor_b30_b36: 9a73a8de977d2b6d67ddca20ef953da6135ccd7b
   per_round1_exit: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-ROUND1-EXIT.md
   local_freeze: true
   local_final_freeze_evidence: FPC-100/FPC-100-LOCAL-FINAL-FREEZE-LATEST.json

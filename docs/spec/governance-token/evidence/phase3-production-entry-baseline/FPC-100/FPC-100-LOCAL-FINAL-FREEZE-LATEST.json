@@ -1,14 +1,14 @@
 {
   "schema": "traveltrust.fpc_100_local_final_freeze.v1",
-  "timestamp_utc": "2026-07-10T10:33:25.518Z",
+  "timestamp_utc": "2026-07-10T10:33:47.085Z",
   "phase": "① local",
   "machine_key": "TT_LOCAL_FINAL_FREEZE",
   "git": {
-    "head": "08fd715a96bac407ae3b099798de3e91e25337dc",
+    "head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
     "branch": "feature/g23-04-abi-event-freeze",
     "working_tree_clean": true
   },
-  "authoritative_immutable_head": "5f1a8de07528928de7ae28e20c92f00d87163adb",
+  "authoritative_immutable_head": "08fd715a96bac407ae3b099798de3e91e25337dc",
   "freeze_chain": {
     "batches": [
       "B21",
@@ -113,49 +113,49 @@
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
       },
       {
         "batch_id": "B31",
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
       },
       {
         "batch_id": "B32",
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
       },
       {
         "batch_id": "B33",
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
       },
       {
         "batch_id": "B34",
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
       },
       {
         "batch_id": "B35",
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
       },
       {
         "batch_id": "B36",
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "5f1a8de07528928de7ae28e20c92f00d87163adb"
+        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
       }
     ],
     "pass_count": 18,
@@ -184,7 +184,7 @@
     {
       "severity": "P0",
       "id": "anchor_head_drift",
-      "detail": "anchor=5f1a8de07528928de7ae28e20c92f00d87163adb head=08fd715a96bac407ae3b099798de3e91e25337dc"
+      "detail": "anchor=08fd715a96bac407ae3b099798de3e91e25337dc head=9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
     }
   ],
   "verdict": "FAIL",

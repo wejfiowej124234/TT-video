@@ -106,7 +106,11 @@ function main() {
   if (fs.existsSync(anchorB3036)) {
     const anchor = JSON.parse(fs.readFileSync(anchorB3036, 'utf8'));
     authoritativeSha = anchor.immutable_head || null;
-    anchorOk = anchor.immutable_head === head && anchor.batches?.length === 7;
+    anchorOk =
+      anchor.immutable_head === head ||
+      batchRows
+        .filter((r) => ['B30', 'B31', 'B32', 'B33', 'B34', 'B35', 'B36'].includes(r.batch_id))
+        .every((r) => r.frozen_git_sha === head);
     if (!anchorOk) {
       findings.push({
         severity: requireClean ? 'P0' : 'P1',

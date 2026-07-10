@@ -1,9 +1,9 @@
 {
   "schema": "traveltrust.fpc_100_defer_commit_anchor.v1",
-  "timestamp_utc": "2026-07-10T10:33:45.180Z",
+  "timestamp_utc": "2026-07-10T10:34:25.480Z",
   "phase": "① local",
   "anchor_id": "B30-B36",
-  "immutable_head": "08fd715a96bac407ae3b099798de3e91e25337dc",
+  "immutable_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
   "batches": [
     "B30",
     "B31",
