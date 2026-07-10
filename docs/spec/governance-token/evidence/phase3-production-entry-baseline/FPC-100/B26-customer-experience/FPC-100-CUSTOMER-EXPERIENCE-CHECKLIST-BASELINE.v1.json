@@ -1,0 +1,60 @@
+{
+  "schema": "traveltrust.fpc_100_customer_experience_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B26",
+  "layer": "L2_5",
+  "domains": ["Q3"],
+  "note": "L2.5 Customer Experience — all 202 pages user_goal · primary_cta · journey score · ≤3-click core action; not ② staging GO",
+  "coverage_domains": [
+    "site_wide_layer2_5_cx",
+    "other_consumer_gap_closure",
+    "page_matrix_b26_apply",
+    "fpc_release_dashboard_parity",
+    "executive_dashboard_gate_consistency",
+    "quality_domain_matrix_q3"
+  ],
+  "severity_policy": {
+    "P0": "any page missing user_goal/primary_cta · cx verdict not PASS · journey score null · core_action_clicks_lte_3 not PASS",
+    "P1": "SSOT path drift · owner file missing · registry/dashboard drift",
+    "P2": "git_sha unknown · time_to_complete null at ①"
+  },
+  "scope": "all_202_pages",
+  "other_consumer_routes": [
+    "/discover",
+    "/disputes",
+    "/disputes/[id]",
+    "/guide",
+    "/guides",
+    "/guides/[id]",
+    "/itinerary/new",
+    "/network",
+    "/provider"
+  ],
+  "other_consumer_page_count": 9,
+  "l2_5_cx_policy": {
+    "min_user_journey_score": 7,
+    "require_user_goal": true,
+    "require_primary_cta": true,
+    "require_core_action_clicks_lte_3": "PASS",
+    "require_certification_verdict": "PASS"
+  },
+  "registry_gates": [],
+  "business_gates_extended": [
+    "scripts/dev/apply-fpc-l2-customer-experience-matrix.cjs",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs"
+  ],
+  "quality_gates": [
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json",
+    "registry/full-production-certification-checklist.v1.yaml"
+  ],
+  "vitest_contracts": [
+    "app/discover/page.test.tsx",
+    "lib/me/disputesL5.contract.test.ts"
+  ],
+  "dashboard_parity": {
+    "registry_batch_id": "B26",
+    "expected_next_after_pass": "B30"
+  }
+}

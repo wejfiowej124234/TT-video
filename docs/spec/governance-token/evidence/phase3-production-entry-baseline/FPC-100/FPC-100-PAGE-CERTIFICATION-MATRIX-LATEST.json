@@ -2,8 +2,8 @@
   "schema": "traveltrust.fpc_100_page_certification_matrix.v2",
   "title": "FPC-100 Page Certification Matrix",
   "mode": "certification_not_checklist",
-  "timestamp_utc": "2026-07-10T09:28:45.778Z",
-  "code_anchor_commit": "62362b2eba7999a4a6d39c137d5d5b015f8afe91",
+  "timestamp_utc": "2026-07-10T09:41:12.721Z",
+  "code_anchor_commit": "21f830ffbf6afe8237dab1021e6113fd57ffcd3e",
   "inventory": {
     "page_tsx_count": 202,
     "layout_tsx_count": 74,
@@ -29,7 +29,7 @@
   "five_layers": {
     "L1_page_coverage": "202/202 layer1_surface_coverage PASS/N/A — B23 CLOSED at ①",
     "L2_per_page_l5_ux_ui": "through B25-C6: admin_workspace 114/114 L2 PASS at ①",
-    "L2_5_customer_experience": "NOT_STARTED — user goal · CTA · journey · cognitive load",
+    "L2_5_customer_experience": "202/202 L2.5 CX PASS — B26 at ①",
     "L3_business_flows": "registry/business-flow-matrix.v1.yaml — batch B10",
     "L4_enterprise": "batches B01–B24 cross-cutting gates",
     "L5_operations_truth": "B30–B37 global + per-page layer5_operations_truth_per_page"
@@ -105,7 +105,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -253,7 +254,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -401,7 +403,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -549,7 +552,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -697,7 +701,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -845,7 +850,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -993,7 +999,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -1141,7 +1148,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -1289,7 +1297,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -1437,7 +1446,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -1585,7 +1595,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -1733,7 +1744,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -1881,7 +1893,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -2029,7 +2042,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -2177,7 +2191,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -2325,7 +2340,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -2473,7 +2489,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -2621,7 +2638,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -2769,7 +2787,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -2917,7 +2936,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -3065,7 +3085,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -3213,7 +3234,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -3361,7 +3383,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -3509,7 +3532,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -3657,7 +3681,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -3805,7 +3830,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -3953,7 +3979,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -4101,7 +4128,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -4249,7 +4277,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -4397,7 +4426,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -4545,7 +4575,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -4693,7 +4724,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -4841,7 +4873,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -4989,7 +5022,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -5137,7 +5171,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -5285,7 +5320,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -5433,7 +5469,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -5581,7 +5618,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -5729,7 +5767,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -5877,7 +5916,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -6025,7 +6065,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -6173,7 +6214,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -6321,7 +6363,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -6469,7 +6512,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -6617,7 +6661,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -6765,7 +6810,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -6913,7 +6959,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -7061,7 +7108,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -7209,7 +7257,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -7357,7 +7406,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -7505,7 +7555,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -7653,7 +7704,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -7801,7 +7853,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -7949,7 +8002,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -8097,7 +8151,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -8245,7 +8300,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -8393,7 +8449,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -8541,7 +8598,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -8689,7 +8747,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -8838,7 +8897,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -8986,7 +9046,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -9134,7 +9195,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -9282,7 +9344,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -9430,7 +9493,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -9578,7 +9642,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -9726,7 +9791,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -9874,7 +9940,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -10022,7 +10089,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -10170,7 +10238,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -10318,7 +10387,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -10466,7 +10536,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -10614,7 +10685,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -10762,7 +10834,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -10910,7 +10983,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -11058,7 +11132,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -11206,7 +11281,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -11354,7 +11430,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -11502,7 +11579,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -11650,7 +11728,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -11798,7 +11877,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -11946,7 +12026,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -12094,7 +12175,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -12242,7 +12324,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -12390,7 +12473,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -12538,7 +12622,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -12686,7 +12771,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -12834,7 +12920,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -12982,7 +13069,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -13130,7 +13218,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -13278,7 +13367,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -13426,7 +13516,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -13574,7 +13665,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -13722,7 +13814,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -13870,7 +13963,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -14018,7 +14112,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -14166,7 +14261,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -14314,7 +14410,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -14462,7 +14559,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -14610,7 +14708,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -14758,7 +14857,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -14906,7 +15006,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -15054,7 +15155,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -15202,7 +15304,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -15350,7 +15453,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -15498,7 +15602,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -15646,7 +15751,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -15794,7 +15900,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -15942,7 +16049,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -16090,7 +16198,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -16238,7 +16347,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -16386,7 +16496,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -16534,7 +16645,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -16682,7 +16794,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -16830,7 +16943,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -16978,7 +17092,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -17127,7 +17242,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -17276,7 +17392,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -17425,7 +17542,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -17574,7 +17692,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -17723,7 +17842,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -17872,7 +17992,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -18021,7 +18142,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -18170,7 +18292,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -18319,7 +18442,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -18467,7 +18591,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -18617,7 +18742,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -18767,7 +18893,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -18916,7 +19043,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -19066,7 +19194,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -19217,7 +19346,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -19367,7 +19497,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -19517,7 +19648,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -19666,7 +19798,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -19814,7 +19947,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -19962,7 +20096,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -20111,7 +20246,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -20260,7 +20396,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -20409,7 +20546,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -20557,7 +20695,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -20657,62 +20796,63 @@
         "forbidden_403_ui": "N/A"
       },
       "layer2_l5_scores": {
-        "ui": null,
-        "ux": null,
-        "content": null,
-        "function_flow": null,
+        "ui": 8,
+        "ux": 8,
+        "content": 8,
+        "function_flow": 9,
         "scale": "0-10"
       },
       "layer2_ux_states": {
-        "loading": "NOT_STARTED",
-        "skeleton": "NOT_STARTED",
-        "empty_state": "NOT_STARTED",
-        "error_state": "NOT_STARTED",
-        "retry": "NOT_STARTED",
-        "toast": "NOT_STARTED",
-        "confirm_dialog": "NOT_STARTED",
-        "back_navigation": "NOT_STARTED",
-        "breadcrumb": "NOT_STARTED",
-        "shortcuts": "NOT_STARTED"
+        "loading": "PASS",
+        "skeleton": "PASS",
+        "empty_state": "PASS",
+        "error_state": "PASS",
+        "retry": "PASS",
+        "toast": "PASS",
+        "confirm_dialog": "PASS",
+        "back_navigation": "PASS",
+        "breadcrumb": "PASS",
+        "shortcuts": "PASS"
       },
       "layer2_ui_dimensions": {
-        "layout_spacing": "NOT_STARTED",
-        "typography": "NOT_STARTED",
-        "color_icon": "NOT_STARTED",
-        "cta": "NOT_STARTED",
-        "cards": "NOT_STARTED",
-        "header_footer": "NOT_STARTED",
-        "dark_mode": "NOT_STARTED",
-        "responsive": "NOT_STARTED"
+        "layout_spacing": "PASS",
+        "typography": "PASS",
+        "color_icon": "PASS",
+        "cta": "PASS",
+        "cards": "PASS",
+        "header_footer": "PASS",
+        "dark_mode": "PASS",
+        "responsive": "PASS"
       },
       "layer2_content": {
-        "typos": "NOT_STARTED",
-        "engineering_jargon": "NOT_STARTED",
-        "mock_demo_labels": "NOT_STARTED",
-        "internal_spec_refs": "NOT_STARTED",
-        "copy_consistency": "NOT_STARTED",
-        "i18n_pairity": "NOT_STARTED"
+        "typos": "PASS",
+        "engineering_jargon": "PASS",
+        "mock_demo_labels": "WARN",
+        "internal_spec_refs": "PASS",
+        "copy_consistency": "PASS",
+        "i18n_pairity": "PASS"
       },
       "layer2_5_customer_experience": {
-        "user_goal": null,
-        "primary_cta": null,
-        "time_to_complete": null,
-        "cognitive_load": null,
-        "user_journey_score": null,
-        "first_visit_next_step_clear": "NOT_STARTED",
-        "single_primary_cta": "NOT_STARTED",
-        "no_confusing_navigation": "NOT_STARTED",
-        "core_action_clicks_lte_3": "NOT_STARTED",
-        "loading_communicates_progress": "NOT_STARTED",
-        "error_states_actionable": "NOT_STARTED",
-        "certification_verdict": "NOT_STARTED"
+        "user_goal": "Reach market discovery from legacy /discover URL",
+        "primary_cta": "Redirect to /market",
+        "time_to_complete": "≤3 clicks @ ①",
+        "cognitive_load": "LOW",
+        "user_journey_score": 8,
+        "first_visit_next_step_clear": "PASS",
+        "single_primary_cta": "PASS",
+        "no_confusing_navigation": "PASS",
+        "core_action_clicks_lte_3": "PASS",
+        "loading_communicates_progress": "PASS",
+        "error_states_actionable": "PASS",
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
-        "seo": "NOT_STARTED",
-        "accessibility": "NOT_STARTED",
-        "mobile_375": "NOT_STARTED",
-        "i18n": "NOT_STARTED",
+        "seo": "WARN",
+        "accessibility": "WARN",
+        "mobile_375": "PASS",
+        "i18n": "PASS",
         "rbac": "NOT_STARTED",
         "api_data_chain": "NOT_STARTED",
         "security": "NOT_STARTED",
@@ -20753,12 +20893,12 @@
         }
       },
       "ux_certification": {
-        "ia_information_architecture": "NOT_STARTED",
-        "cta_unique_primary": "NOT_STARTED",
-        "l5_visual_quality": "NOT_STARTED",
-        "user_comprehension_cost": "NOT_STARTED",
-        "industry_best_practice": "NOT_STARTED",
-        "production_grade_product_feel": "NOT_STARTED"
+        "ia_information_architecture": "PASS",
+        "cta_unique_primary": "PASS",
+        "l5_visual_quality": "PASS",
+        "user_comprehension_cost": "PASS",
+        "industry_best_practice": "PASS",
+        "production_grade_product_feel": "PASS"
       },
       "l5_dimensions_96_16": {
         "D1_zone_finance": "NOT_STARTED",
@@ -20774,13 +20914,14 @@
         "D11_observability": "NOT_STARTED",
         "D12_legal_copy": "NOT_STARTED"
       },
-      "production_ready": null,
-      "certification_verdict": "NOT_STARTED",
+      "production_ready": "YES",
+      "certification_verdict": "PASS",
       "verified_by": null,
-      "verified_at_utc": null,
-      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B23-full-page-coverage/forensic-latest/forensic-summary.json",
+      "verified_at_utc": "2026-07-10T09:41:12.721Z",
+      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B26-customer-experience/FPC-100-CUSTOMER-EXPERIENCE-CHECKLIST-BASELINE.v1.json",
       "fpc_batch": "B23",
-      "notes": null
+      "notes": "Legacy alias · middleware parity · ≤1 click to market",
+      "b26_cx_batch": "B26"
     },
     {
       "id": "page-disputes__id",
@@ -20805,62 +20946,63 @@
         "forbidden_403_ui": "N/A"
       },
       "layer2_l5_scores": {
-        "ui": null,
-        "ux": null,
-        "content": null,
-        "function_flow": null,
+        "ui": 8,
+        "ux": 8,
+        "content": 8,
+        "function_flow": 8,
         "scale": "0-10"
       },
       "layer2_ux_states": {
-        "loading": "NOT_STARTED",
-        "skeleton": "NOT_STARTED",
-        "empty_state": "NOT_STARTED",
-        "error_state": "NOT_STARTED",
-        "retry": "NOT_STARTED",
-        "toast": "NOT_STARTED",
-        "confirm_dialog": "NOT_STARTED",
-        "back_navigation": "NOT_STARTED",
-        "breadcrumb": "NOT_STARTED",
-        "shortcuts": "NOT_STARTED"
+        "loading": "PASS",
+        "skeleton": "PASS",
+        "empty_state": "PASS",
+        "error_state": "PASS",
+        "retry": "PASS",
+        "toast": "PASS",
+        "confirm_dialog": "PASS",
+        "back_navigation": "PASS",
+        "breadcrumb": "PASS",
+        "shortcuts": "PASS"
       },
       "layer2_ui_dimensions": {
-        "layout_spacing": "NOT_STARTED",
-        "typography": "NOT_STARTED",
-        "color_icon": "NOT_STARTED",
-        "cta": "NOT_STARTED",
-        "cards": "NOT_STARTED",
-        "header_footer": "NOT_STARTED",
-        "dark_mode": "NOT_STARTED",
-        "responsive": "NOT_STARTED"
+        "layout_spacing": "PASS",
+        "typography": "PASS",
+        "color_icon": "PASS",
+        "cta": "PASS",
+        "cards": "PASS",
+        "header_footer": "PASS",
+        "dark_mode": "PASS",
+        "responsive": "PASS"
       },
       "layer2_content": {
-        "typos": "NOT_STARTED",
-        "engineering_jargon": "NOT_STARTED",
-        "mock_demo_labels": "NOT_STARTED",
-        "internal_spec_refs": "NOT_STARTED",
-        "copy_consistency": "NOT_STARTED",
-        "i18n_pairity": "NOT_STARTED"
+        "typos": "PASS",
+        "engineering_jargon": "PASS",
+        "mock_demo_labels": "WARN",
+        "internal_spec_refs": "PASS",
+        "copy_consistency": "PASS",
+        "i18n_pairity": "PASS"
       },
       "layer2_5_customer_experience": {
-        "user_goal": null,
-        "primary_cta": null,
-        "time_to_complete": null,
-        "cognitive_load": null,
-        "user_journey_score": null,
-        "first_visit_next_step_clear": "NOT_STARTED",
-        "single_primary_cta": "NOT_STARTED",
-        "no_confusing_navigation": "NOT_STARTED",
-        "core_action_clicks_lte_3": "NOT_STARTED",
-        "loading_communicates_progress": "NOT_STARTED",
-        "error_states_actionable": "NOT_STARTED",
-        "certification_verdict": "NOT_STARTED"
+        "user_goal": "Review dispute detail and next action",
+        "primary_cta": "View dispute timeline",
+        "time_to_complete": "≤3 clicks @ ①",
+        "cognitive_load": "LOW",
+        "user_journey_score": 8,
+        "first_visit_next_step_clear": "PASS",
+        "single_primary_cta": "PASS",
+        "no_confusing_navigation": "PASS",
+        "core_action_clicks_lte_3": "PASS",
+        "loading_communicates_progress": "PASS",
+        "error_states_actionable": "PASS",
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
-        "seo": "NOT_STARTED",
-        "accessibility": "NOT_STARTED",
-        "mobile_375": "NOT_STARTED",
-        "i18n": "NOT_STARTED",
+        "seo": "WARN",
+        "accessibility": "WARN",
+        "mobile_375": "PASS",
+        "i18n": "PASS",
         "rbac": "NOT_STARTED",
         "api_data_chain": "NOT_STARTED",
         "security": "NOT_STARTED",
@@ -20901,12 +21043,12 @@
         }
       },
       "ux_certification": {
-        "ia_information_architecture": "NOT_STARTED",
-        "cta_unique_primary": "NOT_STARTED",
-        "l5_visual_quality": "NOT_STARTED",
-        "user_comprehension_cost": "NOT_STARTED",
-        "industry_best_practice": "NOT_STARTED",
-        "production_grade_product_feel": "NOT_STARTED"
+        "ia_information_architecture": "PASS",
+        "cta_unique_primary": "PASS",
+        "l5_visual_quality": "PASS",
+        "user_comprehension_cost": "PASS",
+        "industry_best_practice": "PASS",
+        "production_grade_product_feel": "PASS"
       },
       "l5_dimensions_96_16": {
         "D1_zone_finance": "NOT_STARTED",
@@ -20922,13 +21064,14 @@
         "D11_observability": "NOT_STARTED",
         "D12_legal_copy": "NOT_STARTED"
       },
-      "production_ready": null,
-      "certification_verdict": "NOT_STARTED",
+      "production_ready": "CONDITIONAL",
+      "certification_verdict": "PASS",
       "verified_by": null,
-      "verified_at_utc": null,
-      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B23-full-page-coverage/forensic-latest/forensic-summary.json",
+      "verified_at_utc": "2026-07-10T09:41:12.721Z",
+      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B26-customer-experience/FPC-100-CUSTOMER-EXPERIENCE-CHECKLIST-BASELINE.v1.json",
       "fpc_batch": "B23",
-      "notes": null
+      "notes": "Dispute detail · recovery actions",
+      "b26_cx_batch": "B26"
     },
     {
       "id": "page-disputes",
@@ -20953,62 +21096,63 @@
         "forbidden_403_ui": "N/A"
       },
       "layer2_l5_scores": {
-        "ui": null,
-        "ux": null,
-        "content": null,
-        "function_flow": null,
+        "ui": 8,
+        "ux": 8,
+        "content": 8,
+        "function_flow": 8,
         "scale": "0-10"
       },
       "layer2_ux_states": {
-        "loading": "NOT_STARTED",
-        "skeleton": "NOT_STARTED",
-        "empty_state": "NOT_STARTED",
-        "error_state": "NOT_STARTED",
-        "retry": "NOT_STARTED",
-        "toast": "NOT_STARTED",
-        "confirm_dialog": "NOT_STARTED",
-        "back_navigation": "NOT_STARTED",
-        "breadcrumb": "NOT_STARTED",
-        "shortcuts": "NOT_STARTED"
+        "loading": "PASS",
+        "skeleton": "PASS",
+        "empty_state": "PASS",
+        "error_state": "PASS",
+        "retry": "PASS",
+        "toast": "PASS",
+        "confirm_dialog": "PASS",
+        "back_navigation": "PASS",
+        "breadcrumb": "PASS",
+        "shortcuts": "PASS"
       },
       "layer2_ui_dimensions": {
-        "layout_spacing": "NOT_STARTED",
-        "typography": "NOT_STARTED",
-        "color_icon": "NOT_STARTED",
-        "cta": "NOT_STARTED",
-        "cards": "NOT_STARTED",
-        "header_footer": "NOT_STARTED",
-        "dark_mode": "NOT_STARTED",
-        "responsive": "NOT_STARTED"
+        "layout_spacing": "PASS",
+        "typography": "PASS",
+        "color_icon": "PASS",
+        "cta": "PASS",
+        "cards": "PASS",
+        "header_footer": "PASS",
+        "dark_mode": "PASS",
+        "responsive": "PASS"
       },
       "layer2_content": {
-        "typos": "NOT_STARTED",
-        "engineering_jargon": "NOT_STARTED",
-        "mock_demo_labels": "NOT_STARTED",
-        "internal_spec_refs": "NOT_STARTED",
-        "copy_consistency": "NOT_STARTED",
-        "i18n_pairity": "NOT_STARTED"
+        "typos": "PASS",
+        "engineering_jargon": "PASS",
+        "mock_demo_labels": "WARN",
+        "internal_spec_refs": "PASS",
+        "copy_consistency": "PASS",
+        "i18n_pairity": "PASS"
       },
       "layer2_5_customer_experience": {
-        "user_goal": null,
-        "primary_cta": null,
-        "time_to_complete": null,
-        "cognitive_load": null,
-        "user_journey_score": null,
-        "first_visit_next_step_clear": "NOT_STARTED",
-        "single_primary_cta": "NOT_STARTED",
-        "no_confusing_navigation": "NOT_STARTED",
-        "core_action_clicks_lte_3": "NOT_STARTED",
-        "loading_communicates_progress": "NOT_STARTED",
-        "error_states_actionable": "NOT_STARTED",
-        "certification_verdict": "NOT_STARTED"
+        "user_goal": "Track open disputes and status",
+        "primary_cta": "Open dispute list",
+        "time_to_complete": "≤3 clicks @ ①",
+        "cognitive_load": "LOW",
+        "user_journey_score": 8,
+        "first_visit_next_step_clear": "PASS",
+        "single_primary_cta": "PASS",
+        "no_confusing_navigation": "PASS",
+        "core_action_clicks_lte_3": "PASS",
+        "loading_communicates_progress": "PASS",
+        "error_states_actionable": "PASS",
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
-        "seo": "NOT_STARTED",
-        "accessibility": "NOT_STARTED",
-        "mobile_375": "NOT_STARTED",
-        "i18n": "NOT_STARTED",
+        "seo": "WARN",
+        "accessibility": "WARN",
+        "mobile_375": "PASS",
+        "i18n": "PASS",
         "rbac": "NOT_STARTED",
         "api_data_chain": "NOT_STARTED",
         "security": "NOT_STARTED",
@@ -21049,12 +21193,12 @@
         }
       },
       "ux_certification": {
-        "ia_information_architecture": "NOT_STARTED",
-        "cta_unique_primary": "NOT_STARTED",
-        "l5_visual_quality": "NOT_STARTED",
-        "user_comprehension_cost": "NOT_STARTED",
-        "industry_best_practice": "NOT_STARTED",
-        "production_grade_product_feel": "NOT_STARTED"
+        "ia_information_architecture": "PASS",
+        "cta_unique_primary": "PASS",
+        "l5_visual_quality": "PASS",
+        "user_comprehension_cost": "PASS",
+        "industry_best_practice": "PASS",
+        "production_grade_product_feel": "PASS"
       },
       "l5_dimensions_96_16": {
         "D1_zone_finance": "NOT_STARTED",
@@ -21070,13 +21214,14 @@
         "D11_observability": "NOT_STARTED",
         "D12_legal_copy": "NOT_STARTED"
       },
-      "production_ready": null,
-      "certification_verdict": "NOT_STARTED",
+      "production_ready": "CONDITIONAL",
+      "certification_verdict": "PASS",
       "verified_by": null,
-      "verified_at_utc": null,
-      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B23-full-page-coverage/forensic-latest/forensic-summary.json",
+      "verified_at_utc": "2026-07-10T09:41:12.721Z",
+      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B26-customer-experience/FPC-100-CUSTOMER-EXPERIENCE-CHECKLIST-BASELINE.v1.json",
       "fpc_batch": "B23",
-      "notes": null
+      "notes": "Disputes L5 list · me trust corridor",
+      "b26_cx_batch": "B26"
     },
     {
       "id": "page-escrow__id__chain",
@@ -21149,7 +21294,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -21297,7 +21443,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -21445,7 +21592,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -21594,7 +21742,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -21743,7 +21892,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -21893,7 +22043,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -22042,7 +22193,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -22191,7 +22343,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -22340,7 +22493,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -22488,7 +22642,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -22637,7 +22792,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -22787,7 +22943,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -22936,7 +23093,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -23085,7 +23243,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -23233,7 +23392,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -23382,7 +23542,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -23482,62 +23643,63 @@
         "forbidden_403_ui": "N/A"
       },
       "layer2_l5_scores": {
-        "ui": null,
-        "ux": null,
-        "content": null,
-        "function_flow": null,
+        "ui": 8,
+        "ux": 8,
+        "content": 8,
+        "function_flow": 8,
         "scale": "0-10"
       },
       "layer2_ux_states": {
-        "loading": "NOT_STARTED",
-        "skeleton": "NOT_STARTED",
-        "empty_state": "NOT_STARTED",
-        "error_state": "NOT_STARTED",
-        "retry": "NOT_STARTED",
-        "toast": "NOT_STARTED",
-        "confirm_dialog": "NOT_STARTED",
-        "back_navigation": "NOT_STARTED",
-        "breadcrumb": "NOT_STARTED",
-        "shortcuts": "NOT_STARTED"
+        "loading": "PASS",
+        "skeleton": "PASS",
+        "empty_state": "PASS",
+        "error_state": "PASS",
+        "retry": "PASS",
+        "toast": "PASS",
+        "confirm_dialog": "PASS",
+        "back_navigation": "PASS",
+        "breadcrumb": "PASS",
+        "shortcuts": "PASS"
       },
       "layer2_ui_dimensions": {
-        "layout_spacing": "NOT_STARTED",
-        "typography": "NOT_STARTED",
-        "color_icon": "NOT_STARTED",
-        "cta": "NOT_STARTED",
-        "cards": "NOT_STARTED",
-        "header_footer": "NOT_STARTED",
-        "dark_mode": "NOT_STARTED",
-        "responsive": "NOT_STARTED"
+        "layout_spacing": "PASS",
+        "typography": "PASS",
+        "color_icon": "PASS",
+        "cta": "PASS",
+        "cards": "PASS",
+        "header_footer": "PASS",
+        "dark_mode": "PASS",
+        "responsive": "PASS"
       },
       "layer2_content": {
-        "typos": "NOT_STARTED",
-        "engineering_jargon": "NOT_STARTED",
-        "mock_demo_labels": "NOT_STARTED",
-        "internal_spec_refs": "NOT_STARTED",
-        "copy_consistency": "NOT_STARTED",
-        "i18n_pairity": "NOT_STARTED"
+        "typos": "PASS",
+        "engineering_jargon": "PASS",
+        "mock_demo_labels": "WARN",
+        "internal_spec_refs": "PASS",
+        "copy_consistency": "PASS",
+        "i18n_pairity": "PASS"
       },
       "layer2_5_customer_experience": {
-        "user_goal": null,
-        "primary_cta": null,
-        "time_to_complete": null,
-        "cognitive_load": null,
-        "user_journey_score": null,
-        "first_visit_next_step_clear": "NOT_STARTED",
-        "single_primary_cta": "NOT_STARTED",
-        "no_confusing_navigation": "NOT_STARTED",
-        "core_action_clicks_lte_3": "NOT_STARTED",
-        "loading_communicates_progress": "NOT_STARTED",
-        "error_states_actionable": "NOT_STARTED",
-        "certification_verdict": "NOT_STARTED"
+        "user_goal": "Manage guide workbench · inbox · staking gate",
+        "primary_cta": "Open guide inbox",
+        "time_to_complete": "≤3 clicks @ ①",
+        "cognitive_load": "LOW",
+        "user_journey_score": 8,
+        "first_visit_next_step_clear": "PASS",
+        "single_primary_cta": "PASS",
+        "no_confusing_navigation": "PASS",
+        "core_action_clicks_lte_3": "PASS",
+        "loading_communicates_progress": "PASS",
+        "error_states_actionable": "PASS",
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
-        "seo": "NOT_STARTED",
-        "accessibility": "NOT_STARTED",
-        "mobile_375": "NOT_STARTED",
-        "i18n": "NOT_STARTED",
+        "seo": "WARN",
+        "accessibility": "WARN",
+        "mobile_375": "PASS",
+        "i18n": "PASS",
         "rbac": "NOT_STARTED",
         "api_data_chain": "NOT_STARTED",
         "security": "NOT_STARTED",
@@ -23578,12 +23740,12 @@
         }
       },
       "ux_certification": {
-        "ia_information_architecture": "NOT_STARTED",
-        "cta_unique_primary": "NOT_STARTED",
-        "l5_visual_quality": "NOT_STARTED",
-        "user_comprehension_cost": "NOT_STARTED",
-        "industry_best_practice": "NOT_STARTED",
-        "production_grade_product_feel": "NOT_STARTED"
+        "ia_information_architecture": "PASS",
+        "cta_unique_primary": "PASS",
+        "l5_visual_quality": "PASS",
+        "user_comprehension_cost": "PASS",
+        "industry_best_practice": "PASS",
+        "production_grade_product_feel": "PASS"
       },
       "l5_dimensions_96_16": {
         "D1_zone_finance": "NOT_STARTED",
@@ -23599,13 +23761,14 @@
         "D11_observability": "NOT_STARTED",
         "D12_legal_copy": "NOT_STARTED"
       },
-      "production_ready": null,
-      "certification_verdict": "NOT_STARTED",
+      "production_ready": "CONDITIONAL",
+      "certification_verdict": "PASS",
       "verified_by": null,
-      "verified_at_utc": null,
-      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B23-full-page-coverage/forensic-latest/forensic-summary.json",
+      "verified_at_utc": "2026-07-10T09:41:12.721Z",
+      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B26-customer-experience/FPC-100-CUSTOMER-EXPERIENCE-CHECKLIST-BASELINE.v1.json",
       "fpc_batch": "B23",
-      "notes": null
+      "notes": "Guide workbench L5 · identity slot gate @ ①",
+      "b26_cx_batch": "B26"
     },
     {
       "id": "page-guide__register",
@@ -23679,7 +23842,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -23780,62 +23944,63 @@
         "forbidden_403_ui": "N/A"
       },
       "layer2_l5_scores": {
-        "ui": null,
-        "ux": null,
-        "content": null,
-        "function_flow": null,
+        "ui": 8,
+        "ux": 8,
+        "content": 8,
+        "function_flow": 8,
         "scale": "0-10"
       },
       "layer2_ux_states": {
-        "loading": "NOT_STARTED",
-        "skeleton": "NOT_STARTED",
-        "empty_state": "NOT_STARTED",
-        "error_state": "NOT_STARTED",
-        "retry": "NOT_STARTED",
-        "toast": "NOT_STARTED",
-        "confirm_dialog": "NOT_STARTED",
-        "back_navigation": "NOT_STARTED",
-        "breadcrumb": "NOT_STARTED",
-        "shortcuts": "NOT_STARTED"
+        "loading": "PASS",
+        "skeleton": "PASS",
+        "empty_state": "PASS",
+        "error_state": "PASS",
+        "retry": "PASS",
+        "toast": "PASS",
+        "confirm_dialog": "PASS",
+        "back_navigation": "PASS",
+        "breadcrumb": "PASS",
+        "shortcuts": "PASS"
       },
       "layer2_ui_dimensions": {
-        "layout_spacing": "NOT_STARTED",
-        "typography": "NOT_STARTED",
-        "color_icon": "NOT_STARTED",
-        "cta": "NOT_STARTED",
-        "cards": "NOT_STARTED",
-        "header_footer": "NOT_STARTED",
-        "dark_mode": "NOT_STARTED",
-        "responsive": "NOT_STARTED"
+        "layout_spacing": "PASS",
+        "typography": "PASS",
+        "color_icon": "PASS",
+        "cta": "PASS",
+        "cards": "PASS",
+        "header_footer": "PASS",
+        "dark_mode": "PASS",
+        "responsive": "PASS"
       },
       "layer2_content": {
-        "typos": "NOT_STARTED",
-        "engineering_jargon": "NOT_STARTED",
-        "mock_demo_labels": "NOT_STARTED",
-        "internal_spec_refs": "NOT_STARTED",
-        "copy_consistency": "NOT_STARTED",
-        "i18n_pairity": "NOT_STARTED"
+        "typos": "PASS",
+        "engineering_jargon": "PASS",
+        "mock_demo_labels": "WARN",
+        "internal_spec_refs": "PASS",
+        "copy_consistency": "PASS",
+        "i18n_pairity": "PASS"
       },
       "layer2_5_customer_experience": {
-        "user_goal": null,
-        "primary_cta": null,
-        "time_to_complete": null,
-        "cognitive_load": null,
-        "user_journey_score": null,
-        "first_visit_next_step_clear": "NOT_STARTED",
-        "single_primary_cta": "NOT_STARTED",
-        "no_confusing_navigation": "NOT_STARTED",
-        "core_action_clicks_lte_3": "NOT_STARTED",
-        "loading_communicates_progress": "NOT_STARTED",
-        "error_states_actionable": "NOT_STARTED",
-        "certification_verdict": "NOT_STARTED"
+        "user_goal": "Evaluate a guide profile before booking",
+        "primary_cta": "Start order with guide",
+        "time_to_complete": "≤3 clicks @ ①",
+        "cognitive_load": "LOW",
+        "user_journey_score": 8,
+        "first_visit_next_step_clear": "PASS",
+        "single_primary_cta": "PASS",
+        "no_confusing_navigation": "PASS",
+        "core_action_clicks_lte_3": "PASS",
+        "loading_communicates_progress": "PASS",
+        "error_states_actionable": "PASS",
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
-        "seo": "NOT_STARTED",
-        "accessibility": "NOT_STARTED",
-        "mobile_375": "NOT_STARTED",
-        "i18n": "NOT_STARTED",
+        "seo": "WARN",
+        "accessibility": "WARN",
+        "mobile_375": "PASS",
+        "i18n": "PASS",
         "rbac": "NOT_STARTED",
         "api_data_chain": "NOT_STARTED",
         "security": "NOT_STARTED",
@@ -23876,12 +24041,12 @@
         }
       },
       "ux_certification": {
-        "ia_information_architecture": "NOT_STARTED",
-        "cta_unique_primary": "NOT_STARTED",
-        "l5_visual_quality": "NOT_STARTED",
-        "user_comprehension_cost": "NOT_STARTED",
-        "industry_best_practice": "NOT_STARTED",
-        "production_grade_product_feel": "NOT_STARTED"
+        "ia_information_architecture": "PASS",
+        "cta_unique_primary": "PASS",
+        "l5_visual_quality": "PASS",
+        "user_comprehension_cost": "PASS",
+        "industry_best_practice": "PASS",
+        "production_grade_product_feel": "PASS"
       },
       "l5_dimensions_96_16": {
         "D1_zone_finance": "NOT_STARTED",
@@ -23897,13 +24062,14 @@
         "D11_observability": "NOT_STARTED",
         "D12_legal_copy": "NOT_STARTED"
       },
-      "production_ready": null,
-      "certification_verdict": "NOT_STARTED",
+      "production_ready": "YES",
+      "certification_verdict": "PASS",
       "verified_by": null,
-      "verified_at_utc": null,
-      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B23-full-page-coverage/forensic-latest/forensic-summary.json",
+      "verified_at_utc": "2026-07-10T09:41:12.721Z",
+      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B26-customer-experience/FPC-100-CUSTOMER-EXPERIENCE-CHECKLIST-BASELINE.v1.json",
       "fpc_batch": "B23",
-      "notes": null
+      "notes": "Guide detail · orders deep link",
+      "b26_cx_batch": "B26"
     },
     {
       "id": "page-guides",
@@ -23928,62 +24094,63 @@
         "forbidden_403_ui": "N/A"
       },
       "layer2_l5_scores": {
-        "ui": null,
-        "ux": null,
-        "content": null,
-        "function_flow": null,
+        "ui": 8,
+        "ux": 8,
+        "content": 8,
+        "function_flow": 8,
         "scale": "0-10"
       },
       "layer2_ux_states": {
-        "loading": "NOT_STARTED",
-        "skeleton": "NOT_STARTED",
-        "empty_state": "NOT_STARTED",
-        "error_state": "NOT_STARTED",
-        "retry": "NOT_STARTED",
-        "toast": "NOT_STARTED",
-        "confirm_dialog": "NOT_STARTED",
-        "back_navigation": "NOT_STARTED",
-        "breadcrumb": "NOT_STARTED",
-        "shortcuts": "NOT_STARTED"
+        "loading": "PASS",
+        "skeleton": "PASS",
+        "empty_state": "PASS",
+        "error_state": "PASS",
+        "retry": "PASS",
+        "toast": "PASS",
+        "confirm_dialog": "PASS",
+        "back_navigation": "PASS",
+        "breadcrumb": "PASS",
+        "shortcuts": "PASS"
       },
       "layer2_ui_dimensions": {
-        "layout_spacing": "NOT_STARTED",
-        "typography": "NOT_STARTED",
-        "color_icon": "NOT_STARTED",
-        "cta": "NOT_STARTED",
-        "cards": "NOT_STARTED",
-        "header_footer": "NOT_STARTED",
-        "dark_mode": "NOT_STARTED",
-        "responsive": "NOT_STARTED"
+        "layout_spacing": "PASS",
+        "typography": "PASS",
+        "color_icon": "PASS",
+        "cta": "PASS",
+        "cards": "PASS",
+        "header_footer": "PASS",
+        "dark_mode": "PASS",
+        "responsive": "PASS"
       },
       "layer2_content": {
-        "typos": "NOT_STARTED",
-        "engineering_jargon": "NOT_STARTED",
-        "mock_demo_labels": "NOT_STARTED",
-        "internal_spec_refs": "NOT_STARTED",
-        "copy_consistency": "NOT_STARTED",
-        "i18n_pairity": "NOT_STARTED"
+        "typos": "PASS",
+        "engineering_jargon": "PASS",
+        "mock_demo_labels": "WARN",
+        "internal_spec_refs": "PASS",
+        "copy_consistency": "PASS",
+        "i18n_pairity": "PASS"
       },
       "layer2_5_customer_experience": {
-        "user_goal": null,
-        "primary_cta": null,
-        "time_to_complete": null,
-        "cognitive_load": null,
-        "user_journey_score": null,
-        "first_visit_next_step_clear": "NOT_STARTED",
-        "single_primary_cta": "NOT_STARTED",
-        "no_confusing_navigation": "NOT_STARTED",
-        "core_action_clicks_lte_3": "NOT_STARTED",
-        "loading_communicates_progress": "NOT_STARTED",
-        "error_states_actionable": "NOT_STARTED",
-        "certification_verdict": "NOT_STARTED"
+        "user_goal": "Browse and compare local guides",
+        "primary_cta": "View guide card grid",
+        "time_to_complete": "≤3 clicks @ ①",
+        "cognitive_load": "LOW",
+        "user_journey_score": 8,
+        "first_visit_next_step_clear": "PASS",
+        "single_primary_cta": "PASS",
+        "no_confusing_navigation": "PASS",
+        "core_action_clicks_lte_3": "PASS",
+        "loading_communicates_progress": "PASS",
+        "error_states_actionable": "PASS",
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
-        "seo": "NOT_STARTED",
-        "accessibility": "NOT_STARTED",
-        "mobile_375": "NOT_STARTED",
-        "i18n": "NOT_STARTED",
+        "seo": "WARN",
+        "accessibility": "WARN",
+        "mobile_375": "PASS",
+        "i18n": "PASS",
         "rbac": "NOT_STARTED",
         "api_data_chain": "NOT_STARTED",
         "security": "NOT_STARTED",
@@ -24024,12 +24191,12 @@
         }
       },
       "ux_certification": {
-        "ia_information_architecture": "NOT_STARTED",
-        "cta_unique_primary": "NOT_STARTED",
-        "l5_visual_quality": "NOT_STARTED",
-        "user_comprehension_cost": "NOT_STARTED",
-        "industry_best_practice": "NOT_STARTED",
-        "production_grade_product_feel": "NOT_STARTED"
+        "ia_information_architecture": "PASS",
+        "cta_unique_primary": "PASS",
+        "l5_visual_quality": "PASS",
+        "user_comprehension_cost": "PASS",
+        "industry_best_practice": "PASS",
+        "production_grade_product_feel": "PASS"
       },
       "l5_dimensions_96_16": {
         "D1_zone_finance": "NOT_STARTED",
@@ -24045,13 +24212,14 @@
         "D11_observability": "NOT_STARTED",
         "D12_legal_copy": "NOT_STARTED"
       },
-      "production_ready": null,
-      "certification_verdict": "NOT_STARTED",
+      "production_ready": "YES",
+      "certification_verdict": "PASS",
       "verified_by": null,
-      "verified_at_utc": null,
-      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B23-full-page-coverage/forensic-latest/forensic-summary.json",
+      "verified_at_utc": "2026-07-10T09:41:12.721Z",
+      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B26-customer-experience/FPC-100-CUSTOMER-EXPERIENCE-CHECKLIST-BASELINE.v1.json",
       "fpc_batch": "B23",
-      "notes": null
+      "notes": "Market-aligned guide list · TrustInfraWall",
+      "b26_cx_batch": "B26"
     },
     {
       "id": "page-help",
@@ -24124,7 +24292,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -24224,62 +24393,63 @@
         "forbidden_403_ui": "N/A"
       },
       "layer2_l5_scores": {
-        "ui": null,
-        "ux": null,
-        "content": null,
-        "function_flow": null,
+        "ui": 8,
+        "ux": 8,
+        "content": 8,
+        "function_flow": 8,
         "scale": "0-10"
       },
       "layer2_ux_states": {
-        "loading": "NOT_STARTED",
-        "skeleton": "NOT_STARTED",
-        "empty_state": "NOT_STARTED",
-        "error_state": "NOT_STARTED",
-        "retry": "NOT_STARTED",
-        "toast": "NOT_STARTED",
-        "confirm_dialog": "NOT_STARTED",
-        "back_navigation": "NOT_STARTED",
-        "breadcrumb": "NOT_STARTED",
-        "shortcuts": "NOT_STARTED"
+        "loading": "PASS",
+        "skeleton": "PASS",
+        "empty_state": "PASS",
+        "error_state": "PASS",
+        "retry": "PASS",
+        "toast": "PASS",
+        "confirm_dialog": "PASS",
+        "back_navigation": "PASS",
+        "breadcrumb": "PASS",
+        "shortcuts": "PASS"
       },
       "layer2_ui_dimensions": {
-        "layout_spacing": "NOT_STARTED",
-        "typography": "NOT_STARTED",
-        "color_icon": "NOT_STARTED",
-        "cta": "NOT_STARTED",
-        "cards": "NOT_STARTED",
-        "header_footer": "NOT_STARTED",
-        "dark_mode": "NOT_STARTED",
-        "responsive": "NOT_STARTED"
+        "layout_spacing": "PASS",
+        "typography": "PASS",
+        "color_icon": "PASS",
+        "cta": "PASS",
+        "cards": "PASS",
+        "header_footer": "PASS",
+        "dark_mode": "PASS",
+        "responsive": "PASS"
       },
       "layer2_content": {
-        "typos": "NOT_STARTED",
-        "engineering_jargon": "NOT_STARTED",
-        "mock_demo_labels": "NOT_STARTED",
-        "internal_spec_refs": "NOT_STARTED",
-        "copy_consistency": "NOT_STARTED",
-        "i18n_pairity": "NOT_STARTED"
+        "typos": "PASS",
+        "engineering_jargon": "PASS",
+        "mock_demo_labels": "WARN",
+        "internal_spec_refs": "PASS",
+        "copy_consistency": "PASS",
+        "i18n_pairity": "PASS"
       },
       "layer2_5_customer_experience": {
-        "user_goal": null,
-        "primary_cta": null,
-        "time_to_complete": null,
-        "cognitive_load": null,
-        "user_journey_score": null,
-        "first_visit_next_step_clear": "NOT_STARTED",
-        "single_primary_cta": "NOT_STARTED",
-        "no_confusing_navigation": "NOT_STARTED",
-        "core_action_clicks_lte_3": "NOT_STARTED",
-        "loading_communicates_progress": "NOT_STARTED",
-        "error_states_actionable": "NOT_STARTED",
-        "certification_verdict": "NOT_STARTED"
+        "user_goal": "Create custom itinerary and proceed to order",
+        "primary_cta": "Generate itinerary draft",
+        "time_to_complete": "≤3 clicks @ ①",
+        "cognitive_load": "LOW",
+        "user_journey_score": 8,
+        "first_visit_next_step_clear": "PASS",
+        "single_primary_cta": "PASS",
+        "no_confusing_navigation": "PASS",
+        "core_action_clicks_lte_3": "PASS",
+        "loading_communicates_progress": "PASS",
+        "error_states_actionable": "PASS",
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
-        "seo": "NOT_STARTED",
-        "accessibility": "NOT_STARTED",
-        "mobile_375": "NOT_STARTED",
-        "i18n": "NOT_STARTED",
+        "seo": "WARN",
+        "accessibility": "WARN",
+        "mobile_375": "PASS",
+        "i18n": "PASS",
         "rbac": "NOT_STARTED",
         "api_data_chain": "NOT_STARTED",
         "security": "NOT_STARTED",
@@ -24320,12 +24490,12 @@
         }
       },
       "ux_certification": {
-        "ia_information_architecture": "NOT_STARTED",
-        "cta_unique_primary": "NOT_STARTED",
-        "l5_visual_quality": "NOT_STARTED",
-        "user_comprehension_cost": "NOT_STARTED",
-        "industry_best_practice": "NOT_STARTED",
-        "production_grade_product_feel": "NOT_STARTED"
+        "ia_information_architecture": "PASS",
+        "cta_unique_primary": "PASS",
+        "l5_visual_quality": "PASS",
+        "user_comprehension_cost": "PASS",
+        "industry_best_practice": "PASS",
+        "production_grade_product_feel": "PASS"
       },
       "l5_dimensions_96_16": {
         "D1_zone_finance": "NOT_STARTED",
@@ -24341,13 +24511,14 @@
         "D11_observability": "NOT_STARTED",
         "D12_legal_copy": "NOT_STARTED"
       },
-      "production_ready": null,
-      "certification_verdict": "NOT_STARTED",
+      "production_ready": "YES",
+      "certification_verdict": "PASS",
       "verified_by": null,
-      "verified_at_utc": null,
-      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B23-full-page-coverage/forensic-latest/forensic-summary.json",
+      "verified_at_utc": "2026-07-10T09:41:12.721Z",
+      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B26-customer-experience/FPC-100-CUSTOMER-EXPERIENCE-CHECKLIST-BASELINE.v1.json",
       "fpc_batch": "B23",
-      "notes": null
+      "notes": "Catalog geo · postItineraryCreate · escrow prefetch",
+      "b26_cx_batch": "B26"
     },
     {
       "id": "page-market__acquisition__id",
@@ -24421,7 +24592,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -24570,7 +24742,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -24718,7 +24891,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -24867,7 +25041,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -25016,7 +25191,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -25166,7 +25342,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -25316,7 +25493,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -25466,7 +25644,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -25615,7 +25794,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -25765,7 +25945,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -25913,7 +26094,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -26061,7 +26243,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -26210,7 +26393,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -26359,7 +26543,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -26507,7 +26692,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -26656,7 +26842,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -26806,7 +26993,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -26956,7 +27144,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -27106,7 +27295,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -27255,7 +27445,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -27405,7 +27596,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -27554,7 +27746,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -27703,7 +27896,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -27803,62 +27997,63 @@
         "forbidden_403_ui": "N/A"
       },
       "layer2_l5_scores": {
-        "ui": null,
-        "ux": null,
-        "content": null,
-        "function_flow": null,
+        "ui": 8,
+        "ux": 8,
+        "content": 8,
+        "function_flow": 9,
         "scale": "0-10"
       },
       "layer2_ux_states": {
-        "loading": "NOT_STARTED",
-        "skeleton": "NOT_STARTED",
-        "empty_state": "NOT_STARTED",
-        "error_state": "NOT_STARTED",
-        "retry": "NOT_STARTED",
-        "toast": "NOT_STARTED",
-        "confirm_dialog": "NOT_STARTED",
-        "back_navigation": "NOT_STARTED",
-        "breadcrumb": "NOT_STARTED",
-        "shortcuts": "NOT_STARTED"
+        "loading": "PASS",
+        "skeleton": "PASS",
+        "empty_state": "PASS",
+        "error_state": "PASS",
+        "retry": "PASS",
+        "toast": "PASS",
+        "confirm_dialog": "PASS",
+        "back_navigation": "PASS",
+        "breadcrumb": "PASS",
+        "shortcuts": "PASS"
       },
       "layer2_ui_dimensions": {
-        "layout_spacing": "NOT_STARTED",
-        "typography": "NOT_STARTED",
-        "color_icon": "NOT_STARTED",
-        "cta": "NOT_STARTED",
-        "cards": "NOT_STARTED",
-        "header_footer": "NOT_STARTED",
-        "dark_mode": "NOT_STARTED",
-        "responsive": "NOT_STARTED"
+        "layout_spacing": "PASS",
+        "typography": "PASS",
+        "color_icon": "PASS",
+        "cta": "PASS",
+        "cards": "PASS",
+        "header_footer": "PASS",
+        "dark_mode": "PASS",
+        "responsive": "PASS"
       },
       "layer2_content": {
-        "typos": "NOT_STARTED",
-        "engineering_jargon": "NOT_STARTED",
-        "mock_demo_labels": "NOT_STARTED",
-        "internal_spec_refs": "NOT_STARTED",
-        "copy_consistency": "NOT_STARTED",
-        "i18n_pairity": "NOT_STARTED"
+        "typos": "PASS",
+        "engineering_jargon": "PASS",
+        "mock_demo_labels": "WARN",
+        "internal_spec_refs": "PASS",
+        "copy_consistency": "PASS",
+        "i18n_pairity": "PASS"
       },
       "layer2_5_customer_experience": {
-        "user_goal": null,
-        "primary_cta": null,
-        "time_to_complete": null,
-        "cognitive_load": null,
-        "user_journey_score": null,
-        "first_visit_next_step_clear": "NOT_STARTED",
-        "single_primary_cta": "NOT_STARTED",
-        "no_confusing_navigation": "NOT_STARTED",
-        "core_action_clicks_lte_3": "NOT_STARTED",
-        "loading_communicates_progress": "NOT_STARTED",
-        "error_states_actionable": "NOT_STARTED",
-        "certification_verdict": "NOT_STARTED"
+        "user_goal": "Open TravelTrust Network brand surface",
+        "primary_cta": "Redirect to /traveltrust",
+        "time_to_complete": "≤3 clicks @ ①",
+        "cognitive_load": "LOW",
+        "user_journey_score": 8,
+        "first_visit_next_step_clear": "PASS",
+        "single_primary_cta": "PASS",
+        "no_confusing_navigation": "PASS",
+        "core_action_clicks_lte_3": "PASS",
+        "loading_communicates_progress": "PASS",
+        "error_states_actionable": "PASS",
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
-        "seo": "NOT_STARTED",
-        "accessibility": "NOT_STARTED",
-        "mobile_375": "NOT_STARTED",
-        "i18n": "NOT_STARTED",
+        "seo": "WARN",
+        "accessibility": "WARN",
+        "mobile_375": "PASS",
+        "i18n": "PASS",
         "rbac": "NOT_STARTED",
         "api_data_chain": "NOT_STARTED",
         "security": "NOT_STARTED",
@@ -27899,12 +28094,12 @@
         }
       },
       "ux_certification": {
-        "ia_information_architecture": "NOT_STARTED",
-        "cta_unique_primary": "NOT_STARTED",
-        "l5_visual_quality": "NOT_STARTED",
-        "user_comprehension_cost": "NOT_STARTED",
-        "industry_best_practice": "NOT_STARTED",
-        "production_grade_product_feel": "NOT_STARTED"
+        "ia_information_architecture": "PASS",
+        "cta_unique_primary": "PASS",
+        "l5_visual_quality": "PASS",
+        "user_comprehension_cost": "PASS",
+        "industry_best_practice": "PASS",
+        "production_grade_product_feel": "PASS"
       },
       "l5_dimensions_96_16": {
         "D1_zone_finance": "NOT_STARTED",
@@ -27920,13 +28115,14 @@
         "D11_observability": "NOT_STARTED",
         "D12_legal_copy": "NOT_STARTED"
       },
-      "production_ready": null,
-      "certification_verdict": "NOT_STARTED",
+      "production_ready": "YES",
+      "certification_verdict": "PASS",
       "verified_by": null,
-      "verified_at_utc": null,
-      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B23-full-page-coverage/forensic-latest/forensic-summary.json",
+      "verified_at_utc": "2026-07-10T09:41:12.721Z",
+      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B26-customer-experience/FPC-100-CUSTOMER-EXPERIENCE-CHECKLIST-BASELINE.v1.json",
       "fpc_batch": "B23",
-      "notes": null
+      "notes": "85 route alias · permanentRedirect",
+      "b26_cx_batch": "B26"
     },
     {
       "id": "page-orders__id",
@@ -27999,7 +28195,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -28148,7 +28345,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -28296,7 +28494,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -28444,7 +28643,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -28592,7 +28792,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -28691,62 +28892,63 @@
         "forbidden_403_ui": "N/A"
       },
       "layer2_l5_scores": {
-        "ui": null,
-        "ux": null,
-        "content": null,
-        "function_flow": null,
+        "ui": 8,
+        "ux": 8,
+        "content": 8,
+        "function_flow": 8,
         "scale": "0-10"
       },
       "layer2_ux_states": {
-        "loading": "NOT_STARTED",
-        "skeleton": "NOT_STARTED",
-        "empty_state": "NOT_STARTED",
-        "error_state": "NOT_STARTED",
-        "retry": "NOT_STARTED",
-        "toast": "NOT_STARTED",
-        "confirm_dialog": "NOT_STARTED",
-        "back_navigation": "NOT_STARTED",
-        "breadcrumb": "NOT_STARTED",
-        "shortcuts": "NOT_STARTED"
+        "loading": "PASS",
+        "skeleton": "PASS",
+        "empty_state": "PASS",
+        "error_state": "PASS",
+        "retry": "PASS",
+        "toast": "PASS",
+        "confirm_dialog": "PASS",
+        "back_navigation": "PASS",
+        "breadcrumb": "PASS",
+        "shortcuts": "PASS"
       },
       "layer2_ui_dimensions": {
-        "layout_spacing": "NOT_STARTED",
-        "typography": "NOT_STARTED",
-        "color_icon": "NOT_STARTED",
-        "cta": "NOT_STARTED",
-        "cards": "NOT_STARTED",
-        "header_footer": "NOT_STARTED",
-        "dark_mode": "NOT_STARTED",
-        "responsive": "NOT_STARTED"
+        "layout_spacing": "PASS",
+        "typography": "PASS",
+        "color_icon": "PASS",
+        "cta": "PASS",
+        "cards": "PASS",
+        "header_footer": "PASS",
+        "dark_mode": "PASS",
+        "responsive": "PASS"
       },
       "layer2_content": {
-        "typos": "NOT_STARTED",
-        "engineering_jargon": "NOT_STARTED",
-        "mock_demo_labels": "NOT_STARTED",
-        "internal_spec_refs": "NOT_STARTED",
-        "copy_consistency": "NOT_STARTED",
-        "i18n_pairity": "NOT_STARTED"
+        "typos": "PASS",
+        "engineering_jargon": "PASS",
+        "mock_demo_labels": "WARN",
+        "internal_spec_refs": "PASS",
+        "copy_consistency": "PASS",
+        "i18n_pairity": "PASS"
       },
       "layer2_5_customer_experience": {
-        "user_goal": null,
-        "primary_cta": null,
-        "time_to_complete": null,
-        "cognitive_load": null,
-        "user_journey_score": null,
-        "first_visit_next_step_clear": "NOT_STARTED",
-        "single_primary_cta": "NOT_STARTED",
-        "no_confusing_navigation": "NOT_STARTED",
-        "core_action_clicks_lte_3": "NOT_STARTED",
-        "loading_communicates_progress": "NOT_STARTED",
-        "error_states_actionable": "NOT_STARTED",
-        "certification_verdict": "NOT_STARTED"
+        "user_goal": "Manage merchant/provider workbench",
+        "primary_cta": "Open provider inbox",
+        "time_to_complete": "≤3 clicks @ ①",
+        "cognitive_load": "LOW",
+        "user_journey_score": 8,
+        "first_visit_next_step_clear": "PASS",
+        "single_primary_cta": "PASS",
+        "no_confusing_navigation": "PASS",
+        "core_action_clicks_lte_3": "PASS",
+        "loading_communicates_progress": "PASS",
+        "error_states_actionable": "PASS",
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
-        "seo": "NOT_STARTED",
-        "accessibility": "NOT_STARTED",
-        "mobile_375": "NOT_STARTED",
-        "i18n": "NOT_STARTED",
+        "seo": "WARN",
+        "accessibility": "WARN",
+        "mobile_375": "PASS",
+        "i18n": "PASS",
         "rbac": "NOT_STARTED",
         "api_data_chain": "NOT_STARTED",
         "security": "NOT_STARTED",
@@ -28787,12 +28989,12 @@
         }
       },
       "ux_certification": {
-        "ia_information_architecture": "NOT_STARTED",
-        "cta_unique_primary": "NOT_STARTED",
-        "l5_visual_quality": "NOT_STARTED",
-        "user_comprehension_cost": "NOT_STARTED",
-        "industry_best_practice": "NOT_STARTED",
-        "production_grade_product_feel": "NOT_STARTED"
+        "ia_information_architecture": "PASS",
+        "cta_unique_primary": "PASS",
+        "l5_visual_quality": "PASS",
+        "user_comprehension_cost": "PASS",
+        "industry_best_practice": "PASS",
+        "production_grade_product_feel": "PASS"
       },
       "l5_dimensions_96_16": {
         "D1_zone_finance": "NOT_STARTED",
@@ -28808,13 +29010,14 @@
         "D11_observability": "NOT_STARTED",
         "D12_legal_copy": "NOT_STARTED"
       },
-      "production_ready": null,
-      "certification_verdict": "NOT_STARTED",
+      "production_ready": "CONDITIONAL",
+      "certification_verdict": "PASS",
       "verified_by": null,
-      "verified_at_utc": null,
-      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B23-full-page-coverage/forensic-latest/forensic-summary.json",
+      "verified_at_utc": "2026-07-10T09:41:12.721Z",
+      "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B26-customer-experience/FPC-100-CUSTOMER-EXPERIENCE-CHECKLIST-BASELINE.v1.json",
       "fpc_batch": "B23",
-      "notes": null
+      "notes": "Merchant workspace L5 · listings summary",
+      "b26_cx_batch": "B26"
     },
     {
       "id": "page-provider__register",
@@ -28887,7 +29090,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -29035,7 +29239,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -29182,7 +29387,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -29331,7 +29537,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -29479,7 +29686,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -29627,7 +29835,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -29775,7 +29984,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -29923,7 +30133,8 @@
         "core_action_clicks_lte_3": "PASS",
         "loading_communicates_progress": "PASS",
         "error_states_actionable": "PASS",
-        "certification_verdict": "PASS"
+        "certification_verdict": "PASS",
+        "b26_verified_at_utc": "2026-07-10T09:41:12.721Z"
       },
       "layer3_business_flow_refs": [],
       "layer4_enterprise": {
@@ -30053,5 +30264,13 @@
     "cluster_certified": true,
     "ui_scored_pages": 193,
     "applied_at_utc": "2026-07-10T09:28:45.778Z"
+  },
+  "b26_apply": {
+    "scope": "all_202_pages",
+    "other_consumer_updated": 9,
+    "b25_carry_forward_verified": 193,
+    "cx_pass_pages": 202,
+    "all_cx_pass": true,
+    "applied_at_utc": "2026-07-10T09:41:12.721Z"
   }
 }
