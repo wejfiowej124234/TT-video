@@ -1,33 +1,19 @@
 {
-  "schema": "traveltrust.fpc_100_batch_certification.v1",
-  "batch_id": "B17",
-  "title": "Security · secrets · internal routes · CSP",
-  "layer": "L4",
-  "phase": "① local",
   "timestamp_utc": "2026-07-10T05:38:37.163Z",
-  "verifier": "run-fpc-batch-b17-security.cjs",
-  "product_version": "v1.0",
-  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
-  "git": {
-    "head": "de8266cfd8b48fe2290cb0860babbefc0c94c38a",
-    "branch": "feature/g23-04-abi-event-freeze"
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T05:38:37.329Z"
   },
-  "depends_on": [
-    "B00",
-    "B09",
-    "B16"
-  ],
-  "gates": [
-    "scripts/gates/check-invariants.sh",
-    "scripts/gates/audit-deps.sh",
-    "scripts/gates/check-auth-email-resend-gate.sh",
-    "scripts/dev/scan-repository-cfg-drift.sh",
-    "scripts/dev/l5-enterprise-rbac-security-audit.sh",
-    "scripts/dev/verify-production-stripe-webhook-signature-static.sh",
-    "scripts/dev/verify-production-cookie-csp-headers.sh",
-    "scripts/gates/me-routes-local-gate.sh",
-    "scripts/dev/smoke-admin-rbac-matrix-local.sh"
-  ],
   "gate_results": [
     {
       "gate": "scripts/gates/check-invariants.sh",
@@ -84,22 +70,7 @@
       "summary_line": "== smoke-admin-rbac-matrix-local (??) API=http://127.0.0.1:8080 == | smoke-admin-rbac-matrix-local: OK assign CS console role via db | smoke-admin-rbac-matrix-local: OK db_console_role + route_matrix + CS deny publish + Finance allow finance read"
     }
   ],
-  "gate_pass": true,
-  "runtime_preflight": {
-    "pass": true,
-    "api_base": "http://127.0.0.1:8080",
-    "items": {
-      "working_tree_clean": false,
-      "api_health": 200,
-      "api_meta": 200,
-      "db_reachable": true,
-      "expected_feature_flags": {}
-    },
-    "findings": [],
-    "blockers": [],
-    "timestamp_utc": "2026-07-10T05:38:37.329Z"
-  },
-  "security_live_evidence": {
+  "live_evidence": {
     "pass": true,
     "api_base": "http://127.0.0.1:8080",
     "probes": [
@@ -173,7 +144,7 @@
     ],
     "skipped": false
   },
-  "security_static_ssot": [
+  "static_ssot": [
     {
       "id": "ssot_session_extract",
       "domain": "session",
@@ -245,79 +216,77 @@
       "notes": []
     }
   ],
-  "business_certification": {
-    "verdict": "PASS",
-    "gate_pass": true
-  },
-  "quality_supplement": {
-    "verdict": "PASS",
-    "domains": [
-      "Q11"
-    ],
-    "checks": [
-      {
-        "id": "Q11_quality_matrix",
-        "domain": "Q11",
-        "pass": true,
-        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100-QUALITY-DOMAIN-MATRIX-v1.md",
-        "notes": []
-      },
-      {
-        "id": "Q11_registry_batch",
-        "domain": "Q11",
-        "pass": true,
-        "path": "registry/full-production-certification-checklist.v1.yaml",
-        "notes": []
-      },
-      {
-        "id": "Q11_alignment_policy",
-        "domain": "Q11",
-        "pass": true,
-        "path": "docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md",
-        "notes": []
-      },
-      {
-        "id": "Q11_security_checklist",
-        "domain": "Q11",
-        "pass": true,
-        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B17-security/FPC-100-SECURITY-CHECKLIST-BASELINE.v1.json",
-        "notes": []
-      },
-      {
-        "id": "Q11_me_security_contract",
-        "domain": "Q11",
-        "pass": true,
-        "path": "frontend/lib/apiClient/meSecurity/meSecurity.test.ts",
-        "notes": []
-      },
-      {
-        "id": "Q11_auth_flow_contract",
-        "domain": "Q11",
-        "pass": true,
-        "path": "frontend/lib/auth/authFlowL5.contract.test.ts",
-        "notes": []
-      },
-      {
-        "id": "Q11_live_security_probes",
-        "domain": "Q11",
-        "pass": true,
-        "path": "scripts/dev/lib/fpc-security-probes.cjs",
-        "notes": [
-          "live_internal_routes:true",
-          "live_admin_unauth:true",
-          "live_security_headers:true",
-          "live_rate_limits_meta:true"
-        ]
-      },
-      {
-        "id": "Q11_static_ssot",
-        "domain": "Q11",
-        "pass": true,
-        "path": "crates/api + frontend security SSOT",
-        "notes": []
-      }
-    ]
-  },
+  "qualityCheckResults": [
+    {
+      "id": "Q11_quality_matrix",
+      "domain": "Q11",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100-QUALITY-DOMAIN-MATRIX-v1.md",
+      "notes": []
+    },
+    {
+      "id": "Q11_registry_batch",
+      "domain": "Q11",
+      "pass": true,
+      "path": "registry/full-production-certification-checklist.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q11_alignment_policy",
+      "domain": "Q11",
+      "pass": true,
+      "path": "docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md",
+      "notes": []
+    },
+    {
+      "id": "Q11_security_checklist",
+      "domain": "Q11",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B17-security/FPC-100-SECURITY-CHECKLIST-BASELINE.v1.json",
+      "notes": []
+    },
+    {
+      "id": "Q11_me_security_contract",
+      "domain": "Q11",
+      "pass": true,
+      "path": "frontend/lib/apiClient/meSecurity/meSecurity.test.ts",
+      "notes": []
+    },
+    {
+      "id": "Q11_auth_flow_contract",
+      "domain": "Q11",
+      "pass": true,
+      "path": "frontend/lib/auth/authFlowL5.contract.test.ts",
+      "notes": []
+    },
+    {
+      "id": "Q11_live_security_probes",
+      "domain": "Q11",
+      "pass": true,
+      "path": "scripts/dev/lib/fpc-security-probes.cjs",
+      "notes": [
+        "live_internal_routes:true",
+        "live_admin_unauth:true",
+        "live_security_headers:true",
+        "live_rate_limits_meta:true"
+      ]
+    },
+    {
+      "id": "Q11_static_ssot",
+      "domain": "Q11",
+      "pass": true,
+      "path": "crates/api + frontend security SSOT",
+      "notes": []
+    }
+  ],
+  "findings": [
+    {
+      "id": "gate_fail:audit-deps",
+      "severity": "P2",
+      "gate": "scripts/gates/audit-deps.sh",
+      "detail": "transitive npm/cargo advisories — ① documented · Production Entry Review upgrade track"
+    }
+  ],
   "certification_four_questions": {
     "business_correct": {
       "answer": true,
@@ -347,54 +316,5 @@
       "answer": true,
       "notes": "All P0/P1 remediated · gates green · live probes PASS"
     }
-  },
-  "overall_verdict": "PASS",
-  "findings": [
-    {
-      "id": "gate_fail:audit-deps",
-      "severity": "P2",
-      "gate": "scripts/gates/audit-deps.sh",
-      "detail": "transitive npm/cargo advisories — ① documented · Production Entry Review upgrade track"
-    }
-  ],
-  "verdict": "PASS",
-  "pass": true,
-  "gate_verdict": "PASS",
-  "release_blocker": "NO",
-  "next_batch": "B18",
-  "ai_review": {
-    "verdict": "PASS",
-    "ai_reviewer": "Internal AI Review",
-    "review_type": "Internal AI Review",
-    "review_date": "2026-07-10",
-    "review_version": "v1"
-  },
-  "human_verified": false,
-  "human_verifier": null,
-  "human_note": "Security ① — invariants · secrets · internal 403 · RBAC · webhook sig · CSP headers · rate_limits meta; not ② staging / ③ Production GO",
-  "traceability": {
-    "requirements": [
-      "Internal routes 403/401 without X-Internal-Api-Secret",
-      "No secrets in tracked repo (scan-repository-cfg-drift)",
-      "Admin RBAC deny enforced (smoke-admin-rbac-matrix-local)",
-      "Stripe webhook signature SSOT",
-      "API security headers on /health",
-      "Q11 static + live security probes"
-    ],
-    "spec_refs": [
-      "registry/full-production-certification-checklist.v1.yaml",
-      "FPC-100-QUALITY-DOMAIN-MATRIX-v1.md",
-      "FPC-100/B17-security/FPC-100-SECURITY-CHECKLIST-BASELINE.v1.json",
-      "docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md"
-    ],
-    "evidence_path": "FPC-100/FPC-100-BATCH-B17-LATEST.json",
-    "certification_batch": "B17",
-    "product_version": "v1.0"
-  },
-  "certified_at_utc": "2026-07-10T05:38:37.163Z",
-  "expires_at_utc": "2026-08-09T05:38:37.163Z",
-  "expiry_policy_days": 30,
-  "certification_frozen": true,
-  "frozen_at_utc": "2026-07-10T05:38:37.163Z",
-  "frozen_git_sha": "de8266cfd8b48fe2290cb0860babbefc0c94c38a"
+  }
 }
