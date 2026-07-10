@@ -6,12 +6,12 @@
   "rollup_computed": {
     "closed": 1,
     "interim": 2,
-    "open": 2
+    "open": 3
   },
   "rollup_declared": {
     "closed": 1,
     "interim": 2,
-    "open": 2
+    "open": 3
   },
   "release_decision": "NO_GO",
   "pi3_gates": [
@@ -26,6 +26,10 @@
     {
       "id": "PI3-003",
       "status": "WAITING_OWNER"
+    },
+    {
+      "id": "G3-02-WEB3-PAYMENT",
+      "status": "NOT_STARTED"
     },
     {
       "id": "PI3-004",
