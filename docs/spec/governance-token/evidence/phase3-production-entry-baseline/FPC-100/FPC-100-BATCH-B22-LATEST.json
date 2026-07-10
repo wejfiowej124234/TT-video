@@ -4,12 +4,12 @@
   "title": "DR · backup · infra · fly deploy SSOT",
   "layer": "L3",
   "phase": "① local",
-  "timestamp_utc": "2026-07-10T07:10:28.938Z",
+  "timestamp_utc": "2026-07-10T07:12:34.866Z",
   "verifier": "run-fpc-batch-b22-infra-dr.cjs",
   "product_version": "v1.0",
-  "code_anchor_commit": "0adb7c9d19c9c0163e62b88cfc36819fd3030d1c",
+  "code_anchor_commit": "e323ce6b32e7073fc9f6e7701df22e3ce27acdad",
   "git": {
-    "head": "0adb7c9d19c9c0163e62b88cfc36819fd3030d1c",
+    "head": "e323ce6b32e7073fc9f6e7701df22e3ce27acdad",
     "branch": "feature/g23-04-abi-event-freeze"
   },
   "depends_on": [
@@ -38,7 +38,7 @@
       "gate": "scripts/check-pi3-001-fly-pg-backup-disaster-recovery-execution.sh",
       "exit_code": 0,
       "pass": true,
-      "summary_line": "pi3-002 execution baseline (151): OK | Evidence: /d/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-001-exec-20260710T071041Z | TT_PI3_001_FLY_PG_BACKUP_DISASTER_RECOVERY_EXECUTION: PI3-001_GO"
+      "summary_line": "pi3-002 execution baseline (151): OK | Evidence: /d/TravelTrust-V1.1/evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-001-exec-20260710T071246Z | TT_PI3_001_FLY_PG_BACKUP_DISASTER_RECOVERY_EXECUTION: PI3-001_GO"
     },
     {
       "gate": "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
@@ -60,7 +60,7 @@
     },
     "findings": [],
     "blockers": [],
-    "timestamp_utc": "2026-07-10T07:10:29.141Z"
+    "timestamp_utc": "2026-07-10T07:12:35.059Z"
   },
   "infra_live_evidence": {
     "pass": true,
@@ -253,8 +253,8 @@
   },
   "overall_verdict": "PASS",
   "findings": [],
-  "verdict": "IN_PROGRESS",
-  "pass": false,
+  "verdict": "PASS",
+  "pass": true,
   "gate_verdict": "PASS",
   "release_blocker": "NO",
   "next_batch": "B23",
@@ -288,21 +288,10 @@
     "certification_batch": "B22",
     "product_version": "v1.0"
   },
-  "certified_at_utc": "2026-07-10T07:10:28.938Z",
-  "expires_at_utc": "2026-08-09T07:10:28.938Z",
+  "certified_at_utc": "2026-07-10T07:12:34.866Z",
+  "expires_at_utc": "2026-08-09T07:12:34.866Z",
   "expiry_policy_days": 30,
   "certification_frozen": true,
-  "frozen_at_utc": "2026-07-10T07:10:28.938Z",
-  "frozen_git_sha": "0adb7c9d19c9c0163e62b88cfc36819fd3030d1c",
-  "dod": {
-    "gate_pass": true,
-    "evidence_complete": true,
-    "dashboard_refreshed": true,
-    "commit_complete": false,
-    "working_tree_clean": false,
-    "all_met": false,
-    "checked_at_utc": "2026-07-10T07:11:46.417Z",
-    "committed_sha": "c4d3399192e2931d68b7443d064c8197df8dd882",
-    "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
-  }
+  "frozen_at_utc": "2026-07-10T07:12:34.866Z",
+  "frozen_git_sha": "e323ce6b32e7073fc9f6e7701df22e3ce27acdad"
 }
