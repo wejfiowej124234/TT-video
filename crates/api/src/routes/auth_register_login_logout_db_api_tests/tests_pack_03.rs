@@ -14,7 +14,7 @@ async fn matrix_93_a_log_002b_f002_login_then_get_me_twice_200_app_stack_ok_pg()
             "skip: matrix_93_a_log_002b_f002_login_then_get_me_twice_200_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let email = format!("93-a-log-002b-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 
@@ -113,7 +113,7 @@ async fn matrix_93_a_log_003_logout_then_get_me_401() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_93_a_log_003_logout_then_get_me_401 (DATABASE_URL unset)");
         return;
-    }
+    };
     let email = format!("93-a-log-003-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 
@@ -183,7 +183,7 @@ async fn matrix_93_a_me_001_register_then_get_me_user_fields_match() {
             "skip: matrix_93_a_me_001_register_then_get_me_user_fields_match (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let email = format!("93-a-me-001-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 
@@ -253,7 +253,7 @@ async fn matrix_93_a_me_002_put_nickname_then_get_me_reflects_pg() {
             "skip: matrix_93_a_me_002_put_nickname_then_get_me_reflects_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let email = format!("93-a-me-002-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 

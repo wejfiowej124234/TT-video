@@ -25,7 +25,7 @@ async fn matrix_93_d_adm_004d_f030_get_admin_cross_check_ok_app_stack_ok_pg() {
             "skip: matrix_93_d_adm_004d_f030_get_admin_cross_check_ok_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let admin = admin_user_row();
     let admin_id = admin.id;
     let now = Utc::now();
@@ -34,7 +34,7 @@ async fn matrix_93_d_adm_004d_f030_get_admin_cross_check_ok_app_stack_ok_pg() {
     cleanup_admin_it_user(&pool, admin_id).await;
 
     insert_user(
-        &pool, admin_id, &email, None, "admin", "none", None, None, None, None, now, now,
+        &pool, admin_id, &email, None, "admin", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user admin cross-check");
@@ -88,7 +88,7 @@ async fn matrix_93_a_env_001b_f029_get_health_and_meta_contract_app_stack_ok_pg(
             "skip: matrix_93_a_env_001b_f029_get_health_and_meta_contract_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let co = ChainOffState {
         store: Arc::new(RwLock::new(ChainOffStore::default())),
         config: ChainOffConfig::default(),

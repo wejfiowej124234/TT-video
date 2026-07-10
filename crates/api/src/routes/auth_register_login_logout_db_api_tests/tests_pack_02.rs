@@ -15,7 +15,7 @@ async fn put_me_password_revokes_pg_session_login_with_new_password() {
             "skip: put_me_password_revokes_pg_session_login_with_new_password (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let email = format!("me-pw-db-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 
@@ -122,7 +122,7 @@ async fn matrix_93_a_reg_001_register_success_pg_users_row() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_93_a_reg_001_register_success_pg_users_row (DATABASE_URL unset)");
         return;
-    }
+    };
     let email = format!("93-a-reg-001-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 
@@ -169,7 +169,7 @@ async fn matrix_93_a_log_001_login_then_get_me_200() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_93_a_log_001_login_then_get_me_200 (DATABASE_URL unset)");
         return;
-    }
+    };
     let email = format!("93-a-log-001-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 
@@ -248,7 +248,7 @@ async fn matrix_93_a_log_001b_f002_login_then_get_me_200_app_stack_ok_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_93_a_log_001b_f002_login_then_get_me_200_app_stack_ok_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let email = format!("93-a-log-001b-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 

@@ -18,7 +18,7 @@ async fn matrix_93_b_mkt_001d_f009_get_discover_orders_country_city_limit_app_st
             "skip: matrix_93_b_mkt_001d_f009_get_discover_orders_country_city_limit_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = orders_app_stack_it_lock().lock().await;
 
     let suffix = Uuid::new_v4();
@@ -136,7 +136,7 @@ async fn matrix_93_b_mkt_001e_f009_get_discover_orders_limit_only_includes_draft
             "skip: matrix_93_b_mkt_001e_f009_get_discover_orders_limit_only_includes_draft_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = orders_app_stack_it_lock().lock().await;
 
     let suffix = Uuid::new_v4();
@@ -251,7 +251,7 @@ async fn matrix_93_b_mkt_002b_f009_get_discover_orders_limit_ok_shape_app_stack_
             "skip: matrix_93_b_mkt_002b_f009_get_discover_orders_limit_ok_shape_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = orders_app_stack_it_lock().lock().await;
 
     let suffix = Uuid::new_v4();

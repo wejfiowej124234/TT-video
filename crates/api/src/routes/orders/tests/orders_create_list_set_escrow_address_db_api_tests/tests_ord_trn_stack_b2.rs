@@ -16,7 +16,7 @@ async fn matrix_93_b_trn_002_f009_post_order_cancel_created_sets_cancelled_pg() 
             "skip: matrix_93_b_trn_002_f009_post_order_cancel_created_sets_cancelled_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let create = cx
         .app
         .clone()
@@ -84,7 +84,7 @@ async fn matrix_93_b_trn_002b_f009_post_order_cancel_created_sets_cancelled_app_
             "skip: matrix_93_b_trn_002b_f009_post_order_cancel_created_sets_cancelled_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let create = cx
         .app
         .clone()

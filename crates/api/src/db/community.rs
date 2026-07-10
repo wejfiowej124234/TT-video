@@ -70,12 +70,21 @@ pub async fn insert_post(
     commerce_showcase_kind: Option<&str>,
     commerce_market_listing_id: Option<Uuid>,
 ) -> Result<Uuid, sqlx::Error> {
+    let display_status = super::governed_community_posts::display_status_for_new_post(data_origin);
+    let display_origin = match data_origin {
+        "production" => "REAL",
+        "test" => "TEST",
+        "demo" => "SHOWCASE",
+        "official_seed" => "OFFICIAL",
+        _ => "REAL",
+    };
     let row = sqlx::query_scalar::<_, Uuid>(
         r#"INSERT INTO community_posts (
                user_id, body, post_type, destination, tags, media_urls, cover_url,
-               primary_media_asset_id, data_origin, commerce_showcase_kind, commerce_market_listing_id
+               primary_media_asset_id, data_origin, commerce_showcase_kind, commerce_market_listing_id,
+               display_status, display_origin, display_source
            )
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id"#,
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING id"#,
     )
     .bind(user_id)
     .bind(body)
@@ -88,6 +97,9 @@ pub async fn insert_post(
     .bind(data_origin)
     .bind(commerce_showcase_kind)
     .bind(commerce_market_listing_id)
+    .bind(display_status)
+    .bind(display_origin)
+    .bind("api:create_post")
     .fetch_one(pool)
     .await?;
     Ok(row)

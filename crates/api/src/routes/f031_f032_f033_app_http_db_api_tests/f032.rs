@@ -22,7 +22,7 @@ async fn matrix_93_b_tgr_001_f032_post_trust_growth_ingest_moment_view_pg() {
             "skip: matrix_93_b_tgr_001_f032_post_trust_growth_ingest_moment_view_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let router = app_with_pool(pool);
     let run = Uuid::new_v4();
     let res = router
@@ -64,7 +64,7 @@ async fn matrix_93_b_tgr_001_f032_get_admin_trust_growth_observability_ok_pg() {
             "skip: matrix_93_b_tgr_001_f032_get_admin_trust_growth_observability_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let admin_id = Uuid::new_v4();
     let now = Utc::now();
     let email = format!("f032-admin-obs-{admin_id}@traveltrust.test");
@@ -73,7 +73,7 @@ async fn matrix_93_b_tgr_001_f032_get_admin_trust_growth_observability_ok_pg() {
     cleanup_admin_session_user(&pool, admin_id).await;
 
     insert_user(
-        &pool, admin_id, &email, None, "admin", "none", None, None, None, None, now, now,
+        &pool, admin_id, &email, None, "admin", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user admin obs");
@@ -90,8 +90,6 @@ async fn matrix_93_b_tgr_001_f032_get_admin_trust_growth_observability_ok_pg() {
         nickname: None,
         avatar_url: None,
         default_wallet_address: None,
-        bio: None,
-        email_verified_at: None,
         created_at: now,
         updated_at: now,
     };
@@ -137,7 +135,7 @@ async fn matrix_93_b_tgr_002c_f032_patch_admin_trust_growth_control_weights_froz
             "skip: matrix_93_b_tgr_002c_f032_patch_admin_trust_growth_control_weights_frozen_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let admin_id = Uuid::new_v4();
     let now = Utc::now();
     let email = format!("f032-admin-ctl-{admin_id}@traveltrust.test");
@@ -146,7 +144,7 @@ async fn matrix_93_b_tgr_002c_f032_patch_admin_trust_growth_control_weights_froz
     cleanup_admin_session_user(&pool, admin_id).await;
 
     insert_user(
-        &pool, admin_id, &email, None, "admin", "none", None, None, None, None, now, now,
+        &pool, admin_id, &email, None, "admin", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user admin trust growth control");
@@ -163,8 +161,6 @@ async fn matrix_93_b_tgr_002c_f032_patch_admin_trust_growth_control_weights_froz
         nickname: None,
         avatar_url: None,
         default_wallet_address: None,
-        bio: None,
-        email_verified_at: None,
         created_at: now,
         updated_at: now,
     };
@@ -210,7 +206,7 @@ async fn matrix_93_b_tgr_001_f032_get_trust_growth_config_autopilot_gen_matches_
             "skip: matrix_93_b_tgr_001_f032_get_trust_growth_config_autopilot_gen_matches_runtime_state_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let tg_env = std::env::var("TRUST_GROWTH_ENV")
         .unwrap_or_else(|_| "default".to_string())
         .trim()
@@ -255,7 +251,7 @@ async fn matrix_93_b_tgr_001b_f032_post_ingest_then_get_trust_growth_config_ok_p
             "skip: matrix_93_b_tgr_001b_f032_post_ingest_then_get_trust_growth_config_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let tg_env = std::env::var("TRUST_GROWTH_ENV")
         .unwrap_or_else(|_| "default".to_string())
         .trim()

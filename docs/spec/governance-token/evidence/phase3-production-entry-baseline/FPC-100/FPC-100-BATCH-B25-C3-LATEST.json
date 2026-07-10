@@ -1,0 +1,1690 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B25-C3",
+  "title": "L2 · Page certification — transaction & escrow cluster",
+  "layer": "L2",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T09:08:03.631Z",
+  "verifier": "run-fpc-batch-b25-c3-transaction-escrow.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "62362b2eba7999a4a6d39c137d5d5b015f8afe91",
+  "git": {
+    "head": "62362b2eba7999a4a6d39c137d5d5b015f8afe91",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B05",
+    "B10",
+    "B20",
+    "B23",
+    "B25-C2"
+  ],
+  "route_clusters": [
+    "transaction_escrow"
+  ],
+  "cluster_routes": [
+    "/orders",
+    "/orders/new",
+    "/orders/[id]",
+    "/pay",
+    "/escrow/[id]",
+    "/escrow/[id]/chain",
+    "/escrow/[id]/proof",
+    "/escrow/[id]/rate"
+  ],
+  "gates": [
+    "scripts/dev/run-web3-itinerary-l5-green.sh",
+    "scripts/dev/smoke-web3-itinerary-full-chain-local.sh",
+    "scripts/dev/run-orders-corridor-local.sh",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+    "scripts/dev/apply-fpc-l2-transaction-escrow-matrix.cjs"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/dev/run-web3-itinerary-l5-green.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "   Duration  5.68s (transform 4.61s, setup 891ms, collect 13.34s, tests 1.93s, environment 49.96s, prepare 7.87s) | TT_WEB3_ITINERARY_L5_GREEN: OK (① local · preview unlock · escrow draft experience) |   SSOT: frontend/evidence/GO_local_web3_itinerary_l5/README.md"
+    },
+    {
+      "gate": "scripts/dev/smoke-web3-itinerary-full-chain-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "  UI step2: /market?view=split&bindGuideToOrder=587e1857-bc6a-4bdc-931c-12d23d3bb3cc | smoke-escrow-draft-guide-bind: PASS (phase ① · itinerary-first · guide reassign) | TT_WEB3_ITINERARY_FULL_CHAIN_SMOKE: OK (① · create no guide · publish · bind · reassign)"
+    },
+    {
+      "gate": "scripts/dev/run-orders-corridor-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "SKIP_E2E=1 → skipped Playwright orders corridor | TT_ORDERS_CORRIDOR_LOCAL: OK (① local · not ②③ staging/production GO) |   SSOT: frontend/evidence/GO_local_orders_l5/README.md"
+    },
+    {
+      "gate": "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "NEXT_BATCH: B25-C3 | DASHBOARD_JSON: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-RELEASE-DASHBOARD-LATEST.json | VERSION_CERT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-VERSION-CERTIFICATION-LATEST.json"
+    },
+    {
+      "gate": "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "blocking_count 0 | rollup {\"closed\":1,\"interim\":2,\"open\":3} | evidence evidence\\GO_executive_dashboard_gate_consistency\\20260703T093000Z\\gate-consistency-audit.json"
+    },
+    {
+      "gate": "scripts/dev/apply-fpc-l2-transaction-escrow-matrix.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FPC_L2_TRANSACTION_ESCROW_APPLY: updated=8 cluster_certified=true ui_scored=17"
+    }
+  ],
+  "gate_pass": true,
+  "runtime_preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T09:08:03.948Z"
+  },
+  "transaction_escrow_live": {
+    "cluster_checks": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "cluster_page_count",
+          "pass": true,
+          "matrix": 8,
+          "expected": 8
+        },
+        {
+          "id": "cluster_route_set",
+          "pass": true,
+          "missingRoutes": [],
+          "extraRoutes": []
+        },
+        {
+          "id": "cluster_l1_complete",
+          "pass": true
+        },
+        {
+          "id": "cluster_l2_certified",
+          "pass": true,
+          "pages": [
+            "/escrow/[id]/chain",
+            "/escrow/[id]",
+            "/escrow/[id]/proof",
+            "/escrow/[id]/rate",
+            "/orders/[id]",
+            "/orders/new",
+            "/orders",
+            "/pay"
+          ]
+        },
+        {
+          "id": "cluster_owner_files",
+          "pass": true
+        }
+      ],
+      "pages": [
+        {
+          "id": "page-escrow__id__chain",
+          "route": "/escrow/[id]/chain",
+          "cluster": "transaction_escrow",
+          "owner_files": {
+            "page": "frontend/app/escrow/[id]/chain/page.tsx",
+            "layouts": [
+              "frontend/app/escrow/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "WARN",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Inspect on-chain sync status",
+            "primary_cta": "View chain sync",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "WARN",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "CONDITIONAL",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:08:49.469Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C3-transaction-escrow/FPC-100-TRANSACTION-ESCROW-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C3",
+          "notes": "CONDITIONAL: chain_off ① · ② testnet chain GO deferred"
+        },
+        {
+          "id": "page-escrow__id",
+          "route": "/escrow/[id]",
+          "cluster": "transaction_escrow",
+          "owner_files": {
+            "page": "frontend/app/escrow/[id]/page.tsx",
+            "layouts": [
+              "frontend/app/escrow/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/escrow/[id]/loading.tsx",
+            "error": "frontend/app/escrow/[id]/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 9,
+            "ux": 9,
+            "content": 8,
+            "function_flow": 9,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "WARN",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "View order · draft Experience or protocol shell",
+            "primary_cta": "Pay / confirm / chat",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 9,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "WARN",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:08:49.469Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C3-transaction-escrow/FPC-100-TRANSACTION-ESCROW-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C3",
+          "notes": "Draft Experience UI frozen · ESCROW-DRAFT-EXPERIENCE-FREEZE · protocol shell not frozen"
+        },
+        {
+          "id": "page-escrow__id__proof",
+          "route": "/escrow/[id]/proof",
+          "cluster": "transaction_escrow",
+          "owner_files": {
+            "page": "frontend/app/escrow/[id]/proof/page.tsx",
+            "layouts": [
+              "frontend/app/escrow/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "WARN",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Upload/view trip evidence",
+            "primary_cta": "Submit evidence",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "WARN",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:08:49.469Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C3-transaction-escrow/FPC-100-TRANSACTION-ESCROW-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C3",
+          "notes": "Evidence receipt HMAC · Runbook §12.1"
+        },
+        {
+          "id": "page-escrow__id__rate",
+          "route": "/escrow/[id]/rate",
+          "cluster": "transaction_escrow",
+          "owner_files": {
+            "page": "frontend/app/escrow/[id]/rate/page.tsx",
+            "layouts": [
+              "frontend/app/escrow/[id]/rate/layout.tsx",
+              "frontend/app/escrow/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/escrow/[id]/rate/loading.tsx",
+            "error": "frontend/app/escrow/[id]/rate/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "WARN",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Rate counterparty after completion",
+            "primary_cta": "Submit review",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "WARN",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:08:49.469Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C3-transaction-escrow/FPC-100-TRANSACTION-ESCROW-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C3",
+          "notes": "Post-completion review corridor"
+        },
+        {
+          "id": "page-orders__id",
+          "route": "/orders/[id]",
+          "cluster": "transaction_escrow",
+          "owner_files": {
+            "page": "frontend/app/orders/[id]/page.tsx",
+            "layouts": [
+              "frontend/app/orders/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/orders/[id]/loading.tsx",
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 9,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "WARN",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Redirect to escrow detail",
+            "primary_cta": "View escrow",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:08:49.469Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C3-transaction-escrow/FPC-100-TRANSACTION-ESCROW-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C3",
+          "notes": "redirect → /escrow/[id] SSOT"
+        },
+        {
+          "id": "page-orders__new",
+          "route": "/orders/new",
+          "cluster": "transaction_escrow",
+          "owner_files": {
+            "page": "frontend/app/orders/new/page.tsx",
+            "layouts": [
+              "frontend/app/orders/new/layout.tsx",
+              "frontend/app/orders/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/orders/new/loading.tsx",
+            "error": "frontend/app/orders/new/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "WARN",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Create new order draft",
+            "primary_cta": "Continue order setup",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:08:49.469Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C3-transaction-escrow/FPC-100-TRANSACTION-ESCROW-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C3",
+          "notes": "ordersNewL5 · auxiliary entry"
+        },
+        {
+          "id": "page-orders",
+          "route": "/orders",
+          "cluster": "transaction_escrow",
+          "owner_files": {
+            "page": "frontend/app/orders/page.tsx",
+            "layouts": [
+              "frontend/app/orders/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/orders/loading.tsx",
+            "error": "frontend/app/orders/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 9,
+            "ux": 9,
+            "content": 8,
+            "function_flow": 9,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "WARN",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "List and filter my orders",
+            "primary_cta": "Open order / pay",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 9,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:08:49.469Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C3-transaction-escrow/FPC-100-TRANSACTION-ESCROW-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C3",
+          "notes": "ordersListL5 · GET /api/v1/orders state/q filter"
+        },
+        {
+          "id": "page-pay",
+          "route": "/pay",
+          "cluster": "transaction_escrow",
+          "owner_files": {
+            "page": "frontend/app/pay/page.tsx",
+            "layouts": [
+              "frontend/app/pay/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/pay/loading.tsx",
+            "error": "frontend/app/pay/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "WARN",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Mock-pay to escrow order",
+            "primary_cta": "Mock pay",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "CONDITIONAL",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:08:49.469Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C3-transaction-escrow/FPC-100-TRANSACTION-ESCROW-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C3",
+          "notes": "CONDITIONAL: ① mock-pay only · ② PSP live deferred"
+        }
+      ]
+    },
+    "dashboard_parity": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "prior_batch_pass",
+          "pass": true,
+          "batch_id": "B25-C2"
+        },
+        {
+          "id": "dashboard_next_required_batch",
+          "pass": true,
+          "expected": "B25-C3",
+          "actual": "B25-C3"
+        },
+        {
+          "id": "registry_batch_ssot",
+          "pass": true,
+          "batch_id": "B25-C3"
+        },
+        {
+          "id": "dashboard_lists_prior_batch",
+          "pass": true,
+          "batch_id": "B25-C2"
+        }
+      ],
+      "dash_ts": "2026-07-10T09:08:49.319Z"
+    },
+    "display_parity": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "escrow_closure",
+          "pass": true,
+          "path": "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md"
+        },
+        {
+          "id": "escrow_draft_freeze",
+          "pass": true,
+          "path": "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-DRAFT-EXPERIENCE-FREEZE.md"
+        },
+        {
+          "id": "orders_l5",
+          "pass": true,
+          "path": "frontend/evidence/GO_local_orders_l5/README.md"
+        },
+        {
+          "id": "escrow_detail_readme",
+          "pass": true,
+          "path": "frontend/components/escrow/EscrowDetail/README.md"
+        },
+        {
+          "id": "pay_readme",
+          "pass": true,
+          "path": "frontend/app/pay/README.md"
+        },
+        {
+          "id": "escrow_draft_freeze_doc",
+          "pass": true
+        }
+      ]
+    },
+    "state_machine": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "confirm_completion_completed",
+          "pass": true,
+          "path": "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs"
+        },
+        {
+          "id": "confirm_service_bilateral",
+          "pass": true,
+          "path": "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs"
+        },
+        {
+          "id": "mock_pay_escrowed",
+          "pass": true,
+          "path": "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs"
+        },
+        {
+          "id": "participant_forbidden",
+          "pass": true,
+          "path": "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs"
+        },
+        {
+          "id": "itinerary_mirror_no_duplicate",
+          "pass": true,
+          "path": "crates/api/src/chain_off/orders.rs"
+        },
+        {
+          "id": "trust_growth_status_ok",
+          "pass": true,
+          "path": "crates/api/src/routes/trust_growth.rs"
+        }
+      ]
+    },
+    "display_chain": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "orders_redirect_escrow",
+          "pass": true,
+          "path": "frontend/app/orders/[id]/page.tsx"
+        },
+        {
+          "id": "escrow_experience_ui",
+          "pass": true,
+          "path": "frontend/components/escrow/EscrowDetail/index.tsx"
+        },
+        {
+          "id": "pay_mock_honesty",
+          "pass": true,
+          "path": "frontend/app/pay/usePayPageMockPay.ts"
+        }
+      ]
+    },
+    "vitest_results": [
+      {
+        "id": "vitest:bilateralExperienceL5.contract.test.ts",
+        "path": "lib/escrow/bilateralExperienceL5.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:escrowDraftExperienceUiFreeze.contract.test.ts",
+        "path": "lib/escrowDraftExperienceUiFreeze.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:escrowExperienceUi.contract.test.ts",
+        "path": "lib/escrowExperienceUi.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:escrowProtocolUi.contract.test.ts",
+        "path": "lib/escrowProtocolUi.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:ordersListL5.contract.test.ts",
+        "path": "lib/orders/ordersListL5.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:ordersNewL5.contract.test.ts",
+        "path": "lib/orders/ordersNewL5.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:ordersCorridorGate.contract.test.ts",
+        "path": "lib/orders/ordersCorridorGate.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:types.chainSync.parseResponse.checkpointAndStatus.test.ts",
+        "path": "components/escrow/EscrowDetail/types.chainSync.parseResponse.checkpointAndStatus.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      }
+    ]
+  },
+  "transaction_static_ssot": [
+    {
+      "id": "static:FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json"
+    },
+    {
+      "id": "static:ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md",
+      "pass": true,
+      "path": "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md"
+    },
+    {
+      "id": "static:ESCROW-DRAFT-EXPERIENCE-FREEZE.md",
+      "pass": true,
+      "path": "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-DRAFT-EXPERIENCE-FREEZE.md"
+    },
+    {
+      "id": "static:README.md",
+      "pass": true,
+      "path": "frontend/evidence/GO_local_orders_l5/README.md"
+    },
+    {
+      "id": "static:full-production-certification-checklist.v1.yaml",
+      "pass": true,
+      "path": "registry/full-production-certification-checklist.v1.yaml"
+    }
+  ],
+  "business_certification": {
+    "verdict": "PASS",
+    "gate_pass": true
+  },
+  "quality_supplement": {
+    "verdict": "PASS",
+    "domains": [
+      "Q4",
+      "Q5",
+      "Q8"
+    ],
+    "checks": [
+      {
+        "id": "Q8_registry_batch",
+        "domain": "Q8",
+        "pass": true,
+        "path": "registry/full-production-certification-checklist.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q4_escrow_closure",
+        "domain": "Q4",
+        "pass": true,
+        "path": "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md",
+        "notes": []
+      },
+      {
+        "id": "Q5_orders_corridor",
+        "domain": "Q5",
+        "pass": true,
+        "path": "frontend/evidence/GO_local_orders_l5/README.md",
+        "notes": []
+      },
+      {
+        "id": "Q5_escrow_checklist",
+        "domain": "Q5",
+        "pass": true,
+        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C3-transaction-escrow/FPC-100-TRANSACTION-ESCROW-CHECKLIST-BASELINE.v1.json",
+        "notes": []
+      },
+      {
+        "id": "Q4_cluster_l2",
+        "domain": "Q4",
+        "pass": true,
+        "path": "FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+        "notes": [
+          "cluster_page_count:true",
+          "cluster_route_set:true",
+          "cluster_l1_complete:true",
+          "cluster_l2_certified:true",
+          "cluster_owner_files:true"
+        ]
+      },
+      {
+        "id": "Q4_dashboard_parity",
+        "domain": "Q4",
+        "pass": true,
+        "path": "FPC-100-RELEASE-DASHBOARD-LATEST.json",
+        "notes": [
+          "prior_batch_pass:true",
+          "dashboard_next_required_batch:true",
+          "registry_batch_ssot:true",
+          "dashboard_lists_prior_batch:true"
+        ]
+      },
+      {
+        "id": "Q8_state_machine",
+        "domain": "Q8",
+        "pass": true,
+        "path": "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs",
+        "notes": [
+          "confirm_completion_completed:true",
+          "confirm_service_bilateral:true",
+          "mock_pay_escrowed:true",
+          "participant_forbidden:true",
+          "itinerary_mirror_no_duplicate:true",
+          "trust_growth_status_ok:true"
+        ]
+      }
+    ]
+  },
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "transaction_escrow 8 routes · web3 green + full-chain smoke + orders corridor"
+    },
+    "quality_meets_standard": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "State machine SSOT · confirm-completion→Completed · bilateral service separate · display chain"
+    },
+    "findings_identified": {
+      "answer": false,
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "items": []
+    },
+    "recertification_passed": {
+      "answer": true,
+      "notes": "8/8 transaction_escrow L2 PASS · dashboard next=B25-C4 · B21-B25-C2 frozen"
+    }
+  },
+  "overall_verdict": "PASS",
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B25-C4",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "transaction_escrow 8 routes ① — order/escrow/settlement state machine + display parity; defer-commit",
+  "traceability": {
+    "requirements": [
+      "8/8 transaction_escrow L2 certified (2 CONDITIONAL: pay · chain sync)",
+      "confirm-completion → Completed (no service-completion delegation)",
+      "confirm-service-completion bilateral Escrowed-only path separate",
+      "web3 green + full-chain smoke + orders corridor SKIP_E2E PASS",
+      "page matrix b25_c3_apply cluster_certified"
+    ],
+    "spec_refs": [
+      "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md",
+      "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-DRAFT-EXPERIENCE-FREEZE.md",
+      "frontend/evidence/GO_local_orders_l5/README.md",
+      "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs",
+      "FPC-100/B25-C3-transaction-escrow/FPC-100-TRANSACTION-ESCROW-CHECKLIST-BASELINE.v1.json"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B25-C3-LATEST.json",
+    "certification_batch": "B25-C3",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T09:08:03.631Z",
+  "expires_at_utc": "2026-08-09T09:08:03.631Z",
+  "expiry_policy_days": 30,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T09:08:03.631Z",
+  "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+  "dod": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": true,
+    "working_tree_clean": true,
+    "all_met": true,
+    "checked_at_utc": "2026-07-10T09:35:04.404Z",
+    "committed_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+    "anchor_head": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+    "policy": "B21-B25-C6 unified defer-commit anchor"
+  },
+  "finalized_at_utc": "2026-07-10T09:35:05.635Z",
+  "defer_commit_anchor": {
+    "anchor_id": "B21-B25-C6",
+    "committed_at_utc": "2026-07-10T09:35:04.404Z",
+    "immutable_head": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+  }
+}

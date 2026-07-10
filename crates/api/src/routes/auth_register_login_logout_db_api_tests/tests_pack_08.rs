@@ -16,7 +16,7 @@ async fn auth_login_failure_audit_reason_matches_risk_error_keys_pg() {
             "skip: auth_login_failure_audit_reason_matches_risk_error_keys_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     clear_auth_email_send_windows_for_it(&pool).await;
     let _audit_queue = AuthAuditAsyncQueueEnvGuard::disable();
@@ -186,14 +186,14 @@ async fn auth_hot_table_retention_delete_helpers_remove_stale_rows_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: auth_hot_table_retention_delete_helpers_remove_stale_rows_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let user_id = Uuid::new_v4();
     let email = format!("auth-hot-retention-{}@traveltrust.test", user_id);
     let token = format!("tts_hot_retention_{}", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
     let now = chrono::Utc::now();
     db::insert_user(
-        &pool, user_id, &email, None, "tourist", "none", None, None, None, None, now, now,
+        &pool, user_id, &email, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert user");
@@ -259,7 +259,7 @@ async fn session_token_hash_backfill_updates_active_rows_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: session_token_hash_backfill_updates_active_rows_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let prev_pepper = std::env::var("TRAVELTRUST_SESSION_TOKEN_PEPPER").ok();
     std::env::set_var(
         "TRAVELTRUST_SESSION_TOKEN_PEPPER",
@@ -272,7 +272,7 @@ async fn session_token_hash_backfill_updates_active_rows_pg() {
     cleanup_user_by_email(&pool, &email).await;
     let now = chrono::Utc::now();
     db::insert_user(
-        &pool, user_id, &email, None, "tourist", "none", None, None, None, None, now, now,
+        &pool, user_id, &email, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert user");

@@ -19,7 +19,7 @@ async fn matrix_93_b_mkt_001c_f009_get_discover_orders_country_city_query_filter
             "skip: matrix_93_b_mkt_001c_f009_get_discover_orders_country_city_query_filters_draft_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = orders_app_stack_it_lock().lock().await;
 
     let suffix = Uuid::new_v4();

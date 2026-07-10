@@ -25,7 +25,7 @@ async fn matrix_93_d_idx_001_f029_get_internal_indexer_status_ok_shape_pg() {
             "skip: matrix_93_d_idx_001_f029_get_internal_indexer_status_ok_shape_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let co = ChainOffState {
         store: Arc::new(RwLock::new(ChainOffStore::default())),
         config: ChainOffConfig::default(),
@@ -61,7 +61,7 @@ async fn matrix_93_d_idx_001b_f029_get_internal_indexer_status_ok_shape_app_stac
             "skip: matrix_93_d_idx_001b_f029_get_internal_indexer_status_ok_shape_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let app = app_stack_router(pool.clone());
 
     let res = app
@@ -92,7 +92,7 @@ async fn matrix_93_d_idx_001_f029_internal_indexer_status_ok_and_sqlx_migrations
             "skip: matrix_93_d_idx_001_f029_internal_indexer_status_ok_and_sqlx_migrations_applied_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let mig_count: i64 = sqlx::query_scalar("SELECT COUNT(*)::bigint FROM _sqlx_migrations")
         .fetch_one(&pool)
         .await
@@ -135,7 +135,7 @@ async fn matrix_93_d_idx_001_f029_post_internal_indexer_reconcile_persist_false_
             "skip: matrix_93_d_idx_001_f029_post_internal_indexer_reconcile_persist_false_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let meta = meta_indexer_reconcile_with_pool(pool);
     let mut body = IndexerReconcileBody::default();
     body.persist = false;
@@ -163,7 +163,7 @@ async fn matrix_93_d_idx_001e_f029_post_internal_indexer_reconcile_persist_false
             "skip: matrix_93_d_idx_001e_f029_post_internal_indexer_reconcile_persist_false_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let meta = meta_indexer_reconcile_with_pool(pool.clone());
     let idem = Arc::new(RwLock::new(IdempotencyCache::default()));
     let app = app(meta, idem, Some(pool.clone()));
@@ -200,7 +200,7 @@ async fn matrix_93_d_idx_001f_f029_post_internal_indexer_reconcile_persist_true_
             "skip: matrix_93_d_idx_001f_f029_post_internal_indexer_reconcile_persist_true_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let meta = meta_indexer_reconcile_with_pool(pool.clone());
     let idem = Arc::new(RwLock::new(IdempotencyCache::default()));
     let app = app(meta, idem, Some(pool.clone()));

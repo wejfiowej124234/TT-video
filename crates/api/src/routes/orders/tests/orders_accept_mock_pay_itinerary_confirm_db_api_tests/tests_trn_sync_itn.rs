@@ -5,8 +5,6 @@ use tower::ServiceExt;
 
 use crate::routes::orders;
 use crate::routes::orders::CHAIN_SYNC_SUCCESS_ENVELOPE_STATUS;
-use crate::state::test_support::TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK;
-
 use super::cleanup::cleanup_order_participants;
 use super::flows_esc::run_b_esc_001_mock_pay_flow_with_app;
 use super::support::{
@@ -22,10 +20,8 @@ async fn matrix_93_b_trn_003b_f025_get_order_detail_disputed_after_open_dispute_
             "skip: matrix_93_b_trn_003b_f025_get_order_detail_disputed_after_open_dispute_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
-    let _env_lock = TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK
-        .lock()
-        .expect("env test lock");
+    };
+    let _env_lock = crate::test_env_serial::lock();
     std::env::remove_var("TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS");
     std::env::remove_var("TRAVELTRUST_DENY_MOCK_PAY");
     let prev_p3 = std::env::var("P3_CHAIN_OFF").ok();
@@ -91,10 +87,8 @@ async fn matrix_93_b_esc_004b_f029_get_order_chain_sync_status_ok_shape_after_es
             "skip: matrix_93_b_esc_004b_f029_get_order_chain_sync_status_ok_shape_after_escrow_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
-    let _env_lock = TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK
-        .lock()
-        .expect("env test lock");
+    };
+    let _env_lock = crate::test_env_serial::lock();
     std::env::remove_var("TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS");
     std::env::remove_var("TRAVELTRUST_DENY_MOCK_PAY");
     let prev_p3 = std::env::var("P3_CHAIN_OFF").ok();

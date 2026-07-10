@@ -16,7 +16,7 @@ async fn matrix_93_b_ord_003_f009_get_order_detail_status_matches_orders_pg() {
             "skip: matrix_93_b_ord_003_f009_get_order_detail_status_matches_orders_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let create = cx
         .app
         .clone()
@@ -91,7 +91,7 @@ async fn matrix_93_b_ord_003b_f009_get_order_detail_status_matches_orders_app_st
             "skip: matrix_93_b_ord_003b_f009_get_order_detail_status_matches_orders_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let create = cx
         .app
         .clone()

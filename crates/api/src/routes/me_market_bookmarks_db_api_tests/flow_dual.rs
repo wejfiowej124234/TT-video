@@ -19,7 +19,7 @@ async fn matrix_93_b_mkt_004f_f020_post_order_then_guide_bookmarks_get_lists_bot
             "skip: matrix_93_b_mkt_004f_f020_post_order_then_guide_bookmarks_get_lists_both_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (order_id, guide_row_id, tourist_id, guide_user_id, token) =
         seed_bm004_bookmark_fixture(&pool).await;
     let router = app_stack_bm004(pool.clone());
@@ -94,7 +94,7 @@ async fn matrix_93_b_mkt_004g_f020_post_order_guide_bookmarks_delete_both_then_l
             "skip: matrix_93_b_mkt_004g_f020_post_order_guide_bookmarks_delete_both_then_lists_absent_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (order_id, guide_row_id, tourist_id, guide_user_id, token) =
         seed_bm004_bookmark_fixture(&pool).await;
     let router = app_stack_bm004(pool.clone());

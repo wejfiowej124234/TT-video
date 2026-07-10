@@ -17,7 +17,7 @@ async fn reset_password_failure_audit_event_persists_outcome_pg() {
             "skip: reset_password_failure_audit_event_persists_outcome_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     let _env = ForgotResetTestEnvGuard::set_log_transport_and_pepper();
     let _audit_queue = AuthAuditAsyncQueueEnvGuard::disable();
@@ -105,7 +105,7 @@ async fn reset_password_failure_error_contract_is_stable_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: reset_password_failure_error_contract_is_stable_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     let _env = ForgotResetTestEnvGuard::set_log_transport_and_pepper();
     let app = db_router(pool.clone());
@@ -158,7 +158,7 @@ async fn forgot_password_failure_audit_reason_is_request_failed_pg() {
             "skip: forgot_password_failure_audit_reason_is_request_failed_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     let _audit_queue = AuthAuditAsyncQueueEnvGuard::disable();
     clear_auth_email_send_windows_for_it(&pool).await;
@@ -244,7 +244,7 @@ async fn auth_audit_query_by_event_type_and_reason_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: auth_audit_query_by_event_type_and_reason_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     clear_auth_email_send_windows_for_it(&pool).await;
     let _audit_queue = AuthAuditAsyncQueueEnvGuard::disable();

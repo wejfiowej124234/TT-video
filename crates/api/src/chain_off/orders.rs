@@ -1149,6 +1149,7 @@ pub fn order_detail_envelope(
                 "total_budget": bundle.amount_breakdown.total_budget
             }
         });
+        resp["order"]["itinerary"] = resp["itinerary"].clone();
 
         // B-083 / TT-B083-FEE-ROUTE-COUNTRY-ORDER-META-SSOT-001：`itinerary.destination`（**`FEE_ROUTE_COUNTRY_SSOT_FIELD`**）→ **`resolve_fee_route_country_from_zh_destination`** → **`iso3166_alpha2` / `bucket_route_key`** 或显式 **reject**（与 **GET /meta** **`orders.fee_route_country_ssot`** 同源语义）。
         match resolve_fee_route_country_from_zh_destination(&bundle.destination) {

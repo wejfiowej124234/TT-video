@@ -1,0 +1,65 @@
+{
+  "schema": "traveltrust.fpc_100_marketing_brand_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B25-C1",
+  "domains": ["Q1", "Q2", "Q4"],
+  "note": "L2 marketing_brand cluster (4 routes) · UI freeze + data chain + dashboard/registry/API/display parity; not ② staging GO",
+  "coverage_domains": [
+    "marketing_brand_page_cards",
+    "five_main_ui_freeze_parity",
+    "landing_market_data_chain",
+    "did_rank_l5_contract",
+    "traveltrust_brand_surface",
+    "fpc_release_dashboard_parity",
+    "executive_dashboard_gate_consistency",
+    "page_matrix_l2_cluster_apply"
+  ],
+  "severity_policy": {
+    "P0": "gate fail · dashboard/registry drift · cluster page missing · L2 scores unset after apply",
+    "P1": "SSOT path drift · vitest contract fail · production_ready null",
+    "P2": "git_sha unknown · PH1 optional e2e skipped at ①"
+  },
+  "cluster": "marketing_brand",
+  "cluster_routes": ["/", "/did-rank", "/traveltrust", "/traveltrust/announcements"],
+  "cluster_page_count": 4,
+  "owner_ssot": "frontend/evidence/GO_local_marketing_front_closure/FIVE-PAGES-ENTERPRISE-CODE-AUDIT-20260603.md",
+  "registry_gates": [
+    "scripts/gates/five-main-routes-ui-antiregression-gate.sh",
+    "scripts/dev/run-web3-itinerary-l5-green.sh",
+    "scripts/dev/run-did-rank-l5-green.sh",
+    "scripts/gates/traveltrust-ph1-homepage-local.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+    "scripts/dev/apply-fpc-l2-marketing-brand-matrix.cjs"
+  ],
+  "quality_gates": [
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+    "frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md",
+    "frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md",
+    "registry/full-production-certification-checklist.v1.yaml"
+  ],
+  "vitest_contracts": [
+    "app/(home)/homeMarketing.contract.test.ts",
+    "components/did-rank/didRankTheme.contract.test.ts",
+    "app/traveltrust/traveltrustNetworkPage.contract.test.ts",
+    "app/traveltrust/traveltrustSeo.contract.test.ts",
+    "lib/traveltrustAnnouncementLaneGovernance.contract.test.ts",
+    "lib/publicSurfaceAudit.contract.test.ts"
+  ],
+  "l2_score_policy": {
+    "scale": "0-10",
+    "min_ui": 8,
+    "min_ux": 8,
+    "min_content": 7,
+    "min_function_flow": 8,
+    "production_ready_allowed": ["YES", "CONDITIONAL"]
+  },
+  "dashboard_parity": {
+    "registry_batch_id": "B25-C1",
+    "prior_batch_id": "B24",
+    "release_dashboard_json": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.json",
+    "registry_yaml": "registry/full-production-certification-checklist.v1.yaml"
+  }
+}

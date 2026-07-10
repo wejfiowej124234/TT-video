@@ -15,7 +15,7 @@ async fn matrix_93_b_ord_006_set_escrow_address_get_detail_reflects() {
             "skip: matrix_93_b_ord_006_set_escrow_address_get_detail_reflects (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let create = cx
         .app
         .clone()
@@ -113,7 +113,7 @@ async fn matrix_93_b_ord_006b_f011_set_escrow_address_get_detail_reflects_app_st
             "skip: matrix_93_b_ord_006b_f011_set_escrow_address_get_detail_reflects_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let create = cx
         .app
         .clone()

@@ -78,7 +78,8 @@ pub(super) async fn cleanup_users_posts_and_reports(
             .bind(post_ids)
             .execute(pool)
             .await;
-    };    if !user_ids.is_empty() {
+    }
+    if !user_ids.is_empty() {
         let _ = sqlx::query(
             "DELETE FROM community_reports WHERE reporter_id = ANY($1) OR (target_type = 'post' AND target_id IN (SELECT id FROM community_posts WHERE user_id = ANY($1)))",
         )
@@ -136,14 +137,13 @@ pub(super) async fn run_d_com_010_report_flow(
         None,
         None,
         None,
-        None,
         now,
         now,
     )
     .await
     .expect("insert_user reporter");
     insert_user(
-        pool, author_id, &email_a, None, "tourist", "none", None, None, None, None, now, now,
+        pool, author_id, &email_a, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user author");
@@ -214,7 +214,7 @@ pub(super) async fn run_d_com_009_me_posts_flow(pool: &PgPool, app: Router) -> (
     cleanup_users_posts_and_reports(pool, &[uid], &[]).await;
 
     insert_user(
-        pool, uid, &email, None, "tourist", "none", None, None, None, None, now, now,
+        pool, uid, &email, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user");

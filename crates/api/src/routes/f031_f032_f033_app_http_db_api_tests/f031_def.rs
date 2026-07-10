@@ -22,7 +22,7 @@ async fn matrix_93_d_com_011d_f031_bearer_post_select_commerce_then_hot_feed_inc
             "skip: matrix_93_d_com_011d_f031_bearer_post_select_commerce_then_hot_feed_includes_post_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let uid = Uuid::new_v4();
     let listing_id = Uuid::new_v4();
     let now = Utc::now();
@@ -32,7 +32,7 @@ async fn matrix_93_d_com_011d_f031_bearer_post_select_commerce_then_hot_feed_inc
     cleanup_community_user_listing(&pool, uid, listing_id).await;
 
     insert_user(
-        &pool, uid, &email, None, "tourist", "none", None, None, None, None, now, now,
+        &pool, uid, &email, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user");
@@ -125,7 +125,7 @@ async fn matrix_93_d_com_011e_f031_bearer_post_then_bearer_follow_feed_ok_shape_
             "skip: matrix_93_d_com_011e_f031_bearer_post_then_bearer_follow_feed_ok_shape_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let uid = Uuid::new_v4();
     let listing_id = Uuid::new_v4();
     let now = Utc::now();
@@ -135,7 +135,7 @@ async fn matrix_93_d_com_011e_f031_bearer_post_then_bearer_follow_feed_ok_shape_
     cleanup_community_user_listing(&pool, uid, listing_id).await;
 
     insert_user(
-        &pool, uid, &email, None, "tourist", "none", None, None, None, None, now, now,
+        &pool, uid, &email, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user");
@@ -215,7 +215,7 @@ async fn matrix_93_d_com_011f_f031_follower_get_follow_feed_includes_author_acqu
             "skip: matrix_93_d_com_011f_f031_follower_get_follow_feed_includes_author_acquisition_post_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let follower_id = Uuid::new_v4();
     let author_id = Uuid::new_v4();
     let listing_id = Uuid::new_v4();
@@ -235,7 +235,6 @@ async fn matrix_93_d_com_011f_f031_follower_get_follow_feed_includes_author_acqu
         None,
         "tourist",
         "none",
-        None,
         None,
         None,
         None,
@@ -264,7 +263,6 @@ async fn matrix_93_d_com_011f_f031_follower_get_follow_feed_includes_author_acqu
         None,
         "tourist",
         "none",
-        None,
         None,
         None,
         None,

@@ -17,7 +17,7 @@ async fn forgot_reset_password_revokes_pre_reset_session_token_pg() {
             "skip: forgot_reset_password_revokes_pre_reset_session_token_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     let _env = ForgotResetTestEnvGuard::set_log_transport_and_pepper();
     let _ = email_transport::test_take_password_reset_raw_for_it();
@@ -110,7 +110,7 @@ async fn forgot_reset_password_token_cannot_be_reused_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: forgot_reset_password_token_cannot_be_reused_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     let _env = ForgotResetTestEnvGuard::set_log_transport_and_pepper();
     let _ = email_transport::test_take_password_reset_raw_for_it();
@@ -208,7 +208,7 @@ async fn forgot_password_rate_limited_keeps_uniform_response_pg() {
             "skip: forgot_password_rate_limited_keeps_uniform_response_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     clear_auth_email_send_windows_for_it(&pool).await;
     let _env = ForgotResetTestEnvGuard::set_log_transport_and_pepper();

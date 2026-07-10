@@ -1,0 +1,177 @@
+{
+  "schema": "traveltrust.fpc_100_governance_community_trust_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B25-C5",
+  "domains": ["Q2", "Q4", "Q6", "Q7"],
+  "note": "L2 governance_economics + community + trust_legal_help (36 routes) · RBAC · public display SSOT · content lifecycle; not ② staging GO",
+  "coverage_domains": [
+    "governance_community_trust_page_cards",
+    "governance_proposals_ui_freeze",
+    "community_phase1_ui_freeze",
+    "trust_help_public_surfaces",
+    "role_permission_rbac",
+    "public_display_data_ssot",
+    "content_state_lifecycle",
+    "test_account_public_catalog_isolation",
+    "api_registry_frontend_parity",
+    "fpc_release_dashboard_parity",
+    "executive_dashboard_gate_consistency",
+    "page_matrix_l2_cluster_apply"
+  ],
+  "severity_policy": {
+    "P0": "gate fail · test data public catalog leak · governance/community contract fail · dashboard drift",
+    "P1": "vitest fail · SSOT path missing · profile/display drift · production_ready null",
+    "P2": "optional Playwright skipped at ①"
+  },
+  "clusters": ["governance_economics", "community", "trust_legal_help"],
+  "cluster_routes": [
+    "/governance",
+    "/governance/delegate",
+    "/governance/distribution-accruals",
+    "/governance/distribution-accruals/[id]",
+    "/governance/distribution-claim",
+    "/governance/fee-routes",
+    "/governance/params",
+    "/governance/proposals",
+    "/governance/proposals/[id]",
+    "/governance/proposals/new",
+    "/governance/vacancy-ledger",
+    "/governance/vault-forwards",
+    "/staking",
+    "/community",
+    "/community/activity",
+    "/community/explore",
+    "/community/feedback",
+    "/community/friends",
+    "/community/guidelines",
+    "/community/me",
+    "/community/me/collects",
+    "/community/me/likes",
+    "/community/me/posts",
+    "/community/me/reports",
+    "/community/me/reports/[id]",
+    "/community/messages",
+    "/community/messages/[id]",
+    "/community/post/[id]",
+    "/community/topic/[tag]",
+    "/community/tt",
+    "/community/user/[id]",
+    "/help",
+    "/privacy",
+    "/terms",
+    "/terms/community-guidelines",
+    "/trust"
+  ],
+  "cluster_page_count": 36,
+  "owner_ssot": "frontend/evidence/GO_local_marketing_front_closure/COMMUNITY-PHASE1-FREEZE.md",
+  "registry_gates": [
+    "scripts/dev/smoke-governance-proposals-l5-local.sh",
+    "scripts/gates/governance-matrix-local-gate.sh",
+    "scripts/gates/check-announcement-lane-governance-gate.sh",
+    "scripts/gates/vertical-slice-04-community-explore-public-smoke.sh",
+    "scripts/gates/run-community-media-guard.sh",
+    "scripts/dev/run-community-l5-green.sh",
+    "scripts/gates/check-display-data-governance-ssot.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+    "scripts/dev/apply-fpc-l2-governance-community-trust-matrix.cjs"
+  ],
+  "quality_gates": [
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+    "registry/display-data-governance.v1.yaml",
+    "registry/test-accounts-business-immutable.v1.yaml",
+    "registry/single-official-public-catalog-policy.v1.yaml",
+    "frontend/evidence/GO_local_marketing_front_closure/COMMUNITY-PHASE1-FREEZE.md",
+    "frontend/evidence/GO_local_identity_workspace/GOVERNANCE-PROPOSALS-L5-FREEZE.md",
+    "registry/full-production-certification-checklist.v1.yaml"
+  ],
+  "vitest_contracts": [
+    "components/trust/trustTransparencyHub.contract.test.ts",
+    "app/governance/governanceHubPage.contract.test.ts",
+    "lib/publicSurfaceAudit.contract.test.ts",
+    "components/community/communityPhase1DataHonesty.contract.test.ts",
+    "app/help/helpPage.i18n.contract.test.ts"
+  ],
+  "display_governance_ssot": [
+    {
+      "id": "display_data_governance_registry",
+      "path": "registry/display-data-governance.v1.yaml",
+      "must_contain": ["TT_DISPLAY_DATA_GOVERNANCE: ENFORCED", "community_feed", "public_catalog_boundary"]
+    },
+    {
+      "id": "single_official_public_catalog",
+      "path": "registry/single-official-public-catalog-policy.v1.yaml",
+      "must_contain": ["public_catalog", "test_demo_smoke", "ocs"]
+    },
+    {
+      "id": "immutable_test_accounts",
+      "path": "registry/test-accounts-business-immutable.v1.yaml",
+      "must_contain": ["immutable_logical_ids", "C1", "public_catalog", "allowed: false"]
+    },
+    {
+      "id": "community_showcase_production_gate",
+      "path": "frontend/lib/communityContentProfile.ts",
+      "must_contain": ["isCommunityContentProductionProfile", "allowCommunityShowcaseLayers"]
+    },
+    {
+      "id": "community_showcase_empty_gate",
+      "path": "frontend/lib/communityShowcase.ts",
+      "must_contain": ["shouldUseCommunityShowcaseOnEmpty", "NODE_ENV"]
+    }
+  ],
+  "content_lifecycle_ssot": [
+    {
+      "id": "governance_proposals_api",
+      "path": "crates/api/src/routes/governance_proposals.rs",
+      "must_contain": ["proposal", "vote"]
+    },
+    {
+      "id": "community_posts_db",
+      "path": "crates/api/src/db/community.rs",
+      "must_contain": ["create_post", "community"]
+    },
+    {
+      "id": "community_moderation",
+      "path": "crates/api/src/db/mod.rs",
+      "must_contain": ["community_moderation_cases"]
+    },
+    {
+      "id": "community_subroutes_contract",
+      "path": "frontend/app/community/communitySubRoutes.contract.test.ts",
+      "must_contain": ["/community/explore", "/community/messages"]
+    }
+  ],
+  "display_chain_ssot": [
+    {
+      "id": "community_readme",
+      "path": "frontend/app/community/README.md",
+      "must_contain": ["/community", "COMMUNITY-PHASE1-FREEZE", "communitySubRoutes"]
+    },
+    {
+      "id": "governance_proposals_freeze",
+      "path": "frontend/evidence/GO_local_identity_workspace/GOVERNANCE-PROPOSALS-L5-FREEZE.md",
+      "must_contain": ["/governance/proposals", "governance-proposals-l5"]
+    },
+    {
+      "id": "trust_page",
+      "path": "frontend/app/trust/page.tsx",
+      "must_contain": ["TrustTransparencyHub", "trust"]
+    }
+  ],
+  "l2_score_policy": {
+    "scale": "0-10",
+    "min_ui": 8,
+    "min_ux": 8,
+    "min_content": 7,
+    "min_function_flow": 8,
+    "production_ready_allowed": ["YES", "CONDITIONAL"]
+  },
+  "dashboard_parity": {
+    "registry_batch_id": "B25-C5",
+    "prior_batch_id": "B25-C4",
+    "release_dashboard_json": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.json",
+    "registry_yaml": "registry/full-production-certification-checklist.v1.yaml"
+  }
+}

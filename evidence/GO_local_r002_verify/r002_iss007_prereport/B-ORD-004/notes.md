@@ -3,30 +3,227 @@
 `cargo test -p traveltrust-api matrix_93_b_ord_004b_f008_patch_itinerary_then_get_detail_reflects_app_stack_ok_pg` exit=0
 
 ```
+^^  ^^^^^^^^^^^^^^^^^^^^^
+14 |     market_listing_surface_key,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-running 1 test
-test routes::orders::tests::orders_create_list_set_escrow_address_db_api_tests::matrix_93_b_ord_004b_f008_patch_itinerary_then_get_detail_reflects_app_stack_ok_pg ... ok
+warning: unused imports: `cmp_public_display_sort`, `dedupe_guides_latest_per_user`, `infer_market_listing_data_origin`, `is_dev_catalog_email`, `is_dev_market_listing_payload`, `is_non_production_market_listing`, and `public_catalog_surface_filter_enabled`
+  --> crates\api\src\pcp\market_builder.rs:19:5
+   |
+19 |     cmp_public_display_sort, dedupe_guides_latest_per_user, infer_market_listing_data_origin,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 |     is_dev_catalog_email, is_dev_market_listing_payload, is_non_production_market_listing,
+   |     ^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+21 |     public_catalog_surface_filter_enabled,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1150 filtered out; finished in 1.03s
+warning: unused imports: `ConsumerColdStartCampaign`, `ConsumerColdStartItem`, `GOVERNED_CAMPAIGN_ITEMS_VIEW`, `GOVERNED_CAMPAIGN_SURFACES_VIEW`, `SURFACE_COMMUNITY_FEED`, `SURFACE_HOME_HERO`, `SURFACE_MARKET_FEED`, and `get_governed_campaign_for_surface`
+  --> crates\api\src\pcp\campaign_builder.rs:10:5
+   |
+10 |     get_governed_campaign_for_surface, ConsumerColdStartCampaign, ConsumerColdStartItem,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^
+11 |     GOVERNED_CAMPAIGN_ITEMS_VIEW, GOVERNED_CAMPAIGN_SURFACES_VIEW, SURFACE_COMMUNITY_FEED,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^
+12 |     SURFACE_HOME_HERO, SURFACE_MARKET_FEED,
+   |     ^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^
 
+warning: unused import: `crate::chain`
+  --> crates\api\src\routes\orders\mod.rs:17:5
+   |
+17 | use crate::chain;
+   |     ^^^^^^^^^^^^
 
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.26s
-     Running unittests src\main.rs (target\debug\deps\traveltrust_api-ada3897541b110f4.exe)
-[req] x-request-id=fc54f7bc-20af-42e3-97a7-d463803a71d7 path=/auth/register status=200
-[req] x-message-id=808ed043-8667-46f1-a66e-3c3d7f1b0daa path=/auth/register status=200
-[req] x-request-id=c0bba4c8-1044-4e96-ad86-01c1135d4048 path=/auth/register status=200
-[req] x-message-id=3399338f-ed1f-464d-8b6f-2f055de0eae7 path=/auth/register status=200
-[req] x-request-id=6a82d462-6255-4a0d-abca-2989d90bdc1d path=/api/v1/guides status=200
-[req] x-message-id=f0d4fd74-fdf2-4b3c-94b4-beb8ff148398 path=/api/v1/guides status=200
-[req] x-request-id=e2f8f9cc-b97b-40d4-b430-049bc0bee3ba path=/api/v1/guides/b9985f7a-3225-46ba-bfac-00f8b6797083/stake status=200
-[req] x-message-id=960c099a-a5b0-4c61-99e7-7ead602e5ba8 path=/api/v1/guides/b9985f7a-3225-46ba-bfac-00f8b6797083/stake status=200
-[req] x-request-id=63919cb3-038f-4bc5-b114-20b64f1bd3d2 path=/api/v1/orders status=200
-[req] x-message-id=55fc1388-00e2-43a5-b4dd-036f83bb9671 path=/api/v1/orders status=200
-audit_key_write op=patch_order_itinerary request_id=- user_id=33e28930-0161-47bc-b808-c64476a0f06c order_id=0f064b99-4ce5-4c17-b6cc-bd64dddac957
-[req] x-request-id=4fa062f6-10b2-44e7-a6fb-a6ca4825381f path=/api/v1/orders/0f064b99-4ce5-4c17-b6cc-bd64dddac957/itinerary status=200
-[req] x-message-id=a5d3a4a2-6d03-4e30-84f6-fb5f6a40cc7e path=/api/v1/orders/0f064b99-4ce5-4c17-b6cc-bd64dddac957/itinerary status=200
-[req] x-request-id=df79fff7-adf6-4ea3-a8cb-f667f2cba6ca path=/api/v1/orders/0f064b99-4ce5-4c17-b6cc-bd64dddac957 status=200
-[req] x-message-id=a89b7e48-6cd8-4d7d-9a1d-c4d75709da75 path=/api/v1/orders/0f064b99-4ce5-4c17-b6cc-bd64dddac957 status=200
+warning: unused import: `stripe_onboarding_runtime_profile`
+  --> crates\api\src\stripe_onboarding\mod.rs:24:70
+   |
+24 | pub use config::{stripe_checkout_enabled, stripe_onboarding_enabled, stripe_onboarding_runtime_profile};
+   |                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `signature::build_stripe_webhook_signature_header`
+  --> crates\api\src\stripe_onboarding\mod.rs:27:16
+   |
+27 | pub(crate) use signature::build_stripe_webhook_signature_header;
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+   --> crates\api\src\chain_off\market_public_surface.rs:588:13
+    |
+588 |         let mut store = ChainOffStore::default();
+    |             ----^^^^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: type `PublishQueueQuery` is more private than the item `get_admin_public_operations_publish_queue`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:188:1
+    |
+188 | / pub async fn get_admin_public_operations_publish_queue(
+189 | |     State(state): State<ApiMetaState>,
+190 | |     headers: HeaderMap,
+191 | |     Query(q): Query<PublishQueueQuery>,
+192 | | ) -> impl IntoResponse {
+    | |______________________^ function `get_admin_public_operations_publish_queue` is reachable at visibility `pub(in crate::routes::admin)`
+    |
+note: but type `PublishQueueQuery` is only usable at visibility `pub(self)`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:21:1
+    |
+ 21 | struct PublishQueueQuery {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^
+    = note: `#[warn(private_interfaces)]` on by default
+
+warning: type `FeaturedBody` is more private than the item `patch_admin_public_operations_featured`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:247:1
+    |
+247 | / pub async fn patch_admin_public_operations_featured(
+248 | |     State(state): State<ApiMetaState>,
+249 | |     headers: HeaderMap,
+250 | |     Path((entity_type, id)): Path<(String, Uuid)>,
+251 | |     Json(body): Json<FeaturedBody>,
+252 | | ) -> impl IntoResponse {
+    | |______________________^ function `patch_admin_public_operations_featured` is reachable at visibility `pub(in crate::routes::admin)`
+    |
+note: but type `FeaturedBody` is only usable at visibility `pub(self)`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:29:1
+    |
+ 29 | struct FeaturedBody {
+    | ^^^^^^^^^^^^^^^^^^^
+
+warning: type `PriorityBody` is more private than the item `patch_admin_public_operations_priority`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:314:1
+    |
+314 | / pub async fn patch_admin_public_operations_priority(
+315 | |     State(state): State<ApiMetaState>,
+316 | |     headers: HeaderMap,
+317 | |     Path((entity_type, id)): Path<(String, Uuid)>,
+318 | |     Json(body): Json<PriorityBody>,
+319 | | ) -> impl IntoResponse {
+    | |______________________^ function `patch_admin_public_operations_priority` is reachable at visibility `pub(in crate::routes::admin)`
+    |
+note: but type `PriorityBody` is only usable at visibility `pub(self)`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:34:1
+    |
+ 34 | struct PriorityBody {
+    | ^^^^^^^^^^^^^^^^^^^
+
+warning: type `SurfacesBody` is more private than the item `patch_admin_public_operations_surfaces`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:379:1
+    |
+379 | / pub async fn patch_admin_public_operations_surfaces(
+380 | |     State(state): State<ApiMetaState>,
+381 | |     headers: HeaderMap,
+382 | |     Path((entity_type, id)): Path<(String, Uuid)>,
+383 | |     Json(body): Json<SurfacesBody>,
+384 | | ) -> impl IntoResponse {
+    | |______________________^ function `patch_admin_public_operations_surfaces` is reachable at visibility `pub(in crate::routes::admin)`
+    |
+note: but type `SurfacesBody` is only usable at visibility `pub(self)`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:39:1
+    |
+ 39 | struct SurfacesBody {
+    | ^^^^^^^^^^^^^^^^^^^
+
+warning: type `ScheduleBody` is more private than the item `patch_admin_public_operations_schedule`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:443:1
+    |
+443 | / pub async fn patch_admin_public_operations_schedule(
+444 | |     State(state): State<ApiMetaState>,
+445 | |     headers: HeaderMap,
+446 | |     Path((entity_type, id)): Path<(String, Uuid)>,
+447 | |     Json(body): Json<ScheduleBody>,
+448 | | ) -> impl IntoResponse {
+    | |______________________^ function `patch_admin_public_operations_schedule` is reachable at visibility `pub(in crate::routes::admin)`
+    |
+note: but type `ScheduleBody` is only usable at visibility `pub(self)`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:44:1
+    |
+ 44 | struct ScheduleBody {
+    | ^^^^^^^^^^^^^^^^^^^
+
+warning: type `PreviewQuery` is more private than the item `get_admin_public_operations_preview`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:525:1
+    |
+525 | / pub async fn get_admin_public_operations_preview(
+526 | |     State(state): State<ApiMetaState>,
+527 | |     headers: HeaderMap,
+528 | |     Path((entity_type, id)): Path<(String, Uuid)>,
+529 | |     Query(q): Query<PreviewQuery>,
+530 | | ) -> impl IntoResponse {
+    | |______________________^ function `get_admin_public_operations_preview` is reachable at visibility `pub(in crate::routes::admin)`
+    |
+note: but type `PreviewQuery` is only usable at visibility `pub(self)`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:50:1
+    |
+ 50 | struct PreviewQuery {
+    | ^^^^^^^^^^^^^^^^^^^
+
+warning: type `PolicyPatchBody` is more private than the item `patch_admin_public_operations_policy`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:682:1
+    |
+682 | / pub async fn patch_admin_public_operations_policy(
+683 | |     State(state): State<ApiMetaState>,
+684 | |     headers: HeaderMap,
+685 | |     Json(body): Json<PolicyPatchBody>,
+686 | | ) -> impl IntoResponse {
+    | |______________________^ function `patch_admin_public_operations_policy` is reachable at visibility `pub(in crate::routes::admin)`
+    |
+note: but type `PolicyPatchBody` is only usable at visibility `pub(self)`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:56:1
+    |
+ 56 | struct PolicyPatchBody {
+    | ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: type `HistoryQuery` is more private than the item `get_admin_public_operations_history`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:753:1
+    |
+753 | / pub async fn get_admin_public_operations_history(
+754 | |     State(state): State<ApiMetaState>,
+755 | |     headers: HeaderMap,
+756 | |     Query(q): Query<HistoryQuery>,
+757 | | ) -> impl IntoResponse {
+    | |______________________^ function `get_admin_public_operations_history` is reachable at visibility `pub(in crate::routes::admin)`
+    |
+note: but type `HistoryQuery` is only usable at visibility `pub(self)`
+   --> crates\api\src\routes\admin\admin_official_public_operations_http.rs:62:1
+    |
+ 62 | struct HistoryQuery {
+    | ^^^^^^^^^^^^^^^^^^^
+
+warning: type `CustomDraftPostBody` is more private than the item `itinerary_custom_draft_create`
+   --> crates\api\src\routes\itineraries.rs:98:1
+    |
+ 98 | / pub async fn itinerary_custom_draft_create(
+ 99 | |     State(state): State<ApiMetaState>,
+100 | |     headers: HeaderMap,
+101 | |     Json(body): Json<CustomDraftPostBody>,
+102 | | ) -> impl IntoResponse {
+    | |______________________^ function `itinerary_custom_draft_create` is reachable at visibility `pub(in crate::routes)`
+    |
+note: but type `CustomDraftPostBody` is only usable at visibility `pub(self)`
+   --> crates\api\src\routes\itineraries.rs:93:1
+    |
+ 93 | struct CustomDraftPostBody {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `traveltrust-api` (bin "traveltrust-api" test) generated 17 warnings (run `cargo fix --bin "traveltrust-api" --tests` to apply 8 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.31s
+     Running unittests src\vacancy_indexer_lib.rs (target\debug\deps\traveltrust_vacancy_indexer-f4bfef5bff4e93af.exe)
+     Running unittests src\main.rs (target\debug\deps\traveltrust_api-a4ade982a8ceea95.exe)
+[req] x-request-id=c40bd72c-cb72-43d6-aa81-901f8ec6f3f2 path=/auth/register status=200
+[req] x-message-id=d002b580-708b-4aea-915e-621eeb604cbc path=/auth/register status=200
+[req] x-request-id=c2f8f42f-30aa-431f-ac89-1cf5365c839a path=/auth/register status=200
+[req] x-message-id=fd333bdb-6c05-4993-b528-ccbeff9e419d path=/auth/register status=200
+[req] x-request-id=f2b6d105-9e8e-40f2-9fc6-7eb8e265f054 path=/api/v1/guides status=200
+[req] x-message-id=fe6ec10c-4569-46df-a4a8-d2e2a7e181c1 path=/api/v1/guides status=200
+[req] x-request-id=ff26eb85-9248-4497-a98b-09bd7a51f5f2 path=/api/v1/guides/2bc94b67-98c4-49eb-b896-083400a04f44/stake status=200
+[req] x-message-id=aed71adf-fb73-494c-b09a-4aaa861595f3 path=/api/v1/guides/2bc94b67-98c4-49eb-b896-083400a04f44/stake status=200
+[req] x-request-id=9215ecd6-706c-40b2-9ec2-d2312cbcc19d path=/api/v1/orders status=200
+[req] x-message-id=627b0884-6598-4379-bbc5-463fdc9954c4 path=/api/v1/orders status=200
+audit_key_write op=patch_order_itinerary request_id=- user_id=afc3cc3e-d2b6-455a-ba30-a6b95c95e862 order_id=fa3401ae-5f97-4474-b20b-ba34e19a06b0
+[req] x-request-id=be28bb18-e6a9-4dc9-a0a4-2f29a0f6e43b path=/api/v1/orders/fa3401ae-5f97-4474-b20b-ba34e19a06b0/itinerary status=200
+[req] x-message-id=e3e0aa61-8d3c-4d96-abae-b560fb43799b path=/api/v1/orders/fa3401ae-5f97-4474-b20b-ba34e19a06b0/itinerary status=200
+[req] x-request-id=1ceb8dd3-3f1f-4360-9d2b-f9a6e2fe393f path=/api/v1/orders/fa3401ae-5f97-4474-b20b-ba34e19a06b0 status=200
+[req] x-message-id=4583d504-70c7-4f8b-a693-7a9eb859abd9 path=/api/v1/orders/fa3401ae-5f97-4474-b20b-ba34e19a06b0 status=200
 
 ```
 E2E: `frontend/e2e/orders-b-domain-request.spec.ts` — F-008 · B-ORD-004 · PATCH …/orders/:id/itinerary then GET detail reflects

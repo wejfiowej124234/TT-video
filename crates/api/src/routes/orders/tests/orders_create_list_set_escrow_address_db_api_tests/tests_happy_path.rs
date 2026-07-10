@@ -14,7 +14,7 @@ async fn post_orders_get_list_get_detail_set_escrow_address_happy_path_db_api() 
             "skip: post_orders_get_list_get_detail_set_escrow_address_happy_path_db_api (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let suffix = Uuid::new_v4();
     let tourist_email = format!("orders-db-it-t-{suffix}@traveltrust.test");
     let guide_email = format!("orders-db-it-g-{suffix}@traveltrust.test");

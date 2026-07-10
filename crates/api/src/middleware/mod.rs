@@ -26,7 +26,7 @@ pub use trace::{message_id_layer, request_id_layer};
 
 use axum::{
     body::Body,
-    http::{header::HeaderName, header::HeaderValue, Method, Request},
+    http::{header::HeaderName, header::HeaderValue, Method, Request, StatusCode},
     response::{IntoResponse, Response},
     Json,
 };
@@ -237,6 +237,14 @@ pub async fn idempotency_key_layer(
                                 status.as_u16(),
                                 e
                             );
+                            return (
+                                StatusCode::SERVICE_UNAVAILABLE,
+                                Json(json!({
+                                    "error": "idempotency_db_persist_failed",
+                                    "message": "idempotency_db_persist_failed",
+                                })),
+                            )
+                                .into_response();
                         }
                     }
                     let mut out = Response::from_parts(parts, Body::from(Bytes::from(body_bytes)));

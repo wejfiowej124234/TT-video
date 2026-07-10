@@ -20,7 +20,7 @@ async fn matrix_93_b_gde_003c_f024_post_stake_twice_same_amount_ok_app_stack_ok_
             "skip: matrix_93_b_gde_003c_f024_post_stake_twice_same_amount_ok_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let guide_user_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_guides_003c_{}", Uuid::new_v4());
@@ -35,7 +35,6 @@ async fn matrix_93_b_gde_003c_f024_post_stake_twice_same_amount_ok_app_stack_ok_
         None,
         "guide",
         "none",
-        None,
         None,
         None,
         None,
@@ -118,7 +117,7 @@ async fn matrix_93_b_gde_003d_f024_stake_then_public_list_shows_stake_amount_act
             "skip: matrix_93_b_gde_003d_f024_stake_then_public_list_shows_stake_amount_active_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let guide_user_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_guides_003d_{}", Uuid::new_v4());
@@ -133,7 +132,6 @@ async fn matrix_93_b_gde_003d_f024_stake_then_public_list_shows_stake_amount_act
         None,
         "guide",
         "none",
-        None,
         None,
         None,
         None,

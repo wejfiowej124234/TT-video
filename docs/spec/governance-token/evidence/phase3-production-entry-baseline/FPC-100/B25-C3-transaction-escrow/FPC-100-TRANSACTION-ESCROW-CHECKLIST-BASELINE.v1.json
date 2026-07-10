@@ -1,0 +1,146 @@
+{
+  "schema": "traveltrust.fpc_100_transaction_escrow_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B25-C3",
+  "domains": ["Q4", "Q5", "Q8"],
+  "note": "L2 transaction_escrow cluster (8 routes) · order/escrow/settlement state machine + UI display parity; not ② staging GO",
+  "coverage_domains": [
+    "transaction_escrow_page_cards",
+    "escrow_draft_experience_freeze",
+    "orders_corridor_l5",
+    "order_state_machine_ssot",
+    "payment_completion_mapping",
+    "permission_boundary_participant",
+    "duplicate_data_guard",
+    "fpc_release_dashboard_parity",
+    "executive_dashboard_gate_consistency",
+    "page_matrix_l2_cluster_apply"
+  ],
+  "severity_policy": {
+    "P0": "gate fail · state machine drift · confirm-completion not → Completed · dashboard/registry drift",
+    "P1": "SSOT path drift · vitest fail · itinerary mirror drift · production_ready null",
+    "P2": "pay page ② PSP deferred · escrow protocol shell not UI frozen"
+  },
+  "cluster": "transaction_escrow",
+  "cluster_routes": [
+    "/orders",
+    "/orders/new",
+    "/orders/[id]",
+    "/pay",
+    "/escrow/[id]",
+    "/escrow/[id]/chain",
+    "/escrow/[id]/proof",
+    "/escrow/[id]/rate"
+  ],
+  "cluster_page_count": 8,
+  "owner_ssot": "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md",
+  "registry_gates": [
+    "scripts/dev/run-web3-itinerary-l5-green.sh",
+    "scripts/dev/smoke-web3-itinerary-full-chain-local.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/run-orders-corridor-local.sh",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+    "scripts/dev/apply-fpc-l2-transaction-escrow-matrix.cjs"
+  ],
+  "business_gate_env": {
+    "scripts/dev/run-orders-corridor-local.sh": {
+      "SKIP_E2E": "1"
+    }
+  },
+  "quality_gates": [
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+    "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md",
+    "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-DRAFT-EXPERIENCE-FREEZE.md",
+    "frontend/evidence/GO_local_orders_l5/README.md",
+    "registry/full-production-certification-checklist.v1.yaml"
+  ],
+  "vitest_contracts": [
+    "lib/escrow/bilateralExperienceL5.contract.test.ts",
+    "lib/escrowDraftExperienceUiFreeze.contract.test.ts",
+    "lib/escrowExperienceUi.contract.test.ts",
+    "lib/escrowProtocolUi.contract.test.ts",
+    "lib/orders/ordersListL5.contract.test.ts",
+    "lib/orders/ordersNewL5.contract.test.ts",
+    "lib/orders/ordersCorridorGate.contract.test.ts",
+    "components/escrow/EscrowDetail/types.chainSync.parseResponse.checkpointAndStatus.test.ts"
+  ],
+  "state_machine_ssot": [
+    {
+      "id": "confirm_completion_completed",
+      "path": "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs",
+      "must_contain": [
+        "order_confirm_completion_impl",
+        "order.state = OrderState::Completed",
+        "\"status\": \"ok\""
+      ],
+      "must_not_contain": [
+        "order_confirm_completion_impl",
+        "order_confirm_service_completion_impl("
+      ],
+      "must_not_note": "confirm-completion must not delegate to bilateral service completion (B-ESC-002/003)"
+    },
+    {
+      "id": "confirm_service_bilateral",
+      "path": "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs",
+      "must_contain": [
+        "order_confirm_service_completion_impl",
+        "service_tourist_confirmed",
+        "service_guide_confirmed",
+        "仅 Escrowed 订单可确认行程服务完成"
+      ]
+    },
+    {
+      "id": "mock_pay_escrowed",
+      "path": "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs",
+      "must_contain": ["OrderState::Escrowed", "order.state = OrderState::Escrowed"]
+    },
+    {
+      "id": "participant_forbidden",
+      "path": "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs",
+      "must_contain": ["order_is_participant", "StatusCode::FORBIDDEN"]
+    },
+    {
+      "id": "itinerary_mirror_no_duplicate",
+      "path": "crates/api/src/chain_off/orders.rs",
+      "must_contain": ["resp[\"order\"][\"itinerary\"]", "resp[\"itinerary\"]"]
+    },
+    {
+      "id": "trust_growth_status_ok",
+      "path": "crates/api/src/routes/trust_growth.rs",
+      "must_contain": ["\"status\": \"ok\""]
+    }
+  ],
+  "display_chain_ssot": [
+    {
+      "id": "orders_redirect_escrow",
+      "path": "frontend/app/orders/[id]/page.tsx",
+      "must_contain": ["/escrow/", "redirect"]
+    },
+    {
+      "id": "escrow_experience_ui",
+      "path": "frontend/components/escrow/EscrowDetail/index.tsx",
+      "must_contain": ["isPreEscrowProtocol", "experienceDraft"]
+    },
+    {
+      "id": "pay_mock_honesty",
+      "path": "frontend/app/pay/usePayPageMockPay.ts",
+      "must_contain": ["mock"]
+    }
+  ],
+  "l2_score_policy": {
+    "scale": "0-10",
+    "min_ui": 8,
+    "min_ux": 8,
+    "min_content": 7,
+    "min_function_flow": 8,
+    "production_ready_allowed": ["YES", "CONDITIONAL"]
+  },
+  "dashboard_parity": {
+    "registry_batch_id": "B25-C3",
+    "prior_batch_id": "B25-C2",
+    "release_dashboard_json": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.json",
+    "registry_yaml": "registry/full-production-certification-checklist.v1.yaml"
+  }
+}

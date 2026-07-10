@@ -19,7 +19,7 @@ import { countOrdersListByTerminalState } from "@/lib/orders/ordersListStateCoun
 import { filterOrdersListByUrlStateParam } from "@/lib/orders/ordersListStateFilter";
 import { isGuideOrdersListHat } from "@/lib/guide/guideOrderCorridorModel";
 import { isMerchantOrdersListHat } from "@/lib/provider/merchantOrderCorridorModel";
-import { ordersListL5ReadyMainDataAttrs, TT_ORDERS_LIST_L5 } from "@/lib/orders/ordersListL5";
+import { ordersListL5MainDataAttrs, ordersListL5ReadyMainDataAttrs, TT_ORDERS_LIST_L5 } from "@/lib/orders/ordersListL5";
 import OrderDetailDrawer from "@/components/market/OrderDetailDrawer";
 import { OrdersListDeleteConfirmDialog } from "@/components/orders/OrdersListDeleteConfirmDialog";
 

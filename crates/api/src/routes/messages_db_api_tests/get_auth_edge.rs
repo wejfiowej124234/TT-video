@@ -17,10 +17,10 @@ async fn matrix_93_b_msg_001b_f026_get_order_messages_empty_list_ok_app_stack_ok
             "skip: matrix_93_b_msg_001b_f026_get_order_messages_empty_list_ok_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (order_id, guide_row_id, tourist_id, guide_user_id, token) =
         seed_f026_order_messages_fixture(&pool).await;
-    let app = app_stack_f026(pool.clone());
+    let app = app_stack_f026(pool.clone()).await;
     let get_uri = format!("/api/v1/orders/{}/messages", order_id);
     let get_res = app
         .oneshot(
@@ -52,10 +52,10 @@ async fn matrix_93_b_msg_003b_f026_get_order_messages_no_auth_unauthorized_app_s
             "skip: matrix_93_b_msg_003b_f026_get_order_messages_no_auth_unauthorized_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (order_id, guide_row_id, tourist_id, guide_user_id, _token) =
         seed_f026_order_messages_fixture(&pool).await;
-    let app = app_stack_f026(pool.clone());
+    let app = app_stack_f026(pool.clone()).await;
     let get_uri = format!("/api/v1/orders/{}/messages", order_id);
     let get_res = app
         .oneshot(

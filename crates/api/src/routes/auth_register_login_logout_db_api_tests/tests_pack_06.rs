@@ -14,7 +14,7 @@ async fn forgot_password_per_ip_rate_limited_keeps_uniform_response_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: forgot_password_per_ip_rate_limited_keeps_uniform_response_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     clear_auth_email_send_windows_for_it(&pool).await;
     let _env = ForgotResetTestEnvGuard::set_log_transport_and_pepper();
@@ -101,7 +101,7 @@ async fn login_per_ip_rate_limited_returns_429_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: login_per_ip_rate_limited_returns_429_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     clear_auth_email_send_windows_for_it(&pool).await;
     let _per_email_disabled = LoginPerEmailRateLimitEnvGuard::set(0, 300);
@@ -195,7 +195,7 @@ async fn forgot_password_global_rate_limited_keeps_uniform_response_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: forgot_password_global_rate_limited_keeps_uniform_response_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     clear_auth_email_send_windows_for_it(&pool).await;
     let _env = ForgotResetTestEnvGuard::set_log_transport_and_pepper();
@@ -283,7 +283,7 @@ async fn login_global_rate_limited_returns_429_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: login_global_rate_limited_returns_429_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     clear_auth_email_send_windows_for_it(&pool).await;
     let _per_email_disabled = LoginPerEmailRateLimitEnvGuard::set(0, 300);

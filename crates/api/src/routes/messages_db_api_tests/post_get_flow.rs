@@ -26,7 +26,7 @@ async fn matrix_93_b_msg_002_f026_post_order_messages_then_get_lists_content() {
             "skip: matrix_93_b_msg_002_f026_post_order_messages_then_get_lists_content (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (order_id, guide_row_id, tourist_id, guide_user_id, token) =
         seed_f026_order_messages_fixture(&pool).await;
 
@@ -49,10 +49,10 @@ async fn matrix_93_b_msg_002_f026_post_get_order_messages_app_stack_ok_pg() {
             "skip: matrix_93_b_msg_002_f026_post_get_order_messages_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (order_id, guide_row_id, tourist_id, guide_user_id, token) =
         seed_f026_order_messages_fixture(&pool).await;
-    let router = app_stack_f026(pool.clone());
+    let router = app_stack_f026(pool.clone()).await;
     assert_b_msg_002_post_get_messages(router, &token, order_id, "app_stack_msg_line").await;
     cleanup_order_bundle(&pool, order_id, guide_row_id, tourist_id, guide_user_id).await;
 }
@@ -66,10 +66,10 @@ async fn matrix_93_b_msg_002b_f026_post_two_order_messages_then_get_lists_both_a
             "skip: matrix_93_b_msg_002b_f026_post_two_order_messages_then_get_lists_both_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (order_id, guide_row_id, tourist_id, guide_user_id, token) =
         seed_f026_order_messages_fixture(&pool).await;
-    let router = app_stack_f026(pool.clone());
+    let router = app_stack_f026(pool.clone()).await;
     assert_b_msg_002_post_two_messages_then_get_lists_both(
         router,
         &token,
@@ -90,10 +90,10 @@ async fn matrix_93_b_msg_002c_f026_tourist_posts_guide_reads_messages_app_stack_
             "skip: matrix_93_b_msg_002c_f026_tourist_posts_guide_reads_messages_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (order_id, guide_row_id, tourist_id, guide_user_id, token_t, token_g) =
         seed_f026_order_messages_fixture_dual(&pool).await;
-    let router = app_stack_f026(pool.clone());
+    let router = app_stack_f026(pool.clone()).await;
     let post_uri = format!("/api/v1/orders/{}/messages", order_id);
     let line = "matrix_93_b_msg_002c_dual_read";
     let post_res = router

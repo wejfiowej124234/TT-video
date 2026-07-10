@@ -19,7 +19,7 @@ async fn matrix_93_a_log_003c_f003_cookie_only_logout_then_me_unauthorized_app_s
             "skip: matrix_93_a_log_003c_f003_cookie_only_logout_then_me_unauthorized_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = auth_app_stack_it_lock().lock().await;
 
     let email = format!("93-a-log-003c-{}@traveltrust.test", Uuid::new_v4());
@@ -121,7 +121,7 @@ async fn matrix_93_a_log_004c_f002_cookie_only_refresh_rotates_token_app_stack_o
             "skip: matrix_93_a_log_004c_f002_cookie_only_refresh_rotates_token_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = auth_app_stack_it_lock().lock().await;
 
     let email = format!("93-a-log-004c-{}@traveltrust.test", Uuid::new_v4());
@@ -209,7 +209,7 @@ async fn matrix_93_a_pwd_002b_f006_forgot_reset_password_new_login_app_stack_ok_
             "skip: matrix_93_a_pwd_002b_f006_forgot_reset_password_new_login_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     let _env = ForgotResetTestEnvGuard::set_log_transport_and_pepper();
     let _ = email_transport::test_take_password_reset_raw_for_it();

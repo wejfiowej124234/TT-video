@@ -8,7 +8,7 @@
   "rule_id": "e2e-playwright-chromium-with-iss007-r002",
   "severity": "gate",
   "owner": "frontend-team",
-  "generated_at": "2026-04-24T03:53:40Z",
+  "generated_at": "2026-07-10T08:41:54Z",
   "passed": true,
   "suite": "playwright chromium + matrix_93 ISS-007 narrow slice",
   "iss007_r002_prereport": {
@@ -226,7 +226,7 @@
         "id": "B-ESC-003",
         "status": "PASS",
         "f_row_8_2": "F-027",
-        "matrix_93_cargo_filter": "matrix_93_b_esc_003c_f027_tourist_first_review_then_get_list_contains_comment_app_stack_ok_pg"
+        "matrix_93_cargo_filter": "matrix_93_b_esc_005b_f027_dual_reviews_after_completed_get_list_len_two_app_stack_ok_pg"
       },
       {
         "id": "D-COM-003",

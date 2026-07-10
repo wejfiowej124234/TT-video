@@ -1,0 +1,171 @@
+{
+  "schema": "traveltrust.fpc_100_admin_workspace_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B25-C6",
+  "domains": ["Q2", "Q4", "Q7", "Q8"],
+  "note": "L2 admin_workspace cluster (114 routes) · RBAC · CMS/Official ops · audit · public display sync; not ② staging GO",
+  "coverage_domains": [
+    "admin_workspace_page_cards",
+    "admin_rbac_permission_boundary",
+    "admin_api_ui_consistency",
+    "cms_ops_data_ssot",
+    "publish_review_workflows",
+    "admin_audit_logs",
+    "public_display_sync",
+    "test_account_isolation",
+    "fpc_release_dashboard_parity",
+    "executive_dashboard_gate_consistency",
+    "page_matrix_l2_cluster_apply"
+  ],
+  "severity_policy": {
+    "P0": "gate fail · RBAC deny leak · unauth admin API · audit mapping fail · dashboard drift",
+    "P1": "route count drift · SSOT missing · vitest fail · production_ready null",
+    "P2": "FE smoke skipped when dev server down @ ①"
+  },
+  "clusters": ["admin_workspace"],
+  "cluster_page_count": 114,
+  "owner_ssot": "frontend/app/admin/README.md",
+  "registry_gates": [
+    "scripts/dev/smoke-admin-rbac-matrix-local.sh",
+    "scripts/gates/smoke-admin-rbac-staging-matrix.sh",
+    "scripts/gates/check-admin-functional-audit-mapping.py",
+    "scripts/dev/run-admin-l5-green.sh",
+    "scripts/gates/check-official-ops-public-operations-ssot.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+    "scripts/dev/apply-fpc-l2-admin-workspace-matrix.cjs"
+  ],
+  "quality_gates": [
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+    "registry/admin-rbac-route-matrix.v1.yaml",
+    "registry/admin-rbac-permissions.v1.yaml",
+    "registry/display-data-governance.v1.yaml",
+    "registry/test-accounts-business-immutable.v1.yaml",
+    "frontend/evidence/GO_local_admin_workspace_closure/README.md",
+    "registry/full-production-certification-checklist.v1.yaml"
+  ],
+  "vitest_contracts": [
+    "app/admin/official/public-operations/adminOfficialPublicOperations.contract.test.ts"
+  ],
+  "admin_rbac_ssot": [
+    {
+      "id": "require_admin_actor",
+      "path": "crates/api/src/routes/admin/mod.rs",
+      "must_contain": ["require_admin_actor", "write_admin_audit_log_best_effort", "super_admin"]
+    },
+    {
+      "id": "admin_rbac_permissions",
+      "path": "crates/api/src/routes/admin/admin_rbac.rs",
+      "must_contain": ["require_admin_permission", "PERM_PLATFORM_PUBLISH"]
+    },
+    {
+      "id": "rbac_route_deny_matrix",
+      "path": "crates/api/src/routes/admin/admin_rbac.rs",
+      "must_contain": ["ROUTE_DENY_MATRIX", "PERM_PLATFORM_PUBLISH"]
+    },
+    {
+      "id": "rbac_permissions_registry",
+      "path": "registry/admin-rbac-permissions.v1.yaml",
+      "must_contain": ["super_admin", "admin.community.super"]
+    },
+    {
+      "id": "admin_layout_gate",
+      "path": "frontend/lib/admin/adminLayoutServerGate.ts",
+      "must_contain": ["assertAdminConsoleServerGate", "capabilities", "admin_access"]
+    },
+    {
+      "id": "admin_actor_gate_ui",
+      "path": "frontend/components/admin/AdminConsoleActorGate.tsx",
+      "must_contain": ["AdminConsoleActorGate"]
+    }
+  ],
+  "cms_ops_ssot": [
+    {
+      "id": "content_publish_queue",
+      "path": "crates/api/src/routes/admin/admin_content_http.rs",
+      "must_contain": ["/api/v1/admin/content/publish-queue", "get_admin_content_publish_queue"]
+    },
+    {
+      "id": "official_public_ops_publish",
+      "path": "crates/api/src/routes/admin/admin_official_public_operations_http.rs",
+      "must_contain": ["public-operations/publish-queue", "get_admin_public_operations_publish_queue"]
+    },
+    {
+      "id": "admin_l5_confirm",
+      "path": "frontend/lib/admin/adminL5ConfirmL5.contract.test.ts",
+      "must_contain": ["AdminL5ConfirmProvider", "useAdminL5ConfirmRequest"]
+    },
+    {
+      "id": "test_accounts_not_public_catalog",
+      "path": "registry/test-accounts-business-immutable.v1.yaml",
+      "must_contain": ["immutable_logical_ids", "public_catalog", "allowed: false"]
+    },
+    {
+      "id": "display_data_governance",
+      "path": "registry/display-data-governance.v1.yaml",
+      "must_contain": ["TT_DISPLAY_DATA_GOVERNANCE: ENFORCED", "official_campaign"]
+    }
+  ],
+  "workflow_ssot": [
+    {
+      "id": "provider_applications_queue",
+      "path": "frontend/app/admin/provider-applications/README.md",
+      "must_contain": ["/admin/provider-applications", "review"]
+    },
+    {
+      "id": "steward_applications_queue",
+      "path": "frontend/app/admin/steward-applications/README.md",
+      "must_contain": ["/admin/steward-applications", "review"]
+    },
+    {
+      "id": "admin_audit_page",
+      "path": "frontend/app/admin/audit/adminAuditPage.contract.test.ts",
+      "must_contain": ["useAdminAuditPage", "routes.admin.auditLogs"]
+    },
+    {
+      "id": "admin_missing_pages_114",
+      "path": "frontend/app/admin/adminMissingPages.contract.test.ts",
+      "must_contain": ["MISSING_PAGE_CONTRACTS", "AdminPermissionDeniedBanner"]
+    }
+  ],
+  "display_chain_ssot": [
+    {
+      "id": "admin_readme",
+      "path": "frontend/app/admin/README.md",
+      "must_contain": ["/admin", "require_admin_actor", "adminL5ConfirmL5"]
+    },
+    {
+      "id": "admin_closure_readme",
+      "path": "frontend/evidence/GO_local_admin_workspace_closure/README.md",
+      "must_contain": ["run-admin-l5-green", "smoke-admin-rbac-matrix-local"]
+    },
+    {
+      "id": "public_ops_ssot_runbook",
+      "path": "docs/runbook/TT-OFFICIAL-OPS-PUBLIC-OPERATIONS-SSOT.md",
+      "must_contain": ["TT_PUBLIC_DISPLAY_FROZEN: true"]
+    }
+  ],
+  "cms_api_unauth_probe": [
+    "/api/v1/admin/content/countries",
+    "/api/v1/admin/content/publish-queue",
+    "/api/v1/admin/growth/referral-codes",
+    "/api/v1/admin/official/accounts",
+    "/api/v1/admin/official/public-operations/publish-queue"
+  ],
+  "l2_score_policy": {
+    "scale": "0-10",
+    "min_ui": 8,
+    "min_ux": 8,
+    "min_content": 7,
+    "min_function_flow": 8,
+    "production_ready_allowed": ["YES", "CONDITIONAL"]
+  },
+  "dashboard_parity": {
+    "registry_batch_id": "B25-C6",
+    "prior_batch_id": "B25-C5",
+    "release_dashboard_json": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.json",
+    "registry_yaml": "registry/full-production-certification-checklist.v1.yaml"
+  }
+}

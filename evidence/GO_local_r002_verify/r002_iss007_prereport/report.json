@@ -3,8 +3,8 @@
   "run_id": "GO_local_r002_verify_r002_iss007_prereport",
   "title": "R-002 prereport · ISS-007 narrow slice (43× matrix_93 ↔ §8.2 F rows)",
   "executor": "scripts/gen-r002-iss007-prereport.py",
-  "started_at": "2026-04-24T03:53:40Z",
-  "finished_at": "2026-04-24T03:53:40Z",
+  "started_at": "2026-07-10T08:41:54Z",
+  "finished_at": "2026-07-10T08:41:54Z",
   "environment": {
     "name": "local",
     "database": "enabled",
@@ -312,9 +312,9 @@
       "blocker": false,
       "notes": "evidence/GO_local_r002_verify/r002_iss007_prereport/B-ESC-003/notes.md",
       "f_row_8_2": "F-027",
-      "matrix_93_cargo_filter": "matrix_93_b_esc_003c_f027_tourist_first_review_then_get_list_contains_comment_app_stack_ok_pg",
+      "matrix_93_cargo_filter": "matrix_93_b_esc_005b_f027_dual_reviews_after_completed_get_list_len_two_app_stack_ok_pg",
       "e2e_spec": "frontend/e2e/f027-f028-f033-request.spec.ts",
-      "e2e_test_title": "F-027 · completed order POST review then GET lists comment"
+      "e2e_test_title": "F-027 · completed order dual POST reviews then GET list len 2"
     },
     {
       "id": "D-COM-003",

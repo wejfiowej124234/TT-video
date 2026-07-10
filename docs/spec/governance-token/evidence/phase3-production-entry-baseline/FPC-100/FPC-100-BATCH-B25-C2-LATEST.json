@@ -1,0 +1,1206 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B25-C2",
+  "title": "L2 · Page certification — market & commerce cluster",
+  "layer": "L2",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T09:02:00.961Z",
+  "verifier": "run-fpc-batch-b25-c2-market-commerce.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "62362b2eba7999a4a6d39c137d5d5b015f8afe91",
+  "git": {
+    "head": "62362b2eba7999a4a6d39c137d5d5b015f8afe91",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B04",
+    "B23",
+    "B25-C1"
+  ],
+  "route_clusters": [
+    "market_commerce"
+  ],
+  "cluster_routes": [
+    "/market",
+    "/market/provider",
+    "/market/acquisition",
+    "/market/acquisition/[id]",
+    "/market/provider/showcase/[id]"
+  ],
+  "gates": [
+    "scripts/dev/run-web3-itinerary-l5-green.sh",
+    "scripts/gates/five-main-routes-ui-antiregression-gate.sh",
+    "scripts/dev/smoke-acquisition-pd009-local.sh",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+    "scripts/dev/apply-fpc-l2-market-commerce-matrix.cjs"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/dev/run-web3-itinerary-l5-green.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "   Duration  5.50s (transform 3.71s, setup 824ms, collect 11.44s, tests 1.68s, environment 53.62s, prepare 7.01s) | TT_WEB3_ITINERARY_L5_GREEN: OK (① local · preview unlock · escrow draft experience) |   SSOT: frontend/evidence/GO_local_web3_itinerary_l5/README.md"
+    },
+    {
+      "gate": "scripts/gates/five-main-routes-ui-antiregression-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "   Start at  17:02:09 |    Duration  3.00s (transform 1.16s, setup 347ms, collect 3.40s, tests 354ms, environment 14.52s, prepare 2.55s) | TT_FIVE_MAIN_ROUTES_UI_GATE_SUMMARY: OK phase=local-1 files=12"
+    },
+    {
+      "gate": "scripts/dev/smoke-acquisition-pd009-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "smoke-acquisition-pd009-local: ALL PASSED (① local · not ②③ GO) |   listing_id=7e5baa4f-e14c-4d4e-b360-5087f7d2f90e order_id=c57182a9-8f23-4b6b-80b5-9a323e836f73 |   escrow: http://localhost:3012/escrow/c57182a9-8f23-4b6b-80b5-9a323e836f73 (if frontend up)"
+    },
+    {
+      "gate": "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "NEXT_BATCH: B25-C2 | DASHBOARD_JSON: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-RELEASE-DASHBOARD-LATEST.json | VERSION_CERT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-VERSION-CERTIFICATION-LATEST.json"
+    },
+    {
+      "gate": "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "blocking_count 0 | rollup {\"closed\":1,\"interim\":2,\"open\":3} | evidence evidence\\GO_executive_dashboard_gate_consistency\\20260703T093000Z\\gate-consistency-audit.json"
+    },
+    {
+      "gate": "scripts/dev/apply-fpc-l2-market-commerce-matrix.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FPC_L2_MARKET_COMMERCE_APPLY: updated=5 cluster_certified=true ui_scored=9"
+    }
+  ],
+  "gate_pass": true,
+  "runtime_preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T09:02:01.194Z"
+  },
+  "market_commerce_live": {
+    "cluster_checks": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "cluster_page_count",
+          "pass": true,
+          "matrix": 5,
+          "expected": 5
+        },
+        {
+          "id": "cluster_route_set",
+          "pass": true,
+          "missingRoutes": [],
+          "extraRoutes": []
+        },
+        {
+          "id": "cluster_l1_complete",
+          "pass": true
+        },
+        {
+          "id": "cluster_l2_certified",
+          "pass": true,
+          "pages": [
+            "/market/acquisition/[id]",
+            "/market/acquisition",
+            "/market",
+            "/market/provider",
+            "/market/provider/showcase/[id]"
+          ]
+        },
+        {
+          "id": "cluster_owner_files",
+          "pass": true
+        }
+      ],
+      "pages": [
+        {
+          "id": "page-market__acquisition__id",
+          "route": "/market/acquisition/[id]",
+          "cluster": "market_commerce",
+          "owner_files": {
+            "page": "frontend/app/market/acquisition/[id]/page.tsx",
+            "layouts": [
+              "frontend/app/market/acquisition/layout.tsx",
+              "frontend/app/market/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/market/acquisition/[id]/loading.tsx",
+            "error": "frontend/app/market/acquisition/[id]/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Review acquisition listing detail",
+            "primary_cta": "Place carry order",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "NOT_STARTED",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:02:38.598Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C2-market-commerce/FPC-100-MARKET-COMMERCE-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C2",
+          "notes": "AcquisitionListingDetailView · trust/bond fields from API"
+        },
+        {
+          "id": "page-market__acquisition",
+          "route": "/market/acquisition",
+          "cluster": "market_commerce",
+          "owner_files": {
+            "page": "frontend/app/market/acquisition/page.tsx",
+            "layouts": [
+              "frontend/app/market/acquisition/layout.tsx",
+              "frontend/app/market/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/market/acquisition/loading.tsx",
+            "error": "frontend/app/market/acquisition/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 9,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Publish or browse acquisition listings",
+            "primary_cta": "Open acquisition studio",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "NOT_STARTED",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:02:38.598Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C2-market-commerce/FPC-100-MARKET-COMMERCE-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C2",
+          "notes": "PD-009 CLOSED ① · acquisition_publish_gate · smoke-acquisition-pd009"
+        },
+        {
+          "id": "page-market",
+          "route": "/market",
+          "cluster": "market_commerce",
+          "owner_files": {
+            "page": "frontend/app/market/page.tsx",
+            "layouts": [
+              "frontend/app/market/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/market/loading.tsx",
+            "error": "frontend/app/market/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 9,
+            "ux": 9,
+            "content": 8,
+            "function_flow": 9,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Discover and book travel orders · filter marketplace",
+            "primary_cta": "Browse orders / bind guide",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 9,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "NOT_STARTED",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:02:38.598Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C2-market-commerce/FPC-100-MARKET-COMMERCE-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C2",
+          "notes": "MARKET-L5 main · useMarketPage 300ms debounce · getDiscoverOrders · F-020 bookmark sync"
+        },
+        {
+          "id": "page-market__provider",
+          "route": "/market/provider",
+          "cluster": "market_commerce",
+          "owner_files": {
+            "page": "frontend/app/market/provider/page.tsx",
+            "layouts": [
+              "frontend/app/market/provider/layout.tsx",
+              "frontend/app/market/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/market/provider/loading.tsx",
+            "error": "frontend/app/market/provider/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Browse merchant showcase subsite",
+            "primary_cta": "Open merchant studio / register",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "NOT_STARTED",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:02:38.598Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C2-market-commerce/FPC-100-MARKET-COMMERCE-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C2",
+          "notes": "Dark Premium subsite · catalog|demo badge · merchantPublishEligibility"
+        },
+        {
+          "id": "page-market__provider__showcase__id",
+          "route": "/market/provider/showcase/[id]",
+          "cluster": "market_commerce",
+          "owner_files": {
+            "page": "frontend/app/market/provider/showcase/[id]/page.tsx",
+            "layouts": [
+              "frontend/app/market/provider/layout.tsx",
+              "frontend/app/market/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/market/provider/showcase/[id]/loading.tsx",
+            "error": "frontend/app/market/provider/showcase/[id]/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 7,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "WARN",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "View merchant showcase listing detail",
+            "primary_cta": "Order from showcase",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "NOT_STARTED",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "CONDITIONAL",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:02:38.598Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C2-market-commerce/FPC-100-MARKET-COMMERCE-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C2",
+          "notes": "CONDITIONAL: demo catalog rows may remain at ① · ② PG catalog SLA deferred"
+        }
+      ]
+    },
+    "dashboard_parity": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "prior_batch_pass",
+          "pass": true,
+          "batch_id": "B25-C1"
+        },
+        {
+          "id": "dashboard_next_required_batch",
+          "pass": true,
+          "expected": "B25-C2",
+          "actual": "B25-C2"
+        },
+        {
+          "id": "registry_batch_ssot",
+          "pass": true,
+          "batch_id": "B25-C2"
+        },
+        {
+          "id": "dashboard_lists_prior_batch",
+          "pass": true,
+          "batch_id": "B25-C1"
+        }
+      ],
+      "dash_ts": "2026-07-10T09:02:38.486Z"
+    },
+    "display_parity": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "landing_market_ssot",
+          "pass": true,
+          "path": "frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md"
+        },
+        {
+          "id": "five_main_freeze",
+          "pass": true,
+          "path": "frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md"
+        },
+        {
+          "id": "acquisition_readme",
+          "pass": true,
+          "path": "frontend/app/market/acquisition/README.md"
+        },
+        {
+          "id": "provider_readme",
+          "pass": true,
+          "path": "frontend/app/market/provider/README.md"
+        },
+        {
+          "id": "market_hub_subnav",
+          "pass": true,
+          "path": "frontend/components/market/MarketHubSubNav.tsx"
+        },
+        {
+          "id": "market_ui_freeze_doc",
+          "pass": true
+        }
+      ]
+    },
+    "api_data_chain": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "market_discover",
+          "pass": true,
+          "path": "frontend/components/market/useMarketPage.ts"
+        },
+        {
+          "id": "market_favorites",
+          "pass": true,
+          "path": "frontend/lib/marketTravelBookmarksSync.ts"
+        },
+        {
+          "id": "acquisition_gate",
+          "pass": true,
+          "path": "docs/spec/artifacts/acquisition-publish-trust-rules.v1.md"
+        },
+        {
+          "id": "market_subsite_filters",
+          "pass": true,
+          "path": "frontend/lib/marketSubsiteFilters.ts"
+        }
+      ]
+    },
+    "vitest_results": [
+      {
+        "id": "vitest:marketTheme.contract.test.ts",
+        "path": "components/market/marketTheme.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:useMarketPage.contract.test.ts",
+        "path": "components/market/useMarketPage.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:web3PagesPhase1DataHonesty.contract.test.ts",
+        "path": "lib/web3PagesPhase1DataHonesty.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:marketUiL5Thaw.contract.test.ts",
+        "path": "lib/marketUiL5Thaw.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:acquisitionL5.contract.test.ts",
+        "path": "lib/acquisition/acquisitionL5.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:acquisitionL5FullScore.contract.test.ts",
+        "path": "lib/acquisition/acquisitionL5FullScore.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:marketDarkRouteScene.contract.test.ts",
+        "path": "components/shell/marketDarkRouteScene.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      }
+    ]
+  },
+  "market_static_ssot": [
+    {
+      "id": "static:FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json"
+    },
+    {
+      "id": "static:LANDING-MARKET-PAGES-CODE-SSOT.md",
+      "pass": true,
+      "path": "frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md"
+    },
+    {
+      "id": "static:FIVE-MAIN-ROUTES-PHASE1-FREEZE.md",
+      "pass": true,
+      "path": "frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md"
+    },
+    {
+      "id": "static:README.md",
+      "pass": true,
+      "path": "frontend/app/market/acquisition/README.md"
+    },
+    {
+      "id": "static:README.md",
+      "pass": true,
+      "path": "frontend/app/market/provider/README.md"
+    },
+    {
+      "id": "static:full-production-certification-checklist.v1.yaml",
+      "pass": true,
+      "path": "registry/full-production-certification-checklist.v1.yaml"
+    }
+  ],
+  "business_certification": {
+    "verdict": "PASS",
+    "gate_pass": true
+  },
+  "quality_supplement": {
+    "verdict": "PASS",
+    "domains": [
+      "Q2",
+      "Q4",
+      "Q5"
+    ],
+    "checks": [
+      {
+        "id": "Q2_quality_matrix",
+        "domain": "Q2",
+        "pass": true,
+        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json",
+        "notes": []
+      },
+      {
+        "id": "Q4_registry_batch",
+        "domain": "Q4",
+        "pass": true,
+        "path": "registry/full-production-certification-checklist.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q4_landing_market_ssot",
+        "domain": "Q4",
+        "pass": true,
+        "path": "frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md",
+        "notes": []
+      },
+      {
+        "id": "Q5_market_checklist",
+        "domain": "Q5",
+        "pass": true,
+        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C2-market-commerce/FPC-100-MARKET-COMMERCE-CHECKLIST-BASELINE.v1.json",
+        "notes": []
+      },
+      {
+        "id": "Q4_cluster_l2",
+        "domain": "Q4",
+        "pass": true,
+        "path": "FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+        "notes": [
+          "cluster_page_count:true",
+          "cluster_route_set:true",
+          "cluster_l1_complete:true",
+          "cluster_l2_certified:true",
+          "cluster_owner_files:true"
+        ]
+      },
+      {
+        "id": "Q4_dashboard_parity",
+        "domain": "Q4",
+        "pass": true,
+        "path": "FPC-100-RELEASE-DASHBOARD-LATEST.json",
+        "notes": [
+          "prior_batch_pass:true",
+          "dashboard_next_required_batch:true",
+          "registry_batch_ssot:true",
+          "dashboard_lists_prior_batch:true"
+        ]
+      },
+      {
+        "id": "Q5_api_data_chain",
+        "domain": "Q5",
+        "pass": true,
+        "path": "frontend/components/market/useMarketPage.ts",
+        "notes": [
+          "market_discover:true",
+          "market_favorites:true",
+          "acquisition_gate:true",
+          "market_subsite_filters:true"
+        ]
+      }
+    ]
+  },
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "market_commerce 5 routes · MARKET-L5 + subsites + PD-009 acquisition smoke"
+    },
+    "quality_meets_standard": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Q2/Q4/Q5 · API data chain SSOT · dashboard/registry parity"
+    },
+    "findings_identified": {
+      "answer": false,
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "items": []
+    },
+    "recertification_passed": {
+      "answer": true,
+      "notes": "5/5 market_commerce L2 PASS · dashboard next=B25-C3 · B21-B25-C1 frozen"
+    }
+  },
+  "overall_verdict": "PASS",
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B25-C3",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "market_commerce 5 routes ① — MARKET-L5 + PD-009 + provider subsite; B21-B25-C1 frozen; defer-commit",
+  "traceability": {
+    "requirements": [
+      "5/5 market_commerce routes L2 certified (1 CONDITIONAL showcase detail)",
+      "run-web3-itinerary-l5-green + five-main market theme PASS",
+      "smoke-acquisition-pd009-local exit 0",
+      "FPC dashboard next_required_batch aligns with registry",
+      "page matrix b25_c2_apply cluster_certified"
+    ],
+    "spec_refs": [
+      "frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md",
+      "frontend/app/market/acquisition/README.md",
+      "frontend/app/market/provider/README.md",
+      "docs/spec/artifacts/acquisition-publish-trust-rules.v1.md",
+      "FPC-100/B25-C2-market-commerce/FPC-100-MARKET-COMMERCE-CHECKLIST-BASELINE.v1.json"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B25-C2-LATEST.json",
+    "certification_batch": "B25-C2",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T09:02:00.961Z",
+  "expires_at_utc": "2026-08-09T09:02:00.961Z",
+  "expiry_policy_days": 30,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T09:02:00.961Z",
+  "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+  "dod": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": true,
+    "working_tree_clean": true,
+    "all_met": true,
+    "checked_at_utc": "2026-07-10T09:35:04.404Z",
+    "committed_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+    "anchor_head": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+    "policy": "B21-B25-C6 unified defer-commit anchor"
+  },
+  "finalized_at_utc": "2026-07-10T09:35:05.458Z",
+  "defer_commit_anchor": {
+    "anchor_id": "B21-B25-C6",
+    "committed_at_utc": "2026-07-10T09:35:04.404Z",
+    "immutable_head": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+  }
+}

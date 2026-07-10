@@ -1,0 +1,96 @@
+{
+  "schema": "traveltrust.fpc_100_market_commerce_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B25-C2",
+  "domains": ["Q2", "Q4", "Q5"],
+  "note": "L2 market_commerce cluster (5 routes) · MARKET-L5 + subsites + PD-009 acquisition · dashboard/registry/API/display parity; not ② staging GO",
+  "coverage_domains": [
+    "market_commerce_page_cards",
+    "market_l5_ui_freeze",
+    "landing_market_four_page_ssot",
+    "market_discover_orders_data_chain",
+    "acquisition_pd009_data_chain",
+    "provider_subsite_data_chain",
+    "fpc_release_dashboard_parity",
+    "executive_dashboard_gate_consistency",
+    "page_matrix_l2_cluster_apply"
+  ],
+  "severity_policy": {
+    "P0": "gate fail · dashboard/registry drift · cluster page missing · L2 scores unset after apply · acquisition smoke fail",
+    "P1": "SSOT path drift · vitest contract fail · production_ready null · bookmark sync drift",
+    "P2": "git_sha unknown · provider showcase demo badge only at ①"
+  },
+  "cluster": "market_commerce",
+  "cluster_routes": [
+    "/market",
+    "/market/provider",
+    "/market/acquisition",
+    "/market/acquisition/[id]",
+    "/market/provider/showcase/[id]"
+  ],
+  "cluster_page_count": 5,
+  "owner_ssot": "frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md",
+  "registry_gates": [
+    "scripts/dev/run-web3-itinerary-l5-green.sh",
+    "scripts/gates/five-main-routes-ui-antiregression-gate.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/smoke-acquisition-pd009-local.sh",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+    "scripts/dev/apply-fpc-l2-market-commerce-matrix.cjs"
+  ],
+  "quality_gates": [
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+    "frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md",
+    "frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md",
+    "frontend/app/market/acquisition/README.md",
+    "frontend/app/market/provider/README.md",
+    "registry/full-production-certification-checklist.v1.yaml"
+  ],
+  "vitest_contracts": [
+    "components/market/marketTheme.contract.test.ts",
+    "components/market/useMarketPage.contract.test.ts",
+    "lib/web3PagesPhase1DataHonesty.contract.test.ts",
+    "lib/marketUiL5Thaw.contract.test.ts",
+    "lib/acquisition/acquisitionL5.contract.test.ts",
+    "lib/acquisition/acquisitionL5FullScore.contract.test.ts",
+    "components/shell/marketDarkRouteScene.contract.test.ts"
+  ],
+  "api_data_chain_ssot": [
+    {
+      "id": "market_discover",
+      "path": "frontend/components/market/useMarketPage.ts",
+      "must_contain": ["getDiscoverOrders", "300"]
+    },
+    {
+      "id": "market_favorites",
+      "path": "frontend/lib/marketTravelBookmarksSync.ts",
+      "must_contain": ["pushMarketOrderBookmarkToggle", "localStorage"]
+    },
+    {
+      "id": "acquisition_gate",
+      "path": "docs/spec/artifacts/acquisition-publish-trust-rules.v1.md",
+      "must_contain": ["acquisition_publish_gate", "8.1"]
+    },
+    {
+      "id": "market_subsite_filters",
+      "path": "frontend/lib/marketSubsiteFilters.ts",
+      "must_contain": ["country", "category"]
+    }
+  ],
+  "l2_score_policy": {
+    "scale": "0-10",
+    "min_ui": 8,
+    "min_ux": 8,
+    "min_content": 7,
+    "min_function_flow": 8,
+    "production_ready_allowed": ["YES", "CONDITIONAL"]
+  },
+  "dashboard_parity": {
+    "registry_batch_id": "B25-C2",
+    "prior_batch_id": "B25-C1",
+    "release_dashboard_json": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.json",
+    "registry_yaml": "registry/full-production-certification-checklist.v1.yaml"
+  }
+}

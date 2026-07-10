@@ -70,6 +70,7 @@ async fn post_ingest(
             StatusCode::OK,
             Json(json!({
                 "ok": true,
+                "status": "ok",
                 "autopilot_generation": gen,
                 "pgrow3": { "storage": "postgres" }
             })),

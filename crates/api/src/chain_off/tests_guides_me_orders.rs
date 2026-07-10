@@ -2,7 +2,8 @@
 
 use super::{
     get_me_impl, guide_create_impl, guide_get_impl, guide_stake_impl, guides_list_impl,
-    order_accept_impl, order_cancel_impl, order_confirm_completion_impl, order_create_impl,
+    order_accept_impl, order_cancel_impl,
+    order_confirm_service_completion_impl, order_create_impl,
     order_mock_pay_impl, put_me_impl, ChainOffConfig, ChainOffState, ChainOffStore,
     CreateGuideBody, CreateOrderBody, DisputeRow, GuideRow, OrderListPage, OrderRow, PutMeBody,
     ReviewRow, StakeBody, UserRow,
@@ -454,16 +455,16 @@ async fn p21_order_create_accept_mock_pay_confirm() {
     assert_eq!(pay_json["order"]["status"], "escrowed");
 
     let Ok(Json(guide_confirm)) =
-        order_confirm_completion_impl(state.clone(), order_id, guide_id).await
+        order_confirm_service_completion_impl(state.clone(), None, order_id, guide_id).await
     else {
-        panic!("order_confirm guide");
+        panic!("order_confirm_service guide");
     };
     assert_eq!(guide_confirm["order"]["status"], "escrowed");
 
     let Ok(Json(confirm_json)) =
-        order_confirm_completion_impl(state.clone(), order_id, tourist_id).await
+        order_confirm_service_completion_impl(state.clone(), None, order_id, tourist_id).await
     else {
-        panic!("order_confirm tourist");
+        panic!("order_confirm_service tourist");
     };
     assert_eq!(confirm_json["order"]["status"], "completed");
 

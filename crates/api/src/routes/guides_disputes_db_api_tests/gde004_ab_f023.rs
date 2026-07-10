@@ -21,7 +21,7 @@ async fn matrix_93_b_gde_004_f023_public_get_guides_list_includes_active_after_s
             "skip: matrix_93_b_gde_004_f023_public_get_guides_list_includes_active_after_stake_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let guide_user_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_guides_appstk_{}", Uuid::new_v4());
@@ -36,7 +36,6 @@ async fn matrix_93_b_gde_004_f023_public_get_guides_list_includes_active_after_s
         None,
         "guide",
         "none",
-        None,
         None,
         None,
         None,
@@ -129,7 +128,7 @@ async fn matrix_93_b_gde_004b_f023_public_get_guides_list_excludes_pending_befor
             "skip: matrix_93_b_gde_004b_f023_public_get_guides_list_excludes_pending_before_stake_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let guide_user_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_guides_004b_{}", Uuid::new_v4());
@@ -144,7 +143,6 @@ async fn matrix_93_b_gde_004b_f023_public_get_guides_list_excludes_pending_befor
         None,
         "guide",
         "none",
-        None,
         None,
         None,
         None,

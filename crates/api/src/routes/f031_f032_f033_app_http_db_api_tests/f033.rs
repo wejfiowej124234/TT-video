@@ -20,7 +20,7 @@ async fn matrix_93_d_itn_002_f033_post_itineraries_custom_persists_orders_pg() {
             "skip: matrix_93_d_itn_002_f033_post_itineraries_custom_persists_orders_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let uid = Uuid::new_v4();
     let now = Utc::now();
     let email = format!("f033-app-{uid}@traveltrust.test");
@@ -28,7 +28,7 @@ async fn matrix_93_d_itn_002_f033_post_itineraries_custom_persists_orders_pg() {
     cleanup_itinerary_orders(&pool, uid).await;
 
     insert_user(
-        &pool, uid, &email, None, "tourist", "none", None, None, None, None, now, now,
+        &pool, uid, &email, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user");
@@ -99,7 +99,7 @@ async fn matrix_93_d_itn_002b_f033_post_itineraries_custom_persists_orders_beare
             "skip: matrix_93_d_itn_002b_f033_post_itineraries_custom_persists_orders_bearer_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let uid = Uuid::new_v4();
     let now = Utc::now();
     let email = format!("f033-bearer-app-{uid}@traveltrust.test");
@@ -108,7 +108,7 @@ async fn matrix_93_d_itn_002b_f033_post_itineraries_custom_persists_orders_beare
     cleanup_itinerary_orders(&pool, uid).await;
 
     insert_user(
-        &pool, uid, &email, None, "tourist", "none", None, None, None, None, now, now,
+        &pool, uid, &email, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user");
@@ -185,7 +185,7 @@ async fn matrix_93_d_itn_003_f033_post_custom_draft_then_get_roundtrip_pg() {
             "skip: matrix_93_d_itn_003_f033_post_custom_draft_then_get_roundtrip_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let uid = Uuid::new_v4();
     let now = Utc::now();
     let email = format!("f033-draft-app-{uid}@traveltrust.test");
@@ -193,7 +193,7 @@ async fn matrix_93_d_itn_003_f033_post_custom_draft_then_get_roundtrip_pg() {
     cleanup_itinerary_orders(&pool, uid).await;
 
     insert_user(
-        &pool, uid, &email, None, "tourist", "none", None, None, None, None, now, now,
+        &pool, uid, &email, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user");
@@ -271,7 +271,7 @@ async fn matrix_93_d_itn_003b_f033_post_custom_draft_then_get_roundtrip_bearer_a
             "skip: matrix_93_d_itn_003b_f033_post_custom_draft_then_get_roundtrip_bearer_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let uid = Uuid::new_v4();
     let now = Utc::now();
     let email = format!("f033-draft-bearer-app-{uid}@traveltrust.test");
@@ -280,7 +280,7 @@ async fn matrix_93_d_itn_003b_f033_post_custom_draft_then_get_roundtrip_bearer_a
     cleanup_itinerary_orders(&pool, uid).await;
 
     insert_user(
-        &pool, uid, &email, None, "tourist", "none", None, None, None, None, now, now,
+        &pool, uid, &email, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user");

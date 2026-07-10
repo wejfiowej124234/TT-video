@@ -2,8 +2,6 @@ use axum::body::Body;
 use axum::http::{header, Method, Request, StatusCode};
 use tower::ServiceExt;
 
-use crate::state::test_support::TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK;
-
 use super::cleanup::cleanup_order_participants;
 use super::flows_esc::{
     run_b_esc_001_mock_pay_flow_with_app, run_b_esc_001_to_accepted_with_app,
@@ -23,7 +21,7 @@ async fn matrix_93_d_itn_001_post_itineraries_draft_persists_pg() {
             "skip: matrix_93_d_itn_001_post_itineraries_draft_persists_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (tourist_email, unused_guide_email) = run_d_itn_001_draft_only(&pool).await;
     cleanup_order_participants(&pool, &tourist_email, &unused_guide_email).await;
 }
@@ -36,7 +34,7 @@ async fn matrix_93_b_ord_005_itinerary_then_confirm_final_snapshot() {
             "skip: matrix_93_b_ord_005_itinerary_then_confirm_final_snapshot (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (tourist_email, unused_guide_email) = run_b_ord_005_itin_then_confirm_final(&pool).await;
     cleanup_order_participants(&pool, &tourist_email, &unused_guide_email).await;
 }
@@ -49,10 +47,8 @@ async fn matrix_93_b_esc_001b_f010_mock_pay_then_get_order_escrowed_app_stack_ok
             "skip: matrix_93_b_esc_001b_f010_mock_pay_then_get_order_escrowed_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
-    let _env_lock = TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK
-        .lock()
-        .expect("env test lock");
+    };
+    let _env_lock = crate::test_env_serial::lock();
     std::env::remove_var("TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS");
     std::env::remove_var("TRAVELTRUST_DENY_MOCK_PAY");
     let prev_p3 = std::env::var("P3_CHAIN_OFF").ok();
@@ -75,10 +71,8 @@ async fn matrix_93_b_esc_002b_f010_guide_confirm_completion_then_get_order_compl
             "skip: matrix_93_b_esc_002b_f010_guide_confirm_completion_then_get_order_completed_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
-    let _env_lock = TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK
-        .lock()
-        .expect("env test lock");
+    };
+    let _env_lock = crate::test_env_serial::lock();
     std::env::remove_var("TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS");
     std::env::remove_var("TRAVELTRUST_DENY_MOCK_PAY");
     let prev_p3 = std::env::var("P3_CHAIN_OFF").ok();
@@ -102,10 +96,8 @@ async fn matrix_93_b_ord_005c_f013_accepted_bilateral_confirm_both_then_get_orde
             "skip: matrix_93_b_ord_005c_f013_accepted_bilateral_confirm_both_then_get_order_sub_status_confirmed_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
-    let _env_lock = TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK
-        .lock()
-        .expect("env test lock");
+    };
+    let _env_lock = crate::test_env_serial::lock();
     std::env::remove_var("TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS");
     std::env::remove_var("TRAVELTRUST_DENY_MOCK_PAY");
     let prev_p3 = std::env::var("P3_CHAIN_OFF").ok();

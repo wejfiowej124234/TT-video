@@ -22,7 +22,7 @@ async fn matrix_93_d_adm_003_f030_get_admin_schema_migrations_lists_pg_rows() {
             "skip: matrix_93_d_adm_003_f030_get_admin_schema_migrations_lists_pg_rows (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let admin = admin_user_row();
     let admin_id = admin.id;
     let now = Utc::now();
@@ -31,7 +31,7 @@ async fn matrix_93_d_adm_003_f030_get_admin_schema_migrations_lists_pg_rows() {
     cleanup_admin_it_user(&pool, admin_id).await;
 
     insert_user(
-        &pool, admin_id, &email, None, "admin", "none", None, None, None, None, now, now,
+        &pool, admin_id, &email, None, "admin", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user admin it");
@@ -81,7 +81,7 @@ async fn matrix_93_d_adm_003_f030_get_admin_schema_migrations_ok_when_sqlx_migra
             "skip: matrix_93_d_adm_003_f030_get_admin_schema_migrations_ok_when_sqlx_migrations_applied_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let mig_count: i64 = sqlx::query_scalar("SELECT COUNT(*)::bigint FROM _sqlx_migrations")
         .fetch_one(&pool)
         .await
@@ -99,7 +99,7 @@ async fn matrix_93_d_adm_003_f030_get_admin_schema_migrations_ok_when_sqlx_migra
     cleanup_admin_it_user(&pool, admin_id).await;
 
     insert_user(
-        &pool, admin_id, &email, None, "admin", "none", None, None, None, None, now, now,
+        &pool, admin_id, &email, None, "admin", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user admin it");
@@ -147,7 +147,7 @@ async fn matrix_93_d_adm_003b_f030_get_admin_schema_migrations_ok_when_sqlx_migr
             "skip: matrix_93_d_adm_003b_f030_get_admin_schema_migrations_ok_when_sqlx_migrations_applied_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let mig_count: i64 = sqlx::query_scalar("SELECT COUNT(*)::bigint FROM _sqlx_migrations")
         .fetch_one(&pool)
         .await
@@ -165,7 +165,7 @@ async fn matrix_93_d_adm_003b_f030_get_admin_schema_migrations_ok_when_sqlx_migr
     cleanup_admin_it_user(&pool, admin_id).await;
 
     insert_user(
-        &pool, admin_id, &email, None, "admin", "none", None, None, None, None, now, now,
+        &pool, admin_id, &email, None, "admin", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user admin it");
@@ -214,7 +214,7 @@ async fn matrix_93_d_adm_003c_f030_get_admin_migrations_returns_non_empty_migrat
             "skip: matrix_93_d_adm_003c_f030_get_admin_migrations_returns_non_empty_migration_histories_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let mig_count: i64 = sqlx::query_scalar("SELECT COUNT(*)::bigint FROM _sqlx_migrations")
         .fetch_one(&pool)
         .await
@@ -234,7 +234,7 @@ async fn matrix_93_d_adm_003c_f030_get_admin_migrations_returns_non_empty_migrat
     cleanup_admin_it_user(&pool, admin_id).await;
 
     insert_user(
-        &pool, admin_id, &email, None, "admin", "none", None, None, None, None, now, now,
+        &pool, admin_id, &email, None, "admin", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user admin it");

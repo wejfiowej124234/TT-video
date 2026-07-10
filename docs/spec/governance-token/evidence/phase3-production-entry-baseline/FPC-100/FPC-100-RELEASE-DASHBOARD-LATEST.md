@@ -4,10 +4,10 @@
 
 | Metric | Value |
 |--------|-------|
-| **TT_RELEASE_READINESS** | **56.1%** |
+| **TT_RELEASE_READINESS** | **75.6%** |
 | **TT_RELEASE_DECISION** | **NO_GO** |
 
-_Next batch: B23 · v1.0_ · Governance FROZEN — no v5 expansion_
+_Next batch: B26 · v1.0_ · Governance FROZEN — no v5 expansion_
 
 > Feature Freeze does not mean Release Ready. Release Ready is earned only through completed certification evidence.
 > 功能冻结不代表可以发布；发布资格只能通过完整的认证证据获得。
@@ -16,9 +16,9 @@ _Next batch: B23 · v1.0_ · Governance FROZEN — no v5 expansion_
 
 | Metric | Value |
 |--------|-------|
-| Batches Completed | 23 / 41 |
-| Remaining | 18 |
-| Batch Coverage | 56.1% |
+| Batches Completed | 31 / 41 |
+| Remaining | 10 |
+| Batch Coverage | 75.6% |
 | Evidence Coverage (pages/API/…) | 25% |
 
 _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
@@ -28,19 +28,19 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 **Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
 **FPC verdict:** **NOT_STARTED**  
 **Release decision:** `TT_RELEASE_DECISION` = **NO_GO**  
-**Updated:** 2026-07-10T07:22:02.416Z
+**Updated:** 2026-07-10T09:31:46.910Z
 
 ## Release Health
 
 | Metric | Value |
 |--------|-------|
-| Certified | 114.6% |
+| Certified | 134.1% |
 | Expired | 0 |
 | Blocked | 0 |
 | Accepted Risks | 2 |
 | Coverage | 25% |
 | Human Verified | 0% |
-| AI Review PASS | 51.1% |
+| AI Review PASS | 50% |
 
 ## Release History (Version Certification)
 
@@ -53,7 +53,7 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 | Pillar | Verdict |
 |--------|---------|
 | technical | IN_PROGRESS |
-| product | NOT_STARTED |
+| product | IN_PROGRESS |
 | operations | IN_PROGRESS |
 | content | IN_PROGRESS |
 | business | NOT_STARTED |
@@ -100,6 +100,13 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 | B21 | PASS (Internal AI Review) | — |
 | B22 | PASS (Internal AI Review) | — |
 | B23 | PASS (Internal AI Review) | — |
+| B24 | PASS (Internal AI Review) | — |
+| B25-C1 | PASS (Internal AI Review) | — |
+| B25-C2 | PASS (Internal AI Review) | — |
+| B25-C3 | PASS (Internal AI Review) | — |
+| B25-C4 | PASS (Internal AI Review) | — |
+| B25-C5 | PASS (Internal AI Review) | — |
+| B25-C6 | PASS (Internal AI Review) | — |
 | B00 | NOT_STARTED (NOT_STARTED) | — |
 | B01 | NOT_STARTED (NOT_STARTED) | — |
 | B02 | NOT_STARTED (NOT_STARTED) | — |
@@ -123,6 +130,14 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 | B20 | NOT_STARTED (NOT_STARTED) | — |
 | B21 | NOT_STARTED (NOT_STARTED) | — |
 | B22 | NOT_STARTED (NOT_STARTED) | — |
+| B23 | NOT_STARTED (NOT_STARTED) | — |
+| B24 | NOT_STARTED (NOT_STARTED) | — |
+| B25-C1 | NOT_STARTED (NOT_STARTED) | — |
+| B25-C2 | NOT_STARTED (NOT_STARTED) | — |
+| B25-C3 | NOT_STARTED (NOT_STARTED) | — |
+| B25-C4 | NOT_STARTED (NOT_STARTED) | — |
+| B25-C5 | NOT_STARTED (NOT_STARTED) | — |
+| B25-C6 | NOT_STARTED (NOT_STARTED) | — |
 
 ## Accepted Risks
 

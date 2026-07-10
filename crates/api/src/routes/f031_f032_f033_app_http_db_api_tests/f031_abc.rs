@@ -21,7 +21,7 @@ async fn matrix_93_d_com_011_f031_post_community_post_acquisition_led_listing_pg
             "skip: matrix_93_d_com_011_f031_post_community_post_acquisition_led_listing_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let uid = Uuid::new_v4();
     let listing_id = Uuid::new_v4();
     let now = Utc::now();
@@ -30,7 +30,7 @@ async fn matrix_93_d_com_011_f031_post_community_post_acquisition_led_listing_pg
     cleanup_community_user_listing(&pool, uid, listing_id).await;
 
     insert_user(
-        &pool, uid, &email, None, "tourist", "none", None, None, None, None, now, now,
+        &pool, uid, &email, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user");
@@ -89,7 +89,7 @@ async fn matrix_93_d_com_011b_f031_post_community_post_acquisition_led_listing_b
             "skip: matrix_93_d_com_011b_f031_post_community_post_acquisition_led_listing_bearer_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let uid = Uuid::new_v4();
     let listing_id = Uuid::new_v4();
     let now = Utc::now();
@@ -99,7 +99,7 @@ async fn matrix_93_d_com_011b_f031_post_community_post_acquisition_led_listing_b
     cleanup_community_user_listing(&pool, uid, listing_id).await;
 
     insert_user(
-        &pool, uid, &email, None, "tourist", "none", None, None, None, None, now, now,
+        &pool, uid, &email, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user");
@@ -165,7 +165,7 @@ async fn matrix_93_d_com_011_f031_get_community_feed_includes_acquisition_led_po
             "skip: matrix_93_d_com_011_f031_get_community_feed_includes_acquisition_led_post_after_create_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let uid = Uuid::new_v4();
     let listing_id = Uuid::new_v4();
     let now = Utc::now();
@@ -174,7 +174,7 @@ async fn matrix_93_d_com_011_f031_get_community_feed_includes_acquisition_led_po
     cleanup_community_user_listing(&pool, uid, listing_id).await;
 
     insert_user(
-        &pool, uid, &email, None, "tourist", "none", None, None, None, None, now, now,
+        &pool, uid, &email, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user");
@@ -249,7 +249,7 @@ async fn matrix_93_d_com_011c_f031_bearer_post_then_anon_feed_includes_post_app_
             "skip: matrix_93_d_com_011c_f031_bearer_post_then_anon_feed_includes_post_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let uid = Uuid::new_v4();
     let listing_id = Uuid::new_v4();
     let now = Utc::now();
@@ -259,7 +259,7 @@ async fn matrix_93_d_com_011c_f031_bearer_post_then_anon_feed_includes_post_app_
     cleanup_community_user_listing(&pool, uid, listing_id).await;
 
     insert_user(
-        &pool, uid, &email, None, "tourist", "none", None, None, None, None, now, now,
+        &pool, uid, &email, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user");

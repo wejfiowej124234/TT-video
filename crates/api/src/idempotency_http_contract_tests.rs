@@ -22,6 +22,12 @@ mod tests {
 
     static IDEMPOTENCY_HTTP_ENV_LOCK: Mutex<()> = Mutex::new(());
 
+    fn idem_http_env_lock() -> std::sync::MutexGuard<'static, ()> {
+        IDEMPOTENCY_HTTP_ENV_LOCK
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+    }
+
     struct RemoveEnvOnDrop(&'static str);
     impl Drop for RemoveEnvOnDrop {
         fn drop(&mut self) {
@@ -39,9 +45,7 @@ mod tests {
 
     #[tokio::test]
     async fn post_missing_idempotency_key_returns_400_when_require_idempotency_key() {
-        let _lock = IDEMPOTENCY_HTTP_ENV_LOCK
-            .lock()
-            .expect("idem http env lock");
+        let _lock = idem_http_env_lock();
         std::env::set_var("REQUIRE_IDEMPOTENCY_KEY", "1");
         let _clear = RemoveEnvOnDrop("REQUIRE_IDEMPOTENCY_KEY");
 
@@ -73,11 +77,9 @@ mod tests {
 
     #[tokio::test]
     async fn post_idempotency_db_persist_failed_returns_503_on_dead_pool() {
-        let _lock = IDEMPOTENCY_HTTP_ENV_LOCK
-            .lock()
-            .expect("idem http env lock");
+        let _lock = idem_http_env_lock();
 
-        let pool = PgPoolOptions::new()
+        let dead_pool = PgPoolOptions::new()
             .max_connections(1)
             .acquire_timeout(Duration::from_millis(200))
             .connect_lazy("postgres://nouser:nopass@127.0.0.1:1/traveltrust_idem_http_gate")
@@ -87,9 +89,8 @@ mod tests {
         let router = app(
             api_meta_state(Some(chain_off_memory_no_db_pool())),
             idem,
-            Some(pool),
+            Some(dead_pool),
         );
-        // Handler 先 **503 `database_unavailable`**（**`chain_off.db_pool`** **None**）；幂等层随后 **`save_cached_response`** 命中 **dead pool** → **`idempotency_db_persist_failed`**。
         let res = router
             .oneshot(
                 Request::builder()
@@ -116,9 +117,7 @@ mod tests {
     #[tokio::test]
     async fn matrix_93_b_idm_001_f028_trust_growth_ingest_duplicate_idempotency_key_identical_body_pg(
     ) {
-        let _lock = IDEMPOTENCY_HTTP_ENV_LOCK
-            .lock()
-            .expect("idem http env lock");
+        let _lock = idem_http_env_lock();
 
         let Some(pool) = crate::it_db_pool::connect_migrated_pg_it_pool().await else {
             eprintln!(
@@ -210,9 +209,7 @@ mod tests {
     #[tokio::test]
     async fn matrix_93_b_idm_001b_f028_trust_growth_ingest_duplicate_x_idempotency_key_identical_body_pg(
     ) {
-        let _lock = IDEMPOTENCY_HTTP_ENV_LOCK
-            .lock()
-            .expect("idem http env lock");
+        let _lock = idem_http_env_lock();
 
         let Some(pool) = crate::it_db_pool::connect_migrated_pg_it_pool().await else {
             eprintln!(

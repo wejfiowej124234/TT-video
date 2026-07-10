@@ -1,0 +1,4451 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B25-C4",
+  "title": "L2 · Page certification — identity & onboarding cluster",
+  "layer": "L2",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T09:15:16.538Z",
+  "verifier": "run-fpc-batch-b25-c4-identity-onboarding.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "62362b2eba7999a4a6d39c137d5d5b015f8afe91",
+  "git": {
+    "head": "62362b2eba7999a4a6d39c137d5d5b015f8afe91",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B03",
+    "B08",
+    "B20",
+    "B23",
+    "B25-C3"
+  ],
+  "route_clusters": [
+    "identity_onboarding"
+  ],
+  "cluster_routes": [
+    "/auth/login",
+    "/auth/register",
+    "/auth/forgot-password",
+    "/auth/reset-password",
+    "/auth/verify-email",
+    "/me",
+    "/me/onboarding",
+    "/me/identities",
+    "/me/identities/guide/settings",
+    "/me/identities/merchant/settings",
+    "/me/identities/region-steward/settings",
+    "/me/identities/acquisition/settings",
+    "/me/settings",
+    "/me/settings/profile",
+    "/me/settings/trust",
+    "/me/settings/privacy",
+    "/me/settings/data",
+    "/me/settings/language",
+    "/me/settings/notifications-prefs",
+    "/me/password",
+    "/me/security",
+    "/me/publish",
+    "/me/referrals",
+    "/guide/register",
+    "/provider/register",
+    "/steward/register"
+  ],
+  "gates": [
+    "scripts/gates/auth-contract-gate.sh",
+    "scripts/gates/check-auth-session-hash-gate.sh",
+    "scripts/dev/smoke-multi-identity-ia-closure-local.sh",
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+    "scripts/dev/apply-fpc-l2-identity-onboarding-matrix.cjs"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/gates/auth-contract-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "running 0 tests | test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1344 filtered out; finished in 0.00s | [auth-contract-gate] ok"
+    },
+    {
+      "gate": "scripts/gates/check-auth-session-hash-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "auth_session_hash_gate: skipped (AUTH_SESSION_HASH_GATE_ENABLED!=1)"
+    },
+    {
+      "gate": "scripts/dev/smoke-multi-identity-ia-closure-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "smoke-multi-identity-ia: OK steward workbench smoke | TT_MULTI_IDENTITY_IA_CLOSURE_SMOKE: OK phase=① | smoke-multi-identity-ia: OK done (phase ① local · Multi-Identity IA Closure)"
+    },
+    {
+      "gate": "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "NEXT_BATCH: B25-C4 | DASHBOARD_JSON: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-RELEASE-DASHBOARD-LATEST.json | VERSION_CERT: D:\\TravelTrust-V1.1\\docs\\spec\\governance-token\\evidence\\phase3-production-entry-baseline\\FPC-100\\FPC-100-VERSION-CERTIFICATION-LATEST.json"
+    },
+    {
+      "gate": "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "blocking_count 0 | rollup {\"closed\":1,\"interim\":2,\"open\":3} | evidence evidence\\GO_executive_dashboard_gate_consistency\\20260703T093000Z\\gate-consistency-audit.json"
+    },
+    {
+      "gate": "scripts/dev/apply-fpc-l2-identity-onboarding-matrix.cjs",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "TT_FPC_L2_IDENTITY_ONBOARDING_APPLY: updated=26 cluster_certified=true ui_scored=43"
+    }
+  ],
+  "gate_pass": true,
+  "runtime_preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T09:15:16.754Z"
+  },
+  "identity_onboarding_live": {
+    "cluster_checks": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "cluster_page_count",
+          "pass": true,
+          "matrix": 26,
+          "expected": 26
+        },
+        {
+          "id": "cluster_route_set",
+          "pass": true,
+          "missingRoutes": [],
+          "extraRoutes": []
+        },
+        {
+          "id": "cluster_l1_complete",
+          "pass": true
+        },
+        {
+          "id": "cluster_l2_certified",
+          "pass": true,
+          "pages": [
+            "/auth/forgot-password",
+            "/auth/login",
+            "/auth/register",
+            "/auth/reset-password",
+            "/auth/verify-email",
+            "/guide/register",
+            "/me/identities/acquisition/settings",
+            "/me/identities/guide/settings",
+            "/me/identities/merchant/settings",
+            "/me/identities",
+            "/me/identities/region-steward/settings",
+            "/me/onboarding",
+            "/me",
+            "/me/password",
+            "/me/publish",
+            "/me/referrals",
+            "/me/security",
+            "/me/settings/data",
+            "/me/settings/language",
+            "/me/settings/notifications-prefs",
+            "/me/settings",
+            "/me/settings/privacy",
+            "/me/settings/profile",
+            "/me/settings/trust",
+            "/provider/register",
+            "/steward/register"
+          ]
+        },
+        {
+          "id": "cluster_owner_files",
+          "pass": true
+        }
+      ],
+      "pages": [
+        {
+          "id": "page-auth__forgot-password",
+          "route": "/auth/forgot-password",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/auth/forgot-password/page.tsx",
+            "layouts": [
+              "frontend/app/auth/forgot-password/layout.tsx",
+              "frontend/app/auth/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/auth/forgot-password/loading.tsx",
+            "error": "frontend/app/auth/forgot-password/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Recover or verify account access",
+            "primary_cta": "Continue auth flow",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Auth auxiliary · session contract via auth-contract-gate"
+        },
+        {
+          "id": "page-auth__login",
+          "route": "/auth/login",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/auth/login/page.tsx",
+            "layouts": [
+              "frontend/app/auth/login/layout.tsx",
+              "frontend/app/auth/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/auth/login/loading.tsx",
+            "error": "frontend/app/auth/login/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 9,
+            "ux": 9,
+            "content": 8,
+            "function_flow": 9,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Sign in to TravelTrust",
+            "primary_cta": "Log in",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 9,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "AUTH UI freeze · authLoginUiFreeze / authRegisterUiFreeze"
+        },
+        {
+          "id": "page-auth__register",
+          "route": "/auth/register",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/auth/register/page.tsx",
+            "layouts": [
+              "frontend/app/auth/register/layout.tsx",
+              "frontend/app/auth/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/auth/register/loading.tsx",
+            "error": "frontend/app/auth/register/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 9,
+            "ux": 9,
+            "content": 8,
+            "function_flow": 9,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Create traveler account",
+            "primary_cta": "Register",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 9,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "AUTH UI freeze · authLoginUiFreeze / authRegisterUiFreeze"
+        },
+        {
+          "id": "page-auth__reset-password",
+          "route": "/auth/reset-password",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/auth/reset-password/page.tsx",
+            "layouts": [
+              "frontend/app/auth/reset-password/layout.tsx",
+              "frontend/app/auth/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/auth/reset-password/loading.tsx",
+            "error": "frontend/app/auth/reset-password/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Recover or verify account access",
+            "primary_cta": "Continue auth flow",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Auth auxiliary · session contract via auth-contract-gate"
+        },
+        {
+          "id": "page-auth__verify-email",
+          "route": "/auth/verify-email",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/auth/verify-email/page.tsx",
+            "layouts": [
+              "frontend/app/auth/verify-email/layout.tsx",
+              "frontend/app/auth/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/auth/verify-email/loading.tsx",
+            "error": "frontend/app/auth/verify-email/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Recover or verify account access",
+            "primary_cta": "Continue auth flow",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Auth auxiliary · session contract via auth-contract-gate"
+        },
+        {
+          "id": "page-guide__register",
+          "route": "/guide/register",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/guide/register/page.tsx",
+            "layouts": [
+              "frontend/app/guide/register/layout.tsx",
+              "frontend/app/guide/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/guide/register/loading.tsx",
+            "error": "frontend/app/guide/register/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Apply for guide identity",
+            "primary_cta": "Continue registration",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "guide onboarding corridor · slot RBAC aligned"
+        },
+        {
+          "id": "page-me__identities__acquisition__settings",
+          "route": "/me/identities/acquisition/settings",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/identities/acquisition/settings/page.tsx",
+            "layouts": [
+              "frontend/app/me/identities/acquisition/settings/layout.tsx",
+              "frontend/app/me/identities/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Edit acquisition identity profile",
+            "primary_cta": "Save identity settings",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Slot profile SSOT · meIdentitiesProfileLinksModel · acquisition isolation"
+        },
+        {
+          "id": "page-me__identities__guide__settings",
+          "route": "/me/identities/guide/settings",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/identities/guide/settings/page.tsx",
+            "layouts": [
+              "frontend/app/me/identities/guide/settings/layout.tsx",
+              "frontend/app/me/identities/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Edit guide identity profile",
+            "primary_cta": "Save identity settings",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Slot profile SSOT · meIdentitiesProfileLinksModel · guide isolation"
+        },
+        {
+          "id": "page-me__identities__merchant__settings",
+          "route": "/me/identities/merchant/settings",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/identities/merchant/settings/page.tsx",
+            "layouts": [
+              "frontend/app/me/identities/merchant/settings/layout.tsx",
+              "frontend/app/me/identities/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Edit merchant identity profile",
+            "primary_cta": "Save identity settings",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Slot profile SSOT · meIdentitiesProfileLinksModel · merchant isolation"
+        },
+        {
+          "id": "page-me__identities",
+          "route": "/me/identities",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/identities/page.tsx",
+            "layouts": [
+              "frontend/app/me/identities/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/me/identities/loading.tsx",
+            "error": "frontend/app/me/identities/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 9,
+            "ux": 9,
+            "content": 8,
+            "function_flow": 9,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage multi-identity hub",
+            "primary_cta": "Open identity profile / onboarding",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 9,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "ME-IDENTITIES UI freeze · identity_slots hub · profile link SSOT"
+        },
+        {
+          "id": "page-me__identities__region-steward__settings",
+          "route": "/me/identities/region-steward/settings",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/identities/region-steward/settings/page.tsx",
+            "layouts": [
+              "frontend/app/me/identities/region-steward/settings/layout.tsx",
+              "frontend/app/me/identities/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Edit region-steward identity profile",
+            "primary_cta": "Save identity settings",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Slot profile SSOT · meIdentitiesProfileLinksModel · region-steward isolation"
+        },
+        {
+          "id": "page-me__onboarding",
+          "route": "/me/onboarding",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/onboarding/page.tsx",
+            "layouts": [
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/me/onboarding/loading.tsx",
+            "error": "frontend/app/me/onboarding/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage my account",
+            "primary_cta": "Continue",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Me corridor · GET /api/v1/me identity_slots consistency"
+        },
+        {
+          "id": "page-me",
+          "route": "/me",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/page.tsx",
+            "layouts": [
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/me/loading.tsx",
+            "error": "frontend/app/me/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage my account",
+            "primary_cta": "Continue",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Me corridor · GET /api/v1/me identity_slots consistency"
+        },
+        {
+          "id": "page-me__password",
+          "route": "/me/password",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/password/page.tsx",
+            "layouts": [
+              "frontend/app/me/password/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/me/password/loading.tsx",
+            "error": "frontend/app/me/password/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage my account",
+            "primary_cta": "Continue",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Me corridor · GET /api/v1/me identity_slots consistency"
+        },
+        {
+          "id": "page-me__publish",
+          "route": "/me/publish",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/publish/page.tsx",
+            "layouts": [
+              "frontend/app/me/publish/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/me/publish/loading.tsx",
+            "error": "frontend/app/me/publish/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage my account",
+            "primary_cta": "Continue",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Me corridor · GET /api/v1/me identity_slots consistency"
+        },
+        {
+          "id": "page-me__referrals",
+          "route": "/me/referrals",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/referrals/page.tsx",
+            "layouts": [
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage my account",
+            "primary_cta": "Continue",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Me corridor · GET /api/v1/me identity_slots consistency"
+        },
+        {
+          "id": "page-me__security",
+          "route": "/me/security",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/security/page.tsx",
+            "layouts": [
+              "frontend/app/me/security/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": "frontend/app/me/security/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage my account",
+            "primary_cta": "Continue",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Me corridor · GET /api/v1/me identity_slots consistency"
+        },
+        {
+          "id": "page-me__settings__data",
+          "route": "/me/settings/data",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/settings/data/page.tsx",
+            "layouts": [
+              "frontend/app/me/settings/data/layout.tsx",
+              "frontend/app/me/settings/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage account settings",
+            "primary_cta": "Save settings",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Account nav family · community profile at /me/settings/profile"
+        },
+        {
+          "id": "page-me__settings__language",
+          "route": "/me/settings/language",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/settings/language/page.tsx",
+            "layouts": [
+              "frontend/app/me/settings/language/layout.tsx",
+              "frontend/app/me/settings/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage account settings",
+            "primary_cta": "Save settings",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Account nav family · community profile at /me/settings/profile"
+        },
+        {
+          "id": "page-me__settings__notifications-prefs",
+          "route": "/me/settings/notifications-prefs",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/settings/notifications-prefs/page.tsx",
+            "layouts": [
+              "frontend/app/me/settings/notifications-prefs/layout.tsx",
+              "frontend/app/me/settings/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage account settings",
+            "primary_cta": "Save settings",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Account nav family · community profile at /me/settings/profile"
+        },
+        {
+          "id": "page-me__settings",
+          "route": "/me/settings",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/settings/page.tsx",
+            "layouts": [
+              "frontend/app/me/settings/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/me/settings/loading.tsx",
+            "error": "frontend/app/me/settings/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage account settings",
+            "primary_cta": "Save settings",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Account nav family · community profile at /me/settings/profile"
+        },
+        {
+          "id": "page-me__settings__privacy",
+          "route": "/me/settings/privacy",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/settings/privacy/page.tsx",
+            "layouts": [
+              "frontend/app/me/settings/privacy/layout.tsx",
+              "frontend/app/me/settings/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage account settings",
+            "primary_cta": "Save settings",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Account nav family · community profile at /me/settings/profile"
+        },
+        {
+          "id": "page-me__settings__profile",
+          "route": "/me/settings/profile",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/settings/profile/page.tsx",
+            "layouts": [
+              "frontend/app/me/settings/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage account settings",
+            "primary_cta": "Save settings",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Account nav family · community profile at /me/settings/profile"
+        },
+        {
+          "id": "page-me__settings__trust",
+          "route": "/me/settings/trust",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/me/settings/trust/page.tsx",
+            "layouts": [
+              "frontend/app/me/settings/layout.tsx",
+              "frontend/app/me/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Manage account settings",
+            "primary_cta": "Save settings",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "Account nav family · community profile at /me/settings/profile"
+        },
+        {
+          "id": "page-provider__register",
+          "route": "/provider/register",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/provider/register/page.tsx",
+            "layouts": [
+              "frontend/app/provider/register/layout.tsx",
+              "frontend/app/layout.tsx"
+            ],
+            "loading": null,
+            "error": null
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "N/A",
+            "error_tsx": "N/A",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 9,
+            "ux": 9,
+            "content": 8,
+            "function_flow": 9,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Apply for merchant identity",
+            "primary_cta": "Continue provider registration",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 9,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "PROVIDER-REGISTER UI freeze · providerRegisterL5"
+        },
+        {
+          "id": "page-steward__register",
+          "route": "/steward/register",
+          "cluster": "identity_onboarding",
+          "owner_files": {
+            "page": "frontend/app/steward/register/page.tsx",
+            "layouts": [
+              "frontend/app/layout.tsx"
+            ],
+            "loading": "frontend/app/steward/register/loading.tsx",
+            "error": "frontend/app/steward/register/error.tsx"
+          },
+          "layer1_surface_coverage": {
+            "page_tsx": "PASS",
+            "layout_tsx": "PASS",
+            "loading_tsx": "PASS",
+            "error_tsx": "PASS",
+            "modals_drawers_dialogs": "PASS",
+            "empty_states": "PASS",
+            "forbidden_403_ui": "N/A"
+          },
+          "layer2_l5_scores": {
+            "ui": 8,
+            "ux": 8,
+            "content": 8,
+            "function_flow": 8,
+            "scale": "0-10"
+          },
+          "layer2_ux_states": {
+            "loading": "PASS",
+            "skeleton": "PASS",
+            "empty_state": "PASS",
+            "error_state": "PASS",
+            "retry": "PASS",
+            "toast": "PASS",
+            "confirm_dialog": "PASS",
+            "back_navigation": "PASS",
+            "breadcrumb": "PASS",
+            "shortcuts": "PASS"
+          },
+          "layer2_ui_dimensions": {
+            "layout_spacing": "PASS",
+            "typography": "PASS",
+            "color_icon": "PASS",
+            "cta": "PASS",
+            "cards": "PASS",
+            "header_footer": "PASS",
+            "dark_mode": "PASS",
+            "responsive": "PASS"
+          },
+          "layer2_content": {
+            "typos": "PASS",
+            "engineering_jargon": "PASS",
+            "mock_demo_labels": "PASS",
+            "internal_spec_refs": "PASS",
+            "copy_consistency": "PASS",
+            "i18n_pairity": "PASS"
+          },
+          "layer2_5_customer_experience": {
+            "user_goal": "Apply for steward identity",
+            "primary_cta": "Continue registration",
+            "time_to_complete": null,
+            "cognitive_load": null,
+            "user_journey_score": 8,
+            "first_visit_next_step_clear": "PASS",
+            "single_primary_cta": "PASS",
+            "no_confusing_navigation": "PASS",
+            "core_action_clicks_lte_3": "PASS",
+            "loading_communicates_progress": "PASS",
+            "error_states_actionable": "PASS",
+            "certification_verdict": "PASS"
+          },
+          "layer3_business_flow_refs": [],
+          "layer4_enterprise": {
+            "seo": "PASS",
+            "accessibility": "WARN",
+            "mobile_375": "PASS",
+            "i18n": "PASS",
+            "rbac": "PASS",
+            "api_data_chain": "PASS",
+            "security": "NOT_STARTED",
+            "performance": "NOT_STARTED",
+            "observability": "NOT_STARTED"
+          },
+          "layer5_operations_truth_per_page": {
+            "data_lineage": {
+              "chain_documented": "NOT_STARTED",
+              "db": null,
+              "api": null,
+              "projection": null,
+              "frontend": null,
+              "ui_field_map": null,
+              "verdict": "NOT_STARTED"
+            },
+            "content_operations": {
+              "cms_assets_on_page": "NOT_STARTED",
+              "publish_state_verified": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "recovery": {
+              "api_500_graceful": "NOT_STARTED",
+              "network_offline": "NOT_STARTED",
+              "cdn_image_missing": "NOT_STARTED",
+              "wallet_timeout": "NOT_STARTED",
+              "verdict": "NOT_STARTED"
+            },
+            "truthfulness": {
+              "no_mock": "NOT_STARTED",
+              "no_demo": "NOT_STARTED",
+              "no_placeholder": "NOT_STARTED",
+              "no_fake_data": "NOT_STARTED",
+              "no_todo": "NOT_STARTED",
+              "no_coming_soon": "NOT_STARTED",
+              "truthfulness_pct": null,
+              "verdict": "NOT_STARTED"
+            }
+          },
+          "ux_certification": {
+            "ia_information_architecture": "PASS",
+            "cta_unique_primary": "PASS",
+            "l5_visual_quality": "PASS",
+            "user_comprehension_cost": "PASS",
+            "industry_best_practice": "PASS",
+            "production_grade_product_feel": "PASS"
+          },
+          "l5_dimensions_96_16": {
+            "D1_zone_finance": "NOT_STARTED",
+            "D2_ia_navigation": "NOT_STARTED",
+            "D3_responsive_touch": "NOT_STARTED",
+            "D4_empty_load_error": "NOT_STARTED",
+            "D5_i18n": "NOT_STARTED",
+            "D6_a11y": "NOT_STARTED",
+            "D7_performance": "NOT_STARTED",
+            "D8_motion": "NOT_STARTED",
+            "D9_tokens": "NOT_STARTED",
+            "D10_wallet_chain": "NOT_STARTED",
+            "D11_observability": "NOT_STARTED",
+            "D12_legal_copy": "NOT_STARTED"
+          },
+          "production_ready": "YES",
+          "certification_verdict": "PASS",
+          "verified_by": null,
+          "verified_at_utc": "2026-07-10T09:15:47.663Z",
+          "evidence_path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+          "fpc_batch": "B25-C4",
+          "notes": "steward onboarding corridor · slot RBAC aligned"
+        }
+      ]
+    },
+    "dashboard_parity": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "prior_batch_pass",
+          "pass": true,
+          "batch_id": "B25-C3"
+        },
+        {
+          "id": "dashboard_next_required_batch",
+          "pass": true,
+          "expected": "B25-C4",
+          "actual": "B25-C4"
+        },
+        {
+          "id": "registry_batch_ssot",
+          "pass": true,
+          "batch_id": "B25-C4"
+        },
+        {
+          "id": "dashboard_lists_prior_batch",
+          "pass": true,
+          "batch_id": "B25-C3"
+        }
+      ],
+      "dash_ts": "2026-07-10T09:15:47.554Z"
+    },
+    "display_parity": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "login_freeze",
+          "pass": true,
+          "path": "frontend/evidence/GO_local_auth_l5/AUTH-LOGIN-UI-FREEZE.md"
+        },
+        {
+          "id": "register_freeze",
+          "pass": true,
+          "path": "frontend/evidence/GO_local_auth_l5/AUTH-REGISTER-UI-FREEZE.md"
+        },
+        {
+          "id": "identities_freeze",
+          "pass": true,
+          "path": "frontend/evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md"
+        },
+        {
+          "id": "provider_register_freeze",
+          "pass": true,
+          "path": "frontend/evidence/GO_local_provider_register_closure/PROVIDER-REGISTER-UI-FREEZE.md"
+        },
+        {
+          "id": "test_accounts_quick_ref",
+          "pass": true,
+          "path": "docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md"
+        },
+        {
+          "id": "freeze_doc:AUTH-LOGIN-UI-FREEZE.md",
+          "pass": true
+        },
+        {
+          "id": "freeze_doc:AUTH-REGISTER-UI-FREEZE.md",
+          "pass": true
+        },
+        {
+          "id": "freeze_doc:ME-IDENTITIES-UI-FREEZE.md",
+          "pass": true
+        }
+      ]
+    },
+    "identity_ssot": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "immutable_test_accounts",
+          "pass": true,
+          "path": "registry/test-accounts-business-immutable.v1.yaml"
+        },
+        {
+          "id": "business_admin_separation",
+          "pass": true,
+          "path": "registry/test-accounts-business-immutable.v1.yaml"
+        },
+        {
+          "id": "identity_slots_me_api",
+          "pass": true,
+          "path": "crates/api/src/chain_off/me.rs"
+        },
+        {
+          "id": "session_logout_contract",
+          "pass": true,
+          "path": "scripts/gates/auth-contract-gate.sh"
+        },
+        {
+          "id": "profile_links_core_model",
+          "pass": true,
+          "path": "frontend/lib/me/meIdentitiesCoreCardModel.ts"
+        },
+        {
+          "id": "profile_links_guide_model",
+          "pass": true,
+          "path": "frontend/lib/me/meIdentitiesProfileLinksModel.ts"
+        },
+        {
+          "id": "identity_slot_visibility",
+          "pass": true,
+          "path": "frontend/lib/me/meIdentitySlotVisibility.ts"
+        }
+      ]
+    },
+    "profile_links": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "profile_href_cluster",
+          "pass": true,
+          "hrefs": [
+            "/me/identities/guide/settings"
+          ],
+          "missing": []
+        }
+      ]
+    },
+    "display_chain": {
+      "pass": true,
+      "checks": [
+        {
+          "id": "login_readme",
+          "pass": true,
+          "path": "frontend/app/auth/login/README.md"
+        },
+        {
+          "id": "identities_readme",
+          "pass": true,
+          "path": "frontend/app/me/identities/README.md"
+        },
+        {
+          "id": "provider_register_readme",
+          "pass": true,
+          "path": "frontend/app/provider/register/README.md"
+        }
+      ]
+    },
+    "vitest_results": [
+      {
+        "id": "vitest:authLoginUiFreeze.contract.test.ts",
+        "path": "lib/auth/authLoginUiFreeze.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:authRegisterUiFreeze.contract.test.ts",
+        "path": "lib/auth/authRegisterUiFreeze.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:meIdentitiesUiFreeze.contract.test.ts",
+        "path": "lib/me/meIdentitiesUiFreeze.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:meIdentitiesL5FullScore.contract.test.ts",
+        "path": "lib/me/meIdentitiesL5FullScore.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:meIdentitiesPage.contract.test.ts",
+        "path": "app/me/identities/meIdentitiesPage.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:meIdentitiesIaClosure.contract.test.ts",
+        "path": "lib/me/meIdentitiesIaClosure.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      },
+      {
+        "id": "vitest:providerRegisterL5.contract.test.ts",
+        "path": "lib/provider/providerRegisterL5.contract.test.ts",
+        "pass": true,
+        "exit_code": 0,
+        "summary": " "
+      }
+    ]
+  },
+  "identity_static_ssot": [
+    {
+      "id": "static:FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json"
+    },
+    {
+      "id": "static:test-accounts-business-immutable.v1.yaml",
+      "pass": true,
+      "path": "registry/test-accounts-business-immutable.v1.yaml"
+    },
+    {
+      "id": "static:AUTH-LOGIN-UI-FREEZE.md",
+      "pass": true,
+      "path": "frontend/evidence/GO_local_auth_l5/AUTH-LOGIN-UI-FREEZE.md"
+    },
+    {
+      "id": "static:AUTH-REGISTER-UI-FREEZE.md",
+      "pass": true,
+      "path": "frontend/evidence/GO_local_auth_l5/AUTH-REGISTER-UI-FREEZE.md"
+    },
+    {
+      "id": "static:ME-IDENTITIES-UI-FREEZE.md",
+      "pass": true,
+      "path": "frontend/evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md"
+    },
+    {
+      "id": "static:full-production-certification-checklist.v1.yaml",
+      "pass": true,
+      "path": "registry/full-production-certification-checklist.v1.yaml"
+    }
+  ],
+  "business_certification": {
+    "verdict": "PASS",
+    "gate_pass": true
+  },
+  "quality_supplement": {
+    "verdict": "PASS",
+    "domains": [
+      "Q4",
+      "Q5",
+      "Q6",
+      "Q8"
+    ],
+    "checks": [
+      {
+        "id": "Q8_registry_batch",
+        "domain": "Q8",
+        "pass": true,
+        "path": "registry/full-production-certification-checklist.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q4_auth_login_freeze",
+        "domain": "Q4",
+        "pass": true,
+        "path": "frontend/evidence/GO_local_auth_l5/AUTH-LOGIN-UI-FREEZE.md",
+        "notes": []
+      },
+      {
+        "id": "Q4_me_identities_freeze",
+        "domain": "Q4",
+        "pass": true,
+        "path": "frontend/evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md",
+        "notes": []
+      },
+      {
+        "id": "Q6_test_accounts_registry",
+        "domain": "Q6",
+        "pass": true,
+        "path": "registry/test-accounts-business-immutable.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q5_identity_checklist",
+        "domain": "Q5",
+        "pass": true,
+        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json",
+        "notes": []
+      },
+      {
+        "id": "Q4_cluster_l2",
+        "domain": "Q4",
+        "pass": true,
+        "path": "FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+        "notes": [
+          "cluster_page_count:true",
+          "cluster_route_set:true",
+          "cluster_l1_complete:true",
+          "cluster_l2_certified:true",
+          "cluster_owner_files:true"
+        ]
+      },
+      {
+        "id": "Q4_dashboard_parity",
+        "domain": "Q4",
+        "pass": true,
+        "path": "FPC-100-RELEASE-DASHBOARD-LATEST.json",
+        "notes": [
+          "prior_batch_pass:true",
+          "dashboard_next_required_batch:true",
+          "registry_batch_ssot:true",
+          "dashboard_lists_prior_batch:true"
+        ]
+      },
+      {
+        "id": "Q6_identity_ssot",
+        "domain": "Q6",
+        "pass": true,
+        "path": "registry/test-accounts-business-immutable.v1.yaml",
+        "notes": [
+          "immutable_test_accounts:true",
+          "business_admin_separation:true",
+          "identity_slots_me_api:true",
+          "session_logout_contract:true",
+          "profile_links_core_model:true",
+          "profile_links_guide_model:true",
+          "identity_slot_visibility:true",
+          "profile_href_cluster:true"
+        ]
+      }
+    ]
+  },
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "identity_onboarding 26 routes · auth contract + session hash + multi-identity IA smoke"
+    },
+    "quality_meets_standard": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Test-account registry SSOT · identity_slots API · profile link parity · UI freeze docs"
+    },
+    "findings_identified": {
+      "answer": false,
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "items": []
+    },
+    "recertification_passed": {
+      "answer": true,
+      "notes": "26/26 identity_onboarding L2 PASS · dashboard next=B25-C5 · B21-B25-C3 frozen"
+    }
+  },
+  "overall_verdict": "PASS",
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B25-C5",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "identity_onboarding 26 routes ① — auth/session/identity_slots + test-account governance; defer-commit",
+  "traceability": {
+    "requirements": [
+      "26/26 identity_onboarding L2 certified",
+      "auth-contract + session-hash + multi-identity IA smoke PASS",
+      "immutable test accounts C1–C4 E1 E2 · public_catalog allowed:false",
+      "GET /api/v1/me identity_slots + profile link SSOT parity",
+      "page matrix b25_c4_apply cluster_certified"
+    ],
+    "spec_refs": [
+      "frontend/evidence/GO_local_auth_l5/AUTH-LOGIN-UI-FREEZE.md",
+      "frontend/evidence/GO_local_auth_l5/AUTH-REGISTER-UI-FREEZE.md",
+      "frontend/evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md",
+      "registry/test-accounts-business-immutable.v1.yaml",
+      "crates/api/src/chain_off/me.rs",
+      "FPC-100/B25-C4-identity-onboarding/FPC-100-IDENTITY-ONBOARDING-CHECKLIST-BASELINE.v1.json"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B25-C4-LATEST.json",
+    "certification_batch": "B25-C4",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T09:15:16.538Z",
+  "expires_at_utc": "2026-08-09T09:15:16.538Z",
+  "expiry_policy_days": 30,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T09:15:16.538Z",
+  "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+  "dod": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": true,
+    "working_tree_clean": true,
+    "all_met": true,
+    "checked_at_utc": "2026-07-10T09:35:04.404Z",
+    "committed_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+    "anchor_head": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+    "policy": "B21-B25-C6 unified defer-commit anchor"
+  },
+  "finalized_at_utc": "2026-07-10T09:35:05.837Z",
+  "defer_commit_anchor": {
+    "anchor_id": "B21-B25-C6",
+    "committed_at_utc": "2026-07-10T09:35:04.404Z",
+    "immutable_head": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+  }
+}

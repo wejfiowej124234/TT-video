@@ -18,7 +18,7 @@ async fn login_not_found_and_wrong_password_have_same_contract_pg() {
             "skip: login_not_found_and_wrong_password_have_same_contract_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let known_email = format!("login-known-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &known_email).await;
     let unknown_email = format!("login-unknown-{}@traveltrust.test", Uuid::new_v4());
@@ -104,7 +104,7 @@ async fn forgot_reset_audit_events_persist_request_id_and_outcome_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: forgot_reset_audit_events_persist_request_id_and_outcome_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     let _env = ForgotResetTestEnvGuard::set_log_transport_and_pepper();
     let _audit_queue = AuthAuditAsyncQueueEnvGuard::disable();
@@ -231,7 +231,7 @@ async fn auth_login_failure_audit_reason_matches_error_key_pg() {
             "skip: auth_login_failure_audit_reason_matches_error_key_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     clear_auth_email_send_windows_for_it(&pool).await;
     let _audit_queue = AuthAuditAsyncQueueEnvGuard::disable();

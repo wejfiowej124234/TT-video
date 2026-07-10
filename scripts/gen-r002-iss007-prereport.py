@@ -515,6 +515,7 @@ def repo_root() -> Path:
 def run_cargo_test(test_filter: str) -> tuple[int, str]:
     env = os.environ.copy()
     env.setdefault("P3_CHAIN_OFF", "1")
+    env.setdefault("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", "0")
     cmd = [
         "cargo",
         "test",

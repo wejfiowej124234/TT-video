@@ -21,7 +21,7 @@ async fn matrix_93_d_itn_001b_f012_post_itineraries_draft_persists_app_stack_ok_
             "skip: matrix_93_d_itn_001b_f012_post_itineraries_draft_persists_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = mock_pay_itin_app_stack_it_lock().lock().await;
     let app = app_stack_router(pool.clone());
     let (tourist_email, unused_guide_email) = run_d_itn_001_draft_only_with_app(&pool, app).await;
@@ -36,7 +36,7 @@ async fn matrix_93_d_itn_001c_f012_post_itineraries_get_order_detail_destination
             "skip: matrix_93_d_itn_001c_f012_post_itineraries_get_order_detail_destination_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = mock_pay_itin_app_stack_it_lock().lock().await;
     let app = app_stack_router(pool.clone());
     let (tourist_email, unused_guide_email, order_id, token_t) =
@@ -80,7 +80,7 @@ async fn matrix_93_d_itn_001d_f012_post_itineraries_patch_order_itinerary_reflec
             "skip: matrix_93_d_itn_001d_f012_post_itineraries_patch_order_itinerary_reflects_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = mock_pay_itin_app_stack_it_lock().lock().await;
     let app = app_stack_router(pool.clone());
     let (tourist_email, unused_guide_email, order_id, token_t) =
@@ -154,7 +154,7 @@ async fn matrix_93_b_ord_005b_f013_itinerary_then_confirm_final_snapshot_app_sta
             "skip: matrix_93_b_ord_005b_f013_itinerary_then_confirm_final_snapshot_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = mock_pay_itin_app_stack_it_lock().lock().await;
     let app = app_stack_router(pool.clone());
     let (tourist_email, unused_guide_email) =

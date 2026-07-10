@@ -10,3 +10,12 @@ mod review_submit_db_pool_idempotent_contract;
 mod review_weight_dual_path_parity_b447;
 mod review_weight_json_contract_b449;
 mod suite;
+
+// TT-MOD · 93 matrix B-domain PG app-stack (ISS-007 / R-002).
+#[cfg(test)]
+#[path = "orders_create_list_set_escrow_address_db_api_tests/mod.rs"]
+mod orders_create_list_set_escrow_address_db_api_tests;
+
+#[cfg(test)]
+#[path = "orders_accept_mock_pay_itinerary_confirm_db_api_tests/mod.rs"]
+mod orders_accept_mock_pay_itinerary_confirm_db_api_tests;

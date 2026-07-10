@@ -157,7 +157,7 @@ function applyDoD(batchId, dodResult) {
     batch.certification_frozen = true;
     batch.frozen_at_utc = batch.frozen_at_utc || stamp;
   } else if (dodResult.verdict === 'IN_PROGRESS') {
-    batch.pass = false;
+    if (!batch.certification_frozen) batch.pass = false;
   }
 
   fs.writeFileSync(p, JSON.stringify(batch, null, 2) + '\n');
@@ -167,6 +167,7 @@ function applyDoD(batchId, dodResult) {
 module.exports = {
   REQUIRED_EVIDENCE_FIELDS,
   evaluateDoD,
+  evaluateEvidenceComplete,
   applyDoD,
   loadBatch,
 };

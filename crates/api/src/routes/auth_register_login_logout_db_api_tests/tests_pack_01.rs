@@ -13,7 +13,7 @@ async fn login_after_register_issues_distinct_pg_session() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: login_after_register_issues_distinct_pg_session (DATABASE_URL unset)");
         return;
-    }
+    };
     let email = format!("auth-db-login-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 
@@ -115,7 +115,7 @@ async fn login_upgrades_p3_seed_arbitrator_row_from_tourist_to_arbitrator_pg() {
             "skip: login_upgrades_p3_seed_arbitrator_row_from_tourist_to_arbitrator_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = auth_app_stack_it_lock().lock().await;
     let prev_seed = std::env::var("P3_SEED_ARBITRATOR_EMAIL").ok();
     let _restore_seed = RestoreP3SeedArbitratorEmail {
@@ -200,7 +200,7 @@ async fn put_me_updates_nickname_visible_on_get_me_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: put_me_updates_nickname_visible_on_get_me_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let email = format!("me-put-db-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 

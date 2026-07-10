@@ -108,6 +108,8 @@ pub(super) async fn seed_bm004_bookmark_fixture(pool: &PgPool) -> (Uuid, Uuid, U
         None,
         None,
         None,
+        None,
+        None,
     )
     .await
     .expect("upsert_order");

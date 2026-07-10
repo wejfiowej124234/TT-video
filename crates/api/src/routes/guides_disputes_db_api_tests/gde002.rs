@@ -19,7 +19,7 @@ async fn matrix_93_b_gde_002b_f023_get_guide_availability_ok_shape_app_stack_ok_
             "skip: matrix_93_b_gde_002b_f023_get_guide_availability_ok_shape_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let guide_user_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_gde002b_app_{}", Uuid::new_v4());
@@ -34,7 +34,6 @@ async fn matrix_93_b_gde_002b_f023_get_guide_availability_ok_shape_app_stack_ok_
         None,
         "guide",
         "none",
-        None,
         None,
         None,
         None,

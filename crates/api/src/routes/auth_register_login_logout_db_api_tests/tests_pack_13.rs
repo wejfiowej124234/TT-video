@@ -14,7 +14,7 @@ async fn matrix_93_a_me_002b_f005_put_nickname_then_get_me_reflects_app_stack_ok
             "skip: matrix_93_a_me_002b_f005_put_nickname_then_get_me_reflects_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = auth_app_stack_it_lock().lock().await;
 
     let email = format!("93-a-me-002b-{}@traveltrust.test", Uuid::new_v4());
@@ -97,7 +97,7 @@ async fn matrix_93_a_me_005b_f005_put_default_wallet_then_get_me_reflects_app_st
             "skip: matrix_93_a_me_005b_f005_put_default_wallet_then_get_me_reflects_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = auth_app_stack_it_lock().lock().await;
 
     let email = format!("93-a-me-005b-{}@traveltrust.test", Uuid::new_v4());
@@ -184,7 +184,7 @@ async fn matrix_93_a_log_005b_f003_post_auth_refresh_after_logout_unauthorized_a
             "skip: matrix_93_a_log_005b_f003_post_auth_refresh_after_logout_unauthorized_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = auth_app_stack_it_lock().lock().await;
 
     let email = format!("93-a-log-005b-{}@traveltrust.test", Uuid::new_v4());

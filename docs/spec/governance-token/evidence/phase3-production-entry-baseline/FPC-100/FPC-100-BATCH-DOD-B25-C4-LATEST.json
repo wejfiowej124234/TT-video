@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.fpc_100_batch_dod.v1",
+  "timestamp_utc": "2026-07-10T09:35:04.404Z",
+  "batch_id": "B25-C4",
+  "ok": true,
+  "all_met": true,
+  "items": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": true,
+    "working_tree_clean": true
+  },
+  "committed_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+  "verdict": "PASS",
+  "pass": true,
+  "policy_note": "B21-B25-C6 unified defer-commit anchor ① — no push · no ②",
+  "anchor_head": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+}

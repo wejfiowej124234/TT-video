@@ -1,0 +1,156 @@
+{
+  "schema": "traveltrust.fpc_100_identity_onboarding_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B25-C4",
+  "domains": ["Q2", "Q4", "Q6"],
+  "note": "L2 identity_onboarding cluster (26 routes) · auth/session/identity_slots/profile · test-account governance; not ② staging GO",
+  "coverage_domains": [
+    "identity_onboarding_page_cards",
+    "auth_login_register_ui_freeze",
+    "me_identities_hub_freeze",
+    "provider_guide_steward_register",
+    "multi_role_data_isolation",
+    "test_account_registry_ssot",
+    "session_state_consistency",
+    "profile_display_parity",
+    "permission_boundary_rbac",
+    "fpc_release_dashboard_parity",
+    "executive_dashboard_gate_consistency",
+    "page_matrix_l2_cluster_apply"
+  ],
+  "severity_policy": {
+    "P0": "gate fail · test account public_catalog leak · session/auth contract fail · dashboard drift",
+    "P1": "profile link drift · vitest fail · SSOT path missing · production_ready null",
+    "P2": "optional Playwright skipped at ①"
+  },
+  "cluster": "identity_onboarding",
+  "cluster_routes": [
+    "/auth/login",
+    "/auth/register",
+    "/auth/forgot-password",
+    "/auth/reset-password",
+    "/auth/verify-email",
+    "/me",
+    "/me/onboarding",
+    "/me/identities",
+    "/me/identities/guide/settings",
+    "/me/identities/merchant/settings",
+    "/me/identities/region-steward/settings",
+    "/me/identities/acquisition/settings",
+    "/me/settings",
+    "/me/settings/profile",
+    "/me/settings/trust",
+    "/me/settings/privacy",
+    "/me/settings/data",
+    "/me/settings/language",
+    "/me/settings/notifications-prefs",
+    "/me/password",
+    "/me/security",
+    "/me/publish",
+    "/me/referrals",
+    "/guide/register",
+    "/provider/register",
+    "/steward/register"
+  ],
+  "cluster_page_count": 26,
+  "owner_ssot": "frontend/evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md",
+  "registry_gates": [
+    "scripts/gates/auth-contract-gate.sh",
+    "scripts/gates/check-auth-session-hash-gate.sh",
+    "scripts/dev/smoke-multi-identity-ia-closure-local.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/refresh-fpc-100-release-dashboard.cjs",
+    "scripts/dev/audit-executive-dashboard-gate-consistency.cjs",
+    "scripts/dev/apply-fpc-l2-identity-onboarding-matrix.cjs"
+  ],
+  "quality_gates": [
+    "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-PAGE-CERTIFICATION-MATRIX-LATEST.json",
+    "registry/test-accounts-business-immutable.v1.yaml",
+    "frontend/evidence/GO_local_auth_l5/AUTH-LOGIN-UI-FREEZE.md",
+    "frontend/evidence/GO_local_auth_l5/AUTH-REGISTER-UI-FREEZE.md",
+    "frontend/evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md",
+    "registry/full-production-certification-checklist.v1.yaml"
+  ],
+  "vitest_contracts": [
+    "lib/auth/authLoginUiFreeze.contract.test.ts",
+    "lib/auth/authRegisterUiFreeze.contract.test.ts",
+    "lib/me/meIdentitiesUiFreeze.contract.test.ts",
+    "lib/me/meIdentitiesL5FullScore.contract.test.ts",
+    "app/me/identities/meIdentitiesPage.contract.test.ts",
+    "lib/me/meIdentitiesIaClosure.contract.test.ts",
+    "lib/provider/providerRegisterL5.contract.test.ts"
+  ],
+  "identity_ssot": [
+    {
+      "id": "immutable_test_accounts",
+      "path": "registry/test-accounts-business-immutable.v1.yaml",
+      "must_contain": ["immutable_logical_ids", "C1", "C2", "C3", "C4", "public_catalog", "allowed: false"]
+    },
+    {
+      "id": "business_admin_separation",
+      "path": "registry/test-accounts-business-immutable.v1.yaml",
+      "must_contain": ["Business personas test CONSUMER", "Admin RBAC personas", "role_reassignment_forbidden"]
+    },
+    {
+      "id": "identity_slots_me_api",
+      "path": "crates/api/src/chain_off/me.rs",
+      "must_contain": ["identity_slots", "role_traveltrust"]
+    },
+    {
+      "id": "session_logout_contract",
+      "path": "scripts/gates/auth-contract-gate.sh",
+      "must_contain": ["auth_register_login_logout_db_api_tests", "session_cookie"]
+    },
+    {
+      "id": "profile_links_core_model",
+      "path": "frontend/lib/me/meIdentitiesCoreCardModel.ts",
+      "must_contain": [
+        "/me/identities/merchant/settings",
+        "/me/identities/region-steward/settings",
+        "/me/identities/acquisition/settings"
+      ]
+    },
+    {
+      "id": "profile_links_guide_model",
+      "path": "frontend/lib/me/meIdentitiesProfileLinksModel.ts",
+      "must_contain": ["/me/identities/guide/settings", "meIdentitiesProfileLinks"]
+    },
+    {
+      "id": "identity_slot_visibility",
+      "path": "frontend/lib/me/meIdentitySlotVisibility.ts",
+      "must_contain": ["MeIdentitySlotState", "meMerchantWorkspaceUnlocked"]
+    }
+  ],
+  "display_chain_ssot": [
+    {
+      "id": "login_readme",
+      "path": "frontend/app/auth/login/README.md",
+      "must_contain": ["/auth/login", "authLoginUiFreeze"]
+    },
+    {
+      "id": "identities_readme",
+      "path": "frontend/app/me/identities/README.md",
+      "must_contain": ["/me/identities", "meIdentitiesUiFreeze", "/me/settings/profile"]
+    },
+    {
+      "id": "provider_register_readme",
+      "path": "frontend/app/provider/register/README.md",
+      "must_contain": ["/provider/register", "providerRegisterL5"]
+    }
+  ],
+  "l2_score_policy": {
+    "scale": "0-10",
+    "min_ui": 8,
+    "min_ux": 8,
+    "min_content": 7,
+    "min_function_flow": 8,
+    "production_ready_allowed": ["YES", "CONDITIONAL"]
+  },
+  "dashboard_parity": {
+    "registry_batch_id": "B25-C4",
+    "prior_batch_id": "B25-C3",
+    "release_dashboard_json": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.json",
+    "registry_yaml": "registry/full-production-certification-checklist.v1.yaml"
+  }
+}

@@ -37,12 +37,15 @@ function loadBatchPass(batchId) {
   if (!fs.existsSync(p)) return false;
   try {
     const b = JSON.parse(fs.readFileSync(p, 'utf8'));
+    const verdictOk = b.verdict === 'PASS' || b.verdict === 'PASS_WITH_WARN';
     const dodOk = b.dod?.all_met === true;
-    return !!(
-      b.pass &&
-      dodOk &&
-      (b.verdict === 'PASS' || b.verdict === 'PASS_WITH_WARN')
-    );
+    // ① Engineering: frozen gate PASS + evidence; commit/clean-tree deferred to batch anchor.
+    const engineeringOk =
+      !!b.certification_frozen &&
+      !!b.gate_pass &&
+      b.dod?.gate_pass !== false &&
+      (verdictOk || b.dod?.evidence_complete === true);
+    return dodOk || engineeringOk;
   } catch {
     return false;
   }

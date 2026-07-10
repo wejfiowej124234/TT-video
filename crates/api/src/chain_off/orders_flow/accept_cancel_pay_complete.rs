@@ -509,5 +509,95 @@ pub async fn order_confirm_completion_impl(
     order_id: Uuid,
     user_id: Uuid,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
-    order_confirm_service_completion_impl(state, None, order_id, user_id).await
+    let mut store = state.store.write().await;
+    let order_before = store
+        .orders
+        .get(&order_id)
+        .ok_or((
+            StatusCode::NOT_FOUND,
+            Json(json!({"error": "order_not_found", "message": "order_not_found"})),
+        ))?
+        .clone();
+    if !crate::chain_off::order_is_participant(&store, &order_before, user_id) {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(json!({"error": "forbidden", "message": "forbidden"})),
+        ));
+    }
+    if let Some(err_key) =
+        crate::chain_off::me::order_participant_trust_gate(&store, user_id, &order_before)
+    {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(crate::api_json::err_key(err_key)),
+        ));
+    }
+    if !order_before.state.can_transition_to(OrderState::Completed) {
+        return Err((
+            StatusCode::CONFLICT,
+            Json(
+                json!({"error": "invalid_state", "message": "invalid_state", "current": order_state_to_str(order_before.state)}),
+            ),
+        ));
+    }
+    let guide_id = order_before.guide_id;
+    let slot_restore = store.guide_slot.get(&guide_id).copied();
+    let order = store.orders.get_mut(&order_id).ok_or((
+        StatusCode::NOT_FOUND,
+        Json(json!({"error": "order_not_found", "message": "order_not_found"})),
+    ))?;
+    let now = Utc::now();
+    order.state = OrderState::Completed;
+    order.completed_at = Some(now);
+    order.updated_at = now;
+    let order_clone = order.clone();
+    let (order_id_val, completed_at) = (order_clone.id, order_clone.completed_at);
+    store.guide_slot.remove(&guide_id);
+    drop(store);
+    if state.db_pool.is_some() {
+        if strict_order_db_write_enabled() {
+            if let Err(e) = try_persist_order_to_db(&state, &order_clone).await {
+                eprintln!(
+                    "[audit] strict order_confirm_completion: upsert_order failed order_id={} error={}",
+                    order_id_val, e
+                );
+                let mut store = state.store.write().await;
+                store.orders.insert(order_id_val, order_before);
+                if let Some(oid) = slot_restore {
+                    store.guide_slot.insert(guide_id, oid);
+                }
+                return Err((
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "order_db_persist_failed",
+                        "message": "order_db_persist_failed",
+                        "rule": "TRAVELTRUST_STRICT_ORDER_DB_WRITE=1; completion reverted in memory",
+                    })),
+                ));
+            }
+        } else {
+            persist_order_if_db(&state, &order_clone).await;
+        }
+    }
+    if let Some(ref pool) = state.db_pool {
+        let had_escrow = order_before.escrowed_at.is_some()
+            || order_before
+                .escrow_address
+                .as_deref()
+                .map(str::trim)
+                .is_some_and(|s| !s.is_empty());
+        crate::db::observe_order_completed(
+            pool,
+            order_before.tourist_id,
+            order_id_val,
+            had_escrow,
+        )
+        .await;
+    }
+    let _ = schedule_engine::release_slot(guide_id, order_id_val).await;
+    audit_key_write_stderr("order_confirm_completion", None, user_id, order_id_val);
+    Ok(Json(json!({
+        "status": "ok",
+        "order": { "id": order_id_val.to_string(), "status": "completed", "completed_at": completed_at.map(|t| t.to_rfc3339()) }
+    })))
 }

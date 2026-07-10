@@ -72,6 +72,27 @@ mod me_profile_avatar_http_contract_tests;
 #[cfg(test)]
 mod me_profile_avatar_s3_minio_db_api_tests;
 
+// TT-MOD · 93 matrix PG app-stack tests (ISS-007 / R-002); directory `#[path]` when split from legacy `.rs`.
+#[cfg(test)]
+#[path = "internal_indexer_admin_db_api_tests/mod.rs"]
+mod internal_indexer_admin_db_api_tests;
+
+#[cfg(test)]
+#[path = "guides_disputes_db_api_tests/mod.rs"]
+mod guides_disputes_db_api_tests;
+
+#[cfg(test)]
+#[path = "f031_f032_f033_app_http_db_api_tests/mod.rs"]
+mod f031_f032_f033_app_http_db_api_tests;
+
+#[cfg(test)]
+#[path = "me_market_bookmarks_db_api_tests/mod.rs"]
+mod me_market_bookmarks_db_api_tests;
+
+#[cfg(test)]
+#[path = "messages_db_api_tests/mod.rs"]
+mod messages_db_api_tests;
+
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use axum::Json;

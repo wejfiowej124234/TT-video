@@ -1,0 +1,108 @@
+{
+  "schema": "traveltrust.fpc_100_defer_commit_anchor.v1",
+  "timestamp_utc": "2026-07-10T09:35:04.404Z",
+  "phase": "① local",
+  "anchor_id": "B21-B25-C6",
+  "immutable_head": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+  "batches": [
+    "B21",
+    "B22",
+    "B23",
+    "B24",
+    "B25-C1",
+    "B25-C2",
+    "B25-C3",
+    "B25-C4",
+    "B25-C5",
+    "B25-C6"
+  ],
+  "batch_dod": [
+    {
+      "batch_id": "B21",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B22",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B23",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B24",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B25-C1",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B25-C2",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B25-C3",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B25-C4",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B25-C5",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    },
+    {
+      "batch_id": "B25-C6",
+      "gate_pass": true,
+      "evidence_complete": true,
+      "dashboard_refreshed": true,
+      "commit_complete": true,
+      "working_tree_clean": true
+    }
+  ],
+  "policy": {
+    "push": false,
+    "deploy": false,
+    "phase2": false,
+    "note": "Unified defer-commit anchor — engineering ① only"
+  },
+  "next_batch": "B26"
+}

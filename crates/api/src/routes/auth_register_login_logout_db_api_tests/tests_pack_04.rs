@@ -16,7 +16,7 @@ async fn matrix_93_a_pwd_001_change_password_revokes_session_new_login_ok() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_93_a_pwd_001_change_password_revokes_session_new_login_ok (DATABASE_URL unset)");
         return;
-    }
+    };
     let email = format!("93-a-pwd-001-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 
@@ -122,7 +122,7 @@ async fn matrix_93_a_pwd_002_f006_forgot_reset_password_new_login_ok_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_93_a_pwd_002_f006_forgot_reset_password_new_login_ok_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     let _env = ForgotResetTestEnvGuard::set_log_transport_and_pepper();
     let _ = email_transport::test_take_password_reset_raw_for_it();
@@ -253,7 +253,7 @@ async fn auth_login_per_email_limit_returns_429_after_window_exhausted() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: auth_login_per_email_limit_returns_429_after_window_exhausted (DATABASE_URL unset)");
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     let _rate_env = LoginPerEmailRateLimitEnvGuard::set(1, 3600);
     let email = format!("auth-login-rate-{}@traveltrust.test", Uuid::new_v4());

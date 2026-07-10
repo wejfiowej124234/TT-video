@@ -14,7 +14,7 @@ async fn register_creates_pg_session_logout_deletes_me_401() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: register_creates_pg_session_logout_deletes_me_401 (DATABASE_URL unset)");
         return;
-    }
+    };
     let email = format!("auth-db-it-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 
@@ -125,7 +125,7 @@ async fn pg_logout_cookie_only_deletes_session_and_me_unauthorized() {
             "skip: pg_logout_cookie_only_deletes_session_and_me_unauthorized (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let email = format!("auth-db-cookie-logout-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 
@@ -223,7 +223,7 @@ async fn pg_post_auth_refresh_cookie_only_rotates_session_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: pg_post_auth_refresh_cookie_only_rotates_session_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let email = format!("auth-db-cookie-refresh-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 

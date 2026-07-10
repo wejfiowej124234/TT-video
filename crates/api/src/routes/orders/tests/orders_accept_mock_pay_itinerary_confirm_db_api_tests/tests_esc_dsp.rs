@@ -4,8 +4,6 @@ use serde_json::json;
 use tower::ServiceExt;
 use uuid::Uuid;
 
-use crate::state::test_support::TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK;
-
 use super::cleanup::{arb_email_for_mockpay_tourist, cleanup_arb_user, cleanup_order_participants};
 use super::flows_esc::{run_b_esc_001_mock_pay_flow, run_b_esc_001_mock_pay_flow_with_app};
 use super::flows_itn_ord::run_b_ord_005_itin_then_confirm_final;
@@ -21,7 +19,7 @@ async fn f012_f013_itinerary_create_then_confirm_final_plan_db_api() {
             "skip: f012_f013_itinerary_create_then_confirm_final_plan_db_api (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (tourist_email, unused_guide_email) = run_b_ord_005_itin_then_confirm_final(&pool).await;
     cleanup_order_participants(&pool, &tourist_email, &unused_guide_email).await;
 }
@@ -34,10 +32,8 @@ async fn matrix_93_b_esc_001_mock_pay_then_get_order_escrowed() {
             "skip: matrix_93_b_esc_001_mock_pay_then_get_order_escrowed (DATABASE_URL unset)"
         );
         return;
-    }
-    let _env_lock = TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK
-        .lock()
-        .expect("env test lock");
+    };
+    let _env_lock = crate::test_env_serial::lock();
     std::env::remove_var("TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS");
     std::env::remove_var("TRAVELTRUST_DENY_MOCK_PAY");
     let prev_p3 = std::env::var("P3_CHAIN_OFF").ok();
@@ -56,10 +52,8 @@ async fn matrix_93_b_dsp_001_f025_post_order_dispute_then_list_contains_dispute_
             "skip: matrix_93_b_dsp_001_f025_post_order_dispute_then_list_contains_dispute_pg (DATABASE_URL unset)"
         );
         return;
-    }
-    let _env_lock = TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK
-        .lock()
-        .expect("env test lock");
+    };
+    let _env_lock = crate::test_env_serial::lock();
     std::env::remove_var("TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS");
     std::env::remove_var("TRAVELTRUST_DENY_MOCK_PAY");
     let prev_p3 = std::env::var("P3_CHAIN_OFF").ok();
@@ -135,10 +129,8 @@ async fn matrix_93_b_dsp_001b_f025_post_order_dispute_then_list_contains_dispute
             "skip: matrix_93_b_dsp_001b_f025_post_order_dispute_then_list_contains_dispute_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
-    let _env_lock = TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK
-        .lock()
-        .expect("env test lock");
+    };
+    let _env_lock = crate::test_env_serial::lock();
     std::env::remove_var("TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS");
     std::env::remove_var("TRAVELTRUST_DENY_MOCK_PAY");
     let prev_p3 = std::env::var("P3_CHAIN_OFF").ok();
@@ -217,10 +209,8 @@ async fn matrix_93_b_dsp_003b_f025_post_dispute_resolve_then_pg_status_resolved_
             "skip: matrix_93_b_dsp_003b_f025_post_dispute_resolve_then_pg_status_resolved_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
-    let _env_lock = TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK
-        .lock()
-        .expect("env test lock");
+    };
+    let _env_lock = crate::test_env_serial::lock();
     std::env::remove_var("TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS");
     std::env::remove_var("TRAVELTRUST_DENY_MOCK_PAY");
     let prev_p3 = std::env::var("P3_CHAIN_OFF").ok();

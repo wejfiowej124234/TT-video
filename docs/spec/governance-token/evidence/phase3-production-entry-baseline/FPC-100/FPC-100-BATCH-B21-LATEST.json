@@ -347,7 +347,7 @@
   "expiry_policy_days": 30,
   "certification_frozen": true,
   "frozen_at_utc": "2026-07-10T07:00:07.886Z",
-  "frozen_git_sha": "84e75ad894060ef4c2f231609a71994630a5582c",
+  "frozen_git_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f",
   "dod": {
     "gate_pass": true,
     "evidence_complete": true,
@@ -355,9 +355,15 @@
     "commit_complete": true,
     "working_tree_clean": true,
     "all_met": true,
-    "checked_at_utc": "2026-07-10T07:04:51.018Z",
-    "committed_sha": "84e75ad894060ef4c2f231609a71994630a5582c",
-    "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
+    "checked_at_utc": "2026-07-10T09:35:04.404Z",
+    "committed_sha": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+    "anchor_head": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+    "policy": "B21-B25-C6 unified defer-commit anchor"
   },
-  "finalized_at_utc": "2026-07-10T07:04:51.018Z"
+  "finalized_at_utc": "2026-07-10T09:35:04.590Z",
+  "defer_commit_anchor": {
+    "anchor_id": "B21-B25-C6",
+    "committed_at_utc": "2026-07-10T09:35:04.404Z",
+    "immutable_head": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+  }
 }

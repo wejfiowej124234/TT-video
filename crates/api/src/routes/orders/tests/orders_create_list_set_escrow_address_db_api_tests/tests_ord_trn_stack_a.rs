@@ -13,7 +13,7 @@ async fn matrix_93_b_ord_001_post_orders_ok_persisted_pg_row() {
     let Some(cx) = guide_staked_orders_ctx_or_skip().await else {
         eprintln!("skip: matrix_93_b_ord_001_post_orders_ok_persisted_pg_row (DATABASE_URL unset)");
         return;
-    }
+    };
     let create = cx
         .app
         .clone()
@@ -67,7 +67,7 @@ async fn matrix_93_b_ord_001b_f008_post_orders_ok_persisted_pg_row_app_stack_ok_
             "skip: matrix_93_b_ord_001b_f008_post_orders_ok_persisted_pg_row_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let create = cx
         .app
         .clone()
@@ -121,7 +121,7 @@ async fn matrix_93_b_ord_001c_f008_post_order_get_detail_created_app_stack_ok_pg
             "skip: matrix_93_b_ord_001c_f008_post_order_get_detail_created_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let create = cx
         .app
         .clone()
@@ -188,7 +188,7 @@ async fn matrix_93_b_ord_004b_f008_patch_itinerary_then_get_detail_reflects_app_
             "skip: matrix_93_b_ord_004b_f008_patch_itinerary_then_get_detail_reflects_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let create = cx
         .app
         .clone()

@@ -12,7 +12,7 @@ async fn auth_wallet_failure_error_contract_smoke_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: auth_wallet_failure_error_contract_smoke_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     clear_auth_email_send_windows_for_it(&pool).await;
     let _mail_env = ForgotResetTestEnvGuard::set_log_transport_and_pepper();

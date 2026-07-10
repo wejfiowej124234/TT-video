@@ -17,7 +17,7 @@ async fn matrix_93_b_mkt_001b_f009_get_discover_orders_ok_shape_app_stack_ok_pg(
             "skip: matrix_93_b_mkt_001b_f009_get_discover_orders_ok_shape_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = orders_app_stack_it_lock().lock().await;
 
     let suffix = Uuid::new_v4();

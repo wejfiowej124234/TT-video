@@ -26,7 +26,7 @@ async fn indexer_reorg_rewind_force_executes_delete_and_replay_on_isolated_chain
             "skip: indexer_reorg_rewind_force_executes_delete_and_replay_on_isolated_chain_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let chain_id: u64 = 990_001;
     let chain_id_i64 = chain_id as i64;
     let rewind_from_block: u64 = 12;
@@ -38,8 +38,9 @@ async fn indexer_reorg_rewind_force_executes_delete_and_replay_on_isolated_chain
         escrow_factory_address: None,
         fee_router_address: None,
         region_vault_address: None,
-        onboarding_fee_receiver_address: None,
+        escrow_factory_v2_address: None,
         country_pool_ledger_address: None,
+        unallocated_steward_path_vault_address: None,
         investor_share_token_addresses: vec![],
         staking_address: None,
         guide_staking_address: None,
@@ -123,7 +124,7 @@ async fn indexer_reorg_rewind_non_force_rejects_when_hash_matches_pg() {
             "skip: indexer_reorg_rewind_non_force_rejects_when_hash_matches_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
 
     const LAST_BLOCK: u64 = 13;
     const HASH: &str = "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
@@ -136,11 +137,12 @@ async fn indexer_reorg_rewind_non_force_rejects_when_hash_matches_pg() {
         loop {
             let Ok((mut socket, _)) = listener.accept().await else {
                 break;
-            }
+            };
             tokio::spawn(async move {
                 let Ok(_req) = read_http_request_headers_and_body(&mut socket).await else {
                     return;
-                };                let body = format!(
+                };
+                let body = format!(
                     r#"{{"jsonrpc":"2.0","id":1,"result":{{"hash":"{}"}}}}"#,
                     HASH
                 );
@@ -162,8 +164,9 @@ async fn indexer_reorg_rewind_non_force_rejects_when_hash_matches_pg() {
         escrow_factory_address: None,
         fee_router_address: None,
         region_vault_address: None,
-        onboarding_fee_receiver_address: None,
+        escrow_factory_v2_address: None,
         country_pool_ledger_address: None,
+        unallocated_steward_path_vault_address: None,
         investor_share_token_addresses: vec![],
         staking_address: None,
         guide_staking_address: None,
@@ -216,7 +219,7 @@ async fn indexer_reorg_rewind_non_force_rejects_when_hash_matches_app_stack_ok_p
             "skip: indexer_reorg_rewind_non_force_rejects_when_hash_matches_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
 
     const LAST_BLOCK: u64 = 15;
     const HASH: &str = "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
@@ -229,11 +232,12 @@ async fn indexer_reorg_rewind_non_force_rejects_when_hash_matches_app_stack_ok_p
         loop {
             let Ok((mut socket, _)) = listener.accept().await else {
                 break;
-            }
+            };
             tokio::spawn(async move {
                 let Ok(_req) = read_http_request_headers_and_body(&mut socket).await else {
                     return;
-                };                let body = format!(
+                };
+                let body = format!(
                     r#"{{"jsonrpc":"2.0","id":1,"result":{{"hash":"{}"}}}}"#,
                     HASH
                 );
@@ -255,8 +259,9 @@ async fn indexer_reorg_rewind_non_force_rejects_when_hash_matches_app_stack_ok_p
         escrow_factory_address: None,
         fee_router_address: None,
         region_vault_address: None,
-        onboarding_fee_receiver_address: None,
+        escrow_factory_v2_address: None,
         country_pool_ledger_address: None,
+        unallocated_steward_path_vault_address: None,
         investor_share_token_addresses: vec![],
         staking_address: None,
         guide_staking_address: None,

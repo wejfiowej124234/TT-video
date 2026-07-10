@@ -46,6 +46,9 @@ mod it_db_pool;
 #[cfg(test)]
 mod test_env_serial;
 
+#[cfg(test)]
+mod idempotency_http_contract_tests;
+
 fn main() {
     // 加载 .env：先当前目录，再项目根（crates/api 的上级两级 = 仓库根），使 SEED_TEST_ACCOUNTS、DATABASE_URL 等生效
     dotenvy::dotenv().ok();

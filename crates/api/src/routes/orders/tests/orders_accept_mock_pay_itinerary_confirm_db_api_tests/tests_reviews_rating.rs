@@ -3,8 +3,6 @@ use axum::http::{header, Method, Request, StatusCode};
 use serde_json::json;
 use tower::ServiceExt;
 
-use crate::state::test_support::TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK;
-
 use super::cleanup::cleanup_order_participants;
 use super::flows_esc::run_b_esc_002_completed_with_app;
 use super::support::{
@@ -20,10 +18,8 @@ async fn matrix_93_b_esc_005b_f027_dual_reviews_after_completed_get_list_len_two
             "skip: matrix_93_b_esc_005b_f027_dual_reviews_after_completed_get_list_len_two_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
-    let _env_lock = TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK
-        .lock()
-        .expect("env test lock");
+    };
+    let _env_lock = crate::test_env_serial::lock();
     std::env::remove_var("TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS");
     std::env::remove_var("TRAVELTRUST_DENY_MOCK_PAY");
     let prev_p3 = std::env::var("P3_CHAIN_OFF").ok();
@@ -114,10 +110,8 @@ async fn matrix_93_b_esc_005d_f010_bilateral_confirm_rating_then_order_sub_statu
             "skip: matrix_93_b_esc_005d_f010_bilateral_confirm_rating_then_order_sub_status_rating_confirmed_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
-    let _env_lock = TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS_ENV_TEST_LOCK
-        .lock()
-        .expect("env test lock");
+    };
+    let _env_lock = crate::test_env_serial::lock();
     std::env::remove_var("TRAVELTRUST_PRODUCTION_SAFE_DEFAULTS");
     std::env::remove_var("TRAVELTRUST_DENY_MOCK_PAY");
     let prev_p3 = std::env::var("P3_CHAIN_OFF").ok();

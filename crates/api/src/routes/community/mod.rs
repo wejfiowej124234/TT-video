@@ -23,3 +23,7 @@ mod tests;
 #[cfg(test)]
 #[path = "community_feed_like_collect_db_api_tests/mod.rs"]
 mod community_feed_like_collect_db_api_tests;
+
+#[cfg(test)]
+#[path = "community_report_me_posts_db_api_tests/mod.rs"]
+mod community_report_me_posts_db_api_tests;

@@ -22,7 +22,7 @@ async fn matrix_93_b_mkt_002c_f009_discover_orders_cursor_second_page_app_stack_
             "skip: matrix_93_b_mkt_002c_f009_discover_orders_cursor_second_page_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = orders_app_stack_it_lock().lock().await;
 
     let suffix = Uuid::new_v4();
@@ -168,7 +168,7 @@ async fn matrix_93_b_mkt_003b_f009_get_discover_orders_filter_city_empty_items_2
             "skip: matrix_93_b_mkt_003b_f009_get_discover_orders_filter_city_empty_items_200_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = orders_app_stack_it_lock().lock().await;
 
     let suffix = Uuid::new_v4();

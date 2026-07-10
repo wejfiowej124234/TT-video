@@ -23,7 +23,7 @@ async fn matrix_93_b_dsp_002_f025_dispute_detail_links_order() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_93_b_dsp_002_f025_dispute_detail_links_order (DATABASE_URL unset)");
         return;
-    }
+    };
     let tourist_id = Uuid::new_v4();
     let guide_user_id = Uuid::new_v4();
     let guide_row_id = Uuid::new_v4();
@@ -51,7 +51,6 @@ async fn matrix_93_b_dsp_002_f025_dispute_detail_links_order() {
         None,
         None,
         None,
-        None,
         now,
         now,
     )
@@ -64,7 +63,6 @@ async fn matrix_93_b_dsp_002_f025_dispute_detail_links_order() {
         None,
         "guide",
         "none",
-        None,
         None,
         None,
         None,
@@ -112,6 +110,8 @@ async fn matrix_93_b_dsp_002_f025_dispute_detail_links_order() {
         now,
         Some(now),
         Some(now),
+        None,
+        None,
         None,
         None,
         None,
@@ -209,7 +209,7 @@ async fn matrix_93_b_dsp_002b_f025_dispute_detail_links_order_app_stack_ok_pg() 
             "skip: matrix_93_b_dsp_002b_f025_dispute_detail_links_order_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let tourist_id = Uuid::new_v4();
     let guide_user_id = Uuid::new_v4();
     let guide_row_id = Uuid::new_v4();
@@ -237,7 +237,6 @@ async fn matrix_93_b_dsp_002b_f025_dispute_detail_links_order_app_stack_ok_pg() 
         None,
         None,
         None,
-        None,
         now,
         now,
     )
@@ -250,7 +249,6 @@ async fn matrix_93_b_dsp_002b_f025_dispute_detail_links_order_app_stack_ok_pg() 
         None,
         "guide",
         "none",
-        None,
         None,
         None,
         None,
@@ -303,6 +301,8 @@ async fn matrix_93_b_dsp_002b_f025_dispute_detail_links_order_app_stack_ok_pg() 
         now,
         Some(now),
         Some(now),
+        None,
+        None,
         None,
         None,
         None,

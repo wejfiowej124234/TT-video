@@ -1,0 +1,504 @@
+{
+  "timestamp_utc": "2026-07-10T08:39:04.034Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T08:39:04.358Z"
+  },
+  "gate_results": [
+    {
+      "gate": "scripts/gates/vertical-slice-tt9627-segment3-r002-validate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "OK: evidence\\GO_local_r002_verify\\r002_iss007_prereport\\report.json release_gate=PARTIAL_GO cases=43\r | OK: vertical-slice-tt9627-segment3-r002-validate (evidence/GO_local_r002_verify/r002_iss007_prereport/report.json)"
+    },
+    {
+      "gate": "scripts/gates/ci-local-delivery-minimum.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "  db_violations=0 (db skipped) | TT_COMMUNITY_MEDIA_GUARD: PASS | OK: ci-local-delivery-minimum"
+    },
+    {
+      "gate": "scripts/gates/check-go-no-go.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "all_required_jobs_success=false | go_no_go_status=REVIEW_REQUIRED | ========================================="
+    },
+    {
+      "gate": "scripts/gates/local-verify-r002-prereport-chain.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "OK: evidence\\GO_local_r002_verify\\r002_iss007_prereport\\report.json release_gate=PARTIAL_GO cases=43\r | Wrote evidence\\GO_local_r002_verify\\e2e_core_report.json and evidence\\GO_local_r002_verify\\e2e_trace_index.csv\r | OK: strict R-002 chain + e2e_core_report.passed=true\r"
+    }
+  ],
+  "wiring_checks": [
+    {
+      "id": "wiring:mod.rs",
+      "domain": "routes_test_module_wiring",
+      "pass": true,
+      "path": "internal_indexer_admin_db_api_tests/mod.rs"
+    },
+    {
+      "id": "wiring:mod.rs",
+      "domain": "routes_test_module_wiring",
+      "pass": true,
+      "path": "guides_disputes_db_api_tests/mod.rs"
+    },
+    {
+      "id": "wiring:mod.rs",
+      "domain": "routes_test_module_wiring",
+      "pass": true,
+      "path": "f031_f032_f033_app_http_db_api_tests/mod.rs"
+    },
+    {
+      "id": "wiring:mod.rs",
+      "domain": "routes_test_module_wiring",
+      "pass": true,
+      "path": "me_market_bookmarks_db_api_tests/mod.rs"
+    },
+    {
+      "id": "wiring:mod.rs",
+      "domain": "routes_test_module_wiring",
+      "pass": true,
+      "path": "messages_db_api_tests/mod.rs"
+    },
+    {
+      "id": "wiring:mod.rs",
+      "domain": "routes_test_module_wiring",
+      "pass": true,
+      "path": "orders_create_list_set_escrow_address_db_api_tests/mod.rs"
+    },
+    {
+      "id": "wiring:mod.rs",
+      "domain": "routes_test_module_wiring",
+      "pass": true,
+      "path": "orders_accept_mock_pay_itinerary_confirm_db_api_tests/mod.rs"
+    },
+    {
+      "id": "wiring:mod.rs",
+      "domain": "routes_test_module_wiring",
+      "pass": true,
+      "path": "community_report_me_posts_db_api_tests/mod.rs"
+    },
+    {
+      "id": "wiring:idempotency_http_contract",
+      "domain": "routes_test_module_wiring",
+      "pass": true
+    }
+  ],
+  "anchor_checks": [
+    {
+      "id": "cargo_list:matrix_93_d_idx_001b_f029_get_internal_i",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_idx_001b_f029_get_internal_indexer_status_ok_shape_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_dsp_003b_f025_post_dispute_r",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_dsp_003b_f025_post_dispute_resolve_then_pg_status_resolved_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_d_com_011_f031_post_community_",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_com_011_f031_post_community_post_acquisition_led_listing_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_d_adm_003b_f030_get_admin_sche",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_adm_003b_f030_get_admin_schema_migrations_ok_when_sqlx_migrations_applied_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_esc_001b_f010_mock_pay_then_",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_esc_001b_f010_mock_pay_then_get_order_escrowed_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_tgr_001_f032_get_trust_growt",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_tgr_001_f032_get_trust_growth_config_autopilot_gen_matches_runtime_state_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_d_itn_002_f033_post_itinerarie",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_itn_002_f033_post_itineraries_custom_persists_orders_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_mkt_001e_f009_get_discover_o",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_mkt_001e_f009_get_discover_orders_limit_only_includes_draft_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_dsp_001b_f025_post_order_dis",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_dsp_001b_f025_post_order_dispute_then_list_contains_dispute_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_d_com_001e_f014_get_feed_hot_m",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_com_001e_f014_get_feed_hot_mode_includes_seeded_post_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_ord_004b_f008_patch_itinerar",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_ord_004b_f008_patch_itinerary_then_get_detail_reflects_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_d_itn_001d_f012_post_itinerari",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_itn_001d_f012_post_itineraries_patch_order_itinerary_reflects_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_idm_001b_f028_trust_growth_i",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_idm_001b_f028_trust_growth_ingest_duplicate_x_idempotency_key_identical_body_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_ord_006b_f011_set_escrow_add",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_ord_006b_f011_set_escrow_address_get_detail_reflects_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_ord_005b_f013_itinerary_then",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_ord_005b_f013_itinerary_then_confirm_final_snapshot_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_msg_002_f026_post_get_order_",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_msg_002_f026_post_get_order_messages_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_a_ava_001b_f007_post_profile_a",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_a_ava_001b_f007_post_profile_avatar_local_persists_avatar_url_on_get_me_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_d_com_002b_f015_post_bearer_th",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_com_002b_f015_post_bearer_then_get_detail_unauthenticated_ok_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_esc_005b_f027_dual_reviews_a",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_esc_005b_f027_dual_reviews_after_completed_get_list_len_two_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_d_com_003b_f016_post_like_dele",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_com_003b_f016_post_like_delete_relike_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_d_com_008b_f017_post_collect_d",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_com_008b_f017_post_collect_delete_recollect_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_d_com_010b_f018_report_then_ge",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_com_010b_f018_report_then_get_post_detail_unauthenticated_ok_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_d_com_009_f019_get_me_posts_li",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_com_009_f019_get_me_posts_lists_own_post_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_mkt_004c_f020_post_get_delet",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_mkt_004c_f020_post_get_delete_get_market_bookmarks_order_absent_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_mkt_007_f021_post_provider_l",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_mkt_007_f021_post_provider_listing_then_get_catalog_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_mkt_008_f022_post_acquisitio",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_mkt_008_f022_post_acquisition_listing_then_get_catalog_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_gde_001_f023_post_guide_get_",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_gde_001_f023_post_guide_get_detail_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_gde_003b_f024_stake_post_per",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_gde_003b_f024_stake_post_persists_guide_row_active_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_mkt_005_f021_get_provider_li",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_mkt_005_f021_get_provider_listings_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_gde_002b_f023_get_guide_avai",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_gde_002b_f023_get_guide_availability_ok_shape_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_dsp_002b_f025_dispute_detail",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_dsp_002b_f025_dispute_detail_links_order_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_mkt_006_f022_get_acquisition",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_mkt_006_f022_get_acquisition_listings_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_mkt_009_f021_get_provider_li",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_mkt_009_f021_get_provider_listing_detail_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_esc_002b_f010_guide_confirm_",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_esc_002b_f010_guide_confirm_completion_then_get_order_completed_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_mkt_010_f022_get_acquisition",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_mkt_010_f022_get_acquisition_listing_detail_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_trn_003b_f025_get_order_deta",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_trn_003b_f025_get_order_detail_disputed_after_open_dispute_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_mkt_004d_f020_post_guide_boo",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_mkt_004d_f020_post_guide_bookmark_then_get_guide_ids_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_esc_004b_f029_get_order_chai",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_esc_004b_f029_get_order_chain_sync_status_ok_shape_after_escrow_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_b_msg_002c_f026_tourist_posts_",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_b_msg_002c_f026_tourist_posts_guide_reads_messages_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_d_itn_003b_f033_post_custom_dr",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_itn_003b_f033_post_custom_draft_then_get_roundtrip_bearer_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_a_env_001b_f029_get_health_and",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_a_env_001b_f029_get_health_and_meta_contract_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_d_itn_001b_f012_post_itinerari",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_itn_001b_f012_post_itineraries_draft_persists_app_stack_ok_pg"
+    },
+    {
+      "id": "cargo_list:matrix_93_d_com_001c_f014_get_feed_tag_f",
+      "domain": "matrix_93_cargo_filter_ssot",
+      "pass": true,
+      "filter": "matrix_93_d_com_001c_f014_get_feed_tag_filter_includes_tagged_post_app_stack_ok_pg"
+    },
+    {
+      "id": "gen_r002_anchor_count",
+      "domain": "gen_r002_anchor_parity",
+      "pass": true,
+      "expected": 43,
+      "parsed": 43,
+      "missing_list": 0
+    }
+  ],
+  "report_checks": [
+    {
+      "id": "r002_release_gate",
+      "domain": "r002_report_release_gate",
+      "pass": true,
+      "release_gate": "PARTIAL_GO",
+      "release_gate_reason": "ISS-007 narrow slice: D-IDX-001, B-DSP-003, D-COM-011, D-ADM-003, B-ESC-001, B-TGR-001, D-ITN-002, B-MKT-002, B-DSP-001, D-COM-001, B-ORD-004, D-ITN-001, B-IDM-001, B-ORD-006, B-ORD-005, B-MSG-002, A-AVA-001, D-COM-002, B-ESC-003, D-COM-003, D-COM-008, D-COM-010, D-COM-009, B-MKT-004, B-MKT-007, B-MKT-008, B-GDE-001, B-GDE-003, B-MKT-005, B-GDE-002, B-DSP-002, B-MKT-006, B-MKT-009, B-ESC-002, B-MKT-010, B-TRN-003, B-MKT-013, B-ESC-004, B-MSG-002C, D-ITN-003, A-ENV-001, D-ITN-001B, D-COM-001C PASS via matrix_93_* on PG+chain_off; staging full-matrix report.json still per ISS-007.",
+      "summary": {
+        "PASS": 43,
+        "FAIL": 0,
+        "BLOCKED": 0,
+        "N_A": 0,
+        "NOT_RUN": 0
+      }
+    },
+    {
+      "id": "false_go_guard_readme",
+      "domain": "false_go_guard",
+      "pass": true
+    },
+    {
+      "id": "partial_go_narrow_slice_expected",
+      "domain": "false_go_guard",
+      "pass": true,
+      "note": "43/43 PASS with PARTIAL_GO is valid ISS-007 narrow slice at ①"
+    }
+  ],
+  "static_ssot": [
+    {
+      "id": "ssot_93_matrix",
+      "domain": "04_route_contract_drift",
+      "pass": true,
+      "path": "D:\\TravelTrust-V1.1\\docs\\spec\\93-全站功能验证矩阵-域别回归清单.md"
+    },
+    {
+      "id": "ssot_r002",
+      "domain": "04_route_contract_drift",
+      "pass": true,
+      "path": "D:\\TravelTrust-V1.1\\docs\\spec\\R-002-回归执行闭环与发布准入.md"
+    },
+    {
+      "id": "ssot_gen_r002",
+      "domain": "04_route_contract_drift",
+      "pass": true,
+      "path": "D:\\TravelTrust-V1.1\\scripts\\gen-r002-iss007-prereport.py"
+    }
+  ],
+  "qualityCheckResults": [
+    {
+      "id": "Q8_regression_matrix",
+      "domain": "Q8",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json",
+      "notes": []
+    },
+    {
+      "id": "Q8_registry_batch",
+      "domain": "Q8",
+      "pass": true,
+      "path": "registry/full-production-certification-checklist.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q8_r002_readme",
+      "domain": "Q8",
+      "pass": true,
+      "path": "evidence/GO_local_r002_verify/README.md",
+      "notes": []
+    },
+    {
+      "id": "Q17_regression_checklist",
+      "domain": "Q17",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B24-regression/FPC-100-REGRESSION-CHECKLIST-BASELINE.v1.json",
+      "notes": []
+    },
+    {
+      "id": "Q8_matrix_wiring",
+      "domain": "Q8",
+      "pass": true,
+      "path": "crates/api/src/routes/mod.rs",
+      "notes": [
+        "wiring:mod.rs:true",
+        "wiring:mod.rs:true",
+        "wiring:mod.rs:true",
+        "wiring:mod.rs:true",
+        "wiring:mod.rs:true",
+        "wiring:mod.rs:true",
+        "wiring:mod.rs:true",
+        "wiring:mod.rs:true",
+        "wiring:idempotency_http_contract:true"
+      ]
+    },
+    {
+      "id": "Q8_anchor_cargo_parity",
+      "domain": "Q8",
+      "pass": true,
+      "path": "scripts/gen-r002-iss007-prereport.py",
+      "notes": [
+        "anchors:43"
+      ]
+    },
+    {
+      "id": "Q8_r002_report_gate",
+      "domain": "Q8",
+      "pass": true,
+      "path": "evidence/GO_local_r002_verify/r002_iss007_prereport/report.json",
+      "notes": [
+        "r002_release_gate",
+        "false_go_guard_readme",
+        "partial_go_narrow_slice_expected"
+      ]
+    }
+  ],
+  "findings": [],
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "43-anchor ISS-007 R-002 · PARTIAL_GO valid · --fail-on-no-go chain"
+    },
+    "quality_meets_standard": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Q8 regression + Q17 evidence · matrix wiring + false-GO guard"
+    },
+    "findings_identified": {
+      "answer": false,
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "items": []
+    },
+    "recertification_passed": {
+      "answer": true,
+      "notes": "43/43 PASS · release_gate PARTIAL_GO · local-verify-r002 chain exit 0"
+    }
+  }
+}

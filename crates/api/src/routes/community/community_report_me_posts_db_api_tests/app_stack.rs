@@ -16,7 +16,7 @@ async fn matrix_93_d_com_010_f018_post_report_persists_pg_row_app_stack_ok_pg() 
             "skip: matrix_93_d_com_010_f018_post_report_persists_pg_row_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (reporter_id, author_id, post_id, _token) =
         run_d_com_010_report_flow(&pool, app_stack_report_pool(pool.clone())).await;
     cleanup_users_posts_and_reports(&pool, &[reporter_id, author_id], &[post_id]).await;
@@ -32,7 +32,7 @@ async fn matrix_93_d_com_010b_f018_report_then_get_post_detail_unauthenticated_o
             "skip: matrix_93_d_com_010b_f018_report_then_get_post_detail_unauthenticated_ok_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let app = app_stack_report_pool(pool.clone());
     let (reporter_id, author_id, post_id, _token) =
         run_d_com_010_report_flow(&pool, app.clone()).await;
@@ -72,7 +72,7 @@ async fn matrix_93_d_com_009_f019_get_me_posts_lists_own_post_app_stack_ok_pg() 
             "skip: matrix_93_d_com_009_f019_get_me_posts_lists_own_post_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (uid, post_id) =
         run_d_com_009_me_posts_flow(&pool, app_stack_report_pool(pool.clone())).await;
     cleanup_users_posts_and_reports(&pool, &[uid], &[post_id]).await;
@@ -87,7 +87,7 @@ async fn matrix_93_d_com_009f_f019_get_me_posts_unauthorized_without_bearer_app_
             "skip: matrix_93_d_com_009f_f019_get_me_posts_unauthorized_without_bearer_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let app = app_stack_report_pool(pool.clone());
     let res = app
         .oneshot(

@@ -1,0 +1,53 @@
+{
+  "schema": "traveltrust.fpc_100_regression_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B24",
+  "domains": ["Q1", "Q8", "Q17"],
+  "note": "R-002 ISS-007 narrow 43-anchor slice + 93 matrix PG app-stack wiring SSOT; PARTIAL_GO valid — do not --require-go as staging full-matrix GO",
+  "coverage_domains": [
+    "matrix_93_cargo_filter_ssot",
+    "routes_test_module_wiring",
+    "r002_report_release_gate",
+    "false_go_guard",
+    "gen_r002_anchor_parity",
+    "04_route_contract_drift"
+  ],
+  "severity_policy": {
+    "P0": "release_gate NO_GO · anchor FAIL · matrix test 0-run drift · validate --fail-on-no-go fail",
+    "P1": "missing release_gate_reason · SSOT path drift · unwired db_api_tests module",
+    "P2": "NOT_RUN when DATABASE_URL unset (soft path only)"
+  },
+  "report_json_ssot": "evidence/GO_local_r002_verify/r002_iss007_prereport/report.json",
+  "r002_readme": "evidence/GO_local_r002_verify/README.md",
+  "anchor_count": 43,
+  "registry_gates": [
+    "scripts/gates/vertical-slice-tt9627-segment3-r002-validate.sh",
+    "scripts/gates/ci-local-delivery-minimum.sh",
+    "scripts/gates/check-go-no-go.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/gates/local-verify-r002-prereport-chain.sh"
+  ],
+  "quality_gates": [
+    "scripts/gen-r002-iss007-prereport.py",
+    "docs/spec/93-全站功能验证矩阵-域别回归清单.md",
+    "docs/spec/R-002-回归执行闭环与发布准入.md",
+    "crates/api/src/routes/mod.rs",
+    "crates/api/src/routes/orders/tests/mod.rs"
+  ],
+  "required_test_mod_paths": [
+    "internal_indexer_admin_db_api_tests/mod.rs",
+    "guides_disputes_db_api_tests/mod.rs",
+    "f031_f032_f033_app_http_db_api_tests/mod.rs",
+    "me_market_bookmarks_db_api_tests/mod.rs",
+    "messages_db_api_tests/mod.rs",
+    "orders_create_list_set_escrow_address_db_api_tests/mod.rs",
+    "orders_accept_mock_pay_itinerary_confirm_db_api_tests/mod.rs",
+    "community_report_me_posts_db_api_tests/mod.rs"
+  ],
+  "false_go_policy": {
+    "forbid_flags_on_iss007_prereport": ["--require-go"],
+    "allowed_release_gates": ["PARTIAL_GO", "GO"],
+    "forbidden_mislabel": "PARTIAL_GO must not be documented as staging full-matrix GO"
+  }
+}

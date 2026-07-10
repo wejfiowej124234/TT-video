@@ -21,7 +21,7 @@ async fn matrix_93_b_gde_004c_f023_public_get_guides_list_language_and_service_f
             "skip: matrix_93_b_gde_004c_f023_public_get_guides_list_language_and_service_filters_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let guide_user_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_guides_004c_{}", Uuid::new_v4());
@@ -36,7 +36,6 @@ async fn matrix_93_b_gde_004c_f023_public_get_guides_list_language_and_service_f
         None,
         "guide",
         "none",
-        None,
         None,
         None,
         None,
@@ -127,7 +126,7 @@ async fn matrix_93_b_gde_004e_f023_public_get_guides_list_singular_language_para
             "skip: matrix_93_b_gde_004e_f023_public_get_guides_list_singular_language_param_zh_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let guide_user_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_guides_004e_{}", Uuid::new_v4());
@@ -142,7 +141,6 @@ async fn matrix_93_b_gde_004e_f023_public_get_guides_list_singular_language_para
         None,
         "guide",
         "none",
-        None,
         None,
         None,
         None,

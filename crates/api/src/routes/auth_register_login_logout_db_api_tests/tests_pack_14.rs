@@ -18,7 +18,7 @@ async fn matrix_93_a_pwd_001b_f006_change_password_revokes_session_new_login_app
             "skip: matrix_93_a_pwd_001b_f006_change_password_revokes_session_new_login_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = auth_app_stack_it_lock().lock().await;
 
     let email = format!("93-a-pwd-001b-{}@traveltrust.test", Uuid::new_v4());
@@ -128,7 +128,7 @@ async fn matrix_93_a_reg_002b_f001_post_verify_email_ok_app_stack_ok_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_93_a_reg_002b_f001_post_verify_email_ok_app_stack_ok_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     let _env = ForgotResetTestEnvGuard::set_log_transport_and_pepper();
     let _ = email_transport::test_take_email_verify_raw_for_it();
@@ -223,7 +223,7 @@ async fn matrix_93_a_reg_001b_f001_register_success_pg_users_row_app_stack_ok_pg
             "skip: matrix_93_a_reg_001b_f001_register_success_pg_users_row_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = auth_app_stack_it_lock().lock().await;
 
     let email = format!("93-a-reg-001b-{}@traveltrust.test", Uuid::new_v4());
@@ -274,7 +274,7 @@ async fn matrix_93_a_log_003b_f003_logout_then_get_me_unauthorized_app_stack_ok_
             "skip: matrix_93_a_log_003b_f003_logout_then_get_me_unauthorized_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let _lock = auth_app_stack_it_lock().lock().await;
 
     let email = format!("93-a-log-003b-{}@traveltrust.test", Uuid::new_v4());

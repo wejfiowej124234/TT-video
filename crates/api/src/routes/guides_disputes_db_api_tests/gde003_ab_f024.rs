@@ -23,7 +23,7 @@ async fn matrix_93_b_gde_003_f024_stake_post_persists_guide_row_active() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_93_b_gde_003_f024_stake_post_persists_guide_row_active (DATABASE_URL unset)");
         return;
-    }
+    };
     let guide_user_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_guides_{}", Uuid::new_v4());
@@ -38,7 +38,6 @@ async fn matrix_93_b_gde_003_f024_stake_post_persists_guide_row_active() {
         None,
         "guide",
         "none",
-        None,
         None,
         None,
         None,
@@ -146,7 +145,7 @@ async fn matrix_93_b_gde_003b_f024_stake_post_persists_guide_row_active_app_stac
             "skip: matrix_93_b_gde_003b_f024_stake_post_persists_guide_row_active_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let guide_user_id = Uuid::new_v4();
     let now = Utc::now();
     let token = format!("tts_guides_{}", Uuid::new_v4());
@@ -161,7 +160,6 @@ async fn matrix_93_b_gde_003b_f024_stake_post_persists_guide_row_active_app_stac
         None,
         "guide",
         "none",
-        None,
         None,
         None,
         None,

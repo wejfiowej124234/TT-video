@@ -17,7 +17,7 @@ async fn matrix_93_b_mkt_003b_f020_get_market_bookmarks_empty_order_ids_ok_app_s
             "skip: matrix_93_b_mkt_003b_f020_get_market_bookmarks_empty_order_ids_ok_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let suffix = Uuid::new_v4();
     let email = format!("93-b-mkt-003b-f020-{suffix}@traveltrust.test");
     cleanup_user_by_email(&pool, &email).await;

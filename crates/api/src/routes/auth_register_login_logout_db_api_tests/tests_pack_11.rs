@@ -16,7 +16,7 @@ async fn admin_auth_audit_events_support_reason_filter_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: admin_auth_audit_events_support_reason_filter_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let admin_id = Uuid::new_v4();
     let admin_email = format!("admin-auth-audit-{}@traveltrust.test", admin_id);
     let admin_token = format!("tts_admin_auth_audit_{}", Uuid::new_v4());
@@ -286,7 +286,7 @@ async fn matrix_93_a_reg_002_f001_post_verify_email_ok_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_93_a_reg_002_f001_post_verify_email_ok_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let _serial = crate::test_auth_mail_env_mutex::lock_auth_mail_env_tests();
     let _env = ForgotResetTestEnvGuard::set_log_transport_and_pepper();
     let _ = email_transport::test_take_email_verify_raw_for_it();
@@ -377,7 +377,7 @@ async fn matrix_93_a_log_004_f002_post_auth_refresh_rotates_token_ok_pg() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: matrix_93_a_log_004_f002_post_auth_refresh_rotates_token_ok_pg (DATABASE_URL unset)");
         return;
-    }
+    };
     let email = format!("93-a-log-004-{}@traveltrust.test", Uuid::new_v4());
     cleanup_user_by_email(&pool, &email).await;
 

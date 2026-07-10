@@ -11,7 +11,7 @@ async fn f020_post_market_bookmark_order_then_get_lists_it() {
     let Some(pool) = pool_or_skip().await else {
         eprintln!("skip: f020_post_market_bookmark_order_then_get_lists_it (DATABASE_URL unset)");
         return;
-    }
+    };
     let (order_id, guide_row_id, tourist_id, guide_user_id) =
         run_b_mkt_004_me_market_bookmark_flow(&pool).await;
     cleanup_bookmark_order_bundle(&pool, order_id, guide_row_id, tourist_id, guide_user_id).await;
@@ -38,7 +38,7 @@ async fn matrix_93_b_mkt_004_f020_post_get_market_bookmarks_app_stack_ok_pg() {
             "skip: matrix_93_b_mkt_004_f020_post_get_market_bookmarks_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (order_id, guide_row_id, tourist_id, guide_user_id, token) =
         seed_bm004_bookmark_fixture(&pool).await;
     let router = app_stack_bm004(pool.clone());
@@ -56,7 +56,7 @@ async fn matrix_93_b_mkt_004c_f020_post_get_delete_get_market_bookmarks_order_ab
             "skip: matrix_93_b_mkt_004c_f020_post_get_delete_get_market_bookmarks_order_absent_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (order_id, guide_row_id, tourist_id, guide_user_id, token) =
         seed_bm004_bookmark_fixture(&pool).await;
     let router = app_stack_bm004(pool.clone());
@@ -73,7 +73,7 @@ async fn matrix_93_b_mkt_004d_f020_post_guide_bookmark_then_get_guide_ids_app_st
             "skip: matrix_93_b_mkt_004d_f020_post_guide_bookmark_then_get_guide_ids_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (order_id, guide_row_id, tourist_id, guide_user_id, token) =
         seed_bm004_bookmark_fixture(&pool).await;
     let router = app_stack_bm004(pool.clone());
@@ -91,7 +91,7 @@ async fn matrix_93_b_mkt_004e_f020_post_guide_bookmark_delete_get_guide_ids_abse
             "skip: matrix_93_b_mkt_004e_f020_post_guide_bookmark_delete_get_guide_ids_absent_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let (order_id, guide_row_id, tourist_id, guide_user_id, token) =
         seed_bm004_bookmark_fixture(&pool).await;
     let router = app_stack_bm004(pool.clone());

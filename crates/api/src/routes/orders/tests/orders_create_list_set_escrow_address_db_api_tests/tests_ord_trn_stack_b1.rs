@@ -15,7 +15,7 @@ async fn matrix_93_b_trn_001_f008_post_order_accept_sets_status_accepted_pg() {
             "skip: matrix_93_b_trn_001_f008_post_order_accept_sets_status_accepted_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let create = cx
         .app
         .clone()
@@ -82,7 +82,7 @@ async fn matrix_93_b_trn_001b_f008_post_order_accept_sets_status_accepted_app_st
             "skip: matrix_93_b_trn_001b_f008_post_order_accept_sets_status_accepted_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let create = cx
         .app
         .clone()
@@ -149,7 +149,7 @@ async fn matrix_93_b_ord_002_f009_get_orders_list_contains_created_order_pg() {
             "skip: matrix_93_b_ord_002_f009_get_orders_list_contains_created_order_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let create = cx
         .app
         .clone()
@@ -221,7 +221,7 @@ async fn matrix_93_b_ord_002b_f009_get_orders_list_contains_created_order_app_st
             "skip: matrix_93_b_ord_002b_f009_get_orders_list_contains_created_order_app_stack_ok_pg (DATABASE_URL unset)"
         );
         return;
-    }
+    };
     let create = cx
         .app
         .clone()

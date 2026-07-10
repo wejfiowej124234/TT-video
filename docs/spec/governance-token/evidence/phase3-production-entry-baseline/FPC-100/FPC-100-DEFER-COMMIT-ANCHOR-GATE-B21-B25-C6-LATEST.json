@@ -1,0 +1,149 @@
+{
+  "schema": "traveltrust.fpc_100_defer_commit_anchor_gate.v1",
+  "timestamp_utc": "2026-07-10T09:35:06.991Z",
+  "phase": "① local",
+  "anchor_batches": [
+    "B21",
+    "B22",
+    "B23",
+    "B24",
+    "B25-C1",
+    "B25-C2",
+    "B25-C3",
+    "B25-C4",
+    "B25-C5",
+    "B25-C6"
+  ],
+  "batches": [
+    {
+      "batch_id": "B21",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B22",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B23",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B24",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B25-C1",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B25-C2",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B25-C3",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B25-C4",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B25-C5",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B25-C6",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "gate_pass": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    }
+  ],
+  "burn_down": {
+    "completed": 31,
+    "remaining": 10,
+    "total": 41,
+    "contiguous_completed": 31,
+    "release_readiness_pct": 75.6,
+    "coverage_pct": 75.6,
+    "next_required_batch": "B26",
+    "skip_violations": [],
+    "sequence_ok": true
+  },
+  "b26_unlock": true,
+  "ui_scored_pages": 193,
+  "required_evidence_fields": [
+    "product_version",
+    "certified_at_utc",
+    "expires_at_utc",
+    "certification_frozen",
+    "frozen_at_utc",
+    "frozen_git_sha",
+    "release_blocker",
+    "human_verified",
+    "ai_review",
+    "traceability",
+    "verdict",
+    "pass"
+  ],
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true
+}

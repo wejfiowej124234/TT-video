@@ -76,7 +76,7 @@ pub(super) async fn seed_f026_order_messages_fixture(
     cleanup_order_bundle(pool, order_id, guide_row_id, tourist_id, guide_user_id).await;
 
     insert_user(
-        pool, tourist_id, &email_t, None, "tourist", "none", None, None, None, None, now, now,
+        pool, tourist_id, &email_t, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user tourist");
@@ -87,7 +87,6 @@ pub(super) async fn seed_f026_order_messages_fixture(
         None,
         "guide",
         "none",
-        None,
         None,
         None,
         None,
@@ -135,6 +134,8 @@ pub(super) async fn seed_f026_order_messages_fixture(
         None,
         None,
         None,
+        None,
+        None,
     )
     .await
     .expect("upsert_order");
@@ -159,7 +160,7 @@ pub(super) async fn seed_f026_order_messages_fixture_dual(
     cleanup_order_bundle(pool, order_id, guide_row_id, tourist_id, guide_user_id).await;
 
     insert_user(
-        pool, tourist_id, &email_t, None, "tourist", "none", None, None, None, None, now, now,
+        pool, tourist_id, &email_t, None, "tourist", "none", None, None, None, now, now,
     )
     .await
     .expect("insert_user tourist");
@@ -170,7 +171,6 @@ pub(super) async fn seed_f026_order_messages_fixture_dual(
         None,
         "guide",
         "none",
-        None,
         None,
         None,
         None,
@@ -210,6 +210,8 @@ pub(super) async fn seed_f026_order_messages_fixture_dual(
         now,
         Some(now),
         Some(now),
+        None,
+        None,
         None,
         None,
         None,
@@ -339,9 +341,13 @@ pub(super) async fn assert_b_msg_002_post_two_messages_then_get_lists_both(
     );
 }
 
-pub(super) fn app_stack_f026(pool: PgPool) -> Router {
+pub(super) async fn app_stack_f026(pool: PgPool) -> Router {
+    let mut store = ChainOffStore::default();
+    crate::startup::hydrate_from_db(&pool, &mut store)
+        .await
+        .expect("hydrate_from_db for app_stack_f026");
     let chain_off = ChainOffState {
-        store: Arc::new(RwLock::new(ChainOffStore::default())),
+        store: Arc::new(RwLock::new(store)),
         config: ChainOffConfig::default(),
         db_pool: Some(pool.clone()),
     };
