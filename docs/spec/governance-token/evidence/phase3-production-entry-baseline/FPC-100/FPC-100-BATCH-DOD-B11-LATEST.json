@@ -1,6 +1,6 @@
 {
   "schema": "traveltrust.fpc_100_batch_dod.v1",
-  "timestamp_utc": "2026-07-10T01:39:09.102Z",
+  "timestamp_utc": "2026-07-10T01:39:26.602Z",
   "batch_id": "B11",
   "ok": true,
   "all_met": true,
@@ -11,7 +11,7 @@
     "commit_complete": true,
     "working_tree_clean": true
   },
-  "committed_sha": "36940e60dbdb349b2a71410e05714741f6d8dc02",
+  "committed_sha": "7148cd049fc6010d183ca8d73e411915b9f672de",
   "verdict": "PASS",
   "pass": true
 }
