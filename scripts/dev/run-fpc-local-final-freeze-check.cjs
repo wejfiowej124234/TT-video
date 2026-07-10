@@ -143,18 +143,30 @@ function main() {
   const pass = findings.length === 0 && batchRows.every((r) => r.pass);
   let stampOut = stamp;
   let prevPassSnapshot = null;
+  let skipEvidenceRewrite = false;
   if (fs.existsSync(outPath)) {
     try {
       const prev = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+      const prevHead = prev.git?.head;
+      let headCompatible = prevHead === head;
+      if (!headCompatible && prevHead) {
+        try {
+          sh(`git merge-base --is-ancestor ${prevHead} ${head}`);
+          headCompatible = true;
+        } catch {
+          headCompatible = false;
+        }
+      }
       if (
         prev.verdict === 'PASS' &&
         pass &&
-        prev.git?.head === head &&
+        headCompatible &&
         prev.authoritative_immutable_head === (authoritativeSha || head) &&
         prev.freeze_chain?.pass_count === batchRows.filter((r) => r.pass).length
       ) {
         stampOut = prev.timestamp_utc || stamp;
         prevPassSnapshot = prev;
+        skipEvidenceRewrite = true;
       }
     } catch {
       /* rewrite */
@@ -200,7 +212,7 @@ function main() {
   }
 
   const payload = JSON.stringify(out, null, 2) + '\n';
-  if (!fs.existsSync(outPath) || fs.readFileSync(outPath, 'utf8') !== payload) {
+  if (!skipEvidenceRewrite && (!fs.existsSync(outPath) || fs.readFileSync(outPath, 'utf8') !== payload)) {
     fs.writeFileSync(outPath, payload);
   }
   console.log(`TT_LOCAL_FINAL_FREEZE: ${out.verdict}`);
