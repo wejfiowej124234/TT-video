@@ -357,8 +357,8 @@
       "detail": "transitive npm/cargo advisories — ① documented · Production Entry Review upgrade track"
     }
   ],
-  "verdict": "PASS",
-  "pass": true,
+  "verdict": "IN_PROGRESS",
+  "pass": false,
   "gate_verdict": "PASS",
   "release_blocker": "NO",
   "next_batch": "B18",
@@ -396,5 +396,16 @@
   "expiry_policy_days": 30,
   "certification_frozen": true,
   "frozen_at_utc": "2026-07-10T05:38:37.163Z",
-  "frozen_git_sha": "de8266cfd8b48fe2290cb0860babbefc0c94c38a"
+  "frozen_git_sha": "de8266cfd8b48fe2290cb0860babbefc0c94c38a",
+  "dod": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": false,
+    "working_tree_clean": false,
+    "all_met": false,
+    "checked_at_utc": "2026-07-10T05:38:55.482Z",
+    "committed_sha": "8a794e63d890fed18e9318423844b098a655dcfa",
+    "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
+  }
 }
