@@ -48,8 +48,14 @@ function main() {
   const stamp = new Date().toISOString();
   const head = sh('git rev-parse HEAD');
   const branch = sh('git branch --show-current');
+  const outPath = path.join(EVID, 'FPC-100-LOCAL-FINAL-FREEZE-LATEST.json');
+  const relOut = path.relative(ROOT, outPath).replace(/\\/g, '/');
   const porcelain = sh('git status --porcelain');
-  const treeClean = porcelain.length === 0;
+  const foreignDirty = porcelain
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l && !l.endsWith(relOut));
+  const treeClean = foreignDirty.length === 0;
   const findings = [];
   const batchRows = [];
 
@@ -57,7 +63,7 @@ function main() {
     findings.push({
       severity: 'P0',
       id: 'working_tree_not_clean',
-      detail: porcelain.split('\n').slice(0, 8).join('; '),
+      detail: foreignDirty.slice(0, 8).join('; '),
     });
   }
 
@@ -135,8 +141,8 @@ function main() {
   const readiness = dash?.release_readiness?.pct ?? burn.release_readiness_pct;
 
   const pass = findings.length === 0 && batchRows.every((r) => r.pass);
-  const outPath = path.join(EVID, 'FPC-100-LOCAL-FINAL-FREEZE-LATEST.json');
   let stampOut = stamp;
+  let prevPassSnapshot = null;
   if (fs.existsSync(outPath)) {
     try {
       const prev = JSON.parse(fs.readFileSync(outPath, 'utf8'));
@@ -144,40 +150,54 @@ function main() {
         prev.verdict === 'PASS' &&
         pass &&
         prev.git?.head === head &&
+        prev.authoritative_immutable_head === (authoritativeSha || head) &&
         prev.freeze_chain?.pass_count === batchRows.filter((r) => r.pass).length
       ) {
         stampOut = prev.timestamp_utc || stamp;
+        prevPassSnapshot = prev;
       }
     } catch {
       /* rewrite */
     }
   }
-  const out = {
-    schema: 'traveltrust.fpc_100_local_final_freeze.v1',
-    timestamp_utc: stampOut,
-    phase: '① local',
-    machine_key: 'TT_LOCAL_FINAL_FREEZE',
-    git: { head, branch, working_tree_clean: treeClean },
-    authoritative_immutable_head: authoritativeSha || head,
-    freeze_chain: {
-      batches: FREEZE_CHAIN_B21_B36,
-      rows: batchRows,
-      pass_count: batchRows.filter((r) => r.pass).length,
-      total: FREEZE_CHAIN_B21_B36.length,
-    },
-    burn_down: burn,
-    release_readiness_pct: readiness,
-    next_required_batch: burn.next_required_batch,
-    anchor_b30_b36: anchorOk,
-    b40_entry: {
-      authorized: false,
-      note: 'B40 ② staging one-shot — requires explicit Owner authorization; no ① business code changes after freeze',
-      phase: '②',
-    },
-    findings,
-    verdict: pass ? 'PASS' : 'FAIL',
-    pass,
-  };
+  const out = prevPassSnapshot
+    ? {
+        ...prevPassSnapshot,
+        git: { head, branch, working_tree_clean: treeClean },
+        findings,
+        verdict: pass ? 'PASS' : 'FAIL',
+        pass,
+      }
+    : {
+        schema: 'traveltrust.fpc_100_local_final_freeze.v1',
+        timestamp_utc: stampOut,
+        phase: '① local',
+        machine_key: 'TT_LOCAL_FINAL_FREEZE',
+        git: { head, branch, working_tree_clean: treeClean },
+        authoritative_immutable_head: authoritativeSha || head,
+        freeze_chain: {
+          batches: FREEZE_CHAIN_B21_B36,
+          rows: batchRows,
+          pass_count: batchRows.filter((r) => r.pass).length,
+          total: FREEZE_CHAIN_B21_B36.length,
+        },
+        burn_down: burn,
+        release_readiness_pct: readiness,
+        next_required_batch: burn.next_required_batch,
+        anchor_b30_b36: anchorOk,
+        b40_entry: {
+          authorized: false,
+          note: 'B40 ② staging one-shot — requires explicit Owner authorization; no ① business code changes after freeze',
+          phase: '②',
+        },
+        findings,
+        verdict: pass ? 'PASS' : 'FAIL',
+        pass,
+      };
+
+  if (prevPassSnapshot) {
+    out.timestamp_utc = stampOut;
+  }
 
   const payload = JSON.stringify(out, null, 2) + '\n';
   if (!fs.existsSync(outPath) || fs.readFileSync(outPath, 'utf8') !== payload) {
