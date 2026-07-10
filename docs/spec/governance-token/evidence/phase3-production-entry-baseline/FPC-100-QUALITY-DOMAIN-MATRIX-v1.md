@@ -9,6 +9,25 @@
 
 ---
 
+## 0.0 FPC 最高原则（写死 · 全文灵魂）
+
+> **Certification never ends at finding problems.**  
+> **Certification ends only when:** problems are resolved · evidence is regenerated · re-certification passes · and the release decision can be justified.
+
+**中文：** 认证不是发现问题就结束，而是只有在 **问题修复 · 证据更新 · 重新认证通过 · 并能够支撑发布决策** 时，认证才算真正完成。
+
+**Batch 完整生命周期**（优于「检查 → PASS」）：
+
+```
+Business Certification → Quality Certification → Findings → Severity
+→ Remediation → Change Impact → Re-certification → Evidence Refresh
+→ DoD → Batch CLOSED
+```
+
+Governance SSOT：[`FPC-CERTIFICATION-GOVERNANCE-v1.md`](FPC-CERTIFICATION-GOVERNANCE-v1.md) §0.1
+
+---
+
 ## 0. 定位（Release Certification → Production Quality）
 
 | 维度 | 当前 FPC v5 强项 | 本矩阵补全的视角 |
@@ -79,6 +98,121 @@ FPC-100 的目标不是「检查结束」，而是 **风险收敛至发布门槛
 | 最终 | **0** | **0** | ≤Accepted | Evidence 完整 · Gate PASS → PER → 发布 |
 
 **B00–B10 已证明：** 该闭环可运行（Anchor → … → Business Flow Certification）。**B11–B41** 继续对 API · 页面 · 性能 · 安全 · 运维 · 体验 · 运营 **全量跑一遍** — 最后不是「我们觉得能上线」，而是 **证据链证明达到生产发布标准**。
+
+### 0.3 Change Impact · 不全量重跑 · Quality Supplement
+
+**原则：** 新增认证项 **不** 默认推翻 B00–B41 已 PASS 批次。按 **变更影响（Change Impact）** 决定重跑范围 — 与 [`FPC-CERTIFICATION-GOVERNANCE-v1.md`](FPC-CERTIFICATION-GOVERNANCE-v1.md) §1 Freeze · [`registry/fpc-100-change-impact-map.v1.json`](../../../../registry/fpc-100-change-impact-map.v1.json) · `check-fpc-change-impact.cjs` 同源。
+
+#### 三种情形
+
+| # | 情形 | 是否重跑已 PASS 批次 | 示例 |
+|---|------|---------------------|------|
+| **① 不重跑** | 仅扩展 **认证能力**（清单/域定义/验收标准/证据模板），**尚未执行**新检查 | ❌ | **Quality Domain Matrix v1** — 能力扩展，**不是**认证结果改变 |
+| **② Quality Supplement** | 对已 PASS 批次 **执行** 新增质量域检查 | ⚠️ **只跑增量** | B04 Business PASS → 补 Performance · UX · Architecture 深度清单 → 写 Evidence → 再 DoD |
+| **③ 全量失效** | **治理规则**改变（Batch 顺序 · Dashboard Schema · DoD 定义 · Release Decision） | ✅ 全部重认证 | **FPC v5 Governance Freeze** — **当前不存在** |
+
+**禁止：** 每增加一项 UX/性能/代码质量检查就把 B00–B41 **全部重跑** — 认证成本失控 · 打乱 Burn-down。
+
+#### 双层批次模型（证据扩展 · 不改 v5 Dashboard Schema）
+
+**写死：** **Overall PASS 的前提是 Business PASS + Quality PASS**（Quality 为 **N/A** 的批次除外 · 须 documented 理由）。
+
+每个 Batch 证据 JSON 可扩展（**认证内容** · 非治理 Schema）：
+
+| 字段 | 允许状态 | 说明 |
+|------|----------|------|
+| `business_certification.verdict` | NOT_STARTED · IN_PROGRESS · **PASS** · FAIL | 原 Batch Gate/DoD · 已 PASS 的 **继续有效** |
+| `quality_supplement.verdict` | **PENDING** · **IN_PROGRESS** · **PASS** · PASS_WITH_WARN · FAIL · N/A | 新增质量域增量认证 |
+| `overall_verdict` | **IN_PROGRESS** · PASS · PASS_WITH_WARN · FAIL | **派生字段** · 见下表 |
+
+**Overall 派生规则（固定）：**
+
+| Business | Quality | Overall | Dashboard 读法 |
+|----------|---------|---------|----------------|
+| PASS | PENDING | **IN_PROGRESS** | 业务已过 · **质量认证尚未开始** |
+| PASS | IN_PROGRESS | **IN_PROGRESS** | 业务已过 · **质量认证进行中** |
+| PASS | PASS | **PASS** | 双层均完成 |
+| PASS | PASS_WITH_WARN | **PASS_WITH_WARN** | P2 已登记 Accepted Risk |
+| PASS | FAIL | **FAIL** | 质量阻断 · 修后只重跑 Quality 增量 |
+| FAIL | * | **FAIL** | 业务未过 · Quality 不单独 Overall PASS |
+| PASS | N/A | **PASS** | 须 documented · 该批无映射质量域 |
+
+**示例 B04（进行中）：**
+
+```
+Business:  PASS
+Quality:   IN_PROGRESS
+Overall:   IN_PROGRESS    ← 不是业务没过，是质量还没补完
+```
+
+**示例 B04（完成）：**
+
+```
+Business:  PASS
+Quality:   PASS
+Overall:   PASS
+```
+
+**三层 Coverage（最终 Dashboard 旁证 · ② Staging 前须全 100%）：**
+
+| 指标 | 公式 | 目标 |
+|------|------|------|
+| **Business Coverage** | Business PASS 批次数 / 41 | **100%** |
+| **Quality Coverage** | Quality PASS（或 documented N/A）批次数 / 41 | **100%** |
+| **Overall Certification** | Overall PASS 批次数 / 41 | **100%** → `TT_FULL_PRODUCTION_CERTIFICATION` |
+
+**Burn-down 纪律：** B00–B10 的 **Business PASS 不被推翻** · Readiness 历史 **不回零**；Overall 在 Quality Supplement 完成前为 IN_PROGRESS · **不** 因此 retroactive 撤销已记录的 Business 证据链。
+
+#### Quality Supplement 流程（以 B04 为例）
+
+```
+B04  Business Certification     PASS（已冻结 · 不推翻）
+        ↓
+Quality Checklist（本矩阵 §3 · 该批映射域）
+        ↓
+Performance / UX / Architecture …（仅新增域对应检查）
+        ↓
+Evidence → FPC-100/B04-*/quality-supplement/
+        ↓
+Re-certify（只跑增量 · 非全 Batch 重跑）
+        ↓
+finalize-fpc-batch-dod.cjs --batch B04  （quality 柱更新）
+        ↓
+B04  FINAL PASS（Business + Quality）
+```
+
+#### 执行纪律（写死）
+
+| 阶段 | 动作 |
+|------|------|
+| **现在** | **不** 回头重跑 B00–B10；Quality Matrix v1 = ① 能力扩展 |
+| **下一步** | **B11 → DoD 收口**（Burn-down 纪律不变） |
+| **B12 → B41** | 每批 **Business + Quality 一并**执行 → 该批 Overall PASS 后进入下一批 |
+| **B41 完成后** | **回头** B00 → B01 → … → B10 **Quality Supplement**（仅增量 · 不推翻 Business） |
+| **② Staging 前** | Business Coverage **100%** · Quality Coverage **100%** · Overall Certification **PASS** |
+| **代码变更** | 仍走 Change Impact — 只 **失效** 受影响批次，非全量 |
+
+```
+B11 DoD
+  ↓
+B12  Business + Quality  →  Overall PASS
+  ↓
+…
+  ↓
+B41  Business + Quality  →  Overall PASS
+  ↓
+B00 Quality Supplement  →  Overall PASS
+  ↓
+B01 Quality Supplement  →  Overall PASS
+  ↓
+…
+  ↓
+B10 Quality Supplement  →  Overall PASS
+  ↓
+Dashboard: Business 100% · Quality 100% · Overall PASS
+```
+
+**Re-certification** 在此指 **只跑新增质量域对应检查** — **不是** 全部重跑。
 
 ---
 
@@ -370,8 +504,8 @@ L5  运营与真实              → 运营 · 数据 · 恢复 · 真实 B30–
 | **Findings 100% = 0** | 所有发现清零 | ❌ **不是**发布标准 |
 | **Blocking 100% = 0** | P0=0 · P1=0 · Critical Risk=0 | ✅ |
 
-**Release Readiness %（Burn-down）** 仍 = 连续 Batch PASS / 41。  
-**Quality Coverage %（旁证）** = 17 域中 **检查已执行** 的域数 / 17 — **不** 替代 `TT_RELEASE_READINESS` 或 **§0.1 发布门槛**。
+**Release Readiness %（Burn-down）** 仍 = 连续 **Overall PASS** 前缀 / 41（B00–B10 在 Quality 补完前 Overall=IN_PROGRESS · Business 证据 **保留**）。  
+**Business Coverage %** = Business PASS / 41 · **Quality Coverage %** = Quality PASS|N/A / 41 — Owner 旁证 · **不** 替代 Burn-down。
 
 ---
 
@@ -384,13 +518,12 @@ L5  运营与真实              → 运营 · 数据 · 恢复 · 真实 B30–
 | 改 Batch / Dashboard Schema | — | ❌ 禁止（v5 Freeze） |
 | 改业务代码 | — | ❌ 本轮不做 |
 
-**建议执行顺序（与 Burn-down 一致）：**
+**建议执行顺序（与 §0.3 一致 · 不回头重跑）：**
 
-1. 收口 **B11** DoD（commit + finalize）→ Readiness ≈29%  
-2. **B12** 起按 Registry 顺序；每批附带本矩阵对应域的 **深度清单** 段落写入该批 `FPC-100/Bxx-*/`  
-3. **B25-C*** + **B26** 集中拉高 Q3 · Q4 · Q5 深度  
-4. **B30–B36** 拉高 Q7 · Q9 · Q14 运营与数据质量  
-5. ② **B40** 后 Environment Diff 复验 Q4 · Q10 · Q14
+1. **B11 DoD 收口** → Readiness 前进  
+2. **B12–B41** — 每批 Business + Quality → Overall PASS  
+3. **B41 完成后** — B00→…→B10 Quality Supplement（增量 only）  
+4. **② Staging 前** — Business / Quality Coverage 均 **100%** · Overall Certification **PASS**
 
 ---
 
@@ -402,8 +535,9 @@ L5  运营与真实              → 运营 · 数据 · 恢复 · 真实 B30–
 | API smoke | **API Parity Certification**（B11 · 四维） |
 | 页面绿集 | **Page Certification**（B25 · L2） |
 | 走查 | **Certification**（须 verdict + evidence） |
+| 全量重跑 | **Change Impact 失效** 或 **Quality Supplement 增量**（§0.3） |
 
 ---
 
-**Version:** 1.0.1 · **2026-07-10**  
+**Version:** 1.0.4 · **2026-07-10**  
 **Maintainer discipline:** 单维护者自检 · 与 [`FPC-GOVERNANCE-FREEZE-v5.md`](FPC-GOVERNANCE-FREEZE-v5.md) · [`FPC-CERTIFICATION-GOVERNANCE-v1.md`](FPC-CERTIFICATION-GOVERNANCE-v1.md) §2 Accepted Risks 同源

@@ -15,6 +15,50 @@
 
 FPC-100 是 **TravelTrust Full Production Certification Framework** — 不仅是一次发布检查，而是 **每个版本（v1.1 · v1.2 · v2.0）可重复执行的长期发布标准**。
 
+### 0.1 FPC 最高原则（写死 · 框架灵魂）
+
+> **Certification never ends at finding problems.**  
+> **Certification ends only when:** problems are resolved · evidence is regenerated · re-certification passes · and the release decision can be justified.
+
+**中文：** 认证不是发现问题就结束，而是只有在 **问题修复 · 证据更新 · 重新认证通过 · 并能够支撑发布决策** 时，认证才算真正完成。
+
+**禁止：** 把「跑完 Gate / 列出 Findings」当作 Batch PASS 或 CLOSED。
+
+#### Batch 完整生命周期
+
+```
+Business Certification
+        │
+        ▼
+Quality Certification（B12 起一并 · B00–B10 后补 Supplement）
+        │
+        ▼
+Findings
+        │
+        ▼
+Severity（P0 / P1 / P2 / P3）
+        │
+        ▼
+Remediation
+        │
+        ▼
+Change Impact
+        │
+        ▼
+Re-certification（增量 · 非无脑全量重跑）
+        │
+        ▼
+Evidence Refresh
+        │
+        ▼
+DoD（Gate · Evidence · Dashboard · Commit · Clean tree）
+        │
+        ▼
+Batch CLOSED
+```
+
+互指：[`FPC-100-QUALITY-DOMAIN-MATRIX-v1.md`](FPC-100-QUALITY-DOMAIN-MATRIX-v1.md) §0.1–0.3 · [`FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md`](FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md)
+
 与已有 Freeze 的关系：
 
 | Freeze | 范围 |

@@ -6,6 +6,10 @@
 > **Feature Freeze does not mean Release Ready.** Release Ready is earned only through completed certification evidence.  
 > 功能冻结不代表可以发布；发布资格只能通过完整的认证证据获得。
 
+> **FPC 最高原则：** 认证不是发现问题就结束；只有在 **问题修复 · 证据更新 · 重新认证通过 · 并能够支撑发布决策** 时，认证才算真正完成。  
+> *Certification never ends at finding problems — it ends when remediation, evidence refresh, re-certification, and release justification are all complete.*  
+> 见 [`FPC-CERTIFICATION-GOVERNANCE-v1.md`](FPC-CERTIFICATION-GOVERNANCE-v1.md) §0.1 · [`FPC-100-QUALITY-DOMAIN-MATRIX-v1.md`](FPC-100-QUALITY-DOMAIN-MATRIX-v1.md) §0.0
+
 **Governance freeze:** [`FPC-GOVERNANCE-FREEZE-v5.md`](FPC-GOVERNANCE-FREEZE-v5.md)
 **Governance:** [`FPC-CERTIFICATION-GOVERNANCE-v1.md`](FPC-CERTIFICATION-GOVERNANCE-v1.md)  
 **Release Dashboard:** [`FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.md`](FPC-100/FPC-100-RELEASE-DASHBOARD-LATEST.md)  
@@ -238,6 +242,8 @@ L5   运营与真实 ★★★★★       Content · Lineage · API Contract ·
 **Release Certification** 覆盖 Batch/Gate/Evidence；**Product + Operational + Engineering Quality** 由 **17 个质量域** 映射到现有 **B00–B41** 与 **202 页卡字段**（含 UX/性能/架构/可维护性/运营体验深度清单）。
 
 **发布标准：** 全量 **Coverage** + **P0=0 · P1=0 · Critical Risk=0** + P2 **FIX 或 Accepted Risk** — 见矩阵 **§0.1–0.2** 与本文 **§7.2**。
+
+**重跑纪律：** 新增质量域 **不** 推翻 B00–B10 — 按 **Change Impact + Quality Supplement（§0.3）** 增量补认证。
 
 → [`FPC-100-QUALITY-DOMAIN-MATRIX-v1.md`](FPC-100-QUALITY-DOMAIN-MATRIX-v1.md) · 机读 [`FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json`](FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json)
 

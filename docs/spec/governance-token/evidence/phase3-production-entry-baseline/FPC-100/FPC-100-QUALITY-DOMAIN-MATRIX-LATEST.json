@@ -11,8 +11,25 @@
     "parent_registry": "registry/full-production-certification-checklist.v1.yaml",
     "parent_doc": "FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md"
   },
-  "timestamp_utc": "2026-07-10T01:30:00.000Z",
-  "version": "1.0.1",
+  "timestamp_utc": "2026-07-10T01:50:00.000Z",
+  "version": "1.0.4",
+  "fpc_highest_principle": {
+    "en": "Certification never ends at finding problems. Certification ends only when problems are resolved, evidence is regenerated, re-certification passes, and the release decision can be justified.",
+    "zh": "认证不是发现问题就结束，而是只有在问题修复、证据更新、重新认证通过，并能够支撑发布决策时，认证才算真正完成.",
+    "forbidden": "treating_gate_run_or_findings_list_as_batch_closed"
+  },
+  "batch_lifecycle": [
+    "business_certification",
+    "quality_certification",
+    "findings",
+    "severity_P0_P1_P2_P3",
+    "remediation",
+    "change_impact",
+    "re_certification",
+    "evidence_refresh",
+    "dod",
+    "batch_closed"
+  ],
   "release_standard": {
     "principle": "blocking_issues_closed_and_residual_risks_explicitly_accepted",
     "not_required": "all_findings_zero",
@@ -53,6 +70,71 @@
       "label_zh": "Enhancement · 不阻断发布",
       "examples": ["feature_suggestion", "ux_optimization"],
       "release_rule": "backlog_only"
+    }
+  },
+  "quality_supplement_model": {
+    "principle": "change_impact_driven_not_full_rerun",
+    "governance_frozen": true,
+    "change_impact_ssot": "registry/fpc-100-change-impact-map.v1.json",
+    "change_impact_script": "scripts/dev/check-fpc-change-impact.cjs",
+    "recert_rules": {
+      "no_rerun": {
+        "when": "capability_extension_only_not_yet_executed",
+        "example": "Quality Domain Matrix v1 definition",
+        "invalidate_passed_batches": false
+      },
+      "quality_supplement": {
+        "when": "new_quality_domains_executed_on_already_passed_batch",
+        "invalidate_business_pass": false,
+        "rerun_scope": "incremental_quality_checks_only",
+        "evidence_path_pattern": "FPC-100/Bxx-*/quality-supplement/"
+      },
+      "full_invalidation": {
+        "when": "governance_rules_change",
+        "examples": ["batch_order", "dashboard_schema", "dod_definition", "release_decision"],
+        "current_status": "not_applicable_fpc_v5_frozen"
+      }
+    },
+    "overall_pass_rule": "Business PASS AND Quality PASS (Quality N/A with documented reason exempt)",
+    "batch_evidence_layers": {
+      "business_certification": {
+        "field": "business_certification.verdict",
+        "states": ["NOT_STARTED", "IN_PROGRESS", "PASS", "FAIL"]
+      },
+      "quality_supplement": {
+        "field": "quality_supplement.verdict",
+        "states": ["PENDING", "IN_PROGRESS", "PASS", "PASS_WITH_WARN", "FAIL", "N/A"]
+      },
+      "overall_verdict": {
+        "field": "overall_verdict",
+        "states": ["IN_PROGRESS", "PASS", "PASS_WITH_WARN", "FAIL"],
+        "derived": true
+      },
+      "derivation_table": [
+        { "business": "PASS", "quality": "PENDING", "overall": "IN_PROGRESS" },
+        { "business": "PASS", "quality": "IN_PROGRESS", "overall": "IN_PROGRESS" },
+        { "business": "PASS", "quality": "PASS", "overall": "PASS" },
+        { "business": "PASS", "quality": "PASS_WITH_WARN", "overall": "PASS_WITH_WARN" },
+        { "business": "PASS", "quality": "FAIL", "overall": "FAIL" },
+        { "business": "FAIL", "quality": "*", "overall": "FAIL" },
+        { "business": "PASS", "quality": "N/A", "overall": "PASS", "note": "documented_reason_required" }
+      ],
+      "note": "evidence_json_extension_only_not_v5_dashboard_schema_change"
+    },
+    "coverage_metrics": {
+      "business_coverage_pct": "business_pass_batches / 41",
+      "quality_coverage_pct": "quality_pass_or_na_batches / 41",
+      "overall_certification_pct": "overall_pass_batches / 41",
+      "staging_gate_target": "all_three_100_pct"
+    },
+    "execution_discipline": {
+      "now": "no_rerun_b00_b10",
+      "next": "b11_dod_close",
+      "b12_to_b41": "business_and_quality_together_per_batch_until_overall_pass",
+      "after_b41": "backfill_b00_to_b10_quality_supplement_sequential",
+      "before_staging_phase_2": "business_100_quality_100_overall_pass",
+      "re_certification_meaning": "incremental_quality_domains_only_not_full_batch_rerun",
+      "burn_down": "business_pass_history_not_revoked_readiness_not_reset_to_zero"
     }
   },
   "certification_loop": {
