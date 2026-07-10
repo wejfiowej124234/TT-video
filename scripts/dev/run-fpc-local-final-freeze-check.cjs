@@ -179,7 +179,10 @@ function main() {
     pass,
   };
 
-  fs.writeFileSync(outPath, JSON.stringify(out, null, 2) + '\n');
+  const payload = JSON.stringify(out, null, 2) + '\n';
+  if (!fs.existsSync(outPath) || fs.readFileSync(outPath, 'utf8') !== payload) {
+    fs.writeFileSync(outPath, payload);
+  }
   console.log(`TT_LOCAL_FINAL_FREEZE: ${out.verdict}`);
   console.log(`chain: ${out.freeze_chain.pass_count}/${out.freeze_chain.total} frozen PASS`);
   console.log(`HEAD: ${head} clean=${treeClean} readiness=${readiness}% next=${burn.next_required_batch}`);

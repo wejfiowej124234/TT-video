@@ -1,10 +1,10 @@
 {
   "schema": "traveltrust.fpc_100_local_final_freeze.v1",
-  "timestamp_utc": "2026-07-10T10:36:22.708Z",
+  "timestamp_utc": "2026-07-10T10:36:38.469Z",
   "phase": "① local",
   "machine_key": "TT_LOCAL_FINAL_FREEZE",
   "git": {
-    "head": "7be436e419e87703914a7a9605fe4418826ad930",
+    "head": "cb29bd88208ee5694b356c4e311c106397308cfa",
     "branch": "feature/g23-04-abi-event-freeze",
     "working_tree_clean": true
   },
