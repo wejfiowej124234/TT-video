@@ -1,5 +1,5 @@
-{"role": "traveler", "route": "/", "probe": "home", "alertCount": 0, "ok": true, "capture": "baseline-seed"}
-{"role": "traveler", "route": "/market", "probe": "market", "alertCount": 0, "ok": true, "capture": "baseline-seed"}
-{"role": "traveler", "route": "/community", "probe": "community", "alertCount": 0, "ok": true, "capture": "baseline-seed"}
-{"role": "guide", "route": "/guide", "probe": "guide", "alertCount": 0, "ok": true, "capture": "baseline-seed"}
-{"role": "merchant", "route": "/provider/register", "probe": "merchant", "alertCount": 0, "ok": true, "capture": "baseline-seed"}
+{"role":"traveler","route":"/","probe":"home","alertCount":1,"ok":true}
+{"role":"traveler","route":"/market","probe":"market","alertCount":3,"ok":true}
+{"role":"traveler","route":"/community","probe":"community","alertCount":1,"ok":true}
+{"role":"guide","route":"/guide","probe":"guide","alertCount":2,"ok":true}
+{"role":"merchant","route":"/provider/register","probe":"merchant","alertCount":1,"ok":true}
