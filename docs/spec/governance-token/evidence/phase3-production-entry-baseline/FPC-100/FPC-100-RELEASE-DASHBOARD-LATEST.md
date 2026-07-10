@@ -4,10 +4,10 @@
 
 | Metric | Value |
 |--------|-------|
-| **TT_RELEASE_READINESS** | **19.5%** |
+| **TT_RELEASE_READINESS** | **22%** |
 | **TT_RELEASE_DECISION** | **NO_GO** |
 
-_Next batch: B08 · v1.0_ · Governance FROZEN — no v5 expansion_
+_Next batch: B09 · v1.0_ · Governance FROZEN — no v5 expansion_
 
 > Feature Freeze does not mean Release Ready. Release Ready is earned only through completed certification evidence.
 > 功能冻结不代表可以发布；发布资格只能通过完整的认证证据获得。
@@ -16,9 +16,9 @@ _Next batch: B08 · v1.0_ · Governance FROZEN — no v5 expansion_
 
 | Metric | Value |
 |--------|-------|
-| Batches Completed | 8 / 41 |
-| Remaining | 33 |
-| Batch Coverage | 19.5% |
+| Batches Completed | 9 / 41 |
+| Remaining | 32 |
+| Batch Coverage | 22% |
 | Evidence Coverage (pages/API/…) | 0% |
 
 _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
@@ -28,19 +28,19 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 **Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
 **FPC verdict:** **NOT_STARTED**  
 **Release decision:** `TT_RELEASE_DECISION` = **NO_GO**  
-**Updated:** 2026-07-10T00:19:38.701Z
+**Updated:** 2026-07-10T00:37:05.470Z
 
 ## Release Health
 
 | Metric | Value |
 |--------|-------|
-| Certified | 41.5% |
+| Certified | 46.3% |
 | Expired | 0 |
 | Blocked | 0 |
 | Accepted Risks | 2 |
 | Coverage | 0% |
 | Human Verified | 0% |
-| AI Review PASS | 52.9% |
+| AI Review PASS | 52.6% |
 
 ## Release History (Version Certification)
 
@@ -54,7 +54,7 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 |--------|---------|
 | technical | IN_PROGRESS |
 | product | NOT_STARTED |
-| operations | NOT_STARTED |
+| operations | IN_PROGRESS |
 | content | NOT_STARTED |
 | business | NOT_STARTED |
 | security | NOT_STARTED |
@@ -85,6 +85,7 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 | B06 | PASS (Internal AI Review) | — |
 | B07 | PASS (Internal AI Review) | — |
 | B08 | PASS (Internal AI Review) | — |
+| B09 | PASS (Internal AI Review) | — |
 | B00 | NOT_STARTED (NOT_STARTED) | — |
 | B01 | NOT_STARTED (NOT_STARTED) | — |
 | B02 | NOT_STARTED (NOT_STARTED) | — |
@@ -93,6 +94,7 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 | B05 | NOT_STARTED (NOT_STARTED) | — |
 | B06 | NOT_STARTED (NOT_STARTED) | — |
 | B07 | NOT_STARTED (NOT_STARTED) | — |
+| B08 | NOT_STARTED (NOT_STARTED) | — |
 
 ## Accepted Risks
 
