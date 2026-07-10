@@ -229,13 +229,21 @@ get_status="$(json_nested "$get_body" order.status)"
 [[ "$get_status" == "escrowed" ]] || fail "GET order status $get_status"
 ok "GET order confirms escrowed"
 
-complete_out="$(curl_json POST "$API_BASE/api/v1/orders/${ORDER_ID}/confirm-completion" "{}" "$CARRIER_TOKEN")"
-complete_code="${complete_out%%|*}"
-complete_body="${complete_out#*|}"
-[[ "$complete_code" == "200" ]] || fail "confirm-completion HTTP $complete_code body=$complete_body"
-complete_status="$(json_nested "$complete_body" order.status)"
+complete_carrier_out="$(curl_json POST "$API_BASE/api/v1/orders/${ORDER_ID}/confirm-completion" "{}" "$CARRIER_TOKEN")"
+complete_carrier_code="${complete_carrier_out%%|*}"
+complete_carrier_body="${complete_carrier_out#*|}"
+[[ "$complete_carrier_code" == "200" ]] || fail "carrier confirm-completion HTTP $complete_carrier_code body=$complete_carrier_body"
+carrier_status="$(json_nested "$complete_carrier_body" order.status)"
+[[ "$carrier_status" == "escrowed" ]] || fail "carrier confirm expected escrowed got $carrier_status"
+ok "carrier confirm-completion → service_completion_pending"
+
+complete_owner_out="$(curl_json POST "$API_BASE/api/v1/orders/${ORDER_ID}/confirm-completion" "{}" "$OWNER_TOKEN")"
+complete_owner_code="${complete_owner_out%%|*}"
+complete_owner_body="${complete_owner_out#*|}"
+[[ "$complete_owner_code" == "200" ]] || fail "owner confirm-completion HTTP $complete_owner_code body=$complete_owner_body"
+complete_status="$(json_nested "$complete_owner_body" order.status)"
 [[ "$complete_status" == "completed" ]] || fail "expected completed got $complete_status"
-ok "confirm-completion → completed"
+ok "owner confirm-completion → completed (bilateral)"
 
 review_payload='{"score":5,"comment":"smoke pd009 l5"}'
 for tok in "$OWNER_TOKEN" "$CARRIER_TOKEN"; do

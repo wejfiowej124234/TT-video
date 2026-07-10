@@ -1,0 +1,184 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B08",
+  "title": "Me · identities · acquisition PD-009",
+  "layer": "L1-L5",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T00:18:56.396Z",
+  "verifier": "run-fpc-batch-b08-me-acquisition.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "a831f34064eacde167108adff7d7452ed856c1a4",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B03"
+  ],
+  "routes": [
+    "/me",
+    "/me/*",
+    "/market/acquisition"
+  ],
+  "gates": [
+    "scripts/dev/smoke-acquisition-pd009-local.sh",
+    "scripts/gates/me-routes-local-gate.sh"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/dev/smoke-acquisition-pd009-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "smoke-acquisition-pd009: OK PG ↔ memory acquisition trust parity | smoke-acquisition-pd009-local: ALL PASSED (① local · not ②③ GO) |   listing_id=b980d5e2-4f62-42c4-b2f9-0d5c2aa54770 order_id=d3bb4bad-affc-4d3d-931b-69b9567736b8 |   escrow: http://localhost:3012/escrow/d3bb4bad-affc-4d3d-931b-69b9567736b8 (if frontend up)"
+    },
+    {
+      "gate": "scripts/gates/me-routes-local-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "      Tests  20 passed (20) |    Start at  08:19:05 |    Duration  1.62s (transform 233ms, setup 83ms, collect 428ms, tests 17ms, environment 3.35s, prepare 757ms) | TT_ME_ROUTES_LOCAL_GATE_SUMMARY: OK phase=local-1 routes=2"
+    }
+  ],
+  "gate_pass": true,
+  "identity_hub": {
+    "lifecycle": [
+      "register",
+      "login",
+      "identity",
+      "profile",
+      "update",
+      "permission"
+    ],
+    "routes": [
+      "/me/identities",
+      "/me/security",
+      "/me/settings/*"
+    ],
+    "hub_freeze": "ME-IDENTITIES-UI-FREEZE.md",
+    "me_routes_gate": "me-routes-local-gate.sh (/me/identities + /me/security contracts)",
+    "multi_identity": "identity_slots.acquisition + GET /me.trust.acquisition_* (non fifth users.role)",
+    "onboarding": "meOnboardingUiFreeze.contract.test.ts",
+    "phase": "① local"
+  },
+  "acquisition_evidence": {
+    "smoke": {
+      "listing_id": "b980d5e2-4f62-42c4-b2f9-0d5c2aa54770",
+      "order_id": "d3bb4bad-affc-4d3d-931b-69b9567736b8",
+      "bilateral_confirm": true,
+      "trust_parity": true
+    },
+    "publish_gate": "acquisition_publish_gate.rs",
+    "flow": "register → wallet → publish-bond → [admin suspend] → listing → order → accept → mock-pay → bilateral confirm → reviews → /me trust",
+    "single_source": {
+      "api": "GET /api/v1/market/acquisition/listings",
+      "ui": "MarketStandaloneBusinessPage catalog rows when API ok; demo only when demoAllowed + degraded",
+      "listings_sample_count": 0,
+      "duplicate_guard": "mergeCommunityFeedLocalAndApiPosts-style dedupe in acquisition catalog path via filter/sort SSOT"
+    },
+    "demo_leak_guard": {
+      "demo_provenance_banner": "AcquisitionListingDetailView demo_studio provenance",
+      "bond_honesty": "data-tt-acquisition-bond-honesty phase1-mock-pg-not-mainnet",
+      "profile_preview": "AcquisitionProfileMarketPreview labeled demo note"
+    }
+  },
+  "user_data_authenticity": {
+    "fields": [
+      "nickname",
+      "avatar",
+      "DID",
+      "profile",
+      "referral",
+      "reputation"
+    ],
+    "me_trust": "meTrust.parseFromMeResponse — only fields present on GET /me",
+    "acquisition_trust_score": "smoke verifies acquisition_trust_score on /me after completed order",
+    "no_phantom_data": "meIdentitiesPage — no duplicate onboarding footer; settings nav workspace hubs only"
+  },
+  "ux_evidence": {
+    "onboarding": "meOnboardingUiFreeze — login gate + pay phase compact next-step",
+    "profile_completion": "MeTrustSection + identities hub CTA to acquisition",
+    "empty_state": "me settings + identities contracts",
+    "edit_flow": "/me/settings/profile SSOT",
+    "error_recovery": "acquisition publish gate error keys (wallet/bond/suspend/rate)",
+    "me_routes_vitest": 20
+  },
+  "supplemental_results": [
+    {
+      "contract": "lib/acquisition/acquisitionL5.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "lib/acquisition/acquisitionL5FullScore.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "lib/meTrust.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "lib/meTrust.parseFromMeResponse.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "lib/me/meOnboardingUiFreeze.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    }
+  ],
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B09",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Identity + acquisition ① — bilateral confirm-completion in smoke; mainnet bond/trust → ②",
+  "traceability": {
+    "requirements": [
+      "/me/identities hub freeze",
+      "acquisition_publish_gate path green",
+      "VP-05 logged-in hub walk target",
+      "Acquisition listing API/UI single-source when catalog available"
+    ],
+    "spec_refs": [
+      "frontend/app/me/identities/README.md",
+      "frontend/app/market/acquisition/README.md",
+      "docs/spec/artifacts/acquisition-publish-trust-rules.v1.md §8.1",
+      "FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md § B08"
+    ],
+    "code_paths": [
+      "crates/api/src/chain_off/acquisition_publish_gate.rs",
+      "frontend/app/me/identities",
+      "frontend/components/market/MarketStandaloneBusinessPage.tsx"
+    ],
+    "tests": [
+      "smoke-acquisition-pd009-local.sh",
+      "me-routes-local-gate.sh",
+      "acquisitionL5.contract.test.ts",
+      "acquisitionL5FullScore.contract.test.ts",
+      "meTrust.test.ts",
+      "meTrust.parseFromMeResponse.test.ts",
+      "meOnboardingUiFreeze.contract.test.ts"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B08-LATEST.json",
+    "certification_batch": "B08",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T00:18:56.396Z",
+  "expires_at_utc": "2026-10-08T00:18:56.396Z",
+  "expiry_policy_days": 90,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T00:18:56.396Z",
+  "frozen_git_sha": "a831f34064eacde167108adff7d7452ed856c1a4"
+}

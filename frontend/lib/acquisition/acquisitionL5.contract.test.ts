@@ -32,8 +32,15 @@ const MARKET_PAGE = readFileSync(
   join(process.cwd(), "components", "market", "MarketStandaloneBusinessPage.tsx"),
   "utf8",
 );
-const ADMIN_DETAIL = readFileSync(join(process.cwd(), "app", "admin", "users", "[id]", "page.tsx"), "utf8");
-const ADMIN_LIST = readFileSync(join(process.cwd(), "app", "admin", "users", "page.tsx"), "utf8");
+const ADMIN_DETAIL = readFileSync(
+  join(process.cwd(), "app", "admin", "users", "[id]", "AdminUserDetailPageMain.tsx"),
+  "utf8",
+);
+const ADMIN_LIST = readFileSync(join(process.cwd(), "app", "admin", "users", "AdminUsersPageMain.tsx"), "utf8");
+const ADMIN_LIST_TABLE = readFileSync(
+  join(process.cwd(), "app", "admin", "users", "AdminUsersDataSection.tsx"),
+  "utf8",
+);
 
 describe("acquisition L5 contract (PD-009 · ①)", () => {
   it("exports bond SSOT + escrow ack body key", () => {
@@ -71,11 +78,11 @@ describe("acquisition L5 contract (PD-009 · ①)", () => {
     expect(ADMIN_SUSPEND).toContain('id="admin-acquisition-suspend"');
     expect(ADMIN_DETAIL).toContain("AdminAcquisitionPublishSuspendCard");
     expect(ADMIN_DETAIL).toContain("initialSnapshot");
-    expect(ADMIN_LIST).toContain("acquisition_publish_suspended");
-    expect(ADMIN_LIST).toContain("#admin-acquisition-suspend");
+    expect(ADMIN_LIST_TABLE).toContain("acquisition_publish_suspended");
+    expect(ADMIN_LIST_TABLE).toContain("#admin-acquisition-suspend");
     expect(ADMIN_LIST).toContain("AdminAcquisitionPublishSuspendModal");
-    expect(ADMIN_LIST).toContain("admin_users_acquisitionSuspendManage");
-    expect(ADMIN_LIST).toContain("quickLiftSuspend");
+    expect(ADMIN_LIST_TABLE).toContain("admin_users_acquisitionSuspendManage");
+    expect(ADMIN_LIST_TABLE).toContain("quickLiftSuspend");
     expect(COMMUNITY_STRIP).toContain("CommunityMeAcquisitionTrustStrip");
     expect(COMMUNITY_STRIP).toContain("TT_COMMUNITY_PAGE_L5");
     expect(COMMUNITY_STRIP).toContain("MeAcquisitionPublishBondAction");
