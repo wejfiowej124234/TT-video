@@ -6,12 +6,12 @@
       "TT_RELEASE_READINESS",
       "TT_RELEASE_DECISION"
     ],
-    "release_readiness_pct": 39,
+    "release_readiness_pct": 41.5,
     "release_readiness_key": "TT_RELEASE_READINESS",
     "release_decision": "NO_GO",
     "release_decision_key": "TT_RELEASE_DECISION",
     "product_version": "v1.0",
-    "next_required_batch": "B16",
+    "next_required_batch": "B17",
     "governance": "FROZEN @ v5 · Do not expand",
     "execution": "B02→B41 only"
   },
@@ -20,23 +20,23 @@
   "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION",
   "release_decision_key": "TT_RELEASE_DECISION",
   "product_version": "v1.0",
-  "timestamp_utc": "2026-07-10T05:11:54.829Z",
+  "timestamp_utc": "2026-07-10T05:18:18.471Z",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "verdict": "NOT_STARTED",
   "pass": false,
   "tt_release_decision": "NO_GO",
   "release_readiness": {
     "machine_key": "TT_RELEASE_READINESS",
-    "pct": 39,
-    "contiguous_completed": 16,
+    "pct": 41.5,
+    "contiguous_completed": 17,
     "total": 41
   },
   "burn_down": {
-    "completed": 16,
-    "remaining": 25,
+    "completed": 17,
+    "remaining": 24,
     "total": 41,
-    "coverage_pct": 39,
-    "next_required_batch": "B16",
+    "coverage_pct": 41.5,
+    "next_required_batch": "B17",
     "no_batch_skip_ok": true,
     "skip_violations": []
   },
@@ -53,14 +53,14 @@
     "human_verification": "NOT_STARTED"
   },
   "release_health": {
-    "certified_pct": 80.5,
+    "certified_pct": 82.9,
     "expired_count": 0,
     "blocked_count": 0,
     "accepted_risks_count": 2,
     "coverage_pct": 0,
     "human_verified_pct": 0,
     "human_required_verified_pct": 0,
-    "ai_review_pct": 51.5
+    "ai_review_pct": 50
   },
   "release_history": [
     {
@@ -480,6 +480,15 @@
     },
     {
       "batch_id": "B15",
+      "ai_review": {
+        "verdict": "NOT_STARTED"
+      },
+      "ai_display": "NOT_STARTED",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B16",
       "ai_review": {
         "verdict": "NOT_STARTED"
       },
