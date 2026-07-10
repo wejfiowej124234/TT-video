@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust.fpc_100_production_build_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B18",
+  "domains": ["Q8", "Q16"],
+  "note": "Prod build + next start with hygiene flags off · not ② staging / ③ Production GO",
+  "prod_env_required": {
+    "NODE_ENV": "production",
+    "NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI": "0",
+    "NEXT_PUBLIC_TRAVELTRUST_ALLOW_TRAVELTRUST_SPACING_DEBUG": "0"
+  },
+  "registry_gates": [
+    "scripts/gates/check-production-ui-hygiene-gate.sh",
+    "STRICT_FRONTEND_BUILD=1 scripts/gates/check-frontend-npm-build.sh"
+  ],
+  "prod_html_forbidden_patterns": [
+    { "id": "mock_swap_attr", "pattern": "data-tt-traveltrust-ttg-mock-swap-v1", "severity": "P0" },
+    { "id": "spacing_debug_toggle", "pattern": "data-tt-traveltrust-spacing-debug-toggle", "severity": "P0" },
+    { "id": "spacing_debug_label", "pattern": "间距调试", "severity": "P1" },
+    { "id": "fee_router_footer", "pattern": "footer_link_governance_fee_routes", "severity": "P1" }
+  ],
+  "prod_html_routes": ["/traveltrust", "/", "/help"]
+}

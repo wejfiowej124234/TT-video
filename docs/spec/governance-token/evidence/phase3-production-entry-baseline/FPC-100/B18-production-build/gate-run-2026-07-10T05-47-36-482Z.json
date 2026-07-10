@@ -1,0 +1,151 @@
+{
+  "timestamp_utc": "2026-07-10T05:47:36.482Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T05:47:36.670Z"
+  },
+  "gate_results": [
+    {
+      "gate": "check-production-ui-hygiene-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "check-production-ui-hygiene-gate: PASS PRODUCTION_UI_HYGIENE_WAVE_A"
+    },
+    {
+      "gate": "check-frontend-npm-build.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "sync-server-chunks: copied 178 chunk files to .next/server/ | check-frontend-npm-build: OK"
+    }
+  ],
+  "prod_html_evidence": {
+    "pass": true,
+    "routes": [
+      {
+        "route": "/traveltrust",
+        "status": 200,
+        "bytes": 193899,
+        "forbidden_hits": [],
+        "pass": true
+      },
+      {
+        "route": "/",
+        "status": 200,
+        "bytes": 64472,
+        "forbidden_hits": [],
+        "pass": true
+      },
+      {
+        "route": "/help",
+        "status": 200,
+        "bytes": 24871,
+        "forbidden_hits": [],
+        "pass": true
+      }
+    ],
+    "skipped": false,
+    "production_server": "http://127.0.0.1:3014",
+    "prod_env": {
+      "NODE_ENV": "production",
+      "NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI": "0",
+      "NEXT_PUBLIC_TRAVELTRUST_ALLOW_TRAVELTRUST_SPACING_DEBUG": "0"
+    }
+  },
+  "static_ssot": [
+    {
+      "id": "ui_guards_mock_pay",
+      "pass": true,
+      "path": "frontend/lib/travelTrustUiGuards.ts"
+    },
+    {
+      "id": "dockerfile_mock_pay_off",
+      "pass": true,
+      "path": "frontend/Dockerfile.fly-staging"
+    },
+    {
+      "id": "gateway_conditional_mock",
+      "pass": true,
+      "path": "frontend/components/traveltrust/cinematic/TravelTrustStablecoinGateway.tsx"
+    },
+    {
+      "id": "footer_trust_center",
+      "pass": true,
+      "path": "frontend/components/landing/LandingFooter.tsx"
+    }
+  ],
+  "qualityCheckResults": [
+    {
+      "id": "Q8_registry_batch",
+      "domain": "Q8",
+      "pass": true,
+      "path": "registry/full-production-certification-checklist.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q8_ui_guards_test",
+      "domain": "Q8",
+      "pass": true,
+      "path": "frontend/lib/travelTrustUiGuards.test.ts",
+      "notes": []
+    },
+    {
+      "id": "Q16_per_wave_backlog",
+      "domain": "Q16",
+      "pass": true,
+      "path": "registry/per-wave-backlog.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q8_checklist_ssot",
+      "domain": "Q8",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B18-production-build/FPC-100-PRODUCTION-BUILD-CHECKLIST-BASELINE.v1.json",
+      "notes": []
+    },
+    {
+      "id": "Q8_prod_html_evidence",
+      "domain": "Q8",
+      "pass": true,
+      "path": "next start prod HTML scan",
+      "notes": [
+        "/traveltrust:true",
+        "/:true",
+        "/help:true"
+      ]
+    }
+  ],
+  "findings": [],
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "UI hygiene gate + STRICT prod build + next start HTML scan (flags off)"
+    },
+    "quality_meets_standard": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Q8 maintainability SSOT · travelTrustUiGuards · Dockerfile defaults"
+    },
+    "findings_identified": {
+      "answer": false,
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "items": []
+    },
+    "recertification_passed": {
+      "answer": true,
+      "notes": "All P0/P1 remediated · gates + prod HTML PASS"
+    }
+  }
+}

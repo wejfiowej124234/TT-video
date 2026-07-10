@@ -1,0 +1,220 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B18",
+  "title": "Production build · DevTools · mock surfaces",
+  "layer": "L4",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T05:47:36.482Z",
+  "verifier": "run-fpc-batch-b18-production-build.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "396e441e49286f53157671da4f38f04f96971714",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B01",
+    "B17"
+  ],
+  "gates": [
+    "check-production-ui-hygiene-gate.sh",
+    "check-frontend-npm-build.sh"
+  ],
+  "gate_results": [
+    {
+      "gate": "check-production-ui-hygiene-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "check-production-ui-hygiene-gate: PASS PRODUCTION_UI_HYGIENE_WAVE_A"
+    },
+    {
+      "gate": "check-frontend-npm-build.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "sync-server-chunks: copied 178 chunk files to .next/server/ | check-frontend-npm-build: OK"
+    }
+  ],
+  "gate_pass": true,
+  "runtime_preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T05:47:36.670Z"
+  },
+  "production_build_live_evidence": {
+    "pass": true,
+    "routes": [
+      {
+        "route": "/traveltrust",
+        "status": 200,
+        "bytes": 193899,
+        "forbidden_hits": [],
+        "pass": true
+      },
+      {
+        "route": "/",
+        "status": 200,
+        "bytes": 64472,
+        "forbidden_hits": [],
+        "pass": true
+      },
+      {
+        "route": "/help",
+        "status": 200,
+        "bytes": 24871,
+        "forbidden_hits": [],
+        "pass": true
+      }
+    ],
+    "skipped": false,
+    "production_server": "http://127.0.0.1:3014",
+    "prod_env": {
+      "NODE_ENV": "production",
+      "NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI": "0",
+      "NEXT_PUBLIC_TRAVELTRUST_ALLOW_TRAVELTRUST_SPACING_DEBUG": "0"
+    }
+  },
+  "production_build_static_ssot": [
+    {
+      "id": "ui_guards_mock_pay",
+      "pass": true,
+      "path": "frontend/lib/travelTrustUiGuards.ts"
+    },
+    {
+      "id": "dockerfile_mock_pay_off",
+      "pass": true,
+      "path": "frontend/Dockerfile.fly-staging"
+    },
+    {
+      "id": "gateway_conditional_mock",
+      "pass": true,
+      "path": "frontend/components/traveltrust/cinematic/TravelTrustStablecoinGateway.tsx"
+    },
+    {
+      "id": "footer_trust_center",
+      "pass": true,
+      "path": "frontend/components/landing/LandingFooter.tsx"
+    }
+  ],
+  "business_certification": {
+    "verdict": "PASS",
+    "gate_pass": true
+  },
+  "quality_supplement": {
+    "verdict": "PASS",
+    "domains": [
+      "Q8",
+      "Q16"
+    ],
+    "checks": [
+      {
+        "id": "Q8_registry_batch",
+        "domain": "Q8",
+        "pass": true,
+        "path": "registry/full-production-certification-checklist.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q8_ui_guards_test",
+        "domain": "Q8",
+        "pass": true,
+        "path": "frontend/lib/travelTrustUiGuards.test.ts",
+        "notes": []
+      },
+      {
+        "id": "Q16_per_wave_backlog",
+        "domain": "Q16",
+        "pass": true,
+        "path": "registry/per-wave-backlog.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q8_checklist_ssot",
+        "domain": "Q8",
+        "pass": true,
+        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B18-production-build/FPC-100-PRODUCTION-BUILD-CHECKLIST-BASELINE.v1.json",
+        "notes": []
+      },
+      {
+        "id": "Q8_prod_html_evidence",
+        "domain": "Q8",
+        "pass": true,
+        "path": "next start prod HTML scan",
+        "notes": [
+          "/traveltrust:true",
+          "/:true",
+          "/help:true"
+        ]
+      }
+    ]
+  },
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "UI hygiene gate + STRICT prod build + next start HTML scan (flags off)"
+    },
+    "quality_meets_standard": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Q8 maintainability SSOT · travelTrustUiGuards · Dockerfile defaults"
+    },
+    "findings_identified": {
+      "answer": false,
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "items": []
+    },
+    "recertification_passed": {
+      "answer": true,
+      "notes": "All P0/P1 remediated · gates + prod HTML PASS"
+    }
+  },
+  "overall_verdict": "PASS",
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B19",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Production build ① — hygiene gate + strict build + next start HTML without mock/dev chrome; not ②③ GO",
+  "traceability": {
+    "requirements": [
+      "check-production-ui-hygiene-gate.sh PASS",
+      "STRICT_FRONTEND_BUILD=1 npm build PASS",
+      "next start with mock/spacing flags off — no forbidden HTML on /traveltrust"
+    ],
+    "spec_refs": [
+      "registry/full-production-certification-checklist.v1.yaml",
+      "frontend/lib/travelTrustUiGuards.ts",
+      "FPC-100/B18-production-build/FPC-100-PRODUCTION-BUILD-CHECKLIST-BASELINE.v1.json"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B18-LATEST.json",
+    "certification_batch": "B18",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T05:47:36.482Z",
+  "expires_at_utc": "2026-08-09T05:47:36.482Z",
+  "expiry_policy_days": 30,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T05:47:36.482Z",
+  "frozen_git_sha": "396e441e49286f53157671da4f38f04f96971714"
+}
