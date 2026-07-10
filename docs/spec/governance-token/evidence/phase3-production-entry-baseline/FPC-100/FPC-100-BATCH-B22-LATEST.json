@@ -293,5 +293,5 @@
   "expiry_policy_days": 30,
   "certification_frozen": true,
   "frozen_at_utc": "2026-07-10T07:16:00.494Z",
-  "frozen_git_sha": "3d6a17c22f66302154e0576902c6729045a66a2c"
+  "frozen_git_sha": "909ed8e8d559aa7d1ee8574b2b0cdb89ca6c68d3"
 }
