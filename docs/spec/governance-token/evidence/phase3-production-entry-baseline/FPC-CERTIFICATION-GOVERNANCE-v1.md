@@ -51,11 +51,20 @@ Re-certification（增量 · 非无脑全量重跑）
 Evidence Refresh
         │
         ▼
+Dashboard Refresh
+        │
+        ▼
 DoD（Gate · Evidence · Dashboard · Commit · Clean tree）
         │
         ▼
 Batch CLOSED
 ```
+
+**每 Batch 执行纪律（B12 起写死 · 标杆可复制）：**
+
+- **禁止** 在本 Batch 内留下「已知 P0/P1 以后再修」（**Accepted Risk** 仅限 **P2** · 须登记 risk register）
+- 发现 → 分级 → **当前 Batch 内** Remediation → Re-certification → Evidence Refresh → DoD → **CLOSED** 后进入下一批
+- **B12** = Quality Domain Matrix 正式启用后 **第一个标杆 Batch**（Business + Quality + Overall 全链路）
 
 互指：[`FPC-100-QUALITY-DOMAIN-MATRIX-v1.md`](FPC-100-QUALITY-DOMAIN-MATRIX-v1.md) §0.1–0.3 · [`FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md`](FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md)
 

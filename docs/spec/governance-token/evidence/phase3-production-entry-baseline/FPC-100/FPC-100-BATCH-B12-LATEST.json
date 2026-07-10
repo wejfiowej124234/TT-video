@@ -1,0 +1,168 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B12",
+  "title": "Data governance · CMS runtime consumer · official ops",
+  "layer": "L5",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T01:47:13.881Z",
+  "verifier": "run-fpc-batch-b12-data-governance.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "2c7b5a296986475d1c17aa0e7229978a0b96908c",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B04",
+    "B11"
+  ],
+  "routes": [
+    "DDG · OCS · CMS consumer · /api/v1/admin/official/public-operations/*"
+  ],
+  "gates": [
+    "scripts/gates/check-display-data-governance-ssot.sh",
+    "scripts/gates/check-official-ops-public-operations-ssot.sh",
+    "scripts/gates/check-cms-announcements-gate.sh",
+    "scripts/dev/run-display-data-governance.sh"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-display-data-governance-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "PASS: display-data-governance SSOT"
+    },
+    {
+      "gate": "scripts/gates/check-official-ops-public-operations-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": " Test Files  3 passed (3) |       Tests  17 passed (17) |    Start at  09:47:16 |    Duration  1.37s (transform 168ms, setup 36ms, collect 255ms, tests 12ms, environment 1.70s, prepare 423ms) | OK: Official Ops 1.0 domain freeze + public-operations Phase 0+1 gate"
+    },
+    {
+      "gate": "scripts/gates/check-cms-announcements-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "check-cms-announcements-gate: PASS"
+    },
+    {
+      "gate": "scripts/dev/run-display-data-governance.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "display-data-governance: orders unpublish candidates: 0 | display-data-governance: community_posts unpublish candidates: 0 | POST_OCS_BASELINE: skip legacy C3 publish + canonical city matrix (SOPCP/OCS owns Public Catalog) | display-data-governance: PASS | display-data-governance: [local] exit 0"
+    }
+  ],
+  "gate_pass": true,
+  "business_certification": {
+    "verdict": "PASS",
+    "gate_pass": true,
+    "frozen_at_utc": "2026-07-10T01:47:13.881Z"
+  },
+  "quality_supplement": {
+    "verdict": "PASS",
+    "domains": [
+      "Q9",
+      "Q7"
+    ],
+    "checks": [
+      {
+        "id": "Q9_ddg_registry",
+        "domain": "Q9",
+        "pass": true,
+        "path": "registry/display-data-governance.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q9_official_catalog_policy",
+        "domain": "Q9",
+        "pass": true,
+        "path": "registry/single-official-public-catalog-policy.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q7_official_ops_domain",
+        "domain": "Q7",
+        "pass": true,
+        "path": "registry/official-ops-domain.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q7_cms_asset_matrix",
+        "domain": "Q7",
+        "pass": true,
+        "path": "data/catalog/cms-asset-matrix.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q9_ddg_runbook",
+        "domain": "Q9",
+        "pass": true,
+        "path": "docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md",
+        "notes": []
+      },
+      {
+        "id": "Q9_public_ops_stats_runtime",
+        "domain": "Q9",
+        "pass": true,
+        "path": "/api/v1/admin/official/public-operations/stats",
+        "notes": [
+          "runtime_ok"
+        ]
+      }
+    ],
+    "benchmark_batch": true,
+    "note": "First batch with Business + Quality together per Quality Domain Matrix v1.0.4"
+  },
+  "overall_verdict": "PASS",
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B13",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "B12 benchmark — DDG + Official Ops SSOT + CMS announcements + display-data-governance runtime; Quality Q9/Q7 SSOT + public-ops stats probe",
+  "traceability": {
+    "requirements": [
+      "DDG surfaces PASS",
+      "Homepage/market read catalog not fallback where Live",
+      "OCS official entities separated from business API data",
+      "Quality Q9 data governance SSOT + runtime probe",
+      "Quality Q7 CMS/official ops registry alignment"
+    ],
+    "spec_refs": [
+      "registry/display-data-governance.v1.yaml",
+      "registry/single-official-public-catalog-policy.v1.yaml",
+      "docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md",
+      "FPC-100-QUALITY-DOMAIN-MATRIX-v1.md §0.3",
+      "FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md § B12"
+    ],
+    "code_paths": [
+      "scripts/dev/display-data-governance-run.cjs",
+      "scripts/dev/run-display-data-governance.sh",
+      "crates/api/src/routes/admin/admin_official_public_operations_http.rs"
+    ],
+    "tests": [
+      "check-display-data-governance-ssot.sh",
+      "check-official-ops-public-operations-ssot.sh",
+      "check-cms-announcements-gate.sh",
+      "run-display-data-governance.sh"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B12-LATEST.json",
+    "certification_batch": "B12",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T01:47:13.881Z",
+  "expires_at_utc": "2026-10-08T01:47:13.881Z",
+  "expiry_policy_days": 90,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T01:47:13.881Z",
+  "frozen_git_sha": "2c7b5a296986475d1c17aa0e7229978a0b96908c"
+}

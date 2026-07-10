@@ -1,0 +1,99 @@
+{
+  "timestamp_utc": "2026-07-10T01:46:41.872Z",
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-display-data-governance-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "PASS: display-data-governance SSOT"
+    },
+    {
+      "gate": "scripts/gates/check-official-ops-public-operations-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": " Test Files  3 passed (3) |       Tests  17 passed (17) |    Start at  09:46:44 |    Duration  1.57s (transform 145ms, setup 45ms, collect 223ms, tests 11ms, environment 1.96s, prepare 652ms) | OK: Official Ops 1.0 domain freeze + public-operations Phase 0+1 gate"
+    },
+    {
+      "gate": "scripts/gates/check-cms-announcements-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "check-cms-announcements-gate: PASS"
+    },
+    {
+      "gate": "scripts/dev/run-display-data-governance.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "display-data-governance: orders unpublish candidates: 0 | display-data-governance: community_posts unpublish candidates: 0 | POST_OCS_BASELINE: skip legacy C3 publish + canonical city matrix (SOPCP/OCS owns Public Catalog) | display-data-governance: PASS | display-data-governance: [local] exit 0"
+    }
+  ],
+  "qualityCheckResults": [
+    {
+      "id": "Q9_ddg_registry",
+      "domain": "Q9",
+      "pass": false,
+      "path": "registry/display-data-governance.v1.yaml",
+      "notes": [
+        "missing:lifecycle:"
+      ]
+    },
+    {
+      "id": "Q9_official_catalog_policy",
+      "domain": "Q9",
+      "pass": true,
+      "path": "registry/single-official-public-catalog-policy.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q7_official_ops_domain",
+      "domain": "Q7",
+      "pass": false,
+      "path": "registry/official-ops-domain.v1.yaml",
+      "notes": [
+        "missing:schema:"
+      ]
+    },
+    {
+      "id": "Q7_cms_asset_matrix",
+      "domain": "Q7",
+      "pass": true,
+      "path": "data/catalog/cms-asset-matrix.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q9_ddg_runbook",
+      "domain": "Q9",
+      "pass": true,
+      "path": "docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md",
+      "notes": []
+    },
+    {
+      "id": "Q9_public_ops_stats_runtime",
+      "domain": "Q9",
+      "pass": false,
+      "path": "/api/v1/admin/official/public-operations/stats",
+      "notes": [
+        "runtime_fail"
+      ]
+    }
+  ],
+  "publicOpsProbe": {
+    "pass": false
+  },
+  "findings": [
+    {
+      "id": "quality_ssot:Q9_ddg_registry",
+      "severity": "P1",
+      "detail": "registry/display-data-governance.v1.yaml missing lifecycle:"
+    },
+    {
+      "id": "quality_ssot:Q7_official_ops_domain",
+      "severity": "P1",
+      "detail": "registry/official-ops-domain.v1.yaml missing schema:"
+    },
+    {
+      "id": "quality_public_ops_probe",
+      "severity": "P0",
+      "detail": "Command failed: curl -sS -X POST \"http://127.0.0.1:8080/auth/seed-test-accounts\" -H 'Content-Type: application/json' -d '{\"promote_admin_email\":\"tourist@test.com\"}'\ncurl: (6) Could not resolve host: application\r\n"
+    }
+  ]
+}

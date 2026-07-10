@@ -1,0 +1,96 @@
+{
+  "timestamp_utc": "2026-07-10T01:47:13.881Z",
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-display-data-governance-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "PASS: display-data-governance SSOT"
+    },
+    {
+      "gate": "scripts/gates/check-official-ops-public-operations-ssot.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": " Test Files  3 passed (3) |       Tests  17 passed (17) |    Start at  09:47:16 |    Duration  1.37s (transform 168ms, setup 36ms, collect 255ms, tests 12ms, environment 1.70s, prepare 423ms) | OK: Official Ops 1.0 domain freeze + public-operations Phase 0+1 gate"
+    },
+    {
+      "gate": "scripts/gates/check-cms-announcements-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "check-cms-announcements-gate: PASS"
+    },
+    {
+      "gate": "scripts/dev/run-display-data-governance.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "display-data-governance: orders unpublish candidates: 0 | display-data-governance: community_posts unpublish candidates: 0 | POST_OCS_BASELINE: skip legacy C3 publish + canonical city matrix (SOPCP/OCS owns Public Catalog) | display-data-governance: PASS | display-data-governance: [local] exit 0"
+    }
+  ],
+  "qualityCheckResults": [
+    {
+      "id": "Q9_ddg_registry",
+      "domain": "Q9",
+      "pass": true,
+      "path": "registry/display-data-governance.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q9_official_catalog_policy",
+      "domain": "Q9",
+      "pass": true,
+      "path": "registry/single-official-public-catalog-policy.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q7_official_ops_domain",
+      "domain": "Q7",
+      "pass": true,
+      "path": "registry/official-ops-domain.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q7_cms_asset_matrix",
+      "domain": "Q7",
+      "pass": true,
+      "path": "data/catalog/cms-asset-matrix.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q9_ddg_runbook",
+      "domain": "Q9",
+      "pass": true,
+      "path": "docs/runbook/TT-DISPLAY-DATA-GOVERNANCE.md",
+      "notes": []
+    },
+    {
+      "id": "Q9_public_ops_stats_runtime",
+      "domain": "Q9",
+      "pass": true,
+      "path": "/api/v1/admin/official/public-operations/stats",
+      "notes": [
+        "runtime_ok"
+      ]
+    }
+  ],
+  "publicOpsProbe": {
+    "pass": true,
+    "data_origin_counts": {
+      "market_listings": {
+        "test": 6,
+        "total": 6
+      },
+      "orders": {
+        "production": 14,
+        "test": 7,
+        "total": 21
+      },
+      "guides": {
+        "demo": 5,
+        "production": 5,
+        "test": 1,
+        "total": 11
+      }
+    }
+  },
+  "findings": []
+}

@@ -26,6 +26,16 @@ Business Certification → Quality Certification → Findings → Severity
 
 Governance SSOT：[`FPC-CERTIFICATION-GOVERNANCE-v1.md`](FPC-CERTIFICATION-GOVERNANCE-v1.md) §0.1
 
+**每 Batch 执行节奏（B12 起写死 · 标杆可复制）：**
+
+```
+Business Certification → Quality Certification → Findings → P0/P1/P2/P3
+→ Remediation → Change Impact → Re-certification → Evidence Refresh
+→ Dashboard Refresh → DoD → CLOSED
+```
+
+**禁止** 在本 Batch 内留下已知 P0/P1「以后再修」（P2 仅可通过 Accepted Risk · risk register）。
+
 ---
 
 ## 0. 定位（Release Certification → Production Quality）
