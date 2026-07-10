@@ -6,12 +6,12 @@
       "TT_RELEASE_READINESS",
       "TT_RELEASE_DECISION"
     ],
-    "release_readiness_pct": 9.8,
+    "release_readiness_pct": 12.2,
     "release_readiness_key": "TT_RELEASE_READINESS",
     "release_decision": "NO_GO",
     "release_decision_key": "TT_RELEASE_DECISION",
     "product_version": "v1.0",
-    "next_required_batch": "B04",
+    "next_required_batch": "B05",
     "governance": "FROZEN @ v5 · Do not expand",
     "execution": "B02→B41 only"
   },
@@ -20,23 +20,23 @@
   "machine_key": "TT_FULL_PRODUCTION_CERTIFICATION",
   "release_decision_key": "TT_RELEASE_DECISION",
   "product_version": "v1.0",
-  "timestamp_utc": "2026-07-10T00:00:07.299Z",
+  "timestamp_utc": "2026-07-10T00:07:07.267Z",
   "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
   "verdict": "NOT_STARTED",
   "pass": false,
   "tt_release_decision": "NO_GO",
   "release_readiness": {
     "machine_key": "TT_RELEASE_READINESS",
-    "pct": 9.8,
-    "contiguous_completed": 4,
+    "pct": 12.2,
+    "contiguous_completed": 5,
     "total": 41
   },
   "burn_down": {
-    "completed": 4,
-    "remaining": 37,
+    "completed": 5,
+    "remaining": 36,
     "total": 41,
-    "coverage_pct": 9.8,
-    "next_required_batch": "B04",
+    "coverage_pct": 12.2,
+    "next_required_batch": "B05",
     "no_batch_skip_ok": true,
     "skip_violations": []
   },
@@ -53,14 +53,14 @@
     "human_verification": "NOT_STARTED"
   },
   "release_health": {
-    "certified_pct": 22,
+    "certified_pct": 24.4,
     "expired_count": 0,
     "blocked_count": 0,
     "accepted_risks_count": 2,
     "coverage_pct": 0,
     "human_verified_pct": 0,
     "human_required_verified_pct": 0,
-    "ai_review_pct": 55.6
+    "ai_review_pct": 50
   },
   "release_history": [
     {
@@ -188,6 +188,19 @@
       "human_verifier": null
     },
     {
+      "batch_id": "B05",
+      "ai_review": {
+        "verdict": "PASS",
+        "ai_reviewer": "Internal AI Review",
+        "review_type": "Internal AI Review",
+        "review_date": "2026-07-10",
+        "review_version": "v1"
+      },
+      "ai_display": "Internal AI Review",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
       "batch_id": "B00",
       "ai_review": {
         "verdict": "NOT_STARTED"
@@ -216,6 +229,24 @@
     },
     {
       "batch_id": "B03",
+      "ai_review": {
+        "verdict": "NOT_STARTED"
+      },
+      "ai_display": "NOT_STARTED",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B04",
+      "ai_review": {
+        "verdict": "NOT_STARTED"
+      },
+      "ai_display": "NOT_STARTED",
+      "human_verified": false,
+      "human_verifier": null
+    },
+    {
+      "batch_id": "B05",
       "ai_review": {
         "verdict": "NOT_STARTED"
       },
