@@ -1,6 +1,6 @@
 {
   "schema": "traveltrust.fpc_100_no_batch_skip.v1",
-  "timestamp_utc": "2026-07-10T00:14:55.453Z",
+  "timestamp_utc": "2026-07-10T00:19:55.283Z",
   "policy": "NO_BATCH_SKIP",
   "execution_sequence": [
     "B00",
@@ -46,12 +46,12 @@
     "B41"
   ],
   "burn_down": {
-    "completed": 8,
-    "remaining": 33,
+    "completed": 9,
+    "remaining": 32,
     "total": 41,
-    "coverage_pct": 19.5,
-    "release_readiness_pct": 19.5,
-    "next_required_batch": "B08"
+    "coverage_pct": 22,
+    "release_readiness_pct": 22,
+    "next_required_batch": "B09"
   },
   "skip_violations": [],
   "sequence_ok": true
