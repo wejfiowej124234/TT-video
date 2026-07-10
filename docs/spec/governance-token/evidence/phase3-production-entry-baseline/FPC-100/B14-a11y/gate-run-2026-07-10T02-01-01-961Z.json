@@ -1,0 +1,123 @@
+{
+  "timestamp_utc": "2026-07-10T02:01:01.961Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": true,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T02:01:02.122Z"
+  },
+  "gate_results": [
+    {
+      "gate": "bash scripts/dev/l5-pe-accessibility-audit.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "OK   consumer aria | OK   ops live region | OK   focus rings | OK   error alert roles | TT_ACCESSIBILITY: ACCESSIBILITY_L5_GO"
+    },
+    {
+      "gate": "npx vitest run lib/auth/authErrorA11y.contract.test.ts",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": " ✓ lib/auth/authErrorA11y.contract.test.ts (3 tests) 2ms |  Test Files  1 passed (1) |       Tests  3 passed (3) |    Start at  10:01:03 |    Duration  1.19s (transform 32ms, setup 16ms, collect 13ms, tests 2ms, environment 536ms, prepare 131ms)"
+    },
+    {
+      "gate": "npx vitest run lib/admin/adminTableA11y.contract.test.ts",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": " ✓ lib/admin/adminTableA11y.contract.test.ts (7 tests) 29ms |  Test Files  1 passed (1) |       Tests  7 passed (7) |    Start at  10:01:05 |    Duration  1.24s (transform 32ms, setup 16ms, collect 19ms, tests 29ms, environment 538ms, prepare 87ms)"
+    },
+    {
+      "gate": "npx vitest run lib/admin/adminModalA11yL5.contract.test.ts",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": " ✓ lib/admin/adminModalA11yL5.contract.test.ts (3 tests) 24ms |  Test Files  1 passed (1) |       Tests  3 passed (3) |    Start at  10:01:08 |    Duration  1.25s (transform 34ms, setup 16ms, collect 16ms, tests 24ms, environment 544ms, prepare 147ms)"
+    },
+    {
+      "gate": "npx vitest run lib/l5/l5ProductExcellence.contract.test.ts -t accessibility",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": " ✓ lib/l5/l5ProductExcellence.contract.test.ts (6 tests | 5 skipped) 2ms |  Test Files  1 passed (1) |       Tests  1 passed | 5 skipped (6) |    Start at  10:01:10 |    Duration  1.19s (transform 33ms, setup 16ms, collect 16ms, tests 2ms, environment 526ms, prepare 125ms)"
+    },
+    {
+      "gate": "npx playwright test e2e/l5-a11y-live-scan.spec.ts --project=chromium",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "l5-a11y-live-scan playwright PASS"
+    }
+  ],
+  "qualityCheckResults": [
+    {
+      "id": "Q3_spec_96_13",
+      "domain": "Q3",
+      "pass": true,
+      "path": "docs/spec/96-13-UI-UX-i18n-a11y-性能走查.md",
+      "notes": []
+    },
+    {
+      "id": "Q3_focus_ring_ssot",
+      "domain": "Q3",
+      "pass": true,
+      "path": "frontend/lib/travelLinkFocus.ts",
+      "notes": []
+    },
+    {
+      "id": "Q3_consumer_aria",
+      "domain": "Q3",
+      "pass": true,
+      "path": "frontend/components/consumer/ConsumerSurfaceStatePanel.tsx",
+      "notes": []
+    },
+    {
+      "id": "Q13_auth_error_live_region",
+      "domain": "Q13",
+      "pass": true,
+      "path": "frontend/components/auth/AuthL5FormError.tsx",
+      "notes": []
+    },
+    {
+      "id": "Q3_a11y_live_spec",
+      "domain": "Q3",
+      "pass": true,
+      "path": "frontend/e2e/l5-a11y-live-scan.spec.ts",
+      "notes": []
+    },
+    {
+      "id": "Q3_a11y_live_evidence",
+      "domain": "Q3",
+      "pass": true,
+      "path": "frontend/evidence/l5-a11y-live-scan/",
+      "notes": []
+    }
+  ],
+  "findings": [],
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "L5 PE accessibility audit + a11y contract vitests + public corridor live scan"
+    },
+    "quality_meets_standard": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Q3 keyboard/focus/live scan · Q13 auth error live regions · 96-13 SSOT"
+    },
+    "findings_identified": {
+      "answer": false,
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "items": []
+    },
+    "recertification_passed": {
+      "answer": true,
+      "notes": "All gates green after remediation (if any)"
+    }
+  }
+}
