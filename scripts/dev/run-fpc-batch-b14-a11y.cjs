@@ -39,8 +39,7 @@ const BUSINESS_GATES = [
   },
 ];
 
-const LIVE_SCAN_CMD =
-  'PLAYWRIGHT_FULL_STACK=1 npx playwright test e2e/l5-a11y-live-scan.spec.ts --project=chromium';
+const LIVE_SCAN_CMD = 'npx playwright test e2e/l5-a11y-live-scan.spec.ts --project=chromium';
 
 const QUALITY_CHECKS = [
   {
