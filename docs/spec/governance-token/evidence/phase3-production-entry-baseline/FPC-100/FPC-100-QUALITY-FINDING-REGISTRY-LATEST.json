@@ -3,7 +3,7 @@
   "phase": "① local",
   "product_version": "v1.0",
   "governance_note": "Evidence extension only · FPC v5 framework FROZEN · not dashboard schema change",
-  "timestamp_utc": "2026-07-10T05:35:00.000Z",
+  "timestamp_utc": "2026-07-10T06:10:00.000Z",
   "execution_model": {
     "b00_b15": "Business PASS (completed) · Quality Supplement deferred until after B41",
     "b16_b41": "Business + Quality + Fix + Re-cert per batch",
@@ -114,6 +114,23 @@
       "evidence": ["FPC-100/FPC-100-BATCH-B17-LATEST.json", "scripts/gates/audit-deps.sh"],
       "status": "OPEN",
       "owner_acceptance_required": true
+    },
+    {
+      "id": "B19-Q-001",
+      "batch_id": "B19",
+      "domain": "Q10",
+      "title": "GET /health/ready handler not mounted (404 despite handlers.rs implementation)",
+      "severity": "P0",
+      "discovered_at_utc": "2026-07-10T06:05:00.000Z",
+      "fix_summary": "Register .route(\"/health/ready\", get(health_ready)) in health_meta/router.rs",
+      "re_test": "curl /health/ready → 200 {\"status\":\"ok\",\"database\":\"ok|not_configured\"}",
+      "re_test_verdict": "PASS",
+      "evidence": [
+        "crates/api/src/routes/health_meta/router.rs",
+        "FPC-100/FPC-100-BATCH-B19-LATEST.json",
+        "scripts/dev/lib/fpc-observability-probes.cjs"
+      ],
+      "status": "CLOSED"
     }
   ],
   "open_counts": {
@@ -123,7 +140,7 @@
     "P3": 0
   },
   "next_actions": [
-    "Finalize B17 DoD CLOSED · NEXT B18",
+    "Finalize B19 DoD CLOSED · NEXT B20",
     "P2 B17-Q-003 Owner acceptance before Production GO"
   ]
 }

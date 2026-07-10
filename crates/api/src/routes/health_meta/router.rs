@@ -1,10 +1,10 @@
-//! `/health`、`/meta`、`/meta/build`、`/metrics` 路由装配。
+//! `/health`、`/health/ready`、`/meta`、`/meta/build`、`/metrics` 路由装配。
 
 use axum::{routing::get, Router};
 
 use crate::state::ApiMetaState;
 
-use super::handlers::{meta, meta_build_only, metrics};
+use super::handlers::{health_ready, meta, meta_build_only, metrics};
 
 async fn health() -> &'static str {
     "ok"
@@ -13,6 +13,7 @@ async fn health() -> &'static str {
 pub fn router() -> Router<ApiMetaState> {
     Router::new()
         .route("/health", get(health))
+        .route("/health/ready", get(health_ready))
         .route("/meta", get(meta))
         .route("/meta/build", get(meta_build_only))
         .route("/metrics", get(metrics))

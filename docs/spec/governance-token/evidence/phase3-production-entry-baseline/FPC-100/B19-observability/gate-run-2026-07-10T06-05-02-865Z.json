@@ -1,0 +1,245 @@
+{
+  "timestamp_utc": "2026-07-10T06:05:02.865Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T06:05:03.052Z"
+  },
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-api-build-health-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "API_BUILD_HEALTH: PASS |   lib=PASS bin=PASS bin_errors=0 | Report: docs/spec/governance-token/API-BUILD-HEALTH-GATE-REPORT-v1.md"
+    },
+    {
+      "gate": "scripts/gates/smoke-api-public-routes.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "smoke-api-public-routes: OK (http://127.0.0.1:8080 health + meta + metrics + meta.indexer.checkpoint + discover + discover?limit=1 + did-rank/itineraries + did-rank/guides + did-rank/travelers + community/stats/posts-by-tag; /meta order_chain_sync_status 722/723/724/725 + finality_discipline 726 + indexer 727 + indexer.memory 757 + indexer.checkpoint 758 top_keys + database 760 + rate_limits.guide_upload 761 + chain.rule 762/763/765/766/767/768/769/770/771/772/773/774/775/776/777/778/779/780/781/782/783/784/785/786/787/788/789/790/791/792/793/794/795/796/797/798/799/800/801/802/803/804/805/806 + build 730 + dual_write 732 + strict_mode 731 + ssot 733 + admin_exports 734 + chargeback_policy 735 + authority 736 + pause 737 + evidence 738 + order_messages 739 + reviews 740 + dispute_open 741 + dispute_resolve 742 + itineraries 743 + orders 744 + discover 745 + product_countries 746 + did_rank 747 + product_roles 748 + auth.registration 749 + auth 750 + chain 729 + chain.contracts 759 top_keys when object + root 728 lock when jq)"
+    }
+  ],
+  "live_observability_evidence": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "probes": [
+      {
+        "id": "live_health_liveness",
+        "domain": "api_health",
+        "pass": true,
+        "http": 200,
+        "ms": 5
+      },
+      {
+        "id": "live_health_readiness",
+        "domain": "readiness_probe",
+        "pass": true,
+        "http": 200,
+        "database": "ok",
+        "ms": 5
+      },
+      {
+        "id": "live_meta_snapshot",
+        "domain": "meta_dependency_snapshot",
+        "pass": true,
+        "http": 200,
+        "database_connected": true,
+        "indexer_checkpoint_source": "runtime",
+        "chain_id": "31337",
+        "authority_degraded": false
+      },
+      {
+        "id": "live_metrics_prometheus",
+        "domain": "prometheus_metrics",
+        "pass": true,
+        "http": 200,
+        "missing_lines": []
+      },
+      {
+        "id": "live_correlation_id",
+        "domain": "trace_correlation_id",
+        "pass": true,
+        "sent": "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+        "received": "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee"
+      },
+      {
+        "id": "live_message_id",
+        "domain": "message_id",
+        "pass": true,
+        "message_id": "5dc372b3-c594-4154-b304-45320225371b"
+      },
+      {
+        "id": "live_error_pii_safe",
+        "domain": "pii_safe_error_paths",
+        "pass": true,
+        "http": 401,
+        "forbidden_hits": []
+      },
+      {
+        "id": "live_internal_alerts_deny",
+        "domain": "alert_routes",
+        "pass": true,
+        "http": 403
+      }
+    ],
+    "skipped": false
+  },
+  "static_ssot": [
+    {
+      "id": "ssot_trace_request_id",
+      "domain": "trace_correlation_id",
+      "pass": true,
+      "path": "crates/api/src/middleware/trace.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_health_ready_handler",
+      "domain": "readiness_probe",
+      "pass": true,
+      "path": "crates/api/src/routes/health_meta/handlers.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_health_ready_route",
+      "domain": "readiness_probe",
+      "pass": true,
+      "path": "crates/api/src/routes/health_meta/router.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_metrics_handler",
+      "domain": "prometheus_metrics",
+      "pass": true,
+      "path": "crates/api/src/routes/health_meta/handlers.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_db_pool_obs",
+      "domain": "database_dependency",
+      "pass": true,
+      "path": "crates/api/src/db_pool_obs.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_production_matrix",
+      "domain": "meta_dependency_snapshot",
+      "pass": true,
+      "path": "registry/production-readiness-master-matrix.v1.yaml",
+      "notes": []
+    }
+  ],
+  "vitest_admin_observability": {
+    "pass": true,
+    "exit_code": 0,
+    "summary": " "
+  },
+  "qualityCheckResults": [
+    {
+      "id": "Q10_quality_matrix",
+      "domain": "Q10",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json",
+      "notes": []
+    },
+    {
+      "id": "Q10_registry_batch",
+      "domain": "Q10",
+      "pass": true,
+      "path": "registry/full-production-certification-checklist.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q10_observability_checklist",
+      "domain": "Q10",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B19-observability/FPC-100-OBSERVABILITY-CHECKLIST-BASELINE.v1.json",
+      "notes": []
+    },
+    {
+      "id": "Q10_admin_observability_contract",
+      "domain": "Q10",
+      "pass": true,
+      "path": "frontend/app/admin/observability/adminObservabilityPage.contract.test.ts",
+      "notes": []
+    },
+    {
+      "id": "Q10_smoke_public_routes_ref",
+      "domain": "Q10",
+      "pass": true,
+      "path": "scripts/gates/smoke-api-public-routes.sh",
+      "notes": []
+    },
+    {
+      "id": "Q10_live_observability_probes",
+      "domain": "Q10",
+      "pass": true,
+      "path": "scripts/dev/lib/fpc-observability-probes.cjs",
+      "notes": [
+        "live_health_liveness:true",
+        "live_health_readiness:true",
+        "live_meta_snapshot:true",
+        "live_metrics_prometheus:true",
+        "live_correlation_id:true",
+        "live_message_id:true",
+        "live_error_pii_safe:true",
+        "live_internal_alerts_deny:true"
+      ]
+    },
+    {
+      "id": "Q10_static_ssot",
+      "domain": "Q10",
+      "pass": true,
+      "path": "crates/api observability SSOT",
+      "notes": [
+        "ssot_trace_request_id:true",
+        "ssot_health_ready_handler:true",
+        "ssot_health_ready_route:true",
+        "ssot_metrics_handler:true",
+        "ssot_db_pool_obs:true",
+        "ssot_production_matrix:true"
+      ]
+    },
+    {
+      "id": "Q10_admin_observability_vitest",
+      "domain": "Q10",
+      "pass": true,
+      "path": "adminObservabilityPage.contract.test.ts",
+      "notes": [
+        " "
+      ]
+    }
+  ],
+  "findings": [],
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "API build health + smoke-api-public-routes + live health/meta/metrics probes"
+    },
+    "quality_meets_standard": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Q10 observability SSOT · trace/metrics/handlers · admin observability contract"
+    },
+    "findings_identified": {
+      "answer": false,
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "items": []
+    },
+    "recertification_passed": {
+      "answer": true,
+      "notes": "All P0/P1 remediated · gates green · live observability probes PASS"
+    }
+  }
+}

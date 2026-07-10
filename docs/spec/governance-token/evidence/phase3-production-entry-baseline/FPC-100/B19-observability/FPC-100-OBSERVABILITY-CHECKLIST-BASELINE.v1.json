@@ -1,0 +1,104 @@
+{
+  "schema": "traveltrust.fpc_100_observability_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B19",
+  "domain": "Q10",
+  "note": "Production-grade observability · live API @8080 · structured logs · trace/correlation · metrics · health/ready · not ② staging / ③ production GO",
+  "coverage_domains": [
+    "api_health",
+    "readiness_probe",
+    "structured_logging",
+    "trace_correlation_id",
+    "message_id",
+    "prometheus_metrics",
+    "meta_dependency_snapshot",
+    "indexer_observability",
+    "chain_rpc_observability",
+    "database_dependency",
+    "cache_idempotency_observability",
+    "error_visibility",
+    "pii_safe_error_paths",
+    "alert_routes",
+    "admin_observability_ui"
+  ],
+  "severity_policy": {
+    "P0": "missing health/ready/metrics route or live probe fail on owned observability surface",
+    "P1": "missing SSOT gate, correlation header, or meta/metrics key drift",
+    "P2": "non-blocking alert tuning · ② upgrade track"
+  },
+  "live_probes": {
+    "health_liveness": {
+      "path": "/health",
+      "allowed_http": [200],
+      "body_contains": "ok"
+    },
+    "health_readiness": {
+      "path": "/health/ready",
+      "allowed_http": [200],
+      "required_json_keys": ["status", "database"],
+      "database_allowed": ["ok", "not_configured"]
+    },
+    "meta_snapshot": {
+      "path": "/meta",
+      "required_keys": [
+        "service",
+        "api_version",
+        "database_connected",
+        "database",
+        "indexer",
+        "chain",
+        "authority",
+        "rate_limits"
+      ],
+      "service_value": "traveltrust-api"
+    },
+    "metrics_prometheus": {
+      "path": "/metrics",
+      "required_lines": [
+        "traveltrust_api_info",
+        "http_requests_total",
+        "traveltrust_indexer_lag_blocks",
+        "traveltrust_database_connected",
+        "traveltrust_chain_config_loaded",
+        "traveltrust_authority_degraded_mode"
+      ]
+    },
+    "correlation_id": {
+      "path": "/health",
+      "request_header": "x-request-id",
+      "response_header": "x-request-id",
+      "echo_client_value": true
+    },
+    "message_id": {
+      "path": "/health",
+      "response_header": "x-message-id",
+      "must_be_uuid": true
+    },
+    "error_pii_safe": {
+      "path": "/api/v1/admin/capabilities",
+      "allowed_http": [401, 403],
+      "forbidden_body_patterns": [
+        "postgresql://",
+        "DATABASE_URL=",
+        "INTERNAL_API_SECRET=",
+        "sk_live_",
+        "sk_test_",
+        "eyJhbGci"
+      ]
+    },
+    "internal_alerts_deny": {
+      "path": "/api/v1/internal/alerts/test-fire",
+      "method": "POST",
+      "allowed_http": [401, 403]
+    }
+  },
+  "registry_gates": [
+    "scripts/gates/check-api-build-health-gate.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/gates/smoke-api-public-routes.sh"
+  ],
+  "quality_gates": [
+    "frontend/app/admin/observability/adminObservabilityPage.contract.test.ts"
+  ]
+}
