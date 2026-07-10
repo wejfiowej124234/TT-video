@@ -1,0 +1,68 @@
+{
+  "schema": "traveltrust.fpc_100_payment_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B21",
+  "domains": ["Q12", "Q14"],
+  "note": "Payment/PSP/Webhook ① — mock-pay sandbox + internal onboarding webhook + Stripe signature SSOT; PI3-003 live baseline PLANNED until ③",
+  "coverage_domains": [
+    "psp_adapter_mock_pay",
+    "stripe_webhook_signature",
+    "internal_onboarding_webhook",
+    "idempotency_payment_intent",
+    "order_state_machine_escrowed",
+    "refund_path_documented",
+    "failure_recovery_webhook",
+    "settlement_fee_schedule_alignment",
+    "prod_stripe_env_hygiene"
+  ],
+  "severity_policy": {
+    "P0": "mock-pay/webhook/idempotency live fail · gate fail · order state drift after payment",
+    "P1": "missing SSOT static anchor · meta flag mismatch",
+    "P2": "PI3-003 PLANNED at ① · ② Stripe test mode deferred"
+  },
+  "live_probes": {
+    "meta_mock_pay_flag": {
+      "path": "/meta",
+      "require_order_mock_pay_enabled": true
+    },
+    "stripe_webhook_unconfigured": {
+      "path": "/api/v1/hooks/stripe/onboarding",
+      "method": "POST",
+      "body": {},
+      "allowed_when_whsec_unset": [503],
+      "error_key": "stripe_webhook_not_configured"
+    },
+    "internal_webhook_deny": {
+      "path": "/api/v1/internal/onboarding/payments/webhook",
+      "method": "POST",
+      "body": { "schema_version": 1, "idempotency_key": "00000000-0000-4000-8000-000000000001", "provider_event_id": "evt_probe", "outcome": "succeeded" },
+      "allowed_without_secret": [401, 403]
+    },
+    "mock_pay_order_lifecycle": {
+      "use_seed_accounts": true,
+      "tourist_email": "tourist@test.com",
+      "guide_email": "guide@test.com",
+      "password": "Test123!",
+      "expected_after_mock_pay": "escrowed"
+    },
+    "onboarding_webhook_idempotency": {
+      "surface": "provider",
+      "mark_paid_via": "internal_webhook"
+    }
+  },
+  "registry_gates": [
+    "scripts/gates/check-pi3-003-stripe-live-baseline-record.py"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/verify-production-stripe-webhook-signature-static.sh",
+    "scripts/dev/smoke-seed-tourist-guide-transaction-local.sh",
+    "scripts/dev/smoke-onboarding-full-chain-local.sh",
+    "scripts/dev/smoke-onboarding-fee-schedule-v1-local.sh",
+    "scripts/dev/check-production-stripe-env-alignment.sh"
+  ],
+  "quality_gates": [
+    "crates/api/src/stripe_onboarding/tests.rs",
+    "frontend/lib/api.test.ts",
+    "frontend/lib/apiClient/meta.test.ts"
+  ]
+}

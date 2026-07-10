@@ -3,7 +3,7 @@
   "phase": "① local",
   "product_version": "v1.0",
   "governance_note": "Evidence extension only · FPC v5 framework FROZEN · not dashboard schema change",
-  "timestamp_utc": "2026-07-10T06:40:00.000Z",
+  "timestamp_utc": "2026-07-10T07:10:00.000Z",
   "execution_model": {
     "b00_b15": "Business PASS (completed) · Quality Supplement deferred until after B41",
     "b16_b41": "Business + Quality + Fix + Re-cert per batch",
@@ -148,6 +148,39 @@
         "FPC-100/FPC-100-BATCH-B20-LATEST.json"
       ],
       "status": "CLOSED"
+    },
+    {
+      "id": "B21-Q-001",
+      "batch_id": "B21",
+      "domain": "Q12",
+      "title": "B21 runner invoked PI3-003 baseline gate with bash instead of python",
+      "severity": "P0",
+      "discovered_at_utc": "2026-07-10T07:05:00.000Z",
+      "fix_summary": "run-fpc-batch-b21-payment.cjs runGate uses python for *.py registry gates",
+      "re_test": "python scripts/gates/check-pi3-003-stripe-live-baseline-record.py exit 0",
+      "re_test_verdict": "PASS",
+      "evidence": [
+        "scripts/dev/run-fpc-batch-b21-payment.cjs",
+        "FPC-100/FPC-100-BATCH-B21-LATEST.json"
+      ],
+      "status": "CLOSED"
+    },
+    {
+      "id": "B21-Q-002",
+      "batch_id": "B21",
+      "domain": "Q14",
+      "title": "mock-pay live probe expected order_id top-level; API returns order.id",
+      "severity": "P0",
+      "discovered_at_utc": "2026-07-10T07:05:00.000Z",
+      "fix_summary": "fpc-payment-probes.cjs extracts order.id, Idempotency-Key on POST /orders, aligns with smoke-seed-tourist-guide",
+      "re_test": "run-fpc-batch-b21-payment.cjs live_mock_pay_lifecycle PASS",
+      "re_test_verdict": "PASS",
+      "evidence": [
+        "scripts/dev/lib/fpc-payment-probes.cjs",
+        "scripts/dev/smoke-seed-tourist-guide-transaction-local.sh",
+        "FPC-100/FPC-100-BATCH-B21-LATEST.json"
+      ],
+      "status": "CLOSED"
     }
   ],
   "open_counts": {
@@ -157,7 +190,8 @@
     "P3": 0
   },
   "next_actions": [
-    "Finalize B20 DoD CLOSED · NEXT B21",
-    "P2 B17-Q-003 Owner acceptance before Production GO"
+    "Finalize B21 DoD CLOSED · NEXT B22",
+    "P2 B17-Q-003 Owner acceptance before Production GO",
+    "P2 prod_stripe_env STRIPE_ENABLED=0 at ① — deferred to ③ Production GO (B21 batch note)"
   ]
 }

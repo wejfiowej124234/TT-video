@@ -1,0 +1,292 @@
+{
+  "timestamp_utc": "2026-07-10T07:00:07.886Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T07:00:08.102Z"
+  },
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-pi3-003-stripe-live-baseline-record.py",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": ""
+    },
+    {
+      "gate": "scripts/dev/verify-production-stripe-webhook-signature-static.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "=== 5 · 121 webhook URL topology === |   [PASS] 121 prod webhook URL template | verify-production-stripe-webhook-signature-static: PASS=10 FAIL=0 WARN=0"
+    },
+    {
+      "gate": "scripts/dev/smoke-seed-tourist-guide-transaction-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "============================================================== | TT_SEED_TRANSACTION_SMOKE: OK (① local · order=b96cc8e8-d341-44a8-a9d8-facab8baf5e8 · guide=a49c7b2d-3352-4614-827b-c8e8f567c5e7) |   phase: ① only (mock-pay sandbox · not ②③ GO)"
+    },
+    {
+      "gate": "scripts/dev/smoke-onboarding-full-chain-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "smoke-onboarding-full-chain: OK steward full chain → paid + role-confirm (①; stake 另链) | TT_SMOKE_ONBOARDING_FULL_CHAIN: OK (① local · no PSP · no on-chain) |   Phase ② Stripe/testnet PSP: backlog only — onboarding-fee-schedule.v1 §8.2"
+    },
+    {
+      "gate": "scripts/dev/smoke-onboarding-fee-schedule-v1-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "smoke-onboarding-fee-schedule-v1: OK alignment local-dev/provider/US | TT_SMOKE_ONBOARDING_FEE_SCHEDULE_V1: OK alignment (① only) |   next gate: ② Stripe / testnet PSP (out of scope for this script)"
+    },
+    {
+      "gate": "scripts/dev/check-production-stripe-env-alignment.sh",
+      "exit_code": 2,
+      "pass": true,
+      "summary_line": "  [WARN] whsec not filled or placeholder |   [FAIL] STRIPE_ENABLED must be 1 for prod |   [WARN] PROD_API_BASE is *.fly.dev — 151 requires dedicated brand domain for Production GO"
+    }
+  ],
+  "payment_live_evidence": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "probes": [
+      {
+        "id": "live_meta_mock_pay",
+        "domain": "psp_adapter_mock_pay",
+        "pass": true,
+        "order_mock_pay_enabled": true
+      },
+      {
+        "id": "live_stripe_webhook_unconfigured",
+        "domain": "stripe_webhook_signature",
+        "pass": true,
+        "http": 503,
+        "error": "stripe_webhook_not_configured"
+      },
+      {
+        "id": "live_internal_webhook_deny",
+        "domain": "failure_recovery_webhook",
+        "pass": true,
+        "http": 403
+      },
+      {
+        "id": "live_mock_pay_lifecycle",
+        "domain": "order_state_machine_escrowed",
+        "pass": true,
+        "order_id": "042d4634-bffc-435c-a94f-682cdd94e82e",
+        "status_after_pay": "escrowed"
+      },
+      {
+        "id": "live_onboarding_webhook_idem",
+        "domain": "idempotency_payment_intent",
+        "pass": true,
+        "idempotency_key": "dcd2a563-9002-458f-875e-c6b811cf1c37",
+        "entitlement_paid": true,
+        "webhook_replay": true
+      }
+    ],
+    "skipped": false
+  },
+  "static_ssot": [
+    {
+      "id": "ssot_stripe_signature",
+      "domain": "stripe_webhook_signature",
+      "pass": true,
+      "path": "crates/api/src/stripe_onboarding/signature.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_apply_payment_webhook",
+      "domain": "internal_onboarding_webhook",
+      "pass": true,
+      "path": "crates/api/src/db/onboarding/webhook_apply.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_order_mock_pay",
+      "domain": "psp_adapter_mock_pay",
+      "pass": true,
+      "path": "crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_prod_checklist",
+      "domain": "prod_stripe_env_hygiene",
+      "pass": true,
+      "path": "registry/production-usdc-go-live-master-checklist.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "ssot_onboarding_mod",
+      "domain": "failure_recovery_webhook",
+      "pass": true,
+      "path": "crates/api/src/routes/onboarding/mod.rs",
+      "notes": []
+    }
+  ],
+  "cargo_stripe": {
+    "pass": true,
+    "exit_code": 0,
+    "summary": "test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 1223 filtered out; finished in 0.00s  "
+  },
+  "vitest": {
+    "api": {
+      "pass": true,
+      "exit_code": 0,
+      "summary": " "
+    },
+    "meta": {
+      "pass": true,
+      "exit_code": 0,
+      "summary": " "
+    }
+  },
+  "qualityCheckResults": [
+    {
+      "id": "Q12_quality_matrix",
+      "domain": "Q12",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json",
+      "notes": []
+    },
+    {
+      "id": "Q12_registry_batch",
+      "domain": "Q12",
+      "pass": true,
+      "path": "registry/full-production-certification-checklist.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q12_payment_checklist",
+      "domain": "Q12",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B21-stripe/FPC-100-PAYMENT-CHECKLIST-BASELINE.v1.json",
+      "notes": []
+    },
+    {
+      "id": "Q12_pi3_baseline",
+      "domain": "Q12",
+      "pass": true,
+      "path": "evidence/pi3_003_stripe_live_production_webhook/baseline_record.v1.json",
+      "notes": []
+    },
+    {
+      "id": "Q14_quality_matrix",
+      "domain": "Q14",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json",
+      "notes": []
+    },
+    {
+      "id": "Q14_onboarding_webhook_script",
+      "domain": "Q14",
+      "pass": true,
+      "path": "scripts/dev/onboarding-webhook-local.sh",
+      "notes": []
+    },
+    {
+      "id": "Q14_smoke_onboarding_ref",
+      "domain": "Q14",
+      "pass": true,
+      "path": "scripts/dev/smoke-onboarding-full-chain-local.sh",
+      "notes": []
+    },
+    {
+      "id": "Q14_live_payment_probes",
+      "domain": "Q14",
+      "pass": true,
+      "path": "scripts/dev/lib/fpc-payment-probes.cjs",
+      "notes": [
+        "live_meta_mock_pay:true",
+        "live_stripe_webhook_unconfigured:true",
+        "live_internal_webhook_deny:true",
+        "live_mock_pay_lifecycle:true",
+        "live_onboarding_webhook_idem:true"
+      ]
+    },
+    {
+      "id": "Q12_static_payment_ssot",
+      "domain": "Q12",
+      "pass": true,
+      "path": "stripe signature + webhook_apply + mock_pay SSOT",
+      "notes": [
+        "ssot_stripe_signature:true",
+        "ssot_apply_payment_webhook:true",
+        "ssot_order_mock_pay:true",
+        "ssot_prod_checklist:true",
+        "ssot_onboarding_mod:true"
+      ]
+    },
+    {
+      "id": "Q12_cargo_stripe_tests",
+      "domain": "Q12",
+      "pass": true,
+      "path": "crates/api/src/stripe_onboarding/tests.rs",
+      "notes": [
+        "test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 1223 filtered out; finished in 0.00s  "
+      ]
+    },
+    {
+      "id": "Q14_vitest_api_routes",
+      "domain": "Q14",
+      "pass": true,
+      "path": "frontend/lib/api.test.ts",
+      "notes": [
+        " "
+      ]
+    },
+    {
+      "id": "Q14_vitest_meta_mock_pay",
+      "domain": "Q14",
+      "pass": true,
+      "path": "frontend/lib/apiClient/meta.test.ts",
+      "notes": [
+        " "
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "prod_stripe_env_①_deferred",
+      "severity": "P2",
+      "gate": "scripts/dev/check-production-stripe-env-alignment.sh",
+      "detail": "① local: prod .env.production.local STRIPE_ENABLED=0 until ③ Production GO"
+    }
+  ],
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "PSP mock-pay + internal onboarding webhook + registry PI3-003 + golden smokes"
+    },
+    "quality_meets_standard": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Q12 business readiness + Q14 payment reliability · Stripe signature SSOT · vitest routes"
+    },
+    "findings_identified": {
+      "answer": true,
+      "p0": 0,
+      "p1": 0,
+      "p2": 1,
+      "items": [
+        {
+          "id": "prod_stripe_env_①_deferred",
+          "severity": "P2",
+          "gate": "scripts/dev/check-production-stripe-env-alignment.sh",
+          "detail": "① local: prod .env.production.local STRIPE_ENABLED=0 until ③ Production GO"
+        }
+      ]
+    },
+    "recertification_passed": {
+      "answer": true,
+      "notes": "PSP→Webhook→API→DB→Order lifecycle consistency PASS at ①"
+    }
+  }
+}
