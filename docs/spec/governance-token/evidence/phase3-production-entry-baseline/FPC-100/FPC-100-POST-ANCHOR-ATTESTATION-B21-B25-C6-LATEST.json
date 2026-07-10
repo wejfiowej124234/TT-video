@@ -1,0 +1,146 @@
+{
+  "schema": "traveltrust.fpc_100_post_anchor_attestation.v1",
+  "readonly": true,
+  "does_not_amend_anchor_commit": true,
+  "timestamp_utc": "2026-07-10T09:41:05.159Z",
+  "phase": "① local",
+  "anchor_id": "B21-B25-C6",
+  "authoritative_immutable_head": "21f830ffbf6afe8237dab1021e6113fd57ffcd3e",
+  "anchor_manifest_immutable_head_at_commit": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+  "anchor_manifest_immutable_head_working_copy": "3c212778aae7a439e8a6a59a03cccb222e27779f",
+  "stale_manifest_head_note": "finalize-amend SHA drift in anchor manifest; authoritative_immutable_head is the anchor commit SHA",
+  "verifier": "run-fpc-post-anchor-attestation-b21-b25-c6.cjs",
+  "batches": [
+    {
+      "batch_id": "B21",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B22",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B23",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B24",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B25-C1",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B25-C2",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B25-C3",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B25-C4",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B25-C5",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    },
+    {
+      "batch_id": "B25-C6",
+      "pass": true,
+      "verdict": "PASS",
+      "certification_frozen": true,
+      "p0": 0,
+      "p1": 0,
+      "evidence_complete": true
+    }
+  ],
+  "checks": [
+    {
+      "id": "git_commit_exists",
+      "pass": true,
+      "head": "21f830ffbf6afe8237dab1021e6113fd57ffcd3e"
+    },
+    {
+      "id": "anchor_manifest_in_commit",
+      "pass": true,
+      "anchor_id": "B21-B25-C6",
+      "manifest_immutable_head": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+    },
+    {
+      "id": "readonly_no_manifest_rewrite",
+      "pass": true,
+      "note": "attestation only writes POST-ANCHOR-ATTESTATION LATEST",
+      "working_manifest_immutable_head": "3c212778aae7a439e8a6a59a03cccb222e27779f"
+    },
+    {
+      "id": "batches_at_authoritative_head",
+      "pass": true,
+      "pass_count": 10,
+      "total": 10
+    },
+    {
+      "id": "authoritative_head_reachable",
+      "pass": true,
+      "current_head": "21f830ffbf6afe8237dab1021e6113fd57ffcd3e",
+      "authoritative_head": "21f830ffbf6afe8237dab1021e6113fd57ffcd3e"
+    }
+  ],
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "policy": {
+    "push": false,
+    "deploy": false,
+    "phase2": false,
+    "note": "Read-only attestation sidecar — does not mutate B21-B25 anchor commit tree"
+  },
+  "next_batch_after_anchor": "B26"
+}
