@@ -1,0 +1,179 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B07",
+  "title": "Community corridor",
+  "layer": "L1-L5",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T00:14:04.448Z",
+  "verifier": "run-fpc-batch-b07-community.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "331a861a6a4dd70c1484921bef9802405d86f7d1",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B02"
+  ],
+  "routes": [
+    "/community",
+    "/community/*"
+  ],
+  "gates": [
+    "scripts/gates/vertical-slice-04-community-explore-public-smoke.sh",
+    "scripts/gates/run-community-media-guard.sh",
+    "scripts/dev/run-community-l5-green.sh"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/gates/vertical-slice-04-community-explore-public-smoke.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "ok: GET /health | GET /api/v1/community/feed?limit=8&mode=recommend posts.length=0 | GET /api/v1/community/stats/posts-by-tag?tag=… post_count=0 | pass: vertical-slice-04 community explore public smoke (health + feed + posts-by-tag)"
+    },
+    {
+      "gate": "scripts/gates/run-community-media-guard.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "Community Media Guard: PASS |   repo_data_violations=0 |   db_violations=0 (db skipped) | TT_COMMUNITY_MEDIA_GUARD: PASS"
+    },
+    {
+      "gate": "scripts/dev/run-community-l5-green.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "      Tests  138 passed (138) |    Start at  08:14:06 |    Duration  4.31s (transform 1.86s, setup 476ms, collect 6.16s, tests 518ms, environment 31.95s, prepare 4.30s) | TT_COMMUNITY_L5_GREEN: OK"
+    }
+  ],
+  "gate_pass": true,
+  "content_lifecycle": {
+    "lifecycle": [
+      "create_post",
+      "publish",
+      "view",
+      "comment",
+      "like",
+      "report",
+      "moderation",
+      "archive_delete"
+    ],
+    "wiring": {
+      "create_post": "PublishDrawer · POST /api/v1/community/posts",
+      "publish": "useCommunityFeedPublishSubmit",
+      "view": "GET /api/v1/community/feed · explore public smoke",
+      "comment": "useCommunityFeedTopicReportCommentChain · comment API",
+      "like": "useCommunityFeedLikeCollectFollow",
+      "report": "useCommunityFeedTopicReportCommentChain reportContext",
+      "moderation": "admin/community/* contracts (E1/E2 RBAC → B25-C6 slice)",
+      "archive_delete": "CommunityFeedCardContent visibility archived badge · me/posts"
+    },
+    "phase": "① local · staging UGC density + CDN → ②"
+  },
+  "content_safety": {
+    "media_guard": "validate-community-media-guard.cjs · communityMediaClientUrl policy",
+    "upload_video": "PublishDrawer video-duration tests in L5 green",
+    "report_moderation": "communityModals.contract.test.ts · admin moderation page contracts",
+    "permissions": "communityShowcase.gating.test.ts · production/testnet showcase hard-off",
+    "data_honesty": {
+      "showcase_disclosure": "data-tt-community-feed-showcase active-v1 when dev showcase only",
+      "relational_honesty": "CommunityRelationalShowcaseHonestyNote on friends/messages",
+      "fake_engagement_guard": "communityFeedMappers — API empty thread ignores showcase mock counts; no trust_gate fixtures in feed",
+      "market_parity_note": "Avoid Market-style undisclosed seed — community uses data-tt + sr-only hints"
+    }
+  },
+  "ux_evidence": {
+    "empty_state": "CommunityFeedEmptyFooter · CommunityFeedList empty branches",
+    "feed_loading": "communityRouteDataHooks.contract.test.ts · useCommunityFeed",
+    "error_recovery": "communityModals + feed action theme contracts",
+    "cta_clarity": "CommunityFeedDiscoveryChrome community-feed-publish-entry",
+    "l5_green_tests": 138,
+    "shell_freeze_ssot": "frontend/evidence/GO_local_community_phase1_narrow/COMMUNITY-PHASE1-FREEZE.md"
+  },
+  "api_evidence": {
+    "health": "http://127.0.0.1:8080/health",
+    "feed": {
+      "path": "/api/v1/community/feed?limit=8&mode=recommend",
+      "posts_count": 0,
+      "status": "ok"
+    },
+    "stats_by_tag": {
+      "path": "/api/v1/community/stats/posts-by-tag",
+      "post_count": 0,
+      "status": "ok"
+    }
+  },
+  "supplemental_results": [
+    {
+      "contract": "components/community/communityPhase1DataHonesty.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "components/community/communityRelationalShowcaseHonesty.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "components/community/communityFeedActionTheme.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "components/community/communityModals.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    }
+  ],
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B08",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Community corridor ① — L5 contracts + public feed smoke; live UGC density + moderation E2E → ②",
+  "traceability": {
+    "requirements": [
+      "Community shell theme contract green",
+      "Feed/public explore smoke PASS",
+      "Media URL policy per communityMediaClientUrl",
+      "Data honesty disclosures (showcase / relational / explore catalog)",
+      "Empty state + publish CTA L2 clarity"
+    ],
+    "spec_refs": [
+      "frontend/app/community/README.md",
+      "frontend/evidence/GO_local_community_phase1_narrow/COMMUNITY-PHASE1-FREEZE.md",
+      "FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md § B07"
+    ],
+    "code_paths": [
+      "frontend/components/community/CommunityRouteShell.tsx",
+      "frontend/components/community/PublishDrawer",
+      "frontend/lib/apiClient/community/feed.ts"
+    ],
+    "tests": [
+      "vertical-slice-04-community-explore-public-smoke.sh",
+      "run-community-media-guard.sh",
+      "run-community-l5-green.sh",
+      "communityPhase1DataHonesty.contract.test.ts",
+      "communityRelationalShowcaseHonesty.contract.test.ts",
+      "communityFeedActionTheme.contract.test.ts",
+      "communityModals.contract.test.ts"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B07-LATEST.json",
+    "certification_batch": "B07",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T00:14:04.448Z",
+  "expires_at_utc": "2026-10-08T00:14:04.448Z",
+  "expiry_policy_days": 90,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T00:14:04.448Z",
+  "frozen_git_sha": "331a861a6a4dd70c1484921bef9802405d86f7d1"
+}

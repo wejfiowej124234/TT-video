@@ -1,0 +1,102 @@
+{
+  "timestamp_utc": "2026-07-10T00:14:04.448Z",
+  "gate_results": [
+    {
+      "gate": "scripts/gates/vertical-slice-04-community-explore-public-smoke.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "ok: GET /health | GET /api/v1/community/feed?limit=8&mode=recommend posts.length=0 | GET /api/v1/community/stats/posts-by-tag?tag=… post_count=0 | pass: vertical-slice-04 community explore public smoke (health + feed + posts-by-tag)"
+    },
+    {
+      "gate": "scripts/gates/run-community-media-guard.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "Community Media Guard: PASS |   repo_data_violations=0 |   db_violations=0 (db skipped) | TT_COMMUNITY_MEDIA_GUARD: PASS"
+    },
+    {
+      "gate": "scripts/dev/run-community-l5-green.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "      Tests  138 passed (138) |    Start at  08:14:06 |    Duration  4.31s (transform 1.86s, setup 476ms, collect 6.16s, tests 518ms, environment 31.95s, prepare 4.30s) | TT_COMMUNITY_L5_GREEN: OK"
+    }
+  ],
+  "supplemental_results": [
+    {
+      "contract": "components/community/communityPhase1DataHonesty.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "components/community/communityRelationalShowcaseHonesty.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "components/community/communityFeedActionTheme.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "components/community/communityModals.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    }
+  ],
+  "content_lifecycle": {
+    "lifecycle": [
+      "create_post",
+      "publish",
+      "view",
+      "comment",
+      "like",
+      "report",
+      "moderation",
+      "archive_delete"
+    ],
+    "wiring": {
+      "create_post": "PublishDrawer · POST /api/v1/community/posts",
+      "publish": "useCommunityFeedPublishSubmit",
+      "view": "GET /api/v1/community/feed · explore public smoke",
+      "comment": "useCommunityFeedTopicReportCommentChain · comment API",
+      "like": "useCommunityFeedLikeCollectFollow",
+      "report": "useCommunityFeedTopicReportCommentChain reportContext",
+      "moderation": "admin/community/* contracts (E1/E2 RBAC → B25-C6 slice)",
+      "archive_delete": "CommunityFeedCardContent visibility archived badge · me/posts"
+    },
+    "phase": "① local · staging UGC density + CDN → ②"
+  },
+  "content_safety": {
+    "media_guard": "validate-community-media-guard.cjs · communityMediaClientUrl policy",
+    "upload_video": "PublishDrawer video-duration tests in L5 green",
+    "report_moderation": "communityModals.contract.test.ts · admin moderation page contracts",
+    "permissions": "communityShowcase.gating.test.ts · production/testnet showcase hard-off",
+    "data_honesty": {
+      "showcase_disclosure": "data-tt-community-feed-showcase active-v1 when dev showcase only",
+      "relational_honesty": "CommunityRelationalShowcaseHonestyNote on friends/messages",
+      "fake_engagement_guard": "communityFeedMappers — API empty thread ignores showcase mock counts; no trust_gate fixtures in feed",
+      "market_parity_note": "Avoid Market-style undisclosed seed — community uses data-tt + sr-only hints"
+    }
+  },
+  "ux_evidence": {
+    "empty_state": "CommunityFeedEmptyFooter · CommunityFeedList empty branches",
+    "feed_loading": "communityRouteDataHooks.contract.test.ts · useCommunityFeed",
+    "error_recovery": "communityModals + feed action theme contracts",
+    "cta_clarity": "CommunityFeedDiscoveryChrome community-feed-publish-entry",
+    "l5_green_tests": 138,
+    "shell_freeze_ssot": "frontend/evidence/GO_local_community_phase1_narrow/COMMUNITY-PHASE1-FREEZE.md"
+  },
+  "api_evidence": {
+    "health": "http://127.0.0.1:8080/health",
+    "feed": {
+      "path": "/api/v1/community/feed?limit=8&mode=recommend",
+      "posts_count": 0,
+      "status": "ok"
+    },
+    "stats_by_tag": {
+      "path": "/api/v1/community/stats/posts-by-tag",
+      "post_count": 0,
+      "status": "ok"
+    }
+  },
+  "findings": []
+}
