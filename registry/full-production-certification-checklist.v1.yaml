@@ -156,8 +156,8 @@ local_ssot_anchor:
   branch: feature/g23-04-abi-event-freeze
   prior_anchor_b21_b25_c6: 21f830ffbf6afe8237dab1021e6113fd57ffcd3e
   anchor_b30_b36: 9a73a8de977d2b6d67ddca20ef953da6135ccd7b
-  anchor_finalize_commit: 449b41f1fbb7664ca3e22934979970016cce05ef
-  local_final_freeze_tip: 449b41f1fbb7664ca3e22934979970016cce05ef
+  anchor_finalize_commit: 754a1e385bf2a3d37ec5f2ad0faf203cd3ca9e94
+  local_final_freeze_tip: 754a1e385bf2a3d37ec5f2ad0faf203cd3ca9e94
   per_round1_exit: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-ROUND1-EXIT.md
   local_freeze: true
   local_final_freeze_evidence: FPC-100/FPC-100-LOCAL-FINAL-FREEZE-LATEST.json
