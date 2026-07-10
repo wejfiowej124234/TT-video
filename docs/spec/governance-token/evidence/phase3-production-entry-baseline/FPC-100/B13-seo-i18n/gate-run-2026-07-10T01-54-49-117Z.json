@@ -1,0 +1,69 @@
+{
+  "timestamp_utc": "2026-07-10T01:54:49.117Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": true,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T01:54:49.274Z"
+  },
+  "gate_results": [
+    {
+      "gate": "bash scripts/gates/check-home-public-disclosure-alignment-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "registry-validate: OK\r | check-home-public-disclosure-alignment-gate: PASS HOME_PUBLIC_DISCLOSURE_ALIGNED"
+    },
+    {
+      "gate": "npx vitest run lib/siteMetadataBase.test.ts",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": " ✓ lib/siteMetadataBase.test.ts (5 tests) 3ms |  Test Files  1 passed (1) |       Tests  5 passed (5) |    Start at  09:54:52 |    Duration  1.17s (transform 34ms, setup 17ms, collect 16ms, tests 3ms, environment 528ms, prepare 115ms)"
+    }
+  ],
+  "qualityCheckResults": [
+    {
+      "id": "Q16_site_metadata_base",
+      "domain": "Q16",
+      "pass": true,
+      "path": "frontend/lib/siteMetadataBase.ts",
+      "notes": []
+    },
+    {
+      "id": "Q16_metadata_tests",
+      "domain": "Q16",
+      "pass": true,
+      "path": "frontend/lib/siteMetadataBase.test.ts",
+      "notes": []
+    },
+    {
+      "id": "Q13_locale_zh",
+      "domain": "Q13",
+      "pass": true,
+      "path": "frontend/locales/zh.ts",
+      "notes": []
+    },
+    {
+      "id": "Q13_locale_en",
+      "domain": "Q13",
+      "pass": true,
+      "path": "frontend/locales/en.ts",
+      "notes": []
+    },
+    {
+      "id": "Q16_public_disclosure_registry",
+      "domain": "Q16",
+      "pass": true,
+      "path": "registry/traveltrust-public-disclosure.v1.yaml",
+      "notes": []
+    }
+  ],
+  "findings": []
+}

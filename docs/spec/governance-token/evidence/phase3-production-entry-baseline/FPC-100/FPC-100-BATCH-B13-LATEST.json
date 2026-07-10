@@ -1,0 +1,152 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B13",
+  "title": "SEO · metadata · canonical · OG · i18n",
+  "layer": "L4",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T01:54:49.117Z",
+  "verifier": "run-fpc-batch-b13-seo-i18n.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "f1637d63fed0db366f8206b7cc56d1f551ab890d",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B01",
+    "B12"
+  ],
+  "routes": [
+    "Public marketing · home · metadata · locales"
+  ],
+  "gates": [
+    "bash scripts/gates/check-home-public-disclosure-alignment-gate.sh",
+    "npx vitest run lib/siteMetadataBase.test.ts"
+  ],
+  "gate_results": [
+    {
+      "gate": "bash scripts/gates/check-home-public-disclosure-alignment-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "registry-validate: OK\r | check-home-public-disclosure-alignment-gate: PASS HOME_PUBLIC_DISCLOSURE_ALIGNED"
+    },
+    {
+      "gate": "npx vitest run lib/siteMetadataBase.test.ts",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": " ✓ lib/siteMetadataBase.test.ts (5 tests) 3ms |  Test Files  1 passed (1) |       Tests  5 passed (5) |    Start at  09:54:52 |    Duration  1.17s (transform 34ms, setup 17ms, collect 16ms, tests 3ms, environment 528ms, prepare 115ms)"
+    }
+  ],
+  "gate_pass": true,
+  "runtime_preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": true,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T01:54:49.274Z"
+  },
+  "business_certification": {
+    "verdict": "PASS",
+    "gate_pass": true
+  },
+  "quality_supplement": {
+    "verdict": "PASS",
+    "domains": [
+      "Q13",
+      "Q16"
+    ],
+    "checks": [
+      {
+        "id": "Q16_site_metadata_base",
+        "domain": "Q16",
+        "pass": true,
+        "path": "frontend/lib/siteMetadataBase.ts",
+        "notes": []
+      },
+      {
+        "id": "Q16_metadata_tests",
+        "domain": "Q16",
+        "pass": true,
+        "path": "frontend/lib/siteMetadataBase.test.ts",
+        "notes": []
+      },
+      {
+        "id": "Q13_locale_zh",
+        "domain": "Q13",
+        "pass": true,
+        "path": "frontend/locales/zh.ts",
+        "notes": []
+      },
+      {
+        "id": "Q13_locale_en",
+        "domain": "Q13",
+        "pass": true,
+        "path": "frontend/locales/en.ts",
+        "notes": []
+      },
+      {
+        "id": "Q16_public_disclosure_registry",
+        "domain": "Q16",
+        "pass": true,
+        "path": "registry/traveltrust-public-disclosure.v1.yaml",
+        "notes": []
+      }
+    ]
+  },
+  "overall_verdict": "PASS",
+  "findings": [],
+  "verdict": "IN_PROGRESS",
+  "pass": false,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B14",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "SEO/i18n ① — public disclosure alignment + siteMetadataBase vitest; VP-02 en sweep deferred ②",
+  "traceability": {
+    "requirements": [
+      "No localhost in canonical/OG on public routes",
+      "zh/en locale SSOT present",
+      "HOME_PUBLIC_DISCLOSURE_ALIGNED registry"
+    ],
+    "spec_refs": [
+      "frontend/lib/siteMetadataBase.ts",
+      "registry/traveltrust-public-disclosure.v1.yaml",
+      "FPC-100-QUALITY-DOMAIN-MATRIX-v1.md"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B13-LATEST.json",
+    "certification_batch": "B13",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T01:54:49.117Z",
+  "expires_at_utc": "2026-09-08T01:54:49.117Z",
+  "expiry_policy_days": 60,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T01:54:49.117Z",
+  "frozen_git_sha": "f1637d63fed0db366f8206b7cc56d1f551ab890d",
+  "dod": {
+    "gate_pass": true,
+    "evidence_complete": true,
+    "dashboard_refreshed": true,
+    "commit_complete": false,
+    "working_tree_clean": false,
+    "all_met": false,
+    "checked_at_utc": "2026-07-10T01:54:58.236Z",
+    "committed_sha": "f1637d63fed0db366f8206b7cc56d1f551ab890d",
+    "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
+  }
+}
