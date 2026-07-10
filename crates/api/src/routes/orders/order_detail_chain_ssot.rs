@@ -169,7 +169,7 @@ pub(crate) async fn merge_escrow_locked_amount_ssot_into_order_detail_if_ok(
         return;
     };    let Some(m) = body.as_object_mut() else {
         return;
-    }
+    };
     m.insert("escrow_locked_amount".to_string(), json!(bal_hex));
     m.insert(
         "escrow_locked_amount_data_source".to_string(),
@@ -195,7 +195,7 @@ pub(crate) async fn merge_escrow_chain_state_ssot_into_order_detail_if_ok(
     };    let label = escrow_chain_status_label_order_detail_ssot(&st);
     let Some(m) = body.as_object_mut() else {
         return;
-    }
+    };
     m.insert("escrow_chain_state".to_string(), json!(label));
     m.insert(
         "escrow_chain_state_data_source".to_string(),

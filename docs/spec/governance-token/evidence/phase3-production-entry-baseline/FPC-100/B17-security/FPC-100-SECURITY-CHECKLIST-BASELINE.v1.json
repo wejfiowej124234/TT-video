@@ -1,0 +1,65 @@
+{
+  "schema": "traveltrust.fpc_100_security_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B17",
+  "domain": "Q11",
+  "note": "Absolute security certification checklist · live probes on API @8080 · not ② staging / ③ production GO",
+  "coverage_domains": [
+    "authentication",
+    "session",
+    "token_lifecycle",
+    "rbac",
+    "permission_boundary",
+    "input_validation",
+    "xss",
+    "csrf",
+    "sql_injection",
+    "ssrf",
+    "file_upload",
+    "webhook_security",
+    "secrets",
+    "rate_limit",
+    "csp",
+    "security_logging",
+    "audit_trail"
+  ],
+  "severity_policy": {
+    "P0": "exploitable misconfig or bypass in ① local cert scope",
+    "P1": "missing SSOT gate or live probe fail on owned attack surface",
+    "P2": "transitive dependency advisories · ② upgrade track · fix or ACCEPTED_RISK before Production GO"
+  },
+  "live_probes": {
+    "internal_routes_deny_without_secret": {
+      "paths": [
+        { "method": "POST", "path": "/api/v1/internal/indexer-tick", "allowed_http": [401, 403] },
+        { "method": "GET", "path": "/api/v1/internal/growth/reconcile", "allowed_http": [401, 403] },
+        { "method": "POST", "path": "/api/v1/internal/alerts/test-fire", "allowed_http": [401, 403] }
+      ]
+    },
+    "admin_unauthenticated_deny": {
+      "path": "/api/v1/admin/capabilities",
+      "allowed_http": [401, 403]
+    },
+    "security_headers": {
+      "path": "/health",
+      "required": ["x-content-type-options", "x-frame-options"]
+    },
+    "rate_limits_meta": {
+      "path": "/meta",
+      "required_keys": ["window_seconds", "api_limit_disabled", "guide_upload"]
+    }
+  },
+  "registry_gates": [
+    "scripts/gates/check-invariants.sh",
+    "scripts/gates/audit-deps.sh",
+    "scripts/gates/check-auth-email-resend-gate.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/dev/scan-repository-cfg-drift.sh",
+    "scripts/dev/l5-enterprise-rbac-security-audit.sh",
+    "scripts/dev/verify-production-stripe-webhook-signature-static.sh",
+    "scripts/dev/verify-production-cookie-csp-headers.sh",
+    "scripts/gates/me-routes-local-gate.sh",
+    "scripts/dev/smoke-admin-rbac-matrix-local.sh"
+  ]
+}

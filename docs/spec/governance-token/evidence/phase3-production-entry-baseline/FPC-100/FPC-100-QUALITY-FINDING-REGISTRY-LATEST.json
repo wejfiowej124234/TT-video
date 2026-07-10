@@ -3,7 +3,7 @@
   "phase": "① local",
   "product_version": "v1.0",
   "governance_note": "Evidence extension only · FPC v5 framework FROZEN · not dashboard schema change",
-  "timestamp_utc": "2026-07-10T05:12:00.000Z",
+  "timestamp_utc": "2026-07-10T05:35:00.000Z",
   "execution_model": {
     "b00_b15": "Business PASS (completed) · Quality Supplement deferred until after B41",
     "b16_b41": "Business + Quality + Fix + Re-cert per batch",
@@ -73,16 +73,57 @@
         "FPC-100/FPC-100-BATCH-B16-LATEST.json"
       ],
       "status": "CLOSED"
+    },
+    {
+      "id": "B17-Q-001",
+      "batch_id": "B17",
+      "domain": "Q11",
+      "title": "ssot-guard-ci-v2 B-097 escrow_locked_amount outside order_detail_chain_ssot.rs",
+      "severity": "P0",
+      "discovered_at_utc": "2026-07-10T05:23:00.000Z",
+      "fix_summary": "Wire mod order_detail_chain_ssot; remove duplicate merge_escrow_* from orders/mod.rs; fix order_detail_chain_ssot.rs semicolons",
+      "re_test": "bash scripts/gates/check-invariants.sh exit 0",
+      "re_test_verdict": "PASS",
+      "evidence": ["FPC-100/FPC-100-BATCH-B17-LATEST.json", "crates/api/src/routes/orders/order_detail_chain_ssot.rs"],
+      "status": "CLOSED"
+    },
+    {
+      "id": "B17-Q-002",
+      "batch_id": "B17",
+      "domain": "Q11",
+      "title": "GET /api/v1/growth/referrals/validate blocked under STRICT_SESSION_GATE=1",
+      "severity": "P0",
+      "discovered_at_utc": "2026-07-10T05:32:00.000Z",
+      "detail": "Public referral validate returned 401; G-S1 smoke expects valid:false for unknown code",
+      "fix_summary": "Add growth/referrals/validate to auth public read whitelist (102 §6.5)",
+      "re_test": "curl validate?code=TT-NOSUCH99 → 200 valid:false",
+      "re_test_verdict": "PASS",
+      "evidence": ["crates/api/src/middleware/auth_pause_metrics/mod.rs", "FPC-100/FPC-100-BATCH-B17-LATEST.json"],
+      "status": "CLOSED"
+    },
+    {
+      "id": "B17-Q-003",
+      "batch_id": "B17",
+      "domain": "Q11",
+      "title": "audit-deps transitive npm/cargo advisories (wagmi/metamask uuid · sqlx/rustls tree)",
+      "severity": "P2",
+      "discovered_at_utc": "2026-07-10T05:28:00.000Z",
+      "fix_summary": "npm audit fix + vitest 3.2.6; remaining transitive deferred to Production Entry Review upgrade track",
+      "re_test": "bash scripts/gates/audit-deps.sh — P2 documented at ①",
+      "re_test_verdict": "P2_ACCEPTED_RISK",
+      "evidence": ["FPC-100/FPC-100-BATCH-B17-LATEST.json", "scripts/gates/audit-deps.sh"],
+      "status": "OPEN",
+      "owner_acceptance_required": true
     }
   ],
   "open_counts": {
     "P0": 0,
     "P1": 0,
-    "P2": 0,
+    "P2": 1,
     "P3": 0
   },
   "next_actions": [
-    "Commit B16 remediation + evidence · finalize DoD CLOSED",
-    "Continue B17 with Business + Quality + Fix + Re-cert (do not skip to supplement backfill yet)"
+    "Finalize B17 DoD CLOSED · NEXT B18",
+    "P2 B17-Q-003 Owner acceptance before Production GO"
   ]
 }

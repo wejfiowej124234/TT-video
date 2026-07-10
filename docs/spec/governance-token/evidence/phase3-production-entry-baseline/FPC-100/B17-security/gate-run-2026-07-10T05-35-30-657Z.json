@@ -1,0 +1,350 @@
+{
+  "timestamp_utc": "2026-07-10T05:35:30.657Z",
+  "preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T05:35:30.838Z"
+  },
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-invariants.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "OK: frontend package-lock.json covers package.json direct deps (B-158) | OK: ssot-guard-ci-v2 passed (static B-097 + B-110 + response contract)\r | OK: invariants passed"
+    },
+    {
+      "gate": "scripts/gates/audit-deps.sh",
+      "exit_code": 1,
+      "pass": true,
+      "summary_line": "WARN or FAIL: frontend audit found issues (或未安装 pnpm/npm) | WARN or FAIL: cargo audit found issues | audit-deps: 2 check(s) reported issues"
+    },
+    {
+      "gate": "scripts/gates/check-auth-email-resend-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "OK: check-auth-email-resend-gate (resend + key + from present)"
+    },
+    {
+      "gate": "scripts/dev/scan-repository-cfg-drift.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "OK   verify-cfg-drift-closure.sh | OK   CFG registry JSON | === scan-repository-cfg-drift exit 0 ==="
+    },
+    {
+      "gate": "scripts/dev/l5-enterprise-rbac-security-audit.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "INFO: API live — optional live RBAC matrix available |   bash scripts/dev/smoke-admin-rbac-matrix-local.sh | TT_RBAC_SECURITY: RBAC_SECURITY_GO"
+    },
+    {
+      "gate": "scripts/dev/verify-production-stripe-webhook-signature-static.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "=== 5 · 121 webhook URL topology === |   [PASS] 121 prod webhook URL template | verify-production-stripe-webhook-signature-static: PASS=10 FAIL=0 WARN=0"
+    },
+    {
+      "gate": "scripts/dev/verify-production-cookie-csp-headers.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "=== 2 · Cookie attributes (live · optional) === | === 3 · Security headers (live · optional) === | verify-production-cookie-csp-headers: PASS=4 FAIL=0 WARN=2"
+    },
+    {
+      "gate": "scripts/dev/smoke-growth-ledger-observer-p0-local.sh",
+      "exit_code": 1,
+      "pass": false,
+      "summary_line": "OK   GET /api/v1/growth/referrals/validate (unknown code) | OK   GET /api/v1/admin/growth/referral-codes unauth -> HTTP 401 | FAIL fe /auth/register?ref=TT-SMOKE1 -> HTTP 500"
+    },
+    {
+      "gate": "scripts/gates/me-routes-local-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "   Start at  13:35:46 |    Duration  1.80s (transform 253ms, setup 77ms, collect 447ms, tests 14ms, environment 3.69s, prepare 657ms) | TT_ME_ROUTES_LOCAL_GATE_SUMMARY: OK phase=local-1 routes=2"
+    },
+    {
+      "gate": "scripts/dev/smoke-admin-rbac-matrix-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "== smoke-admin-rbac-matrix-local (??) API=http://127.0.0.1:8080 == | smoke-admin-rbac-matrix-local: OK assign CS console role via db | smoke-admin-rbac-matrix-local: OK db_console_role + route_matrix + CS deny publish + Finance allow finance read"
+    }
+  ],
+  "live_evidence": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "probes": [
+      {
+        "id": "live_internal_routes",
+        "domain": "permission_boundary",
+        "pass": true,
+        "rows": [
+          {
+            "method": "POST",
+            "path": "/api/v1/internal/indexer-tick",
+            "allowed_http": [
+              401,
+              403
+            ],
+            "http": 403,
+            "pass": true,
+            "ms": 4
+          },
+          {
+            "method": "GET",
+            "path": "/api/v1/internal/growth/reconcile",
+            "allowed_http": [
+              401,
+              403
+            ],
+            "http": 403,
+            "pass": true,
+            "ms": 3
+          },
+          {
+            "method": "POST",
+            "path": "/api/v1/internal/alerts/test-fire",
+            "allowed_http": [
+              401,
+              403
+            ],
+            "http": 403,
+            "pass": true,
+            "ms": 2
+          }
+        ]
+      },
+      {
+        "id": "live_admin_unauth",
+        "domain": "rbac",
+        "pass": true,
+        "http": 401
+      },
+      {
+        "id": "live_security_headers",
+        "domain": "csp",
+        "pass": true,
+        "http": 200,
+        "headers": {
+          "x-content-type-options": "nosniff",
+          "x-frame-options": "DENY"
+        }
+      },
+      {
+        "id": "live_rate_limits_meta",
+        "domain": "rate_limit",
+        "pass": true,
+        "http": 200,
+        "keys_present": [
+          "window_seconds",
+          "api_limit_disabled",
+          "guide_upload"
+        ]
+      }
+    ],
+    "skipped": false
+  },
+  "static_ssot": [
+    {
+      "id": "ssot_session_extract",
+      "domain": "session",
+      "pass": true,
+      "path": "crates/api/src/state.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_auth_public_hooks",
+      "domain": "webhook_security",
+      "pass": true,
+      "path": "crates/api/src/middleware/auth_pause_metrics/mod.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_sqlx_query",
+      "domain": "sql_injection",
+      "pass": false,
+      "path": "crates/api/src/db/users.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_upload_security_test",
+      "domain": "file_upload",
+      "pass": true,
+      "path": "crates/api/src/routes/community/community_feed_like_collect_db_api_tests/upload_media_security_pg.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_me_security_page",
+      "domain": "authentication",
+      "pass": true,
+      "path": "frontend/app/me/security/meSecurityPage.contract.test.ts",
+      "notes": []
+    },
+    {
+      "id": "ssot_auth_audit_events",
+      "domain": "audit_trail",
+      "pass": true,
+      "path": "frontend/app/admin/auth-audit-events/adminAuthAuditEventsL5.contract.test.ts",
+      "notes": []
+    },
+    {
+      "id": "ssot_next_xfo",
+      "domain": "xss",
+      "pass": true,
+      "path": "frontend/next.config.js",
+      "notes": []
+    },
+    {
+      "id": "ssot_stripe_webhook_sig",
+      "domain": "webhook_security",
+      "pass": true,
+      "path": "crates/api/src/stripe_onboarding/signature.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_idempotency",
+      "domain": "csrf",
+      "pass": true,
+      "path": "crates/api/src/db/idempotency.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_admin_permissions",
+      "domain": "rbac",
+      "pass": true,
+      "path": "frontend/lib/admin/adminPermissionIds.ts",
+      "notes": []
+    }
+  ],
+  "qualityCheckResults": [
+    {
+      "id": "Q11_quality_matrix",
+      "domain": "Q11",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100-QUALITY-DOMAIN-MATRIX-v1.md",
+      "notes": []
+    },
+    {
+      "id": "Q11_registry_batch",
+      "domain": "Q11",
+      "pass": true,
+      "path": "registry/full-production-certification-checklist.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "Q11_alignment_policy",
+      "domain": "Q11",
+      "pass": true,
+      "path": "docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md",
+      "notes": []
+    },
+    {
+      "id": "Q11_security_checklist",
+      "domain": "Q11",
+      "pass": true,
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B17-security/FPC-100-SECURITY-CHECKLIST-BASELINE.v1.json",
+      "notes": []
+    },
+    {
+      "id": "Q11_me_security_contract",
+      "domain": "Q11",
+      "pass": true,
+      "path": "frontend/lib/apiClient/meSecurity/meSecurity.test.ts",
+      "notes": []
+    },
+    {
+      "id": "Q11_auth_flow_contract",
+      "domain": "Q11",
+      "pass": true,
+      "path": "frontend/lib/auth/authFlowL5.contract.test.ts",
+      "notes": []
+    },
+    {
+      "id": "Q11_live_security_probes",
+      "domain": "Q11",
+      "pass": true,
+      "path": "scripts/dev/lib/fpc-security-probes.cjs",
+      "notes": [
+        "live_internal_routes:true",
+        "live_admin_unauth:true",
+        "live_security_headers:true",
+        "live_rate_limits_meta:true"
+      ]
+    },
+    {
+      "id": "Q11_static_ssot",
+      "domain": "Q11",
+      "pass": false,
+      "path": "crates/api + frontend security SSOT",
+      "notes": [
+        "ssot_sqlx_query"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "gate_fail:audit-deps",
+      "severity": "P2",
+      "gate": "scripts/gates/audit-deps.sh",
+      "detail": "transitive npm/cargo advisories — ① documented · Production Entry Review upgrade track"
+    },
+    {
+      "id": "gate_fail:smoke-growth-ledger-observer-p0-local.sh",
+      "severity": "P0",
+      "gate": "scripts/dev/smoke-growth-ledger-observer-p0-local.sh",
+      "detail": "== smoke-growth-ledger-observer-p0-local (G-S2) ==\nAPI=http://127.0.0.1:8080 FE=http://127.0.0.1:3012\n== smoke-growth-referral-p0-local (G-S1) ==\nAPI=http://127.0.0.1:8080 FE=http://127.0.0.1:3012\nOK   GET /api/v1/growth/referrals/validate (unknown code)\nOK   GET /api/v1/admin/growth/referral-codes unauth -> HTTP 401\nFAIL fe /auth/register?ref=TT-SMOKE1 -> HTTP 500\n"
+    },
+    {
+      "id": "static_missing:ssot_sqlx_query",
+      "severity": "P0",
+      "detail": "crates/api/src/db/users.rs"
+    }
+  ],
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": false,
+      "verdict": "FAIL",
+      "notes": "Registry + extended security gates · internal 403 · secrets scan · RBAC · webhook · CSP"
+    },
+    "quality_meets_standard": {
+      "answer": false,
+      "verdict": "FAIL",
+      "notes": "Q11 security SSOT · live probes · static auth/session/RBAC/upload/webhook anchors"
+    },
+    "findings_identified": {
+      "answer": true,
+      "p0": 2,
+      "p1": 0,
+      "p2": 1,
+      "items": [
+        {
+          "id": "gate_fail:audit-deps",
+          "severity": "P2",
+          "gate": "scripts/gates/audit-deps.sh",
+          "detail": "transitive npm/cargo advisories — ① documented · Production Entry Review upgrade track"
+        },
+        {
+          "id": "gate_fail:smoke-growth-ledger-observer-p0-local.sh",
+          "severity": "P0",
+          "gate": "scripts/dev/smoke-growth-ledger-observer-p0-local.sh",
+          "detail": "== smoke-growth-ledger-observer-p0-local (G-S2) ==\nAPI=http://127.0.0.1:8080 FE=http://127.0.0.1:3012\n== smoke-growth-referral-p0-local (G-S1) ==\nAPI=http://127.0.0.1:8080 FE=http://127.0.0.1:3012\nOK   GET /api/v1/growth/referrals/validate (unknown code)\nOK   GET /api/v1/admin/growth/referral-codes unauth -> HTTP 401\nFAIL fe /auth/register?ref=TT-SMOKE1 -> HTTP 500\n"
+        },
+        {
+          "id": "static_missing:ssot_sqlx_query",
+          "severity": "P0",
+          "detail": "crates/api/src/db/users.rs"
+        }
+      ]
+    },
+    "recertification_passed": {
+      "answer": false,
+      "notes": "Pending fix + re-run batch runner"
+    }
+  }
+}

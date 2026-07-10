@@ -70,6 +70,8 @@ pub async fn auth_placeholder_layer(req: Request<Body>, next: axum::middleware::
         || (read && path.starts_with("/api/v1/public/announcements"))
         // CMS · product roadmap (independent public read · no auth)
         || (read && path.starts_with("/api/v1/public/roadmap"))
+        // G-S1 · 102 §6.5：referral code validate is public read (invalid code → valid:false)
+        || (read && path == "/api/v1/growth/referrals/validate")
         || path.starts_with("/api/v1/internal/")
         || community_read;
     if public {
