@@ -1,14 +1,14 @@
 {
   "schema": "traveltrust.fpc_100_local_final_freeze.v1",
-  "timestamp_utc": "2026-07-10T10:33:47.085Z",
+  "timestamp_utc": "2026-07-10T10:34:59.505Z",
   "phase": "① local",
   "machine_key": "TT_LOCAL_FINAL_FREEZE",
   "git": {
-    "head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+    "head": "112d8b17f94dd3f19eeea1aad0a681ce0038c2ce",
     "branch": "feature/g23-04-abi-event-freeze",
-    "working_tree_clean": true
+    "working_tree_clean": false
   },
-  "authoritative_immutable_head": "08fd715a96bac407ae3b099798de3e91e25337dc",
+  "authoritative_immutable_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
   "freeze_chain": {
     "batches": [
       "B21",
@@ -113,49 +113,49 @@
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
       },
       {
         "batch_id": "B31",
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
       },
       {
         "batch_id": "B32",
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
       },
       {
         "batch_id": "B33",
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
       },
       {
         "batch_id": "B34",
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
       },
       {
         "batch_id": "B35",
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
       },
       {
         "batch_id": "B36",
         "pass": true,
         "verdict": "PASS",
         "certification_frozen": true,
-        "frozen_git_sha": "08fd715a96bac407ae3b099798de3e91e25337dc"
+        "frozen_git_sha": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
       }
     ],
     "pass_count": 18,
@@ -174,7 +174,7 @@
   },
   "release_readiness_pct": 95.1,
   "next_required_batch": "B40",
-  "anchor_b30_b36": false,
+  "anchor_b30_b36": true,
   "b40_entry": {
     "authorized": false,
     "note": "B40 ② staging one-shot — requires explicit Owner authorization; no ① business code changes after freeze",
@@ -183,8 +183,8 @@
   "findings": [
     {
       "severity": "P0",
-      "id": "anchor_head_drift",
-      "detail": "anchor=08fd715a96bac407ae3b099798de3e91e25337dc head=9a73a8de977d2b6d67ddca20ef953da6135ccd7b"
+      "id": "working_tree_not_clean",
+      "detail": "M docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-LOCAL-FINAL-FREEZE-LATEST.json;  M registry/full-production-certification-checklist.v1.yaml;  M scripts/dev/run-fpc-local-final-freeze-check.cjs"
     }
   ],
   "verdict": "FAIL",

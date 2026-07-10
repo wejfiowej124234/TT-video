@@ -106,11 +106,19 @@ function main() {
   if (fs.existsSync(anchorB3036)) {
     const anchor = JSON.parse(fs.readFileSync(anchorB3036, 'utf8'));
     authoritativeSha = anchor.immutable_head || null;
-    anchorOk =
-      anchor.immutable_head === head ||
-      batchRows
-        .filter((r) => ['B30', 'B31', 'B32', 'B33', 'B34', 'B35', 'B36'].includes(r.batch_id))
-        .every((r) => r.frozen_git_sha === head);
+    const anchorBatchesOk = ['B30', 'B31', 'B32', 'B33', 'B34', 'B35', 'B36']
+      .map((id) => batchRows.find((r) => r.batch_id === id))
+      .every((r) => r?.pass && r.frozen_git_sha === authoritativeSha);
+    let headReachable = head === authoritativeSha;
+    if (!headReachable && authoritativeSha) {
+      try {
+        sh(`git merge-base --is-ancestor ${authoritativeSha} ${head}`);
+        headReachable = true;
+      } catch {
+        headReachable = false;
+      }
+    }
+    anchorOk = !!authoritativeSha && anchor.batches?.length === 7 && anchorBatchesOk && headReachable;
     if (!anchorOk) {
       findings.push({
         severity: requireClean ? 'P0' : 'P1',
