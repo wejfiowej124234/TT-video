@@ -3,7 +3,7 @@
   "phase": "① local",
   "product_version": "v1.0",
   "governance_note": "Evidence extension only · FPC v5 framework FROZEN · not dashboard schema change",
-  "timestamp_utc": "2026-07-10T06:10:00.000Z",
+  "timestamp_utc": "2026-07-10T06:40:00.000Z",
   "execution_model": {
     "b00_b15": "Business PASS (completed) · Quality Supplement deferred until after B41",
     "b16_b41": "Business + Quality + Fix + Re-cert per batch",
@@ -131,6 +131,23 @@
         "scripts/dev/lib/fpc-observability-probes.cjs"
       ],
       "status": "CLOSED"
+    },
+    {
+      "id": "B20-Q-001",
+      "batch_id": "B20",
+      "domain": "Q15",
+      "title": "check-55-quick-verify.sh stale meta top_keys vs CHAIN_CONTRACTS/BUILD/ORDERS SSOT",
+      "severity": "P0",
+      "discovered_at_utc": "2026-07-10T06:30:00.000Z",
+      "fix_summary": "Sync c759 (escrow_factory_v2_address), b730 (deployment_profile), ord744 (order_mock_pay_enabled) expectations with meta_contract_keys.rs",
+      "re_test": "BASE_URL=http://127.0.0.1:8080 bash scripts/dev/check-55-quick-verify.sh exit 0",
+      "re_test_verdict": "PASS",
+      "evidence": [
+        "scripts/dev/check-55-quick-verify.sh",
+        "crates/api/src/routes/health_meta/meta_contract_keys.rs",
+        "FPC-100/FPC-100-BATCH-B20-LATEST.json"
+      ],
+      "status": "CLOSED"
     }
   ],
   "open_counts": {
@@ -140,7 +157,7 @@
     "P3": 0
   },
   "next_actions": [
-    "Finalize B19 DoD CLOSED · NEXT B20",
+    "Finalize B20 DoD CLOSED · NEXT B21",
     "P2 B17-Q-003 Owner acceptance before Production GO"
   ]
 }

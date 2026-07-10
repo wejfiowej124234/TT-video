@@ -1,0 +1,74 @@
+{
+  "schema": "traveltrust.fpc_100_web3_checklist.v1",
+  "phase": "① local",
+  "batch_id": "B20",
+  "domain": "Q15",
+  "note": "Web3 deep certification · Blockchain→Indexer→DB→API→UI consistency · Sepolia registry gates + ① local API chain_sync · not ③ Production GO",
+  "coverage_domains": [
+    "contract_registry_abi",
+    "chain_id_network_config",
+    "wallet_transaction_lifecycle",
+    "indexer_checkpoint_parity",
+    "event_log_projection",
+    "escrow_state_machine",
+    "payment_settlement_vacancy",
+    "api_meta_chain_ssot",
+    "frontend_chain_env",
+    "deployment_truth_sepolia"
+  ],
+  "severity_policy": {
+    "P0": "chain_sync/meta/indexer drift · gate fail · broken golden path · exploitable ABI/registry mismatch",
+    "P1": "missing SSOT anchor · vitest fail · RPC flake without retry on owned gate",
+    "P2": "Sepolia RPC transient · ② staging-only gaps documented"
+  },
+  "live_probes": {
+    "meta_chain_indexer": {
+      "path": "/meta",
+      "required_keys": ["chain", "indexer", "finality_n"],
+      "checkpoint_sources": ["runtime", "startup_snapshot"],
+      "finality_n_match_indexer": true
+    },
+    "metrics_indexer_parity": {
+      "path": "/metrics",
+      "gauge_pairs": [
+        ["traveltrust_indexer_checkpoint_block", "indexer.checkpoint.block_number"],
+        ["traveltrust_indexer_checkpoint_log_index", "indexer.checkpoint.log_index"],
+        ["traveltrust_chain_config_loaded", "chain.contracts"]
+      ]
+    },
+    "chain_sync_checkpoint_parity": {
+      "create_itinerary": true,
+      "chain_sync_path_template": "/api/v1/orders/{order_id}/chain-sync-status",
+      "required_chain_sync_keys": ["status", "checkpoint", "finality_n"],
+      "checkpoint_must_match_meta_when_runtime": true
+    },
+    "escrow_order_state": {
+      "allowed_states_after_create": ["Created", "Draft", "draft"],
+      "chain_sync_status_allowed": ["pending", "unknown", "confirmed"]
+    },
+    "registry_chain_id_note": {
+      "local_chain_ids_allowed": ["31337", "11155111", "137"],
+      "sepolia_verified_by_gate": "check-web3-deployment-truth-gate.sh"
+    }
+  },
+  "registry_gates": [
+    "scripts/gates/check-web3-deployment-truth-gate.sh",
+    "scripts/gates/check-web3-runtime-activation-gate.sh",
+    "scripts/gates/check-phase2-web3-runtime-alignment-gate.sh",
+    "scripts/gates/check-vacancy-deployment-readiness-gate.sh"
+  ],
+  "business_gates_extended": [
+    "scripts/gates/check-web3-full-alignment-gate.sh",
+    "scripts/dev/smoke-web3-itinerary-full-chain-local.sh",
+    "scripts/dev/run-web3-itinerary-l5-green.sh",
+    "scripts/dev/check-55-quick-verify.sh"
+  ],
+  "quality_gates": [
+    "frontend/lib/chainEnv.test.ts",
+    "frontend/components/escrow/EscrowDetail/types.chainSync.parseResponse.checkpointAndStatus.test.ts"
+  ],
+  "rpc_env": {
+    "preferred": "https://ethereum-sepolia-rpc.publicnode.com",
+    "fallback_env_file": "scripts/dev/.env.phase2-chain-deploy.local"
+  }
+}

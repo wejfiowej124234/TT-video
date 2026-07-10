@@ -1,6 +1,6 @@
 # WEB3 Vacancy Indexer Reconcile Gate Report v1
 
-**Generated:** 2026-07-10T00:05:48Z
+**Generated:** 2026-07-10T06:40:57Z
 **Gate:** `bash scripts/gates/check-web3-vacancy-indexer-reconcile-gate.sh`
 **Result:** `WEB3_VACANCY_INDEXER_RECONCILE: PASS`
 

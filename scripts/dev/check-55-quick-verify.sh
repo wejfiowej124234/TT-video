@@ -425,23 +425,25 @@ if command -v jq >/dev/null 2>&1; then
   if [[ "$ct" == "object" ]]; then
     cc759r=$(echo "$mb" | jq -r '.chain.contracts.rule // empty')
     [[ "$cc759r" == *"759"* ]] || fail "/meta JSON chain.contracts.rule must mention 759 (759), got \"$cc759r\""
-    c759_exp='["guide_staking_address","staking_provider_address","governor_address","timelock_address","governance_token_address","fee_router_address","treasury_address","registry_address","escrow_factory_address","region_steward_stake_pool_address","rule","chain_contracts_top_keys","chain_contracts_top_keys_contract_759"]'
+    c759_exp='["guide_staking_address","staking_provider_address","governor_address","timelock_address","governance_token_address","fee_router_address","treasury_address","registry_address","escrow_factory_address","escrow_factory_v2_address","region_steward_stake_pool_address","rule","chain_contracts_top_keys","chain_contracts_top_keys_contract_759"]'
     c759_got=$(jq -c '.chain.contracts.chain_contracts_top_keys' "$META_BODY_FILE")
     [[ "$c759_got" == "$c759_exp" ]] || fail "/meta JSON chain.contracts.chain_contracts_top_keys must equal CHAIN_CONTRACTS_META (759), got \"$c759_got\""
     sb759cc=$(jq -r '.chain.contracts.chain_contracts_top_keys_contract_759' "$META_BODY_FILE")
     [[ "$sb759cc" == *"759"* ]] || fail "/meta JSON chain_contracts_top_keys_contract_759 must mention 759 (759), got \"$sb759cc\""
     [[ "$sb759cc" == *"escrow_factory_address"* ]] || fail "/meta JSON chain_contracts_top_keys_contract_759 must embed escrow_factory_address (759), got \"$sb759cc\""
+    [[ "$sb759cc" == *"escrow_factory_v2_address"* ]] || fail "/meta JSON chain_contracts_top_keys_contract_759 must embed escrow_factory_v2_address (759), got \"$sb759cc\""
     [[ "$sb759cc" == *"registry_address"* ]] || fail "/meta JSON chain_contracts_top_keys_contract_759 must embed registry_address (759), got \"$sb759cc\""
   fi
   br730=$(echo "$mb" | jq -r '.build.rule // empty')
   [[ "$br730" == *"730"* ]] || fail "/meta JSON build.rule must mention 730 (730), got \"$br730\""
-  b730_exp='["git_sha","deployed_at","rule","build_top_keys","build_top_keys_contract_730"]'
+  b730_exp='["git_sha","deployed_at","deployment_profile","rule","build_top_keys","build_top_keys_contract_730"]'
   b730_got=$(echo "$mb" | jq -c '.build.build_top_keys // empty')
   [[ "$b730_got" == "$b730_exp" ]] || fail "/meta JSON build.build_top_keys must equal SSOT (730), got \"$b730_got\""
   sb730=$(echo "$mb" | jq -r '.build.build_top_keys_contract_730 // empty')
   [[ "$sb730" == *"730"* ]] || fail "/meta JSON build_top_keys_contract_730 must mention 730 (730), got \"$sb730\""
   [[ "$sb730" == *"git_sha"* ]] || fail "/meta JSON build_top_keys_contract_730 must embed git_sha (730), got \"$sb730\""
   [[ "$sb730" == *"deployed_at"* ]] || fail "/meta JSON build_top_keys_contract_730 must embed deployed_at (730), got \"$sb730\""
+  [[ "$sb730" == *"deployment_profile"* ]] || fail "/meta JSON build_top_keys_contract_730 must embed deployment_profile (730), got \"$sb730\""
   dw732r=$(echo "$mb" | jq -r '.dual_write.rule // empty')
   [[ "$dw732r" == *"732"* ]] || fail "/meta JSON dual_write.rule must mention 732 (732), got \"$dw732r\""
   dw732_exp='["failure_policy","strict_db_write_any","rule","dual_write_top_keys","dual_write_top_keys_contract_732"]'
@@ -561,7 +563,7 @@ if command -v jq >/dev/null 2>&1; then
   [[ "$sb743it" == *"dual_write_order"* ]] || fail "/meta JSON itineraries_top_keys_contract_743 must embed dual_write_order (743), got \"$sb743it\""
   ord744r=$(echo "$mb" | jq -r '.orders.rule // empty')
   [[ "$ord744r" == *"744"* ]] || fail "/meta JSON orders.rule must mention 744 (744), got \"$ord744r\""
-  ord744_exp='["strict_db_write","dual_write_order","rule","list_pagination","fee_route_country_ssot","deadline_rating_observability","orders_top_keys","orders_top_keys_contract_744"]'
+  ord744_exp='["strict_db_write","dual_write_order","rule","list_pagination","fee_route_country_ssot","deadline_rating_observability","order_mock_pay_enabled","orders_top_keys","orders_top_keys_contract_744"]'
   ord744_got=$(jq -c '.orders.orders_top_keys' "$META_BODY_FILE")
   [[ "$ord744_got" == "$ord744_exp" ]] || fail "/meta JSON orders.orders_top_keys must equal ORDERS (744), got \"$ord744_got\""
   sb744ord=$(jq -r '.orders.orders_top_keys_contract_744' "$META_BODY_FILE")

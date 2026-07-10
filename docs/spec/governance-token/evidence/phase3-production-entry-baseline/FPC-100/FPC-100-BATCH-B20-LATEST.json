@@ -1,0 +1,380 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B20",
+  "title": "Web3 deep · escrow · Sepolia · vacancy · chain_sync parity",
+  "layer": "L3",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T06:34:44.469Z",
+  "verifier": "run-fpc-batch-b20-web3.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "6768fabaa38b53c66aaa45521e7a6cd69039124d",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B05",
+    "B19"
+  ],
+  "gates": [
+    "scripts/gates/check-web3-deployment-truth-gate.sh",
+    "scripts/gates/check-web3-runtime-activation-gate.sh",
+    "scripts/gates/check-phase2-web3-runtime-alignment-gate.sh",
+    "scripts/gates/check-vacancy-deployment-readiness-gate.sh",
+    "scripts/gates/check-web3-full-alignment-gate.sh",
+    "scripts/dev/smoke-web3-itinerary-full-chain-local.sh",
+    "scripts/dev/run-web3-itinerary-l5-green.sh",
+    "scripts/dev/check-55-quick-verify.sh"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/gates/check-web3-deployment-truth-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "OK: Web3 Protocol Master Matrix gate (WEB3_PROTOCOL_VERSION=1.0.3 sha256=3d1daf94ac346c4e7cb169c2cb51f7b7098640f286fb97c7fa071f12cefba616) | WEB3_REGISTRY_CONVERGENCE: PASS | Report: docs/spec/governance-token/WEB3-DEPLOYMENT-TRUTH-GATE-REPORT-v1.md"
+    },
+    {
+      "gate": "scripts/gates/check-web3-runtime-activation-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "Report: docs/spec/governance-token/WEB3-VACANCY-INDEXER-RECONCILE-GATE-REPORT-v1.md | WEB3_RUNTIME_ACTIVATION_GATE: PASS | W7_SEPOLIA_BROADCAST: AUTHORIZED pending TRAVELTRUST_W7_SEPOLIA_BROADCAST_OK=1"
+    },
+    {
+      "gate": "scripts/gates/check-phase2-web3-runtime-alignment-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "  sepolia_de=ACTIVE live_mode=LIVE_V1 warn_count=0 | Report: docs/spec/governance-token/PHASE2-WEB3-RUNTIME-CLOSEOUT-REPORT-v1.md | JSON: docs/spec/governance-token/evidence/phase2-web3-runtime-closeout/phase2-web3-runtime-closeout.json"
+    },
+    {
+      "gate": "scripts/gates/check-vacancy-deployment-readiness-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "VACANCY_DEPLOYMENT_READINESS: PASS |   protocol=PASS indexer=PASS sepolia_runtime=ACTIVE production=PENDING | Report: docs/spec/governance-token/VACANCY-V1-RUNTIME-DEPLOYMENT-STATUS-v1.md"
+    },
+    {
+      "gate": "scripts/gates/check-web3-full-alignment-gate.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "SSOT: registry/web3-final-alignment-matrix.v2.yaml | Drift: docs/spec/governance-token/WEB3_ALIGNMENT_DRIFT_REPORT-v2.md | Audit: docs/spec/governance-token/TRAVELTRUST-WEB3-FULL-ALIGNMENT-AUDIT-v2.md"
+    },
+    {
+      "gate": "scripts/dev/smoke-web3-itinerary-full-chain-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "  UI step2: /market?view=split&bindGuideToOrder=60f5ea30-bb9a-47a6-9638-a7349ac3358c | smoke-escrow-draft-guide-bind: PASS (phase ① · itinerary-first · guide reassign) | TT_WEB3_ITINERARY_FULL_CHAIN_SMOKE: OK (① · create no guide · publish · bind · reassign)"
+    },
+    {
+      "gate": "scripts/dev/run-web3-itinerary-l5-green.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "   Duration  5.94s (transform 4.23s, setup 1.00s, collect 13.22s, tests 1.82s, environment 57.60s, prepare 6.99s) | TT_WEB3_ITINERARY_L5_GREEN: OK (① local · preview unlock · escrow draft experience) |   SSOT: frontend/evidence/GO_local_web3_itinerary_l5/README.md"
+    },
+    {
+      "gate": "scripts/dev/check-55-quick-verify.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "55-QUICK-VERIFY OK: did-rank providers JSON shape (period=week, rank_basis, providers[]) | 55-QUICK-VERIFY OK: did-rank acquisitions JSON shape (period=week, rank_basis, acquisitions[]) | 55 阶段运行时快速验收通过（BASE_URL=http://127.0.0.1:8080）。"
+    }
+  ],
+  "gate_pass": true,
+  "runtime_preflight": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "items": {
+      "working_tree_clean": false,
+      "api_health": 200,
+      "api_meta": 200,
+      "db_reachable": true,
+      "expected_feature_flags": {}
+    },
+    "findings": [],
+    "blockers": [],
+    "timestamp_utc": "2026-07-10T06:34:44.668Z"
+  },
+  "web3_live_evidence": {
+    "pass": true,
+    "api_base": "http://127.0.0.1:8080",
+    "probes": [
+      {
+        "id": "live_meta_chain_indexer",
+        "domain": "api_meta_chain_ssot",
+        "pass": true,
+        "chain_id": "31337",
+        "checkpoint": {
+          "block_number": 0,
+          "log_index": 0,
+          "source": "runtime",
+          "rule": "与 orders chain_sync.checkpoint、metrics traveltrust_indexer_checkpoint_* 同源；source=runtime 时 block/log 与 indexer.memory 同源；758 GET /meta indexer.checkpoint 对象 indexer_checkpoint_top_keys / indexer_checkpoint_top_keys_contract_758 与 INDEXER_CHECKPOINT_META_TOP_KEYS 六键顺序同源",
+          "indexer_checkpoint_top_keys": [
+            "block_number",
+            "log_index",
+            "source",
+            "rule",
+            "indexer_checkpoint_top_keys",
+            "indexer_checkpoint_top_keys_contract_758"
+          ],
+          "indexer_checkpoint_top_keys_contract_758": "**758**：**`indexer_checkpoint_top_keys`** **与 **`INDEXER_CHECKPOINT_META_TOP_KEYS`** **同源（顺序 `block_number`****→**`log_index`****→**`source`****→**`rule`****→**`indexer_checkpoint_top_keys`****→**`indexer_checkpoint_top_keys_contract_758`）"
+        },
+        "finality_n": 12
+      },
+      {
+        "id": "live_metrics_indexer_parity",
+        "domain": "indexer_checkpoint_parity",
+        "pass": true,
+        "gauges": {
+          "block": 0,
+          "log": 0,
+          "chain_config_loaded": 1
+        },
+        "meta": {
+          "block": 0,
+          "log": 0
+        }
+      },
+      {
+        "id": "live_chain_sync_checkpoint_parity",
+        "domain": "indexer_checkpoint_parity",
+        "pass": true,
+        "order_id": "d394e300-dfdf-4da8-9ee3-25b6ef4ce0d5",
+        "chain_sync_status": "pending",
+        "checkpoint": {
+          "block_number": 0,
+          "log_index": 0,
+          "source": "runtime"
+        },
+        "meta_checkpoint": {
+          "block_number": 0,
+          "log_index": 0,
+          "source": "runtime",
+          "rule": "与 orders chain_sync.checkpoint、metrics traveltrust_indexer_checkpoint_* 同源；source=runtime 时 block/log 与 indexer.memory 同源；758 GET /meta indexer.checkpoint 对象 indexer_checkpoint_top_keys / indexer_checkpoint_top_keys_contract_758 与 INDEXER_CHECKPOINT_META_TOP_KEYS 六键顺序同源",
+          "indexer_checkpoint_top_keys": [
+            "block_number",
+            "log_index",
+            "source",
+            "rule",
+            "indexer_checkpoint_top_keys",
+            "indexer_checkpoint_top_keys_contract_758"
+          ],
+          "indexer_checkpoint_top_keys_contract_758": "**758**：**`indexer_checkpoint_top_keys`** **与 **`INDEXER_CHECKPOINT_META_TOP_KEYS`** **同源（顺序 `block_number`****→**`log_index`****→**`source`****→**`rule`****→**`indexer_checkpoint_top_keys`****→**`indexer_checkpoint_top_keys_contract_758`）"
+        }
+      },
+      {
+        "id": "live_escrow_order_state",
+        "domain": "escrow_state_machine",
+        "pass": true,
+        "order_id": "c67a6fc5-f57d-49e8-90f3-3dfc15a8552f",
+        "order_state": "draft",
+        "chain_sync_status": "pending"
+      },
+      {
+        "id": "live_chain_id_phase_boundary",
+        "domain": "chain_id_network_config",
+        "pass": true,
+        "chain_id": "31337",
+        "note": "check-web3-deployment-truth-gate.sh"
+      }
+    ],
+    "skipped": false,
+    "rpc_used": "https://ethereum-sepolia-rpc.publicnode.com"
+  },
+  "web3_static_ssot": [
+    {
+      "id": "ssot_protocol_registry",
+      "domain": "contract_registry_abi",
+      "pass": true,
+      "path": "registry/protocol-convergence-deployments.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "ssot_master_matrix",
+      "domain": "contract_registry_abi",
+      "pass": true,
+      "path": "registry/traveltrust-web3-protocol-master-matrix.v1.yaml",
+      "notes": []
+    },
+    {
+      "id": "ssot_chain_sync_handler",
+      "domain": "event_log_projection",
+      "pass": true,
+      "path": "crates/api/src/routes/orders/chain_sync_status.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_order_detail_chain_ssot",
+      "domain": "escrow_state_machine",
+      "pass": true,
+      "path": "crates/api/src/routes/orders/order_detail_chain_ssot.rs",
+      "notes": []
+    },
+    {
+      "id": "ssot_frontend_chain_env",
+      "domain": "frontend_chain_env",
+      "pass": true,
+      "path": "frontend/lib/chainEnv.ts",
+      "notes": []
+    },
+    {
+      "id": "ssot_spec_14_ref",
+      "domain": "contract_registry_abi",
+      "pass": true,
+      "path": "docs/spec/14-合约-API-ABI-前后端对齐.md",
+      "notes": []
+    }
+  ],
+  "business_certification": {
+    "verdict": "PASS",
+    "gate_pass": true
+  },
+  "quality_supplement": {
+    "verdict": "PASS",
+    "domains": [
+      "Q15"
+    ],
+    "checks": [
+      {
+        "id": "Q15_quality_matrix",
+        "domain": "Q15",
+        "pass": true,
+        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-QUALITY-DOMAIN-MATRIX-LATEST.json",
+        "notes": []
+      },
+      {
+        "id": "Q15_registry_batch",
+        "domain": "Q15",
+        "pass": true,
+        "path": "registry/full-production-certification-checklist.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q15_web3_checklist",
+        "domain": "Q15",
+        "pass": true,
+        "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/B20-web3/FPC-100-WEB3-CHECKLIST-BASELINE.v1.json",
+        "notes": []
+      },
+      {
+        "id": "Q15_protocol_registry",
+        "domain": "Q15",
+        "pass": true,
+        "path": "registry/protocol-convergence-deployments.v1.yaml",
+        "notes": []
+      },
+      {
+        "id": "Q15_smoke_web3_ref",
+        "domain": "Q15",
+        "pass": true,
+        "path": "scripts/dev/smoke-web3-itinerary-full-chain-local.sh",
+        "notes": []
+      },
+      {
+        "id": "Q15_live_web3_probes",
+        "domain": "Q15",
+        "pass": true,
+        "path": "scripts/dev/lib/fpc-web3-probes.cjs",
+        "notes": [
+          "live_meta_chain_indexer:true",
+          "live_metrics_indexer_parity:true",
+          "live_chain_sync_checkpoint_parity:true",
+          "live_escrow_order_state:true",
+          "live_chain_id_phase_boundary:true"
+        ]
+      },
+      {
+        "id": "Q15_static_ssot",
+        "domain": "Q15",
+        "pass": true,
+        "path": "registry + chain_sync + chainEnv SSOT",
+        "notes": [
+          "ssot_protocol_registry:true",
+          "ssot_master_matrix:true",
+          "ssot_chain_sync_handler:true",
+          "ssot_order_detail_chain_ssot:true",
+          "ssot_frontend_chain_env:true",
+          "ssot_spec_14_ref:true"
+        ]
+      },
+      {
+        "id": "Q15_vitest_chain_env",
+        "domain": "Q15",
+        "pass": true,
+        "path": "frontend/lib/chainEnv.test.ts",
+        "notes": [
+          " "
+        ]
+      },
+      {
+        "id": "Q15_vitest_chain_sync",
+        "domain": "Q15",
+        "pass": true,
+        "path": "types.chainSync.parseResponse.checkpointAndStatus.test.ts",
+        "notes": [
+          " "
+        ]
+      }
+    ]
+  },
+  "certification_four_questions": {
+    "business_correct": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Registry web3 gates + full alignment + golden path smoke + chain_sync live parity"
+    },
+    "quality_meets_standard": {
+      "answer": true,
+      "verdict": "PASS",
+      "notes": "Q15 Web3 SSOT · protocol registry · chainEnv + chainSync vitest"
+    },
+    "findings_identified": {
+      "answer": false,
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "items": []
+    },
+    "recertification_passed": {
+      "answer": true,
+      "notes": "All P0/P1 remediated · Blockchain→Indexer→DB→API consistency PASS"
+    }
+  },
+  "overall_verdict": "PASS",
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B21",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Web3 deep ① — Sepolia registry gates + meta/metrics/chain_sync checkpoint parity + golden path; not ②③ GO",
+  "traceability": {
+    "requirements": [
+      "WEB3_REGISTRY_CONVERGENCE PASS",
+      "WEB3_RUNTIME_ACTIVATION_GATE PASS",
+      "TT_PHASE2_WEB3_RUNTIME_READY PASS",
+      "chain_sync.checkpoint matches meta.indexer.checkpoint when runtime",
+      "smoke-web3-itinerary-full-chain-local.sh PASS"
+    ],
+    "spec_refs": [
+      "registry/full-production-certification-checklist.v1.yaml",
+      "registry/protocol-convergence-deployments.v1.yaml",
+      "docs/spec/14-合约-API-ABI-前后端对齐.md",
+      "FPC-100/B20-web3/FPC-100-WEB3-CHECKLIST-BASELINE.v1.json"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B20-LATEST.json",
+    "certification_batch": "B20",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T06:34:44.469Z",
+  "expires_at_utc": "2026-08-09T06:34:44.469Z",
+  "expiry_policy_days": 30,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T06:34:44.469Z",
+  "frozen_git_sha": "6768fabaa38b53c66aaa45521e7a6cd69039124d"
+}
