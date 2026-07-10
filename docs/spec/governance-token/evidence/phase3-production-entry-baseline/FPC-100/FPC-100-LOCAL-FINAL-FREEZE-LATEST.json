@@ -1,12 +1,12 @@
 {
   "schema": "traveltrust.fpc_100_local_final_freeze.v1",
-  "timestamp_utc": "2026-07-10T10:34:59.505Z",
+  "timestamp_utc": "2026-07-10T10:36:22.708Z",
   "phase": "① local",
   "machine_key": "TT_LOCAL_FINAL_FREEZE",
   "git": {
-    "head": "112d8b17f94dd3f19eeea1aad0a681ce0038c2ce",
+    "head": "7be436e419e87703914a7a9605fe4418826ad930",
     "branch": "feature/g23-04-abi-event-freeze",
-    "working_tree_clean": false
+    "working_tree_clean": true
   },
   "authoritative_immutable_head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
   "freeze_chain": {
@@ -180,13 +180,7 @@
     "note": "B40 ② staging one-shot — requires explicit Owner authorization; no ① business code changes after freeze",
     "phase": "②"
   },
-  "findings": [
-    {
-      "severity": "P0",
-      "id": "working_tree_not_clean",
-      "detail": "M docs/spec/governance-token/evidence/phase3-production-entry-baseline/FPC-100/FPC-100-LOCAL-FINAL-FREEZE-LATEST.json;  M registry/full-production-certification-checklist.v1.yaml;  M scripts/dev/run-fpc-local-final-freeze-check.cjs"
-    }
-  ],
-  "verdict": "FAIL",
-  "pass": false
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true
 }

@@ -135,9 +135,26 @@ function main() {
   const readiness = dash?.release_readiness?.pct ?? burn.release_readiness_pct;
 
   const pass = findings.length === 0 && batchRows.every((r) => r.pass);
+  const outPath = path.join(EVID, 'FPC-100-LOCAL-FINAL-FREEZE-LATEST.json');
+  let stampOut = stamp;
+  if (fs.existsSync(outPath)) {
+    try {
+      const prev = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+      if (
+        prev.verdict === 'PASS' &&
+        pass &&
+        prev.git?.head === head &&
+        prev.freeze_chain?.pass_count === batchRows.filter((r) => r.pass).length
+      ) {
+        stampOut = prev.timestamp_utc || stamp;
+      }
+    } catch {
+      /* rewrite */
+    }
+  }
   const out = {
     schema: 'traveltrust.fpc_100_local_final_freeze.v1',
-    timestamp_utc: stamp,
+    timestamp_utc: stampOut,
     phase: '① local',
     machine_key: 'TT_LOCAL_FINAL_FREEZE',
     git: { head, branch, working_tree_clean: treeClean },
@@ -162,7 +179,6 @@ function main() {
     pass,
   };
 
-  const outPath = path.join(EVID, 'FPC-100-LOCAL-FINAL-FREEZE-LATEST.json');
   fs.writeFileSync(outPath, JSON.stringify(out, null, 2) + '\n');
   console.log(`TT_LOCAL_FINAL_FREEZE: ${out.verdict}`);
   console.log(`chain: ${out.freeze_chain.pass_count}/${out.freeze_chain.total} frozen PASS`);
