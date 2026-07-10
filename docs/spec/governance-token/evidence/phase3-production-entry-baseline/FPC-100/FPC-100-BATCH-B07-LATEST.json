@@ -175,7 +175,7 @@
   "expiry_policy_days": 90,
   "certification_frozen": true,
   "frozen_at_utc": "2026-07-10T00:14:04.448Z",
-  "frozen_git_sha": "8e84993efc76e32769a54cab92f322a0165e94e2",
+  "frozen_git_sha": "ee274cf41efca210b6fb0edc1da7c1bd152bf2b1",
   "dod": {
     "gate_pass": true,
     "evidence_complete": true,
@@ -183,9 +183,9 @@
     "commit_complete": true,
     "working_tree_clean": true,
     "all_met": true,
-    "checked_at_utc": "2026-07-10T00:14:36.642Z",
-    "committed_sha": "8e84993efc76e32769a54cab92f322a0165e94e2",
+    "checked_at_utc": "2026-07-10T00:14:37.196Z",
+    "committed_sha": "ee274cf41efca210b6fb0edc1da7c1bd152bf2b1",
     "policy": "Gate PASS + Evidence + Dashboard + Commit + Clean tree"
   },
-  "finalized_at_utc": "2026-07-10T00:14:36.642Z"
+  "finalized_at_utc": "2026-07-10T00:14:37.196Z"
 }
