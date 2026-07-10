@@ -29,8 +29,8 @@ function adminPageRoutes(): string[] {
 const PERM_DENIED_JARGON = /admin\.[a-z0-9_.]+|\b403\b|Missing admin\.|writeRequestHeaders|subject_user_id/;
 
 describe("Admin L5 perfect closure (① · enterprise zero-gap SSOT)", () => {
-  it("indexes 111 admin routes for forensic matrix", () => {
-    expect(adminPageRoutes().length).toBe(111);
+  it("indexes 114 admin routes for forensic matrix", () => {
+    expect(adminPageRoutes().length).toBe(114);
   });
 
   it("dead cross-nav modules removed from tree", () => {

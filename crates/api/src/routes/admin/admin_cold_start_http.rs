@@ -18,7 +18,7 @@ fn official_pool(state: &ApiMetaState) -> Option<&sqlx::PgPool> {
     state.chain_off.as_ref()?.db_pool.as_ref()
 }
 
-fn official_err(code: &str) -> (StatusCode, Json<Value>) {
+pub(crate) fn official_err(code: &str) -> (StatusCode, Json<Value>) {
     (
         StatusCode::CONFLICT,
         Json(json!({ "status": "error", "error": code })),
@@ -118,6 +118,7 @@ pub async fn get_admin_cold_start_campaigns(
     match db::list_cold_start_campaigns_admin(
         pool,
         q.publish_status.as_deref().filter(|s| !s.is_empty()),
+        None,
         q.limit.unwrap_or(50),
     )
     .await
@@ -168,6 +169,7 @@ pub async fn post_admin_cold_start_campaign(
         db::CreateColdStartCampaignInput {
             name: body.name,
             surfaces: body.surfaces.unwrap_or_default(),
+            campaign_kind: db::CAMPAIGN_KIND_COLD_START.to_string(),
         },
         req_id,
     )
@@ -387,7 +389,7 @@ fn service_unavailable() -> axum::response::Response {
         .into_response()
 }
 
-fn db_err(code: &str, e: sqlx::Error) -> axum::response::Response {
+pub(crate) fn db_err(code: &str, e: sqlx::Error) -> axum::response::Response {
     (
         StatusCode::INTERNAL_SERVER_ERROR,
         Json(json!({ "status": "error", "error": code, "message": e.to_string() })),

@@ -16,7 +16,7 @@ import {
 } from "@/components/admin/ops/OfficialOpsDataTable";
 import { adminTableRowPrimaryActionClass } from "@/components/admin/ops/OfficialOpsFilterBar";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
-import { ADMIN_TABLE_TD_CELL_CLASS } from "@/lib/adminUi";
+import { ADMIN_TABLE_TD_CELL_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
 import { apiUrl } from "@/lib/api";
 import { routes } from "@/lib/api/routes";
 import { requestId, writeRequestHeaders } from "@/lib/apiClient/core";
@@ -148,7 +148,7 @@ export function AdminVacancyLedgerOpsPageMain() {
         </button>
         <Link
           href="/governance/vacancy-ledger"
-          className="text-body-s text-travel-600 hover:underline"
+          className={`text-body-s ${adminPageNavLinkClass()}`}
           data-tt-admin-vacancy-ops-governance-link="1"
         >
           {t("admin_vacancy_ledger_ops_governance_link")}

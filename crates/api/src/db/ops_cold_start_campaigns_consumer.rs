@@ -174,6 +174,14 @@ pub async fn get_deployed_cold_start_campaign_for_surface(
     }))
 }
 
+/// Public Operations · campaign_kind surface read (alias for gate + admin consumer SSOT).
+pub async fn get_deployed_campaign_for_surface(
+    pool: &PgPool,
+    surface: &str,
+) -> Result<Option<ConsumerColdStartCampaign>, sqlx::Error> {
+    get_deployed_cold_start_campaign_for_surface(pool, surface).await
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

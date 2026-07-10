@@ -175,6 +175,8 @@ mod campaign_catalog;
 mod pg_transient_retry;
 mod public_operations_policy;
 mod public_operations_display_admin;
+mod public_operations_display_history;
+mod public_operations_campaigns;
 pub use did_rank_market_boards::*;
 pub use user_security_notifications::*;
 pub use did_rank_snapshots::*;
@@ -193,6 +195,8 @@ pub use campaign_catalog::{
 pub use pg_transient_retry::*;
 pub use public_operations_policy::*;
 pub use public_operations_display_admin::*;
+pub use public_operations_display_history::*;
+pub use public_operations_campaigns::*;
 
 #[cfg(test)]
 #[path = "role_identity_dual_write_db_api_tests.rs"]

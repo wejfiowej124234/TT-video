@@ -52,6 +52,8 @@ mod admin_official_accounts_http;
 mod admin_official_guides_http;
 mod admin_official_itinerary_templates_http;
 mod admin_cold_start_http;
+mod admin_official_public_operations_http;
+mod admin_official_public_operations_campaigns_http;
 mod admin_onboarding;
 pub(crate) mod admin_rbac;
 pub(crate) mod admin_security_totp;
@@ -752,7 +754,9 @@ pub fn router() -> Router<ApiMetaState> {
         .merge(admin_acquisition_suspend_http::router())
         // CMS public surface admin（公告/路线图 · Production Entry）：public 路由常挂载 · admin CRUD 亦须 staging/content ops
         .merge(admin_content_announcements_http::router())
-        .merge(admin_content_roadmap_http::router());
+        .merge(admin_content_roadmap_http::router())
+        .merge(admin_official_public_operations_http::router())
+        .merge(admin_official_public_operations_campaigns_http::router());
 
     if !crate::complexity_convergence::freeze_active() {
         r = r

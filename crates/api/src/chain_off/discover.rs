@@ -93,6 +93,11 @@ fn discover_card_json(o: &OrderRow, bundle: &ItineraryBundle) -> serde_json::Val
     card
 }
 
+/// Public Operations admin preview — same card shape as discover list.
+pub fn discover_card_json_for_preview(o: &OrderRow, bundle: &ItineraryBundle) -> serde_json::Value {
+    discover_card_json(o, bundle)
+}
+
 /// 可被浏览的订单列表（Draft + Created 且未指派向导，供前端 **自由市场 `/market`** 卡片消费；HTTP 路径保留 **`GET /api/v1/discover/orders`**）；49 D：country/city 筛选；50-80-5 按 created_at 倒序。
 /// 55-S12：按 order_id 唯一；**可选** `limit`+`cursor` 分页（`updated_at DESC, id DESC`），不传 limit 时行为与历史一致（全量、按 created_at 倒序）。
 pub async fn discover_orders_list_impl(

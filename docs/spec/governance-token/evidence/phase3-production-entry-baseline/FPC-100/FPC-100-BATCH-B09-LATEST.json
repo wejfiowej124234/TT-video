@@ -1,0 +1,173 @@
+{
+  "schema": "traveltrust.fpc_100_batch_certification.v1",
+  "batch_id": "B09",
+  "title": "Admin workspace · RBAC · four centers (114 routes)",
+  "layer": "L1-L5",
+  "phase": "① local",
+  "timestamp_utc": "2026-07-10T00:33:06.330Z",
+  "verifier": "run-fpc-batch-b09-admin-rbac.cjs",
+  "product_version": "v1.0",
+  "code_anchor_commit": "e9df0a73f63b5ebccc7c17266f000c3bf867d872",
+  "git": {
+    "head": "fedc5c15fda3f03d752768079241ede1e1287252",
+    "branch": "feature/g23-04-abi-event-freeze"
+  },
+  "depends_on": [
+    "B00"
+  ],
+  "routes": [
+    "/admin/* (114 page.tsx)"
+  ],
+  "gates": [
+    "scripts/dev/smoke-admin-rbac-matrix-local.sh",
+    "scripts/gates/smoke-admin-rbac-staging-matrix.sh",
+    "scripts/gates/run-admin-platform-40-verification.sh",
+    "scripts/gates/check-admin-functional-audit-mapping.py"
+  ],
+  "gate_results": [
+    {
+      "gate": "scripts/dev/smoke-admin-rbac-matrix-local.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "== smoke-admin-rbac-matrix-local (??) API=http://127.0.0.1:8080 == | smoke-admin-rbac-matrix-local: OK assign CS console role via db | smoke-admin-rbac-matrix-local: OK db_console_role + route_matrix + CS deny publish + Finance allow finance read"
+    },
+    {
+      "gate": "scripts/gates/smoke-admin-rbac-staging-matrix.sh",
+      "exit_code": 0,
+      "pass": true,
+      "staging_skip": true,
+      "summary_line": "smoke-admin-rbac-staging-matrix: SKIP (set STAGING_API_BASE + tokens or STAGING_DATABASE_URL) | TT_ADMIN_RBAC_STAGING_MATRIX: SKIP"
+    },
+    {
+      "gate": "scripts/gates/run-admin-platform-40-verification.sh",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "verdict=PASS_MACHINE | OK: Admin Platform 40/40 machine verification complete | Evidence: /d/TravelTrust-V1.1/evidence/GO_admin_platform_40_complete/20260710T003313Z/report.json | Next: manual Admin testing (local → staging) per report.manual_next"
+    },
+    {
+      "gate": "scripts/gates/check-admin-functional-audit-mapping.py",
+      "exit_code": 0,
+      "pass": true,
+      "summary_line": "OK: admin functional audit mapping �� 40/40 Complete �� Audit/SSOT/Checklist/Registry aligned �� anchors present\r"
+    }
+  ],
+  "gate_pass": true,
+  "rbac_matrix": {
+    "lifecycle": [
+      "role",
+      "permission",
+      "route",
+      "action"
+    ],
+    "local_smoke": "smoke-admin-rbac-matrix-local.sh (SuperAdmin · CS deny publish · Finance allow read)",
+    "staging_matrix": "SKIP (② deferred · ADM-U01_STRICT not set)",
+    "deny_examples": {
+      "cs_flag_publish": "403",
+      "cs_finance_summary": "403",
+      "finance_finance_summary": "200"
+    },
+    "personas": [
+      "E1",
+      "E2"
+    ],
+    "registries": [
+      "registry/admin-rbac-route-matrix.v1.yaml",
+      "registry/admin-rbac-permissions.v1.yaml"
+    ]
+  },
+  "admin_coverage": {
+    "route_count": 114,
+    "target_routes": 114,
+    "platform_40": "PASS_MACHINE",
+    "functional_audit_mapping": "40/40 Complete",
+    "four_centers": "content · growth · official · community (admin shell)",
+    "page_level_contracts": "adminMissingPages + adminUxShared + adminAdminPerfectClosureL5"
+  },
+  "admin_public_isolation": {
+    "governance_hub": "governanceHubPage.contract.test.ts PER CI-13 — ops admin opt-in only",
+    "unauthenticated_admin_api": "GET /api/v1/admin/capabilities → 401 without Bearer",
+    "public_surface": "no /admin in public marketing route registry",
+    "phase": "① local"
+  },
+  "operation_authenticity": {
+    "adm_u02": "approval chain + audit + 2FA enforce (platform-40 step 5)",
+    "rbac_db_source": "console_role_source=db:admin_console_roles",
+    "audit_trail": "public ops display history + cold start audit (wired in platform-40 mapping)",
+    "note": "Full Action→API→DB→Audit E2E for all 114 routes → B25-C6 slice"
+  },
+  "supplemental_results": [
+    {
+      "contract": "lib/admin/adminAdminPerfectClosureL5.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "app/governance/governanceHubPage.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "app/admin/adminMissingPages.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    },
+    {
+      "contract": "app/admin/adminUxShared.contract.test.ts",
+      "exit_code": 0,
+      "pass": true
+    }
+  ],
+  "findings": [],
+  "verdict": "PASS",
+  "pass": true,
+  "gate_verdict": "PASS",
+  "release_blocker": "NO",
+  "next_batch": "B10",
+  "ai_review": {
+    "verdict": "PASS",
+    "ai_reviewer": "Internal AI Review",
+    "review_type": "Internal AI Review",
+    "review_date": "2026-07-10",
+    "review_version": "v1"
+  },
+  "human_verified": false,
+  "human_verifier": null,
+  "human_note": "Admin RBAC ① — local matrix + platform-40 machine; staging ADM-U01 + per-route E1/E2 cards → ② / B25-C6",
+  "traceability": {
+    "requirements": [
+      "admin-rbac-route-matrix probes PASS",
+      "deny matrix enforced",
+      "four-centers governance SSOT aligned",
+      "114 admin routes carded at contract level",
+      "Public ≠ Admin surface isolation"
+    ],
+    "spec_refs": [
+      "frontend/app/admin/README.md",
+      "registry/admin-rbac-route-matrix.v1.yaml",
+      "FPC-100-PRE-RELEASE-DEEP-CHECKLIST-v1.md § B09"
+    ],
+    "code_paths": [
+      "crates/api/src/routes/admin/admin_rbac.rs",
+      "frontend/app/admin"
+    ],
+    "tests": [
+      "smoke-admin-rbac-matrix-local.sh",
+      "smoke-admin-rbac-staging-matrix.sh",
+      "run-admin-platform-40-verification.sh",
+      "check-admin-functional-audit-mapping.py",
+      "adminAdminPerfectClosureL5.contract.test.ts",
+      "governanceHubPage.contract.test.ts",
+      "adminMissingPages.contract.test.ts",
+      "adminUxShared.contract.test.ts"
+    ],
+    "evidence_path": "FPC-100/FPC-100-BATCH-B09-LATEST.json",
+    "certification_batch": "B09",
+    "product_version": "v1.0"
+  },
+  "certified_at_utc": "2026-07-10T00:33:06.330Z",
+  "expires_at_utc": "2026-10-08T00:33:06.330Z",
+  "expiry_policy_days": 90,
+  "certification_frozen": true,
+  "frozen_at_utc": "2026-07-10T00:33:06.330Z",
+  "frozen_git_sha": "fedc5c15fda3f03d752768079241ede1e1287252"
+}

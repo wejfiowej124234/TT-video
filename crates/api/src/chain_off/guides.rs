@@ -253,6 +253,11 @@ fn guide_list_card_json(store: &super::ChainOffStore, g: &GuideRow) -> serde_jso
     card
 }
 
+/// Public Operations admin preview — same card shape as market discover list.
+pub fn guide_list_card_json_for_preview(store: &super::ChainOffStore, g: &GuideRow) -> serde_json::Value {
+    guide_list_card_json(store, g)
+}
+
 /// Admin 列表/详情共用：与 `GET /api/v1/admin/guides` 行同形；不含 `passport_number` / `passport_number_hash`。
 pub fn guide_admin_row_json(g: &GuideRow) -> serde_json::Value {
     json!({

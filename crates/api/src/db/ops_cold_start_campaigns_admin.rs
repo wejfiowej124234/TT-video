@@ -40,6 +40,7 @@ pub struct AdminColdStartCampaignRow {
     pub name: String,
     pub status: String,
     pub surfaces: Vec<String>,
+    pub campaign_kind: String,
     pub publish_status: String,
     pub version: i32,
     pub deployed_at: Option<DateTime<Utc>>,
@@ -87,17 +88,20 @@ async fn reload_campaign(
 pub async fn list_cold_start_campaigns_admin(
     pool: &PgPool,
     publish_status: Option<&str>,
+    campaign_kind: Option<&str>,
     limit: i64,
 ) -> Result<Vec<AdminColdStartCampaignRow>, sqlx::Error> {
     sqlx::query_as(
-        r#"SELECT id, name, status, surfaces, publish_status, version, deployed_at, rolled_back_at,
+        r#"SELECT id, name, status, surfaces, campaign_kind, publish_status, version, deployed_at, rolled_back_at,
                   created_by, created_at, updated_at
            FROM ops_cold_start_campaigns
            WHERE ($1::text IS NULL OR publish_status = $1)
+             AND ($2::text IS NULL OR campaign_kind = $2)
            ORDER BY updated_at DESC
-           LIMIT $2"#,
+           LIMIT $3"#,
     )
     .bind(publish_status)
+    .bind(campaign_kind)
     .bind(limit.clamp(1, 200))
     .fetch_all(pool)
     .await
@@ -108,7 +112,7 @@ pub async fn get_cold_start_campaign_admin(
     id: Uuid,
 ) -> Result<Option<AdminColdStartCampaignRow>, sqlx::Error> {
     sqlx::query_as(
-        r#"SELECT id, name, status, surfaces, publish_status, version, deployed_at, rolled_back_at,
+        r#"SELECT id, name, status, surfaces, campaign_kind, publish_status, version, deployed_at, rolled_back_at,
                   created_by, created_at, updated_at
            FROM ops_cold_start_campaigns WHERE id = $1"#,
     )
@@ -131,6 +135,7 @@ pub async fn get_cold_start_campaign_with_items_admin(
 pub struct CreateColdStartCampaignInput {
     pub name: String,
     pub surfaces: Vec<String>,
+    pub campaign_kind: String,
 }
 
 fn normalize_surfaces(surfaces: &[String]) -> Vec<String> {
@@ -152,15 +157,20 @@ pub async fn create_cold_start_campaign_admin(
         return Ok(Err("invalid_name"));
     }
     let surfaces = normalize_surfaces(&input.surfaces);
+    let campaign_kind = input.campaign_kind.trim();
+    if campaign_kind.is_empty() {
+        return Ok(Err("invalid_campaign_kind"));
+    }
     let now = Utc::now();
     let id: Uuid = sqlx::query_scalar(
         r#"INSERT INTO ops_cold_start_campaigns
-           (name, status, surfaces, publish_status, created_by, created_at, updated_at)
-           VALUES ($1, 'draft', $2, 'draft', $3, $4, $4)
+           (name, status, surfaces, campaign_kind, publish_status, created_by, created_at, updated_at)
+           VALUES ($1, 'draft', $2, $3, 'draft', $4, $5, $5)
            RETURNING id"#,
     )
     .bind(name)
     .bind(&surfaces)
+    .bind(campaign_kind)
     .bind(actor_id)
     .bind(now)
     .fetch_one(pool)
