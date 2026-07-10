@@ -28,19 +28,19 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 **Machine key:** `TT_FULL_PRODUCTION_CERTIFICATION`  
 **FPC verdict:** **NOT_STARTED**  
 **Release decision:** `TT_RELEASE_DECISION` = **NO_GO**  
-**Updated:** 2026-07-10T00:07:45.998Z
+**Updated:** 2026-07-10T00:11:31.384Z
 
 ## Release Health
 
 | Metric | Value |
 |--------|-------|
-| Certified | 29.3% |
+| Certified | 31.7% |
 | Expired | 0 |
 | Blocked | 0 |
 | Accepted Risks | 2 |
 | Coverage | 0% |
 | Human Verified | 0% |
-| AI Review PASS | 50% |
+| AI Review PASS | 53.8% |
 
 ## Release History (Version Certification)
 
@@ -82,6 +82,7 @@ _Governance FROZEN @ v5 · Execution ACTIVE — CEO / Owner / Investor view_
 | B03 | PASS (Internal AI Review) | — |
 | B04 | PASS (Internal AI Review) | — |
 | B05 | PASS (Internal AI Review) | — |
+| B06 | PASS (Internal AI Review) | — |
 | B00 | NOT_STARTED (NOT_STARTED) | — |
 | B01 | NOT_STARTED (NOT_STARTED) | — |
 | B02 | NOT_STARTED (NOT_STARTED) | — |
