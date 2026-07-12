@@ -33,6 +33,7 @@
 | **Governance Framework** | V1.1（GOV-03 Amendment + Genesis AND + Public 定义） | **PASS · FROZEN** | 本 Certificate |
 | **Consistency Audit** | [GOVERNANCE-CONSISTENCY-AUDIT-LATEST.md](GOVERNANCE-CONSISTENCY-AUDIT-LATEST.md) · `20260712T120952Z` | **PASS** | `bash scripts/gates/run-governance-consistency-audit.sh` |
 | **Production-Grade Alignment Audit** | [WEB3-PRODUCTION-GRADE-ALIGNMENT-AUDIT-LATEST.md](WEB3-PRODUCTION-GRADE-ALIGNMENT-AUDIT-LATEST.md) · `20260712T120952Z` | **PASS** | `bash scripts/gates/run-web3-production-grade-alignment-audit.sh` |
+| **Asset / Treasury Separation** | [ASSET-DENOMINATION-TREASURY-SEPARATION-AUDIT-LATEST.md](ASSET-DENOMINATION-TREASURY-SEPARATION-AUDIT-LATEST.md) | **PASS** | `bash scripts/gates/run-asset-denomination-treasury-separation-audit.sh` |
 | **Tokenomics** | [TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md) | **PASS · FROZEN** | 10M · 六桶 · GOV-01～04 |
 | **Registry** | [protocol-ssot.v1.yaml](protocol-ssot.v1.yaml) · [governance-phase-transition.v1.yaml](../../../registry/governance-phase-transition.v1.yaml) | **PASS** | 阈值机读 · 文档不写死 1.5M |
 | **Genesis** | [GENESIS-GOVERNANCE-PHASE.md](GENESIS-GOVERNANCE-PHASE.md) v1.3 | **PASS · FROZEN** | G-END-01 **AND** G-END-02 |
@@ -94,7 +95,7 @@ Consistency Audit PASS
 | **Sepolia Governor V1.1** | ② 测试网 | ① Framework V1.1 冻结 · 双审计 PASS · Owner **`TRAVELTRUST_PHASE2_SEPOLIA_BROADCAST_OK=1`** | Team vesting cliff/duration/start/beneficiary |
 | **Mainnet vesting ACTIVE** | ③ 生产 | commercial OWNER_INPUT 已填 · legal sign-off · 链上 vesting = registry | Sepolia 升级可先/后并行 |
 
-**Supply 写死（Registry v3）：** `team` **1.5M** · `advisors` **0.5M** 标准 vesting · `ecosystem` **1.5M** 治理批准释放 · `public_global` **2M** = Primary Market **500K+500K+1M**（非 cliff vesting）· `country_pool_shelf` / `treasury_dao` 路径见 registry · **禁止** 独立 `investor` 池。
+**Supply 写死（Registry v3）：** `team` **1.5M** · `advisors` **0.5M** 标准 vesting · `ecosystem` **1.5M** 治理批准释放 · `public_global` **2M** = Primary Market **500K+500K+1M**（非 cliff vesting）· `country_pool_shelf` / `treasury_dao` **2M TTG only** · **USDC P1→P4** = **GovernanceTreasuryP4Cap**（见 [asset-denomination-treasury-separation](../../../registry/asset-denomination-treasury-separation.v1.yaml)）· **禁止** 独立 `investor` 池。
 
 ---
 
@@ -103,9 +104,10 @@ Consistency Audit PASS
 ```bash
 bash scripts/gates/run-governance-consistency-audit.sh
 bash scripts/gates/run-web3-production-grade-alignment-audit.sh
+bash scripts/gates/run-asset-denomination-treasury-separation-audit.sh
 ```
 
-须 **`TT_GOV_CONSISTENCY_SUMMARY: PASS`** · **`TT_WEB3_ALIGN_SUMMARY: PASS`** 与 Certificate §1 矩阵一致。
+须 **`TT_GOV_CONSISTENCY_SUMMARY: PASS`** · **`TT_WEB3_ALIGN_SUMMARY: PASS`** · **`TT_ASSET_TREASURY_SEPARATION_SUMMARY: PASS`** 与 Certificate §1 矩阵一致。
 
 ---
 

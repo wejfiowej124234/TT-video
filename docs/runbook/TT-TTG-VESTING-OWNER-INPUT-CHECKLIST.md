@@ -78,7 +78,7 @@
 | Bucket | Custody / authorization (see registry) |
 |--------|----------------------------------------|
 | **country_pool_shelf** | RegionStewardStakePool · Seat lock · exit KPI unlock |
-| **treasury_dao** | Timelock + Safe · GOV-02 · GOV-01 P4 cap · no self-vote |
+| **treasury_dao** | **2M TTG** · Timelock → TTG grants only · [USDC Treasury SSOT](../../registry/asset-denomination-treasury-separation.v1.yaml) |
 
 ---
 

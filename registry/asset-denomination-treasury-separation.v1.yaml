@@ -1,0 +1,161 @@
+# Asset Denomination & Treasury Separation SSOT v1
+#
+# Separates TTG supply buckets from USDC Global Treasury cash policy.
+# Human: docs/spec/governance-token/fund-flow-ssot.v1.md
+# Gate:  bash scripts/gates/run-asset-denomination-treasury-separation-audit.sh
+
+schema: traveltrust.asset_denomination_treasury_separation.v1
+version: 1
+machine_key: TT_ASSET_DENOMINATION_TREASURY_SEPARATION
+effective_utc: "2026-07-12"
+status: ACTIVE
+
+principles:
+  - four_fund_rails_never_mixed: fund-flow-ssot.v1 R1-R4
+  - ttg_dao_treasury_bucket_is_not_usdc_global_treasury
+  - p1_p4_applies_to_usdc_global_treasury_only
+  - escrow_usdc_isolated_from_treasury_and_primary_market
+
+cross_refs:
+  fund_flow: docs/spec/governance-token/fund-flow-ssot.v1.md
+  tokenomics: docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md
+  country_revenue: docs/spec/governance-token/country-revenue-model-v1-draft.md#21
+  vesting_registry: registry/ttg-vesting-registry.v1.yaml
+  treasury_ops: registry/treasury-ops-policy.v1.yaml
+  mainnet_registry: registry/mainnet-address-registry.v2.yaml
+
+# ── TTG supply rail (R1) ─────────────────────────────────────────────────────
+
+ttg_dao_treasury_bucket:
+  id: TTG_DAO_TREASURY
+  asset: TTG
+  ssot_bucket_key: treasury_dao
+  amount_tokens: 2000000
+  amount_tokens_status: FROZEN
+  nature: governance_token_supply_allocation
+  custody:
+    primary: GovernanceTimelock
+    secondary: treasury_safe_multisig
+  authorization:
+    - GOV-02_proposal_vote_quorum_4pct
+    - timelock_48h_before_execute
+  release_path:
+    flow: Proposal → Vote → Timelock 48h → TTG transfer only
+    payload: GovernanceVotesToken.transfer or vesting/grant contract
+  forbidden:
+    - usdc_spend_from_ttg_dao_bucket
+    - p4_deploy_cap_on_ttg_bucket
+    - primary_market_usdc_ingress
+    - conflate_with_governance_treasury_p4cap_contract
+  vote_policy: G-VOTE-03_default_no_self_vote
+  registry_owner: registry/ttg-vesting-registry.v1.yaml#allocation_bucket_paths.treasury_dao
+
+# ── USDC Global Treasury (cash · P1→P4) ──────────────────────────────────────
+
+usdc_global_treasury:
+  id: USDC_GLOBAL_TREASURY
+  asset: USDC
+  nature: operational_and_reserve_cash_treasury
+  on_chain_contract: GovernanceTreasuryP4Cap
+  contract_source: contracts/src/GovernanceTreasuryP4Cap.sol
+  custody:
+    contract: GovernanceTreasuryP4Cap
+    spender: GovernanceTimelock
+    operational_safe: treasury_safe_multisig
+  ingress_sources:
+    - id: primary_market_usdc
+      asset: USDC
+      from: TtgPrimaryMarketV1.purchase
+      to: usdcTreasury slot (= GovernanceTreasuryP4Cap)
+      ttg_leg: public_global bucket via TTG transfer to buyer
+      isolated_from: escrow_order_usdc
+    - id: country_net_profit_55
+      asset: USDC
+      from: CountryPoolNetProfit splitNetProfit Global leg
+      note: D-4555-B · 55% of country pool net profit — not FeeRouter L1 55%
+      isolated_from: escrow_order_usdc
+    - id: fee_router_global_pool
+      asset: USDC
+      from: FeeRouter D-4555-A global pool leg
+      note: Orthogonal to country net profit 55% — fund-flow-ssot R4
+  spend_policy:
+    sequence_ref: country-revenue-model-v1-draft §2.1
+    stages:
+      P1:
+        label: platform_operations
+        includes: [ops, security_legal_accounting, customer_support, rnd_market]
+        authorization: routine_budget_via_treasury_ops_policy
+        governance_proposal_required: false
+        timelock_required: true
+      P2:
+        label: security_risk_reserve
+        authorization: finance_ops_budget
+        governance_proposal_required: false
+        timelock_required: true
+      P3:
+        label: ecosystem_incentives
+        authorization: governance_approved_budget
+        governance_proposal_required: true
+        timelock_required: true
+      P4:
+        label: treasury_reserve_surplus
+        goV_rule: GOV-01
+        deploy_cap_bps: 3000
+        authorization: governance_proposal_required
+        timelock_required: true
+        options: [buyback_ttg, burn_ttg, holder_incentives, ecosystem_grant, country_pool_subsidy]
+        note: USDC deploy — buyback spends USDC not TTG from dao bucket
+  spend_classes_owner_input:
+    refunds: OWNER_INPUT
+    taxes: OWNER_INPUT
+    supplier_payments: OWNER_INPUT
+    payroll_manual: OWNER_INPUT
+    emergency_spend: emergency_safe_break_glass
+  forbidden:
+    - treat_as_ttg_dao_treasury_bucket
+    - automatic_cash_dividend_by_ttg_holdings
+    - spend_from_escrow_contract
+  vote_policy: G-VOTE-04_no_ttg_voting_weight
+  registry_owner: registry/treasury-ops-policy.v1.yaml
+
+# ── Other fund rails (isolation) ─────────────────────────────────────────────
+
+fund_rails:
+  R1_ttg:
+    asset: TTG
+    ref: fund-flow-ssot.v1#R1
+    contracts: [GovernanceVotesToken, RegionStewardStakePool, vesting_contracts]
+  R2_country_pool_usdc:
+    asset: USDC
+    ref: fund-flow-ssot.v1#R2
+    sub_vaults: [ReserveVault, OperationsVault, ClaimVault, RedemptionVault]
+    isolated_from: [R3_escrow, usdc_global_treasury_direct_mixing]
+  R3_escrow_usdc:
+    asset: USDC
+    ref: fund-flow-ssot.v1#R3
+    contracts: [Escrow, EscrowFactoryV2]
+    custody: per_order_escrow_instance
+    authorization: order_state_machine_release_refund_only
+    isolated_from: [usdc_global_treasury, primary_market, fee_router_treasury_pool]
+    governor_direct_spend: forbidden
+  R4_fee_usdc:
+    asset: USDC
+    ref: fund-flow-ssot.v1#R4
+    contract: FeeRouter
+    split: country_45_global_55_then_global_65_20_15
+
+primary_market:
+  ttg_source_bucket: public_global
+  usdc_sink: usdc_global_treasury
+  contract: TtgPrimaryMarketV1
+  usdc_field: usdcTreasury
+  rounds_frozen: [500000, 500000, 1000000]
+
+drift_checks:
+  vesting_registry_treasury_dao_must_not_reference:
+    - p4_cash
+    - GOV-01
+    - primary_market_usdc_ingress
+    - P1→P4
+  genesis_must_not_conflate:
+    - treasury_dao_with_p4_reserve

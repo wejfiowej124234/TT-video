@@ -1,0 +1,266 @@
+{
+  "audit_id": "ASSET-DENOMINATION-TREASURY-SEPARATION-AUDIT-01",
+  "stamp_utc": "20260712T122952Z",
+  "phase": "\u2460 local SSOT + contract read",
+  "baseline_commits": [
+    "9f500335",
+    "4f56727e",
+    "f575d459"
+  ],
+  "verdict": "PASS",
+  "fund_flow_inventory": [
+    {
+      "id": "FF-01",
+      "name": "TTG DAO Treasury bucket (supply allocation)",
+      "asset": "TTG",
+      "amount": "2,000,000 TTG (treasury_dao 20%)",
+      "source": "Genesis mint / allocation bucket",
+      "destination": "GovernanceTimelock \u00b7 treasury Safe (custody)",
+      "authorization": "GOV-02 Proposal \u2192 Vote \u2192 Timelock 48h",
+      "spend_path": "TTG transfer only (grants \u00b7 incentives \u00b7 ecosystem TTG)",
+      "forbidden": "USDC spend \u00b7 P4 deploy \u00b7 PM USDC ingress",
+      "vote_policy": "G-VOTE-03",
+      "refund_accounting": "N/A (TTG grants \u2014 no order escrow)"
+    },
+    {
+      "id": "FF-USDC-IN-primary_market_usdc",
+      "name": "USDC Global Treasury ingress: primary_market_usdc",
+      "asset": "USDC",
+      "source": "TtgPrimaryMarketV1.purchase",
+      "destination": "GovernanceTreasuryP4Cap (usdcTreasury slot)",
+      "isolated_from": "escrow_order_usdc",
+      "authorization": "Contract routing \u00b7 spend via Timelock",
+      "spend_path": "P1\u2192P4 per country-revenue-model \u00a72.1"
+    },
+    {
+      "id": "FF-USDC-IN-country_net_profit_55",
+      "name": "USDC Global Treasury ingress: country_net_profit_55",
+      "asset": "USDC",
+      "source": "CountryPoolNetProfit splitNetProfit Global leg",
+      "destination": "GovernanceTreasuryP4Cap (usdcTreasury slot)",
+      "isolated_from": "escrow_order_usdc",
+      "authorization": "Contract routing \u00b7 spend via Timelock",
+      "spend_path": "P1\u2192P4 per country-revenue-model \u00a72.1"
+    },
+    {
+      "id": "FF-USDC-IN-fee_router_global_pool",
+      "name": "USDC Global Treasury ingress: fee_router_global_pool",
+      "asset": "USDC",
+      "source": "FeeRouter D-4555-A global pool leg",
+      "destination": "GovernanceTreasuryP4Cap (usdcTreasury slot)",
+      "isolated_from": "Orthogonal to country net profit 55% \u2014 fund-flow-ssot R4",
+      "authorization": "Contract routing \u00b7 spend via Timelock",
+      "spend_path": "P1\u2192P4 per country-revenue-model \u00a72.1"
+    },
+    {
+      "id": "FF-USDC-SPEND-P1",
+      "name": "USDC Global Treasury spend stage P1",
+      "asset": "USDC",
+      "label": "platform_operations",
+      "authorization": "routine_budget_via_treasury_ops_policy",
+      "governance_proposal_required": false,
+      "timelock_required": true,
+      "gov_rule": null
+    },
+    {
+      "id": "FF-USDC-SPEND-P2",
+      "name": "USDC Global Treasury spend stage P2",
+      "asset": "USDC",
+      "label": "security_risk_reserve",
+      "authorization": "finance_ops_budget",
+      "governance_proposal_required": false,
+      "timelock_required": true,
+      "gov_rule": null
+    },
+    {
+      "id": "FF-USDC-SPEND-P3",
+      "name": "USDC Global Treasury spend stage P3",
+      "asset": "USDC",
+      "label": "ecosystem_incentives",
+      "authorization": "governance_approved_budget",
+      "governance_proposal_required": true,
+      "timelock_required": true,
+      "gov_rule": null
+    },
+    {
+      "id": "FF-USDC-SPEND-P4",
+      "name": "USDC Global Treasury spend stage P4",
+      "asset": "USDC",
+      "label": "treasury_reserve_surplus",
+      "authorization": "governance_proposal_required",
+      "governance_proposal_required": null,
+      "timelock_required": true,
+      "gov_rule": "GOV-01"
+    },
+    {
+      "id": "FF-RAIL-R1_ttg",
+      "name": "fund-flow-ssot.v1#R1",
+      "asset": "TTG",
+      "contracts": [
+        "GovernanceVotesToken",
+        "RegionStewardStakePool",
+        "vesting_contracts"
+      ],
+      "isolated_from": null,
+      "authorization": null
+    },
+    {
+      "id": "FF-RAIL-R2_country_pool_usdc",
+      "name": "fund-flow-ssot.v1#R2",
+      "asset": "USDC",
+      "contracts": null,
+      "isolated_from": [
+        "R3_escrow",
+        "usdc_global_treasury_direct_mixing"
+      ],
+      "authorization": null
+    },
+    {
+      "id": "FF-RAIL-R3_escrow_usdc",
+      "name": "fund-flow-ssot.v1#R3",
+      "asset": "USDC",
+      "contracts": [
+        "Escrow",
+        "EscrowFactoryV2"
+      ],
+      "isolated_from": [
+        "usdc_global_treasury",
+        "primary_market",
+        "fee_router_treasury_pool"
+      ],
+      "authorization": "order_state_machine_release_refund_only"
+    },
+    {
+      "id": "FF-RAIL-R4_fee_usdc",
+      "name": "fund-flow-ssot.v1#R4",
+      "asset": "USDC",
+      "contracts": "FeeRouter",
+      "isolated_from": null,
+      "authorization": null
+    },
+    {
+      "id": "FF-PM",
+      "name": "Primary Market purchase",
+      "asset": "TTG + USDC",
+      "ttg_leg": "public_global bucket \u2192 buyer ([500000, 500000, 1000000])",
+      "usdc_leg": "TtgPrimaryMarketV1.usdcTreasury \u2192 GovernanceTreasuryP4Cap",
+      "isolated_from": "Escrow order USDC"
+    },
+    {
+      "id": "FF-OWNER-refunds",
+      "name": "Spend class: refunds",
+      "asset": "USDC",
+      "policy": "OWNER_INPUT",
+      "note": "Owner-defined ops policy \u2014 not simulated in \u2460 audit"
+    },
+    {
+      "id": "FF-OWNER-taxes",
+      "name": "Spend class: taxes",
+      "asset": "USDC",
+      "policy": "OWNER_INPUT",
+      "note": "Owner-defined ops policy \u2014 not simulated in \u2460 audit"
+    },
+    {
+      "id": "FF-OWNER-supplier_payments",
+      "name": "Spend class: supplier_payments",
+      "asset": "USDC",
+      "policy": "OWNER_INPUT",
+      "note": "Owner-defined ops policy \u2014 not simulated in \u2460 audit"
+    },
+    {
+      "id": "FF-OWNER-payroll_manual",
+      "name": "Spend class: payroll_manual",
+      "asset": "USDC",
+      "policy": "OWNER_INPUT",
+      "note": "Owner-defined ops policy \u2014 not simulated in \u2460 audit"
+    },
+    {
+      "id": "FF-OWNER-emergency_spend",
+      "name": "Spend class: emergency_spend",
+      "asset": "USDC",
+      "policy": "emergency_safe_break_glass",
+      "note": "Owner-defined ops policy \u2014 not simulated in \u2460 audit"
+    }
+  ],
+  "checks": {
+    "SEP-validator": {
+      "ok": true,
+      "detail": "OK: asset-denomination-treasury-separation v1 ttg_dao=2M-TTG-only usdc_global=GovernanceTreasuryP4Cap rails=R1-R4-isolated pm_usdc_sink=P4Cap",
+      "severity_if_fail": "error"
+    },
+    "SEP-treasury-dao-ttg-only": {
+      "ok": true,
+      "detail": "asset=TTG forbidden=['usdc_spend', 'p4_deploy_cap', 'primary_market_usdc_ingress', 'conflate_with_GovernanceTreasuryP4Cap']",
+      "severity_if_fail": "error"
+    },
+    "SEP-primary-market-usdc-sink": {
+      "ok": true,
+      "detail": "sink=GovernanceTreasuryP4Cap",
+      "severity_if_fail": "error"
+    },
+    "SEP-contract-pm-usdc-to-treasury-slot": {
+      "ok": true,
+      "detail": "TtgPrimaryMarketV1 \u2192 usdcTreasury immutable",
+      "severity_if_fail": "error"
+    },
+    "SEP-contract-escrow-holds-usdc-per-order": {
+      "ok": true,
+      "detail": "Escrow USDC custody per order instance",
+      "severity_if_fail": "error"
+    },
+    "SEP-genesis-split-gvote-03-04": {
+      "ok": true,
+      "detail": "GENESIS \u00a77.2 TTG bucket vs USDC Global Treasury",
+      "severity_if_fail": "error"
+    },
+    "SEP-genesis-no-treasury-dao-p4-conflation": {
+      "ok": true,
+      "detail": "treasury_dao row must not read as P4 Reserve",
+      "severity_if_fail": "error"
+    },
+    "SEP-runbook-treasury-dao-ttg-path": {
+      "ok": true,
+      "detail": "runbook splits TTG dao bucket vs USDC treasury",
+      "severity_if_fail": "error"
+    },
+    "SEP-mainnet-treasury-slot-usdc-p4cap": {
+      "ok": true,
+      "detail": "mainnet.treasury=GovernanceTreasuryP4Cap",
+      "severity_if_fail": "error"
+    },
+    "SEP-vesting-cross-ref": {
+      "ok": true,
+      "detail": "cross_ref=registry/asset-denomination-treasury-separation.v1.yaml",
+      "severity_if_fail": "error"
+    },
+    "SEP-frontend-treasury-dao-hint-ttg": {
+      "ok": true,
+      "detail": "frontend treasury_dao hint describes TTG not USDC P4",
+      "severity_if_fail": "warning"
+    },
+    "SEP-frontend-usdc-treasury-scope-note": {
+      "ok": true,
+      "detail": "USDC treasury budget alignment deferred to Gate-2.4 \u2014 documented",
+      "severity_if_fail": "warning"
+    },
+    "SEP-no-stale-treasury-dao-p4-drift": {
+      "ok": true,
+      "detail": "stale: none",
+      "severity_if_fail": "error"
+    },
+    "SEP-vesting-registry-validator": {
+      "ok": true,
+      "detail": "OK: ttg-vesting-registry v3 vesting=team+advisors pm=500k+500k+1m ecosystem=governance_release bucket_paths=country+treasury lifecycle=READY_TEMPLATE",
+      "severity_if_fail": "error"
+    }
+  },
+  "findings": [],
+  "manual_checklist_owner_only": [
+    "Confirm operational Safe multisig signers for USDC P1/P2 routine budget (treasury-ops-policy)",
+    "Define refunds / taxes / supplier / payroll routing in treasury-ops-policy (OWNER_INPUT)",
+    "Verify on-chain Primary Market usdcTreasury == GovernanceTreasuryP4Cap address (\u2461 Sepolia)",
+    "Confirm Escrow USDC never shares address with Global Treasury (\u2461 integration test)",
+    "P4 deploy cap 30% enforcement \u2014 live spend tx (\u2462 \u00b7 not simulated here)"
+  ],
+  "honest_boundary": "\u2460 registry/contract alignment \u2260 \u2461 Sepolia address wiring \u2260 \u2462 Production treasury ops GO"
+}

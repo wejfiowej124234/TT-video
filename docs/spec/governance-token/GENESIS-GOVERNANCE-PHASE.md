@@ -201,7 +201,8 @@ Proposal → Vote（GOV-02）→ Quorum → Approval ≥50% → Timelock 48h →
 |----------|----------------|
 | Regional / 国家 | `country_pool_shelf` 25% · Seat/Steward 路径 |
 | Ecosystem | `ecosystem` 15% |
-| DAO / Reserve | `treasury_dao` 20% · P4 Reserve（[country-revenue-model §2.1](country-revenue-model-v1-draft.md)） |
+| DAO TTG 桶 | `treasury_dao` 20% · **2M TTG**（治理激励/生态 TTG 拨款）· **≠** USDC Global Treasury |
+| Global Treasury USDC | **GovernanceTreasuryP4Cap** · P1→P4 · [country-revenue-model §2.1](country-revenue-model-v1-draft.md) · [asset-denomination-treasury-separation](../../../registry/asset-denomination-treasury-separation.v1.yaml) |
 | Public | `public_global` 20% · 三轮 |
 
 ---

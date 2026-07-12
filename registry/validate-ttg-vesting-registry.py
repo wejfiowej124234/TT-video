@@ -133,6 +133,18 @@ def main() -> None:
         if total_supply and total_supply * bps // 10000 != famount:
             fail(f"{bname} amount/bps mismatch")
 
+    td = paths.get("treasury_dao") or {}
+    td_policy = {k: v for k, v in td.items() if k not in ("forbidden", "refs", "usdc_cash_policy_ref")}
+    td_text = yaml.dump(td_policy) if td_policy else ""
+    if any(x in td_text for x in ("p4_cash", "GOV-01", "primary_market_usdc", "P1→P4")):
+        fail("treasury_dao must not reference USDC P4 / GOV-01 / primary market USDC")
+    if td.get("asset") != "TTG":
+        fail("treasury_dao.asset must be TTG")
+    if not td.get("forbidden") or "usdc_spend" not in (td.get("forbidden") or []):
+        fail("treasury_dao.forbidden must include usdc_spend")
+    if not td.get("usdc_cash_policy_ref"):
+        fail("treasury_dao.usdc_cash_policy_ref required")
+
     sep = (data.get("gate_separation") or {}).get("sepolia_governor_v1_1") or {}
     if not sep.get("does_not_require"):
         fail("gate_separation.sepolia required")

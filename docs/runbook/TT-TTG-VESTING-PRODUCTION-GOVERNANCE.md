@@ -18,7 +18,7 @@
 | **Governance planned release** | `ecosystem` 15% | **1,500,000 TTG** | GOV-02 Proposal → Vote → Timelock → approved schedule |
 | **Primary Market** | `public_global` 20% | **2,000,000 TTG** | R1 500K + R2 500K + R3 1M · `TtgPrimaryMarketV1` · GOV-04 |
 | **Bucket path** | `country_pool_shelf` 25% | **2,500,000 TTG** | Seat stake lock · exit unlock · vacancy rules |
-| **Bucket path** | `treasury_dao` 20% | **2,000,000 TTG** | Proposal → Vote → Timelock · P4 cash deploy rules |
+| **Bucket path** | `treasury_dao` 20% | **2,000,000 TTG** | Proposal → Timelock → **TTG transfer only** (≠ USDC P1→P4) |
 
 **Forbidden:** independent `investor` pool · `public_global` as single-beneficiary cliff vesting.
 
@@ -32,7 +32,7 @@
 | R2 | 500,000 | Yes | `OWNER_INPUT` |
 | R3 | 1,000,000 | Yes | `OWNER_INPUT` |
 
-**GOV-04:** 25,000 TTG/wallet · 100 USDC min · USDC → GovernanceTreasury.
+**GOV-04:** 25,000 TTG/wallet · 100 USDC min · **USDC → USDC Global Treasury** (`GovernanceTreasuryP4Cap` · see [asset-denomination-treasury-separation.v1.yaml](../../registry/asset-denomination-treasury-separation.v1.yaml)).
 
 **Frontend SSOT:** [traveltrustTtgPublicRounds.ts](../../frontend/lib/traveltrustTtgPublicRounds.ts)
 

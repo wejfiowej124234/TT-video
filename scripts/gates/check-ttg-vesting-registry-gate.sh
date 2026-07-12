@@ -21,6 +21,10 @@ echo "== TTG Vesting & Distribution Registry Gate (v3) =="
 
 python "$VALIDATOR" || fail "validate-ttg-vesting-registry.py"
 
+SEP_VALIDATOR="registry/validate-asset-denomination-treasury-separation.py"
+[[ -f "$SEP_VALIDATOR" ]] || fail "missing $SEP_VALIDATOR"
+python "$SEP_VALIDATOR" || fail "validate-asset-denomination-treasury-separation.py"
+
 grep -q '^version: 3' "$REG" || fail "version must be 3"
 grep -q '^vesting_tracks:' "$REG" || fail "vesting_tracks required"
 grep -q '^governance_planned_release:' "$REG" || fail "governance_planned_release required"
@@ -42,7 +46,9 @@ grep -q 'country_pool_shelf:' "$REG" || fail "country_pool_shelf path required"
 grep -q 'treasury_dao:' "$REG" || fail "treasury_dao path required"
 grep -q 'release_paths:' "$REG" || fail "release_paths required"
 grep -q 'optional_lockup_seconds: OWNER_INPUT' "$REG" || fail "round optional lockup OWNER_INPUT"
-grep -q 'governance_planned_release' "$REG" || fail "ecosystem governance release required"
+grep -q 'usdc_global_treasury' "$REG" || fail "usdc_global_treasury ref required"
+grep -q 'usdc_spend' "$REG" || fail "treasury_dao usdc_spend forbidden required"
+grep -q 'TTG transfer only' "$DOC" || fail "runbook must split TTG dao vs USDC treasury"
 
 grep -q '1,500,000' "$CHECKLIST" || fail "checklist team 1.5M"
 grep -q '500,000' "$CHECKLIST" || fail "checklist round amounts"

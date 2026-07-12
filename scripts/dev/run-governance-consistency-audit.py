@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -152,8 +153,10 @@ def _vesting_supply_checks() -> list[tuple[str, bool, str]]:
     out.append(
         (
             "VESTING-treasury-dao-paths",
-            bool(td.get("custody") and td.get("release_paths")),
-            "treasury_dao custody+release_paths",
+            bool(td.get("custody") and td.get("release_paths"))
+            and td.get("asset") == "TTG"
+            and "usdc_spend" in (td.get("forbidden") or []),
+            "treasury_dao TTG-only custody+release_paths",
         )
     )
     sep = (reg.get("gate_separation") or {}).get("sepolia_governor_v1_1") or {}
@@ -338,6 +341,29 @@ def main() -> int:
 
     amendment = ROOT / "docs/spec/governance-token/GOV-03-AMENDMENT-V1.1.md"
     checks.append(("GOV-03-AMENDMENT-present", amendment.is_file(), str(amendment.name)))
+
+    sep_reg = ROOT / "registry/asset-denomination-treasury-separation.v1.yaml"
+    sep_val = subprocess.run(
+        [sys.executable, str(ROOT / "registry/validate-asset-denomination-treasury-separation.py")],
+        capture_output=True,
+        text=True,
+        cwd=ROOT,
+    )
+    checks.append(
+        (
+            "TREASURY-separation-ssot-validator",
+            sep_reg.is_file() and sep_val.returncode == 0,
+            (sep_val.stdout or sep_val.stderr or "").strip().split("\n")[-1] if sep_reg.is_file() else "missing SSOT",
+        )
+    )
+    genesis_usdc_split = "GovernanceTreasuryP4Cap" in genesis and "G-VOTE-04" in genesis
+    checks.append(
+        (
+            "TREASURY-genesis-usdc-global-vs-ttg-dao",
+            genesis_usdc_split,
+            "GENESIS separates G-VOTE-03 (TTG dao bucket) vs G-VOTE-04 (USDC Global Treasury)",
+        )
+    )
 
     lifecycle = ROOT / "docs/spec/governance-token/TTG-GOVERNANCE-LIFECYCLE.md"
     freeze_cert = ROOT / "docs/spec/governance-token/TTG-GOVERNANCE-FREEZE-CERTIFICATE.md"

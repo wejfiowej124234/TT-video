@@ -123,6 +123,8 @@ primary_market:
   gov_rules_ref: GOV-04
   per_wallet_cap_ttg: 25000
   min_purchase_usdc: 100
+  usdc_global_treasury_ref: registry/asset-denomination-treasury-separation.v1.yaml#usdc_global_treasury
+  usdc_sink_contract: GovernanceTreasuryP4Cap
   forbidden_models:
     - single_beneficiary_cliff_vesting
     - parallel_investor_pool
@@ -133,21 +135,24 @@ primary_market:
       amount_tokens_status: FROZEN
       governance_open_required: false
       optional_lockup_seconds: OWNER_INPUT
-      usdc_sink: GovernanceTreasury
+      usdc_sink_ref: usdc_global_treasury
+      note: USDC leg → GovernanceTreasuryP4Cap · see asset-denomination-treasury-separation.v1.yaml
     public_round_2:
       round_number: 2
       amount_tokens: 500000
       amount_tokens_status: FROZEN
       governance_open_required: true
       optional_lockup_seconds: OWNER_INPUT
-      usdc_sink: GovernanceTreasury
+      usdc_sink_ref: usdc_global_treasury
+      note: USDC leg → GovernanceTreasuryP4Cap · see asset-denomination-treasury-separation.v1.yaml
     public_round_3:
       round_number: 3
       amount_tokens: 1000000
       amount_tokens_status: FROZEN
       governance_open_required: true
       optional_lockup_seconds: OWNER_INPUT
-      usdc_sink: GovernanceTreasury
+      usdc_sink_ref: usdc_global_treasury
+      note: USDC leg → GovernanceTreasuryP4Cap · see asset-denomination-treasury-separation.v1.yaml
   rounds_sum_tokens: 2000000
   frontend_ssot_ref: frontend/lib/traveltrustTtgPublicRounds.ts
 
@@ -184,24 +189,28 @@ allocation_bucket_paths:
     amount_tokens: 2000000
     amount_tokens_status: FROZEN
     track_type: bucket_allocation_path
+    asset: TTG
+    nature: ttg_dao_treasury_supply_bucket
     custody:
       primary: GovernanceTimelock
       secondary: treasury_safe_multisig
     authorization:
       - GOV-02_proposal_vote_quorum_4pct
-      - GOV-01_treasury_p4_deploy_cap_bps_3000
       - timelock_48h_before_execute
     release_paths:
-      - id: governance_ttg_spend
-        flow: Proposal → Vote → Timelock 48h → Execute (G-VOTE-03 no self-vote)
-      - id: p4_cash_reserve_deploy
-        flow: P1→P2→P3 satisfied → P4 reserve → governance vote (≤30% Treasury balance)
-      - id: primary_market_usdc_ingress
-        flow: Public sale USDC → GovernanceTreasury sub-vaults (orthogonal TTG leg)
+      - id: governance_ttg_grant
+        asset: TTG
+        flow: Proposal → Vote → Timelock 48h → TTG transfer (grants · incentives · ecosystem TTG)
+    forbidden:
+      - usdc_spend
+      - p4_deploy_cap
+      - primary_market_usdc_ingress
+      - conflate_with_GovernanceTreasuryP4Cap
     vote_policy: G-VOTE-03_default_no_vote_treasury_self
+    usdc_cash_policy_ref: registry/asset-denomination-treasury-separation.v1.yaml#usdc_global_treasury
     refs:
-      - docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md#GOV-01
-      - registry/treasury-ops-policy.v1.yaml
+      - docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md
+      - registry/asset-denomination-treasury-separation.v1.yaml
 
 gate_separation:
   sepolia_governor_v1_1:
@@ -230,6 +239,7 @@ cross_refs:
   governance_token: mainnet-address-registry.v2.contracts.governance_token
   tokenomics: docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md
   phase_transition: registry/governance-phase-transition.v1.yaml
+  asset_treasury_separation: registry/asset-denomination-treasury-separation.v1.yaml
 
 evidence:
   gate: scripts/gates/check-ttg-vesting-registry-gate.sh
