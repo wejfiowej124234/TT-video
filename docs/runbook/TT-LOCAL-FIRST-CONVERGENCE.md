@@ -24,6 +24,8 @@
 
 **从属文档（消费本主链 · 非平行轨）：** [PHASE2-LOCAL-STAGING-PARITY-LOOP](./PHASE2-LOCAL-STAGING-PARITY-LOOP.md)（S5/S6 编排实现）· [TT-PHASE2-DEEP-RELEASE-GATE](./TT-PHASE2-DEEP-RELEASE-GATE.md)（S6）· [HUMAN-ACCEPTANCE-REPORT](./HUMAN-ACCEPTANCE-REPORT.md)（H1）· [go-live-checklist](../go-live-checklist.md)（③）· TT-9626/9627（竖切/段勾选 · **不替代**本主链）。
 
+**Certification 语义层（互补 · 非平行轨）：** [TT-CERTIFICATION-FRAMEWORK.md](./TT-CERTIFICATION-FRAMEWORK.md) — **L1 Engineering → L2 Blockchain Reality → L3 Production**；Phase② CLOSED = **L2 Reality Certificate**（Web3：[TT-WEB3-REALITY-CERTIFICATION.md](./TT-WEB3-REALITY-CERTIFICATION.md)）。
+
 
 
 ---

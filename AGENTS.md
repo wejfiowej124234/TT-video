@@ -12,6 +12,8 @@ Work is ordered in **three phases**. **Finish what the current phase means befor
 
 **Do not** present **① or ②** results as **③** unless the user explicitly asks to verify **③** in this session.
 
+**Certification Framework (L1→L2→L3):** [docs/runbook/TT-CERTIFICATION-FRAMEWORK.md](docs/runbook/TT-CERTIFICATION-FRAMEWORK.md) — **Audit = inspect**; **Certification = pass + Certificate**. L1 Engineering (①) · L2 Blockchain Reality (② · [TT-WEB3-REALITY-CERTIFICATION.md](docs/runbook/TT-WEB3-REALITY-CERTIFICATION.md)) · L3 Production (③). Agent work **defaults to Certification progress**, not audit-only exit 0.
+
 ## Production Preparation phase (current · dual mainline)
 
 **SSOT (ops north star, not a new runbook):** [data/catalog/cms-asset-matrix.v1.yaml](data/catalog/cms-asset-matrix.v1.yaml) `production_preparation`.
@@ -87,6 +89,8 @@ If you are the **only** maintainer, treat **Owner** in checklists as **yourself*
 **`TT_CONFIGURATION_ZERO_DRIFT`（STATUS: FROZEN · 2026-06-30）**：Configuration **已毕业** — **CFG-001～028** 封顶；**Configuration Sprint 永久关闭**（无新配置面不得重开）。**配置复发 = PER Regression**。**主线（验产品）：** Manual UAT → Business Defect → Regression → Production Entry Review → Testnet Sign-off → Mainnet Preparation。SSOT：**[TT-CONFIGURATION-ZERO-DRIFT-FROZEN](docs/runbook/TT-CONFIGURATION-ZERO-DRIFT-FROZEN.md)** · **[TT-PROJECT-MAINLINE](docs/runbook/TT-PROJECT-MAINLINE-PRODUCT-VERIFICATION.md)** · **[manual-uat](evidence/manual-uat/README.md)**。
 
 **Phase ② Sepolia 治理栈 broadcast（测试 ETH · Agent 代跑）**：Owner **本轮明确授权** + **`TRAVELTRUST_PHASE2_SEPOLIA_BROADCAST_OK=1`** 时，Agent **可**执行 **`bash scripts/dev/phase2-sepolia-broadcast-governance-stack.sh`**（内嵌 pregate + dry-run + broadcast；**仅 chain_id=11155111**）。**禁止**裸 `forge … --broadcast`、**禁止 CI 默认**、**③ 主网仍 Owner-only** — **[Broadcast 确认单 §4.1](docs/runbook/TT-PHASE2-GOVERNANCE-STACK-SEPOLIA-BROADCAST-CHECKLIST.md)**。
+
+**Certification Framework（L1→L2→L3）**：**[TT-CERTIFICATION-FRAMEWORK](docs/runbook/TT-CERTIFICATION-FRAMEWORK.md)** — Audit=检查 · Certification=通过+Certificate；L1 工程（①）· L2 区块链 Reality（② · **[TT-WEB3-REALITY-CERTIFICATION](docs/runbook/TT-WEB3-REALITY-CERTIFICATION.md)** · Target Chain 在 Overview）· L3 生产（③）。AI 默认围绕 **Certification 进度**，非仅 audit exit 0。
 
 **① 本地 → ② 测试网 → ③ 公网/生产**；**须顺序完成当前阶可验证目标，再进入下一阶**；**禁止跳阶**；**禁止**用 **①②** 冒充 **③**。读仓库内**任意** `docs/` 文档做方案或汇报时，仍须遵守本阶次；单篇 spec 可不重复写三阶全文，但**进度与「已闭/GO」结论必须写明落在哪一阶**。**禁止假完成**（文档/矩阵/窄切片 GO/本地绿 **不得** 冒充 **②③** 真实数据链已验；**ISS-007** **`gen-r002`** 43 锚全过仍 **`PARTIAL_GO`**，**勿** **`--require-go`** 当 staging 全矩阵 **GO**，见 **`evidence/GO_local_r002_verify/README.md`**）：**[CONTRIBUTING · 禁止假完成](CONTRIBUTING.md#no-false-completion)**、**[TT-9628 §0.0.5](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-no-false-completion)**。**拆线机读闸 / `report.json` 路径（①）**：[TT-9628 §0.0.2a](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-tt9627-gates-index)、[§0.0.3](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-report-json-path-convention)。**双人拆线（双 Owner · 合线主持人）**：[TT-9628 §0.0.2b](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-dual-owner-split)（可复制话术见 **[AI协作话术 §13](docs/AI协作话术-减负与边界.md)**）。**多文叙事互指（含 AI 一览 `maybe-run` / 跳过变量 / `docs/00` / `docs/README` / AI话术 §0.2）**：[TT-9628 §0.0.4](docs/runbook/TT-9628-main-line-vs-branch-lines-delivery.md#tt-9628-0-0-4-doc-hygiene)（**`rg`** 清单与 **[CONTRIBUTING](CONTRIBUTING.md)**「Handbook 一行对拍」同源；含 **`docs/00-文档索引.md`**、**`docs/README.md`**、**[§0.2](docs/AI协作话术-减负与边界.md#ai-collab-doc-hygiene-0-2)**）。
 
