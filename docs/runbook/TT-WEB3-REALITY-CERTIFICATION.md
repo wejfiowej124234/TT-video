@@ -1,7 +1,7 @@
 # Web3 Blockchain Reality Certification（L2 · 唯一 SSOT）
 
 **Document ID:** `TT-WEB3-REALITY-CERTIFICATION`  
-**Certification Level:** **L2 · Reality Certification**（见 [TT-CERTIFICATION-FRAMEWORK.md](./TT-CERTIFICATION-FRAMEWORK.md)）  
+**Certification Level:** **L2 · Blockchain Reality Certification**（[TT-CERTIFICATION-FRAMEWORK.md](./TT-CERTIFICATION-FRAMEWORK.md) v1.1 · 前置 **L0 FROZEN** · **L1 CLOSED** @ `9de9c1eb`）  
 **Supersedes:** ~~Sepolia Reality Verification / Sepolia Reality Certification~~（同 lineage · **禁止平行 Runbook**）  
 **Engineering HEAD（L1 冻结）：** `9de9c1eb`  
 **Status:** **PREPARED · NOT STARTED**
@@ -595,7 +595,7 @@ Certificate 汇总
 
 | 文档 | 关系 |
 |------|------|
-| [TT-CERTIFICATION-FRAMEWORK.md](./TT-CERTIFICATION-FRAMEWORK.md) | L1/L2/L3 全项目 Certification 层级 |
+| [TT-CERTIFICATION-FRAMEWORK.md](./TT-CERTIFICATION-FRAMEWORK.md) | L0–L4 全项目 Certification 层级（v1.1 · 当前主线 L2） |
 | [WEB3-FULL-SYSTEM-CLOSURE-AUDIT-LATEST.md](../spec/governance-token/WEB3-FULL-SYSTEM-CLOSURE-AUDIT-LATEST.md) | L1 inventory · gaps · **非** L2 PASS |
 | [PHASE2-REPOSITORY-STATUS.md](PHASE2-REPOSITORY-STATUS.md) | 阶段闸 G-1/G-2 |
 | [TT-PHASE2-GOVERNANCE-STACK-SEPOLIA-BROADCAST-CHECKLIST.md](TT-PHASE2-GOVERNANCE-STACK-SEPOLIA-BROADCAST-CHECKLIST.md) | SV-04 前置 broadcast（Sepolia 实例） |
