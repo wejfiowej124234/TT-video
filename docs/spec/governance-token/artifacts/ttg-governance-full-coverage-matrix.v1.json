@@ -1,6 +1,6 @@
 {
   "schema": "traveltrust.ttg-governance-full-coverage-matrix.v1",
-  "generated_at_utc": "20260616T090309Z",
+  "generated_at_utc": "20260712T121004Z",
   "phase": "②",
   "baseline": {
     "govfreeze_v2": true,
@@ -128,7 +128,7 @@
       "id": "M-008",
       "module": "GOV-03",
       "function": "Seat concentration",
-      "sub_function": "vote cap 400 bps",
+      "sub_function": "cap disabled (unlimited per-address weight)",
       "page": "/governance?view=region",
       "api": "GET /governance/voting-power",
       "contract": "TtgSeatConcentrationRegistry",
@@ -330,7 +330,7 @@
       "permission": "voter",
       "fund_flow": "—",
       "test_status": "PARTIAL",
-      "evidence_path": "Phase A vote capped · API stub ① PASS",
+      "evidence_path": "Phase A on-chain vote · API stub ① PASS",
       "gap_level": "P1",
       "verify_class": "需链上验证"
     },
@@ -1386,7 +1386,7 @@
     "需链上验证": [
       "M-006 GOV-01 / 30% cap enforce",
       "M-007 GOV-02 / 400 bps quorum · 48h delay",
-      "M-008 GOV-03 / vote cap 400 bps",
+      "M-008 GOV-03 / cap disabled (unlimited per-address weight)",
       "M-009 GOV-03 / stake aggregate cap",
       "M-010 GOV-04 / 25k per wallet cap",
       "M-011 GOV-04 / min 100 USDC purchase",

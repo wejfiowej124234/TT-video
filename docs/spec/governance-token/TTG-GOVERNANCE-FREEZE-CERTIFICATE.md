@@ -31,7 +31,8 @@
 | 项 | 版本 / 证据 | 状态 | 说明 |
 |----|-------------|------|------|
 | **Governance Framework** | V1.1（GOV-03 Amendment + Genesis AND + Public 定义） | **PASS · FROZEN** | 本 Certificate |
-| **Consistency Audit** | [GOVERNANCE-CONSISTENCY-AUDIT-LATEST.md](GOVERNANCE-CONSISTENCY-AUDIT-LATEST.md) | **Pending evidence commit** | `bash scripts/gates/run-governance-consistency-audit.sh` |
+| **Consistency Audit** | [GOVERNANCE-CONSISTENCY-AUDIT-LATEST.md](GOVERNANCE-CONSISTENCY-AUDIT-LATEST.md) · `20260712T120952Z` | **PASS** | `bash scripts/gates/run-governance-consistency-audit.sh` |
+| **Production-Grade Alignment Audit** | [WEB3-PRODUCTION-GRADE-ALIGNMENT-AUDIT-LATEST.md](WEB3-PRODUCTION-GRADE-ALIGNMENT-AUDIT-LATEST.md) · `20260712T120952Z` | **PASS** | `bash scripts/gates/run-web3-production-grade-alignment-audit.sh` |
 | **Tokenomics** | [TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md) | **PASS · FROZEN** | 10M · 六桶 · GOV-01～04 |
 | **Registry** | [protocol-ssot.v1.yaml](protocol-ssot.v1.yaml) · [governance-phase-transition.v1.yaml](../../../registry/governance-phase-transition.v1.yaml) | **PASS** | 阈值机读 · 文档不写死 1.5M |
 | **Genesis** | [GENESIS-GOVERNANCE-PHASE.md](GENESIS-GOVERNANCE-PHASE.md) v1.3 | **PASS · FROZEN** | G-END-01 **AND** G-END-02 |
@@ -89,9 +90,10 @@ Consistency Audit PASS
 
 ```bash
 bash scripts/gates/run-governance-consistency-audit.sh
+bash scripts/gates/run-web3-production-grade-alignment-audit.sh
 ```
 
-须 **`TT_GOV_CONSISTENCY_SUMMARY: PASS`** 与 Certificate §1 矩阵一致。
+须 **`TT_GOV_CONSISTENCY_SUMMARY: PASS`** · **`TT_WEB3_ALIGN_SUMMARY: PASS`** 与 Certificate §1 矩阵一致。
 
 ---
 

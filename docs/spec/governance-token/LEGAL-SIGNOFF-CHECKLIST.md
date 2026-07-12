@@ -37,7 +37,7 @@
 | ☐ | **TTG Tokenomics V1 · GOV-01～04（FROZEN）** | [TTG-TOKENOMICS-FREEZE-V1](TTG-TOKENOMICS-FREEZE-V1.md) · [Final Audit Report](TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.md) · 08-4 **§9-c** · `/governance/params#gov-params-tokenomics-freeze` |
 | ☐ | **GOV-01 Treasury 30% cap** | `treasury_p4_deploy_cap_bps=3000` · 非按持仓分现 |
 | ☐ | **GOV-02 Quorum 4%** | `governance_quorum_bps=400` · approval 50% · timelock 48h |
-| ☐ | **GOV-03 Seat 集中度** | max 1 Seat/entity · max 4% vote · max 4% aggregate stake |
+| ☐ | **GOV-03 Seat 集中度（V1.1）** | max 1 Seat/entity（一国一控）· **无单地址 vote cap** · max 4% aggregate Seat stake |
 | ☐ | **GOV-04 单钱包 25,000 TTG** | 公众三轮 · min 100 USDC · ③ KYC |
 
 ---

@@ -29,7 +29,7 @@
 | **G24-P-12** | **TTG Tokenomics V1 + GOV-01～04 SSOT** | ① | ✅ | [TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md) · [Final Audit Report](TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.md) · `/governance/params#gov-params-tokenomics-freeze` |
 | **G24-GOV-01** | **GOV-01 链上 enforce · `GovernanceTreasuryP4Cap`** | ①/② | ✅ ① HAT · ✅ ② Sepolia | `verify-gov-freeze-v1-sepolia-onchain.sh` · [GO_phase2_gov_freeze_v1_sepolia](../../../evidence/GO_phase2_gov_freeze_v1_sepolia/) |
 | **G24-GOV-02** | **GOV-02 Governor quorum 400 + Timelock 48h** | ①/② | ✅ ① · ✅ ② Sepolia | Proxy 基线 · timelock delay=172800 |
-| **G24-GOV-03** | **GOV-03 Seat registry + vote cap 400 bps** | ①/② | ✅ ① · ✅ ② Sepolia | `TtgSeatConcentrationRegistry` Proxy |
+| **G24-GOV-03** | **GOV-03 Seat registry（一国一控 + stake aggregate cap）** | ①/② | ✅ ① · ✅ ② Sepolia | `TtgSeatConcentrationRegistry` Proxy |
 | **G24-GOV-04** | **GOV-04 Primary Market per-wallet / round cap** | ①/② | ✅ ① · ✅ ② Sepolia | `TtgPrimaryMarketV1` Proxy · `initializeProxyStorage` |
 | **G24-P-UPGRADE-01** | **Proxy 架构闸 · Shell 须 Timelock Proxy · 禁止裸 Implementation 基线** | ② pre-broadcast | ✅ | [G24-P-UPGRADE-01-proxy-architecture-gate.md](G24-P-UPGRADE-01-proxy-architecture-gate.md) |
 | **G24-FSA-01** | **TTG Tokenomics Full-System Audit**（SSOT 全链路 · ② Sepolia） | ② | ✅ PASS_WITH_PARTIAL | `bash scripts/dev/run-ttg-tokenomics-full-system-audit.sh` · [TTG-TOKENOMICS-FULL-SYSTEM-AUDIT-REPORT.md](TTG-TOKENOMICS-FULL-SYSTEM-AUDIT-REPORT.md) |

@@ -22,7 +22,7 @@ bash scripts/dev/run-governance-concentration-audit-sepolia.sh
 # TT_GOV_CONCENTRATION_SUMMARY: PASS
 ```
 
-验证：quorum 400 bps · vote cap 400 bps · Seat 质押上限 · HAT-R1 proposal `forVotes` 是否被 cap · 捕获风险披露（cap=quorum 时单地址可独达 quorum，属 SSOT 已知设计面 + Timelock 48h 缓释）。
+验证：quorum 400 bps · GOV-03 cap_disabled（legacy Sepolia 可能仍 400 bps）· Seat 质押上限 · HAT-R1 proposal forVotes · 捕获风险披露（大持有人 + Timelock 48h 缓释 · 见 GENESIS §7.2）。
 
 ---
 

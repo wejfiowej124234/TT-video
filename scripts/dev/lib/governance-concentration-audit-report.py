@@ -33,27 +33,44 @@ def main() -> int:
     prop_for = int(os.environ.get("AUDIT_PROPOSAL_FOR_VOTES_WEI", "0") or "0")
     prop_against = int(os.environ.get("AUDIT_PROPOSAL_AGAINST_VOTES_WEI", "0") or "0")
 
-    max_vote_weight = (supply * max_vote_bps) // 10_000
+    max_vote_weight = (supply * max_vote_bps) // 10_000 if max_vote_bps > 0 else wallet_bal
     quorum_need = (supply * quorum_bps) // 10_000
-    effective_vote = min(wallet_bal, max_vote_weight)
+    effective_vote = min(wallet_bal, max_vote_weight) if max_vote_bps > 0 else wallet_bal
 
-    cap_enforced_on_hat = prop_for > 0 and prop_for <= max_vote_weight
-    params_match_ssot = quorum_bps == 400 and max_vote_bps == 400 and tl_delay == 172800
+    cap_enforced_on_hat = (
+        max_vote_bps == 0
+        or (prop_for > 0 and prop_for <= max_vote_weight)
+    )
+    params_match_ssot = (
+        quorum_bps == 400
+        and max_vote_bps in (0, 400)
+        and tl_delay == 172800
+    )
     stake_within_cap = staked <= max_agg_stake
     raw_concentration_bps = (wallet_bal * 10_000) // supply if supply else 0
 
     findings = []
-    if raw_concentration_bps > 400:
+    if raw_concentration_bps > 400 and max_vote_bps > 0:
         findings.append(
             {
                 "id": "ECON-01",
                 "severity": "informational",
                 "title": "Raw TTG economic concentration exceeds 4%",
                 "detail": f"Wallet holds {raw_concentration_bps/100:.2f}% of total supply raw; "
-                f"on-chain vote weight capped at {max_vote_bps/100:.2f}% per GOV-03.",
+                f"on-chain vote weight capped at {max_vote_bps/100:.2f}% per legacy GOV-03.",
             }
         )
-    if max_vote_bps == quorum_bps and effective_vote >= quorum_need:
+    if max_vote_bps == 0 and raw_concentration_bps > 400:
+        findings.append(
+            {
+                "id": "GOV-PROC-01",
+                "severity": "accepted-design",
+                "title": "Large holder vote weight uncapped (GOV-03 V1.1)",
+                "detail": "No per-address vote cap; mitigated by Vesting · Safe · GOV-02 quorum · "
+                "48h Timelock · conflict disclosure per SSOT.",
+            }
+        )
+    if max_vote_bps == quorum_bps and max_vote_bps > 0 and effective_vote >= quorum_need:
         findings.append(
             {
                 "id": "GOV-CAP-01",
@@ -64,7 +81,7 @@ def main() -> int:
                 "not uncapped capture; mitigated by Timelock 48h + disclosure rules in SSOT.",
             }
         )
-    if prop_for and prop_for != effective_vote and prop_for > max_vote_weight:
+    if prop_for and max_vote_bps > 0 and prop_for != effective_vote and prop_for > max_vote_weight:
         findings.append(
             {
                 "id": "GOV-03-FAIL",
@@ -77,7 +94,7 @@ def main() -> int:
     checks = [
         ("GOV-02-quorum-bps", quorum_bps == 400),
         ("GOV-02-timelock-48h", tl_delay == 172800),
-        ("GOV-03-vote-cap-bps", max_vote_bps == 400),
+        ("GOV-03-vote-cap-bps", max_vote_bps in (0, 400)),
         ("GOV-03-max-aggregate-stake", max_agg_stake == 400_000 * 10**18),
         ("GOV-03-stake-within-cap", stake_within_cap),
         ("GOV-03-vote-cap-enforced-hat-r1", cap_enforced_on_hat or prop_for == 0),
@@ -129,7 +146,8 @@ def main() -> int:
         "",
         f"- Wallet `{report['wallet']}` · raw **{report['metrics']['wallet_balance_ttg']:,.0f} TTG** "
         f"({report['metrics']['wallet_raw_holding_pct']}% of supply)",
-        f"- Effective vote weight (GOV-03 cap): **{report['metrics']['effective_vote_pct_of_supply']}%**",
+        f"- Effective vote weight: **{report['metrics']['effective_vote_pct_of_supply']}%** "
+        f"(GOV-03 cap {'off' if max_vote_bps == 0 else f'{max_vote_bps/100:.2f}%'})",
         f"- Quorum need (GOV-02): **{wei_to_ttg(quorum_need):,.0f} TTG** ({quorum_bps/100}%)",
         "",
         "## GOV-02 / GOV-03 alignment",

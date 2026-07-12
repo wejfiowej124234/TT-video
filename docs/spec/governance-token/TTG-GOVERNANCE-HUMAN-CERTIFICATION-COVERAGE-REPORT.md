@@ -174,7 +174,7 @@ HC-FO-04～05 · HC-PM-03 · HC-ST-06 · HC-GV-09～10 · HC-DL-05 · HC-TR-06 �
 | HC-ST-02 | P0 | 1 | Stake 状态读 | 同上 | Steward | on-chain stake 与 UI 一致 | status 区 | Phase A stake | ☐ |
 | HC-ST-03 | P1 | 1 | Seat 申请 | 同上 | Steward | 申请流 **不**承诺 USDC 回报 | application 表单 | POST applications | ☐ |
 | HC-ST-04 | P0 | 1 | 180d 退出叙事 | 同上 | Steward | **不退 USDC** · notice 路径 | resign 文案 | W-S2 | ☐ |
-| HC-ST-05 | P1 | 1 | Voting power / Seat | 同上 | Seat holder | vote cap 400 bps 认知 | voting power | concentration audit | ☐ |
+| HC-ST-05 | P1 | 1 | Voting power / Seat | 同上 | Seat holder | GOV-03 V1.1 cap_disabled 认知 | voting power | concentration audit | ☐ |
 | HC-ST-06 | P2 | 9 | Unstake live | wallet + region | Steward | Phase B unstake tx | tx 录屏 | Phase B PAUSED | ☐ |
 | HC-ST-07 | P2 | 1 | Vault forwards | `/governance/vault-forwards` | Steward | escrow fee forward **≠** NetProfit | vault-forwards | C-GOV-008 | ☐ |
 

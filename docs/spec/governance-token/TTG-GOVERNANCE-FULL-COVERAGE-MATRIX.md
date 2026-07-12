@@ -3,8 +3,8 @@
 > **SUPERSEDED · READ-ONLY · replaced by MTM 146** — [TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md](TTG-GOVERNANCE-MASTER-TRACEABILITY-MATRIX.md) 为 **ACTIVE** 执行真源；本矩阵 **禁止** 扩写 · 仅作 cutover 旁证。
 
 **Matrix ID:** `TTG-GOVERNANCE-FULL-COVERAGE-MATRIX`  
-**Version:** v1-20260616  
-**Generated:** 20260616T090309Z (UTC)  
+**Version:** v1-20260712  
+**Generated:** 20260712T121004Z (UTC)  
 **Phase:** **② Sepolia 经济基线锁定** · **≠ ③ Production GO**  
 **Baseline SSOT:** GovFreeze V2 + Four-Ledger PASS (`20260616T084248Z`)  
 **Policy:** 停止 Tokenomics 设计变更 · 停止新增治理开发/测试 · 仅验收维护窗  
@@ -56,7 +56,7 @@
 | 5 | GOV-FREEZE-V2 | Sepolia baseline | Legacy stack read-only | — | — | LEGACY_* env | forbidden rollback | — | **PASS** | assert-gov-freeze-v2-active-baseline-only.sh | — | 已验证 |
 | 6 | GOV-01 | Treasury P4 deploy cap | 30% cap enforce | /governance/params | GET /governance/protocol-reference | GovernanceTreasuryP4Cap 0xc1de… | Timelock path | deploy cap not spend | **PASS** | G24-GOV-01 · verify-gov-freeze-v1-sepolia-onchain.sh | — | 需链上验证 |
 | 7 | GOV-02 | Quorum + Timelock | 400 bps quorum · 48h delay | /governance/proposals/[id] | GET /governance/proposal-status/:id | Governor·Timelock 0x904a… | Governor queue | — | **PASS** | G24-GOV-02 · HAT-R1 Phase A queue tx | — | 需链上验证 |
-| 8 | GOV-03 | Seat concentration | vote cap 400 bps | /governance?view=region | GET /governance/voting-power | TtgSeatConcentrationRegistry | Seat holder | — | **PASS** | G24-GOV-CONC-01 · GO_governance_concentration_audit_sepolia/ | — | 需链上验证 |
+| 8 | GOV-03 | Seat concentration | cap disabled (unlimited per-address weight) | /governance?view=region | GET /governance/voting-power | TtgSeatConcentrationRegistry | Seat holder | — | **PASS** | G24-GOV-CONC-01 · GO_governance_concentration_audit_sepolia/ | — | 需链上验证 |
 | 9 | GOV-03 | Seat concentration | stake aggregate cap | /governance?view=region | GET /steward/stake-status | RegionStewardStakePool | steward | TTG stake lock | **PASS** | concentration audit · Phase A stake | — | 需链上验证 |
 | 10 | GOV-04 | Primary Market | 25k per wallet cap | /governance/params | GET /governance/ttg-exchange/quote | TtgPrimaryMarketV1 0x7af1… | buyer EOA | USDC→PM | **PASS** | G24-GOV-04 · Enterprise HAT L2 | — | 需链上验证 |
 | 11 | GOV-04 | Primary Market | min 100 USDC purchase | — | GET /governance/ttg-exchange/quote | TtgPrimaryMarketV1 | buyer | USDC in | **PARTIAL** | Enterprise HAT L2 · HAT-R1 purchase skipped (USDC=0) | P2 | 需链上验证 |
@@ -69,7 +69,7 @@
 | 18 | Seat / Stake | Finalize resign / unstake | exit tx | /governance?view=region | POST /steward/finalize-resign | RegionStewardStakePool | steward | TTG return | **NOT TESTED** | HAT-R1 Phase B scope · PAUSED | P0 | 需链上验证 |
 | 19 | Governor | Propose | create proposal UI | /governance/proposals/new | — | TravelTrustGovernor 0x847b… | proposer | — | **PARTIAL** | governanceProposalCreatePage.contract.test.ts · ② live NOT TESTED | P1 | 需链上验证 |
 | 20 | Governor | Propose | list proposals | /governance/proposals | GET /governance/proposals | Governor events / DB | public | — | **PASS** | C-GOV-002 · indexer ② | — | 已验证 |
-| 21 | Governor | Vote | cast vote wallet | /governance/proposals/[id] | POST /governance/proposals/:id/vote | Governor | voter | — | **PARTIAL** | Phase A vote capped · API stub ① PASS | P1 | 需链上验证 |
+| 21 | Governor | Vote | cast vote wallet | /governance/proposals/[id] | POST /governance/proposals/:id/vote | Governor | voter | — | **PARTIAL** | Phase A on-chain vote · API stub ① PASS | P1 | 需链上验证 |
 | 22 | Governor | Vote | vote on-chain Phase A | /governance/proposals/[id] | — | Governor | HAT wallet | — | **PASS** | HAT-R1 20260616T063612Z · proposal 1 | — | 需链上验证 |
 | 23 | Governor | Queue | queue after vote period | /governance/proposals/[id] | GET /governance/proposal-status/:id | Governor→Timelock | anyone after vote | — | **PASS** | HAT-R1 queue tx 0xcfd0… | — | 需链上验证 |
 | 24 | Timelock | Execute | execute after 48h | /governance/proposals/[id] | — | Timelock 0x904a… | anyone | payload effect | **NOT TESTED** | HAT-R1 Phase B PAUSED · EXECUTE_EARLIEST_UNIX.txt | P0 | 需链上验证 |
@@ -207,7 +207,7 @@
 
 - M-006 GOV-01 / 30% cap enforce
 - M-007 GOV-02 / 400 bps quorum · 48h delay
-- M-008 GOV-03 / vote cap 400 bps
+- M-008 GOV-03 / cap disabled (unlimited per-address weight)
 - M-009 GOV-03 / stake aggregate cap
 - M-010 GOV-04 / 25k per wallet cap
 - M-011 GOV-04 / min 100 USDC purchase

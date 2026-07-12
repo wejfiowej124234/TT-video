@@ -30,7 +30,7 @@ EXPECTED_GOV = {
     },
     "GOV-03": {
         "max_active_seats_per_controlling_entity": 1,
-        "max_voting_power_per_address_bps": 400,
+        "max_voting_power_per_address_bps": 0,
         "max_aggregate_seat_stake_per_entity_bps": 400,
     },
     "GOV-04": {

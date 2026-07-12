@@ -1,0 +1,84 @@
+{
+  "audit_id": "GOV-CONSISTENCY-AUDIT-01",
+  "stamp_utc": "20260712T120952Z",
+  "phase": "\u2460 local SSOT",
+  "verdict": "PASS",
+  "checks": {
+    "GOV-03-yaml-fe-vote-bps-zero": {
+      "ok": true,
+      "detail": "yaml=0 fe=0 sol=0"
+    },
+    "GOV-03-cap-disabled-flag": {
+      "ok": true,
+      "detail": "yaml=True fe=True sol=True"
+    },
+    "GOV-03-seat-one-per-entity": {
+      "ok": true,
+      "detail": "max_active_seats_per_controlling_entity=1"
+    },
+    "GENESIS-dilution-table": {
+      "ok": true,
+      "detail": "Genesis\u2192R1\u2192R2\u2192R3 table present"
+    },
+    "GENESIS-explicit-end-conditions-and": {
+      "ok": true,
+      "detail": "G-END-01 AND G-END-02 (no OR-only exit)"
+    },
+    "REGISTRY-public-governance-threshold": {
+      "ok": true,
+      "detail": "logic=AND active_bps=3500 public_bucket_bps=7500"
+    },
+    "PUBLIC-GOVERNANCE-PHASE-doc": {
+      "ok": true,
+      "detail": "PUBLIC-GOVERNANCE-PHASE.md"
+    },
+    "GENESIS-exit-no-hardcoded-ttg-amounts": {
+      "ok": true,
+      "detail": "\u00a77.1 reads Registry keys not absolute TTG amounts"
+    },
+    "VESTING-schema-defined": {
+      "ok": true,
+      "detail": "OWNER_INPUT fields pending: team.cliff_seconds, team.duration_seconds, team.start_timestamp, team.amount_tokens, team.beneficiary"
+    },
+    "TREASURY-spend-via-proposal": {
+      "ok": true,
+      "detail": "Treasury spend requires Proposal\u2192Vote\u2192Timelock"
+    },
+    "TREASURY-no-self-vote-documented": {
+      "ok": true,
+      "detail": "Treasury/DAO self-vote policy documented in GENESIS \u00a77.2"
+    },
+    "PUBLIC-ROUND-voting-supply-defined": {
+      "ok": true,
+      "detail": "Active Voting Supply + snapshot rules in GENESIS \u00a73"
+    },
+    "NO-stale-400bps-vote-cap-in-key-ssot": {
+      "ok": true,
+      "detail": "stale refs: none"
+    },
+    "GOV-03-AMENDMENT-present": {
+      "ok": true,
+      "detail": "GOV-03-AMENDMENT-V1.1.md"
+    },
+    "GOV-LIFECYCLE-doc": {
+      "ok": true,
+      "detail": "TTG-GOVERNANCE-LIFECYCLE.md"
+    },
+    "GOV-FREEZE-CERTIFICATE-doc": {
+      "ok": true,
+      "detail": "TTG-GOVERNANCE-FREEZE-CERTIFICATE.md \u00b7 Sepolia deferred"
+    }
+  },
+  "findings": [],
+  "owner_input_open": {
+    "team_vesting_commercial_params": [
+      "team.cliff_seconds",
+      "team.duration_seconds",
+      "team.start_timestamp",
+      "team.amount_tokens",
+      "team.beneficiary"
+    ],
+    "sepolia_governor_v1_1_upgrade": "deferred until this audit PASS"
+  },
+  "honest_boundary": "\u2460 doc/constant alignment \u2260 \u2461 Sepolia on-chain upgrade \u2260 \u2462 Production GO"
+}

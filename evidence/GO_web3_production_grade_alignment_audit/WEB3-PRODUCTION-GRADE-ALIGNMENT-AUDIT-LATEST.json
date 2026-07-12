@@ -1,0 +1,166 @@
+{
+  "audit_id": "WPGA-2026-07-12-v1",
+  "stamp_utc": "20260712T120952Z",
+  "phase": "\u2460 local alignment",
+  "framework": "Governance Framework V1.1 FROZEN",
+  "verdict": "PASS",
+  "summary": {
+    "pass": 14,
+    "warn": 0,
+    "fail": 0,
+    "manual_actions": 5,
+    "blockers": 0
+  },
+  "checks": [
+    {
+      "id": "CHK-CONSISTENCY",
+      "status": "PASS",
+      "risk": "P0",
+      "detail": {
+        "cmd": "C:\\Users\\plant\\AppData\\Local\\Programs\\Python\\Python313\\python.EXE scripts/dev/run-governance-consistency-audit.py",
+        "exit_code": 0,
+        "stdout_tail": "GOV_CONSISTENCY_AUDIT: PASS stamp=20260712T120952Z\nTT_GOV_CONSISTENCY_SUMMARY: PASS\n",
+        "stderr_tail": ""
+      }
+    },
+    {
+      "id": "CHK-DRIFT-SCAN",
+      "status": "PASS",
+      "risk": "P2",
+      "detail": [],
+      "count": 0
+    },
+    {
+      "id": "REG-protocol-ssot-gov03",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": "cap_disabled=True bps=0"
+    },
+    {
+      "id": "REG-phase-transition-and",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": "logic=AND"
+    },
+    {
+      "id": "REG-public-governance-threshold",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": "active=3500 public_bucket=7500"
+    },
+    {
+      "id": "REG-vesting-owner-input",
+      "status": "PASS",
+      "risk": "P2",
+      "detail": "team vesting commercial params OWNER_INPUT (expected pre-Owner Decision)"
+    },
+    {
+      "id": "DOC-TTG-GOVERNANCE-LIFECYCLE",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": "docs/spec/governance-token/TTG-GOVERNANCE-LIFECYCLE.md"
+    },
+    {
+      "id": "DOC-TTG-GOVERNANCE-FREEZE-CE",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": "docs/spec/governance-token/TTG-GOVERNANCE-FREEZE-CERTIFICATE.md"
+    },
+    {
+      "id": "DOC-GENESIS-GOVERNANCE-PHASE",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": "docs/spec/governance-token/GENESIS-GOVERNANCE-PHASE.md"
+    },
+    {
+      "id": "DOC-PUBLIC-GOVERNANCE-PHASE",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": "docs/spec/governance-token/PUBLIC-GOVERNANCE-PHASE.md"
+    },
+    {
+      "id": "DOC-GOV-03-AMENDMENT-V1.1",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": "docs/spec/governance-token/GOV-03-AMENDMENT-V1.1.md"
+    },
+    {
+      "id": "CHK-FORGE-GOV-FREEZE",
+      "status": "PASS",
+      "risk": "P0",
+      "detail": {
+        "cmd": "D:\\dev\\foundry\\bin\\forge.EXE test --match-contract TtgGovFreezeV1EnforcementTest -vv",
+        "exit_code": 0,
+        "stdout_tail": "No files changed, compilation skipped\n\nRan 9 tests for test/TtgGovFreezeV1Enforcement.t.sol:TtgGovFreezeV1EnforcementTest\n[PASS] test_GOV01_earmarked_p1p3_reduces_reserve() (gas: 43251)\n[PASS] test_GOV01_p4DeployCap_enforced_at_30_percent() (gas: 71937)\n[PASS] test_GOV02_governor_quorum_400_bps_and_timelock_48h() (gas: 527758)\n[PASS] test_GOV02_quorum_not_reached_when_under_4_percent() (gas: 468409)\n[PASS] test_GOV03_no_voting_power_cap_when_bps_zero() (gas: 361831)\n[PASS] test_GOV03_seat_concentration_one_active_seat_per_entity() (gas: 498793)\n[PASS] test_GOV04_primary_market_per_wallet_and_round_caps() (gas: 198444)\n[PASS] test_GOV04_round_hard_cap_enforced() (gas: 2695059)\n[PASS] test_freeze_constants_match_ssot_yaml() (gas: 384)\nSuite result: ok. 9 passed; 0 failed; 0 skipped; finished in 2.51ms (4.30ms CPU time)\n\nRan 1 test suite in 6.55ms (2.51ms CPU time): 9 tests passed, 0 failed, 0 skipped (9 total tests)\n",
+        "stderr_tail": ""
+      }
+    },
+    {
+      "id": "CHK-VITEST-GOV-PARAMS",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": {
+        "cmd": "C:\\Program Files\\nodejs\\npx.CMD vitest run lib/governance/governanceParamsTokenomicsModel.test.ts lib/governance/governanceParamsPageL5FullClosure.contract.test.ts",
+        "exit_code": 0,
+        "stdout_tail": "\n RUN  v3.2.6 D:/TravelTrust-V1.1/frontend\n\n \u2713 lib/governance/governanceParamsTokenomicsModel.test.ts (4 tests) 2ms\n \u2713 lib/governance/governanceParamsPageL5FullClosure.contract.test.ts (7 tests) 20ms\n\n Test Files  2 passed (2)\n      Tests  11 passed (11)\n   Start at  20:10:02\n   Duration  1.77s (transform 377ms, setup 36ms, collect 455ms, tests 22ms, environment 1.21s, prepare 282ms)\n\n",
+        "stderr_tail": ""
+      }
+    },
+    {
+      "id": "CHK-REGEN-COVERAGE-MATRIX",
+      "status": "PASS",
+      "risk": "P2",
+      "detail": {
+        "cmd": "C:\\Users\\plant\\AppData\\Local\\Programs\\Python\\Python313\\python.EXE scripts/dev/gen-ttg-governance-full-coverage-matrix.py",
+        "exit_code": 0,
+        "stdout_tail": "TTG_GOV_FULL_COVERAGE_MATRIX: rows=87 coverage=86.2%\n  md=docs\\spec\\governance-token\\TTG-GOVERNANCE-FULL-COVERAGE-MATRIX.md\n  json=docs\\spec\\governance-token\\artifacts\\ttg-governance-full-coverage-matrix.v1.json\n",
+        "stderr_tail": ""
+      }
+    }
+  ],
+  "drift_findings": [],
+  "manual_action_checklist": [
+    {
+      "id": "MAN-OWNER-VESTING",
+      "priority": "P0",
+      "owner": true,
+      "item": "Fill registry/ttg-vesting-registry.v1.yaml commercial params (cliff/duration/start)",
+      "blocked_by": "Owner commercial decision"
+    },
+    {
+      "id": "MAN-FREEZE-SIGNOFF",
+      "priority": "P1",
+      "owner": true,
+      "item": "Owner attestation on TTG-GOVERNANCE-FREEZE-CERTIFICATE.md \u00a74",
+      "blocked_by": "Owner signature"
+    },
+    {
+      "id": "MAN-SEPOLIA-V11",
+      "priority": "P0",
+      "owner": true,
+      "item": "Sepolia Governor V1.1 upgrade (cap_disabled) via Timelock \u00b7 chain_id=11155111 only",
+      "blocked_by": "Owner authorization + post-vesting decision"
+    },
+    {
+      "id": "MAN-SEPOLIA-ONCHAIN",
+      "priority": "P1",
+      "owner": false,
+      "item": "Sepolia deployed Governor may still read maxVotingPowerPerAddressBps=400 until upgrade",
+      "blocked_by": "On-chain upgrade not executed"
+    },
+    {
+      "id": "MAN-MAINNET-PREP",
+      "priority": "P1",
+      "owner": true,
+      "item": "Mainnet address registry \u00b7 multisig \u00b7 deployment manifest \u00b7 vesting deploy",
+      "blocked_by": "Phase \u2462 gates"
+    }
+  ],
+  "blockers": [],
+  "re_freeze_recommendation": {
+    "action": "MAINTAIN TTG-GOVERNANCE-FREEZE-CERTIFICATE v1.1",
+    "note": "No further governance rule edits; next changes via GOV-02 proposal only",
+    "after_owner_vesting": "Bump Certificate patch + re-run this audit before Sepolia V1.1"
+  },
+  "honest_boundary": "\u2460 alignment PASS \u2260 \u2461 Sepolia on-chain V1.1 \u2260 \u2462 Production GO"
+}

@@ -117,7 +117,7 @@
 
 | ID | 场景 | 证据 |
 |----|------|------|
-| **ASV-01** | GOV-03 单地址投票权重 ≤ 4% 供应（HAT-R1 提案观测） | `GO_governance_concentration_audit_sepolia/` · HAT-R1 `20260616T063612Z` |
+| **ASV-01** | GOV-03 V1.1 · `votingPowerCapDisabled` / 无单地址权重 cap（HAT-R1 · legacy Sepolia 可能仍 400 bps） | `GO_governance_concentration_audit_sepolia/` · HAT-R1 `20260616T063612Z` |
 | **ASV-02** | 非 Timelock 无法 Treasury.spend（代码+叙事） | Enterprise HAT L5-01 · `GovernanceTreasury.sol` |
 | **ASV-03** | DE NetProfit 45/55 守恒 + 55% → V2 Timelock | `cutover-drill/20260616T082259Z/fund-flow-verdict.json` |
 | **ASV-04** | 链上=API=页 四账（DE · 无 DB） | `20260616T084248Z/four-ledger-reconcile.json` |

@@ -329,7 +329,7 @@ TTG Holder
 | Quorum | 400 bps of supply at snapshot | GOV-02 |
 | Approval | 5000 bps of cast votes | GOV-02 |
 | Timelock delay | 48 hours | GOV-02 · immutable in Timelock |
-| Max voting power / address | 400 bps | GOV-03 |
+| Max voting power / address | cap_disabled (`maxVotingPowerPerAddressBps=0` · unlimited · ≠ no vote) | GOV-03 V1.1 |
 | P4 deploy cap / quarter | 3000 bps of reserve | GOV-01 |
 
 ### C.4 Admin roles & bypass check

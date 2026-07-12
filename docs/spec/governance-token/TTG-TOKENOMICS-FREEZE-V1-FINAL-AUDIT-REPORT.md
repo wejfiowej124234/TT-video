@@ -32,7 +32,7 @@
 |------|----------------|------|-----|------|-------|
 | **GOV-01** Treasury 30% Cap | `treasury_p4_deploy_cap_bps=3000` | ✅ | ✅ `/governance/params` | ✅ §9-c | ☐ |
 | **GOV-02** Quorum | `quorum=400bps` · `approval=5000bps` · `timelock=48h` | ✅ | ✅ | ✅ §9-c | ☐ |
-| **GOV-03** Seat 集中度 | `max_seats/entity=1` · `max_vote=400bps` · `max_stake=400bps` | ✅ | ✅ | ✅ §9-c | ☐ |
+| **GOV-03** Seat 集中度 | `max_seats/entity=1` · `cap_disabled=true` · `max_stake=400bps` | ✅ | ✅ | ✅ §9-c | ☐ |
 | **GOV-04** 单钱包认购 | `per_wallet=25000 TTG` · `min=100 USDC` | ✅ | ✅ | ✅ §9-c | ☐ |
 
 ---
