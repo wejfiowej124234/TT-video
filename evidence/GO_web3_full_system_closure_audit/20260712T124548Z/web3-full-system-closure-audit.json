@@ -1,0 +1,470 @@
+{
+  "audit_id": "WEB3-FULL-SYSTEM-CLOSURE-AUDIT-01",
+  "stamp_utc": "20260712T124548Z",
+  "phase": "\u2460 local full-stack inventory + gate union",
+  "baseline_commits": [
+    "9f500335",
+    "4f56727e",
+    "f575d459",
+    "1f205af1"
+  ],
+  "verdict": "WARN",
+  "verdict_note": "WARN = \u2460 local SSOT/gates green but \u2461\u2462 Owner/on-chain items open",
+  "checks": {
+    "GATE-web3-alignment": {
+      "ok": true,
+      "detail": "TT_WEB3_ALIGN_SUMMARY: PASS pass=19 fail=0 warn=0",
+      "severity_if_fail": "error"
+    },
+    "GATE-treasury-separation": {
+      "ok": true,
+      "detail": "TT_ASSET_TREASURY_SEPARATION_SUMMARY: PASS",
+      "severity_if_fail": "error"
+    },
+    "GATE-governance-consistency": {
+      "ok": true,
+      "detail": "TT_GOV_CONSISTENCY_SUMMARY: PASS",
+      "severity_if_fail": "error"
+    },
+    "GATE-vesting-registry": {
+      "ok": true,
+      "detail": "TT_TTG_VESTING_SUMMARY: PASS v3 vesting=team+advisors pm=500k+500k+1m ecosystem=governance bucket_paths=ok",
+      "severity_if_fail": "error"
+    },
+    "IDX-escrow-v2-service-complete-event": {
+      "ok": true,
+      "detail": "EscrowV2 ServiceCompleteConfirmed topic decode",
+      "severity_if_fail": "error"
+    },
+    "CON-GovernanceVotesToken": {
+      "ok": true,
+      "detail": "contracts/src/GovernanceVotesToken.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-TtgPrimaryMarketV1": {
+      "ok": true,
+      "detail": "contracts/src/TtgPrimaryMarketV1.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-TravelTrustGovernor": {
+      "ok": true,
+      "detail": "contracts/src/TravelTrustGovernor.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-GovernanceTimelock": {
+      "ok": true,
+      "detail": "contracts/src/GovernanceTimelock.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-GovernanceTreasuryP4Cap": {
+      "ok": true,
+      "detail": "contracts/src/GovernanceTreasuryP4Cap.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-GovernanceTreasury": {
+      "ok": true,
+      "detail": "contracts/src/GovernanceTreasury.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-TtgSeatConcentrationRegistry": {
+      "ok": true,
+      "detail": "contracts/src/TtgSeatConcentrationRegistry.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-RegionStewardStakePool": {
+      "ok": true,
+      "detail": "contracts/src/RegionStewardStakePool.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-EscrowFactory": {
+      "ok": true,
+      "detail": "contracts/src/EscrowFactory.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-EscrowFactoryV2": {
+      "ok": true,
+      "detail": "contracts/src/EscrowFactoryV2.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-Escrow": {
+      "ok": true,
+      "detail": "contracts/src/Escrow.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-EscrowV2": {
+      "ok": true,
+      "detail": "contracts/src/EscrowV2.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-FeeRouter": {
+      "ok": true,
+      "detail": "contracts/src/FeeRouter.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-RegionVault": {
+      "ok": true,
+      "detail": "contracts/src/RegionVault.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-CountryPoolNetProfitLedger": {
+      "ok": true,
+      "detail": "contracts/src/CountryPoolNetProfitLedger.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-UnallocatedStewardPathVault": {
+      "ok": true,
+      "detail": "contracts/src/UnallocatedStewardPathVault.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-ReserveVault": {
+      "ok": true,
+      "detail": "contracts/src/ReserveVault.sol",
+      "severity_if_fail": "error"
+    },
+    "CON-SlashRouter": {
+      "ok": true,
+      "detail": "contracts/src/SlashRouter.sol",
+      "severity_if_fail": "error"
+    },
+    "ABI-escrow-v2-fe-sync": {
+      "ok": true,
+      "detail": "frontend/dapp/abis EscrowV2+EscrowFactoryV2",
+      "severity_if_fail": "warning"
+    },
+    "SSOT-treasury-separation-active": {
+      "ok": true,
+      "detail": "asset-denomination-treasury-separation v1",
+      "severity_if_fail": "error"
+    },
+    "REG-mainnet-ready-template": {
+      "ok": true,
+      "detail": "mainnet slots OWNER_INPUT \u00b7 deploy NOT_STARTED",
+      "severity_if_fail": "warning"
+    },
+    "API-indexer-internal-tick": {
+      "ok": true,
+      "detail": "POST /internal/indexer-tick",
+      "severity_if_fail": "error"
+    },
+    "FE-governance-pages": {
+      "ok": true,
+      "detail": "/governance + /escrow/[id]",
+      "severity_if_fail": "error"
+    },
+    "IDX-country-net-profit-full-projection": {
+      "ok": true,
+      "detail": "Full net-profit epoch events \u2014 partial indexer coverage (WARN expected)",
+      "severity_if_fail": "warning"
+    },
+    "DOC-fund-flow-ssot": {
+      "ok": true,
+      "detail": "fund-flow-ssot R1-R4",
+      "severity_if_fail": "error"
+    },
+    "TEST-escrow-v2-event-decode": {
+      "ok": true,
+      "detail": "cargo test maps_service_complete_confirmed",
+      "severity_if_fail": "error"
+    }
+  },
+  "web3_function_inventory": [
+    {
+      "contract": "GovernanceVotesToken",
+      "purpose": "TTG voting token \u00b7 snapshots"
+    },
+    {
+      "contract": "TtgPrimaryMarketV1",
+      "purpose": "GOV-04 USDC\u2192TTG primary market"
+    },
+    {
+      "contract": "TravelTrustGovernor",
+      "purpose": "Propose/vote/queue/execute"
+    },
+    {
+      "contract": "GovernanceTimelock",
+      "purpose": "48h delayed execution"
+    },
+    {
+      "contract": "GovernanceTreasuryP4Cap",
+      "purpose": "USDC Global Treasury \u00b7 GOV-01 P4 cap"
+    },
+    {
+      "contract": "GovernanceTreasury",
+      "purpose": "Legacy FeeRouter globalOps 15% leg"
+    },
+    {
+      "contract": "TtgSeatConcentrationRegistry",
+      "purpose": "GOV-03 seat concentration"
+    },
+    {
+      "contract": "RegionStewardStakePool",
+      "purpose": "Country pool TTG seat stake"
+    },
+    {
+      "contract": "EscrowFactory",
+      "purpose": "V1 escrow deploy (Sepolia legacy)"
+    },
+    {
+      "contract": "EscrowFactoryV2",
+      "purpose": "V2 bilateral escrow (mainnet path)"
+    },
+    {
+      "contract": "Escrow",
+      "purpose": "Per-order USDC escrow V1"
+    },
+    {
+      "contract": "EscrowV2",
+      "purpose": "Bilateral service confirmation before release"
+    },
+    {
+      "contract": "FeeRouter",
+      "purpose": "Platform fee 45/55 + global 65/20/15"
+    },
+    {
+      "contract": "RegionVault",
+      "purpose": "Country bucket receiver"
+    },
+    {
+      "contract": "CountryPoolNetProfitLedger",
+      "purpose": "Quarter net profit 45/55 split"
+    },
+    {
+      "contract": "UnallocatedStewardPathVault",
+      "purpose": "Vacancy ledger V1"
+    },
+    {
+      "contract": "ReserveVault",
+      "purpose": "Slash reserve \u00b7 Timelock spend"
+    },
+    {
+      "contract": "SlashRouter",
+      "purpose": "Slash routing to reserve/treasury"
+    }
+  ],
+  "permission_matrix": [
+    {
+      "function": "TTG mint/transfer",
+      "contract": "GovernanceVotesToken",
+      "actor": "Timelock/minter role",
+      "auth": "Governance proposal",
+      "asset": "TTG"
+    },
+    {
+      "function": "Primary Market purchase",
+      "contract": "TtgPrimaryMarketV1",
+      "actor": "Any buyer wallet",
+      "auth": "USDC pull + TTG transfer",
+      "asset": "USDC\u2192P4Cap \u00b7 TTG\u2192buyer"
+    },
+    {
+      "function": "Treasury USDC spend",
+      "contract": "GovernanceTreasuryP4Cap",
+      "actor": "Timelock only",
+      "auth": "P1\u2013P4 policy",
+      "asset": "USDC"
+    },
+    {
+      "function": "Treasury TTG grant",
+      "contract": "treasury_dao bucket",
+      "actor": "Timelock",
+      "auth": "Proposal\u2192Vote",
+      "asset": "TTG only"
+    },
+    {
+      "function": "Escrow deposit",
+      "contract": "Escrow/EscrowV2",
+      "actor": "Payer wallet",
+      "auth": "transferFrom\u2192escrow",
+      "asset": "USDC isolated"
+    },
+    {
+      "function": "Escrow release/refund",
+      "contract": "Escrow/EscrowV2",
+      "actor": "Arbitrator/parties/rules",
+      "auth": "State machine",
+      "asset": "USDC to beneficiary"
+    },
+    {
+      "function": "FeeRouter distribute",
+      "contract": "FeeRouter",
+      "actor": "Authorized caller",
+      "auth": "45/55 split",
+      "asset": "USDC"
+    },
+    {
+      "function": "Country net profit close",
+      "contract": "CountryPoolNetProfitLedger",
+      "actor": "Governor\u2192Timelock",
+      "auth": "Quarter close + split",
+      "asset": "USDC"
+    },
+    {
+      "function": "Seat stake lock",
+      "contract": "RegionStewardStakePool",
+      "actor": "Steward wallet",
+      "auth": "Stake lock per jurisdiction",
+      "asset": "TTG"
+    },
+    {
+      "function": "Governor upgrade",
+      "contract": "TimelockUpgradeableProxy",
+      "actor": "Timelock admin Safe",
+      "auth": "Governance only",
+      "asset": "N/A"
+    },
+    {
+      "function": "Emergency pause",
+      "contract": "FeeRouter/EscrowFactory",
+      "actor": "emergency_safe",
+      "auth": "Pause only \u00b7 no withdraw",
+      "asset": "N/A"
+    }
+  ],
+  "fund_flow_matrix": [
+    {
+      "id": "FF-PM",
+      "flow": "Primary Market",
+      "asset": "USDC",
+      "source": "Buyer",
+      "sink": "GovernanceTreasuryP4Cap",
+      "rail": "TtgPrimaryMarketV1.usdcTreasury",
+      "spend": "Timelock spend P1\u2013P4"
+    },
+    {
+      "id": "FF-PM-TTG",
+      "flow": "Primary Market TTG leg",
+      "asset": "TTG",
+      "source": "public_global bucket",
+      "sink": "Buyer wallet",
+      "rail": "TtgPrimaryMarketV1",
+      "spend": "Round caps GOV-04"
+    },
+    {
+      "id": "FF-ESC",
+      "flow": "Order Escrow",
+      "asset": "USDC",
+      "source": "Traveler/provider",
+      "sink": "Escrow instance",
+      "rail": "EscrowFactory(V2)",
+      "spend": "Release/refund/dispute only"
+    },
+    {
+      "id": "FF-FEE",
+      "flow": "Platform fee",
+      "asset": "USDC",
+      "source": "Escrow settlement",
+      "sink": "FeeRouter\u2192country+global",
+      "rail": "FeeRouter",
+      "spend": "45% country \u00b7 55% global pool"
+    },
+    {
+      "id": "FF-NP45",
+      "flow": "Country net profit 45%",
+      "asset": "USDC",
+      "source": "CountryPoolNetProfit",
+      "sink": "Country sub-vaults",
+      "rail": "StewardPathVault etc.",
+      "spend": "Country pool ops"
+    },
+    {
+      "id": "FF-NP55",
+      "flow": "Country net profit 55%",
+      "asset": "USDC",
+      "source": "CountryPoolNetProfit",
+      "sink": "GovernanceTreasuryP4Cap",
+      "rail": "Global leg",
+      "spend": "P1\u2013P4"
+    },
+    {
+      "id": "FF-TTG-DAO",
+      "flow": "DAO TTG bucket",
+      "asset": "TTG",
+      "source": "treasury_dao 2M",
+      "sink": "Timelock grants",
+      "rail": "Governance",
+      "spend": "\u2260 USDC treasury"
+    },
+    {
+      "id": "FF-VAC",
+      "flow": "Vacancy sweep",
+      "asset": "USDC/TTG policy",
+      "source": "Unallocated path",
+      "sink": "Reserve/governance paths",
+      "rail": "Vacancy ledger",
+      "spend": "Governance gated"
+    }
+  ],
+  "gaps_and_risks": [
+    {
+      "id": "GAP-MAINNET-001",
+      "severity": "P0",
+      "phase": "\u2462",
+      "title": "Mainnet address registry all OWNER_INPUT",
+      "detail": "mainnet-address-registry.v2 deploy_status NOT_STARTED"
+    },
+    {
+      "id": "GAP-ESCROW-V2-002",
+      "severity": "P1",
+      "phase": "\u2462",
+      "title": "EscrowFactoryV2 mainnet wiring + FE write path",
+      "detail": "V2 ABI synced; production factory env + UI default path pending Owner"
+    },
+    {
+      "id": "GAP-TREASURY-OPS-003",
+      "severity": "P1",
+      "phase": "\u2462",
+      "title": "Treasury ops spend classes OWNER_INPUT",
+      "detail": "refunds/taxes/supplier/payroll in asset-denomination separation SSOT"
+    },
+    {
+      "id": "GAP-IDX-NP-004",
+      "severity": "P2",
+      "phase": "\u2461",
+      "title": "CountryPoolNetProfit full epoch event projection",
+      "detail": "Vacancy + CountryLedgerCredited indexed; full quarter-close UI projection partial"
+    },
+    {
+      "id": "GAP-PM-005",
+      "severity": "P1",
+      "phase": "\u2462",
+      "title": "Primary Market on-chain ACTIVE",
+      "detail": "Contract exists \u00b7 commercial round lockup OWNER_INPUT \u00b7 mainnet not deployed"
+    },
+    {
+      "id": "GAP-VESTING-006",
+      "severity": "P1",
+      "phase": "\u2462",
+      "title": "Vesting contracts deploy vs registry FROZEN amounts",
+      "detail": "team/advisors commercial params OWNER_INPUT"
+    }
+  ],
+  "ai_fixed": [
+    "Indexer: EscrowV2 ServiceCompleteConfirmed topic0 decode + unit test",
+    "Frontend: sync EscrowV2.json + EscrowFactoryV2.json from contracts/abi",
+    "Treasury separation SSOT (commit 1f205af1) \u2014 TTG dao bucket \u2260 USDC P4Cap"
+  ],
+  "owner_manual": [
+    "Fill ttg-vesting-registry commercial OWNER_INPUT (cliff/duration/start/beneficiary)",
+    "Treasury ops: refunds/taxes/supplier/payroll routing + Safe signers",
+    "Mainnet address registry OWNER_INPUT fill + bytecode verify",
+    "Certificate \u00a74 Owner attestation",
+    "Sepolia Governor V1.1 broadcast auth (TRAVELTRUST_PHASE2_SEPOLIA_BROADCAST_OK=1)"
+  ],
+  "sepolia_verification_checklist": [
+    "Verify PM usdcTreasury == GovernanceTreasuryP4Cap on-chain",
+    "Escrow V1 lifecycle smoke (create\u2192fund\u2192release/refund/dispute)",
+    "FeeRouter PlatformFeeRouted \u2192 RegionVault + global treasury legs",
+    "Governor propose/vote/queue/execute dry-run on test proposal",
+    "Vacancy indexer reconcile gate PASS",
+    "Treasury P4 cap enforcement tx (GOV-01)"
+  ],
+  "mainnet_go_blockers": [
+    "mainnet-address-registry.v2 all core slots VERIFIED/ACTIVE",
+    "EscrowFactoryV2 REQUIRED (V1 forbidden on mainnet policy)",
+    "Legal sign-off vesting + primary market",
+    "Production PSP / webhook \u2462 gates (orthogonal but GO-blocking)",
+    "Multisig timelock_admin MUST be Safe (RULE-ADMIN-001)",
+    "Treasury ops policy OWNER_INPUT caps filled"
+  ],
+  "honest_boundary": "\u2460 inventory + local gates PASS/WARN \u2260 \u2461 Sepolia full matrix GO \u2260 \u2462 Production GO"
+}

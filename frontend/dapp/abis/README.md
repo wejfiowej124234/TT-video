@@ -12,4 +12,5 @@
 
 - **Escrow.json**：自 **contracts/abi/Escrow.json** 原样同步（含 `openDispute` 等），供 P9 DApp 调用 deposit/release/openDispute。
 - **EscrowFactory.json**：已从 contracts/abi 同步（48 前后端 ABI 对齐），供创建 Escrow 实例时使用（escrowOf、createEscrow、EscrowCreated）。
+- **EscrowV2.json** · **EscrowFactoryV2.json**：自 **contracts/abi/** 同步（③ 主网 bilateral Escrow 路径）；Indexer 解码 `ServiceCompleteConfirmed`。
 - 与 [contracts/abi](../../../contracts/abi/) 同步；发版前核对部署合约版本。见 [14-合约-API-ABI-前后端对齐](../../../docs/spec/14-合约-API-ABI-前后端对齐.md) §1.2。

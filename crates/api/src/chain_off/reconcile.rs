@@ -74,6 +74,10 @@ pub fn event_name_from_topic0(topic0: &str) -> Option<&'static str> {
             b"SlashedExecuted(bytes32,address,uint256,uint256,uint256)".as_slice(),
             "SlashedExecuted",
         ),
+        (
+            b"ServiceCompleteConfirmed(bytes32,address,bool,bool)".as_slice(),
+            "ServiceCompleteConfirmed",
+        ),
         (PLATFORM_FEE_ROUTED_EVENT_SIGNATURE, "PlatformFeeRouted"),
         (REGION_VAULT_FORWARDED_EVENT_SIGNATURE, "RegionVaultForwarded"),
         (
@@ -625,6 +629,20 @@ mod tests {
             ))
         );
         assert_eq!(event_name_from_topic0(&topic), Some("SlashedExecuted"));
+    }
+
+    #[test]
+    fn maps_service_complete_confirmed_topic_escrow_v2() {
+        let topic = format!(
+            "0x{}",
+            hex::encode(Keccak256::digest(
+                b"ServiceCompleteConfirmed(bytes32,address,bool,bool)"
+            ))
+        );
+        assert_eq!(
+            event_name_from_topic0(&topic),
+            Some("ServiceCompleteConfirmed")
+        );
     }
 }
 
