@@ -159,13 +159,60 @@ def _registry_checks() -> list[tuple[str, bool, str, str]]:
         )
     )
     vest = yaml.safe_load(_read(ROOT / "registry/ttg-vesting-registry.v1.yaml")) or {}
-    team = (vest.get("pools") or {}).get("team") or {}
+    tracks = vest.get("vesting_tracks") or {}
+    pm = vest.get("primary_market") or {}
+    team = tracks.get("team") or {}
     out.append(
         (
-            "REG-vesting-owner-input",
-            team.get("cliff_seconds") == "OWNER_INPUT",
+            "REG-vesting-team-1_5M-frozen",
+            int(team.get("amount_tokens") or 0) == 1_500_000 and team.get("amount_tokens_status") == "FROZEN",
+            "error",
+            f"team amount={team.get('amount_tokens')} status={team.get('amount_tokens_status')}",
+        )
+    )
+    out.append(
+        (
+            "REG-vesting-no-investor-pool",
+            "investor" not in tracks,
+            "error",
+            "forbidden parallel investor pool must be absent",
+        )
+    )
+    rounds = pm.get("rounds") or {}
+    rsum = sum(int((rounds.get(k) or {}).get("amount_tokens") or 0) for k in rounds)
+    out.append(
+        (
+            "REG-primary-market-rounds",
+            pm.get("distribution_model") == "three_round_primary_market" and rsum == 2_000_000,
+            "error",
+            f"pm_model={pm.get('distribution_model')} sum={rsum}",
+        )
+    )
+    out.append(
+        (
+            "REG-vesting-commercial-owner-input",
+            team.get("cliff_seconds") == "OWNER_INPUT" and team.get("beneficiary") == "OWNER_INPUT",
             "warn",
-            "team vesting commercial params OWNER_INPUT (expected pre-Owner Decision)",
+            "commercial cliff/duration/start/beneficiary OWNER_INPUT",
+        )
+    )
+    paths = vest.get("allocation_bucket_paths") or {}
+    out.append(
+        (
+            "REG-bucket-paths-country-treasury",
+            bool((paths.get("country_pool_shelf") or {}).get("release_paths"))
+            and bool((paths.get("treasury_dao") or {}).get("release_paths")),
+            "pass",
+            "country_pool_shelf + treasury_dao release_paths",
+        )
+    )
+    sep = (vest.get("gate_separation") or {}).get("sepolia_governor_v1_1") or {}
+    out.append(
+        (
+            "REG-gate-separation-sepolia-vs-vesting",
+            bool(sep.get("does_not_require")),
+            "pass",
+            "Sepolia V1.1 not blocked by vesting commercial params",
         )
     )
     return out
@@ -242,11 +289,30 @@ def main() -> int:
     # Manual actions (never simulated)
     manual.extend(
         [
-            {"id": "MAN-OWNER-VESTING", "priority": "P0", "owner": True, "item": "Fill registry/ttg-vesting-registry.v1.yaml commercial params (cliff/duration/start)", "blocked_by": "Owner commercial decision"},
+            {
+                "id": "MAN-OWNER-VESTING",
+                "priority": "P0",
+                "owner": True,
+                "item": "Fill vesting/PM commercial OWNER_INPUT (team/advisors cliff · ecosystem schedule · optional round lockup)",
+                "blocked_by": "Owner commercial decision · ③ mainnet vesting only",
+            },
             {"id": "MAN-FREEZE-SIGNOFF", "priority": "P1", "owner": True, "item": "Owner attestation on TTG-GOVERNANCE-FREEZE-CERTIFICATE.md §4", "blocked_by": "Owner signature"},
-            {"id": "MAN-SEPOLIA-V11", "priority": "P0", "owner": True, "item": "Sepolia Governor V1.1 upgrade (cap_disabled) via Timelock · chain_id=11155111 only", "blocked_by": "Owner authorization + post-vesting decision"},
+            {
+                "id": "MAN-SEPOLIA-V11",
+                "priority": "P0",
+                "owner": True,
+                "item": "Sepolia Governor V1.1 upgrade (cap_disabled) via Timelock · chain_id=11155111 only",
+                "blocked_by": "Owner authorization (TRAVELTRUST_PHASE2_SEPOLIA_BROADCAST_OK=1) — not blocked by vesting commercial params",
+            },
             {"id": "MAN-SEPOLIA-ONCHAIN", "priority": "P1", "owner": False, "item": "Sepolia deployed Governor may still read maxVotingPowerPerAddressBps=400 until upgrade", "blocked_by": "On-chain upgrade not executed"},
-            {"id": "MAN-MAINNET-PREP", "priority": "P1", "owner": True, "item": "Mainnet address registry · multisig · deployment manifest · vesting deploy", "blocked_by": "Phase ③ gates"},
+            {
+                "id": "MAN-MAINNET-VESTING",
+                "priority": "P0",
+                "owner": True,
+                "item": "Mainnet vesting deploy + ACTIVE lifecycle (verify against registry FROZEN amounts)",
+                "blocked_by": "Phase ③ · commercial OWNER_INPUT + legal sign-off",
+            },
+            {"id": "MAN-MAINNET-PREP", "priority": "P1", "owner": True, "item": "Mainnet address registry · multisig · deployment manifest", "blocked_by": "Phase ③ gates"},
         ]
     )
 
@@ -283,7 +349,7 @@ def main() -> int:
         "re_freeze_recommendation": {
             "action": "MAINTAIN TTG-GOVERNANCE-FREEZE-CERTIFICATE v1.1",
             "note": "No further governance rule edits; next changes via GOV-02 proposal only",
-            "after_owner_vesting": "Bump Certificate patch + re-run this audit before Sepolia V1.1",
+            "after_owner_vesting": "Commercial OWNER_INPUT filled → re-run dual audit before mainnet vesting ACTIVE",
         },
         "honest_boundary": "① alignment PASS ≠ ② Sepolia on-chain V1.1 ≠ ③ Production GO",
     }

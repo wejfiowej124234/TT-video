@@ -260,7 +260,7 @@ Community Governance / 成熟 DAO（见 PUBLIC-GOVERNANCE-PHASE §4）
 | **G-VOTE-05** | **Public Round 1/2/3 购买者** | 购入 TTG | **可 Vote**（购入即流通） | 可 `delegate` | 个人钱包 | GOV-04 规避拆分 |
 | **G-VOTE-06** | **Seat 质押** | 锁定于 StakePool | **Stake 期间** 通常 **不可转移** · Vote 权随 token  custody（② 以合约为准） | 视 custody | StakePool | 一国多 Seat（GOV-03） |
 
-**Team Vesting 商业参数（③ 前须 Owner 填）：** [registry/ttg-vesting-registry.v1.yaml](../../../registry/ttg-vesting-registry.v1.yaml) — `cliff_seconds` · `duration_seconds` · `start_timestamp` · **当前 = OWNER_INPUT**。
+**Team Vesting 商业参数（③ 前须 Owner 填）：** [registry/ttg-vesting-registry.v1.yaml](../../../registry/ttg-vesting-registry.v1.yaml) v3 — **`team` 1,500,000 TTG（FROZEN）** · **`advisors` 500,000（FROZEN）** · commercial **OWNER_INPUT** · **`public_global` 2M = Primary Market R1/R2/R3（500K+500K+1M）** · **`ecosystem` = 治理批准释放** · 无独立 investor 池。
 
 **Voting Supply 计算（Public Round 结束后 · 与 §3 一致）：**
 

@@ -121,7 +121,7 @@ Community Governance / 成熟 DAO
 |------|--------|
 | 改 **Genesis/Public 阈值** | **`registry/governance-phase-transition.v1.yaml`** + GOV-02 提案 · 本文件 + [GENESIS-GOVERNANCE-PHASE.md](GENESIS-GOVERNANCE-PHASE.md) · `bash scripts/gates/run-governance-consistency-audit.sh` |
 | 改 **供应 / GOV bps** | [TTG-TOKENOMICS-FREEZE-V1](TTG-TOKENOMICS-FREEZE-V1.md) 修订程序 · **禁止** 在本文件另造 |
-| Team vesting 商业参数 | [registry/ttg-vesting-registry.v1.yaml](../../../registry/ttg-vesting-registry.v1.yaml) · **OWNER_INPUT** 直至 Owner 决策 |
+| Team vesting 商业参数 | [registry/ttg-vesting-registry.v1.yaml](../../../registry/ttg-vesting-registry.v1.yaml) v3 · team/advisors FROZEN · PM 500K+500K+1M |
 
 ---
 

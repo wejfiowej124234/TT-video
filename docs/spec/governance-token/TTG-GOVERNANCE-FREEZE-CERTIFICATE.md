@@ -38,8 +38,8 @@
 | **Genesis** | [GENESIS-GOVERNANCE-PHASE.md](GENESIS-GOVERNANCE-PHASE.md) v1.3 | **PASS · FROZEN** | G-END-01 **AND** G-END-02 |
 | **Public** | [PUBLIC-GOVERNANCE-PHASE.md](PUBLIC-GOVERNANCE-PHASE.md) v1 | **PASS · FROZEN** | Public → Community / Mature DAO |
 | **Lifecycle 总图** | [TTG-GOVERNANCE-LIFECYCLE.md](TTG-GOVERNANCE-LIFECYCLE.md) | **PASS** | 5 分钟读口 |
-| **Owner Pending** | [registry/ttg-vesting-registry.v1.yaml](../../../registry/ttg-vesting-registry.v1.yaml) | **PENDING · OWNER_INPUT** | **仅** cliff / duration / start · **商业决策 · 非 AI** |
-| **Sepolia Upgrade** | Governor V1.1 · `cap_disabled` | **DEFERRED** | **Owner Decision 之后** · 本阶段 **禁止** 开始 broadcast |
+| **Owner Pending** | [registry/ttg-vesting-registry.v1.yaml](../../../registry/ttg-vesting-registry.v1.yaml) v3 | **PENDING · OWNER_INPUT** | **Team 1.5M FROZEN** · PM **500K+500K+1M** · ecosystem **治理释放** · commercial **Owner 填** |
+| **Sepolia Upgrade** | Governor V1.1 · `cap_disabled` | **DEFERRED** | **Owner broadcast 授权** · **不** 依赖 vesting 商业参数已填 |
 
 ---
 
@@ -81,8 +81,20 @@ Consistency Audit PASS
 | **Framework** | Governance Framework **V1.1** |
 | **Freeze effective** | 2026-07-12（文档层 · ①） |
 | **Owner attestation** | ☐ Pending |
-| **Next Owner Decision** | Team vesting 商业参数（12/24/36/48 月等 · **Owner 自选**） |
-| **Next engineering gate** | Sepolia Governor V1.1 upgrade（**post Owner Decision**） |
+| **Next Owner Decision** | Vesting **commercial** 参数（cliff/duration/start/beneficiary · **非** amount） |
+| **Next engineering gate (②)** | Sepolia Governor V1.1 — **Owner broadcast 授权**（`TRAVELTRUST_PHASE2_SEPOLIA_BROADCAST_OK=1`） |
+| **Mainnet vesting gate (③)** | Vesting ACTIVE — commercial OWNER_INPUT + legal sign-off + 链上验证 |
+
+---
+
+## §4.5 阶段闸区分（Sepolia 技术 vs Vesting 主网分配）
+
+| 闸 | 阶段 | 前置条件 | **不**依赖 |
+|----|------|----------|-----------|
+| **Sepolia Governor V1.1** | ② 测试网 | ① Framework V1.1 冻结 · 双审计 PASS · Owner **`TRAVELTRUST_PHASE2_SEPOLIA_BROADCAST_OK=1`** | Team vesting cliff/duration/start/beneficiary |
+| **Mainnet vesting ACTIVE** | ③ 生产 | commercial OWNER_INPUT 已填 · legal sign-off · 链上 vesting = registry | Sepolia 升级可先/后并行 |
+
+**Supply 写死（Registry v3）：** `team` **1.5M** · `advisors` **0.5M** 标准 vesting · `ecosystem` **1.5M** 治理批准释放 · `public_global` **2M** = Primary Market **500K+500K+1M**（非 cliff vesting）· `country_pool_shelf` / `treasury_dao` 路径见 registry · **禁止** 独立 `investor` 池。
 
 ---
 
@@ -102,3 +114,4 @@ bash scripts/gates/run-web3-production-grade-alignment-audit.sh
 | 版本 | 日期 | 说明 |
 |------|------|------|
 | v1.1-20260712 | 2026-07-12 | 初版 Certificate：Framework V1.1 Freeze · Consistency PASS · Vesting OWNER_INPUT · Sepolia DEFERRED |
+| v1.1-20260712-supply-v3 | 2026-07-12 | Registry v3：PM 三轮轨 · ecosystem 治理释放 · country/treasury 路径 |
