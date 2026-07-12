@@ -43,7 +43,7 @@ contract TravelTrustGovernor {
     uint256 public immutable proposalThresholdVotes;
     /// @notice **quorum**：**`(for+abstain) >= supply@snapshot * quorumNumeratorBps / 10000`**
     uint256 public immutable quorumNumeratorBps;
-    /// @notice **GOV-03** · 单地址投票权重上限（bps of supply@snapshot）· **0** = 不封顶（遗留测试）
+    /// @notice **GOV-03 V1.1** · bps of supply@snapshot · **0 + cap disabled = unlimited weight (≠ no vote rights)**
     uint256 public immutable maxVotingPowerPerAddressBps;
 
     /// @notice **TT-B110**：订单 **`rating_deadline`** 评价窗口天数链上 SSOT（**`eth_call` `orderRatingReviewWindowDays()`**）；与后端 **`GOVERNANCE_ORDER_DEADLINE_CHAIN_SSOT`** 联用；治理可通过 Timelock 执行对 Governor 的 **`setOrderRatingReviewWindowDays`** 更新。
@@ -111,6 +111,11 @@ contract TravelTrustGovernor {
         maxVotingPowerPerAddressBps = maxVotingPowerPerAddressBps_;
         if (orderRatingReviewWindowDays_ == 0 || orderRatingReviewWindowDays_ > 3660) revert GovInvalidReviewWindowDays();
         orderRatingReviewWindowDays = orderRatingReviewWindowDays_;
+    }
+
+    /// @notice GOV-03 V1.1 · true when per-address vote weight is not capped (0 bps limit)
+    function votingPowerCapDisabled() external view returns (bool) {
+        return maxVotingPowerPerAddressBps == 0;
     }
 
     /// @dev **仅 Timelock** 可更新（治理 **`queue`→`execute`** 路径）。

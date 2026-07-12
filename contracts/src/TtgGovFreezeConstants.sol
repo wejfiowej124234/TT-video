@@ -18,9 +18,12 @@ library TtgGovFreezeConstants {
     uint256 internal constant GOVERNANCE_TIMELOCK_DELAY_SECONDS = 48 hours;
     uint256 internal constant P4_ACCOUNTING_PERIOD_SECONDS = 90 days;
 
-    /// GOV-03
+    /// GOV-03 · V1.1 — see GOV-03-AMENDMENT-V1.1
     uint256 internal constant MAX_ACTIVE_SEATS_PER_CONTROLLING_ENTITY = 1;
-    uint256 internal constant MAX_VOTING_POWER_PER_ADDRESS_BPS = 400;
+    /// @dev true = unlimited per-address vote weight at Governor (NOT "no vote rights")
+    bool internal constant MAX_VOTING_POWER_CAP_DISABLED = true;
+    /// @dev Only enforced when MAX_VOTING_POWER_CAP_DISABLED is false
+    uint256 internal constant MAX_VOTING_POWER_PER_ADDRESS_BPS = 0;
     uint256 internal constant MAX_AGGREGATE_SEAT_STAKE_PER_ENTITY_BPS = 400;
 
     /// GOV-04 (TTG 18 dec · USDC 6 dec)

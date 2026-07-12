@@ -5,7 +5,7 @@ import "./TtgGovFreezeConstants.sol";
 
 /**
  * @title TtgSeatConcentrationRegistry
- * @notice **GOV-03** · 同一控制主体 ≤1 Active Seat · 聚合质押 ≤4% 供应
+ * @notice **GOV-03** · 同一控制主体 ≤1 Active Seat · 聚合质押 ≤4% 供应（Seat 路径）
  * @dev `controllingEntityOf` 由 owner 绑定（② KYC/合规 oracle · 未绑定则 address 即 entity）
  *      仅 `stakePool` 可调 `onStake` / `onReleaseComplete`
  */

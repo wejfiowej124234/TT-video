@@ -1,6 +1,6 @@
 # Protocol SSOT v1 — machine-readable mirror (P1)
 # Authoritative prose: protocol-ssot.v1.md — on conflict, markdown wins until YAML codegen lands (P2).
-version: "1.0.3"
+version: "1.0.4"
 status: locked
 phase: target
 
@@ -15,8 +15,11 @@ governance_freeze_v1:
     governance_timelock_delay_hours: 48
   GOV-03:
     max_active_seats_per_controlling_entity: 1
-    max_voting_power_per_address_bps: 400
+    max_voting_power_cap_disabled: true
+    max_voting_power_per_address_bps: 0
+    max_voting_power_per_address_bps_semantics: disabled_means_unlimited_not_no_vote
     max_aggregate_seat_stake_per_entity_bps: 400
+    gov_03_amendment: GOV-03-AMENDMENT-V1.1
   GOV-04:
     public_sale_per_wallet_cap_ttg: 25000
     public_sale_min_purchase_usdc: 100

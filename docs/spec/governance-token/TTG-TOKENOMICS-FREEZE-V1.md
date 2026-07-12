@@ -69,16 +69,21 @@
 
 ---
 
-### GOV-03 · Seat 集中度限制
+### GOV-03 · Seat 集中度限制（**V1.1 修订 · 2026-07-11**）
+
+**Amendment SSOT：** [GOV-03-AMENDMENT-V1.1.md](GOV-03-AMENDMENT-V1.1.md)
 
 | 字段 | 值 |
 |------|-----|
 | **Rule ID** | `GOV-03` |
-| **参数键** | `max_active_seats_per_controlling_entity` = **1** |
-| | `max_voting_power_per_address_bps` = **400**（单地址治理权重 **≤ 4.00%** 总供应 · snapshot） |
-| | `max_aggregate_seat_stake_per_entity_bps` = **400**（同一控制主体 Seat 质押合计 **≤ 4.00%** 总供应） |
+| **参数键** | `max_active_seats_per_controlling_entity` = **1**（同一控制主体 **≤ 1** Active Seat · **一国一控**） |
+| | `max_voting_power_cap_disabled` = **true**（**显式关闭单地址权重上限**） |
+| | `max_voting_power_per_address_bps` = **0**（**仅当 cap_disabled=false 时生效** · **0 在此语义 = Unlimited，≠ No Vote**） |
+| | `max_aggregate_seat_stake_per_entity_bps` = **400**（**仅 Seat 质押路径** · 同一控制主体质押合计 **≤ 4.00%** 总供应） |
+| **流程保护（非 cap）** | **Team 15%** → Vesting · **Treasury 20%** → Safe → **Proposal → Vote（GOV-02）→ Timelock 48h → Execute** |
 | **Phase 1** | 十国各 **1 Seat** · [protocol-ssot §4](protocol-ssot.v1.md) `seat_cap: 1` / 辖区 |
-| **禁止** | 同一控制主体 **>1** Active Seat · 单地址 **>4%** 治理权 · 通过嵌套地址规避（② 链上 **须** 关联检测或合规 KYC 绑定） |
+| **禁止** | 同一控制主体 **>1** Active Seat · 未披露 team/advisors 投票（GOV-02）· 嵌套地址规避 **Seat** 绑定（② KYC / `controllingEntityOf`） |
+| **废止（V1.1）** | 单地址 TTG **持仓 / 投票权重 ≤ 4%** — **不得** 再作为 team 15% 拆分依据 |
 
 ---
 
@@ -112,8 +117,10 @@ governance_freeze_v1:
     governance_timelock_delay_hours: 48
   GOV-03:
     max_active_seats_per_controlling_entity: 1
-    max_voting_power_per_address_bps: 400
+    max_voting_power_cap_disabled: true
+    max_voting_power_per_address_bps: 0          # disabled=true → unlimited weight, NOT no vote
     max_aggregate_seat_stake_per_entity_bps: 400
+    gov_03_amendment: GOV-03-AMENDMENT-V1.1
   GOV-04:
     public_sale_per_wallet_cap_ttg: 25000
     public_sale_min_purchase_usdc: 100
@@ -162,3 +169,4 @@ governance_freeze_v1:
 | Version | Date | Note |
 |---------|------|------|
 | v1-20260616 | 2026-06-16 | 初版冻结：GOV-01～04 · Tokenomics V1 SSOT · Gate-2.4 / Sepolia 读口 |
+| v1.1-gov03-20260711 | 2026-07-11 | **GOV-03 V1.1：** 移除单地址 4% 投票/持仓 cap · 保留 Seat 一国一控 + 流程保护 — [GOV-03-AMENDMENT-V1.1](GOV-03-AMENDMENT-V1.1.md) |

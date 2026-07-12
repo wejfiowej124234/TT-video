@@ -9,6 +9,10 @@
 | **Steward / Country / Redemption 状态枚举** | **[state-machine.v1.md](state-machine.v1.md)** |
 | **TTG 分配 · 权限 · 申请流程（图解 SSOT · 改逻辑必改图）** | **[ttg-allocation-permissions-flows-ssot-v1.md](ttg-allocation-permissions-flows-ssot-v1.md)** |
 | **TTG Tokenomics V1 · GOV-01～04（FROZEN · Gate-2.4 读口）** | **[TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md)** · **[Final Audit Report](TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.md)** |
+| **5 分钟看懂全治理系统（总图 · 首选）** | **[TTG-GOVERNANCE-LIFECYCLE.md](TTG-GOVERNANCE-LIFECYCLE.md)** |
+| **Governance Framework V1.1 已冻结？** | **[TTG-GOVERNANCE-FREEZE-CERTIFICATE.md](TTG-GOVERNANCE-FREEZE-CERTIFICATE.md)** |
+| **Genesis 治理启动解释** | **[GENESIS-GOVERNANCE-PHASE.md](GENESIS-GOVERNANCE-PHASE.md)** |
+| **Public 治理阶段 · 成熟 DAO 生命周期** | **[PUBLIC-GOVERNANCE-PHASE.md](PUBLIC-GOVERNANCE-PHASE.md)** · 阈值 **[registry/governance-phase-transition.v1.yaml](../../registry/governance-phase-transition.v1.yaml)** |
 | **公众三轮 · P4 治理 · Seat 解锁退出（Owner 拍板）** | **[ttg-primary-market-and-exit-policy-v1-draft.md](ttg-primary-market-and-exit-policy-v1-draft.md)** |
 | **总览与联动** | **[82-治理币-文档总览](../82-治理币-文档总览.md)**、**[83](../83-区域治理与收益分配-协议白皮书.md)**、**[84](../84-第一阶段10国Country-Pool发行参数总表.md)**（**§四 fee 列镜像 protocol-ssot §4**） |
 | **对外口径** | **[08-4](../08-4-对外口径包.md)** |

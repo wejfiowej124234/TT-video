@@ -3,7 +3,7 @@
 export const TTG_TOTAL_SUPPLY = 10_000_000 as const;
 
 export const PROTOCOL_SSOT_DOC_ID = "protocol-ssot.v1" as const;
-export const PROTOCOL_SSOT_DOC_VERSION = "1.0.2" as const;
+export const PROTOCOL_SSOT_DOC_VERSION = "1.0.4" as const;
 export const TTG_ALLOCATION_FLOWS_DOC_ID = "ttg-allocation-permissions-flows-ssot-v1" as const;
 
 export const GOVERNANCE_TOKENOMICS_FREEZE_DOC_ID = "TTG-TOKENOMICS-FREEZE-V1" as const;
@@ -18,7 +18,8 @@ export const GOVERNANCE_FREEZE_V1 = {
   },
   GOV_03: {
     max_active_seats_per_controlling_entity: 1,
-    max_voting_power_per_address_bps: 400,
+    max_voting_power_cap_disabled: true,
+    max_voting_power_per_address_bps: 0,
     max_aggregate_seat_stake_per_entity_bps: 400,
   },
   GOV_04: {
@@ -244,7 +245,6 @@ export function governanceFreezeLocaleVars(locale: string): Record<string, strin
     approval: GOVERNANCE_FREEZE_V1.GOV_02.governance_approval_threshold_bps / 100,
     timelock: GOVERNANCE_FREEZE_V1.GOV_02.governance_timelock_delay_hours,
     seats: GOVERNANCE_FREEZE_V1.GOV_03.max_active_seats_per_controlling_entity,
-    voteBps: GOVERNANCE_FREEZE_V1.GOV_03.max_voting_power_per_address_bps / 100,
     stakeBps: GOVERNANCE_FREEZE_V1.GOV_03.max_aggregate_seat_stake_per_entity_bps / 100,
     walletTtg: GOVERNANCE_FREEZE_V1.GOV_04.public_sale_per_wallet_cap_ttg.toLocaleString(locale),
     minUsdc: GOVERNANCE_FREEZE_V1.GOV_04.public_sale_min_purchase_usdc,

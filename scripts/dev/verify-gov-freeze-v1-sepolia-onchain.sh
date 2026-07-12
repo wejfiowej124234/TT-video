@@ -76,7 +76,13 @@ max_stake="$(cast_call "$SEAT_REGISTRY_ADDRESS" "maxAggregateStakePerEntity()(ui
 seat_pool="$(cast_call "$SEAT_REGISTRY_ADDRESS" "stakePool()(address)" | awk '{print $1}')"
 
 [[ "$quorum_bps" == "400" ]] && pass "GOV-02 quorum=400" || fail "GOV-02 quorum=${quorum_bps} expected 400"
-[[ "$max_vote_bps" == "400" ]] && pass "GOV-03 vote cap=400" || fail "GOV-03 vote cap=${max_vote_bps} expected 400"
+if [[ "$max_vote_bps" == "0" ]]; then
+  pass "GOV-03 vote cap=0 (V1.1 no cap)"
+elif [[ "$max_vote_bps" == "400" ]]; then
+  pass "GOV-03 vote cap=400 (legacy Sepolia · GOV-03-V1.1 upgrade pending)"
+else
+  fail "GOV-03 vote cap=${max_vote_bps} expected 0 (SSOT) or 400 (legacy Sepolia)"
+fi
 [[ "$tl_delay" == "172800" ]] && pass "GOV-02 timelock=172800" || fail "GOV-02 timelock=${tl_delay} expected 172800"
 [[ "${tl_gov,,}" == "${GOVERNOR_ADDRESS,,}" ]] && pass "Timelock.governor wired" || fail "Timelock governor mismatch"
 [[ "$cap_bps" == "3000" ]] && pass "GOV-01 cap=3000" || fail "GOV-01 cap=${cap_bps} expected 3000"
@@ -142,7 +148,7 @@ report = {
   "expected_ssot": {
     "GOV-01": {"treasury_p4_deploy_cap_bps": 3000},
     "GOV-02": {"governance_quorum_bps": 400, "governance_timelock_delay_seconds": 172800},
-    "GOV-03": {"max_voting_power_per_address_bps": 400, "max_aggregate_seat_stake_per_entity_bps": 400},
+    "GOV-03": {"max_voting_power_per_address_bps": 0, "max_aggregate_seat_stake_per_entity_bps": 400},
     "GOV-04": {
       "public_sale_per_wallet_cap_ttg": "25000000000000000000000",
       "public_sale_min_purchase_usdc": "100000000",

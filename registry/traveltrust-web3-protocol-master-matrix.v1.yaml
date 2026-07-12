@@ -298,7 +298,8 @@ governance_architecture:
     quorum_bps: 400
     approval_threshold_bps: 5000
     timelock_delay_hours: 48
-    max_voting_power_per_address_bps: 400
+    max_voting_power_cap_disabled: true
+    max_voting_power_per_address_bps: 0
     p4_deploy_cap_bps: 3000
   upgrade_admin: GovernanceTimelock
   bypass_check:

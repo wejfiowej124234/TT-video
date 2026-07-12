@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  GOVERNANCE_FREEZE_V1,
   GOVERNANCE_PUBLIC_SALE_ROUNDS,
   GOVERNANCE_PUBLIC_SALE_TOTAL,
   GOVERNANCE_TTG_SUPPLY_ROWS,
@@ -23,6 +24,12 @@ describe("governanceParamsTokenomicsModel", () => {
     const totalPct = GOVERNANCE_TTG_SUPPLY_ROWS.reduce((s, r) => s + r.sharePct, 0);
     expect(totalUnits).toBe(TTG_TOTAL_SUPPLY);
     expect(totalPct).toBe(100);
+  });
+
+  it("GOV-03 V1.1 cap_disabled and seat-one-per-entity", () => {
+    expect(GOVERNANCE_FREEZE_V1.GOV_03.max_voting_power_cap_disabled).toBe(true);
+    expect(GOVERNANCE_FREEZE_V1.GOV_03.max_voting_power_per_address_bps).toBe(0);
+    expect(GOVERNANCE_FREEZE_V1.GOV_03.max_active_seats_per_controlling_entity).toBe(1);
   });
 
   it("public rounds fit inside public 20% bucket", () => {

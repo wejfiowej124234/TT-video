@@ -9554,7 +9554,7 @@ export default {
     "法定人数 ≥ 总供应 {{quorum}}%；赞成 ≥ 已投 {{approval}}%；Timelock {{timelock}}h。",
   governance_params_tokenomics_freeze_GOV_03_title: "Seat 集中度",
   governance_params_tokenomics_freeze_GOV_03_value:
-    "同一控制主体 Active Seat ≤ {{seats}}；单地址治理权 ≤ {{voteBps}}%；Seat 质押合计 ≤ {{stakeBps}}%。",
+    "同一控制主体 Active Seat ≤ {{seats}}；Seat 质押合计 ≤ {{stakeBps}}%。单地址 TTG 权重无上限（cap 已关闭，≠ 无投票权）；team / treasury 经 Vesting · Safe · Proposal · Vote · Timelock 保护。",
   governance_params_tokenomics_freeze_GOV_04_title: "单钱包认购上限",
   governance_params_tokenomics_freeze_GOV_04_value:
     "公众三轮默认每钱包 ≤ {{walletTtg}} TTG（0.25%）；最低 {{minUsdc}} USDC。",

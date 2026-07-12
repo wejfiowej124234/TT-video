@@ -1,0 +1,75 @@
+# TTG Vesting Registry v1 — Production Governance SSOT (Step 7 · defined early)
+
+schema: traveltrust.ttg_vesting_registry.v1
+version: 1
+phase3_step: 7
+machine_key: TT_TTG_VESTING_REGISTRY
+effective_utc: "2026-07-10"
+registry_lifecycle_status: READY_TEMPLATE
+
+production_required: true
+rationale: >
+  Public TTG launch requires auditable answer to "team tokens locked how?"
+  before Production GO. Contract deploy may follow; governance schema must lead.
+
+lifecycle:
+  status_enum:
+    - READY_TEMPLATE
+    - OWNER_FILLED
+    - VERIFIED
+    - ACTIVE
+    - DEPRECATED
+
+vesting_contract_options:
+  - id: openzeppelin_vesting_wallet
+    status: RECOMMENDED_CANDIDATE
+    note: Final Owner selection — not deployed in this registry
+  - id: custom_timelock_stream
+    status: ALTERNATIVE
+    note: Requires security review if selected
+
+pools:
+  team:
+    role: Team and core contributor allocation
+    lifecycle_status: READY_TEMPLATE
+    beneficiary: OWNER_INPUT
+    amount_tokens: OWNER_INPUT
+    cliff_seconds: OWNER_INPUT
+    duration_seconds: OWNER_INPUT
+    start_timestamp: OWNER_INPUT
+    revocable: false
+    controller: timelock
+    custody: timelock
+
+  investor:
+    role: Investor / SAFT rounds
+    lifecycle_status: READY_TEMPLATE
+    beneficiary: OWNER_INPUT
+    amount_tokens: OWNER_INPUT
+    cliff_seconds: OWNER_INPUT
+    duration_seconds: OWNER_INPUT
+    start_timestamp: OWNER_INPUT
+    revocable: false
+
+  ecosystem:
+    role: Community / ecosystem incentives
+    lifecycle_status: READY_TEMPLATE
+    beneficiary: OWNER_INPUT
+    schedule_template: OWNER_INPUT
+
+  treasury:
+    role: DAO treasury — not a vesting pool; governance spend via Timelock
+    lifecycle_status: READY_TEMPLATE
+    note: Distinct from team/investor vesting — see treasury ops runbook
+
+cross_refs:
+  mainnet_registry: registry/mainnet-address-registry.v2.yaml
+  governance_token: mainnet-address-registry.v2.contracts.governance_token
+
+evidence:
+  template: evidence/GO_phase3_auth_production_hardening/TTG-VESTING-REGISTRY-GATE-LATEST.json
+  gate: scripts/gates/check-ttg-vesting-registry-gate.sh
+
+verdict:
+  status: TTG_VESTING_GOVERNANCE_DEFINED
+  note: Values OWNER_INPUT — schema production-grade; on-chain deploy is Step 7 execution

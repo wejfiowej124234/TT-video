@@ -136,8 +136,10 @@ governance_freeze_v1:
     governance_timelock_delay_hours: 48
   GOV-03:
     max_active_seats_per_controlling_entity: 1
-    max_voting_power_per_address_bps: 400
+    max_voting_power_cap_disabled: true
+    max_voting_power_per_address_bps: 0          # V1.1 · disabled=true → unlimited, NOT no vote
     max_aggregate_seat_stake_per_entity_bps: 400
+    gov_03_amendment: GOV-03-AMENDMENT-V1.1
   GOV-04:
     public_sale_per_wallet_cap_ttg: 25000       # 0.25% × 10M
     public_sale_min_purchase_usdc: 100

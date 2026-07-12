@@ -9818,7 +9818,7 @@ export default {
     "Quorum ≥ {{quorum}}% of supply; yes ≥ {{approval}}% of votes cast; Timelock {{timelock}}h.",
   governance_params_tokenomics_freeze_GOV_03_title: "Seat concentration",
   governance_params_tokenomics_freeze_GOV_03_value:
-    "Max {{seats}} active Seat per controlling entity; max vote weight {{voteBps}}%; max aggregate Seat stake {{stakeBps}}%.",
+    "Max {{seats}} active Seat per controlling entity; max aggregate Seat stake {{stakeBps}}%. Per-address TTG vote weight uncapped (cap disabled — not “no vote”); team/treasury protected via Vesting · Safe · Proposal · Vote · Timelock.",
   governance_params_tokenomics_freeze_GOV_04_title: "Per-wallet subscription cap",
   governance_params_tokenomics_freeze_GOV_04_value:
     "Default max {{walletTtg}} TTG per wallet (0.25%) across public rounds; min {{minUsdc}} USDC.",

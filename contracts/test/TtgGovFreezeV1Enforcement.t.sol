@@ -150,7 +150,10 @@ contract TtgGovFreezeV1EnforcementTest is Test {
         assertEq(uint256(gov.state(pid)), uint256(ProposalState.Defeated));
     }
 
-    function test_GOV03_max_voting_power_per_address_capped_at_4_percent() public {
+    function test_GOV03_no_voting_power_cap_when_bps_zero() public {
+        assertTrue(gov.votingPowerCapDisabled());
+        assertEq(gov.maxVotingPowerPerAddressBps(), 0);
+
         address[] memory targets = new address[](1);
         targets[0] = address(treasury);
         uint256[] memory values = new uint256[](1);
@@ -158,15 +161,14 @@ contract TtgGovFreezeV1EnforcementTest is Test {
         calldatas[0] = abi.encodeWithSelector(GovernanceTreasuryP4Cap.setEarmarkedP1P3.selector, uint256(2));
 
         vm.prank(whale);
-        uint256 pid = gov.propose(targets, values, calldatas, "vote cap");
+        uint256 pid = gov.propose(targets, values, calldatas, "no vote cap");
 
         vm.roll(block.number + 1);
         vm.prank(whale);
         gov.castVote(pid, 1);
 
         (uint256 forVotes,,) = _proposalVotes(pid);
-        uint256 expectedCap = (TtgGovFreezeConstants.TTG_TOTAL_SUPPLY_UNITS * 400) / 10_000;
-        assertEq(forVotes, expectedCap);
+        assertEq(forVotes, 5_000_000 ether);
     }
 
     function test_GOV03_seat_concentration_one_active_seat_per_entity() public {
