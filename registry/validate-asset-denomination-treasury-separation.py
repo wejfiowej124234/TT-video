@@ -44,8 +44,8 @@ def main() -> None:
         fail("ttg_dao_treasury_bucket.asset must be TTG")
     if usdc_treasury.get("asset") != "USDC":
         fail("usdc_global_treasury.asset must be USDC")
-    if int(ttg_bucket.get("amount_tokens") or 0) != 2_000_000:
-        fail("ttg_dao_treasury_bucket.amount_tokens must be 2000000")
+    if int(ttg_bucket.get("amount_tokens") or 0) != 3_000_000:
+        fail("ttg_dao_treasury_bucket.amount_tokens must be 3000000")
     if usdc_treasury.get("on_chain_contract") != "GovernanceTreasuryP4Cap":
         fail("usdc_global_treasury.on_chain_contract must be GovernanceTreasuryP4Cap")
 
@@ -69,6 +69,11 @@ def main() -> None:
         fail("primary_market.usdc_sink must be usdc_global_treasury")
     if pm.get("usdc_field") != "usdcTreasury":
         fail("primary_market.usdc_field must be usdcTreasury")
+    if pm.get("ttg_source_bucket") != "public_sale":
+        fail("primary_market.ttg_source_bucket must be public_sale (Genesis V2)")
+    rounds = pm.get("rounds_registry_initial") or []
+    if list(rounds) != [800_000, 1_200_000, 3_000_000]:
+        fail("primary_market.rounds_registry_initial must be 800k+1.2M+3M")
 
     td = (vest.get("allocation_bucket_paths") or {}).get("treasury_dao") or {}
     td_policy = {k: v for k, v in td.items() if k not in ("forbidden", "refs", "usdc_cash_policy_ref")}
@@ -102,7 +107,7 @@ def main() -> None:
 
     print(
         "OK: asset-denomination-treasury-separation v1 "
-        "ttg_dao=2M-TTG-only usdc_global=GovernanceTreasuryP4Cap "
+        "ttg_dao=3M-TTG-only usdc_global=GovernanceTreasuryP4Cap "
         "rails=R1-R4-isolated pm_usdc_sink=P4Cap"
     )
 

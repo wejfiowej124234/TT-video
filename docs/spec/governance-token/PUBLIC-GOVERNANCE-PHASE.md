@@ -15,7 +15,7 @@
 ## §0 治理生命周期（完整栈）
 
 ```text
-Tokenomics（FROZEN · 10M · 六桶 · GOV-01～04）
+Tokenomics（FROZEN · 10M · Genesis V2 四块 15/5/30/50 · GOV-01～04）
         ↓
 Genesis Governance Phase
   · team 启动 · 少量 TTG 进入 snapshot · 披露 + 流程保护
@@ -24,7 +24,7 @@ Public Governance Phase（本文件）
   · 公众三轮完成 + 投票供应达阈 · 社区持有人实质参与
         ↓
 Community Governance（成熟 DAO 叙事）
-  · 国家承销 / 生态 / DAO Treasury 按 SSOT 释放
+  · Community Incentive Program / DAO Treasury 经治理释放
   · team 占全供应长期 ≈15% · Active Voting Supply 持续分散
 ```
 
@@ -57,7 +57,7 @@ Community Governance（成熟 DAO 叙事）
 | 键 | 含义 |
 |----|------|
 | `public_governance_threshold.active_voting_supply_min_bps` | Active Voting Supply **≥** 该 bps × **总供应** |
-| `public_governance_threshold.public_bucket_votable_min_bps` | Public 桶内 **已进入可投票流通** 的 TTG **≥** 该 bps × **`public_global` 桶** |
+| `public_governance_threshold.public_bucket_votable_min_bps` | Public Sale 桶内 **已进入可投票流通** 的 TTG **≥** 该 bps × **`public_sale` 创世 Allocation（5M）** |
 
 **禁止：**
 
@@ -72,7 +72,8 @@ Community Governance（成熟 DAO 叙事）
 ### §3.1 持有人与投票权
 
 - **Public 购买者**（G-VOTE-05）持有并已流通的 TTG **可 Vote / Delegate**  
-- **Team / Advisors**（G-VOTE-01/02）：仅 **已解锁** 部分可 Vote（vesting 合约落地后）  
+- **Team**（G-VOTE-01）：仅 **已解锁** 部分可 Vote（vesting 合约落地后）  
+- **Community Incentive Program**（G-VOTE-02）：按 Policy 进入流通后可 Vote  
 - **DAO Treasury TTG 桶**（G-VOTE-03）：**默认不 Vote** · 不能自己投自己  
 - **Active Voting Supply** 按 [GENESIS §3](GENESIS-GOVERNANCE-PHASE.md) 快照公式重算 — **随真实流通变化**
 
@@ -81,9 +82,9 @@ Community Governance（成熟 DAO 叙事）
 | 类型 | 说明 |
 |------|------|
 | Treasury P4 动用 | GOV-01 cap · GOV-02 投票 · 48h Timelock |
-| 生态 / 国家池框架 | 按 allocation SSOT · 须披露 |
+| DAO / Community Incentive 拨付 | 按 Genesis V2 allocation SSOT · 须披露 |
 | 参数修订 | GOV-01～04 · `governance-phase-transition` 阈值修订亦须 GOV-02 |
-| Seat / 国家承销 | GOV-03 一国一控 · 质押路径 cap |
+| Seat / Steward | GOV-03 一国一控 · **自持 TTG** 质押（无 Country Shelf） |
 
 ### §3.3 与 Genesis 的差异
 
@@ -120,8 +121,8 @@ Community Governance / 成熟 DAO
 | 变更 | 须同步 |
 |------|--------|
 | 改 **Genesis/Public 阈值** | **`registry/governance-phase-transition.v1.yaml`** + GOV-02 提案 · 本文件 + [GENESIS-GOVERNANCE-PHASE.md](GENESIS-GOVERNANCE-PHASE.md) · `bash scripts/gates/run-governance-consistency-audit.sh` |
-| 改 **供应 / GOV bps** | [TTG-TOKENOMICS-FREEZE-V1](TTG-TOKENOMICS-FREEZE-V1.md) 修订程序 · **禁止** 在本文件另造 |
-| Team vesting 商业参数 | [registry/ttg-vesting-registry.v1.yaml](../../../registry/ttg-vesting-registry.v1.yaml) v3 · team/advisors FROZEN · PM 500K+500K+1M |
+| 改 **供应 / GOV bps** | [TTG-TOKENOMICS-GENESIS-V2](TTG-TOKENOMICS-GENESIS-V2.md) 修订程序 · **禁止** 在本文件另造 |
+| Team vesting 商业参数 | [registry/ttg-vesting-registry.v1.yaml](../../../registry/ttg-vesting-registry.v1.yaml) v4 · team 1.5M FROZEN · PM 800K+1.2M+3M |
 
 ---
 

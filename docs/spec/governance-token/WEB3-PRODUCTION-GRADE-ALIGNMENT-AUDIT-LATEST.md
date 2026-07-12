@@ -1,6 +1,6 @@
 # Web3 Production-Grade Alignment Audit — Latest
 
-**Audit ID:** `WPGA-2026-07-12-v1` · **Verdict:** `PASS` · **Stamp:** `20260712T122953Z`
+**Audit ID:** `WPGA-2026-07-12-v1` · **Verdict:** `PASS` · **Stamp:** `20260712T234554Z`
 
 ## Summary
 
@@ -18,7 +18,7 @@
 - **PASS** `REG-vesting-no-investor-pool` (P1)
 - **PASS** `REG-primary-market-rounds` (P1)
 - **PASS** `REG-vesting-commercial-owner-input` (P2)
-- **PASS** `REG-bucket-paths-country-treasury` (P1)
+- **PASS** `REG-bucket-paths-dao-treasury` (P1)
 - **PASS** `REG-gate-separation-sepolia-vs-vesting` (P1)
 - **PASS** `DOC-TTG-GOVERNANCE-LIFECYCLE` (P1)
 - **PASS** `DOC-TTG-GOVERNANCE-FREEZE-CE` (P1)

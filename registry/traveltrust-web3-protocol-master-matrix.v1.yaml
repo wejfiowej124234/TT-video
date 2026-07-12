@@ -268,14 +268,12 @@ token_system:
   burn_on_chain: false
   voting: getPastVotes_checkpoints
   allocation_bps:
-    country_pool_shelf: 2500
-    public_global: 2000
-    ecosystem: 1500
     team: 1500
-    advisors: 500
-    treasury_dao: 2000
+    community_incentive: 500
+    treasury_dao: 3000
+    public_sale: 5000
   gov_04_public_sale:
-    round_ttg: [500000, 500000, 1000000]
+    round_ttg: [800000, 1200000, 3000000]
     per_wallet_cap_ttg: 25000
     min_purchase_usdc: 100
   consistency:

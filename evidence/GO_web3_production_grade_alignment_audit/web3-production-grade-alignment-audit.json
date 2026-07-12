@@ -1,14 +1,14 @@
 {
   "audit_id": "WPGA-2026-07-12-v1",
-  "stamp_utc": "20260712T120952Z",
+  "stamp_utc": "20260712T234554Z",
   "phase": "\u2460 local alignment",
   "framework": "Governance Framework V1.1 FROZEN",
   "verdict": "PASS",
   "summary": {
-    "pass": 14,
+    "pass": 19,
     "warn": 0,
     "fail": 0,
-    "manual_actions": 5,
+    "manual_actions": 6,
     "blockers": 0
   },
   "checks": [
@@ -19,7 +19,7 @@
       "detail": {
         "cmd": "C:\\Users\\plant\\AppData\\Local\\Programs\\Python\\Python313\\python.EXE scripts/dev/run-governance-consistency-audit.py",
         "exit_code": 0,
-        "stdout_tail": "GOV_CONSISTENCY_AUDIT: PASS stamp=20260712T120952Z\nTT_GOV_CONSISTENCY_SUMMARY: PASS\n",
+        "stdout_tail": "GOV_CONSISTENCY_AUDIT: PASS stamp=20260712T234554Z\nTT_GOV_CONSISTENCY_SUMMARY: PASS\n",
         "stderr_tail": ""
       }
     },
@@ -49,10 +49,40 @@
       "detail": "active=3500 public_bucket=7500"
     },
     {
-      "id": "REG-vesting-owner-input",
+      "id": "REG-vesting-team-1_5M-frozen",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": "team amount=1500000 status=FROZEN"
+    },
+    {
+      "id": "REG-vesting-no-investor-pool",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": "forbidden parallel investor pool must be absent"
+    },
+    {
+      "id": "REG-primary-market-rounds",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": "pm_model=three_round_primary_market sum=5000000 (Genesis V2 Public Sale)"
+    },
+    {
+      "id": "REG-vesting-commercial-owner-input",
       "status": "PASS",
       "risk": "P2",
-      "detail": "team vesting commercial params OWNER_INPUT (expected pre-Owner Decision)"
+      "detail": "commercial cliff/duration/start/beneficiary OWNER_INPUT"
+    },
+    {
+      "id": "REG-bucket-paths-dao-treasury",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": "Genesis V2: treasury_dao paths \u00b7 no country_pool_shelf \u00b7 30/50 bps"
+    },
+    {
+      "id": "REG-gate-separation-sepolia-vs-vesting",
+      "status": "PASS",
+      "risk": "P1",
+      "detail": "Sepolia V1.1 not blocked by vesting commercial params"
     },
     {
       "id": "DOC-TTG-GOVERNANCE-LIFECYCLE",
@@ -91,7 +121,7 @@
       "detail": {
         "cmd": "D:\\dev\\foundry\\bin\\forge.EXE test --match-contract TtgGovFreezeV1EnforcementTest -vv",
         "exit_code": 0,
-        "stdout_tail": "No files changed, compilation skipped\n\nRan 9 tests for test/TtgGovFreezeV1Enforcement.t.sol:TtgGovFreezeV1EnforcementTest\n[PASS] test_GOV01_earmarked_p1p3_reduces_reserve() (gas: 43251)\n[PASS] test_GOV01_p4DeployCap_enforced_at_30_percent() (gas: 71937)\n[PASS] test_GOV02_governor_quorum_400_bps_and_timelock_48h() (gas: 527758)\n[PASS] test_GOV02_quorum_not_reached_when_under_4_percent() (gas: 468409)\n[PASS] test_GOV03_no_voting_power_cap_when_bps_zero() (gas: 361831)\n[PASS] test_GOV03_seat_concentration_one_active_seat_per_entity() (gas: 498793)\n[PASS] test_GOV04_primary_market_per_wallet_and_round_caps() (gas: 198444)\n[PASS] test_GOV04_round_hard_cap_enforced() (gas: 2695059)\n[PASS] test_freeze_constants_match_ssot_yaml() (gas: 384)\nSuite result: ok. 9 passed; 0 failed; 0 skipped; finished in 2.51ms (4.30ms CPU time)\n\nRan 1 test suite in 6.55ms (2.51ms CPU time): 9 tests passed, 0 failed, 0 skipped (9 total tests)\n",
+        "stdout_tail": "No files changed, compilation skipped\n\nRan 9 tests for test/TtgGovFreezeV1Enforcement.t.sol:TtgGovFreezeV1EnforcementTest\n[PASS] test_GOV01_earmarked_p1p3_reduces_reserve() (gas: 43251)\n[PASS] test_GOV01_p4DeployCap_enforced_at_30_percent() (gas: 71937)\n[PASS] test_GOV02_governor_quorum_400_bps_and_timelock_48h() (gas: 527758)\n[PASS] test_GOV02_quorum_not_reached_when_under_4_percent() (gas: 468409)\n[PASS] test_GOV03_no_voting_power_cap_when_bps_zero() (gas: 361831)\n[PASS] test_GOV03_seat_concentration_one_active_seat_per_entity() (gas: 498793)\n[PASS] test_GOV04_primary_market_per_wallet_and_round_caps() (gas: 198444)\n[PASS] test_GOV04_round_hard_cap_enforced() (gas: 2695059)\n[PASS] test_freeze_constants_match_ssot_yaml() (gas: 384)\nSuite result: ok. 9 passed; 0 failed; 0 skipped; finished in 2.78ms (5.57ms CPU time)\n\nRan 1 test suite in 6.93ms (2.78ms CPU time): 9 tests passed, 0 failed, 0 skipped (9 total tests)\n",
         "stderr_tail": ""
       }
     },
@@ -102,7 +132,7 @@
       "detail": {
         "cmd": "C:\\Program Files\\nodejs\\npx.CMD vitest run lib/governance/governanceParamsTokenomicsModel.test.ts lib/governance/governanceParamsPageL5FullClosure.contract.test.ts",
         "exit_code": 0,
-        "stdout_tail": "\n RUN  v3.2.6 D:/TravelTrust-V1.1/frontend\n\n \u2713 lib/governance/governanceParamsTokenomicsModel.test.ts (4 tests) 2ms\n \u2713 lib/governance/governanceParamsPageL5FullClosure.contract.test.ts (7 tests) 20ms\n\n Test Files  2 passed (2)\n      Tests  11 passed (11)\n   Start at  20:10:02\n   Duration  1.77s (transform 377ms, setup 36ms, collect 455ms, tests 22ms, environment 1.21s, prepare 282ms)\n\n",
+        "stdout_tail": "\n RUN  v3.2.6 D:/TravelTrust-V1.1/frontend\n\n \u2713 lib/governance/governanceParamsTokenomicsModel.test.ts (4 tests) 4ms\n \u2713 lib/governance/governanceParamsPageL5FullClosure.contract.test.ts (7 tests) 21ms\n\n Test Files  2 passed (2)\n      Tests  11 passed (11)\n   Start at  07:46:04\n   Duration  1.73s (transform 389ms, setup 39ms, collect 466ms, tests 25ms, environment 1.16s, prepare 179ms)\n\n",
         "stderr_tail": ""
       }
     },
@@ -124,8 +154,8 @@
       "id": "MAN-OWNER-VESTING",
       "priority": "P0",
       "owner": true,
-      "item": "Fill registry/ttg-vesting-registry.v1.yaml commercial params (cliff/duration/start)",
-      "blocked_by": "Owner commercial decision"
+      "item": "Fill vesting/PM commercial OWNER_INPUT (team/advisors cliff \u00b7 ecosystem schedule \u00b7 optional round lockup)",
+      "blocked_by": "Owner commercial decision \u00b7 \u2462 mainnet vesting only"
     },
     {
       "id": "MAN-FREEZE-SIGNOFF",
@@ -139,7 +169,7 @@
       "priority": "P0",
       "owner": true,
       "item": "Sepolia Governor V1.1 upgrade (cap_disabled) via Timelock \u00b7 chain_id=11155111 only",
-      "blocked_by": "Owner authorization + post-vesting decision"
+      "blocked_by": "Owner authorization (TRAVELTRUST_PHASE2_SEPOLIA_BROADCAST_OK=1) \u2014 not blocked by vesting commercial params"
     },
     {
       "id": "MAN-SEPOLIA-ONCHAIN",
@@ -149,10 +179,17 @@
       "blocked_by": "On-chain upgrade not executed"
     },
     {
+      "id": "MAN-MAINNET-VESTING",
+      "priority": "P0",
+      "owner": true,
+      "item": "Mainnet vesting deploy + ACTIVE lifecycle (verify against registry FROZEN amounts)",
+      "blocked_by": "Phase \u2462 \u00b7 commercial OWNER_INPUT + legal sign-off"
+    },
+    {
       "id": "MAN-MAINNET-PREP",
       "priority": "P1",
       "owner": true,
-      "item": "Mainnet address registry \u00b7 multisig \u00b7 deployment manifest \u00b7 vesting deploy",
+      "item": "Mainnet address registry \u00b7 multisig \u00b7 deployment manifest",
       "blocked_by": "Phase \u2462 gates"
     }
   ],
@@ -160,7 +197,7 @@
   "re_freeze_recommendation": {
     "action": "MAINTAIN TTG-GOVERNANCE-FREEZE-CERTIFICATE v1.1",
     "note": "No further governance rule edits; next changes via GOV-02 proposal only",
-    "after_owner_vesting": "Bump Certificate patch + re-run this audit before Sepolia V1.1"
+    "after_owner_vesting": "Commercial OWNER_INPUT filled \u2192 re-run dual audit before mainnet vesting ACTIVE"
   },
   "honest_boundary": "\u2460 alignment PASS \u2260 \u2461 Sepolia on-chain V1.1 \u2260 \u2462 Production GO"
 }

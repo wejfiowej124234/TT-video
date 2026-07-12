@@ -32,9 +32,11 @@ describe("governanceParamsTokenomicsModel", () => {
     expect(GOVERNANCE_FREEZE_V1.GOV_03.max_active_seats_per_controlling_entity).toBe(1);
   });
 
-  it("public rounds fit inside public 20% bucket", () => {
+  it("public rounds fit inside Public Sale 50% bucket (Genesis V2)", () => {
     const total = GOVERNANCE_PUBLIC_SALE_ROUNDS.reduce((s, r) => s + r.ttgUnits, 0);
     expect(total).toBe(GOVERNANCE_PUBLIC_SALE_TOTAL.ttgUnits);
-    expect(GOVERNANCE_PUBLIC_SALE_TOTAL.ttgUnits).toBe(2_000_000);
+    expect(GOVERNANCE_PUBLIC_SALE_TOTAL.ttgUnits).toBe(5_000_000);
+    expect(GOVERNANCE_PUBLIC_SALE_TOTAL.ofSupplyPct).toBe(50);
+    expect(GOVERNANCE_TTG_SUPPLY_ROWS).toHaveLength(4);
   });
 });

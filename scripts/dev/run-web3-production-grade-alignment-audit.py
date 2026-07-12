@@ -183,9 +183,9 @@ def _registry_checks() -> list[tuple[str, bool, str, str]]:
     out.append(
         (
             "REG-primary-market-rounds",
-            pm.get("distribution_model") == "three_round_primary_market" and rsum == 2_000_000,
+            pm.get("distribution_model") == "three_round_primary_market" and rsum == 5_000_000,
             "error",
-            f"pm_model={pm.get('distribution_model')} sum={rsum}",
+            f"pm_model={pm.get('distribution_model')} sum={rsum} (Genesis V2 Public Sale)",
         )
     )
     out.append(
@@ -197,13 +197,16 @@ def _registry_checks() -> list[tuple[str, bool, str, str]]:
         )
     )
     paths = vest.get("allocation_bucket_paths") or {}
+    bps = (vest.get("supply_ssot") or {}).get("buckets_bps") or {}
     out.append(
         (
-            "REG-bucket-paths-country-treasury",
-            bool((paths.get("country_pool_shelf") or {}).get("release_paths"))
-            and bool((paths.get("treasury_dao") or {}).get("release_paths")),
+            "REG-bucket-paths-dao-treasury",
+            bool((paths.get("treasury_dao") or {}).get("release_paths"))
+            and "country_pool_shelf" not in paths
+            and int(bps.get("treasury_dao") or 0) == 3000
+            and int(bps.get("public_sale") or 0) == 5000,
             "pass",
-            "country_pool_shelf + treasury_dao release_paths",
+            "Genesis V2: treasury_dao paths · no country_pool_shelf · 30/50 bps",
         )
     )
     sep = (vest.get("gate_separation") or {}).get("sepolia_governor_v1_1") or {}

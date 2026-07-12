@@ -69,20 +69,13 @@ def _vesting_owner_gaps() -> list[str]:
         return ["pyyaml missing"]
     reg = yaml.safe_load(_read(ROOT / "registry/ttg-vesting-registry.v1.yaml")) or {}
     tracks = reg.get("vesting_tracks") or {}
-    planned = reg.get("governance_planned_release") or {}
     pm = reg.get("primary_market") or {}
     gaps: list[str] = []
     commercial = ("cliff_seconds", "duration_seconds", "start_timestamp", "beneficiary")
-    for track_name in ("team", "advisors"):
-        track = tracks.get(track_name) or {}
-        for field in commercial:
-            if track.get(field) == "OWNER_INPUT":
-                gaps.append(f"{track_name}.{field}")
-    eco = planned.get("ecosystem") or {}
-    if eco.get("beneficiary") == "OWNER_INPUT":
-        gaps.append("ecosystem.beneficiary")
-    if eco.get("schedule_template") == "OWNER_INPUT":
-        gaps.append("ecosystem.schedule_template")
+    team = tracks.get("team") or {}
+    for field in commercial:
+        if team.get(field) == "OWNER_INPUT":
+            gaps.append(f"team.{field}")
     for rid in ("public_round_1_early", "public_round_2", "public_round_3"):
         r = (pm.get("rounds") or {}).get(rid) or {}
         if r.get("optional_lockup_seconds") == "OWNER_INPUT":
@@ -95,12 +88,14 @@ def _vesting_supply_checks() -> list[tuple[str, bool, str]]:
         return [("VESTING-supply", False, "pyyaml missing")]
     reg = yaml.safe_load(_read(ROOT / "registry/ttg-vesting-registry.v1.yaml")) or {}
     tracks = reg.get("vesting_tracks") or {}
-    planned = reg.get("governance_planned_release") or {}
+    buckets = (reg.get("supply_ssot") or {}).get("buckets_bps") or {}
     pm = reg.get("primary_market") or {}
     paths = reg.get("allocation_bucket_paths") or {}
+    cia = reg.get("community_incentive_allocation") or {}
     out: list[tuple[str, bool, str]] = []
 
     out.append(("VESTING-no-investor-pool", "investor" not in tracks, "no investor in vesting_tracks"))
+    out.append(("VESTING-no-advisors-track", "advisors" not in tracks, "Genesis V2 removed advisors"))
     out.append(
         (
             "VESTING-team-1_5M-frozen",
@@ -110,53 +105,49 @@ def _vesting_supply_checks() -> list[tuple[str, bool, str]]:
     )
     out.append(
         (
-            "VESTING-advisors-0_5M-frozen",
-            int((tracks.get("advisors") or {}).get("amount_tokens") or 0) == 500_000,
-            "advisors frozen",
+            "VESTING-genesis-v2-bps",
+            buckets.get("team") == 1500
+            and buckets.get("community_incentive") == 500
+            and buckets.get("treasury_dao") == 3000
+            and buckets.get("public_sale") == 5000
+            and sum(int(v) for v in buckets.values()) == 10000,
+            f"buckets={buckets}",
         )
     )
-    eco = planned.get("ecosystem") or {}
     out.append(
         (
-            "VESTING-ecosystem-governance-release",
-            eco.get("track_type") == "governance_planned_release",
-            f"type={eco.get('track_type')}",
+            "VESTING-community-incentive-allocation",
+            int(cia.get("amount_tokens") or 0) == 500_000,
+            "community_incentive 0.5M",
         )
     )
     rounds = pm.get("rounds") or {}
     rsum = sum(int((rounds.get(k) or {}).get("amount_tokens") or 0) for k in rounds)
     out.append(
         (
-            "VESTING-primary-market-500k-500k-1m",
-            rsum == 2_000_000
-            and int((rounds.get("public_round_1_early") or {}).get("amount_tokens") or 0) == 500_000
-            and int((rounds.get("public_round_3") or {}).get("amount_tokens") or 0) == 1_000_000,
+            "VESTING-primary-market-5m-registry-split",
+            rsum == 5_000_000
+            and int((rounds.get("public_round_1_early") or {}).get("amount_tokens") or 0) == 800_000
+            and int((rounds.get("public_round_3") or {}).get("amount_tokens") or 0) == 3_000_000,
             f"rounds_sum={rsum}",
         )
     )
     out.append(
         (
-            "VESTING-no-public-global-cliff-track",
-            "public_global" not in tracks and pm.get("distribution_model") == "three_round_primary_market",
-            "public_global via primary_market not vesting_tracks",
+            "VESTING-no-shelf-path",
+            "country_pool_shelf" not in paths,
+            "no country_pool_shelf in Genesis V2",
         )
     )
-    cp = paths.get("country_pool_shelf") or {}
     td = paths.get("treasury_dao") or {}
     out.append(
         (
-            "VESTING-country-shelf-paths",
-            bool(cp.get("custody") and cp.get("release_paths")),
-            "country_pool_shelf custody+release_paths",
-        )
-    )
-    out.append(
-        (
-            "VESTING-treasury-dao-paths",
-            bool(td.get("custody") and td.get("release_paths"))
+            "VESTING-treasury-dao-3m-ttg-only",
+            int(td.get("amount_tokens") or 0) == 3_000_000
             and td.get("asset") == "TTG"
+            and td.get("represents_voting_power") is False
             and "usdc_spend" in (td.get("forbidden") or []),
-            "treasury_dao TTG-only custody+release_paths",
+            "treasury_dao 3M · not voting power · TTG-only",
         )
     )
     sep = (reg.get("gate_separation") or {}).get("sepolia_governor_v1_1") or {}

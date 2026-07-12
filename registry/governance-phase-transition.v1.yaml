@@ -35,16 +35,16 @@ public_governance_threshold:
   active_voting_supply_min_bps: 3500
   active_voting_supply_min_bps_of: TTG_TOTAL_SUPPLY
   public_bucket_votable_min_bps: 7500
-  public_bucket_votable_min_bps_of: public_global_allocation
+  public_bucket_votable_min_bps_of: public_sale_allocation
   notes:
     - active_voting_supply_min_bps 3500 = 35.00% of 10M at default registry values
-    - public_bucket_votable_min_bps 7500 = 75.00% of public_global 20% bucket (2M) at default
+    - public_bucket_votable_min_bps 7500 = 75.00% of Public Sale 50% bucket (5M) at default
     - Illustrative only — revise via GOV-02 + registry bump, not ad-hoc doc edits
 
 community_governance:
   label: Community Governance / Mature DAO
   narrative_ref: docs/spec/governance-token/PUBLIC-GOVERNANCE-PHASE.md
-  entry: progressive_as_country_ecosystem_dao_buckets_release
+  entry: progressive_as_community_incentive_dao_treasury_governance_release
   no_single_hard_gate_in_v1: true
 
 doc_refs:

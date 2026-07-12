@@ -25,10 +25,11 @@
 
 | 文件 | 职责 |
 |------|------|
-| **[TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md)** | **GOV-01～04 经济模型冻结 · Gate-2.4 / Sepolia 读口** |
+| **[TTG-TOKENOMICS-GENESIS-V2.md](TTG-TOKENOMICS-GENESIS-V2.md)** | **创世分配唯一业务真源（四块 15/5/30/50）** |
+| **[TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md)** | **GOV-01～04 经济闸 · Gate-2.4 / Sepolia 读口**（分配表 → Genesis V2） |
 | **[fund-flow-ssot.v1.md](fund-flow-ssot.v1.md)** | 四类资金分轨、Vault 职责、可提/不可提 |
 | **[state-machine.v1.md](state-machine.v1.md)** | Steward / Country / Redemption 状态枚举（`snake_case`） |
-| **[ttg-allocation-permissions-flows-ssot-v1.md](ttg-allocation-permissions-flows-ssot-v1.md)** | **图解 SSOT**：TTG 供应 · 四轨 · 两轨收益 · 申请 · 权限（**改逻辑必改图 · §0**） |
+| **[ttg-allocation-permissions-flows-ssot-v1.md](ttg-allocation-permissions-flows-ssot-v1.md)** | **图解 SSOT**：TTG 供应 · 四轨 · 两轨收益 · 申请 · 权限（**分配表 SUPERSEDED → Genesis V2**） |
 | **[protocol-conformance-matrix-vacancy-ledger-v1.md](protocol-conformance-matrix-vacancy-ledger-v1.md)** | **PCM**：Vacancy Ledger Spec → Module → Test → Audit（**Sprint 1 前必 READ**） |
 | **[traveltrust-web3-protocol-master-matrix-v1.md](traveltrust-web3-protocol-master-matrix-v1.md)** | **Web3 运维总账**：部署 · Registry · 层就绪 · 风险（**W1+ 必 READ**） |
 
@@ -49,6 +50,9 @@
 
 ## §1 代币总量与分配（TTG）
 
+**Allocation SSOT：** [TTG-TOKENOMICS-GENESIS-V2.md](TTG-TOKENOMICS-GENESIS-V2.md)（四块创世分配 · **唯一业务真源**）。  
+**机读镜像：** [protocol-ssot.v1.yaml](protocol-ssot.v1.yaml)#token_allocation_bps · [registry/ttg-vesting-registry.v1.yaml](../../../registry/ttg-vesting-registry.v1.yaml)。
+
 ```yaml
 ttg:
   symbol: TTG
@@ -57,17 +61,18 @@ ttg:
   total_supply: 10000000          # 与 DeployGovernanceStack GOVERNANCE_VOTES_INITIAL_SUPPLY_WEI 默认一致
   total_supply_wei: "10000000000000000000000000"
 
+# Genesis V2 four-block — sum MUST = 10000
 token_allocation_bps:              # 占 total_supply 10000 = 100.00%
-  country_pool_shelf: 2500         # ≤25%；84 §1.3 国家承销桶上限
-  public_global: 2000
-  ecosystem: 1500
-  team: 1500                       # cliff/vest 见 01 对外稿；测试 transfer 见 contracts/README
-  advisors: 500
-  treasury_dao: 2000
+  team: 1500                       # 15% · 1.5M · Vesting（单受益钱包）
+  community_incentive: 500         # 5% · 0.5M · Community Incentive Allocation（Program，非 vesting）
+  treasury_dao: 3000               # 30% · 3M · DAO Treasury（托管位置 ≠ 投票权来源 · 禁 Mint 补仓）
+  public_sale: 5000                # 50% · 5M · Public Sale（Registry 初值轮次 800k/1.2M/3M）
   # sum must equal 10000
+# Removed in Genesis V2 (do not reintroduce without Genesis amendment):
+# country_pool_shelf · advisors · ecosystem · public_global（V2 键为 public_sale）
 ```
 
-**说明：** [02-对内技术规格-草案 §2.5](02-对内技术规格-草案.md) **百分比表镜像本节**；改数 **只改本节**。
+**说明：** 改分配比例 **只改** [TTG-TOKENOMICS-GENESIS-V2](TTG-TOKENOMICS-GENESIS-V2.md) + 本节 YAML + 机读镜像同批；FeeRouter 45/55 等 **非** 供应表（见 §2）。
 
 ---
 

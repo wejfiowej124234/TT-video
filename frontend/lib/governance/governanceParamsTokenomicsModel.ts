@@ -1,4 +1,4 @@
-/** TTG 10M 供应 · 公众三轮 · 文档锚点 · 前端只读 */
+/** TTG 10M Genesis V2 supply · Public Sale rounds · FE read-only SSOT mirror */
 
 export const TTG_TOTAL_SUPPLY = 10_000_000 as const;
 
@@ -6,6 +6,11 @@ export const PROTOCOL_SSOT_DOC_ID = "protocol-ssot.v1" as const;
 export const PROTOCOL_SSOT_DOC_VERSION = "1.0.4" as const;
 export const TTG_ALLOCATION_FLOWS_DOC_ID = "ttg-allocation-permissions-flows-ssot-v1" as const;
 
+/** Allocation business SSOT (supersedes Freeze V1 supply table) */
+export const GOVERNANCE_TOKENOMICS_GENESIS_DOC_ID = "TTG-TOKENOMICS-GENESIS-V2" as const;
+export const GOVERNANCE_TOKENOMICS_GENESIS_DATE = "2026-07-12" as const;
+
+/** @deprecated Use GOVERNANCE_TOKENOMICS_GENESIS_DOC_ID for allocation */
 export const GOVERNANCE_TOKENOMICS_FREEZE_DOC_ID = "TTG-TOKENOMICS-FREEZE-V1" as const;
 export const GOVERNANCE_TOKENOMICS_FREEZE_DATE = "2026-06-16" as const;
 
@@ -36,29 +41,8 @@ export type GovernanceParamsSupplyRow = {
   ttgUnits: number;
 };
 
-/** protocol-ssot §1 · 25/20/15/15/5/20 — 唯一供应分解（占 10M 100%） */
+/** Genesis V2 · 15/5/30/50 — sole supply breakdown (10M = 100%) */
 export const GOVERNANCE_TTG_SUPPLY_ROWS: readonly GovernanceParamsSupplyRow[] = [
-  {
-    id: "country_pool",
-    labelKey: "governance_params_ttg_supply_country_pool",
-    hintKey: "governance_params_ttg_supply_country_pool_hint",
-    sharePct: 25,
-    ttgUnits: 2_500_000,
-  },
-  {
-    id: "public",
-    labelKey: "governance_params_ttg_supply_public",
-    hintKey: "governance_params_ttg_supply_public_hint",
-    sharePct: 20,
-    ttgUnits: 2_000_000,
-  },
-  {
-    id: "ecosystem",
-    labelKey: "governance_params_ttg_supply_ecosystem",
-    hintKey: "governance_params_ttg_supply_ecosystem_hint",
-    sharePct: 15,
-    ttgUnits: 1_500_000,
-  },
   {
     id: "team",
     labelKey: "governance_params_ttg_supply_team",
@@ -67,9 +51,9 @@ export const GOVERNANCE_TTG_SUPPLY_ROWS: readonly GovernanceParamsSupplyRow[] = 
     ttgUnits: 1_500_000,
   },
   {
-    id: "advisors",
-    labelKey: "governance_params_ttg_supply_advisors",
-    hintKey: "governance_params_ttg_supply_advisors_hint",
+    id: "community_incentive",
+    labelKey: "governance_params_ttg_supply_community_incentive",
+    hintKey: "governance_params_ttg_supply_community_incentive_hint",
     sharePct: 5,
     ttgUnits: 500_000,
   },
@@ -77,8 +61,15 @@ export const GOVERNANCE_TTG_SUPPLY_ROWS: readonly GovernanceParamsSupplyRow[] = 
     id: "treasury_dao",
     labelKey: "governance_params_ttg_supply_treasury_dao",
     hintKey: "governance_params_ttg_supply_treasury_dao_hint",
-    sharePct: 20,
-    ttgUnits: 2_000_000,
+    sharePct: 30,
+    ttgUnits: 3_000_000,
+  },
+  {
+    id: "public_sale",
+    labelKey: "governance_params_ttg_supply_public",
+    hintKey: "governance_params_ttg_supply_public_hint",
+    sharePct: 50,
+    ttgUnits: 5_000_000,
   },
 ] as const;
 
@@ -89,27 +80,11 @@ export type GovernanceParamsGlobalUsageRow = {
   sharePct: number;
 };
 
-/** HQ TTG beyond ten countries · 15/5/80 — product disclosure only */
-export const GOVERNANCE_TTG_GLOBAL_USAGE_ROWS: readonly GovernanceParamsGlobalUsageRow[] = [
-  {
-    id: "operations",
-    labelKey: "governance_params_ttg_global_usage_operations",
-    hintKey: "governance_params_ttg_global_usage_operations_hint",
-    sharePct: 15,
-  },
-  {
-    id: "airdrop",
-    labelKey: "governance_params_ttg_global_usage_airdrop",
-    hintKey: "governance_params_ttg_global_usage_airdrop_hint",
-    sharePct: 5,
-  },
-  {
-    id: "reserve",
-    labelKey: "governance_params_ttg_global_usage_reserve",
-    hintKey: "governance_params_ttg_global_usage_reserve_hint",
-    sharePct: 80,
-  },
-] as const;
+/**
+ * @deprecated Removed HQ 15/5/80 disclosure — empty for API stability.
+ * Do not reintroduce as a second TTG supply table.
+ */
+export const GOVERNANCE_TTG_GLOBAL_USAGE_ROWS: readonly GovernanceParamsGlobalUsageRow[] = [] as const;
 
 export type GovernanceParamsPublicRoundRow = {
   id: string;
@@ -119,34 +94,34 @@ export type GovernanceParamsPublicRoundRow = {
   ofPublicPct: number;
 };
 
-/** 公众 20% 内部分三轮 · 非 Web3 部署 Phase 1/2/3 */
+/** Public Sale 50% · Registry initial split (mutable via governance · sum must stay 5M) */
 export const GOVERNANCE_PUBLIC_SALE_ROUNDS: readonly GovernanceParamsPublicRoundRow[] = [
   {
     id: "round_1_early",
     labelKey: "governance_params_treasury_policy_round_round_1_early",
-    ttgUnits: 500_000,
-    ofSupplyPct: 5,
-    ofPublicPct: 25,
+    ttgUnits: 800_000,
+    ofSupplyPct: 8,
+    ofPublicPct: 16,
   },
   {
     id: "round_2",
     labelKey: "governance_params_treasury_policy_round_round_2",
-    ttgUnits: 500_000,
-    ofSupplyPct: 5,
-    ofPublicPct: 25,
+    ttgUnits: 1_200_000,
+    ofSupplyPct: 12,
+    ofPublicPct: 24,
   },
   {
     id: "round_3",
     labelKey: "governance_params_treasury_policy_round_round_3",
-    ttgUnits: 1_000_000,
-    ofSupplyPct: 10,
-    ofPublicPct: 50,
+    ttgUnits: 3_000_000,
+    ofSupplyPct: 30,
+    ofPublicPct: 60,
   },
 ] as const;
 
 export const GOVERNANCE_PUBLIC_SALE_TOTAL = {
-  ttgUnits: 2_000_000,
-  ofSupplyPct: 20,
+  ttgUnits: 5_000_000,
+  ofSupplyPct: 50,
   ofPublicPct: 100,
 } as const;
 
@@ -158,7 +133,7 @@ export type GovernanceParamsPhaseContrastRow = {
   isNotKey: string;
 };
 
-/** Web3 产品部署阶段 ≠ 公众认购 Round 1/2/3 */
+/** Web3 product deploy phases ≠ Public Sale Round 1/2/3 */
 export const GOVERNANCE_PHASE_CONTRAST_ROWS: readonly GovernanceParamsPhaseContrastRow[] = [
   {
     id: "deploy_p1",
@@ -249,6 +224,7 @@ export function governanceFreezeLocaleVars(locale: string): Record<string, strin
     walletTtg: GOVERNANCE_FREEZE_V1.GOV_04.public_sale_per_wallet_cap_ttg.toLocaleString(locale),
     minUsdc: GOVERNANCE_FREEZE_V1.GOV_04.public_sale_min_purchase_usdc,
     supply: TTG_TOTAL_SUPPLY.toLocaleString(locale),
+    doc: GOVERNANCE_TOKENOMICS_GENESIS_DOC_ID,
   };
 }
 

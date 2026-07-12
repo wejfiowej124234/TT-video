@@ -18,7 +18,7 @@
 | **看总图（本页）** | §1 ASCII · §2 Mermaid |
 | **Genesis 为何能启动** | [GENESIS-GOVERNANCE-PHASE.md](GENESIS-GOVERNANCE-PHASE.md) |
 | **Public 进入后发生什么** | [PUBLIC-GOVERNANCE-PHASE.md](PUBLIC-GOVERNANCE-PHASE.md) |
-| **GOV-01～04 数值** | [TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md) |
+| **GOV-01～04 数值** | [TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md)（分配 → [Genesis V2](TTG-TOKENOMICS-GENESIS-V2.md)） |
 | **Genesis 退出阈值** | [registry/governance-phase-transition.v1.yaml](../../../registry/governance-phase-transition.v1.yaml) |
 | **框架已冻结？** | [TTG-GOVERNANCE-FREEZE-CERTIFICATE.md](TTG-GOVERNANCE-FREEZE-CERTIFICATE.md) |
 
@@ -30,13 +30,15 @@
                         TTG · 10,000,000
                               │
                               ▼
-                        Allocation（六桶 · FROZEN）
+                Allocation（Genesis V2 四块 · FROZEN）
                               │
         ┌─────────────────────┼─────────────────────┐
         │                     │                     │
-   Team 15%            Public Sale 20%      DAO Treasury 20%
-   (+ Advisors 5%)      (R1/R2/R3)           (+ Country 25%
-        │                     │              Ecosystem 15%)
+   Team 15%          Community Incentive 5%   DAO Treasury 30%
+   (1.5M Vesting)    (0.5M Program)           (3M · ≠ vote source)
+        │                     │                     │
+        │              Public Sale 50% (5M)
+        │              R1 800K / R2 1.2M / R3 3M
         │                     │                     │
         ▼                     ▼                     ▼
    Vesting · Safe         Primary Market        Timelock · Safe
@@ -50,6 +52,7 @@
                               ▼
                    Genesis Governance Phase
               team 启动 · 披露 · Seat 一国一控
+              Steward：自持 TTG 质押（无 Country Shelf）
                               │
                               ▼
               ┌───────────────────────────────┐
@@ -64,7 +67,7 @@
                               │
                               ▼
                   Community Governance
-           国家承销 · 生态 · DAO 按 SSOT 释放
+           Community Incentive Program · DAO 按 SSOT 拨付
                               │
                               ▼
                         Mature DAO
@@ -78,10 +81,11 @@
 ```mermaid
 flowchart TB
   TTG["TTG · 10M total supply"]
-  ALLOC["Allocation · 25/20/15/15/5/20"]
-  TEAM["Team + Advisors<br/>Vesting · Safe"]
-  PUB["Public Sale R1/R2/R3<br/>GOV-04"]
-  TREAS["Country · Ecosystem · DAO Treasury<br/>Timelock · no self-vote"]
+  ALLOC["Allocation · Genesis V2 15/5/30/50"]
+  TEAM["Team 15%<br/>Vesting · Safe"]
+  CIP["Community Incentive 5%<br/>Program"]
+  PUB["Public Sale 50%<br/>R1/R2/R3 · GOV-04"]
+  TREAS["DAO Treasury 30%<br/>Timelock · no self-vote"]
   PROC["Proposal → Vote → Quorum 4%<br/>Approval 50% → Timelock 48h → Execute"]
   GEN["Genesis Governance"]
   GATE["G-END-01 AND G-END-02<br/>Registry thresholds"]
@@ -91,9 +95,11 @@ flowchart TB
 
   TTG --> ALLOC
   ALLOC --> TEAM
+  ALLOC --> CIP
   ALLOC --> PUB
   ALLOC --> TREAS
   TEAM --> PROC
+  CIP --> PROC
   PUB --> PROC
   TREAS --> PROC
   PROC --> GEN
@@ -105,18 +111,19 @@ flowchart TB
 
 ---
 
-## §3 六桶一览（读口 · 真源 protocol-ssot）
+## §3 四块一览（读口 · 真源 Genesis V2）
 
-| 桶 | 占比 | 治理生命周期中的角色 |
+| 块 | 占比 | 治理生命周期中的角色 |
 |----|------|----------------------|
-| 国家承销 | 25% | Seat 质押 · Community 阶段释放 |
-| 公众发行 | 20% | R1 → R2 → R3 · Public 阶段社区投票权来源 |
-| 生态激励 | 15% | Community 渐进释放 |
-| 初创团队 | 15% | Genesis 启动 · Vesting（**OWNER_INPUT**） |
-| 顾问 | 5% | 同 team vesting 路径 |
-| DAO Treasury | 20% | Timelock · **Proposal 动用 · 默认不 Vote** |
+| 初创团队 Team | 15% | Genesis 启动 · Vesting（**OWNER_INPUT**） |
+| Community Incentive Allocation | 5% | Program 发放 · **非** standard vesting |
+| DAO Treasury | 30% | Timelock · **Proposal 动用 · 默认不 Vote** · **≠** 投票权来源 · 禁 Mint 补仓 |
+| Public Sale | 50% | R1 → R2 → R3（Registry 初值 800K/1.2M/3M）· Public 阶段社区投票权来源 |
 
----
+**已取消：** advisors 创世桶 · `country_pool_shelf` · 独立 ecosystem 创世桶。  
+**Steward：** 自持 TTG 质押达门槛（无 Country Shelf）。
+
+**数值真源：** [TTG-TOKENOMICS-GENESIS-V2](./TTG-TOKENOMICS-GENESIS-V2.md) · [protocol-ssot §1](protocol-ssot.v1.md)
 
 ## §4 三阶段治理（一句话各）
 
@@ -124,7 +131,7 @@ flowchart TB
 |------|--------|
 | **Genesis** | Governor 已部署 · 有效 snapshot 内 team/early public 占多数 · **允许** 启动第一批提案（须 GOV-02 + 披露） |
 | **Public** | **G-END-01 ∧ G-END-02** 后 · 公募闭合且投票供应达 Registry 阈 · 社区 **实质** 参与 |
-| **Community / Mature DAO** | 国家/生态/DAO 桶按 SSOT 释放 · team 占 **Active Voting Supply** 持续下降 · 占 **全供应** 长期 ≈15% |
+| **Community / Mature DAO** | Community Incentive Program / DAO 桶按 SSOT 拨付 · team 占 **Active Voting Supply** 持续下降 · 占 **全供应** 长期 ≈15% |
 
 **Seat（全阶段）：** GOV-03 V1.1 — **一国一控** · `cap_disabled`（无单地址权重上限 · ≠ 无投票权）。
 

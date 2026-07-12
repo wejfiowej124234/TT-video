@@ -119,7 +119,7 @@ def _fund_flow_inventory() -> list[dict]:
             "id": "FF-PM",
             "name": "Primary Market purchase",
             "asset": "TTG + USDC",
-            "ttg_leg": f"public_global bucket → buyer ({pm.get('rounds_frozen')})",
+            "ttg_leg": f"public_sale bucket → buyer ({pm.get('rounds_registry_initial')})",
             "usdc_leg": f"TtgPrimaryMarketV1.{pm.get('usdc_field')} → GovernanceTreasuryP4Cap",
             "isolated_from": "Escrow order USDC",
         }

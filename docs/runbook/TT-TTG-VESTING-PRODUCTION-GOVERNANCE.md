@@ -1,36 +1,40 @@
 # TTG Vesting & Public Distribution — Production Governance (Phase③ · Step 7)
 
 **Status:** Allocation semantics **must be defined** before Production GO if TTG is publicly marketed.  
-**Supply amounts:** **FROZEN** per [protocol-ssot §1](../../docs/spec/governance-token/protocol-ssot.v1.md).  
+**Supply amounts:** **FROZEN** per [TTG-TOKENOMICS-GENESIS-V2](../../docs/spec/governance-token/TTG-TOKENOMICS-GENESIS-V2.md) · [protocol-ssot §1](../../docs/spec/governance-token/protocol-ssot.v1.md).  
 **Commercial schedule:** `OWNER_INPUT` — cliff / duration / start / beneficiary / optional round lockup.
 
-**SSOT:** [registry/ttg-vesting-registry.v1.yaml](../../registry/ttg-vesting-registry.v1.yaml) (v3)  
+**SSOT:** [registry/ttg-vesting-registry.v1.yaml](../../registry/ttg-vesting-registry.v1.yaml)  
 **Gate:** `bash scripts/gates/check-ttg-vesting-registry-gate.sh`
 
 ---
 
-## Distribution semantics (v3)
+## Distribution semantics (Genesis V2)
 
 | Model | SSOT bucket | Amount (FROZEN) | Mechanism |
 |-------|-------------|-----------------|-----------|
-| **Standard vesting** | `team` 15% | **1,500,000 TTG** | cliff · duration · Timelock custody |
-| **Standard vesting** | `advisors` 5% | **500,000 TTG** | cliff · duration · Timelock custody |
-| **Governance planned release** | `ecosystem` 15% | **1,500,000 TTG** | GOV-02 Proposal → Vote → Timelock → approved schedule |
-| **Primary Market** | `public_global` 20% | **2,000,000 TTG** | R1 500K + R2 500K + R3 1M · `TtgPrimaryMarketV1` · GOV-04 |
-| **Bucket path** | `country_pool_shelf` 25% | **2,500,000 TTG** | Seat stake lock · exit unlock · vacancy rules |
-| **Bucket path** | `treasury_dao` 20% | **2,000,000 TTG** | Proposal → Timelock → **TTG transfer only** (≠ USDC P1→P4) |
+| **Standard vesting** | `team` 15% | **1,500,000 TTG** | cliff · duration · Timelock custody · single beneficiary wallet |
+| **Program (not vesting)** | `community_incentive` 5% | **500,000 TTG** | Community Incentive Allocation → Community Incentive Program · Policy |
+| **Bucket path** | `treasury_dao` 30% | **3,000,000 TTG** | Proposal → Timelock → **TTG transfer only**（≠ USDC P1→P4 · ≠ voting power source · no Mint replenish） |
+| **Primary Market** | `public_sale` 50% | **5,000,000 TTG** | R1 800K + R2 1.2M + R3 3M（Registry 初值）· `TtgPrimaryMarketV1` · GOV-04 |
 
-**Forbidden:** independent `investor` pool · `public_global` as single-beneficiary cliff vesting.
+**Cancelled (V1):** independent `advisors` genesis bucket · `country_pool_shelf` · standalone `ecosystem` genesis bucket.
+
+**Forbidden:** independent `investor` pool · `public_sale` as single-beneficiary cliff vesting · Country Shelf as genesis supply.
+
+**Steward:** no Country Shelf; stake **self-held** TTG（Same Protocol Rights · source not recorded）.
 
 ---
 
-## Primary Market (public_global)
+## Primary Market (public_sale)
 
-| Round | TTG | Governance open | Optional lockup |
-|-------|-----|-----------------|-----------------|
-| R1 Early | 500,000 | No (Phase 1 default) | `OWNER_INPUT` |
-| R2 | 500,000 | Yes | `OWNER_INPUT` |
-| R3 | 1,000,000 | Yes | `OWNER_INPUT` |
+| Round | TTG (Registry initial) | Governance open | Optional lockup |
+|-------|------------------------|-----------------|-----------------|
+| R1 Early | 800,000 | No (Phase 1 default) | `OWNER_INPUT` |
+| R2 | 1,200,000 | Yes | `OWNER_INPUT` |
+| R3 | 3,000,000 | Yes | `OWNER_INPUT` |
+
+**Sum must remain 5,000,000.** Per-round split revisable via governance + Registry（Genesis does not freeze per-round amounts）.
 
 **GOV-04:** 25,000 TTG/wallet · 100 USDC min · **USDC → USDC Global Treasury** (`GovernanceTreasuryP4Cap` · see [asset-denomination-treasury-separation.v1.yaml](../../registry/asset-denomination-treasury-separation.v1.yaml)).
 

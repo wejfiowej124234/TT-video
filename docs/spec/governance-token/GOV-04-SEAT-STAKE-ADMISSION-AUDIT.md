@@ -1,8 +1,8 @@
 # GOV-04 · Seat 最低质押 · 准入冲突审计
 
 **Audit ID:** `GOV-04-SEAT-STAKE-ADMISSION`  
-**SSOT:** [TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md) · [protocol-ssot.v1.yaml](protocol-ssot.v1.yaml)  
-**Date:** 2026-06-16  
+**SSOT:** [TTG-TOKENOMICS-GENESIS-V2.md](TTG-TOKENOMICS-GENESIS-V2.md) · [protocol-ssot.v1.yaml](protocol-ssot.v1.yaml)  
+**Date:** 2026-07-12 (Genesis V2 realignment)  
 **Phase:** ② Sepolia · **HAT-R1 暂停中**
 
 ---
@@ -28,12 +28,12 @@
 **结论：`PRIMARY_MARKET_ALONE_INSUFFICIENT`（结构性张力 · 非实现 bug）**
 
 - **GOV-04** 约束的是 **Primary Market 公众三轮 USDC→TTG** 的单钱包累计认购上限。
-- **Seat 最低质押** 约束的是 **主理人 Seat 路径** 的链上 `stake()` 门槛。
+- **Seat 最低质押** 约束的是 **主理人 Seat 路径** 的链上 `stake()` 门槛（**自持 TTG** · Same Protocol Rights）。
 - 十国 **最低 stake（150k～450k TTG）均 > GOV-04 cap（25k TTG）** → **单钱包无法仅靠 Primary Market 购满 Seat 质押量**。
 
-这与 SSOT 分层一致：
+这与 Genesis V2 SSOT 分层一致：
 
-1. **公众发行 20%**（Primary Market · GOV-04）≠ **Country Pool Shelf / Seat 质押 TTG**（protocol-ssot `country_pool_shelf` 25% · 独立分配）
+1. **Public Sale 50%**（Primary Market · GOV-04）≠ **Region Steward 质押 TTG**（任意合法来源 · **无** `country_pool_shelf` 创世桶）
 2. [ttg-primary-market-and-exit-policy-v1-draft.md](ttg-primary-market-and-exit-policy-v1-draft.md) · UI 文案：**持 TTG ≠ 自动获得 45% 主理人路径**
 
 ---
@@ -44,27 +44,19 @@
 |------|----------|
 | Primary Market 买 TTG → 治理投票 / 持币 | ✅ |
 | Primary Market 单钱包买满 → 直接 Seat `stake(min)` | ❌ **禁止**（数学上不可行） |
-| Shelf / 分配 / OTC / 多源 TTG → Seat stake | ✅ **SSOT 设计意图** |
+| 多源 TTG（PM + 二级市场 + Community Incentive + DAO 治理拨付 + Team 已解锁等）→ Seat stake | ✅ **Genesis V2 设计意图** |
 | 修订 GOV-04 或降低 `steward_stake_bps` 以消除张力 | ☐ **须 GOV-02 提案 · 不在 HAT-R1 范围** |
 
 **HAT-R1 Phase A 测试设计：**
 
-- **Step 1** 仍验 Primary Market（GOV-04 · 100 USDC min）
-- **Step 2** Stake 使用 **钱包既有 TTG**（非 PM 单一来源）或 Owner 文档化的 test top-up · **不得**宣称「PM 单路径可 Seat」
+- 用 **多钱包 / 预置 TTG** 测 Seat stake — **不** 假设 Primary Market 单钱包可满 stake  
+- GOV-04 cap **保持** 25k — 与 Seat min stake **并存** 为产品约束，非 bug
 
 ---
 
-## 4. 机读审计
+## 4. 变更记录
 
-```bash
-bash scripts/dev/audit-stake-pool-jurisdiction-bootstrap.sh
-# report.gov04_vs_seat_stake.admission_class == PRIMARY_MARKET_ALONE_INSUFFICIENT
-```
-
----
-
-## 5. 诚实边界
-
-- 本审计 **不** 修改 GOV-04 / `steward_stake_bps` 冻结值  
-- **≠** ③ 法务对外 GO  
-- Seat 准入若需「PM 可直达 Seat」叙事 → **须 SSOT 修订 + GOV-02 投票 · 另闸**
+| 日期 | 说明 |
+|------|------|
+| 2026-06-16 | 初版 · V1 六桶 + Country Shelf 叙事 |
+| 2026-07-12 | **Genesis V2 对齐** — 取消 Shelf/顾问桶 · Seat = 自持 TTG 质押 · Public Sale 50% |

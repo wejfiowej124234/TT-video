@@ -54,17 +54,19 @@ If you describe **protocol fee routing** in public materials: the **allocatable 
 
 ---
 
-## 4. Supply & allocation (TTG Tokenomics V1 · frozen · 2026-06-16)
+## 4. Supply & allocation (TTG Tokenomics Genesis V2 · frozen · 2026-07-12)
 
-**Numeric SSOT:** [TTG-TOKENOMICS-FREEZE-V1.md](../TTG-TOKENOMICS-FREEZE-V1.md) · [protocol-ssot.v1 §1](../protocol-ssot.v1.md) · **Audit:** [TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.md](../TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.md)
+**Numeric SSOT:** [TTG-TOKENOMICS-GENESIS-V2.md](../TTG-TOKENOMICS-GENESIS-V2.md) · [protocol-ssot.v1 §1](../protocol-ssot.v1.md)
 
 | Item | Frozen value |
 |------|----------------|
 | **Total supply** | **10,000,000 TTG** |
-| **Allocation** | Country shelf 25% · Public 20% · Ecosystem 15% · Team 15% · Advisors 5% · DAO 20% |
-| **Public sale** | Three rounds: 500K / 500K / 1M TTG (**GOV-04** per-wallet ≤ **25,000 TTG**) |
+| **Allocation** | Team 15% · Community Incentive 5% · DAO Treasury 30% · Public Sale 50% |
+| **Public sale** | Three rounds: 800K / 1.2M / 3M TTG (**GOV-04** per-wallet ≤ **25,000 TTG**) |
 | **Treasury P4** | Default stay in reserve · **GOV-01** deploy cap ≤ **30%** of reserve per period · **GOV-02** quorum **4%** |
-| **Seat** | One Seat per country · **GOV-03** ≤ **1** active Seat per controlling entity |
+| **Seat** | One Seat per country · **GOV-03** ≤ **1** active Seat per controlling entity · **self-held TTG stake** · **no Country Shelf genesis bucket** |
+
+> **Historical:** V1 six-bucket (25/20/15/15/5/20) in [TTG-TOKENOMICS-FREEZE-V1.md](../TTG-TOKENOMICS-FREEZE-V1.md) (**ALLOCATION SUPERSEDED**).
 
 **Explicitly excluded:** automatic Global Treasury cash by TTG holdings; Seat stake **USDC redemption**; fixed yield / principal-back promises (see **08-4** · **§6**).
 

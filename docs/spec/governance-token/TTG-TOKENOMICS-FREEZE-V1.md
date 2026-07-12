@@ -1,10 +1,13 @@
 # TTG Tokenomics Freeze V1 — 经济模型唯一真源
 
+> **ALLOCATION SUPERSEDED (2026-07-12):** 创世分配表（六桶 25/20/15/15/5/20）已被 **[TTG-TOKENOMICS-GENESIS-V2](./TTG-TOKENOMICS-GENESIS-V2.md)** 取代（四块 15/5/30/50）。  
+> **仍有效：** GOV-01～GOV-04、废止持币自动现金分红、P1–P4 USDC 叙事、Seat 退出不退 USDC 等非分配条款（除非 V2/后续 DD 明示修改）。
+
 **Document ID:** `TTG-TOKENOMICS-FREEZE-V1`  
 **Version:** v1-20260616  
-**Status:** **FROZEN（① · Owner 拍板 · Gate-2.4 / Sepolia 经济模型 SSOT）**  
+**Status:** **PARTIALLY SUPERSEDED** — allocation → Genesis V2; GOV gates retained  
 **Supersedes:** 一切「按 TTG 持仓自动分 55% 现金」「刚性分红」「HolderDividendVault 自动分红」叙事  
-**Companion：** [protocol-ssot.v1.md](protocol-ssot.v1.md) · [country-revenue-model-v1-draft §2.1](country-revenue-model-v1-draft.md) · [ttg-primary-market-and-exit-policy-v1-draft.md](ttg-primary-market-and-exit-policy-v1-draft.md) · [ttg-allocation-permissions-flows-ssot-v1.md](ttg-allocation-permissions-flows-ssot-v1.md)
+**Companion：** [protocol-ssot.v1.md](protocol-ssot.v1.md) · [TTG-TOKENOMICS-GENESIS-V2](./TTG-TOKENOMICS-GENESIS-V2.md) · [country-revenue-model-v1-draft §2.1](country-revenue-model-v1-draft.md) · [ttg-primary-market-and-exit-policy-v1-draft.md](ttg-primary-market-and-exit-policy-v1-draft.md) · [ttg-allocation-permissions-flows-ssot-v1.md](ttg-allocation-permissions-flows-ssot-v1.md)
 
 **阶段边界：** ① 文档 + `/governance/params` 公示 **≠** ② Sepolia 合约部署 **≠** ③ 法务对外印刷 GO  
 **Gate-2.4 关系：** Settlement `splitNetProfit` 45/55 **不变**（ABI 冻结）；**GOV-01～04** 约束 **GovernanceTreasury / Primary Market / Governor** — **独立 PR · 不混入 Ledger ABI**
@@ -29,12 +32,12 @@
 
 | 层 | 规则 | SSOT |
 |----|------|------|
-| **供应** | 10,000,000 TTG · 25/20/15/15/5/20 | [protocol-ssot §1](protocol-ssot.v1.md) |
+| **供应** | 10,000,000 TTG · **Genesis V2 四块 15/5/30/50**（Team 1.5M · Community Incentive 0.5M · DAO Treasury 3M · Public Sale 5M） | [TTG-TOKENOMICS-GENESIS-V2](./TTG-TOKENOMICS-GENESIS-V2.md) · [protocol-ssot §1](protocol-ssot.v1.md) |
 | **净利润第一步** | 单国 NetProfit **45% StewardPath / 55% Global Treasury** | [country-revenue-model §2](country-revenue-model-v1-draft.md) |
 | **Treasury 顺序** | **P1 运营 → P2 安全 → P3 生态 → P4 Reserve** | §2.1 |
 | **P4 默认** | **留库** · **须治理投票** 方可用 · **GOV-01 cap** | §2 GOV-01 |
 | **Seat 退出** | 180d 冷静 → KPI → 解锁 TTG · **不退 USDC** | [ttg-primary-market §2](ttg-primary-market-and-exit-policy-v1-draft.md) |
-| **公众发行** | 三轮 500K / 500K / 1M · **GOV-04 单钱包 cap** | §2 GOV-04 · [ttg-primary-market §3](ttg-primary-market-and-exit-policy-v1-draft.md) |
+| **公众发行** | 三轮 **800K / 1.2M / 3M**（Registry 初值 · 合计 5M）· **GOV-04 单钱包 cap** | §2 GOV-04 · [ttg-vesting-registry](../../../registry/ttg-vesting-registry.v1.yaml) · [ttg-primary-market §3](ttg-primary-market-and-exit-policy-v1-draft.md) |
 
 ---
 
@@ -64,7 +67,7 @@
 | | `governance_approval_threshold_bps` = **5000**（赞成票 **≥ 50%** 已投权重） |
 | | `governance_timelock_delay_hours` = **48** |
 | **适用范围** | P4 动用 · 公众 Round 2/3 开启 · GOV 参数修订 · Treasury 回购/销毁提案 |
-| **冲突披露** | `team` / `advisors` / 初创团队 multisig **须** 披露利益 · **禁止** 未披露投票 |
+| **冲突披露** | `team` / 初创团队 founding multisig **须** 披露利益 · **禁止** 未披露投票（Genesis V2 **无**独立 advisors 创世桶；披露对象为 team / founding multisig） |
 | **回购执行（②）** | TWAP **≥ 7 天** · 单笔 **≤ 5%** 当日 DEX 深度 |
 
 ---
@@ -80,9 +83,9 @@
 | | `max_voting_power_cap_disabled` = **true**（**显式关闭单地址权重上限**） |
 | | `max_voting_power_per_address_bps` = **0**（**仅当 cap_disabled=false 时生效** · **0 在此语义 = Unlimited，≠ No Vote**） |
 | | `max_aggregate_seat_stake_per_entity_bps` = **400**（**仅 Seat 质押路径** · 同一控制主体质押合计 **≤ 4.00%** 总供应） |
-| **流程保护（非 cap）** | **Team 15%** → Vesting · **Treasury 20%** → Safe → **Proposal → Vote（GOV-02）→ Timelock 48h → Execute** |
+| **流程保护（非 cap）** | **Team 15%** → Vesting · **DAO Treasury 30%**（Genesis V2）→ Safe → **Proposal → Vote（GOV-02）→ Timelock 48h → Execute** |
 | **Phase 1** | 十国各 **1 Seat** · [protocol-ssot §4](protocol-ssot.v1.md) `seat_cap: 1` / 辖区 |
-| **禁止** | 同一控制主体 **>1** Active Seat · 未披露 team/advisors 投票（GOV-02）· 嵌套地址规避 **Seat** 绑定（② KYC / `controllingEntityOf`） |
+| **禁止** | 同一控制主体 **>1** Active Seat · 未披露 team / founding multisig 投票（GOV-02）· 嵌套地址规避 **Seat** 绑定（② KYC / `controllingEntityOf`） |
 | **废止（V1.1）** | 单地址 TTG **持仓 / 投票权重 ≤ 4%** — **不得** 再作为 team 15% 拆分依据 |
 
 ---
@@ -95,7 +98,7 @@
 | **参数键** | `public_sale_per_wallet_cap_ttg` = **25000**（**0.25%** × 10M） |
 | | `public_sale_min_purchase_usdc` = **100** |
 | **适用轮次** | **Round 1 Early / Round 2 / Round 3**（默认同 cap · 修订须 **GOV-02** 提案） |
-| **轮次硬顶** | R1 **500,000** · R2 **500,000** · R3 **1,000,000** TTG（见 [ttg-primary-market §3.1](ttg-primary-market-and-exit-policy-v1-draft.md)） |
+| **轮次硬顶** | R1 **800,000** · R2 **1,200,000** · R3 **3,000,000** TTG（Registry 初值 · 合计 5M · 见 [ttg-vesting-registry](../../../registry/ttg-vesting-registry.v1.yaml) · [Genesis V2](./TTG-TOKENOMICS-GENESIS-V2.md)） |
 | **禁止** | 单钱包通过多地址拆分 **规避** GOV-04（② **须** 合规/KYC 或链上累计 cap） |
 
 ---

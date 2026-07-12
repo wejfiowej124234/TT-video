@@ -30,7 +30,7 @@ ttg_dao_treasury_bucket:
   id: TTG_DAO_TREASURY
   asset: TTG
   ssot_bucket_key: treasury_dao
-  amount_tokens: 2000000
+  amount_tokens: 3000000
   amount_tokens_status: FROZEN
   nature: governance_token_supply_allocation
   custody:
@@ -67,7 +67,7 @@ usdc_global_treasury:
       asset: USDC
       from: TtgPrimaryMarketV1.purchase
       to: usdcTreasury slot (= GovernanceTreasuryP4Cap)
-      ttg_leg: public_global bucket via TTG transfer to buyer
+      ttg_leg: public_sale bucket (Genesis V2 50%) via TTG transfer to buyer
       isolated_from: escrow_order_usdc
     - id: country_net_profit_55
       asset: USDC
@@ -145,11 +145,12 @@ fund_rails:
     split: country_45_global_55_then_global_65_20_15
 
 primary_market:
-  ttg_source_bucket: public_global
+  ttg_source_bucket: public_sale
   usdc_sink: usdc_global_treasury
   contract: TtgPrimaryMarketV1
   usdc_field: usdcTreasury
-  rounds_frozen: [500000, 500000, 1000000]
+  rounds_registry_initial: [800000, 1200000, 3000000]
+  rounds_note: Registry-mutable via governance · sum must stay 5M Public Sale
 
 drift_checks:
   vesting_registry_treasury_dao_must_not_reference:

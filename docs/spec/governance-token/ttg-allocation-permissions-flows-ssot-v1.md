@@ -1,12 +1,17 @@
 # TTG 治理币 · 分配 · 权限 · 申请流程 SSOT（图解真源）
 
+> **ALLOCATION SUPERSEDED (2026-07-12):** §1 供应六桶表 / pie 为 **历史快照**。  
+> **现行创世分配唯一真源：** [TTG-TOKENOMICS-GENESIS-V2.md](./TTG-TOKENOMICS-GENESIS-V2.md) — Team 15% · Community Incentive 5% · DAO Treasury 30% · Public Sale 50%。  
+> **仍有效（非分配表）：** 四轨资金 · 两轨收益 · FeeRouter 45/55 · 申请/权限图 · GOV-01～04 引用。  
+> 改分配比例 **禁止** 只改本文件 — 须改 Genesis V2 + `protocol-ssot` §1 + Registry。
+
 **Document ID:** `ttg-allocation-permissions-flows-ssot-v1`  
 **Version:** v1-20260616  
-**Status:** **ACTIVE（① 图解 SSOT · 与产品冻结 Global Treasury §2.1 同批）**  
+**Status:** **PARTIALLY SUPERSEDED（① 图解 · 分配表 → Genesis V2；其余 ACTIVE）**  
 **Phase:** **① 本地文档 + 公示 UI** · **② 测试网链上对齐 NOT STARTED** · **≠ ③ Production GO**
 
 > **本文件职责：** 用**一张总图 + 分图**描述 TTG 供应、四类资金轨、两轨收益、申请流程与链上/链下权限边界。  
-> **数值真源** 仍归 **[protocol-ssot.v1.md](protocol-ssot.v1.md)**；**资金流** 归 **[fund-flow-ssot.v1.md](fund-flow-ssot.v1.md)**；**状态机** 归 **[state-machine.v1.md](state-machine.v1.md)**；**净利润 45/55 + Treasury 用途** 归 **[country-revenue-model-v1-draft §2.1](country-revenue-model-v1-draft.md)**。  
+> **数值真源（分配）：** [TTG-TOKENOMICS-GENESIS-V2](./TTG-TOKENOMICS-GENESIS-V2.md) · [protocol-ssot.v1.md](protocol-ssot.v1.md) §1；**资金流** 归 **[fund-flow-ssot.v1.md](fund-flow-ssot.v1.md)**；**状态机** 归 **[state-machine.v1.md](state-machine.v1.md)**；**净利润 45/55 + Treasury 用途** 归 **[country-revenue-model-v1-draft §2.1](country-revenue-model-v1-draft.md)**。  
 > **UI 镜像：** [`/governance/params`](../../../frontend/app/governance/params/README.md)
 
 **诚实边界：** ① 图解与 SSOT 文档一致 **≠** ② Sepolia / staging 全链已验收 **≠** ③ 法务对外印刷签字。
@@ -19,14 +24,14 @@
 
 | 变更类型 | 须同步的本文章节 | 须同批对读/改写的其它真源 |
 |----------|------------------|---------------------------|
-| TTG 供应六桶比例 | §1 | `protocol-ssot.v1 §1` · `protocol-ssot.v1.yaml` · `/governance/params` TTG 供应表 |
+| TTG 供应四块比例（Genesis V2） | §1 | `TTG-TOKENOMICS-GENESIS-V2` · `protocol-ssot.v1 §1` · `protocol-ssot.v1.yaml` · `/governance/params` TTG 供应表 |
 | FeeRouter 第一层 45/55 或 Global 65/20/15 | §3A | `protocol-ssot.v1 §2` · `08-4-附录` Mermaid · `governance_doc_reference.rs` |
 | 国家池净利润 45/55 | §3B 上半 | `country-revenue-model §2` · `accounting-spec §6` · Settlement 设计包（**合约另闸**） |
 | Global Treasury 用途顺序 P1～P4 | §3B 下半 | `country-revenue-model §2.1` · **`TTG-TOKENOMICS-FREEZE-V1` GOV-01** · `ttg-primary-market-and-exit-policy-v1` · `/governance/params` Treasury 卡 |
 | GOV-01～04 治理硬闸 | §10 · `/governance/params#gov-params-tokenomics-freeze` | **`TTG-TOKENOMICS-FREEZE-V1`** · `protocol-ssot.v1.yaml` `governance_freeze_v1` |
 | 早期 USDC 兑换 · P4 治理 · 主理人退出 | §10 | `ttg-primary-market-and-exit-policy-v1` · **`TTG-TOKENOMICS-FREEZE-V1`** · `/governance/params` |
 | Unallocated / Q-F01 规则 | §3B · §7 核对表 #4 | `accounting-spec §6.3` · `settlement-architecture-package` |
-| Steward 申请 / Seat 状态 | §4 · §4.1–§4.2 | `state-machine.v1 §1–§2` · `/steward/register` |
+| Steward 申请 / Seat 状态 | §4 · §4.1–§4.2 | `state-machine.v1 §1–§2` · `/steward/register` · Genesis V2（自持 TTG · 无 Country Shelf） |
 | 收购 PD-009 门闸 | §4 | `acquisition-publish-trust-rules` · `94 §1.3` |
 | B 轨 onboarding 准入费 | §4 · §6 | `onboarding-fee-schedule.v1` · `96-18 §3.6` |
 | Timelock / Governor 权限 | §5 | `TT-CHAIN-ARCHITECTURE-AUDITABLE-SPEC §4` · `02 §4.6` |
@@ -42,40 +47,51 @@ bash scripts/gates/check-governance-doc-linkage.sh
 
 ### 0.3 禁止
 
-- **禁止** 在 Pitch Deck / 白皮书 / `/governance/params` 单独改分配或权限叙事而不同步本文件  
-- **禁止** 用本文件 **另造** 与 `protocol-ssot` 冲突的百分比  
+- **禁止** 在 Pitch Deck / 白皮书 / `/governance/params` 单独改分配或权限叙事而不同步本文件与 Genesis V2  
+- **禁止** 用本文件 **另造** 与 Genesis V2 / `protocol-ssot` 冲突的百分比  
 - **禁止** 在 Gate-2.4 合约冻结期内 **breaking change** Settlement / FeeRouter ABI（见 [gate2.4-prerequisites](country-pool-settlement-gate2.4-prerequisites-checklist.md) **G23-04**）
 
 ---
 
 ## §1 TTG 全供应结构（10M）
 
-**数值 SSOT：** [protocol-ssot.v1 §1](protocol-ssot.v1.md)
+**数值 SSOT：** [TTG-TOKENOMICS-GENESIS-V2](./TTG-TOKENOMICS-GENESIS-V2.md) · [protocol-ssot.v1 §1](protocol-ssot.v1.md)
 
 | 类别 | 占供应 | `token_allocation_bps` 键 |
 |------|--------|---------------------------|
-| 国家承销桶 | **25%** | `country_pool_shelf` |
-| 公众发行 | **20%** | `public_global` |
-| 生态激励 | **15%** | `ecosystem` |
-| 初创团队 | **15%** | `team`（cliff/vest · **≠** 商家「橱窗 listing」） |
-| 顾问 | **5%** | `advisors` |
-| DAO Treasury | **20%** | `treasury_dao` |
+| 初创团队 Team | **15%** | `team` |
+| Community Incentive Allocation | **5%** | `community_incentive` |
+| DAO Treasury | **30%** | `treasury_dao` |
+| Public Sale | **50%** | `public_sale` |
 | **合计** | **100%** | sum = 10000 bps |
 
 ```mermaid
-pie title TTG 全供应（10,000,000 TTG）
-  "国家承销桶 25%" : 25
-  "公众发行 20%" : 20
-  "生态激励 15%" : 15
-  "初创团队 15%" : 15
-  "顾问 5%" : 5
-  "DAO Treasury 20%" : 20
+pie title TTG 全供应 Genesis V2（10,000,000 TTG）
+  "Team 15%" : 15
+  "Community Incentive 5%" : 5
+  "DAO Treasury 30%" : 30
+  "Public Sale 50%" : 50
 ```
 
-**读法：** Seat 须锁 TTG 来自国家承销桶等路径；**持 TTG 本身不自动获得国家池 45% 净收益**（见 §2）。**`team` 15% = 初创团队**（协议 co-founder/核心团队 vest），**不是** 自由市场 **商家橱窗**（merchant listing）或 `/publish` 发布能力。
+**已取消：** `advisors` · `country_pool_shelf` · 独立 `ecosystem` 创世桶 · `public_global` 20%（升为 Public Sale 50%）。
+
+**读法：** Steward Seat 须锁 **自持** TTG（Same Protocol Rights · **无 Country Shelf**）；**持 TTG 本身不自动获得国家池 45% 净收益**（见 §2）。**`team` 15% = 初创团队** vesting；**`community_incentive` = Program**（非 standard vesting）。**DAO Treasury ≠ 投票权来源** · **禁止 Mint 补仓**。
+
+<details>
+<summary>ARCHIVED · V1 六桶表（勿作现行政策）</summary>
+
+| 类别 | 占供应 | 旧键 |
+|------|--------|------|
+| 国家承销桶 | 25% | `country_pool_shelf` |
+| 公众发行 | 20% | `public_global` |
+| 生态激励 | 15% | `ecosystem` |
+| 初创团队 | 15% | `team` |
+| 顾问 | 5% | `advisors` |
+| DAO Treasury | 20% | `treasury_dao` |
+
+</details>
 
 ---
-
 ## §2 边界：四条禁止混读
 
 ```mermaid
@@ -308,7 +324,7 @@ flowchart LR
 
 | # | 断言 | ① 文档 | ② 链上 |
 |---|------|--------|--------|
-| 1 | TTG 10M · 25/20/15/15/5/20 | ✅ protocol-ssot | Target |
+| 1 | TTG 10M · Genesis V2 15/5/30/50 | ✅ Genesis V2 · protocol-ssot | Target |
 | 2 | 净利润第一步 45/55 | ✅ revenue-model §2 | Gate-2.3 EXIT · ② broadcast NS |
 | 3 | Treasury 55%：P1→P2→P3→P4 治理+30% cap | ✅ revenue-model §2.1 · primary-market §1 | ② 预算科目待对齐 |
 | 4 | 无 Active Steward：45%→Unallocated | ✅ accounting-spec | Gate-2.3 EXIT |

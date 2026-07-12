@@ -1,5 +1,9 @@
 # TravelTrust Web3 Protocol Master Audit Report v1
 
+> **SUPERSEDED (allocation table · 2026-07-12):** §B.2 six-bucket allocation below is a **historical W5 snapshot**.  
+> **Current allocation SSOT:** [TTG-TOKENOMICS-GENESIS-V2.md](./TTG-TOKENOMICS-GENESIS-V2.md) — four-block **15/5/30/50** (`team` / `community_incentive` / `treasury_dao` / `public_sale`).  
+> Do **not** treat country_pool_shelf / advisors / ecosystem / public_global 20% as live policy.
+
 **Audit ID:** `WEB3_PROTOCOL_MASTER_AUDIT_V1`  
 **Sprint:** **W5** · Web3 Master Audit (read-only · no deploy/upgrade)  
 **Next:** W6 Runtime Activation Plan → W7 Sepolia Upgrade Execution  
@@ -273,16 +277,34 @@ Net profit (DE D-4555-B) is a **separate quarter-close rail** on `CountryPoolNet
 
 ### B.2 Allocation (10,000 bps)
 
+> **ARCHIVED snapshot (W5 · pre–Genesis V2).** Live keys → [TTG-TOKENOMICS-GENESIS-V2](./TTG-TOKENOMICS-GENESIS-V2.md) · `protocol-ssot.v1.yaml` · matrix `allocation_bps`.
+
+**Current (Genesis V2 · operative):**
+
+| Bucket | bps | TTG units | SSOT |
+|--------|-----|-----------|------|
+| team | 1500 | 1,500,000 | ✅ Genesis V2 |
+| community_incentive | 500 | 500,000 | ✅ Genesis V2 |
+| treasury_dao | 3000 | 3,000,000 | ✅ Genesis V2 |
+| public_sale | 5000 | 5,000,000 | ✅ Genesis V2 |
+
+**Public sale (GOV-04):** Registry initial rounds **800k / 1.2M / 3M** TTG · 25k wallet cap · 100 USDC min — amounts in [ttg-vesting-registry.v1.yaml](../../../registry/ttg-vesting-registry.v1.yaml); GOV-04 gates in `TTG-TOKENOMICS-FREEZE-V1.md`.
+
+<details>
+<summary>Historical W5 six-bucket table (do not use as live policy)</summary>
+
 | Bucket | bps | TTG units | SSOT | Freeze doc |
 |--------|-----|-----------|------|------------|
-| country_pool_shelf | 2500 | 2,500,000 | ✅ | ✅ |
-| public_global | 2000 | 2,000,000 | ✅ | ✅ |
-| ecosystem | 1500 | 1,500,000 | ✅ | ✅ |
+| country_pool_shelf | 2500 | 2,500,000 | ARCHIVED | SUPERSEDED |
+| public_global | 2000 | 2,000,000 | ARCHIVED | SUPERSEDED → public_sale 50% |
+| ecosystem | 1500 | 1,500,000 | ARCHIVED | SUPERSEDED |
 | team | 1500 | 1,500,000 | ✅ | ✅ |
-| advisors | 500 | 500,000 | ✅ | ✅ |
-| treasury_dao | 2000 | 2,000,000 | ✅ | ✅ |
+| advisors | 500 | 500,000 | ARCHIVED | SUPERSEDED |
+| treasury_dao | 2000 | 2,000,000 | ARCHIVED | SUPERSEDED → 30% |
 
-**Public sale (GOV-04):** rounds 500k / 500k / 1M TTG · 25k wallet cap · 100 USDC min — frozen in `TTG-TOKENOMICS-FREEZE-V1.md`.
+**Historical Public sale:** rounds 500k / 500k / 1M TTG — superseded by Registry 800k/1.2M/3M.
+
+</details>
 
 ### B.3 Cross-surface consistency
 

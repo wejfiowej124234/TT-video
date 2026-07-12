@@ -1,42 +1,72 @@
-# TTG Vesting & Public Distribution Registry v1 — allocation semantics SSOT (Step 7)
+# TTG Vesting & Distribution Registry v4 — Genesis V2 allocation SSOT
 
 schema: traveltrust.ttg_vesting_registry.v1
-version: 3
+version: 4
 phase3_step: 7
 machine_key: TT_TTG_VESTING_REGISTRY
 effective_utc: "2026-07-12"
 registry_lifecycle_status: READY_TEMPLATE
+genesis_ref: docs/spec/governance-token/TTG-TOKENOMICS-GENESIS-V2.md
 
 production_required: true
 rationale: >
-  Auditable six-bucket allocation semantics before Production GO.
-  Standard vesting (team/advisors) · governance-planned release (ecosystem) ·
-  Primary Market rounds (public_global) · bucket paths (country/treasury).
+  Genesis V2 four-block allocation (Team 15% · Community Incentive Allocation 5% ·
+  DAO Treasury 30% · Public Sale 50%). No advisors bucket · no country_pool_shelf ·
+  no standalone ecosystem genesis bucket. One TTG, Same Protocol Rights.
 
 supply_ssot:
   ref: docs/spec/governance-token/protocol-ssot.v1.yaml#token_allocation_bps
+  genesis_doc: TTG-TOKENOMICS-GENESIS-V2
   total_supply: 10000000
   unit: TTG
+  bucket_sum_bps_required: 10000
+  bucket_sum_gate:
+    validator: registry/validate-ttg-vesting-registry.py
+    rule: sum(buckets_bps) MUST equal 10000 exactly
   buckets_bps:
-    country_pool_shelf: 2500
-    public_global: 2000
-    ecosystem: 1500
     team: 1500
-    advisors: 500
-    treasury_dao: 2000
+    community_incentive: 500
+    treasury_dao: 3000
+    public_sale: 5000
+  forbidden_genesis_keys:
+    - advisors
+    - country_pool_shelf
+    - ecosystem
 
 forbidden_parallel_pools:
   - investor
+  - country_pool_shelf
+  - advisors_as_genesis_bucket
+
+genesis_allocation_policy:
+  status: FROZEN_GENESIS_V2
+  label: Genesis Four-Block Model V2
+  modification_requires_all:
+    - dao_governance_proposal_passed
+    - timelock_execute_after_delay
+    - owner_release_policy_signoff
+  forbidden_without_above:
+    - operational_pressure_ad_hoc_reallocation
+    - convenience_bucket_merge_or_split
+  note: >
+    Four blocks are genesis allocation. Ratio change requires governance + Timelock + Owner.
+    bucket_sum_bps MUST remain 10000.
+
+protocol_rights:
+  principle: one_ttg_same_protocol_rights
+  source_tracking: false
+  steward_eligibility: available_to_stake_quantity_only
+  note: >
+    Protocol does not record TTG source. Steward eligibility checks quantity available
+    to stake only — implementation field names live in contract/protocol specs, not Genesis.
 
 distribution_semantics:
   standard_vesting_tracks:
     - team
-    - advisors
-  governance_planned_release:
-    - ecosystem
-  primary_market_bucket: public_global
+  community_incentive_allocation: community_incentive
+  primary_market_bucket: public_sale
+  dao_treasury_bucket: treasury_dao
   bucket_allocation_paths:
-    - country_pool_shelf
     - treasury_dao
 
 lifecycle:
@@ -50,12 +80,28 @@ lifecycle:
 vesting_contract_options:
   - id: openzeppelin_vesting_wallet
     status: RECOMMENDED_CANDIDATE
-    note: Final Owner selection — team/advisors deploy only
+    note: Final Owner selection — team deploy only (V2 · no advisors track)
   - id: custom_timelock_stream
     status: ALTERNATIVE
     note: Requires security review if selected
 
-# Standard cliff/duration vesting — team 15% · advisors 5%
+vesting_governance_policy:
+  business_review: APPROVED
+  business_review_date: "2026-07-12"
+  genesis_version: V2
+  revocable: false
+  revocable_policy: keep_false_not_recommended_to_change
+  start_event_default: MAINNET_VESTING_DEPLOY_EXECUTE
+  start_event_alternatives_historical_only:
+    - TGE_ANNOUNCEMENT_UTC
+    - GENESIS_MINT_TIMESTAMP
+  beneficiary_policy: organizational_governance_first_not_personal_identity
+  governance_boundary: vesting_controls_release_timing_only_not_voting_power_source
+  governance_chapter_ref: BD-GOV
+  commercial_params_status: OWNER_INPUT_UNTIL_MAINNET_FREEZE
+  team_wallets: 1
+  advisors_track: REMOVED_IN_GENESIS_V2
+
 vesting_tracks:
   team:
     ssot_bucket: team
@@ -63,9 +109,10 @@ vesting_tracks:
     amount_tokens: 1500000
     amount_tokens_status: FROZEN
     track_type: standard_vesting
-    role: Team and core contributor allocation (初创团队 15%)
+    role: Founding team long-term incentive (初创团队 15% · single wallet)
     lifecycle_status: READY_TEMPLATE
     beneficiary: OWNER_INPUT
+    beneficiary_wallet_count: 1
     cliff_seconds: OWNER_INPUT
     duration_seconds: OWNER_INPUT
     start_timestamp: OWNER_INPUT
@@ -73,53 +120,30 @@ vesting_tracks:
     controller: timelock
     custody: timelock
 
-  advisors:
-    ssot_bucket: advisors
-    allocation_bps: 500
-    amount_tokens: 500000
-    amount_tokens_status: FROZEN
-    track_type: standard_vesting
-    role: Advisor / counsel allocation (顾问 5%)
-    lifecycle_status: READY_TEMPLATE
-    beneficiary: OWNER_INPUT
-    cliff_seconds: OWNER_INPUT
-    duration_seconds: OWNER_INPUT
-    start_timestamp: OWNER_INPUT
-    revocable: false
-    controller: timelock
-    custody: timelock
+community_incentive_allocation:
+  ssot_bucket: community_incentive
+  allocation_bps: 500
+  amount_tokens: 500000
+  amount_tokens_status: FROZEN
+  track_type: genesis_allocation
+  program_name: Community Incentive Program
+  policy_ref: docs/spec/governance-token/COMMUNITY-INCENTIVE-POLICY-V1.md
+  policy_status: ACTIVE
+  note: >
+    Genesis allocation is fixed at 5%. DAO may fund additional Program budgets from
+    treasury_dao via governance transfer — does not change genesis allocation bps.
+  dao_top_up_allowed: true
+  dao_top_up_changes_genesis_bps: false
 
-# Governance-approved planned release — not single-beneficiary cliff vesting
-governance_planned_release:
-  ecosystem:
-    ssot_bucket: ecosystem
-    allocation_bps: 1500
-    amount_tokens: 1500000
-    amount_tokens_status: FROZEN
-    track_type: governance_planned_release
-    role: Community / ecosystem incentives (生态 15%)
-    lifecycle_status: READY_TEMPLATE
-    release_model: governance_proposal_approved_schedule
-    authorization_chain:
-      - GOV-02_proposal
-      - quorum_governance_quorum_bps_400
-      - approval_governance_approval_threshold_bps_5000
-      - timelock_governance_timelock_delay_hours_48
-    custody: timelock
-    beneficiary: OWNER_INPUT
-    schedule_template: OWNER_INPUT
-    note: Each tranche requires governance approval — no silent mint/transfer
-
-# public_global 20% — Primary Market three rounds (NOT cliff vesting)
 primary_market:
-  ssot_bucket: public_global
-  allocation_bps: 2000
-  amount_tokens: 2000000
+  ssot_bucket: public_sale
+  allocation_bps: 5000
+  amount_tokens: 5000000
   amount_tokens_status: FROZEN
   distribution_model: three_round_primary_market
   controller_contract: TtgPrimaryMarketV1
   custody: primary_market_proxy_timelock_admin
-  policy_ref: docs/spec/governance-token/ttg-primary-market-and-exit-policy-v1-draft.md#3.1
+  genesis_ref: TTG-TOKENOMICS-GENESIS-V2#public-sale
   gov_rules_ref: GOV-04
   per_wallet_cap_ttg: 25000
   min_purchase_usdc: 100
@@ -128,69 +152,86 @@ primary_market:
   forbidden_models:
     - single_beneficiary_cliff_vesting
     - parallel_investor_pool
+    - country_shelf_allocation
+  round_roles:
+    public_round_1_early:
+      round_number: 1
+      role: Early Community
+      governance_open_required: false
+    public_round_2:
+      round_number: 2
+      role: Governance Open
+      governance_open_required: true
+    public_round_3:
+      round_number: 3
+      role: Governance Open
+      governance_open_required: true
   rounds:
     public_round_1_early:
       round_number: 1
-      amount_tokens: 500000
-      amount_tokens_status: FROZEN
+      amount_tokens: 800000
+      amount_tokens_status: REGISTRY_MUTABLE_VIA_GOVERNANCE
       governance_open_required: false
-      optional_lockup_seconds: OWNER_INPUT
+      optional_lockup_seconds: 0
+      optional_lockup_seconds_status: FROZEN
+      optional_lockup_note: Genesis V2 ① default no PM lockup; per-round lockup change requires governance + registry bump
       usdc_sink_ref: usdc_global_treasury
-      note: USDC leg → GovernanceTreasuryP4Cap · see asset-denomination-treasury-separation.v1.yaml
+      note: Registry initial split · sum MUST remain 5000000 · Genesis does not freeze per-round amounts
     public_round_2:
       round_number: 2
-      amount_tokens: 500000
-      amount_tokens_status: FROZEN
+      amount_tokens: 1200000
+      amount_tokens_status: REGISTRY_MUTABLE_VIA_GOVERNANCE
       governance_open_required: true
-      optional_lockup_seconds: OWNER_INPUT
+      optional_lockup_seconds: 0
+      optional_lockup_seconds_status: FROZEN
       usdc_sink_ref: usdc_global_treasury
-      note: USDC leg → GovernanceTreasuryP4Cap · see asset-denomination-treasury-separation.v1.yaml
     public_round_3:
       round_number: 3
-      amount_tokens: 1000000
-      amount_tokens_status: FROZEN
+      amount_tokens: 3000000
+      amount_tokens_status: REGISTRY_MUTABLE_VIA_GOVERNANCE
       governance_open_required: true
-      optional_lockup_seconds: OWNER_INPUT
+      optional_lockup_seconds: 0
+      optional_lockup_seconds_status: FROZEN
       usdc_sink_ref: usdc_global_treasury
-      note: USDC leg → GovernanceTreasuryP4Cap · see asset-denomination-treasury-separation.v1.yaml
-  rounds_sum_tokens: 2000000
+  rounds_sum_tokens: 5000000
+  rounds_sum_must_equal_bucket: true
+  remaining_unsold_policy: RESERVE_GOVERNANCE_GATED_DISPOSITION
+  remaining_unsold_default_state: reserve_in_public_sale_bucket
+  remaining_unsold_disposition_requires:
+    - governance_proposal
+    - timelock_execute
+  remaining_unsold_allowed_dispositions:
+    - future_round_via_governance
+    - transfer_to_treasury_dao_via_governance
+    - burn
+  remaining_unsold_forbidden:
+    - ad_hoc_ops_transfer_without_governance
+    - automatic_burn
+    - mint_to_replenish_public_sale
+  remaining_unsold_policy_status: FROZEN
+  remaining_unsold_policy_ref: docs/spec/governance-token/WEB3-全系统业务规范-LATEST.md#rl-8-001
   frontend_ssot_ref: frontend/lib/traveltrustTtgPublicRounds.ts
 
-# Non-vesting buckets — custody · authorization · release paths
 allocation_bucket_paths:
-  country_pool_shelf:
-    ssot_bucket: country_pool_shelf
-    allocation_bps: 2500
-    amount_tokens: 2500000
-    amount_tokens_status: FROZEN
-    track_type: bucket_allocation_path
-    custody:
-      primary: RegionStewardStakePool
-      note: Seat underwriting stake locked per jurisdiction
-    authorization:
-      - seat_activation_and_stake_lock
-      - steward_exit_kpi_review
-      - governance_for_shelf_policy_change
-    release_paths:
-      - id: seat_stake_lock
-        flow: country_pool_shelf → Seat activation → RegionStewardStakePool lock
-      - id: steward_exit_unlock
-        flow: exit_application → 180d notice → KPI review → TTG to steward wallet (no USDC redemption)
-      - id: vacancy_sweep
-        flow: vacancy_ledger_v1 rules → governance-controlled sweep to reserve paths
-    vote_policy: votable_when_unlocked_to_steward_wallet
-    refs:
-      - docs/spec/governance-token/state-machine.v1.md
-      - docs/spec/governance-token/ttg-primary-market-and-exit-policy-v1-draft.md#2
-
   treasury_dao:
     ssot_bucket: treasury_dao
-    allocation_bps: 2000
-    amount_tokens: 2000000
+    allocation_bps: 3000
+    amount_tokens: 3000000
     amount_tokens_status: FROZEN
     track_type: bucket_allocation_path
     asset: TTG
     nature: ttg_dao_treasury_supply_bucket
+    platform_operational_funds: false
+    represents_voting_power: false
+    mint_replenish_forbidden: true
+    balance_increase_sources_allowed:
+      - genesis_allocation
+      - governance_approved_transfer
+      - donation
+      - protocol_rule_ingress
+    platform_ops_note: >
+      DAO Treasury is custody of protocol TTG assets — NOT company operating cash and
+      NOT an automatic voting-power source. No Mint replenishment.
     custody:
       primary: GovernanceTimelock
       secondary: treasury_safe_multisig
@@ -200,52 +241,60 @@ allocation_bucket_paths:
     release_paths:
       - id: governance_ttg_grant
         asset: TTG
-        flow: Proposal → Vote → Timelock 48h → TTG transfer (grants · incentives · ecosystem TTG)
+        flow: Proposal → Vote → Timelock 48h → TTG transfer
+      - id: community_incentive_program_top_up
+        asset: TTG
+        flow: Proposal → Vote → Timelock → transfer to Community Incentive Program budget
     forbidden:
       - usdc_spend
       - p4_deploy_cap
       - primary_market_usdc_ingress
       - conflate_with_GovernanceTreasuryP4Cap
+      - treat_custody_balance_as_voting_power
+      - mint_to_replenish
     vote_policy: G-VOTE-03_default_no_vote_treasury_self
     usdc_cash_policy_ref: registry/asset-denomination-treasury-separation.v1.yaml#usdc_global_treasury
     refs:
-      - docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md
+      - docs/spec/governance-token/TTG-TOKENOMICS-GENESIS-V2.md
       - registry/asset-denomination-treasury-separation.v1.yaml
+
+region_steward_policy:
+  country_shelf_genesis_bucket: false
+  source_tracking: false
+  eligibility: governance_parameter_stake_threshold_plus_review_plus_stake_lock
+  exit_unlocks_to_wallet: true
+  exit_burns_stake: false
+  note: >
+    No country_pool_shelf allocation. Steward must hold stakeable TTG, pass review, then stake.
+    Exit unlocks per protocol — does not burn.
 
 gate_separation:
   sepolia_governor_v1_1:
     phase: "② testnet"
     scope: Governor cap_disabled upgrade via Timelock
-    technical_prerequisites:
-      - governance_framework_v1_1_frozen
-      - dual_audit_pass_local
-      - owner_broadcast_authorization
     does_not_require:
       - vesting cliff_seconds / duration_seconds / start_timestamp filled
       - primary_market round lockup params filled
       - mainnet vesting contract deploy
   mainnet_vesting_allocation:
     phase: "③ production"
-    scope: Standard vesting deploy (team/advisors) + Primary Market ops + ecosystem release ACTIVE
+    scope: Team vesting deploy + Public Sale ACTIVE + Community Incentive Program
     prerequisites:
-      - commercial OWNER_INPUT filled for vesting_tracks and optional round lockups
+      - commercial OWNER_INPUT filled for team vesting
       - legal sign-off
       - on-chain verified against registry FROZEN amounts
-    does_not_block:
-      - sepolia_governor_v1_1 technical upgrade
 
 cross_refs:
+  genesis: docs/spec/governance-token/TTG-TOKENOMICS-GENESIS-V2.md
   mainnet_registry: registry/mainnet-address-registry.v2.yaml
-  governance_token: mainnet-address-registry.v2.contracts.governance_token
-  tokenomics: docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md
-  phase_transition: registry/governance-phase-transition.v1.yaml
   asset_treasury_separation: registry/asset-denomination-treasury-separation.v1.yaml
+  community_incentive_policy: docs/spec/governance-token/COMMUNITY-INCENTIVE-POLICY-V1.md
 
 evidence:
   gate: scripts/gates/check-ttg-vesting-registry-gate.sh
 
 verdict:
-  status: TTG_VESTING_AND_DISTRIBUTION_DEFINED
+  status: TTG_GENESIS_V2_DEFINED
   note: >
-    team/advisors=standard vesting · ecosystem=governance release · public_global=Primary Market 500K+500K+1M ·
-    country/treasury=bucket paths. Commercial OWNER_INPUT only. No duplicate evidence in commit.
+    team=1.5M vesting · community_incentive=0.5M allocation · treasury_dao=3M ·
+    public_sale=5M three rounds registry-mutable split · no advisors · no country shelf.

@@ -1,10 +1,10 @@
 /**
- * TTG 公众认购轮次 · 用户向 SSOT（经济细节见 /governance/params · TTG-TOKENOMICS-FREEZE-V1）
+ * TTG Public Sale rounds · SSOT: TTG-TOKENOMICS-GENESIS-V2 + registry/ttg-vesting-registry.v1.yaml
  *
- * lane: ttg_round · audience: participant
- * Status machine: registry/traveltrust-announcement-lane-governance.v1.yaml
+ * Genesis fixes Public Sale = 50% (5M) and round *roles*; per-round amounts are Registry
+ * (initial 800k / 1.2M / 3M · mutable via governance · sum MUST remain 5M).
  *
- * 公众认购 **无锁仓**（GOV-04 仅 cap + min purchase）· 锁仓仅适用于区域主理人 Seat 质押（protocol-ssot L2）。
+ * GOV-04: per-wallet cap + min purchase. Seat stake is separate (no Country Shelf genesis bucket).
  */
 
 import type { TraveltrustTtgRoundGovernanceStatus } from "./traveltrustAnnouncementLaneGovernance";
@@ -31,13 +31,13 @@ export type TraveltrustTtgPublicRound = {
   requiresGovernanceApproval?: boolean;
 };
 
-/** 三轮 50万 + 50万 + 100万 */
+/** Registry initial split · Genesis V2 Public Sale 50% · sum = 5_000_000 */
 export const TRAVELTRUST_TTG_PUBLIC_ROUNDS: TraveltrustTtgPublicRound[] = [
   {
     id: "public_round_1",
     roundNumber: 1,
     status: "upcoming",
-    allocationTtg: 500_000,
+    allocationTtg: 800_000,
     perWalletCapTtg: 25_000,
     distributionKey: "traveltrust_ttg_round_distribution_r1",
     titleKey: "traveltrust_ttg_round_1_title",
@@ -49,7 +49,7 @@ export const TRAVELTRUST_TTG_PUBLIC_ROUNDS: TraveltrustTtgPublicRound[] = [
     id: "public_round_2",
     roundNumber: 2,
     status: "governance_approval_required",
-    allocationTtg: 500_000,
+    allocationTtg: 1_200_000,
     perWalletCapTtg: 25_000,
     distributionKey: "traveltrust_ttg_round_distribution_governance_gated",
     titleKey: "traveltrust_ttg_round_2_title",
@@ -62,7 +62,7 @@ export const TRAVELTRUST_TTG_PUBLIC_ROUNDS: TraveltrustTtgPublicRound[] = [
     id: "public_round_3",
     roundNumber: 3,
     status: "governance_approval_required",
-    allocationTtg: 1_000_000,
+    allocationTtg: 3_000_000,
     perWalletCapTtg: 25_000,
     distributionKey: "traveltrust_ttg_round_distribution_governance_gated",
     titleKey: "traveltrust_ttg_round_3_title",

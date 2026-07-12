@@ -1,6 +1,6 @@
 {
   "audit_id": "WPGA-2026-07-12-v1",
-  "stamp_utc": "20260712T122953Z",
+  "stamp_utc": "20260712T234554Z",
   "phase": "\u2460 local alignment",
   "framework": "Governance Framework V1.1 FROZEN",
   "verdict": "PASS",
@@ -19,7 +19,7 @@
       "detail": {
         "cmd": "C:\\Users\\plant\\AppData\\Local\\Programs\\Python\\Python313\\python.EXE scripts/dev/run-governance-consistency-audit.py",
         "exit_code": 0,
-        "stdout_tail": "GOV_CONSISTENCY_AUDIT: PASS stamp=20260712T122953Z\nTT_GOV_CONSISTENCY_SUMMARY: PASS\n",
+        "stdout_tail": "GOV_CONSISTENCY_AUDIT: PASS stamp=20260712T234554Z\nTT_GOV_CONSISTENCY_SUMMARY: PASS\n",
         "stderr_tail": ""
       }
     },
@@ -64,7 +64,7 @@
       "id": "REG-primary-market-rounds",
       "status": "PASS",
       "risk": "P1",
-      "detail": "pm_model=three_round_primary_market sum=2000000"
+      "detail": "pm_model=three_round_primary_market sum=5000000 (Genesis V2 Public Sale)"
     },
     {
       "id": "REG-vesting-commercial-owner-input",
@@ -73,10 +73,10 @@
       "detail": "commercial cliff/duration/start/beneficiary OWNER_INPUT"
     },
     {
-      "id": "REG-bucket-paths-country-treasury",
+      "id": "REG-bucket-paths-dao-treasury",
       "status": "PASS",
       "risk": "P1",
-      "detail": "country_pool_shelf + treasury_dao release_paths"
+      "detail": "Genesis V2: treasury_dao paths \u00b7 no country_pool_shelf \u00b7 30/50 bps"
     },
     {
       "id": "REG-gate-separation-sepolia-vs-vesting",
@@ -121,7 +121,7 @@
       "detail": {
         "cmd": "D:\\dev\\foundry\\bin\\forge.EXE test --match-contract TtgGovFreezeV1EnforcementTest -vv",
         "exit_code": 0,
-        "stdout_tail": "No files changed, compilation skipped\n\nRan 9 tests for test/TtgGovFreezeV1Enforcement.t.sol:TtgGovFreezeV1EnforcementTest\n[PASS] test_GOV01_earmarked_p1p3_reduces_reserve() (gas: 43251)\n[PASS] test_GOV01_p4DeployCap_enforced_at_30_percent() (gas: 71937)\n[PASS] test_GOV02_governor_quorum_400_bps_and_timelock_48h() (gas: 527758)\n[PASS] test_GOV02_quorum_not_reached_when_under_4_percent() (gas: 468409)\n[PASS] test_GOV03_no_voting_power_cap_when_bps_zero() (gas: 361831)\n[PASS] test_GOV03_seat_concentration_one_active_seat_per_entity() (gas: 498793)\n[PASS] test_GOV04_primary_market_per_wallet_and_round_caps() (gas: 198444)\n[PASS] test_GOV04_round_hard_cap_enforced() (gas: 2695059)\n[PASS] test_freeze_constants_match_ssot_yaml() (gas: 384)\nSuite result: ok. 9 passed; 0 failed; 0 skipped; finished in 2.69ms (5.97ms CPU time)\n\nRan 1 test suite in 7.24ms (2.69ms CPU time): 9 tests passed, 0 failed, 0 skipped (9 total tests)\n",
+        "stdout_tail": "No files changed, compilation skipped\n\nRan 9 tests for test/TtgGovFreezeV1Enforcement.t.sol:TtgGovFreezeV1EnforcementTest\n[PASS] test_GOV01_earmarked_p1p3_reduces_reserve() (gas: 43251)\n[PASS] test_GOV01_p4DeployCap_enforced_at_30_percent() (gas: 71937)\n[PASS] test_GOV02_governor_quorum_400_bps_and_timelock_48h() (gas: 527758)\n[PASS] test_GOV02_quorum_not_reached_when_under_4_percent() (gas: 468409)\n[PASS] test_GOV03_no_voting_power_cap_when_bps_zero() (gas: 361831)\n[PASS] test_GOV03_seat_concentration_one_active_seat_per_entity() (gas: 498793)\n[PASS] test_GOV04_primary_market_per_wallet_and_round_caps() (gas: 198444)\n[PASS] test_GOV04_round_hard_cap_enforced() (gas: 2695059)\n[PASS] test_freeze_constants_match_ssot_yaml() (gas: 384)\nSuite result: ok. 9 passed; 0 failed; 0 skipped; finished in 2.78ms (5.57ms CPU time)\n\nRan 1 test suite in 6.93ms (2.78ms CPU time): 9 tests passed, 0 failed, 0 skipped (9 total tests)\n",
         "stderr_tail": ""
       }
     },
@@ -132,7 +132,7 @@
       "detail": {
         "cmd": "C:\\Program Files\\nodejs\\npx.CMD vitest run lib/governance/governanceParamsTokenomicsModel.test.ts lib/governance/governanceParamsPageL5FullClosure.contract.test.ts",
         "exit_code": 0,
-        "stdout_tail": "\n RUN  v3.2.6 D:/TravelTrust-V1.1/frontend\n\n \u2713 lib/governance/governanceParamsTokenomicsModel.test.ts (4 tests) 3ms\n \u2713 lib/governance/governanceParamsPageL5FullClosure.contract.test.ts (7 tests) 18ms\n\n Test Files  2 passed (2)\n      Tests  11 passed (11)\n   Start at  20:30:03\n   Duration  1.60s (transform 353ms, setup 35ms, collect 429ms, tests 21ms, environment 1.05s, prepare 125ms)\n\n",
+        "stdout_tail": "\n RUN  v3.2.6 D:/TravelTrust-V1.1/frontend\n\n \u2713 lib/governance/governanceParamsTokenomicsModel.test.ts (4 tests) 4ms\n \u2713 lib/governance/governanceParamsPageL5FullClosure.contract.test.ts (7 tests) 21ms\n\n Test Files  2 passed (2)\n      Tests  11 passed (11)\n   Start at  07:46:04\n   Duration  1.73s (transform 389ms, setup 39ms, collect 466ms, tests 25ms, environment 1.16s, prepare 179ms)\n\n",
         "stderr_tail": ""
       }
     },

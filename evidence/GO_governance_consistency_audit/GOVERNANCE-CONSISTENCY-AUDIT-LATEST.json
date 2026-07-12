@@ -1,6 +1,6 @@
 {
   "audit_id": "GOV-CONSISTENCY-AUDIT-01",
-  "stamp_utc": "20260712T122953Z",
+  "stamp_utc": "20260712T234607Z",
   "phase": "\u2460 local SSOT",
   "verdict": "PASS",
   "checks": {
@@ -38,39 +38,39 @@
     },
     "VESTING-schema-defined": {
       "ok": true,
-      "detail": "OWNER_INPUT fields pending: team.cliff_seconds, team.duration_seconds, team.start_timestamp, team.beneficiary, advisors.cliff_seconds\u2026"
+      "detail": "OWNER_INPUT fields pending: team.cliff_seconds, team.duration_seconds, team.start_timestamp, team.beneficiary"
     },
     "VESTING-no-investor-pool": {
       "ok": true,
       "detail": "no investor in vesting_tracks"
     },
+    "VESTING-no-advisors-track": {
+      "ok": true,
+      "detail": "Genesis V2 removed advisors"
+    },
     "VESTING-team-1_5M-frozen": {
       "ok": true,
       "detail": "team=1500000"
     },
-    "VESTING-advisors-0_5M-frozen": {
+    "VESTING-genesis-v2-bps": {
       "ok": true,
-      "detail": "advisors frozen"
+      "detail": "buckets={'team': 1500, 'community_incentive': 500, 'treasury_dao': 3000, 'public_sale': 5000}"
     },
-    "VESTING-ecosystem-governance-release": {
+    "VESTING-community-incentive-allocation": {
       "ok": true,
-      "detail": "type=governance_planned_release"
+      "detail": "community_incentive 0.5M"
     },
-    "VESTING-primary-market-500k-500k-1m": {
+    "VESTING-primary-market-5m-registry-split": {
       "ok": true,
-      "detail": "rounds_sum=2000000"
+      "detail": "rounds_sum=5000000"
     },
-    "VESTING-no-public-global-cliff-track": {
+    "VESTING-no-shelf-path": {
       "ok": true,
-      "detail": "public_global via primary_market not vesting_tracks"
+      "detail": "no country_pool_shelf in Genesis V2"
     },
-    "VESTING-country-shelf-paths": {
+    "VESTING-treasury-dao-3m-ttg-only": {
       "ok": true,
-      "detail": "country_pool_shelf custody+release_paths"
-    },
-    "VESTING-treasury-dao-paths": {
-      "ok": true,
-      "detail": "treasury_dao TTG-only custody+release_paths"
+      "detail": "treasury_dao 3M \u00b7 not voting power \u00b7 TTG-only"
     },
     "VESTING-sepolia-not-blocked-by-commercial": {
       "ok": true,
@@ -98,7 +98,7 @@
     },
     "TREASURY-separation-ssot-validator": {
       "ok": true,
-      "detail": "OK: asset-denomination-treasury-separation v1 ttg_dao=2M-TTG-only usdc_global=GovernanceTreasuryP4Cap rails=R1-R4-isolated pm_usdc_sink=P4Cap"
+      "detail": "OK: asset-denomination-treasury-separation v1 ttg_dao=3M-TTG-only usdc_global=GovernanceTreasuryP4Cap rails=R1-R4-isolated pm_usdc_sink=P4Cap"
     },
     "TREASURY-genesis-usdc-global-vs-ttg-dao": {
       "ok": true,
@@ -119,16 +119,7 @@
       "team.cliff_seconds",
       "team.duration_seconds",
       "team.start_timestamp",
-      "team.beneficiary",
-      "advisors.cliff_seconds",
-      "advisors.duration_seconds",
-      "advisors.start_timestamp",
-      "advisors.beneficiary",
-      "ecosystem.beneficiary",
-      "ecosystem.schedule_template",
-      "primary_market.public_round_1_early.optional_lockup_seconds",
-      "primary_market.public_round_2.optional_lockup_seconds",
-      "primary_market.public_round_3.optional_lockup_seconds"
+      "team.beneficiary"
     ],
     "sepolia_governor_v1_1_upgrade": "deferred until this audit PASS"
   },

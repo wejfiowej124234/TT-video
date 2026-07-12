@@ -1,6 +1,6 @@
 # Asset Denomination & Treasury Separation Audit — Latest
 
-**Verdict:** `PASS` · **Stamp:** `20260712T122952Z` · **Phase:** ① local
+**Verdict:** `WARN` · **Stamp:** `20260712T234607Z` · **Phase:** ① local
 
 SSOT: [asset-denomination-treasury-separation.v1.yaml](../../../registry/asset-denomination-treasury-separation.v1.yaml)
 
@@ -95,7 +95,7 @@ SSOT: [asset-denomination-treasury-separation.v1.yaml](../../../registry/asset-d
 
 ### `FF-PM` — Primary Market purchase
 - **asset:** TTG + USDC
-- **ttg_leg:** public_global bucket → buyer ([500000, 500000, 1000000])
+- **ttg_leg:** public_sale bucket → buyer ([800000, 1200000, 3000000])
 - **usdc_leg:** TtgPrimaryMarketV1.usdcTreasury → GovernanceTreasuryP4Cap
 - **isolated_from:** Escrow order USDC
 
@@ -126,8 +126,8 @@ SSOT: [asset-denomination-treasury-separation.v1.yaml](../../../registry/asset-d
 
 ## Automated checks
 
-- ✅ `SEP-validator` — OK: asset-denomination-treasury-separation v1 ttg_dao=2M-TTG-only usdc_global=GovernanceTreasuryP4Cap rails=R1-R4-isolated pm_usdc_sink=P4Cap
-- ✅ `SEP-treasury-dao-ttg-only` — asset=TTG forbidden=['usdc_spend', 'p4_deploy_cap', 'primary_market_usdc_ingress', 'conflate_with_GovernanceTreasuryP4Cap']
+- ✅ `SEP-validator` — OK: asset-denomination-treasury-separation v1 ttg_dao=3M-TTG-only usdc_global=GovernanceTreasuryP4Cap rails=R1-R4-isolated pm_usdc_sink=P4Cap
+- ✅ `SEP-treasury-dao-ttg-only` — asset=TTG forbidden=['usdc_spend', 'p4_deploy_cap', 'primary_market_usdc_ingress', 'conflate_with_GovernanceTreasuryP4Cap', 'treat_custody_balance_as_voting_power', 'mint_to_replenish']
 - ✅ `SEP-primary-market-usdc-sink` — sink=GovernanceTreasuryP4Cap
 - ✅ `SEP-contract-pm-usdc-to-treasury-slot` — TtgPrimaryMarketV1 → usdcTreasury immutable
 - ✅ `SEP-contract-escrow-holds-usdc-per-order` — Escrow USDC custody per order instance
@@ -136,14 +136,14 @@ SSOT: [asset-denomination-treasury-separation.v1.yaml](../../../registry/asset-d
 - ✅ `SEP-runbook-treasury-dao-ttg-path` — runbook splits TTG dao bucket vs USDC treasury
 - ✅ `SEP-mainnet-treasury-slot-usdc-p4cap` — mainnet.treasury=GovernanceTreasuryP4Cap
 - ✅ `SEP-vesting-cross-ref` — cross_ref=registry/asset-denomination-treasury-separation.v1.yaml
-- ✅ `SEP-frontend-treasury-dao-hint-ttg` — frontend treasury_dao hint describes TTG not USDC P4
+- ❌ `SEP-frontend-treasury-dao-hint-ttg` — frontend treasury_dao hint describes TTG not USDC P4
 - ✅ `SEP-frontend-usdc-treasury-scope-note` — USDC treasury budget alignment deferred to Gate-2.4 — documented
 - ✅ `SEP-no-stale-treasury-dao-p4-drift` — stale: none
-- ✅ `SEP-vesting-registry-validator` — OK: ttg-vesting-registry v3 vesting=team+advisors pm=500k+500k+1m ecosystem=governance_release bucket_paths=country+treasury lifecycle=READY_TEMPLATE
+- ✅ `SEP-vesting-registry-validator` — OK: ttg-vesting-registry v4 GenesisV2 team=1.5M community=0.5M dao=3M public_sale=5M rounds=800k+1.2M+3M no_shelf no_advisors
 
 ## Findings
 
-- None.
+- **SEP-frontend-treasury-dao-hint-ttg** (warning): frontend treasury_dao hint describes TTG not USDC P4
 
 ## Manual checklist (Owner only · not simulated)
 
@@ -159,4 +159,4 @@ SSOT: [asset-denomination-treasury-separation.v1.yaml](../../../registry/asset-d
 - Added `asset-denomination-treasury-separation.v1.yaml` machine SSOT
 - Primary Market USDC sink → `GovernanceTreasuryP4Cap` (not TTG dao bucket)
 
-Machine-readable: `evidence/GO_asset_denomination_treasury_separation_audit/20260712T122952Z/asset-denomination-treasury-separation-audit.json`
+Machine-readable: `evidence/GO_asset_denomination_treasury_separation_audit/20260712T234607Z/asset-denomination-treasury-separation-audit.json`

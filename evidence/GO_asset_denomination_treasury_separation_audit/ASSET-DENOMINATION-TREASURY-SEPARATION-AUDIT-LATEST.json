@@ -1,13 +1,13 @@
 {
   "audit_id": "ASSET-DENOMINATION-TREASURY-SEPARATION-AUDIT-01",
-  "stamp_utc": "20260712T122952Z",
+  "stamp_utc": "20260712T234607Z",
   "phase": "\u2460 local SSOT + contract read",
   "baseline_commits": [
     "9f500335",
     "4f56727e",
     "f575d459"
   ],
-  "verdict": "PASS",
+  "verdict": "WARN",
   "fund_flow_inventory": [
     {
       "id": "FF-01",
@@ -142,7 +142,7 @@
       "id": "FF-PM",
       "name": "Primary Market purchase",
       "asset": "TTG + USDC",
-      "ttg_leg": "public_global bucket \u2192 buyer ([500000, 500000, 1000000])",
+      "ttg_leg": "public_sale bucket \u2192 buyer ([800000, 1200000, 3000000])",
       "usdc_leg": "TtgPrimaryMarketV1.usdcTreasury \u2192 GovernanceTreasuryP4Cap",
       "isolated_from": "Escrow order USDC"
     },
@@ -185,12 +185,12 @@
   "checks": {
     "SEP-validator": {
       "ok": true,
-      "detail": "OK: asset-denomination-treasury-separation v1 ttg_dao=2M-TTG-only usdc_global=GovernanceTreasuryP4Cap rails=R1-R4-isolated pm_usdc_sink=P4Cap",
+      "detail": "OK: asset-denomination-treasury-separation v1 ttg_dao=3M-TTG-only usdc_global=GovernanceTreasuryP4Cap rails=R1-R4-isolated pm_usdc_sink=P4Cap",
       "severity_if_fail": "error"
     },
     "SEP-treasury-dao-ttg-only": {
       "ok": true,
-      "detail": "asset=TTG forbidden=['usdc_spend', 'p4_deploy_cap', 'primary_market_usdc_ingress', 'conflate_with_GovernanceTreasuryP4Cap']",
+      "detail": "asset=TTG forbidden=['usdc_spend', 'p4_deploy_cap', 'primary_market_usdc_ingress', 'conflate_with_GovernanceTreasuryP4Cap', 'treat_custody_balance_as_voting_power', 'mint_to_replenish']",
       "severity_if_fail": "error"
     },
     "SEP-primary-market-usdc-sink": {
@@ -234,7 +234,7 @@
       "severity_if_fail": "error"
     },
     "SEP-frontend-treasury-dao-hint-ttg": {
-      "ok": true,
+      "ok": false,
       "detail": "frontend treasury_dao hint describes TTG not USDC P4",
       "severity_if_fail": "warning"
     },
@@ -250,11 +250,17 @@
     },
     "SEP-vesting-registry-validator": {
       "ok": true,
-      "detail": "OK: ttg-vesting-registry v3 vesting=team+advisors pm=500k+500k+1m ecosystem=governance_release bucket_paths=country+treasury lifecycle=READY_TEMPLATE",
+      "detail": "OK: ttg-vesting-registry v4 GenesisV2 team=1.5M community=0.5M dao=3M public_sale=5M rounds=800k+1.2M+3M no_shelf no_advisors",
       "severity_if_fail": "error"
     }
   },
-  "findings": [],
+  "findings": [
+    {
+      "id": "SEP-frontend-treasury-dao-hint-ttg",
+      "severity": "warning",
+      "detail": "frontend treasury_dao hint describes TTG not USDC P4"
+    }
+  ],
   "manual_checklist_owner_only": [
     "Confirm operational Safe multisig signers for USDC P1/P2 routine budget (treasury-ops-policy)",
     "Define refunds / taxes / supplier / payroll routing in treasury-ops-policy (OWNER_INPUT)",

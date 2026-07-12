@@ -34,12 +34,12 @@
 | **Consistency Audit** | [GOVERNANCE-CONSISTENCY-AUDIT-LATEST.md](GOVERNANCE-CONSISTENCY-AUDIT-LATEST.md) · `20260712T120952Z` | **PASS** | `bash scripts/gates/run-governance-consistency-audit.sh` |
 | **Production-Grade Alignment Audit** | [WEB3-PRODUCTION-GRADE-ALIGNMENT-AUDIT-LATEST.md](WEB3-PRODUCTION-GRADE-ALIGNMENT-AUDIT-LATEST.md) · `20260712T120952Z` | **PASS** | `bash scripts/gates/run-web3-production-grade-alignment-audit.sh` |
 | **Asset / Treasury Separation** | [ASSET-DENOMINATION-TREASURY-SEPARATION-AUDIT-LATEST.md](ASSET-DENOMINATION-TREASURY-SEPARATION-AUDIT-LATEST.md) | **PASS** | `bash scripts/gates/run-asset-denomination-treasury-separation-audit.sh` |
-| **Tokenomics** | [TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md) | **PASS · FROZEN** | 10M · 六桶 · GOV-01～04 |
-| **Registry** | [protocol-ssot.v1.yaml](protocol-ssot.v1.yaml) · [governance-phase-transition.v1.yaml](../../../registry/governance-phase-transition.v1.yaml) | **PASS** | 阈值机读 · 文档不写死 1.5M |
+| **Tokenomics** | [TTG-TOKENOMICS-GENESIS-V2.md](TTG-TOKENOMICS-GENESIS-V2.md) · [TTG-TOKENOMICS-FREEZE-V1.md](TTG-TOKENOMICS-FREEZE-V1.md) | **PASS · FROZEN** | 10M · Genesis V2 四块 15/5/30/50 · GOV-01～04 仍有效 |
+| **Registry** | [protocol-ssot.v1.yaml](protocol-ssot.v1.yaml) · [ttg-vesting-registry.v1.yaml](../../../registry/ttg-vesting-registry.v1.yaml) · [governance-phase-transition.v1.yaml](../../../registry/governance-phase-transition.v1.yaml) | **PASS** | 阈值机读 · 公募轮次初值 Registry |
 | **Genesis** | [GENESIS-GOVERNANCE-PHASE.md](GENESIS-GOVERNANCE-PHASE.md) v1.3 | **PASS · FROZEN** | G-END-01 **AND** G-END-02 |
 | **Public** | [PUBLIC-GOVERNANCE-PHASE.md](PUBLIC-GOVERNANCE-PHASE.md) v1 | **PASS · FROZEN** | Public → Community / Mature DAO |
 | **Lifecycle 总图** | [TTG-GOVERNANCE-LIFECYCLE.md](TTG-GOVERNANCE-LIFECYCLE.md) | **PASS** | 5 分钟读口 |
-| **Owner Pending** | [registry/ttg-vesting-registry.v1.yaml](../../../registry/ttg-vesting-registry.v1.yaml) v3 | **PENDING · OWNER_INPUT** | **Team 1.5M FROZEN** · PM **500K+500K+1M** · ecosystem **治理释放** · commercial **Owner 填** |
+| **Owner Pending** | [registry/ttg-vesting-registry.v1.yaml](../../../registry/ttg-vesting-registry.v1.yaml) | **PENDING · OWNER_INPUT** | **仅商业 vesting 参数**（team cliff/duration/start/beneficiary）· **金额** Team 1.5M / CIP 0.5M / DAO 3M / Public 5M **FROZEN** · PM 初值 **800K+1.2M+3M** |
 | **Sepolia Upgrade** | Governor V1.1 · `cap_disabled` | **DEFERRED** | **Owner broadcast 授权** · **不** 依赖 vesting 商业参数已填 |
 
 ---
@@ -95,7 +95,9 @@ Consistency Audit PASS
 | **Sepolia Governor V1.1** | ② 测试网 | ① Framework V1.1 冻结 · 双审计 PASS · Owner **`TRAVELTRUST_PHASE2_SEPOLIA_BROADCAST_OK=1`** | Team vesting cliff/duration/start/beneficiary |
 | **Mainnet vesting ACTIVE** | ③ 生产 | commercial OWNER_INPUT 已填 · legal sign-off · 链上 vesting = registry | Sepolia 升级可先/后并行 |
 
-**Supply 写死（Registry v3）：** `team` **1.5M** · `advisors` **0.5M** 标准 vesting · `ecosystem` **1.5M** 治理批准释放 · `public_global` **2M** = Primary Market **500K+500K+1M**（非 cliff vesting）· `country_pool_shelf` / `treasury_dao` **2M TTG only** · **USDC P1→P4** = **GovernanceTreasuryP4Cap**（见 [asset-denomination-treasury-separation](../../../registry/asset-denomination-treasury-separation.v1.yaml)）· **禁止** 独立 `investor` 池。
+**Supply 写死（Genesis V2 · Registry）：** `team` **1.5M** 标准 vesting · `community_incentive` **0.5M** Allocation（Program · **非** cliff vesting）· `treasury_dao` **3M TTG only**（托管 ≠ 投票权来源 · 禁 Mint 补仓）· `public_sale` **5M** = Primary Market **800K+1.2M+3M**（Registry 初值 · 非 cliff vesting）· **无** `advisors` / `country_pool_shelf` / 独立 `ecosystem` 创世桶 · **USDC P1→P4** = **GovernanceTreasuryP4Cap**（见 [asset-denomination-treasury-separation](../../../registry/asset-denomination-treasury-separation.v1.yaml)）· **禁止** 独立 `investor` 池。
+
+**PENDING Owner inputs（仅商业参数）：** team `cliff` / `duration` / `start` / `beneficiary` · optional PM round lockup — **不** 重开四块比例。
 
 ---
 
@@ -117,3 +119,4 @@ bash scripts/gates/run-asset-denomination-treasury-separation-audit.sh
 |------|------|------|
 | v1.1-20260712 | 2026-07-12 | 初版 Certificate：Framework V1.1 Freeze · Consistency PASS · Vesting OWNER_INPUT · Sepolia DEFERRED |
 | v1.1-20260712-supply-v3 | 2026-07-12 | Registry v3：PM 三轮轨 · ecosystem 治理释放 · country/treasury 路径 |
+| v1.1-20260712-genesis-v2 | 2026-07-12 | Allocation → Genesis V2 四块 · Registry 公募初值 800K/1.2M/3M · Owner Pending 仅商业 vesting 参数 |

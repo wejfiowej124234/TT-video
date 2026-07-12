@@ -7,6 +7,8 @@ phase: target
 governance_freeze_v1:
   document_id: TTG-TOKENOMICS-FREEZE-V1
   frozen_at: "2026-06-16"
+  allocation_superseded_by: TTG-TOKENOMICS-GENESIS-V2
+  allocation_superseded_at: "2026-07-12"
   GOV-01:
     treasury_p4_deploy_cap_bps: 3000
   GOV-02:
@@ -24,18 +26,25 @@ governance_freeze_v1:
     public_sale_per_wallet_cap_ttg: 25000
     public_sale_min_purchase_usdc: 100
 
+genesis_v2:
+  document_id: TTG-TOKENOMICS-GENESIS-V2
+  frozen_at: "2026-07-12"
+  status: FROZEN_BUSINESS_SSOT
+  allocation_bps_ref: token_allocation_bps
+
 ttg:
   symbol: TTG
   decimals: 18
   total_supply: 10000000
 
+# Genesis V2 four-block (TTG-TOKENOMICS-GENESIS-V2) — sum MUST = 10000
 token_allocation_bps:
-  country_pool_shelf: 2500
-  public_global: 2000
-  ecosystem: 1500
   team: 1500
-  advisors: 500
-  treasury_dao: 2000
+  community_incentive: 500
+  treasury_dao: 3000
+  public_sale: 5000
+# Removed in V2 (do not reintroduce without Genesis amendment):
+# country_pool_shelf · advisors · ecosystem · public_global (renamed public_sale)
 
 fee_router_layer1_bps:
   country_bucket: 4500
