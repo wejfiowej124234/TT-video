@@ -7,6 +7,7 @@
 
 pub mod balance_read;
 pub mod country_ledger;
+pub mod country_pool_net_profit_indexer;
 pub mod fee_router_verify;
 pub mod governor;
 pub mod timelock;
@@ -38,6 +39,8 @@ pub struct ChainConfig {
     pub country_pool_ledger_address: Option<String>,
     /// **UnallocatedStewardPathVault**（S4a · sweep / reserve / disburse 事件）
     pub unallocated_steward_path_vault_address: Option<String>,
+    /// **StewardPathVault**（D-4555-B · StewardPathDeposit 事件）
+    pub steward_path_vault_address: Option<String>,
     /// 份额代币（TTG / Country Pool 等）ERC20 地址列表；`indexer-tick` 写入 `investor_share_transfer_events`（B-085）
     #[serde(default)]
     pub investor_share_token_addresses: Vec<String>,
@@ -133,7 +136,9 @@ impl ChainConfig {
                 .or_else(|| Self::env_nonempty("COUNTRY_POOL_LEDGER_ADDRESS")),
             unallocated_steward_path_vault_address: Self::env_nonempty(
                 "UNALLOCATED_STEWARD_PATH_VAULT_ADDRESS",
-            ),
+            )
+            .or_else(|| Self::env_nonempty("COUNTRY_POOL_UNALLOCATED_STEWARD_VAULT_ADDRESS")),
+            steward_path_vault_address: Self::env_nonempty("COUNTRY_POOL_STEWARD_PATH_VAULT_ADDRESS"),
             investor_share_token_addresses,
             staking_address: guide_staking_address.clone(),
             guide_staking_address,

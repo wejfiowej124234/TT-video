@@ -38,6 +38,7 @@ mod admin_growth_early_bird_http;
 mod admin_growth_fraud_http;
 mod admin_country_market_http;
 mod admin_vacancy_ledger_http;
+mod admin_net_profit_ledger_http;
 mod admin_region_share_reconcile_http;
 mod admin_growth_airdrop_http;
 mod admin_growth_analytics_http;
@@ -767,6 +768,7 @@ pub fn router() -> Router<ApiMetaState> {
             .merge(admin_growth_fraud_http::router())
             .merge(admin_country_market_http::router())
             .merge(admin_vacancy_ledger_http::router())
+            .merge(admin_net_profit_ledger_http::router())
             .merge(admin_region_share_reconcile_http::router())
             .merge(admin_growth_airdrop_http::router())
             .merge(admin_growth_analytics_http::router())

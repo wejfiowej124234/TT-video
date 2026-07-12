@@ -1,0 +1,77 @@
+{
+  "gap_id": "GAP-IDX-NP-004",
+  "verdict": "PASS",
+  "phase": "\u2460",
+  "timestamp_utc": "20260712T125907Z",
+  "checks": [
+    {
+      "id": "IDX-np-indexer-module",
+      "pass": true,
+      "detail": "D:\\TravelTrust-V1.1\\crates\\api\\src\\chain\\country_pool_net_profit_indexer.rs",
+      "severity": "error"
+    },
+    {
+      "id": "DB-np-projection-module",
+      "pass": true,
+      "detail": "D:\\TravelTrust-V1.1\\crates\\api\\src\\db\\country_pool_net_profit.rs",
+      "severity": "error"
+    },
+    {
+      "id": "DB-np-migration",
+      "pass": true,
+      "detail": "D:\\TravelTrust-V1.1\\crates\\api\\migrations\\20260712100000_country_pool_net_profit_events.sql",
+      "severity": "error"
+    },
+    {
+      "id": "API-governance-net-profit",
+      "pass": true,
+      "detail": "D:\\TravelTrust-V1.1\\crates\\api\\src\\routes\\governance\\governance_net_profit_ledger.rs",
+      "severity": "error"
+    },
+    {
+      "id": "API-admin-net-profit",
+      "pass": true,
+      "detail": "D:\\TravelTrust-V1.1\\crates\\api\\src\\routes\\admin\\admin_net_profit_ledger_http.rs",
+      "severity": "error"
+    },
+    {
+      "id": "FE-governance-net-profit-page",
+      "pass": true,
+      "detail": "D:\\TravelTrust-V1.1\\frontend\\app\\governance\\net-profit-ledger\\page.tsx",
+      "severity": "error"
+    },
+    {
+      "id": "IDX-reconcile-topic0",
+      "pass": true,
+      "detail": "reconcile.rs event_name_from_topic0",
+      "severity": "error"
+    },
+    {
+      "id": "IDX-tick-persist-hook",
+      "pass": true,
+      "detail": "indexer tick NP-004 hook",
+      "severity": "error"
+    },
+    {
+      "id": "REG-decoder-yaml",
+      "pass": true,
+      "detail": "country-pool-net-profit-v1.yaml",
+      "severity": "error"
+    },
+    {
+      "id": "TEST-np-indexer-unit",
+      "pass": true,
+      "detail": "cargo test country_pool_net_profit",
+      "severity": "error"
+    }
+  ],
+  "pipeline": [
+    "Contract Event",
+    "Indexer",
+    "Database",
+    "API",
+    "Frontend",
+    "Accounting",
+    "Audit"
+  ]
+}

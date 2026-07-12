@@ -15,6 +15,7 @@ use super::governance_reads::{
     get_governance_fee_routes, get_governance_rewards, get_governance_vault_forwards,
 };
 use super::governance_vacancy_ledger::get_governance_vacancy_ledger;
+use super::governance_net_profit_ledger::get_governance_net_profit_ledger;
 
 pub fn router() -> Router<ApiMetaState> {
     Router::new()
@@ -54,6 +55,10 @@ pub fn router() -> Router<ApiMetaState> {
         .route(
             "/api/v1/governance/vacancy-ledger",
             get(get_governance_vacancy_ledger),
+        )
+        .route(
+            "/api/v1/governance/net-profit-ledger",
+            get(get_governance_net_profit_ledger),
         )
         .merge(super::state_machines::state_machines_route())
 }

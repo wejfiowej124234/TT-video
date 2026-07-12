@@ -126,6 +126,39 @@ pub fn event_name_from_topic0(topic0: &str) -> Option<&'static str> {
             crate::chain::vacancy_ledger_indexer::JURISDICTION_RESERVE_DISBURSED_SIG,
             "JurisdictionReserveDisbursed",
         ),
+        (crate::chain::country_pool_net_profit_indexer::EPOCH_OPENED_SIG, "EpochOpened"),
+        (
+            crate::chain::country_pool_net_profit_indexer::NET_PROFIT_ACCRUED_SIG,
+            "NetProfitAccrued",
+        ),
+        (
+            crate::chain::country_pool_net_profit_indexer::EPOCH_CLOSED_SIG,
+            "EpochClosed",
+        ),
+        (
+            crate::chain::country_pool_net_profit_indexer::LEDGER_FUNDED_FOR_SPLIT_SIG,
+            "LedgerFundedForSplit",
+        ),
+        (
+            crate::chain::country_pool_net_profit_indexer::NET_PROFIT_SPLIT_SIG,
+            "NetProfitSplit",
+        ),
+        (
+            crate::chain::country_pool_net_profit_indexer::ACTIVE_STEWARD_CONFIG_SET_SIG,
+            "ActiveStewardConfigSet",
+        ),
+        (
+            crate::chain::country_pool_net_profit_indexer::STEWARD_PATH_DEPOSIT_SIG,
+            "StewardPathDeposit",
+        ),
+        (
+            crate::chain::country_pool_net_profit_indexer::UNALLOCATED_STEWARD_DEPOSIT_SIG,
+            "UnallocatedStewardDeposit",
+        ),
+        (
+            crate::chain::country_pool_net_profit_indexer::UNALLOCATED_STEWARD_RELEASED_SIG,
+            "UnallocatedStewardReleased",
+        ),
     ];
     for (sig, name) in sigs {
         if hex::encode(Keccak256::digest(sig)) == topic_hex {

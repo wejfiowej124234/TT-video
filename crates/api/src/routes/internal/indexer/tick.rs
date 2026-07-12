@@ -429,6 +429,42 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
             }
         }
     }
+    // D-4555-B · StewardPathVault — StewardPathDeposit
+    if let Some(ref vault_a) = config.steward_path_vault_address {
+        let vault_a = vault_a.trim();
+        if !vault_a.is_empty() {
+            match chain::indexer::fetch_logs_from_addresses(
+                &config.rpc_url,
+                &[vault_a.to_string()],
+                from_block,
+                to_block,
+            )
+            .await
+            {
+                Ok(vault_logs) => {
+                    logs.extend(vault_logs);
+                    logs.sort_by_key(|t| (t.0, t.1));
+                }
+                Err(e) => {
+                    if strict_supplemental_logs {
+                        return (
+                            StatusCode::INTERNAL_SERVER_ERROR,
+                            Json(crate::api_json::err_key_detail(
+                                "fetch_supplemental_logs_failed",
+                                format!("steward_path_vault: {}", e),
+                            )),
+                        )
+                            .into_response();
+                    }
+                    logs_fetch_skipped.push(json!({
+                        "scope": "steward_path_vault",
+                        "address": vault_a,
+                        "error": e
+                    }));
+                }
+            }
+        }
+    }
     // Governor：**ProposalCreated / VoteCast / …** → **`event_log`** + **`governance_proposals_projection`**（B-089 Completion）
     if let Some(ref gov_a) = config.governor_address {
         let gov_a = gov_a.trim();
@@ -469,6 +505,7 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
     let mut events_new = 0u32;
     let mut region_share_snapshot_lines_new = 0u32;
     let mut p5_country_ledger_lines_new = 0u32;
+    let mut net_profit_events_new = 0u32;
     for (block_number, log_index, block_hash, tx_hash, kind, data, topics, log_address) in logs {
         let data_for_fee_parse = data.clone();
         let inserted = chain::indexer::append_event_and_advance_checkpoint(
@@ -723,6 +760,55 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
             }
             if let Some(ref co) = state.chain_off.as_ref() {
                 if let Some(pool) = co.db_pool.as_ref() {
+                    if let Some(np_ev) =
+                        chain::country_pool_net_profit_indexer::parse_net_profit_event(
+                            &kind,
+                            &topics,
+                            &data_for_fee_parse,
+                        )
+                    {
+                        let chain_id_i64 = (config.chain_id.min(i64::MAX as u64)) as i64;
+                        if let (Some(bh), Some(th)) = (
+                            db::decode_eth_hash_bytes(&block_hash),
+                            db::decode_eth_hash_bytes(&tx_hash),
+                        ) {
+                            let payload = json!({
+                                "topics": topics,
+                                "topic0": &kind,
+                                "data": &data_for_fee_parse,
+                            });
+                            match db::persist_net_profit_indexer_event(
+                                pool,
+                                chain_id_i64,
+                                block_number as i64,
+                                log_index as i32,
+                                &bh,
+                                &th,
+                                &log_address,
+                                &np_ev,
+                                &payload,
+                            )
+                            .await
+                            {
+                                Ok(true) => net_profit_events_new += 1,
+                                Ok(false) => {}
+                                Err(e) => {
+                                    return (
+                                        StatusCode::INTERNAL_SERVER_ERROR,
+                                        Json(crate::api_json::err_key_detail(
+                                            "persist_net_profit_indexer_event_failed",
+                                            e.to_string(),
+                                        )),
+                                    )
+                                        .into_response();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if let Some(ref co) = state.chain_off.as_ref() {
+                if let Some(pool) = co.db_pool.as_ref() {
                     if let Some(vacancy_ev) = chain::vacancy_ledger_indexer::parse_vacancy_event(
                         &kind,
                         &topics,
@@ -789,6 +875,15 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
                             | "ReserveReached"
                             | "StewardActivated"
                             | "JurisdictionReserveDisbursed"
+                            | "EpochOpened"
+                            | "NetProfitAccrued"
+                            | "EpochClosed"
+                            | "LedgerFundedForSplit"
+                            | "NetProfitSplit"
+                            | "ActiveStewardConfigSet"
+                            | "StewardPathDeposit"
+                            | "UnallocatedStewardDeposit"
+                            | "UnallocatedStewardReleased"
                     ) {
                         let want_escrow = event_name == "EscrowCreated";
                         if let Some((order_id, escrow_addr)) =
@@ -1181,6 +1276,7 @@ pub async fn indexer_tick(State(state): State<ApiMetaState>) -> impl IntoRespons
         "investor_lock_state_events_new": investor_lock_state_events_new,
         "region_share_snapshot_lines_new": region_share_snapshot_lines_new,
         "p5_country_ledger_lines_new": p5_country_ledger_lines_new,
+        "net_profit_events_new": net_profit_events_new,
         "from_block": from_block,
         "to_block": to_block,
         "chain_tip": latest,

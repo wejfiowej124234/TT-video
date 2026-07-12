@@ -80,6 +80,7 @@ pub(super) fn meta_indexer_reconcile_with_pool(pool: PgPool) -> ApiMetaState {
         escrow_factory_v2_address: None,
         country_pool_ledger_address: None,
         unallocated_steward_path_vault_address: None,
+        steward_path_vault_address: None,
         investor_share_token_addresses: vec![],
         staking_address: None,
         guide_staking_address: None,

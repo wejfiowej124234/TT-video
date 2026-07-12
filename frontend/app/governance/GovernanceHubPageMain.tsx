@@ -92,6 +92,9 @@ export function GovernanceHubPageMain() {
           <Link href="/governance/vacancy-ledger" className={navLink}>
             {t("governance_vacancy_ledger_title")}
           </Link>
+          <Link href="/governance/net-profit-ledger" className={navLink}>
+            {t("governance_net_profit_ledger_title")}
+          </Link>
           <Link href="/governance/distribution-accruals" className={navLink}>
             {t("governance_distribution_accruals_title")}
           </Link>

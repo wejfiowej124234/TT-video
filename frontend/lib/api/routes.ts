@@ -234,7 +234,9 @@ export const routes = {
   /** RegionVault RegionVaultForwarded 索引只读列表；query 同 fee-routes */
   governanceVaultForwards: "/api/v1/governance/vault-forwards",
   governanceVacancyLedger: "/api/v1/governance/vacancy-ledger",
+  governanceNetProfitLedger: "/api/v1/governance/net-profit-ledger",
   adminVacancyLedgerOps: "/api/v1/admin/vacancy-ledger",
+  adminNetProfitLedgerOps: "/api/v1/admin/net-profit-ledger",
   /** B-084：投影表按 token/pool_id 累计；query chain_id? */
   governanceFeePoolAggregates: "/api/v1/governance/fee-pool-aggregates",
   governanceInvestorShareReconcile: "/api/v1/governance/investor-share-reconcile",

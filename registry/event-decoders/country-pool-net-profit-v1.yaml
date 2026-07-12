@@ -1,5 +1,5 @@
-# Country Pool Net Profit · Event Topic Registry v1 (G23-04 freeze)
-# Gate-2.4 input · decoder implementation deferred to Gate-2.4 / Gate-3
+# Country Pool Net Profit · Event Topic Registry v1 (G23-04 freeze · GAP-IDX-NP-004 decoder ACTIVE)
+# Gate-2.4 input · decoder implementation in crates/api/src/chain/country_pool_net_profit_indexer.rs
 # Phase: ① local · ≠ ② Sepolia GO
 registry_id: country-pool-net-profit-v1
 version: v1-g23-04-freeze-20260615

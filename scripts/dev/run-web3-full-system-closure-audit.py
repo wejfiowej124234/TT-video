@@ -238,14 +238,15 @@ def main() -> int:
         )
     )
 
-    # Net-profit full event projection — partial today
-    indexer_rs = _read(ROOT / "crates/api/src/chain/indexer.rs")
+    # Net-profit full event projection — GAP-IDX-NP-004 closed
+    np_indexer = _read(ROOT / "crates/api/src/chain/country_pool_net_profit_indexer.rs")
     checks.append(
         (
             "IDX-country-net-profit-full-projection",
-            "CountryPoolNetProfit" in indexer_rs or "splitNetProfit" in _read(ROOT / "contracts/src/CountryPoolNetProfitLedger.sol"),
-            "Full net-profit epoch events — partial indexer coverage (WARN expected)",
-            "warning",
+            "parse_net_profit_event" in np_indexer
+            and (ROOT / "crates/api/migrations/20260712100000_country_pool_net_profit_events.sql").is_file(),
+            "Full net-profit epoch events — indexer + DB + API + FE pipeline",
+            "error",
         )
     )
 
@@ -316,7 +317,8 @@ def main() -> int:
             "severity": "P2",
             "phase": "②",
             "title": "CountryPoolNetProfit full epoch event projection",
-            "detail": "Vacancy + CountryLedgerCredited indexed; full quarter-close UI projection partial",
+            "detail": "CLOSED in ① — indexer→DB→API→FE→accounting audit; Sepolia live data pending Owner ②",
+            "status": "CLOSED_LOCAL",
         },
         {
             "id": "GAP-PM-005",
