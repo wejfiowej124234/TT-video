@@ -28,4 +28,17 @@ describe("apiUrl (browser, loopback base)", () => {
       "http://localhost:8080/auth/seed-test-accounts",
     );
   });
+
+  it("staging same-origin proxy: auth direct to API base, JSON via web origin", async () => {
+    vi.stubEnv("NEXT_PUBLIC_API_BASE_URL", "https://tt-api-staging.fly.dev");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://tt-web-staging.fly.dev");
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: { ...window.location, origin: "https://tt-web-staging.fly.dev", protocol: "https:", hostname: "tt-web-staging.fly.dev", port: "" },
+    });
+    vi.resetModules();
+    const { apiUrl, routes } = await import("./api");
+    expect(apiUrl(routes.auth.login)).toBe("https://tt-api-staging.fly.dev/auth/login");
+    expect(apiUrl(routes.guides)).toBe("https://tt-web-staging.fly.dev/api/v1/guides");
+  });
 });

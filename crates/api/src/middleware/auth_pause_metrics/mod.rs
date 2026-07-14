@@ -9,6 +9,7 @@ use axum::{
 use serde_json::json;
 use std::env;
 use std::sync::atomic::{AtomicU64, Ordering};
+use std::time::Instant;
 
 /// 鉴权占位：需登录路由在缺少身份时返回 401；实现时替换为 JWT/session 校验。04 §三、企业报告 §9.2。
 pub async fn auth_placeholder_layer(req: Request<Body>, next: axum::middleware::Next) -> Response {
@@ -24,10 +25,19 @@ pub async fn auth_placeholder_layer(req: Request<Body>, next: axum::middleware::
 
     let public = method == Method::OPTIONS
         || path == "/health"
+        || path == "/health/live"
+        || path == "/health/ready"
+        || path == "/health/dependencies"
+        || path == "/metrics"
+        || (method == Method::POST && path == "/health/drill/inject")
         || path == "/meta"
         || path == "/meta/build"
         || path.starts_with("/auth/")
         || (read && path == "/api/v1/guides")
+        || (read
+            && path.starts_with("/api/v1/guides/")
+            && path != "/api/v1/guides/upload-doc"
+            && !path.ends_with("/stake"))
         || (read && path == "/api/v1/discover/orders")
         || (method == Method::POST && path == "/api/v1/trust-growth/ingest")
         // Stripe / PSP webhooks：公开 POST，handler 内 Stripe-Signature 验签（hooks.rs）
@@ -110,7 +120,11 @@ pub async fn auth_placeholder_layer(req: Request<Body>, next: axum::middleware::
                 .map(|s| !s.is_empty())
                 .unwrap_or(false);
             let has_auth = req.headers().get("Authorization").is_some();
-            if !has_user && !has_auth {
+            let has_session_cookie = crate::session_cookie::extract_session_token_from_headers(
+                req.headers(),
+            )
+            .is_some();
+            if !has_user && !has_auth && !has_session_cookie {
                 return (
                     axum::http::StatusCode::UNAUTHORIZED,
                     Json(json!({
@@ -361,7 +375,11 @@ pub async fn metrics_request_count_layer(
     next: axum::middleware::Next,
 ) -> Response {
     REQUEST_TOTAL.fetch_add(1, Ordering::Relaxed);
-    next.run(req).await
+    let started = Instant::now();
+    let mut res = next.run(req).await;
+    let status = res.status().as_u16();
+    crate::production_metrics::record_http_response(status, started.elapsed());
+    res
 }
 
 #[cfg(test)]

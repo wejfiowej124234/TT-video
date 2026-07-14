@@ -20,16 +20,20 @@ export function resolvePostDetailImageSources(post: CommunityPost): string[] {
   const isVideoPost = post.is_video === true || post.type === "video";
   if (isVideoPost) return [];
 
-  const list = postMediaList(post)
+  const gridThumb = communityPostGridThumbRaw(post).trim();
+  const fromMedia = postMediaList(post)
     .map((u) => u.trim())
     .filter(isStillImageUrl);
-  if (list.length > 0) return list;
-
-  const thumb = communityPostGridThumbRaw(post).trim();
-  if (thumb && isStillImageUrl(thumb)) return [thumb];
-
+  const ordered: string[] = [];
+  const seen = new Set<string>();
+  const push = (u: string) => {
+    if (!u || !isStillImageUrl(u) || seen.has(u)) return;
+    seen.add(u);
+    ordered.push(u);
+  };
+  if (gridThumb) push(gridThumb);
+  for (const u of fromMedia) push(u);
   const cover = post.cover_url?.trim();
-  if (cover && isStillImageUrl(cover)) return [cover];
-
-  return [];
+  if (cover) push(cover);
+  return ordered;
 }

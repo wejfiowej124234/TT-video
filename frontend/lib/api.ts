@@ -1109,7 +1109,12 @@ export function apiUrl(path: string): string {
   const p = path.startsWith("/") ? path : `/${path}`;
   if (browserUsesSameOriginApiProxy()) {
     if (p.startsWith("/auth/")) {
-      return loopbackDirectAuthApiUrl(p);
+      // ① loopback：绕过 Next `/auth/*` 页面路由，直连 API :8080
+      // ② staging/production：Next rewrite 对 POST /auth/login 返回 405 → 直连 API（CORS 已允许 SITE_URL）
+      if (isLoopbackApiBase(BASE)) {
+        return loopbackDirectAuthApiUrl(p);
+      }
+      return `${BASE}${p}`;
     }
     const same = sameOriginApiPathInBrowser(p);
     if (same != null) return same;

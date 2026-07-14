@@ -32,7 +32,12 @@ export function useLandingAmbientResolution(
     if (!isCatalogApiEnabled() || !country.trim()) return;
     let cancelled = false;
     void resolveLandingAmbientUrl(country).then((r) => {
-      if (!cancelled && r.source === "catalog-api") setCatalogUrl(r.data);
+      if (cancelled || r.source !== "catalog-api") return;
+      const next = r.data?.trim();
+      if (!next) return;
+      const ts = landingAmbientImageUrl(country).trim();
+      if (next === ts) return;
+      setCatalogUrl(next);
     });
     return () => {
       cancelled = true;

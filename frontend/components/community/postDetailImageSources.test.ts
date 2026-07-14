@@ -13,14 +13,18 @@ describe("resolvePostDetailImageSources", () => {
     expect(resolvePostDetailImageSources(post)).toEqual(["https://cdn.example/cover.jpg"]);
   });
 
-  it("prefers media_urls over cover", () => {
+  it("aligns with feed grid thumb (cover before media_urls)", () => {
     const post = {
       id: "p2",
       type: "photo",
       media_urls: ["/a.jpg", "/b.jpg"],
       cover_url: "https://cdn.example/cover.jpg",
     } as CommunityPost;
-    expect(resolvePostDetailImageSources(post)).toEqual(["/a.jpg", "/b.jpg"]);
+    expect(resolvePostDetailImageSources(post)).toEqual([
+      "https://cdn.example/cover.jpg",
+      "/a.jpg",
+      "/b.jpg",
+    ]);
   });
 
   it("returns empty list for video posts", () => {
