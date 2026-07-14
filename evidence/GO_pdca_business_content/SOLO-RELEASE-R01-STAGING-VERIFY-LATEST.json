@@ -1,0 +1,52 @@
+{
+  "schema": "traveltrust.solo_release_record.v1",
+  "release_id": "R-01-staging-verify",
+  "captured_at_utc": "2026-07-14T19:24:42.752Z",
+  "phase": "②_staging",
+  "rc_git_sha": "e4fe13e2",
+  "branch": "feature/g23-04-abi-event-freeze",
+  "deploy": {
+    "state": "sync",
+    "app": "tt-web-staging",
+    "web": "https://tt-web-staging.fly.dev",
+    "rc_baseline_override": true,
+    "note": "Owner override pre-deploy RC drift (admin 503); no align run"
+  },
+  "local_validation": {
+    "vitest": [
+      "communityFeedVisiblePosts.test.ts",
+      "coldStartConsumerPresentation.test.ts"
+    ],
+    "result": "9/9 PASS"
+  },
+  "staging_verification": {
+    "guest_csr": {
+      "dir": "evidence/GO_pdca_business_content/20260714T184503Z",
+      "community": "10/10 aligned",
+      "home_hero": "2/2 aligned",
+      "campaign_total": "10/10 aligned"
+    },
+    "pdca": {
+      "dir": "evidence/GO_pdca_business_content/20260714T184707Z",
+      "diff": "PASS",
+      "integrity": "WARN",
+      "integrity_note": "destination_admin STAGING_ROUTE_NOT_DEPLOYED pre-existing"
+    },
+    "fe_api_audit": {
+      "blocking": 0,
+      "warnings": 2,
+      "strict": true
+    },
+    "playwright_e2e": {
+      "status": "SKIPPED_HUNG",
+      "note": "Guest CSR runner playwright_csr_guest already PASS; standalone e2e spec hung locally"
+    }
+  },
+  "remaining_human_only": [
+    "WalletConnect",
+    "Real Device P1 Batch",
+    "Timelock execute",
+    "Owner Sign-off Production GO"
+  ],
+  "verdict": "R-01_CLOSED"
+}

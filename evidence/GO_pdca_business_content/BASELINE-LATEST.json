@@ -1,0 +1,755 @@
+{
+  "schema": "traveltrust.pdca_baseline.v1",
+  "captured_at_utc": "2026-07-14T18:47:51.406Z",
+  "environment": {
+    "name": "staging",
+    "api_base": "https://tt-api-staging.fly.dev",
+    "web_base": "https://tt-web-staging.fly.dev",
+    "staging_git_sha": "3c0d7ad57f08bfb4ceb4dfa956afbbe184db7d0d",
+    "repo_git_sha": "e4fe13e265bc98fd91e243b7a481ef03afcedd31",
+    "page_probe_mode": "playwright_csr"
+  },
+  "admin_auth": {
+    "mode": "login",
+    "probe_status": "ok",
+    "has_content_read": true,
+    "console_role_70": "SuperAdmin",
+    "warn_reason": null,
+    "note": "Login-only read GETs; never calls seed-test-accounts promote (no data mutation)"
+  },
+  "surfaces": {
+    "community": {
+      "probe_status": "ok",
+      "http_status": 200,
+      "count": {
+        "total": 10,
+        "official": 0,
+        "campaign": 0,
+        "pinned": 0,
+        "test": 0,
+        "other": 10
+      },
+      "feed_readonly_audit": {
+        "endpoint": "/api/v1/community/feed",
+        "method": "GET",
+        "http_status": 200,
+        "items_count": 10,
+        "identity": {
+          "official": 0,
+          "campaign": 0,
+          "pinned": 0,
+          "test": 0,
+          "other": 10
+        },
+        "visibility": {
+          "public": 10
+        },
+        "data_origin": {
+          "not_in_payload": 10
+        },
+        "display_status": {
+          "not_in_payload": 10
+        },
+        "excluded_from_cms_ocs_root_cause": [
+          "browser_extension_chext_driver",
+          "permissions_policy_geolocation_console_violation",
+          "unauthenticated_social_api_401_me_friends"
+        ],
+        "note": "Read-only public feed probe. Social me/* 401 and browser console noise are not CMS/OCS content-missing signals."
+      }
+    },
+    "guide": {
+      "probe_status": "ok",
+      "http_status": 200,
+      "count": {
+        "total": 10,
+        "official": 10,
+        "test": 0
+      }
+    },
+    "official_guide": {
+      "probe_status": "pending",
+      "count": {
+        "total": null
+      },
+      "note": "v1 probe not wired"
+    },
+    "destination": {
+      "probe_status": "warn",
+      "http_status": 200,
+      "count": {
+        "total": 10,
+        "catalog_countries": 10
+      },
+      "triangle_matrix": {
+        "admin_cms": {
+          "probe_status": "unknown",
+          "http_status": 404,
+          "endpoint": "/api/v1/admin/content/countries?publish_status=published&limit=500",
+          "count": {
+            "total": null,
+            "all_statuses": null
+          },
+          "warn_reason": "SuperAdmin/content.read actor receives empty HTTP 404 — admin_content_http router not mounted when TRAVELTRUST_COMPLEXITY_CONVERGENCE_FREEZE active (code gate; not RBAC 403)",
+          "admin_leg_diagnosis": "STAGING_ROUTE_NOT_DEPLOYED",
+          "admin_actor_has_content_read": true
+        },
+        "public_api": {
+          "probe_status": "ok",
+          "http_status": 200,
+          "endpoints": {
+            "catalog_countries": {
+              "http_status": 200,
+              "count": 10
+            },
+            "explore_destinations": {
+              "http_status": 200,
+              "count": 10,
+              "catalog": "api-aggregate-v1"
+            }
+          },
+          "count": {
+            "total": 10,
+            "catalog_countries": 10
+          }
+        },
+        "page_visible": {
+          "probe_status": "ok",
+          "http_status": 200,
+          "url": "https://tt-web-staging.fly.dev/community/explore",
+          "probe_mode": "playwright_csr",
+          "count": {
+            "total": 10,
+            "destination_links": 10
+          },
+          "explore_dest_catalog": "api-aggregate-v1",
+          "warn_reason": null,
+          "note": "Playwright CSR — waited for explore destination DOM"
+        },
+        "api_page_reconcile": {
+          "public_api_total": 10,
+          "page_visible_total": 10,
+          "aligned": true
+        }
+      },
+      "admin_leg_diagnosis": {
+        "endpoint": "/api/v1/admin/content/countries?publish_status=published&limit=500",
+        "http_status": 404,
+        "admin_actor_has_content_read": true,
+        "console_role_70": "SuperAdmin",
+        "staging_git_sha": "3c0d7ad57f08bfb4ceb4dfa956afbbe184db7d0d",
+        "repo_git_sha": "e4fe13e265bc98fd91e243b7a481ef03afcedd31",
+        "code_ssot": {
+          "route_handler": "crates/api/src/routes/admin/admin_content_http.rs",
+          "router_mount": "crates/api/src/routes/admin/mod.rs",
+          "freeze_gate": "crates/api/src/complexity_convergence.rs",
+          "rbac_perm": "crates/api/src/routes/admin/admin_rbac.rs"
+        },
+        "code_route_declared": true,
+        "code_freeze_gate_on_admin_content_http": true,
+        "rbac_route_deny_matrix_lists_route": false,
+        "openapi_note": "No dedicated OpenAPI artifact in repo root; contract SSOT = 04 §3.4 + admin_content_http.rs",
+        "diagnosis": "STAGING_ROUTE_NOT_DEPLOYED",
+        "warn_reason": "SuperAdmin/content.read actor receives empty HTTP 404 — admin_content_http router not mounted when TRAVELTRUST_COMPLEXITY_CONVERGENCE_FREEZE active (code gate; not RBAC 403)",
+        "secondary": "ADMIN_CONTRACT_MISSING",
+        "secondary_note": "ROUTE_DENY_MATRIX / staging RBAC probe registry omit /api/v1/admin/content/countries"
+      },
+      "admin_leg_judgment": {
+        "judgment": "ADMIN_LEG_UNRESOLVED",
+        "confidence": "high",
+        "rationale": "SuperAdmin/content.read actor receives empty HTTP 404 — admin_content_http router not mounted when TRAVELTRUST_COMPLEXITY_CONVERGENCE_FREEZE active (code gate; not RBAC 403)",
+        "diagnosis": "STAGING_ROUTE_NOT_DEPLOYED",
+        "secondary": "ADMIN_CONTRACT_MISSING"
+      },
+      "dimensions": {
+        "admin_cms": {
+          "published": {},
+          "visibility": {},
+          "locale": {},
+          "country": {},
+          "data_origin": {},
+          "open_status": {},
+          "cms_binding": {},
+          "ownership": {
+            "org": {},
+            "country": {}
+          },
+          "catalog_layer": "admin_content_countries"
+        },
+        "public_catalog": {
+          "published": {
+            "not_in_payload": 10
+          },
+          "visibility": {
+            "not_in_payload": 10
+          },
+          "locale": {
+            "not_in_payload": 10
+          },
+          "country": {
+            "JP": 1,
+            "KR": 1,
+            "TH": 1,
+            "SG": 1,
+            "FR": 1,
+            "US": 1,
+            "AU": 1,
+            "ES": 1,
+            "AE": 1,
+            "CN": 1
+          },
+          "data_origin": {
+            "not_in_payload": 10
+          },
+          "open_status": {
+            "open": 10
+          },
+          "cms_binding": {
+            "not_in_payload": 10
+          },
+          "ownership": {
+            "org": {
+              "not_in_payload": 10
+            },
+            "country": {
+              "JP": 1,
+              "KR": 1,
+              "TH": 1,
+              "SG": 1,
+              "FR": 1,
+              "US": 1,
+              "AU": 1,
+              "ES": 1,
+              "AE": 1,
+              "CN": 1
+            }
+          },
+          "catalog_layer": "public_catalog_countries"
+        },
+        "public_explore": {
+          "published": {
+            "published": 10
+          },
+          "visibility": {
+            "public": 10
+          },
+          "locale": {
+            "not_in_payload": 10
+          },
+          "country": {
+            "东京": 1,
+            "京都": 1,
+            "巴塞罗那": 1,
+            "巴黎": 1,
+            "悉尼": 1,
+            "新加坡": 1,
+            "曼谷": 1,
+            "纽约": 1,
+            "迪拜": 1,
+            "首尔": 1
+          },
+          "data_origin": {
+            "api_aggregate": 1,
+            "not_in_payload": 0
+          },
+          "catalog": {
+            "api-aggregate-v1": 1
+          },
+          "cms_binding": {
+            "not_in_payload": 10
+          },
+          "ownership": {
+            "org": {
+              "not_in_payload": 10
+            },
+            "country": {
+              "东京": 1,
+              "京都": 1,
+              "巴塞罗那": 1,
+              "巴黎": 1,
+              "悉尼": 1,
+              "新加坡": 1,
+              "曼谷": 1,
+              "纽约": 1,
+              "迪拜": 1,
+              "首尔": 1
+            }
+          }
+        }
+      },
+      "filter_hide_reasons": [
+        {
+          "code": "ADMIN_CMS_UNREACHABLE",
+          "detail": "Admin/CMS leg UNKNOWN — cannot compare publish filters"
+        }
+      ],
+      "root_cause_judgment": {
+        "judgment": "content_exists",
+        "confidence": "high",
+        "rationale": "Public API (10) and CSR page DOM (10) aligned",
+        "admin_leg_note": "STAGING_ROUTE_NOT_DEPLOYED"
+      },
+      "readonly_audit": {
+        "surface": "destination",
+        "endpoints": {
+          "admin_countries": "/api/v1/admin/content/countries?limit=500",
+          "admin_countries_published": "/api/v1/admin/content/countries?publish_status=published&limit=500",
+          "public_catalog_countries": "/api/v1/catalog/countries",
+          "public_explore_destinations": "/api/v1/community/explore/destinations"
+        },
+        "staging_git_sha": "3c0d7ad57f08bfb4ceb4dfa956afbbe184db7d0d",
+        "repo_git_sha": "e4fe13e265bc98fd91e243b7a481ef03afcedd31",
+        "excluded_from_cms_ocs_root_cause": [
+          "browser_extension_chext_driver",
+          "permissions_policy_geolocation_console_violation",
+          "unauthenticated_social_api_401_me_friends"
+        ],
+        "note": "Admin 404 with content.read → STAGING_ROUTE_NOT_DEPLOYED (freeze gate); not RBAC masked; PDCA must not trigger deploy/align"
+      }
+    },
+    "campaign": {
+      "probe_status": "ok",
+      "count": {
+        "total": 10,
+        "deployed_surfaces": 3
+      },
+      "triangle_matrix": {
+        "admin_cms": {
+          "probe_status": "ok",
+          "http_status": 200,
+          "endpoint": "/api/v1/admin/official/cold-start/campaigns",
+          "count": {
+            "total": 10,
+            "published_rows": 10,
+            "all_rows": 34
+          }
+        },
+        "public_api": {
+          "probe_status": "ok",
+          "count": {
+            "total": 10,
+            "deployed_surfaces": 3
+          },
+          "surfaces": [
+            {
+              "surface": "home_hero",
+              "probe_status": "ok",
+              "http_status": 200,
+              "items_count": 2,
+              "campaign_id": "abf2ec26-9158-4fbb-95a7-6595567da3a4",
+              "campaign_name": "首页 Hero · 全球精选",
+              "deployed_at": "2026-07-04T10:09:39.124791Z",
+              "dimensions": {
+                "published": {
+                  "deployed": 1
+                },
+                "visibility": {
+                  "consumer_surface": 2
+                },
+                "locale": {
+                  "not_in_payload": 2
+                },
+                "country": {
+                  "东京": 2
+                },
+                "data_origin": {
+                  "not_in_payload": 2
+                },
+                "cms_binding": {
+                  "not_in_payload": 2
+                },
+                "ownership": {
+                  "org": {
+                    "not_in_payload": 2
+                  },
+                  "country": {
+                    "not_in_payload": 2
+                  }
+                }
+              },
+              "binding_gaps": 0
+            },
+            {
+              "surface": "market_feed",
+              "probe_status": "ok",
+              "http_status": 200,
+              "items_count": 3,
+              "campaign_id": "98ee6ab0-7197-4493-b3b4-761c782f6bcb",
+              "campaign_name": "本周精选 · Market Feed",
+              "deployed_at": "2026-07-04T07:35:56.862969Z",
+              "dimensions": {
+                "published": {
+                  "deployed": 1
+                },
+                "visibility": {
+                  "consumer_surface": 3
+                },
+                "locale": {
+                  "not_in_payload": 3
+                },
+                "country": {
+                  "首尔": 1,
+                  "巴黎": 1,
+                  "not_in_payload": 1
+                },
+                "data_origin": {
+                  "not_in_payload": 3
+                },
+                "cms_binding": {
+                  "not_in_payload": 3
+                },
+                "ownership": {
+                  "org": {
+                    "not_in_payload": 3
+                  },
+                  "country": {
+                    "not_in_payload": 3
+                  }
+                }
+              },
+              "binding_gaps": 0
+            },
+            {
+              "surface": "community_feed",
+              "probe_status": "ok",
+              "http_status": 200,
+              "items_count": 5,
+              "campaign_id": "2b15b465-f107-46fe-a904-48adb7fbbcac",
+              "campaign_name": "Official Cold Start Campaign · Community Feed",
+              "deployed_at": "2026-07-04T07:35:45.065886Z",
+              "dimensions": {
+                "published": {
+                  "deployed": 1
+                },
+                "visibility": {
+                  "consumer_surface": 5
+                },
+                "locale": {
+                  "not_in_payload": 5
+                },
+                "country": {
+                  "东京": 2,
+                  "京都": 1,
+                  "新加坡": 2
+                },
+                "data_origin": {
+                  "not_in_payload": 5
+                },
+                "cms_binding": {
+                  "not_in_payload": 5
+                },
+                "ownership": {
+                  "org": {
+                    "not_in_payload": 5
+                  },
+                  "country": {
+                    "not_in_payload": 5
+                  }
+                }
+              },
+              "binding_gaps": 0
+            }
+          ]
+        },
+        "page_visible": {
+          "probe_status": "ok",
+          "probe_mode": "playwright_csr",
+          "count": {
+            "total": 10,
+            "cold_start_ready_surfaces": 3
+          },
+          "surfaces": [
+            {
+              "surface": "home_hero",
+              "page_path": "/",
+              "http_status": 200,
+              "campaign_items_visible": 2,
+              "cold_start_ready": 1,
+              "cold_start_loading": 0,
+              "cold_start_empty": 0,
+              "cold_start_error": 0,
+              "campaign_id": null,
+              "public_api_items": 2,
+              "api_page_aligned": true
+            },
+            {
+              "surface": "market_feed",
+              "page_path": "/market",
+              "http_status": 200,
+              "campaign_items_visible": 3,
+              "cold_start_ready": 1,
+              "cold_start_loading": 0,
+              "cold_start_empty": 0,
+              "cold_start_error": 0,
+              "campaign_id": "98ee6ab0-7197-4493-b3b4-761c782f6bcb",
+              "public_api_items": 3,
+              "api_page_aligned": true
+            },
+            {
+              "surface": "community_feed",
+              "page_path": "/community",
+              "http_status": 200,
+              "campaign_items_visible": 5,
+              "cold_start_ready": 1,
+              "cold_start_loading": 0,
+              "cold_start_empty": 0,
+              "cold_start_error": 0,
+              "campaign_id": "2b15b465-f107-46fe-a904-48adb7fbbcac",
+              "public_api_items": 5,
+              "api_page_aligned": true
+            }
+          ],
+          "note": "Playwright CSR — waited for data-tt-cold-start-ready|empty|error per surface"
+        },
+        "api_page_reconcile": {
+          "public_api_total": 10,
+          "page_visible_total": 10,
+          "aligned": true,
+          "per_surface": [
+            {
+              "surface": "home_hero",
+              "public_api_items": 2,
+              "page_items": 2,
+              "aligned": true
+            },
+            {
+              "surface": "market_feed",
+              "public_api_items": 3,
+              "page_items": 3,
+              "aligned": true
+            },
+            {
+              "surface": "community_feed",
+              "public_api_items": 5,
+              "page_items": 5,
+              "aligned": true
+            }
+          ]
+        }
+      },
+      "dimensions": {
+        "admin_cms": {
+          "published": {
+            "published": 10
+          },
+          "visibility": {
+            "not_in_payload": 10
+          },
+          "locale": {
+            "not_in_payload": 10
+          },
+          "country": {
+            "not_in_payload": 10
+          },
+          "data_origin": {
+            "not_in_payload": 10
+          },
+          "open_status": {
+            "not_in_payload": 10
+          },
+          "cms_binding": {
+            "not_in_payload": 10
+          },
+          "ownership": {
+            "org": {
+              "not_in_payload": 10
+            },
+            "country": {
+              "not_in_payload": 10
+            }
+          },
+          "lifecycle_status": {
+            "deployed": 10
+          },
+          "campaign_kind": {
+            "homepage": 3,
+            "market": 3,
+            "festival": 1,
+            "holiday": 1,
+            "regional": 1,
+            "community": 1
+          },
+          "surfaces": {
+            "home_hero": 2,
+            "market_feed": 4,
+            "landing_promo": 2,
+            "home_feed": 2,
+            "community_feed": 1,
+            "community_featured": 1
+          }
+        },
+        "public_api": {
+          "published": {
+            "deployed_surfaces": 3
+          },
+          "visibility": {
+            "visible": 3
+          },
+          "locale": {
+            "not_in_payload": 3
+          },
+          "country": {
+            "not_in_payload": 3
+          },
+          "data_origin": {
+            "cold_start_consumer": 1
+          },
+          "cms_binding": {
+            "resolved_items": 10,
+            "binding_gaps": 0
+          },
+          "ownership": {
+            "org": {
+              "not_in_payload": 1
+            },
+            "country": {
+              "not_in_payload": 1
+            }
+          }
+        },
+        "per_surface": [
+          {
+            "surface": "home_hero",
+            "dimensions": {
+              "published": {
+                "deployed": 1
+              },
+              "visibility": {
+                "consumer_surface": 2
+              },
+              "locale": {
+                "not_in_payload": 2
+              },
+              "country": {
+                "东京": 2
+              },
+              "data_origin": {
+                "not_in_payload": 2
+              },
+              "cms_binding": {
+                "not_in_payload": 2
+              },
+              "ownership": {
+                "org": {
+                  "not_in_payload": 2
+                },
+                "country": {
+                  "not_in_payload": 2
+                }
+              }
+            }
+          },
+          {
+            "surface": "market_feed",
+            "dimensions": {
+              "published": {
+                "deployed": 1
+              },
+              "visibility": {
+                "consumer_surface": 3
+              },
+              "locale": {
+                "not_in_payload": 3
+              },
+              "country": {
+                "首尔": 1,
+                "巴黎": 1,
+                "not_in_payload": 1
+              },
+              "data_origin": {
+                "not_in_payload": 3
+              },
+              "cms_binding": {
+                "not_in_payload": 3
+              },
+              "ownership": {
+                "org": {
+                  "not_in_payload": 3
+                },
+                "country": {
+                  "not_in_payload": 3
+                }
+              }
+            }
+          },
+          {
+            "surface": "community_feed",
+            "dimensions": {
+              "published": {
+                "deployed": 1
+              },
+              "visibility": {
+                "consumer_surface": 5
+              },
+              "locale": {
+                "not_in_payload": 5
+              },
+              "country": {
+                "东京": 2,
+                "京都": 1,
+                "新加坡": 2
+              },
+              "data_origin": {
+                "not_in_payload": 5
+              },
+              "cms_binding": {
+                "not_in_payload": 5
+              },
+              "ownership": {
+                "org": {
+                  "not_in_payload": 5
+                },
+                "country": {
+                  "not_in_payload": 5
+                }
+              }
+            }
+          }
+        ]
+      },
+      "filter_hide_reasons": [],
+      "root_cause_judgment": {
+        "judgment": "content_exists",
+        "confidence": "high",
+        "rationale": "Public API (10) and CSR page DOM (10) aligned",
+        "admin_leg_note": null
+      },
+      "binding_gaps": 0,
+      "readonly_audit": {
+        "surface": "campaign",
+        "excluded_from_cms_ocs_root_cause": [
+          "browser_extension_chext_driver",
+          "permissions_policy_geolocation_console_violation",
+          "unauthenticated_social_api_401_me_friends"
+        ]
+      }
+    },
+    "merchant": {
+      "probe_status": "pending",
+      "count": {
+        "total": null
+      },
+      "note": "v1 probe not wired"
+    },
+    "hero": {
+      "probe_status": "pending",
+      "count": {
+        "total": null
+      },
+      "note": "v1 probe not wired"
+    },
+    "cms": {
+      "probe_status": "pending",
+      "count": {
+        "total": null
+      },
+      "note": "v1 probe not wired"
+    }
+  },
+  "reference": {
+    "ocs_cold_start_phase1": {
+      "reference_only": true,
+      "note": "Historical OCS counts are not framework floors; see OCS manifest."
+    }
+  }
+}

@@ -51,7 +51,7 @@
 | CMS Automation 绿集 | PASS · ambient 10/10 · stamp `20260714T142635Z` |
 | Staging ephemeral media smoke | PASS · da-hero HEAD 10/10 · CRA `CMS_AMBIENT=PASS` |
 | CRA（2026-07-14T14:38:42Z） | `PASS_WITH_HOLD` · OPEN_FAIL=none · HOLD=Clearance Owner · RC_BASELINE PASS |
-| PDCA Remediation R-01 | **FIX_APPLIED** · Community+home_hero 根因已修 · **WAITING** Staging FE 部署后 Guest CSR 复验 |
+| PDCA Remediation R-01 | **CLOSED** · RC `e4fe13e2` · Staging Guest CSR 10/10 · home_hero 2/2 · PDCA diff=PASS |
 
 ---
 

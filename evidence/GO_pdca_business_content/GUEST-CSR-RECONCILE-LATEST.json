@@ -1,0 +1,41 @@
+{
+  "captured_at": "2026-07-14T18:45:38.492Z",
+  "evidence_dir": "evidence/GO_pdca_business_content/20260714T184503Z",
+  "environments": [
+    {
+      "env_label": "staging",
+      "summary": {
+        "aligned": 4,
+        "filtered_after_load": 0,
+        "fe_not_loaded": 0,
+        "static_html_blind_spots": 3
+      },
+      "surfaces": [
+        {
+          "surface": "community",
+          "public_api_count": 10,
+          "page_csr_dom_count": 10,
+          "guest_reconcile_judgment": "aligned"
+        },
+        {
+          "surface": "guide",
+          "public_api_count": 10,
+          "page_csr_dom_count": 10,
+          "guest_reconcile_judgment": "aligned"
+        },
+        {
+          "surface": "destination",
+          "public_api_count": 10,
+          "page_csr_dom_count": 10,
+          "guest_reconcile_judgment": "aligned"
+        },
+        {
+          "surface": "campaign",
+          "public_api_count": 10,
+          "page_csr_dom_count": 10,
+          "guest_reconcile_judgment": "aligned"
+        }
+      ]
+    }
+  ]
+}

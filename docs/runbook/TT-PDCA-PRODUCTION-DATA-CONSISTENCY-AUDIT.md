@@ -193,4 +193,6 @@ node scripts/dev/run-pdca-guest-csr-reconcile.cjs
 
 期望：`community` 与 `campaign.home_hero` 均为 `aligned`（API 计数 = Guest CSR DOM）。
 
+**状态（2026-07-14T18:47Z · ② Staging）：** **CLOSED** · RC `e4fe13e2` · Guest CSR `20260714T184503Z`（Community 10/10 · home_hero 2/2）· PDCA `20260714T184707Z`（diff=PASS · integrity=WARN 仅 destination_admin 预存项）。
+
 **禁止：** align · Content Freeze 解除 · 新增探针 surface。

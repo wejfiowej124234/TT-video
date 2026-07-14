@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.pdca_run_index.v1",
+  "run_utc": "20260714T184707Z",
+  "evidence_dir": "evidence/GO_pdca_business_content/20260714T184707Z",
+  "diff_verdict": "PASS",
+  "integrity_verdict": "WARN",
+  "environment": "staging",
+  "destination_judgment": "content_exists",
+  "destination_admin_leg": "ADMIN_LEG_UNRESOLVED",
+  "destination_admin_diagnosis": "STAGING_ROUTE_NOT_DEPLOYED",
+  "campaign_judgment": "content_exists",
+  "page_probe_mode": "playwright_csr"
+}

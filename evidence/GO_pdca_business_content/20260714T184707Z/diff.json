@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.pdca_diff.v1",
+  "previous_baseline_utc": "2026-07-14T18:46:43.536Z",
+  "current_baseline_utc": "2026-07-14T18:47:51.406Z",
+  "rows": [
+    {
+      "surface": "community",
+      "metric": "count.total",
+      "yesterday": 10,
+      "today": 10,
+      "verdict": "PASS"
+    },
+    {
+      "surface": "guide",
+      "metric": "count.total",
+      "yesterday": 10,
+      "today": 10,
+      "verdict": "PASS"
+    },
+    {
+      "surface": "destination",
+      "metric": "count.total",
+      "yesterday": 10,
+      "today": 10,
+      "verdict": "PASS"
+    },
+    {
+      "surface": "campaign",
+      "metric": "count.total",
+      "yesterday": 10,
+      "today": 10,
+      "verdict": "PASS"
+    }
+  ],
+  "summary_verdict": "PASS"
+}

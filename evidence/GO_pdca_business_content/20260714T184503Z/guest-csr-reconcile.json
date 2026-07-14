@@ -1,0 +1,364 @@
+{
+  "schema": "pdca-guest-csr-reconcile-v1",
+  "captured_at": "2026-07-14T18:45:38.492Z",
+  "evidence_dir": "evidence/GO_pdca_business_content/20260714T184503Z",
+  "environments": [
+    {
+      "env_label": "staging",
+      "api_base": "https://tt-api-staging.fly.dev",
+      "web_base": "https://tt-web-staging.fly.dev",
+      "probe_mode": "guest_playwright_csr",
+      "captured_at": "2026-07-14T18:45:38.492Z",
+      "static_html": {
+        "community": {
+          "url": "https://tt-web-staging.fly.dev/community",
+          "http_status": 200,
+          "static_marker_hits": 1,
+          "note": "SSR HTML only — CSR may populate after hydration"
+        },
+        "guide": {
+          "url": "https://tt-web-staging.fly.dev/guides",
+          "http_status": 200,
+          "static_marker_hits": 0,
+          "note": "SSR HTML only — CSR may populate after hydration"
+        },
+        "destination": {
+          "url": "https://tt-web-staging.fly.dev/community/explore",
+          "http_status": 200,
+          "static_marker_hits": 0,
+          "note": "SSR HTML only — CSR may populate after hydration"
+        },
+        "campaign_home": {
+          "url": "https://tt-web-staging.fly.dev/",
+          "http_status": 200,
+          "static_marker_hits": 0,
+          "note": "SSR HTML only — CSR may populate after hydration"
+        }
+      },
+      "public_api": {
+        "community": {
+          "endpoint": "/api/v1/community/feed?limit=200",
+          "http_status": 200,
+          "count": 10,
+          "error": null
+        },
+        "guide": {
+          "endpoint": "/api/v1/guides?limit=500",
+          "http_status": 200,
+          "count": 10,
+          "error": null
+        },
+        "destination": {
+          "endpoint": "/api/v1/community/explore/destinations",
+          "http_status": 200,
+          "count": 10,
+          "catalog_countries": 10,
+          "error": null
+        },
+        "campaign": {
+          "surfaces": [
+            {
+              "surface": "home_hero",
+              "http_status": 200,
+              "api_count": 2,
+              "api_error": null
+            },
+            {
+              "surface": "market_feed",
+              "http_status": 200,
+              "api_count": 3,
+              "api_error": null
+            },
+            {
+              "surface": "community_feed",
+              "http_status": 200,
+              "api_count": 5,
+              "api_error": null
+            }
+          ],
+          "count": 10
+        }
+      },
+      "surfaces": [
+        {
+          "surface": "community",
+          "public_api_count": 10,
+          "page_csr_dom_count": 10,
+          "csr_ready": true,
+          "static_html_marker_hits": 1,
+          "static_html_blind_spot": false,
+          "guest_reconcile_judgment": "aligned",
+          "page_probe": {
+            "surface": "community",
+            "probe_status": "ok",
+            "probe_mode": "playwright_csr_guest",
+            "url": "https://tt-web-staging.fly.dev/community",
+            "http_status": 200,
+            "count": {
+              "total": 10,
+              "feed_posts": 10
+            },
+            "csr_ready": true,
+            "feed_loading": 0,
+            "feed_error": null,
+            "warn_reason": null,
+            "error": null
+          },
+          "public_api": {
+            "endpoint": "/api/v1/community/feed?limit=200",
+            "http_status": 200,
+            "count": 10,
+            "error": null
+          }
+        },
+        {
+          "surface": "guide",
+          "public_api_count": 10,
+          "page_csr_dom_count": 10,
+          "csr_ready": true,
+          "static_html_marker_hits": 0,
+          "static_html_blind_spot": true,
+          "guest_reconcile_judgment": "aligned",
+          "page_probe": {
+            "surface": "guide",
+            "probe_status": "ok",
+            "probe_mode": "playwright_csr_guest",
+            "url": "https://tt-web-staging.fly.dev/guides",
+            "http_status": 200,
+            "count": {
+              "total": 10,
+              "guide_cards": 10
+            },
+            "csr_ready": true,
+            "list_loading": 0,
+            "warn_reason": null,
+            "error": null
+          },
+          "public_api": {
+            "endpoint": "/api/v1/guides?limit=500",
+            "http_status": 200,
+            "count": 10,
+            "error": null
+          }
+        },
+        {
+          "surface": "destination",
+          "public_api_count": 10,
+          "page_csr_dom_count": 10,
+          "csr_ready": true,
+          "static_html_marker_hits": 0,
+          "static_html_blind_spot": true,
+          "guest_reconcile_judgment": "aligned",
+          "page_probe": {
+            "probe_status": "ok",
+            "probe_mode": "playwright_csr_guest",
+            "url": "https://tt-web-staging.fly.dev/community/explore",
+            "http_status": 200,
+            "count": {
+              "total": 10,
+              "destination_links": 10
+            },
+            "explore_dest_catalog": "api-aggregate-v1",
+            "cold_start_state": null,
+            "warn_reason": null,
+            "error": null,
+            "csr_ready": true
+          },
+          "public_api": {
+            "endpoint": "/api/v1/community/explore/destinations",
+            "http_status": 200,
+            "count": 10,
+            "catalog_countries": 10,
+            "error": null
+          }
+        },
+        {
+          "surface": "campaign",
+          "public_api_count": 10,
+          "page_csr_dom_count": 10,
+          "csr_ready": true,
+          "static_html_marker_hits": 0,
+          "static_html_blind_spot": true,
+          "guest_reconcile_judgment": "aligned",
+          "page_probe": {
+            "probe_status": "ok",
+            "probe_mode": "playwright_csr",
+            "count": {
+              "total": 10,
+              "cold_start_ready_surfaces": 3
+            },
+            "surfaces": [
+              {
+                "surface": "home_hero",
+                "page_path": "/",
+                "probe_status": "ok",
+                "probe_mode": "playwright_csr_guest",
+                "url": "https://tt-web-staging.fly.dev/",
+                "http_status": 200,
+                "campaign_items_visible": 2,
+                "cold_start_ready": 1,
+                "cold_start_loading": 0,
+                "cold_start_empty": 0,
+                "cold_start_error": 0,
+                "campaign_id": null,
+                "warn_reason": null,
+                "error": null
+              },
+              {
+                "surface": "market_feed",
+                "page_path": "/market",
+                "probe_status": "ok",
+                "probe_mode": "playwright_csr_guest",
+                "url": "https://tt-web-staging.fly.dev/market",
+                "http_status": 200,
+                "campaign_items_visible": 3,
+                "cold_start_ready": 1,
+                "cold_start_loading": 0,
+                "cold_start_empty": 0,
+                "cold_start_error": 0,
+                "campaign_id": "98ee6ab0-7197-4493-b3b4-761c782f6bcb",
+                "warn_reason": null,
+                "error": null
+              },
+              {
+                "surface": "community_feed",
+                "page_path": "/community",
+                "probe_status": "ok",
+                "probe_mode": "playwright_csr_guest",
+                "url": "https://tt-web-staging.fly.dev/community",
+                "http_status": 200,
+                "campaign_items_visible": 5,
+                "cold_start_ready": 1,
+                "cold_start_loading": 0,
+                "cold_start_empty": 0,
+                "cold_start_error": 0,
+                "campaign_id": "2b15b465-f107-46fe-a904-48adb7fbbcac",
+                "warn_reason": null,
+                "error": null
+              }
+            ],
+            "note": "CSR runtime DOM after data-tt-cold-start-ready|empty|error"
+          },
+          "public_api": {
+            "count": 10,
+            "surfaces": [
+              {
+                "surface": "home_hero",
+                "http_status": 200,
+                "api_count": 2,
+                "api_error": null
+              },
+              {
+                "surface": "market_feed",
+                "http_status": 200,
+                "api_count": 3,
+                "api_error": null
+              },
+              {
+                "surface": "community_feed",
+                "http_status": 200,
+                "api_count": 5,
+                "api_error": null
+              }
+            ]
+          }
+        }
+      ],
+      "campaign_surface_detail": [
+        {
+          "surface": "home_hero",
+          "public_api_count": 2,
+          "page_csr_dom_count": 2,
+          "csr_ready": true,
+          "guest_reconcile_judgment": "aligned",
+          "page_probe": {
+            "surface": "home_hero",
+            "page_path": "/",
+            "probe_status": "ok",
+            "probe_mode": "playwright_csr_guest",
+            "url": "https://tt-web-staging.fly.dev/",
+            "http_status": 200,
+            "campaign_items_visible": 2,
+            "cold_start_ready": 1,
+            "cold_start_loading": 0,
+            "cold_start_empty": 0,
+            "cold_start_error": 0,
+            "campaign_id": null,
+            "warn_reason": null,
+            "error": null
+          },
+          "public_api": {
+            "surface": "home_hero",
+            "http_status": 200,
+            "api_count": 2,
+            "api_error": null
+          }
+        },
+        {
+          "surface": "market_feed",
+          "public_api_count": 3,
+          "page_csr_dom_count": 3,
+          "csr_ready": true,
+          "guest_reconcile_judgment": "aligned",
+          "page_probe": {
+            "surface": "market_feed",
+            "page_path": "/market",
+            "probe_status": "ok",
+            "probe_mode": "playwright_csr_guest",
+            "url": "https://tt-web-staging.fly.dev/market",
+            "http_status": 200,
+            "campaign_items_visible": 3,
+            "cold_start_ready": 1,
+            "cold_start_loading": 0,
+            "cold_start_empty": 0,
+            "cold_start_error": 0,
+            "campaign_id": "98ee6ab0-7197-4493-b3b4-761c782f6bcb",
+            "warn_reason": null,
+            "error": null
+          },
+          "public_api": {
+            "surface": "market_feed",
+            "http_status": 200,
+            "api_count": 3,
+            "api_error": null
+          }
+        },
+        {
+          "surface": "community_feed",
+          "public_api_count": 5,
+          "page_csr_dom_count": 5,
+          "csr_ready": true,
+          "guest_reconcile_judgment": "aligned",
+          "page_probe": {
+            "surface": "community_feed",
+            "page_path": "/community",
+            "probe_status": "ok",
+            "probe_mode": "playwright_csr_guest",
+            "url": "https://tt-web-staging.fly.dev/community",
+            "http_status": 200,
+            "campaign_items_visible": 5,
+            "cold_start_ready": 1,
+            "cold_start_loading": 0,
+            "cold_start_empty": 0,
+            "cold_start_error": 0,
+            "campaign_id": "2b15b465-f107-46fe-a904-48adb7fbbcac",
+            "warn_reason": null,
+            "error": null
+          },
+          "public_api": {
+            "surface": "community_feed",
+            "http_status": 200,
+            "api_count": 5,
+            "api_error": null
+          }
+        }
+      ],
+      "summary": {
+        "aligned": 4,
+        "filtered_after_load": 0,
+        "fe_not_loaded": 0,
+        "static_html_blind_spots": 3
+      }
+    }
+  ]
+}

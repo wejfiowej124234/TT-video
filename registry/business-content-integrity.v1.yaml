@@ -140,11 +140,18 @@ pdca:
     run_index: evidence/GO_pdca_business_content/PDCA-LATEST.json
     remediation_r01: evidence/GO_pdca_business_content/PDCA-REMEDIATION-R01-LATEST.json
     guest_csr: evidence/GO_pdca_business_content/GUEST-CSR-RECONCILE-LATEST.json
+    solo_release_r01: evidence/GO_pdca_business_content/SOLO-RELEASE-R01-STAGING-VERIFY-LATEST.json
 
 pdca_remediation:
-  active: R-01
-  status: FIX_APPLIED_AWAITING_STAGING_DEPLOY_VERIFY
+  active: null
+  status: CLOSED
+  closed_at_utc: "2026-07-14T18:47:07Z"
+  rc_git_sha: e4fe13e2
+  staging_web_deploy: tt-web-staging@20260714T184503Z
   guest_csr_runner: scripts/dev/run-pdca-guest-csr-reconcile.cjs
+  verify_evidence:
+    guest_csr: evidence/GO_pdca_business_content/20260714T184503Z
+    pdca: evidence/GO_pdca_business_content/20260714T184707Z
   root_causes_closed:
     - R-01-COMMUNITY
     - R-01-HOME_HERO

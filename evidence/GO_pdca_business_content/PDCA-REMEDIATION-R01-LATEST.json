@@ -2,8 +2,8 @@
   "schema": "traveltrust.pdca_remediation.v1",
   "remediation_id": "R-01",
   "captured_at_utc": "2026-07-14T18:25:00Z",
-  "phase": "local_engineering",
-  "status": "FIX_APPLIED_AWAITING_STAGING_DEPLOY_VERIFY",
+  "phase": "staging_verified",
+  "status": "CLOSED",
   "issues": [
     {
       "id": "R-01-COMMUNITY",
@@ -26,5 +26,28 @@
       ]
     }
   ],
-  "prior_evidence": "evidence/GO_pdca_business_content/20260714T180511Z/guest-csr-reconcile.json"
+  "prior_evidence": "evidence/GO_pdca_business_content/20260714T180511Z/guest-csr-reconcile.json",
+  "closed_at_utc": "2026-07-14T18:47:07Z",
+  "rc_git_sha": "e4fe13e2",
+  "staging_deploy": {
+    "web": "tt-web-staging",
+    "deployed_at_utc": "2026-07-14T18:45:00Z"
+  },
+  "verify": {
+    "guest_csr": "evidence/GO_pdca_business_content/20260714T184503Z",
+    "pdca": "evidence/GO_pdca_business_content/20260714T184707Z",
+    "community": {
+      "api": 10,
+      "dom": 10,
+      "judgment": "aligned"
+    },
+    "home_hero": {
+      "api": 2,
+      "dom": 2,
+      "judgment": "aligned"
+    },
+    "pdca_diff": "PASS",
+    "pdca_integrity": "WARN",
+    "pdca_integrity_note": "destination_admin STAGING_ROUTE_NOT_DEPLOYED pre-existing; not R-01 scope"
+  }
 }
