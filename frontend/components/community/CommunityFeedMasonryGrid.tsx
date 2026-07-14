@@ -13,6 +13,7 @@ import {
 } from "@/components/community/CommunityFeedPromoSlots";
 import { CommunityFeedVideoAutoplayProvider } from "@/components/community/CommunityFeedVideoAutoplayContext";
 import { communityFeedMasonryPostsExcludingPromoPreview, pickCommunityFeedPromoPreviewPost } from "@/components/community/communityFeedPromoMedia";
+import { COMMUNITY_FEED_LIST_DEFAULT_PAGE } from "@/lib/apiClient/community/constants";
 import { TT_COMMUNITY_FEED_LAYOUT, TT_COMMUNITY_FEED_L5 } from "@/lib/marketingUi";
 import type { CommunityFeedListProps } from "./communityFeedListTypes";
 
@@ -63,7 +64,10 @@ export function CommunityFeedMasonryGrid({
   showPromoSlots = false,
   hotDestinations = [],
 }: CommunityFeedMasonryGridProps) {
-  const previewPost = showPromoSlots ? pickCommunityFeedPromoPreviewPost(postsToShow) : undefined;
+  const previewPost =
+    showPromoSlots && postsToShow.length > COMMUNITY_FEED_LIST_DEFAULT_PAGE
+      ? pickCommunityFeedPromoPreviewPost(postsToShow)
+      : undefined;
   const gridPosts = communityFeedMasonryPostsExcludingPromoPreview(postsToShow, {
     showPromoSlots,
     previewPost,

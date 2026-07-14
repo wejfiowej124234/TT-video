@@ -5,7 +5,12 @@ import type { ColdStartCampaignItem, ColdStartCampaignPayload } from "./types";
 /** Static cover when API omits image (official guide accounts). */
 export const COLD_START_CONSUMER_COVER_FALLBACK = "/market-backdrop-travel-guilin-sunset.png";
 
-const ALLOWED_ITEM_TYPES = new Set(["official_account", "itinerary_template", "guide_post"]);
+const ALLOWED_ITEM_TYPES = new Set([
+  "official_account",
+  "itinerary_template",
+  "guide_post",
+  "guide",
+]);
 
 /** Reject ops / smoke / sprint identifiers and dev terminology in consumer copy. */
 const INTERNAL_TEXT_PATTERN =
@@ -47,6 +52,9 @@ export function isInternalConsumerText(value: string | null | undefined): boolea
 
 function resolveItemHref(item: ColdStartCampaignItem): string | null {
   const r = item.resolved as Record<string, unknown>;
+  if (item.item_type === "guide" && typeof r.id === "string" && r.id) {
+    return `/guides/${encodeURIComponent(r.id)}`;
+  }
   if (item.item_type === "official_account" && typeof r.linked_guide_id === "string" && r.linked_guide_id) {
     return `/guides/${encodeURIComponent(r.linked_guide_id)}`;
   }
@@ -74,7 +82,7 @@ function inferGuidePostCategory(tags: string[] | undefined): ColdStartConsumerCa
 }
 
 function categoryForItem(item: ColdStartCampaignItem): ColdStartConsumerCategory | null {
-  if (item.item_type === "official_account") return "official_guide";
+  if (item.item_type === "official_account" || item.item_type === "guide") return "official_guide";
   if (item.item_type === "itinerary_template") return "official_route";
   if (item.item_type === "guide_post") {
     const tags = (item.resolved as { tags?: string[] }).tags;
@@ -111,6 +119,15 @@ function resolveTitle(item: ColdStartCampaignItem): string | null {
   if (item.item_type === "official_account" && typeof r.display_label === "string") {
     return r.display_label.trim() || null;
   }
+  if (item.item_type === "guide") {
+    if (typeof r.public_title === "string" && r.public_title.trim()) {
+      return r.public_title.trim();
+    }
+    if (typeof r.city === "string" && r.city.trim()) {
+      return r.city.trim();
+    }
+    return null;
+  }
   if (
     (item.item_type === "itinerary_template" || item.item_type === "guide_post") &&
     typeof r.title === "string"
@@ -131,6 +148,11 @@ function resolveSubtitle(item: ColdStartCampaignItem, t: LocaleTranslateFn): str
     const destination = r.country_iso.trim();
     if (isInternalConsumerText(destination)) return t("cold_start_consumer_subtitle_default");
     return t("cold_start_consumer_subtitle_destination", { destination });
+  }
+  if (item.item_type === "guide" && typeof r.city === "string" && r.city.trim()) {
+    const city = r.city.trim();
+    if (isInternalConsumerText(city)) return t("cold_start_consumer_subtitle_default");
+    return t("cold_start_consumer_subtitle_destination", { destination: city });
   }
   if (item.item_type === "official_account") {
     return t("cold_start_consumer_subtitle_official_guide");

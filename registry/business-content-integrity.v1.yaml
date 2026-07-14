@@ -1,0 +1,168 @@
+# TravelTrust · Business Content Integrity (BCI) v1.1
+# Human SSOT: docs/runbook/TT-BUSINESS-CONTENT-INTEGRITY-SSOT.md
+# PDCA: docs/runbook/TT-PDCA-PRODUCTION-DATA-CONSISTENCY-AUDIT.md
+
+schema: traveltrust.business_content_integrity.v1
+version: 2
+effective_utc: "2026-07-14"
+status: ACTIVE
+
+machine_keys:
+  TT_BUSINESS_CONTENT_INTEGRITY: ACTIVE
+  TT_BCI_DISCIPLINE: ENFORCED
+  TT_BCI_BASELINE_MODE: SNAPSHOT_DIFF
+  TT_CONTENT_VALIDATION_CADENCE: daily
+  TT_CONTENT_AS_REGRESSABLE_ASSET: REQUIRED
+  TT_BCI_RUNBOOK: docs/runbook/TT-BUSINESS-CONTENT-INTEGRITY-SSOT.md
+  TT_PDCA_RUNBOOK: docs/runbook/TT-PDCA-PRODUCTION-DATA-CONSISTENCY-AUDIT.md
+  TT_PDCA_RUNNER: scripts/dev/run-pdca-business-content-snapshot.cjs
+
+product_asset_principle: >-
+  Any user-facing business content (CMS, OCS, Public Catalog, operational data)
+  is a product asset, not test data. Product assets require an integrity baseline
+  independent of engineering release validation, with continuous monitoring of
+  count, identity, binding, visibility, and ownership drift.
+
+diagnosis:
+  not_missing:
+    - DDG
+    - OCS
+    - Public_Catalog
+    - CMS_Automation
+    - Official_Asset_Baseline
+    - OCS_Surface_Expansion
+    - Alignment_Audit
+  missing:
+    - continuous_snapshot_diff_baseline
+    - quantity_and_identity_and_ownership_slices
+  anti_patterns:
+    - guide_api_200_pass_while_count_drops
+    - stable_total_while_official_becomes_test
+    - stable_count_while_country_ownership_wrong
+
+baseline_mode:
+  mode: SNAPSHOT_DIFF
+  forbidden_in_framework:
+    - hardcoded_expected_counts_per_surface
+    - ocs_cold_start_n_as_framework_floor
+  allowed:
+    - snapshot_to_snapshot_diff
+    - reference_only_annotations
+  thresholds:
+    warn_absolute_drop: 1
+    fail_ratio_of_previous: 0.6
+    identity_collapse: FAIL
+    ownership_collapse: FAIL
+  first_run:
+    summary_verdict: FIRST_SNAPSHOT
+    diff_required: false
+
+reference_only_annotations:
+  note: >-
+    OCS Phase 1 cold-start counts (e.g. 10) may appear in baseline.json.reference
+    for human context only. Operational expansion (30/80/500) updates snapshot;
+    framework SSOT must not be edited.
+  ocs_cold_start_phase1_example:
+    reference_only: true
+    surfaces_example: [official_guide, community, destination, campaign, merchant, hero]
+
+disciplines:
+  release_validation:
+    id: RELEASE_VALIDATION
+    owns: [api, auth, wallet, payment, governance, escrow]
+    does_not_certify: [content_completeness, business_baseline]
+    forbidden_pass_signal: http_200_with_empty_list_as_content_ok
+
+  content_validation:
+    id: CONTENT_VALIDATION
+    cadence: daily
+    domains:
+      - CMS
+      - Guide
+      - Destination
+      - Campaign
+      - Merchant
+      - Community
+      - Official_Guide
+      - Hero
+    note: Domain coverage; verdicts from snapshot diff + integrity
+
+  business_baseline:
+    id: BUSINESS_BASELINE
+    also_known_as: BCI
+    compare: previous_snapshot_to_current_snapshot
+    not: fixed_expected_floor_in_ssot
+
+bci_dimensions:
+  - id: count
+  - id: identity
+  - id: data_origin
+  - id: lifecycle
+  - id: visibility
+  - id: media
+  - id: cms_binding
+  - id: catalog
+  - id: ownership
+    checks:
+      - is_official
+      - organization_match
+      - country_destination_match
+      - data_origin_match
+      - cms_entry_catalog_page_chain
+
+identity_slices:
+  community:
+    public_facing_must_not_substitute_with: [draft, hidden, deleted, test, demo, smoke]
+  official_guide:
+    track: [official, published, media_bound, hero, locale]
+
+hooks:
+  daily_ops:
+    runner: scripts/dev/run-pdca-business-content-snapshot.cjs
+    purpose: detect_operational_misconfiguration_daily_drift
+  release_pipeline:
+    runner: scripts/dev/run-pdca-business-content-snapshot.cjs
+    env:
+      TRAVELTRUST_PDCA_REQUIRE_PASS: "1"
+    purpose: detect_pre_release_drift
+
+pdca:
+  full_name: Production Data Consistency Audit
+  baseline_mode: SNAPSHOT_DIFF
+  evidence_root: evidence/GO_pdca_business_content
+  artifacts:
+    - baseline.json
+    - diff.json
+    - integrity.json
+    - report.md
+  latest_pointers:
+    baseline: evidence/GO_pdca_business_content/BASELINE-LATEST.json
+    run_index: evidence/GO_pdca_business_content/PDCA-LATEST.json
+    remediation_r01: evidence/GO_pdca_business_content/PDCA-REMEDIATION-R01-LATEST.json
+    guest_csr: evidence/GO_pdca_business_content/GUEST-CSR-RECONCILE-LATEST.json
+
+pdca_remediation:
+  active: R-01
+  status: FIX_APPLIED_AWAITING_STAGING_DEPLOY_VERIFY
+  guest_csr_runner: scripts/dev/run-pdca-guest-csr-reconcile.cjs
+  root_causes_closed:
+    - R-01-COMMUNITY
+    - R-01-HOME_HERO
+
+relationship_to_existing_gates:
+  parallel_to: Release_Validation
+  complements: [DDG, OCS, Public_Catalog, CMS]
+  does_not_reopen_by_default:
+    - RELEASE_CANDIDATE
+    - STAGING_FULL_SITE_DDG
+    - TT_OFFICIAL_COLD_START_DATASET
+
+forbidden:
+  - hardcoded_expected_counts_in_framework_ssot
+  - empty_list_http_200_as_bci_pass
+  - total_count_masking_identity_drift
+  - total_count_masking_ownership_drift
+  - draft_or_test_padding_public_facing_counts
+  - silent_snapshot_reduction_to_restore_pass
+  - pdca_single_report_without_json_artifacts
+  - treating_content_migration_as_one_shot_without_regression_baseline

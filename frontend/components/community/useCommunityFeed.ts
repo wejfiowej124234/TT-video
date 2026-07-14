@@ -12,10 +12,13 @@ import { useCommunityFeedPublishSubmit } from "@/components/community/useCommuni
 import { useCommunityAuth, type CommunityMeUser } from "@/components/community/CommunityAuthContext";
 import { useCommunityPublish } from "@/components/community/CommunityPublishContext";
 import {
-  FEED_PAGE_SIZE,
   type FeedTab,
   type SortBy,
 } from "@/components/community/communityFeedConstants";
+import {
+  communityFeedHasMoreFromClientSlice,
+  resolveCommunityFeedPostsToShow,
+} from "@/components/community/communityFeedVisiblePosts";
 import { useCommunityFeedFilters } from "@/components/community/useCommunityFeedFilters";
 import { useCommunityFeedAnchorPoi } from "@/components/community/useCommunityFeedAnchorPoi";
 import {
@@ -382,11 +385,21 @@ export function useCommunityFeed(options?: { initialSnapshot?: CommunityFeedInit
   }, [showLoginModal]);
 
   const postsToShow = useMemo(
-    () => searchFilteredPosts.slice(0, feedPage * FEED_PAGE_SIZE),
-    [searchFilteredPosts, feedPage]
+    () =>
+      resolveCommunityFeedPostsToShow({
+        searchFilteredPosts,
+        feedPage,
+        feedFromApi,
+        feedNextCursor,
+      }),
+    [searchFilteredPosts, feedPage, feedFromApi, feedNextCursor],
   );
   const hasMoreFromApi = feedNextCursor != null;
-  const hasMoreFromClient = feedPage * FEED_PAGE_SIZE < searchFilteredPosts.length;
+  const hasMoreFromClient = communityFeedHasMoreFromClientSlice({
+    searchFilteredPosts,
+    feedPage,
+    feedNextCursor,
+  });
   const hasMore = hasMoreFromApi || hasMoreFromClient;
 
   const retryMeCollectsLoad = useCallback(() => {

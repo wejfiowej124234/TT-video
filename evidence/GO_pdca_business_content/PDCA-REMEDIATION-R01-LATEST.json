@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.pdca_remediation.v1",
+  "remediation_id": "R-01",
+  "captured_at_utc": "2026-07-14T18:25:00Z",
+  "phase": "local_engineering",
+  "status": "FIX_APPLIED_AWAITING_STAGING_DEPLOY_VERIFY",
+  "issues": [
+    {
+      "id": "R-01-COMMUNITY",
+      "surface": "community",
+      "symptom": "Public API count=10 vs Guest CSR masonry DOM=5 on Staging",
+      "root_cause": "Client-only feed paging (FEED_PAGE_SIZE=6 on feedPage=1) plus promo preview deduplication removed one masonry card while the full Public API batch was already in memory (feedNextCursor=null).",
+      "fix": [
+        "frontend/components/community/communityFeedVisiblePosts.ts",
+        "frontend/components/community/useCommunityFeed.ts",
+        "frontend/components/community/CommunityFeedMasonryGrid.tsx"
+      ]
+    },
+    {
+      "id": "R-01-HOME_HERO",
+      "surface": "campaign.home_hero",
+      "symptom": "Public API items=2 vs Guest CSR campaign-items=1",
+      "root_cause": "Consumer presentation omitted API item_type guide; catalog guide row was dropped in filterConsumerHighlightCards.",
+      "fix": [
+        "frontend/lib/coldStartCampaign/coldStartConsumerPresentation.ts"
+      ]
+    }
+  ],
+  "prior_evidence": "evidence/GO_pdca_business_content/20260714T180511Z/guest-csr-reconcile.json"
+}

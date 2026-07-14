@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { FEED_PAGE_SIZE } from "@/components/community/communityFeedConstants";
+import {
+  communityFeedHasMoreFromClientSlice,
+  resolveCommunityFeedPostsToShow,
+} from "@/components/community/communityFeedVisiblePosts";
 import type { UseCommunityFeedTopicReportCommentChainOptions } from "@/components/community/communityFeedTopicAndTailHookModel";
 import { useCommunityFeedTopicDestinationUrl } from "@/components/community/useCommunityFeedTopicDestinationUrl";
 import { useCommunityFeedPostDeepLink } from "@/components/community/useCommunityFeedPostDeepLink";
@@ -126,11 +129,21 @@ export function useCommunityFeedTopicReportCommentChain(options: UseCommunityFee
   });
 
   const postsToShow = useMemo(
-    () => searchFilteredPosts.slice(0, feedPage * FEED_PAGE_SIZE),
-    [searchFilteredPosts, feedPage],
+    () =>
+      resolveCommunityFeedPostsToShow({
+        searchFilteredPosts,
+        feedPage,
+        feedFromApi: true,
+        feedNextCursor,
+      }),
+    [searchFilteredPosts, feedPage, feedNextCursor],
   );
   const hasMoreFromApi = feedNextCursor != null;
-  const hasMoreFromClient = feedPage * FEED_PAGE_SIZE < searchFilteredPosts.length;
+  const hasMoreFromClient = communityFeedHasMoreFromClientSlice({
+    searchFilteredPosts,
+    feedPage,
+    feedNextCursor,
+  });
   const hasMore = hasMoreFromApi || hasMoreFromClient;
 
   useEffect(() => {

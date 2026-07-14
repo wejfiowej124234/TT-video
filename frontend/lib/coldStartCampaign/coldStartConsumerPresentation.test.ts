@@ -97,4 +97,24 @@ describe("coldStartConsumerPresentation", () => {
     expect(result.visible).toBe(true);
     expect(filterConsumerHighlightCards(consumerCampaign.items, t)).toHaveLength(2);
   });
+
+  it("maps catalog guide items to consumer highlight cards", () => {
+    const guideCatalogItem: ColdStartCampaignItem = {
+      id: "item-catalog-guide",
+      item_type: "guide",
+      sort_order: 0,
+      payload: {},
+      resolved: {
+        id: "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
+        city: "东京",
+        public_title: null,
+        display_status: "published",
+      },
+    };
+    const card = buildConsumerHighlightCard(guideCatalogItem, t);
+    expect(card).not.toBeNull();
+    expect(card?.href).toBe("/guides/b4d9ecf8-4762-4bc8-95f6-d1c339d2975b");
+    expect(card?.title).toBe("东京");
+    expect(filterConsumerHighlightCards([guideCatalogItem, validRouteItem], t)).toHaveLength(2);
+  });
 });
