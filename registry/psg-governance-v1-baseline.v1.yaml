@@ -11,14 +11,28 @@ schema: traveltrust.psg_governance_v1_baseline.v1
 version: 1
 machine_key: TT_PSG_GOVERNANCE_V1
 status: BASELINE_ESTABLISHED
+frozen: true
 established_utc: "2026-07-17T17:30:00Z"
+discipline_locked_utc: "2026-07-17T17:45:00Z"
 layer: post_psg_change_control
+
+# Human-normative discipline (Runbook only — no new Gate):
+# After BASELINE_ESTABLISHED, do not add first-class governance capabilities in v1.
+# Start Governance v2 design only when a new architecture-level governance problem
+# cannot be covered by existing Capability, RCP, or Incremental Audit.
+# Ordinary bugs, features, module governance, and targeted fixes reuse v1.
+governance_discipline_v1: >
+  PSG Governance v1 进入 BASELINE_ESTABLISHED 后，不允许在 v1 中新增一级治理能力；
+  新增能力必须满足「新的架构级治理问题无法通过现有 Capability、RCP 或 Incremental Audit 覆盖」
+  这一条件，方可启动 PSG Governance v2 设计。普通 Bug、功能开发、模块治理和专项修复，
+  应优先复用 v1 能力，而不是扩展治理框架。
 
 meaning:
   - all_future_runtime_changes_use_rcp_path
   - no_new_first_class_governance_capabilities_in_v1
   - evolve_to_v2_only_for_architecture_level_problems
   - psg_must_not_inflate_indefinitely
+  - ordinary_work_reuses_v1_not_expands_framework
 
 not_meaning:
   - COMPLETE
@@ -39,15 +53,18 @@ baseline_artifacts:
   gap_runbook: docs/runbook/TT-PSG-RUNTIME-CHANGE-PROPAGATION-ENTERPRISE-DEEPENING-GAP-LATEST.md
 
 active_ops_path: |
-  Feature → Incremental Audit → RCP Gate → Deploy
+  Feature → Local Validation → Incremental Audit → RCP Gate
+  → Staging Deploy → Verification
   (not: Feature → continue designing PSG)
 
 mainline_return:
   status: RETURN_TO_MAINLINE
+  governance_design_track: EXITED
   note: >
     Stop expanding Governance design. Product work resumes on TravelTrust
     Mainline (feature / bugfix / CMS / Market / Wallet / Web3 / Payment /
-    Production Release). RCP remains the mandatory runtime-change check.
+    Production Release). All new features default into existing v1 flow;
+    no new first-class governance capability required.
 
 immutable_surfaces_must_not_touch:
   - evidence/GO_psg_foundation/release_archive/v1.1.0-psg-go.20260717/
@@ -58,5 +75,12 @@ immutable_surfaces_must_not_touch:
   - OA-01 / OA-02
 
 v2_unlock_only_when:
+  - architecture_level_problem_cannot_be_covered_by_existing_capability_or_rcp_or_incremental_audit
   - architecture_level_problem_not_solvable_by_registry_domain_extension
   - owner_explicit_governance_v2_charter
+
+forbid_in_v1:
+  - new_first_class_governance_capability
+  - parallel_gate_language_per_module
+  - wave_c_d_rule_pile_expansion
+  - governance_framework_growth_for_ordinary_bugs_or_features

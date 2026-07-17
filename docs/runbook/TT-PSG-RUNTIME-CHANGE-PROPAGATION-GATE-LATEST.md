@@ -13,7 +13,9 @@
 
 **层位（写死）：** Post-PSG Change Control · **不是** 冻结 Certification 的重开 · **不是** Tag/Archive 刷新  
 
-**默认产品路径：** Feature → Incremental Audit → **RCP** → Deploy（**禁止**默认继续设计 PSG）  
+**默认产品路径：** Feature → Local Validation → Incremental Audit → **RCP Gate** → Staging Deploy → Verification（**禁止**默认继续设计 PSG）  
+
+**治理纪律（写死 · 不新增 Gate）：** v1 `BASELINE_ESTABLISHED` 后 **不允许**新增一级治理能力；仅当架构级问题无法被现有 Capability / RCP / Incremental Audit 覆盖时，才可启动 Governance **v2**。普通 Bug / 功能 / 模块治理 / 专项修复 **优先复用 v1**。全文见 [BASELINE 纪律节](./TT-PSG-GOVERNANCE-V1-BASELINE-ESTABLISHED-LATEST.md#治理纪律v1--防膨胀--不新增-gate)。  
 
 **维护铁律：** Gap Matrix · Probe Scope · Validation Scope · Compatibility Matrix · Deploy Dependency Graph **只**从 Dependency Registry 生成；禁止在 Gate binder 或散文里平行维护第二份。  
 
