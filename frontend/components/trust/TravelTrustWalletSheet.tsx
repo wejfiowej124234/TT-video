@@ -26,9 +26,9 @@ type AnchorPos = {
   mobile: boolean;
 };
 
-/** Dense grid cell — 2 cols × 3 rows fits without scroll. */
+/** Dense grid cell — 2 cols × 3 rows; L5 pill row (icon · name · 安装/●). */
 const CELL =
-  "flex min-h-[2.75rem] items-center gap-2 rounded-lg border border-ref-sun/20 bg-[#14100d]/85 px-2 py-1.5 text-left transition-[border-color,background-color] duration-150 hover:border-ref-sun/42 hover:bg-ref-sun/[0.08] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/40";
+  "flex min-h-[2.75rem] items-center gap-2 rounded-xl border border-ref-sun/25 bg-[#14100d]/90 px-2.5 py-1.5 text-left transition-[border-color,background-color] duration-150 hover:border-ref-sun/45 hover:bg-ref-sun/[0.08] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/40";
 
 function brandLabel(
   t: (k: string, p?: Record<string, string | number>) => string,
@@ -145,35 +145,35 @@ function RecommendedCell({
   row,
   onConnect,
   t,
+  activeBrandKey,
 }: {
   row: RecommendedBrandRow;
   onConnect: (c: Connector) => void;
   t: (k: string, p?: Record<string, string | number>) => string;
+  activeBrandKey?: string | null;
 }) {
   const { short, full } = brandDisplay(t, row.brandKey, row.brandKey);
+  const iconUrl = row.connector?.icon ?? null;
+  /** Installed → connect. Missing extension → official install URL (L5 · not connect-fail). */
   if (row.connector && row.installed) {
+    const isCurrent = activeBrandKey === row.brandKey;
     return (
       <WalletCell
+        brandKey={row.brandKey}
+        iconUrl={iconUrl}
         shortLabel={short}
         fullLabel={full}
         installed
-        installHint={t("wallet_installed")}
-        onClick={() => onConnect(row.connector!)}
-      />
-    );
-  }
-  if (row.connector && !row.installed) {
-    return (
-      <WalletCell
-        shortLabel={short}
-        fullLabel={full}
-        installHint={t("wallet_not_installed")}
+        current={isCurrent}
+        installHint={isCurrent ? t("wallet_current") : t("wallet_installed")}
         onClick={() => onConnect(row.connector!)}
       />
     );
   }
   return (
     <WalletCell
+      brandKey={row.brandKey}
+      iconUrl={iconUrl}
       shortLabel={short}
       fullLabel={full}
       installHint={t("wallet_not_installed")}
@@ -404,15 +404,14 @@ export function TravelTrustWalletSheet({ ctrl, authL5 }: Props) {
               ))}
             </div>
           ) : (
-            <div
-              className="mt-1.5 rounded-md border border-white/10 bg-white/[0.03] px-2 py-1.5"
+            <p
+              className="mt-1.5 px-0.5 text-meta text-[#f5e6c8]"
               data-tt-wallet-wc-unconfigured="1"
               role="status"
               title={t("wallet_wc_unconfigured")}
             >
-              <p className="text-meta text-slate-300">{t("wallet_wc_mobile_deferred")}</p>
-              <p className="mt-0.5 text-meta text-[#d4b87a]">{t("wallet_wc_injected_still_ok")}</p>
-            </div>
+              {t("wallet_wc_unconfigured_short")}
+            </p>
           )}
 
           {extras.length > 0 ? (
@@ -442,20 +441,21 @@ export function TravelTrustWalletSheet({ ctrl, authL5 }: Props) {
             </div>
           ) : null}
 
-          <div className="mt-1.5 flex flex-wrap items-center gap-x-3 border-t border-ref-sun/12 px-0.5 pt-1.5">
+          <div className="mt-1.5 flex flex-wrap items-center gap-x-2 border-t border-ref-sun/12 px-0.5 pt-1.5 text-meta">
+            <span className="text-[#f5e6c8]">{t("wallet_no_wallet_prompt")}</span>
             <a
               href="https://ethereum.org/wallets/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-meta font-medium text-[#e8d4a8] underline-offset-2 hover:text-[#fde9a8] hover:underline"
+              className="font-medium text-[#e8d4a8] underline-offset-2 hover:text-[#fde9a8] hover:underline"
             >
-              {t("wallet_install_help")}
+              {t("wallet_install_help_link")}
             </a>
             {!showViewOnly ? (
               <button
                 type="button"
                 role="menuitem"
-                className="text-meta font-medium text-[#e8d4a8] hover:text-[#fde9a8]"
+                className="font-medium text-[#e8d4a8] hover:text-[#fde9a8]"
                 onClick={() => {
                   setShowViewOnly(true);
                   setAddrError(null);

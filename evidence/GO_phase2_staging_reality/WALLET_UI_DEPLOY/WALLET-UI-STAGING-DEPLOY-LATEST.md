@@ -1,0 +1,8 @@
+# Wallet UI Deploy · Staging (LATEST)
+
+**STATUS:** WALLET_UI_DEPLOY: PASS
+**KIND:** L5_UI_CONTRACT_FIX
+**Fly:** deployment-01KXR5WBYQFEXA28CPVMKX5HWJ
+**OA-01:** BLOCKED
+**OA-02:** LOCKED_BY_OA01
+**PSG Tag/Archive/GO:** untouched

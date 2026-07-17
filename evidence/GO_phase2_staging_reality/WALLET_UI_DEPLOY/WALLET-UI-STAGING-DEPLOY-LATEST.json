@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.wallet_ui_staging_deploy.v1",
+  "machine_key": "WALLET_UI_DEPLOY",
+  "kind": "L5_UI_CONTRACT_FIX",
+  "status": "PASS",
+  "recorded_utc": "2026-07-17T14:11:00Z",
+  "git_head": "a5593b73c865fe3db322972c07c012cf1e236268",
+  "deploy_source": "git_commit_pending_head",
+  "web": "https://tt-web-staging.fly.dev",
+  "fly_image": "registry.fly.io/tt-web-staging:deployment-01KXR5WBYQFEXA28CPVMKX5HWJ",
+  "supersedes_fly_image": "registry.fly.io/tt-web-staging:deployment-01KXR3V7G5GZM3Z9P2VDH9QJ4R",
+  "home_http": 200,
+  "wc_project_id": "KEY_ABSENT",
+  "oa01_wc_activation": "BLOCKED",
+  "oa02": "LOCKED_BY_OA01",
+  "psg_archive_tag_untouched": true,
+  "baseline_tag": "v1.1.0-psg-go.20260717",
+  "baseline_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+  "tt_production_go": "GO",
+  "browser_verify": {
+    "sheet_open": true,
+    "brand_icons": true,
+    "install_chip": true,
+    "view_only": true,
+    "wc_unconfigured_copy": "WalletConnect 未配置"
+  },
+  "not_new_capability": true,
+  "d1_closure": "committing_l5_contract_fix_to_feature_g23",
+  "updated_utc": "2026-07-17T14:16:46Z"
+}

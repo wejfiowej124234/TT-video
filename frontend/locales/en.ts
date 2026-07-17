@@ -9239,9 +9239,11 @@ export default {
   wallet_installed: "Installed",
   wallet_current: "Current",
   wallet_install_help: "No wallet yet? Install help",
+  wallet_no_wallet_prompt: "No wallet installed?",
+  wallet_install_help_link: "Install help",
   wallet_wc_unconfigured:
     "WalletConnect / mobile wallet not activated (needs Project ID). Browser extensions still work; QR and deep link come later.",
-  wallet_wc_unconfigured_short: "Mobile wallet connect is not enabled yet",
+  wallet_wc_unconfigured_short: "WalletConnect not configured",
   wallet_wc_mobile_deferred: "Mobile wallet connect is not enabled yet",
   wallet_wc_injected_still_ok: "Browser extension wallets still work normally",
   wallet_wc_mobile_deeplink:

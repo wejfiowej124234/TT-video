@@ -1,22 +1,34 @@
 # OA-01 · WalletConnect Activation（LATEST）
 
-**STATUS:** **BLOCKED**  
-**Machine:** `WC_PROJECT_ID: KEY_ABSENT`（见 `evidence/GO_phase2_staging_reality/OA-01/WC-PROJECT-ID-PROBE-LATEST.json`）
+**STATUS:** **BLOCKED**（仅 WalletConnect 激活）  
+**Machine:** `WC_PROJECT_ID: KEY_ABSENT`  
+**Companion:** Wallet UI Deploy = **PASS**（见 `evidence/GO_phase2_staging_reality/WALLET_UI_DEPLOY/`）
 
-## Exit
+## Gate split（写死）
 
-`WC_PROJECT_ID: KEY_PRESENT` + 只读探针 PASS +（可选）`tt-web-staging` 重建验证 QR/Deep Link
+```text
+Wallet UI Deploy          → PASS（Injected / Read-only / Sheet · Staging）
+OA-01 WalletConnect       → BLOCKED until KEY_PRESENT（诚实降级「未配置」）
+OA-02 Real Device QR/DL   → LOCKED_BY_OA01
+```
+
+`KEY_ABSENT` **不**阻塞钱包 UI 上线；只阻塞 WalletConnect QR / Deep Link 与 OA-02。
+
+## Exit（本闸）
+
+`WC_PROJECT_ID: KEY_PRESENT` + probe PASS + Staging rebuild + QR/Deep Link 验证
 
 ## Owner 步骤（禁 Git 提交密钥）
 
 1. Reown Cloud 创建 32-hex Project ID，绑定 `tt-web-staging.fly.dev`
 2. `bash scripts/dev/set-walletconnect-project-id.sh '<32-hex>'`
 3. `node scripts/dev/probe-walletconnect-project-id.cjs` → KEY_PRESENT
-4. Owner 授权后重建 Staging Web
-5. 验证 QR / Deep Link → 才解锁 OA-02
+4. 重建 Staging Web
+5. 验证 QR / Deep Link → 解锁 OA-02
 
 ## Forbidden
 
-- 绕过 OA-01 进入 OA-02 / OA-04
+- 用 KEY_ABSENT 否决已部署的 Injected / View-only UI
+- 绕过 KEY_PRESENT 宣称 OA-02 PASS
 - 修改 PSG / Release Archive / Tag
 - 提交 `.env*` / Project ID 进 Git

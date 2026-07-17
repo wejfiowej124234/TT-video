@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.wallet_l5_ui_contract_fix_deploy.v1",
+  "kind": "L5_UI_CONTRACT_FIX",
+  "status": "PASS",
+  "recorded_utc": "2026-07-17T14:06:12Z",
+  "web": "https://tt-web-staging.fly.dev",
+  "fly_image": "registry.fly.io/tt-web-staging:deployment-01KXR5WBYQFEXA28CPVMKX5HWJ",
+  "home_http": 200,
+  "locale_markers": [
+    "WalletConnect 未配置",
+    "没有安装钱包？",
+    "查看安装帮助"
+  ],
+  "oa01": "BLOCKED",
+  "oa02": "LOCKED_BY_OA01",
+  "psg_archive_tag_untouched": true,
+  "not_new_capability": true,
+  "git_head": "a5593b73c865fe3db322972c07c012cf1e236268",
+  "deploy_source": "git_commit_pending_head",
+  "baseline_tag": "v1.1.0-psg-go.20260717",
+  "baseline_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+  "tt_production_go": "GO",
+  "updated_utc": "2026-07-17T14:16:46Z",
+  "d1_closure": "committing_l5_contract_fix_to_feature_g23"
+}

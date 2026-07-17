@@ -1,0 +1,109 @@
+{
+  "schema": "traveltrust.psg_consistency_audit_incremental.v1",
+  "machine_key": "PSG_CONSISTENCY_AUDIT_INCREMENTAL_WALLET_L5",
+  "kind": "INCREMENTAL_PSG_CONSISTENCY_AUDIT",
+  "recorded_utc": "2026-07-17T14:11:00Z",
+  "stamp": "20260717T141100Z",
+  "verdict": "PASS_WITH_DRIFT_CLEARED",
+  "checks": [
+    {
+      "id": "C1",
+      "item": "brandKey→WalletBrandIcon",
+      "status": "PASS"
+    },
+    {
+      "id": "C2",
+      "item": "Install URL when uninstalled",
+      "status": "PASS"
+    },
+    {
+      "id": "C3",
+      "item": "KEY_ABSENT WalletConnect 未配置",
+      "status": "PASS"
+    },
+    {
+      "id": "C4",
+      "item": "WalletStatusMini→Sheet",
+      "status": "PASS"
+    },
+    {
+      "id": "C5",
+      "item": "Vitest contracts",
+      "status": "PASS",
+      "detail": "7/7"
+    },
+    {
+      "id": "C6",
+      "item": "Staging live locale markers",
+      "status": "PASS"
+    },
+    {
+      "id": "C7",
+      "item": "Fly image↔Evidence LATEST",
+      "status": "PASS"
+    },
+    {
+      "id": "C8",
+      "item": "OA-01 BLOCKED / OA-02 LOCKED",
+      "status": "PASS"
+    },
+    {
+      "id": "C9",
+      "item": "Tag==baseline_sha 0bbc7adb",
+      "status": "PASS"
+    },
+    {
+      "id": "C10",
+      "item": "Production GO / Archive clean",
+      "status": "PASS"
+    }
+  ],
+  "drifts": [
+    {
+      "id": "D1",
+      "severity": "medium",
+      "status": "OPEN_TRACKED",
+      "summary": "Staging built from a5593b73 + uncommitted L5 contract-fix working tree",
+      "fix": "Owner commit when ready"
+    },
+    {
+      "id": "D2",
+      "severity": "low",
+      "status": "FIXED",
+      "summary": "LATEST fly image stale",
+      "fix": "Synced to 01KXR5WBY"
+    },
+    {
+      "id": "D3",
+      "severity": "low",
+      "status": "FIXED",
+      "summary": "machine_line omitted WALLET_UI_DEPLOY=PASS",
+      "fix": "Appended"
+    },
+    {
+      "id": "D4",
+      "severity": "low",
+      "status": "FIXED",
+      "summary": "Contract-fix evidence lacked provenance",
+      "fix": "Enriched"
+    }
+  ],
+  "frozen_boundaries_confirmed": {
+    "tag": "v1.1.0-psg-go.20260717",
+    "baseline_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+    "tt_production_go": "GO",
+    "oa01": "BLOCKED",
+    "oa02": "LOCKED_BY_OA01",
+    "oa04": "FORBIDDEN",
+    "psg_cert_rerun": false,
+    "release_archive_touched": false
+  },
+  "not": [
+    "Foundation re-run",
+    "Alignment re-run",
+    "Capability Certification re-run",
+    "Production Certification re-run",
+    "mutate frozen PSG evidence",
+    "mutate Tag / Release Archive / TT_PRODUCTION_GO"
+  ]
+}

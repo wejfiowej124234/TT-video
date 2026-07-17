@@ -23,8 +23,13 @@ forbidden:
   - claim_phase2_closed_without_evidence
 
 sequence:
+  - id: WALLET_UI_DEPLOY
+    title: Wallet L5 UI to Staging (Injected + Sheet + View-only; WC KEY_ABSENT graceful degrade)
+    status: PASS
+    exit: "WALLET_UI_DEPLOY: PASS on tt-web-staging"
+    evidence: evidence/GO_phase2_staging_reality/WALLET_UI_DEPLOY/
   - id: OA-01
-    title: WalletConnect Project ID + read-only probe (+ staging web rebuild when KEY_PRESENT)
+    title: WalletConnect Activation only (Project ID + KEY_PRESENT + QR/Deep Link rebuild)
     status: BLOCKED
     exit: "WC_PROJECT_ID: KEY_PRESENT + probe PASS + (optional) staging web redeploy verified"
     evidence: evidence/GO_phase2_staging_reality/OA-01/
@@ -58,4 +63,4 @@ sequence:
     status: FORBIDDEN_UNTIL_PHASE2_CLOSED
     exit: "separate batch after PHASE2_CLOSED"
 
-machine_line: TT_PHASE2_STAGING_REALITY_CLOSURE: ACTIVE OA-01=BLOCKED OA-02=LOCKED_BY_OA01 OA-04=FORBIDDEN
+machine_line: TT_PHASE2_STAGING_REALITY_CLOSURE: ACTIVE WALLET_UI_DEPLOY=PASS OA-01=BLOCKED OA-02=LOCKED_BY_OA01 OA-04=FORBIDDEN

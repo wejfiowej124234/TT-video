@@ -8983,9 +8983,11 @@ export default {
   wallet_installed: "已安装",
   wallet_current: "当前",
   wallet_install_help: "没有安装钱包？查看安装帮助",
+  wallet_no_wallet_prompt: "没有安装钱包？",
+  wallet_install_help_link: "查看安装帮助",
   wallet_wc_unconfigured:
     "WalletConnect / 手机钱包未激活（需 Project ID）。浏览器扩展钱包仍可连接；二维码与 Deep Link 后置。",
-  wallet_wc_unconfigured_short: "手机钱包连接暂未启用",
+  wallet_wc_unconfigured_short: "WalletConnect 未配置",
   wallet_wc_mobile_deferred: "手机钱包连接暂未启用",
   wallet_wc_injected_still_ok: "浏览器扩展钱包仍可正常连接",
   wallet_wc_mobile_deeplink: "手机端将通过 WalletConnect Deep Link 打开钱包 App；请在钱包内确认连接。",
