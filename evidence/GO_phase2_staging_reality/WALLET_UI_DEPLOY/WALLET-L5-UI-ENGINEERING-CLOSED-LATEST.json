@@ -4,8 +4,8 @@
   "status": "ENGINEERING_CLOSED",
   "recorded_utc": "2026-07-17T14:19:51Z",
   "stamp": "20260717T141951Z",
-  "git_head": "83f7206115d46352c62575f08e039c24138209bd",
-  "git_head_short": "83f72061",
+  "git_head": "d996f6aff6a9d93fbf83428590fdb1182f481a54",
+  "git_head_short": "d996f6af",
   "fly_image": "registry.fly.io/tt-web-staging:deployment-01KXR5WBYQFEXA28CPVMKX5HWJ",
   "aligned_with": {
     "code": "83f72061",
@@ -32,5 +32,11 @@
   "psg_archive_tag_untouched": true,
   "tt_production_go": "GO",
   "baseline_tag": "v1.1.0-psg-go.20260717",
-  "baseline_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84"
+  "baseline_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+  "wallet_contract_sha": "7bc00c267f805dd27b29175d5cea0a9cf8b3e2fc",
+  "wallet_contract_sha_short": "7bc00c26",
+  "updated_utc": "2026-07-17T14:30:40Z",
+  "four_layer_audit_stamp": "20260717T143040Z",
+  "repo_staging_evidence_aligned": true,
+  "alignment_note": "HEAD docs/status tip; wallet UI code tree identical to 7bc00c26; Staging image verified for that contract"
 }

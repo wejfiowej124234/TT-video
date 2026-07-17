@@ -4,7 +4,7 @@
   "kind": "L5_UI_CONTRACT_FIX",
   "status": "ENGINEERING_CLOSED",
   "recorded_utc": "2026-07-17T14:11:00Z",
-  "git_head": "83f7206115d46352c62575f08e039c24138209bd",
+  "git_head": "d996f6aff6a9d93fbf83428590fdb1182f481a54",
   "deploy_source": "git_commit_7bc00c26",
   "web": "https://tt-web-staging.fly.dev",
   "fly_image": "registry.fly.io/tt-web-staging:deployment-01KXR5WBYQFEXA28CPVMKX5HWJ",
@@ -26,9 +26,14 @@
   },
   "not_new_capability": true,
   "d1_closure": "committing_l5_contract_fix_to_feature_g23",
-  "updated_utc": "2026-07-17T14:19:51Z",
+  "updated_utc": "2026-07-17T14:30:40Z",
   "d1_status": "CLOSED",
   "repo_staging_evidence_aligned": true,
   "engineering_status": "ENGINEERING_CLOSED",
-  "no_further_wallet_ui_iteration": true
+  "no_further_wallet_ui_iteration": true,
+  "git_head_short": "d996f6af",
+  "wallet_contract_sha": "7bc00c267f805dd27b29175d5cea0a9cf8b3e2fc",
+  "wallet_contract_sha_short": "7bc00c26",
+  "four_layer_audit_stamp": "20260717T143040Z",
+  "alignment_note": "HEAD docs/status tip; wallet UI code tree identical to 7bc00c26; Staging image verified for that contract"
 }

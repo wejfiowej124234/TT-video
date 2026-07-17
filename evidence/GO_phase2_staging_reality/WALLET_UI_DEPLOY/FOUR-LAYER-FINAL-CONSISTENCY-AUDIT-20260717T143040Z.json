@@ -1,0 +1,176 @@
+{
+  "schema": "traveltrust.four_layer_final_consistency_audit.v1",
+  "machine_key": "TT_FOUR_LAYER_FINAL_CONSISTENCY_AUDIT",
+  "scope": "TravelTrust Wallet L5 + PSG boundary + Staging + Git",
+  "recorded_utc": "2026-07-17T14:30:40Z",
+  "stamp": "20260717T143040Z",
+  "verdict": "PASS_WITH_OPEN_TRACKED",
+  "order": [
+    "L1_PSG_FROZEN",
+    "L2_LOCAL_WORKTREE_TESTS",
+    "L3_STAGING_LIVE",
+    "L4_GIT_REMOTE_TAG_ARCHIVE"
+  ],
+  "not_done": [
+    "PSG certification re-run",
+    "Tag move/retag",
+    "Release Archive mutate",
+    "OA-01/OA-02 status flip"
+  ],
+  "layers": {
+    "L1_PSG_FROZEN": {
+      "status": "PASS",
+      "tag": "v1.1.0-psg-go.20260717",
+      "tag_commit": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+      "baseline_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+      "tt_production_go": "GO",
+      "tt_psg_production_cert": "PASS",
+      "psg_paths_dirty": false,
+      "release_archive_dirty": false
+    },
+    "L2_LOCAL_WORKTREE_TESTS": {
+      "status": "PASS",
+      "branch": "feature/g23-04-abi-event-freeze",
+      "head": "d996f6aff6a9d93fbf83428590fdb1182f481a54",
+      "wallet_code_dirty": false,
+      "wallet_contract_sha": "7bc00c267f805dd27b29175d5cea0a9cf8b3e2fc",
+      "vitest_wallet_contracts": "7/7 PASS",
+      "non_wallet_workdir_noise": [
+        "frontend/tsconfig.tsbuildinfo",
+        "pre-deploy/STATUS.txt",
+        "pre-deploy/staging-rc-baseline-enforcement.json",
+        "pre-deploy/staging-rc-ssot-parity.json"
+      ]
+    },
+    "L3_STAGING_LIVE": {
+      "status": "PASS",
+      "web": "https://tt-web-staging.fly.dev",
+      "home_http": 200,
+      "fly_image": "registry.fly.io/tt-web-staging:deployment-01KXR5WBYQFEXA28CPVMKX5HWJ",
+      "live_markers": [
+        "WalletConnect 未配置",
+        "没有安装钱包？",
+        "查看安装帮助",
+        "metamask.io/download"
+      ],
+      "contract_match_head": true,
+      "note": "Fly image has no embedded git SHA; content matches wallet contract tree 7bc00c26"
+    },
+    "L4_GIT_REMOTE_TAG_ARCHIVE": {
+      "status": "PASS_WITH_OPEN_TRACKED",
+      "upstream": "traveltrust-v11/feature/g23-04-abi-event-freeze",
+      "ahead_of_upstream": 6,
+      "behind_upstream": 0,
+      "tag_peel_ok": true,
+      "archive_dirty": false,
+      "oa01": "BLOCKED",
+      "oa02": "LOCKED_BY_OA01",
+      "wallet_batch": "ENGINEERING_CLOSED"
+    }
+  },
+  "matrix": [
+    {
+      "id": "M1",
+      "item": "PSG Tag == baseline_sha 0bbc7adb",
+      "L1": "PASS",
+      "L2": "PASS",
+      "L3": "n/a",
+      "L4": "PASS"
+    },
+    {
+      "id": "M2",
+      "item": "TT_PRODUCTION_GO / PSG cert untouched",
+      "L1": "PASS",
+      "L2": "PASS",
+      "L3": "n/a",
+      "L4": "PASS"
+    },
+    {
+      "id": "M3",
+      "item": "Wallet L5 code (brandKey/icons/install/KEY_ABSENT)",
+      "L1": "n/a",
+      "L2": "PASS",
+      "L3": "PASS",
+      "L4": "PASS"
+    },
+    {
+      "id": "M4",
+      "item": "Vitest wallet contracts",
+      "L1": "n/a",
+      "L2": "PASS",
+      "L3": "n/a",
+      "L4": "n/a"
+    },
+    {
+      "id": "M5",
+      "item": "Evidence <-> HEAD <-> Staging contract",
+      "L1": "n/a",
+      "L2": "PASS",
+      "L3": "PASS",
+      "L4": "PASS"
+    },
+    {
+      "id": "M6",
+      "item": "OA-01 BLOCKED / OA-02 LOCKED",
+      "L1": "PASS",
+      "L2": "PASS",
+      "L3": "PASS",
+      "L4": "PASS"
+    },
+    {
+      "id": "M7",
+      "item": "Wallet L5 ENGINEERING_CLOSED",
+      "L1": "n/a",
+      "L2": "PASS",
+      "L3": "PASS",
+      "L4": "PASS"
+    },
+    {
+      "id": "M8",
+      "item": "Unpushed commits to upstream",
+      "L1": "n/a",
+      "L2": "n/a",
+      "L3": "n/a",
+      "L4": "OPEN_TRACKED"
+    }
+  ],
+  "drifts": [
+    {
+      "id": "D-EVID-HEAD",
+      "severity": "low",
+      "status": "FIXED",
+      "summary": "Evidence git_head lagged at 83f72061 while HEAD was d996f6af",
+      "fix": "Pinned Evidence LATEST git_head to d996f6af; wallet_contract_sha kept 7bc00c26"
+    },
+    {
+      "id": "D-UNPUSHED",
+      "severity": "medium",
+      "status": "OPEN_TRACKED",
+      "summary": "6 local commits ahead of traveltrust-v11/feature/g23-04-abi-event-freeze",
+      "fix": "Owner push when ready — not auto-pushed; does not pollute PSG Tag/Archive"
+    },
+    {
+      "id": "D-WORKDIR-NOISE",
+      "severity": "low",
+      "status": "OPEN_TRACKED",
+      "summary": "Non-wallet dirty: tsconfig.tsbuildinfo + pre-deploy/*",
+      "fix": "Leave uncommitted; out of Wallet L5 / PSG scope"
+    },
+    {
+      "id": "D-STAGING-SHA-EMBED",
+      "severity": "info",
+      "status": "CONFIRM_EXPECTED",
+      "summary": "Staging Fly image has no embedded git SHA; deployed before 7bc00c26 commit label",
+      "fix": "Confirmed live markers + HEAD contains identical wallet contract tree — no redeploy required"
+    }
+  ],
+  "frozen_boundaries_confirmed": {
+    "tag": "v1.1.0-psg-go.20260717",
+    "baseline_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+    "tt_production_go": "GO",
+    "oa01": "BLOCKED",
+    "oa02": "LOCKED_BY_OA01",
+    "psg_cert_rerun": false,
+    "release_archive_touched": false
+  }
+}

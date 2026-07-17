@@ -107,8 +107,8 @@
     "mutate Tag / Release Archive / TT_PRODUCTION_GO"
   ],
   "d1_closure_utc": "2026-07-17T14:16:46Z",
-  "aligned_git_head": "83f7206115d46352c62575f08e039c24138209bd",
-  "aligned_git_head_short": "83f72061",
+  "aligned_git_head": "d996f6aff6a9d93fbf83428590fdb1182f481a54",
+  "aligned_git_head_short": "d996f6af",
   "aligned_fly_image": "registry.fly.io/tt-web-staging:deployment-01KXR5WBYQFEXA28CPVMKX5HWJ",
   "d1_closure": {
     "status": "CLOSED",
@@ -117,5 +117,12 @@
   },
   "wallet_l5_ui_batch": "ENGINEERING_CLOSED",
   "mainline_focus": "TravelTrust non-WalletConnect release work",
-  "wc_activation": "WAITING_OWNER_PROJECT_ID (OA-01 BLOCKED)"
+  "wc_activation": "WAITING_OWNER_PROJECT_ID (OA-01 BLOCKED)",
+  "git_head": "d996f6aff6a9d93fbf83428590fdb1182f481a54",
+  "git_head_short": "d996f6af",
+  "wallet_contract_sha": "7bc00c267f805dd27b29175d5cea0a9cf8b3e2fc",
+  "wallet_contract_sha_short": "7bc00c26",
+  "fly_image": "registry.fly.io/tt-web-staging:deployment-01KXR5WBYQFEXA28CPVMKX5HWJ",
+  "updated_utc": "2026-07-17T14:30:40Z",
+  "four_layer_audit_stamp": "20260717T143040Z"
 }
