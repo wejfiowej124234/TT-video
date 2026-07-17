@@ -1,0 +1,40 @@
+{
+  "schema": "traveltrust.per_exit_blockers_clear.v1",
+  "stamp_utc": "20260717T105924Z",
+  "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+  "clear_ec_prior": 2,
+  "prior_blocking": "PER-B-TIMEOUT-001 spawnSync 900s mid-bootstrap",
+  "remediaiton": "rerun Production Cert only with OCS_STATE_SEED + 60m path · CERT_EC=0",
+  "no_foundation_rerun": true,
+  "no_alignment_rerun": true,
+  "no_freeze_rerun": true,
+  "no_cap_cert_rerun": true,
+  "tt_psg_production_cert": "PASS",
+  "admission": {
+    "TT_PSG_SSOT_DRIFT": "PASS",
+    "TT_PSG_REPRODUCIBLE_BUILD": "PASS",
+    "TT_PSG_ENVIRONMENT_ALIGNMENT": "PASS"
+  },
+  "destructive_suite": {
+    "status": "PASS",
+    "items": [
+      "media_destructive:PASS",
+      "machine_replacement:PASS",
+      "double_bootstrap:PASS",
+      "clean_deploy:PASS",
+      "cache_flush:PASS",
+      "runtime_restart:PASS"
+    ]
+  },
+  "domains": {
+    "B1": "PASS",
+    "B2": "PASS",
+    "B3": "PASS",
+    "B4": "PASS",
+    "B5": "PASS"
+  },
+  "module_ladder": {
+    "status": "OWNER_ACCEPTED_NON_BLOCKING",
+    "signoff": "OWNER-ACCEPTED-MODULE-LADDER-CONFLUENCE.json"
+  }
+}

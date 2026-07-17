@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.psg_production_release_archive_latest.v1",
+  "machine_key": "TT_PSG_PRODUCTION_RELEASE_ARCHIVE",
+  "tag": "v1.1.0-psg-go.20260717",
+  "git_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+  "archive_dir": "evidence/GO_psg_foundation/release_archive/v1.1.0-psg-go.20260717",
+  "manifest": "evidence/GO_psg_foundation/release_archive/v1.1.0-psg-go.20260717/manifest.json",
+  "stamp_utc": "20260717T111135Z",
+  "status": "IMMUTABLE"
+}

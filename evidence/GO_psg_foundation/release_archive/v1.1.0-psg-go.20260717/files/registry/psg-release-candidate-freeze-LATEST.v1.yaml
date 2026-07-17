@@ -1,0 +1,36 @@
+# Freeze Manifest · immutable Release Candidate pointer (R2)
+# Written only at Step 2.5 by freeze procedure. Capability Cert MUST cite freeze_manifest_id.
+schema: traveltrust.psg_release_candidate_freeze_manifest.v1
+machine_key: TT_PSG_RC_BASELINE_FREEZE
+sequence_ssot: registry/psg-release-candidate-sequence.v1.yaml
+human: docs/runbook/TT-PSG-RELEASE-CANDIDATE-SEQUENCE.md
+
+status: FROZEN
+# When FROZEN, status=FROZEN and fields below are immutable until THAWED for Blocking Defect only.
+
+freeze_manifest:
+  freeze_manifest_id: RC-FREEZE-20260717T094900Z
+  frozen_utc: "2026-07-17T09:49:00.367Z"
+  git_sha: 0bbc7adbd3142b111463fc398288ab94be5c0b84
+  registry_sha: dccfcd56c7cd76a9252ea256465c8b89c5ee4c547e03ff5073db2f091da89d71
+  migration_version: 20260716140000_psg_p0_4_catalog_media_object_storage.sql
+  config_fingerprint: 36816693b8f4d65fb52f662a8c350022461cf514a3551f00d5a9d8e2f19d58b5
+  cms_snapshot_id: cms-asset-matrix:fa353ead8800f5e4
+  runtime_build_id: "local-api-meta:200|web:200|git:0bbc7adbd314"
+  foundation_gate_stamp: 20260717T042733Z
+  alignment_audit_stamp: 20260717T094442Z
+  evidence_refs:
+    - docs/spec/governance-token/evidence/phase3-production-entry-baseline/LOCAL-STAGING-FULL-ALIGNMENT-AUDIT-LATEST.json
+    - registry/psg-foundation-gate-LATEST.v1.yaml
+    - docs/spec/governance-token/evidence/phase3-production-entry-baseline/ALIGNMENT-FIX-STEP2-CLOSEOUT-LATEST.json
+
+cert_citation_rule: >
+  Capability Certification artifacts MUST set freeze_manifest_id (and optionally
+  copy git_sha for display). They MUST NOT assemble a parallel baseline from
+  ad-hoc SHA / migration / CMS sources.
+
+unlock_only_when: Blocking Defect invalidating frozen baseline
+on_thaw: "status=THAWED · invalidate Step-3 certs citing this freeze_manifest_id · re-run Steps 1–2.5"
+
+honest_boundary: "FROZEN ≠ Capability Cert started ≠ TT_PSG_PRODUCTION_CERT=PASS ≠ Production GO"
+machine_line: TT_PSG_RC_BASELINE_FREEZE: FROZEN

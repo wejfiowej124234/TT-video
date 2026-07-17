@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.psg_rc_production_entry_review.v1",
+  "machine_key": "TT_PSG_RC_PRODUCTION_ENTRY",
+  "stamp_utc": "20260717T095716Z",
+  "status": "EXIT_READY",
+  "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+  "git_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+  "production_go": "NO_GO",
+  "cited": {
+    "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+    "capability_cert_stamp": "20260717T095316Z",
+    "capability_cert_status": "PASS",
+    "foundation_gate_stamp": "20260717T042733Z",
+    "alignment_audit_stamp": "20260717T094442Z",
+    "per_ssot": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PRODUCTION-ENTRY-REVIEW.md"
+  },
+  "discipline": {
+    "no_foundation_gate_rerun": true,
+    "no_alignment_audit_rerun": true,
+    "no_rc_freeze_rerun": true,
+    "no_capability_cert_rerun": true
+  },
+  "step4_opened": true,
+  "step4_exit_ready": true,
+  "exit_blockers": [],
+  "next_owner_actions_for_exit": [
+    "Clear TT_PSG_REPRODUCIBLE_BUILD WAITING_OWNER (3 post-deploy fingerprints or Owner attest)",
+    "Set PRODUCTION_CANDIDATE_API_BASE for TT_PSG_ENVIRONMENT_ALIGNMENT PASS",
+    "PSG_ALLOW_DESTRUCTIVE_CERT=1 Owner suite → TT_PSG_PRODUCTION_CERT PASS",
+    "Module Ladder P1 Real Device Batch PASS or Owner Non-blocking deferral"
+  ],
+  "honest_boundary": "ACTIVE Production Entry Review ≠ Step4 EXIT ≠ TT_PSG_PRODUCTION_CERT=PASS ≠ Production GO",
+  "updated_utc": "2026-07-17T10:59:24.449Z",
+  "exit_blockers_clear": {
+    "schema": "traveltrust.per_exit_blockers_clear.v1",
+    "stamp_utc": "20260717T105924Z",
+    "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+    "clear_ec_prior": 2,
+    "prior_blocking": "PER-B-TIMEOUT-001 spawnSync 900s mid-bootstrap",
+    "remediaiton": "rerun Production Cert only with OCS_STATE_SEED + 60m path · CERT_EC=0",
+    "no_foundation_rerun": true,
+    "no_alignment_rerun": true,
+    "no_freeze_rerun": true,
+    "no_cap_cert_rerun": true,
+    "tt_psg_production_cert": "PASS",
+    "admission": {
+      "TT_PSG_SSOT_DRIFT": "PASS",
+      "TT_PSG_REPRODUCIBLE_BUILD": "PASS",
+      "TT_PSG_ENVIRONMENT_ALIGNMENT": "PASS"
+    },
+    "destructive_suite": {
+      "status": "PASS",
+      "items": [
+        "media_destructive:PASS",
+        "machine_replacement:PASS",
+        "double_bootstrap:PASS",
+        "clean_deploy:PASS",
+        "cache_flush:PASS",
+        "runtime_restart:PASS"
+      ]
+    },
+    "domains": {
+      "B1": "PASS",
+      "B2": "PASS",
+      "B3": "PASS",
+      "B4": "PASS",
+      "B5": "PASS"
+    },
+    "module_ladder": {
+      "status": "OWNER_ACCEPTED_NON_BLOCKING",
+      "signoff": "OWNER-ACCEPTED-MODULE-LADDER-CONFLUENCE.json"
+    }
+  },
+  "tt_psg_production_cert": "PASS",
+  "next": {
+    "step": 5,
+    "step_id": "production_go",
+    "note": "Step4 EXIT_READY · TT_PSG_PRODUCTION_CERT=PASS locked · open Production GO (Owner sign-off still required for TT_PRODUCTION_GO: GO)"
+  }
+}

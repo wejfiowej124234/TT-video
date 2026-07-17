@@ -1,0 +1,108 @@
+{
+  "schema": "traveltrust.psg_production_release_archive.v1",
+  "machine_key": "TT_PSG_PRODUCTION_RELEASE_ARCHIVE",
+  "stamp_utc": "20260717T111135Z",
+  "status": "IMMUTABLE",
+  "tag": "v1.1.0-psg-go.20260717",
+  "git_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+  "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+  "baseline_manifest": "evidence/GO_psg_foundation/release_baseline/RELEASE-BASELINE-LATEST.json",
+  "baseline_stamp_utc": "20260717T110854Z",
+  "tt_psg_production_cert": "PASS",
+  "tt_production_go": "GO",
+  "owner_attestation": {
+    "name": "Sebastian Ward",
+    "decision": "GO",
+    "signed_utc": "2026-07-17T11:03:31Z"
+  },
+  "discipline": {
+    "byte_copy_only": true,
+    "no_content_mutation": true,
+    "no_gate_rerun": true,
+    "no_evidence_regeneration": true,
+    "overwrite_forbidden": true
+  },
+  "file_count": 13,
+  "files": [
+    {
+      "path": "registry/psg-release-candidate-freeze-LATEST.v1.yaml",
+      "archive_path": "files/registry/psg-release-candidate-freeze-LATEST.v1.yaml",
+      "sha256": "fe8a1e5b310dbb13956e5fad2c0fb0a1aab9866ab60e91c827a0dd9b689aec4f",
+      "bytes": 1950
+    },
+    {
+      "path": "registry/psg-release-candidate-sequence.v1.yaml",
+      "archive_path": "files/registry/psg-release-candidate-sequence.v1.yaml",
+      "sha256": "4f7b0fab3b3ef9908f2c538a8a67278b3ebada9854f6d144c4bdad90d17f3757",
+      "bytes": 11098
+    },
+    {
+      "path": "registry/production-readiness-master-matrix.v1.yaml",
+      "archive_path": "files/registry/production-readiness-master-matrix.v1.yaml",
+      "sha256": "c16f88e15cd6119bee854da72b229a3ea761f7e8c4df4e6cf039bac1b6b7dfda",
+      "bytes": 40562
+    },
+    {
+      "path": "evidence/GO_psg_foundation/production_cert/PSG-PRODUCTION-CERT-LATEST.json",
+      "archive_path": "files/evidence/GO_psg_foundation/production_cert/PSG-PRODUCTION-CERT-LATEST.json",
+      "sha256": "9e8be0cfc30e54d64ad9fc213bb60f259b039e1d64ec91991c3ae46a2f46fbd4",
+      "bytes": 1379
+    },
+    {
+      "path": "evidence/GO_psg_foundation/production_entry_review/PSG-RC-PRODUCTION-ENTRY-LATEST.json",
+      "archive_path": "files/evidence/GO_psg_foundation/production_entry_review/PSG-RC-PRODUCTION-ENTRY-LATEST.json",
+      "sha256": "45a52965888a2813d989e9fd742305d8db7ebc386d10a49a52124a2c5dfb4da5",
+      "bytes": 2934
+    },
+    {
+      "path": "evidence/GO_psg_foundation/production_go/OWNER-DECISION-PACKAGE-LATEST.json",
+      "archive_path": "files/evidence/GO_psg_foundation/production_go/OWNER-DECISION-PACKAGE-LATEST.json",
+      "sha256": "e269337610bad2662044d11ccb763540864acc5ecc6168eb5c518535266ef910",
+      "bytes": 7002
+    },
+    {
+      "path": "evidence/GO_psg_foundation/production_go/OWNER-SIGNOFF-CHECKLIST-LATEST.md",
+      "archive_path": "files/evidence/GO_psg_foundation/production_go/OWNER-SIGNOFF-CHECKLIST-LATEST.md",
+      "sha256": "73fdf072267655affc46711d62adb9aa075d0bf076e4c0011264d1bd7ee8b384",
+      "bytes": 2779
+    },
+    {
+      "path": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-EXIT-BLOCKERS/PER-EXIT-BLOCKERS-CLEAR-LATEST.json",
+      "archive_path": "files/docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-EXIT-BLOCKERS/PER-EXIT-BLOCKERS-CLEAR-LATEST.json",
+      "sha256": "25ce1429ba680ba024e1dc2c8640e8e40c2e4e83ce4cd689b0146c5a1fb57940",
+      "bytes": 1116
+    },
+    {
+      "path": "evidence/GO_psg_foundation/production_go/PSG-RC-PRODUCTION-GO-LATEST.json",
+      "archive_path": "files/evidence/GO_psg_foundation/production_go/PSG-RC-PRODUCTION-GO-LATEST.json",
+      "sha256": "a07260ed0cc880f9a1de795ec556e300274d8226cf8146bef7a148eb241b4226",
+      "bytes": 766
+    },
+    {
+      "path": "evidence/GO_psg_foundation/release_baseline/RELEASE-BASELINE-LATEST.json",
+      "archive_path": "files/evidence/GO_psg_foundation/release_baseline/RELEASE-BASELINE-LATEST.json",
+      "sha256": "dfb009acc6f02b70d2d2282e67d50a4de59851f3e635a74dda46df627cb13db0",
+      "bytes": 2936
+    },
+    {
+      "path": "evidence/GO_psg_foundation/release_baseline/20260717T110854Z/RELEASE-BASELINE-MANIFEST.json",
+      "archive_path": "files/evidence/GO_psg_foundation/release_baseline/20260717T110854Z/RELEASE-BASELINE-MANIFEST.json",
+      "sha256": "dfb009acc6f02b70d2d2282e67d50a4de59851f3e635a74dda46df627cb13db0",
+      "bytes": 2936
+    },
+    {
+      "path": "registry/psg-production-release-baseline-LATEST.v1.yaml",
+      "archive_path": "files/registry/psg-production-release-baseline-LATEST.v1.yaml",
+      "sha256": "79bb0572660eeb6ef304b48691b648355ceab1c8c1663314e875825144012137",
+      "bytes": 2460
+    },
+    {
+      "path": "docs/runbook/TT-PSG-PRODUCTION-RELEASE-BASELINE-LATEST.md",
+      "archive_path": "files/docs/runbook/TT-PSG-PRODUCTION-RELEASE-BASELINE-LATEST.md",
+      "sha256": "02cf96433dedb70b8a2688d591d22fe5ef67be46eb84952615f0eba37a5230e1",
+      "bytes": 2532
+    }
+  ],
+  "honest_boundary": "Archive is a byte-level freeze of Baseline cites + Baseline LATEST artifacts. ≠ re-Cert. ≠ new GO.",
+  "manifest_sha256": "aa527f566b05778ac522b21ce9e764bd0f2332e47066287ab894119918023cf2"
+}
