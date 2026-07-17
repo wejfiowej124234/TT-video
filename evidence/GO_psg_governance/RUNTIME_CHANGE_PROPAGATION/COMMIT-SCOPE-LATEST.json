@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.psg_runtime_change_propagation_commit_scope.v1",
+  "machine_key": "TT_PSG_RUNTIME_CHANGE_PROPAGATION",
+  "status": "ACTIVE",
+  "recorded_utc": "2026-07-17T16:52:01Z",
+  "stamp": "20260717T165201Z",
+  "wave_a": {
+    "id": "Wave_A",
+    "scope": [
+      "RCP-MEDIA-01",
+      "RCP-MEDIA-02",
+      "RCP-MEDIA-03",
+      "RCP-MEDIA-04"
+    ],
+    "verdict": "PASS",
+    "completed": true
+  },
+  "wave_b": {
+    "id": "Wave_B",
+    "completed": false,
+    "status": "NOT_STARTED"
+  },
+  "wave_c": {
+    "id": "Wave_C",
+    "completed": false,
+    "status": "NOT_STARTED"
+  },
+  "wave_d": {
+    "id": "Wave_D",
+    "completed": false,
+    "status": "NOT_STARTED"
+  },
+  "sixteen_dimensions_governance": "NOT_COMPLETE \u2014 matrix inventory only; Wave A enforces D02/D03/D06/D10/D12 subset",
+  "untouched": [
+    "Wallet L5 commits",
+    "MEDIA_ALIGNMENT business commit e1353016",
+    "Tag v1.1.0-psg-go.20260717",
+    "Release Archive",
+    "PSG Certification packs",
+    "TT_PRODUCTION_GO",
+    "OA-01",
+    "OA-02"
+  ],
+  "commit_paths_only": [
+    "registry/psg-runtime-change-propagation.v1.yaml",
+    "docs/runbook/TT-PSG-RUNTIME-CHANGE-PROPAGATION-GATE-LATEST.md",
+    "scripts/gates/check-psg-runtime-change-propagation.cjs",
+    "evidence/GO_psg_governance/RUNTIME_CHANGE_PROPAGATION/"
+  ]
+}

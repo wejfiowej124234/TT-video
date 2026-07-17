@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.psg_runtime_change_propagation_gap_analysis.v1",
+  "machine_key": "TT_PSG_RUNTIME_CHANGE_PROPAGATION_GAP_ANALYSIS",
+  "recorded_utc": "2026-07-17T16:52:01Z",
+  "stamp": "20260717T164918Z",
+  "verdict": "GAP_CONFIRMED_GATE_ESTABLISHED",
+  "question": "Does existing PSG have Runtime Change Propagation?",
+  "answer": "NO first-class post-PSG runtime\u2194config\u2194probe propagation control existed before this incremental gate.",
+  "why_media_drift_escaped": [
+    "EnvAlign checks media_caps KEYS only, not absolute URL hosts vs next.config remotePatterns",
+    "COS integrity HEADs objects directly; never hits Staging /_next/image",
+    "Runtime Cert / Production Cert compose the above; no FE allowlist assertion",
+    "Wallet incremental audit scope excluded Community Media",
+    "RC parity historically required upload paths (pre MED-02/03)"
+  ],
+  "first_bad_exposure": "tt-web-staging v100 after COS rebind + Wallet rebuild",
+  "remediation_batch": "MEDIA_ALIGNMENT ENGINEERING_CLOSED (e1353016)",
+  "new_control": {
+    "registry": "registry/psg-runtime-change-propagation.v1.yaml",
+    "runbook": "docs/runbook/TT-PSG-RUNTIME-CHANGE-PROPAGATION-GATE-LATEST.md",
+    "gate": "scripts/gates/check-psg-runtime-change-propagation.cjs",
+    "layer": "post_psg_change_control"
+  },
+  "forbidden_confirmed": [
+    "Did not mutate Tag v1.1.0-psg-go.20260717",
+    "Did not mutate release_archive/",
+    "Did not re-run or refresh PSG Production Cert packs",
+    "Did not flip TT_PRODUCTION_GO"
+  ],
+  "priorities": {
+    "P0": [
+      "M-MEDIA",
+      "M-CMS_OCS",
+      "M-DEPLOYMENT",
+      "M-TESTING"
+    ],
+    "P1": [
+      "M-AUTH",
+      "M-MARKET_GUIDE",
+      "M-CACHE_CDN",
+      "M-WALLET_WEB3",
+      "M-PAYMENT_ESCROW",
+      "M-SECRETS",
+      "M-MIGRATION"
+    ],
+    "P2": [
+      "M-INDEXER",
+      "M-RBAC",
+      "M-OBSERVABILITY"
+    ],
+    "P3": [
+      "M-I18N"
+    ]
+  },
+  "status": "ACTIVE",
+  "wave_a_verdict": "PASS",
+  "waves_bcd_completed": false,
+  "sixteen_dimensions_complete": false
+}

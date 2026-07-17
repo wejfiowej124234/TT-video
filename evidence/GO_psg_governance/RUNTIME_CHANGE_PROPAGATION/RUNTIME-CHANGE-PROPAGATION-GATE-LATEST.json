@@ -1,0 +1,61 @@
+{
+  "schema": "traveltrust.psg_runtime_change_propagation_gate.v1",
+  "machine_key": "TT_PSG_RUNTIME_CHANGE_PROPAGATION",
+  "stamp": "20260717T164915Z",
+  "recorded_utc": "2026-07-17T16:49:15.622Z",
+  "layer": "post_psg_change_control",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "honest_boundary": "PASS ≠ Production Cert refresh ≠ TT_PRODUCTION_GO · does not mutate Tag/Archive",
+  "checks": [
+    {
+      "id": "RCP-MEDIA-04",
+      "verdict": "PASS"
+    },
+    {
+      "id": "RCP-MEDIA-03",
+      "verdict": "PASS"
+    },
+    {
+      "id": "RCP-MEDIA-01",
+      "verdict": "PASS"
+    },
+    {
+      "id": "RCP-MEDIA-02",
+      "verdict": "PASS",
+      "http": 200
+    }
+  ],
+  "sample_url_n": 20,
+  "absolute_url_n": 20,
+  "sampled_hosts": [
+    "traveltrust-community-media.fly.storage.tigris.dev"
+  ],
+  "next_config_hosts": [
+    "images.unsplash.com",
+    "avatars.githubusercontent.com",
+    "127.0.0.1",
+    "localhost",
+    "cdn-staging.example.test",
+    "cdn.example.test",
+    "traveltrust-community-media.fly.storage.tigris.dev",
+    "cdn.traveltrust.app"
+  ],
+  "next_image_probe": {
+    "url": "https://tt-web-staging.fly.dev/_next/image?url=https%3A%2F%2Ftraveltrust-community-media.fly.storage.tigris.dev%2Fofficial-cold-start%2Fv1%2Focs-dubai-luxury-community-cover.jpg&w=640&q=75",
+    "http": 200
+  },
+  "passes": [
+    "RCP-MEDIA-04_build_env_example",
+    "RCP-MEDIA-03_no_ephemeral_among_absolute_samples",
+    "RCP-MEDIA-01_remotePatterns",
+    "RCP-MEDIA-02_next_image"
+  ],
+  "failures": [],
+  "verdict": "PASS",
+  "machine_keys": {
+    "TT_PSG_RUNTIME_CHANGE_PROPAGATION": "PASS",
+    "TT_PRODUCTION_GO": "UNCHANGED",
+    "TT_PSG_PRODUCTION_CERT": "UNCHANGED"
+  }
+}

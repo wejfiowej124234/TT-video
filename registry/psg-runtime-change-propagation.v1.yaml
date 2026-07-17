@@ -1,0 +1,192 @@
+# PSG · Runtime Change Propagation Gate (Post-PSG Change Control)
+# Human: docs/runbook/TT-PSG-RUNTIME-CHANGE-PROPAGATION-GATE-LATEST.md
+#
+# CRITICAL BOUNDARY (write-locked):
+#   This is NOT a re-open of Tag / Release Archive / Production Cert / TT_PRODUCTION_GO.
+#   It is incremental Post-PSG governance for runtime ↔ config ↔ probe drift AFTER a
+#   frozen baseline (e.g. v1.1.0-psg-go.20260717).
+#
+# Trigger example (MEDIA_ALIGNMENT RCA):
+#   COS rebind → absolute Tigris URLs → Staging Web rebuild without remotePatterns
+#   → /_next/image 400. PSG EnvAlign / COS integrity / Production Cert did NOT catch it.
+schema: traveltrust.psg_runtime_change_propagation.v1
+version: 1
+machine_key: TT_PSG_RUNTIME_CHANGE_PROPAGATION
+status: ACTIVE
+opened_utc: "2026-07-17T16:40:00Z"
+layer: post_psg_change_control
+honest_boundary: >
+  RUNTIME_CHANGE_PROPAGATION_GATE PASS ≠ Production Cert refresh ≠ TT_PRODUCTION_GO flip.
+  Does not mutate frozen Archive / Tag / Certification evidence packs.
+
+immutable_surfaces_must_not_touch:
+  - evidence/GO_psg_foundation/release_archive/v1.1.0-psg-go.20260717/
+  - Tag v1.1.0-psg-go.20260717
+  - TT_PRODUCTION_GO machine key (except via new Release cycle)
+  - already-PASS Production Cert LATEST packs (no re-run-to-refresh)
+
+relationship_to_existing_psg:
+  admission_trio:
+    - check-psg-ssot-drift (doc/registry presence)
+    - check-psg-reproducible-build (same-SHA fingerprint)
+    - check-psg-environment-alignment (API /meta + media_caps KEYS only)
+  runtime_cert: scripts/gates/run-psg-runtime-certification.sh
+  cos_integrity: scripts/gates/check-psg-cos-reference-integrity.cjs
+  gap_this_gate_closes: >
+    Cross-surface propagation: Data/API/Object URL shape changes must force
+    FE allowlist · build-args · probes · evidence updates before Staging Web
+    is considered healthy.
+
+dimensions:
+  - id: D01_code
+    title: Code / consumer path
+  - id: D02_config
+    title: App config (next.config, remotePatterns, loaders)
+  - id: D03_env
+    title: Environment variables (API + Web NEXT_PUBLIC_*)
+  - id: D04_migration
+    title: Database migrations
+  - id: D05_object_storage
+    title: Object storage / CDN / public base URL
+  - id: D06_media_url
+    title: Media URL shape (relative upload vs absolute COS)
+  - id: D07_api_contract
+    title: API contract / DTO fields
+  - id: D08_frontend_consumer
+    title: Frontend Image / media consumers
+  - id: D09_feature_flag
+    title: Feature flags
+  - id: D10_build_args
+    title: Docker / Fly build-args
+  - id: D11_deploy
+    title: Deploy orchestration (API vs Web image sync)
+  - id: D12_probe
+    title: Probes / gates that assert live render path
+  - id: D13_evidence
+    title: Evidence pack update
+  - id: D14_git
+    title: Git SHA / Tag / branch discipline
+  - id: D15_staging_runtime
+    title: Staging live runtime
+  - id: D16_prod_candidate
+    title: Production Candidate parity
+
+# First-wave enforceable checks (implemented in gate script)
+enforceable_now:
+  - id: RCP-MEDIA-01
+    dimension: D02_config
+    check: next.config.js remotePatterns must include hosts sampled from Staging Guest media URLs
+  - id: RCP-MEDIA-02
+    dimension: D12_probe
+    check: Staging Web /_next/image?url=<absolute sample> returns 200|206
+  - id: RCP-MEDIA-03
+    dimension: D06_media_url
+    check: Sampled covers must not be ephemeral /api/v1/uploads when COS permanent policy active
+  - id: RCP-MEDIA-04
+    dimension: D03_env
+    check: build.env.example declares NEXT_PUBLIC_COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL (source gate)
+
+# Module coverage (scan) — status: COVERED | PARTIAL | GAP | DEFERRED
+modules:
+  - id: M-MEDIA
+    title: Community / CMS / OCS media
+    status: PARTIAL
+    note: MEDIA_ALIGNMENT closed MED-01..05; this gate makes it permanent post-PSG control
+    priority: P0
+  - id: M-AUTH
+    title: Auth / Session
+    status: GAP
+    priority: P1
+    risks: [cookie_domain, NEXT_PUBLIC_API_BASE, CORS, rewrite dest]
+  - id: M-CMS_OCS
+    title: CMS / OCS surfaces
+    status: PARTIAL
+    priority: P0
+    note: COS integrity covers object HEAD; not FE consumer allowlist
+  - id: M-MARKET_GUIDE
+    title: Market / Guide
+    status: GAP
+    priority: P1
+    risks: [listing_cover_hosts, catalog_public_url]
+  - id: M-COMMUNITY
+    title: Community feed / post detail
+    status: PARTIAL
+    priority: P0
+  - id: M-WALLET_WEB3
+    title: Wallet / Web3
+    status: PARTIAL
+    priority: P1
+    note: separate Web3 env catalog gates; not media propagation
+  - id: M-ABI_CHAIN
+    title: ABI / Chain addresses
+    status: PARTIAL
+    priority: P1
+  - id: M-INDEXER
+    title: Indexer
+    status: GAP
+    priority: P2
+  - id: M-PAYMENT_ESCROW
+    title: Payment / Escrow
+    status: PARTIAL
+    priority: P1
+  - id: M-RBAC
+    title: RBAC / roles
+    status: GAP
+    priority: P2
+  - id: M-I18N
+    title: i18n
+    status: DEFERRED
+    priority: P3
+  - id: M-CACHE_CDN
+    title: Cache / CDN cutover
+    status: GAP
+    priority: P1
+    risks: [cdn.traveltrust.app cutover without remotePatterns/probe]
+  - id: M-MIGRATION
+    title: DB Migration
+    status: PARTIAL
+    priority: P1
+    note: Runtime Cert checks LF integrity; not semantic data rebind
+  - id: M-SECRETS
+    title: Secrets / WC Project ID
+    status: PARTIAL
+    priority: P1
+    note: OA-01 KEY_ABSENT path separate
+  - id: M-OBSERVABILITY
+    title: Observability
+    status: GAP
+    priority: P2
+  - id: M-DEPLOYMENT
+    title: Deployment (API vs Web image pair)
+    status: GAP
+    priority: P0
+    risks: [API_data_rebind_without_Web_rebuild, Web_rebuild_without_config_sync]
+  - id: M-TESTING
+    title: Testing / probes
+    status: PARTIAL
+    priority: P0
+  - id: M-DATA_GOVERNANCE
+    title: Data Governance / Guest public data
+    status: PARTIAL
+    priority: P1
+
+gate:
+  script: scripts/gates/check-psg-runtime-change-propagation.cjs
+  machine_pass: TT_PSG_RUNTIME_CHANGE_PROPAGATION
+  evidence_dir: evidence/GO_psg_governance/RUNTIME_CHANGE_PROPAGATION/
+  optional_hook: >
+    May be invoked after Staging Web deploy or COS rebind; NOT required to re-run
+    frozen Production Cert.
+
+triggers_when:
+  - community_media_public_base_url_changes
+  - cos_or_cdn_rebind
+  - next_config_remote_patterns_edit
+  - staging_web_rebuild_after_api_data_change
+  - media_url_shape_relative_to_absolute
+
+forbidden_claims:
+  - Production GO
+  - PSG Certification refreshed
+  - Tag/Archive mutate
+  - Phase② CLOSED solely by this gate
