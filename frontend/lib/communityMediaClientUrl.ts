@@ -109,19 +109,44 @@ export function outboundUrlFromPersisted(raw: string | null | undefined): string
   return communityMediaAbsoluteUrlForRender(u);
 }
 
+/** Staging Tigris 公网桶（COS permanent · staging_primary）。 */
+export const COMMUNITY_MEDIA_TIGRIS_PUBLIC_HOST =
+  "traveltrust-community-media.fly.storage.tigris.dev";
+
+/** 未来 CDN 切流目标（PI3 · 与 COS permanent `r2_cdn_cutover` 对齐）。 */
+export const COMMUNITY_MEDIA_CDN_PUBLIC_HOST = "cdn.traveltrust.app";
+
+function communityMediaHostIsObjectStoreOrCdn(hostname: string): boolean {
+  const h = hostname.toLowerCase();
+  return h === COMMUNITY_MEDIA_TIGRIS_PUBLIC_HOST || h === COMMUNITY_MEDIA_CDN_PUBLIC_HOST;
+}
+
 /**
- * 与 `next/image` 配合：自管上传路径、本地预览等不走默认优化器（与各处分散的 `unoptimized` 条件同源）。
+ * 与 `next/image` 配合：自管上传路径、本地预览、Tigris/CDN 公网媒体等不走默认优化器
+ *（CardMedia / PostDetail 等均经此 helper；与各处分散的 `unoptimized` 条件同源）。
  * 入参须为**已**经 `communityMediaAbsoluteUrlForRender` 等解析后的展示 URL。
+ *
+ * MED-05：绝对 Tigris/CDN URL 须 `unoptimized`，避免 Staging `/_next/image` 400。
  */
 export function communityMediaNextImageUnoptimized(resolvedSrc: string): boolean {
   const s = resolvedSrc;
   if (!s) return false;
-  return (
+  if (
     s.startsWith("blob:") ||
     s.startsWith("data:") ||
     s.includes("/api/v1/uploads/") ||
     s.includes("images.unsplash.com")
-  );
+  ) {
+    return true;
+  }
+  if (s.startsWith("http://") || s.startsWith("https://")) {
+    try {
+      if (communityMediaHostIsObjectStoreOrCdn(new URL(s).hostname)) return true;
+    } catch {
+      /* ignore */
+    }
+  }
+  return false;
 }
 
 /** 与后端 **`COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL`** / MinIO 证据链同源；Next rewrite 须与此一致。 */

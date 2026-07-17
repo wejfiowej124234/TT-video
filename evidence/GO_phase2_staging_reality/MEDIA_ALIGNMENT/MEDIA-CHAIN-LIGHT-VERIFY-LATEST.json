@@ -1,0 +1,60 @@
+{
+  "schema": "traveltrust.media_alignment_light_verify.v1",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "checks": [
+    {
+      "i": 0,
+      "cover_head": 0,
+      "next_image": 200,
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-dubai-luxury-community-cover.jpg"
+    },
+    {
+      "i": 1,
+      "cover_head": 200,
+      "next_image": 200,
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-barcelona-arch-community-cover.jpg"
+    },
+    {
+      "i": 2,
+      "cover_head": 200,
+      "next_image": 200,
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-sydney-coast-community-cover.jpg"
+    },
+    {
+      "i": 3,
+      "cover_head": 200,
+      "next_image": 200,
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-nyc-skyline-community-cover.jpg"
+    },
+    {
+      "i": 4,
+      "cover_head": 200,
+      "next_image": 200,
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-paris-art-community-cover.jpg"
+    }
+  ],
+  "blocking": [],
+  "feed_n": 10,
+  "cover_n": 10,
+  "covers_tigris_n": 10,
+  "covers_upload_n": 0,
+  "ocs_home_hero_cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg",
+  "ocs_home_hero": {
+    "head": 200,
+    "next_image": 200
+  },
+  "blocking_count": 0,
+  "verdict": "PASS",
+  "recorded_utc": "2026-07-17T16:33:03Z",
+  "stamp": "20260717T163303Z",
+  "dubai_head_retry": 200,
+  "browser_community": {
+    "url": "https://tt-web-staging.fly.dev/community",
+    "img_n": 27,
+    "broken_n": 0,
+    "direct_tigris_n": 27,
+    "next_image_optimizer_n": 0,
+    "note": "CardMedia uses unoptimized for Tigris (MED-05); optimizer still PASS when probed"
+  }
+}

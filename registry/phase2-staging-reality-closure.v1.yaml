@@ -28,6 +28,11 @@ sequence:
     status: ENGINEERING_CLOSED
     exit: "WALLET_L5_UI: ENGINEERING_CLOSED — WC activation remains OA-01"
     evidence: evidence/GO_phase2_staging_reality/WALLET_UI_DEPLOY/
+  - id: MEDIA_ALIGNMENT
+    title: Community/CMS Media Alignment (Tigris remotePatterns + unoptimized + RC probe + staging media env)
+    status: ENGINEERING_CLOSED
+    exit: "MEDIA_ALIGNMENT: ENGINEERING_CLOSED — MED-01..05 closed; MED-06/07 deferred SSOT/docs"
+    evidence: evidence/GO_phase2_staging_reality/MEDIA_ALIGNMENT/
   - id: OA-01
     title: WalletConnect Activation only (Project ID + KEY_PRESENT + QR/Deep Link rebuild)
     status: BLOCKED
@@ -63,4 +68,4 @@ sequence:
     status: FORBIDDEN_UNTIL_PHASE2_CLOSED
     exit: "separate batch after PHASE2_CLOSED"
 
-machine_line: TT_PHASE2_STAGING_REALITY_CLOSURE: ACTIVE WALLET_UI_DEPLOY=ENGINEERING_CLOSED OA-01=BLOCKED OA-02=LOCKED_BY_OA01 OA-04=FORBIDDEN
+machine_line: TT_PHASE2_STAGING_REALITY_CLOSURE: ACTIVE WALLET_UI_DEPLOY=ENGINEERING_CLOSED MEDIA_ALIGNMENT=ENGINEERING_CLOSED OA-01=BLOCKED OA-02=LOCKED_BY_OA01 OA-04=FORBIDDEN

@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.community_cms_media_full_alignment_audit.v1",
+  "machine_key": "TT_COMMUNITY_CMS_MEDIA_FULL_ALIGNMENT_AUDIT",
+  "batch": "MEDIA_ALIGNMENT",
+  "recorded_utc": "2026-07-17T16:33:03Z",
+  "stamp": "20260717T163303Z",
+  "verdict": "ENGINEERING_CLOSED",
+  "defect_status": {
+    "MED-01": "FIXED",
+    "MED-02": "FIXED",
+    "MED-03": "FIXED",
+    "MED-04": "FIXED",
+    "MED-05": "FIXED",
+    "MED-06": "OPEN_DEFERRED_SSOT_SHAPE",
+    "MED-07": "OPEN_DEFERRED_DOCS",
+    "MED-08": "CONFIRM_EXPECTED"
+  },
+  "engineering_closed": "MEDIA-ALIGNMENT-ENGINEERING-CLOSED-20260717T163303Z.json",
+  "honest_boundary": "\u2461 MEDIA_ALIGNMENT Engineering Closed \u2260 Production GO"
+}

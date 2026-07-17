@@ -1,0 +1,61 @@
+{
+  "schema": "traveltrust.media_alignment_engineering_closed.v1",
+  "machine_key": "MEDIA_ALIGNMENT",
+  "batch": "MEDIA_ALIGNMENT",
+  "status": "ENGINEERING_CLOSED",
+  "recorded_utc": "2026-07-17T16:33:03Z",
+  "stamp": "20260717T163303Z",
+  "independent_of": [
+    "WALLET_L5",
+    "PSG_GO_PACK",
+    "OA-01",
+    "OA-02"
+  ],
+  "untouched": {
+    "wallet_l5": "ENGINEERING_CLOSED (unchanged)",
+    "psg_tag": "v1.1.0-psg-go.20260717",
+    "baseline_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+    "tt_production_go": "GO (unchanged)",
+    "oa01": "BLOCKED",
+    "oa02": "LOCKED_BY_OA01"
+  },
+  "closed_items": [
+    "MED-01",
+    "MED-02",
+    "MED-03",
+    "MED-04",
+    "MED-05"
+  ],
+  "deferred": [
+    "MED-06_OCS_SSOT_shape",
+    "MED-07_docs_stale"
+  ],
+  "verify": {
+    "vitest_media_contracts": "16/16 PASS",
+    "media_rc_probe": {
+      "feed_ocs_only": true,
+      "web_rewrite_media_200": true,
+      "next_image_absolute_media_200": true,
+      "verdict": "PASS"
+    },
+    "full_rc_ssot_parity": {
+      "verdict": "FAIL",
+      "failures": [
+        "official_guides_published=179 expected 10",
+        "campaigns_deployed=127 expected 10"
+      ],
+      "note": "Admin count drift out of MEDIA_ALIGNMENT scope; media cover/next_image checks PASS"
+    },
+    "media_chain_light": "PASS",
+    "staging_web_image": "deployment-01KXR9VKWGRAKEZ12HT30QHANT",
+    "browser_community_broken_imgs": 0
+  },
+  "honest_boundary": "MEDIA_ALIGNMENT ENGINEERING_CLOSED (\u2461) \u2260 Production GO \u2260 Phase\u2461 CLOSED",
+  "forbidden_confirmed": [
+    "No Wallet L5 rollback",
+    "No PSG re-cert",
+    "No Tag/Archive mutate",
+    "No TT_PRODUCTION_GO flip",
+    "No OA-01/OA-02 status flip"
+  ]
+}

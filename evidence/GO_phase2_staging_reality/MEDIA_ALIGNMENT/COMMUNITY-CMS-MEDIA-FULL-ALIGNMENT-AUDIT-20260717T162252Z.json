@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust.community_cms_media_full_alignment_audit.v1",
+  "machine_key": "TT_COMMUNITY_CMS_MEDIA_FULL_ALIGNMENT_AUDIT",
+  "batch": "MEDIA_ALIGNMENT",
+  "recorded_utc": "2026-07-17T16:22:52Z",
+  "stamp": "20260717T162252Z",
+  "verdict": "ENGINEERING_CLOSED_PENDING_VERIFY",
+  "scope": "CMS -> Official Assets -> OCS -> Community Feed -> Next Image -> Object Storage -> Staging Runtime",
+  "primary_root_cause": "Next Image remotePatterns / unoptimized / RC probe lagged COS Tigris absolute URLs; Wallet rebuild exposed drift",
+  "defect_status": {
+    "MED-01": "FIXED",
+    "MED-02": "FIXED",
+    "MED-03": "FIXED",
+    "MED-04": "FIXED",
+    "MED-05": "FIXED",
+    "MED-06": "OPEN_DEFERRED_SSOT_SHAPE",
+    "MED-07": "OPEN_DEFERRED_DOCS",
+    "MED-08": "CONFIRM_EXPECTED"
+  },
+  "timeline_rca": "STAGING-MEDIA-DEPLOY-TIMELINE-RCA-LATEST.json",
+  "staging_web_current": "deployment-01KXR9VKWGRAKEZ12HT30QHANT",
+  "independent_of": [
+    "WALLET_L5",
+    "PSG_GO_PACK",
+    "OA-01",
+    "OA-02"
+  ],
+  "honest_boundary": "\u2461 Staging media alignment Engineering Closed \u2260 Production GO",
+  "forbidden": [
+    "Wallet L5 rollback",
+    "PSG re-cert",
+    "Tag/Archive mutate",
+    "TT_PRODUCTION_GO flip"
+  ]
+}

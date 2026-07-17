@@ -168,6 +168,16 @@ const nextConfig = {
       /** ② staging C4/C5：社区 Feed 视频封面/playback URL（`cdn-staging.example.test`）须列入，否则 `/community` error boundary */
       { protocol: "https", hostname: "cdn-staging.example.test", pathname: "/**" },
       { protocol: "https", hostname: "cdn.example.test", pathname: "/**" },
+      /**
+       * MED-01 · Staging COS（Fly Tigris）公网桶 + 未来 CDN 切流目标。
+       * 仅受控 hostname；禁止通配任意 `*.tigris.dev`。
+       */
+      {
+        protocol: "https",
+        hostname: "traveltrust-community-media.fly.storage.tigris.dev",
+        pathname: "/**",
+      },
+      { protocol: "https", hostname: "cdn.traveltrust.app", pathname: "/**" },
     ],
   },
   async headers() {

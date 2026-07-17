@@ -18,7 +18,37 @@ const API = (process.env.API || process.env.API_BASE || 'https://tt-api-staging.
 const WEB = (process.env.WEB || process.env.WEB_BASE || 'https://tt-web-staging.fly.dev').replace(/\/$/, '');
 const evidDir = process.argv[2] || process.env.SSOT_EVIDENCE_DIR || '';
 
+/** COS permanent · staging_primary = fly_tigris（registry/psg-p0-4-cos-permanent.v1.yaml） */
+const COMMUNITY_MEDIA_TIGRIS_HOST = 'traveltrust-community-media.fly.storage.tigris.dev';
+/** PI3 CDN cutover target — accept early so RC does not regress after cutover */
+const COMMUNITY_MEDIA_CDN_HOST = 'cdn.traveltrust.app';
+
 const lib = API.startsWith('https') ? https : http;
+
+/**
+ * MED-02: accept OCS covers that are either legacy upload paths or COS permanent absolute URLs.
+ * Do not require `/api/v1/uploads/...` after Tigris rebind.
+ */
+function isAcceptableOcsMediaCover(cover) {
+  const s = String(cover || '');
+  if (!s.includes('ocs-')) return false;
+  if (s.includes('/api/v1/uploads/')) return true;
+  if (!(s.startsWith('http://') || s.startsWith('https://'))) return false;
+  try {
+    const h = new URL(s).hostname.toLowerCase();
+    return h === COMMUNITY_MEDIA_TIGRIS_HOST || h === COMMUNITY_MEDIA_CDN_HOST;
+  } catch {
+    return false;
+  }
+}
+
+/** MED-03: absolute media URLs HEAD directly; relative paths stay WEB-prefixed. */
+function mediaHeadTarget(cover) {
+  const s = String(cover || '');
+  if (s.startsWith('http://') || s.startsWith('https://')) return s;
+  if (s.startsWith('/')) return `${WEB}${s}`;
+  return `${WEB}/${s}`;
+}
 
 function get(urlPath) {
   return new Promise((resolve, reject) => {
@@ -98,7 +128,7 @@ function head(url) {
       failures.push(`feed_smoke_body=${p.id}`);
     }
     const cover = p.cover_url || '';
-    if (!cover.includes('ocs-') || !cover.includes('/api/v1/uploads/community-posts/')) {
+    if (!isAcceptableOcsMediaCover(cover)) {
       failures.push(`feed_bad_cover=${p.id}`);
     }
   }
@@ -130,8 +160,7 @@ function head(url) {
     for (const r of rows) {
       const p = r.payload && typeof r.payload === 'object' ? r.payload : {};
       const raw = p.cover_url || p.coverUrl || p.videoUrl || p.video_url || '';
-      const s = String(raw);
-      if (!s.includes('ocs-') || !s.includes('/api/v1/uploads/')) {
+      if (!isAcceptableOcsMediaCover(raw)) {
         failures.push(`market_${variant}_missing_cover=${r.id}`);
       }
     }
@@ -181,10 +210,23 @@ function head(url) {
 
   const sampleCover = posts[0]?.cover_url;
   if (sampleCover) {
-    const webUrl = `${WEB}${sampleCover.startsWith('/') ? '' : '/'}${sampleCover}`;
-    const code = await head(webUrl);
-    if (code === 200) passes.push('web_rewrite_media_200');
-    else failures.push(`web_media_head=${code} url=${webUrl}`);
+    const mediaUrl = mediaHeadTarget(sampleCover);
+    const code = await head(mediaUrl);
+    if (code === 200 || code === 206) passes.push('web_rewrite_media_200');
+    else failures.push(`web_media_head=${code} url=${mediaUrl}`);
+
+    // MED-01 regression tripwire: absolute Tigris/CDN must be allowed by Staging next/image
+    if (/^https?:\/\//i.test(String(sampleCover))) {
+      try {
+        const enc = encodeURIComponent(String(sampleCover));
+        const nextImg = `${WEB}/_next/image?url=${enc}&w=640&q=75`;
+        const imgCode = await head(nextImg);
+        if (imgCode === 200 || imgCode === 206) passes.push('next_image_absolute_media_200');
+        else failures.push(`next_image_media_head=${imgCode} url=${nextImg}`);
+      } catch (e) {
+        failures.push(`next_image_media_probe=${String(e.message || e).slice(0, 80)}`);
+      }
+    }
   }
 
   const report = {

@@ -1,0 +1,39 @@
+{
+  "schema": "traveltrust.staging_media_deploy_timeline_rca.v1",
+  "machine_key": "TT_STAGING_MEDIA_DEPLOY_TIMELINE_RCA",
+  "recorded_utc": "2026-07-17T16:20:00Z",
+  "stamp": "20260717T162000Z",
+  "verdict": "ROOT_CAUSE_CONFIRMED",
+  "phase": "2 Staging Runtime",
+  "batch": "MEDIA_ALIGNMENT",
+  "not_done": ["Wallet L5 rollback", "PSG re-cert", "Tag/Archive mutate", "TT_PRODUCTION_GO flip", "Production GO claim"],
+  "responsibility": {
+    "not": "Wallet L5 business code broke community media",
+    "is": "Staging rebuild after COS/Tigris rebind exposed Runtime↔Web Config↔Probe drift"
+  },
+  "versions": {
+    "last_good_combo": {
+      "web": "tt-web-staging v99 · deployment-01KXNT60TZ1DCJBD6TP6NYFET6",
+      "created_utc": "2026-07-16T15:59:56Z",
+      "data": "pre-rebind relative /api/v1/uploads/community-posts/*",
+      "config_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84"
+    },
+    "root_cause_data_event": {
+      "event": "COS/Tigris rebind",
+      "stamp_utc": "2026-07-17T10:24:40.672Z",
+      "evidence": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-EXIT-BLOCKERS/OFFICIAL-GUIDE-COS-REBIND-LATEST.json"
+    },
+    "first_bad_exposed": {
+      "web": "tt-web-staging v100 · deployment-01KXR3V7G5GZM3Z9P2VDH9QJ4R",
+      "created_utc": "2026-07-17T13:28:26Z",
+      "trigger": "Wallet L5 Staging rebuild/deploy wave",
+      "wallet_code_blame": false
+    },
+    "first_good_after_fix": {
+      "web": "tt-web-staging v103 · deployment-01KXR9VKWGRAKEZ12HT30QHANT",
+      "created_utc": "2026-07-17T15:10:12Z",
+      "verify": "/_next/image?url=<tigris absolute>&w=640&q=75 → HTTP 200"
+    }
+  },
+  "fix_ids": ["MED-01", "MED-02", "MED-03", "MED-04", "MED-05"]
+}

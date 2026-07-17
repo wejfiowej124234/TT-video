@@ -127,9 +127,13 @@ describe("outboundUrlFromPersisted", () => {
 });
 
 describe("communityMediaNextImageUnoptimized", () => {
-  it("flags blob, data, and API upload paths", async () => {
+  it("flags blob, data, API upload paths, Tigris, and CDN hosts", async () => {
     vi.resetModules();
-    const { communityMediaNextImageUnoptimized } = await import("./communityMediaClientUrl");
+    const {
+      communityMediaNextImageUnoptimized,
+      COMMUNITY_MEDIA_TIGRIS_PUBLIC_HOST,
+      COMMUNITY_MEDIA_CDN_PUBLIC_HOST,
+    } = await import("./communityMediaClientUrl");
     expect(communityMediaNextImageUnoptimized("")).toBe(false);
     expect(communityMediaNextImageUnoptimized("blob:http://localhost/x")).toBe(true);
     expect(communityMediaNextImageUnoptimized("data:image/png;base64,xx")).toBe(true);
@@ -139,6 +143,16 @@ describe("communityMediaNextImageUnoptimized", () => {
     expect(
       communityMediaNextImageUnoptimized(
         "https://images.unsplash.com/photo-1547150492-da7ff1742941?auto=format&fit=crop&w=640&q=75",
+      ),
+    ).toBe(true);
+    expect(
+      communityMediaNextImageUnoptimized(
+        `https://${COMMUNITY_MEDIA_TIGRIS_PUBLIC_HOST}/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg`,
+      ),
+    ).toBe(true);
+    expect(
+      communityMediaNextImageUnoptimized(
+        `https://${COMMUNITY_MEDIA_CDN_PUBLIC_HOST}/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg`,
       ),
     ).toBe(true);
   });
