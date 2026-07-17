@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.wallet_l5_ui_engineering_closed.v1",
+  "machine_key": "WALLET_L5_UI_ENGINEERING_CLOSED",
+  "status": "ENGINEERING_CLOSED",
+  "recorded_utc": "2026-07-17T14:19:51Z",
+  "stamp": "20260717T141951Z",
+  "git_head": "83f7206115d46352c62575f08e039c24138209bd",
+  "git_head_short": "83f72061",
+  "fly_image": "registry.fly.io/tt-web-staging:deployment-01KXR5WBYQFEXA28CPVMKX5HWJ",
+  "aligned_with": {
+    "code": "83f72061",
+    "staging": "deployment-01KXR5WBYQFEXA28CPVMKX5HWJ",
+    "evidence": "WALLET_UI_DEPLOY LATEST",
+    "incremental_psg_audit": "PASS · D1 CLOSED"
+  },
+  "means": [
+    "No further Wallet L5 UI iteration",
+    "Injected / Sheet / icons / install / view-only remain as shipped",
+    "WalletConnect stays KEY_ABSENT honest degrade",
+    "QR / Deep Link wait Owner Project ID via OA-01 only",
+    "Dev focus returns to TravelTrust mainline (non-WC release work)"
+  ],
+  "does_not_mean": [
+    "OA-01 unlocked",
+    "OA-02 unlocked",
+    "WalletConnect usable",
+    "PSG / Tag / Archive / TT_PRODUCTION_GO changed"
+  ],
+  "oa01": "BLOCKED",
+  "oa02": "LOCKED_BY_OA01",
+  "wc_project_id": "KEY_ABSENT",
+  "psg_archive_tag_untouched": true,
+  "tt_production_go": "GO",
+  "baseline_tag": "v1.1.0-psg-go.20260717",
+  "baseline_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84"
+}

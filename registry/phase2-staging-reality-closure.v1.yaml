@@ -24,9 +24,9 @@ forbidden:
 
 sequence:
   - id: WALLET_UI_DEPLOY
-    title: Wallet L5 UI to Staging (Injected + Sheet + View-only; WC KEY_ABSENT graceful degrade)
-    status: PASS
-    exit: "WALLET_UI_DEPLOY: PASS on tt-web-staging"
+    title: Wallet L5 UI Engineering Closed (Injected + Sheet + View-only; WC KEY_ABSENT; no further UI iteration)
+    status: ENGINEERING_CLOSED
+    exit: "WALLET_L5_UI: ENGINEERING_CLOSED — WC activation remains OA-01"
     evidence: evidence/GO_phase2_staging_reality/WALLET_UI_DEPLOY/
   - id: OA-01
     title: WalletConnect Activation only (Project ID + KEY_PRESENT + QR/Deep Link rebuild)
@@ -63,4 +63,4 @@ sequence:
     status: FORBIDDEN_UNTIL_PHASE2_CLOSED
     exit: "separate batch after PHASE2_CLOSED"
 
-machine_line: TT_PHASE2_STAGING_REALITY_CLOSURE: ACTIVE WALLET_UI_DEPLOY=PASS OA-01=BLOCKED OA-02=LOCKED_BY_OA01 OA-04=FORBIDDEN
+machine_line: TT_PHASE2_STAGING_REALITY_CLOSURE: ACTIVE WALLET_UI_DEPLOY=ENGINEERING_CLOSED OA-01=BLOCKED OA-02=LOCKED_BY_OA01 OA-04=FORBIDDEN

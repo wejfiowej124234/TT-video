@@ -2,12 +2,12 @@
 
 **STATUS:** **BLOCKED**（仅 WalletConnect 激活）  
 **Machine:** `WC_PROJECT_ID: KEY_ABSENT`  
-**Companion:** Wallet UI Deploy = **PASS**（见 `evidence/GO_phase2_staging_reality/WALLET_UI_DEPLOY/`）
+**Companion:** Wallet L5 UI = **ENGINEERING_CLOSED**（见 `evidence/GO_phase2_staging_reality/WALLET_UI_DEPLOY/`）· 不再迭代 UI；本闸仅 WC Project ID / QR / Deep Link
 
 ## Gate split（写死）
 
 ```text
-Wallet UI Deploy          → PASS（Injected / Read-only / Sheet · Staging）
+Wallet L5 UI              → ENGINEERING_CLOSED（Injected / Sheet 已收口 · 停迭代）
 OA-01 WalletConnect       → BLOCKED until KEY_PRESENT（诚实降级「未配置」）
 OA-02 Real Device QR/DL   → LOCKED_BY_OA01
 ```
