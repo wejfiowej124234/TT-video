@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.psg_rc_production_go_open.v1",
+  "machine_key": "TT_PSG_RC_PRODUCTION_GO",
+  "stamp_utc": "20260717T110139Z",
+  "status": "OWNER_DECISION_PENDING",
+  "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+  "git_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+  "tt_psg_production_cert": "PASS",
+  "production_cert_stamp": "20260717T104800Z",
+  "step4_status": "EXIT_READY",
+  "production_go": "NO_GO",
+  "owner_decision_package": "evidence/GO_psg_foundation/production_go/OWNER-DECISION-PACKAGE-LATEST.json",
+  "owner_signoff_checklist": "evidence/GO_psg_foundation/production_go/OWNER-SIGNOFF-CHECKLIST-LATEST.md",
+  "honest_boundary": "OWNER_DECISION_PENDING ≠ TT_PRODUCTION_GO: GO · apply only after owner_attestation.decision=GO"
+}

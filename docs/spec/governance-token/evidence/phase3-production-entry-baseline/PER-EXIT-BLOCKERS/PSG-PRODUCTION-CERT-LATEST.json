@@ -1,0 +1,42 @@
+{
+  "schema": "traveltrust.psg_production_cert.v1",
+  "machine_key": "TT_PSG_PRODUCTION_CERT",
+  "stamp_utc": "20260717T104800Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "production_go": "NO_GO",
+  "pf_step5": "FROZEN",
+  "domains": {
+    "B1": "PASS",
+    "B2": "PASS",
+    "B3": "PASS",
+    "B4": "PASS",
+    "B5": "PASS"
+  },
+  "admission": {
+    "TT_PSG_SSOT_DRIFT": "PASS",
+    "TT_PSG_REPRODUCIBLE_BUILD": "PASS",
+    "TT_PSG_ENVIRONMENT_ALIGNMENT": "PASS"
+  },
+  "destructive_suite": {
+    "status": "PASS",
+    "items": [
+      "media_destructive:PASS",
+      "machine_replacement:PASS",
+      "double_bootstrap:PASS",
+      "clean_deploy:PASS",
+      "cache_flush:PASS",
+      "runtime_restart:PASS"
+    ]
+  },
+  "credentials_in_report": false,
+  "status": "PASS",
+  "note": "PRODUCTION_CERT PASS — PF still needs P0③⑤ CLOSED + full unfreeze formula",
+  "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+  "per_evidence_dir": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-EXIT-BLOCKERS",
+  "module_ladder_confluence": {
+    "status": "OWNER_ACCEPTED_NON_BLOCKING",
+    "signoff": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-EXIT-BLOCKERS/OWNER-ACCEPTED-MODULE-LADDER-CONFLUENCE.json"
+  },
+  "locked_utc": "2026-07-17T10:59:24.448Z",
+  "locked_for": "RC Step4 EXIT → Step5 Production GO pointer"
+}

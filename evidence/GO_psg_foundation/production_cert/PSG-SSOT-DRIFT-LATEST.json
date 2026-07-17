@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.psg_ssot_drift.v1",
+  "machine_key": "TT_PSG_SSOT_DRIFT",
+  "stamp_utc": "2026-07-17T10:48:07.360Z",
+  "drift_count": 0,
+  "drifts": [],
+  "runtime": {
+    "git_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+    "api_version": "0.1.0"
+  },
+  "production_go": "NO_GO",
+  "pf_step5": "FROZEN",
+  "credentials_in_report": false,
+  "status": "PASS"
+}

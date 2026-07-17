@@ -1,0 +1,153 @@
+{
+  "schema": "traveltrust.psg_rc_production_go_owner_decision.v1",
+  "machine_key": "TT_PSG_RC_OWNER_DECISION",
+  "stamp_utc": "20260717T110139Z",
+  "status": "PENDING_OWNER_SIGNOFF",
+  "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+  "workspace_git_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+  "production_go": "NO_GO",
+  "tt_psg_production_cert": "PASS",
+  "discipline": {
+    "no_foundation_gate_rerun": true,
+    "no_alignment_audit_rerun": true,
+    "no_rc_freeze_rerun": true,
+    "no_capability_cert_rerun": true,
+    "no_production_cert_rerun": true,
+    "cite_locked_evidence_only": true
+  },
+  "cited": {
+    "freeze_manifest": "registry/psg-release-candidate-freeze-LATEST.v1.yaml",
+    "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+    "freeze_git_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+    "production_cert": "evidence/GO_psg_foundation/production_cert/PSG-PRODUCTION-CERT-LATEST.json",
+    "production_cert_stamp": "20260717T104800Z",
+    "production_entry": "evidence/GO_psg_foundation/production_entry_review/PSG-RC-PRODUCTION-ENTRY-LATEST.json",
+    "per_exit_clear": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-EXIT-BLOCKERS/PER-EXIT-BLOCKERS-CLEAR-LATEST.json",
+    "capability_cert": "evidence/GO_psg_foundation/capability_cert/PSG-RC-CAPABILITY-CERT-LATEST.json",
+    "capability_cert_stamp": "20260717T095316Z",
+    "foundation_gate": "registry/psg-foundation-gate-LATEST.v1.yaml",
+    "foundation_gate_status": "PASS",
+    "repro": "evidence/GO_psg_foundation/production_cert/PSG-REPRODUCIBLE-BUILD-LATEST.json",
+    "repro_status": "PASS",
+    "env_alignment": "evidence/GO_psg_foundation/production_cert/PSG-ENVIRONMENT-ALIGNMENT-LATEST.json",
+    "env_alignment_status": "PASS",
+    "module_ladder_signoff": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-EXIT-BLOCKERS/OWNER-ACCEPTED-MODULE-LADDER-CONFLUENCE.json",
+    "module_ladder_status": "OWNER_ACCEPTED_NON_BLOCKING"
+  },
+  "locked_production_cert": {
+    "status": "PASS",
+    "stamp_utc": "20260717T104800Z",
+    "admission": {
+      "TT_PSG_SSOT_DRIFT": "PASS",
+      "TT_PSG_REPRODUCIBLE_BUILD": "PASS",
+      "TT_PSG_ENVIRONMENT_ALIGNMENT": "PASS"
+    },
+    "destructive_suite": {
+      "status": "PASS",
+      "items": [
+        "media_destructive:PASS",
+        "machine_replacement:PASS",
+        "double_bootstrap:PASS",
+        "clean_deploy:PASS",
+        "cache_flush:PASS",
+        "runtime_restart:PASS"
+      ]
+    },
+    "domains": {
+      "B1": "PASS",
+      "B2": "PASS",
+      "B3": "PASS",
+      "B4": "PASS",
+      "B5": "PASS"
+    },
+    "freeze_manifest_id": "RC-FREEZE-20260717T094900Z"
+  },
+  "step4": {
+    "status": "EXIT_READY",
+    "step4_exit_ready": true,
+    "exit_blockers": []
+  },
+  "checklist": [
+    {
+      "id": "OD-01",
+      "item": "Confirm freeze baseline RC-FREEZE-20260717T094900Z still FROZEN",
+      "cite": "registry/psg-release-candidate-freeze-LATEST.v1.yaml",
+      "required": true,
+      "owner_mark": "☐"
+    },
+    {
+      "id": "OD-02",
+      "item": "Confirm TT_PSG_PRODUCTION_CERT=PASS (locked) — do not re-run Production Cert",
+      "cite": "evidence/GO_psg_foundation/production_cert/PSG-PRODUCTION-CERT-LATEST.json",
+      "required": true,
+      "owner_mark": "☐"
+    },
+    {
+      "id": "OD-03",
+      "item": "Confirm Step4 EXIT_READY · exit_blockers=[]",
+      "cite": "evidence/GO_psg_foundation/production_entry_review/PSG-RC-PRODUCTION-ENTRY-LATEST.json",
+      "required": true,
+      "owner_mark": "☐"
+    },
+    {
+      "id": "OD-04",
+      "item": "Confirm PER EXIT_BLOCKERS clear cites same freeze + PASS",
+      "cite": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-EXIT-BLOCKERS/PER-EXIT-BLOCKERS-CLEAR-LATEST.json",
+      "required": true,
+      "owner_mark": "☐"
+    },
+    {
+      "id": "OD-05",
+      "item": "Confirm admission trio PASS (SSOT · Repro · Env) from locked cert JSON only",
+      "cite": "evidence/GO_psg_foundation/production_cert/PSG-PRODUCTION-CERT-LATEST.json",
+      "required": true,
+      "owner_mark": "☐"
+    },
+    {
+      "id": "OD-06",
+      "item": "Confirm destructive suite PASS (no SKIPPED) from locked cert JSON only",
+      "cite": "evidence/GO_psg_foundation/production_cert/PSG-PRODUCTION-CERT-LATEST.json",
+      "required": true,
+      "owner_mark": "☐"
+    },
+    {
+      "id": "OD-07",
+      "item": "Confirm Module Ladder Owner Non-blocking deferral on file (or Ladder PASS)",
+      "cite": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-EXIT-BLOCKERS/OWNER-ACCEPTED-MODULE-LADDER-CONFLUENCE.json",
+      "required": true,
+      "owner_mark": "☐"
+    },
+    {
+      "id": "OD-08",
+      "item": "Owner attestation: decision GO | NO_GO | GO_WITH_EXCEPTION + name + signed_utc",
+      "cite": "owner_attestation block in this package",
+      "required": true,
+      "owner_mark": "☐"
+    }
+  ],
+  "owner_attestation": {
+    "name": null,
+    "role": "solo_owner",
+    "decision": null,
+    "allowed_decisions": [
+      "GO",
+      "NO_GO",
+      "GO_WITH_EXCEPTION"
+    ],
+    "signed_utc": null,
+    "exceptions": [],
+    "notes": null,
+    "instruction": "Fill name + decision + signed_utc (ISO-8601). Only decision=GO unlocks atomic TT_PRODUCTION_GO write."
+  },
+  "atomic_go_apply": {
+    "when": "After owner_attestation.decision=GO and checklist OD-01..OD-08 marked complete",
+    "command": "node scripts/dev/apply-psg-rc-production-go-after-owner-signoff.cjs --package evidence/GO_psg_foundation/production_go/OWNER-DECISION-PACKAGE-LATEST.json",
+    "effect": "Atomically set registry/production-readiness-master-matrix.v1.yaml TT_PRODUCTION_GO: GO",
+    "forbids": [
+      "Setting TT_PRODUCTION_GO=GO before Owner attestation",
+      "Re-running any PASS Gate to claim GO",
+      "Chat-only GO without this package"
+    ]
+  },
+  "honest_boundary": "PENDING_OWNER_SIGNOFF ≠ TT_PRODUCTION_GO: GO · Package assemble ≠ Gate re-run · Cap Cert/Production Cert remain cited only"
+}

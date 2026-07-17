@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.per_exit_blocker_owner_signoff.v1",
+  "signoff_id": "PER-EXIT-NB-LADDER-20260717",
+  "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+  "risk_class": "NON_BLOCKING",
+  "disposition": "ACCEPT_WITH_OWNER",
+  "blocker_id": "MODULE_RELEASE_LADDER_CONFLUENCE",
+  "title": "P1 Real Device Batch (OA-02) deferred for Step-4 EXIT under RC Freeze",
+  "owner": "Sebastian Ward（塞巴斯蒂安·沃德）",
+  "role": "solo_maintainer",
+  "signed_utc": "2026-07-17T10:00:00.000Z",
+  "machine_key": "TT_PER_EXIT_OWNER_ACCEPTED: MODULE_RELEASE_LADDER_CONFLUENCE",
+  "rationale": [
+    "RC Sequence Step 4 EXIT allows Owner written Non-blocking deferral for Module Ladder confluence",
+    "OA-02 Real Device remains OWNER_ACTION on TT-OWNER-FINAL-HUMAN-QUEUE — not closed here",
+    "Does not grant TT_REAL_DEVICE_BATCH_P1: PASS · does not grant Staging Stage-4 pointer · does not grant Production GO"
+  ],
+  "mitigation": [
+    "Keep OA-02 on Owner Final Human Queue",
+    "Do not advance Module Ladder P1 batch pointer until TT_REAL_DEVICE_BATCH_P1: PASS",
+    "Re-open this acceptance if Wallet/Order funds path becomes Blocking Risk before Production GO"
+  ],
+  "target_close": "before Production GO / OA-05",
+  "honest_boundary": "OWNER_ACCEPTED Non-blocking ≠ TT_REAL_DEVICE_BATCH_P1: PASS ≠ Production GO"
+}

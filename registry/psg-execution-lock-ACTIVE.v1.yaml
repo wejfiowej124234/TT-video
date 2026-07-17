@@ -1,0 +1,7 @@
+# PSG execution lock ACTIVE · machine-managed · do not hand-edit while RUNNING
+schema: traveltrust.psg_execution_lock_active.v1
+machine_key: TT_PSG_EXECUTION_LOCK
+policy: registry/psg-execution-control.v1.yaml
+updated_utc: "2026-07-17T10:58:24.449Z"
+active_run: null
+machine_line: TT_PSG_EXECUTION_LOCK: IDLE

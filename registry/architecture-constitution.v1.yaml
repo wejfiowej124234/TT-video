@@ -1,0 +1,84 @@
+# TravelTrust Architecture Constitution · machine pointer
+# Human SSOT: docs/governance/TT-ARCHITECTURE-CONSTITUTION-v1.md
+schema: traveltrust.architecture_constitution.v1
+version: "1"
+effective_utc: "2026-07-16"
+machine_key: TT_ARCHITECTURE_CONSTITUTION_V1
+status: RATIFIED
+
+production_go: NO_GO
+hierarchy:
+  - L0_architecture_governance
+  - PSG
+  - PF
+  - production_entry_review
+  - production_go
+
+feature_pipeline:
+  - feature
+  - psg_review
+  - development
+  - psg_certification
+  - pf
+  - production
+
+psg_is_permanent_first_class: true
+psg_is_not_subset_of_pf: true
+
+release_constitution:
+  - id: 1
+    rule: no_hand_edit_production_data
+  - id: 2
+    rule: no_frontend_as_data_source_of_truth
+  - id: 3
+    rule: cms_guest_published_only
+  - id: 4
+    rule: cos_requires_object_registry
+  - id: 5
+    rule: deploy_requires_psg
+  - id: 6
+    rule: production_requires_pf
+
+runtime_forbidden:
+  - mutate_cms
+  - mutate_db_business_rows_as_hotfix
+  - put_objects_outside_governance
+  - seed_patch_as_production_path
+  - sftp_restore_as_closed_path
+
+lawful_fix_paths:
+  - migration
+  - bootstrap_gated
+  - publish
+  - governance_process
+
+l0:
+  ssot: docs/governance/TT-L0-ARCHITECTURE-GOVERNANCE.md
+  require:
+    - unique_owner_per_entity_family
+    - unique_write_ingress
+    - unique_publish_ingress
+    - unique_public_ingress
+    - data_lineage_for_public_surfaces
+  dual_write: FAIL
+
+documents:
+  constitution: docs/governance/TT-ARCHITECTURE-CONSTITUTION-v1.md
+  l0: docs/governance/TT-L0-ARCHITECTURE-GOVERNANCE.md
+  psg: docs/runbook/TT-PUBLIC-SURFACE-GOVERNANCE.md
+  psg_board: docs/runbook/TT-PUBLIC-SURFACE-GOVERNANCE-BOARD.md
+  psg_phase_b: docs/runbook/TT-PSG-PHASE-B-PUBLIC-SURFACE-CERTIFICATION.md
+  pgc: docs/runbook/TT-PRODUCTION-GOVERNANCE-CLOSURE.md
+
+entity_owners:
+  # Progressive fill — parallel owner tables forbidden
+  status: OPEN_TO_COMPLETE
+  families:
+    - user
+    - order
+    - guide
+    - provider
+    - acquisition
+    - campaign
+    - media
+    - cms

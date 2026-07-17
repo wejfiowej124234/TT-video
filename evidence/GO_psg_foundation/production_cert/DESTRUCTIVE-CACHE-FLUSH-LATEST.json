@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.psg_destructive_cache_flush.v1",
+  "status": "PASS",
+  "urls_probed": 10,
+  "purge_cmd_used": false,
+  "before": {
+    "ok": 10,
+    "broken": 0,
+    "n": 10
+  },
+  "after": {
+    "ok": 10,
+    "broken": 0,
+    "n": 10
+  },
+  "surfaces": [
+    "hero",
+    "ambient",
+    "banner",
+    "guide"
+  ],
+  "production_go": "NO_GO",
+  "pf_step5": "FROZEN",
+  "credentials_in_report": false
+}

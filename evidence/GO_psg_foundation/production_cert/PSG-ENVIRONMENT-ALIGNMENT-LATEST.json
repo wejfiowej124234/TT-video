@@ -1,0 +1,53 @@
+{
+  "schema": "traveltrust.psg_environment_alignment.v1",
+  "machine_key": "TT_PSG_ENVIRONMENT_ALIGNMENT",
+  "stamp_utc": "2026-07-17T10:48:23.294Z",
+  "status": "PASS",
+  "production_go": "NO_GO",
+  "pf_step5": "FROZEN",
+  "credentials_in_report": false,
+  "local": {
+    "guest_contract_has_cover_asset": true,
+    "guest_contract_version_marker": true,
+    "cos_object_key_migration": true,
+    "cos_storage_tigris": true,
+    "matrix_pf_frozen": true,
+    "cms_lifecycle_gate": true
+  },
+  "staging": {
+    "base_host": "tt-api-staging.fly.dev",
+    "git_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+    "api_version": "0.1.0",
+    "media_caps_keys": [
+      "head_bucket_cache_hit",
+      "head_bucket_probe_impl",
+      "max_video_bytes",
+      "max_video_seconds",
+      "multipart_enabled",
+      "public_video_publish_error",
+      "public_video_publish_ready",
+      "public_video_spec_required",
+      "status",
+      "supported_content_types"
+    ],
+    "countries_n": 10
+  },
+  "prod_candidate": {
+    "base_host": "tt-api-prod.fly.dev",
+    "git_sha": "013425d5513420613102d28be65ac0c28211f262",
+    "api_version": "0.1.0",
+    "media_caps_keys": [
+      "head_bucket_cache_hit",
+      "head_bucket_probe_impl",
+      "max_video_bytes",
+      "max_video_seconds",
+      "multipart_enabled",
+      "public_video_publish_error",
+      "public_video_publish_ready",
+      "public_video_spec_required",
+      "status",
+      "supported_content_types"
+    ],
+    "countries_n": 10
+  }
+}

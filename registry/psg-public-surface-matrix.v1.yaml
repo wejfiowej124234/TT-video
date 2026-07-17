@@ -1,0 +1,60 @@
+# TravelTrust Public Surface Governance · Matrix (machine-readable)
+# SSOT prose: docs/runbook/TT-PUBLIC-SURFACE-GOVERNANCE.md
+# Board: docs/runbook/TT-PUBLIC-SURFACE-GOVERNANCE-BOARD.md
+schema: traveltrust.psg_public_surface_matrix.v1
+version: 1
+machine_key: TT_PSG_PUBLIC_SURFACE_MATRIX
+production_go: NO_GO
+pf_step5: FROZEN
+deploy_policy: DEFER_UNTIL_FOUNDATION_P0_3_4_5
+deferred_sha_note: "Do not deploy 46af7c70 alone; integrate after P0-3/4/5 foundation"
+
+foundation:
+  p0_2_ocs_upsert: CLOSED
+  p0_3_cms_governance: FOUNDATION_READY
+  p0_4_cos_governance: GOVERNANCE_ENFORCED
+  p0_5_public_data_governance: FOUNDATION_READY
+
+modules:
+  - id: provider
+    psg_status: PASS_PARTIAL  # P0② unique=10; still needs CMS/COS/Data foundation cert
+  - id: acquisition
+    psg_status: PASS_PARTIAL
+  - id: home
+    psg_status: PENDING
+  - id: guides
+    psg_status: PENDING
+  - id: community
+    psg_status: PENDING
+  - id: cms
+    psg_status: FOUNDATION_READY
+  - id: cos
+    psg_status: GOVERNANCE_ENFORCED
+    note: persistent_object_storage; sftp_restore=LEGACY_INCIDENT_ONLY; CLOSED requires destructive broken=0
+  - id: campaign
+    psg_status: PENDING
+  - id: hero
+    psg_status: PENDING
+  - id: ambient
+    psg_status: PENDING
+  - id: banner
+    psg_status: PENDING
+  - id: pulse
+    psg_status: PENDING
+  - id: official_guide
+    psg_status: PENDING
+
+gates:
+  permanent_cert: scripts/gates/run-psg-runtime-certification.sh
+  p0_3: scripts/gates/check-psg-cms-lifecycle.cjs
+  p0_4: scripts/gates/check-psg-cos-reference-integrity.cjs
+  p0_5: scripts/gates/check-psg-public-data-isolation.cjs
+  upsert_x2: scripts/dev/run-psg-ocs-listing-upsert-x2.cjs
+  matrix: scripts/gates/check-psg-public-surface-matrix.cjs
+
+exit_unfreeze_pf_step5:
+  require:
+    - all_modules_psg_status_in: [PASS, PASS_CERTIFIED]
+    - foundation_p0_3_4_5: CLOSED
+    - runtime_cert: PASS
+  still_not: [Production_GO, Staging_Batch_PASS]

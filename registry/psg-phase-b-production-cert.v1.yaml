@@ -1,0 +1,151 @@
+# PSG Phase B · Production Certification (machine-readable)
+# Human: docs/runbook/TT-PSG-PHASE-B-PUBLIC-SURFACE-CERTIFICATION.md
+schema: traveltrust.psg_phase_b_production_cert.v1
+version: 1
+effective_utc: "2026-07-16"
+machine_key: TT_PSG_PRODUCTION_CERT
+
+production_go: NO_GO
+pf_step5: FROZEN
+status: ACTIVE_WAITING_CERT  # PASS only when gate emits TT_PSG_PRODUCTION_CERT: PASS
+
+domains:
+  B1_public_data:
+    goal: data_never_confused
+    gates:
+      - scripts/gates/check-psg-public-data-isolation.cjs
+    checks:
+      - published_lifecycle
+      - production_isolation
+      - guest_contract
+      - dto
+      - country_language_filters
+  B2_cms_governance:
+    goal: cms_always_ssot
+    gates:
+      - scripts/gates/check-psg-cms-lifecycle.cjs
+    checks:
+      - lifecycle
+      - version
+      - publish
+      - rollback
+      - audit
+  B3_cos_governance:
+    goal: media_never_lost
+    gates:
+      - scripts/gates/check-psg-cos-reference-integrity.cjs
+    checks:
+      - asset_to_object_to_cdn_to_guest
+      - ephemeral_eq_0
+      - object_key_head
+    destructive:
+      - scripts/dev/run-psg-p0-4-destructive-media-cert.cjs
+  B4_runtime_governance:
+    goal: restart_never_regresses
+    gates:
+      - scripts/gates/run-psg-runtime-certification.sh
+    checks:
+      - deploy
+      - machine_replacement
+      - bootstrap
+      - cache
+  B5_public_surface:
+    goal: guest_pages_always_consistent
+    gates:
+      - scripts/gates/check-psg-public-surface-matrix.cjs
+    surfaces:
+      - home
+      - hero
+      - ambient
+      - guides
+      - provider
+      - acquisition
+      - community
+      - campaign
+      - pulse
+      - banner
+      - official_guide
+
+destructive_suite:
+  require_all_pass: true
+  items:
+    - id: media_destructive
+      script: scripts/dev/run-psg-p0-4-destructive-media-cert.cjs
+      note: existing P0④ clean restart without sftp
+    - id: machine_replacement
+      script: scripts/dev/run-psg-destructive-machine-replacement.cjs
+      min_replacements: 2
+      verify: [page_count, dto, media, guest]
+    - id: double_bootstrap
+      script: scripts/dev/run-psg-destructive-double-bootstrap.cjs
+      verify: [no_new_rows, uuid_stable, canonical_key_stable]
+    - id: clean_deploy
+      script: scripts/dev/run-psg-destructive-clean-deploy.cjs
+      sequence: [api, web, api, web]
+      verify: [matrix_unchanged, guest_unchanged, cms_unchanged]
+    - id: cache_flush
+      script: scripts/dev/run-psg-destructive-cache-flush.cjs
+      verify: [hero, ambient, banner, guide_recoverable]
+    - id: runtime_restart
+      script: scripts/dev/run-psg-destructive-runtime-restart.cjs
+      targets: [api, web]
+      verify: [all_public_surfaces_consistent]
+
+final_gate:
+  machine_line: TT_PSG_PRODUCTION_CERT
+  script: scripts/gates/run-psg-production-cert.sh
+  evidence: evidence/GO_psg_foundation/production_cert/PSG-PRODUCTION-CERT-LATEST.json
+  pass_requires:
+    - domains_B1_to_B5: PASS
+    - TT_PSG_SSOT_DRIFT: PASS
+    - TT_PSG_REPRODUCIBLE_BUILD: PASS
+    - TT_PSG_ENVIRONMENT_ALIGNMENT: PASS
+    - destructive_suite: PASS
+    - public_surface_matrix: PASS
+    - guest_contract: PASS
+    - media: PASS
+    - dto: PASS
+    - bootstrap: PASS
+    - cache: PASS
+    - machine_replacement: PASS
+    - clean_deploy: PASS
+    - runtime_restart: PASS
+
+admission_gates:
+  ssot_drift:
+    machine_line: TT_PSG_SSOT_DRIFT
+    script: scripts/gates/check-psg-ssot-drift.cjs
+  reproducible_build:
+    machine_line: TT_PSG_REPRODUCIBLE_BUILD
+    script: scripts/gates/check-psg-reproducible-build.cjs
+  environment_alignment:
+    machine_line: TT_PSG_ENVIRONMENT_ALIGNMENT
+    script: scripts/gates/check-psg-environment-alignment.cjs
+
+close_p0_3_and_p0_5_require:
+  - TT_PSG_PRODUCTION_CERT: PASS
+  - TT_PSG_SSOT_DRIFT: PASS
+  - TT_PSG_REPRODUCIBLE_BUILD: PASS
+  - TT_PSG_ENVIRONMENT_ALIGNMENT: PASS
+  - domains_B1_to_B5: PASS
+  - destructive_suite: PASS
+
+pf_step5_unfreeze:
+  formula: |
+    P0①～P0⑤ CLOSED
+    AND TT_PSG_PRODUCTION_CERT = PASS
+    AND TT_PSG_SSOT_DRIFT = PASS
+    AND TT_PSG_REPRODUCIBLE_BUILD = PASS
+    AND TT_PSG_ENVIRONMENT_ALIGNMENT = PASS
+    AND Public Surface Matrix PASS
+    AND all destructive certs PASS
+  still_not:
+    - Staging_Batch_PASS
+    - Production_GO
+  not_sufficient:
+    - PASS_RUNTIME_SAMPLE
+    - PASS_STRUCTURAL
+    - feeling_stable
+    - single_page_fix
+    - p0_4_only
+    - gates_green_once_by_chance

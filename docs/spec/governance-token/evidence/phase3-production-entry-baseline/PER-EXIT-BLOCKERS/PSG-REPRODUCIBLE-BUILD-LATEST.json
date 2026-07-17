@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.psg_reproducible_build.v1",
+  "machine_key": "TT_PSG_REPRODUCIBLE_BUILD",
+  "stamp_utc": "2026-07-17T10:31:03.076Z",
+  "status": "PASS",
+  "production_go": "NO_GO",
+  "pf_step5": "FROZEN",
+  "credentials_in_report": false,
+  "require": "same_git_sha_deploy_x3_identical_runtime_matrix_guest_dto_cms_cos",
+  "mode": "evidence_dir",
+  "git_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+  "deploys": 3
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.psg_destructive_machine_replacement.v1",
+  "status": "PASS",
+  "rounds": 2,
+  "counts": {
+    "/api/v1/market/provider/listings": 10,
+    "/api/v1/market/acquisition/listings": 10,
+    "/api/v1/guides": 10,
+    "/api/v1/community/feed": 10,
+    "/api/v1/catalog/countries": 10
+  },
+  "ephemeral": 0,
+  "production_go": "NO_GO",
+  "pf_step5": "FROZEN",
+  "credentials_in_report": false
+}

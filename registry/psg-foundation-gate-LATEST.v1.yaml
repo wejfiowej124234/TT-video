@@ -1,0 +1,46 @@
+# Foundation Gate · auto-generated · DO NOT hand-edit status
+schema: traveltrust.psg_foundation_gate.v1
+machine_key: TT_PSG_FOUNDATION_GATE
+sequence_ssot: registry/psg-release-candidate-sequence.v1.yaml
+human: docs/runbook/TT-PSG-RELEASE-CANDIDATE-SEQUENCE.md
+
+foundation_gate:
+  status: PASS
+  stamp_utc: "20260717T042733Z"
+  git_sha: 0bbc7adbd3142b111463fc398288ab94be5c0b84
+  aggregate_rule: "PASS only when every check is PASS; any FAIL|WAITING|SKIPPED|UNKNOWN → FAIL"
+  checks:
+    ssot_drift:
+      status: PASS
+      machine_line: TT_PSG_SSOT_DRIFT
+      gate: node scripts/gates/check-psg-ssot-drift.cjs
+      exit_code: 0
+      log: evidence/GO_psg_foundation/foundation_gate/20260717T042733Z/ssot_drift.log
+    env_alignment:
+      status: PASS
+      machine_line: TT_PSG_ENVIRONMENT_ALIGNMENT
+      gate: node scripts/gates/check-psg-environment-alignment.cjs
+      exit_code: 0
+      log: evidence/GO_psg_foundation/foundation_gate/20260717T042733Z/env_alignment.log
+    repro:
+      status: PASS
+      machine_line: TT_PSG_REPRODUCIBLE_BUILD
+      gate: node scripts/gates/check-psg-reproducible-build.cjs
+      exit_code: 0
+      log: evidence/GO_psg_foundation/foundation_gate/20260717T042733Z/repro.log
+    runtime_b4:
+      status: PASS
+      machine_line: TT_PSG_RUNTIME_B4
+      gate: bash scripts/gates/run-psg-runtime-certification.sh
+      exit_code: 0
+      log: evidence/GO_psg_foundation/foundation_gate/20260717T042733Z/runtime_b4.log
+    data_foundation:
+      status: PASS
+      machine_line: TT_PSG_DATA_FOUNDATION
+      gate: node scripts/gates/check-psg-public-data-isolation.cjs
+      exit_code: 0
+      log: evidence/GO_psg_foundation/foundation_gate/20260717T042733Z/data_foundation.log
+  run_id: psg-foundation_gate-staging-20260717T042734Z
+evidence_dir: evidence/GO_psg_foundation/foundation_gate/20260717T042733Z
+honest_boundary: "foundation_gate.status=PASS ≠ Freeze ≠ TT_PSG_PRODUCTION_CERT=PASS ≠ Production GO"
+machine_line: TT_PSG_FOUNDATION_GATE: PASS

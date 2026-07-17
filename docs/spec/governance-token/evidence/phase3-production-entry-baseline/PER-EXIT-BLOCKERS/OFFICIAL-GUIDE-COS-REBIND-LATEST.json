@@ -1,0 +1,762 @@
+{
+  "schema": "traveltrust.per_exit_blocker.official_guide_cos_rebind.v1",
+  "stamp_utc": "2026-07-17T10:24:40.672Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "patched": [
+    {
+      "id": "9b2eecd4-4b85-49da-892f-bd90f741fd5c",
+      "chainId": "dubai-luxury",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-dubai-luxury-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-dubai-luxury-official-guide-cover.jpg"
+    },
+    {
+      "id": "7c6dcb59-1d4b-46c7-8c58-f311a745baa7",
+      "chainId": "barcelona-arch",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-barcelona-arch-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-barcelona-arch-official-guide-cover.jpg"
+    },
+    {
+      "id": "cb48f763-14c5-4238-ab0d-a196dea59ba5",
+      "chainId": "sydney-coast",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-sydney-coast-official-guide-cover.jpg"
+    },
+    {
+      "id": "1252577b-1ec1-4453-a7ff-332be8006f1a",
+      "chainId": "nyc-skyline",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-nyc-skyline-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-nyc-skyline-official-guide-cover.jpg"
+    },
+    {
+      "id": "e13b9527-955e-4187-902c-7967105808f6",
+      "chainId": "paris-art",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "id": "b9a38ef3-764c-4ae0-8f35-fe3d7a256f10",
+      "chainId": "singapore-family",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-singapore-family-official-guide-cover.jpg"
+    },
+    {
+      "id": "32a87d35-1a3f-46fb-ba66-321b3d756b0c",
+      "chainId": "bangkok-temple",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg"
+    },
+    {
+      "id": "178fed4d-c93f-4a68-bcc6-6e110203c4e1",
+      "chainId": "seoul-food",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-seoul-food-official-guide-cover.jpg"
+    },
+    {
+      "id": "9c441aaf-eaf6-4c70-b764-8fbf93cb40b4",
+      "chainId": "kyoto-culture",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg"
+    },
+    {
+      "id": "2e8d774c-7d29-4adf-b614-b7e03e826969",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "d68901d8-5f2c-4ed3-8935-51f93d04afe8",
+      "chainId": "dubai-luxury",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-dubai-luxury-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-dubai-luxury-official-guide-cover.jpg"
+    },
+    {
+      "id": "b7cdcfd4-5e66-4d42-9291-02d095ecea38",
+      "chainId": "barcelona-arch",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-barcelona-arch-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-barcelona-arch-official-guide-cover.jpg"
+    },
+    {
+      "id": "08ebc364-0bc4-4f31-a44c-242e9b2e6473",
+      "chainId": "sydney-coast",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-sydney-coast-official-guide-cover.jpg"
+    },
+    {
+      "id": "34d64ca3-d44f-49ed-a0c4-3891db0101a1",
+      "chainId": "nyc-skyline",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-nyc-skyline-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-nyc-skyline-official-guide-cover.jpg"
+    },
+    {
+      "id": "6fc670f1-b0bf-43ca-b983-28ec7c7fc7e7",
+      "chainId": "paris-art",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "id": "1eedf4cc-2225-4a46-8710-f33933617260",
+      "chainId": "singapore-family",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-singapore-family-official-guide-cover.jpg"
+    },
+    {
+      "id": "2423ad64-f0d1-435c-bc03-eb49edc432f4",
+      "chainId": "bangkok-temple",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg"
+    },
+    {
+      "id": "f1ec53a7-2ce7-42ca-b691-d078e5a3207d",
+      "chainId": "seoul-food",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-seoul-food-official-guide-cover.jpg"
+    },
+    {
+      "id": "9280d2e2-d5a2-4297-b416-204d067d6d06",
+      "chainId": "kyoto-culture",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg"
+    },
+    {
+      "id": "4fb30b5d-f135-4c51-b97b-52a01fe18f9d",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "2492a98a-b7f8-4241-aba7-3da8777c9da6",
+      "chainId": "dubai-luxury",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-dubai-luxury-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-dubai-luxury-official-guide-cover.jpg"
+    },
+    {
+      "id": "a83053b0-42ac-4f20-89a8-42b16a8333ba",
+      "chainId": "barcelona-arch",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-barcelona-arch-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-barcelona-arch-official-guide-cover.jpg"
+    },
+    {
+      "id": "4000c5dc-334f-4a8a-8045-479375dd5c69",
+      "chainId": "sydney-coast",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-sydney-coast-official-guide-cover.jpg"
+    },
+    {
+      "id": "12a11171-06c7-49e7-aed0-2a05c22c222e",
+      "chainId": "nyc-skyline",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-nyc-skyline-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-nyc-skyline-official-guide-cover.jpg"
+    },
+    {
+      "id": "6d558ae1-955d-4a7f-bc15-528650ee2dff",
+      "chainId": "paris-art",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "id": "26af62b1-c30d-4018-9296-f3f7deccce82",
+      "chainId": "singapore-family",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-singapore-family-official-guide-cover.jpg"
+    },
+    {
+      "id": "9a31d1cb-6b97-491f-9351-e13921f72207",
+      "chainId": "bangkok-temple",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg"
+    },
+    {
+      "id": "5651e594-cf33-4f24-87b6-e3989a027f39",
+      "chainId": "seoul-food",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-seoul-food-official-guide-cover.jpg"
+    },
+    {
+      "id": "d32a0b24-75cb-4d90-843f-40f2eae7549c",
+      "chainId": "kyoto-culture",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg"
+    },
+    {
+      "id": "b5c291cf-d3cc-4829-b4ae-e1695ab14e94",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "baea74fa-2f2c-4b5c-bd3f-2220100b8aab",
+      "chainId": "kyoto-culture",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg"
+    },
+    {
+      "id": "0b5d4034-bfb7-4c10-853f-e15167febf87",
+      "chainId": "kyoto-culture",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg"
+    },
+    {
+      "id": "2cd02b7d-15d4-4148-b0ae-fdd23e6101c6",
+      "chainId": "kyoto-culture",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg"
+    },
+    {
+      "id": "6cd3f1e0-9b6b-4f7f-abb2-f4fd9c2294d1",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "a4aad205-f899-4040-a07e-79107dd2243c",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "c01e9395-d424-4ede-837b-a78531d7ee0f",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "92577071-76fe-494f-9333-a174bc874c50",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "4a7c463c-7861-4ffe-b5ab-1a866266c02c",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "d76256cb-9b64-4f5f-b775-77e47f2f1e00",
+      "chainId": "bangkok-temple",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg"
+    },
+    {
+      "id": "b62d9b4a-7baf-465f-a8f8-41bb1a6c5aec",
+      "chainId": "seoul-food",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-seoul-food-official-guide-cover.jpg"
+    },
+    {
+      "id": "4742c6ee-48d8-42d8-a931-49bd327c2ae4",
+      "chainId": "kyoto-culture",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg"
+    },
+    {
+      "id": "c8338584-2c29-4ae2-9cac-d94de3991605",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "2c63e10a-6ac5-4046-a01d-02c27adaa200",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "0fe0ba5b-9d28-47ae-8190-83a6a3350727",
+      "chainId": "dubai-luxury",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-dubai-luxury-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-dubai-luxury-official-guide-cover.jpg"
+    },
+    {
+      "id": "640205bf-b98c-443b-b11f-f395ad1f1106",
+      "chainId": "barcelona-arch",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-barcelona-arch-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-barcelona-arch-official-guide-cover.jpg"
+    },
+    {
+      "id": "bf691c74-afd7-42b5-8760-624f7ae6a6da",
+      "chainId": "sydney-coast",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-sydney-coast-official-guide-cover.jpg"
+    },
+    {
+      "id": "e99be3c3-89fe-44c0-9c4f-74c6c9b14d4e",
+      "chainId": "nyc-skyline",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-nyc-skyline-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-nyc-skyline-official-guide-cover.jpg"
+    },
+    {
+      "id": "c37ed229-2ea7-49ac-9c92-933e4e51e2f7",
+      "chainId": "paris-art",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "id": "f17189ba-7e11-444f-9335-79f122b4cd84",
+      "chainId": "singapore-family",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-singapore-family-official-guide-cover.jpg"
+    },
+    {
+      "id": "3b6c220d-4915-45be-bbe7-dc0a67f042e9",
+      "chainId": "bangkok-temple",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg"
+    },
+    {
+      "id": "0ec58966-f3b1-4517-bd3c-45348f736267",
+      "chainId": "seoul-food",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-seoul-food-official-guide-cover.jpg"
+    },
+    {
+      "id": "6db6eccb-01d6-47e5-8a2c-5b457b56b098",
+      "chainId": "kyoto-culture",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg"
+    },
+    {
+      "id": "2dab853e-f248-4687-bb3c-7b1540069317",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "0aba7063-d391-4852-9206-0226b87d6b8a",
+      "chainId": "dubai-luxury",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-dubai-luxury-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-dubai-luxury-official-guide-cover.jpg"
+    },
+    {
+      "id": "3acca858-2c69-4543-9605-9cb460d6c78a",
+      "chainId": "barcelona-arch",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-barcelona-arch-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-barcelona-arch-official-guide-cover.jpg"
+    },
+    {
+      "id": "d7136943-a94d-4e47-8365-67a0296e79d3",
+      "chainId": "sydney-coast",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-sydney-coast-official-guide-cover.jpg"
+    },
+    {
+      "id": "50f47301-1e93-4530-b8ae-1f805f20b81a",
+      "chainId": "nyc-skyline",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-nyc-skyline-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-nyc-skyline-official-guide-cover.jpg"
+    },
+    {
+      "id": "bd306dee-15bd-4c63-a1c5-5f71675c8d96",
+      "chainId": "paris-art",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "id": "057e1443-d3e2-4297-b718-fd5866e6b74b",
+      "chainId": "singapore-family",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-singapore-family-official-guide-cover.jpg"
+    },
+    {
+      "id": "7f208c3d-0bb6-4cd5-8c16-bf468151e032",
+      "chainId": "bangkok-temple",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg"
+    },
+    {
+      "id": "65669732-8b27-40ae-bc92-027338fa0c8e",
+      "chainId": "seoul-food",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-seoul-food-official-guide-cover.jpg"
+    },
+    {
+      "id": "d5e8650b-18b6-4afd-aee8-b5c5a5391235",
+      "chainId": "kyoto-culture",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg"
+    },
+    {
+      "id": "9376ef51-6207-4826-bf01-d8b7360561fb",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "f3a053dd-40b2-4a1d-81a1-f72acf21b737",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "05264cdf-bacc-42ec-8217-7ad62a88bb43",
+      "chainId": "dubai-luxury",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-dubai-luxury-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-dubai-luxury-official-guide-cover.jpg"
+    },
+    {
+      "id": "41122836-94e8-45dd-9e43-b052efb30b82",
+      "chainId": "barcelona-arch",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-barcelona-arch-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-barcelona-arch-official-guide-cover.jpg"
+    },
+    {
+      "id": "8e329ac3-f2ad-4231-8e87-e06284a4aa19",
+      "chainId": "sydney-coast",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-sydney-coast-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-sydney-coast-official-guide-cover.jpg"
+    },
+    {
+      "id": "7af83e21-63eb-43be-8970-502a04a9944c",
+      "chainId": "nyc-skyline",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-nyc-skyline-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-nyc-skyline-official-guide-cover.jpg"
+    },
+    {
+      "id": "f91c4c19-d34d-4d6f-acf0-912620b88871",
+      "chainId": "paris-art",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-paris-art-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "id": "3f32915b-5056-4528-86b4-4caaebb4f4fd",
+      "chainId": "singapore-family",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-singapore-family-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-singapore-family-official-guide-cover.jpg"
+    },
+    {
+      "id": "1afe9e63-20ef-441b-9c03-84b12f4128e1",
+      "chainId": "bangkok-temple",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-bangkok-temple-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg"
+    },
+    {
+      "id": "151e10ae-c781-4f23-9823-f7eedf50f11e",
+      "chainId": "seoul-food",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-seoul-food-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-seoul-food-official-guide-cover.jpg"
+    },
+    {
+      "id": "2e93e996-aba3-417a-9aad-6cefc980f19c",
+      "chainId": "kyoto-culture",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-kyoto-culture-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg"
+    },
+    {
+      "id": "76ca85c9-77c8-4c38-abcb-83dd610ceead",
+      "chainId": "tokyo-photo",
+      "status": "PATCHED",
+      "http": 200,
+      "from": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      "to": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "35ce4cea-fb17-4753-b890-2e65be6a6e13",
+      "chainId": "dubai-luxury",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-dubai-luxury-official-guide-cover.jpg"
+    },
+    {
+      "id": "cf0bce4e-2359-4438-bf69-4211a5b962c8",
+      "chainId": "barcelona-arch",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-barcelona-arch-official-guide-cover.jpg"
+    },
+    {
+      "id": "47f1b47d-ee14-4341-86c2-773a4a4e9493",
+      "chainId": "sydney-coast",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-sydney-coast-official-guide-cover.jpg"
+    },
+    {
+      "id": "763c98a9-293b-463c-820d-3f4ba0663fc7",
+      "chainId": "nyc-skyline",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-nyc-skyline-official-guide-cover.jpg"
+    },
+    {
+      "id": "2ef6d7c7-9b26-4531-bf8c-67304977ba14",
+      "chainId": "paris-art",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "id": "9588af4d-4cf5-4f08-94a2-1d545e907fcd",
+      "chainId": "singapore-family",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-singapore-family-official-guide-cover.jpg"
+    },
+    {
+      "id": "976fd350-2828-46c3-985b-019dbb820c11",
+      "chainId": "bangkok-temple",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg"
+    },
+    {
+      "id": "408cfcb7-57b3-47e5-b8dd-e7f3017f1c75",
+      "chainId": "seoul-food",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-seoul-food-official-guide-cover.jpg"
+    },
+    {
+      "id": "56e7fb40-74ee-49b4-b749-07630c3feaa8",
+      "chainId": "kyoto-culture",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg"
+    },
+    {
+      "id": "f0fa351e-6a57-45e6-8c2c-6cebddede0ef",
+      "chainId": "tokyo-photo",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "652a1791-f9e4-4c92-8261-77545a551352",
+      "chainId": "dubai-luxury",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-dubai-luxury-official-guide-cover.jpg"
+    },
+    {
+      "id": "abc9aa8c-e1e0-473e-9a93-f74e799643d4",
+      "chainId": "barcelona-arch",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-barcelona-arch-official-guide-cover.jpg"
+    },
+    {
+      "id": "cb626f5d-48c3-4823-9a4f-59ce4e4a687e",
+      "chainId": "sydney-coast",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-sydney-coast-official-guide-cover.jpg"
+    },
+    {
+      "id": "c4b8fa09-9378-4ae4-91cf-6acc0ea8463c",
+      "chainId": "nyc-skyline",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-nyc-skyline-official-guide-cover.jpg"
+    },
+    {
+      "id": "38868321-adee-494b-8b89-ae61a31578e9",
+      "chainId": "paris-art",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "id": "d9fb96ef-cbc2-4fc5-a48e-d05c4878dc64",
+      "chainId": "singapore-family",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-singapore-family-official-guide-cover.jpg"
+    },
+    {
+      "id": "ef6d15f0-fbd0-4848-aa97-64041c90caf4",
+      "chainId": "bangkok-temple",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg"
+    },
+    {
+      "id": "ea285662-9687-4801-9493-51a27888f43f",
+      "chainId": "seoul-food",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-seoul-food-official-guide-cover.jpg"
+    },
+    {
+      "id": "05f2f475-bde7-49a9-a78a-8f6e74758806",
+      "chainId": "kyoto-culture",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-kyoto-culture-official-guide-cover.jpg"
+    },
+    {
+      "id": "1b9a2126-a6fc-4ff3-869a-64bdedab3f6c",
+      "chainId": "tokyo-photo",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg"
+    },
+    {
+      "id": "f16db695-957e-471e-b935-7bcb0098e68c",
+      "chainId": "sydney-coast",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-sydney-coast-official-guide-cover.jpg"
+    },
+    {
+      "id": "de8a6fa5-32f5-4e82-bc35-2db2dc89055a",
+      "chainId": "nyc-skyline",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-nyc-skyline-official-guide-cover.jpg"
+    },
+    {
+      "id": "3fdc54d3-5009-462f-b892-2d6ad209b772",
+      "chainId": "paris-art",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-paris-art-official-guide-cover.jpg"
+    },
+    {
+      "id": "f374e29b-2c55-4a22-9d61-e05a733b4772",
+      "chainId": "singapore-family",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-singapore-family-official-guide-cover.jpg"
+    },
+    {
+      "id": "2fc85d69-5a09-4d51-8d31-a1ca2501e5e9",
+      "chainId": "bangkok-temple",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-bangkok-temple-official-guide-cover.jpg"
+    },
+    {
+      "id": "96986597-20c2-44b7-9d78-798ab13d4142",
+      "chainId": "seoul-food",
+      "status": "ALREADY_TIGRIS",
+      "cover": "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/ocs-seoul-food-official-guide-cover.jpg"
+    }
+  ],
+  "campaign": {
+    "id": "7bea89eb-def2-4ffb-9705-5f64a6bb1a59",
+    "guide_ids": 10,
+    "deploy_http": 200
+  },
+  "production_go": "NO_GO",
+  "note": "B3 under_probe remediation · permanent Tigris cover_url + Guest campaign surface"
+}

@@ -1,0 +1,80 @@
+# PSG P0④ · Persistent object storage permanent governance
+# Human: docs/runbook/TT-PSG-P0-4-COS-GOVERNANCE.md
+schema: traveltrust.psg_p0_4_cos_permanent.v1
+version: 1
+effective_utc: "2026-07-16"
+machine_key: TT_PSG_P0_4_COS_PERMANENT
+
+production_go: NO_GO
+pf_step5: FROZEN
+
+status: DESTRUCTIVE_CERT_PASS
+# Status ladder (no skip): FOUNDATION_READY → GOVERNANCE_ENFORCED → OBJECTS_MIGRATED
+#   → DESTRUCTIVE_CERT_PASS → CLOSED
+
+lineage:
+  - cms_or_ocs_entity
+  - catalog_media_assets_id
+  - storage_backend_bucket_object_key
+  - public_base_url_object_key
+  - guest_surface
+
+storage:
+  staging_primary: fly_tigris
+  env:
+    - COMMUNITY_MEDIA_S3_BUCKET
+    - COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL
+    - COMMUNITY_MEDIA_S3_ENDPOINT
+  official_key_prefix: official-cold-start/v1
+  community_key_prefix: community-media/v1
+  bake_disaster_recovery_only: true
+  bake_path: data/official-cold-start/media/
+  r2_cdn_cutover: PI3-MEDIA-R2-CDN-FINAL
+  r2_blocks_p0_4_closed: false
+
+ephemeral_url_denylist:
+  - "/api/v1/uploads/community-posts/"
+  - "data/community_post_media/"
+
+legacy_incident_only:
+  - scripts/dev/restore-staging-ephemeral-media.cjs
+  - fly_sftp_put_to_community_post_media
+  rule: MUST_NOT_be_used_to_claim_P0_4_CLOSED
+
+storage_backends:
+  - tigris
+  - r2
+  - minio_local
+  - bake_dr
+
+closed_criteria:
+  - public_assets_not_on_ephemeral_filesystem
+  - upload_publish_archive_replace_via_asset_registry
+  - cms_published_records_bind_valid_asset_id
+  - clean_redeploy_or_machine_replacement_broken_eq_0
+  - missing_object_fails_publish_gate
+  - bake_is_dr_not_primary
+  - orphan_eq_0
+  - bare_url_eq_0
+  - ephemeral_published_eq_0
+  - non_production_leak_eq_0
+
+gate:
+  script: scripts/gates/check-psg-cos-reference-integrity.cjs
+  # Measured staging ceiling 2026-07-16 (unique Guest media URLs across PSG surfaces = 70).
+  # Raise after OCS surface expansion / bootstrap-market route live — not by lowering probe quality.
+  min_public_media_probe: 70
+  machine_pass: TT_PSG_P0_4_COS_INTEGRITY
+  evidence_dir: evidence/GO_psg_foundation/cos_permanent/
+
+destructive_cert:
+  script: scripts/dev/run-psg-p0-4-destructive-media-cert.cjs
+  require_env: PSG_ALLOW_DESTRUCTIVE_REDEPLOY=1
+  evidence: evidence/GO_psg_foundation/cos_permanent/P0-4-DESTRUCTIVE-CERT-LATEST.json
+
+publish_gate_errors:
+  - ephemeral_media_forbidden
+  - cos_object_missing
+  - cos_object_key_required
+  - cos_bake_dr_not_primary
+  - cos_refcount_blocked

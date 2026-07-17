@@ -1,0 +1,51 @@
+{
+  "schema": "traveltrust.psg_destructive_double_bootstrap.v1",
+  "status": "PASS",
+  "before": {
+    "provider": {
+      "n": 10,
+      "unique": 10,
+      "keys": [
+        "1c0103f3-4dac-4c2b-93f4-8a8d6c276266",
+        "4151ab89-4a88-427b-9f34-eb4fbe01a196",
+        "4a62be85-92aa-4423-9136-9b26e47924f6",
+        "80784772-af41-4d21-8faa-24dea081d0e6",
+        "8ccff008-23d6-4028-a6b4-65ac68e6eea7",
+        "b2d9f022-0653-4400-826c-91042ea8b3b8",
+        "db1ab8d0-8215-4647-ae2a-74e5f2a35b0d",
+        "fc552d6f-81c4-4e1b-bdaa-1fb9245ab8a4",
+        "fe0533d3-305a-474a-b473-df4f4b7ea713",
+        "ocs:provider:tokyo-photo"
+      ]
+    },
+    "acquisition": {
+      "n": 10,
+      "unique": 10,
+      "keys": [
+        "28a1d88a-a2ba-4ec6-9243-074ab846c590",
+        "4f677a25-a73c-4a14-8e1f-3c25640e5a4c",
+        "5c497be1-a4dc-4103-b16b-8021e357b08c",
+        "62173ab8-b657-4b8c-9654-6dbac09b3ced",
+        "6876ca7c-195e-40d8-b766-2787f2da9cf3",
+        "7ecec219-7981-454c-84c7-e30cd01b815a",
+        "83b7cb80-c17d-494e-9cd3-48cdd1b96940",
+        "a110921b-af3b-49a0-923c-52f201e9134e",
+        "c3a45398-9677-4cf4-879b-011d1f1323b1",
+        "d9ece4dc-7b9d-4928-9d4d-c6b314292b8b"
+      ]
+    }
+  },
+  "after": {
+    "provider": {
+      "n": 10,
+      "unique": 10
+    },
+    "acquisition": {
+      "n": 10,
+      "unique": 10
+    }
+  },
+  "production_go": "NO_GO",
+  "pf_step5": "FROZEN",
+  "credentials_in_report": false
+}

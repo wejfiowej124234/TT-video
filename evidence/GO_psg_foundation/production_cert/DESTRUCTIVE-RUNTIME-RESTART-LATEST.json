@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.psg_destructive_runtime_restart.v1",
+  "status": "PASS",
+  "restarted": [
+    "tt-api-staging",
+    "tt-web-staging"
+  ],
+  "counts": {
+    "/api/v1/market/provider/listings": 10,
+    "/api/v1/market/acquisition/listings": 10,
+    "/api/v1/guides": 10,
+    "/api/v1/community/feed": 10,
+    "/api/v1/catalog/countries": 10
+  },
+  "production_go": "NO_GO",
+  "pf_step5": "FROZEN",
+  "credentials_in_report": false
+}

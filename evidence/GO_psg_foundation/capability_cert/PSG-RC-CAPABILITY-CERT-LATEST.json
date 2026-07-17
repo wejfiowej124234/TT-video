@@ -1,0 +1,80 @@
+{
+  "schema": "traveltrust.psg_rc_capability_cert.v1",
+  "machine_key": "TT_PSG_RC_CAPABILITY_CERT",
+  "stamp_utc": "20260717T095316Z",
+  "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+  "git_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+  "status": "PASS",
+  "production_go": "NO_GO",
+  "discipline": {
+    "no_foundation_gate_rerun": true,
+    "no_alignment_audit_rerun": true,
+    "no_rc_freeze_rerun": true,
+    "cite_existing_evidence_only_for_steps_1_2_2_5": true
+  },
+  "cited_existing": {
+    "foundation_gate_stamp": "20260717T042733Z",
+    "foundation_gate_status": "PASS",
+    "alignment_audit_stamp": "20260717T094442Z",
+    "alignment_verdict": "LOCAL_SSOT_READY",
+    "alignment_blocking_count": 0,
+    "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+    "freeze_status": "FROZEN"
+  },
+  "probes": [
+    {
+      "name": "SSOT_DRIFT",
+      "pass": true,
+      "exit_code": 0,
+      "tail": "check-psg-ssot-drift: OK Registry/Runbook/Board/Matrix/Migration/GuestContract aligned | TT_PSG_SSOT_DRIFT: PASS"
+    },
+    {
+      "name": "B1_PUBLIC_DATA",
+      "pass": true,
+      "exit_code": 0,
+      "tail": "check-psg-public-data-isolation: OK Public Data Foundation SSOT present | check-psg-public-data-isolation: OK Guest contract Rust module declares required fields | check-psg-public-data-isolation: OK migration declares production/test/demo/historical + canonical_key | check-psg-public-data-isolation: OK server-side non-production filter present | TT_PSG_P0_5_PUBLIC_DATA: PASS_STRUCTURAL"
+    },
+    {
+      "name": "B2_CMS",
+      "pass": true,
+      "exit_code": 0,
+      "tail": "check-psg-cms-lifecycle: OK Foundation SSOT present | check-psg-cms-lifecycle: OK TTOW machine_values draft/in_review/published/archived | check-psg-cms-lifecycle: OK PSG Matrix registered | TT_PSG_P0_3_CMS_LIFECYCLE: PASS_STRUCTURAL | NOTE: P0③ CLOSED only after full-matrix Guest Published-only Runtime Cert"
+    },
+    {
+      "name": "B3_COS",
+      "pass": true,
+      "exit_code": 0,
+      "tail": "check-psg-cos-reference-integrity: OK COS permanent lineage SSOT present | TT_PSG_P0_4_COS_INTEGRITY: PASS_STRUCTURAL | NOTE: P0④ CLOSED requires OBJECTS_MIGRATED + DESTRUCTIVE_CERT_PASS (broken=0)"
+    },
+    {
+      "name": "B5_PUBLIC_SURFACE",
+      "pass": true,
+      "exit_code": 0,
+      "tail": "check-psg-public-surface-matrix: OK campaign n=0 bad_status=0 bad_origin=0 media_broken=0 | check-psg-public-surface-matrix: OK catalog_media n=30 bad_status=0 bad_origin=0 media_broken=0 | check-psg-public-surface-matrix: OK catalog_countries n=10 bad_status=0 bad_origin=0 media_broken=0 | TT_PSG_MATRIX: PASS_RUNTIME_SAMPLE_CONTRACT_WAITING_DEPLOY | NOTE: PF Step 5 FROZEN · Production GO=NO_GO · integrate deploy before CLOSED"
+    },
+    {
+      "name": "B4_RUNTIME_READONLY",
+      "pass": true,
+      "exit_code": 0,
+      "tail": "NOTE: P0② CLOSE still requires Staging double-bootstrap UPSERT evidence (no DELETE) after migration deploy |  | === PSG STEP: 9 Runtime SHA === | TT_PSG_RUNTIME_CERT: OK remote /meta.git_sha=0bbc7adbd3142b111463fc398288ab94be5c0b84 | TT_PSG_RUNTIME_CERT: PASS_READONLY_PARTIAL (bootstrap skipped — not full Deploy PASS)"
+    }
+  ],
+  "new_blocking": [],
+  "module_release_ladder_confluence": {
+    "status": "BLOCKED",
+    "source": "docs/runbook/TT-MODULE-RELEASE-COCKPIT-LATEST.md",
+    "note": "P1 Real Device Batch not PASS — confluence recorded honestly (not ignored)"
+  },
+  "production_cert_prior": {
+    "status": "FAIL_OR_WAITING",
+    "admission": {
+      "TT_PSG_SSOT_DRIFT": "PASS",
+      "TT_PSG_REPRODUCIBLE_BUILD": "WAITING_OWNER",
+      "TT_PSG_ENVIRONMENT_ALIGNMENT": "WAITING_PROD_CANDIDATE"
+    },
+    "destructive": "WAITING_OWNER",
+    "note": "Prior PRODUCTION_CERT cited; Cap Cert does not re-run destructive suite"
+  },
+  "next": "Step 4 Production Entry Review (requires TT_PSG_PRODUCTION_CERT=PASS for exit)",
+  "honest_boundary": "Cap Cert PASS ≠ TT_PSG_PRODUCTION_CERT=PASS ≠ Production GO · PF-GAP-004/007 remain Owner/staging waves"
+}

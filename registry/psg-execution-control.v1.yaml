@@ -1,0 +1,138 @@
+# PSG · Execution Control (FROZEN discipline · single-instance write env)
+# Human: docs/runbook/TT-PSG-RELEASE-CANDIDATE-SEQUENCE.md §R3
+# Active lease: registry/psg-execution-lock-ACTIVE.v1.yaml
+# CLI: node scripts/dev/psg-execution-lock.cjs status|preflight|acquire|heartbeat|release|adopt
+schema: traveltrust.psg_execution_control.v1
+machine_key: TT_PSG_EXECUTION_CONTROL
+status: ACTIVE
+version: "1.1.0"
+effective_utc: "2026-07-17"
+owner: solo_owner
+
+honest_boundary: >
+  Disconnect ≠ task failure. Task RUNNING ≠ permission to start another run.
+  FAIL → Diagnose → Fix → Rerun under same governance — never blind restart.
+  This control does not grant Production GO.
+
+# ── Canonical lifecycle (all PSG long tasks) ─────────────────────────
+lifecycle:
+  - id: 1_preflight
+    title: Execution Preflight
+    checks: [run_check, residual_process_check, lock_check, staging_write_occupancy]
+  - id: 2_lock
+    title: Acquire Run Lock
+  - id: 3_run
+    title: Execute task
+  - id: 4_observe
+    title: Observe (disconnect → resume_existing_run only)
+  - id: 5_diagnose
+    title: Failure analysis
+    categories: [environment, permission, data, code, concurrency]
+  - id: 6_fix
+    title: Fix root cause only
+  - id: 7_rerun
+    title: Rerun under same governance (new run_id · retain prior evidence)
+  - id: 8_evidence
+    title: Generate Evidence (immutable per run_id)
+  - id: 9_registry
+    title: Update Registry status
+  - id: 10_certify
+    title: Certify / advance RC step (only when exit criteria met)
+
+flow_ascii: |
+  Preflight → Lock → Run → Observe → Diagnose → Fix → Rerun → Evidence → Registry → Certify
+
+wrong_vs_right:
+  wrong: "FAIL → feel stuck → start_new_run → Gate pile-up → 429 → unreadable"
+  right: "FAIL → active_run check → logs → classify (e.g. 429/concurrency) → stop dupes → one Run → verify"
+
+# ── Three mandatory checks ───────────────────────────────────────────
+three_checks:
+  run_check:
+    question: "Is a same-type task already running?"
+    examples: [foundation_gate, alignment_audit, capability_cert]
+    rule: "Same environment → at most one write_env task of that pipeline"
+  environment_check:
+    question: "Which environment am I writing?"
+    matrix:
+      local: allowed
+      staging: requires_lease
+      production: owner_only
+  evidence_check:
+    question: "Does failure overwrite prior evidence?"
+    rule: "Never overwrite. Run-001 FAIL kept; Run-002 PASS is a new stamp/run_id"
+
+psg_execution_control:
+  concurrency:
+    foundation_gate: single_instance
+    alignment_audit: single_instance
+    capability_cert: single_instance_per_environment
+    ocs_bootstrap: single_instance_per_environment
+  lock:
+    required: true
+    scope:
+      - pipeline
+      - environment
+    artifact: registry/psg-execution-lock-ACTIVE.v1.yaml
+    heartbeat_ttl_sec: 120
+    stale_after_sec: 300
+  write_operations:
+    require_environment_lease: true
+    environments:
+      - staging
+      - production
+    forbidden_without_lease:
+      - OCS bootstrap write
+      - Foundation Gate aggregator start
+      - Capability Certification wave start
+      - Alignment Audit write-env probes that mutate Staging
+  reconnect_policy:
+    on_connection_failure:
+      action: resume_existing_run
+      forbidden:
+        - start_new_run
+        - PSG_SKIP_BOOTSTRAP=1 as substitute
+    rule: >
+      Before any long PSG task: query active_run.
+      YES → resume / observe only.
+      NO → preflight → acquire lock → start.
+  failure_policy:
+    forbidden: [blind_restart, start_parallel_gate, skip_bootstrap_as_pass]
+    required:
+      - classify_failure
+      - fix_root_cause
+      - retain_prior_evidence
+      - new_run_id_on_rerun
+  diagnose_categories:
+    - environment
+    - permission
+    - data
+    - code
+    - concurrency
+
+core_principles:
+  - "断线 ≠ 任务失败"
+  - "任务 RUNNING ≠ 可以重新启动"
+  - "跑失败 → 判断失败类型 → 修复根因 → 保持同一治理流程 → 再跑"
+  - "同一 environment 同时仅一个 write_env 任务"
+  - "Evidence 按 run_id/stamp 保留 · 禁止覆盖"
+
+pipelines:
+  - id: foundation_gate
+    entry: scripts/dev/run-psg-foundation-gate.cjs
+    environment_default: staging
+  - id: alignment_audit
+    entry: scripts/dev/run-local-staging-full-alignment-audit.sh
+    environment_default: staging
+  - id: capability_cert
+    entry: null
+    note: "Must cite freeze_manifest_id; blocked until foundation_gate.status=PASS"
+    environment_default: staging
+
+anti_patterns:
+  - "Multiple Foundation Gate / OCS bootstrap processes against same Staging"
+  - "Connection failed → start_new_run"
+  - "Orphan background & / nohup without consulting ACTIVE lock"
+  - "Evidence overwrite by a second run_id on the same environment"
+  - "B4 FAIL → restart Gate without Diagnose"
+  - "PSG_SKIP_BOOTSTRAP=1 to fake Foundation PASS"

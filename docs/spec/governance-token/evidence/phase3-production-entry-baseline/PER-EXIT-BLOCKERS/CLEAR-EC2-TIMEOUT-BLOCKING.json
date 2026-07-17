@@ -1,0 +1,27 @@
+{
+  "schema": "traveltrust.per_exit_blocker.diagnosis.v1",
+  "stamp_utc": "2026-07-17T10:46:25Z",
+  "clear_ec": 2,
+  "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+  "blocking": [
+    {
+      "id": "PER-B-TIMEOUT-001",
+      "title": "run-psg-production-cert.sh killed by spawnSync 900000ms during B4 OCS bootstrap",
+      "evidence": [
+        "CLEAR-RUN-LATEST.log ends mid HTTP 429 community/posts sleep",
+        "PSG-PRODUCTION-CERT-LATEST.json stamp_utc still 20260716T073651Z (stale; no new emit)",
+        "Repro/Env LATEST on disk PASS (2026-07-17T10:31Z) — admission WAITING in stale cert JSON is not current"
+      ],
+      "fix": [
+        "Increase clear-script cert timeout to 3600000ms",
+        "Pass OCS_STATE_SEED + OCS_SKIP_ASSET_BOOTSTRAP to avoid 429 storm",
+        "Rerun Production Certification only"
+      ]
+    }
+  ],
+  "production_go": "NO_GO",
+  "no_foundation_rerun": true,
+  "no_alignment_rerun": true,
+  "no_freeze_rerun": true,
+  "no_cap_cert_rerun": true
+}

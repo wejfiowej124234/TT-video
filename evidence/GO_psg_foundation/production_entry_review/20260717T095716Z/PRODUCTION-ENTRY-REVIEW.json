@@ -1,0 +1,52 @@
+{
+  "schema": "traveltrust.psg_rc_production_entry_review.v1",
+  "machine_key": "TT_PSG_RC_PRODUCTION_ENTRY",
+  "stamp_utc": "20260717T095716Z",
+  "status": "ACTIVE",
+  "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+  "git_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+  "production_go": "NO_GO",
+  "cited": {
+    "freeze_manifest_id": "RC-FREEZE-20260717T094900Z",
+    "capability_cert_stamp": "20260717T095316Z",
+    "capability_cert_status": "PASS",
+    "foundation_gate_stamp": "20260717T042733Z",
+    "alignment_audit_stamp": "20260717T094442Z",
+    "per_ssot": "docs/spec/governance-token/evidence/phase3-production-entry-baseline/PRODUCTION-ENTRY-REVIEW.md"
+  },
+  "discipline": {
+    "no_foundation_gate_rerun": true,
+    "no_alignment_audit_rerun": true,
+    "no_rc_freeze_rerun": true,
+    "no_capability_cert_rerun": true
+  },
+  "step4_opened": true,
+  "step4_exit_ready": false,
+  "exit_blockers": [
+    {
+      "id": "TT_PSG_PRODUCTION_CERT",
+      "status": "FAIL_OR_WAITING",
+      "admission": {
+        "TT_PSG_SSOT_DRIFT": "PASS",
+        "TT_PSG_REPRODUCIBLE_BUILD": "WAITING_OWNER",
+        "TT_PSG_ENVIRONMENT_ALIGNMENT": "WAITING_PROD_CANDIDATE"
+      },
+      "destructive": "WAITING_OWNER",
+      "disposition": "REQUIRED_FOR_STEP4_EXIT",
+      "note": "Step 4 may OPEN now; EXIT requires PRODUCTION_CERT PASS (Owner repro×3 · prod candidate · destructive)"
+    },
+    {
+      "id": "MODULE_RELEASE_LADDER_CONFLUENCE",
+      "status": "BLOCKED",
+      "disposition": "REQUIRED_OR_OWNER_DEFERRAL",
+      "note": "P1 Real Device Batch not PASS — confluence recorded honestly (not ignored)"
+    }
+  ],
+  "next_owner_actions_for_exit": [
+    "Clear TT_PSG_REPRODUCIBLE_BUILD WAITING_OWNER (3 post-deploy fingerprints or Owner attest)",
+    "Set PRODUCTION_CANDIDATE_API_BASE for TT_PSG_ENVIRONMENT_ALIGNMENT PASS",
+    "PSG_ALLOW_DESTRUCTIVE_CERT=1 Owner suite → TT_PSG_PRODUCTION_CERT PASS",
+    "Module Ladder P1 Real Device Batch PASS or Owner Non-blocking deferral"
+  ],
+  "honest_boundary": "ACTIVE Production Entry Review ≠ Step4 EXIT ≠ TT_PSG_PRODUCTION_CERT=PASS ≠ Production GO"
+}

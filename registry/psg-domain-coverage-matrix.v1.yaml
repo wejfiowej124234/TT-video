@@ -1,0 +1,853 @@
+# PSG Capability Coverage Matrix · under Governance Architecture v1.0
+# Formal term: Governance Capability · legacy alias: Domain · PSG-## IDs retained
+# Parent: registry/governance-architecture.v1.yaml
+# Visual: canvases/traveltrust-governance-architecture.canvas.tsx
+schema: traveltrust.psg_domain_coverage_matrix.v1
+version: 11
+effective_utc: "2026-07-17"
+frozen_utc: "2026-07-16T11:00:00Z"
+matrix_sync_utc: "2026-07-17T00:30:00Z"
+machine_key: TT_PSG_DOMAIN_COVERAGE_MATRIX
+rc_sequence: registry/psg-release-candidate-sequence.v1.yaml
+foundation_gate: registry/psg-foundation-gate-LATEST.v1.yaml
+
+terminology:
+  formal: Governance Capability
+  legacy_alias: Domain
+  registry_file_legacy_name: psg-domain-coverage-matrix
+  id_retained: "PSG-## for PSG certification track compatibility"
+
+production_go: NO_GO
+tt_psg_production_cert: FAIL_OR_WAITING
+pf_step5: FROZEN
+p0_foundation_complete: true
+
+ga_v1_freeze:
+  status: FROZEN
+  declaration: registry/governance-architecture-v1-freeze-20260716.v1.yaml
+  capability_registry: registry/capability-registry-v1-freeze-20260716.v1.yaml
+  capability_wbs: registry/capability-wbs.v1.yaml
+  project_coverage_verification: registry/project-coverage-verification-20260716.v1.yaml
+  pcv_status: PASS
+  note: "治理架构冻结 ≠ 项目功能冻结 · PCV before GA full takeover"
+  capability_registry_mutable: audit_fields_only
+
+project_coverage_verification:
+  artifact: registry/project-coverage-verification-20260716.v1.yaml
+  status: PASS
+  pass: true
+  metrics:
+    expected_objects: 37
+    assigned_objects: 37
+    unassigned_objects: 0
+    duplicate_ownership: 0
+  next: "Foundation Gate (RC Sequence) → Alignment → Freeze → Cap Cert; PSG-10 already CLOSED"
+
+hierarchy:
+  l0: docs/governance/TT-ARCHITECTURE-CONSTITUTION-v1.md
+  governance_architecture: registry/governance-architecture.v1.yaml
+  tracks:
+    psg: slim_production_certification
+    repository_hygiene: parallel_sibling_not_in_psg_runner
+
+execution:
+  model: WBS
+  phases: [audit, coverage, coverage_review, gap_list, closure, certification]
+  audit_template: registry/governance-audit-template.v1.yaml
+  audit_output: [coverage_pct, boundary_score]
+  audit_not_pass_fail: true
+  audit_priority: risk_based
+  benchmark_domain: PSG-20
+  common_model: registry/governance-common-model.v1.yaml
+  common_model_version: "1.0"
+  common_model_status: FROZEN
+  meta_review: registry/governance-architecture-meta-review-20260716.v1.yaml
+  capability_wbs: registry/capability-wbs.v1.yaml
+  capability_registry_v1: registry/capability-registry-v1-freeze-20260716.v1.yaml
+  standard_capability_audit: registry/psg-09-web3-phase1-audit-20260716.v1.yaml
+  one_capability_per_session: true
+  one_domain_per_session: true
+  cross_domain_parallel: forbidden
+  modify_unaudited: forbidden
+  owner: solo_developer
+  no_pr: true
+  coverage_review_gate: "Patch matrix + unknown_domains before Closure if ga_inclusion_complete=false"
+
+audit_priority_queue:
+  P0: [PSG-08, PSG-20, PSG-04, PSG-13]
+  P0_status: COMPLETE
+  P1: [PSG-09, PSG-10, PSG-03, PSG-02]
+  P1_status: IN_PROGRESS
+  P1_completed: [PSG-09, PSG-10]
+  P2: remainder
+
+governance_coverage:
+  status: PARTIAL
+  expected_capabilities: 21
+  audited_capabilities: 6
+  certified_capabilities: 1
+  certification_active_capabilities: 1
+  first_certified_capability: PSG-10
+  first_full_lifecycle_closed: PSG-10
+  certification_active: [PSG-20]
+  governance_coverage_pct: null
+  p0_foundation_complete: true
+  p1_web3_audited: true
+  standard_audit_template: registry/psg-09-web3-phase1-audit-20260716.v1.yaml
+  # PCV assigns all modules (37/37/0/0). Residual "unknown" = audit-not-yet / legacy GA list — not PCV unassigned.
+  unknown_capabilities_unassigned: 0
+  unknown_domains_unassigned: 0
+  unknown_audit_backlog_note: "12 capabilities still lack full audit/cert lifecycle — tracked under governance_coverage PARTIAL, not PCV unassigned"
+  pcv_unassigned_modules: 0
+  unknown_domains_ssot: registry/governance-architecture.v1.yaml#unknown_domains
+  pcv_ssot: registry/project-coverage-verification-20260716.v1.yaml
+  capability_categories:
+    business: { pct: null, audited: 0, total: 1 }
+    platform: { pct: 88, audited: 2, total: 4, note: "PSG-20 · PSG-09 Web3" }
+    technical: { pct: 83, audited: 2, total: 6, note: "PSG-04 Data Foundation · PSG-13 Release Foundation" }
+    operations: { pct: 87, audited: 2, total: 5 }
+    quality: { pct: null, audited: 0, total: 2 }
+    governance: { pct: null, audited: 0, total: 3 }
+
+domain_categories:
+  business:
+    ids: [PSG-01]
+    subdomains: [community, guide, market, provider, acquisition, campaign]
+  platform:
+    ids: [PSG-09, PSG-10, PSG-11, PSG-20]
+    subdomains: [web3, payment, wallet, platform_financial, revenue, settlement, platform_registry, pricing, revenue_policy]
+  technical:
+    ids: [PSG-02, PSG-03, PSG-04, PSG-12, PSG-13, PSG-14]
+    subdomains: [frontend, backend, data_foundation, runtime, deploy, ci_cd]
+    psg_04:
+      id: PSG-04
+      name: Data Foundation
+      legacy_alias: Database
+      pillars: [schema, migration, constraints, canonical_key, idempotency, data_lifecycle, dto_contract, registry_mapping, data_consistency, runtime_data, data_governance]
+  operations:
+    ids: [PSG-05, PSG-06, PSG-07, PSG-08, PSG-15]
+    subdomains: [cms, cos, operations, admin, monitoring, analytics]
+  quality:
+    ids: [PSG-16, PSG-17]
+    subdomains: [testing, security, performance, observability, disaster_recovery, backup]
+  governance:
+    ids: [PSG-00, PSG-18, PSG-19]
+    subdomains: [governance, documentation, production]
+
+domains:
+  PSG-00:
+    name: Governance
+    category: governance
+    in_psg_cert: admission
+    gates: [scripts/gates/check-psg-ssot-drift.cjs]
+    audit: PARTIAL
+    closure: PARTIAL
+    cert: OPEN
+
+  PSG-01:
+    name: Business
+    category: business
+    in_psg_cert: indirect
+    maps_phase_b: [B5]
+    business_subdomains: [community, guide, market, provider, acquisition, campaign]
+    audit: OPEN
+    closure: OPEN
+    cert: OPEN
+
+  PSG-02:
+    name: Frontend
+    category: technical
+    in_psg_cert: indirect
+    maps_phase_b: [B5]
+    audit: OPEN
+    closure: OPEN
+    cert: PARTIAL
+
+  PSG-03:
+    name: Backend
+    category: technical
+    in_psg_cert: partial
+    maps_phase_b: [B1]
+    audit: OPEN
+    closure: PARTIAL
+    cert: PARTIAL
+
+  PSG-04:
+    name: Data Foundation
+    legacy_name: Database
+    category: technical
+    coverage_pct: 81
+    boundary_score: 96
+    priority: P0
+    scope: "Schema · Migration · Constraints · Canonical Key · Idempotency · Data Lifecycle · DTO Contract · Registry Mapping · Data Consistency · Runtime Data · Data Governance"
+    pillars: [schema, migration, constraints, canonical_key, idempotency, data_lifecycle, dto_contract, registry_mapping, data_consistency, runtime_data, data_governance]
+    includes: [postgresql, redis_cache_consistency, registry_metadata, dto_enforcement]
+    in_psg_cert: yes
+    maps_phase_b: [B1]
+    coordinated_domains: [PSG-05, PSG-06, PSG-08, PSG-20]
+    ssot:
+      - registry/display-data-governance.v1.yaml
+      - registry/single-official-public-catalog-policy.v1.yaml
+      - crates/api/src/chain_off/psg_guest_contract.rs
+      - docs/runbook/TT-PSG-P0-5-PUBLIC-DATA-GOVERNANCE.md
+    audit:
+      phase: COMPLETE
+      completed_utc: "2026-07-16"
+      artifact: registry/psg-04-data-foundation-phase1-audit-20260716.v1.yaml
+    coverage_review:
+      ga_inclusion_complete: true
+      domain_ownership: COMPLETE
+      authoritative_source: PARTIAL
+      lifecycle: PARTIAL
+      data_lineage: documented_in_audit_artifact
+      resolved_unknown: [UNK-014]
+    closure: OPEN
+    cert: OPEN
+    gap_count: 8
+    gaps:
+      - DF-GAP-001 canonical_key not all families
+      - DF-GAP-002 staging migration deploy
+      - DF-GAP-003 CRLF redeploy
+      - DF-GAP-004 guest DTO meta
+      - DF-GAP-005 destructive bootstrap
+      - DF-GAP-006 unified lineage registry
+      - DF-GAP-007 redis lifecycle doc
+      - DF-GAP-008 bootstrap-market
+
+  PSG-05:
+    name: CMS
+    category: operations
+    in_psg_cert: yes
+    maps_phase_b: [B2]
+    audit: PARTIAL
+    closure: OPEN
+    cert: PARTIAL
+
+  PSG-06:
+    name: COS
+    category: operations
+    in_psg_cert: yes
+    maps_phase_b: [B3]
+    audit: PARTIAL
+    closure: PARTIAL
+    cert: PARTIAL
+
+  PSG-07:
+    name: Admin
+    category: operations
+    coverage_pct: 94
+    in_psg_cert: parallel
+    parallel_ssot: docs/runbook/TT-ADMIN-PLATFORM-GOVERNANCE-DISCIPLINE.md
+    audit:
+      phase: COMPLETE
+      completed_utc: "2026-07-16"
+      artifact: registry/psg-07-admin-phase1-audit-20260716.v1.yaml
+    coverage_review:
+      ga_inclusion_complete: true
+    closure: OPEN
+    cert: PARALLEL
+    gap_count: 6
+
+  PSG-08:
+    name: Operations
+    category: operations
+    coverage_pct: 80
+    priority: P0
+    scope: "Ops orchestration · CMS/OCS/public-data pipeline · TTOW/TTOP · Production Preparation loop"
+    subdomains: [cms_ops_loop, ocs_bootstrap, public_data_coordination, business_content_integrity, pdca, guest_pipeline]
+    coordinated_domains: [PSG-05, PSG-06]
+    in_psg_cert: partial
+    maps_phase_b: [B1, B4]
+    ssot:
+      - data/catalog/cms-asset-matrix.v1.yaml
+      - registry/traveltrust-operations-workflow.v1.yaml
+      - registry/traveltrust-operations-platform.v1.yaml
+    audit:
+      phase: COMPLETE
+      completed_utc: "2026-07-16"
+      artifact: registry/psg-08-operations-phase1-audit-20260716.v1.yaml
+    coverage_review:
+      ga_inclusion_complete: false
+      blockers:
+        - UNK-004 Public Content Platform
+        - UNK-005 Business Content Integrity
+        - matrix scope expanded this session · orphans remain
+    closure: OPEN
+    cert: OPEN
+    gap_count: 8
+    gaps:
+      - OPS-GAP-001 matrix scope
+      - OPS-GAP-002 bootstrap-market
+      - OPS-GAP-003 B1-B5 cert not PASS
+      - OPS-GAP-004 PCP owner
+      - OPS-GAP-005 BCI/PDCA in matrix
+      - OPS-GAP-006 evidence rollup
+      - OPS-GAP-007 guest contract meta
+      - OPS-GAP-008 PI3 media CDN orphan
+
+  PSG-09:
+    name: Web3
+    capability_name: Web3 Governance Capability
+    category: platform
+    in_psg_cert: parallel
+    cert_path: PARALLEL
+    parallel_ssot: docs/runbook/TT-WEB3-ACTIVE-EXECUTION-MATRIX.md
+    registry_ssot: registry/web3-active-execution-matrix.v1.yaml
+    capability_wbs: registry/capability-wbs.v1.yaml#PSG-09
+    audit: COMPLETE
+    audit_artifact: registry/psg-09-web3-phase1-audit-20260716.v1.yaml
+    coverage_pct: 82
+    boundary_score: 94
+    common_model_validation: PASS
+    new_concepts_added: 0
+    ga_inclusion_complete: true
+    closure: OPEN
+    cert: PARALLEL
+    boundary_cross_ref:
+      psg_10: registry/psg-10-payment-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+      payment_classification: registry/payment-architecture-classification.v1.yaml#capability_boundary_matrix
+    boundary_frozen_note: >
+      Escrow contracts · FeeRouter · indexer · chain events = PSG-09.
+      order_settlement execution rail = PSG-10 dep. Stripe/PSP = PSG-10 only.
+    audit_charter:
+      audit_as: Web3 Governance Capability
+      not_as: blockchain_feature_audit
+      five_questions: registry/governance-common-model.v1.yaml#capability_five_questions
+      required_output:
+        - scope
+        - ownership
+        - boundary
+        - governed_objects
+        - authoritative_source
+        - lifecycle
+        - dependency
+        - coverage_pct
+        - boundary_score
+        - gap_list
+      owns:
+        - Contract Registry
+        - ABI Registry
+        - Contract Address Registry
+        - Chain Configuration
+        - Mainnet / Testnet governance
+        - Governance Token
+        - Web3 Runtime
+        - Indexer
+        - On-chain Verification
+      boundary_excludes:
+        - Stripe / PSP → PSG-10 Payment
+        - Platform Financial Policy → PSG-20
+        - Wallet UI / connect UX → PSG-11 Wallet
+        - Admin CMS editorial ops → PSG-08 Operations
+        - Platform Onboarding Fee business rules → PSG-20
+      certification_path: PARALLEL
+      certification_note: "TT-WEB3-ACTIVE-EXECUTION-MATRIX · not TT_PSG_PRODUCTION_CERT slim runner"
+
+  PSG-10:
+    name: Payment
+    capability_name: Payment Governance Capability
+    category: platform
+    capability_wbs: registry/capability-wbs.v1.yaml#PSG-10
+    in_psg_cert: pf_entry
+    cert_path: OUT_OF_PSG_RUNNER
+    scope: "PSP · Stripe · escrow checkout — not platform financial policy"
+    parallel_ssot: registry/payment-architecture-classification.v1.yaml
+    coverage_pct: 76
+    boundary_score: 88
+    audit: COMPLETE
+    audit_artifact: registry/psg-10-payment-phase1-audit-20260716.v1.yaml
+    closure_plan: COMPLETE
+    closure_plan_artifact: registry/psg-10-payment-closure-plan-20260716.v1.yaml
+    closure: CLOSED
+    closure_utc: "2026-07-16T10:20:00Z"
+    certification: PASS
+    certification_artifact: registry/psg-10-certification-20260716.v1.yaml
+    certification_utc: "2026-07-16T10:20:00Z"
+    capability_lifecycle: CLOSED
+    first_full_lifecycle_in_ga: true
+    golden_reference: true
+    lifecycle_standard: registry/psg-capability-lifecycle-standard.v1.yaml#reference_implementation
+    closure_wave_1_governance_definition: COMPLETE
+    closure_wave_1_utc: "2026-07-16T14:30:00Z"
+    closure_wave_2_governance_implementation: COMPLETE
+    closure_wave_2_utc: "2026-07-16T15:00:00Z"
+    closure_wave_3_governance_validation: COMPLETE
+    closure_wave_3_utc: "2026-07-16T15:30:00Z"
+    governance_exit_review: registry/psg-10-governance-exit-review-20260716.v1.yaml
+    governance_exit: PASS
+    engineering_implementation: COMPLETE
+    engineering_implementation_utc: "2026-07-16T10:16:00Z"
+    engineering_implementation_report: registry/psg-10-engineering-implementation-report-20260716.v1.yaml
+    certification_authorized: true
+    closure_template_benchmark: true
+    inventory_modules:
+      ssot: registry/psg-10-payment-closure-plan-20260716.v1.yaml#owned_modules_index
+      registry:
+        - registry/payment-architecture-classification.v1.yaml
+        - registry/web3-payment-production-gate.v1.yaml
+        - registry/production-payment-readiness-checklist.v1.yaml
+        - registry/web3-gate-layering.v1.yaml
+      docs:
+        - docs/runbook/PRODUCTION-PAYMENT-READINESS-WEB3-USDC.md
+        - docs/runbook/G3-02-WEB3-PAYMENT-PRODUCTION-EXECUTION.md
+        - docs/runbook/TT-B435-USER-WALLET-ESCROW-FEEROUTER-PAYMENT-PATH-001.md
+        - docs/runbook/TT-9618-onboarding-local-testnet.md
+        - docs/runbook/PRODUCTION-STRIPE-ENV-MATRIX-SEPOLIA-SCOPE.md
+        - docs/spec/04-附录-商家主理人准入费HTTP契约草案-配96-18.md
+      backend:
+        - crates/api/src/stripe_onboarding/
+        - crates/api/src/routes/onboarding/payment_intents.rs
+        - crates/api/src/routes/onboarding/payment_intents_stripe.rs
+        - crates/api/src/routes/internal/onboarding/payments_webhook.rs
+        - crates/api/src/routes/hooks.rs
+        - crates/api/src/db/onboarding/payment_events.rs
+        - crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs
+      frontend:
+        - frontend/app/pay/
+        - frontend/app/me/onboarding/StripeOnboardingPayment.tsx
+        - frontend/components/me/onboarding/MeOnboardingUsdcFeePayment.tsx
+        - frontend/components/escrow/EscrowDetail/
+        - frontend/app/admin/onboarding/payment-events/
+        - frontend/app/admin/onboarding/webhook-jobs/
+      migrations:
+        - crates/api/migrations/20260505100000_onboarding_entitlements_payment_events.sql
+        - crates/api/migrations/20260505110000_onboarding_webhook_dlq.sql
+        - crates/api/migrations/20260505120000_onboarding_webhook_jobs.sql
+      gates:
+        - scripts/check-web3-payment-production-readiness.sh
+        - scripts/check-pi3-003-stripe-live-production-webhook-execution.sh
+        - scripts/dev/smoke-orders-pay-escrow-local.sh
+        - scripts/dev/smoke-onboarding-full-chain-local.sh
+        - scripts/dev/run-g3-02-web3-payment-production-verification.cjs
+      evidence:
+        - frontend/evidence/GO_local_web3_pages_closure/PAY-HUB-PHASE1-CLOSURE.md
+      dependency_only_not_owned:
+        - registry/platform-safe-registry.v1.yaml → PSG-20
+        - docs/spec/artifacts/onboarding-fee-schedule.v1.yaml → PSG-20
+        - crates/api/src/chain/indexer.rs → PSG-09
+        - frontend/lib/wagmi/ → PSG-11
+    governance_traceability:
+      ssot: registry/psg-10-payment-closure-plan-20260716.v1.yaml#governance_traceability
+      wbs_lines_mapped: 8
+      rule: "Every WBS 10.x maps to primary registry/docs/code/gate assets"
+    boundary_cross_ref:
+      psg_20: registry/psg-20-platform-financial-phase1-audit-20260716.v1.yaml#11_coverage_review
+      psg_09: registry/psg-09-web3-phase1-audit-20260716.v1.yaml#11_coverage_review
+      matrix: registry/psg-10-payment-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+      payment_classification: registry/payment-architecture-classification.v1.yaml#capability_boundary_matrix
+    terminology_ssot: registry/payment-architecture-classification.v1.yaml#settlement_terminology
+    cert: OUT_OF_PSG_RUNNER
+    pcv_gate: "registry/project-coverage-verification-20260716.v1.yaml · PASS"
+    audit_charter:
+      page_one_boundary_frozen: true
+      audit_as: Payment Governance Capability
+      post_pcv_discipline: "Implementation Consistency · not Capability Mapping"
+      five_questions: registry/governance-common-model.v1.yaml#capability_five_questions
+      inventory_wbs:
+        - "10.1 PSP (Stripe)"
+        - "10.2 Payment Gateway"
+        - "10.3 Payment Intent"
+        - "10.4 Escrow Payment Flow"
+        - "10.5 Settlement Execution"
+        - "10.6 Payment Webhook"
+        - "10.7 Payment Ledger"
+        - "10.8 Payment Verification"
+      owns:
+        - PSP (Stripe)
+        - Payment Gateway
+        - Payment Intent
+        - Escrow Payment Flow
+        - Settlement Execution
+        - Payment Webhook
+        - Payment Ledger (payment events)
+        - Payment Verification
+      boundary_excludes:
+        - Platform Admission Fee → PSG-20
+        - Revenue Policy → PSG-20
+        - Pricing Policy → PSG-20
+        - Platform Financial Registry → PSG-20
+        - Wallet UI → PSG-11
+        - Web3 contracts / on-chain governance → PSG-09
+        - Admin CMS editorial → PSG-08
+      boundary_frozen_note: >
+        PSG-10 owns payment execution rail only. Admission fee business rules,
+        pricing, revenue policy, and Platform Safe registry are PSG-20 — never PSG-10.
+        Settlement terms require prefix — see payment-architecture-classification#settlement_terminology.
+      certification_path: OUT_OF_PSG_RUNNER
+
+  PSG-11:
+    name: Wallet
+    capability_name: Wallet Governance Capability
+    category: platform
+    capability_wbs: registry/capability-wbs.v1.yaml#PSG-11
+    in_psg_cert: pf_entry
+    cert_path: OUT_OF_PSG_RUNNER
+    parallel_ssot: docs/runbook/TT-MODULE-RELEASE-COCKPIT-LATEST.md
+    coverage_pct: 72
+    boundary_score: 91
+    audit: COMPLETE
+    audit_artifact: registry/psg-11-wallet-phase1-audit-20260716.v1.yaml
+    audit_completed_utc: "2026-07-16T10:28:00Z"
+    closure_plan: COMPLETE
+    closure_plan_artifact: registry/psg-11-wallet-closure-plan-20260716.v1.yaml
+    closure_plan_completed_utc: "2026-07-16T10:33:00Z"
+    lifecycle_standard: registry/psg-capability-lifecycle-standard.v1.yaml
+    golden_reference: PSG-10
+    closure: OPEN
+    closure_wave_1_governance_definition: COMPLETE
+    closure_wave_1_utc: "2026-07-16T10:50:00Z"
+    closure_wave_1_report: registry/psg-11-governance-wave1-definition-report-20260716.v1.yaml
+    closure_wave_2_governance_implementation: COMPLETE
+    closure_wave_2_utc: "2026-07-16T10:53:00Z"
+    closure_wave_2_report: registry/psg-11-governance-wave2-implementation-report-20260716.v1.yaml
+    closure_wave_3_governance_validation: COMPLETE
+    closure_wave_3_utc: "2026-07-16T10:56:00Z"
+    governance_exit_review: registry/psg-11-governance-exit-review-20260716.v1.yaml
+    governance_exit: PASS
+    engineering_implementation: PARTIAL
+    engineering_implementation_status: WAITING_OWNER_REAL_DEVICE_BATCH
+    engineering_implementation_frozen: true
+    engineering_implementation_complete: false
+    engineering_implementation_report: registry/psg-11-engineering-implementation-report-20260716.v1.yaml
+    engineering_blocking_verification: registry/psg-11-engineering-blocking-verification-20260716.v1.yaml
+    engineering_implementation_authorized: true
+    certification_authorized: false
+    production_go: NO_GO
+    cert: OPEN
+    gap_count: 8
+    gaps_closed: [WAL-GAP-001, WAL-GAP-002, WAL-GAP-003, WAL-GAP-004, WAL-GAP-005, WAL-GAP-007, WAL-GAP-008]
+    gaps_blocking: [WAL-GAP-006]
+    wbs_block_absent: false
+    charter_ssot: registry/psg-11-wallet-closure-plan-20260716.v1.yaml#charter_boundary_frozen
+    connection_ssot: registry/psg-11-wallet-closure-plan-20260716.v1.yaml#connection_ssot_note
+    terminology_ssot: registry/psg-11-wallet-closure-plan-20260716.v1.yaml#wallet_connect_terminology
+    boundary_cross_ref:
+      psg_09: registry/psg-09-web3-phase1-audit-20260716.v1.yaml#11_coverage_review
+      psg_10: registry/psg-10-payment-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+      psg_20: registry/psg-20-platform-financial-phase1-audit-20260716.v1.yaml#11_coverage_review
+      closure_plan: registry/psg-11-wallet-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+    inventory_modules:
+      ssot: registry/psg-11-wallet-closure-plan-20260716.v1.yaml#owned_modules_index
+      wave_2_mirror_verified_utc: "2026-07-16T10:53:00Z"
+      registry:
+        - registry/production-secret-catalog.v1.yaml
+        - registry/capability-wbs.v1.yaml#PSG-11
+      docs:
+        - docs/runbook/TT-MODULE-RELEASE-COCKPIT-LATEST.md
+        - docs/runbook/TT-MODULE-RELEASE-LADDER-V1.md
+        - docs/runbook/TT-OA01-WALLETCONNECT-ACTIVATION-LATEST.md
+        - docs/runbook/TT-B435-USER-WALLET-ESCROW-FEEROUTER-PAYMENT-PATH-001.md
+        - docs/spec/35-DApp与钱包流程实现与验收清单.md
+        - docs/spec/96-17-多重身份与钱包真值.md
+        - docs/spec/96-14-专项Wallet社区治理与扩展域.md
+      backend:
+        - crates/api/src/chain_off/wallet_verify.rs
+        - crates/api/src/wallet_verify_crypto.rs
+        - crates/api/src/db/wallet_verify_challenges.rs
+      frontend:
+        - frontend/components/Providers.tsx
+        - frontend/components/trust/WalletStatusMini.tsx
+        - frontend/components/Header.tsx
+        - frontend/lib/chainEnv.ts
+        - frontend/lib/ViewOnlyAddressContext.tsx
+        - frontend/components/WalletSessionRevalidate.tsx
+        - frontend/components/traveltrust/cinematic/TravelTrustHeroWalletConnect.tsx
+        - frontend/components/governance/GovernanceWalletConnectPanel.tsx
+        - frontend/components/staking/StakingWalletGateContext.tsx
+        - frontend/components/escrow/EscrowDetail/
+        - frontend/dapp/hooks/useEscrowActions.ts
+        - frontend/dapp/hooks/useOrderIntentSigner.ts
+        - frontend/lib/mapWalletWriteError.ts
+        - frontend/app/me/security/
+        - frontend/app/guide/register/
+      migrations:
+        - crates/api/migrations/20260502150000_wallet_verify_challenges.sql
+        - crates/api/migrations/20260503133000_auth_wallet_hardening_indexes.sql
+      gates:
+        - scripts/dev/smoke-wallet-connection-l5-local.sh
+        - scripts/dev/oa01-preflight-wc-key.py
+        - scripts/dev/verify-staking-wallet-anvil-local.sh
+      evidence:
+        - frontend/evidence/GO_local_wallet_connection_l5/
+      dependency_only_not_owned:
+        - registry/web3-active-execution-matrix.v1.yaml → PSG-09
+        - crates/api/src/chain/indexer.rs → PSG-09
+        - frontend/dapp/abis/ → PSG-09
+        - registry/web3-payment-production-gate.v1.yaml → PSG-10
+        - registry/platform-safe-registry.v1.yaml → PSG-20
+        - docs/spec/artifacts/onboarding-fee-schedule.v1.yaml → PSG-20
+        - crates/api/src/chain_off/orders_flow/ → PSG-03 co_implementation
+    governance_traceability:
+      ssot: registry/psg-11-wallet-closure-plan-20260716.v1.yaml#governance_traceability
+      wbs_lines_mapped: 8
+      wave_1_synced: true
+      wave_2_synced: true
+      wave_2_synced_utc: "2026-07-16T10:53:00Z"
+      consistency_report: registry/psg-11-governance-wave2-implementation-report-20260716.v1.yaml#consistency_verification
+      governance_exit_review: registry/psg-11-governance-exit-review-20260716.v1.yaml
+      governance_exit: PASS
+    boundary_frozen_note: >
+      PSG-11 owns connect · verify · write UX only. Canonical FE: Providers.tsx + WalletStatusMini.
+      No custody. PSG-09 contracts · PSG-10 payment rail · PSG-20 financial policy are peer-owned.
+    next_step: WAITING_OWNER_REAL_DEVICE_BATCH
+
+  PSG-20:
+    name: Platform Financial
+    capability_name: Platform Financial
+    category: platform
+    capability_wbs: registry/capability-wbs.v1.yaml#PSG-20
+    coverage_pct: 93
+    boundary_score: 100
+    benchmark_domain: true
+    priority: P0
+    scope: "Platform admission fee · commercial revenue · Platform Safe · pricing · financial registry · treasury rules · reports · audit"
+    not_same_as: PSG-10
+    boundary_cross_ref:
+      psg_10: registry/psg-10-payment-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+      payment_classification: registry/payment-architecture-classification.v1.yaml#stripe_rail_vs_policy
+    boundary_frozen_note: >
+      platform_revenue_settlement ∈ PSG-20 · order_settlement rail ∈ PSG-10 · Stripe policy here · Stripe rail PSG-10.
+    admission_fee:
+      owner: PSG-20
+      destination: Platform Safe
+      not_dao_treasury: true
+      closure_priority: 1
+      wbs_id: "20.1"
+      sub_lines: [pricing, billing, settlement, ledger, audit, destination_platform_safe]
+      note: "商业模式调整只改 treasury_rules 流向 · 不改变 PSG-20 归类"
+    inventory_wbs:
+      - "20.1 Admission Fee"
+      - "20.2 Pricing"
+      - "20.3 Revenue"
+      - "20.4 Settlement"
+      - "20.5 Financial Registry"
+      - "20.6 Treasury Rules"
+      - "20.7 Financial Reports"
+      - "20.8 Financial Audit"
+    closure_rule: "按 8 条 Inventory 逐项 Closure · 20.1 Admission Fee 第一优先直至 Cert"
+    in_psg_cert: pf_entry
+    ssot:
+      - docs/spec/artifacts/platform-financial-governance.v1.md
+      - registry/platform-safe-registry.v1.yaml
+      - docs/spec/artifacts/onboarding-fee-schedule.v1.yaml
+    audit:
+      phase: COMPLETE
+      completed_utc: "2026-07-16"
+      artifact: registry/psg-20-platform-financial-phase1-audit-20260716.v1.yaml
+    coverage_review:
+      ga_inclusion_complete: true
+      domain_ownership: COMPLETE
+      substeps:
+        scope: PASS
+        boundary: PASS
+        dependency: PASS
+        unknown_domains: PARTIAL
+      resolved_unknown: [UNK-007, UNK-009]
+    closure: IN_PROGRESS
+    closure_plan: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml
+    closure_plan_complete: true
+    wave_1_governance_definition: COMPLETE
+    wave_1_report: registry/psg-20-governance-wave1-definition-report-20260716.v1.yaml
+    wave_1_completed_utc: "2026-07-16T12:10:00Z"
+    wave_2_governance_implementation: COMPLETE
+    wave_2_report: registry/psg-20-governance-wave2-implementation-report-20260716.v1.yaml
+    wave_2_completed_utc: "2026-07-16T12:20:00Z"
+    next_step: foundation_gate_then_pf_gap_004
+    next_step_note: "RC Sequence step 1 — forbid Cap Cert (PF-GAP-004) until foundation_gate.status=PASS"
+    closure_wave_3_governance_validation: COMPLETE
+    closure_wave_3_utc: "2026-07-16T12:30:00Z"
+    governance_exit_review: registry/psg-20-governance-exit-review-20260716.v1.yaml
+    governance_exit: PASS
+    engineering_implementation_authorized: true
+    engineering_implementation_status: COMPLETE
+    engineering_implementation_report: registry/psg-20-engineering-implementation-report-20260716.v1.yaml
+    certification_authorized: true
+    certification_status: CERTIFICATION_ACTIVE
+    certification: registry/psg-20-certification-20260716.v1.yaml
+    capability_lifecycle_closed: false
+    production_go: NO_GO
+    rc_sequence_gate: "foundation_gate.status=PASS required before further Cap Cert waves"
+    charter_ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#charter_boundary_frozen
+    terminology_ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#platform_financial_terminology
+    governance_traceability:
+      ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#governance_traceability
+      wbs_lines_mapped: 8
+      wave_1_synced_utc: "2026-07-16T12:10:00Z"
+      wave_2_synced_utc: "2026-07-16T12:20:00Z"
+      consistency_verified: registry/psg-20-governance-wave2-implementation-report-20260716.v1.yaml#consistency_verification
+    inventory_modules:
+      ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#owned_modules_index
+      wave_2_mirror_verified_utc: "2026-07-16T12:20:00Z"
+      registry:
+        - registry/platform-safe-registry.v1.yaml
+        - registry/payment-architecture-classification.v1.yaml#governance_treasury_boundary
+        - registry/capability-wbs.v1.yaml#PSG-20
+      docs:
+        - docs/spec/artifacts/platform-financial-governance.v1.md
+        - docs/spec/artifacts/onboarding-fee-schedule.v1.yaml
+        - docs/spec/artifacts/platform-safe-runtime.v1.md
+        - docs/runbook/TT-PLATFORM-FINANCIAL-GOVERNANCE-RC2-BOARD.md
+        - docs/runbook/TT-ADMIN-OPERATOR-MAP-SSOT.md
+      backend:
+        - crates/api/src/routes/platform_safe.rs
+        - crates/api/src/services/platform_safe_service.rs
+        - crates/api/src/repositories/platform_safe_repository.rs
+        - crates/api/src/routes/onboarding/fee_schedule_v1.rs
+      frontend:
+        - frontend/app/admin/platform-financial/
+        - frontend/lib/apiClient/platform/platformSafeHttp.ts
+        - frontend/components/me/onboarding/MeOnboardingUsdcFeePayment.tsx
+      scripts:
+        - scripts/dev/run-platform-financial-step3-runtime.sh
+        - scripts/dev/run-platform-financial-step4-staging.sh
+      evidence:
+        - evidence/GO_platform_financial_admin/
+        - evidence/GO_platform_financial_staging/
+      dependency_only_not_owned:
+        - registry/region-reward-wallet.v1.yaml → PSG-09 execution · PSG-20 boundary
+        - crates/api/src/stripe_onboarding/ → PSG-10
+        - frontend/lib/wagmi/ → PSG-11
+        - crates/api/src/chain/indexer.rs → PSG-09
+        - docs/runbook/TT-ADMIN-OPERATOR-MAP-SSOT.md → PSG-07 SSOT · PSG-20 consumer
+    boundary_cross_ref:
+      closure_plan: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+      psg_10: registry/psg-10-payment-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+      psg_09: registry/psg-09-web3-phase1-audit-20260716.v1.yaml#11_coverage_review
+      psg_11: registry/psg-11-wallet-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+    cert: OUT_OF_PSG_RUNNER
+    gap_count: 3
+    gaps_closed_governance: [PF-GAP-001, PF-GAP-005]
+    gaps_closed_engineering: [PF-GAP-002, PF-GAP-006]
+    gaps_closed_certification_ops: [PF-GAP-008]
+    gaps_phase2_ready: [PF-GAP-003]
+    gaps_open_certification: [PF-GAP-003, PF-GAP-004, PF-GAP-007]
+    gaps:
+      - PF-GAP-001 wbs 20.8 operator map — CLOSED governance · map edit deferred
+      - PF-GAP-002 wbs 20.1 step4 staging — CLOSED engineering (Step4 exit 0)
+      - PF-GAP-003 wbs 20.1 current active — PASS_PHASE2_READY (≠ CLOSED at ③)
+      - PF-GAP-004 wbs 20.7 step5 e2e — OPEN · blocked until Foundation Gate PASS
+      - PF-GAP-005 wbs 20.6 RTR registry cross-ref — CLOSED governance
+      - PF-GAP-006 wbs 20.1 billing consumer wiring — CLOSED engineering
+      - PF-GAP-007 wbs 20.4 settlement staging — OPEN
+      - PF-GAP-008 CMS public catalog — CLOSED (② staging 10/10/10/10)
+
+  PSG-12:
+    name: Runtime
+    category: technical
+    in_psg_cert: yes
+    maps_phase_b: [B4]
+    audit: PARTIAL
+    closure: PARTIAL
+    cert: OPEN
+
+  PSG-13:
+    name: Deploy
+    capability_name: Release Foundation
+    category: technical
+    in_psg_cert: yes
+    maps_phase_b: [B4, admission]
+    audit: COMPLETE
+    audit_artifact: registry/psg-13-deploy-phase1-audit-20260716.v1.yaml
+    coverage_pct: 84
+    boundary_score: 91
+    common_model_validation: PASS
+    new_concepts_added: 0
+    ga_inclusion_complete: true
+    closure: OPEN
+    cert: OPEN
+    p0_foundation: true
+
+  PSG-14:
+    name: CI_CD
+    category: technical
+    in_psg_cert: pgc_dod
+    audit: OPEN
+    closure: OPEN
+    cert: OPEN
+
+  PSG-15:
+    name: Monitoring
+    category: operations
+    in_psg_cert: pf_entry
+    audit: OPEN
+    closure: OPEN
+    cert: OUT_OF_PSG_RUNNER
+
+  PSG-16:
+    name: Security
+    category: quality
+    in_psg_cert: partial
+    audit: OPEN
+    closure: PARTIAL
+    cert: PARTIAL
+
+  PSG-17:
+    name: Testing
+    category: quality
+    in_psg_cert: indirect
+    audit: OPEN
+    closure: OPEN
+    cert: PARTIAL
+
+  PSG-18:
+    name: Documentation
+    category: governance
+    in_psg_cert: governance_only
+    audit: PARTIAL
+    closure: OPEN
+    cert: OUT_OF_PSG_RUNNER
+
+  PSG-19:
+    name: Production
+    category: governance
+    in_psg_cert: admission
+    audit: PARTIAL
+    closure: OPEN
+    cert: FAIL
+
+repository_hygiene:
+  track: parallel_sibling
+  under: governance_architecture
+  not_under: psg_certification
+  affects_tt_psg_production_cert: false
+  audit_template: registry/governance-audit-template.v1.yaml
+  rh_template_prefix: RH
+  buckets: [legacy, deprecated, archive, duplicate, dead_code, dead_docs, deprecated_api, deprecated_registry]
+  audit: OPEN
+  coverage_pct: null
+
+next_recommended_action: psg_20_engineering_implementation
+next_capability_audit: PSG-20
+next_capability_audit_status: GOVERNANCE_EXIT_PASS
+prior_frozen_capability:
+  id: PSG-11
+  status: WAITING_OWNER_REAL_DEVICE_BATCH
+  frozen: true
+  closure_plan: registry/psg-11-wallet-closure-plan-20260716.v1.yaml
+  rule: "Do not modify PSG-11 code · registry · certification"
+lifecycle_standard: registry/psg-capability-lifecycle-standard.v1.yaml
+golden_reference:
+  capability_id: PSG-10
+  role: reference_implementation
+  status: CLOSED
+  ssot: registry/psg-capability-lifecycle-standard.v1.yaml#reference_implementation
+pcv_gate:
+  artifact: registry/project-coverage-verification-20260716.v1.yaml
+  status: PASS
+  unassigned_objects: 0
+  duplicate_ownership: 0
+  phase_a: COMPLETE
+  phase_b: COMPLETE
+  phase_c: COMPLETE
+  pcv_pass: true
+  blocks_ga_full_takeover: false
+  allow_psg_10_audit: true
+  note: "PCV PARTIAL does not block Capability Audit · blocks GA full takeover claim"
+
+meta_review_gate:
+  status: PASS
+  artifact: registry/governance-architecture-meta-review-20260716.v1.yaml
+  common_model: registry/governance-common-model.v1.yaml
+  common_model_version: "1.0"
+  psg_09_standard_audit: registry/psg-09-web3-phase1-audit-20260716.v1.yaml
+  rule: "Capability Registry + WBS frozen · zero new GA concepts"
