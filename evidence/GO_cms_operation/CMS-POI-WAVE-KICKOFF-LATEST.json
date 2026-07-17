@@ -1,11 +1,11 @@
 {
   "schema": "traveltrust.cms_poi_wave_kickoff.v1",
-  "stamp_utc": "2026-07-05T153700Z",
+  "stamp_utc": "20260717T130050Z",
   "asset_family": "poi",
-  "status": "JP_CITY_PILOT_COMPLETE",
+  "status": "SCOPE_LOCKED",
   "next_stage": "CATALOG_BUILD",
-  "upload_paused": false,
-  "not_started_items": false,
+  "upload_paused": true,
+  "not_started_items": true,
   "advancement_rule": "Scope → Country → City → POI · acceptance = City CLOSED",
   "workflow": [
     "POI Catalog Scope Lock",
@@ -29,10 +29,36 @@
     "food": 161,
     "matrix_ssot": "data/catalog/poi-hero-matrix.v1.yaml"
   },
-  "active_catalog_build": null,
+  "active_catalog_build": {
+    "wave_id": "POI-WAVE-1-PILOT",
+    "label": "Pilot · JP · 东京",
+    "country_iso": "JP",
+    "cities": [
+      "东京"
+    ],
+    "poi_count": 9,
+    "acceptance_unit": "city",
+    "acceptance_target": "东京 CLOSED",
+    "matrix_ids": [
+      "PH-JP-009-ATR",
+      "PH-JP-010-ATR",
+      "PH-JP-011-ATR",
+      "PH-JP-012-ATR",
+      "PH-JP-013-ATR",
+      "PH-JP-014-FOOD",
+      "PH-JP-015-FOOD",
+      "PH-JP-016-FOOD",
+      "PH-JP-017-FOOD"
+    ],
+    "first_poi": {
+      "city_zh": "东京",
+      "legacy_value": "浅草寺",
+      "matrix_id": "PH-JP-009-ATR"
+    }
+  },
   "pilot_acceptance": {
     "unit": "city",
-    "target": "福冈 CLOSED",
+    "target": "东京 CLOSED",
     "country_iso": "JP"
   },
   "pilot_waves": [
@@ -55,7 +81,7 @@
       "poi_count": 258
     }
   ],
-  "catalog_gate": "Pilot city only · JP · 东京 catalog build · acceptance = 东京 CLOSED · not 330 bulk",
+  "catalog_gate": "Catalog rows exist · re-lock denominator then next POI loop",
   "forbidden": [
     "poi_upload_while_catalog_empty",
     "ingest_all_330_on_day_one",
@@ -116,36 +142,5 @@
       "status": "NOT_STARTED"
     }
   ],
-  "TT_CMS_POI_WAVE": "JP_CITY_PILOT_COMPLETE",
-  "ambient_runtime_closure": {
-    "status": "CLOSED",
-    "evidence": "evidence/GO_cms_operation/CMS-DESTINATION-AMBIENT-RUNTIME-CLOSURE-LATEST.json"
-  },
-  "TT_CMS_POI_UPLOAD_PAUSED": false,
-  "tokyo_city_closure": {
-    "status": "CLOSED",
-    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-TOKYO-CLOSURE-LATEST.json"
-  },
-  "TT_CMS_POI_CITY_TOKYO": "CLOSED",
-  "TT_CMS_POI_ACTIVE_CITY": null,
-  "osaka_city_closure": {
-    "status": "CLOSED",
-    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-OSAKA-CLOSURE-LATEST.json"
-  },
-  "TT_CMS_POI_CITY_OSAKA": "CLOSED",
-  "kyoto_city_closure": {
-    "status": "CLOSED",
-    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-KYOTO-CLOSURE-LATEST.json"
-  },
-  "TT_CMS_POI_CITY_KYOTO": "CLOSED",
-  "sapporo_city_closure": {
-    "status": "CLOSED",
-    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-SAPPORO-CLOSURE-LATEST.json"
-  },
-  "TT_CMS_POI_CITY_SAPPORO": "CLOSED",
-  "fukuoka_city_closure": {
-    "status": "CLOSED",
-    "evidence": "evidence/GO_cms_operation/CMS-POI-CITY-FUKUOKA-CLOSURE-LATEST.json"
-  },
-  "TT_CMS_POI_CITY_FUKUOKA": "CLOSED"
+  "TT_CMS_POI_WAVE": "SCOPE_LOCKED_CATALOG_BUILD_NEXT"
 }

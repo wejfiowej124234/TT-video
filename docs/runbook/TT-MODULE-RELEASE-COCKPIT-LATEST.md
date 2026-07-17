@@ -7,7 +7,7 @@
 **RC1 Freeze：** [TT-RELEASE-CANDIDATE-RC1-FREEZE-LATEST.md](./TT-RELEASE-CANDIDATE-RC1-FREEZE-LATEST.md) · SHA `0bbc7adbd314…` · `20260715T074252Z`  
 **🔒 Release Lock：** [TT-RELEASE-LOCK-LATEST.md](./TT-RELEASE-LOCK-LATEST.md) · **`LOCKED`**  
 **C3 Patch Review：** [TT-RC1-PATCH-CANDIDATE-REVIEW-LATEST.md](./TT-RC1-PATCH-CANDIDATE-REVIEW-LATEST.md) · v2 DONE · WT_CLEAN PASS  
-**OA-01：** [TT-OA01-WALLETCONNECT-ACTIVATION-LATEST.md](./TT-OA01-WALLETCONNECT-ACTIVATION-LATEST.md) · **BLOCKED**（Project ID）· OA-02 CLOSED  
+**OA-01：** [TT-OA01-WALLETCONNECT-ACTIVATION-LATEST.md](./TT-OA01-WALLETCONNECT-ACTIVATION-LATEST.md) · **BLOCKED**（Project ID）· OA-02 **LOCKED_BY_OA01**  
 **Owner 唯一执行页：** [TT-PRODUCTION-EXECUTION-CHECKLIST-LATEST.md](./TT-PRODUCTION-EXECUTION-CHECKLIST-LATEST.md)
 **最终人工队列：** [TT-OWNER-FINAL-HUMAN-QUEUE-LATEST.md](./TT-OWNER-FINAL-HUMAN-QUEUE-LATEST.md)  
 **Execution Prep：** [TT-RELEASE-EXECUTION-PREPARATION-LATEST.md](./TT-RELEASE-EXECUTION-PREPARATION-LATEST.md) · [`registry/release-execution-preparation.v1.yaml`](../../registry/release-execution-preparation.v1.yaml)  
@@ -20,7 +20,7 @@
 **正式口径写死：** 仅 `PASS` · `BLOCKED` · `WAITING` · `FAIL`。  
 **里程碑：** Engineering **DONE** · **RC1/PSG Freeze** · **`TT_PRODUCTION_GO: GO`** · Solo Workflow + W5 **ACTIVE** · 残余人控 OA-01…04（激活/真机/Timelock/密钥）。  
 **每日焦点：** 仓库真相干净 → push → 再处理 Staging 真人验收。禁止扩 PSG 治理 SSOT。  
-**AI 工程 / AI_ASSIST：** **EMPTY**。**Ambient SLA = FAIL·OPEN**（诚实 · 运维轨 · ≠ 否决已 GO）。
+**AI 工程 / AI_ASSIST：** **EMPTY**。**Ambient SLA：** machine prep **PASS**（见 `GO_phase2_staging_reality/AMBIENT/`）· Owner accept **WAITING** · ≠ 否决已 GO · ≠ 解锁 OA-02。
 
 ---
 

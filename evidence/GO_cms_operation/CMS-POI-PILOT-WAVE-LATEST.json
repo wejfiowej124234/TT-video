@@ -1,6 +1,6 @@
 {
   "schema": "traveltrust.cms_poi_pilot_wave.v1",
-  "stamp_utc": "2026-07-05T153700Z",
+  "stamp_utc": "20260717T130050Z",
   "layer": "CMS_OPERATION",
   "not_governance": true,
   "phase": "② staging",
@@ -9,7 +9,7 @@
     "asset_family",
     "country",
     "city",
-    "poi"
+    "asset"
   ],
   "acceptance_unit": "city",
   "full_scope_denominator": 330,
@@ -19,7 +19,109 @@
     "poi_upload_before_pilot_catalog_build"
   ],
   "active_wave": "POI-WAVE-1-PILOT",
-  "active_catalog_build": null,
+  "active_catalog_build": {
+    "wave_id": "POI-WAVE-1-PILOT",
+    "label": "Pilot · JP · 东京",
+    "country_iso": "JP",
+    "country_zh": "日本",
+    "cities": [
+      "东京"
+    ],
+    "acceptance_unit": "city",
+    "acceptance_target": "东京 CLOSED",
+    "purpose": "Catalog Build → per-POI Review → Live · validate pipeline · pilot done when 东京 CLOSED (not \"9 POIs\")",
+    "forbidden": [
+      "bulk_ingest_330",
+      "skip_pilot_before_wave_2",
+      "accept_by_poi_count"
+    ],
+    "status": "ACTIVE",
+    "catalog_build": true,
+    "matrix_ids": [
+      "PH-JP-009-ATR",
+      "PH-JP-010-ATR",
+      "PH-JP-011-ATR",
+      "PH-JP-012-ATR",
+      "PH-JP-013-ATR",
+      "PH-JP-014-FOOD",
+      "PH-JP-015-FOOD",
+      "PH-JP-016-FOOD",
+      "PH-JP-017-FOOD"
+    ],
+    "poi_count": 9,
+    "by_city": [
+      {
+        "city_zh": "东京",
+        "acceptance_unit": "city",
+        "acceptance_target": "东京 CLOSED",
+        "poi_count": 9,
+        "matrix_ids": [
+          "PH-JP-009-ATR",
+          "PH-JP-010-ATR",
+          "PH-JP-011-ATR",
+          "PH-JP-012-ATR",
+          "PH-JP-013-ATR",
+          "PH-JP-014-FOOD",
+          "PH-JP-015-FOOD",
+          "PH-JP-016-FOOD",
+          "PH-JP-017-FOOD"
+        ],
+        "pois": [
+          {
+            "legacy_value": "浅草寺",
+            "poi_type": "attraction",
+            "matrix_id": "PH-JP-009-ATR"
+          },
+          {
+            "legacy_value": "东京塔",
+            "poi_type": "attraction",
+            "matrix_id": "PH-JP-010-ATR"
+          },
+          {
+            "legacy_value": "新宿",
+            "poi_type": "attraction",
+            "matrix_id": "PH-JP-011-ATR"
+          },
+          {
+            "legacy_value": "涩谷",
+            "poi_type": "attraction",
+            "matrix_id": "PH-JP-012-ATR"
+          },
+          {
+            "legacy_value": "上野公园",
+            "poi_type": "attraction",
+            "matrix_id": "PH-JP-013-ATR"
+          },
+          {
+            "legacy_value": "寿司",
+            "poi_type": "food",
+            "matrix_id": "PH-JP-014-FOOD"
+          },
+          {
+            "legacy_value": "拉面",
+            "poi_type": "food",
+            "matrix_id": "PH-JP-015-FOOD"
+          },
+          {
+            "legacy_value": "天妇罗",
+            "poi_type": "food",
+            "matrix_id": "PH-JP-016-FOOD"
+          },
+          {
+            "legacy_value": "居酒屋",
+            "poi_type": "food",
+            "matrix_id": "PH-JP-017-FOOD"
+          }
+        ]
+      }
+    ],
+    "first_matrix_id": "PH-JP-009-ATR",
+    "first_poi": {
+      "city_zh": "东京",
+      "legacy_value": "浅草寺",
+      "matrix_id": "PH-JP-009-ATR"
+    }
+  },
   "waves": [
     {
       "wave_id": "POI-WAVE-1-PILOT",
@@ -532,17 +634,6 @@
   ],
   "matrix_ssot": "data/catalog/poi-hero-matrix.v1.yaml",
   "TT_CMS_POI_PILOT_WAVE": "POI-WAVE-1-PILOT",
-  "TT_CMS_POI_CATALOG_BUILD_NEXT": "JP · 福冈",
-  "TT_CMS_POI_CATALOG_BUILD_POI_COUNT": 9,
-  "tokyo_closed": true,
-  "TT_CMS_POI_CITY_TOKYO": "CLOSED",
-  "osaka_closed": true,
-  "TT_CMS_POI_CITY_OSAKA": "CLOSED",
-  "kyoto_closed": true,
-  "TT_CMS_POI_CITY_KYOTO": "CLOSED",
-  "sapporo_closed": true,
-  "TT_CMS_POI_CITY_SAPPORO": "CLOSED",
-  "fukuoka_closed": true,
-  "jp_city_pilot_complete": true,
-  "TT_CMS_POI_CITY_FUKUOKA": "CLOSED"
+  "TT_CMS_POI_CATALOG_BUILD_NEXT": "Pilot · JP · 东京",
+  "TT_CMS_POI_CATALOG_BUILD_POI_COUNT": 9
 }

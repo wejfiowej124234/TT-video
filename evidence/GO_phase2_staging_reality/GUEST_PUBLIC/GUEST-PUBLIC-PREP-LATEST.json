@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.phase2_guest_public_prep.v1",
+  "machine_key": "GUEST_PUBLIC_PREP",
+  "status": "PASS",
+  "hold_clearance": "WAITING",
+  "batch_status": "WAITING",
+  "recorded_utc": "2026-07-17T13:02:30Z",
+  "probe": {
+    "tt_web_staging_home_http": 200,
+    "tt_web_staging_community_http": 200
+  },
+  "prior_closure_refs": [
+    "evidence/GO_pdca_business_content/PDCA-REMEDIATION-R01-LATEST.json",
+    "evidence/GO_pdca_business_content/GUEST-CSR-RECONCILE-LATEST.json",
+    "evidence/GO_pdca_business_content/SOLO-RELEASE-R01-STAGING-VERIFY-LATEST.json"
+  ],
+  "honest_boundary": "Guest CSR R-01 already CLOSED on lineage. This prep reconfirms staging HTTP 200 only. Does not clear HOLD without Owner. Does not mutate OA-01.",
+  "oa01_untouched": true
+}

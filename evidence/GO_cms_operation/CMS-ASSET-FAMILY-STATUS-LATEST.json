@@ -1,6 +1,6 @@
 {
   "schema": "traveltrust.cms_asset_family_status.v1",
-  "stamp_utc": "20260705T104328Z",
+  "stamp_utc": "20260717T130050Z",
   "layer": "CMS_OPERATION",
   "not_governance": true,
   "phase": "② staging",
@@ -49,7 +49,7 @@
         "live": 0,
         "pending": 330,
         "completion": "0/330 (scope_locked · pilot 9 next)",
-        "catalog_empty": true,
+        "catalog_empty": false,
         "target": "Pilot · 东京 CLOSED → Osaka ACTIVE → … · not bulk 330"
       },
       "closure_evidence": null,
@@ -188,5 +188,7 @@
   "TT_CMS_ACTIVE_ASSET_FAMILY": "poi",
   "TT_CMS_POI_STATUS": "SCOPE_LOCKED",
   "TT_CMS_POI_NEXT_STAGE": "CATALOG_BUILD",
-  "active_catalog_build": "POI-WAVE-1-PILOT"
+  "active_catalog_build": "POI-WAVE-1-PILOT",
+  "cms_ops_hierarchy": "evidence/GO_cms_operation/CMS-OPS-HIERARCHY-LATEST.json",
+  "cms_ops_hierarchy_frozen": true
 }

@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.phase2_ambient_sla_prep.v1",
+  "machine_key": "AMBIENT_SLA_PREP",
+  "status": "PASS",
+  "owner_accept": "WAITING",
+  "batch_status": "WAITING",
+  "recorded_utc": "2026-07-17T13:02:30Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "probe": {
+    "countries": 10,
+    "catalog_media_http_200": 10,
+    "sample_head_ok": 10,
+    "isos": ["JP", "CN", "KR", "TH", "SG", "FR", "US", "AU", "ES", "AE"]
+  },
+  "prior_closure_refs": [
+    "evidence/GO_cms_operation/CMS-AMBIENT-WAVE1-CLOSURE-LATEST.json",
+    "evidence/GO_cms_operation/CMS-DESTINATION-AMBIENT-RUNTIME-CLOSURE-LATEST.json"
+  ],
+  "honest_boundary": "Machine prep PASS ≠ AMBIENT_SLA: PASS Owner accept. Does not unlock OA-02. Does not mutate OA-01.",
+  "oa01_untouched": true
+}

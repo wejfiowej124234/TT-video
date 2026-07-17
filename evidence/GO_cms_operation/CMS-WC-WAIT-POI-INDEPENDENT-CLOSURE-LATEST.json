@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.cms_wc_wait_poi_independent_closure.v1",
+  "machine_key": "TT_CMS_WC_WAIT_POI_INDEPENDENT",
+  "status": "PASS_WITH_HOLD",
+  "recorded_utc": "2026-07-17T13:01:00Z",
+  "daily_board": "PASS",
+  "poi_scope_lock": "PASS",
+  "ops_refresh": "PASS",
+  "catalog_empty": false,
+  "poi_next_stage": "CATALOG_BUILD",
+  "public_catalog": {
+    "attraction": 169,
+    "food": 161
+  },
+  "pilot_catalog_build_script": "BLOCKED",
+  "hold": "admin_content_countries_http_404",
+  "oa01_untouched": true,
+  "jp_content_qa_reopened": false
+}

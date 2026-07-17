@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.timelock_resume_prebuild.v1",
+  "machine_key": "TT_TIMELOCK_RESUME_PREBUILD",
+  "status": "PASS",
+  "execute_status": "WAITING",
+  "mode": "TL2_ELAPSED_SPEND_BLOCKED",
+  "recorded_utc": "2026-07-17T12:55:00Z",
+  "probe_exit": 0,
+  "cert_session": "20260616T100918Z",
+  "forbidden": [
+    "broadcast_without_owner",
+    "claim_oa03_pass",
+    "mutate_oa01"
+  ],
+  "probe_tail": [
+    "TT_PHASE_B_TIMELOCK_COUNTDOWN: MODE=TL2_ELAPSED_SPEND_BLOCKED",
+    "spend execute blocked until explicit Wave 2 (HAT_R1_ALLOW_SPEND_EXECUTE=1)"
+  ]
+}
