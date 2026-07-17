@@ -5,7 +5,7 @@
 schema: traveltrust.psg_solo_developer_workflow.v1
 machine_key: TT_PSG_SOLO_DEVELOPER_WORKFLOW
 status: ACTIVE
-effective_utc: "2026-07-17T11:24:00Z"
+effective_utc: "2026-07-17T11:37:00Z"
 owner: solo_owner
 baseline_tag: v1.1.0-psg-go.20260717
 baseline_sha: 0bbc7adbd3142b111463fc398288ab94be5c0b84
@@ -14,6 +14,8 @@ honest_boundary: >
   Solo workflow replaces team PR/Approver/Reviewer gates.
   It does NOT waive Gate · Evidence · Freeze · Certification · Release Baseline · Release Archive.
   TT_PSG_PRODUCTION_CERT=PASS and Owner Sign-off remain hard for Production GO.
+  Quality comes from Gates + Evidence + Freeze + Cert + Archive + Owner Sign-off —
+  not from Peer Review theatre.
 
 retained_unchanged:
   - Gate (Foundation / Alignment / Cap Cert / Production Cert hard gates)
@@ -30,27 +32,66 @@ replaced_team_controls:
   Reviewer: Owner
   Approver: Owner_Sign_off
   dual_owner_merge_host: LEGACY_optional_team_only
-  second_person_signoff: Owner_time_separated_recheck_optional
+  second_person_signoff: Owner_time_separated_independent_recheck
+
+# Canonical ladder (formal Production Release · write-dead)
+canonical_release_ladder:
+  - feature_hotfix_or_patch_branch
+  - owner_self_review
+  - local_engineering
+  - staging_engineering
+  - foundation_gate
+  - alignment_audit
+  - rc_baseline_freeze
+  - capability_certification
+  - production_entry_review
+  - production_certification
+  - owner_sign_off
+  - release_baseline
+  - release_archive
+  - tt_production_go
+  - release_closed
+
+# Why this ladder holds (quality spine · not PR)
+quality_spine:
+  - automatic_gates_repeatable
+  - evidence_auditable
+  - freeze_immutable_point
+  - certification_attested
+  - release_archive_traceable
+  - owner_sign_off_accountable
 
 workflow:
   - id: W1_branch
     title: Branch from frozen baseline
-    rule: "Hotfix / Patch / Feature MUST branch from tag v1.1.0-psg-go.20260717 (or baseline SHA)"
+    rule: "Hotfix / Patch / Feature MUST branch from tag v1.1.0-psg-go.20260717 (or baseline SHA) until a newer Release Baseline Tag exists"
   - id: W2_owner_self_review
     title: Owner Self Review
     rule: >
       Owner reviews own diff against Gate exit criteria and Evidence paths.
       No second human Reviewer required. Local ci-local / gate scripts replace PR checks when Actions unavailable.
-  - id: W3_gates_evidence
-    title: Run required Gates · write Evidence
-    rule: "Only Gates required by the change class; never re-run PASS Gates solely to refresh a frozen baseline"
-  - id: W4_owner_signoff
+  - id: W3_local_staging_engineering
+    title: Local then Staging Engineering
+    rule: "① Local Engineering then ② Staging Engineering before Foundation Gate for release-class work; do not skip phases"
+  - id: W4_gates_freeze_cert
+    title: Foundation → Alignment → Freeze → Cap Cert → Entry → Production Cert
+    rule: "Follow RC Sequence; never re-run PASS Gates solely to refresh a frozen baseline"
+  - id: W5_time_separated_recheck
+    title: Time-separated independent recheck (formal Release only)
+    rule: >
+      For any formal Release, Owner Self Review and final Owner Sign-off MUST NOT
+      complete in the same continuous work session. Require at least one independent
+      recheck after a break (e.g. revisit the key checklist later), then re-confirm
+      Gate results, Evidence, Release Note, and Archive consistency before Sign-off.
+      This replaces peer review's "second pair of eyes" with temporal separation —
+      not a second human Approver.
+  - id: W6_owner_signoff
     title: Owner Sign-off
-    rule: "Single Owner attestation (name + signed_utc + decision) for release / Production GO class changes"
-  - id: W5_release_archive
-    title: Release Archive (formal releases)
-    rule: "New formal release → new Freeze + new Archive; do not mutate prior Archive bytes"
-  - id: W6_new_cycle
+    rule: "Single Owner attestation (name + signed_utc + decision) only after W5 when change class is formal Release / Production GO"
+  - id: W7_release_baseline_archive_go
+    title: Release Baseline → Archive → TT_PRODUCTION_GO → Closed
+    rule: "Emit Baseline + immutable Archive; set TT_PRODUCTION_GO; mark Release Closed. Do not mutate prior Archive bytes."
+  - id: W8_new_cycle
     title: New Release cycle
     rule: "Future Production GO opens a NEW RC Sequence cycle — do not extend the frozen GO pack"
 
@@ -58,9 +99,9 @@ vocabulary:
   - team: Pull Request / Merge Request / 发版 PR
     solo: Owner commit (+ optional push) · cite tag / SHA / Release Archive
   - team: Code Review / peer review / Reviewer
-    solo: Owner Self Review
+    solo: Owner Self Review (+ W5 time-separated recheck for formal Release)
   - team: Approver / required approvals / 双人复核 / 双签
-    solo: Owner Sign-off (single attestation)
+    solo: Owner Sign-off (single attestation after W5)
   - team: dual-owner / 合线主持人
     solo: Solo Owner · task-card split only if helpers exist (not a GO gate)
   - team: meta review / L0 approval
@@ -71,8 +112,9 @@ vocabulary:
 forbidden:
   - require_external_PR_approval_for_PSG_GO
   - require_second_human_approver_for_Owner_Sign_off
+  - same_session_self_review_and_signoff_for_formal_release
   - waive_Gate_or_Evidence_because_solo
   - mutate_release_archive_v1_1_0_psg_go_20260717
   - claim_GO_by_docs_only
 
-machine_line: TT_PSG_SOLO_DEVELOPER_WORKFLOW: ACTIVE baseline=v1.1.0-psg-go.20260717
+machine_line: TT_PSG_SOLO_DEVELOPER_WORKFLOW: ACTIVE baseline=v1.1.0-psg-go.20260717 W5_time_separated_recheck=REQUIRED_FOR_FORMAL_RELEASE

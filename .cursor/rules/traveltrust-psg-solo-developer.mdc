@@ -1,5 +1,5 @@
 ---
-description: PSG Solo Developer — Owner Self Review + Sign-off + Archive; no team PR/Approver gates; keep all Gates/Evidence/Freeze/Cert
+description: PSG Solo Developer — Owner Self Review + time-separated recheck + Sign-off + Archive; no team PR/Approver; keep Gates/Evidence/Freeze/Cert
 alwaysApply: true
 ---
 
@@ -9,23 +9,23 @@ alwaysApply: true
 
 **Baseline:** `v1.1.0-psg-go.20260717` · `TT_PRODUCTION_GO: GO`
 
-## Default model
+## Canonical ladder (formal Release)
 
-Hotfix / Patch / Feature / new Release → **Owner Self Review + Owner Sign-off + Release Archive**.
+`feature|hotfix|patch` → Owner Self Review → Local → Staging → Foundation → Alignment → Freeze → Cap Cert → Entry → Production Cert → **W5 time-separated recheck** → Owner Sign-off → Baseline → Archive → `TT_PRODUCTION_GO` → Closed
 
-**Keep:** Gate · Evidence · Freeze · Certification · Release Baseline · Release Archive.
-
-**Do not require for PSG/GO:** Pull Request approval · Code Reviewer · Approver · Merge Request · dual-person sign-off · merge host.
+**Quality spine:** Gates · Evidence · Freeze · Cert · Archive · Owner Sign-off — **not** PR/Reviewer.
 
 ## Agent MUST
 
 - Branch from frozen baseline Tag/SHA for product changes
 - Prefer Owner Self Review language over “needs PR / Reviewer”
+- For **formal Release / GO**: enforce **W5** — Self Review and Sign-off **not** in the same continuous session; require independent recheck (Gates · Evidence · Note · Archive) before Sign-off
 - Preserve Archive immutability; new formal release = new cycle + new Archive
 
 ## Agent MUST NOT
 
 - Block work waiting for a second human Approver
+- Allow same-session Self Review + Sign-off for formal Release
 - Waive Gates because the maintainer is Solo
 - Mutate `release_archive/v1.1.0-psg-go.20260717/`
 - Re-run PASS Gates only to refresh the frozen GO pack
