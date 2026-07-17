@@ -1,8 +1,8 @@
 {
   "schema": "traveltrust.psg_runtime_change_propagation_gate.v1",
   "machine_key": "TT_PSG_RUNTIME_CHANGE_PROPAGATION",
-  "stamp": "20260717T171829Z",
-  "recorded_utc": "2026-07-17T17:18:29.513Z",
+  "stamp": "20260717T171820Z",
+  "recorded_utc": "2026-07-17T17:18:20.439Z",
   "layer": "post_psg_change_control",
   "waves": {
     "A": "ENFORCED",

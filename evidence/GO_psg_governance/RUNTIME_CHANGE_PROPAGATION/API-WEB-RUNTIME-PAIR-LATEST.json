@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.api_web_runtime_pair.v1",
-  "stamp": "20260717T171431Z",
-  "recorded_utc": "2026-07-17T17:14:35.713Z",
+  "stamp": "20260717T171829Z",
+  "recorded_utc": "2026-07-17T17:18:32.925Z",
   "api": "https://tt-api-staging.fly.dev",
   "web": "https://tt-web-staging.fly.dev",
   "producer_hash": "81e77e593bc13b40921a02283290d8ed61c779d639f04dd047cdcccfd6c97316",
