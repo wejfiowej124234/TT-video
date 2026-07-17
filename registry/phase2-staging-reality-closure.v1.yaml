@@ -1,0 +1,61 @@
+# Phase② Staging Reality Closure Batch (ACTIVE · independent of PSG GO pack)
+# Human: docs/runbook/TT-PHASE2-STAGING-REALITY-CLOSURE-LATEST.md
+# Does NOT mutate Tag / Release Archive / TT_PRODUCTION_GO.
+schema: traveltrust.phase2_staging_reality_closure.v1
+machine_key: TT_PHASE2_STAGING_REALITY_CLOSURE
+status: ACTIVE
+opened_utc: "2026-07-17T11:47:00Z"
+owner: solo_owner
+baseline_tag: v1.1.0-psg-go.20260717
+baseline_sha: 0bbc7adbd3142b111463fc398288ab94be5c0b84
+tt_production_go: GO
+
+honest_boundary: >
+  This batch closes Staging Reality (②) only. It does not reopen PSG GO,
+  mutate Release Archive, or start OA-04 production secrets / formal prod deploy.
+  Do not git stash pop stash@{0} wholesale.
+
+forbidden:
+  - restore_full_stash_0
+  - mutate_release_archive
+  - retag_or_move_v1_1_0_psg_go_20260717
+  - start_OA04_before_phase2_closed
+  - claim_phase2_closed_without_evidence
+
+sequence:
+  - id: OA-01
+    title: WalletConnect Project ID + read-only probe (+ staging web rebuild when KEY_PRESENT)
+    status: BLOCKED
+    exit: "WC_PROJECT_ID: KEY_PRESENT + probe PASS + (optional) staging web redeploy verified"
+    evidence: evidence/GO_phase2_staging_reality/OA-01/
+  - id: OA-02
+    title: P1 Real Device Batch (Wallet·Order·Provider·Guide)
+    status: LOCKED_BY_OA01
+    exit: "TT_REAL_DEVICE_BATCH_P1: PASS"
+    evidence: evidence/GO_phase2_staging_reality/OA-02/
+  - id: AMBIENT_SLA
+    title: Destination Ambient cold-switch SLA
+    status: WAITING
+    exit: "AMBIENT_SLA: PASS (or Owner Non-blocking accept recorded)"
+    evidence: evidence/GO_phase2_staging_reality/AMBIENT/
+  - id: GUEST_PUBLIC_HOLD
+    title: Guest/Public Access HOLD residual
+    status: WAITING
+    exit: "GUEST_PUBLIC: PASS or HOLD cleared with evidence"
+    evidence: evidence/GO_phase2_staging_reality/GUEST_PUBLIC/
+  - id: OA-03
+    title: Timelock Execute (Owner wallet sign · Sepolia)
+    status: WAITING
+    exit: "TIMELOCK_EXECUTE: PASS + tx evidence"
+    evidence: evidence/GO_phase2_staging_reality/OA-03/
+  - id: PHASE2_CLOSED
+    title: Phase② Staging Reality Closure
+    status: NOT_STARTED
+    exit: "TT_PHASE2_STAGING_REALITY: CLOSED"
+    unlocks: OA-04
+  - id: OA-04
+    title: Production secrets / DNS / R2 / Stripe Live + formal prod deploy
+    status: FORBIDDEN_UNTIL_PHASE2_CLOSED
+    exit: "separate batch after PHASE2_CLOSED"
+
+machine_line: TT_PHASE2_STAGING_REALITY_CLOSURE: ACTIVE OA-01=BLOCKED OA-02=LOCKED_BY_OA01 OA-04=FORBIDDEN

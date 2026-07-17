@@ -1,30 +1,28 @@
 # TT Owner · 最终人工清单（OA 硬闸 · LATEST）
 
-**STATUS:** ACTIVE · 2026-07-17 · **Post–Production GO residual human ops**  
+**STATUS:** ACTIVE · 2026-07-17 · **Phase② Staging Reality Closure**（独立批次）  
 **AI_AUTO / AI_ASSIST queues:** **EMPTY**  
-**Production:** `TT_PRODUCTION_GO: GO`（矩阵 · Owner Sign-off 已闭 · Tag `v1.1.0-psg-go.20260717`）  
+**Production:** `TT_PRODUCTION_GO: GO`（不重开）  
+**Phase② batch:** [TT-PHASE2-STAGING-REALITY-CLOSURE-LATEST.md](./TT-PHASE2-STAGING-REALITY-CLOSURE-LATEST.md) · `OA-01=BLOCKED` · `OA-02=LOCKED_BY_OA01` · `OA-04=FORBIDDEN`  
 **Freeze / Baseline:** `RC-FREEZE-20260717T094900Z` · SHA `0bbc7adbd3142b111463fc398288ab94be5c0b84`  
-**Solo:** [TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md](./TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md)（含 W5 时间隔离复检）  
-**Owner 唯一执行页（SSOT）：** [TT-PRODUCTION-EXECUTION-CHECKLIST-LATEST.md](./TT-PRODUCTION-EXECUTION-CHECKLIST-LATEST.md)  
-**Companion：** [驾驶舱](./TT-MODULE-RELEASE-COCKPIT-LATEST.md) · Inbox `evidence/GO_module_release_ladder/OWNER-RETURN-INBOX/`
+**Solo:** [TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md](./TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md)  
+**Companion：** [驾驶舱](./TT-MODULE-RELEASE-COCKPIT-LATEST.md)
 
-> **OA-05 / Production GO Decision：CLOSED · GO** — 禁止用本页重开 GO 叙事。  
-> **OA-01～04** = GO **之后**的 Staging 激活 / 真机 / Timelock / 生产密钥落地（独立批次）。  
-> **禁止**扩 PSG 治理 SSOT；Hotfix/Feature 从 Tag 开分支。
+> **禁止**整体 `git stash pop stash@{0}`。  
+> **OA-05 / GO：CLOSED。** Phase② 未 CLOSED 前 **禁止 OA-04**。
 
 ---
 
-## 优先级总表（残余人控 · OA-01～04）
+## 优先级总表（Phase②）
 
-| # | ID | 事项 | 预估 | 回传 |
+| # | ID | 事项 | 状态 | 回传 |
 |---|-----|------|------|------|
-| 1 | **OA-01** | WalletConnect Project ID + inject + Staging Web redeploy | 10–20 min | `WC_PROJECT_ID: KEY_PRESENT` |
-| 2 | **OA-02** | P1 Real Device Batch（Wallet→Order→Provider·Guide） | 45–90 min | `TT_REAL_DEVICE_BATCH_P1: PASS` |
-| 3 | **OA-03** | Timelock READY 后 **钱包签名 execute**（SC-E→…→A） | 20–40 min（窗后） | `op done=true` + tx |
-| 4 | **OA-04** | DNS / R2 / Stripe Live / 生产密钥 | 1–3 h | 勾选表（非秘密） |
-| — | **OA-05** | Owner Sign-off → Production GO | — | **CLOSED · GO** |
-
-**WC 探针**仍可能 `KEY_ABSENT` — **≠** 否决 `TT_PRODUCTION_GO: GO`。
+| 1 | **OA-01** | WC Project ID + probe（+ Staging Web rebuild） | **BLOCKED** | `WC_PROJECT_ID: KEY_PRESENT` |
+| 2 | **OA-02** | P1 Real Device Batch | LOCKED_BY_OA01 | `TT_REAL_DEVICE_BATCH_P1: PASS` |
+| 3 | Ambient / Guest | SLA + HOLD 增量 | WAITING | 分项 Evidence |
+| 4 | **OA-03** | Timelock Execute | WAITING | tx Evidence |
+| — | **OA-04** | 生产密钥 / 正式部署 | **FORBIDDEN** | Phase② CLOSED 后 |
+| — | **OA-05** | Production GO | **CLOSED · GO** | — |
 
 ---
 

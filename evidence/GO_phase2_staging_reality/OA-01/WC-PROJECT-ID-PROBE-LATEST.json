@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.wc_project_id_probe.v1",
+  "machine_key": "WC_PROJECT_ID",
+  "verdict": "KEY_ABSENT",
+  "stamp_utc": "20260717T115022Z",
+  "batch": "TT_PHASE2_STAGING_REALITY_CLOSURE",
+  "oa": "OA-01",
+  "sources": [
+    {
+      "path": "D:\\TravelTrust-V1.1\\deploy\\fly\\tt-web-staging\\build.env.local",
+      "status": "KEY_ABSENT",
+      "present": false
+    },
+    {
+      "path": "D:\\TravelTrust-V1.1\\frontend\\.env.local",
+      "status": "KEY_ABSENT",
+      "present": false
+    },
+    {
+      "path": "D:\\TravelTrust-V1.1\\.env",
+      "status": "KEY_ABSENT",
+      "present": false
+    },
+    {
+      "path": "process.env",
+      "status": "KEY_ABSENT",
+      "present": false
+    }
+  ],
+  "next": "Owner: create Project ID at https://cloud.reown.com then bash scripts/dev/set-walletconnect-project-id.sh <32-hex>",
+  "forbidden": [
+    "print_full_project_id",
+    "git_commit_secrets",
+    "start_OA02_before_KEY_PRESENT"
+  ]
+}
