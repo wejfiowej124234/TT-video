@@ -84,3 +84,16 @@ deploy/fly/**/build.env.local
 frontend/playwright-report/
 frontend/test-results/
 **/adm-u01-tokens.env
+
+# Playwright browser binaries（本机安装 · 勿入仓）
+.playwright-browsers/
+
+# FPC 本地检查 worktree（勿入仓）
+.fpc-b40-check-worktree/
+.fpc-b40-docker-test/
+
+# 本地 recon 临时脚本
+tmp-recon-classify.py
+
+# RC1 Release Lock · untracked code quarantine (not part of candidate)
+.rc1-quarantine/

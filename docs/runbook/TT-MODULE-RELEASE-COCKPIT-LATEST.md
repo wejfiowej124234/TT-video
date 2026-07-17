@@ -18,9 +18,9 @@
 
 **回答项目状态只贴本表**（第几阶 · 卡点 · 阻塞 · 下一步 Exit Criteria）。  
 **正式口径写死：** 仅 `PASS` · `BLOCKED` · `WAITING` · `FAIL`。  
-**里程碑：** Engineering **DONE** · **RC1 Frozen** · **🔒 Release Lock** · **C3 Review ACTIVE** · **OA-01 PAUSED** · GO Waiting。  
-**每日焦点：** 清 D4 → CLEAN → 才开 OA-01。禁止扩工程 / 顺手优化 / 无必要长审计。  
-**AI 工程 / AI_ASSIST：** **EMPTY**。**Ambient SLA = FAIL·OPEN**（诚实）。
+**里程碑：** Engineering **DONE** · **RC1/PSG Freeze** · **`TT_PRODUCTION_GO: GO`** · Solo Workflow + W5 **ACTIVE** · 残余人控 OA-01…04（激活/真机/Timelock/密钥）。  
+**每日焦点：** 仓库真相干净 → push → 再处理 Staging 真人验收。禁止扩 PSG 治理 SSOT。  
+**AI 工程 / AI_ASSIST：** **EMPTY**。**Ambient SLA = FAIL·OPEN**（诚实 · 运维轨 · ≠ 否决已 GO）。
 
 ---
 
@@ -35,12 +35,13 @@
 | Governance | Real Device（第3阶） | WAITING | Automation PASS · 抽验并入 **OA-02/OA-05** |
 | CMS | Real Device（第3阶） | WAITING | Automation PASS · Ambient SLA 接受并入 **OA-05** |
 | Escrow | Engineering（第1阶） | BLOCKED | **OA-03** Timelock execute / Reality |
-| Admin | Production（第5阶） | WAITING | **OA-05** Sign-off / Production GO |
+| Admin | Production（第5阶） | PASS | **OA-05 CLOSED** · `TT_PRODUCTION_GO: GO` |
 
 **Batch：** P1 = Wallet·Order·Provider·Guide · 仅 `PASS`|`BLOCKED`（无 PARTIAL）  
 **Reality：** 3/8 · Timelock WAITING（禁提前 execute）· **OA-03**  
-**Production：** `TT_PRODUCTION_GO: NO_GO` · Entry = PREP · **OA-04** 密钥 · **OA-05** GO  
-**下一步 Owner：** **OA-01**（WC `KEY_ABSENT`）
+**Production：** `TT_PRODUCTION_GO: GO`（矩阵 SSOT · Tag `v1.1.0-psg-go.20260717` · Freeze `RC-FREEZE-20260717T094900Z`）· **OA-05 CLOSED**  
+**残余人控（≠ 重开 GO）：** **OA-01** WC · **OA-02** 真机 · **OA-03** Timelock · **OA-04** 生产密钥/DNS — Staging/生产落地批次，**禁止**与仓库同步混批  
+**下一步 Owner（仓库外）：** 先 push 对齐 · 再 OA-01…
 
 ---
 
