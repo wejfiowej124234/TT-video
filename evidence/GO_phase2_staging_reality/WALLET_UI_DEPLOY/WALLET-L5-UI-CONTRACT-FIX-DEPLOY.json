@@ -15,19 +15,19 @@
   "oa02": "LOCKED_BY_OA01",
   "psg_archive_tag_untouched": true,
   "not_new_capability": true,
-  "git_head": "d996f6aff6a9d93fbf83428590fdb1182f481a54",
+  "git_head": "b65249002e9d2539eb9034384bee49edd3b5cfb6",
   "deploy_source": "git_commit_7bc00c26",
   "baseline_tag": "v1.1.0-psg-go.20260717",
   "baseline_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
   "tt_production_go": "GO",
-  "updated_utc": "2026-07-17T14:30:40Z",
+  "updated_utc": "2026-07-17T14:32:41Z",
   "d1_closure": "committing_l5_contract_fix_to_feature_g23",
   "d1_status": "CLOSED",
   "repo_staging_evidence_aligned": true,
   "engineering_status": "ENGINEERING_CLOSED",
   "no_further_wallet_ui_iteration": true,
-  "git_head_short": "d996f6af",
+  "git_head_short": "b6524900",
   "wallet_contract_sha": "7bc00c267f805dd27b29175d5cea0a9cf8b3e2fc",
   "wallet_contract_sha_short": "7bc00c26",
-  "four_layer_audit_stamp": "20260717T143040Z"
+  "four_layer_audit_stamp": "20260717T143241Z"
 }
