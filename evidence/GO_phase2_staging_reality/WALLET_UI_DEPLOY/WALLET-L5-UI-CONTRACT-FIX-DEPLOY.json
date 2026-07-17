@@ -15,11 +15,13 @@
   "oa02": "LOCKED_BY_OA01",
   "psg_archive_tag_untouched": true,
   "not_new_capability": true,
-  "git_head": "a5593b73c865fe3db322972c07c012cf1e236268",
-  "deploy_source": "git_commit_pending_head",
+  "git_head": "7bc00c267f805dd27b29175d5cea0a9cf8b3e2fc",
+  "deploy_source": "git_commit_7bc00c26",
   "baseline_tag": "v1.1.0-psg-go.20260717",
   "baseline_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
   "tt_production_go": "GO",
-  "updated_utc": "2026-07-17T14:16:46Z",
-  "d1_closure": "committing_l5_contract_fix_to_feature_g23"
+  "updated_utc": "2026-07-17T14:17:32Z",
+  "d1_closure": "committing_l5_contract_fix_to_feature_g23",
+  "d1_status": "CLOSED",
+  "repo_staging_evidence_aligned": true
 }
