@@ -1,0 +1,59 @@
+# Production Governance Closure · machine-readable
+# Human: docs/runbook/TT-PRODUCTION-GOVERNANCE-CLOSURE.md
+schema: traveltrust.production_governance_closure.v1
+version: 1
+effective_utc: "2026-07-16"
+machine_key: TT_PRODUCTION_GOVERNANCE_CLOSURE
+status: ACTIVE
+
+solo_developer_workflow:
+  status: ACTIVE
+  ssot: registry/psg-solo-developer-workflow.v1.yaml
+  human: docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md
+  human_controls: [Owner_Self_Review, Owner_Sign_off, Release_Archive]
+  not_required_for_psg_go: [PR_approval, Code_Reviewer, Approver, dual_person_signoff]
+  retained: [Gate, Evidence, Freeze, Certification, Release_Baseline, Release_Archive]
+
+hierarchy:
+  - L0_architecture_constitution
+  - PSG
+  - PF
+  - production_entry_review
+  - production_go
+
+hard_require_for_production_actions:
+  machine_line: TT_PSG_PRODUCTION_CERT
+  must_equal: PASS
+  evidence: evidence/GO_psg_foundation/production_cert/PSG-PRODUCTION-CERT-LATEST.json
+  gate_script: scripts/gates/check-psg-production-cert-required.sh
+  hard_gate_lib: scripts/ops/lib/psg-production-cert-hard-gate.sh
+
+applies_to:
+  - scripts/dev/deploy-tt-web-production.sh
+  - scripts/dev/phase3-production-fly-deploy-and-sync.sh
+  - scripts/dev/run-ocs-production-bootstrap.cjs
+  - registry/release-pipeline.v1.yaml#mandatory_pre_production_gates
+  - docs/go-live-checklist.md#go-decision-entry-point
+
+bypass:
+  env: TT_PGC_BYPASS=1
+  require:
+    - TT_PGC_BYPASS_REASON
+    - TT_PGC_BYPASS_OWNER
+  post_require: re_run_psg_production_cert
+  classification: INCIDENT_ONLY
+
+superseded_as_sole_release_chain:
+  - docs/runbook/TT-LOCAL-FIRST-CONVERGENCE.md
+
+legacy_go_narratives_require_psg:
+  - docs/go-live-checklist.md
+  - docs/runbook/PRODUCTION-GO-DECISION-PACKAGE.md
+  - docs/runbook/TT-9626-zero-to-production-go-single-path.md
+  - docs/runbook/TT-MASTER-PUBLISH-GO-CHECKLIST-001.md
+
+documents:
+  pgc: docs/runbook/TT-PRODUCTION-GOVERNANCE-CLOSURE.md
+  traceability: docs/runbook/TT-PGC-TRACEABILITY-MATRIX.md
+  constitution: docs/governance/TT-ARCHITECTURE-CONSTITUTION-v1.md
+  psg: docs/runbook/TT-PUBLIC-SURFACE-GOVERNANCE.md

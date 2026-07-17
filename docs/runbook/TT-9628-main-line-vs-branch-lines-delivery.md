@@ -75,6 +75,9 @@
 
 ### 0.0.2b 双人拆线：双 Owner、任务卡字段、合线主持人
 
+> **PSG / Production GO（2026-07-17）：** 本仓默认 **Solo Developer**。本节仅在**实际有第二人并行**时适用（LEGACY optional）。  
+> **不**构成 PSG Cert / Production GO 硬闸。Solo 人控见 [TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST](./TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md)（Owner Self Review + Owner Sign-off + Release Archive）。
+
 **目的**：两人在**同一仓库**并行推进时，把 **[TT-9627](TT-9627-delivery-order-spine-then-full-site.md) 段 1～6** 的全局顺序与**各自 scope** 对齐，避免互相改契约、互相打终局勾、证据与 staging 写库踩脚。
 
 | 项 | 约定 |

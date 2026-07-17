@@ -1,0 +1,60 @@
+# PSG Production Release Baseline (ACTIVE · sole Hotfix/Patch/next-version origin)
+# Human: docs/runbook/TT-PSG-PRODUCTION-RELEASE-BASELINE-LATEST.md
+# Assembler: scripts/dev/run-psg-production-release-baseline.cjs
+schema: traveltrust.psg_production_release_baseline.v1
+machine_key: TT_PSG_PRODUCTION_RELEASE_BASELINE
+status: ACTIVE
+stamp_utc: "20260717T110854Z"
+
+baseline:
+  tag: v1.1.0-psg-go.20260717
+  freeze_manifest_id: RC-FREEZE-20260717T094900Z
+  git_sha: 0bbc7adbd3142b111463fc398288ab94be5c0b84
+  tt_psg_production_cert: PASS
+  tt_production_go: GO
+  production_cert_stamp: "20260717T104800Z"
+  owner_decision: GO
+  owner_signed_utc: "2026-07-17T11:03:31Z"
+
+evidence:
+  manifest_stamp: 20260717T110854Z
+  manifest: evidence/GO_psg_foundation/release_baseline/20260717T110854Z/RELEASE-BASELINE-MANIFEST.json
+  latest: evidence/GO_psg_foundation/release_baseline/RELEASE-BASELINE-LATEST.json
+  per_mirror: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-EXIT-BLOCKERS/RELEASE-BASELINE-LATEST.json
+  cited:
+    - registry/psg-release-candidate-freeze-LATEST.v1.yaml
+    - evidence/GO_psg_foundation/production_cert/PSG-PRODUCTION-CERT-LATEST.json
+    - evidence/GO_psg_foundation/production_go/OWNER-DECISION-PACKAGE-LATEST.json
+    - evidence/GO_psg_foundation/production_entry_review/PSG-RC-PRODUCTION-ENTRY-LATEST.json
+    - docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-EXIT-BLOCKERS/PER-EXIT-BLOCKERS-CLEAR-LATEST.json
+    - registry/production-readiness-master-matrix.v1.yaml
+
+evolution_rules:
+  hotfix_patch:
+    must_branch_from: v1.1.0-psg-go.20260717
+    or_sha: 0bbc7adbd3142b111463fc398288ab94be5c0b84
+    record_as: Baseline_Patch
+    forbid: parallel_already_GO_narrative
+  next_version_feature:
+    must_branch_from: v1.1.0-psg-go.20260717
+    requires: new_freeze_manifest_id
+    forbid: silent_retag_or_move_baseline_tag
+  solo_developer_workflow:
+    status: ACTIVE
+    ssot: registry/psg-solo-developer-workflow.v1.yaml
+    human_controls: [Owner_Self_Review, Owner_Sign_off, Release_Archive]
+    not_required: [PR_approval, Code_Reviewer, Approver, dual_person_signoff]
+  forbidden:
+    - tagging_dirty_worktree_as_baseline
+    - claiming_baseline_with_uncertified_sha
+    - documentation_rewrite_as_new_GO
+    - re_running_PASS_gates_to_mint_baseline
+    - requiring_team_PR_for_PSG_GO
+
+honest_boundary: >
+  Tag is the certified code commit (freeze git_sha). Owner GO attestation and
+  matrix TT_PRODUCTION_GO may be recorded after the tag; they are bound by the
+  Evidence MANIFEST sha256 list. This baseline ≠ re-run Production Cert ≠ skip
+  next RC Freeze.
+
+machine_line: TT_PSG_PRODUCTION_RELEASE_BASELINE: ACTIVE tag=v1.1.0-psg-go.20260717 sha=0bbc7adbd314

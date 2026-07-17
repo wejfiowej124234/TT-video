@@ -14,9 +14,11 @@ alwaysApply: true
 - Treat `evidence/GO_psg_foundation/release_archive/v1.1.0-psg-go.20260717/` as **immutable** (no edit / no overwrite)
 - Start Hotfix / Patch / features from the Tag (or that SHA), not by extending PSG RC Step1–5 on this baseline
 - For a new formal release: open a **new** Release cycle (new Freeze), do not reopen this PSG GO pack
+- Follow Solo Workflow: Owner Self Review + Owner Sign-off + Archive ([traveltrust-psg-solo-developer](./traveltrust-psg-solo-developer.mdc))
 
 ## Agent MUST NOT
 
 - Mutate this release’s Archive, Baseline cite bytes, or “refresh” GO by re-running PASS Gates
 - Force-move / retag `v1.1.0-psg-go.20260717`
 - Claim a new Production GO by docs alone
+- Require team PR / Approver / dual-person sign-off as a PSG hard gate

@@ -1,0 +1,379 @@
+# PSG Capability Lifecycle Standard v1.0 (FROZEN)
+# Execution standard · process only · NO capability business content
+# All Governance Capabilities MUST reuse this lifecycle · NO parallel process design
+schema: traveltrust.psg_capability_lifecycle_standard.v1
+version: "1.0"
+standard_status: FROZEN
+effective_utc: "2026-07-16"
+frozen_utc: "2026-07-16T10:23:00Z"
+machine_key: TT_PSG_CAPABILITY_LIFECYCLE_STANDARD
+honest_boundary: "Capability CLOSED ≠ Production GO ≠ mainnet · phase labels ①②③ mandatory"
+
+# ── Governance stack (fixed assets · top → bottom) ───────────────────
+governance_stack:
+  L0:
+    name: Architecture Constitution
+    role: "Why · principles · amendment authority"
+    ssot: docs/governance/TT-ARCHITECTURE-CONSTITUTION-v1.md
+  L1:
+    name: Governance Architecture v1.0
+    role: "What capabilities exist · common model · audit template · PCV discipline"
+    ssot: registry/governance-architecture-v1-freeze-20260716.v1.yaml
+    status: FROZEN
+  L2:
+    name: PSG Capability Lifecycle Standard v1.0
+    role: "How every capability moves Audit → CLOSED"
+    ssot: registry/psg-capability-lifecycle-standard.v1.yaml
+    status: FROZEN
+  L3:
+    name: Reference Implementation
+    role: "Proof that lifecycle works end-to-end · copy artifact shapes"
+    capability_id: PSG-10
+    status: CLOSED
+    golden_reference: true
+  L4:
+    name: All Other Capabilities
+    role: "Inherit L2 process · inherit L3 artifact patterns · own business content only"
+    examples: [PSG-11, PSG-09, PSG-20, PSG-04, PSG-08, PSG-13]
+
+mandate:
+  rule: "Every Capability MUST reuse PSG-10 Lifecycle · forbidden to redesign process per capability"
+  if_process_insufficient: "Amend THIS standard (L2) via proposal → Owner Self Review (meta_review) → Owner L0 Sign-off → then apply uniformly"
+  forbidden:
+    - parallel_lifecycle_models
+    - capability_specific_governance_waves
+    - skipping_phases
+    - cert_as_gate_rerun_only
+    - CLOSED_without_certification_pass
+  change_control:
+    correct: "Lifecycle Standard amendment → re-benchmark PSG-10 if needed → roll to all OPEN capabilities"
+    incorrect: "Patch PSG-11/09/20 process independently"
+
+# ── Fixed pipeline (immutable order) ─────────────────────────────────
+fixed_pipeline:
+  - id: capability_audit
+    name: Audit
+    phase_label: "Phase ① audit only"
+  - id: coverage_review
+    name: Coverage Review
+    embedded_in: capability_audit
+  - id: gap_list
+    name: Gap List
+    embedded_in: capability_audit
+  - id: closure_plan
+    name: Closure Plan
+    note: "Plan only · no execution sign-off"
+  - id: wave_1_governance_definition
+    name: "Governance Wave 1 — Definition"
+    verb: Define
+  - id: wave_2_governance_implementation
+    name: "Governance Wave 2 — Implementation"
+    verb: Implement
+  - id: wave_3_governance_validation
+    name: "Governance Wave 3 — Validation"
+    verb: Validate
+  - id: engineering_implementation
+    name: Engineering Implementation
+    not_a_closure_wave: true
+  - id: certification
+    name: Certification
+    not_a_gate_rerun: true
+  - id: CLOSED
+    name: CLOSED
+    terminal: true
+
+diagram: |
+  Audit
+    ↓
+  Governance (Wave 1 → Wave 2 → Wave 3)
+    ↓
+  Engineering
+    ↓
+  Certification
+    ↓
+  CLOSED
+
+# ── Phase 1 · Audit ──────────────────────────────────────────────────
+audit:
+  purpose: "Establish capability charter · inventory · boundary · gaps · closure readiness"
+  prerequisite: "PCV PASS for repository (once) · per-capability inherits post-PCV discipline"
+  template: registry/governance-audit-template.v1.yaml
+  common_model: registry/governance-common-model.v1.yaml#v1.0
+  outputs:
+    primary_metrics: [coverage_pct, boundary_score]
+    required_sections:
+      - scope
+      - ownership
+      - boundary
+      - governed_objects
+      - authoritative_source
+      - lifecycle
+      - dependency
+      - gap_list
+      - implementation_consistency
+      - audit_summary_table
+  rules:
+    - "Five Questions answered · WBS inventory fixed lines only"
+    - "No new GA concepts · no extend common model v1"
+    - "Gap list with phase classification (governance vs engineering)"
+    - "Certification path declared · not PASS/FAIL closure"
+  artifact_pattern: "registry/{capability_id_lower}-{domain}-phase1-audit-{date}.v1.yaml"
+  reference: registry/psg-10-payment-phase1-audit-20260716.v1.yaml
+  exit_criteria:
+    - coverage_pct_and_boundary_score_recorded
+    - gap_list_complete_with_phases
+    - closure_plan_authorized
+  forbidden: [business_code_changes, closure_signoff, certification_signoff]
+
+# ── Phase 2 · Closure Plan (between Audit and Wave 1) ───────────────
+closure_plan:
+  purpose: "Unified remediation plan · boundary matrix · owned modules · gap table"
+  mandatory_sections:
+    - charter_boundary_frozen
+    - cross_capability_boundary_matrix
+    - owned_modules_index
+    - governance_traceability
+    - wbs_line_footnotes
+    - gap_remediation_table
+    - closure_waves
+    - engineering_implementation
+    - certification_handoff
+    - exit_criteria
+  rules:
+    - "Plan only · code_changes forbidden at plan phase"
+    - "Every gap row has phase · status · owner · artifact_to_update"
+    - "Engineering gaps MUST have explicit exit_criteria before governance exit"
+  artifact_pattern: "registry/{capability_id_lower}-{domain}-closure-plan-{date}.v1.yaml"
+  reference: registry/psg-10-payment-closure-plan-20260716.v1.yaml#closure_plan_template
+  exit_criteria:
+    - mandatory_sections_present
+    - gap_remediation_table_complete
+
+# ── Phase 3 · Governance Wave 1 — Definition ─────────────────────────
+governance_wave_1:
+  id: governance_definition
+  verb: Define
+  purpose: "Freeze boundary · terminology · WBS footnotes · cross-capability matrix"
+  allowed:
+    - boundary_freeze
+    - wbs_footnotes
+    - registry_cross_reference
+    - terminology_consistency
+    - cross_capability_boundary_matrix
+  forbidden:
+    - business_code
+    - database_schema
+    - api_changes
+    - runtime
+    - new_gates
+    - cert_condition_changes
+    - ga_extension
+    - common_model_extension
+  gap_disposition: DOCUMENTED
+  exit_criteria:
+    - boundary_matrix_published
+    - wbs_footnotes_synced
+    - governance_phase_gaps_documented
+  reference: registry/psg-10-payment-closure-plan-20260716.v1.yaml#closure_waves.wave_1_governance_definition
+
+# ── Phase 4 · Governance Wave 2 — Implementation ───────────────────
+governance_wave_2:
+  id: governance_implementation
+  verb: Implement
+  purpose: "Inventory · matrix sync · governance traceability · registry cross-refs"
+  allowed:
+    - inventory_modules
+    - matrix_sync
+    - governance_traceability
+    - registry_cross_ref
+  forbidden:
+    - business_code
+    - database_schema
+    - api_changes
+    - runtime
+    - new_gates
+  exit_criteria:
+    - owned_modules_index_in_matrix
+    - governance_traceability_wbs_mapped
+    - implementation_consistency_gaps_addressed_in_registry
+  reference: registry/psg-10-payment-closure-plan-20260716.v1.yaml#closure_waves.wave_2_governance_implementation
+
+# ── Phase 5 · Governance Wave 3 — Validation ─────────────────────────
+governance_wave_3:
+  id: governance_validation
+  verb: Validate
+  purpose: "8-dimension consistency audit · governance exit signoff"
+  allowed:
+    - governance_exit_review_artifact
+    - closure_plan_sync
+    - matrix_status_update
+  forbidden:
+    - business_code
+    - gate_execution
+    - evidence_execution
+    - engineering_work
+  review_dimensions:
+    - wbs
+    - matrix
+    - registry
+    - audit
+    - closure_plan
+    - traceability
+    - boundary
+    - dependencies
+  artifact_pattern: "registry/{capability_id_lower}-{domain}-governance-exit-review-{date}.v1.yaml"
+  reference: registry/psg-10-governance-exit-review-20260716.v1.yaml
+  exit_criteria:
+    - verdict: PASS
+    - governance_exit: true
+    - blocking_issues: 0
+    - all_governance_gaps_documented: true
+    - all_engineering_gaps_deferred_with_exit_criteria: true
+    - engineering_implementation_authorized: true
+  on_fail: "Remain in Wave 3 · fix issues · re-review"
+
+# ── Phase 6 · Engineering Implementation ─────────────────────────────
+engineering_implementation:
+  purpose: "Close engineering-phase gaps · code/DB/API/runtime/deploy/evidence as needed"
+  after: wave_3_governance_validation
+  not_a_closure_wave: true
+  scope: [api, frontend, backend, database, runtime, deployment, staging, production, evidence]
+  rules:
+    - "Only gaps assigned phase engineering_implementation"
+    - "Each gap closed against documented exit_criteria"
+    - "No GA · WBS · common model · governance process changes"
+    - "Phase honesty: ① local ≠ ② staging ≠ ③ production scope"
+  artifact_pattern: "registry/{capability_id_lower}-engineering-implementation-report-{date}.v1.yaml"
+  reference: registry/psg-10-engineering-implementation-report-20260716.v1.yaml
+  exit_criteria:
+    - all_engineering_gaps_status_closed
+    - gate_results_recorded_where_required
+    - evidence_paths_on_disk
+    - engineering_implementation_complete: true
+    - certification_authorized: true
+  on_fail: "Return to engineering · do not enter certification"
+
+# ── Phase 7 · Certification ──────────────────────────────────────────
+certification:
+  purpose: "Answer: may this capability be formally marked CLOSED?"
+  template: registry/governance-capability-certification-template.v1.yaml
+  not:
+    - gate_rerun_as_sole_activity
+    - production_go_claim
+    - requiring_peer_capabilities_closed
+  dimensions:
+    - id: evidence_review
+      question: "Engineering evidence complete · traceable · meets exit_criteria?"
+      fail_return_to: engineering_implementation
+    - id: gate_review
+      question: "Recorded gates satisfy closure plan pass conditions?"
+      method: "Review engineering report · spot-check staleness optional · no mandatory re-run"
+      fail_return_to: engineering_implementation
+    - id: boundary_review
+      question: "No boundary drift · no peer capability role confusion?"
+      fail_return_to: governance_validation
+    - id: certification_decision
+      verdict_enum: [PASS, FAIL]
+      pass_marks: CLOSED
+  artifact_pattern: "registry/{capability_id_lower}-certification-{date}.v1.yaml"
+  reference: registry/psg-10-certification-20260716.v1.yaml
+  exit_criteria:
+    - all_four_dimensions_pass
+    - certification_decision: PASS
+
+# ── Phase 8 · CLOSED (terminal) ────────────────────────────────────
+CLOSED:
+  purpose: "Governance Capability lifecycle complete at documented scope"
+  entry_requires:
+    - certification_decision: PASS
+    - capability_lifecycle: CLOSED
+  effects:
+    - matrix.domains.{id}.closure: CLOSED
+    - closure_plan.next_step: CLOSED
+    - certified_capabilities_increment: 1
+  not_implied:
+    - Production GO
+    - mainnet_reality_certification
+    - peer_capability_CLOSED
+  post_closed_allowed:
+    - bugfix
+    - evidence_refresh
+    - PER_regression
+  post_closed_forbidden:
+    - scope_expansion_without_new_audit
+    - lifecycle_fork
+    - silent_boundary_drift
+
+# ── Golden Reference (PSG-10) ───────────────────────────────────────
+reference_implementation:
+  capability_id: PSG-10
+  role: golden_reference
+  status: CLOSED
+  first_full_lifecycle: true
+  artifact_chain:
+    audit: registry/psg-10-payment-phase1-audit-20260716.v1.yaml
+    closure_plan: registry/psg-10-payment-closure-plan-20260716.v1.yaml
+    governance_exit: registry/psg-10-governance-exit-review-20260716.v1.yaml
+    engineering: registry/psg-10-engineering-implementation-report-20260716.v1.yaml
+    certification: registry/psg-10-certification-20260716.v1.yaml
+  usage: "Copy artifact shapes and phase discipline · replace business content only"
+  note: "Payment business content in PSG-10 artifacts is illustrative · not part of this standard"
+
+# ── Rollout order (recommended · not mandatory sequence) ───────────
+recommended_capability_order_after_reference:
+  paused_until_lifecycle_frozen: false
+  lifecycle_standard_frozen_utc: "2026-07-16T10:23:00Z"
+  in_progress: PSG-11
+  next_candidates: [PSG-11, PSG-09, PSG-20, PSG-04]
+  rule: "Each capability inherits L2 lifecycle · L3 artifact patterns · no process redesign"
+
+amendment:
+  process: [proposal, meta_review, l0_owner_approval, lifecycle_v1_1_or_v2]
+  solo_gloss: >
+    meta_review = Owner Self Review; l0_owner_approval = Owner Sign-off on L0/Constitution.
+    Not a second human Approver or PR Code Review.
+  forbidden: per_capability_process_patch
+
+# Solo Developer (ACTIVE · does not thaw FROZEN pipeline ids)
+solo_developer_workflow:
+  status: ACTIVE
+  ssot: registry/psg-solo-developer-workflow.v1.yaml
+  human: docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md
+  note: >
+    Lifecycle stage names (Coverage Review · Certification) remain process stages.
+    Human gate for Solo = Owner Self Review + Owner Sign-off + Evidence/Archive.
+    Team PR / Reviewer / Approver are NOT required.
+
+# ── Permanent principle (final · immutable discipline) ───────────────
+process_change_permanent_principle:
+  id: LCS-PRINCIPLE-001
+  name: "No capability-local process fork"
+  frozen: true
+  rule: >
+    Anyone (including future AI) who discovers a process issue MUST NOT modify
+    that capability's local workflow. First determine whether the issue belongs
+    to Lifecycle Standard (L2). If no — fix within the capability. If yes —
+    amend L2, then uniform rollout to all capabilities.
+  flow: |
+    Capability discovers issue
+            │
+            ▼
+    MUST NOT directly modify own process
+            │
+            ▼
+    Is it Lifecycle Standard (L2)?
+            │
+            ├── No → Capability fixes its own content/implementation
+            │
+            └── Yes → Amend L2 Lifecycle Standard
+                        │
+                        ▼
+                  Uniform rollout to ALL capabilities
+  forbidden_outcome:
+    - PSG-11_process_fork
+    - PSG-09_process_fork
+    - PSG-20_process_fork
+  lifecycle_change_proposal:
+    artifact_pattern: "docs/governance/lifecycle-change-proposal-{id}.md"
+    during_audit: "Record only · do NOT patch L2 or capability process in same session"
+    example_empty: "PSG-11 Phase ① Audit · no L2 defect recorded"

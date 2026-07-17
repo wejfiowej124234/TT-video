@@ -22,6 +22,7 @@
 | 1 | **不再修改** 这一版的任何 Evidence、Registry 快照或 Release Archive 字节 |
 | 2 | 所有 **Hotfix / Patch / 新功能** 必须从 Tag `v1.1.0-psg-go.20260717`（或对应 SHA）**新建开发分支** |
 | 3 | 未来正式发布须开启 **新的 Release 周期**（新 Freeze / 新认证链），**禁止**继续扩展本次 PSG Step1–5 流程 |
+| 4 | **Solo Developer 默认** — [Solo Workflow](./TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md)：Owner Self Review + Owner Sign-off + Release Archive；**不要求** PR / Reviewer / Approver |
 
 ## 分支习惯
 

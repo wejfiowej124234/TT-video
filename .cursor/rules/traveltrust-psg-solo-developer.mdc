@@ -1,0 +1,32 @@
+---
+description: PSG Solo Developer — Owner Self Review + Sign-off + Archive; no team PR/Approver gates; keep all Gates/Evidence/Freeze/Cert
+alwaysApply: true
+---
+
+# PSG · Solo Developer Workflow
+
+**SSOT:** [registry/psg-solo-developer-workflow.v1.yaml](../../registry/psg-solo-developer-workflow.v1.yaml) · [TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md](../../docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md)
+
+**Baseline:** `v1.1.0-psg-go.20260717` · `TT_PRODUCTION_GO: GO`
+
+## Default model
+
+Hotfix / Patch / Feature / new Release → **Owner Self Review + Owner Sign-off + Release Archive**.
+
+**Keep:** Gate · Evidence · Freeze · Certification · Release Baseline · Release Archive.
+
+**Do not require for PSG/GO:** Pull Request approval · Code Reviewer · Approver · Merge Request · dual-person sign-off · merge host.
+
+## Agent MUST
+
+- Branch from frozen baseline Tag/SHA for product changes
+- Prefer Owner Self Review language over “needs PR / Reviewer”
+- Preserve Archive immutability; new formal release = new cycle + new Archive
+
+## Agent MUST NOT
+
+- Block work waiting for a second human Approver
+- Waive Gates because the maintainer is Solo
+- Mutate `release_archive/v1.1.0-psg-go.20260717/`
+- Re-run PASS Gates only to refresh the frozen GO pack
+- Cite TT-9628 dual-owner as a Production GO hard gate (LEGACY optional team only)

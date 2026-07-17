@@ -1,0 +1,246 @@
+# PSG · Release Candidate Sequence (FROZEN process · multi-month SSOT)
+# Human: docs/runbook/TT-PSG-RELEASE-CANDIDATE-SEQUENCE.md
+# Parent: docs/runbook/TT-PRODUCTION-GOVERNANCE-CLOSURE.md (PGC)
+schema: traveltrust.psg_release_candidate_sequence.v1
+machine_key: TT_PSG_RELEASE_CANDIDATE_SEQUENCE
+status: ACTIVE
+version: "1.1.0"
+effective_utc: "2026-07-17"
+owner: solo_owner
+solo_developer_workflow:
+  status: ACTIVE
+  ssot: registry/psg-solo-developer-workflow.v1.yaml
+  human: docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md
+  rule: >
+    Human controls for this sequence are Owner Self Review + Owner Sign-off +
+    Release Archive. Team PR / Code Reviewer / Approver / dual-person sign-off
+    are NOT hard gates. Gates · Evidence · Freeze · Certification remain mandatory.
+honest_boundary: >
+  This sequence governs how evidence is collected under one Release Candidate.
+  It does NOT grant Production GO. TT_PSG_PRODUCTION_CERT=PASS remains the
+  sole system admission gate before Production Entry / Production GO.
+
+# ── Long-term rules (do not churn) ───────────────────────────────────
+long_term_rules:
+  R1_foundation_gate_machine_aggregate:
+    id: R1
+    title: Foundation Gate exit MUST be machine-aggregable
+    rule: >
+      Do not leave Foundation exit as prose checklist only. Maintain aggregate
+      registry/psg-foundation-gate-LATEST.v1.yaml with foundation_gate.status
+      PASS|FAIL. Downstream scripts MUST gate on foundation_gate.status only —
+      not ad-hoc reads of individual admission results.
+    artifact: registry/psg-foundation-gate-LATEST.v1.yaml
+    aggregator: scripts/dev/run-psg-foundation-gate.cjs
+    machine_key: TT_PSG_FOUNDATION_GATE
+    checks_required: [ssot_drift, env_alignment, repro, runtime_b4, data_foundation]
+  R2_freeze_manifest:
+    id: R2
+    title: Immutable Freeze Manifest is the sole Cap-Cert baseline citation
+    rule: >
+      Step 2.5 MUST emit an immutable Freeze Manifest (git_sha, registry_sha,
+      migration_version, config_fingerprint, cms_snapshot_id, runtime_build_id).
+      Capability Certification MUST cite freeze_manifest_id only — not assemble
+      a baseline from multiple loose sources.
+    artifact: registry/psg-release-candidate-freeze-LATEST.v1.yaml
+    machine_key: TT_PSG_RC_BASELINE_FREEZE
+    required_fields:
+      - freeze_manifest_id
+      - git_sha
+      - registry_sha
+      - migration_version
+      - config_fingerprint
+      - cms_snapshot_id
+      - runtime_build_id
+
+# ── Dual-track definition (long-term) ────────────────────────────────
+dual_track:
+  module_release_ladder:
+    proves: "A module meets release standard (stage batch · real device · etc.)"
+    cannot_substitute: TT_PSG_PRODUCTION_CERT
+  psg_production_cert:
+    proves: "The whole system meets release admission standard"
+    cannot_ignore: module_release_ladder
+  confluence: "Both tracks MUST meet before Production Entry Review"
+
+# ── Standing disciplines (immutable while sequence ACTIVE) ───────────
+disciplines:
+  - id: D1_NO_SKIP_FOUNDATION
+    rule: "Step 3 Capability Certification MUST NOT skip Steps 1 / 2 / 2.5"
+    on_violation: "Stop Cert · return to Foundation Gate or re-Freeze"
+  - id: D2_DUAL_TRACK_CONFLUENCE
+    rule: "Module Release Ladder and PSG Production Cert must both PASS before Production Entry"
+    on_violation: "Production Entry Review BLOCKED"
+  - id: D3_ONE_CANDIDATE_ONE_EVIDENCE_SET
+    rule: "All Capability Cert evidence under Step 3 MUST cite the same freeze_manifest_id (R2)"
+    on_violation: "Evidence invalid for RC · re-Freeze + re-Cert affected capabilities"
+
+# ── Sequence ─────────────────────────────────────────────────────────
+sequence:
+  - step: 1
+    id: foundation_gate
+    title: Foundation Gate
+    content: "Clear foundation P0/P1 — data governance · Runtime · SSOT · environment consistency"
+    machine_exit: "foundation_gate.status == PASS (R1)"
+    aggregator: scripts/dev/run-psg-foundation-gate.cjs
+    artifact: registry/psg-foundation-gate-LATEST.v1.yaml
+    exit_criteria:
+      - "TT_PSG_FOUNDATION_GATE: PASS"
+      - "foundation_gate.checks.ssot_drift == PASS"
+      - "foundation_gate.checks.env_alignment == PASS"
+      - "foundation_gate.checks.repro == PASS"
+      - "foundation_gate.checks.runtime_b4 == PASS"
+      - "foundation_gate.checks.data_foundation == PASS"
+    forbids_next_until_exit: [2, 2.5, 3, 4, 5]
+    current_phase_focus:
+      - SSOT Drift
+      - Environment Alignment
+      - Repro
+      - Runtime B4
+      - Data Foundation (DF-GAP / public-data isolation)
+    forbid_capability_cert_until_pass: true
+
+  - step: 2
+    id: full_alignment_audit
+    title: Full Alignment Audit
+    content: "Full-repo alignment — Defect/Drift/Conflict/Blocking Risk only; Expected Difference CONFIRM_DESIGN"
+    exit_criteria:
+      - "OPEN_BLOCKING_RISKS = 0"
+      - "OPEN_P0_DEFECTS = 0"
+      - "OPEN_P1_DEFECTS = 0"
+      - "DRIFT_BLOCKERS = 0"
+      - "SSOT_CONFLICTS = 0"
+    policy_ssot: docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md
+    forbids_next_until_exit: [2.5, 3, 4, 5]
+
+  - step: 2.5
+    id: baseline_freeze
+    title: Baseline Freeze (Release Candidate)
+    content: >
+      Emit immutable Freeze Manifest (R2). All Capability Cert cites freeze_manifest_id only.
+      Prevents: Cert A on SHA-A → fix Runtime/CMS/Migration → Cert B on SHA-B → Production Cert on SHA-C.
+    prerequisite: "foundation_gate.status == PASS AND Alignment Audit exit met"
+    freeze_manifest_fields:
+      - freeze_manifest_id
+      - git_sha
+      - registry_sha
+      - migration_version
+      - config_fingerprint
+      - cms_snapshot_id
+      - runtime_build_id
+    exit_criteria:
+      - "TT_PSG_RC_BASELINE_FREEZE = FROZEN"
+      - "Freeze Manifest written (registry/psg-release-candidate-freeze-LATEST.v1.yaml)"
+      - "All freeze_manifest_fields non-null"
+      - "foundation_gate_stamp recorded on manifest"
+      - "alignment_audit_stamp recorded on manifest"
+    unlock_only_when:
+      - "Blocking Defect that invalidates the frozen baseline"
+    on_unlock:
+      - "Set status = THAWED"
+      - "Return to Step 1 or 2 as required"
+      - "Re-run Step 2.5 Freeze (new freeze_manifest_id)"
+      - "Invalidate Step 3 cert evidence citing old freeze_manifest_id"
+    forbids_during_freeze:
+      - "Non-blocking refactors"
+      - "CMS bulk remediations that change public catalog/media baseline"
+      - "Migration churn without Blocking Defect"
+      - "Capability Cert citing any SHA other than freeze_manifest.git_sha"
+
+  - step: 3
+    id: capability_certification
+    title: Capability Certification
+    content: "PSG/PF single-track sequential certification under the frozen RC baseline"
+    exit_criteria:
+      - "Every cert artifact records freeze_manifest_id == Freeze Manifest id (R2)"
+      - "PSG/PF closed in declared order without mid-stream foundation churn"
+      - "Module Release Ladder confluence status recorded (PASS|BLOCKED|WAITING) — not ignored"
+    order_note: "Do not start PF-GAP-004 (or peer Cert work) until Steps 1–2.5 exit; if foundation regresses → unlock Freeze"
+    forbids_next_until_exit: [4, 5]
+    forbids_until_foundation_pass:
+      - "PF-GAP-004"
+      - "PF-GAP-007"
+      - "Any new PSG Capability Certification wave"
+
+  - step: 4
+    id: production_entry_review
+    title: Production Entry Review
+    content: "System admission review — requires TT_PSG_PRODUCTION_CERT=PASS"
+    exit_criteria:
+      - "TT_PSG_PRODUCTION_CERT = PASS"
+      - "Admission trio PASS (SSOT · Repro · EnvAlignment)"
+      - "Destructive suite PASS (no SKIPPED remaining)"
+      - "Production Cert evidence cites same freeze_manifest_id (or identical git_sha)"
+      - "Module Release Ladder confluence satisfied or Owner written deferral (Non-blocking only)"
+    forbids_next_until_exit: [5]
+
+  - step: 5
+    id: production_go
+    title: Production GO
+    content: "Sole Production exit — Deploy / Bootstrap / GO"
+    exit_criteria:
+      - "Production Entry Review signed PASS"
+      - "TT_PSG_PRODUCTION_CERT = PASS (still)"
+      - "No parallel LEGACY GO path"
+
+# ── Current pointer (update when Freeze / step advances) ─────────────
+current:
+  step: 5
+  step_id: production_go
+  rc_freeze: FROZEN
+  freeze_manifest_id: RC-FREEZE-20260717T094900Z
+  foundation_gate_status: PASS
+  tt_psg_production_cert: PASS
+  note: >
+    Step 5 Owner Decision PENDING under freeze RC-FREEZE-20260717T094900Z.
+    TT_PSG_PRODUCTION_CERT=PASS locked · package OWNER-DECISION-PACKAGE-LATEST.json.
+    TT_PRODUCTION_GO remains NO_GO until Owner attestation + apply-psg-rc-production-go-after-owner-signoff.
+
+
+
+# ── Anti-patterns (explicit) ─────────────────────────────────────────
+# ── Execution control (Preflight→Certify · 2026-07-17 · v1.1.0) ─────
+psg_execution_control:
+  ssot: registry/psg-execution-control.v1.yaml
+  version: "1.1.0"
+  active_lease: registry/psg-execution-lock-ACTIVE.v1.yaml
+  cli: scripts/dev/psg-execution-lock.cjs
+  lifecycle: [preflight, lock, run, observe, diagnose, fix, rerun, evidence, registry, certify]
+  three_checks: [run_check, environment_check, evidence_check]
+  concurrency:
+    foundation_gate: single_instance
+    capability_cert: single_instance_per_environment
+  lock:
+    required: true
+    scope: [pipeline, environment]
+  write_operations:
+    require_environment_lease: true
+  reconnect_policy:
+    on_connection_failure:
+      action: resume_existing_run
+      forbidden: [start_new_run]
+  failure_policy: "FAIL → Diagnose → Fix → Rerun (new run_id) · never blind restart"
+  core_principles:
+    - "Disconnect ≠ task failure"
+    - "Task RUNNING ≠ permission to start another run"
+    - "Preflight → Lock → Run → Observe → Diagnose → Fix → Rerun → Certify"
+    - "Query active_run: YES→resume/observe · NO→preflight→acquire→start"
+
+anti_patterns:
+  - "Capability Cert while ENV_ALIGNMENT or REPRO still WAITING"
+  - "Re-Cert after silent Migration/CMS/Runtime change without re-Freeze"
+  - "Using Module Ladder PASS as substitute for TT_PSG_PRODUCTION_CERT"
+  - "Using TT_PSG_PRODUCTION_CERT to skip Module Ladder confluence"
+  - "Mixing evidence from SHA A/B/C into one Production Entry pack"
+  - "Connection failed → start_new_run while ACTIVE lease RUNNING"
+  - "Multiple Foundation Gate / OCS bootstrap processes on same Staging"
+
+cross_refs:
+  pgc: docs/runbook/TT-PRODUCTION-GOVERNANCE-CLOSURE.md
+  constitution: docs/governance/TT-ARCHITECTURE-CONSTITUTION-v1.md
+  production_cert: registry/psg-phase-b-production-cert.v1.yaml
+  alignment_policy: docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md
+  module_ladder: docs/runbook/TT-RELEASE-ENGINEERING-V1.md
+  cockpit: docs/runbook/TT-MODULE-RELEASE-COCKPIT-LATEST.md
+  human_runbook: docs/runbook/TT-PSG-RELEASE-CANDIDATE-SEQUENCE.md
+  execution_control: registry/psg-execution-control.v1.yaml

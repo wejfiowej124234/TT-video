@@ -41,6 +41,12 @@ rules:
     rule: >
       Do not re-run already-PASS Foundation / Alignment / Freeze / Cap Cert /
       Production Cert to “refresh” this baseline.
+  R5_solo_developer_default:
+    rule: >
+      Hotfix / Patch / Feature / new Release default to Solo Developer workflow:
+      Owner Self Review + Owner Sign-off + Release Archive. Team PR / Code Reviewer /
+      Approver / dual-person approval are NOT hard gates. Gates · Evidence · Freeze ·
+      Certification remain mandatory. SSOT: registry/psg-solo-developer-workflow.v1.yaml
 
 forbidden:
   - edit_release_archive_files

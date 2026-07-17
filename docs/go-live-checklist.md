@@ -1,5 +1,11 @@
 # TravelTrust Go-Live Checklist
 
+> **PGC / PSG 前置（2026-07-16 · 硬规则）：** 本清单为 **LEGACY_GO_NARRATIVE** 运维核对表。  
+> **不得**单独用本清单勾选宣称 Production GO。  
+> **必须先** `TT_PSG_PRODUCTION_CERT=PASS`（[PSG](runbook/TT-PUBLIC-SURFACE-GOVERNANCE.md) · [PGC](runbook/TT-PRODUCTION-GOVERNANCE-CLOSURE.md) · `bash scripts/gates/check-psg-production-cert-required.sh`）。  
+> 路径：L0 → PSG → PF → Production Entry → **然后**本清单运维子集。  
+> **Solo Developer（2026-07-17 · 默认）：** 下文凡「双人复核 / 双签 / 发版 PR / Code Reviewer / Approver」一律 **诚实降级**为 **Owner Self Review + Owner Sign-off**（可写 commit 留言或 Decision 包）；正式发布优先引用 **Tag + Release Archive**。[Solo Workflow](runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md) · **不**因 Solo 跳过 Gate / Evidence。
+
 > **核心支付（2026-07-08）：** Trip/Market/收购支付 = **Web3 USDC + Escrow** — 全方位验收见 **[PRODUCTION-USDC-GO-LIVE-MASTER-CHECKLIST.md](runbook/PRODUCTION-USDC-GO-LIVE-MASTER-CHECKLIST.md)**（PAY-W01～W16 · 合约/API/ABI 对拍）。**Stripe 仅 Optional Fiat Onboarding（P1 附录）**，不是本清单 §1～§7 的核心支付前提。
 
 基于当前 **`docs/verification-evidence-pack.md`** 与 **`.env.example`** 的上线前必做项；按顺序执行并逐项勾选。不包含功能扩展或新任务。
@@ -48,10 +54,10 @@
 
   **若推送到镜像仓库**：再记录 **registry manifest digest**（`docker push` 末尾或 `docker buildx imagetools inspect <registry>/traveltrust-api:v0.1.0`），并与上述 Git SHA 一并归档。
 
-- [ ] **0.2** 本清单覆盖环境：**预发 → 生产** 各跑一遍；生产勾选须有双人复核。**（P0 #8；07 §四 4.3 发版前并联核对）**
+- [ ] **0.2** 本清单覆盖环境：**预发 → 生产** 各跑一遍；生产勾选须有 **Owner Self Review**（Solo 默认；**不要求**第二人复核）。**（P0 #8；07 §四 4.3 发版前并联核对 · Solo 降级）**
 - [ ] **0.3 R-002 / 93 · 回归 `report.json` + 发版闸（不可跳过）**  
   - **机读（硬）**：`python scripts/validate-regression-report.py evidence/r003_staging_first/run_<UTC>/report.json --fail-on-no-go` **exit 0**（**首轮 R-003** 首选路径；若本轮主证据为 **`evidence/GO_YYYYMMDD/report.json`**，则对该路径执行同一命令）。  
-  - **人工四样齐**（发布工单/记录 **须同时具备**，**缺一不得进入 go-live**）：① **`report.json` 路径** ② **`sha256`**（文件指纹）③ **`release_gate` 与 `release_gate_reason`**（可读、可对 **[93 §7.1](spec/93-全站功能验证矩阵-域别回归清单.md)**）④ **Release Owner 双签**。  
+  - **人工四样齐**（发布记录 **须同时具备**，**缺一不得进入 go-live**）：① **`report.json` 路径** ② **`sha256`**（文件指纹）③ **`release_gate` 与 `release_gate_reason`**（可读、可对 **[93 §7.1](spec/93-全站功能验证矩阵-域别回归清单.md)**）④ **Owner Sign-off**（Solo 默认 · **替代**原「Release Owner 双签」）。  
   - **`release_gate`** 符合 **93 §7.1**（**NO_GO → 禁止**本清单继续勾选为可发版）。**（R-002 §1；R-003）**
 
 ---
@@ -173,10 +179,10 @@
 
 - [ ] **11.13** **`GO_FINAL_*`**：用作**定型发布包**目录名时，**同次封口**在仓内只认**一个** bundle 根路径（勿复制出多套同名前缀目录）；一般过门仍用 **`evidence/GO_YYYYMMDD/`**（与上文 **Evidence path 约定** 一致）。
 - [ ] **11.14** **Check-G 封口三连**已在**发布前/发布动作**执行（见 [Runbook §2.7.4](../ops/RUNBOOK.md#check-g-dual-score-gate)「**封口命令（建议顺序）**」）：**`bash scripts/check-dual-score-gate.sh`** → **`python scripts/dev/validate_dual_score_signoff.py <评分件路径> --bundle-root <GO包根目录>`** → **`python scripts/dev/validate_evidence_manifest.py validate <GO包根目录>`**；**`GO_FINAL_*`** **须**对第三步加 **`--verify-artifact-files`**。
-- [ ] **11.15** **`dual_score_signoff.v1.json`**：**`stage`**、**`risk_acceptances[]`**、**`evidence_refs[]`** 已与当次**会议纪要 / PR / TT** **人工对读**一致（**谁 / 何时 / 依据**可追溯）。**`evidence_refs[]`** **须**含与本发布一致的 **commit 可解析行**（推荐 **`commit:`** + **40 位小写 hex**，与 **§11.16** / **`g1_snapshot`** 同源）；建议并列 **`tag:`**、**`PR:`**（例：`commit: abcdef…`、`tag: v1.0.x`、`PR: #482`），以绑定**评分对应的构建 / release 状态**（仍用字符串数组，**不**改 schema）。
-- [ ] **11.16** 发版 **PR** 或工单已写明**本发布 tip `git` commit SHA**（与 **§0.1** **`TRAVELTRUST_GIT_SHA` / tag / 镜像 digest** 可追溯对齐）。
-- [ ] **11.17** **供应链留痕**：本发布与根目录 **`Cargo.lock`**、**`frontend/package-lock.json`**（及 CI **run** 或制品号，若有）已能在工单/PR 中关联，便于事后对拍（**不**替代 **§0.1** 运行时 SHA）。
-- [ ] **11.18** **封口执行留痕**：**Check-G 三连**（[Runbook §2.7.4](../ops/RUNBOOK.md#check-g-dual-score-gate)）成功运行的**终端输出**已粘贴至发版 **PR/工单**，或落入本 bundle **`artifacts/check-g-seal.log`**（或等价可链 URL）— **不**引入 CI 强制，仅满足审计「发生过、可核对」。
+- [ ] **11.15** **`dual_score_signoff.v1.json`**：**`stage`**、**`risk_acceptances[]`**、**`evidence_refs[]`** 已与当次**Owner Self Review 记录 / commit 留言 / Decision 包** **人工对读**一致（**谁 / 何时 / 依据**可追溯）。**`evidence_refs[]`** **须**含与本发布一致的 **commit 可解析行**（推荐 **`commit:`** + **40 位小写 hex**，与 **§11.16** / **`g1_snapshot`** 同源）；建议并列 **`tag:`**、可选 **`archive:`**（Release Archive 路径）（例：`commit: abcdef…`、`tag: v1.1.0-psg-go.20260717`）—— **不要求** `PR:`（Solo 默认）。
+- [ ] **11.16** 发版 **记录**（commit 留言 / Decision 包 / 工单）已写明**本发布 tip `git` commit SHA**（与 **§0.1** **`TRAVELTRUST_GIT_SHA` / tag / 镜像 digest** 可追溯对齐）。**Solo：不强制发版 PR。**
+- [ ] **11.17** **供应链留痕**：本发布与根目录 **`Cargo.lock`**、**`frontend/package-lock.json`**（及 CI **run** 或制品号，若有）已能在发版记录中关联，便于事后对拍（**不**替代 **§0.1** 运行时 SHA）。
+- [ ] **11.18** **封口执行留痕**：**Check-G 三连**（[Runbook §2.7.4](../ops/RUNBOOK.md#check-g-dual-score-gate)）成功运行的**终端输出**已粘贴至发版记录，或落入本 bundle **`artifacts/check-g-seal.log`**（或等价可链 URL）— **不**引入 CI 强制，仅满足审计「发生过、可核对」。**Solo：不强制粘贴到 PR。**
 
 - [ ] **11.1 （P0 #1）** [08-4](spec/08-4-对外口径包.md) 文末 **定稿日期、法务/运营签字或邮件确认** 已在官方总表 **P0 #1** 勾选。
   - **Evidence path:** `docs/spec/08-4-对外口径包.md`（文末三要素 Git 可追溯）；可选扫描件/邮件落 **`evidence/GO_YYYYMMDD/artifacts/08-4-signoff/`**（或内网制品库路径写入 **`manifest.json` → `artifacts`**）。

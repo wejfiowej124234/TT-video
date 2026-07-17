@@ -1,0 +1,78 @@
+# PSG · Solo Developer Workflow (ACTIVE · default for Hotfix / Patch / Feature / new Release)
+# Human: docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md
+# Parent: PGC + RC Sequence + Production Baseline Dev Strategy
+# Does NOT mutate release_archive or re-run PASS Gates.
+schema: traveltrust.psg_solo_developer_workflow.v1
+machine_key: TT_PSG_SOLO_DEVELOPER_WORKFLOW
+status: ACTIVE
+effective_utc: "2026-07-17T11:24:00Z"
+owner: solo_owner
+baseline_tag: v1.1.0-psg-go.20260717
+baseline_sha: 0bbc7adbd3142b111463fc398288ab94be5c0b84
+
+honest_boundary: >
+  Solo workflow replaces team PR/Approver/Reviewer gates.
+  It does NOT waive Gate · Evidence · Freeze · Certification · Release Baseline · Release Archive.
+  TT_PSG_PRODUCTION_CERT=PASS and Owner Sign-off remain hard for Production GO.
+
+retained_unchanged:
+  - Gate (Foundation / Alignment / Cap Cert / Production Cert hard gates)
+  - Evidence (immutable when archived)
+  - Freeze Manifest
+  - Certification
+  - Release Baseline
+  - Release Archive
+
+replaced_team_controls:
+  Pull_Request: Owner_commit_and_local_self_review
+  Merge_Request: Owner_integrate_to_main_or_release_branch
+  Code_Review: Owner_Self_Review
+  Reviewer: Owner
+  Approver: Owner_Sign_off
+  dual_owner_merge_host: LEGACY_optional_team_only
+  second_person_signoff: Owner_time_separated_recheck_optional
+
+workflow:
+  - id: W1_branch
+    title: Branch from frozen baseline
+    rule: "Hotfix / Patch / Feature MUST branch from tag v1.1.0-psg-go.20260717 (or baseline SHA)"
+  - id: W2_owner_self_review
+    title: Owner Self Review
+    rule: >
+      Owner reviews own diff against Gate exit criteria and Evidence paths.
+      No second human Reviewer required. Local ci-local / gate scripts replace PR checks when Actions unavailable.
+  - id: W3_gates_evidence
+    title: Run required Gates · write Evidence
+    rule: "Only Gates required by the change class; never re-run PASS Gates solely to refresh a frozen baseline"
+  - id: W4_owner_signoff
+    title: Owner Sign-off
+    rule: "Single Owner attestation (name + signed_utc + decision) for release / Production GO class changes"
+  - id: W5_release_archive
+    title: Release Archive (formal releases)
+    rule: "New formal release → new Freeze + new Archive; do not mutate prior Archive bytes"
+  - id: W6_new_cycle
+    title: New Release cycle
+    rule: "Future Production GO opens a NEW RC Sequence cycle — do not extend the frozen GO pack"
+
+vocabulary:
+  - team: Pull Request / Merge Request / 发版 PR
+    solo: Owner commit (+ optional push) · cite tag / SHA / Release Archive
+  - team: Code Review / peer review / Reviewer
+    solo: Owner Self Review
+  - team: Approver / required approvals / 双人复核 / 双签
+    solo: Owner Sign-off (single attestation)
+  - team: dual-owner / 合线主持人
+    solo: Solo Owner · task-card split only if helpers exist (not a GO gate)
+  - team: meta review / L0 approval
+    solo: Owner Self Review → Owner L0 / Constitution Sign-off
+  - note: "PSG Review / Production Entry Review / Coverage Review = process stages · ≠ peer Code Review"
+  - note: "CMS Draft→Review→Approved = content lifecycle · ≠ Git PR"
+
+forbidden:
+  - require_external_PR_approval_for_PSG_GO
+  - require_second_human_approver_for_Owner_Sign_off
+  - waive_Gate_or_Evidence_because_solo
+  - mutate_release_archive_v1_1_0_psg_go_20260717
+  - claim_GO_by_docs_only
+
+machine_line: TT_PSG_SOLO_DEVELOPER_WORKFLOW: ACTIVE baseline=v1.1.0-psg-go.20260717

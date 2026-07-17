@@ -4,34 +4,43 @@
 **语言 SSOT：** [TT-MODULE-RELEASE-LADDER-V1.md](./TT-MODULE-RELEASE-LADDER-V1.md)  
 **Stage Batch：** [TT-MODULE-RELEASE-STAGE-BATCH-V1.md](./TT-MODULE-RELEASE-STAGE-BATCH-V1.md)  
 **签收卡：** [evidence/GO_module_release_ladder/](../../evidence/GO_module_release_ladder/README.md)  
-**最终人工（仅四类）：** [TT-OWNER-FINAL-HUMAN-QUEUE-LATEST.md](./TT-OWNER-FINAL-HUMAN-QUEUE-LATEST.md)  
+**RC1 Freeze：** [TT-RELEASE-CANDIDATE-RC1-FREEZE-LATEST.md](./TT-RELEASE-CANDIDATE-RC1-FREEZE-LATEST.md) · SHA `0bbc7adbd314…` · `20260715T074252Z`  
+**🔒 Release Lock：** [TT-RELEASE-LOCK-LATEST.md](./TT-RELEASE-LOCK-LATEST.md) · **`LOCKED`**  
+**C3 Patch Review：** [TT-RC1-PATCH-CANDIDATE-REVIEW-LATEST.md](./TT-RC1-PATCH-CANDIDATE-REVIEW-LATEST.md) · v2 DONE · WT_CLEAN PASS  
+**OA-01：** [TT-OA01-WALLETCONNECT-ACTIVATION-LATEST.md](./TT-OA01-WALLETCONNECT-ACTIVATION-LATEST.md) · **BLOCKED**（Project ID）· OA-02 CLOSED  
+**Owner 唯一执行页：** [TT-PRODUCTION-EXECUTION-CHECKLIST-LATEST.md](./TT-PRODUCTION-EXECUTION-CHECKLIST-LATEST.md)
+**最终人工队列：** [TT-OWNER-FINAL-HUMAN-QUEUE-LATEST.md](./TT-OWNER-FINAL-HUMAN-QUEUE-LATEST.md)  
+**Execution Prep：** [TT-RELEASE-EXECUTION-PREPARATION-LATEST.md](./TT-RELEASE-EXECUTION-PREPARATION-LATEST.md) · [`registry/release-execution-preparation.v1.yaml`](../../registry/release-execution-preparation.v1.yaml)  
 **Timelock 预构建：** [TIMELOCK-RESUME-PREBUILD-LATEST.md](../../evidence/GO_module_release_ladder/TIMELOCK-RESUME-PREBUILD-LATEST.md)  
 **Watchdog + CRA：** [TT-OWNER-RESUME-AUTOPILOT-LATEST.md](./TT-OWNER-RESUME-AUTOPILOT-LATEST.md) · Inbox `OWNER-RETURN-INBOX/` · `OWNER-RESUME/WATCHDOG-LATEST.md` · `OWNER-RESUME/CONTINUOUS-RELEASE-AUDIT-LATEST.md`  
-**Production Entry 预准备：** [PRODUCTION-ENTRY-REVIEW-PREP-LATEST.md](../../evidence/GO_module_release_ladder/PRODUCTION-ENTRY-REVIEW-PREP-LATEST.md)
+**Production Entry 预准备：** [PRODUCTION-ENTRY-REVIEW-PREP-LATEST.md](../../evidence/GO_module_release_ladder/PRODUCTION-ENTRY-REVIEW-PREP-LATEST.md)  
+**Production Readiness Final Review（工程基线）：** [TT-PRODUCTION-READINESS-REVIEW-LATEST.md](./TT-PRODUCTION-READINESS-REVIEW-LATEST.md) · Active Index [`GO_ssot_governance_convergence/`](../../evidence/GO_ssot_governance_convergence/)
 
 **回答项目状态只贴本表**（第几阶 · 卡点 · 阻塞 · 下一步 Exit Criteria）。  
 **正式口径写死：** 仅 `PASS` · `BLOCKED` · `WAITING` · `FAIL`。  
-**AI 工程收口：** 完成（G24 PASS · RBAC CLOSED · R06 PASS · TLC PASS · Clearance PASS_WITH_OWNER_HOLD · Protocol-Grade P0=0 · **CMS Automation PASS** · **CRA machine FAIL=0**）。剩余 **仅** 人工四类。
+**里程碑：** Engineering **DONE** · **RC1 Frozen** · **🔒 Release Lock** · **C3 Review ACTIVE** · **OA-01 PAUSED** · GO Waiting。  
+**每日焦点：** 清 D4 → CLEAN → 才开 OA-01。禁止扩工程 / 顺手优化 / 无必要长审计。  
+**AI 工程 / AI_ASSIST：** **EMPTY**。**Ambient SLA = FAIL·OPEN**（诚实）。
 
 ---
 
-## 当前真实状态（2026-07-14 · Ambient/CMS/CRA 复验绿）
+## 当前真实状态（2026-07-15 · Release Execution Preparation）
 
 | Module | Current Stage | @Stage Status | 下一步 |
 |--------|---------------|---------------|--------|
-| Wallet | Real Device（第3阶） | BLOCKED | **人工·外部平台** WC Project ID → 真机 UAT |
-| Order | Real Device（第3阶） | BLOCKED | **人工·真机** `/orders`（P1 同批） |
-| Provider | Real Device（第3阶） | BLOCKED | **人工·真机** `/provider`（同批） |
-| Guide | Real Device（第3阶） | WAITING | **人工·真机** 同批原子 |
-| Governance | Real Device（第3阶） | WAITING | Automation PASS · **人工·真机** UAT |
-| CMS | Real Device（第3阶） | WAITING | Automation PASS（ambient 10/10 · ladder `20260714T142635Z`）· **人工·真机** Owner UAT |
-| Escrow | Engineering（第1阶） | BLOCKED | **人工·链上** Timelock / Reality SC-E·F |
-| Admin | Production（第5阶） | WAITING | **人工·Sign-off** Production Entry |
+| Wallet | Real Device（第3阶） | BLOCKED | **OA-01** WC Project ID → **OA-02** 真机 |
+| Order | Real Device（第3阶） | BLOCKED | **OA-02** P1 Batch（同批） |
+| Provider | Real Device（第3阶） | BLOCKED | **OA-02** P1 Batch（同批） |
+| Guide | Real Device（第3阶） | WAITING | **OA-02** P1 Batch（同批原子） |
+| Governance | Real Device（第3阶） | WAITING | Automation PASS · 抽验并入 **OA-02/OA-05** |
+| CMS | Real Device（第3阶） | WAITING | Automation PASS · Ambient SLA 接受并入 **OA-05** |
+| Escrow | Engineering（第1阶） | BLOCKED | **OA-03** Timelock execute / Reality |
+| Admin | Production（第5阶） | WAITING | **OA-05** Sign-off / Production GO |
 
 **Batch：** P1 = Wallet·Order·Provider·Guide · 仅 `PASS`|`BLOCKED`（无 PARTIAL）  
-**Reality：** 3/8 · Timelock WAITING（禁提前 execute）  
-**Production：** `TT_PRODUCTION_GO: NO_GO` · Entry Review = PREP/WAITING  
-**Phase3 Prerequisite：** 6/10 reviews PASS · 剩余 8 blockers = Cert #8+ / Phase② Exit / Mainnet drill（全人工）
+**Reality：** 3/8 · Timelock WAITING（禁提前 execute）· **OA-03**  
+**Production：** `TT_PRODUCTION_GO: NO_GO` · Entry = PREP · **OA-04** 密钥 · **OA-05** GO  
+**下一步 Owner：** **OA-01**（WC `KEY_ABSENT`）
 
 ---
 
@@ -52,17 +61,33 @@
 | Staging ephemeral media smoke | PASS · da-hero HEAD 10/10 · CRA `CMS_AMBIENT=PASS` |
 | CRA（2026-07-14T14:38:42Z） | `PASS_WITH_HOLD` · OPEN_FAIL=none · HOLD=Clearance Owner · RC_BASELINE PASS |
 | PDCA Remediation R-01 | **CLOSED** · RC `e4fe13e2` · Staging Guest CSR 10/10 · home_hero 2/2 · PDCA diff=PASS |
+| PDCA Remediation R-02 Acquisition country key | **CLOSED** · API `deployment-01KXHHV56671K3TYB9YRW594K5` · AE 1=1 · JP 2=2 · unfiltered 10=10 · Guest CSR `20260715T001502Z` |
+| PDCA Remediation R-03 Ambient/418/Guide ISO/Geo | **PASS** · CLOSED · Web `deployment-01KXHKJ4KE3ZGSQ4N32FGPFP3P` · verify `20260715T004417Z` · market/guides 10/2/0 · no #418 · ambient 1× commit · ≠ ③ |
+| Cold-Start & Public Content Full Closure (R-04) | **SUPERSEDED** · 不得再宣告 Public Content 全量 CLOSED |
+| Cold-Start & Public Content Final Closure (R-05) | **REVOKED** · 不得冒充全量 CLOSED |
+| Market Detail & Media Closure (R-06) | **PASS** · **CLOSED** · Web `deployment-01KXHR8Q4XCNA0Y1B91W2T5WYC` · Guest Acq 10=10 decode · detail 无 404/500 · scroll reset · forensic PASS · ≠ Public Content 全量 CLOSED · ≠ ③ |
+| SSOT Governance & Documentation Convergence | **PASS_WITH_HOLD** · stamp `20260715T022246Z` · 证据 [`GO_ssot_governance_convergence/`](../../evidence/GO_ssot_governance_convergence/) · Active Index + Drift/Broken/Archive 已落 · HOLD=双「唯一发布」文案以 **状态→Cockpit** 为准 · ≠ 产品全量 CLOSED · ≠ ③ |
+| Public Visual Integrity (R-07) | **PASS** · **CLOSED** · Web `deployment-01KXHVHY0X0E02V2K0ZBH126QT` · Gate `20260715T032202Z` · Acq/Provider 10/10 photo · opacity0=0 · 无 `IMG_PRESENT_BUT_OPACITY_0` · ≠ Public Content 全量 CLOSED · ≠ ③ |
+| Guest/Public Access Integrity (R-08) | **PASS_WITH_HOLD** · **OPEN** · Staging re-audit `20260715T041959Z` · Gate exit 0 · Web deploy 后仍 HOLD（P1 残余 / 本地 API migration）· ≠ CLOSED · ≠ ③ |
+| Destination Ambient Runtime L5 (②) | **FAIL** · **OPEN** · 不得 CLOSED · 结构 10/10 · 无 Unsplash · ISO PASS · **冷切换 SLA FAIL**（JP/KR/TH/FR）· ≠ ③ |
+| **Production Readiness Final Review** | **PASS**（工程基线）· **NO_GO** · stamp `20260715T055821Z` · [TT-PRODUCTION-READINESS-REVIEW-LATEST](./TT-PRODUCTION-READINESS-REVIEW-LATEST.md) · 进入 WC/真机/Timelock/Sign-off · ≠ 产品全量 CLOSED · ≠ ③ |
+| SSOT Governance Convergence（复验） | **PASS_WITH_HOLD** · stamp → `20260715T055821Z`（Final Review 同步）· Active Index 含文档面「PR Review」历史条目（Solo 下 = **Owner Self Review** 叙事 · **≠** 团队 PR 硬闸）· ≠ ③ |
+| RC Baseline Gate Reconciliation Audit | **PASS** · stamp `20260715T063346Z` · 06:28 `admin_*_count=0` = **假阳性**（Parity 已 ALIGNED）· 现网 READY/ENFORCED · **Override FORBIDDEN** · 指标 **KEEP**（未退休）· Content Freeze 未解 · ≠ ③ · 证据 `GO_staging_rc_baseline/reconciliation-audit/` |
+| **Final Engineering Closure** | **PASS** · stamp → `evidence/GO_staging_rc_baseline/final-engineering-closure/LATEST.json` · 探针硬化 PASS · Full Audit OK `20260715T065643Z` · Guest CSR aligned · Visual PASS · SHA Local=Staging · **人工仅剩** WC / 真机 / Timelock / Sign-off · `TT_PRODUCTION_GO: NO_GO` · ≠ ③ |
+| **Release Backlog Decomposition** | **PASS** · `AI_ENGINEERING_QUEUE_EMPTY` · AI_AUTO **11/11 CLOSED** · Block A → ③ DEFERRED · SSOT [`TT-RELEASE-BACKLOG-DECOMPOSITION-LATEST`](./TT-RELEASE-BACKLOG-DECOMPOSITION-LATEST.md) · Evidence `GO_release_backlog_decomposition/` · ≠ Ambient SLA CLOSED · ≠ ③ |
+| **Release Candidate RC1 Freeze** | **FROZEN** · `20260715T074252Z` · SHA `0bbc7adbd3142b111463fc398288ab94be5c0b84` · Evidence `GO_release_candidate_rc1/` · ≠ ③ |
+| **Release Lock** | **LOCKED** · [TT-RELEASE-LOCK-LATEST](./TT-RELEASE-LOCK-LATEST.md) · 非 P0/P1 / 新需求 / SSOT 扩 / RC2 / 无必要长审计 **禁止** · 每日只看 OA-01→05 · ≠ ③ |
+| **Release Execution Preparation** | **PASS** · `AI_ASSIST_PREP_CLOSED_OWNER_ACTION_REMAINS` · AI_ASSIST **9/9 CLOSED** · Owner SSOT [`TT-PRODUCTION-EXECUTION-CHECKLIST-LATEST`](./TT-PRODUCTION-EXECUTION-CHECKLIST-LATEST.md) · Evidence `GO_release_execution_preparation/` · WC `KEY_ABSENT` · ≠ ③ |
+| **PFG RC2 Step 3（Owner 授权）** | **PASS（① runtime）** · Evidence `GO_platform_financial_admin/` · ≠ ② ≠ ③ |
+| **PFG RC2 Step 4（Owner 授权 · 仅 ② Staging）** | **PAUSED / BLOCKED** · **PSG** · Guest Contract **CODE_READY**（`67df86d4`）· Staging Matrix **FAIL**（Ambient/Hero COS 404）· 整合 Deploy **WAITING** · Step 5 **FROZEN** · **`TT_PRODUCTION_GO: NO_GO`** · Board [`TT-PUBLIC-SURFACE-GOVERNANCE-BOARD`](./TT-PUBLIC-SURFACE-GOVERNANCE-BOARD.md) |
 
 ---
 
 ## 紧凑卡
 
 ```text
-【人工 · 外部平台】WC KEY_ABSENT · DNS/R2/Stripe
-【人工 · 真机】P1 Batch · Governance UAT · CMS UAT · TW-023/024
-【人工 · 链上】Timelock execute · Cert #8–12
-【人工 · Sign-off】H1 · Phase② CLOSED · Entry · Production GO
-
-【工程 AI】Ambient/CMS/CRA machine FAIL=0 · da-hero 10/10 · 无剩余 OPEN/Drift
-【禁止】无条件全量重传媒体（仅对审计 BAD 清单批次上传）
+【OA-01】BLOCKED — Owner 称 KEY_PRESENT · Agent 探针 KEY_ABSENT · 未部署
+【请】bash scripts/dev/set-walletconnect-project-id.sh '<32-hex>'
+【OA-02】NOT_STARTED / LOCKED_BY_OA01
+【RC1】0bbc7adb · WT_CLEAN PASS · 无 quarantine/patch 混入
 ```
