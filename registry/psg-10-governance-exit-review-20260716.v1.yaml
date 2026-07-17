@@ -1,0 +1,192 @@
+# PSG-10 Payment Governance Capability · Governance Exit Review
+# Wave 3 ONLY · no business code · no gates · no evidence execution
+# SSOT: single Governance Exit Review report for PSG-10
+schema: traveltrust.governance_exit_review.v1
+review_id: PSG-10-GOV-EXIT-20260716
+capability_id: PSG-10
+capability_name: Payment Governance Capability
+parent_closure_plan: registry/psg-10-payment-closure-plan-20260716.v1.yaml
+parent_audit: registry/psg-10-payment-phase1-audit-20260716.v1.yaml
+completed_utc: "2026-07-16T15:30:00Z"
+reviewer: solo_owner
+phase: governance_validation_only
+ga_version: registry/governance-architecture-v1-freeze-20260716.v1.yaml
+common_model: registry/governance-common-model.v1.yaml#v1.0
+code_change: false
+evidence_execution: false
+
+verdict: PASS
+governance_exit: true
+engineering_implementation_authorized: true
+certification_authorized: false
+honest_boundary: "Governance Exit ≠ Engineering complete ≠ Certification ≠ CLOSED"
+
+# ── Audit scope (8 dimensions) ────────────────────────────────────────
+audit_dimensions:
+  wbs:
+    ssot: registry/capability-wbs.v1.yaml#PSG-10
+    checks:
+      - "8 inventory lines 10.1–10.8 present"
+      - "Each line has footnote"
+      - "boundary_excludes match matrix charter"
+      - "terminology prefixes aligned payment-architecture"
+      - "cross-ref owned_modules + traceability + matrix"
+    result: PASS
+    notes: "10.8 footnote updated Wave 3 · engineering_implementation → certification chain"
+  matrix:
+    ssot: registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-10
+    checks:
+      - "inventory_modules mirrors closure plan owned_modules_index"
+      - "governance_traceability wbs_lines_mapped = 8"
+      - "boundary_cross_ref PSG-09/20 + payment-architecture"
+      - "audit_charter boundary_excludes frozen"
+      - "coverage_pct/boundary_score match audit artifact"
+    result: PASS
+  registry:
+    ssot: registry/payment-architecture-classification.v1.yaml
+    checks:
+      - "capability_boundary_matrix points closure plan matrix"
+      - "settlement_terminology required_prefixes"
+      - "stripe_rail_vs_policy summary"
+      - "payment_ledger_terminology dual SSOT"
+      - "governance_implementation index Wave 2"
+    result: PASS
+  audit:
+    ssot: registry/psg-10-payment-phase1-audit-20260716.v1.yaml
+    checks:
+      - "Five Questions answered"
+      - "inventory_wbs 10.1–10.8"
+      - "charter_page_one boundary_excludes_frozen"
+      - "11_coverage_review dependencies DEP-PAY-01..05"
+      - "gap_list 8 items phase-classified"
+    result: PASS
+  closure_plan:
+    ssot: registry/psg-10-payment-closure-plan-20260716.v1.yaml
+    checks:
+      - "cross_capability_boundary_matrix 6 rows PSG-10/20/09"
+      - "gap_remediation all rows have phase + status"
+      - "wave 1/2 COMPLETE · wave 3 this review"
+      - "engineering_implementation separated from governance waves"
+    result: PASS
+    wave_3_remediation_applied:
+      - "gap_remediation phase labels synced governance_definition"
+      - "PAY-GAP-001/003 handoff text → engineering_implementation"
+      - "PAY-GAP-003 exit_criteria explicit"
+      - "wbs_line_footnotes synced capability-wbs"
+  traceability:
+    ssot: registry/psg-10-payment-closure-plan-20260716.v1.yaml#governance_traceability
+    checks:
+      - "wbs_to_primary_assets covers 10.1–10.8"
+      - "matrix governance_traceability cross-ref"
+      - "capability-wbs governance_traceability cross-ref"
+      - "10.7 trip_ledger_ssot documented"
+    result: PASS
+  boundary:
+    ssot: registry/psg-10-payment-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+    checks:
+      - "PSG-10/20/09 three-way matrix consistent"
+      - "PSG-20 audit cross_capability_boundary_ref reciprocity"
+      - "PSG-09 audit cross_capability_boundary_ref reciprocity"
+      - "No duplicate ownership without dependency_only"
+      - "Admission fee policy ∉ PSG-10"
+    result: PASS
+  dependencies:
+    checks:
+      - "DEP-PAY-01 Platform Safe → PSG-20 dependency_only"
+      - "DEP-PAY-02 Escrow/indexer → PSG-09 dependency_only"
+      - "DEP-PAY-03 Wallet → PSG-11 dependency_only"
+      - "DEP-PAY-04 fee_schedule → PSG-20 policy_consumer"
+      - "DEP-PAY-05 orders API → PSG-03 co_implementation"
+      - "matrix inventory dependency_only_not_owned matches"
+    result: PASS
+
+common_model_compliance:
+  new_ga_concepts: 0
+  common_model_extended: false
+  capability_registry_modified: false
+  wbs_lines_added: false
+  result: PASS
+
+# ── Gap disposition ───────────────────────────────────────────────────
+governance_gaps:
+  count: 5
+  status: ALL_DOCUMENTED
+  items:
+    - { id: PAY-GAP-005, phase: governance_definition, status: DOCUMENTED }
+    - { id: PAY-GAP-002, phase: governance_definition, status: DOCUMENTED }
+    - { id: PAY-GAP-004, phase: governance_definition, status: DOCUMENTED }
+    - { id: PAY-GAP-006, phase: governance_definition, status: DOCUMENTED }
+    - { id: PAY-GAP-007, phase: governance_implementation, status: DOCUMENTED }
+
+engineering_gaps:
+  count: 3
+  status: ALL_DEFERRED_WITH_EXIT_CRITERIA
+  handoff_to: engineering_implementation
+  items:
+    - id: PAY-GAP-001
+      wbs: "10.8"
+      exit_criteria: "bash scripts/check-web3-payment-production-readiness.sh exit 0 + evidence/GO_production_readiness/G3-02/ present"
+    - id: PAY-GAP-003
+      wbs: "10.4"
+      exit_criteria: "G3-02 ③ USDC deposit path Final · B435 evidence · runbook G3-02 execution evidence on disk"
+    - id: PAY-GAP-008
+      wbs: "10.6"
+      exit_criteria: "bash scripts/check-pi3-003-stripe-live-production-webhook-execution.sh exit 0"
+
+# ── Wave 3 findings (resolved in this review) ───────────────────────
+issues_found:
+  - id: GOV-REV-001
+    severity: minor
+    dimension: closure_plan
+    issue: "gap_remediation phase labels still 'closure' for Wave 1 gaps"
+    remediation: "Renamed to governance_definition in closure plan"
+    status: FIXED
+  - id: GOV-REV-002
+    severity: minor
+    dimension: wbs
+    issue: "10.8 footnote referenced Certification only · omitted Engineering Implementation"
+    remediation: "Updated capability-wbs + closure plan wbs_line_footnotes"
+    status: FIXED
+  - id: GOV-REV-003
+    severity: minor
+    dimension: closure_plan
+    issue: "PAY-GAP-003 lacked explicit exit_criteria in gap_remediation table"
+    remediation: "Added exit_criteria field"
+    status: FIXED
+  - id: GOV-REV-004
+    severity: minor
+    dimension: traceability
+    issue: "closure plan wbs_line_footnotes drift from capability-wbs footnotes"
+    remediation: "Synced wbs_line_footnotes block to capability-wbs"
+    status: FIXED
+
+blocking_issues: 0
+
+# ── Governance Exit sign-off ────────────────────────────────────────
+governance_exit_criteria:
+  wave_1_governance_definition: COMPLETE
+  wave_2_governance_implementation: COMPLETE
+  wave_3_governance_validation: COMPLETE
+  all_governance_gaps_documented: true
+  all_engineering_gaps_deferred_with_exit: true
+  cross_refs_mutually_consistent: true
+  no_new_ga_concepts: true
+
+signoff:
+  governance_exit: PASS
+  signed_utc: "2026-07-16T15:30:00Z"
+  owner: solo_owner
+
+next_phase:
+  id: engineering_implementation
+  authorized: true
+  gaps: [PAY-GAP-001, PAY-GAP-003, PAY-GAP-008]
+  then: certification
+  then_terminal: CLOSED
+  blocks_psg_11_audit: false
+  note: "PSG-11 may proceed in parallel after Owner choice · PSG-10 engineering track independent"
+
+standard_governance_exit_review_template:
+  reusable_for: [PSG-11, PSG-03, PSG-02]
+  pattern: "8-dimension audit · gap disposition · issues · PASS/FAIL · governance_exit signoff"
+  benchmark: PSG-10

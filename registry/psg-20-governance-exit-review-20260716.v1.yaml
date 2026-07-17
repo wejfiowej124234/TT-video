@@ -1,0 +1,239 @@
+# PSG-20 Platform Financial Governance Capability · Governance Exit Review
+# Wave 3 ONLY · no business code · no gates · no evidence execution
+# SSOT: single Governance Exit Review report for PSG-20
+schema: traveltrust.governance_exit_review.v1
+review_id: PSG-20-GOV-EXIT-20260716
+capability_id: PSG-20
+capability_name: Platform Financial Governance Capability
+parent_closure_plan: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml
+parent_audit: registry/psg-20-platform-financial-phase1-audit-20260716.v1.yaml
+prior_waves:
+  wave_1: registry/psg-20-governance-wave1-definition-report-20260716.v1.yaml
+  wave_2: registry/psg-20-governance-wave2-implementation-report-20260716.v1.yaml
+lifecycle_standard: registry/psg-capability-lifecycle-standard.v1.yaml#governance_wave_3
+golden_reference: registry/psg-10-governance-exit-review-20260716.v1.yaml
+completed_utc: "2026-07-16T12:30:00Z"
+reviewer: solo_owner
+phase: governance_validation_only
+ga_version: registry/governance-architecture-v1-freeze-20260716.v1.yaml
+common_model: registry/governance-common-model.v1.yaml#v1.0
+code_change: false
+evidence_execution: false
+lifecycle_change_proposals: []
+
+verdict: PASS
+governance_exit: PASS
+engineering_implementation_authorized: true
+certification_authorized: false
+production_go: NO_GO
+honest_boundary: "Governance Exit ≠ PF Step 4 staging PASS ≠ Engineering complete ≠ Certification ≠ CLOSED · ① governance PASS ≠ ② staging GO"
+
+# ── Audit scope (8 dimensions) ────────────────────────────────────────
+audit_dimensions:
+  wbs:
+    ssot: registry/capability-wbs.v1.yaml#PSG-20
+    checks:
+      - "8 inventory lines 20.1–20.8 present"
+      - "Each line has footnote"
+      - "boundary_excludes match charter · boundary matrix"
+      - "closure_priority first 20.1 Admission Fee"
+      - "terminology settlement prefixes aligned PSG-10 reciprocity"
+      - "cross-ref owned_modules + traceability + matrix + closure plan"
+      - "governance_implementation_sync Wave 2 verified"
+    result: PASS
+    notes: "Wave 1 footnotes frozen · Wave 2 implementation_consistency PASS"
+  matrix:
+    ssot: registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-20
+    checks:
+      - "inventory_modules categorized mirror matches owned_modules_index"
+      - "governance_traceability wbs_lines_mapped = 8 · wave_2_synced"
+      - "boundary_cross_ref PSG-10/09/11 + closure_plan matrix"
+      - "coverage_pct 93 · boundary_score 100 match audit artifact"
+      - "closure_wave_1/2 COMPLETE · wave_3 this review"
+      - "benchmark_domain true · priority P0"
+    result: PASS
+  registry:
+    ssot: registry/platform-safe-registry.v1.yaml
+    checks:
+      - "closure_plan · owned_modules_index · governance_traceability cross-refs in capability-wbs"
+      - "charter_ssot · wave_1/2 reports · governance_implementation_sync"
+      - "payment-architecture PSG-20 platform_financial audit cross-ref"
+      - "amendment_log Wave 1/2 entries present"
+      - "region-reward-wallet dependency-only · not modified (PF-GAP-005 CLOSED governance)"
+    result: PASS
+  audit:
+    ssot: registry/psg-20-platform-financial-phase1-audit-20260716.v1.yaml
+    checks:
+      - "Five Questions answered · benchmark_domain first full Domain Ownership"
+      - "inventory_wbs 20.1–20.8 via capability-wbs"
+      - "11_coverage_review capability_ownership + dependencies DEP-PF-01..07"
+      - "gap_list 7 items phase-classified"
+      - "closure_plan wave_1/2 COMPLETE synced"
+      - "pf_track Step 3 PASS ① · Step 4 PAUSED · Step 5 NOT_STARTED documented"
+    result: PASS
+  closure_plan:
+    ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml
+    checks:
+      - "cross_capability_boundary_matrix 6 rows PSG-20/10/09/11"
+      - "gap_remediation all rows have phase + status + exit_criteria where deferred"
+      - "wave 1/2 COMPLETE · wave 3 this review"
+      - "engineering_implementation separated from governance waves"
+      - "owned_modules_index ssot + matrix_mirror_verified"
+      - "platform_financial_terminology + operator_map + RTR cross-ref Wave 1 frozen"
+      - "admission_fee_consumer_map PF-GAP-006 governance layer documented"
+    result: PASS
+    wave_3_remediation_applied:
+      - "pipeline_position.current → governance_exit_complete"
+      - "charter governance_cross_refs + governance_exit_review"
+      - "wave_3_governance_validation COMPLETE in closure_waves"
+      - "audit cross_capability_boundary_ref frozen_wave → psg_20_closure_wave_1"
+  traceability:
+    ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#governance_traceability
+    checks:
+      - "wbs_to_primary_assets covers 20.1–20.8"
+      - "matrix governance_traceability cross-ref · wave_2_synced"
+      - "capability-wbs governance_traceability cross-ref"
+      - "20.6 region-reward-wallet cross_ref dependency-only documented"
+      - "20.8 operator_map_cross_ref PF-GAP-001 governance CLOSED"
+      - "consistency_verified points Wave 2 report CV-W2-01..08"
+    result: PASS
+  boundary:
+    ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+    checks:
+      - "PSG-20/10/09/11 four-way matrix consistent"
+      - "PSG-10 closure boundary_matrix reciprocity · platform_revenue_settlement → PSG-20"
+      - "PSG-09 audit 11_coverage_review reciprocity · protocol treasury ∉ PSG-20"
+      - "PSG-11 wallet signing UX consumer · admission policy PSG-20"
+      - "No duplicate ownership without dependency_only"
+      - "traceability_topics align WBS 20.1/20.4/20.6/20.8"
+      - "settlement prefix inherited PSG-10 · not ambiguous"
+    result: PASS
+  dependencies:
+    checks:
+      - "DEP-PF-01 escrow/order settlement → PSG-10 dependency_only"
+      - "DEP-PF-02 FeeRouter/indexer → PSG-09 dependency_only"
+      - "DEP-PF-03 wallet signing → PSG-11 dependency_only"
+      - "DEP-PF-04 Stripe onboarding → PSG-10 dependency_only"
+      - "DEP-PF-05 RTR FeeRouter payout → PSG-09 execution · PSG-20 boundary"
+      - "DEP-PF-06 protocol treasury → PSG-09 dependency_only"
+      - "DEP-PF-07 admin finance observability → PSG-07 · not PSG-20 owner"
+      - "matrix inventory dependency_only_not_owned 5 items match owned_modules_index"
+    result: PASS
+
+common_model_compliance:
+  new_ga_concepts: 0
+  common_model_extended: false
+  capability_registry_modified: false
+  wbs_lines_added: false
+  result: PASS
+
+# ── Gap disposition ───────────────────────────────────────────────────
+governance_gaps:
+  count: 2
+  status: ALL_CLOSED
+  open_count: 0
+  items:
+    - { id: PF-GAP-001, phase: governance_definition, status: CLOSED, closed_utc: "2026-07-16T12:10:00Z" }
+    - { id: PF-GAP-005, phase: governance_definition, status: CLOSED, closed_utc: "2026-07-16T12:10:00Z" }
+
+governance_partial:
+  count: 1
+  items:
+    - { id: PF-GAP-006, phase: engineering_implementation, governance_layer: DOCUMENTED, wave_1: true }
+
+engineering_gaps:
+  count: 2
+  status: ALL_DEFERRED_WITH_EXIT_CRITERIA
+  handoff_to: engineering_implementation
+  items:
+    - id: PF-GAP-002
+      wbs: "20.1"
+      surface: Admission Fee
+      exit_criteria: "run-platform-financial-step4-staging.sh exit 0 · four-layer evidence PASS"
+    - id: PF-GAP-006
+      wbs: "20.1"
+      surface: Admission Fee · Billing
+      exit_criteria: "Onboarding consumer wiring complete at ③ per admission_fee_consumer_map"
+
+certification_gaps:
+  count: 3
+  status: ALL_DEFERRED_WITH_EXIT_CRITERIA
+  handoff_to: certification
+  after: engineering_implementation
+  items:
+    - id: PF-GAP-003
+      wbs: "20.1"
+      exit_criteria: "Current Active wired to all payment/onboarding consumers at ③"
+    - id: PF-GAP-004
+      wbs: "20.7"
+      exit_criteria: "PF Step 5 PASS per RC2 board · after Step 4 staging PASS"
+    - id: PF-GAP-007
+      wbs: "20.4"
+      exit_criteria: "PF Step 4 PASS unblocks settlement staging evidence"
+
+# ── Wave 3 findings (resolved in this review) ───────────────────────
+issues_found:
+  - id: GOV-REV-PF20-001
+    severity: minor
+    dimension: closure_plan
+    issue: "pipeline_position.current still wave_2 after Wave 2 complete"
+    remediation: "Updated to governance_exit_complete · next engineering_implementation"
+    status: FIXED
+  - id: GOV-REV-PF20-002
+    severity: minor
+    dimension: closure_plan
+    issue: "charter governance_cross_refs lacked governance_exit_review pointer"
+    remediation: "Added governance_exit_review + wave_3_synced_utc"
+    status: FIXED
+  - id: GOV-REV-PF20-003
+    severity: minor
+    dimension: audit
+    issue: "cross_capability_boundary_ref frozen_wave still psg_10_closure_wave_1"
+    remediation: "Updated to psg_20_closure_wave_1 · PSG-20 closure plan SSOT"
+    status: FIXED
+  - id: GOV-REV-PF20-004
+    severity: minor
+    dimension: matrix
+    issue: "closure_wave_3_governance_validation not set after Wave 3"
+    remediation: "Matrix PSG-20 wave_3 + governance_exit fields updated"
+    status: FIXED
+
+blocking_issues: 0
+
+# ── Governance Exit sign-off ────────────────────────────────────────
+governance_exit_criteria:
+  wave_1_governance_definition: COMPLETE
+  wave_2_governance_implementation: COMPLETE
+  wave_3_governance_validation: COMPLETE
+  all_governance_gaps_closed: true
+  all_engineering_gaps_deferred_with_exit: true
+  all_certification_gaps_deferred_with_exit: true
+  cross_refs_mutually_consistent: true
+  no_new_ga_concepts: true
+  wave_1_wave_2_assets_verified: true
+  eight_dimension_audit: PASS
+
+signoff:
+  governance_exit: PASS
+  signed_utc: "2026-07-16T12:30:00Z"
+  owner: solo_owner
+
+next_phase:
+  id: engineering_implementation
+  authorized: true
+  gaps: [PF-GAP-002, PF-GAP-006]
+  certification_gaps: [PF-GAP-003, PF-GAP-004, PF-GAP-007]
+  then: certification
+  then_terminal: CLOSED
+  note: "Engineering may modify code/staging/evidence · Certification forbidden until Engineering complete · PF Step 4 blocker remains ②"
+
+prior_frozen_capability:
+  id: PSG-11
+  status: WAITING_OWNER_REAL_DEVICE_BATCH
+  untouched: true
+  rule: "PSG-11 frozen · independent Real Device batch"
+
+standard_governance_exit_review_template:
+  inherits: registry/psg-10-governance-exit-review-20260716.v1.yaml
+  pattern: "8-dimension audit · gap disposition · issues · PASS/FAIL · governance_exit signoff"
+  golden_reference: PSG-10

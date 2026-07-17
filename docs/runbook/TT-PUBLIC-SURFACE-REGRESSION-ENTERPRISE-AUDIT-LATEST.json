@@ -1,0 +1,67 @@
+{
+  "schema": "traveltrust.public_surface_regression_enterprise_audit.v1",
+  "machine_key": "TT_PUBLIC_SURFACE_REGRESSION_ENTERPRISE_AUDIT",
+  "stamp_utc": "20260715T174800Z",
+  "phase": "2_staging_readonly",
+  "status": "AUDIT_COMPLETE_NO_DATA_MUTATION",
+  "production_go": "NO_GO",
+  "freeze": {
+    "pf_track": "FROZEN",
+    "whole_tree_staging_deploy": "FORBIDDEN",
+    "non_essential_fixes": "PAUSED",
+    "data_mutation": "FORBIDDEN_UNTIL_SSOT_ACCEPT",
+    "pf_step_5": "NOT_STARTED"
+  },
+  "runtime": {
+    "staging_api_meta_git_sha": "231ceb211753891909e4a2b49028a870f1f68310",
+    "local_main_head": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+    "pf_worktree_head": "231ceb211753891909e4a2b49028a870f1f68310",
+    "acq_fix_head": "1e1171d0f3907c8ec89c4c4cf82d30d54efa11e5",
+    "acq_fix_deployed": false,
+    "sha_alignment": "STAGING_EQ_PF_NE_MAIN_NE_ACQ_FIX"
+  },
+  "live_probes": {
+    "acquisition_unfiltered_n": 30,
+    "acquisition_unique_titles": 10,
+    "acquisition_max_per_title": 3,
+    "acquisition_country_AE_n": 0,
+    "acquisition_country_JP_n": 0,
+    "acquisition_country_CN_n": 0,
+    "provider_unfiltered_n": 30,
+    "provider_country_AE_n": 3,
+    "provider_country_JP_n": 6,
+    "guides_n": 25,
+    "community_feed_n": 20,
+    "community_created_at_day": "2026-07-04",
+    "community_daily_regen": false,
+    "cover_source_catalog_n": 10,
+    "cover_source_none_n": 20,
+    "media_head_http": 200
+  },
+  "finding_ids_p0": ["PSR-P0-01", "PSR-P0-02", "PSR-P0-03", "PSR-P0-04"],
+  "finding_ids_p1": ["PSR-P1-01", "PSR-P1-02", "PSR-P1-03", "PSR-P1-04", "PSR-P1-05"],
+  "finding_ids_p2": ["PSR-P2-01", "PSR-P2-02", "PSR-P2-03"],
+  "gates_proposed": [
+    "check-staging-meta-sha-matches-deploy-tree",
+    "check-public-market-title-dedupe",
+    "check-acquisition-country-filter-AE-JP",
+    "check-trustEscrowBadge-hardgate",
+    "check-community-feed-cap",
+    "forbid-dirty-path-fly-deploy"
+  ],
+  "ssot_norm_keys": [
+    "DEPLOY_PROVENANCE",
+    "PUBLIC_SURFACE_CANONICAL",
+    "OCS_UPSERT",
+    "MEDIA_TIER",
+    "NO_WHOLE_TREE",
+    "GO_SEMANTICS"
+  ],
+  "r02_mislabel_evidence": {
+    "git_sha_at_deploy": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+    "fly_image": "deployment-01KXHHV56671K3TYB9YRW594K5",
+    "tree_at_sha_has_country_fallback": false
+  },
+  "md": "TT-PUBLIC-SURFACE-REGRESSION-ENTERPRISE-AUDIT-LATEST.md",
+  "canvas": "canvases/public-surface-regression-audit.canvas.tsx"
+}

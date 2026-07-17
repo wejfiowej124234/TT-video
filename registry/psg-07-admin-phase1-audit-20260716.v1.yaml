@@ -1,0 +1,149 @@
+# PSG-07 Admin · Phase ① Audit (Governance Architecture standard template)
+# No code changes · No new gates · No Closure
+schema: traveltrust.governance_domain_audit.v1
+domain_id: PSG-07
+domain_name: Admin
+category: operations
+phase: audit_only
+completed_utc: "2026-07-16T08:49:00Z"
+auditor: solo_owner
+template: registry/governance-audit-template.v1.yaml
+coverage_pct: 94
+
+1_scope:
+  status: COMPLETE
+  score: 100
+  boundary: "Admin Console /admin/* · API crates/api/src/routes/admin/* · parallel PSG track (not slim runner)"
+  parallel_ssot: docs/runbook/TT-ADMIN-PLATFORM-GOVERNANCE-DISCIPLINE.md
+  in_scope:
+    - FE admin workspace 116 page routes
+    - Admin HTTP API (mod.rs + sub-routers)
+    - RBAC v3 console roles · ADM-U01/U02
+    - Four centers IA (Business · Content · Official · Platform)
+  out_of_scope:
+    - Production GO mainline (PI3 · mainnet · business UAT)
+    - PSG B1-B5 runner admission (parallel at Production Entry)
+    - Five-main public routes UI freeze
+
+2_inventory:
+  status: COMPLETE
+  score: 88
+  counts:
+    fe_page_routes: 116
+    operator_map_rows: 91
+    sidebar_primary_nav: 38
+    sidebar_in_operator_map: 32
+    static_pages_missing_from_operator_map: 12
+    route_deny_matrix_entries: 40
+    adm_u01_api_probes_last_run: 102
+  registries:
+    - registry/admin-platform-production-readiness.v1.yaml
+    - registry/admin-four-centers-governance.v1.yaml
+    - registry/admin-rbac-route-matrix.v1.yaml
+    - registry/admin-rbac-production-probes.v1.yaml
+  ssot_docs:
+    - docs/runbook/TT-ADMIN-OPERATOR-MAP-SSOT.md
+    - docs/runbook/TT-ADMIN-FEATURE-SSOT.md
+    - frontend/app/admin/README.md
+
+3_runtime:
+  status: COMPLETE
+  score: 92
+  staging:
+    adm_u01: "GO · 102/102 API · 54/54 shell · 2026-07-01"
+    adm_u02: "GO · 2026-07-01"
+    browser_walkthrough: "26/26 · 2026-07-02"
+  local:
+    l5_green: scripts/dev/run-admin-l5-green.sh
+    rbac_smoke: scripts/dev/smoke-admin-rbac-matrix-local.sh
+  gaps:
+    - "Evidence dated 2026-07-01/02 · HEAD may drift"
+    - "ROUTE_DENY_MATRIX (40) < ADM-U01 probes (102)"
+    - "Post-freeze routes not re-probed on current SHA"
+
+4_data_flow:
+  status: COMPLETE
+  score: 95
+  operator_map: docs/runbook/TT-ADMIN-OPERATOR-MAP-SSOT.md
+  model: "Source → Target → Owner (subsystem tag)"
+  rows_with_owner: 91
+  gaps:
+    - "12 static routes lack operator-map row"
+    - "platform-financial · vacancy-ledger · net-profit-ledger not in map"
+
+5_architecture:
+  status: COMPLETE
+  score: 100
+  model: FOUR_CENTERS
+  registry: registry/admin-four-centers-governance.v1.yaml
+  capability: "40/40 · 6/6 enterprise · PERMANENT_FROZEN"
+  ia_drift: 0
+
+6_governance:
+  status: COMPLETE
+  score: 100
+  owner_status: CLOSED
+  dev_validation: CLOSED
+  blocking_production_go: false
+  ga_track: parallel_psg_at_production_entry
+
+7_evidence:
+  status: COMPLETE
+  score: 90
+  paths:
+    - evidence/GO_staging_admin_rbac_matrix/latest/report.json
+    - evidence/GO_staging_admin_adm_u02/latest/report.json
+    - evidence/GO_admin_platform_40_complete/20260701T180425Z/report.json
+    - evidence/GO_staging_admin_final_validation_walkthrough/20260702T003523Z/report.json
+    - evidence/manual-uat/signoff/PHASE2-ADMIN-FINAL-VALIDATION-SIGNOFF-20260702.md
+
+8_risks:
+  status: COMPLETE
+  score: 85
+  non_blocking:
+    - id: ADM-GAP-001
+      title: bootstrap-market route missing
+    - id: ADM-GAP-002
+      title: Operator map drift (12 routes)
+    - id: ADM-GAP-003
+      title: RBAC ROUTE_DENY_MATRIX vs ADM-U01 parity
+    - id: ADM-GAP-004
+      title: GA entity_owners matrix (PGC OPEN)
+
+9_coverage:
+  coverage_pct: 94
+  section_scores:
+    scope: 100
+    inventory: 88
+    runtime: 92
+    data_flow: 95
+    architecture: 100
+    governance: 100
+    evidence: 90
+    risks: 85
+
+10_gap_list:
+  - id: ADM-GAP-001
+    surface: API
+    item: POST …/official/accounts/:id/bootstrap-market not implemented
+    phase: closure
+  - id: ADM-GAP-002
+    surface: Documentation
+    item: "Operator map missing: platform-financial, vacancy-ledger, net-profit-ledger, backup, schema, content/announcements, content/roadmap, content/seo, content/translation, audit/operations, community/appeals/review, content/revisions/compare"
+    phase: closure
+  - id: ADM-GAP-003
+    surface: RBAC
+    item: ROUTE_DENY_MATRIX sync with ADM-U01 probe set
+    phase: closure
+  - id: ADM-GAP-004
+    surface: Governance
+    item: entity_owners / Owner Matrix at GA level
+    phase: closure
+  - id: ADM-GAP-005
+    surface: Runtime
+    item: Re-run ADM-U01/U02 on current staging SHA
+    phase: certification
+  - id: ADM-GAP-006
+    surface: Audit Log
+    item: GA cross-index for admin audit surfaces (logs exist · unified index missing)
+    phase: closure

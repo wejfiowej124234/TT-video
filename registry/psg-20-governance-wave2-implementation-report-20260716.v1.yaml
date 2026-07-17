@@ -1,0 +1,162 @@
+# PSG-20 Platform Financial Governance Capability · Governance Wave 2 — Implementation Report
+# Wave 2 ONLY · registry/matrix/WBS sync · no business code · no evidence execution
+schema: traveltrust.governance_wave_report.v1
+report_id: PSG-20-WAVE2-IMPL-20260716
+capability_id: PSG-20
+capability_name: Platform Financial Governance Capability
+wave: wave_2_governance_implementation
+parent_closure_plan: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml
+prior_wave: registry/psg-20-governance-wave1-definition-report-20260716.v1.yaml
+lifecycle_standard: registry/psg-capability-lifecycle-standard.v1.yaml#governance_wave_2
+golden_reference: PSG-10
+completed_utc: "2026-07-16T12:20:00Z"
+executor: solo_owner
+code_change: false
+evidence_modified: false
+lifecycle_change_proposals: []
+
+verdict: COMPLETE
+governance_implementation_consistency: PASS
+note: "No PF-GAP-008 in audit · Wave 2 standard implementation-consistency satisfied per PSG-10/PSG-11 pattern"
+
+# ── Wave 2 actions executed ─────────────────────────────────────────
+actions_completed:
+  - "owned_modules_index ↔ psg-domain-coverage-matrix#PSG-20.inventory_modules full categorized mirror"
+  - "governance_traceability WBS 20.1–20.8 ↔ owned_modules_index bidirectional cross-ref verified"
+  - "capability-wbs#PSG-20 ↔ closure plan charter · boundary · traceability · inventory cross-refs complete"
+  - "charter_boundary_frozen governance_cross_refs · wave_2_report published"
+  - "cross_capability_boundary_matrix wave_2_sync · peer reciprocity verified (PSG-10/09/11)"
+  - "dependency_only_not_owned closure plan ↔ matrix count parity (5 entries)"
+  - "8-point consistency verification · 0 drift · 0 blocking"
+
+artifacts_updated:
+  - registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml
+  - registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-20
+  - registry/capability-wbs.v1.yaml#PSG-20
+  - registry/psg-20-platform-financial-phase1-audit-20260716.v1.yaml
+  - registry/governance-audit-template.v1.yaml
+
+artifacts_not_modified_by_design:
+  - registry/psg-11-wallet-closure-plan-20260716.v1.yaml
+  - registry/psg-10-payment-closure-plan-20260716.v1.yaml
+  - registry/region-reward-wallet.v1.yaml
+  - docs/runbook/TT-ADMIN-OPERATOR-MAP-SSOT.md
+  - frontend/app/admin/platform-financial/
+  - evidence/GO_platform_financial_staging/
+  - scripts/dev/run-platform-financial-step3-runtime.sh
+  - scripts/dev/run-platform-financial-step4-staging.sh
+
+# ── Bidirectional consistency verification ────────────────────────────
+consistency_verification:
+  method: "Registry-only cross-ref · owned_modules_index vs matrix inventory_modules category parity"
+  blocking_drift: 0
+  checks:
+    - id: CV-W2-01
+      dimension: owned_modules_index
+      closure_plan_ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#owned_modules_index
+      matrix_mirror: registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-20.inventory_modules
+      result: PASS
+      note: "Matrix inventory_modules categorized mirror matches owned_modules_index all 7 categories · 25 owned paths"
+    - id: CV-W2-02
+      dimension: governance_traceability
+      wbs_lines_mapped: 8
+      wbs_ssot: registry/capability-wbs.v1.yaml#PSG-20
+      traceability_keys: [20.1, 20.2, 20.3, 20.4, 20.5, 20.6, 20.7, 20.8]
+      result: PASS
+      note: "Each WBS line has primary assets · 20.7 duplicate docs key resolved"
+    - id: CV-W2-03
+      dimension: capability_wbs
+      owned_modules_ref: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#owned_modules_index
+      governance_traceability_ref: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#governance_traceability
+      matrix_inventory_ref: registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-20.inventory_modules
+      charter_ssot_ref: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#charter_boundary_frozen
+      result: PASS
+    - id: CV-W2-04
+      dimension: charter
+      charter: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#charter_boundary_frozen
+      wbs_boundary_excludes_match: true
+      psg_20_never_owns_vs_boundary_excludes: aligned
+      result: PASS
+    - id: CV-W2-05
+      dimension: boundary_matrix
+      matrix_ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+      matrix_row_count: 6
+      traceability_topic_keys: [20.1, 20.4, 20.6, 20.8]
+      peer_cross_ref:
+        psg_10: registry/psg-10-payment-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+        psg_09: registry/psg-09-web3-phase1-audit-20260716.v1.yaml#11_coverage_review
+        psg_11: registry/psg-11-wallet-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+      result: PASS
+    - id: CV-W2-06
+      dimension: wbs_footnotes
+      closure_plan: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#wbs_line_footnotes
+      capability_wbs: registry/capability-wbs.v1.yaml#PSG-20.wbs
+      footnote_lines: 8
+      result: PASS
+    - id: CV-W2-07
+      dimension: dependency_only_not_owned
+      closure_plan_count: 5
+      matrix_count: 5
+      result: PASS
+    - id: CV-W2-08
+      dimension: gap_remediation_governance
+      governance_closed: [PF-GAP-001, PF-GAP-005]
+      governance_partial: [PF-GAP-006]
+      governance_open: 0
+      engineering_deferred: [PF-GAP-002, PF-GAP-006]
+      certification_deferred: [PF-GAP-003, PF-GAP-004, PF-GAP-007]
+      result: PASS
+
+# ── Inventory mirror summary ────────────────────────────────────────
+inventory_mirror:
+  owned_modules_index_ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#owned_modules_index
+  matrix_mirror_verified: true
+  counts:
+    registry: 3
+    docs: 5
+    backend: 4
+    frontend: 3
+    scripts: 2
+    evidence: 2
+    dependency_only_not_owned: 5
+
+# ── Remaining gaps (unchanged · not Wave 2) ─────────────────────────
+engineering_gaps_remaining:
+  - id: PF-GAP-002
+    wbs: "20.1"
+    surface: Admission Fee
+    exit_criteria: "run-platform-financial-step4-staging.sh exit 0 · four-layer evidence PASS"
+  - id: PF-GAP-006
+    wbs: "20.1"
+    surface: Admission Fee · Billing
+    exit_criteria: "Onboarding consumer wiring complete at ③ per admission_fee_consumer_map"
+
+certification_gaps_remaining:
+  - id: PF-GAP-003
+    wbs: "20.1"
+    exit_criteria: "Current Active wired to all payment/onboarding consumers at ③"
+  - id: PF-GAP-004
+    wbs: "20.7"
+    exit_criteria: "PF Step 5 PASS per RC2 board · after Step 4 staging PASS"
+  - id: PF-GAP-007
+    wbs: "20.4"
+    exit_criteria: "PF Step 4 PASS unblocks settlement staging evidence"
+
+governance_gaps_remaining: []
+
+next_wave:
+  id: wave_3_governance_validation
+  action: "8-dimension governance exit review · defer engineering/certification gaps with exit_criteria"
+  not_started: [engineering_implementation, certification]
+
+prior_frozen_capability:
+  id: PSG-11
+  status: WAITING_OWNER_REAL_DEVICE_BATCH
+  untouched: true
+
+honest_boundary: "Wave 2 Implementation ≠ PF Step 4 staging PASS ≠ Governance Exit ≠ CLOSED"
+
+signoff:
+  wave_2_governance_implementation: COMPLETE
+  signed_utc: "2026-07-16T12:20:00Z"
+  owner: solo_owner

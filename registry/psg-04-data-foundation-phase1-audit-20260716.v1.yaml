@@ -1,0 +1,295 @@
+# PSG-04 Data Foundation · Phase ① Audit
+# Legacy ID PSG-04 · upgraded from "Database" to data governance base domain
+# No code · No gates · No Closure
+schema: traveltrust.governance_domain_audit.v1
+domain_id: PSG-04
+domain_name: Data Foundation
+legacy_name: Database
+category: technical
+priority: P0
+phase: audit_only
+completed_utc: "2026-07-16T09:30:00Z"
+auditor: solo_owner
+template: registry/governance-audit-template.v1.yaml
+coverage_pct: 81
+boundary_score: 96
+
+1_scope:
+  status: COMPLETE
+  score: 95
+  definition: "Data governance base — not PostgreSQL-only"
+  pillars:
+    schema: "PostgreSQL DDL · constraints · indexes"
+    migration: "sqlx migrations · checksum · CRLF/LF discipline"
+    constraints: "CHECK · UNIQUE · FK · publish_status · data_origin"
+    canonical_key: "Stable business keys · UPSERT · historical supersede"
+    idempotency: "OCS bootstrap · double-bootstrap · ON CONFLICT"
+    data_lifecycle: "draft→published→archived · production/test/demo/historical"
+    dto_contract: "psg_guest_contract.v1 · server-enforced Guest fields"
+    registry_mapping: "YAML/Registry SSOT → runtime DB columns"
+    data_consistency: "B1 isolation · dedupe · no DELETE masquerade"
+    runtime_data: "Post-deploy row counts · cache flush recovery"
+    data_governance: "DDG · SOPCP · OCIP · display-data-governance"
+  includes:
+    - PostgreSQL migrations (145 files)
+    - Redis/cache consistency (destructive cert B4)
+    - Registry/metadata mapping
+    - DTO contract enforcement layer
+  excludes:
+    - CMS editorial UI workflow (PSG-05)
+    - COS object upload/CDN ops (PSG-06)
+    - Business product rules (PSG-01)
+    - Payment rail execution (PSG-10)
+
+2_inventory:
+  status: COMPLETE
+  score: 86
+  counts:
+    sql_migrations: 145
+    migrations_with_data_origin: 15
+    migrations_explicit_canonical_key: 1
+  core_artifacts:
+    - crates/api/migrations/
+    - crates/api/src/chain_off/psg_guest_contract.rs
+    - registry/display-data-governance.v1.yaml
+    - registry/single-official-public-catalog-policy.v1.yaml
+    - registry/official-catalog-identity-policy.v1.yaml
+    - registry/market-listings-display-governance.v1.yaml
+    - registry/platform-safe-registry.v1.yaml
+    - docs/runbook/TT-PSG-P0-5-PUBLIC-DATA-GOVERNANCE.md
+    - docs/runbook/TT-PSG-P0-3-CMS-GOVERNANCE.md
+  gates:
+    - scripts/gates/check-psg-public-data-isolation.cjs
+    - scripts/gates/check-psg-cms-lifecycle.cjs
+    - scripts/gates/check-display-data-governance-ssot.sh
+
+3_runtime:
+  status: COMPLETE
+  score: 72
+  psg_phase_b:
+    B1_public_data: "gate exists · FOUNDATION_READY · cert not PASS at HEAD"
+    maps_from: PSG-04
+  deployment:
+    market_listings_canonical_key_migration: "local yes · staging SHA drift"
+    dockerfile_crlf_strip: "fixed 2026-07-16 · pending redeploy"
+  destructive:
+    double_bootstrap: not_run
+    machine_replacement: not_run
+
+4_data_flow:
+  status: COMPLETE
+  score: 82
+  pattern: "Registry/YAML SSOT → Migration → DB → API DTO filter → Guest"
+
+12_authoritative_source:
+  status: COMPLETE
+  score: 80
+  rule: "Every data object must declare one authoritative source"
+  catalog:
+    - data_object: Platform Safe Current Active
+      authoritative_source: platform_safe PG tables + registry/platform-safe-registry.v1.yaml
+      owner_domain: PSG-20
+      guest: none
+      runtime: GET /api/v1/platform/safe/current
+    - data_object: Platform Onboarding Fee amount
+      authoritative_source: docs/spec/artifacts/onboarding-fee-schedule.v1.yaml
+      owner_domain: PSG-20
+      guest: quote API
+      runtime: fee_schedule_v1.rs
+    - data_object: CMS Catalog entity (POI/country/city)
+      authoritative_source: CMS PostgreSQL publish_status + catalog tables
+      owner_domain: "PSG-05 CMS · PSG-04 lifecycle enforcement"
+      guest: GET /api/v1/catalog/*
+      runtime: B2 cms-lifecycle gate
+    - data_object: Catalog media asset binding
+      authoritative_source: catalog_media_assets + object_key registry
+      owner_domain: "PSG-06 COS · PSG-04 binding rules"
+      guest: CDN public URL
+      runtime: B3 cos-reference-integrity gate
+    - data_object: Market listing public row
+      authoritative_source: market_listings UPSERT by canonical_key
+      owner_domain: "PSG-04 · PSG-01 Business shell"
+      guest: governed market list API
+      runtime: B1 public-data-isolation gate
+    - data_object: OCS official cold-start entity
+      authoritative_source: registry/official-cold-start-dataset.v1.yaml
+      owner_domain: "PSG-08 Operations · PSG-04 idempotency"
+      guest: home/market surfaces
+      runtime: bootstrap scripts + double-bootstrap cert
+    - data_object: Guest contract meta
+      authoritative_source: psg_guest_contract.rs server builder
+      owner_domain: PSG-04
+      guest: meta.psg_guest_contract
+      runtime: chain_off market handlers
+    - data_object: Test/demo account rows
+      authoritative_source: registry/test-accounts-business-immutable.v1.yaml + data_origin=test|demo
+      owner_domain: PSG-04 isolation
+      guest: hidden
+      runtime: DDG expected difference
+
+13_lifecycle:
+  status: COMPLETE
+  score: 84
+  rule: "No lifecycle declared = future chaos"
+  models:
+    cms_publish:
+      states: [draft, in_review, published, archived]
+      guest_visible: published_only
+      ssot: TT-PSG-P0-3-CMS-GOVERNANCE.md
+    data_origin:
+      states: [production, test, demo, historical]
+      guest_visible: production_only
+      ssot: TT-PSG-P0-5-PUBLIC-DATA-GOVERNANCE.md
+    market_listing_status:
+      states: [published, plus variant-specific]
+      supersede: "data_origin=historical · no DELETE"
+      ssot: 20260716120000_market_listings_canonical_key_lifecycle.sql
+    platform_safe:
+      states: [active_version, retired_history]
+      ssot: platform_safe_service version chain
+    ocs_bootstrap:
+      states: [bootstrap_pending, upserted, guest_visible_published]
+      idempotent: double-bootstrap verify
+  gaps:
+    - "Not all entity families have documented lifecycle in GA matrix"
+    - "Redis cache key lifecycle implicit only (B4 destructive)"
+
+14_data_lineage:
+  diagram: |
+    Data Object → Authoritative Source → Owner Domain → Lifecycle → Guest → Runtime
+  examples:
+    - "Platform Fee → platform-safe-registry → PSG-20 → active/history → — → API current"
+    - "CMS POI → CMS DB published → PSG-05+04 → draft→published→archived → catalog API → B2"
+    - "Media → catalog_media_assets+object_key → PSG-06+04 → asset bind→CDN → Guest URL → B3"
+    - "Market card → market_listings.canonical_key → PSG-04+01 → prod+published → market API → B1"
+    - "OCS card → official-cold-start-dataset → PSG-08+04 → bootstrap UPSERT → home/market → destructive cert"
+
+5_architecture:
+  status: COMPLETE
+  score: 90
+  stack: "L1 DDG/SOPCP/OCIP → DB schema → API filter → Guest contract meta"
+  idempotency_principle: "UPSERT + canonical_key + historical row · forbid DELETE cleanup"
+
+6_governance:
+  status: COMPLETE
+  score: 88
+  in_psg_cert: yes
+  maps_phase_b: [B1]
+  coordinated_domains: [PSG-05, PSG-06, PSG-08, PSG-20]
+
+7_evidence:
+  status: COMPLETE
+  score: 74
+  exists:
+    - psg_guest_contract.rs tests
+    - display-data-governance registry
+  missing:
+    - PSG-PRODUCTION-CERT-LATEST.json
+    - unified data_lineage GA registry file
+    - staging PASS for canonical_key migration
+
+8_risks:
+  status: COMPLETE
+  score: 80
+  production_risks:
+    - Guest sees test/demo/smoke rows if B1 regresses
+    - Duplicate OCS rows if canonical_key missing on entity family
+    - Migration checksum fail on CRLF if deploy without Dockerfile fix
+    - CMS/COS lineage break → broken guest media
+    - Frontend dedupe masking non-idempotent DB
+
+9_coverage:
+  coverage_pct: 81
+  boundary_score: 96
+  section_scores:
+    scope: 95
+    inventory: 86
+    runtime: 72
+    data_flow: 82
+    authoritative_source: 80
+    lifecycle: 84
+    architecture: 90
+    governance: 88
+    evidence: 74
+    risks: 80
+
+11_coverage_review:
+  ga_inclusion_complete: true
+  domain_ownership:
+    owns:
+      - Schema · Migration · Constraints
+      - Canonical Key · Idempotency patterns
+      - Data lifecycle policy (data_origin · publish_status)
+      - DTO Guest contract enforcement
+      - Registry→DB mapping discipline
+      - Data consistency gates (B1)
+      - Runtime data integrity (destructive cert verify)
+      - Cache/Redis consistency recovery (B4 facet)
+    boundary_excludes:
+      - CMS editorial workflow UI → PSG-05
+      - COS upload/CDN object ops → PSG-06
+      - OCS daily ops orchestration → PSG-08
+      - Platform Safe business policy → PSG-20
+      - Escrow/order payment state machine → PSG-10
+    inventory_modules:
+      - crates/api/migrations/*
+      - psg_guest_contract.rs
+      - display-data-governance · SOPCP · OCIP registries
+      - market_listings canonical_key migration
+      - check-psg-public-data-isolation.cjs
+    dependencies:
+      - id: DEP-DF-01
+        module: CMS publish workflow tables
+        owner: PSG-05
+      - id: DEP-DF-02
+        module: COS object_key / media registry
+        owner: PSG-06
+      - id: DEP-DF-03
+        module: OCS bootstrap scripts
+        owner: PSG-08
+      - id: DEP-DF-04
+        module: Platform Safe tables
+        owner: PSG-20
+  substeps:
+    scope: PASS
+    boundary: PASS
+    dependency: PASS
+    authoritative_source: PARTIAL
+    lifecycle: PARTIAL
+    unknown_domains: PARTIAL
+  unknown_domains_resolved:
+    - UNK-014
+
+10_gap_list:
+  - id: DF-GAP-001
+    surface: Schema
+    item: canonical_key + historical pattern not on all public entity families
+    phase: closure
+  - id: DF-GAP-002
+    surface: Migration
+    item: 20260716120000 market_listings migration not on staging SHA
+    phase: certification
+  - id: DF-GAP-003
+    surface: Migration
+    item: CRLF/LF checksum — Dockerfile fix local · redeploy pending
+    phase: certification
+  - id: DF-GAP-004
+    surface: DTO Contract
+    item: Guest meta incomplete on some surfaces (P0⑤ documented)
+    phase: closure
+  - id: DF-GAP-005
+    surface: Idempotency
+    item: destructive double-bootstrap / machine-replacement not run
+    phase: certification
+  - id: DF-GAP-006
+    surface: GA
+    item: unified data_lineage registry (machine-readable catalog) missing
+    phase: coverage_review
+  - id: DF-GAP-007
+    surface: Lifecycle
+    item: Redis/cache invalidation lifecycle not documented per object
+    phase: closure
+  - id: DF-GAP-008
+    surface: OCS
+    item: bootstrap-market API missing breaks merchant idempotent path
+    phase: closure

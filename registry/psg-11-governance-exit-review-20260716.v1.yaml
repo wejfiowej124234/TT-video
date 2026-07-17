@@ -1,0 +1,204 @@
+# PSG-11 Wallet Governance Capability · Governance Exit Review
+# Wave 3 ONLY · no business code · no gates · no evidence execution
+# SSOT: single Governance Exit Review report for PSG-11
+schema: traveltrust.governance_exit_review.v1
+review_id: PSG-11-GOV-EXIT-20260716
+capability_id: PSG-11
+capability_name: Wallet Governance Capability
+parent_closure_plan: registry/psg-11-wallet-closure-plan-20260716.v1.yaml
+parent_audit: registry/psg-11-wallet-phase1-audit-20260716.v1.yaml
+prior_waves:
+  wave_1: registry/psg-11-governance-wave1-definition-report-20260716.v1.yaml
+  wave_2: registry/psg-11-governance-wave2-implementation-report-20260716.v1.yaml
+lifecycle_standard: registry/psg-capability-lifecycle-standard.v1.yaml#governance_wave_3
+golden_reference: registry/psg-10-governance-exit-review-20260716.v1.yaml
+completed_utc: "2026-07-16T10:56:00Z"
+reviewer: solo_owner
+phase: governance_validation_only
+ga_version: registry/governance-architecture-v1-freeze-20260716.v1.yaml
+common_model: registry/governance-common-model.v1.yaml#v1.0
+code_change: false
+evidence_execution: false
+lifecycle_change_proposals: []
+
+verdict: PASS
+governance_exit: PASS
+engineering_implementation_authorized: true
+certification_authorized: false
+honest_boundary: "Governance Exit ≠ Engineering complete ≠ Certification ≠ CLOSED · ① governance PASS ≠ ② Real Device GO"
+
+# ── Audit scope (8 dimensions) ────────────────────────────────────────
+audit_dimensions:
+  wbs:
+    ssot: registry/capability-wbs.v1.yaml#PSG-11
+    checks:
+      - "8 inventory lines 11.1–11.8 present"
+      - "Each line has footnote"
+      - "boundary_excludes match charter · boundary matrix"
+      - "connection_canonical Providers.tsx · WalletStatusMini · chainEnv"
+      - "cross-ref owned_modules + traceability + matrix + closure plan"
+      - "governance_implementation_sync Wave 2 verified"
+    result: PASS
+    notes: "Wave 1 connection SSOT frozen · Wave 2 sync block present"
+  matrix:
+    ssot: registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-11
+    checks:
+      - "inventory_modules mirrors closure plan owned_modules_index all categories"
+      - "governance_traceability wbs_lines_mapped = 8 · wave_2_synced"
+      - "boundary_cross_ref PSG-09/10/20 + closure_plan matrix"
+      - "coverage_pct 72 · boundary_score 91 match audit artifact"
+      - "closure_wave_1/2 COMPLETE · wave_3 this review"
+    result: PASS
+  registry:
+    ssot: registry/capability-wbs.v1.yaml#PSG-11
+    checks:
+      - "closure_plan · owned_modules_index · governance_traceability cross-refs"
+      - "charter_ssot · wave_2_report · governance_implementation_sync"
+      - "amendment_log Wave 1/2 entries present"
+      - "production-secret-catalog referenced for OA-01 · not modified"
+      - "parallel_ssot TT-MODULE-RELEASE-COCKPIT-LATEST via matrix"
+    result: PASS
+  audit:
+    ssot: registry/psg-11-wallet-phase1-audit-20260716.v1.yaml
+    checks:
+      - "Five Questions answered · capability_wbs_status PRESENT"
+      - "inventory_wbs 11.1–11.8 via closure plan"
+      - "11_coverage_review capability_ownership 8 lines"
+      - "dependencies DEP-WAL-01..04 classified"
+      - "gap_list 8 items phase-classified · governance gaps CLOSED"
+      - "closure_plan wave_1/2 COMPLETE synced"
+    result: PASS
+  closure_plan:
+    ssot: registry/psg-11-wallet-closure-plan-20260716.v1.yaml
+    checks:
+      - "cross_capability_boundary_matrix 7 rows PSG-11/09/10/20"
+      - "gap_remediation all rows have phase + status + engineering exit_criteria"
+      - "wave 1/2 COMPLETE · wave 3 this review"
+      - "engineering_implementation separated from governance waves"
+      - "owned_modules_index ssot + matrix_mirror_verified"
+      - "connection_ssot_note + wallet_connect_terminology Wave 1 frozen"
+    result: PASS
+    wave_3_remediation_applied:
+      - "pipeline_position.current → governance_exit_complete"
+      - "charter governance_cross_refs + governance_exit_review"
+      - "wave_3_governance_validation COMPLETE in closure_waves"
+  traceability:
+    ssot: registry/psg-11-wallet-closure-plan-20260716.v1.yaml#governance_traceability
+    checks:
+      - "wbs_to_primary_assets covers 11.1–11.8"
+      - "matrix governance_traceability cross-ref · wave_2_synced"
+      - "capability-wbs governance_traceability cross-ref"
+      - "11.5 gap WAL-GAP-004 documented in traceability · engineering handoff"
+      - "consistency_verified points Wave 2 report CV-W2-01..08"
+    result: PASS
+  boundary:
+    ssot: registry/psg-11-wallet-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+    checks:
+      - "PSG-11/09/10/20 four-way matrix consistent"
+      - "PSG-09 audit 11_coverage_review reciprocity"
+      - "PSG-10 closure boundary_matrix reciprocity · lib/wagmi peer drift documented not reopened"
+      - "PSG-20 audit 11_coverage_review reciprocity"
+      - "No custody · no duplicate ownership without dependency_only"
+      - "traceability_topics align WBS 11.1–11.8 subset"
+    result: PASS
+  dependencies:
+    checks:
+      - "DEP-WAL-01 chain/ABIs/meta → PSG-09 dependency_only"
+      - "DEP-WAL-02 escrow pay corridor → PSG-10 co_surface"
+      - "DEP-WAL-03 admission fee signing → PSG-20 policy_consumer"
+      - "DEP-WAL-04 orders API → PSG-03 co_implementation"
+      - "matrix inventory dependency_only_not_owned 7 items match owned_modules_index"
+      - "indexer · abis · orders_flow · fee_schedule listed dependency_only"
+    result: PASS
+
+common_model_compliance:
+  new_ga_concepts: 0
+  common_model_extended: false
+  capability_registry_modified: false
+  wbs_lines_added: false
+  result: PASS
+
+# ── Gap disposition ───────────────────────────────────────────────────
+governance_gaps:
+  count: 4
+  status: ALL_CLOSED
+  open_count: 0
+  items:
+    - { id: WAL-GAP-001, phase: closure_plan, status: CLOSED, closed_utc: "2026-07-16T10:33:00Z" }
+    - { id: WAL-GAP-002, phase: governance_definition, status: CLOSED, closed_utc: "2026-07-16T10:50:00Z" }
+    - { id: WAL-GAP-003, phase: governance_definition, status: CLOSED, closed_utc: "2026-07-16T10:50:00Z" }
+    - { id: WAL-GAP-007, phase: governance_implementation, status: CLOSED, closed_utc: "2026-07-16T10:53:00Z" }
+
+engineering_gaps:
+  count: 4
+  status: ALL_DEFERRED_WITH_EXIT_CRITERIA
+  handoff_to: engineering_implementation
+  items:
+    - id: WAL-GAP-004
+      wbs: "11.5"
+      surface: View-Only Mode
+      exit_criteria: "WalletSessionRevalidate mounted OR documented waive with signoff"
+    - id: WAL-GAP-005
+      wbs: "11.3"
+      surface: WalletConnect Activation
+      exit_criteria: "oa01-preflight-wc-key.py PASS OR documented WAITING_OWNER with Ladder honest degrade"
+    - id: WAL-GAP-006
+      wbs: "11.8"
+      surface: Release & Real Device
+      exit_criteria: "TT_REAL_DEVICE_BATCH_P1 Wallet leg PASS per Release Ladder"
+    - id: WAL-GAP-008
+      wbs: "11.8"
+      surface: Release & Real Device
+      exit_criteria: "smoke-wallet-connection-l5-local.sh exit 0 with on-disk test inventory"
+
+# ── Wave 3 findings (resolved in this review) ───────────────────────
+issues_found:
+  - id: GOV-REV-W11-001
+    severity: minor
+    dimension: closure_plan
+    issue: "pipeline_position.current still wave_2 after Wave 2 complete"
+    remediation: "Updated to governance_exit_complete · next engineering_implementation"
+    status: FIXED
+  - id: GOV-REV-W11-002
+    severity: minor
+    dimension: closure_plan
+    issue: "charter governance_cross_refs lacked governance_exit_review pointer"
+    remediation: "Added governance_exit_review + wave_3_synced_utc"
+    status: FIXED
+  - id: GOV-REV-W11-003
+    severity: minor
+    dimension: matrix
+    issue: "closure_wave_3_governance_validation not set after Wave 3"
+    remediation: "Matrix PSG-11 wave_3 + governance_exit fields updated"
+    status: FIXED
+
+blocking_issues: 0
+
+# ── Governance Exit sign-off ────────────────────────────────────────
+governance_exit_criteria:
+  wave_1_governance_definition: COMPLETE
+  wave_2_governance_implementation: COMPLETE
+  wave_3_governance_validation: COMPLETE
+  all_governance_gaps_closed: true
+  all_engineering_gaps_deferred_with_exit: true
+  cross_refs_mutually_consistent: true
+  no_new_ga_concepts: true
+  wave_1_wave_2_assets_verified: true
+
+signoff:
+  governance_exit: PASS
+  signed_utc: "2026-07-16T10:56:00Z"
+  owner: solo_owner
+
+next_phase:
+  id: engineering_implementation
+  authorized: true
+  gaps: [WAL-GAP-004, WAL-GAP-005, WAL-GAP-006, WAL-GAP-008]
+  then: certification
+  then_terminal: CLOSED
+  note: "Engineering may modify code/gates/evidence · Certification still forbidden until Engineering complete"
+
+standard_governance_exit_review_template:
+  inherits: registry/psg-10-governance-exit-review-20260716.v1.yaml
+  pattern: "8-dimension audit · gap disposition · issues · PASS/FAIL · governance_exit signoff"
+  golden_reference: PSG-10

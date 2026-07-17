@@ -1,0 +1,325 @@
+# PSG-20 Platform Financial · Phase ① Audit
+# First GA business-benchmark domain · Domain Ownership complete
+# No code · No gates · No Closure
+schema: traveltrust.governance_domain_audit.v1
+domain_id: PSG-20
+domain_name: Platform Financial
+category: platform
+priority: P0
+benchmark_domain: true
+phase: audit_only
+completed_utc: "2026-07-16T09:15:00Z"
+auditor: solo_owner
+template: registry/governance-audit-template.v1.yaml
+capability_wbs: registry/capability-wbs.v1.yaml#PSG-20
+coverage_pct: 93
+boundary_score: 100
+
+inventory_wbs_ref:
+  ssot: registry/capability-wbs.v1.yaml#PSG-20
+  lines: 8
+  closure_priority_first: "20.1 Admission Fee"
+  admission_fee:
+    destination: Platform Safe
+    not_dao_treasury: true
+    sub_lines: [pricing, billing, settlement, ledger, audit, destination_platform_safe]
+
+inventory_wbs_scores:
+  "20.1":
+    key: admission_fee
+    score: 88
+    status: PARTIAL
+    closure_priority: 1
+    sub_lines:
+      pricing: { score: 92, ssot: onboarding-fee-schedule.v1.yaml }
+      billing: { score: 85, ssot: fee_schedule_v1.rs · onboarding routes }
+      settlement: { score: 80, ssot: USDC → Platform Safe path }
+      ledger: { score: 90, ssot: platform-safe-registry.v1.yaml }
+      audit: { score: 75, ssot: platform_safe audit log · admin UI partial }
+      destination_platform_safe: { score: 88, note: "Current Active · ≠ DAO Treasury" }
+  "20.2":
+    key: pricing
+    score: 92
+    status: COMPLETE
+  "20.3":
+    key: revenue
+    score: 90
+    status: COMPLETE
+  "20.4":
+    key: settlement
+    score: 82
+    status: PARTIAL
+  "20.5":
+    key: financial_registry
+    score: 95
+    status: COMPLETE
+  "20.6":
+    key: treasury_rules
+    score: 94
+    status: COMPLETE
+  "20.7":
+    key: financial_reports
+    score: 70
+    status: PARTIAL
+    note: "PF Step 4/5 evidence · RC2 board · reports not fully closed"
+  "20.8":
+    key: financial_audit
+    score: 78
+    status: PARTIAL
+    note: "Admin operator map · audit trail partial"
+
+1_scope:
+  status: COMPLETE
+  score: 100
+  constitution: docs/spec/artifacts/platform-financial-governance.v1.md
+  manages:
+    - Platform Onboarding Fee (admission fee · USDC → Platform Safe)
+    - Platform commercial revenue classification (P12 whitelist)
+    - Platform Safe registry (Current Active · Version History · Audit Log)
+    - Platform Operating Treasury (business use · Operator discretion)
+    - Pricing SSOT (onboarding-fee-schedule · fee_schedule_v1)
+    - Financial registry (platform-safe-registry.v1.yaml)
+    - Financial policy (PFG L1–L4 · RC2 board)
+    - Revenue accounting boundary (Protocol ≠ Platform · P1–P5)
+  excludes:
+    - Stripe / PSP checkout rails
+    - Escrow runtime / order USDC deposit-release
+    - Wallet connect / transfer UX
+    - FeeRouter on-chain distribution execution
+    - Protocol Treasury Safe / DAO governance treasury
+    - TTG Stake / Community Incentive pools
+    - Merchant order settlement execution rail
+  admission_fee_boundary:
+    owner: PSG-20
+    destination: Platform Safe
+    not_dao_treasury: true
+    note: "资金不进入 DAO 仍属 PSG-20 · 商业模式调整仅改 treasury_rules 流向"
+
+2_inventory:
+  status: COMPLETE
+  score: 90
+  owned_modules:
+    - docs/spec/artifacts/platform-financial-governance.v1.md
+    - docs/spec/artifacts/onboarding-fee-schedule.v1.yaml
+    - docs/spec/artifacts/platform-safe-runtime.v1.md
+    - registry/platform-safe-registry.v1.yaml
+    - registry/payment-architecture-classification.v1.yaml#governance_treasury_boundary
+    - crates/api/src/routes/platform_safe.rs
+    - crates/api/src/services/platform_safe_service.rs
+    - crates/api/src/repositories/platform_safe_repository.rs
+    - crates/api/src/routes/onboarding/fee_schedule_v1.rs
+    - frontend/app/admin/platform-financial/
+    - frontend/lib/apiClient/platform/platformSafeHttp.ts
+    - scripts/dev/run-platform-financial-step3-runtime.sh
+    - scripts/dev/run-platform-financial-step4-staging.sh
+    - docs/runbook/TT-PLATFORM-FINANCIAL-GOVERNANCE-RC2-BOARD.md
+  not_owned_but_adjacent:
+    - onboarding_fee_paid_events (indexer · PSG-09)
+    - stripe_onboarding (optional fiat · PSG-10)
+    - admin/finance* (observability · PSG-07/10)
+
+3_runtime:
+  status: COMPLETE
+  score: 85
+  pf_track:
+    step_1_pfg: DONE
+    step_2_model: DONE
+    step_3_admin_ui: "PASS ① local · evidence/GO_platform_financial_admin/"
+    step_4_staging: PAUSED_BLOCKED
+    step_5_e2e: NOT_STARTED
+  cert_path: PF_Entry · OUT_OF_PSG_RUNNER
+  production_go: NO_GO
+
+4_data_flow:
+  status: COMPLETE
+  score: 95
+  platform_revenue_flow: "Onboarding Fee USDC → Platform Safe (Current Active) → Platform Operating Treasury → Operator"
+  steward_dual_track:
+    track_a: "TTG Stake → Stake Pool (PSG-09)"
+    track_b: "Platform Onboarding Fee → Platform Safe (PSG-20)"
+  read_discipline: "All consumers read Current Active via API — no hardcoded Safe address"
+  write_discipline: "Only Platform Financial admin → Platform Safe registry"
+
+5_architecture:
+  status: COMPLETE
+  score: 100
+  layers:
+    L1: "P1–P5 permanent principles (FROZEN)"
+    L2: "P9–P12 governance rules"
+    L3: "Platform Safe V1 ops (1/1 → future multisig)"
+    L4: "Platform Financial admin (4 capabilities only)"
+  separation: "Platform Safe ≠ treasury_safe ≠ Escrow"
+
+6_governance:
+  status: COMPLETE
+  score: 95
+  pfg_status: FROZEN_V1_0
+  pf_step5: FROZEN
+  in_psg_cert: pf_entry
+  not_same_as: PSG-10
+  rc_track: RC2_not_RC1
+
+7_evidence:
+  status: COMPLETE
+  score: 88
+  paths:
+    - evidence/GO_platform_financial_admin/
+    - evidence/GO_platform_financial_staging/ (BLOCKED)
+    - registry/platform-safe-registry.v1.yaml
+  gap: "Step 4 staging four-layer evidence not PASS"
+
+8_risks:
+  status: COMPLETE
+  score: 90
+  misclassification_risks:
+    - "Revenue routed to Payment domain (Stripe/Escrow)"
+    - "Protocol treasury spend confused with Platform Operating Treasury"
+    - "RTR FeeRouter payout confused with Platform commercial revenue"
+  mitigations:
+    - payment-architecture-classification.v1.yaml
+    - PFG revenue classification table
+    - forbidden_misclassification list
+
+9_coverage:
+  coverage_pct: 93
+  boundary_score: 100
+  section_scores:
+    scope: 100
+    inventory: 90
+    runtime: 85
+    data_flow: 95
+    architecture: 100
+    governance: 95
+    evidence: 88
+    risks: 90
+
+11_coverage_review:
+  ga_inclusion_complete: true
+  benchmark: "First domain with full Domain Ownership · template for all future audits"
+  domain_ownership:
+    owns:
+      - Platform Fee / Onboarding Fee
+      - Platform commercial Revenue classification
+      - Settlement policy for platform commercial income (not order escrow settlement)
+      - Platform Operating Treasury business rules
+      - Pricing (onboarding-fee-schedule)
+      - Financial Registry (platform-safe-registry)
+      - Financial Policy (PFG V1.0)
+    boundary_excludes:
+      - Stripe Payment → PSG-10
+      - PSP / optional fiat onboarding → PSG-10
+      - Escrow Runtime / USDC trip payment → PSG-10 + PSG-09
+      - Wallet Transfer / WalletConnect UX → PSG-11
+      - On-chain USDC transaction execution / FeeRouter deploy → PSG-09
+      - Protocol Treasury Safe / DAO Timelock spend ops → PSG-09
+      - TTG Stake pools → PSG-09
+    inventory_modules:
+      - platform-financial-governance.v1.md
+      - platform-safe-registry.v1.yaml
+      - platform_safe HTTP + PG tables
+      - /admin/platform-financial UI
+      - onboarding-fee-schedule.v1
+      - fee_schedule_v1 API
+    dependencies:
+      - id: DEP-PF-01
+        module: Escrow deposit / release / order settlement
+        owner: PSG-10 Payment
+      - id: DEP-PF-02
+        module: FeeRouter · chain events · indexer
+        owner: PSG-09 Web3
+      - id: DEP-PF-03
+        module: Wallet connect · signing · transfers
+        owner: PSG-11 Wallet
+      - id: DEP-PF-04
+        module: Stripe onboarding checkout (optional)
+        owner: PSG-10 Payment
+      - id: DEP-PF-05
+        module: Region Reward Wallet / RTR FeeRouter payout
+        owner: "PSG-09 execution · PSG-20 boundary (≠ Platform Revenue)"
+      - id: DEP-PF-06
+        module: treasury_safe spend / Timelock / multisig protocol ops
+        owner: PSG-09 Web3
+      - id: DEP-PF-07
+        module: Admin finance observability pages
+        owner: PSG-07 Admin
+  unknown_domains_resolved:
+    - UNK-007
+    - UNK-009
+  substeps:
+    scope: PASS
+    boundary: PASS
+    dependency: PASS
+    unknown_domains: PARTIAL
+
+cross_capability_boundary_ref:
+  frozen_wave: psg_20_closure_wave_1
+  ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+  payment_classification: registry/payment-architecture-classification.v1.yaml
+  reciprocity:
+    psg_10: "Stripe/Escrow rails → PSG-10 · platform_revenue_settlement → PSG-20"
+    psg_09: "protocol_treasury_settlement · FeeRouter on-chain → PSG-09"
+    psg_11: "Wallet signing UX → PSG-11 · admission policy → PSG-20"
+  terminology: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#platform_financial_terminology
+  synced_utc: "2026-07-16T12:30:00Z"
+  code_change: false
+
+10_gap_list:
+  - id: PF-GAP-001
+    wbs: "20.8"
+    surface: Financial Audit
+    item: /admin/platform-financial not in TT-ADMIN-OPERATOR-MAP-SSOT
+    phase: closure
+  - id: PF-GAP-002
+    wbs: "20.1"
+    surface: Admission Fee
+    item: Step 4 Staging PAUSED · four-layer evidence BLOCKED
+    phase: certification
+  - id: PF-GAP-003
+    wbs: "20.1"
+    surface: Admission Fee
+    item: Current Active not yet wired to all payment/onboarding consumers at ③
+    phase: certification
+  - id: PF-GAP-004
+    wbs: "20.7"
+    surface: Financial Reports
+    item: PF Step 5 E2E not started
+    phase: certification
+  - id: PF-GAP-005
+    wbs: "20.6"
+    surface: Treasury Rules
+    item: region-reward-wallet.v1.yaml cross-ref to PSG-20 in registry (dependency only)
+    phase: closure
+  - id: PF-GAP-006
+    wbs: "20.1"
+    surface: Admission Fee · Billing
+    item: onboarding consumer wiring incomplete at ③
+    phase: closure
+  - id: PF-GAP-007
+    wbs: "20.4"
+    surface: Settlement
+    item: settlement path staging evidence blocked with PF Step 4
+    phase: certification
+
+cross_capability_boundary_ref:
+  frozen_wave: psg_20_closure_wave_1
+  ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+  payment_classification: registry/payment-architecture-classification.v1.yaml
+  reciprocity:
+    psg_10: "Stripe/Escrow rails → PSG-10 · platform_revenue_settlement → PSG-20"
+    psg_09: "protocol_treasury_settlement · FeeRouter on-chain → PSG-09"
+    psg_11: "Wallet signing UX → PSG-11 · admission policy → PSG-20"
+  terminology: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#platform_financial_terminology
+  synced_utc: "2026-07-16T12:10:00Z"
+  code_change: false
+
+closure_plan:
+  artifact: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml
+  status: IN_PROGRESS
+  wave_1: COMPLETE
+  wave_1_report: registry/psg-20-governance-wave1-definition-report-20260716.v1.yaml
+  wave_2: COMPLETE
+  wave_2_report: registry/psg-20-governance-wave2-implementation-report-20260716.v1.yaml
+  wave_3: COMPLETE
+  governance_exit_review: registry/psg-20-governance-exit-review-20260716.v1.yaml
+  governance_exit: PASS
+  next: engineering_implementation

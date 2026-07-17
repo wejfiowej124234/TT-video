@@ -1,0 +1,115 @@
+# PSG-11 Wallet Governance Capability · Governance Wave 1 — Definition Report
+# Wave 1 ONLY · registry/docs/matrix/WBS sync · no business code · no evidence execution
+schema: traveltrust.governance_wave_report.v1
+report_id: PSG-11-WAVE1-DEF-20260716
+capability_id: PSG-11
+capability_name: Wallet Governance Capability
+wave: wave_1_governance_definition
+parent_closure_plan: registry/psg-11-wallet-closure-plan-20260716.v1.yaml
+parent_audit: registry/psg-11-wallet-phase1-audit-20260716.v1.yaml
+lifecycle_standard: registry/psg-capability-lifecycle-standard.v1.yaml#governance_wave_1
+golden_reference: PSG-10
+completed_utc: "2026-07-16T10:50:00Z"
+executor: solo_owner
+code_change: false
+evidence_modified: false
+lifecycle_change_proposals: []
+
+verdict: COMPLETE
+gaps_closed: [WAL-GAP-002, WAL-GAP-003]
+gaps_deferred_remaining:
+  governance_implementation: [WAL-GAP-007]
+  engineering_implementation: [WAL-GAP-004, WAL-GAP-005, WAL-GAP-006, WAL-GAP-008]
+
+# ── Wave 1 scope executed ───────────────────────────────────────────
+actions_completed:
+  - "Published wallet_connect_terminology disambiguation table"
+  - "Frozen connection_ssot_note · canonical on-disk FE paths"
+  - "Documented PSG-10 frontend/lib/wagmi/ peer drift · canonical Providers.tsx"
+  - "Documented evidence README aspirational architecture · NOT modified (Wave 1 discipline)"
+  - "Synced charter_boundary_frozen · cross_capability_boundary_matrix"
+  - "Aligned governance_traceability 11.1/11.2 with WBS footnotes"
+  - "Aligned owned_modules_index · matrix inventory_modules"
+  - "Updated capability-wbs amendment_log Wave 1 entry"
+  - "Closed WAL-GAP-002 · WAL-GAP-003 in gap_remediation_table"
+
+artifacts_updated:
+  - registry/psg-11-wallet-closure-plan-20260716.v1.yaml
+  - registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-11
+  - registry/capability-wbs.v1.yaml#PSG-11
+  - registry/psg-11-wallet-phase1-audit-20260716.v1.yaml
+
+artifacts_not_modified_by_design:
+  - frontend/evidence/GO_local_wallet_connection_l5/README.md
+  - registry/psg-10-payment-closure-plan-20260716.v1.yaml
+  - frontend/components/Providers.tsx
+  - scripts/dev/smoke-wallet-connection-l5-local.sh
+
+# ── WAL-GAP-002 disposition ───────────────────────────────────────────
+WAL-GAP-002:
+  status: CLOSED
+  governance_resolution: >
+    Registry SSOT connection_ssot_note + wallet_connect_terminology now define
+    canonical connection center as Providers.tsx + WalletStatusMini.tsx.
+    Evidence README aspirational lib/wallet/connection/* documented as drift;
+    governance layer consistent · evidence file refresh deferred (not Wave 1).
+  wbs: "11.2"
+  on_disk_canonical:
+    - frontend/components/Providers.tsx
+    - frontend/components/trust/WalletStatusMini.tsx
+    - frontend/components/Header.tsx
+
+# ── WAL-GAP-003 disposition ───────────────────────────────────────────
+WAL-GAP-003:
+  status: CLOSED
+  governance_resolution: >
+    Canonical connection provider path frozen as Providers.tsx + chainEnv.ts.
+    Stale peer ref frontend/lib/wagmi/ (PSG-10 dependency_only) documented in
+    peer_registry_cross_ref · PSG-11 does not reopen PSG-10 CLOSED artifact.
+  wbs: "11.1"
+  peer_drift:
+    stale_ref: frontend/lib/wagmi/
+    source: registry/psg-10-payment-closure-plan-20260716.v1.yaml#owned_modules_index
+    canonical: frontend/components/Providers.tsx
+
+# ── Terminology (Wave 1 publish) ────────────────────────────────────
+terminology:
+  ssot: registry/psg-11-wallet-closure-plan-20260716.v1.yaml#wallet_connect_terminology
+  rule: "Never use 'wallet' without context — connect | verify | write | custody"
+
+# ── Remaining Engineering Gaps (handoff · not Wave 1) ───────────────
+engineering_gaps_remaining:
+  - id: WAL-GAP-004
+    wbs: "11.5"
+    surface: View-Only Mode
+    exit_criteria: "WalletSessionRevalidate mounted OR documented waive with signoff"
+  - id: WAL-GAP-005
+    wbs: "11.3"
+    surface: WalletConnect Activation
+    exit_criteria: "oa01-preflight-wc-key.py PASS OR WAITING_OWNER with Ladder honest degrade"
+  - id: WAL-GAP-006
+    wbs: "11.8"
+    surface: Release & Real Device
+    exit_criteria: "TT_REAL_DEVICE_BATCH_P1 Wallet leg PASS per Release Ladder"
+  - id: WAL-GAP-008
+    wbs: "11.8"
+    surface: Release & Real Device
+    exit_criteria: "smoke-wallet-connection-l5-local.sh exit 0 with on-disk test inventory"
+
+governance_gaps_remaining:
+  - id: WAL-GAP-007
+    phase: governance_implementation
+    surface: Implementation Consistency
+    action: "Wave 2 · matrix inventory full sync · traceability verification pass"
+
+next_wave:
+  id: wave_2_governance_implementation
+  gaps: [WAL-GAP-007]
+  not_started: [wave_3, engineering_implementation, certification]
+
+honest_boundary: "Wave 1 Definition ≠ Real Device PASS ≠ Production GO · evidence README not edited this wave"
+
+signoff:
+  wave_1_governance_definition: COMPLETE
+  signed_utc: "2026-07-16T10:50:00Z"
+  owner: solo_owner

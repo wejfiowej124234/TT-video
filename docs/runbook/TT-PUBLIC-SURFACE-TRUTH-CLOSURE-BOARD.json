@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.public_surface_truth_closure_board.v1",
+  "machine_key": "TT_PUBLIC_SURFACE_TRUTH_CLOSURE",
+  "status": "ACTIVE",
+  "stamp_utc": "20260716T003400Z",
+  "production_go": "NO_GO",
+  "pf_frozen": true,
+  "whole_tree_deploy": "FORBIDDEN",
+  "step0": "PASS_ACQ_PROVIDER",
+  "step0_runtime_sha": "ddc022b6e57e8374a72a42b51e017020db2872e0",
+  "p0_1_lf_integrity": "PASS",
+  "preflight_commit": "00f7e3d6c2ae427a3e887a78f835b9bf23b38a0e",
+  "next": "P0_2_OCS_CMS_UPSERT",
+  "still_open_exit": ["guides", "community", "p0_2", "p0_3", "p0_4", "p0_5", "p0_6", "p0_7"]
+}

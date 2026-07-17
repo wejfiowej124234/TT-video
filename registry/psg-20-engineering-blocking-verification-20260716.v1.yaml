@@ -1,0 +1,50 @@
+# PSG-20 Platform Financial Governance Capability · Engineering Blocking Verification
+# Read-only verification · post Step 4 PASS · no governance reopen
+schema: traveltrust.engineering_blocking_verification.v1
+verification_id: PSG-20-ENG-BLOCK-VERIFY-20260716
+capability_id: PSG-20
+capability_name: Platform Financial Governance Capability
+parent_engineering_report: registry/psg-20-engineering-implementation-report-20260716.v1.yaml
+parent_governance_exit: registry/psg-20-governance-exit-review-20260716.v1.yaml
+completed_utc: "2026-07-16T12:05:33Z"
+reviewer: solo_owner
+code_change: false
+new_gaps_added: 0
+governance_reopened: false
+certification_started: true
+
+capability_status: CERTIFICATION_ACTIVE
+production_go: NO_GO
+
+# ── Blocking verdict ─────────────────────────────────────────────────
+blocking_verdict:
+  registered_engineering_blocking_gaps: 0
+  sole_blocking_gap: null
+  hidden_blocking_gaps: 0
+  engineering_implementation_complete: true
+  blocking_gaps: 0
+  certification_authorized: true
+
+engineering_gaps_pass:
+  - id: PF-GAP-002
+    status: PASS
+    phase: "② Staging Step 4"
+    gate: scripts/dev/run-platform-financial-step4-staging.sh
+    exit_code: 0
+    stamp: "20260716T120410Z"
+  - id: PF-GAP-006
+    status: PASS
+    phase: "① code + vitest · ② Step 4 API cross-check"
+
+engineering_gaps_fail: []
+
+certification_gaps_open:
+  - PF-GAP-003
+  - PF-GAP-004
+  - PF-GAP-007
+
+signoff:
+  verification: COMPLETE
+  capability_status: CERTIFICATION_ACTIVE
+  signed_utc: "2026-07-16T12:05:33Z"
+  owner: solo_owner

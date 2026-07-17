@@ -1,0 +1,212 @@
+# PSG-11 Wallet Governance Capability · Engineering Implementation Report
+# Scope: WAL-GAP-004 · WAL-GAP-005 · WAL-GAP-006 · WAL-GAP-008 only
+# SSOT: post-Governance-Exit engineering track · no GA/WBS/governance-process changes
+schema: traveltrust.engineering_implementation_report.v1
+report_id: PSG-11-ENG-IMPL-20260716
+capability_id: PSG-11
+capability_name: Wallet Governance Capability
+parent_governance_exit: registry/psg-11-governance-exit-review-20260716.v1.yaml
+parent_closure_plan: registry/psg-11-wallet-closure-plan-20260716.v1.yaml
+completed_utc: "2026-07-16T11:00:19Z"
+executor: solo_owner
+phase: engineering_implementation_only
+phase_scope_primary: "① local · ② Real Device deferred"
+code_change_this_session: true
+honest_boundary: "3/4 Engineering gaps closed at ① · WAL-GAP-006 requires ② Owner Real Device · ≠ Certification · ≠ CLOSED"
+
+verdict: PARTIAL
+capability_status: WAITING_OWNER_REAL_DEVICE_BATCH
+capability_status_frozen: true
+capability_status_frozen_utc: "2026-07-16T11:04:00Z"
+engineering_implementation_complete: false
+certification_authorized: false
+production_go: NO_GO
+blocking_gaps: 1
+blocking_verification: registry/psg-11-engineering-blocking-verification-20260716.v1.yaml
+
+# ── Scope discipline ─────────────────────────────────────────────────
+scope:
+  in_scope_gaps: [WAL-GAP-004, WAL-GAP-005, WAL-GAP-006, WAL-GAP-008]
+  out_of_scope:
+    - governance_waves
+    - governance_exit_review
+    - GA_v1.0
+    - common_model
+    - capability_registry
+    - capability_wbs
+    - closure_plan
+    - psg_domain_coverage_matrix
+  layers_verified:
+    - code_mount_runtime
+    - vitest_automation
+    - smoke_gate
+    - wc_activation_probe
+    - release_ladder_cockpit
+    - evidence_artifacts
+
+code_changes:
+  - frontend/components/Providers.tsx
+  - frontend/components/WalletSessionRevalidate.test.tsx
+  - scripts/dev/smoke-wallet-connection-l5-local.sh
+
+# ── Gap disposition ──────────────────────────────────────────────────
+gaps:
+  - id: WAL-GAP-004
+    wbs: "11.5"
+    surface: View-Only Mode
+    exit_criteria: "WalletSessionRevalidate mounted OR documented waive with signoff"
+    status: PASS
+    phase_scope: "① local"
+    resolution: mount
+    runtime:
+      component: frontend/components/WalletSessionRevalidate.tsx
+      mounted_in: frontend/components/Providers.tsx
+      placement: "inside WagmiProvider · before QueryClientProvider"
+      behavior: "clearGetMeCache + traveltrust:wallet-context-changed on address/chainId change"
+    test:
+      file: frontend/components/WalletSessionRevalidate.test.tsx
+      result: PASS
+    notes: "Waive path not needed · mount satisfies exit_criteria"
+
+  - id: WAL-GAP-005
+    wbs: "11.3"
+    surface: WalletConnect Activation
+    exit_criteria: "oa01-preflight-wc-key.py PASS OR documented WAITING_OWNER with Ladder honest degrade"
+    status: PASS
+    phase_scope: "① local · ② Activation WAITING_OWNER"
+    resolution: WAITING_OWNER
+    gate:
+      command: python scripts/dev/oa01-preflight-wc-key.py
+      exit_code: 2
+      key_present: false
+      staging_build_key_present: false
+      safe_to_deploy: false
+    supplementary_probe:
+      command: python scripts/dev/run-release-execution-preparation.py
+      wc_probe: KEY_ABSENT
+      stamp: "20260716T110011Z"
+    ladder_honest_degrade:
+      cockpit: docs/runbook/TT-MODULE-RELEASE-COCKPIT-LATEST.md
+      wallet_stage: "Real Device · BLOCKED"
+      signoff: frontend/evidence/GO_local_wallet_connection_l5/SIGNOFF-LATEST.md
+      capability_ready: CLOSED
+      activation: "ACTIVE · BLOCKED KEY_ABSENT"
+      providers_behavior: "WalletConnect connector omitted when NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID empty"
+    notes: "Alternate exit_criteria path · Owner OA-01 set-walletconnect-project-id.sh remains ② prerequisite"
+
+  - id: WAL-GAP-006
+    wbs: "11.8"
+    surface: Release & Real Device
+    exit_criteria: "TT_REAL_DEVICE_BATCH_P1 Wallet leg PASS per Release Ladder"
+    status: FAIL
+    phase_scope: "② Real Device · Owner-only"
+    batch:
+      key: TT_REAL_DEVICE_BATCH_P1
+      current: BLOCKED
+      wallet_leg: BLOCKED
+      atomic_modules: [Wallet, Order, Provider, Guide]
+    cockpit: docs/runbook/TT-MODULE-RELEASE-COCKPIT-LATEST.md
+    owner_queue: docs/runbook/TT-OWNER-FINAL-HUMAN-QUEUE-LATEST.md#OA-02
+    blockers:
+      - "OA-01 KEY_ABSENT"
+      - "OA-02 P1 Real Device UAT not executed this session"
+    notes: "No alternate exit · cannot mark PASS at ① · blocks engineering_implementation_complete"
+
+  - id: WAL-GAP-008
+    wbs: "11.8"
+    surface: Release & Real Device
+    exit_criteria: "smoke-wallet-connection-l5-local.sh exit 0 with on-disk test inventory"
+    status: PASS
+    phase_scope: "① local Automation"
+    gate:
+      command: bash scripts/dev/smoke-wallet-connection-l5-local.sh
+      exit_code: 0
+      recorded_utc: "20260716T110019Z"
+      machine_key: TT_WALLET_L5_SMOKE
+      verdict: PASS
+    on_disk_inventory:
+      - components/trust/WalletStatusMini.test.tsx
+      - lib/chainEnv.test.ts
+      - lib/mapWalletWriteError.test.ts
+      - lib/header/headerUtilityMenuUiFreeze.contract.test.ts
+      - lib/governance/governanceWalletGate.test.ts
+      - components/WalletSessionRevalidate.test.tsx
+    vitest_summary:
+      test_files: 6
+      tests_passed: 34
+    removed_stale_targets:
+      - WalletBrandIcon
+      - walletConnectorCatalog
+      - deriveWalletPhase
+      - walletConnectionCenter.contract
+      - installRedetect
+    notes: "Cinematic hero slice non-blocking WARN only · core wallet smoke PASS"
+
+# ── Gate summary (this session) ──────────────────────────────────────
+gate_results:
+  - gate: scripts/dev/smoke-wallet-connection-l5-local.sh
+    exit_code: 0
+    verdict: TT_WALLET_L5_SMOKE: PASS
+    stamp: "20260716T110019Z"
+  - gate: python scripts/dev/oa01-preflight-wc-key.py
+    exit_code: 2
+    verdict: KEY_ABSENT
+    stamp: "20260716T110011Z"
+    blocks_wal_gap_005_primary_path: true
+    alternate_exit_used: WAITING_OWNER
+
+# ── Evidence ─────────────────────────────────────────────────────────
+evidence:
+  - frontend/evidence/GO_local_wallet_connection_l5/ENGINEERING-IMPL-LATEST.json
+  - frontend/evidence/GO_local_wallet_connection_l5/SIGNOFF-LATEST.md
+  - evidence/GO_release_execution_preparation/20260716T110011Z/
+
+# ── Completed items ──────────────────────────────────────────────────
+completed:
+  - "WAL-GAP-004 PASS — WalletSessionRevalidate mounted · unit test added"
+  - "WAL-GAP-005 PASS — WAITING_OWNER KEY_ABSENT documented · Ladder + SIGNOFF + Providers honest degrade"
+  - "WAL-GAP-008 PASS — smoke script on-disk inventory · 34 tests · exit 0"
+
+# ── Incomplete / deferred (honest boundary) ──────────────────────────
+incomplete_or_deferred:
+  - item: WAL-GAP-006 TT_REAL_DEVICE_BATCH_P1 Wallet leg
+    owner: Owner
+    phase: "② Real Device"
+    reason: "P1 Batch atomic BLOCKED · OA-01 KEY_ABSENT · OA-02 not run"
+    blocks_engineering_exit: true
+    blocks_certification_entry: true
+  - item: WalletConnect QR / Deep Link live activation
+    owner: Owner
+    phase: "②"
+    reason: "Requires set-walletconnect-project-id.sh + staging redeploy + C1/C2 UAT"
+    blocks_engineering_exit: false
+    note: "WAL-GAP-005 closed via WAITING_OWNER alternate"
+  - item: Staging / Production GO
+    phase: "②③"
+    reason: "Release Ladder Real Device → Staging Batch → Production Entry"
+    blocks_engineering_exit: false
+
+# ── Sign-off ─────────────────────────────────────────────────────────
+signoff:
+  engineering_implementation: PARTIAL
+  gaps_pass: 3
+  gaps_fail: 1
+  signed_utc: "2026-07-16T11:00:19Z"
+  owner: solo_owner
+
+next_phase:
+  id: WAITING_OWNER_REAL_DEVICE_BATCH
+  frozen: true
+  certification:
+    authorized: false
+    status: FROZEN_NOT_AUTHORIZED
+  unblock_when: "Owner OA-01 + OA-02 + TT_REAL_DEVICE_BATCH_P1 PASS (Wallet·Order·Provider·Guide atomic)"
+  then: engineering_rerun_close_WAL-GAP-006_only
+  then_certification: separate_four_dimension_review
+  production_go: NO_GO
+  reason: "WAL-GAP-006 FAIL · engineering_implementation_complete false"
+
+standard_engineering_implementation_template:
+  inherits: registry/psg-10-engineering-implementation-report-20260716.v1.yaml
+  pattern: "gap exit_criteria verification · gate runs · evidence inventory · honest phase boundary"
+  golden_reference: PSG-10

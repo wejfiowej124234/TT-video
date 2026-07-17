@@ -1,0 +1,318 @@
+# PSG-13 Release Foundation (Deploy Capability) · Phase ① Audit
+# Primary validation: Common Model sufficient · NOT a new Deploy governance framework
+# No code · No gates · No Closure
+schema: traveltrust.governance_capability_audit.v1
+capability_id: PSG-13
+capability_name: Release Foundation
+legacy_labels: [Deploy, Domain]
+capability_category: technical
+role: release_foundation
+priority: P0
+phase: audit_only
+completed_utc: "2026-07-16T10:30:00Z"
+auditor: solo_owner
+template: registry/governance-audit-template.v1.yaml
+common_model: registry/governance-common-model.v1.yaml
+common_model_version: "1.0"
+coverage_pct: 84
+boundary_score: 91
+
+audit_validation_goals:
+  V1_ga_inclusion:
+    goal: "Verify Release Foundation fully incorporated into Governance Architecture"
+    result: PASS
+    note: "Release Foundation slotted under Technical Capabilities · P0 foundation complete"
+  V2_common_model_sufficient:
+    goal: "Verify Common Model describes Deploy without any new governance concepts"
+    result: PASS
+    new_concepts_added: 0
+  V3_outputs_only:
+    goal: "Coverage · Boundary · Gap only"
+    result: PASS
+    closure: false
+    code_changes: false
+
+common_model_validation:
+  status: PASS
+  elements_used:
+    - ownership
+    - boundary
+    - dependency
+    - authoritative_source
+    - lifecycle
+    - coverage_pct
+    - boundary_score
+    - gap
+    - certification
+    - governed_object_lineage
+  lifecycle_pattern: deploy
+  lifecycle_states: [pending, built, deployed, verified, active, superseded]
+  forbidden_concepts_avoided:
+    - Repro Lifecycle
+    - Deployment Tree
+    - Deployment Governance Framework
+    - Release Layer Model
+  product_inventory_allowed:
+    - fly.toml per app
+    - admission trio machine keys
+    - destructive suite script list
+
+1_scope:
+  status: COMPLETE
+  score: 96
+  definition: "Release Foundation — build reproducibility · environment alignment · deploy artifact governance"
+  release_foundation_manages:
+    - Git SHA as deploy identity (authoritative source for runtime)
+    - Container build artifacts (API · Web · soak watcher)
+    - Staging/production deploy surfaces (Fly.io manifests · build.env)
+    - Admission gates TT_PSG_REPRODUCIBLE_BUILD · TT_PSG_ENVIRONMENT_ALIGNMENT
+    - Deploy orchestration entry (run-psg-production-cert.sh · runtime cert preflight)
+    - Repro evidence capture (capture-psg-repro-fingerprint.cjs)
+  excludes:
+    - Post-deploy runtime behavior verification → PSG-12 Runtime (B4)
+    - Migration DDL content · canonical_key policy → PSG-04 Data Foundation
+    - GitHub Actions / ci-local matrix → PSG-14 CI/CD
+    - SSOT drift registry comparison logic → PSG-00 Governance (gate consumed here)
+    - Web3 contract broadcast / mainnet manifest → PSG-09 Web3
+    - CMS/OCS bootstrap business logic → PSG-08 Operations (invoked at deploy)
+
+2_inventory:
+  status: COMPLETE
+  score: 88
+  deploy_artifacts:
+    - Dockerfile
+    - frontend/Dockerfile.fly-staging
+    - deploy/fly/tt-api-staging/fly.toml
+    - deploy/fly/tt-api-prod/fly.toml
+    - deploy/fly/tt-web-staging/
+    - deploy/fly/tt-web-prod/
+    - deploy/fly/tt-soak-watcher-staging/
+  gates_and_runners:
+    - scripts/gates/check-psg-reproducible-build.cjs
+    - scripts/gates/check-psg-environment-alignment.cjs
+    - scripts/gates/run-psg-runtime-certification.sh
+    - scripts/gates/run-psg-production-cert.sh
+    - scripts/dev/capture-psg-repro-fingerprint.cjs
+    - scripts/dev/run-psg-destructive-clean-deploy.cjs
+    - scripts/dev/run-psg-destructive-machine-replacement.cjs
+  registries:
+    - registry/psg-phase-b-production-cert.v1.yaml
+    - registry/deployment-manifest-mainnet.template.json
+  docs:
+    - docs/runbook/TT-PSG-PHASE-B-PUBLIC-SURFACE-CERTIFICATION.md
+  evidence_paths:
+    - evidence/GO_psg_foundation/production_cert/
+    - evidence/GO_psg_runtime_certification/
+
+3_runtime:
+  status: COMPLETE
+  score: 68
+  admission_trio:
+    TT_PSG_SSOT_DRIFT: "gate exists · owner PSG-00 · consumed at cert"
+    TT_PSG_REPRODUCIBLE_BUILD: WAITING_OWNER
+    TT_PSG_ENVIRONMENT_ALIGNMENT: WAITING_PROD_CANDIDATE
+  psg_phase_b:
+    B4_runtime: "run-psg-runtime-certification.sh · owner facet PSG-12 · deploy trigger PSG-13"
+  staging:
+    api_base: https://tt-api-staging.fly.dev
+    local_vs_staging_sha_drift: true
+  destructive_suite:
+    status: SKIPPED_default
+    note: "Required for TT_PSG_PRODUCTION_CERT PASS · not run in audit session"
+
+4_data_flow:
+  status: COMPLETE
+  score: 86
+  pattern: "git ref → docker build (TRAVELTRUST_BUILD_GIT_SHA) → fly deploy → /meta.git_sha → guest surfaces"
+  repro_flow: "same SHA deploy ×3 → fingerprint JSON → check-psg-reproducible-build.cjs"
+  env_alignment_flow: "local SSOT markers ↔ staging /meta ↔ prod candidate (optional)"
+
+12_authoritative_source:
+  status: COMPLETE
+  score: 88
+  rule: "Every deploy governed object declares exactly one authoritative source"
+  catalog:
+    - governed_object: API runtime deploy identity
+      authoritative_source: git HEAD ref + TRAVELTRUST_BUILD_GIT_SHA baked in image + /meta.build.git_sha
+      owner_capability: PSG-13
+      guest_or_consumer: all Guest API surfaces
+      runtime: GET /meta
+    - governed_object: Web staging image
+      authoritative_source: deploy/fly/tt-web-staging/build.env.local + Dockerfile.fly-staging
+      owner_capability: PSG-13
+      guest_or_consumer: B5 public pages
+      runtime: tt-web-staging Fly app
+    - governed_object: Reproducibility attestation bundle
+      authoritative_source: evidence/GO_psg_foundation/production_cert/repro/*.json
+      owner_capability: PSG-13
+      guest_or_consumer: TT_PSG_REPRODUCIBLE_BUILD gate
+      runtime: check-psg-reproducible-build.cjs
+    - governed_object: Environment contract markers
+      authoritative_source: local guest contract + migrations + registry SSOT files
+      owner_capability: PSG-13
+      guest_or_consumer: TT_PSG_ENVIRONMENT_ALIGNMENT gate
+      runtime: check-psg-environment-alignment.cjs
+
+13_lifecycle:
+  status: COMPLETE
+  score: 90
+  pattern: deploy
+  states: [pending, built, deployed, verified, active, superseded]
+  examples:
+    - object: market_listings canonical_key migration
+      lifecycle: pending (local) → built (Dockerfile CRLF fix) → deployed (staging pending) → verified (destructive) → active
+    - object: staging API SHA
+      lifecycle: active (older SHA) → superseded (pending redeploy)
+
+14_governed_object_lineage:
+  status: COMPLETE
+  score: 92
+  chain_verified: true
+  sample:
+    governed_object: Staging API deploy bundle
+    authoritative_source: git ref 3016731a… + Dockerfile migration LF strip
+    owner_capability: PSG-13
+    lifecycle: built → deployed (pending verify)
+    guest_or_consumer: Guest public surface matrix
+    runtime: tt-api-staging + B4 runtime cert
+
+5_architecture:
+  status: COMPLETE
+  score: 90
+  ga_position: "Technical Capabilities · P0 Release Foundation · last foundation capability before P1 business"
+  psg_cert_maps: [B4_deploy_trigger, admission_repro, admission_env_alignment]
+  not_a_framework: true
+
+6_governance:
+  status: COMPLETE
+  score: 93
+  common_model_only: true
+  ga_v1_frozen: true
+  inherits: registry/governance-common-model.v1.yaml#v1.0
+
+7_evidence:
+  status: PARTIAL
+  score: 62
+  present:
+    - registry/psg-phase-b-production-cert.v1.yaml
+    - scripts/gates/*.cjs runners
+    - Dockerfile CRLF fix (2026-07-16)
+  missing_or_waiting:
+    - repro x3 fingerprint evidence dir incomplete
+    - PRODUCTION_CANDIDATE_API_BASE unset
+    - PSG-PRODUCTION-CERT-LATEST.json not PASS at HEAD
+
+8_risks:
+  status: COMPLETE
+  score: 78
+  items:
+    - Staging SHA behind local blocks env alignment PASS
+    - Repro WAITING blocks TT_PSG_PRODUCTION_CERT
+    - B4 runtime cert overlaps PSG-12 — boundary documented not duplicate ownership
+    - Destructive suite Owner-only — cert false green if skipped
+    - Web3 deploy manifest track parallel — not merged into PSG-13 scope
+
+9_coverage:
+  coverage_pct: 84
+  boundary_score: 91
+  section_scores:
+    scope: 96
+    inventory: 88
+    runtime: 68
+    data_flow: 86
+    authoritative_source: 88
+    lifecycle: 90
+    governed_object_lineage: 92
+    architecture: 90
+    governance: 93
+    evidence: 62
+    risks: 78
+
+11_coverage_review:
+  ga_inclusion_complete: true
+  capability_ownership:
+    owns:
+      - Deploy artifact identity (git SHA · OCI image labels)
+      - Reproducible build admission gate + evidence discipline
+      - Environment alignment admission gate (L/S/P contract markers)
+      - Fly.io deploy manifests · build.env injection
+      - Production cert deploy orchestration entrypoints
+      - Migration LF normalization at image build (Dockerfile)
+    boundary_excludes:
+      - Runtime restart/bootstrap verify semantics → PSG-12
+      - CI workflow matrix · GitHub Actions → PSG-14
+      - Migration business rules · canonical_key DDL → PSG-04
+      - OCS daily ops orchestration → PSG-08
+      - SSOT drift definition → PSG-00
+      - On-chain contract deploy → PSG-09
+    inventory_modules:
+      - Dockerfile · deploy/fly/*
+      - check-psg-reproducible-build.cjs
+      - check-psg-environment-alignment.cjs
+      - run-psg-production-cert.sh
+      - capture-psg-repro-fingerprint.cjs
+    dependencies:
+      - id: DEP-RF-01
+        module: B4 runtime certification steps
+        owner: PSG-12
+      - id: DEP-RF-02
+        module: sqlx migrations content
+        owner: PSG-04
+      - id: DEP-RF-03
+        module: OCS bootstrap at deploy
+        owner: PSG-08
+      - id: DEP-RF-04
+        module: TT_PSG_SSOT_DRIFT gate
+        owner: PSG-00
+      - id: DEP-RF-05
+        module: public surface matrix
+        owner: PSG-02/B5
+  substeps:
+    scope: PASS
+    boundary: PASS
+    dependency: PASS
+    authoritative_source: PASS
+    lifecycle: PASS
+    unknown_capabilities: PARTIAL
+
+10_gap_list:
+  - id: DEP-GAP-001
+    surface: Reproducible Build
+    item: TT_PSG_REPRODUCIBLE_BUILD WAITING_OWNER — x3 same-SHA deploy fingerprints not captured
+    phase: certification
+  - id: DEP-GAP-002
+    surface: Environment Alignment
+    item: TT_PSG_ENVIRONMENT_ALIGNMENT WAITING_PROD_CANDIDATE — PRODUCTION_CANDIDATE_API_BASE unset
+    phase: certification
+  - id: DEP-GAP-003
+    surface: Deploy
+    item: staging /meta.git_sha drifts from local HEAD (blocks full alignment)
+    phase: certification
+  - id: DEP-GAP-004
+    surface: Build
+    item: Dockerfile CRLF strip fixed locally · staging redeploy pending (cross DF-GAP-003)
+    phase: certification
+  - id: DEP-GAP-005
+    surface: Destructive Suite
+    item: clean_deploy · machine_replacement · double_bootstrap not run at HEAD
+    phase: certification
+  - id: DEP-GAP-006
+    surface: Evidence
+    item: PSG-PRODUCTION-CERT-LATEST.json not PASS — admission trio + destructive open
+    phase: certification
+  - id: DEP-GAP-007
+    surface: Boundary
+    item: PSG-12 vs PSG-13 B4 split documented — retrofit shared runbook cross-link on next touch
+    phase: closure
+  - id: DEP-GAP-008
+    surface: Web3 Deploy
+    item: registry/deployment-manifest-mainnet.template.json owned by PSG-09 — explicit boundary OK · no PSG-13 action
+    phase: —
+
+p0_foundation_complete:
+  status: true
+  note: "PSG-08 · PSG-20 · PSG-04 · PSG-13 audited — next queue P1 business capabilities (Web3 · Payment)"
+
+next_recommended_capability: PSG-09
+next_phase: audit_only
+next_reason: "P1 Web3 · after P0 foundation capabilities complete"

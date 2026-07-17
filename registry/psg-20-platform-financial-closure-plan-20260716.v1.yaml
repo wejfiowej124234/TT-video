@@ -1,0 +1,557 @@
+# PSG-20 Platform Financial Governance Capability · Closure Plan v1.0
+# PLAN ONLY · no business code · no gates execution · no Certification
+# Inherits: registry/psg-capability-lifecycle-standard.v1.yaml · Golden Reference PSG-10
+schema: traveltrust.capability_closure_plan.v1
+plan_id: PSG-20-CLOSURE-20260716
+capability_id: PSG-20
+capability_name: Platform Financial Governance Capability
+parent_audit: registry/psg-20-platform-financial-phase1-audit-20260716.v1.yaml
+lifecycle_standard: registry/psg-capability-lifecycle-standard.v1.yaml
+golden_reference: registry/psg-10-payment-closure-plan-20260716.v1.yaml#closure_plan_template
+created_utc: "2026-07-16T12:00:00Z"
+owner: solo_owner
+phase: governance_exit_complete
+code_changes: forbidden
+certification_signoff: forbidden
+engineering_execution: authorized_not_started
+governance_reopen: forbidden
+lifecycle_change_proposals: []
+honest_boundary: "Governance Exit PASS · Engineering authorized · PF Step 4 staging BLOCKED · Production GO NO_GO · not Certification · not CLOSED"
+
+pipeline_position:
+  full_pipeline:
+    - capability_audit
+    - coverage_review
+    - gap_list
+    - closure_plan
+    - wave_1_governance_definition
+    - wave_2_governance_implementation
+    - wave_3_governance_validation
+    - engineering_implementation
+    - certification
+    - CLOSED
+  current: governance_exit_complete
+  next: engineering_implementation
+  wave_1_report: registry/psg-20-governance-wave1-definition-report-20260716.v1.yaml
+  wave_2_report: registry/psg-20-governance-wave2-implementation-report-20260716.v1.yaml
+  governance_exit_review: registry/psg-20-governance-exit-review-20260716.v1.yaml
+  rule: "Waves 1–3 = governance · no business code · Engineering after governance exit"
+
+# ── Charter · frozen boundary ─────────────────────────────────────────
+charter_boundary_frozen:
+  psg_20_owns:
+    - Platform Onboarding Fee (admission fee · USDC → Platform Safe)
+    - Platform commercial revenue classification (P1–P5 · P12 whitelist)
+    - Platform Safe registry (Current Active · Version History · Audit Log)
+    - Platform Operating Treasury business rules
+    - Pricing SSOT (onboarding-fee-schedule · fee_schedule_v1)
+    - Financial registry (platform-safe-registry.v1.yaml)
+    - Financial policy (PFG L1–L4 · RC2 board)
+    - platform_revenue_settlement policy (not order escrow rail)
+  psg_20_never_owns:
+    - Stripe / PSP checkout rails
+    - Escrow runtime / order USDC deposit-release
+    - Wallet connect / transfer UX
+    - FeeRouter on-chain distribution execution
+    - Protocol Treasury Safe / DAO Timelock spend ops
+    - TTG Stake / Community Incentive pools
+    - Merchant order settlement execution rail
+  ssot:
+    - docs/spec/artifacts/platform-financial-governance.v1.md
+    - registry/platform-safe-registry.v1.yaml
+    - docs/spec/artifacts/onboarding-fee-schedule.v1.yaml
+    - registry/capability-wbs.v1.yaml#PSG-20
+  admission_fee_canonical:
+    owner: PSG-20
+    destination: Platform Safe
+    not_dao_treasury: true
+    wbs: "20.1"
+    closure_priority: 1
+    wave_1_frozen_utc: "2026-07-16T12:10:00Z"
+  governance_cross_refs:
+    closure_plan: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml
+    matrix: registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-20
+    wbs: registry/capability-wbs.v1.yaml#PSG-20
+    boundary_matrix: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+    traceability: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#governance_traceability
+    owned_modules: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#owned_modules_index
+    wave_1_report: registry/psg-20-governance-wave1-definition-report-20260716.v1.yaml
+    wave_1_synced_utc: "2026-07-16T12:10:00Z"
+    wave_2_report: registry/psg-20-governance-wave2-implementation-report-20260716.v1.yaml
+    wave_2_synced_utc: "2026-07-16T12:20:00Z"
+    governance_exit_review: registry/psg-20-governance-exit-review-20260716.v1.yaml
+    wave_3_synced_utc: "2026-07-16T12:30:00Z"
+
+# ── Four-way boundary matrix (PSG-20 · PSG-10 · PSG-09 · PSG-11) ───
+cross_capability_boundary_matrix:
+  purpose: "Fix Platform Financial / Payment / Web3 / Wallet revenue boundaries permanently"
+  ssot_after_closure: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+  matrix_row: registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-20.boundary_cross_ref
+  reciprocity_ssot: registry/psg-10-payment-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+  wbs_alignment: registry/capability-wbs.v1.yaml#PSG-20.boundary_notes
+  traceability_topics:
+    "20.1": "Admission fee · pricing · billing · Platform Safe destination"
+    "20.4": "platform_revenue_settlement policy"
+    "20.6": "Treasury rules · Operating Treasury · RTR boundary"
+    "20.8": "Financial audit · admin operator map"
+  wave_1_synced_utc: "2026-07-16T12:10:00Z"
+  wave_2_synced_utc: "2026-07-16T12:20:00Z"
+  governance_sync:
+    reciprocity_ssot: registry/psg-10-payment-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+    peer_verified:
+      psg_10: registry/psg-10-payment-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+      psg_09: registry/psg-09-web3-phase1-audit-20260716.v1.yaml#11_coverage_review
+      psg_11: registry/psg-11-wallet-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+    consistency_verified: registry/psg-20-governance-wave2-implementation-report-20260716.v1.yaml#consistency_verification
+  rows:
+    - topic: USDC admission fee (default onboarding path)
+      psg_20: "fee_schedule_v1 · onboarding-fee-schedule · Platform Safe Current Active · revenue classification"
+      psg_10: "Wallet transfer rail · Stripe optional PSP · onboarding_payment_events"
+      psg_09: "OnboardingFeeReceiver / indexer onboarding_fee_paid events"
+      psg_11: "MeOnboardingUsdcFeePayment signing UX"
+      ledger_ssot: "Split — PG events + chain indexer"
+      rule: "PSG-20 owns policy · PSG-10 owns rail · PSG-11 signs · PSG-09 indexes"
+    - topic: Optional Stripe onboarding checkout
+      psg_20: "Admission fee amount · pricing · destination Platform Safe · revenue classification"
+      psg_10: "Stripe PSP · payment-intents · webhooks"
+      psg_09: "—"
+      psg_11: "—"
+      rule: "Stripe rail (PSG-10) vs admission policy (PSG-20) — payment-architecture#stripe_rail_vs_policy"
+    - topic: Settlement (term disambiguation)
+      psg_20: "platform_revenue_settlement · Platform Safe → Operating Treasury"
+      psg_10: "order_settlement · escrow release · FeeRouter order rail"
+      psg_09: "protocol_treasury_settlement · treasury_safe / Timelock"
+      rule: "Never use 'settlement' without prefix — inherited PSG-10 Wave 1"
+    - topic: Region Reward Wallet / RTR FeeRouter payout
+      psg_20: "Boundary only · ≠ Platform commercial revenue · policy consumer"
+      psg_09: "FeeRouter execution · RegionRewardRegistry · on-chain payout"
+      psg_10: "—"
+      psg_11: "—"
+      registry: registry/region-reward-wallet.v1.yaml
+      rule: "RTR payout execution ∈ PSG-09 · PSG-20 documents dependency-only cross-ref (PF-GAP-005)"
+    - topic: Platform Safe admin UI
+      psg_20: "/admin/platform-financial · platform_safe HTTP · Super Admin RC2 Step 3"
+      psg_07: "Admin operator map SSOT · menu governance"
+      psg_10: "—"
+      psg_09: "—"
+      operator_map_handoff: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#operator_map_cross_ref
+    - topic: PF track · staging · certification
+      psg_20: "PF Entry · Step 3 PASS ① · Step 4 PAUSED · Step 5 NOT_STARTED"
+      psg_10: "G3-02 parallel · does not block PSG-20 governance exit"
+      psg_09: "Reality Certification parallel"
+      cert_paths: "PSG-20 OUT_OF_PSG_RUNNER · PF Entry"
+
+platform_financial_terminology:
+  purpose: "Disambiguate platform financial vocabulary · Wave 1 terminology freeze"
+  forbidden_ambiguous: [settlement, treasury, revenue]
+  required_context:
+    platform_revenue_settlement: "PSG-20 · Platform Safe → Operating Treasury · admission fee facet"
+    order_settlement: "PSG-10 · escrow release · FeeRouter order rail"
+    protocol_treasury_settlement: "PSG-09 · treasury_safe / Timelock spend"
+    platform_safe: "PSG-20 · Current Active registry · ≠ DAO treasury_safe"
+    operating_treasury: "PSG-20 · business use · Operator discretion"
+    admission_fee: "PSG-20 · USDC → Platform Safe · 20.1 first closure priority"
+    region_reward_wallet: "PSG-09 execution · PSG-20 boundary consumer only"
+  settlement_prefix_inherited: registry/psg-10-payment-closure-plan-20260716.v1.yaml#settlement_term_traceability
+  wbs_alignment:
+    "20.1": admission_fee
+    "20.4": platform_revenue_settlement
+    "20.6": operating_treasury
+
+operator_map_cross_ref:
+  status: DOCUMENTED_GOVERNANCE
+  wave_1_completed_utc: "2026-07-16T12:10:00Z"
+  gap: PF-GAP-001
+  wbs: "20.8"
+  admin_route: /admin/platform-financial
+  operator_map_ssot: docs/runbook/TT-ADMIN-OPERATOR-MAP-SSOT.md
+  peer_audit: registry/psg-07-admin-phase1-audit-20260716.v1.yaml#10_gap_list
+  governance_resolution: >
+    PSG-20 Wave 1 documents operator-map handoff row for /admin/platform-financial.
+    Map file edit is PSG-07 Admin coordination · not PSG-20 governance wave scope.
+    Financial audit WBS 20.8 traceability links admin UI + operator map SSOT explicitly.
+  remediation_phase: engineering_implementation_or_psg_07_coordination
+  exit_criteria: "/admin/platform-financial listed in TT-ADMIN-OPERATOR-MAP-SSOT with RC2 Step 3 role"
+
+region_reward_wallet_cross_ref:
+  status: DOCUMENTED_GOVERNANCE
+  wave_1_completed_utc: "2026-07-16T12:10:00Z"
+  gap: PF-GAP-005
+  wbs: "20.6"
+  registry: registry/region-reward-wallet.v1.yaml
+  governance_resolution: >
+    region-reward-wallet.v1.yaml is PSG-09 execution registry.
+    PSG-20 treasury_rules WBS 20.6 documents dependency-only boundary —
+    RTR FeeRouter payout ≠ Platform commercial revenue (P1–P5).
+    No registry content change this wave · cross-ref published in closure plan + WBS 20.6 footnote.
+  peer_audit: registry/psg-09-web3-phase1-audit-20260716.v1.yaml#10_gap_list
+  dependency_owner: PSG-09
+  boundary_owner: PSG-20
+
+admission_fee_consumer_map:
+  purpose: "Document onboarding fee consumer wiring · PF-GAP-006 governance layer"
+  wave_1_status: DOCUMENTED
+  read_discipline: "All consumers read Current Active via API — no hardcoded Safe address"
+  consumers:
+    - path: frontend/app/me/onboarding/
+      role: USDC fee payment surface
+      deps: [PSG-11 signing · PSG-10 rail · fee_schedule_v1 API]
+    - path: frontend/components/me/onboarding/MeOnboardingUsdcFeePayment.tsx
+      role: admission fee signing UX consumer
+    - path: crates/api/src/routes/onboarding/fee_schedule_v1.rs
+      role: pricing SSOT HTTP
+    - path: registry/platform-safe-registry.v1.yaml
+      role: Current Active destination SSOT
+  engineering_gap: PF-GAP-006
+  engineering_note: "③ wiring completeness verified in Engineering Implementation · not Wave 1"
+
+# ── Governance traceability (Wave 1 publish · Wave 2 verify) ─────
+governance_traceability:
+  ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#governance_traceability
+  matrix_row: registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-20.governance_traceability
+  wbs_lines_mapped: 8
+  wave_1_synced_utc: "2026-07-16T12:10:00Z"
+  wave_2_synced_utc: "2026-07-16T12:20:00Z"
+  owned_modules_index_ref: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#owned_modules_index
+  consistency_verified: registry/psg-20-governance-wave2-implementation-report-20260716.v1.yaml#consistency_verification
+  wbs_to_primary_assets:
+    "20.1":
+      registry:
+        - docs/spec/artifacts/onboarding-fee-schedule.v1.yaml
+        - registry/platform-safe-registry.v1.yaml
+      backend: [crates/api/src/routes/onboarding/fee_schedule_v1.rs]
+      frontend: [frontend/components/me/onboarding/MeOnboardingUsdcFeePayment.tsx]
+      docs: [docs/spec/artifacts/platform-financial-governance.v1.md]
+      pf_track: "Step 3 PASS ① · Step 4 PAUSED · PF-GAP-002/003/006"
+    "20.2":
+      registry: [docs/spec/artifacts/onboarding-fee-schedule.v1.yaml]
+      backend: [crates/api/src/routes/onboarding/fee_schedule_v1.rs]
+      note: "Platform-wide pricing · admission facet under 20.1"
+    "20.3":
+      docs: [docs/spec/artifacts/platform-financial-governance.v1.md]
+      registry: [registry/payment-architecture-classification.v1.yaml#governance_treasury_boundary]
+    "20.4":
+      docs: [docs/spec/artifacts/platform-financial-governance.v1.md]
+      terminology: platform_revenue_settlement
+      gap: "PF-GAP-007 · staging blocked with Step 4"
+    "20.5":
+      registry: [registry/platform-safe-registry.v1.yaml]
+      backend:
+        - crates/api/src/routes/platform_safe.rs
+        - crates/api/src/services/platform_safe_service.rs
+        - crates/api/src/repositories/platform_safe_repository.rs
+    "20.6":
+      registry: [registry/region-reward-wallet.v1.yaml]
+      docs: [docs/spec/artifacts/platform-financial-governance.v1.md]
+      cross_ref: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#region_reward_wallet_cross_ref
+      gap: "PF-GAP-005 CLOSED governance"
+    "20.7":
+      docs: [docs/runbook/TT-PLATFORM-FINANCIAL-GOVERNANCE-RC2-BOARD.md]
+      scripts:
+        - scripts/dev/run-platform-financial-step4-staging.sh
+      evidence: [evidence/GO_platform_financial_admin/]
+      gap: "PF-GAP-004 · Step 5 NOT_STARTED per RC2 board"
+    "20.8":
+      frontend: [frontend/app/admin/platform-financial/]
+      docs: [docs/runbook/TT-ADMIN-OPERATOR-MAP-SSOT.md]
+      cross_ref: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#operator_map_cross_ref
+      gap: "PF-GAP-001 CLOSED governance · map edit deferred"
+
+# ── Owned modules index ─────────────────────────────────────────────
+owned_modules_index:
+  ssot: true
+  closure_action: "Wave 2 COMPLETE · matrix mirror verified · governance_traceability 8/8 verified"
+  wave_1_synced_utc: "2026-07-16T12:10:00Z"
+  wave_2_synced_utc: "2026-07-16T12:20:00Z"
+  matrix_row: registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-20.inventory_modules
+  matrix_mirror_verified: true
+  consistency_verified: registry/psg-20-governance-wave2-implementation-report-20260716.v1.yaml#consistency_verification
+  terminology_ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#platform_financial_terminology
+  registry:
+    - registry/platform-safe-registry.v1.yaml
+    - registry/payment-architecture-classification.v1.yaml#governance_treasury_boundary
+    - registry/capability-wbs.v1.yaml#PSG-20
+  docs:
+    - docs/spec/artifacts/platform-financial-governance.v1.md
+    - docs/spec/artifacts/onboarding-fee-schedule.v1.yaml
+    - docs/spec/artifacts/platform-safe-runtime.v1.md
+    - docs/runbook/TT-PLATFORM-FINANCIAL-GOVERNANCE-RC2-BOARD.md
+    - docs/runbook/TT-ADMIN-OPERATOR-MAP-SSOT.md
+  backend:
+    - crates/api/src/routes/platform_safe.rs
+    - crates/api/src/services/platform_safe_service.rs
+    - crates/api/src/repositories/platform_safe_repository.rs
+    - crates/api/src/routes/onboarding/fee_schedule_v1.rs
+  frontend:
+    - frontend/app/admin/platform-financial/
+    - frontend/lib/apiClient/platform/platformSafeHttp.ts
+    - frontend/components/me/onboarding/MeOnboardingUsdcFeePayment.tsx
+  scripts:
+    - scripts/dev/run-platform-financial-step3-runtime.sh
+    - scripts/dev/run-platform-financial-step4-staging.sh
+  evidence:
+    - evidence/GO_platform_financial_admin/
+    - evidence/GO_platform_financial_staging/
+  dependency_only_not_owned:
+    - registry/region-reward-wallet.v1.yaml → PSG-09 execution · PSG-20 boundary
+    - crates/api/src/stripe_onboarding/ → PSG-10
+    - frontend/lib/wagmi/ → PSG-11
+    - crates/api/src/chain/indexer.rs → PSG-09
+    - docs/runbook/TT-ADMIN-OPERATOR-MAP-SSOT.md → PSG-07 SSOT · PSG-20 consumer
+
+# ── WBS footnotes (Wave 1 · capability-wbs amendment) ───────────────
+wbs_line_footnotes:
+  closure_action: "Append to capability-wbs.v1.yaml#PSG-20 via amendment_log · no new WBS lines"
+  lines:
+    "20.1":
+      footnote: "Admission Fee first priority · USDC → Platform Safe · ≠ DAO treasury · policy here · rail PSG-10 · sign PSG-11"
+    "20.2":
+      footnote: "Platform-wide pricing SSOT · admission facet primary under 20.1"
+    "20.3":
+      footnote: "P1–P5 revenue classification · Protocol ≠ Platform commercial"
+    "20.4":
+      footnote: "platform_revenue_settlement only · order_settlement → PSG-10 · protocol → PSG-09"
+    "20.5":
+      footnote: "platform-safe-registry.v1.yaml · Current Active read discipline · no hardcoded Safe"
+    "20.6":
+      footnote: "Operating Treasury rules · RTR FeeRouter payout ≠ Platform revenue · region-reward-wallet dependency-only"
+    "20.7":
+      footnote: "RC2 board · PF Step 4/5 evidence · reports partial until staging PASS"
+    "20.8":
+      footnote: "Financial audit · /admin/platform-financial · operator map handoff PF-GAP-001"
+
+# ── Gap remediation table ───────────────────────────────────────────
+gap_remediation:
+  - gap_id: PF-GAP-001
+    wbs: "20.8"
+    surface: Financial Audit
+    closure_action: "Publish operator_map_cross_ref · traceability 20.8 · handoff to PSG-07 map SSOT"
+    artifact_to_update:
+      - registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#operator_map_cross_ref
+      - registry/capability-wbs.v1.yaml#PSG-20
+    owner_capability: PSG-20
+    cross_owner: PSG-07
+    phase: governance_definition
+    code_change: false
+    status: CLOSED
+    closed_utc: "2026-07-16T12:10:00Z"
+    wave_1_synced: true
+    engineering_remainder: "Map row edit · exit_criteria in operator_map_cross_ref"
+  - gap_id: PF-GAP-005
+    wbs: "20.6"
+    surface: Treasury Rules
+    closure_action: "Publish region_reward_wallet_cross_ref · WBS 20.6 footnote · dependency-only"
+    artifact_to_update:
+      - registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#region_reward_wallet_cross_ref
+      - registry/capability-wbs.v1.yaml#PSG-20
+    owner_capability: PSG-20
+    cross_owner: PSG-09
+    phase: governance_definition
+    code_change: false
+    status: CLOSED
+    closed_utc: "2026-07-16T12:10:00Z"
+    wave_1_synced: true
+  - gap_id: PF-GAP-002
+    wbs: "20.1"
+    surface: Admission Fee
+    closure_action: "Handoff — PF Step 4 staging four-layer evidence · Engineering → Certification"
+    artifact_to_update:
+      - evidence/GO_platform_financial_staging/
+      - scripts/dev/run-platform-financial-step4-staging.sh
+    owner_capability: PSG-20
+    phase: engineering_implementation
+    code_change: may_be_required_later
+    status: DEFERRED
+    exit_criteria: "run-platform-financial-step4-staging.sh exit 0 · four-layer evidence PASS"
+  - gap_id: PF-GAP-003
+    wbs: "20.1"
+    surface: Admission Fee
+    closure_action: "Handoff — Current Active wired to all payment/onboarding consumers at ③"
+    artifact_to_update:
+      - registry/platform-safe-registry.v1.yaml
+      - frontend/app/me/onboarding/
+    owner_capability: PSG-20
+    phase: certification
+    code_change: may_be_required_later
+    status: DEFERRED
+    exit_criteria: "All onboarding consumers read Current Active via API at ③"
+  - gap_id: PF-GAP-004
+    wbs: "20.7"
+    surface: Financial Reports
+    closure_action: "Handoff — PF Step 5 E2E · Engineering → Certification"
+    artifact_to_update:
+      - docs/runbook/TT-PLATFORM-FINANCIAL-GOVERNANCE-RC2-BOARD.md
+      - evidence/GO_platform_financial_staging/
+    owner_capability: PSG-20
+    phase: certification
+    code_change: may_be_required_later
+    status: DEFERRED
+    exit_criteria: "PF Step 5 NOT_STARTED → PASS per RC2 board · after Step 4 staging PASS"
+  - gap_id: PF-GAP-006
+    wbs: "20.1"
+    surface: Admission Fee · Billing
+    closure_action: "Wave 1 admission_fee_consumer_map published · ③ wiring in Engineering"
+    artifact_to_update:
+      - registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#admission_fee_consumer_map
+    owner_capability: PSG-20
+    phase: engineering_implementation
+    code_change: may_be_required_later
+    status: PARTIAL
+    wave_1_governance: DOCUMENTED
+    exit_criteria: "Onboarding consumer wiring complete at ③ per consumer map"
+  - gap_id: PF-GAP-007
+    wbs: "20.4"
+    surface: Settlement
+    closure_action: "Handoff — platform_revenue_settlement staging evidence · blocked with PF Step 4"
+    artifact_to_update:
+      - evidence/GO_platform_financial_staging/
+    owner_capability: PSG-20
+    cross_owner: PSG-10
+    phase: certification
+    code_change: false
+    status: DEFERRED
+    exit_criteria: "PF Step 4 PASS unblocks settlement staging evidence"
+
+# ── Closure waves ───────────────────────────────────────────────────
+closure_wave_model:
+  wave_1: { id: governance_definition, verb: Define }
+  wave_2: { id: governance_implementation, verb: Implement }
+  wave_3: { id: governance_validation, verb: Validate }
+  after_governance: engineering_implementation
+  then: certification
+  terminal: CLOSED
+
+closure_waves:
+  wave_1_governance_definition:
+    title: "Governance Definition — boundary · terminology · WBS · cross-reference"
+    status: COMPLETE
+    completed_utc: "2026-07-16T12:10:00Z"
+    report: registry/psg-20-governance-wave1-definition-report-20260716.v1.yaml
+    code_change: false
+    gaps_closed: [PF-GAP-001, PF-GAP-005]
+    gaps_partial: [PF-GAP-006]
+    artifacts_updated:
+      - registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml
+      - registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-20
+      - registry/capability-wbs.v1.yaml#PSG-20
+      - registry/psg-20-platform-financial-phase1-audit-20260716.v1.yaml
+    owner_signoff: solo_owner
+  wave_2_governance_implementation:
+    title: "Governance Implementation — inventory · matrix · registry · traceability"
+    status: COMPLETE
+    completed_utc: "2026-07-16T12:20:00Z"
+    report: registry/psg-20-governance-wave2-implementation-report-20260716.v1.yaml
+    code_change: false
+    actions:
+      - "owned_modules_index → matrix inventory_modules categorized full mirror"
+      - "governance_traceability 8/8 WBS mapped · 20.7 duplicate docs resolved"
+      - "capability-wbs charter · boundary · traceability · inventory cross-refs verified"
+      - "dependency_only_not_owned parity closure plan ↔ matrix (5 entries)"
+      - "8-point consistency verification PASS · 0 blocking drift"
+    artifacts_updated:
+      - registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml
+      - registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-20
+      - registry/capability-wbs.v1.yaml#PSG-20
+      - registry/psg-20-platform-financial-phase1-audit-20260716.v1.yaml
+    owner_signoff: solo_owner
+  wave_3_governance_validation:
+    title: "Governance Validation — consistency check · governance exit"
+    status: COMPLETE
+    completed_utc: "2026-07-16T12:30:00Z"
+    review_artifact: registry/psg-20-governance-exit-review-20260716.v1.yaml
+    code_change: false
+    governance_exit: PASS
+    blocking_issues: 0
+    actions:
+      - "8-dimension audit WBS · Matrix · Registry · Audit · Closure Plan · Traceability · Boundary · Dependencies"
+      - "Confirm governance gaps CLOSED · engineering/certification gaps DEFERRED with exit_criteria"
+      - "Sign governance_exit · authorize Engineering Implementation (not execute)"
+    owner_signoff: solo_owner
+
+engineering_implementation:
+  phase: after_governance_validation
+  not_part_of_closure_waves: true
+  status: NOT_STARTED
+  authorized: true
+  authorized_utc: "2026-07-16T12:30:00Z"
+  governance_exit_review: registry/psg-20-governance-exit-review-20260716.v1.yaml
+  gaps: [PF-GAP-002, PF-GAP-006]
+  certification_gaps: [PF-GAP-003, PF-GAP-004, PF-GAP-007]
+  rule: "Only after Wave 3 Governance Exit · separate from governance waves · not started this review"
+
+certification_handoff:
+  after: engineering_implementation
+  cert_path: OUT_OF_PSG_RUNNER
+  pf_entry: true
+  primary_gates:
+    - scripts/dev/run-platform-financial-step3-runtime.sh
+    - scripts/dev/run-platform-financial-step4-staging.sh
+  cross_capability_cert_order:
+    - "PSG-20 Governance Waves 1–3 complete"
+    - "PSG-20 Engineering · PF Step 4 staging"
+    - "PSG-20 Certification · PF Step 5 E2E"
+    - "PSG-10 CLOSED · boundary frozen · parallel not blocking"
+    - "PSG-11 frozen · Real Device batch independent"
+  rule: "Certification = four-dimension review · PF Entry · not ① local Step 3 alone"
+
+certification:
+  template: registry/governance-capability-certification-template.v1.yaml
+  status: NOT_AUTHORIZED
+  authorized: false
+  reason: "governance_exit not PASS · engineering not authorized"
+
+exit_criteria:
+  closure_plan_complete:
+    - cross_capability_boundary_matrix_published
+    - owned_modules_index_published
+    - wbs_footnotes_documented
+    - gap_remediation_table_all_rows_have_phase_and_action
+    - governance_traceability_wbs_to_assets
+    - engineering_gaps_explicitly_deferred_with_exit_criteria
+  wave_1_governance_definition_complete:
+    - PF-GAP-001 PF-GAP-005 CLOSED
+    - platform_financial_terminology published
+    - operator_map_cross_ref DOCUMENTED
+    - region_reward_wallet_cross_ref DOCUMENTED
+    - wbs_matrix_traceability_aligned
+  wave_2_governance_implementation_complete:
+    - owned_modules_index_matrix_mirror_verified
+    - governance_traceability_8_of_8_mapped
+    - capability_wbs_charter_boundary_cross_refs_complete
+    - consistency_verification_8_checks_PASS
+  governance_exit:
+    after_wave_3: true
+    before_engineering_implementation: true
+  not_required_for_wave_1:
+    - PF Step 4 staging PASS
+    - Production GO
+    - PSG-11 Real Device batch
+
+closure_plan_complete: true
+closure_plan_verified_utc: "2026-07-16T12:00:00Z"
+wave_1_governance_definition_complete: true
+wave_1_completed_utc: "2026-07-16T12:10:00Z"
+wave_1_report: registry/psg-20-governance-wave1-definition-report-20260716.v1.yaml
+wave_2_governance_implementation_complete: true
+wave_2_completed_utc: "2026-07-16T12:20:00Z"
+wave_2_report: registry/psg-20-governance-wave2-implementation-report-20260716.v1.yaml
+wave_3_governance_validation_complete: true
+wave_3_completed_utc: "2026-07-16T12:30:00Z"
+governance_exit_review: registry/psg-20-governance-exit-review-20260716.v1.yaml
+governance_exit: PASS
+engineering_implementation_authorized: true
+engineering_implementation_status: NOT_STARTED
+certification_authorized: false
+production_go: NO_GO
+next_step: engineering_implementation
+
+prior_frozen_capability:
+  id: PSG-11
+  status: WAITING_OWNER_REAL_DEVICE_BATCH
+  frozen: true
+  rule: "Do not modify PSG-11 code · registry · certification"
+
+standard_closure_template_proof:
+  inherits: registry/psg-10-payment-closure-plan-20260716.v1.yaml#closure_plan_template
+  lifecycle_standard: registry/psg-capability-lifecycle-standard.v1.yaml
+  golden_reference: PSG-10

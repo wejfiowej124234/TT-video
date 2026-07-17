@@ -1,0 +1,392 @@
+# PSG-11 Wallet Governance Capability · Phase ① Audit
+# Post-PCV discipline · inherits L0/L1/L2 · Golden Reference PSG-10 · audit only
+# NO code changes · NO closure · NO GA/Lifecycle/WBS/Registry extension
+schema: traveltrust.governance_capability_audit.v1
+capability_id: PSG-11
+capability_name: Wallet Governance Capability
+legacy_label: Wallet
+category: platform
+priority: P1
+phase: audit_only
+completed_utc: "2026-07-16T10:28:00Z"
+auditor: solo_owner
+template: registry/governance-audit-template.v1.yaml
+lifecycle_standard: registry/psg-capability-lifecycle-standard.v1.yaml
+golden_reference: PSG-10
+common_model: registry/governance-common-model.v1.yaml#v1.0
+capability_wbs: registry/capability-wbs.v1.yaml#PSG-11
+capability_wbs_status: PRESENT
+capability_registry: registry/capability-registry-v1-freeze-20260716.v1.yaml
+pcv_gate: registry/project-coverage-verification-20260716.v1.yaml
+pcv_pass: true
+post_pcv_discipline: registry/governance-architecture.v1.yaml#post_pcv_capability_discipline
+coverage_pct: 72
+boundary_score: 91
+code_changes: false
+closure: false
+new_concepts_added: 0
+lifecycle_change_proposals: []
+
+audit_summary_table:
+  Five Questions: "✅ PASS"
+  WBS Inventory: "✅ PASS (11.1–11.8 · capability-wbs amendment via closure plan)"
+  Boundary: "✅ PASS (charter clear · peer reciprocity PSG-09/10/20)"
+  Implementation Consistency: "⚠ PARTIAL (72 · doc/code drift · Real Device BLOCKED)"
+  Coverage: "72%"
+  Boundary Score: 91
+  Gap List: "8 项"
+  Closure Ready: "否（Closure Plan 完成 · 待 Wave 1）"
+  Certification Path: "OUT_OF_PSG_RUNNER · PF Entry · Release Ladder Real Device"
+
+audit_validation_goals:
+  five_questions: PASS
+  fixed_inventory_wbs: PASS
+  fixed_inventory_wbs_note: "PSG-11 block added via closure plan WAL-GAP-001 · capability-wbs amendment 2026-07-16"
+  common_model_sufficient: PASS
+  new_concepts_added: 0
+  implementation_consistency: PARTIAL
+  closure: false
+  code_changes: false
+  lifecycle_standard_inherited: true
+  golden_reference_pattern: PSG-10
+
+charter_page_one:
+  capability: Wallet Governance Capability
+  owns:
+    - Connection Provider (Wagmi · connectors · chain env)
+    - Connection Center UI (connect · disconnect · account display)
+    - WalletConnect Activation (Project ID · QR · deep link · honest degrade)
+    - Network Guard (wrong-network · switch-chain · write guards)
+    - View-Only Mode (read-only address · no-sign enforcement)
+    - Wallet Verify & Bind (personal_sign challenge · me/guide/steward)
+    - On-Chain Write UX (approve · deposit · release · EIP-712 intents · error mapping)
+    - Release & Real Device Evidence (Ladder · OA-01/OA-02 · P1 batch)
+  boundary_excludes_frozen:
+    - Escrow contracts · FeeRouter deploy · indexer → PSG-09
+    - Payment rails · Stripe · PG ledger · G3-02 verification → PSG-10
+    - Admission fee policy · Platform Safe registry · revenue → PSG-20
+    - Order lifecycle API / mock-pay orchestration → PSG-03
+    - Admin CMS editorial → PSG-08
+    - Region Reward Wallet payout policy (RTR) → PSG-09 execution · PSG-20 boundary
+  core_vs_optional:
+    core: "Injected EIP-1193 + chain guard + signing UX for trip/governance/staking"
+    optional: "WalletConnect QR/deep link — Capability-Ready with honest KEY_ABSENT degrade"
+  not_same_as: PSG-09
+
+capability_five_questions:
+  Q1_capability_purpose:
+    question: "为什么存在？"
+    answer: >
+      Govern wallet connection, identification, chain alignment, and client-side
+      signing UX — TravelTrust connects and requests signatures only; no custody,
+      no mnemonic storage, no wallet creation product.
+    score: 90
+  Q2_ownership:
+    question: "谁负责？"
+    answer: "PSG-11 Wallet Governance Capability · cert OUT_OF_PSG_RUNNER · Release Ladder Real Device"
+    owner_capability: PSG-11
+    score: 88
+  Q3_boundary:
+    question: "负责什么，不负责什么？"
+    owns_summary: Connect · identify · chain guard · verify/bind · signing UX · release evidence
+    excludes_summary: On-chain deploy · payment rails · financial policy · order API · CMS
+    score: 91
+    note: "Peer audits PSG-09/10/20 consistently assign signing UX to PSG-11"
+  Q4_governed_objects:
+    question: "管理哪些对象？"
+    audit_inventory:
+      ssot: registry/capability-wbs.v1.yaml#PSG-11
+      lines: [11.1, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8]
+    score: 82
+    wbs_block_present: true
+  Q5_certification_path:
+    question: "Certification Path？"
+    path: OUT_OF_PSG_RUNNER
+    runner: PF_Entry
+    parallel_ssot: docs/runbook/TT-MODULE-RELEASE-COCKPIT-LATEST.md
+    release_ladder: docs/runbook/TT-MODULE-RELEASE-LADDER-V1.md
+    not: TT_PSG_PRODUCTION_CERT_slim_runner
+    score: 82
+
+inventory_wbs_scores:
+  note: "Scores use provisional audit inventory · WBS SSOT absent until capability-wbs amendment"
+  "11.1":
+    key: connection_provider
+    label: Connection Provider
+    score: 78
+    status: PARTIAL
+    ssot:
+      - frontend/components/Providers.tsx
+      - frontend/lib/chainEnv.ts
+      - frontend/package.json
+    gap: "Registry cites frontend/lib/wagmi/ — path absent · actual stack Providers.tsx"
+  "11.2":
+    key: connection_center_ui
+    label: Connection Center UI
+    score: 75
+    status: PARTIAL
+    ssot:
+      - frontend/components/trust/WalletStatusMini.tsx
+      - frontend/components/Header.tsx
+      - frontend/components/traveltrust/cinematic/TravelTrustHeroWalletConnect.tsx
+    gap: "Evidence README cites TravelTrustWalletSheet · WalletAccountMenu · lib/wallet/connection/* — not on disk"
+  "11.3":
+    key: walletconnect_activation
+    label: WalletConnect Activation
+    score: 55
+    status: PARTIAL
+    ssot:
+      - docs/runbook/TT-OA01-WALLETCONNECT-ACTIVATION-LATEST.md
+      - scripts/dev/set-walletconnect-project-id.sh
+      - scripts/dev/oa01-preflight-wc-key.py
+    gap: "OA-01 KEY_ABSENT · Real Device BLOCKED · honest degrade only"
+  "11.4":
+    key: network_guard
+    label: Network Guard
+    score: 80
+    status: PARTIAL
+    ssot:
+      - frontend/components/escrow/EscrowDetail/EscrowChainMismatchActions.tsx
+      - frontend/lib/chainEnv.ts
+      - frontend/dapp/hooks/useEscrowActions.ts
+  "11.5":
+    key: view_only_mode
+    label: View-Only Mode
+    score: 72
+    status: PARTIAL
+    ssot:
+      - frontend/lib/ViewOnlyAddressContext.tsx
+    gap: "WalletSessionRevalidate defined but not mounted in layout"
+  "11.6":
+    key: wallet_verify_bind
+    label: Wallet Verify & Bind
+    score: 85
+    status: PARTIAL
+    ssot:
+      - crates/api/src/chain_off/wallet_verify.rs
+      - crates/api/src/wallet_verify_crypto.rs
+      - frontend/app/me/security/MeSecurityWalletVerifySection.tsx
+      - frontend/app/guide/register/GuideRegisterWalletVerifySection.tsx
+      - crates/api/migrations/20260502150000_wallet_verify_challenges.sql
+  "11.7":
+    key: on_chain_write_ux
+    label: On-Chain Write UX
+    score: 82
+    status: PARTIAL
+    ssot:
+      - frontend/dapp/hooks/useEscrowActions.ts
+      - frontend/components/escrow/EscrowDetail/useEscrowDetailSettlementTokenAndApproval.ts
+      - frontend/lib/mapWalletWriteError.ts
+      - docs/runbook/TT-B435-USER-WALLET-ESCROW-FEEROUTER-PAYMENT-PATH-001.md
+    psg_10_dep: "PSG-10 owns payment rail · PSG-11 owns approve/deposit signing surface"
+  "11.8":
+    key: release_real_device
+    label: Release & Real Device
+    score: 65
+    status: PARTIAL
+    ssot:
+      - frontend/evidence/GO_local_wallet_connection_l5/
+      - docs/runbook/TT-MODULE-RELEASE-COCKPIT-LATEST.md
+      - scripts/dev/smoke-wallet-connection-l5-local.sh
+    gap: "Engineering PASS · Automation PASS · Real Device BLOCKED · Staging WAITING"
+
+implementation_consistency:
+  status: PARTIAL
+  score: 72
+  business_model_ssot: frontend/evidence/GO_local_wallet_connection_l5/README.md
+  verdict: >
+    Wallet connection architecture is documented at L5 evidence layer but
+    implementation tree has drifted (missing lib/wallet/connection/* bundle cited
+    in README and smoke script). Core wagmi path via Providers.tsx + WalletStatusMini
+    is present. Boundary with PSG-09/10/20 is consistent across peer audits.
+  layers:
+    frontend_ui:
+      status: PARTIAL
+      score: 70
+      primary:
+        - frontend/components/Providers.tsx
+        - frontend/components/trust/WalletStatusMini.tsx
+      gap: "Evidence/doc architecture vs on-disk module tree mismatch"
+    backend_service:
+      status: PARTIAL
+      score: 78
+      wallet_verify:
+        - crates/api/src/chain_off/wallet_verify.rs
+        - crates/api/src/db/wallet_verify_challenges.rs
+      gap: "No backend wallet-connect — by design · client-side wagmi only"
+    api_contract:
+      status: PASS
+      score: 88
+      ssot:
+        - docs/spec/96-17-多重身份与钱包真值.md
+        - docs/spec/35-DApp与钱包流程实现与验收清单.md
+    database:
+      status: PASS
+      score: 85
+      tables:
+        - wallet_verify_challenges
+    registry:
+      status: PARTIAL
+      score: 62
+      gap: "PSG-11 absent from capability-wbs.v1.yaml · PSG-10 lists frontend/lib/wagmi/ → PSG-11 but path missing"
+    runtime:
+      status: PARTIAL
+      score: 68
+      runbooks:
+        - docs/runbook/TT-OA01-WALLETCONNECT-ACTIVATION-LATEST.md
+        - docs/runbook/TT-B435-USER-WALLET-ESCROW-FEEROUTER-PAYMENT-PATH-001.md
+      gap: "Real Device stage BLOCKED · WC Project ID absent"
+    documentation:
+      status: PARTIAL
+      score: 74
+      gap: "GO_local_wallet_connection_l5 README describes modules not present in frontend tree"
+    e2e_gate_evidence:
+      status: PARTIAL
+      score: 70
+      gates:
+        - scripts/dev/smoke-wallet-connection-l5-local.sh
+        - frontend/evidence/GO_local_wallet_connection_l5/SIGNOFF-LATEST.md
+      gap: "Smoke script references tests/components not found on disk (WalletBrandIcon etc.)"
+
+11_coverage_review:
+  ga_inclusion_complete: true
+  ga_inclusion_note: "WBS block present after closure plan · WAL-GAP-001 CLOSED"
+  post_pcv_focus: "Implementation Consistency · not Capability Mapping"
+  capability_ownership:
+    owns:
+      - Connection Provider
+      - Connection Center UI
+      - WalletConnect Activation
+      - Network Guard
+      - View-Only Mode
+      - Wallet Verify & Bind
+      - On-Chain Write UX
+      - Release & Real Device Evidence
+    boundary_excludes:
+      - Escrow contracts · indexer · chain deploy → PSG-09
+      - Payment rails · Stripe · G3-02 → PSG-10
+      - Admission fee policy · Platform Safe → PSG-20
+      - Order lifecycle API → PSG-03
+      - Admin CMS → PSG-08
+    dependencies:
+      - id: DEP-WAL-01
+        module: Chain config · contract addresses · ABIs · /meta.chain
+        owner: PSG-09
+        relationship: dependency_only
+      - id: DEP-WAL-02
+        module: Escrow approve/deposit payment corridor UX
+        owner: PSG-10
+        relationship: co_surface
+        note: "PSG-11 signs · PSG-10 owns payment rail verification"
+      - id: DEP-WAL-03
+        module: Admission fee USDC transfer signing (onboarding)
+        owner: PSG-20
+        relationship: policy_consumer
+      - id: DEP-WAL-04
+        module: Order mock-pay / chain-off order API
+        owner: PSG-03
+        relationship: co_implementation
+  substeps:
+    scope: PASS
+    boundary: PASS
+    dependency: PASS
+    authoritative_source: PARTIAL
+    lifecycle: PASS
+    unknown_capabilities: PASS
+
+10_gap_list:
+  - id: WAL-GAP-001
+    wbs: —
+    surface: WBS Inventory
+    item: PSG-11 block added capability-wbs.v1.yaml — CLOSED via closure plan
+    phase: closure_plan
+    status: CLOSED
+  - id: WAL-GAP-002
+    wbs: "11.2"
+    surface: Connection Center UI
+    item: connection_ssot_note + wallet_connect_terminology frozen · CLOSED Wave 1
+    phase: governance_definition
+    status: CLOSED
+  - id: WAL-GAP-003
+    wbs: "11.1"
+    surface: Connection Provider
+    item: canonical Providers.tsx · peer lib/wagmi drift documented · CLOSED Wave 1
+    phase: governance_definition
+    status: CLOSED
+  - id: WAL-GAP-004
+    wbs: "11.5"
+    surface: View-Only Mode
+    item: WalletSessionRevalidate component not mounted in app layout
+    phase: engineering_implementation
+  - id: WAL-GAP-005
+    wbs: "11.3"
+    surface: WalletConnect Activation
+    item: OA-01 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID KEY_ABSENT · Real Device BLOCKED
+    phase: engineering_implementation
+  - id: WAL-GAP-006
+    wbs: "11.8"
+    surface: Release & Real Device
+    item: P1 Real Device Batch (Wallet·Order·Provider·Guide) atomic BLOCKED at Wallet card
+    phase: engineering_implementation
+  - id: WAL-GAP-007
+    surface: Implementation Consistency
+    item: owned_modules_index ↔ matrix ↔ traceability ↔ WBS sync — CLOSED Wave 2
+    phase: governance_implementation
+    status: CLOSED
+    closed_utc: "2026-07-16T10:53:00Z"
+    wave_2_report: registry/psg-11-governance-wave2-implementation-report-20260716.v1.yaml#WAL-GAP-007
+  - id: WAL-GAP-008
+    wbs: "11.8"
+    surface: Release & Real Device
+    item: smoke-wallet-connection-l5-local.sh references vitest targets not found on disk
+    phase: engineering_implementation
+
+lifecycle_change_proposals:
+  recorded: []
+  note: "No L2 Lifecycle Standard defect · process inherited from PSG-10 Golden Reference · issues are capability content gaps"
+
+closure_plan:
+  status: COMPLETE
+  artifact: registry/psg-11-wallet-closure-plan-20260716.v1.yaml
+  ready: true
+  plan_complete: true
+  completed_utc: "2026-07-16T10:33:00Z"
+  wal_gap_001_closed: true
+  wave_1_governance_definition: COMPLETE
+  wave_1_completed_utc: "2026-07-16T10:50:00Z"
+  wave_1_report: registry/psg-11-governance-wave1-definition-report-20260716.v1.yaml
+  wave_2_governance_implementation: COMPLETE
+  wave_2_completed_utc: "2026-07-16T10:53:00Z"
+  wave_2_report: registry/psg-11-governance-wave2-implementation-report-20260716.v1.yaml
+  wave_3_governance_validation: COMPLETE
+  wave_3_completed_utc: "2026-07-16T10:56:00Z"
+  governance_exit_review: registry/psg-11-governance-exit-review-20260716.v1.yaml
+  governance_exit: PASS
+  engineering_implementation_status: WAITING_OWNER_REAL_DEVICE_BATCH
+  engineering_implementation_frozen: true
+  engineering_implementation_partial: true
+  engineering_implementation_complete: false
+  engineering_implementation_report: registry/psg-11-engineering-implementation-report-20260716.v1.yaml
+  engineering_blocking_verification: registry/psg-11-engineering-blocking-verification-20260716.v1.yaml
+  engineering_gaps_pass: [WAL-GAP-004, WAL-GAP-005, WAL-GAP-008]
+  engineering_gaps_blocking: [WAL-GAP-006]
+  next_step: WAITING_OWNER_REAL_DEVICE_BATCH
+  honest_boundary: "Frozen · Owner OA-01/OA-02 + P1 batch · Production GO NO_GO · not Certification"
+
+certification:
+  after: [governance_exit, engineering_implementation]
+  path: OUT_OF_PSG_RUNNER
+  pf_entry: true
+  release_ladder: TT-MODULE-RELEASE-LADDER-V1
+  production_go: NO_GO
+  phase: "① local audit only · not started"
+
+standard_audit_template_proof:
+  inherits: registry/psg-capability-lifecycle-standard.v1.yaml
+  golden_reference: PSG-10
+  pattern: "Audit → Coverage Review → Gap List → (Closure Plan) → Governance Wave 1–3 → Engineering → Certification → CLOSED"
+  lifecycle_change_proposal_rule: registry/psg-capability-lifecycle-standard.v1.yaml#process_change_permanent_principle
+
+next_recommended_action: psg_11_waiting_owner_real_device_batch
+next_phase: WAITING_OWNER_REAL_DEVICE_BATCH
+honest_boundary: "① Audit complete · ② staging Real Device · ③ Production GO not claimed"

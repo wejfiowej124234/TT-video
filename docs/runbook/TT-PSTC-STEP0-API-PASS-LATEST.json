@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.pstc_step0_api_pass.v1",
+  "status": "API_PASS_WEB_BLOCKED",
+  "stamp_utc": "20260716T002200Z",
+  "git_sha": "ddc022b6e57e8374a72a42b51e017020db2872e0",
+  "includes": ["1e1171d0 market fix", "ddc022b6 LF docker"],
+  "fly_image": "deployment-01KXM48AGBAPYJJ31F83F04578",
+  "probes": {
+    "acquisition": { "n": 10, "unique": 10, "AE": 1, "JP": 2, "catalog": 10 },
+    "provider": { "n": 10, "unique": 10, "AE": 1, "JP": 2, "catalog": 10 },
+    "media_head": 200,
+    "guides_n": 25,
+    "community_feed_n_note": "reprobe after web; earlier session had 20"
+  },
+  "gates": [
+    "TT_PSTC_P0_1_SHA_PROVENANCE: PASS",
+    "TT_PSTC_PUBLIC_MARKET: PASS"
+  ],
+  "still_open_for_exit": [
+    "web_deploy",
+    "guides_count",
+    "community_count",
+    "ocs_upsert",
+    "origin_partition",
+    "cos_inventory",
+    "evidence_invalidation"
+  ],
+  "production_go": "NO_GO",
+  "pf_frozen": true
+}

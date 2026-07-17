@@ -1,0 +1,178 @@
+# PSG-08 Operations · Phase ① Audit (risk-priority P0 · GA standard template)
+# Cross-cut: CMS ops loop · OCS · public data orchestration · guest-visible pipeline
+# No code · No gates · No Closure
+schema: traveltrust.governance_domain_audit.v1
+domain_id: PSG-08
+domain_name: Operations
+category: operations
+priority: P0
+phase: audit_only
+completed_utc: "2026-07-16T09:00:00Z"
+auditor: solo_owner
+template: registry/governance-audit-template.v1.yaml
+coverage_pct: 80
+
+1_scope:
+  status: COMPLETE
+  score: 75
+  boundary: "Operational orchestration layer — how public-facing data reaches Guest"
+  includes:
+    - Production Preparation CMS Operation loop (Daily Board → Upload → Publish → Verify → Evidence → Live)
+    - OCS / official cold-start bootstrap discipline
+    - P0③ CMS · P0④ COS · P0⑤ Public Data coordination (cross-domain · not replacing PSG-05/06 ownership)
+    - TTOW L2 Operations Platform + L3 Operations Workflow
+    - Business Content Integrity / PDCA production data consistency
+  excludes:
+    - Admin Console UI (PSG-07)
+    - Slim PSG runner implementation detail (PSG-19)
+    - Web3 on-chain ops (PSG-09)
+  matrix_gap: "psg-domain-coverage-matrix lists PSG-08 maps_phase_b [B4] only — under-scoped vs production ops reality"
+
+2_inventory:
+  status: COMPLETE
+  score: 85
+  ssot_registries:
+    - data/catalog/cms-asset-matrix.v1.yaml
+    - registry/traveltrust-operations-workflow.v1.yaml
+    - registry/traveltrust-operations-platform.v1.yaml
+    - registry/official-cold-start-dataset.v1.yaml
+    - registry/psg-phase-b-production-cert.v1.yaml
+    - registry/psg-public-surface-matrix.v1.yaml
+  runbooks:
+    - docs/runbook/TT-PSG-P0-3-CMS-GOVERNANCE.md
+    - docs/runbook/TT-PSG-P0-4-COS-GOVERNANCE.md
+    - docs/runbook/TT-PSG-P0-5-PUBLIC-DATA-GOVERNANCE.md
+    - docs/runbook/TT-TRAVELTRUST-OPERATIONS-WORKFLOW.md
+    - docs/runbook/TT-TRAVELTRUST-OPERATIONS-PLATFORM.md
+  scripts:
+    - scripts/dev/run-cms-daily-ops-board.cjs
+    - scripts/dev/run-cms-ops-refresh.cjs
+    - scripts/gates/check-psg-public-data-isolation.cjs
+    - scripts/gates/check-psg-cms-lifecycle.cjs
+    - scripts/gates/check-psg-cos-reference-integrity.cjs
+  counts:
+    cms_ops_scripts: "239+ run-cms-* under scripts/dev"
+    phase_b_domains: "B1–B5 mapped to PSG-04/05/06/08/12 + surfaces"
+
+3_runtime:
+  status: COMPLETE
+  score: 78
+  foundation_status:
+    p0_3_cms: FOUNDATION_READY
+    p0_4_cos: GOVERNANCE_ENFORCED
+    p0_5_public_data: FOUNDATION_READY
+  cert_status:
+    tt_psg_production_cert: FAIL_OR_WAITING
+    b1_b5_runner: not_PASS_at_current_HEAD
+    staging_sha: drift_vs_local
+  known_runtime_blockers:
+    - bootstrap-market API missing (OCS merchant cold start)
+    - min_public_media_probe lowered to 70 (staging ceiling · not quality downgrade)
+    - destructive suite SKIPPED without PSG_ALLOW_DESTRUCTIVE_CERT
+
+4_data_flow:
+  status: COMPLETE
+  score: 82
+  canonical_chain: "Official Dataset → Identity (OCIP) → Public Catalog → CMS publish → COS object → CDN → Guest"
+  three_layer_stack: "L1 Data Governance → L2 Operations Platform → L3 Operations Workflow"
+  gaps:
+    - Public Content Platform (PCP) spans CMS/OCS/Admin without single domain owner
+    - Guest Market DTO contract fields incomplete vs P0⑤ (server-enforced filter documented · meta incomplete)
+    - CMS Content QA vs PSG Operations loop parallel tracks not cross-indexed in GA matrix
+
+5_architecture:
+  status: COMPLETE
+  score: 90
+  production_preparation: "ACTIVE · cms-asset-matrix production_preparation.mainline_2_cms_operation"
+  workflow_first: "TTOW enforced · not bare CRUD"
+  country_gate: "after each Live: board +1 · source alignment · homepage catalog not fallback"
+  four_centers: "Admin implementation frozen underneath TTOP taxonomy"
+
+6_governance:
+  status: COMPLETE
+  score: 80
+  psg_runner: "partial · B4 + cross-cut B1/B2/B3 orchestration"
+  pf_step5: FROZEN
+  production_go: NO_GO
+  discipline: "P0③ → P0④ → P0⑤ → integrate deploy → Runtime Cert (PSG doc order)"
+
+7_evidence:
+  status: COMPLETE
+  score: 70
+  exists:
+    - evidence/GO_cms_operation/ (country/city QA waves)
+    - registry/admin-platform references OCS paths
+    - CMS-JAPAN-CONTENT-QA-LATEST pattern
+  missing_or_fragmented:
+    - evidence/GO_psg_foundation/production_cert/PSG-PRODUCTION-CERT-LATEST.json
+    - unified PSG-08 Operations rollup evidence directory
+    - B1–B5 single-sha green set at HEAD
+
+8_risks:
+  status: COMPLETE
+  score: 72
+  production_risk:
+    - Guest sees fallback/stale catalog if ops loop skipped
+    - CMS/COS lineage break → broken media on public surfaces
+    - test/demo data leak if B1 isolation regresses
+    - OCS double-bootstrap / canonical_key drift (B1/B4 destructive not run)
+  non_blocking:
+    - Content QA Japan track ACTIVE parallel to PSG cert
+
+9_coverage:
+  coverage_pct: 80
+  section_scores:
+    scope: 75
+    inventory: 85
+    runtime: 78
+    data_flow: 82
+    architecture: 90
+    governance: 80
+    evidence: 70
+    risks: 72
+
+11_coverage_review:
+  status: PARTIAL
+  ga_inclusion_complete: false
+  question: "Is PSG-08 fully incorporated into Governance Architecture?"
+  answer: "No — matrix scope too narrow; orphan modules not assigned"
+  actions_before_closure:
+    - Expand PSG-08 subdomains in psg-domain-coverage-matrix
+    - Assign UNK-005 business-content-integrity to PSG-08
+    - Assign UNK-004 public-content-platform to PSG-08 (or explicit PSG-05/06 split)
+    - Link P0③/④/⑤ as coordinated_children (not duplicate domains)
+    - Clear unknown_domains entries after matrix patch
+
+10_gap_list:
+  - id: OPS-GAP-001
+    surface: GA Matrix
+    item: PSG-08 scope in matrix = B4 only; expand to ops orchestration + P0 coordination
+    phase: coverage_review
+  - id: OPS-GAP-002
+    surface: API/OCS
+    item: POST …/official/accounts/:id/bootstrap-market missing
+    phase: closure
+  - id: OPS-GAP-003
+    surface: PSG Cert
+    item: B1–B5 + TT_PSG_PRODUCTION_CERT not PASS at current HEAD
+    phase: certification
+  - id: OPS-GAP-004
+    surface: Architecture
+    item: Public Content Platform (TT_PCP) no single PSG domain row
+    phase: coverage_review
+  - id: OPS-GAP-005
+    surface: Operations
+    item: business-content-integrity / PDCA drift not in domain matrix
+    phase: coverage_review
+  - id: OPS-GAP-006
+    surface: Evidence
+    item: CMS ops evidence fragmented · no PSG-08 rollup LATEST
+    phase: closure
+  - id: OPS-GAP-007
+    surface: Public API
+    item: Guest contract meta incomplete (P0⑤ documented gap)
+    phase: closure
+  - id: OPS-GAP-008
+    surface: Media infra
+    item: PI3 Media CDN / TT_PI3_MEDIA_INFRASTRUCTURE orphan vs PSG-06/12
+    phase: coverage_review

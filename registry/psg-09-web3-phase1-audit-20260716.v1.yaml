@@ -1,0 +1,365 @@
+# PSG-09 Web3 Governance Capability · Phase ① Audit
+# GA v1.0 standard Capability Audit · fixed WBS inventory · zero new GA concepts
+# No code · No Closure · No Common Model changes
+schema: traveltrust.governance_capability_audit.v1
+capability_id: PSG-09
+capability_name: Web3 Governance Capability
+legacy_label: Web3
+category: platform
+priority: P1
+phase: audit_only
+completed_utc: "2026-07-16T11:00:00Z"
+auditor: solo_owner
+template: registry/governance-audit-template.v1.yaml
+common_model: registry/governance-common-model.v1.yaml#v1.0
+capability_wbs: registry/capability-wbs.v1.yaml#PSG-09
+capability_registry: registry/capability-registry-v1-freeze-20260716.v1.yaml
+coverage_pct: 82
+boundary_score: 94
+
+audit_validation_goals:
+  five_questions: PASS
+  fixed_inventory_wbs: PASS
+  common_model_sufficient: PASS
+  new_concepts_added: 0
+  closure: false
+  code_changes: false
+
+capability_five_questions:
+  Q1_capability_purpose:
+    question: "为什么存在？"
+    answer: >
+      Govern on-chain protocol identity: contract/ABI/address registries, chain configuration,
+      Web3 runtime wiring, indexer sync, governance token stack, and on-chain verification —
+      as the single Web3 Governance Capability separate from Payment, Wallet, and Platform Financial.
+    score: 95
+  Q2_ownership:
+    question: "谁负责？"
+    answer: "PSG-09 Web3 Governance Capability · parallel cert via TT-WEB3-ACTIVE-EXECUTION-MATRIX"
+    owner_capability: PSG-09
+    score: 92
+  Q3_boundary:
+    question: "负责什么，不负责什么？"
+    owns_summary: Contract · ABI · Address · Chain · Runtime · Indexer · Governance Token · Verification
+    excludes_summary: Stripe/PSP · Platform Financial Policy · Wallet UI · Admin CMS ops
+    score: 94
+  Q4_governed_objects:
+    question: "管理哪些对象？"
+    inventory_wbs: [09.1, 09.2, 09.3, 09.4, 09.5, 09.6, 09.7, 09.8]
+    score: 88
+  Q5_certification_path:
+    question: "Certification Path？"
+    path: PARALLEL
+    runner: TT-WEB3-ACTIVE-EXECUTION-MATRIX
+    not: TT_PSG_PRODUCTION_CERT_slim_runner
+    gate: scripts/gates/check-web3-active-execution-matrix-gate.sh
+    reality_cert: docs/runbook/TT-WEB3-REALITY-CERTIFICATION.md
+    score: 90
+
+inventory_wbs_scores:
+  "09.1":
+    key: contract_registry
+    score: 90
+    status: COMPLETE
+    ssot:
+      - registry/protocol-convergence-deployments.v1.yaml
+      - registry/traveltrust-web3-protocol-master-matrix.v1.yaml
+      - docs/spec/governance-token/protocol-ssot.v1.yaml
+    note: "contracts{} catalog · deploy scripts · env keys mapped"
+  "09.2":
+    key: abi_registry
+    score: 78
+    status: PARTIAL
+    ssot:
+      - frontend/dapp/abis/
+      - frontend/dapp/abis/README.md
+    note: "ACTIVE rebuild discipline documented · LEGACY ABI files coexist · SC-G/H dependency"
+  "09.3":
+    key: address_registry
+    score: 92
+    status: COMPLETE
+    ssot:
+      - registry/protocol-convergence-deployments.v1.yaml#gov_freeze_v2_clean_baseline
+      - registry/web3-active-execution-matrix.v1.yaml#active_addresses
+    note: "Single ACTIVE baseline · fund_stack companion merge rule explicit"
+  "09.4":
+    key: chain_configuration
+    score: 88
+    status: COMPLETE
+    ssot:
+      - registry/env-key-catalog-web3.v1.yaml
+      - registry/web3-active-execution-matrix.v1.yaml#phase_boundary
+      - scripts/dev/.env.phase2-chain-deploy.local
+    chain_id_active: 11155111
+    network: sepolia
+  "09.5":
+    key: runtime
+    score: 80
+    status: PARTIAL
+    ssot:
+      - docs/runbook/WEB3-SYSTEM-PRODUCTION-RUNTIME-WIRING.md
+      - registry/web3-system-master-map.v1.yaml
+      - scripts/dev/check-web3-system-production-meta-contracts.cjs
+    note: "FE/BE/meta wiring exists · SC-H PARTIAL · not Production GO"
+  "09.6":
+    key: indexer
+    score: 65
+    status: PARTIAL
+    ssot:
+      - registry/web3-active-execution-matrix.v1.yaml#H_indexer
+    sc: SC-G
+    reality: "PARTIAL L2-SC-G-003"
+  "09.7":
+    key: governance_token
+    score: 91
+    status: COMPLETE
+    ssot:
+      - docs/spec/governance-token/TTG-TOKENOMICS-GENESIS-V2.md
+      - registry/web3-active-execution-matrix.v1.yaml#A_governance_token
+    contracts: [GovernanceVotesToken, TravelTrustGovernor, GovernanceTimelock]
+  "09.8":
+    key: verification
+    score: 72
+    status: PARTIAL
+    ssot:
+      - docs/runbook/TT-WEB3-REALITY-CERTIFICATION.md
+      - docs/runbook/TT-WEB3-REALITY-CERTIFICATION-LEDGER.md
+    reality_completion: "3/8 SC PASS (B·C·D) · G/H PARTIAL · A/E/F WAITING Timelock"
+
+1_scope:
+  status: COMPLETE
+  score: 94
+  audit_as: Web3 Governance Capability
+  not_as: blockchain_feature_audit
+  execution_matrix: registry/web3-active-execution-matrix.v1.yaml
+  one_liner: "双资产、三资金流、单治理 · TTG governance · USDC flows · Governor+Timelock"
+
+2_inventory:
+  status: COMPLETE
+  score: 86
+  wbs_ref: registry/capability-wbs.v1.yaml#PSG-09
+  core_artifacts:
+    - registry/web3-active-execution-matrix.v1.yaml
+    - registry/protocol-convergence-deployments.v1.yaml
+    - registry/traveltrust-web3-protocol-master-map.v1.yaml
+    - registry/web3-system-production-gate.v1.yaml
+    - registry/env-key-catalog-web3.v1.yaml
+    - docs/runbook/TT-WEB3-ACTIVE-EXECUTION-MATRIX.md
+    - contracts/src/
+    - contracts/script/
+    - frontend/dapp/abis/
+
+3_runtime:
+  status: PARTIAL
+  score: 74
+  phase: "② testnet Sepolia ACTIVE"
+  production_go: NO_GO
+  cert_path: PARALLEL
+  matrix_gate: scripts/gates/check-web3-active-execution-matrix-gate.sh
+  reality_3_of_8: true
+
+12_authoritative_source:
+  status: COMPLETE
+  score: 90
+  catalog:
+    - governed_object: ACTIVE contract addresses (Sepolia)
+      authoritative_source: registry/protocol-convergence-deployments.v1.yaml → gov_freeze_v2_clean_baseline
+      owner_capability: PSG-09
+      lifecycle: active
+      runtime: web3-active-execution-matrix active_addresses
+    - governed_object: Web3 execution entry
+      authoritative_source: registry/web3-active-execution-matrix.v1.yaml
+      owner_capability: PSG-09
+      guest_or_consumer: FE dapp · API /meta · scripts
+      runtime: matrix_gate
+    - governed_object: TTG token + Governor + Timelock
+      authoritative_source: deploy registry + on-chain
+      owner_capability: PSG-09
+      lifecycle: active
+      runtime: Sepolia contracts
+    - governed_object: ABI bundle for ACTIVE contracts
+      authoritative_source: frontend/dapp/abis/ (rebuild from ACTIVE)
+      owner_capability: PSG-09
+      lifecycle: active
+      runtime: FE signing / read calls
+
+13_lifecycle:
+  status: COMPLETE
+  score: 85
+  pattern: deploy
+  examples:
+    - object: EscrowFactoryV2
+      states: [pending, built, deployed, verified, active]
+      note: "LIVE Sepolia · FactoryV2 cutover complete"
+    - object: SC-A Governance final cert
+      states: [pending, built, deployed, verified]
+      note: "WAITING Timelock · not active cert"
+
+14_governed_object_lineage:
+  status: COMPLETE
+  score: 88
+  sample:
+    governed_object: FeeRouterV2 address
+    authoritative_source: rtr_sepolia backfill tx + deploy registry
+    owner_capability: PSG-09
+    lifecycle: active
+    guest_or_consumer: Escrow createEscrowWithRegion
+    runtime: "0x4feCb1438462B9513e994A1Bfa1761fFb1C6C19b"
+
+5_architecture:
+  status: COMPLETE
+  score: 92
+  fixed_path: "Genesis V2 → Impact → Deployment Baseline → Active Execution Matrix → Reality Cert → Mainnet Waves → Production GO"
+  ga_position: Platform Capabilities · PARALLEL cert · not PSG slim runner
+
+6_governance:
+  status: COMPLETE
+  score: 95
+  common_model_only: true
+  wbs_inventory_only: true
+  new_concepts_added: 0
+
+7_evidence:
+  status: PARTIAL
+  score: 70
+  present:
+    - web3-active-execution-matrix FROZEN
+    - protocol-convergence-deployments
+    - matrix gate script
+    - FactoryV2 · FeeRouterV2 · RegionRewardRegistry LIVE txs
+  waiting:
+    - SC-A/E/F Timelock
+    - SC-G/H Final
+    - Reality 8/8
+
+8_risks:
+  status: COMPLETE
+  score: 76
+  items:
+    - LEGACY addresses must not become ACTIVE defaults
+    - Payment/Wallet/Platform Financial boundary confusion
+    - Claiming 8/8 Reality or Production GO prematurely
+    - Indexer partial blocks SC-G Final
+    - ABI drift if not rebuilt from ACTIVE contracts
+
+9_coverage:
+  coverage_pct: 82
+  boundary_score: 94
+  wbs_avg: 82
+  section_scores:
+    scope: 94
+    inventory: 86
+    runtime: 74
+    authoritative_source: 90
+    lifecycle: 85
+    governed_object_lineage: 88
+    architecture: 92
+    governance: 95
+    evidence: 70
+    risks: 76
+
+11_coverage_review:
+  ga_inclusion_complete: true
+  capability_ownership:
+    owns:
+      - Contract Registry (protocol SSOT + deploy catalog)
+      - ABI Registry (dapp/abis · ACTIVE rebuild)
+      - Contract Address Registry (gov_freeze_v2_clean_baseline)
+      - Chain Configuration (Sepolia · env-key-catalog)
+      - Mainnet/Testnet governance (Timelock · Governor · waves template)
+      - Governance Token (TTG · Genesis V2)
+      - Web3 Runtime (master map · meta · FE/BE wiring)
+      - Indexer (SC-G pipeline)
+      - On-chain Verification (Reality Certification · SC ledger)
+    boundary_excludes:
+      - Stripe / PSP checkout rails → PSG-10 Payment
+      - Platform Financial Policy / Platform Safe / onboarding fee business → PSG-20
+      - Wallet connect / transfer UX → PSG-11 Wallet
+      - Admin CMS editorial / OCS daily ops → PSG-08 Operations
+      - Release reproducibility / env alignment → PSG-13 Release Foundation
+    inventory_modules:
+      - registry/web3-active-execution-matrix.v1.yaml
+      - registry/protocol-convergence-deployments.v1.yaml
+      - frontend/dapp/abis/*
+      - contracts/src + contracts/script
+      - docs/runbook/TT-WEB3-*
+    dependencies:
+      - id: DEP-W3-01
+        module: Platform Onboarding Fee USDC destination policy
+        owner: PSG-20
+      - id: DEP-W3-02
+        module: Wallet signing UX
+        owner: PSG-11
+      - id: DEP-W3-03
+        module: Escrow order page guest flow
+        owner: PSG-01/PSG-02
+      - id: DEP-W3-04
+        module: Deploy / staging SHA for API /meta
+        owner: PSG-13
+  substeps:
+    scope: PASS
+    boundary: PASS
+    dependency: PASS
+    authoritative_source: PASS
+    lifecycle: PASS
+    unknown_capabilities: PARTIAL
+
+cross_capability_boundary_ref:
+  frozen_wave: psg_10_closure_wave_1
+  ssot: registry/psg-10-payment-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+  payment_classification: registry/payment-architecture-classification.v1.yaml
+  reciprocity:
+    psg_10: "order_settlement rail · Stripe PSP · escrow mock-pay/USDC → PSG-10"
+    psg_20: "Platform Safe · admission fee policy · platform_revenue_settlement → PSG-20"
+  terminology:
+    order_settlement: PSG-10
+    protocol_treasury_settlement: PSG-09
+  synced_utc: "2026-07-16T14:30:00Z"
+  code_change: false
+
+10_gap_list:
+  - id: W3-GAP-001
+    wbs: "09.6"
+    surface: Indexer
+    item: SC-G PARTIAL L2-SC-G-003 — indexer→DB→API not Final
+    phase: certification
+  - id: W3-GAP-002
+    wbs: "09.5"
+    surface: Runtime
+    item: SC-H PARTIAL L2-SC-H-004 — Frontend Reality not Final
+    phase: certification
+  - id: W3-GAP-003
+    wbs: "09.8"
+    surface: Verification
+    item: Reality 3/8 only · SC-A/E/F WAITING Timelock
+    phase: certification
+  - id: W3-GAP-004
+    wbs: "09.2"
+    surface: ABI Registry
+    item: LEGACY ABI files coexist · rebuild-from-ACTIVE discipline not fully evidenced
+    phase: closure
+  - id: W3-GAP-005
+    wbs: "09.4"
+    surface: Chain Configuration
+    item: Mainnet wave template exists · ③ Production GO not started
+    phase: certification
+  - id: W3-GAP-006
+    wbs: "09.7"
+    surface: Governance Token
+    item: RTR FeeRouter region payout · Region Reward Wallet Epic L3 PARTIAL
+    phase: closure
+  - id: W3-GAP-007
+    surface: Boundary
+    item: region-reward-wallet cross-ref PSG-20 — document dependency-only on next touch
+    phase: closure
+  - id: W3-GAP-008
+    wbs: "09.3"
+    surface: Address Registry
+    item: fund_stack companion + baseline merge — operational discipline Owner-only
+    phase: —
+
+standard_audit_template_proof:
+  reusable_for: [PSG-10, PSG-11, PSG-03, PSG-02]
+  pattern: "Five Questions + fixed WBS + Coverage + Boundary + Gap · no GA extension"
+
+next_recommended_capability: PSG-10

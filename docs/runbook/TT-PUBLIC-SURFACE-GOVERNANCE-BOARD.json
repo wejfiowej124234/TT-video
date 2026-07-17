@@ -1,0 +1,58 @@
+{
+  "schema": "traveltrust.public_surface_governance_board.v1",
+  "machine_key": "TT_PUBLIC_SURFACE_GOVERNANCE",
+  "status": "ACTIVE_PERMANENT_FIRST_CLASS_PSG",
+  "production_go": "NO_GO",
+  "pf_step5": "FROZEN",
+  "deploy_46af7c70": "DEFERRED",
+  "stamp_utc": "20260716T065000Z",
+  "hierarchy": ["L0", "PSG", "PF", "ProductionEntry", "ProductionGO"],
+  "constitution": "docs/governance/TT-ARCHITECTURE-CONSTITUTION-v1.md",
+  "l0": "docs/governance/TT-L0-ARCHITECTURE-GOVERNANCE.md",
+  "pgc": {
+    "status": "ACTIVE",
+    "runbook": "docs/runbook/TT-PRODUCTION-GOVERNANCE-CLOSURE.md",
+    "traceability": "docs/runbook/TT-PGC-TRACEABILITY-MATRIX.md",
+    "registry": "registry/production-governance-closure.v1.yaml",
+    "hard_gate": "scripts/gates/check-psg-production-cert-required.sh",
+    "machine_key": "TT_PRODUCTION_GOVERNANCE_CLOSURE"
+  },
+  "phase_b_ssot": "docs/runbook/TT-PSG-PHASE-B-PUBLIC-SURFACE-CERTIFICATION.md",
+  "psg_is_permanent_first_class": true,
+  "psg_is_not_subset_of_pf": true,
+  "feature_pipeline": [
+    "feature",
+    "psg_review",
+    "development",
+    "psg_certification",
+    "pf",
+    "production"
+  ],
+  "final_gate": "TT_PSG_PRODUCTION_CERT",
+  "admission_gates": {
+    "TT_PSG_SSOT_DRIFT": "scripts/gates/check-psg-ssot-drift.cjs",
+    "TT_PSG_REPRODUCIBLE_BUILD": "scripts/gates/check-psg-reproducible-build.cjs",
+    "TT_PSG_ENVIRONMENT_ALIGNMENT": "scripts/gates/check-psg-environment-alignment.cjs"
+  },
+  "production_cert_script": "scripts/gates/run-psg-production-cert.sh",
+  "runtime_cert_script": "scripts/gates/run-psg-runtime-certification.sh",
+  "domains": ["B1", "B2", "B3", "B4", "B5"],
+  "p0": {
+    "p0_1_deploy_runtime": "CLOSED",
+    "p0_2_ocs_upsert": "CLOSED",
+    "p0_3_cms_governance": "FOUNDATION_READY",
+    "p0_4_cos_governance": "GOVERNANCE_ENFORCED",
+    "p0_5_public_data_governance": "CODE_READY"
+  },
+  "pf_step5_unfreeze_require": {
+    "all_p0_1_to_5": "CLOSED",
+    "TT_PSG_PRODUCTION_CERT": "PASS",
+    "TT_PSG_SSOT_DRIFT": "PASS",
+    "TT_PSG_REPRODUCIBLE_BUILD": "PASS",
+    "TT_PSG_ENVIRONMENT_ALIGNMENT": "PASS",
+    "public_surface_matrix": "PASS",
+    "all_destructive_certs": "PASS",
+    "feeling_stable_not_sufficient": true
+  },
+  "next": "phase_b_admission_trio_then_owner_destructive_cert_then_TT_PSG_PRODUCTION_CERT_PASS"
+}

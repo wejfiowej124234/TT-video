@@ -1,0 +1,395 @@
+# PSG-10 Payment Governance Capability · Phase ① Audit
+# Post-PCV discipline · Implementation Consistency · no GA extension · no code changes
+schema: traveltrust.governance_capability_audit.v1
+capability_id: PSG-10
+capability_name: Payment Governance Capability
+legacy_label: Payment
+category: platform
+priority: P1
+phase: audit_only
+completed_utc: "2026-07-16T13:30:00Z"
+auditor: solo_owner
+template: registry/governance-audit-template.v1.yaml
+common_model: registry/governance-common-model.v1.yaml#v1.0
+capability_wbs: registry/capability-wbs.v1.yaml#PSG-10
+capability_registry: registry/capability-registry-v1-freeze-20260716.v1.yaml
+pcv_gate: registry/project-coverage-verification-20260716.v1.yaml
+pcv_pass: true
+post_pcv_discipline: registry/governance-architecture.v1.yaml#post_pcv_capability_discipline
+coverage_pct: 76
+boundary_score: 88
+
+audit_summary_table:
+  Five Questions: "✅ PASS"
+  WBS Inventory: "✅ PASS (10.1–10.8 fixed)"
+  Boundary: "✅ PASS (charter frozen · score 88 residual WBS labeling)"
+  Implementation Consistency: "⚠ PARTIAL (76 · bifurcated USDC vs Stripe rails consistent · G3-02 evidence gap)"
+  Coverage: "76%"
+  Boundary Score: 88
+  Gap List: "8 项"
+  Closure Ready: "否"
+  Certification Path: "OUT_OF_PSG_RUNNER · PF Entry"
+
+audit_validation_goals:
+  five_questions: PASS
+  fixed_inventory_wbs: PASS
+  common_model_sufficient: PASS
+  new_concepts_added: 0
+  implementation_consistency: PARTIAL
+  closure: false
+  code_changes: false
+
+charter_page_one:
+  capability: Payment Governance Capability
+  owns:
+    - PSP (Stripe optional onboarding rail)
+    - Payment Gateway
+    - Payment Intent
+    - Escrow Payment Flow
+    - Settlement Execution (order payment rail)
+    - Payment Webhook
+    - Payment Ledger (payment events)
+    - Payment Verification
+  boundary_excludes_frozen:
+    - Platform Admission Fee → PSG-20
+    - Revenue Policy → PSG-20
+    - Pricing Policy → PSG-20
+    - Platform Financial Registry → PSG-20
+    - Wallet UI → PSG-11
+    - Web3 contracts / on-chain governance → PSG-09
+    - Admin CMS editorial → PSG-08
+  core_vs_optional:
+    ssot: registry/payment-architecture-classification.v1.yaml
+    core: "Web3 Escrow USDC · trip/market/acquisition orders"
+    optional: "Stripe fiat onboarding bypass · admission fee rail only"
+  not_same_as: PSG-20
+
+capability_five_questions:
+  Q1_capability_purpose:
+    question: "为什么存在？"
+    answer: >
+      Govern payment execution rails: core Web3 Escrow USDC deposit→release for orders,
+      plus optional Stripe PSP for onboarding admission-fee checkout — separate from
+      Platform Financial policy (PSG-20) and Web3 protocol stack (PSG-09).
+    score: 92
+  Q2_ownership:
+    question: "谁负责？"
+    answer: "PSG-10 Payment Governance Capability · cert via PF Entry / OUT_OF_PSG_RUNNER"
+    owner_capability: PSG-10
+    score: 90
+  Q3_boundary:
+    question: "负责什么，不负责什么？"
+    owns_summary: PSP · Gateway · Intent · Escrow pay flow · Settlement exec · Webhook · Ledger · Verification
+    excludes_summary: Admission fee policy · Revenue · Pricing · Platform Safe registry · Wallet UI · Web3 deploy
+    score: 88
+    note: "Stripe stack implements admission rail (PSG-20 destination) — rail owner PSG-10 · policy owner PSG-20"
+  Q4_governed_objects:
+    question: "管理哪些对象？"
+    inventory_wbs: [10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7, 10.8]
+    score: 82
+  Q5_certification_path:
+    question: "Certification Path？"
+    path: OUT_OF_PSG_RUNNER
+    runner: PF_Entry
+    parallel_ssot: registry/payment-architecture-classification.v1.yaml
+    web3_payment_gate: registry/web3-payment-production-gate.v1.yaml
+    gate: scripts/check-web3-payment-production-readiness.sh
+    not: TT_PSG_PRODUCTION_CERT_slim_runner
+    score: 85
+
+inventory_wbs_scores:
+  "10.1":
+    key: psp
+    label: "PSP (Stripe)"
+    score: 78
+    status: PARTIAL
+    ssot:
+      - registry/payment-architecture-classification.v1.yaml#optional_fiat_onboarding
+      - crates/api/src/stripe_onboarding/
+      - frontend/app/me/onboarding/StripeOnboardingPayment.tsx
+    note: "Onboarding admission PSP only · not trip PSP · P0=false"
+    psg_20_overlap: "Rail PSG-10 · admission destination PSG-20 · documented"
+  "10.2":
+    key: payment_gateway
+    score: 72
+    status: PARTIAL
+    ssot:
+      - crates/api/src/routes/internal/onboarding/payments_webhook.rs
+      - docs/spec/04-附录-商家主理人准入费HTTP契约草案-配96-18.md#F-036
+    note: "Internal onboarding gateway only · no abstract USDC trip gateway"
+  "10.3":
+    key: payment_intent
+    score: 80
+    status: PARTIAL
+    ssot:
+      - crates/api/src/routes/onboarding/payment_intents.rs
+      - crates/api/src/routes/onboarding/payment_intents_stripe.rs
+      - frontend/lib/apiClient/onboarding/http.ts
+    note: "Admission payment intents · PG-persisted · idempotency tested"
+  "10.4":
+    key: escrow_payment_flow
+    score: 85
+    status: PARTIAL
+    ssot:
+      - registry/payment-architecture-classification.v1.yaml#core_payment
+      - frontend/app/pay/
+      - frontend/components/escrow/EscrowDetail/
+      - frontend/evidence/GO_local_web3_pages_closure/PAY-HUB-PHASE1-CLOSURE.md
+      - crates/api/src/chain_off/orders_flow/accept_cancel_pay_complete.rs
+    note: "① mock-pay + USDC deposit path · G3-02 ③ evidence OPEN"
+    psg_20_overlap: none
+  "10.5":
+    key: settlement_execution
+    score: 75
+    status: PARTIAL
+    ssot:
+      - docs/runbook/G3-02-WEB3-PAYMENT-PRODUCTION-EXECUTION.md
+      - docs/runbook/TT-B435-USER-WALLET-ESCROW-FEEROUTER-PAYMENT-PATH-001.md
+      - frontend/components/escrow/EscrowDetail/useEscrowDetailSettlementTokenAndApproval.ts
+    note: "Order escrow release + FeeRouter · 'settlement' term also used PSG-20 admin finance"
+  "10.6":
+    key: payment_webhook
+    score: 82
+    status: PARTIAL
+    ssot:
+      - crates/api/src/routes/hooks.rs
+      - crates/api/src/stripe_onboarding/webhook/
+      - crates/api/migrations/20260505120000_onboarding_webhook_jobs.sql
+    note: "Stripe onboarding webhooks + DLQ + worker · no trip PSP webhook by design"
+  "10.7":
+    key: payment_ledger
+    score: 68
+    status: PARTIAL
+    ssot:
+      - crates/api/migrations/20260505100000_onboarding_entitlements_payment_events.sql
+      - crates/api/src/db/onboarding/payment_events.rs
+      - frontend/app/admin/onboarding/payment-events/
+    gap: "No PG payment ledger for USDC trip payments · chain/indexer is SSOT for 10.4"
+    psg_20_overlap: "onboarding_payment_events = admission audit trail · policy PSG-20"
+  "10.8":
+    key: payment_verification
+    score: 70
+    status: PARTIAL
+    ssot:
+      - registry/web3-payment-production-gate.v1.yaml
+      - registry/production-payment-readiness-checklist.v1.yaml
+      - scripts/check-web3-payment-production-readiness.sh
+    gap: "evidence/GO_production_readiness/G3-02/ not on disk · ① local partial"
+
+implementation_consistency:
+  status: PARTIAL
+  score: 76
+  business_model_ssot: registry/payment-architecture-classification.v1.yaml
+  verdict: >
+    Core trip payment and optional Stripe onboarding share one classification registry
+    but diverge in implementation surfaces — consistent by design, not a single unified
+    payment module. Admission fee policy correctly excluded from PSG-10 scope docs.
+  layers:
+    frontend_ui:
+      status: PARTIAL
+      score: 78
+      trip_rail:
+        - frontend/app/pay/
+        - frontend/app/escrow/[id]/
+        - frontend/components/escrow/EscrowDetail/
+      onboarding_rail:
+        - frontend/app/me/onboarding/
+        - frontend/components/me/onboarding/MeOnboardingUsdcFeePayment.tsx
+      gap: "No single PSG-10 inventory page · bifurcation documented in READMEs"
+    backend_service:
+      status: PARTIAL
+      score: 75
+      trip_rail:
+        - crates/api/src/chain_off/orders_flow/
+        - crates/api/src/routes/orders/mod.rs
+      onboarding_rail:
+        - crates/api/src/stripe_onboarding/
+        - crates/api/src/routes/onboarding/
+      gap: "Order pay state via chain_off + indexer · not payment service module"
+    api_contract:
+      status: PASS
+      score: 88
+      trip: docs/spec/04-后端与API.md
+      onboarding: docs/spec/04-附录-商家主理人准入费HTTP契约草案-配96-18.md
+      platform_safe_boundary: docs/spec/04-附录-Platform-Safe-HTTP契约-配PFG.md
+      note: "04 cleanly separates order escrow HTTP from admission HTTP"
+    database:
+      status: PARTIAL
+      score: 72
+      onboarding_tables:
+        - onboarding_payment_events
+        - onboarding_webhook_jobs
+        - onboarding_webhook_dlq
+      trip_tables: "orders lifecycle columns · no payment_events for USDC trips"
+      gap: "10.7 WBS label implies unified ledger · DB is onboarding-only"
+    registry:
+      status: PASS
+      score: 92
+      primary:
+        - registry/payment-architecture-classification.v1.yaml
+        - registry/web3-payment-production-gate.v1.yaml
+        - registry/production-payment-readiness-checklist.v1.yaml
+        - registry/capability-wbs.v1.yaml#PSG-10
+      cross_ref_psg_20: registry/platform-safe-registry.v1.yaml
+    runtime:
+      status: PARTIAL
+      score: 74
+      runbooks:
+        - docs/runbook/PRODUCTION-PAYMENT-READINESS-WEB3-USDC.md
+        - docs/runbook/G3-02-WEB3-PAYMENT-PRODUCTION-EXECUTION.md
+        - docs/runbook/TT-9618-onboarding-local-testnet.md
+      gap: "G3-02 production execution evidence OPEN · ② staging not claimed"
+    documentation:
+      status: PASS
+      score: 90
+      note: "payment-architecture-classification forbids Payment=Stripe misclassification"
+    e2e_gate_evidence:
+      status: PARTIAL
+      score: 70
+      gates:
+        - scripts/check-web3-payment-production-readiness.sh
+        - scripts/check-pi3-003-stripe-live-production-webhook-execution.sh
+        - scripts/dev/smoke-orders-pay-escrow-local.sh
+        - scripts/dev/smoke-onboarding-full-chain-local.sh
+      gap: "G3-02 evidence dir absent · PSG-10 phase-1 audit was missing until this artifact"
+
+11_coverage_review:
+  ga_inclusion_complete: true
+  post_pcv_focus: "Implementation Consistency · not Capability Mapping"
+  capability_ownership:
+    owns:
+      - PSP (Stripe optional onboarding)
+      - Payment Gateway (internal + Stripe ingress)
+      - Payment Intent (onboarding PG)
+      - Escrow Payment Flow (USDC core)
+      - Settlement Execution (order rail)
+      - Payment Webhook (Stripe + internal)
+      - Payment Ledger (onboarding events)
+      - Payment Verification (G3-02 + PI3-003)
+    boundary_excludes:
+      - Platform Admission Fee business rules → PSG-20
+      - Revenue Policy → PSG-20
+      - Pricing Policy → PSG-20
+      - Platform Financial Registry → PSG-20
+      - Wallet connect UX → PSG-11
+      - Contract deploy / FeeRouter on-chain → PSG-09
+      - Admin CMS → PSG-08
+    dependencies:
+      - id: DEP-PAY-01
+        module: Platform Safe / admission fee destination
+        owner: PSG-20
+        relationship: dependency_only
+      - id: DEP-PAY-02
+        module: Escrow contracts · indexer · chain events
+        owner: PSG-09
+        relationship: dependency_only
+      - id: DEP-PAY-03
+        module: Wallet signing · approve · deposit UX
+        owner: PSG-11
+        relationship: dependency_only
+      - id: DEP-PAY-04
+        module: onboarding-fee-schedule · fee_schedule_v1 pricing
+        owner: PSG-20
+        relationship: policy_consumer
+      - id: DEP-PAY-05
+        module: Order lifecycle / mock-pay API
+        owner: PSG-03
+        relationship: co_implementation
+  substeps:
+    scope: PASS
+    boundary: PASS
+    dependency: PASS
+    authoritative_source: PASS
+    lifecycle: PARTIAL
+    unknown_capabilities: PASS
+
+10_gap_list:
+  - id: PAY-GAP-001
+    wbs: "10.8"
+    surface: Payment Verification
+    item: G3-02 evidence/GO_production_readiness/G3-02/ absent on disk
+    phase: engineering_implementation
+  - id: PAY-GAP-002
+    wbs: "10.7"
+    surface: Payment Ledger
+    item: WBS 10.7 maps to onboarding_payment_events only — no trip USDC ledger table; document chain/indexer as trip ledger SSOT
+    phase: governance_definition
+    status: DOCUMENTED
+  - id: PAY-GAP-003
+    wbs: "10.4"
+    surface: Escrow Payment Flow
+    item: ① mock-pay default · ③ real USDC deposit path G3-02 not Final
+    phase: engineering_implementation
+  - id: PAY-GAP-004
+    wbs: "10.5"
+    surface: Settlement Execution
+    item: "Settlement" term collision between order FeeRouter release (PSG-10) and platform revenue settlement (PSG-20) — traceability matrix missing for PSG-10
+    phase: governance_definition
+    status: DOCUMENTED
+  - id: PAY-GAP-005
+    wbs: "10.1"
+    surface: PSP
+    item: Stripe scoped onboarding-only — document explicit split in PSG-10 closure inventory (rail vs policy)
+    phase: governance_definition
+    status: DOCUMENTED
+  - id: PAY-GAP-006
+    wbs: "10.2"
+    surface: Payment Gateway
+    item: No abstract payment gateway module for USDC trip rail (by design) — add WBS footnote in closure
+    phase: governance_definition
+    status: DOCUMENTED
+  - id: PAY-GAP-007
+    surface: Implementation Consistency
+    item: owned_modules_index + governance_traceability → matrix — Wave 2 CLOSED
+    phase: governance_implementation
+    status: DOCUMENTED
+  - id: PAY-GAP-008
+    wbs: "10.6"
+    surface: Payment Webhook
+    item: PI3-003 Stripe live webhook ③ evidence partial · ② staging webhook exceptions tracked separately
+    phase: engineering_implementation
+
+closure_plan:
+  status: GOVERNANCE_EXIT_PASS
+  artifact: registry/psg-10-payment-closure-plan-20260716.v1.yaml
+  ready: false
+  plan_complete: true
+  wave_1_governance_definition: COMPLETE
+  wave_1_completed_utc: "2026-07-16T14:30:00Z"
+  wave_2_governance_implementation: COMPLETE
+  wave_2_completed_utc: "2026-07-16T15:00:00Z"
+  wave_3_governance_validation: COMPLETE
+  wave_3_completed_utc: "2026-07-16T15:30:00Z"
+  governance_exit_review: registry/psg-10-governance-exit-review-20260716.v1.yaml
+  governance_exit: PASS
+  engineering_implementation: AUTHORIZED
+  execution_complete: false
+  governance_closure_complete: true
+  blockers: [PAY-GAP-001, PAY-GAP-003, PAY-GAP-008]
+  governance_phase_gaps_closed:
+    - PAY-GAP-005
+    - PAY-GAP-002
+    - PAY-GAP-004
+    - PAY-GAP-006
+    - PAY-GAP-007
+  engineering_phase_gaps: [PAY-GAP-001, PAY-GAP-003, PAY-GAP-008]
+  template_for: [PSG-11, PSG-03, PSG-02]
+  next_step: engineering_implementation
+  honest_boundary: "Governance Exit PASS · engineering track authorized · not CLOSED"
+
+certification:
+  after: [governance_exit, engineering_implementation]
+  path: OUT_OF_PSG_RUNNER
+  pf_entry: true
+  web3_payment_gate: G3-02
+  production_go: NO_GO
+  phase: "① local audit only · not started"
+
+standard_audit_template_proof:
+  reusable_for: [PSG-11, PSG-03, PSG-02]
+  pattern: "Define → Implement → Validate → Engineering → Cert → CLOSED"
+  adds_vs_psg_09: implementation_consistency_layers
+
+next_recommended_action: psg_10_engineering_implementation
+next_capability_audit: PSG-11
+governance_exit_review: registry/psg-10-governance-exit-review-20260716.v1.yaml

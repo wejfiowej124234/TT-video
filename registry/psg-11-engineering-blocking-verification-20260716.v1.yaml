@@ -1,0 +1,113 @@
+# PSG-11 Wallet Governance Capability · Engineering Blocking Verification
+# Read-only verification · no code · no new gaps · no governance reopen · no certification
+schema: traveltrust.engineering_blocking_verification.v1
+verification_id: PSG-11-ENG-BLOCK-VERIFY-20260716
+capability_id: PSG-11
+capability_name: Wallet Governance Capability
+parent_engineering_report: registry/psg-11-engineering-implementation-report-20260716.v1.yaml
+parent_governance_exit: registry/psg-11-governance-exit-review-20260716.v1.yaml
+completed_utc: "2026-07-16T11:04:00Z"
+reviewer: solo_owner
+code_change: false
+new_gaps_added: 0
+governance_reopened: false
+certification_started: false
+
+capability_status: WAITING_OWNER_REAL_DEVICE_BATCH
+capability_status_frozen: true
+production_go: NO_GO
+
+# ── Blocking verdict ─────────────────────────────────────────────────
+blocking_verdict:
+  registered_engineering_blocking_gaps: 1
+  sole_blocking_gap: WAL-GAP-006
+  hidden_blocking_gaps: 0
+  engineering_implementation_complete: false
+  blocking_gaps: 1
+  certification_authorized: false
+
+sole_blocking_gap:
+  id: WAL-GAP-006
+  wbs: "11.8"
+  exit_criteria: "TT_REAL_DEVICE_BATCH_P1 Wallet leg PASS per Release Ladder"
+  status: FAIL
+  phase: "② Real Device · Owner-only"
+  ladder:
+    wallet_stage: "Real Device · BLOCKED"
+    batch_key: TT_REAL_DEVICE_BATCH_P1
+    batch_status: BLOCKED
+    atomic_modules: [Wallet, Order, Provider, Guide]
+  owner_prerequisites:
+    - "OA-01 · WalletConnect Project ID KEY_PRESENT + staging redeploy + WC UAT"
+    - "OA-02 · P1 Real Device Batch · four modules atomic PASS"
+  note: >
+    Exit criteria text says Wallet leg; Stage Batch V1 requires full P1 batch PASS
+    (no PARTIAL). See OBS-ENG-03.
+
+engineering_gaps_pass:
+  - id: WAL-GAP-004
+    status: PASS
+    phase: "① local"
+  - id: WAL-GAP-005
+    status: PASS
+    resolution: WAITING_OWNER
+    phase: "① alternate · ② Activation pending KEY"
+  - id: WAL-GAP-008
+    status: PASS
+    phase: "① local Automation"
+
+# ── Non-blocking observations (not new Gap IDs) ─────────────────────
+observations:
+  - id: OBS-ENG-01
+    severity: low
+    blocking: false
+    topic: Evidence README vs on-disk tree drift
+    detail: "README cites lib/wallet/connection/* · WalletBrandIcon — not on disk"
+    disposition: "Governance WAL-GAP-002 CLOSED · evidence refresh optional · not Engineering blocking"
+  - id: OBS-ENG-02
+    severity: low
+    blocking: false
+    topic: Phase-1 Audit WBS 11.5 narrative stale
+    detail: "Audit still says WalletSessionRevalidate not mounted · code mounted per Engineering 004 PASS"
+    disposition: "Audit snapshot · update on next audit refresh only · not blocking"
+  - id: OBS-ENG-03
+    severity: medium
+    blocking: false
+    topic: WAL-GAP-006 wording vs Batch atomicity
+    detail: "Closure exit_criteria Wallet leg vs TT-MODULE-RELEASE-STAGE-BATCH-V1 full batch PASS"
+    disposition: "Ladder SSOT governs · 006 remains FAIL until TT_REAL_DEVICE_BATCH_P1 PASS · not a new Gap"
+
+# ── Owner unblock chain (frozen until complete) ─────────────────────
+owner_unblock_chain:
+  step_1:
+    id: OA-01
+    action: "Owner provides 32-hex NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID · set-walletconnect-project-id.sh · staging redeploy · WC UAT"
+    closes: "Activation KEY_ABSENT only · not WAL-GAP-006 alone"
+  step_2:
+    id: OA-02
+    action: "P1 Real Device Batch · Wallet·Order·Provider·Guide · Owner declaration TT_REAL_DEVICE_BATCH_P1: PASS"
+    closes: WAL-GAP-006
+  step_3:
+    id: engineering_rerun
+    action: "Re-run PSG-11 Engineering Implementation only · close WAL-GAP-006 · confirm blocking_gaps=0 · engineering_implementation_complete=true"
+    forbidden_until: step_2
+  step_4:
+    id: certification
+    action: "Separate four-dimension Certification · OUT_OF_PSG_RUNNER · not automatic after OA-02"
+    forbidden_until: step_3
+  production_go:
+    status: NO_GO
+    note: "Unchanged throughout Owner wait · ③ separate gate"
+
+freeze_rules:
+  code_changes: forbidden
+  new_gaps: forbidden
+  governance_reopen: forbidden
+  certification_early_entry: forbidden
+  engineering_changes: forbidden_until_owner_unblock_chain_complete
+
+signoff:
+  verification: COMPLETE
+  capability_status: WAITING_OWNER_REAL_DEVICE_BATCH
+  signed_utc: "2026-07-16T11:04:00Z"
+  owner: solo_owner

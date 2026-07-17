@@ -1,0 +1,43 @@
+{
+  "schema": "traveltrust.pstc_step0_public_surface_pass.v1",
+  "machine_key": "TT_PSTC_STEP0_PUBLIC_SURFACE_PASS",
+  "status": "PASS",
+  "stamp_utc": "20260716T003400Z",
+  "phase": "2_staging",
+  "production_go": "NO_GO",
+  "pf_frozen": true,
+  "api_redeploy": false,
+  "runtime": {
+    "api_git_sha": "ddc022b6e57e8374a72a42b51e017020db2872e0",
+    "includes_commits": [
+      "1e1171d0 market countryIso+dedupe+badge",
+      "ddc022b6 Dockerfile LF sed + .gitattributes eol=lf"
+    ],
+    "web": "tt-web-staging deployed from ACQ scoped tree (Step0)"
+  },
+  "lf_integrity_in_deployed_sha": {
+    "commit": "ddc022b6e57e8374a72a42b51e017020db2872e0",
+    "gitattributes_eol_lf": true,
+    "dockerfile_sed_strip_cr": true
+  },
+  "preflight_added": {
+    "commit": "00f7e3d6c2ae427a3e887a78f835b9bf23b38a0e",
+    "script": "scripts/gates/check-sqlx-migration-lf-integrity.sh",
+    "status": "PASS_LOCAL",
+    "deployed": false,
+    "note": "gate for next API deploy; API not redeployed this step"
+  },
+  "probes": {
+    "acquisition": { "n": 10, "unique": 10, "maxdup": 1, "AE": 1, "JP": 2, "catalog": 10, "uploads": 10 },
+    "provider": { "n": 10, "unique": 10, "maxdup": 1, "AE": 1, "JP": 2, "catalog": 10, "uploads": 10 },
+    "media_head": { "http": 200, "content_type": "image/jpeg" },
+    "web": { "home": 200, "acquisition": 200, "provider": 200 },
+    "trustEscrowBadge_hardgate": "PASS",
+    "badge_bundle": "/_next/static/chunks/68387-581fb1e99dd1bc89.js"
+  },
+  "gates": [
+    "TT_PSTC_P0_1_SHA_PROVENANCE: PASS",
+    "TT_PSTC_PUBLIC_MARKET: PASS",
+    "TT_PSTC_MIGRATION_LF_INTEGRITY: PASS"
+  ]
+}

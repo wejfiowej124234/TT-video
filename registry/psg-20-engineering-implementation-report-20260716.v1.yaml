@@ -1,0 +1,174 @@
+# PSG-20 Platform Financial Governance Capability · Engineering Implementation Report
+# Scope: PF-GAP-002 · PF-GAP-006 only
+# SSOT: post-Governance-Exit engineering track · no GA/WBS/governance-process changes
+schema: traveltrust.engineering_implementation_report.v1
+report_id: PSG-20-ENG-IMPL-20260716
+capability_id: PSG-20
+capability_name: Platform Financial Governance Capability
+parent_governance_exit: registry/psg-20-governance-exit-review-20260716.v1.yaml
+parent_closure_plan: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml
+completed_utc: "2026-07-16T12:05:33Z"
+executor: solo_owner
+phase: engineering_implementation_only
+phase_scope_primary: "① local code + vitest · ② staging Step 4 PASS"
+code_change_this_session: true
+honest_boundary: "2/2 Engineering gaps closed · Certification entered · PF-GAP-003/004/007 remain · ≠ PSG-20 CLOSED · ≠ Production GO"
+
+verdict: PASS
+capability_status: CERTIFICATION_ACTIVE
+engineering_implementation_complete: true
+certification_authorized: true
+production_go: NO_GO
+blocking_gaps: 0
+blocking_verification: registry/psg-20-engineering-blocking-verification-20260716.v1.yaml
+
+# ── Scope discipline ─────────────────────────────────────────────────
+scope:
+  in_scope_gaps: [PF-GAP-002, PF-GAP-006]
+  out_of_scope:
+    - governance_waves
+    - governance_exit_review
+    - GA_v1.0
+    - common_model
+    - capability_registry
+    - capability_wbs
+    - closure_plan_governance_sections
+    - psg_domain_coverage_matrix
+    - PF-GAP-003
+    - PF-GAP-004
+    - PF-GAP-007
+  layers_verified:
+    - code_mount_runtime
+    - vitest_automation
+    - consumer_contract
+    - step4_staging_gate
+    - evidence_artifacts
+
+code_changes:
+  - frontend/lib/apiClient/platform/platformSafeHttp.ts
+  - frontend/lib/onboarding/useOnboardingFeeReceiverFromPlatformSafe.ts
+  - frontend/lib/onboarding/onboardingFeeEnv.ts
+  - frontend/lib/onboarding/onboardingPlatformSafeConsumer.test.ts
+  - frontend/components/me/onboarding/MeOnboardingUsdcFeePayment.tsx
+  - frontend/e2e/smoke-admin.spec.ts
+
+# ── Gap disposition ──────────────────────────────────────────────────
+gaps:
+  - id: PF-GAP-002
+    wbs: "20.1"
+    surface: Admission Fee · PF Step 4 Staging
+    exit_criteria: "run-platform-financial-step4-staging.sh exit 0 · four-layer evidence PASS"
+    status: PASS
+    phase_scope: "② Staging"
+    gate:
+      command: bash scripts/dev/run-platform-financial-step4-staging.sh
+      exit_code: 0
+      recorded_utc: "2026-07-16T12:05:33Z"
+      machine_key: TT_PLATFORM_FINANCIAL_STEP4_STAGING
+      verdict: PASS
+      stamp: "20260716T120410Z"
+    layers:
+      reachability: PASS
+      api_guest_admin_rbac: PASS
+      playwright_platform_financial: PASS
+      db_layer: SKIP
+    sha_alignment:
+      staging_api: 0bbc7adbd3142b111463fc398288ab94be5c0b84
+      local_head: 0bbc7adbd3142b111463fc398288ab94be5c0b84
+    evidence:
+      - evidence/GO_platform_financial_staging/step4-staging-20260716T120410Z.log
+      - evidence/GO_platform_financial_staging/api-guest-admin-20260716T120410Z.json
+      - evidence/GO_platform_financial_staging/playwright-smoke-LATEST.status
+      - evidence/GO_platform_financial_staging/playwright-smoke-LATEST.log
+    notes: "Playwright URL assertion stabilized (regex + 60s) · Step 4 gate authoritative"
+
+  - id: PF-GAP-006
+    wbs: "20.1"
+    surface: Admission Fee · Billing · consumer wiring
+    exit_criteria: "Onboarding consumer wiring complete per admission_fee_consumer_map · Current Active via API"
+    status: PASS
+    phase_scope: "① local code + vitest · ② Step 4 API guest/public current PASS"
+    resolution: code_wiring
+    consumer_map_ref: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#admission_fee_consumer_map
+    runtime:
+      public_api: GET /api/v1/platform/safe/current
+      client: frontend/lib/apiClient/platform/platformSafeHttp.ts#getPublicPlatformSafeCurrent
+      hook: frontend/lib/onboarding/useOnboardingFeeReceiverFromPlatformSafe.ts
+      consumer: frontend/components/me/onboarding/MeOnboardingUsdcFeePayment.tsx
+      source_attribute: data-tt-me-onboarding-usdc-receiver-source
+      primary_source: platform_safe_api
+      fallback: env_fallback_when_platform_safe_not_configured
+    test:
+      file: frontend/lib/onboarding/onboardingPlatformSafeConsumer.test.ts
+      result: PASS
+      tests_passed: 4
+    step4_cross_check:
+      guest_public_current: PASS
+      api_layer_report: evidence/GO_platform_financial_staging/api-guest-admin-20260716T120410Z.json
+
+# ── Gate summary (final) ─────────────────────────────────────────────
+gate_results:
+  - gate: frontend/lib/onboarding/onboardingPlatformSafeConsumer.test.ts
+    command: npx vitest run lib/onboarding/onboardingPlatformSafeConsumer.test.ts
+    exit_code: 0
+    verdict: PASS
+    tests_passed: 4
+    stamp: "20260716T112137Z"
+  - gate: scripts/dev/run-platform-financial-step4-staging.sh
+    exit_code: 0
+    verdict: TT_PLATFORM_FINANCIAL_STEP4_STAGING: PASS
+    stamp: "20260716T120410Z"
+    playwright_summary: "4 passed"
+    api_layer: PASS
+
+# ── Evidence ─────────────────────────────────────────────────────────
+evidence:
+  - evidence/GO_platform_financial_staging/step4-staging-20260716T120410Z.log
+  - evidence/GO_platform_financial_staging/api-guest-admin-20260716T120410Z.json
+  - evidence/GO_platform_financial_staging/playwright-smoke-LATEST.status
+  - evidence/GO_platform_financial_staging/playwright-smoke-LATEST.log
+  - frontend/lib/onboarding/onboardingPlatformSafeConsumer.test.ts
+
+# ── Completed items ──────────────────────────────────────────────────
+completed:
+  - "PF-GAP-002 PASS — Step 4 staging four-layer evidence (API + Playwright) · exit 0"
+  - "PF-GAP-006 PASS — onboarding consumer reads Current Active via Platform Safe public API"
+  - "Staging API SHA aligned with local HEAD 0bbc7adb"
+
+# ── Deferred to Certification (not Engineering blocking) ───────────────
+incomplete_or_deferred:
+  - item: PF-GAP-003 Current Active all payment consumers at ③
+    phase: certification
+    reason: "Closure plan certification scope"
+    blocks_engineering_exit: false
+  - item: PF-GAP-004 PF Step 5 E2E
+    phase: certification
+    reason: "After Step 4 PASS · certification handoff"
+    blocks_engineering_exit: false
+  - item: PF-GAP-007 settlement staging evidence
+    phase: certification
+    reason: "Certification scope · Step 4 unblocks"
+    blocks_engineering_exit: false
+
+# ── Sign-off ─────────────────────────────────────────────────────────
+signoff:
+  engineering_implementation: PASS
+  gaps_pass: 2
+  gaps_fail: 0
+  signed_utc: "2026-07-16T12:05:33Z"
+  owner: solo_owner
+
+next_phase:
+  id: certification
+  certification:
+    authorized: true
+    status: ACTIVE
+    artifact: registry/psg-20-certification-20260716.v1.yaml
+  certification_gaps: [PF-GAP-003, PF-GAP-004, PF-GAP-007]
+  production_go: NO_GO
+  reason: "Engineering complete · certification gaps remain · ≠ CLOSED"
+
+standard_engineering_implementation_template:
+  inherits: registry/psg-10-engineering-implementation-report-20260716.v1.yaml
+  pattern: "gap exit_criteria verification · gate runs · evidence inventory · honest phase boundary"
+  golden_reference: PSG-10

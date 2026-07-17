@@ -1,0 +1,191 @@
+# PSG-10 Payment Governance Capability · Engineering Implementation Report
+# Scope: PAY-GAP-001 · PAY-GAP-003 · PAY-GAP-008 only
+# SSOT: post-Governance-Exit engineering track · no GA/WBS/governance-process changes
+schema: traveltrust.engineering_implementation_report.v1
+report_id: PSG-10-ENG-IMPL-20260716
+capability_id: PSG-10
+capability_name: Payment Governance Capability
+parent_governance_exit: registry/psg-10-governance-exit-review-20260716.v1.yaml
+parent_closure_plan: registry/psg-10-payment-closure-plan-20260716.v1.yaml
+completed_utc: "2026-07-16T10:16:00Z"
+executor: solo_owner
+phase: engineering_implementation_only
+production_scope: PRODUCTION_SCOPE_SEPOLIA
+chain_id: 11155111
+code_change_this_session: false
+honest_boundary: "Engineering exit criteria met at ③ Sepolia production scope ≠ ③ mainnet Production GO ≠ Stripe live webhook Owner UAT closed"
+
+verdict: PASS
+engineering_implementation_complete: true
+certification_authorized: true
+blocking_gaps: 0
+
+# ── Scope discipline ─────────────────────────────────────────────────
+scope:
+  in_scope_gaps: [PAY-GAP-001, PAY-GAP-003, PAY-GAP-008]
+  out_of_scope:
+    - governance_waves
+    - GA_v1.0
+    - common_model
+    - capability_registry
+    - capability_wbs
+    - new_governance_concepts
+  layers_verified:
+    - runtime_probes
+    - evidence_artifacts
+    - primary_gates
+    - staging_regression_smoke
+    - prod_sepolia_api_meta
+
+# ── Gap disposition ──────────────────────────────────────────────────
+gaps:
+  - id: PAY-GAP-001
+    wbs: "10.8"
+    surface: Payment Verification
+    exit_criteria: "bash scripts/check-web3-payment-production-readiness.sh exit 0 + evidence/GO_production_readiness/G3-02/ present"
+    status: CLOSED
+    phase_scope: "③ PRODUCTION_SCOPE_SEPOLIA"
+    gate:
+      command: bash scripts/check-web3-payment-production-readiness.sh
+      exit_code: 0
+      recorded_utc: "20260716T101213Z"
+      machine_key: TT_WEB3_PAYMENT_PRODUCTION_READINESS
+      verdict: WEB3_PAYMENT_PRODUCTION_PASS
+    evidence:
+      - evidence/GO_production_readiness/G3-02/WEB3-PAYMENT-PRODUCTION-READINESS-LATEST.json
+      - evidence/GO_production_readiness/G3-02/web3-payment-readiness-20260716T101213Z/
+    checklist:
+      total: 16
+      with_artifacts: 16
+    runtime_probes:
+      meta_reachable: true
+      mock_pay_forbidden: absent
+      contract_parity_ok: true
+      prod_api: https://tt-api-prod.fly.dev
+      prod_web: https://tt-web-prod.fly.dev
+    notes: "Readiness gate re-run this session; no business code modified."
+
+  - id: PAY-GAP-003
+    wbs: "10.4"
+    surface: Escrow Payment Flow
+    exit_criteria: "G3-02 ③ USDC deposit path Final · B435 evidence · runbook G3-02 execution evidence on disk"
+    status: CLOSED
+    phase_scope: "③ PRODUCTION_SCOPE_SEPOLIA"
+    g3_02_usdc_deposit:
+      pay_item: PAY-W03
+      verdict: PASS
+      latest_artifact: evidence/GO_production_readiness/G3-02/deposit/PAY-W03-LATEST.json
+      run_id: "2026-07-08T08-27-51-062Z"
+      run_dir: evidence/GO_production_readiness/G3-02/exec-2026-07-08T08-27-51-062Z
+      overall_execution_verdict: WEB3_PAYMENT_PRODUCTION_PASS
+      escrow_address: "0x4f37d92E4a11da3223f0f1D7967a33ff3853c1b8"
+      order_id: "58ff3da5-497a-4cd8-b0ea-0c28751ace3e"
+    b435_evidence:
+      root: evidence/b435_fullstack_fund_testnet_closeout/
+      runs:
+        - run_20260416T122500Z
+        - run_20260417T003342Z
+        - run_20260417T013826Z
+        - run_20260417T021846Z
+      tx_hashes: evidence/b435_fullstack_fund_testnet_closeout/run_20260417T021846Z/tx_hashes.json
+    runbook_execution:
+      runbook: docs/runbook/G3-02-WEB3-PAYMENT-PRODUCTION-EXECUTION.md
+      execution_latest: evidence/GO_production_readiness/G3-02/G3-02-EXECUTION-LATEST.json
+      evidence_closure: evidence/GO_production_readiness/G3-02/G3-02-EVIDENCE-CLOSURE-LATEST.json
+      evidence_closure_verdict: G3_02_EVIDENCE_CLOSURE_PASS
+    gate_cross_check:
+      command: bash scripts/check-web3-payment-production-readiness.sh
+      exit_code: 0
+      verdict: WEB3_PAYMENT_PRODUCTION_PASS
+    notes: "USDC deposit corridor executed 2026-07-08 on prod Sepolia; readiness gate 2026-07-16 confirms artifacts still valid. PAY-W14 remains PARTIAL (non-blocking for this gap exit)."
+
+  - id: PAY-GAP-008
+    wbs: "10.6"
+    surface: Payment Webhook
+    exit_criteria: "bash scripts/check-pi3-003-stripe-live-production-webhook-execution.sh exit 0"
+    status: CLOSED
+    phase_scope: "② staging regression + ③ PI3-003 baseline (Sepolia scope)"
+    gate:
+      command: bash scripts/check-pi3-003-stripe-live-production-webhook-execution.sh
+      exit_code: 0
+      recorded_utc: "20260716T101213Z"
+      machine_key: TT_PI3_003_STRIPE_LIVE_PRODUCTION_WEBHOOK_EXECUTION
+      verdict: PI3-003_WAITING_OWNER_STRIPE
+    evidence:
+      - evidence/pi3_003_stripe_live_production_webhook/baseline_record.v1.json
+      - evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-003-exec-20260716T101213Z/
+    staging_validation:
+      smoke_onboarding_testnet: PASS
+      h3_webhook_exception_smoke: WARN
+      staging_health: "https://tt-api-staging.fly.dev/health returned 502 during probe"
+      onboarding_smoke_logs: present
+    static_signature_gate:
+      command: verify-production-stripe-webhook-signature-static
+      pass: 10
+      fail: 0
+    notes: "Gate exit 0 by design for WAITING_OWNER_STRIPE; blocks_core_payment=false. Prod live webhook smoke NOT_RUN — Owner queue for Certification/Production GO."
+
+# ── Gate summary (this session) ──────────────────────────────────────
+gate_results:
+  - gate: scripts/check-web3-payment-production-readiness.sh
+    exit_code: 0
+    verdict: WEB3_PAYMENT_PRODUCTION_PASS
+    stamp: "20260716T101213Z"
+  - gate: scripts/check-pi3-003-stripe-live-production-webhook-execution.sh
+    exit_code: 0
+    verdict: PI3-003_WAITING_OWNER_STRIPE
+    stamp: "20260716T101213Z"
+
+# ── Completed items ──────────────────────────────────────────────────
+completed:
+  - "PAY-GAP-001 exit criteria met — G3-02 readiness gate PASS · 16/16 checklist artifacts"
+  - "PAY-GAP-003 exit criteria met — PAY-W03 USDC deposit PASS · B435 runs on disk · G3-02 execution + closure manifests"
+  - "PAY-GAP-008 exit criteria met — PI3-003 gate exit 0 · staging onboarding smoke PASS · static webhook signature gate PASS"
+  - "Runtime probes — prod Sepolia API /meta reachable · contract parity OK"
+  - "Evidence refreshed — web3-payment-readiness-20260716T101213Z · pi3-003-exec-20260716T101213Z"
+
+# ── Incomplete / deferred (honest boundary) ──────────────────────────
+incomplete_or_deferred:
+  - item: Stripe live production webhook smoke
+    owner: Owner
+    phase: "③ Production GO"
+    reason: "PI3-003 status PLANNED · sk_live not in prod env · smoke-stripe-live-webhook-prod.sh NOT_RUN"
+    blocks_engineering_exit: false
+    blocks_certification_entry: false
+    note: "Certification may record WAITING_OWNER; not part of PAY-GAP-008 exit_criteria"
+  - item: Staging API health / H3 webhook corridor
+    phase: "②"
+    reason: "tt-api-staging.fly.dev/health 502 during 20260716T101213Z probe"
+    blocks_engineering_exit: false
+    note: "Onboarding testnet smoke PASS; H3 exception smoke WARN only"
+  - item: PAY-W14 partial item
+    phase: "③ Sepolia"
+    reason: "G3-02-EXECUTION-LATEST pay_items PAY-W14=PARTIAL"
+    blocks_engineering_exit: false
+    note: "Not in PAY-GAP-001/003/008 exit_criteria"
+  - item: Mainnet / full Production GO
+    phase: "③"
+    reason: "PRODUCTION_SCOPE_SEPOLIA only; not in engineering gap exit criteria"
+    blocks_engineering_exit: false
+
+# ── Sign-off ─────────────────────────────────────────────────────────
+signoff:
+  engineering_implementation: PASS
+  signed_utc: "2026-07-16T10:16:00Z"
+  owner: solo_owner
+  all_three_gaps_closed: true
+
+next_phase:
+  id: certification
+  authorized: true
+  cert_path: OUT_OF_PSG_RUNNER
+  pf_entry: true
+  primary_gates:
+    - scripts/check-web3-payment-production-readiness.sh
+    - scripts/check-pi3-003-stripe-live-production-webhook-execution.sh
+  then: CLOSED
+
+standard_engineering_implementation_template:
+  reusable_for: [PSG-11, PSG-03, PSG-02]
+  pattern: "gap exit_criteria verification · gate runs · evidence inventory · honest phase boundary · PASS → certification"
+  benchmark: PSG-10

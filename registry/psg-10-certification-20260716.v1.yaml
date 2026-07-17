@@ -1,0 +1,165 @@
+# PSG-10 Payment Governance Capability · Certification
+# Four-dimension review · NOT gate re-run · answers CLOSED eligibility
+schema: traveltrust.governance_capability_certification.v1
+certification_id: PSG-10-CERT-20260716
+capability_id: PSG-10
+capability_name: Payment Governance Capability
+template: registry/governance-capability-certification-template.v1.yaml
+lifecycle_standard: registry/psg-capability-lifecycle-standard.v1.yaml
+parent_chain:
+  audit: registry/psg-10-payment-phase1-audit-20260716.v1.yaml
+  closure_plan: registry/psg-10-payment-closure-plan-20260716.v1.yaml
+  governance_exit: registry/psg-10-governance-exit-review-20260716.v1.yaml
+  engineering: registry/psg-10-engineering-implementation-report-20260716.v1.yaml
+completed_utc: "2026-07-16T10:20:00Z"
+certifier: solo_owner
+phase: certification_only
+code_change: false
+gate_rerun_this_phase: false
+production_scope: PRODUCTION_SCOPE_SEPOLIA
+honest_boundary: "PSG-10 CLOSED = Governance Capability lifecycle complete at documented scope · ≠ Production GO · ≠ PSG-09/20 CLOSED"
+
+# ── 1 · Evidence Review ──────────────────────────────────────────────
+evidence_review:
+  question: "All Engineering Evidence complete · traceable · meets exit_criteria?"
+  result: PASS
+  engineering_gaps:
+    - id: PAY-GAP-001
+      status: CLOSED
+      exit_criteria_met: true
+      traceability:
+        - registry/psg-10-engineering-implementation-report-20260716.v1.yaml#gaps.PAY-GAP-001
+        - evidence/GO_production_readiness/G3-02/WEB3-PAYMENT-PRODUCTION-READINESS-LATEST.json
+        - evidence/GO_production_readiness/G3-02/web3-payment-readiness-20260716T101213Z/
+      on_disk_verified: true
+    - id: PAY-GAP-003
+      status: CLOSED
+      exit_criteria_met: true
+      traceability:
+        - evidence/GO_production_readiness/G3-02/G3-02-EXECUTION-LATEST.json
+        - evidence/GO_production_readiness/G3-02/deposit/PAY-W03-LATEST.json
+        - evidence/GO_production_readiness/G3-02/G3-02-EVIDENCE-CLOSURE-LATEST.json
+        - evidence/b435_fullstack_fund_testnet_closeout/
+      on_disk_verified: true
+      pay_w03_verdict: PASS
+      evidence_closure_verdict: G3_02_EVIDENCE_CLOSURE_PASS
+    - id: PAY-GAP-008
+      status: CLOSED
+      exit_criteria_met: true
+      traceability:
+        - evidence/pi3_003_stripe_live_production_webhook/baseline_record.v1.json
+        - evidence/GO_phase2_testnet_20260526/phase3-production-prep/pi3-003-exec-20260716T101213Z/
+      on_disk_verified: true
+  governance_gaps:
+    disposition: ALL_DOCUMENTED
+    count: 5
+    ids: [PAY-GAP-002, PAY-GAP-004, PAY-GAP-005, PAY-GAP-006, PAY-GAP-007]
+    blocks_certification: false
+  evidence_chain:
+    - "Phase ① Audit → closure plan gap table"
+    - "Governance Exit PASS → engineering gaps deferred with exit_criteria"
+    - "Engineering PASS → three gaps CLOSED with artifact paths"
+    - "Certification spot-check: 8/8 key paths exist on disk"
+  phase_honesty:
+    engineering_scope: PRODUCTION_SCOPE_SEPOLIA
+    not_claimed: [mainnet_production_go, stripe_live_owner_uat_closed, full_staging_matrix_go]
+  notes: "PAY-W14 PARTIAL and Stripe live smoke NOT_RUN documented in engineering report · out of certification blocking set"
+
+# ── 2 · Gate Review ──────────────────────────────────────────────────
+gate_review:
+  question: "Recorded gates satisfy Closure Plan pass conditions?"
+  result: PASS
+  method: "Review engineering_implementation_report gate_results · no gate re-run this phase"
+  primary_gates:
+    - gate: scripts/check-web3-payment-production-readiness.sh
+      closure_plan_ref: registry/psg-10-payment-closure-plan-20260716.v1.yaml#certification_handoff.primary_gates
+      recorded_exit_code: 0
+      recorded_verdict: WEB3_PAYMENT_PRODUCTION_PASS
+      recorded_utc: "20260716T101213Z"
+      satisfies_exit_criteria: true
+      gaps_closed: [PAY-GAP-001]
+    - gate: scripts/check-pi3-003-stripe-live-production-webhook-execution.sh
+      closure_plan_ref: registry/psg-10-payment-closure-plan-20260716.v1.yaml#certification_handoff.primary_gates
+      recorded_exit_code: 0
+      recorded_verdict: PI3-003_WAITING_OWNER_STRIPE
+      recorded_utc: "20260716T101213Z"
+      satisfies_exit_criteria: true
+      acceptance_note: "Closure plan + gate script allow exit 0 for WAITING_OWNER_STRIPE · blocks_core_payment=false"
+      gaps_closed: [PAY-GAP-008]
+  cross_gap_gate:
+    PAY-GAP-003: "Satisfied via G3-02 execution evidence + readiness gate cross-check · not a separate primary gate"
+  blocking_gate_failures: 0
+  stale_evidence_flag: false
+  notes: "Certification confirms gate records · does not substitute fresh execution"
+
+# ── 3 · Boundary Review ────────────────────────────────────────────────
+boundary_review:
+  question: "No boundary drift · no PSG-09/20/11 confusion reintroduced?"
+  result: PASS
+  charter_frozen:
+    ssot: registry/psg-10-payment-phase1-audit-20260716.v1.yaml#charter_page_one
+    boundary_excludes_unchanged: true
+    excludes:
+      - Platform Admission Fee → PSG-20
+      - Revenue Policy → PSG-20
+      - Pricing Policy → PSG-20
+      - Platform Financial Registry → PSG-20
+      - Wallet UI → PSG-11
+      - Web3 contracts / on-chain governance → PSG-09
+  cross_capability_matrix:
+    ssot: registry/psg-10-payment-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+    rows: 6
+    drift_detected: false
+    settlement_prefixes_frozen: true
+  dependency_only_not_owned:
+    - registry/platform-safe-registry.v1.yaml → PSG-20
+    - docs/spec/artifacts/onboarding-fee-schedule.v1.yaml → PSG-20
+    - crates/api/src/chain/indexer.rs → PSG-09
+    - frontend/lib/wagmi/ → PSG-11
+    promoted_to_owned: false
+  peer_reciprocity:
+    psg_20: registry/psg-20-platform-financial-phase1-audit-20260716.v1.yaml
+    psg_09: registry/psg-09-web3-phase1-audit-20260716.v1.yaml
+    consistent: true
+  engineering_session_scope_expansion: false
+  code_change_since_governance_exit: false
+  notes: "PSG-10 owns payment execution rail only · admission fee / treasury / wallet remain peer-owned"
+
+# ── 4 · Certification Decision ───────────────────────────────────────
+certification_decision:
+  verdict: PASS
+  capability_lifecycle: CLOSED
+  return_to: null
+  blocking_reasons: []
+  rationale:
+    - "Evidence Review PASS — 3/3 engineering gaps CLOSED with on-disk artifacts"
+    - "Gate Review PASS — primary gate records satisfy closure plan (no re-run required)"
+    - "Boundary Review PASS — charter + matrix frozen · dependencies not promoted"
+  first_full_lifecycle_in_ga: true
+  lifecycle_completed:
+    - capability_audit
+    - governance_wave_1_definition
+    - governance_wave_2_implementation
+    - governance_wave_3_validation
+    - engineering_implementation
+    - certification
+    - CLOSED
+  parallel_tracks_not_required:
+    - "PSG-20 PF admission fee staging"
+    - "PSG-09 Reality Certification"
+    - "Stripe live Owner UAT"
+  post_closed_maintenance: "bugfix · evidence refresh · PER regression only · no scope expansion without new audit"
+
+signoff:
+  certification: PASS
+  capability_status: CLOSED
+  signed_utc: "2026-07-16T10:20:00Z"
+  owner: solo_owner
+
+standard_certification_template_proof:
+  reusable_for: [PSG-11, PSG-03, PSG-02, PSG-20, PSG-09]
+  pattern: "Evidence Review → Gate Review → Boundary Review → Certification Decision"
+  template: registry/governance-capability-certification-template.v1.yaml
+  lifecycle_standard: registry/psg-capability-lifecycle-standard.v1.yaml
+  benchmark: PSG-10
+  golden_reference: true

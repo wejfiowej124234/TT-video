@@ -1,0 +1,171 @@
+# PSG-20 Platform Financial Governance Capability · Certification Entry
+# Four-dimension review · Engineering handoff · NOT full capability CLOSED
+schema: traveltrust.governance_capability_certification.v1
+certification_id: PSG-20-CERT-20260716
+capability_id: PSG-20
+capability_name: Platform Financial Governance Capability
+template: registry/governance-capability-certification-template.v1.yaml
+lifecycle_standard: registry/psg-capability-lifecycle-standard.v1.yaml
+parent_chain:
+  audit: registry/psg-20-platform-financial-phase1-audit-20260716.v1.yaml
+  closure_plan: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml
+  governance_exit: registry/psg-20-governance-exit-review-20260716.v1.yaml
+  engineering: registry/psg-20-engineering-implementation-report-20260716.v1.yaml
+completed_utc: "2026-07-16T12:06:00Z"
+certifier: solo_owner
+phase: certification_entry
+code_change: false
+gate_rerun_this_phase: false
+honest_boundary: "Certification ACTIVE · PF-GAP-008 CLOSED · PF-GAP-003 PASS_PHASE2_READY (≠ CLOSED at ③) · PF-GAP-004/007 open · ≠ PSG-20 CLOSED · ≠ Production GO · Cap Cert waves blocked until foundation_gate.status=PASS (RC Sequence)"
+
+capability_status: CERTIFICATION_ACTIVE
+capability_lifecycle_closed: false
+engineering_implementation_complete: true
+
+# F3 · Matrix / RC alignment (2026-07-17)
+matrix_row: registry/psg-domain-coverage-matrix.v1.yaml#domains.PSG-20
+rc_sequence: registry/psg-release-candidate-sequence.v1.yaml
+foundation_gate: registry/psg-foundation-gate-LATEST.v1.yaml
+cap_cert_preflight: "foundation_gate.status=PASS required before PF-GAP-004 / PF-GAP-007 / new Cap Cert waves"
+
+# ── 1 · Evidence Review ──────────────────────────────────────────────
+evidence_review:
+  question: "All Engineering Evidence complete · traceable · meets exit_criteria?"
+  result: PASS
+  engineering_gaps:
+    - id: PF-GAP-002
+      status: CLOSED
+      exit_criteria_met: true
+      traceability:
+        - registry/psg-20-engineering-implementation-report-20260716.v1.yaml#gaps.PF-GAP-002
+        - evidence/GO_platform_financial_staging/step4-staging-20260716T120410Z.log
+        - evidence/GO_platform_financial_staging/api-guest-admin-20260716T120410Z.json
+        - evidence/GO_platform_financial_staging/playwright-smoke-LATEST.status
+      on_disk_verified: true
+    - id: PF-GAP-006
+      status: CLOSED
+      exit_criteria_met: true
+      traceability:
+        - registry/psg-20-engineering-implementation-report-20260716.v1.yaml#gaps.PF-GAP-006
+        - frontend/lib/onboarding/onboardingPlatformSafeConsumer.test.ts
+        - evidence/GO_platform_financial_staging/api-guest-admin-20260716T120410Z.json
+      on_disk_verified: true
+  certification_gaps:
+    disposition: DEFERRED_OPEN
+    count: 3
+    ids: [PF-GAP-003, PF-GAP-004, PF-GAP-007]
+    phase2_ready:
+      - id: PF-GAP-003
+        title: Current Active wired to onboarding consumers
+        status: PASS_PHASE2_READY
+        closed: false
+        blocks_psg_certification: false
+        note: "② Staging Current Active HTTP 200 + consumer map wired · full CLOSED requires ③"
+        registry: registry/pf-gap-003-current-active-LATEST.v1.yaml
+        gate_script: scripts/dev/run-pf-gap-003-current-active-audit.cjs
+        traceability:
+          - registry/pf-gap-003-current-active-LATEST.v1.yaml
+          - evidence/GO_pf_gap_003_current_active/20260716T234705Z/PF-GAP-003-AUDIT-LATEST.json
+        recorded_verdict: TT_PF_GAP_003: PASS_PHASE2_READY
+        recorded_exit_code: 0
+    closed:
+      - id: PF-GAP-008
+        title: CMS Public Catalog Governance
+        status: CLOSED
+        closed_utc: "2026-07-16T14:40:28Z"
+        blocks_psg_certification: false
+        registry: registry/pf-gap-008-public-catalog-governance-LATEST.v1.yaml
+        allowlist: registry/public-catalog-canonical-allowlist.v1.yaml
+        gate_script: scripts/dev/run-pf-gap-008-public-catalog-governance.cjs
+        server_gate: crates/api/src/pcp/public_catalog_gate.rs
+        traceability:
+          - registry/pf-gap-008-public-catalog-governance-LATEST.v1.yaml
+          - evidence/GO_pf_gap_008_public_catalog/20260716T144028Z/PF-GAP-008-AUDIT-LATEST.json
+          - registry/generated/public-catalog-canonical-allowlist.latest.json
+        recorded_verdict: TT_PF_GAP_008: PASS
+        recorded_exit_code: 0
+        ocs_state: evidence/GO_official_cold_start_dataset/ocs-surface-expansion-staging/20260704T073209Z/state.json
+        phase: "② staging verify · PF_GAP_008_ALIGN=0 · local skipped (major only)"
+    p0_blocking: []
+    blocks_full_capability_closed: true
+    blocks_certification_entry: false
+  phase_honesty:
+    engineering_scope: "② Staging Step 4 + ① consumer wiring"
+    not_claimed: [psg_20_closed, production_go, pf_step_5_pass, all_consumers_at_3]
+
+# ── 2 · Gate Review ──────────────────────────────────────────────────
+gate_review:
+  question: "Recorded gates satisfy Closure Plan pass conditions?"
+  result: PASS
+  method: "Review engineering_implementation_report gate_results · Step 4 authoritative run"
+  primary_gates:
+    - gate: scripts/dev/run-platform-financial-step4-staging.sh
+      closure_plan_ref: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#gaps.PF-GAP-002
+      recorded_exit_code: 0
+      recorded_verdict: TT_PLATFORM_FINANCIAL_STEP4_STAGING: PASS
+      recorded_utc: "20260716T120410Z"
+      satisfies_exit_criteria: true
+      gaps_closed: [PF-GAP-002]
+    - gate: frontend/lib/onboarding/onboardingPlatformSafeConsumer.test.ts
+      recorded_exit_code: 0
+      recorded_verdict: PASS
+      tests_passed: 4
+      satisfies_exit_criteria: true
+      gaps_closed: [PF-GAP-006]
+  blocking_gate_failures: 0
+
+# ── 3 · Boundary Review ────────────────────────────────────────────────
+boundary_review:
+  question: "No boundary drift · peer capabilities unchanged?"
+  result: PASS
+  charter_frozen: true
+  cross_capability_matrix:
+    ssot: registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml#cross_capability_boundary_matrix
+    drift_detected: false
+  peer_reciprocity:
+    psg_10: CLOSED
+    psg_11: WAITING_OWNER_REAL_DEVICE_BATCH
+    psg_09: dependency_only
+  engineering_session_scope_expansion: false
+  notes: "Engineering limited to PF-GAP-002/006 · no GA/WBS/governance reopen"
+
+# ── 4 · Certification Decision ───────────────────────────────────────
+certification_decision:
+  verdict: PASS
+  decision_scope: certification_entry_p0_cleared_pf_gap_008_closed
+  capability_lifecycle: CERTIFICATION_ACTIVE
+  full_capability_closed: false
+  return_to: FOUNDATION_GATE
+  blocking_reasons: []
+  rationale:
+    - "Evidence Review PASS — 2/2 engineering gaps CLOSED with on-disk artifacts"
+    - "Gate Review PASS — Step 4 exit 0 + vitest consumer wiring"
+    - "Boundary Review PASS — charter/matrix frozen · no scope expansion"
+    - "PF-GAP-008 CLOSED — run-pf-gap-008-public-catalog-governance.cjs exit 0 · ② staging 10/10/10/10 · no EXTRA/DUP"
+    - "PF-GAP-003 PASS_PHASE2_READY — Staging Current Active + consumer map · ≠ CLOSED at ③"
+    - "RC Sequence v1.1.0 — next Cap Cert (PF-GAP-004) forbidden until foundation_gate.status=PASS"
+    - "Certification gaps PF-GAP-003(③)/004/007 remain · full CLOSED deferred"
+  next_certification_work:
+    - FOUNDATION_GATE
+    - ALIGNMENT_AUDIT
+    - BASELINE_FREEZE
+    - PF-GAP-004
+    - PF-GAP-007
+    - PF-GAP-003-at-3
+  post_certification_closed_requires:
+    - "PF Step 5 E2E PASS per RC2 board"
+    - "All certification-phase gaps CLOSED"
+    - "Four-dimension re-review for full CLOSED"
+
+signoff:
+  certification_entry: PASS
+  certification_entry_note: "Engineering handoff PASS · PF-GAP-008 CLOSED · PF-GAP-003 PASS_PHASE2_READY · next = Foundation Gate (not PF-GAP-004) · 003 full CLOSED deferred to ③"
+  capability_status: CERTIFICATION_ACTIVE
+  signed_utc: "2026-07-16T14:40:28Z"
+  owner: solo_owner
+
+standard_certification_template:
+  inherits: registry/psg-10-certification-20260716.v1.yaml
+  pattern: "Evidence → Gate → Boundary → Decision"
+  golden_reference: PSG-10
+  note: "PSG-20 full CLOSED deferred until certification-phase gaps close"
