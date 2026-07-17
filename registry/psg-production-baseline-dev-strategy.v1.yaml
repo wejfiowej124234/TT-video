@@ -1,0 +1,52 @@
+# PSG Production Baseline · Development Strategy (FROZEN)
+# Human: docs/runbook/TT-PSG-PRODUCTION-BASELINE-DEV-STRATEGY-LATEST.md
+# Does NOT mutate release_archive or cited baseline bytes.
+schema: traveltrust.psg_production_baseline_dev_strategy.v1
+machine_key: TT_PSG_PRODUCTION_BASELINE_DEV_STRATEGY
+status: FROZEN
+effective_utc: "2026-07-17T11:13:00Z"
+
+baseline:
+  tag: v1.1.0-psg-go.20260717
+  git_sha: 0bbc7adbd3142b111463fc398288ab94be5c0b84
+  freeze_manifest_id: RC-FREEZE-20260717T094900Z
+  tt_production_go: GO
+  tt_psg_production_cert: PASS
+  release_baseline: registry/psg-production-release-baseline-LATEST.v1.yaml
+  release_archive: evidence/GO_psg_foundation/release_archive/v1.1.0-psg-go.20260717/
+  archive_manifest: evidence/GO_psg_foundation/release_archive/v1.1.0-psg-go.20260717/manifest.json
+
+immutable_surfaces:
+  - evidence/GO_psg_foundation/release_archive/v1.1.0-psg-go.20260717/
+  - evidence/GO_psg_foundation/release_baseline/20260717T110854Z/
+  - evidence/GO_psg_foundation/release_baseline/RELEASE-BASELINE-LATEST.json
+  - docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-EXIT-BLOCKERS/RELEASE-BASELINE-LATEST.json
+  - docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-EXIT-BLOCKERS/RELEASE-ARCHIVE-LATEST.json
+
+rules:
+  R1_no_mutate_this_release:
+    rule: >
+      Do not modify Evidence, Registry snapshots, or Archive bytes that belong to
+      this release baseline / archive. Treat cited sha256 list as immutable.
+  R2_branch_from_tag:
+    rule: >
+      All Hotfix, Patch, and new features MUST create a new development branch
+      from tag v1.1.0-psg-go.20260717 (or git_sha 0bbc7adbd3142b111463fc398288ab94be5c0b84).
+  R3_new_release_cycle:
+    rule: >
+      A future formal production release MUST open a NEW Release cycle
+      (new freeze_manifest_id · new Cap Cert / Production Cert / Owner Decision as required).
+      Do NOT extend or reopen this PSG RC Step1–5 flow on the same baseline tag.
+  R4_no_gate_rerun_for_baseline:
+    rule: >
+      Do not re-run already-PASS Foundation / Alignment / Freeze / Cap Cert /
+      Production Cert to “refresh” this baseline.
+
+forbidden:
+  - edit_release_archive_files
+  - rewrite_cited_evidence_in_place
+  - silent_retag_or_move_v1_1_0_psg_go_20260717
+  - continue_psg_rc_steps_on_same_baseline
+  - claim_new_GO_by_doc_only
+
+machine_line: TT_PSG_PRODUCTION_BASELINE_DEV_STRATEGY: FROZEN tag=v1.1.0-psg-go.20260717

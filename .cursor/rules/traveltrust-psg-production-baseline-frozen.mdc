@@ -1,0 +1,22 @@
+---
+description: PSG production baseline v1.1.0-psg-go.20260717 is FROZEN — branch from tag; no archive/cite mutation; new release = new cycle
+alwaysApply: true
+---
+
+# PSG Production Baseline · Dev Strategy FROZEN
+
+**Baseline:** Tag `v1.1.0-psg-go.20260717` · SHA `0bbc7adbd3142b111463fc398288ab94be5c0b84` · `TT_PRODUCTION_GO: GO`
+
+**SSOT:** [registry/psg-production-baseline-dev-strategy.v1.yaml](../../registry/psg-production-baseline-dev-strategy.v1.yaml) · [TT-PSG-PRODUCTION-BASELINE-DEV-STRATEGY-LATEST.md](../../docs/runbook/TT-PSG-PRODUCTION-BASELINE-DEV-STRATEGY-LATEST.md)
+
+## Agent MUST
+
+- Treat `evidence/GO_psg_foundation/release_archive/v1.1.0-psg-go.20260717/` as **immutable** (no edit / no overwrite)
+- Start Hotfix / Patch / features from the Tag (or that SHA), not by extending PSG RC Step1–5 on this baseline
+- For a new formal release: open a **new** Release cycle (new Freeze), do not reopen this PSG GO pack
+
+## Agent MUST NOT
+
+- Mutate this release’s Archive, Baseline cite bytes, or “refresh” GO by re-running PASS Gates
+- Force-move / retag `v1.1.0-psg-go.20260717`
+- Claim a new Production GO by docs alone
