@@ -1,0 +1,1026 @@
+{
+  "schema": "traveltrust.runtime_dependency_registry.derived.v1",
+  "machine_key": "TT_RUNTIME_DEPENDENCY_REGISTRY_DERIVED",
+  "generated_utc": "2026-07-17T17:14:31Z",
+  "source": "registry/runtime-dependency-registry.v1.yaml",
+  "source_sha256": "e47c19997f8871ff3f483009a1afbeb26d0f67d769761407467f820b11543968",
+  "registry_status": "ACTIVE",
+  "registry_version": "1.1",
+  "change_classes": [
+    "CONFIG_CHANGE",
+    "API_SCHEMA_CHANGE",
+    "DATA_REBIND",
+    "STORAGE_CHANGE",
+    "ENV_CHANGE",
+    "DEPLOY_CHANGE",
+    "FEATURE_FLAG_CHANGE",
+    "ABI_CHANGE",
+    "MEDIA_HOST_CHANGE",
+    "BUILD_ARG_CHANGE"
+  ],
+  "owners": {
+    "solo_owner": {
+      "id": "solo_owner",
+      "role": "Owner Self Review + Sign-off"
+    },
+    "platform_runtime": {
+      "id": "platform_runtime",
+      "role": "API/Web runtime pair steward (same Owner when Solo)"
+    }
+  },
+  "runtimes": [
+    {
+      "id": "data_runtime",
+      "title": "Data / Object / CMS bindings"
+    },
+    {
+      "id": "api_runtime",
+      "title": "API process (tt-api-staging)"
+    },
+    {
+      "id": "web_runtime",
+      "title": "Web process / image (tt-web-staging)"
+    },
+    {
+      "id": "browser_runtime",
+      "title": "Browser render path (next/image, fetch)"
+    },
+    {
+      "id": "cms_runtime",
+      "title": "CMS publish / catalog bindings"
+    },
+    {
+      "id": "ocs_runtime",
+      "title": "Official Cold Start surfaces"
+    }
+  ],
+  "waive_policy": {
+    "global": {
+      "never_waive": [
+        "RCP-MEDIA-01",
+        "RCP-MEDIA-02",
+        "RCP-MEDIA-03",
+        "RCP-MEDIA-04",
+        "RCP-PAIR-02",
+        "RCP-PAIR-03",
+        "RCP-PAIR-04"
+      ],
+      "may_waive": [
+        {
+          "id": "RCP-PAIR-01",
+          "file": "evidence/GO_psg_governance/RUNTIME_CHANGE_PROPAGATION/RCP-PAIR-01-WAIVE.json",
+          "required_fields": [
+            "waive",
+            "owner",
+            "reason",
+            "stamped_utc"
+          ],
+          "note": "Soft-pass producer/consumer fingerprint desync only; never skip live render checks"
+        }
+      ]
+    }
+  },
+  "deploy_dependency_graph": {
+    "nodes": [
+      "data_runtime",
+      "cms_runtime",
+      "ocs_runtime",
+      "api_runtime",
+      "web_runtime",
+      "browser_runtime"
+    ],
+    "edges": [
+      {
+        "from": "data_runtime",
+        "to": "api_runtime",
+        "change_classes": [
+          "DATA_REBIND",
+          "STORAGE_CHANGE"
+        ],
+        "required_validations": [
+          "RCP-PAIR-01",
+          "RCP-MEDIA-03"
+        ]
+      },
+      {
+        "from": "cms_runtime",
+        "to": "api_runtime",
+        "change_classes": [
+          "DATA_REBIND",
+          "MEDIA_HOST_CHANGE"
+        ],
+        "required_validations": [
+          "RCP-MEDIA-01",
+          "RCP-MEDIA-02"
+        ]
+      },
+      {
+        "from": "ocs_runtime",
+        "to": "api_runtime",
+        "change_classes": [
+          "DATA_REBIND",
+          "STORAGE_CHANGE"
+        ],
+        "required_validations": [
+          "RCP-MEDIA-01",
+          "RCP-MEDIA-02",
+          "RCP-MEDIA-03"
+        ]
+      },
+      {
+        "from": "api_runtime",
+        "to": "web_runtime",
+        "change_classes": [
+          "API_SCHEMA_CHANGE",
+          "ENV_CHANGE",
+          "MEDIA_HOST_CHANGE",
+          "DEPLOY_CHANGE",
+          "FEATURE_FLAG_CHANGE"
+        ],
+        "required_validations": [
+          "RCP-PAIR-01",
+          "RCP-PAIR-02",
+          "RCP-PAIR-03",
+          "RCP-PAIR-04"
+        ]
+      },
+      {
+        "from": "web_runtime",
+        "to": "browser_runtime",
+        "change_classes": [
+          "CONFIG_CHANGE",
+          "BUILD_ARG_CHANGE",
+          "DEPLOY_CHANGE"
+        ],
+        "required_validations": [
+          "RCP-MEDIA-01",
+          "RCP-MEDIA-02",
+          "RCP-MEDIA-04"
+        ]
+      }
+    ]
+  },
+  "compatibility_matrix": {
+    "nodes": [
+      "API",
+      "Web",
+      "CMS",
+      "OCS",
+      "Media",
+      "FeatureFlag",
+      "RuntimeEnv"
+    ],
+    "edges": [
+      {
+        "from": "API",
+        "to": "Web",
+        "relation": "media_hosts_subseteq_remotePatterns",
+        "change_classes": [
+          "MEDIA_HOST_CHANGE",
+          "CONFIG_CHANGE",
+          "DEPLOY_CHANGE"
+        ],
+        "validation_ids": [
+          "RCP-PAIR-02",
+          "RCP-MEDIA-01"
+        ],
+        "incompatible_if": "absolute_media_host_not_in_web_remotePatterns"
+      },
+      {
+        "from": "API",
+        "to": "Media",
+        "relation": "producer_emits_public_urls",
+        "change_classes": [
+          "STORAGE_CHANGE",
+          "DATA_REBIND"
+        ],
+        "validation_ids": [
+          "RCP-MEDIA-03"
+        ],
+        "incompatible_if": "ephemeral_upload_url_when_cos_primary"
+      },
+      {
+        "from": "Media",
+        "to": "Web",
+        "relation": "next_image_or_unoptimized",
+        "change_classes": [
+          "MEDIA_HOST_CHANGE",
+          "CONFIG_CHANGE"
+        ],
+        "validation_ids": [
+          "RCP-MEDIA-02",
+          "RCP-PAIR-04"
+        ],
+        "incompatible_if": "next_image_http_not_200"
+      },
+      {
+        "from": "CMS",
+        "to": "API",
+        "relation": "published_assets_bound",
+        "change_classes": [
+          "DATA_REBIND"
+        ],
+        "validation_ids": [
+          "RCP-MEDIA-03"
+        ],
+        "incompatible_if": "guest_surface_points_ephemeral_or_missing_object"
+      },
+      {
+        "from": "OCS",
+        "to": "API",
+        "relation": "cold_start_covers_bound",
+        "change_classes": [
+          "DATA_REBIND",
+          "STORAGE_CHANGE"
+        ],
+        "validation_ids": [
+          "RCP-MEDIA-01",
+          "RCP-MEDIA-02"
+        ],
+        "incompatible_if": "ocs_cover_host_not_allowed_by_web"
+      },
+      {
+        "from": "RuntimeEnv",
+        "to": "Web",
+        "relation": "build_args_declare_media_base",
+        "change_classes": [
+          "ENV_CHANGE",
+          "BUILD_ARG_CHANGE"
+        ],
+        "validation_ids": [
+          "RCP-MEDIA-04",
+          "RCP-PAIR-03"
+        ],
+        "incompatible_if": "required_NEXT_PUBLIC_media_keys_missing"
+      },
+      {
+        "from": "FeatureFlag",
+        "to": "Web",
+        "relation": "declared_not_enforced_wave_c",
+        "change_classes": [
+          "FEATURE_FLAG_CHANGE"
+        ],
+        "validation_ids": [],
+        "status": "DECLARED_NOT_ENFORCED"
+      },
+      {
+        "from": "API",
+        "to": "RuntimeEnv",
+        "relation": "caps_keys_stable_or_pair_ledger",
+        "change_classes": [
+          "ENV_CHANGE",
+          "API_SCHEMA_CHANGE"
+        ],
+        "validation_ids": [
+          "RCP-PAIR-01"
+        ],
+        "incompatible_if": "producer_fp_changed_consumer_fp_stale"
+      }
+    ]
+  },
+  "domains_enforced": {
+    "community_media": {
+      "title": "Community / CMS / OCS media URLs",
+      "wave": "A_and_B",
+      "priority": "P0",
+      "enforced": true,
+      "owner": "platform_runtime",
+      "producers": [
+        {
+          "id": "api_community_feed",
+          "surface": "GET /api/v1/community/feed",
+          "runtime": "api_runtime",
+          "owner": "platform_runtime",
+          "change_classes": [
+            "MEDIA_HOST_CHANGE",
+            "API_SCHEMA_CHANGE",
+            "DATA_REBIND"
+          ],
+          "emits": "absolute_or_relative_media_urls"
+        },
+        {
+          "id": "api_ocs_surfaces",
+          "surface": "GET /api/v1/official/cold-start/surfaces/*",
+          "runtime": "api_runtime",
+          "owner": "platform_runtime",
+          "change_classes": [
+            "MEDIA_HOST_CHANGE",
+            "DATA_REBIND"
+          ],
+          "emits": "cover_url"
+        },
+        {
+          "id": "cms_publish",
+          "surface": "CMS publish / asset registry",
+          "runtime": "cms_runtime",
+          "owner": "platform_runtime",
+          "change_classes": [
+            "DATA_REBIND",
+            "STORAGE_CHANGE"
+          ]
+        },
+        {
+          "id": "ocs_rebind",
+          "surface": "COS / Tigris rebind",
+          "runtime": "ocs_runtime",
+          "owner": "platform_runtime",
+          "change_classes": [
+            "DATA_REBIND",
+            "STORAGE_CHANGE",
+            "MEDIA_HOST_CHANGE"
+          ]
+        }
+      ],
+      "consumers": [
+        {
+          "id": "next_image",
+          "runtime": "browser_runtime",
+          "owner": "platform_runtime",
+          "path_hint": "frontend next/image optimizer",
+          "change_classes": [
+            "CONFIG_CHANGE"
+          ]
+        },
+        {
+          "id": "community_feed",
+          "runtime": "web_runtime",
+          "owner": "platform_runtime",
+          "path_hint": "frontend/components/community/*",
+          "change_classes": [
+            "CONFIG_CHANGE",
+            "BUILD_ARG_CHANGE"
+          ]
+        },
+        {
+          "id": "guide_card",
+          "runtime": "web_runtime",
+          "owner": "platform_runtime",
+          "change_classes": [
+            "CONFIG_CHANGE"
+          ]
+        },
+        {
+          "id": "market_card",
+          "runtime": "web_runtime",
+          "owner": "platform_runtime",
+          "change_classes": [
+            "CONFIG_CHANGE"
+          ]
+        },
+        {
+          "id": "rc_probe",
+          "runtime": "web_runtime",
+          "owner": "platform_runtime",
+          "path_hint": "scripts/dev/validate-staging-rc-ssot-parity.cjs",
+          "change_classes": [
+            "CONFIG_CHANGE"
+          ]
+        }
+      ],
+      "runtime_dependencies": [
+        {
+          "id": "remotePatterns",
+          "surface": "frontend/next.config.js images.remotePatterns",
+          "change_classes": [
+            "CONFIG_CHANGE"
+          ],
+          "required_when": "absolute_https_media_hosts"
+        },
+        {
+          "id": "buildArgs",
+          "surface": "deploy/fly/tt-web-staging/build.env.example",
+          "change_classes": [
+            "BUILD_ARG_CHANGE",
+            "ENV_CHANGE"
+          ],
+          "keys": [
+            "NEXT_PUBLIC_COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL",
+            "NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES"
+          ]
+        },
+        {
+          "id": "media_host",
+          "surface": "live URL hostname set from producers",
+          "change_classes": [
+            "MEDIA_HOST_CHANGE"
+          ]
+        },
+        {
+          "id": "env",
+          "surface": "COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL (API) ↔ NEXT_PUBLIC_* (Web)",
+          "change_classes": [
+            "ENV_CHANGE"
+          ]
+        },
+        {
+          "id": "unoptimized_helper",
+          "surface": "frontend/lib/communityMediaClientUrl.ts communityMediaNextImageUnoptimized",
+          "change_classes": [
+            "CONFIG_CHANGE"
+          ]
+        }
+      ],
+      "required_validations": [
+        {
+          "id": "RCP-MEDIA-01",
+          "rule_id": "hosts_subseteq_remotePatterns",
+          "probe_scope": [
+            "next_config_remotePatterns",
+            "live_media_hosts"
+          ],
+          "blocked_if": "sampled_absolute_hosts_not_in_remotePatterns"
+        },
+        {
+          "id": "RCP-MEDIA-02",
+          "rule_id": "next_image_live",
+          "probe_scope": [
+            "staging_web_next_image"
+          ],
+          "blocked_if": "staging_web_next_image_not_200"
+        },
+        {
+          "id": "RCP-MEDIA-03",
+          "rule_id": "ephemeral_forbidden_when_cos_primary",
+          "probe_scope": [
+            "live_cover_urls"
+          ],
+          "blocked_if": "absolute_samples_still_ephemeral_uploads"
+        },
+        {
+          "id": "RCP-MEDIA-04",
+          "rule_id": "build_args_declared",
+          "probe_scope": [
+            "build_env_example"
+          ],
+          "blocked_if": "required_buildArgs_keys_missing_from_example"
+        }
+      ],
+      "compatibility_rules": [
+        {
+          "id": "CM-C1",
+          "if_change_class": [
+            "MEDIA_HOST_CHANGE",
+            "STORAGE_CHANGE",
+            "DATA_REBIND"
+          ],
+          "must_remain_compatible_with": [
+            "Web",
+            "Media",
+            "RuntimeEnv"
+          ],
+          "validations": [
+            "RCP-MEDIA-01",
+            "RCP-MEDIA-02",
+            "RCP-MEDIA-03",
+            "RCP-MEDIA-04"
+          ]
+        }
+      ]
+    },
+    "api_web_pair": {
+      "title": "API Runtime ↔ Web Runtime synchronization",
+      "wave": "B",
+      "priority": "P0",
+      "enforced": true,
+      "owner": "platform_runtime",
+      "producers": [
+        {
+          "id": "api_deploy",
+          "runtime": "api_runtime",
+          "owner": "platform_runtime",
+          "change_classes": [
+            "DEPLOY_CHANGE",
+            "ENV_CHANGE",
+            "API_SCHEMA_CHANGE",
+            "MEDIA_HOST_CHANGE"
+          ],
+          "fingerprint": [
+            "git_sha_from_meta_build",
+            "media_host_set_hash",
+            "media_caps_keys_hash"
+          ]
+        },
+        {
+          "id": "data_rebind",
+          "runtime": "data_runtime",
+          "owner": "platform_runtime",
+          "change_classes": [
+            "DATA_REBIND",
+            "STORAGE_CHANGE",
+            "MEDIA_HOST_CHANGE"
+          ],
+          "fingerprint": [
+            "media_host_set_hash"
+          ]
+        }
+      ],
+      "consumers": [
+        {
+          "id": "web_deploy",
+          "runtime": "web_runtime",
+          "owner": "platform_runtime",
+          "change_classes": [
+            "DEPLOY_CHANGE",
+            "CONFIG_CHANGE",
+            "BUILD_ARG_CHANGE"
+          ],
+          "fingerprint": [
+            "next_config_remotePatterns_hash",
+            "build_env_example_media_hash",
+            "unoptimized_helper_hosts_hash",
+            "optional_fly_web_image_tag"
+          ],
+          "note": "Web /api/meta/build rewrites to API — never use as web SHA"
+        },
+        {
+          "id": "rcp_gate",
+          "runtime": "web_runtime",
+          "owner": "platform_runtime",
+          "change_classes": [
+            "CONFIG_CHANGE"
+          ]
+        }
+      ],
+      "runtime_dependencies": [
+        {
+          "id": "pair_ledger",
+          "surface": "evidence/GO_psg_governance/RUNTIME_CHANGE_PROPAGATION/API-WEB-RUNTIME-PAIR-LATEST.json",
+          "change_classes": [
+            "DEPLOY_CHANGE"
+          ]
+        },
+        {
+          "id": "producer_fingerprint",
+          "surface": "Staging API live probes",
+          "change_classes": [
+            "MEDIA_HOST_CHANGE",
+            "ENV_CHANGE"
+          ]
+        },
+        {
+          "id": "consumer_fingerprint",
+          "surface": "Web source config baked into next deploy",
+          "change_classes": [
+            "CONFIG_CHANGE",
+            "BUILD_ARG_CHANGE"
+          ]
+        }
+      ],
+      "required_validations": [
+        {
+          "id": "RCP-PAIR-01",
+          "rule_id": "producer_changed_consumer_stale",
+          "probe_scope": [
+            "pair_ledger",
+            "producer_fp",
+            "consumer_fp"
+          ],
+          "blocked_if": "producer_fp_changed_and_consumer_fp_unchanged",
+          "waive": "RCP-PAIR-01"
+        },
+        {
+          "id": "RCP-PAIR-02",
+          "rule_id": "hosts_subseteq_remotePatterns",
+          "binds_domain": "community_media",
+          "binds_validation": "RCP-MEDIA-01",
+          "probe_scope": [
+            "live_media_hosts",
+            "next_config_remotePatterns"
+          ]
+        },
+        {
+          "id": "RCP-PAIR-03",
+          "rule_id": "build_args_declared",
+          "binds_domain": "community_media",
+          "binds_validation": "RCP-MEDIA-04",
+          "probe_scope": [
+            "build_env_example"
+          ]
+        },
+        {
+          "id": "RCP-PAIR-04",
+          "rule_id": "next_image_live",
+          "binds_domain": "community_media",
+          "binds_validation": "RCP-MEDIA-02",
+          "probe_scope": [
+            "staging_web_next_image"
+          ]
+        },
+        {
+          "id": "RCP-REG-00",
+          "rule_id": "registry_active",
+          "probe_scope": [
+            "dependency_registry_file"
+          ],
+          "blocked_if": "registry_missing_or_inactive"
+        }
+      ],
+      "compatibility_rules": [
+        {
+          "id": "PAIR-C1",
+          "if_change_class": [
+            "DEPLOY_CHANGE",
+            "DATA_REBIND",
+            "MEDIA_HOST_CHANGE",
+            "ENV_CHANGE"
+          ],
+          "must_remain_compatible_with": [
+            "API",
+            "Web",
+            "Media",
+            "RuntimeEnv"
+          ],
+          "validations": [
+            "RCP-PAIR-01",
+            "RCP-PAIR-02",
+            "RCP-PAIR-03",
+            "RCP-PAIR-04"
+          ]
+        }
+      ]
+    }
+  },
+  "validation_scope": [
+    {
+      "domain": "community_media",
+      "validation_id": "RCP-MEDIA-01",
+      "rule_id": "hosts_subseteq_remotePatterns",
+      "probe_scope": [
+        "next_config_remotePatterns",
+        "live_media_hosts"
+      ],
+      "blocked_if": "sampled_absolute_hosts_not_in_remotePatterns",
+      "waive": null,
+      "binds_domain": null,
+      "binds_validation": null
+    },
+    {
+      "domain": "community_media",
+      "validation_id": "RCP-MEDIA-02",
+      "rule_id": "next_image_live",
+      "probe_scope": [
+        "staging_web_next_image"
+      ],
+      "blocked_if": "staging_web_next_image_not_200",
+      "waive": null,
+      "binds_domain": null,
+      "binds_validation": null
+    },
+    {
+      "domain": "community_media",
+      "validation_id": "RCP-MEDIA-03",
+      "rule_id": "ephemeral_forbidden_when_cos_primary",
+      "probe_scope": [
+        "live_cover_urls"
+      ],
+      "blocked_if": "absolute_samples_still_ephemeral_uploads",
+      "waive": null,
+      "binds_domain": null,
+      "binds_validation": null
+    },
+    {
+      "domain": "community_media",
+      "validation_id": "RCP-MEDIA-04",
+      "rule_id": "build_args_declared",
+      "probe_scope": [
+        "build_env_example"
+      ],
+      "blocked_if": "required_buildArgs_keys_missing_from_example",
+      "waive": null,
+      "binds_domain": null,
+      "binds_validation": null
+    },
+    {
+      "domain": "api_web_pair",
+      "validation_id": "RCP-PAIR-01",
+      "rule_id": "producer_changed_consumer_stale",
+      "probe_scope": [
+        "pair_ledger",
+        "producer_fp",
+        "consumer_fp"
+      ],
+      "blocked_if": "producer_fp_changed_and_consumer_fp_unchanged",
+      "waive": "RCP-PAIR-01",
+      "binds_domain": null,
+      "binds_validation": null
+    },
+    {
+      "domain": "api_web_pair",
+      "validation_id": "RCP-PAIR-02",
+      "rule_id": "hosts_subseteq_remotePatterns",
+      "probe_scope": [
+        "live_media_hosts",
+        "next_config_remotePatterns"
+      ],
+      "blocked_if": null,
+      "waive": null,
+      "binds_domain": "community_media",
+      "binds_validation": "RCP-MEDIA-01"
+    },
+    {
+      "domain": "api_web_pair",
+      "validation_id": "RCP-PAIR-03",
+      "rule_id": "build_args_declared",
+      "probe_scope": [
+        "build_env_example"
+      ],
+      "blocked_if": null,
+      "waive": null,
+      "binds_domain": "community_media",
+      "binds_validation": "RCP-MEDIA-04"
+    },
+    {
+      "domain": "api_web_pair",
+      "validation_id": "RCP-PAIR-04",
+      "rule_id": "next_image_live",
+      "probe_scope": [
+        "staging_web_next_image"
+      ],
+      "blocked_if": null,
+      "waive": null,
+      "binds_domain": "community_media",
+      "binds_validation": "RCP-MEDIA-02"
+    },
+    {
+      "domain": "api_web_pair",
+      "validation_id": "RCP-REG-00",
+      "rule_id": "registry_active",
+      "probe_scope": [
+        "dependency_registry_file"
+      ],
+      "blocked_if": "registry_missing_or_inactive",
+      "waive": null,
+      "binds_domain": null,
+      "binds_validation": null
+    }
+  ],
+  "probe_scope": [
+    "build_env_example",
+    "consumer_fp",
+    "dependency_registry_file",
+    "live_cover_urls",
+    "live_media_hosts",
+    "next_config_remotePatterns",
+    "pair_ledger",
+    "producer_fp",
+    "staging_web_next_image"
+  ],
+  "change_class_index": {
+    "MEDIA_HOST_CHANGE": [
+      {
+        "domain": "community_media",
+        "side": "producers",
+        "id": "api_community_feed"
+      },
+      {
+        "domain": "community_media",
+        "side": "producers",
+        "id": "api_ocs_surfaces"
+      },
+      {
+        "domain": "community_media",
+        "side": "producers",
+        "id": "ocs_rebind"
+      },
+      {
+        "domain": "api_web_pair",
+        "side": "producers",
+        "id": "api_deploy"
+      },
+      {
+        "domain": "api_web_pair",
+        "side": "producers",
+        "id": "data_rebind"
+      }
+    ],
+    "API_SCHEMA_CHANGE": [
+      {
+        "domain": "community_media",
+        "side": "producers",
+        "id": "api_community_feed"
+      },
+      {
+        "domain": "api_web_pair",
+        "side": "producers",
+        "id": "api_deploy"
+      }
+    ],
+    "DATA_REBIND": [
+      {
+        "domain": "community_media",
+        "side": "producers",
+        "id": "api_community_feed"
+      },
+      {
+        "domain": "community_media",
+        "side": "producers",
+        "id": "api_ocs_surfaces"
+      },
+      {
+        "domain": "community_media",
+        "side": "producers",
+        "id": "cms_publish"
+      },
+      {
+        "domain": "community_media",
+        "side": "producers",
+        "id": "ocs_rebind"
+      },
+      {
+        "domain": "api_web_pair",
+        "side": "producers",
+        "id": "data_rebind"
+      }
+    ],
+    "STORAGE_CHANGE": [
+      {
+        "domain": "community_media",
+        "side": "producers",
+        "id": "cms_publish"
+      },
+      {
+        "domain": "community_media",
+        "side": "producers",
+        "id": "ocs_rebind"
+      },
+      {
+        "domain": "api_web_pair",
+        "side": "producers",
+        "id": "data_rebind"
+      }
+    ],
+    "CONFIG_CHANGE": [
+      {
+        "domain": "community_media",
+        "side": "consumers",
+        "id": "next_image"
+      },
+      {
+        "domain": "community_media",
+        "side": "consumers",
+        "id": "community_feed"
+      },
+      {
+        "domain": "community_media",
+        "side": "consumers",
+        "id": "guide_card"
+      },
+      {
+        "domain": "community_media",
+        "side": "consumers",
+        "id": "market_card"
+      },
+      {
+        "domain": "community_media",
+        "side": "consumers",
+        "id": "rc_probe"
+      },
+      {
+        "domain": "api_web_pair",
+        "side": "consumers",
+        "id": "web_deploy"
+      },
+      {
+        "domain": "api_web_pair",
+        "side": "consumers",
+        "id": "rcp_gate"
+      }
+    ],
+    "BUILD_ARG_CHANGE": [
+      {
+        "domain": "community_media",
+        "side": "consumers",
+        "id": "community_feed"
+      },
+      {
+        "domain": "api_web_pair",
+        "side": "consumers",
+        "id": "web_deploy"
+      }
+    ],
+    "DEPLOY_CHANGE": [
+      {
+        "domain": "api_web_pair",
+        "side": "producers",
+        "id": "api_deploy"
+      },
+      {
+        "domain": "api_web_pair",
+        "side": "consumers",
+        "id": "web_deploy"
+      }
+    ],
+    "ENV_CHANGE": [
+      {
+        "domain": "api_web_pair",
+        "side": "producers",
+        "id": "api_deploy"
+      }
+    ]
+  },
+  "owner_index": {
+    "community_media": "platform_runtime",
+    "api_web_pair": "platform_runtime"
+  },
+  "gap_matrix": {
+    "enforced_domains": [
+      "api_web_pair",
+      "community_media"
+    ],
+    "deferred_domains": [
+      {
+        "id": "auth_session",
+        "wave": "C",
+        "status": "DECLARED_NOT_ENFORCED"
+      },
+      {
+        "id": "market_guide_media",
+        "wave": "C",
+        "status": "DECLARED_NOT_ENFORCED"
+      },
+      {
+        "id": "wallet_web3_env",
+        "wave": "C",
+        "status": "DECLARED_NOT_ENFORCED"
+      },
+      {
+        "id": "payment_escrow",
+        "wave": "C",
+        "status": "DECLARED_NOT_ENFORCED"
+      },
+      {
+        "id": "cdn_cutover",
+        "wave": "C",
+        "status": "DECLARED_NOT_ENFORCED"
+      }
+    ],
+    "sixteen_dimensions_complete": false,
+    "wave_c_d_enforced": false,
+    "dedup_notes": [
+      {
+        "id": "DUP-ENVALIGN",
+        "existing": "check-psg-environment-alignment (media_caps KEYS only)",
+        "overlap": "none_for_hosts",
+        "action": "KEEP_PSG_ADMISSION — RCP owns host↔remotePatterns"
+      },
+      {
+        "id": "DUP-COS",
+        "existing": "check-psg-cos-reference-integrity (object HEAD)",
+        "overlap": "object_existence_vs_fe_allowlist",
+        "action": "KEEP_COS — RCP owns FE consumer path"
+      },
+      {
+        "id": "DUP-RC-PARITY",
+        "existing": "validate-staging-rc-ssot-parity (MED tripwire)",
+        "overlap": "next_image_absolute_media_200",
+        "action": "RC remains Staging SSOT parity; RCP is Post-PSG permanent control — accept dual until Wave C consolidate"
+      },
+      {
+        "id": "HAND-MAINTAIN-RISK",
+        "risk": "Gap Matrix / module tables duplicated in psg-runtime-change-propagation.v1.yaml",
+        "action": "derive probe/validation/gap scopes from THIS registry; thin the RCP yaml to pointers"
+      }
+    ],
+    "p1_near_term": [
+      "Runtime Dependency Registry",
+      "Runtime Drift Detection",
+      "Deploy Dependency Graph"
+    ],
+    "p2_mid_term": [
+      "Data Governance",
+      "Contract Governance"
+    ],
+    "p3_long_term": [
+      "Observability Governance",
+      "Business Governance"
+    ]
+  },
+  "gate_binding": {
+    "script": "scripts/gates/check-psg-runtime-change-propagation.cjs",
+    "derived_machine_ssot": "registry/runtime-dependency-registry.derived.v1.json",
+    "generator": "scripts/dev/generate-rcp-registry-derived.py",
+    "waves": {
+      "A": "ENFORCED",
+      "B": "ENFORCED",
+      "C": "NOT_STARTED",
+      "D": "NOT_STARTED"
+    }
+  },
+  "phased_evolution": {
+    "P1_near_term": [
+      "Runtime Dependency Registry",
+      "Runtime Drift Detection",
+      "Deploy Dependency Graph"
+    ],
+    "P2_mid_term": [
+      "Data Governance",
+      "Contract Governance"
+    ],
+    "P3_long_term": [
+      "Observability Governance",
+      "Business Governance"
+    ],
+    "rule": "Do not implement P2/P3 as parallel Gate forests; extend this registry."
+  },
+  "honest_boundary": "Registry ACTIVE ≠ Wave C/D enforced ≠ sixteen dimensions complete ≠ Production GO. Wave A+B only. Does not mutate Tag / Archive / Certification / TT_PRODUCTION_GO.\n"
+}

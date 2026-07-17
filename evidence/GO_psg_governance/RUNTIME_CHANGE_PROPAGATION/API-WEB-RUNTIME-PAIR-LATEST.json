@@ -1,0 +1,53 @@
+{
+  "schema": "traveltrust.api_web_runtime_pair.v1",
+  "stamp": "20260717T171431Z",
+  "recorded_utc": "2026-07-17T17:14:35.713Z",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "producer_hash": "81e77e593bc13b40921a02283290d8ed61c779d639f04dd047cdcccfd6c97316",
+  "consumer_hash": "f6253d10d4bbd03b6a77e498295ff68bc9c6d29b8ad18d05052bc5e530bfdc73",
+  "producer": {
+    "api_git_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+    "media_hosts": [
+      "traveltrust-community-media.fly.storage.tigris.dev"
+    ],
+    "media_hosts_hash": "ffe1e4659d9b1e1313b1d51a1627be1cb2163aebd49c10a434101146aee80ad6",
+    "media_caps_keys": [
+      "head_bucket_cache_hit",
+      "head_bucket_probe_impl",
+      "max_video_bytes",
+      "max_video_seconds",
+      "multipart_enabled",
+      "public_video_publish_error",
+      "public_video_publish_ready",
+      "public_video_spec_required",
+      "status",
+      "supported_content_types"
+    ],
+    "media_caps_keys_hash": "e2875e6d861dd604d249e7081b10564c3151a5b81f0a5c459f5b6fe3a8c77328"
+  },
+  "consumer": {
+    "web_meta_build_is_api_rewrite": true,
+    "remotePatterns_hosts": [
+      "127.0.0.1",
+      "avatars.githubusercontent.com",
+      "cdn-staging.example.test",
+      "cdn.example.test",
+      "cdn.traveltrust.app",
+      "images.unsplash.com",
+      "localhost",
+      "traveltrust-community-media.fly.storage.tigris.dev"
+    ],
+    "remotePatterns_hash": "1e76413ea2e91b2b16a50e563f2915f5d2f84ddaf7ced59bdd29ee293c7acfec",
+    "build_env_example_media_hash": "6589e997917599079faeb09e22513d3baa9b6335caf449c198f7503a1b7f4279",
+    "unoptimized_helper_hash": "2638378e15403cc022c073f1cd5ac4bbd0a5fce64406c4f2706e798271b7469e",
+    "fly_web_image_tag": null
+  },
+  "pair01": {
+    "verdict": "PASS",
+    "reason": "producer_unchanged"
+  },
+  "dependency_domain": "api_web_pair",
+  "note": "Web /api/meta/build rewrites to API — web identity uses config fingerprints + optional TT_WEB_STAGING_IMAGE_TAG",
+  "ledger_status": "PASS"
+}

@@ -1,8 +1,8 @@
 {
   "schema": "traveltrust.psg_runtime_change_propagation_gate.v1",
   "machine_key": "TT_PSG_RUNTIME_CHANGE_PROPAGATION",
-  "stamp": "20260717T171431Z",
-  "recorded_utc": "2026-07-17T17:14:31.948Z",
+  "stamp": "20260717T170116Z",
+  "recorded_utc": "2026-07-17T17:01:16.923Z",
   "layer": "post_psg_change_control",
   "waves": {
     "A": "ENFORCED",
@@ -12,13 +12,11 @@
   },
   "api": "https://tt-api-staging.fly.dev",
   "web": "https://tt-web-staging.fly.dev",
-  "honest_boundary": "PASS ≠ Production Cert refresh ≠ TT_PRODUCTION_GO · Wave C/D not claimed · sixteen dims NOT complete",
+  "honest_boundary": "PASS ≠ Production Cert refresh ≠ TT_PRODUCTION_GO · Wave C/D not claimed complete",
   "checks": [
     {
       "id": "RCP-REG-00",
-      "verdict": "PASS",
-      "rule_id": "registry_active",
-      "source": "derived"
+      "verdict": "PASS"
     },
     {
       "id": "RCP-MEDIA-04",
@@ -63,106 +61,6 @@
     }
   ],
   "dependency_registry": "registry/runtime-dependency-registry.v1.yaml",
-  "derived_ssot": "registry/runtime-dependency-registry.derived.v1.json",
-  "registry_version": "1.1",
-  "source_sha256": "e47c19997f8871ff3f483009a1afbeb26d0f67d769761407467f820b11543968",
-  "probe_scope": [
-    "build_env_example",
-    "consumer_fp",
-    "dependency_registry_file",
-    "live_cover_urls",
-    "live_media_hosts",
-    "next_config_remotePatterns",
-    "pair_ledger",
-    "producer_fp",
-    "staging_web_next_image"
-  ],
-  "validation_scope_ids": [
-    "RCP-MEDIA-01",
-    "RCP-MEDIA-02",
-    "RCP-MEDIA-03",
-    "RCP-MEDIA-04",
-    "RCP-PAIR-01",
-    "RCP-PAIR-02",
-    "RCP-PAIR-03",
-    "RCP-PAIR-04",
-    "RCP-REG-00"
-  ],
-  "compatibility_edge_n": 8,
-  "deploy_edge_n": 5,
-  "gap_matrix": {
-    "enforced_domains": [
-      "api_web_pair",
-      "community_media"
-    ],
-    "deferred_domains": [
-      {
-        "id": "auth_session",
-        "wave": "C",
-        "status": "DECLARED_NOT_ENFORCED"
-      },
-      {
-        "id": "market_guide_media",
-        "wave": "C",
-        "status": "DECLARED_NOT_ENFORCED"
-      },
-      {
-        "id": "wallet_web3_env",
-        "wave": "C",
-        "status": "DECLARED_NOT_ENFORCED"
-      },
-      {
-        "id": "payment_escrow",
-        "wave": "C",
-        "status": "DECLARED_NOT_ENFORCED"
-      },
-      {
-        "id": "cdn_cutover",
-        "wave": "C",
-        "status": "DECLARED_NOT_ENFORCED"
-      }
-    ],
-    "sixteen_dimensions_complete": false,
-    "wave_c_d_enforced": false,
-    "dedup_notes": [
-      {
-        "id": "DUP-ENVALIGN",
-        "existing": "check-psg-environment-alignment (media_caps KEYS only)",
-        "overlap": "none_for_hosts",
-        "action": "KEEP_PSG_ADMISSION — RCP owns host↔remotePatterns"
-      },
-      {
-        "id": "DUP-COS",
-        "existing": "check-psg-cos-reference-integrity (object HEAD)",
-        "overlap": "object_existence_vs_fe_allowlist",
-        "action": "KEEP_COS — RCP owns FE consumer path"
-      },
-      {
-        "id": "DUP-RC-PARITY",
-        "existing": "validate-staging-rc-ssot-parity (MED tripwire)",
-        "overlap": "next_image_absolute_media_200",
-        "action": "RC remains Staging SSOT parity; RCP is Post-PSG permanent control — accept dual until Wave C consolidate"
-      },
-      {
-        "id": "HAND-MAINTAIN-RISK",
-        "risk": "Gap Matrix / module tables duplicated in psg-runtime-change-propagation.v1.yaml",
-        "action": "derive probe/validation/gap scopes from THIS registry; thin the RCP yaml to pointers"
-      }
-    ],
-    "p1_near_term": [
-      "Runtime Dependency Registry",
-      "Runtime Drift Detection",
-      "Deploy Dependency Graph"
-    ],
-    "p2_mid_term": [
-      "Data Governance",
-      "Contract Governance"
-    ],
-    "p3_long_term": [
-      "Observability Governance",
-      "Business Governance"
-    ]
-  },
   "sample_url_n": 20,
   "absolute_url_n": 20,
   "sampled_hosts": [
@@ -210,7 +108,7 @@
     "fly_web_image_tag": null
   },
   "passes": [
-    "RCP-REG-00_dependency_registry_derived_fresh",
+    "RCP-REG-00_dependency_registry_active",
     "RCP-MEDIA-04_build_env_example",
     "RCP-MEDIA-03_no_ephemeral",
     "RCP-MEDIA-01_remotePatterns",
@@ -226,7 +124,6 @@
   "machine_keys": {
     "TT_PSG_RUNTIME_CHANGE_PROPAGATION": "PASS",
     "TT_RUNTIME_DEPENDENCY_REGISTRY": "ACTIVE",
-    "TT_RUNTIME_DEPENDENCY_REGISTRY_DERIVED": "e47c19997f88",
     "TT_PRODUCTION_GO": "UNCHANGED",
     "TT_PSG_PRODUCTION_CERT": "UNCHANGED"
   }

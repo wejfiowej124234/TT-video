@@ -2,8 +2,8 @@
   "schema": "traveltrust.psg_runtime_change_propagation_commit_scope.v1",
   "machine_key": "TT_PSG_RUNTIME_CHANGE_PROPAGATION",
   "status": "ACTIVE",
-  "recorded_utc": "2026-07-17T17:07:13Z",
-  "stamp": "20260717T170713Z",
+  "recorded_utc": "2026-07-17T17:03:44Z",
+  "stamp": "20260717T170344Z",
   "wave_a": {
     "id": "Wave_A",
     "scope": [

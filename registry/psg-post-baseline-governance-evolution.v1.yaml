@@ -1,0 +1,97 @@
+# PSG Post-Baseline Governance Evolution (phased · lean)
+# Human: docs/runbook/TT-PSG-RUNTIME-CHANGE-PROPAGATION-GATE-LATEST.md
+#
+# Intent: grow PSG from "release-time quality" toward lifecycle governance
+# WITHOUT stacking one-off gates into an unmaintainable rule pile.
+#
+# Does NOT mutate Tag / Release Archive / Production Cert / TT_PRODUCTION_GO.
+schema: traveltrust.psg_post_baseline_governance_evolution.v1
+version: 1
+machine_key: TT_PSG_POST_BASELINE_GOVERNANCE_EVOLUTION
+status: BASELINE_ESTABLISHED
+opened_utc: "2026-07-17T17:10:00Z"
+baseline_established_utc: "2026-07-17T17:30:00Z"
+governance_v1: registry/psg-governance-v1-baseline.v1.yaml
+layer: post_psg_change_control
+honest_boundary: >
+  BASELINE_ESTABLISHED ≠ COMPLETE.
+  P1 Runtime Change path is the ops baseline; P2/P3 stay declared only.
+  Do not invent new first-class governance capabilities in v1.
+  Evolve to Governance v2 only for architecture-level problems.
+
+principle:
+  - do_not_build_everything_at_once
+  - prefer_registry_and_graphs_over_new_special_gates
+  - reuse_rcp_framework_when_extending_domains
+  - frozen_psg_certification_untouched
+
+# ── Priority 1 · Near-term (ONLY active build track) ─────────────────
+priority_1_near_term:
+  title: Lower recurrence of Runtime↔Config↔Deploy drift (Media-class defects)
+  items:
+    - id: P1-RDR
+      name: Runtime Dependency Registry
+      status: ACTIVE_DEEPENED
+      ssot: registry/runtime-dependency-registry.v1.yaml
+      derived: registry/runtime-dependency-registry.derived.v1.json
+      now: >
+        Unique SSOT with change_class, owner, validations, waive, compatibility;
+        community_media + api_web_pair enforced; scopes generated
+      next: add domains only via this registry (no parallel gates)
+    - id: P1-RDD
+      name: Runtime Drift Detection
+      status: ACTIVE
+      ssot: scripts/gates/check-psg-runtime-change-propagation.cjs
+      now: RCP-PAIR-01 fingerprint desync → BLOCKED; media next/image; derived stale → FAIL
+      next: optional deploy hooks; optional TT_WEB_STAGING_IMAGE_TAG
+    - id: P1-DDG
+      name: Deploy Dependency Graph
+      status: ACTIVE_SKELETON
+      ssot: registry/runtime-dependency-registry.v1.yaml#deploy_dependency_graph
+      now: Data/CMS/OCS→API→Web→Browser edges + required_validations in Registry
+      next: wire deploy scripts to emit edge events (non-blocking RCP call)
+
+  forbidden_for_p1:
+    - inventing_parallel_gate_languages_per_module
+    - marking_sixteen_dimensions_complete
+    - implementing_P2_or_P3_frameworks_now
+    - wave_c_d_special_gate_forests
+
+# ── Priority 2 · Mid-term (declared only) ────────────────────────────
+priority_2_mid_term:
+  status: DECLARED_NOT_STARTED
+  items:
+    - id: P2-DATA
+      name: Data Governance (CMS · OCS · media · data lifecycle)
+    - id: P2-CONTRACT
+      name: Contract Governance (API · ABI · Webhook contracts)
+
+# ── Priority 3 · Long-term ops (declared only) ───────────────────────
+priority_3_long_term:
+  status: DECLARED_NOT_STARTED
+  items:
+    - id: P3-OBS
+      name: Observability Governance
+    - id: P3-BIZ
+      name: Business Governance
+
+# ── Mapping from prior Wave labels (do not expand Waves as rule piles) ─
+wave_mapping:
+  Wave_A: maps_to [P1-RDD media tripwires]
+  Wave_B: maps_to [P1-RDR, P1-RDD pair ledger, P1-DDG skeleton]
+  Wave_C: superseded_by_priority_model
+  Wave_D: superseded_by_priority_model
+  note: >
+    Prefer Priority 1→2→3 evolution over inventing Wave C/D special-case gates.
+
+mainline_return:
+  status: RETURN_TO_MAINLINE
+  default_path: Feature → Incremental Audit → RCP → Deploy
+  forbid_default: Feature → continue designing PSG
+
+# Optional P1 hardening only when a Runtime Change needs it — not a Governance design track.
+next_engineering_slice:
+  id: P1-DEPLOY-HOOK
+  title: Non-blocking RCP invoke after Staging API/Web deploy + optional web image tag env
+  priority: optional_when_runtime_change_needs_it
+  not_next: [P2-DATA, P2-CONTRACT, P3-OBS, P3-BIZ, new_first_class_governance_v1]

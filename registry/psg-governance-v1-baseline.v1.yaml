@@ -1,0 +1,62 @@
+# PSG Governance v1 · Baseline Established
+# Human: docs/runbook/TT-PSG-GOVERNANCE-V1-BASELINE-ESTABLISHED-LATEST.md
+#
+# STATUS is BASELINE_ESTABLISHED — NOT COMPLETE.
+# Meaning: all future Runtime Changes use this path; do not invent new
+# first-class governance capabilities unless an architecture-level problem
+# forces Governance v2.
+#
+# Does NOT mutate Tag / Release Archive / Production Cert / TT_PRODUCTION_GO.
+schema: traveltrust.psg_governance_v1_baseline.v1
+version: 1
+machine_key: TT_PSG_GOVERNANCE_V1
+status: BASELINE_ESTABLISHED
+established_utc: "2026-07-17T17:30:00Z"
+layer: post_psg_change_control
+
+meaning:
+  - all_future_runtime_changes_use_rcp_path
+  - no_new_first_class_governance_capabilities_in_v1
+  - evolve_to_v2_only_for_architecture_level_problems
+  - psg_must_not_inflate_indefinitely
+
+not_meaning:
+  - COMPLETE
+  - sixteen_dimensions_complete
+  - P2_or_P3_implemented
+  - Production_Cert_refresh
+  - TT_PRODUCTION_GO_flip
+
+baseline_artifacts:
+  dependency_registry: registry/runtime-dependency-registry.v1.yaml
+  derived_json: registry/runtime-dependency-registry.derived.v1.json
+  generator: scripts/dev/generate-rcp-registry-derived.py
+  gate: scripts/gates/check-psg-runtime-change-propagation.cjs
+  gate_binder: registry/psg-runtime-change-propagation.v1.yaml
+  evolution_roadmap: registry/psg-post-baseline-governance-evolution.v1.yaml
+  evidence_dir: evidence/GO_psg_governance/RUNTIME_CHANGE_PROPAGATION/
+  gate_runbook: docs/runbook/TT-PSG-RUNTIME-CHANGE-PROPAGATION-GATE-LATEST.md
+  gap_runbook: docs/runbook/TT-PSG-RUNTIME-CHANGE-PROPAGATION-ENTERPRISE-DEEPENING-GAP-LATEST.md
+
+active_ops_path: |
+  Feature → Incremental Audit → RCP Gate → Deploy
+  (not: Feature → continue designing PSG)
+
+mainline_return:
+  status: RETURN_TO_MAINLINE
+  note: >
+    Stop expanding Governance design. Product work resumes on TravelTrust
+    Mainline (feature / bugfix / CMS / Market / Wallet / Web3 / Payment /
+    Production Release). RCP remains the mandatory runtime-change check.
+
+immutable_surfaces_must_not_touch:
+  - evidence/GO_psg_foundation/release_archive/v1.1.0-psg-go.20260717/
+  - Tag v1.1.0-psg-go.20260717
+  - TT_PRODUCTION_GO
+  - already-PASS Production Cert packs
+  - Wallet L5 / MEDIA_ALIGNMENT ENGINEERING_CLOSED packs
+  - OA-01 / OA-02
+
+v2_unlock_only_when:
+  - architecture_level_problem_not_solvable_by_registry_domain_extension
+  - owner_explicit_governance_v2_charter

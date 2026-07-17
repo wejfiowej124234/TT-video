@@ -1,12 +1,31 @@
 # TT · PSG Runtime Change Propagation Gate（Post-PSG Change Control）
 
-**Status:** `ACTIVE`  
+**Governance v1:** [`BASELINE_ESTABLISHED`](./TT-PSG-GOVERNANCE-V1-BASELINE-ESTABLISHED-LATEST.md)（**不是** COMPLETE）  
+**Ops Status:** `ACTIVE`（Runtime Change 必走本闸）  
 **Machine:** `TT_PSG_RUNTIME_CHANGE_PROPAGATION`  
-**Registry:** [`registry/psg-runtime-change-propagation.v1.yaml`](../../registry/psg-runtime-change-propagation.v1.yaml)  
+**Unique SSOT:** [`registry/runtime-dependency-registry.v1.yaml`](../../registry/runtime-dependency-registry.v1.yaml)  
+**Derived (do not hand-edit):** [`registry/runtime-dependency-registry.derived.v1.json`](../../registry/runtime-dependency-registry.derived.v1.json)  
+**Generator:** `python scripts/dev/generate-rcp-registry-derived.py`  
+**Gate binder:** [`registry/psg-runtime-change-propagation.v1.yaml`](../../registry/psg-runtime-change-propagation.v1.yaml)  
 **Gate:** `node scripts/gates/check-psg-runtime-change-propagation.cjs`  
 **Evidence:** `evidence/GO_psg_governance/RUNTIME_CHANGE_PROPAGATION/`  
+**Enterprise Gap:** [`TT-PSG-RUNTIME-CHANGE-PROPAGATION-ENTERPRISE-DEEPENING-GAP-LATEST.md`](./TT-PSG-RUNTIME-CHANGE-PROPAGATION-ENTERPRISE-DEEPENING-GAP-LATEST.md)  
 
 **层位（写死）：** Post-PSG Change Control · **不是** 冻结 Certification 的重开 · **不是** Tag/Archive 刷新  
+
+**默认产品路径：** Feature → Incremental Audit → **RCP** → Deploy（**禁止**默认继续设计 PSG）  
+
+**维护铁律：** Gap Matrix · Probe Scope · Validation Scope · Compatibility Matrix · Deploy Dependency Graph **只**从 Dependency Registry 生成；禁止在 Gate binder 或散文里平行维护第二份。  
+
+**演进北星：** [`registry/psg-post-baseline-governance-evolution.v1.yaml`](../../registry/psg-post-baseline-governance-evolution.v1.yaml) · Governance v1 [`registry/psg-governance-v1-baseline.v1.yaml`](../../registry/psg-governance-v1-baseline.v1.yaml)
+
+| 优先级 | 内容 | 现状 |
+|--------|------|------|
+| **P1 基线** | Runtime Dependency Registry · Drift Detection · Deploy Graph skeleton | **BASELINE_ESTABLISHED** · 仅按需硬化 |
+| **P2 中期** | Data Governance · Contract Governance | **仅声明 · 不开工** |
+| **P3 长期** | Observability Governance · Business Governance | **仅声明 · 不开工** |
+
+原则：用 Registry / Drift / Deploy Graph 降「Media 类漂移」复发；**禁止** v1 内新增一级治理能力；架构级问题才开 Governance **v2**。
 
 ---
 
@@ -138,20 +157,39 @@ node scripts/gates/check-psg-runtime-change-propagation.cjs
 # expect: TT_PSG_RUNTIME_CHANGE_PROPAGATION: PASS
 ```
 
-### Wave B（下一步 · P0 Deploy pair）
+### Wave B（已落地 · API ↔ Web Runtime Pair + Dependency Registry）
 
-- 记录 Staging **API SHA** vs **Web image tag**；数据 rebind 事件必须附带 Web 重建或显式 WAIVE（Owner）  
-- 不写入冻结 Archive  
+**目标：** 防的是「Data/API Runtime 已变，Web Runtime 未同步」——媒体只是第一个实例。
 
-### Wave C（P1 扩模块）
+```
+Data Runtime → API Runtime → Web Runtime → Browser Runtime
+```
 
-- Auth rewrite/API_BASE 对拍  
-- Market/Guide cover hosts 并入同一 host 采样器  
-- CDN cutover：`cdn.traveltrust.app` 从「配置预留」升级为「活 URL 必过」  
+| 资产 | 路径 |
+|------|------|
+| Runtime Dependency Registry | `registry/runtime-dependency-registry.v1.yaml` |
+| Pair ledger | `evidence/.../API-WEB-RUNTIME-PAIR-LATEST.json` |
+| Gate 扩展 | RCP-REG-00 · RCP-PAIR-01..05 |
 
-### Wave D（P2）
+**配对指纹（诚实）：**
 
-- Indexer / RBAC / Observability 传播清单（先矩阵后闸）  
+| 侧 | 指纹 | 说明 |
+|----|------|------|
+| API / Data | `git_sha`（`/meta/build`）+ `media_hosts_hash` + `media_caps_keys_hash` | 活 Staging 采样 |
+| Web | `remotePatterns_hash` + `build_env_example_media_hash` + `unoptimized_helper_hash` + 可选 `TT_WEB_STAGING_IMAGE_TAG` | **不用** Web `/api/meta/build`（rewrite 到 API，会误判） |
+
+**RCP-PAIR-01：** producer 指纹相对上次 PASS ledger **变了**，且 consumer 指纹 **未变** → **BLOCKED**（可用 `RCP-PAIR-01-WAIVE.json` 仅软过 PAIR-01，**不能**免 PAIR-02..04）。
+
+**Dependency Registry：** `community_media` / `api_web_pair` 显式 producers → consumers → `runtime_dependencies`；Gate 按规则验证，而不是再堆专项 if。`deferred_domains`（auth/market/wallet/…）仅声明，**Wave C 才 enforce**。
+
+### Wave C（下一步 · P1 扩域 · 未开始）
+
+- 向 Dependency Registry 增加 `auth_session` · `market_guide_media` · `cdn_cutover` 等 domain  
+- **禁止**另起一套平行 Gate 语言；复用同一 pair + dependency 框架  
+
+### Wave D（P2 · 未开始）
+
+- Indexer / RBAC / Observability 传播清单（先矩阵后 enforce）  
 
 ---
 
@@ -159,21 +197,25 @@ node scripts/gates/check-psg-runtime-change-propagation.cjs
 
 - [x] 确认 PSG 无一等 Runtime Change Propagation → **建立本闸**  
 - [x] 定位 Media 漂移逃逸路径 → RCA 写入 MEDIA_ALIGNMENT + 本 runbook §2  
-- [x] 增量 Registry + Gate + Evidence（**未**动 Tag/Archive/Cert/`TT_PRODUCTION_GO`）  
-- [ ] Wave B：API↔Web deploy pair 钩子  
-- [ ] Wave C：Auth / Market / CDN 扩采样  
-- [ ] 可选：在 `deploy-tt-web-staging.sh` **末尾非阻塞提示**调用本闸（勿绑死冻结 Cert）  
-- [ ] 下一正式 Release 周期再评估是否升格为 Production Cert 子项（**新周期**，非本基线刷新）  
+- [x] Wave A RCP-MEDIA-01..04  
+- [x] Wave B API↔Web pair + Runtime Dependency Registry（community_media / api_web_pair）  
+- [ ] Wave C：Registry 扩 domain（Auth / Market / CDN / Wallet…）同一框架 enforce  
+- [ ] Wave D：Indexer/RBAC/Obs  
+- [ ] 可选：`deploy-tt-web-staging.sh` 末尾非阻塞提示调用本闸  
+- [ ] 下一正式 Release 周期再评估是否升格为 Production Cert 子项（**新周期**）  
 
 ---
 
 ## 7 · 与 MEDIA_ALIGNMENT / Wallet 关系
 
 ```
-Wallet L5                 Engineering Closed
-MEDIA_ALIGNMENT           Engineering Closed   ← 事后修复批次
-RUNTIME_CHANGE_PROPAGATION_GATE  ACTIVE        ← 防复发 · Post-PSG
-OA-01                     WAIT Project ID
+Wallet L5                         Engineering Closed
+MEDIA_ALIGNMENT                   Engineering Closed
+RUNTIME_CHANGE_PROPAGATION_GATE   ACTIVE
+  Wave A Media                    ENFORCED · PASS
+  Wave B API↔Web + Dep Registry   ENFORCED
+  Wave C/D                        NOT_STARTED
+OA-01                             WAIT Project ID
 ```
 
-MEDIA_ALIGNMENT 关缺陷；本闸关**类缺陷复发**。二者均不重开 PSG Certification。
+MEDIA_ALIGNMENT 关缺陷；本闸关**类缺陷复发**；Dependency Registry 关**扩展方式**。均不重开 PSG Certification。
