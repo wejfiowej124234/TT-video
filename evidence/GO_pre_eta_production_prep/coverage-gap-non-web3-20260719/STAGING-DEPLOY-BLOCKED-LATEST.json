@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.psg_coverage_consistency_closure_step.v1",
+  "step": 4,
+  "name": "Staging deploy same SHA",
+  "status": "BLOCKED",
+  "recorded_utc": "2026-07-19T05:11:26Z",
+  "local_head": "21b23d107e0c6360f2ad6132bdb65d6e4e101c3f",
+  "pinned_sha": "50682517b71171129700eeac130ecbdace274bb4",
+  "staging_api_meta_git_sha_before": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+  "deploy_attempt": "fly deploy tt-api-staging from clean worktree at HEAD",
+  "blocker": {
+    "kind": "COMPILE_FAIL",
+    "errors": [
+      "E0433 crate::session_cookie not found (middleware/auth_pause_metrics)",
+      "E0433 crate::production_metrics not found",
+      "E0425 crate::db::revoke_all_sessions_for_user not found"
+    ],
+    "note": "Clean tip does not build; missing symbols live in unrelated dirty WIP. Cannot claim ALIGNED_PASS. No Web3/Fix/Gate change. No RBAC expansion."
+  },
+  "release_gate_stamp": {
+    "psg": "CONDITIONAL_GO",
+    "fix_required": 8,
+    "consistency_control": "NOT_ALIGNED"
+  }
+}
