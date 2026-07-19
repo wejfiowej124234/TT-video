@@ -46,7 +46,7 @@ contract F04ServiceFeeStateMachineV311Test is Test {
         escrow.init(p);
     }
 
-    function test_F04_pending_locked_distributable_distributed() public {
+    function test_F04_legacy_pending_locked_distributable_distributed() public {
         assertEq(
             uint256(escrow.serviceFeeState()),
             uint256(ServiceFeeStatesV311.State.SERVICE_FEE_PENDING)
@@ -57,10 +57,17 @@ contract F04ServiceFeeStateMachineV311Test is Test {
             uint256(escrow.serviceFeeState()),
             uint256(ServiceFeeStatesV311.State.SERVICE_FEE_LOCKED)
         );
+        // LEGACY: settlementRouter == 0
         escrow.release();
         assertEq(
             uint256(escrow.serviceFeeState()),
             uint256(ServiceFeeStatesV311.State.SERVICE_FEE_DISTRIBUTED)
         );
+    }
+
+    function test_F04_target_locked_settlement_ready_only_on_release() public {
+        // Will be covered end-to-end by EscrowSettlementRouterWireV311Test;
+        // here assert LEGACY path still default when router unset.
+        assertEq(escrow.settlementRouter(), address(0));
     }
 }

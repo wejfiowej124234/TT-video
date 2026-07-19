@@ -35,8 +35,11 @@ interface ISettlementRouter {
 
     function feeLegAmount(bytes32 orderId) external view returns (uint256);
 
-    /// @notice Pull platform fee leg into router (Escrow/ops after release)
+    /// @notice Pull platform fee leg into router (ops/timelock after release)
     function receiveFeeLeg(bytes32 orderId, address token, uint256 amount, address from) external;
+
+    /// @notice Escrow-callable fee ingress (L5-A wire · Escrow must be allowlisted)
+    function receiveFeeLegFromEscrow(bytes32 orderId, address token, uint256 amount) external;
 
     /// @notice Protocol gate before distributable (auditable intermediate)
     function markSettlementReady(bytes32 orderId) external;

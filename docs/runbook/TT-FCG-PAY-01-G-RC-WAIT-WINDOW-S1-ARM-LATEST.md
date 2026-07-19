@@ -1,20 +1,27 @@
 # TT · FCG-PAY-01 · G-RC WAIT_WINDOW · Post-ETA S1 Arm
 
 **Machine:** `TT_FCG_PAY01_G_RC_WAIT_WINDOW_S1_ARM`  
-**Status:** **G_RC_CLOSED · CDR-19 SCOPE_CONFIRMED (CONTROLLED_MINIMUM_RELEASE)** · `2026-07-19`  
-**机读：** [`registry/psg-fcg-pay01-g-rc-wait-window-s1-arm.v1.yaml`](../../registry/psg-fcg-pay01-g-rc-wait-window-s1-arm.v1.yaml)  
-**Scope Confirm：** [`CDR-19-SCOPE-CONFIRM-LATEST.json`](../../evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/CDR-19-SCOPE-CONFIRM-LATEST.json)  
-**Dirty Audit：** [`CDR-19-DIRTY-AUDIT-LATEST.json`](../../evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/CDR-19-DIRTY-AUDIT-LATEST.json)
+**Status:** **L5 EMPIRICAL_PARTIAL · L5-A LOCAL WIRE CLOSED** · `2026-07-19`  
+**L5-A Evidence：** [`L5A-FINANCIAL-FLOW-WIRING-CLOSURE-LATEST.json`](../../evidence/GO_phase2_fcg_full_capability_v2_sepolia/fg-web3/L5A-FINANCIAL-FLOW-WIRING-CLOSURE-LATEST.json)  
+**Board：** [`PSG-COMPLETION-MATRIX-EMPIRICAL-BOARD-LATEST.json`](../../evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/PSG-COMPLETION-MATRIX-EMPIRICAL-BOARD-LATEST.json)  
+**L3 Prep（并行·不替代 L5）：** [`L3-SECURITY-PREP-PARALLEL-LATEST.json`](../../evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L3-SECURITY-PREP-PARALLEL-LATEST.json)
 
 ```text
-RELEASE_SCOPE_MODE: CONTROLLED_MINIMUM_RELEASE
-  Controlled Release: ~168（FCG/V311 131 + Clean Deploy 必需依赖）
-  Evidence: ~110 独立绑定 · 不入代码 Release Commit
-  Temp: 3 排除
-  Deferred: ~284 逐项审核 · 不自动进入本版
-G-RC CLOSED ✅ · Clean Deploy LOCKED 至 CDR-19 PASS
-下一: Commit(controlled only) → SHA Pin → 四方绑定 → PASS → Clean Deploy → L1–L5
+ACTIVE: 未切换（v311 baseline）
+L5: EMPIRICAL_PARTIAL · l5_pass=false
+
+L5-A Financial Flow Wiring（① forge CLOSED）:
+  ✅ Escrow↔SettlementRouter
+  ✅ FeeRouter 四轨 live path（local）
+  ✅ Distributable 生命周期
+  ✅ Steward/Treasury flow（local）
+  ❌ Chain=Indexer=API=DB=UI 五层等价（仍 OPEN）
+  ❌ Sepolia wired EscrowFactory 重部署（仍 OPEN）
+
+L3 Security: PREP_PARALLEL_ONLY · 不得覆盖/替代 L5
+下一: 五层 rebind / Sepolia wired factory · 或继续 L5 缺口；L3 仅准备
 ```
+
 
 ---
 

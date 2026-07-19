@@ -1,25 +1,571 @@
-
-╭----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------╮
-| Type     | Signature                                                                      | Selector                                                           |
-+================================================================================================================================================================+
-| event    | DistributableMarked(bytes32,uint256)                                           | 0xcec099ba76d313e5c7470a8f8920b08f46cb3f6bf248b8611fc65940d2f58501 |
-|----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------|
-| event    | Distributed(bytes32,uint256,uint256,address,address)                           | 0x322aa469d9421ffdbc04ee193fdf1c2581c8668321db32641b6f562f708ffe7a |
-|----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------|
-| event    | FeeLegReceived(bytes32,address,uint256,address)                                | 0xee7a49f87abf9d138cfad3483414b15e66a3f0b8cd757fe9bca68592150eed63 |
-|----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------|
-| event    | SettlementReadyMarked(bytes32)                                                 | 0x283f76077fc6eaa7d16dd9c3fbc6ecede57d825af0e227b3bdb42d483bc8b6bd |
-|----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------|
-| function | distribute(bytes32,bool,address,address) nonpayable                            | 0x1e3d3148                                                         |
-|----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------|
-| function | feeLegAmount(bytes32) view returns (uint256)                                   | 0xe0f85292                                                         |
-|----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------|
-| function | markDistributable(bytes32) nonpayable                                          | 0x7960a5bd                                                         |
-|----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------|
-| function | markSettlementReady(bytes32) nonpayable                                        | 0xe789f3be                                                         |
-|----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------|
-| function | receiveFeeLeg(bytes32,address,uint256,address) nonpayable                      | 0xb3e09cda                                                         |
-|----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------|
-| function | settlementState(bytes32) view returns (ISettlementRouter.OrderSettlementState) | 0x770bb2e6                                                         |
-╰----------+--------------------------------------------------------------------------------+--------------------------------------------------------------------╯
-
+{
+  "abi": [
+    {
+      "type": "function",
+      "name": "distribute",
+      "inputs": [
+        {
+          "name": "orderId",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "stewardActive",
+          "type": "bool",
+          "internalType": "bool"
+        },
+        {
+          "name": "stewardRecipient",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "projectRevenuePool",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "feeLegAmount",
+      "inputs": [
+        {
+          "name": "orderId",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "function",
+      "name": "markDistributable",
+      "inputs": [
+        {
+          "name": "orderId",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "markSettlementReady",
+      "inputs": [
+        {
+          "name": "orderId",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "receiveFeeLeg",
+      "inputs": [
+        {
+          "name": "orderId",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "token",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "internalType": "uint256"
+        },
+        {
+          "name": "from",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "receiveFeeLegFromEscrow",
+      "inputs": [
+        {
+          "name": "orderId",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        },
+        {
+          "name": "token",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "function",
+      "name": "settlementState",
+      "inputs": [
+        {
+          "name": "orderId",
+          "type": "bytes32",
+          "internalType": "bytes32"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint8",
+          "internalType": "enum ISettlementRouter.OrderSettlementState"
+        }
+      ],
+      "stateMutability": "view"
+    },
+    {
+      "type": "event",
+      "name": "DistributableMarked",
+      "inputs": [
+        {
+          "name": "orderId",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "Distributed",
+      "inputs": [
+        {
+          "name": "orderId",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "stewardShare",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "poolShare",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "stewardRecipient",
+          "type": "address",
+          "indexed": false,
+          "internalType": "address"
+        },
+        {
+          "name": "projectRevenuePool",
+          "type": "address",
+          "indexed": false,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "FeeLegReceived",
+      "inputs": [
+        {
+          "name": "orderId",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        },
+        {
+          "name": "token",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        },
+        {
+          "name": "from",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "event",
+      "name": "SettlementReadyMarked",
+      "inputs": [
+        {
+          "name": "orderId",
+          "type": "bytes32",
+          "indexed": true,
+          "internalType": "bytes32"
+        }
+      ],
+      "anonymous": false
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "distribute(bytes32,bool,address,address)": "1e3d3148",
+    "feeLegAmount(bytes32)": "e0f85292",
+    "markDistributable(bytes32)": "7960a5bd",
+    "markSettlementReady(bytes32)": "e789f3be",
+    "receiveFeeLeg(bytes32,address,uint256,address)": "b3e09cda",
+    "receiveFeeLegFromEscrow(bytes32,address,uint256)": "be67d10d",
+    "settlementState(bytes32)": "770bb2e6"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"orderId\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"DistributableMarked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"orderId\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"stewardShare\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"poolShare\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"stewardRecipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"projectRevenuePool\",\"type\":\"address\"}],\"name\":\"Distributed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"orderId\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"}],\"name\":\"FeeLegReceived\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"orderId\",\"type\":\"bytes32\"}],\"name\":\"SettlementReadyMarked\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"orderId\",\"type\":\"bytes32\"},{\"internalType\":\"bool\",\"name\":\"stewardActive\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"stewardRecipient\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"projectRevenuePool\",\"type\":\"address\"}],\"name\":\"distribute\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"orderId\",\"type\":\"bytes32\"}],\"name\":\"feeLegAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"orderId\",\"type\":\"bytes32\"}],\"name\":\"markDistributable\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"orderId\",\"type\":\"bytes32\"}],\"name\":\"markSettlementReady\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"orderId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"}],\"name\":\"receiveFeeLeg\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"orderId\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"receiveFeeLegFromEscrow\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"orderId\",\"type\":\"bytes32\"}],\"name\":\"settlementState\",\"outputs\":[{\"internalType\":\"enum ISettlementRouter.OrderSettlementState\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Escrow \\u2192 SettlementRouter \\u2192 FeeRouter/PRP split. Not broadcast until G-RC CLOSED.\",\"kind\":\"dev\",\"methods\":{},\"title\":\"ISettlementRouter\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"distribute(bytes32,bool,address,address)\":{\"notice\":\"45/55 or 100% PRP per V311DistributableSplit\"},\"markDistributable(bytes32)\":{\"notice\":\"Advance to distributable after SettlementReady\"},\"markSettlementReady(bytes32)\":{\"notice\":\"Protocol gate before distributable (auditable intermediate)\"},\"receiveFeeLeg(bytes32,address,uint256,address)\":{\"notice\":\"Pull platform fee leg into router (ops/timelock after release)\"},\"receiveFeeLegFromEscrow(bytes32,address,uint256)\":{\"notice\":\"Escrow-callable fee ingress (L5-A wire \\u00b7 Escrow must be allowlisted)\"}},\"notice\":\"Protocol v2 settlement entry (PREP \\u00b7 TARGET SSOT)\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/ISettlementRouter.sol\":\"ISettlementRouter\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":forge-std/=lib/forge-std/src/\"],\"viaIR\":true},\"sources\":{\"src/ISettlementRouter.sol\":{\"keccak256\":\"0xd0f789d572ec806f8d7879811be0bd6bf79090b5604304c5683ba0902547ec48\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://bc88ccc7de41f872012706856da2f43ede9933c82bbdc98ccc7c483286750ec4\",\"dweb:/ipfs/QmNYFzNTpaKGAzD1dEK2PykmnMSeCKHBWvu6YZFZcFMwSy\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.19+commit.7dd6d404"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "orderId",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "DistributableMarked",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "orderId",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "stewardShare",
+              "type": "uint256",
+              "indexed": false
+            },
+            {
+              "internalType": "uint256",
+              "name": "poolShare",
+              "type": "uint256",
+              "indexed": false
+            },
+            {
+              "internalType": "address",
+              "name": "stewardRecipient",
+              "type": "address",
+              "indexed": false
+            },
+            {
+              "internalType": "address",
+              "name": "projectRevenuePool",
+              "type": "address",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "Distributed",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "orderId",
+              "type": "bytes32",
+              "indexed": true
+            },
+            {
+              "internalType": "address",
+              "name": "token",
+              "type": "address",
+              "indexed": true
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256",
+              "indexed": false
+            },
+            {
+              "internalType": "address",
+              "name": "from",
+              "type": "address",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "FeeLegReceived",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "orderId",
+              "type": "bytes32",
+              "indexed": true
+            }
+          ],
+          "type": "event",
+          "name": "SettlementReadyMarked",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "orderId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bool",
+              "name": "stewardActive",
+              "type": "bool"
+            },
+            {
+              "internalType": "address",
+              "name": "stewardRecipient",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "projectRevenuePool",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "distribute"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "orderId",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "feeLegAmount",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "orderId",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "markDistributable"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "orderId",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "markSettlementReady"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "orderId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "address",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "from",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "receiveFeeLeg"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "orderId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "address",
+              "name": "token",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "receiveFeeLegFromEscrow"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "orderId",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "settlementState",
+          "outputs": [
+            {
+              "internalType": "enum ISettlementRouter.OrderSettlementState",
+              "name": "",
+              "type": "uint8"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {
+          "distribute(bytes32,bool,address,address)": {
+            "notice": "45/55 or 100% PRP per V311DistributableSplit"
+          },
+          "markDistributable(bytes32)": {
+            "notice": "Advance to distributable after SettlementReady"
+          },
+          "markSettlementReady(bytes32)": {
+            "notice": "Protocol gate before distributable (auditable intermediate)"
+          },
+          "receiveFeeLeg(bytes32,address,uint256,address)": {
+            "notice": "Pull platform fee leg into router (ops/timelock after release)"
+          },
+          "receiveFeeLegFromEscrow(bytes32,address,uint256)": {
+            "notice": "Escrow-callable fee ingress (L5-A wire \u00b7 Escrow must be allowlisted)"
+          }
+        },
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "forge-std/=lib/forge-std/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/ISettlementRouter.sol": "ISettlementRouter"
+      },
+      "evmVersion": "paris",
+      "libraries": {},
+      "viaIR": true
+    },
+    "sources": {
+      "src/ISettlementRouter.sol": {
+        "keccak256": "0xd0f789d572ec806f8d7879811be0bd6bf79090b5604304c5683ba0902547ec48",
+        "urls": [
+          "bzz-raw://bc88ccc7de41f872012706856da2f43ede9933c82bbdc98ccc7c483286750ec4",
+          "dweb:/ipfs/QmNYFzNTpaKGAzD1dEK2PykmnMSeCKHBWvu6YZFZcFMwSy"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "id": 26
+}

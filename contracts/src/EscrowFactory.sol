@@ -22,6 +22,7 @@ contract EscrowFactory {
     error FactoryPaused();
     error OnlyGuardian();
     error InvalidGuardian();
+    error InvalidSettlementRouter();
 
     constructor(address guardian_) {
         if (guardian_ == address(0)) revert InvalidGuardian();
@@ -50,6 +51,22 @@ contract EscrowFactory {
         if (escrowOf[params.orderId] != address(0)) revert OrderAlreadyHasEscrow();
         Escrow escrow = new Escrow(address(this));
         escrow.init(params);
+        escrowOf[params.orderId] = address(escrow);
+        emit EscrowCreated(params.orderId, address(escrow));
+        return address(escrow);
+    }
+
+    /// @notice L5-A · create Escrow and wire fee leg to SettlementRouter (TARGET path)
+    function createEscrowWired(Escrow.EscrowParams calldata params, address settlementRouter)
+        external
+        returns (address)
+    {
+        if (factoryPaused) revert FactoryPaused();
+        if (escrowOf[params.orderId] != address(0)) revert OrderAlreadyHasEscrow();
+        if (settlementRouter == address(0)) revert InvalidSettlementRouter();
+        Escrow escrow = new Escrow(address(this));
+        escrow.init(params);
+        escrow.setSettlementRouter(settlementRouter);
         escrowOf[params.orderId] = address(escrow);
         emit EscrowCreated(params.orderId, address(escrow));
         return address(escrow);

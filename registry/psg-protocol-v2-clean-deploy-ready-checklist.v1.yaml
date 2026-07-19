@@ -1,7 +1,7 @@
 schema: traveltrust.psg_protocol_v2_clean_deploy_ready_checklist.v1
 machine_key: TT_PROTOCOL_V2_CLEAN_DEPLOY_READY_CHECKLIST
-status: G_RC_CLOSED_CDR19_SCOPE_CONFIRMED_CLEAN_DEPLOY_LOCKED
-recorded_utc: '2026-07-19T09:59:49Z'
+status: READY_CHECKLIST_FG_PREP_LANDED_WAIT_G_RC_CLOSED
+recorded_utc: '2026-07-19T10:25:27Z'
 human_ssot: docs/runbook/TT-PROTOCOL-V2-CLEAN-DEPLOY-READY-CHECKLIST-LATEST.md
 evidence_pack: evidence/GO_pre_eta_production_prep/full-capability-gap-closure-20260719/PROTOCOL-V2-CLEAN-DEPLOY-READY-CHECKLIST-LATEST.json
 preauth_only: true
@@ -84,8 +84,11 @@ checklist:
   note: ISettlementRouter + SettlementRouter landed (prep · not deployed)
 - id: CDR-04
   item: Escrow_wired_to_SettlementRouter_not_LEGACY_direct_pay_ssot
-  ready: false
+  ready: true
   blocker: POST_G_RC_implementation
+  note: L5-A local wire CLOSED (forge EscrowSettlementRouterWireV311); Sepolia EscrowFactory
+    wired redeploy + five-layer rebind still OPEN; l5_pass=false
+  evidence: evidence/GO_phase2_fcg_full_capability_v2_sepolia/fg-web3/L5A-FINANCIAL-FLOW-WIRING-CLOSURE-LATEST.json
 - id: CDR-05
   item: FeeRouter_V311_distributable_routing_ready_to_deploy
   ready: partial
@@ -391,7 +394,7 @@ dual_gates:
     - modify_dirty
     - premature_commit
     - generate_Release_SHA
-clean_deploy: LOCKED
+clean_deploy: UNLOCKED_CDR19_PASS_PRECONDITIONS_STILL_APPLY
 psg_completion: NOT_STARTED
 no_new_work_now: true
 sole_sequence_locked:
@@ -415,3 +418,5 @@ on_g_rc_closed_immediate:
 - TT_PSG_PRODUCTION_COMPLETION_MATRIX_L1_L5_full_FG_acceptance
 g_rc_closed: true
 cdr19_release_identity: *id002
+Release_SHA: 493596aebd579dd92c3c2a5f58349c5444b9df13
+cdr19_status: PASS

@@ -38,7 +38,7 @@ Clean Deploy LOCKED · 未确认 Scope 前禁止 Commit/Pin/Deploy
 | CDR-01 | G-RC-05 CLOSED | ❌ |
 | CDR-02 | PREAUTH / Step2.5 / Ladder Lock 附卷 | ✅ |
 | CDR-03 | `SettlementRouter.sol` 存在 | ✅ prep · 未部署 |
-| CDR-04 | Escrow→SettlementRouter 接线 | ❌ post-G-RC |
+| CDR-04 | Escrow→SettlementRouter 接线 | ✅ ① forge L5-A · Sepolia wired factory/五层仍 OPEN · l5_pass=false |
 | CDR-05 | FeeRouter V3.1.1 Distributable 可部署 | ◐ 源码有 · 接线待 |
 | CDR-06 | Distributable + SETTLEMENT_READY 可观测 | ◐ 枚举有 · Escrow 未重绑 |
 | CDR-07 | `fcg_full_capability_v2_sepolia` Deploy script | ✅ 广播硬闸 |

@@ -4,15 +4,18 @@ pragma solidity 0.8.19;
 import "./IERC20.sol";
 import "./V311EconomicConstants.sol";
 import "./ServiceFeeStatesV311.sol";
+import "./ISettlementRouter.sol";
+import "./IEscrowServiceFeeSync.sol";
 
 /**
  * TravelTrust Escrow 实例（与 01 §4、19 一致）
  * 资金流：Created -> Funded -> Completed | Refunded | (Disputed -> Resolved)
  * 无 admin 后门、无 emergency withdraw（contracts/README）
  * V3.1.1：platformFeeBps 硬闸 0–10%（`V311EconomicConstants.PLATFORM_SERVICE_FEE_MAX_BPS`）
- * V3.1.1 F-04：Distributable Service Fee 四态（PENDING→LOCKED→DISTRIBUTABLE→DISTRIBUTED）
+ * V3.1.1 F-04：Distributable Service Fee 态机
+ * L5-A：若 `settlementRouter != 0`，release 平台费腿 → SettlementRouter（TARGET）；否则 LEGACY 直付 platformFeeRecipient
  */
-contract Escrow {
+contract Escrow is IEscrowServiceFeeSync {
     enum Status {
         None,
         Created,
@@ -55,6 +58,8 @@ contract Escrow {
     address public factory;
     /// @notice V3.1.1 · Gap F-04 service fee state machine
     ServiceFeeStatesV311.State public serviceFeeState;
+    /// @notice L5-A · address(0) = LEGACY direct-pay; non-zero = wire fee leg to SettlementRouter
+    address public settlementRouter;
 
     event EscrowCreated(
         bytes32 indexed orderId,
@@ -135,6 +140,11 @@ contract Escrow {
         );
     }
 
+    /// @notice L5-A · factory sets SettlementRouter after init (address(0) keeps LEGACY path)
+    function setSettlementRouter(address router) external onlyFactory {
+        settlementRouter = router;
+    }
+
     function deposit(uint256 amount) external {
         if (status != Status.Created) revert InvalidState();
         if (msg.sender != traveler) revert OnlyTraveler();
@@ -148,16 +158,41 @@ contract Escrow {
     /// @notice Completed 路径放款分账（01 §10 / 80 附录 §2 · Completed 收平台费）。
     /// @dev 向导到账 = floor(totalAmount * (10000 - platformFeeBps) / 10000)；
     ///      平台费 = totalAmount - guideAmount（BPS 乘除余数归平台费腿，与 01「dust 归平台」一致）。
+    ///      TARGET (settlementRouter!=0): fee → SettlementRouter · SM → SETTLEMENT_READY
+    ///      LEGACY (settlementRouter==0): fee → platformFeeRecipient · SM → DISTRIBUTABLE→DISTRIBUTED
     function release() external virtual {
         if (status != Status.Funded) revert InvalidState();
         uint256 guideAmount = (totalAmount * (uint256(10000) - uint256(platformFeeBps))) / 10000;
         uint256 fee = totalAmount - guideAmount;
         if (!IERC20(token).transfer(guide, guideAmount)) revert TransferFailed();
-        if (fee > 0 && !IERC20(token).transfer(platformFeeRecipient, fee)) revert TransferFailed();
+        if (fee > 0) {
+            if (settlementRouter != address(0)) {
+                if (!IERC20(token).approve(settlementRouter, fee)) revert TransferFailed();
+                ISettlementRouter(settlementRouter).receiveFeeLegFromEscrow(orderId, token, fee);
+            } else if (!IERC20(token).transfer(platformFeeRecipient, fee)) {
+                revert TransferFailed();
+            }
+        }
         status = Status.Completed;
-        _advanceServiceFee(ServiceFeeStatesV311.State.SERVICE_FEE_DISTRIBUTABLE);
-        _advanceServiceFee(ServiceFeeStatesV311.State.SERVICE_FEE_DISTRIBUTED);
+        if (settlementRouter != address(0)) {
+            _advanceServiceFee(ServiceFeeStatesV311.State.SERVICE_FEE_SETTLEMENT_READY);
+        } else {
+            _advanceServiceFee(ServiceFeeStatesV311.State.SERVICE_FEE_DISTRIBUTABLE);
+            _advanceServiceFee(ServiceFeeStatesV311.State.SERVICE_FEE_DISTRIBUTED);
+        }
         emit Released(orderId, address(this), guideAmount, fee);
+    }
+
+    /// @notice L5-A · SettlementRouter callback after markDistributable
+    function notifySettlementDistributable() external {
+        if (msg.sender != settlementRouter) revert InvalidState();
+        _advanceServiceFee(ServiceFeeStatesV311.State.SERVICE_FEE_DISTRIBUTABLE);
+    }
+
+    /// @notice L5-A · SettlementRouter callback after distribute
+    function notifySettlementDistributed() external {
+        if (msg.sender != settlementRouter) revert InvalidState();
+        _advanceServiceFee(ServiceFeeStatesV311.State.SERVICE_FEE_DISTRIBUTED);
     }
 
     function _advanceServiceFee(ServiceFeeStatesV311.State to) internal {
