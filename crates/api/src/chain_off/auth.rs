@@ -789,6 +789,63 @@ pub async fn auth_login(
     })))
 }
 
+/// Immutable business seed emails (C2/C3/C4) — **must not** be `promote_admin_email` targets.
+/// Drift of these roles breaks RBAC Coverage cells (Tourist/Guide/Provider CAP_ADMIN_DENY).
+const IMMUTABLE_BUSINESS_SEED_ROLE_REPAIRS: &[(&str, &str)] = &[
+    ("tourist@test.com", "tourist"),
+    ("guide@test.com", "guide"),
+    ("merchant@test.com", "provider"),
+];
+
+fn is_immutable_business_seed_email(email_norm: &str) -> bool {
+    IMMUTABLE_BUSINESS_SEED_ROLE_REPAIRS
+        .iter()
+        .any(|(e, _)| *e == email_norm)
+}
+
+/// Repair C2/C3/C4 roles if polluted (e.g. accidental `promote_admin_email`).
+/// ① local seed only · does not touch Web3 / Fix Required count.
+pub async fn seed_repair_immutable_business_account_roles(state: &ChainOffState) {
+    if std::env::var("SEED_TEST_ACCOUNTS").as_deref() != Ok("1") {
+        return;
+    }
+    let now = Utc::now();
+    for &(email, expected_role) in IMMUTABLE_BUSINESS_SEED_ROLE_REPAIRS {
+        let uid = {
+            let store = state.store.read().await;
+            store
+                .users
+                .values()
+                .find(|u| u.email.trim().eq_ignore_ascii_case(email))
+                .map(|u| (u.id, u.role.clone()))
+        };
+        let Some((uid, current)) = uid else {
+            continue;
+        };
+        if current == expected_role {
+            continue;
+        }
+        eprintln!(
+            "[audit] seed repair: {} role '{}' → '{}' (immutable business account)",
+            email, current, expected_role
+        );
+        if let Some(ref pool) = state.db_pool {
+            let _ = sqlx::query(
+                r#"UPDATE users SET role = $2, updated_at = now() WHERE id = $1"#,
+            )
+            .bind(uid)
+            .bind(expected_role)
+            .execute(pool)
+            .await;
+        }
+        let mut store = state.store.write().await;
+        if let Some(u) = store.users.get_mut(&uid) {
+            u.role = expected_role.to_string();
+            u.updated_at = now;
+        }
+    }
+}
+
 /// 开发/测试用：当 SEED_TEST_ACCOUNTS=1 且 store 中尚无测试账号时，注入游客与向导。
 /// **① 仅开发**：`POST /auth/seed-test-accounts` body **`promote_admin_email`** → **admin**（内存 + PG 同步）。
 pub async fn seed_promote_user_to_admin_if_enabled(
@@ -801,6 +858,9 @@ pub async fn seed_promote_user_to_admin_if_enabled(
     let email_norm = email.trim().to_ascii_lowercase();
     if email_norm.is_empty() || !is_valid_email_format(&email_norm) {
         return Err("invalid_email");
+    }
+    if is_immutable_business_seed_email(&email_norm) {
+        return Err("seed_promote_immutable_business_account");
     }
     let uid = {
         let store = state.store.read().await;
@@ -870,6 +930,7 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
         seed_multi_identity_demo_account(state).await;
         seed_merchant_workbench_demo_accounts(state).await;
         seed_canonical_test_email_verified(state).await;
+        seed_repair_immutable_business_account_roles(state).await;
         return;
     }
     let password_hash = match bcrypt::hash(SEED_PASSWORD, bcrypt::DEFAULT_COST) {
@@ -1110,6 +1171,7 @@ pub async fn seed_test_accounts_if_empty(state: &ChainOffState) {
     seed_multi_identity_demo_account(state).await;
     seed_merchant_workbench_demo_accounts(state).await;
     seed_canonical_test_email_verified(state).await;
+    seed_repair_immutable_business_account_roles(state).await;
 }
 
 const MERCHANT_WORKBENCH_DEMO_EMAIL: &str = "merchant@test.com";

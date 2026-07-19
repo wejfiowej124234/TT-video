@@ -1,0 +1,13 @@
+{
+  "machine": "TT_PSG_COVERAGE_GAP_COMPLETION_NON_WEB3",
+  "stamp_utc": "2026-07-19T04:10:00Z",
+  "mode": "test_fill_window_not_dev_fix",
+  "local_api": "DOWN",
+  "vitest_total_pass": 73,
+  "live_smoke": "NOT_RUN_API_DOWN",
+  "fix_required_delta": 0,
+  "gate": "CONDITIONAL_GO"
+}
+api_boot=FAIL migration_20260713060000_checksum_mismatch
+health=DOWN
+next=owner_fix_migration_or_authorize_pg_reset

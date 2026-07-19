@@ -1,0 +1,28 @@
+{
+  "schema": "traveltrust.psg_coverage_consistency_control_gate.v1",
+  "machine_key": "TT_PSG_COVERAGE_CONSISTENCY_CONTROL",
+  "recorded_utc": "2026-07-19T04:59:53Z",
+  "head_sha": "3096516ddcb230e571c41eb0fc0eb16a1f3ce39f",
+  "pinned_sha": null,
+  "registry_current_verdict": "NOT_ALIGNED",
+  "working_tree_dirty": true,
+  "coverage_paths_dirty": true,
+  "coverage_run_path": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/COVERAGE-RUN-LATEST.json",
+  "checks": {
+    "L1_LOCAL": "PASS",
+    "L2_GIT": "FAIL",
+    "L3_STAGING_DEPLOY": "FAIL",
+    "L4_STAGING_EVIDENCE": "FAIL",
+    "L5_RECALCULATE": "FAIL"
+  },
+  "overall_verdict": "NOT_ALIGNED",
+  "release_gate_stamp": {
+    "psg": "CONDITIONAL_GO",
+    "fix_required": 8,
+    "consistency_control": "NOT_ALIGNED"
+  },
+  "notes": [
+    "LOCAL_PASS must not count as Coverage PASS until ALIGNED_PASS",
+    "Phase3 local Metric FINAL remains local-only until this gate is ALIGNED_PASS"
+  ]
+}

@@ -1,0 +1,122 @@
+# schema: traveltrust.psg_coverage_consistency_control.v1
+# Alignment Loop hard gate: Local → Git SHA → Staging same SHA → Evidence → Recalculate
+machine_key: TT_PSG_COVERAGE_CONSISTENCY_CONTROL
+schema: traveltrust.psg_coverage_consistency_control.v1
+status: ACTIVE
+recorded_utc: "2026-07-19T05:00:00Z"
+human_ssot: docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md
+gate_script: scripts/gates/check-psg-coverage-consistency-control.sh
+stamp_script: scripts/dev/stamp-psg-coverage-run.py
+
+release_gate_stamp:
+  psg: CONDITIONAL_GO
+  fix_required: 8
+  coverage_evidence: VERIFIED
+  coverage_metrics: FINAL
+  consistency_control: OPEN
+  threshold_rollup: NEED_FIX
+
+principle: >
+  Any Coverage Gap fix must complete Local PASS → Git Commit SHA pin →
+  Staging same-SHA deploy → Staging Evidence → Coverage Recalculate.
+  Local-only PASS must not count as Coverage PASS.
+
+pass_tiers:
+  LOCAL_PASS:
+    counts_for_threshold: false
+    counts_for_acceptance: false
+    meaning: local probe succeeded with evidence_path
+  ALIGNED_PASS:
+    counts_for_threshold: true
+    counts_for_acceptance: true
+    meaning: five_point_alignment_loop_complete
+
+alignment_loop:
+  - id: L1_LOCAL
+    name: Local PASS
+    required: true
+  - id: L2_GIT
+    name: Git Commit SHA pin
+    required: true
+    checks:
+      - working_tree_clean_for_fix_paths_or_committed
+      - head_equals_pinned_sha
+      - registry_pinned_sha_matches
+      - evidence_coverage_run_git_sha_matches
+  - id: L3_STAGING_DEPLOY
+    name: Staging deploy same SHA
+    required: true
+  - id: L4_STAGING_EVIDENCE
+    name: Staging Evidence verify
+    required: true
+    requires_coverage_run_environment: staging
+  - id: L5_RECALCULATE
+    name: Coverage Recalculate
+    required: true
+    aligned_cells_only: true
+
+environment_parity:
+  - local_tests_pass
+  - staging_same_sha_deploy
+  - staging_db_migration_aligned
+  - env_config_mode_aligned
+  - api_health_and_meta_aligned
+
+coverage_run_schema:
+  schema: traveltrust.psg_coverage_run.v1
+  required_fields:
+    - git_sha
+    - environment
+    - api_sha
+    - web_sha
+    - migration_state
+    - api_version
+    - frontend_version
+    - timestamp
+    - evidence_path
+    - consistency_verdict
+  optional_fields:
+    - cell_refs
+    - register_issue_ids
+    - staging_meta_git_sha
+    - notes
+
+rbac_acceptance_note: >
+  RBAC 60/96 NEED_FIX is structural (threshold pass/96==100 while 36 N/A never count).
+  Do not expand tests to chase 100% until Owner redefines valid cells vs N/A / Acceptance rule.
+  Consistency Closure must not invent meaningless RBAC probes.
+
+finding_path:
+  - PSG_Register
+  - Issue_ID
+  - Owner
+  - Min_Fix
+  - Regression_Evidence
+  - Alignment_Loop
+  - Recalculate
+
+# Honest current state after Phase3 local cell fill (①)
+current_verdict: NOT_ALIGNED
+current_verdict_reason: >
+  Phase3 filled local Measurement cells (LOCAL_PASS / Metric FINAL locally)
+  but Git SHA pin + Staging same-SHA Evidence are not closed; dirty/untracked
+  Coverage artifacts and product seed-repair may still be uncommitted.
+pinned_sha: null
+aligned_pass_cells: 0
+local_metric_cite: docs/runbook/TT-PSG-COVERAGE-MEASUREMENT-FINAL-LATEST.md
+measurement_final_registry: registry/psg-coverage-measurement-final.v1.yaml
+register_ssot: docs/runbook/TT-PRODUCTION-READINESS-REGISTER-LATEST.md
+
+discipline:
+  no_local_only_threshold_pass: true
+  no_silent_product_fix: true
+  register_before_fix: true
+  no_web3_minfix_via_this_control: true
+  no_fix_required_delta_without_release_window: true
+  no_gate_mutation: true
+  no_random_test_expansion: true
+
+artifacts:
+  evidence_dir: evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719
+  coverage_run_latest: evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/COVERAGE-RUN-LATEST.json
+  gate_report_latest: evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/CONSISTENCY-CONTROL-GATE-LATEST.json

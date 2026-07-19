@@ -1,0 +1,196 @@
+# schema: traveltrust.psg_coverage_measurement_final.v1
+# Metric FINAL from existing Non-Web3 evidence cells only. Gate untouched.
+schema: "traveltrust.psg_coverage_measurement_final.v1"
+machine_key: "TT_PSG_COVERAGE_MEASUREMENT_FINAL"
+status: "METRIC_FINAL"
+phase: "phase3_residual_cell_fill"
+recorded_utc: "2026-07-19T04:59:25Z"
+mode: "phase1_baseline_plus_phase2_plus_phase3_cell_fill"
+phase2_cell_log: "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/CELL_PASS.ndjson"
+phase3_cell_log: "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/CELL_PASS.ndjson"
+release_gate_stamp:
+  psg: "CONDITIONAL_GO"
+  fix_required: 8
+  coverage_evidence: "VERIFIED"
+  coverage_metrics: "FINAL"
+  consistency_control: "NOT_ALIGNED"
+  pass_tier: "LOCAL_PASS"
+consistency_control:
+  machine_key: "TT_PSG_COVERAGE_CONSISTENCY_CONTROL"
+  human_ssot: "docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md"
+  registry: "registry/psg-coverage-consistency-control.v1.yaml"
+  gate: "scripts/gates/check-psg-coverage-consistency-control.sh"
+  verdict: "NOT_ALIGNED"
+  rule: "only_ALIGNED_PASS_counts_for_threshold_acceptance"
+  local_pass_does_not_count: true
+discipline:
+  no_scope_expansion: true
+  no_product_code_change: false
+  register_linked_minfix_only: true
+  register_linked_minfix: "PFA-UI-ADMIN-01 / RBAC|Tourist|CAP_ADMIN_DENY|F_DENY_API seed role repair"
+  fix_required_delta: 0
+  no_web3_minfix: true
+  no_gate_mutation: true
+  formula: "pass_cells / denom_cells"
+  na_does_not_count_as_pass: true
+  local_pass_does_not_count_as_aligned: true
+  phase2_rejected_keys:
+    - Admin|CAP_OWN|F_DENY_UI
+    - Community|Create
+  phase3_rejected_keys:
+
+metrics:
+  RBAC:
+    denom: 96
+    pass: 60
+    fail: 0
+    not_run: 0
+    na: 36
+    pct: 62.5
+    threshold_rule: "pass/96 == 100"
+    threshold_decision: "NEED_FIX"
+  User_Journey:
+    denom: 5
+    pass: 5
+    fail: 0
+    not_run: 0
+    na: 0
+    pct: 100.0
+    threshold_rule: "pass/5 == 100 (integer >=90)"
+    threshold_decision: "PASS"
+  Data_Lifecycle:
+    denom: 20
+    pass: 20
+    fail: 0
+    not_run: 0
+    na: 0
+    pct: 100.0
+    threshold_rule: "pass/20 >= 90"
+    threshold_decision: "PASS"
+  UI_UX_P0:
+    denom: 24
+    pass: 24
+    fail: 0
+    not_run: 0
+    na: 0
+    pct: 100.0
+    threshold_rule: "pass/24 >= 90"
+    threshold_decision: "PASS"
+rollup_threshold_decision: "NEED_FIX"
+cells_artifact: "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/MEASUREMENT-FINAL-CELLS.json"
+human_ssot: "docs/runbook/TT-PSG-COVERAGE-MEASUREMENT-FINAL-LATEST.md"
+framework_ssot: "docs/runbook/TT-PSG-COVERAGE-MEASUREMENT-RECALCULATE-LATEST.md"
+pass_cell_index:
+  RBAC:
+    - Tourist|CAP_OWN|F_ALLOW_API
+    - Tourist|CAP_OWN|F_DENY_API
+    - Tourist|CAP_OWN|F_ALLOW_UI
+    - Tourist|CAP_OWN|F_DENY_UI
+    - Tourist|CAP_CROSS_DENY|F_DENY_API
+    - Tourist|CAP_CROSS_DENY|F_DENY_UI
+    - Tourist|CAP_ADMIN_DENY|F_DENY_API
+    - Tourist|CAP_ADMIN_DENY|F_DENY_UI
+    - Tourist|CAP_UI_BOUND|F_ALLOW_UI
+    - Tourist|CAP_UI_BOUND|F_DENY_UI
+    - Guide|CAP_OWN|F_ALLOW_API
+    - Guide|CAP_OWN|F_DENY_API
+    - Guide|CAP_OWN|F_ALLOW_UI
+    - Guide|CAP_OWN|F_DENY_UI
+    - Guide|CAP_CROSS_DENY|F_DENY_API
+    - Guide|CAP_CROSS_DENY|F_DENY_UI
+    - Guide|CAP_ADMIN_DENY|F_DENY_API
+    - Guide|CAP_ADMIN_DENY|F_DENY_UI
+    - Guide|CAP_UI_BOUND|F_ALLOW_UI
+    - Guide|CAP_UI_BOUND|F_DENY_UI
+    - Provider|CAP_OWN|F_ALLOW_API
+    - Provider|CAP_OWN|F_DENY_API
+    - Provider|CAP_OWN|F_ALLOW_UI
+    - Provider|CAP_OWN|F_DENY_UI
+    - Provider|CAP_CROSS_DENY|F_DENY_API
+    - Provider|CAP_CROSS_DENY|F_DENY_UI
+    - Provider|CAP_ADMIN_DENY|F_DENY_API
+    - Provider|CAP_ADMIN_DENY|F_DENY_UI
+    - Provider|CAP_UI_BOUND|F_ALLOW_UI
+    - Provider|CAP_UI_BOUND|F_DENY_UI
+    - Steward|CAP_OWN|F_ALLOW_API
+    - Steward|CAP_OWN|F_DENY_API
+    - Steward|CAP_OWN|F_ALLOW_UI
+    - Steward|CAP_OWN|F_DENY_UI
+    - Steward|CAP_CROSS_DENY|F_DENY_API
+    - Steward|CAP_CROSS_DENY|F_DENY_UI
+    - Steward|CAP_ADMIN_DENY|F_DENY_API
+    - Steward|CAP_ADMIN_DENY|F_DENY_UI
+    - Steward|CAP_UI_BOUND|F_ALLOW_UI
+    - Steward|CAP_UI_BOUND|F_DENY_UI
+    - Admin|CAP_OWN|F_ALLOW_API
+    - Admin|CAP_OWN|F_DENY_API
+    - Admin|CAP_OWN|F_ALLOW_UI
+    - Admin|CAP_OWN|F_DENY_UI
+    - Admin|CAP_CROSS_DENY|F_DENY_API
+    - Admin|CAP_CROSS_DENY|F_DENY_UI
+    - Admin|CAP_ADMIN_DENY|F_DENY_API
+    - Admin|CAP_ADMIN_DENY|F_DENY_UI
+    - Admin|CAP_UI_BOUND|F_ALLOW_UI
+    - Admin|CAP_UI_BOUND|F_DENY_UI
+    - DAO_Gov|CAP_OWN|F_ALLOW_API
+    - DAO_Gov|CAP_OWN|F_DENY_API
+    - DAO_Gov|CAP_OWN|F_ALLOW_UI
+    - DAO_Gov|CAP_OWN|F_DENY_UI
+    - DAO_Gov|CAP_CROSS_DENY|F_DENY_API
+    - DAO_Gov|CAP_CROSS_DENY|F_DENY_UI
+    - DAO_Gov|CAP_ADMIN_DENY|F_DENY_API
+    - DAO_Gov|CAP_ADMIN_DENY|F_DENY_UI
+    - DAO_Gov|CAP_UI_BOUND|F_ALLOW_UI
+    - DAO_Gov|CAP_UI_BOUND|F_DENY_UI
+  User_Journey:
+    - J1
+    - J2
+    - J3
+    - J4
+    - J5
+  Data_Lifecycle:
+    - Market_Catalog|Create
+    - Market_Catalog|DB
+    - Market_Catalog|API
+    - Market_Catalog|UI
+    - Provider|Create
+    - Provider|DB
+    - Provider|API
+    - Provider|UI
+    - Guide|Create
+    - Guide|DB
+    - Guide|API
+    - Guide|UI
+    - Announcement|Create
+    - Announcement|DB
+    - Announcement|API
+    - Announcement|UI
+    - Community|Create
+    - Community|DB
+    - Community|API
+    - Community|UI
+  UI_UX_P0:
+    - home|loading
+    - home|error
+    - home|empty
+    - home|success
+    - market|loading
+    - market|error
+    - market|empty
+    - market|success
+    - orders|loading
+    - orders|error
+    - orders|empty
+    - orders|success
+    - escrow|loading
+    - escrow|error
+    - escrow|empty
+    - escrow|success
+    - profile|loading
+    - profile|error
+    - profile|empty
+    - profile|success
+    - governance|loading
+    - governance|error
+    - governance|empty
+    - governance|success

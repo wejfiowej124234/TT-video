@@ -1,0 +1,155 @@
+# schema: traveltrust.psg_coverage_acceptance_threshold_matrix.v1
+# Standard first → gap → Release Window fill → recalculate → GO
+machine_key: TT_PSG_COVERAGE_ACCEPTANCE_THRESHOLD_MATRIX
+status: COMPLETE
+recorded_utc: "2026-07-19T04:45:00Z"
+human_ssot: docs/runbook/TT-PSG-COVERAGE-ACCEPTANCE-THRESHOLD-MATRIX-LATEST.md
+metrics_baseline: docs/runbook/TT-PSG-COVERAGE-METRICS-BASELINE-LATEST.md
+measurement_recalculate: docs/runbook/TT-PSG-COVERAGE-MEASUREMENT-RECALCULATE-LATEST.md
+measurement_registry: registry/psg-coverage-measurement-recalculate.v1.yaml
+
+release_gate_stamp:
+  psg: CONDITIONAL_GO
+  fix_required: 8
+  coverage_evidence: VERIFIED
+  coverage_metrics: FINAL
+  consistency_control: NOT_ALIGNED
+  threshold_rollup: NEED_FIX
+measurement_final: docs/runbook/TT-PSG-COVERAGE-MEASUREMENT-FINAL-LATEST.md
+measurement_final_registry: registry/psg-coverage-measurement-final.v1.yaml
+consistency_control:
+  human_ssot: docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md
+  registry: registry/psg-coverage-consistency-control.v1.yaml
+  gate: scripts/gates/check-psg-coverage-consistency-control.sh
+  rule: only_ALIGNED_PASS_counts_for_threshold_acceptance
+
+discipline:
+  define_standard_before_chasing_percent: true
+  no_estimated_percent: true
+  no_new_audit: true
+  no_full_retest_to_inflate_pass: true
+  no_force_deferred_into_release: true
+  does_not_change_conditional_go: true
+  does_not_increment_fix_required: true
+  local_pass_does_not_count_as_aligned: true
+
+metric_basis: last_formal_weighted_until_measurement_final
+
+thresholds_first_production_slice:
+  Functional_Domain:
+    rule: "weighted_gte_90 AND p0_p1_mapped_eq_100"
+    current_weighted: 64
+    meets: false
+    depends: [MinFix_all, affected_domain_reverify]
+  User_Journey:
+    rule: "measurement_pass_over_5_eq_100_for_gte_90_integer_cells"
+    current_weighted: 50
+    evidence: VERIFIED
+    metric: GAP
+    denom: 5
+    meets: false
+    depends: [J1_J5_cells, PFA-UI-WALLET-01, PFA-UI-ROLE-01, PFA-UI-ROLE-02, ACTIVE_binding]
+  API_Contract:
+    rule: "weighted_gte_95 AND auth_funds_families_eq_100"
+    current_weighted: 100
+    meets: true
+    depends: []
+  RBAC:
+    rule: "measurement_pass_over_96_eq_100"
+    current_weighted: 50
+    evidence: VERIFIED
+    metric: GAP
+    denom: 96
+    meets: false
+    depends: [six_role_can_cannot_api_ui_matrix, PFA-UI-ROLE-01, PFA-UI-ROLE-02]
+  Data_Lifecycle:
+    rule: "measurement_pass_over_20_gte_90"
+    current_weighted: 50
+    evidence: VERIFIED
+    metric: GAP
+    denom: 20
+    meets: false
+    depends: [create_db_api_ui_cells]
+  UI_UX_P0:
+    rule: "measurement_pass_over_24_gte_90 AND critical_entries_eq_100"
+    current_weighted: 67
+    evidence: VERIFIED
+    metric: GAP
+    denom: 24
+    meets: false
+    depends: [page_loading_error_empty_success, PFA-UI-WALLET-01, PFA-UI-GOV-01, PFA-UI-STEWARD-01, PFA-UI-TRUST-01, PFA-UI-ROLE-01]
+  Security_Web3:
+    rule: "p0_security_eq_100 AND overall_weighted_gte_90"
+    current_weighted: 58
+    meets: false
+    depends: [PFA-UI-WALLET-01, PFA-UI-GOV-01, PFA-UI-STEWARD-01, PFA-UI-GOV-02]
+  Code_Line:
+    rule: "not_hard_gate_first_go"
+    current: DEFERRED
+    meets: deferred_ok
+
+release_window_work_table:
+  - coverage: Functional
+    current: 64
+    target: PASS
+    depends: MinFix_plus_reverify
+  - coverage: Journey
+    current: 50
+    target: Core_Journey_PASS
+    depends: WC_Role_ACTIVE
+  - coverage: API
+    current: 100
+    target: HOLD
+    depends: none
+  - coverage: RBAC
+    current: 50
+    target: Core_Role_PASS
+    depends: Role_Fix_plus_boundary
+  - coverage: Data
+    current: 50
+    target: P0_Data_PASS
+    depends: narrow_data_reverify
+  - coverage: UI_UX
+    current: 67
+    target: P0_PASS
+    depends: Wallet_Gov_Trust_Role
+  - coverage: Security_Web3
+    current: 58
+    target: PASS
+    depends: ACTIVE_WC
+
+gap_list_summary:
+  journey_steps_needing_reverify:
+    - Guide_accept
+    - Escrow_corridor
+    - Steward_gov_entry
+    - DAO_execute_after_unlock
+  rbac_four_questions_per_role:
+    - login
+    - what_visible
+    - what_allowed
+    - what_denied_api
+  security_p0_fill:
+    - ACTIVE_address_binding
+    - WalletConnect
+    - Governor_Timelock_meta
+    - Role_permission_nav
+
+forbidden_now:
+  - new_audit
+  - full_playwright
+  - llvm_cov
+  - load_test
+  - money_path
+  - chase_pass_percent_by_rerun
+  - estimated_coverage_percent
+  - random_non_web3_test_expansion
+
+next:
+  - fill_measurement_cells
+  - coverage_measurement_recalculate
+  - execute_allowed_now
+  - min_fix
+  - affected_domain_reverify
+  - metrics_final
+  - psg_final_gate

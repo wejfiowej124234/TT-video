@@ -1,0 +1,8 @@
+checksum_align: OK (060000,140000,15120000) local _sqlx_migrations only
+api:8080 health=200
+fe:3012 home=200
+RBAC matrix: PASS
+orders/provider/guide/steward: PASS
+catalog-ops + catalog-consumer: PASS
+admin-pages + UI P0 enterability: PASS
+web3/min-fix/gate: UNTOUCHED fix_required=8

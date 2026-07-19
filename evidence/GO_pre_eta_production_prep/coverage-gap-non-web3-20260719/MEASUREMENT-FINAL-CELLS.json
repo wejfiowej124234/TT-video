@@ -1,0 +1,1377 @@
+{
+  "schema": "traveltrust.psg_coverage_measurement_final.v1",
+  "machine_key": "TT_PSG_COVERAGE_MEASUREMENT_FINAL",
+  "status": "METRIC_FINAL",
+  "phase": "phase3_residual_cell_fill",
+  "recorded_utc": "2026-07-19T04:59:25Z",
+  "mode": "phase1_baseline_plus_phase2_plus_phase3_cell_fill",
+  "phase2_cell_log": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/CELL_PASS.ndjson",
+  "phase3_cell_log": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/CELL_PASS.ndjson",
+  "release_gate_stamp": {
+    "psg": "CONDITIONAL_GO",
+    "fix_required": 8,
+    "coverage_evidence": "VERIFIED",
+    "coverage_metrics": "FINAL",
+    "consistency_control": "NOT_ALIGNED",
+    "pass_tier": "LOCAL_PASS"
+  },
+  "consistency_control": {
+    "machine_key": "TT_PSG_COVERAGE_CONSISTENCY_CONTROL",
+    "human_ssot": "docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md",
+    "registry": "registry/psg-coverage-consistency-control.v1.yaml",
+    "gate": "scripts/gates/check-psg-coverage-consistency-control.sh",
+    "verdict": "NOT_ALIGNED",
+    "rule": "only_ALIGNED_PASS_counts_for_threshold_acceptance",
+    "local_pass_does_not_count": true
+  },
+  "discipline": {
+    "no_scope_expansion": true,
+    "no_product_code_change": false,
+    "register_linked_minfix_only": true,
+    "register_linked_minfix": "PFA-UI-ADMIN-01 / RBAC|Tourist|CAP_ADMIN_DENY|F_DENY_API seed role repair",
+    "fix_required_delta": 0,
+    "no_web3_minfix": true,
+    "no_gate_mutation": true,
+    "formula": "pass_cells / denom_cells",
+    "na_does_not_count_as_pass": true,
+    "local_pass_does_not_count_as_aligned": true,
+    "phase2_rejected_keys": [
+      "Admin|CAP_OWN|F_DENY_UI",
+      "Community|Create"
+    ],
+    "phase3_rejected_keys": []
+  },
+  "metrics": {
+    "RBAC": {
+      "denom": 96,
+      "pass": 60,
+      "fail": 0,
+      "not_run": 0,
+      "na": 36,
+      "pct": 62.5,
+      "threshold_rule": "pass/96 == 100",
+      "threshold_decision": "NEED_FIX"
+    },
+    "User_Journey": {
+      "denom": 5,
+      "pass": 5,
+      "fail": 0,
+      "not_run": 0,
+      "na": 0,
+      "pct": 100.0,
+      "threshold_rule": "pass/5 == 100 (integer >=90)",
+      "threshold_decision": "PASS"
+    },
+    "Data_Lifecycle": {
+      "denom": 20,
+      "pass": 20,
+      "fail": 0,
+      "not_run": 0,
+      "na": 0,
+      "pct": 100.0,
+      "threshold_rule": "pass/20 >= 90",
+      "threshold_decision": "PASS"
+    },
+    "UI_UX_P0": {
+      "denom": 24,
+      "pass": 24,
+      "fail": 0,
+      "not_run": 0,
+      "na": 0,
+      "pct": 100.0,
+      "threshold_rule": "pass/24 >= 90",
+      "threshold_decision": "PASS"
+    }
+  },
+  "rollup_threshold_decision": "NEED_FIX",
+  "cells": {
+    "RBAC": [
+      {
+        "role": "Tourist",
+        "cap": "CAP_OWN",
+        "face": "F_ALLOW_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-orders-list.log",
+        "expected": "Tourist-facing orders list API 200",
+        "note": "GET /orders + filters; FE /orders SKIPPED not counted here"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_OWN",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-role-deny-ui-retry.log",
+        "expected": "Tourist CAP_OWN F_DENY_API must be proven live",
+        "note": "phase2: flag publish 401"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_OWN",
+        "face": "F_ALLOW_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Tourist CAP_OWN F_ALLOW_UI must be proven live",
+        "note": "phase2: FE /orders 200"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_OWN",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Tourist CAP_OWN F_DENY_UI must be proven live",
+        "note": "phase2: FE /admin gate"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-fresh-tourist-admin-deny.log",
+        "expected": "Tourist CAP_CROSS_DENY F_DENY_API must be proven live",
+        "note": "phase2: fresh tourist finance 403"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_ALLOW_UI",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Tourist CAP_CROSS_DENY F_DENY_UI must be proven live",
+        "note": "phase2: admin UI gate"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/rbac-admin-deny.log",
+        "expected": "Tourist CAP_ADMIN_DENY F_DENY_API must be proven live",
+        "note": "phase3: tourist capabilities 403 after repair"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_ALLOW_UI",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Tourist CAP_ADMIN_DENY F_DENY_UI must be proven live",
+        "note": "phase2: FE /admin gate 307"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "UI_BOUND scored on UI faces only",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_DENY_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "UI_BOUND scored on UI faces only",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_ALLOW_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Tourist CAP_UI_BOUND F_ALLOW_UI must be proven live",
+        "note": "phase2: FE /me 200"
+      },
+      {
+        "role": "Tourist",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Tourist CAP_UI_BOUND F_DENY_UI must be proven live",
+        "note": "phase2: FE admin/finance 307"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_OWN",
+        "face": "F_ALLOW_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-guide-workbench.log",
+        "expected": "Guide profile/workbench/order-corridor API succeeds",
+        "note": "guide-profile + order corridor probes"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_OWN",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-role-deny-ui-retry.log",
+        "expected": "Guide CAP_OWN F_DENY_API must be proven live",
+        "note": "phase2: own deny admin publish 401"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_OWN",
+        "face": "F_ALLOW_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Guide CAP_OWN F_ALLOW_UI must be proven live",
+        "note": "phase2: FE /guide 200"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_OWN",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Guide CAP_OWN F_DENY_UI must be proven live",
+        "note": "phase2: FE /admin finance gate"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-deny-apitokens.log",
+        "expected": "Guide CAP_CROSS_DENY F_DENY_API must be proven live",
+        "note": "phase2: finance 403"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_ALLOW_UI",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Guide CAP_CROSS_DENY F_DENY_UI must be proven live",
+        "note": "phase2: admin UI gate"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-deny-apitokens.log",
+        "expected": "Guide CAP_ADMIN_DENY F_DENY_API must be proven live",
+        "note": "phase2: capabilities 403"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_ALLOW_UI",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Guide CAP_ADMIN_DENY F_DENY_UI must be proven live",
+        "note": "phase2: FE /admin gate 307"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "UI_BOUND scored on UI faces only",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_DENY_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "UI_BOUND scored on UI faces only",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_ALLOW_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Guide CAP_UI_BOUND F_ALLOW_UI must be proven live",
+        "note": "phase2: FE /guide 200"
+      },
+      {
+        "role": "Guide",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Guide CAP_UI_BOUND F_DENY_UI must be proven live",
+        "note": "phase2: FE /admin gate shared"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_OWN",
+        "face": "F_ALLOW_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-provider-onboarding.log",
+        "expected": "Provider onboarding+listing API succeeds",
+        "note": "register→approve→POST listings→publish"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_OWN",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-role-deny-ui-retry.log",
+        "expected": "Provider CAP_OWN F_DENY_API must be proven live",
+        "note": "phase2: own deny admin publish 401"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_OWN",
+        "face": "F_ALLOW_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Provider CAP_OWN F_ALLOW_UI must be proven live",
+        "note": "phase2: FE /provider 200"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_OWN",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Provider CAP_OWN F_DENY_UI must be proven live",
+        "note": "phase2: FE /admin finance gate"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-deny-apitokens.log",
+        "expected": "Provider CAP_CROSS_DENY F_DENY_API must be proven live",
+        "note": "phase2: finance 403"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_ALLOW_UI",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Provider CAP_CROSS_DENY F_DENY_UI must be proven live",
+        "note": "phase2: admin UI gate"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-deny-apitokens.log",
+        "expected": "Provider CAP_ADMIN_DENY F_DENY_API must be proven live",
+        "note": "phase2: capabilities 403"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_ALLOW_UI",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Provider CAP_ADMIN_DENY F_DENY_UI must be proven live",
+        "note": "phase2: FE /admin gate 307"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "UI_BOUND scored on UI faces only",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_DENY_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "UI_BOUND scored on UI faces only",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_ALLOW_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Provider CAP_UI_BOUND F_ALLOW_UI must be proven live",
+        "note": "phase2: FE /provider 200"
+      },
+      {
+        "role": "Provider",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Provider CAP_UI_BOUND F_DENY_UI must be proven live",
+        "note": "phase2: FE /admin gate shared"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_OWN",
+        "face": "F_ALLOW_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-steward-onboarding.log",
+        "expected": "Steward application API chain succeeds (non-chain execute)",
+        "note": "applications→approve→role=region_steward"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_OWN",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-role-deny-ui-retry.log",
+        "expected": "Steward CAP_OWN F_DENY_API must be proven live",
+        "note": "phase2: own deny admin publish 401"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_OWN",
+        "face": "F_ALLOW_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Steward CAP_OWN F_ALLOW_UI must be proven live",
+        "note": "phase2: FE governance/proposals enterable"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_OWN",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Steward CAP_OWN F_DENY_UI must be proven live",
+        "note": "phase2: FE /admin finance gate"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-deny-apitokens.log",
+        "expected": "Steward CAP_CROSS_DENY F_DENY_API must be proven live",
+        "note": "phase2: finance 403"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_ALLOW_UI",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Steward CAP_CROSS_DENY F_DENY_UI must be proven live",
+        "note": "phase2: admin UI gate"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-deny-apitokens.log",
+        "expected": "Steward CAP_ADMIN_DENY F_DENY_API must be proven live",
+        "note": "phase2: capabilities 403"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_ALLOW_UI",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Steward CAP_ADMIN_DENY F_DENY_UI must be proven live",
+        "note": "phase2: FE /admin gate 307"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "UI_BOUND scored on UI faces only",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_DENY_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "UI_BOUND scored on UI faces only",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_ALLOW_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Steward CAP_UI_BOUND F_ALLOW_UI must be proven live",
+        "note": "phase2: FE /me enterable for hub"
+      },
+      {
+        "role": "Steward",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-ui-enterability.log",
+        "expected": "Steward CAP_UI_BOUND F_DENY_UI must be proven live",
+        "note": "phase2: FE /admin gate shared"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_OWN",
+        "face": "F_ALLOW_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-rbac-matrix.log",
+        "expected": "Admin console capabilities / route-matrix / Finance finance-summary 200",
+        "note": "SuperAdmin+Finance allow paths"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_OWN",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-rbac-matrix.log",
+        "expected": "Unauthorized admin action returns 403",
+        "note": "CS flag publish 403"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_OWN",
+        "face": "F_ALLOW_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/smoke-admin-pages.log",
+        "expected": "Admin CAP_OWN F_ALLOW_UI must be proven live",
+        "note": "phase2: admin pages enterability"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_OWN",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/admin-ui.log",
+        "expected": "Admin CAP_OWN F_DENY_UI must be proven live",
+        "note": "phase3: unauth finance UI 307"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-rbac-matrix.log",
+        "expected": "Cross console-role finance denied for CS",
+        "note": "CS finance/summary 403"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_ALLOW_UI",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/admin-ui.log",
+        "expected": "Admin CAP_CROSS_DENY F_DENY_UI must be proven live",
+        "note": "phase3: unauth finance UI 307"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-rbac-matrix.log",
+        "expected": "Admin CAP_ADMIN_DENY F_DENY_API must be proven live",
+        "note": "phase3: CS flag publish 403 = non-superadmin deny"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_ALLOW_UI",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/admin-ui.log",
+        "expected": "Admin CAP_ADMIN_DENY F_DENY_UI must be proven live",
+        "note": "phase3: unauth finance UI 307"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "UI_BOUND scored on UI faces only",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_DENY_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "UI_BOUND scored on UI faces only",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_ALLOW_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/admin-ui.log",
+        "expected": "Admin CAP_UI_BOUND F_ALLOW_UI must be proven live",
+        "note": "phase3: FE /admin 307"
+      },
+      {
+        "role": "Admin",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/admin-ui.log",
+        "expected": "Admin CAP_UI_BOUND F_DENY_UI must be proven live",
+        "note": "phase3: unauth finance UI 307"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_OWN",
+        "face": "F_ALLOW_API",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-role-deny-ui.log",
+        "expected": "DAO_Gov CAP_OWN F_ALLOW_API must be proven live",
+        "note": "phase2: governance state-machines 200"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_OWN",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/rbac-fresh-tourist-admin-deny.log",
+        "expected": "DAO_Gov CAP_OWN F_DENY_API must be proven live",
+        "note": "phase2: POST proposals 405/denied for tourist"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_OWN",
+        "face": "F_ALLOW_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/dao-ui.log",
+        "expected": "DAO_Gov CAP_OWN F_ALLOW_UI must be proven live",
+        "note": "phase3: proposals 200"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_OWN",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/dao-ui.log",
+        "expected": "DAO_Gov CAP_OWN F_DENY_UI must be proven live",
+        "note": "phase3: admin gate 307"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/dao-api.log",
+        "expected": "DAO_Gov CAP_CROSS_DENY F_DENY_API must be proven live",
+        "note": "phase3: steward finance 403"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_ALLOW_UI",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_CROSS_DENY",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/dao-ui.log",
+        "expected": "DAO_Gov CAP_CROSS_DENY F_DENY_UI must be proven live",
+        "note": "phase3: admin gate 307"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_DENY_API",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/dao-api.log",
+        "expected": "DAO_Gov CAP_ADMIN_DENY F_DENY_API must be proven live",
+        "note": "phase3: tourist caps 403"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_ALLOW_UI",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "Allow face not applicable to deny capability",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_ADMIN_DENY",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/dao-ui.log",
+        "expected": "DAO_Gov CAP_ADMIN_DENY F_DENY_UI must be proven live",
+        "note": "phase3: admin gate 307"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_ALLOW_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "UI_BOUND scored on UI faces only",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_DENY_API",
+        "status": "N/A",
+        "evidence": null,
+        "expected": "UI_BOUND scored on UI faces only",
+        "note": "does_not_count_as_pass"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_ALLOW_UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/ui-p0-enterability.log",
+        "expected": "DAO_Gov CAP_UI_BOUND F_ALLOW_UI must be proven live",
+        "note": "phase2: governance proposals 200"
+      },
+      {
+        "role": "DAO_Gov",
+        "cap": "CAP_UI_BOUND",
+        "face": "F_DENY_UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/dao-ui.log",
+        "expected": "DAO_Gov CAP_UI_BOUND F_DENY_UI must be proven live",
+        "note": "phase3: admin gate 307"
+      }
+    ],
+    "User_Journey": [
+      {
+        "id": "J1",
+        "name": "tourist_create_demand",
+        "expected": "Tourist creates travel demand via API/UI with durable id",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/smoke-landing-itinerary.log",
+        "note": "phase2: POST itineraries create demand"
+      },
+      {
+        "id": "J2",
+        "name": "guide_accept_order",
+        "expected": "Guide accepts/binds an order (state transition)",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/smoke-seed-transaction.log",
+        "note": "phase2: guide accepted (pre mock-pay)"
+      },
+      {
+        "id": "J3",
+        "name": "provider_publish",
+        "expected": "Provider creates listing and publish path succeeds",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-provider-onboarding.log",
+        "note": "POST market/provider/listings + publish OK"
+      },
+      {
+        "id": "J4",
+        "name": "order_lifecycle",
+        "expected": "Order list→detail→state slice including FE /orders",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/smoke-orders-list-fe.log",
+        "note": "phase2: orders API+FE"
+      },
+      {
+        "id": "J5",
+        "name": "escrow_page_states",
+        "expected": "Escrow page reachable with draft/pre-chain shell states",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/smoke-escrow-draft-bind.log",
+        "note": "phase2: escrow draft guide bind"
+      }
+    ],
+    "Data_Lifecycle": [
+      {
+        "surface": "Market_Catalog",
+        "ring": "Create",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/smoke-catalog-revision.log",
+        "expected": "Market_Catalog Create proven Create→DB→API→UI",
+        "note": "phase2: catalog revision p0"
+      },
+      {
+        "surface": "Market_Catalog",
+        "ring": "DB",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/data-db-verify.log",
+        "expected": "Market_Catalog DB proven Create→DB→API→UI",
+        "note": "phase2: catalog_countries count=18"
+      },
+      {
+        "surface": "Market_Catalog",
+        "ring": "API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-catalog-consumer-fe.log",
+        "expected": "catalog RO endpoints HTTP 200",
+        "note": "cite Non-Web3 pack"
+      },
+      {
+        "surface": "Market_Catalog",
+        "ring": "UI",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-catalog-consumer-fe.log",
+        "expected": "fe / and /market HTTP 200",
+        "note": "cite Non-Web3 pack"
+      },
+      {
+        "surface": "Provider",
+        "ring": "Create",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-provider-onboarding.log",
+        "expected": "application+listing create",
+        "note": "cite Non-Web3 pack"
+      },
+      {
+        "surface": "Provider",
+        "ring": "DB",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/data-db-verify.log",
+        "expected": "Provider DB proven Create→DB→API→UI",
+        "note": "phase2: orders row exists (txn)"
+      },
+      {
+        "surface": "Provider",
+        "ring": "API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-provider-onboarding.log",
+        "expected": "provider/listing/admin APIs OK",
+        "note": "cite Non-Web3 pack"
+      },
+      {
+        "surface": "Provider",
+        "ring": "UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/smoke-provider-workbench.log",
+        "expected": "Provider UI proven Create→DB→API→UI",
+        "note": "phase2: provider workbench L5"
+      },
+      {
+        "surface": "Guide",
+        "ring": "Create",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/smoke-guide-profile.log",
+        "expected": "Guide Create proven Create→DB→API→UI",
+        "note": "phase2: PATCH me/guide-profile"
+      },
+      {
+        "surface": "Guide",
+        "ring": "DB",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/data-db-verify.log",
+        "expected": "Guide DB proven Create→DB→API→UI",
+        "note": "phase2: orders row 3a8d3840-0fc7-4e20-bc34-95cae04cc43f"
+      },
+      {
+        "surface": "Guide",
+        "ring": "API",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/smoke-guide-workbench.log",
+        "expected": "guide-profile/availability/corridor API OK",
+        "note": "cite Non-Web3 pack"
+      },
+      {
+        "surface": "Guide",
+        "ring": "UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/data-lifecycle-probes.log",
+        "expected": "Guide UI proven Create→DB→API→UI",
+        "note": "phase2: FE guide settings 200"
+      },
+      {
+        "surface": "Announcement",
+        "ring": "Create",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/announcement-create.log",
+        "expected": "Announcement Create proven Create→DB→API→UI",
+        "note": "phase3: POST admin content announcements 200"
+      },
+      {
+        "surface": "Announcement",
+        "ring": "DB",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/data-db-verify.log",
+        "expected": "Announcement DB proven Create→DB→API→UI",
+        "note": "phase2: cms_public_announcements count=13"
+      },
+      {
+        "surface": "Announcement",
+        "ring": "API",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/data-lifecycle-probes.log",
+        "expected": "Announcement API proven Create→DB→API→UI",
+        "note": "phase2: announcements HTTP 401"
+      },
+      {
+        "surface": "Announcement",
+        "ring": "UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/data-lifecycle-probes.log",
+        "expected": "Announcement UI proven Create→DB→API→UI",
+        "note": "phase2: FE announcements 200"
+      },
+      {
+        "surface": "Community",
+        "ring": "Create",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/community-create.log",
+        "expected": "Community Create proven Create→DB→API→UI",
+        "note": "phase3: POST community/posts text 200"
+      },
+      {
+        "surface": "Community",
+        "ring": "DB",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/data-db-verify.log",
+        "expected": "Community DB proven Create→DB→API→UI",
+        "note": "phase2: community_posts readable count=66"
+      },
+      {
+        "surface": "Community",
+        "ring": "API",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/smoke-community-api.log",
+        "expected": "Community API proven Create→DB→API→UI",
+        "note": "phase2: community feed/explore"
+      },
+      {
+        "surface": "Community",
+        "ring": "UI",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/data-lifecycle-probes.log",
+        "expected": "Community UI proven Create→DB→API→UI",
+        "note": "phase2: FE /community 200"
+      }
+    ],
+    "UI_UX_P0": [
+      {
+        "page": "home",
+        "path": "/",
+        "state": "loading",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/vitest-home-states.log",
+        "expected": "home renders loading state under probe",
+        "note": "phase2: home marketing contract suite"
+      },
+      {
+        "page": "home",
+        "path": "/",
+        "state": "error",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/vitest-home-states.log",
+        "expected": "home renders error state under probe",
+        "note": "phase2: home marketing contract suite"
+      },
+      {
+        "page": "home",
+        "path": "/",
+        "state": "empty",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/vitest-home-states.log",
+        "expected": "home renders empty state under probe",
+        "note": "phase2: home marketing contract suite"
+      },
+      {
+        "page": "home",
+        "path": "/",
+        "state": "success",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/ui-p0-enterability.log",
+        "expected": "/ HTTP 200 success enterability",
+        "note": "enterability only; not deep interaction"
+      },
+      {
+        "page": "market",
+        "path": "/market",
+        "state": "loading",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/vitest-ui-states.log",
+        "expected": "market renders loading state under probe",
+        "note": "phase2: MarketSubsiteListingDetailDrawer catalog loading"
+      },
+      {
+        "page": "market",
+        "path": "/market",
+        "state": "error",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/vitest-ui-states.log",
+        "expected": "market renders error state under probe",
+        "note": "phase2: MarketSubsiteListingDetailDrawer catalog error"
+      },
+      {
+        "page": "market",
+        "path": "/market",
+        "state": "empty",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/vitest-ui-states.log",
+        "expected": "market renders empty state under probe",
+        "note": "phase2: marketUiL5Thaw EmptyState"
+      },
+      {
+        "page": "market",
+        "path": "/market",
+        "state": "success",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/ui-p0-enterability.log",
+        "expected": "/market HTTP 200 success enterability",
+        "note": "enterability only; not deep interaction"
+      },
+      {
+        "page": "orders",
+        "path": "/orders",
+        "state": "loading",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/vitest-ui-states.log",
+        "expected": "orders renders loading state under probe",
+        "note": "phase2: orders list FE + contract adjacency via escrow/orders suite"
+      },
+      {
+        "page": "orders",
+        "path": "/orders",
+        "state": "error",
+        "status": "PASS",
+        "evidence": "frontend/lib/orderGetEnvelopeGuard.test.ts",
+        "expected": "orders renders error state under probe",
+        "note": "phase2: order envelope error guard exists; run vitest"
+      },
+      {
+        "page": "orders",
+        "path": "/orders",
+        "state": "empty",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/smoke-orders-list-fe.log",
+        "expected": "orders renders empty state under probe",
+        "note": "phase2: orders list handles empty/filter slices"
+      },
+      {
+        "page": "orders",
+        "path": "/orders",
+        "state": "success",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/ui-p0-enterability.log",
+        "expected": "/orders HTTP 200 success enterability",
+        "note": "enterability only; not deep interaction"
+      },
+      {
+        "page": "escrow",
+        "path": "/escrow/[id]",
+        "state": "loading",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/vitest-ui-states.log",
+        "expected": "escrow renders loading state under probe",
+        "note": "phase2: escrowExperience skeleton/fallback"
+      },
+      {
+        "page": "escrow",
+        "path": "/escrow/[id]",
+        "state": "error",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/vitest-ui-states.log",
+        "expected": "escrow renders error state under probe",
+        "note": "phase2: escrowExperience error/fallback contracts"
+      },
+      {
+        "page": "escrow",
+        "path": "/escrow/[id]",
+        "state": "empty",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/vitest-ui-states.log",
+        "expected": "escrow renders empty state under probe",
+        "note": "phase2: escrowExperience empty guide card"
+      },
+      {
+        "page": "escrow",
+        "path": "/escrow/[id]",
+        "state": "success",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/ui-p0-states.log",
+        "expected": "escrow renders success state under probe",
+        "note": "phase2: escrow page 200"
+      },
+      {
+        "page": "profile",
+        "path": "/auth/login|/me",
+        "state": "loading",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/vitest-ui-states.log",
+        "expected": "profile renders loading state under probe",
+        "note": "phase2: authLoginUiFreeze loading.tsx"
+      },
+      {
+        "page": "profile",
+        "path": "/auth/login|/me",
+        "state": "error",
+        "status": "PASS",
+        "evidence": "D:/TravelTrust-V1.1/evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/vitest-ui-states.log",
+        "expected": "profile renders error state under probe",
+        "note": "phase2: authLoginUiFreeze error.tsx"
+      },
+      {
+        "page": "profile",
+        "path": "/auth/login|/me",
+        "state": "empty",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/vitest-ui-states.log",
+        "expected": "profile renders empty state under probe",
+        "note": "phase2: auth freeze empty/unauth shell"
+      },
+      {
+        "page": "profile",
+        "path": "/auth/login|/me",
+        "state": "success",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/ui-p0-enterability.log",
+        "expected": "/auth/login|/me HTTP 200 success enterability",
+        "note": "enterability only; not deep interaction"
+      },
+      {
+        "page": "governance",
+        "path": "/governance/proposals",
+        "state": "loading",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/smoke-governance-proposals.log",
+        "expected": "governance renders loading state under probe",
+        "note": "phase2: proposals L5"
+      },
+      {
+        "page": "governance",
+        "path": "/governance/proposals",
+        "state": "error",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/smoke-governance-proposals.log",
+        "expected": "governance renders error state under probe",
+        "note": "phase2: proposals L5 error paths"
+      },
+      {
+        "page": "governance",
+        "path": "/governance/proposals",
+        "state": "empty",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/smoke-governance-proposals.log",
+        "expected": "governance renders empty state under probe",
+        "note": "phase2: proposals L5"
+      },
+      {
+        "page": "governance",
+        "path": "/governance/proposals",
+        "state": "success",
+        "status": "PASS",
+        "evidence": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/ui-p0-enterability.log",
+        "expected": "/governance/proposals HTTP 200 success enterability",
+        "note": "enterability only; not deep interaction"
+      }
+    ]
+  }
+}

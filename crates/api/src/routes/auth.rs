@@ -62,6 +62,8 @@ pub async fn auth_seed_test_accounts(
     if let Some(ref co) = state.chain_off {
         chain_off::seed_test_accounts_if_empty(co).await;
         chain_off::seed_me_settings_security_notification_fixture(co).await;
+        // Repair C2/C3/C4 before optional promote (promote rejects immutable emails).
+        chain_off::seed_repair_immutable_business_account_roles(co).await;
         if let Some(email) = body
             .as_ref()
             .and_then(|b| b.promote_admin_email.as_deref())
@@ -76,6 +78,17 @@ pub async fn auth_seed_test_accounts(
                         Json(serde_json::json!({
                             "error": "seed_promote_user_not_found",
                             "message": "seed_promote_user_not_found",
+                        })),
+                    )
+                        .into_response();
+                }
+                Err("seed_promote_immutable_business_account") => {
+                    return (
+                        StatusCode::BAD_REQUEST,
+                        Json(serde_json::json!({
+                            "error": "seed_promote_immutable_business_account",
+                            "message": "seed_promote_immutable_business_account",
+                            "hint": "use ephemeral adm-*@traveltrust.test; never promote C2/C3/C4",
                         })),
                     )
                         .into_response();

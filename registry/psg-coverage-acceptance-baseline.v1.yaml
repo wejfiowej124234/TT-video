@@ -1,0 +1,88 @@
+# schema: traveltrust.psg_coverage_acceptance_baseline.v1
+# Readonly baseline — publish proof from existing evidence; no new Fix; no full re-audit
+machine_key: TT_PSG_COVERAGE_ACCEPTANCE_BASELINE
+status: COMPLETE
+recorded_utc: "2026-07-19T04:10:00Z"
+method: cite_existing_scripts_and_evidence_only
+human_ssot: docs/runbook/TT-PSG-COVERAGE-ACCEPTANCE-BASELINE-LATEST.md
+parent_model: docs/runbook/TT-PSG-COVERAGE-MODEL-SEVEN-DIMENSIONS-LATEST.md
+psg_gate_ssot: docs/runbook/TT-PSG-PRODUCTION-RELEASE-READINESS-GATE-LATEST.md
+
+discipline:
+  not_full_system_retest: true
+  no_new_e2e_security_cms_perf_audit: true
+  findings_only_link_existing_register_ids: true
+  increments_fix_required: false
+  does_not_replace_min_fix: true
+  frozen_rc_untouched: true
+
+production_thresholds:
+  p0_domain_evidence: "100%"
+  core_journey: "100%"
+  security_web3: "100%"
+  api_critical: "100%"
+  data_ownership: "100%"
+  ui_p0: "100%"
+  code_line: not_blocking
+
+coverage_acceptance:
+  functional:
+    status: PARTIAL
+    evidence:
+      - docs/runbook/TT-PSG-RELEASE-SURFACE-TEST-COVERAGE-GAP-MAP-LATEST.md
+  journey:
+    status: PARTIAL
+    note: "Core path evidence mapped from existing smokes; no full journey re-run"
+  api:
+    status: PASS
+  code:
+    status: DEFERRED
+    id: PSG-ENG-LINE-COVERAGE
+  security_web3:
+    status: PARTIAL
+    evidence:
+      - docs/runbook/TT-PFA-02-CHAIN-DEPLOYMENT-MANIFEST-LATEST.md
+      - docs/runbook/TT-PFA-UI-01-RUNTIME-UI-BINDING-LATEST.md
+      - docs/runbook/TT-PRODUCTION-READINESS-HARDENING-P0-LATEST.md
+  data:
+    status: PARTIAL
+    evidence:
+      - docs/runbook/TT-CMS-DATA-CHAIN-SPECIALTY-LATEST.md
+  uiux:
+    status: PARTIAL
+    evidence:
+      - docs/runbook/TT-PFA-UI-01-RUNTIME-UI-BINDING-LATEST.md
+      - frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md
+
+overall: CONDITIONAL
+gate_status: CONDITIONAL_GO
+release: NOT_READY_FOR_GO
+release_blocker_open: 0
+release_fix_required_open: 8
+new_fix_required_from_baseline: 0
+
+finding_links_only:
+  - observation: WC_KEY_ABSENT
+    register_id: PFA-UI-WALLET-01
+  - observation: Governor_LEGACY_UI
+    register_id: PFA-UI-GOV-01
+  - observation: meta_governor_class
+    register_id: PFA-UI-GOV-02
+  - observation: Steward_LEGACY_stake_UI
+    register_id: PFA-UI-STEWARD-01
+  - observation: Role_nav
+    register_ids: [PFA-UI-ROLE-01, PFA-UI-ROLE-02]
+  - observation: Trust_surface
+    register_id: PFA-UI-TRUST-01
+    increments_count: false
+  - observation: candidate_sha_image
+    register_ids: [PFA-01-CANDIDATE-SHA, PFA-01-IMAGE-DIGEST]
+  - observation: Admin_live_RBAC
+    register_id: PFA-UI-ADMIN-01
+    bucket: DEFERRED
+
+next:
+  - wait_execute_allowed_now
+  - min_fix_8
+  - coverage_recalculate
+  - psg_final_decision

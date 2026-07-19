@@ -1,0 +1,115 @@
+# schema: traveltrust.psg_coverage_model_seven_dimensions.v1
+# Final Coverage Acceptance Layer — IN GATE (not post-hoc audit)
+machine_key: TT_PSG_COVERAGE_MODEL_SEVEN_DIMENSIONS
+status: ACTIVE
+role_in_gate: FINAL_COVERAGE_ACCEPTANCE_LAYER
+model_frozen: true
+recorded_utc: "2026-07-19T04:00:00Z"
+human_ssot: docs/runbook/TT-PSG-COVERAGE-MODEL-SEVEN-DIMENSIONS-LATEST.md
+functional_domain_detail: docs/runbook/TT-PSG-RELEASE-SURFACE-TEST-COVERAGE-GAP-MAP-LATEST.md
+psg_gate_ssot: docs/runbook/TT-PSG-PRODUCTION-RELEASE-READINESS-GATE-LATEST.md
+
+discipline:
+  not_single_line_coverage: true
+  coverage_is_acceptance_not_discovery_audit: true
+  yellow_does_not_auto_spawn_wait_window_audit: true
+  fix_close_requires_coverage_reeval_before_go: true
+  does_not_change_conditional_go_stamp_alone: true
+  does_not_increment_fix_required: true
+
+acceptance_status_enum:
+  PASS: "Meets Production threshold for this dimension"
+  CONDITIONAL: "Evidence exists; threshold not met (often open Fix overlap)"
+  FAIL: "Critical missing / unclassified — leans NO-GO"
+  DEFERRED: "Explicitly allowed to not block first Production slice"
+
+production_thresholds:
+  Functional_Domain: PASS
+  User_Journey_core: PASS
+  API_Backend: PASS
+  Code_Line: DEFERRED_allowed
+  Security_Web3: PASS
+  Data_Governance_P0: PASS
+  UI_UX_P0: PASS
+
+baseline_report: docs/runbook/TT-PSG-COVERAGE-ACCEPTANCE-BASELINE-LATEST.md
+baseline_machine: registry/psg-coverage-acceptance-baseline.v1.yaml
+measurement_recalculate: docs/runbook/TT-PSG-COVERAGE-MEASUREMENT-RECALCULATE-LATEST.md
+measurement_registry: registry/psg-coverage-measurement-recalculate.v1.yaml
+
+release_gate_stamp:
+  psg: CONDITIONAL_GO
+  fix_required: 8
+  coverage: Evidence_VERIFIED
+  metrics: NOT_FINAL
+
+# Baseline COMPLETE (WAIT_WINDOW readonly — no new matrix runs)
+acceptance_dashboard:
+  rollup: CONDITIONAL
+  release: NOT_READY_FOR_GO
+  new_fix_from_baseline: 0
+  dimensions:
+    - id: D1_FUNCTIONAL_DOMAIN
+      acceptance: PARTIAL
+      threshold: PASS
+      evidence:
+        - docs/runbook/TT-PSG-RELEASE-SURFACE-TEST-COVERAGE-GAP-MAP-LATEST.md
+    - id: D2_USER_JOURNEY
+      acceptance: PARTIAL
+      threshold: PASS_core_journeys
+      roles_required_core:
+        - Tourist
+        - Guide
+        - Provider
+        - Steward
+        - Admin
+        - DAO
+      wait_window: "do not open full journey audit"
+    - id: D3_API_BACKEND
+      acceptance: PASS
+      threshold: PASS
+    - id: D4_CODE_LINE
+      acceptance: DEFERRED
+      threshold: DEFERRED_allowed
+      engineering_id: PSG-ENG-LINE-COVERAGE
+    - id: D5_SECURITY_WEB3
+      acceptance: PARTIAL
+      threshold: PASS
+      release_action_overlap:
+        - PFA-UI-WALLET-01
+        - PFA-UI-GOV-01
+        - PFA-UI-STEWARD-01
+    - id: D6_DATA_GOVERNANCE
+      acceptance: PARTIAL
+      threshold: PASS_P0_source_chain
+      evidence:
+        - docs/runbook/TT-CMS-DATA-CHAIN-SPECIALTY-LATEST.md
+    - id: D7_UI_UX
+      acceptance: PARTIAL
+      threshold: PASS_P0_paths
+      p0_paths:
+        - login
+        - market
+        - orders
+        - wallet
+        - governance
+        - escrow
+      release_action_overlap:
+        - PFA-UI-ROLE-01
+        - PFA-UI-ROLE-02
+        - PFA-UI-TRUST-01
+
+go_formula:
+  - release_blocker_eq_0
+  - release_fix_required_closed
+  - coverage_acceptance_required_dims_pass
+  - code_line_deferred_ok
+  - owner_signoff
+  - rollback_exists
+  - not_finding_count_eq_0
+
+future_deferred_tools:
+  - PSG-COV-JOURNEY-DASH
+  - PSG-COV-RBAC-MATRIX
+  - PSG-COV-DATA-LIFECYCLE
+  - PSG-ENG-LINE-COVERAGE
