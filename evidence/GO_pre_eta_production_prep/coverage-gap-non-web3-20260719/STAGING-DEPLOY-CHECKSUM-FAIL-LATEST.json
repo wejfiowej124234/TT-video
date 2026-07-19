@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.psg_coverage_consistency_closure_step.v1",
+  "step": 4,
+  "status": "FAIL_SMOKE_CHECKSUM",
+  "recorded_utc": "2026-07-19T05:50:12Z",
+  "deploy_tip": "9528f593d70d89eb0df0dc6cc4daed27e3aaf503",
+  "blocker": {
+    "kind": "MIGRATION_CHECKSUM_DRIFT_CRLF",
+    "message": "migration 20250228000001 was previously applied but has been modified",
+    "root_cause": "Windows worktree autocrlf=true produced CRLF migration bytes in Docker context (sqlx checksum mismatch)",
+    "register_id": "PSG-COV-STG-MIG-02",
+    "min_fix": ".gitattributes eol=lf + redeploy same tip with LF checkout in clean worktree"
+  },
+  "aligned": false,
+  "release_gate_stamp": {
+    "psg": "CONDITIONAL_GO",
+    "fix_required": 8,
+    "consistency_control": "NOT_ALIGNED"
+  }
+}
