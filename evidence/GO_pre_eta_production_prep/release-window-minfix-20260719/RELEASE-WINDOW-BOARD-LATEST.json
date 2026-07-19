@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.release_window_board.v1",
+  "recorded_utc": "2026-07-19T06:57:29Z",
+  "execute_allowed_now": true,
+  "seq": {
+    "1_WC": "OWNER_ACTION_REQUIRED KEY_ABSENT",
+    "2_ACTIVE": "PASS meta aligned v311",
+    "3_ROLE": "ROLE-01 PASS \u00b7 ROLE-02 blocked by WC",
+    "4_TRUST": "PASS redirect",
+    "5_IDENTITY": "pending tip pin"
+  },
+  "fix_required_remaining_estimate": [
+    "PFA-UI-WALLET-01",
+    "PFA-UI-ROLE-02",
+    "PFA-01-* until pin"
+  ],
+  "exclude": "48H_Observation"
+}

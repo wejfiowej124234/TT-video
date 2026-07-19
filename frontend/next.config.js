@@ -210,6 +210,12 @@ const nextConfig = {
         destination: "/governance?view=region",
         permanent: false,
       },
+      /** PFA-UI-TRUST-01 · 旧书签 /me/trust → 信任 SSOT */
+      {
+        source: "/me/trust",
+        destination: "/me/settings/trust",
+        permanent: false,
+      },
     ];
   },
 };

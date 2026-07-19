@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.release_window_minfix_seq.v1",
+  "seq": 3,
+  "recorded_utc": "2026-07-19T06:57:29Z",
+  "findings": [
+    "PFA-UI-ROLE-01",
+    "PFA-UI-ROLE-02"
+  ],
+  "ROLE-01": {
+    "verdict": "PASS",
+    "evidence": "vitest meIdentitiesPage.contract + meIdentitiesUiFreeze 14/14",
+    "fix_closed": true
+  },
+  "ROLE-02": {
+    "verdict": "BLOCKED_BY_WC",
+    "depends": "PFA-UI-WALLET-01 KEY_PRESENT",
+    "fix_closed": false
+  }
+}

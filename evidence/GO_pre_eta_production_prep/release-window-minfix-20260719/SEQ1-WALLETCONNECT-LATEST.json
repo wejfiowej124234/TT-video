@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.release_window_minfix_seq.v1",
+  "seq": 1,
+  "finding": "PFA-UI-WALLET-01",
+  "theme": "WalletConnect",
+  "recorded_utc": "2026-07-19T06:56:55Z",
+  "verdict": "OWNER_ACTION_REQUIRED",
+  "wc_project_id": "KEY_ABSENT",
+  "probe": "evidence/GO_phase2_staging_reality/OA-01/WC-PROJECT-ID-PROBE-LATEST.json",
+  "agent_action": "cannot_inject_secret",
+  "owner_action": "bash scripts/dev/set-walletconnect-project-id.sh '<32-hex>' && probe && deploy-tt-web-staging",
+  "fix_closed": false,
+  "notes": [
+    "Secrets never committed to Git"
+  ]
+}

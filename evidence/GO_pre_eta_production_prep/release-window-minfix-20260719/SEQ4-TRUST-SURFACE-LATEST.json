@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.release_window_minfix_seq.v1",
+  "seq": 4,
+  "recorded_utc": "2026-07-19T06:57:29Z",
+  "finding": "PFA-UI-TRUST-01",
+  "verdict": "PASS",
+  "fix": "frontend/next.config.js redirect /me/trust -> /me/settings/trust",
+  "verify": "meSettingsTrustExtension.contract.test.ts + config assert",
+  "fix_closed": true
+}

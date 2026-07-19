@@ -1,0 +1,449 @@
+# schema: traveltrust.psg_production_release_readiness_gate.v1
+# PSG = unique Production Readiness Gate (enterprise release governance)
+# Not "fix everything" — every risk has status + evidence + owner + path; Gate decides ship.
+machine_key: TT_PSG_PRODUCTION_RELEASE_READINESS_GATE
+status: ACTIVE
+recorded_utc: "2026-07-19T03:20:00Z"
+phase: RELEASE_WINDOW_OPEN
+wait_window: F-02_RELEASE_MINFIX
+execute_allowed_now: true
+execute_allowed_utc: "2026-07-19T06:50:00Z"
+execute_allowed_by: Owner_session_implement_plan
+model: enterprise_nine_domain_lifecycle
+human_ssot: docs/runbook/TT-PSG-PRODUCTION-RELEASE-READINESS-GATE-LATEST.md
+register_ssot: docs/runbook/TT-PRODUCTION-READINESS-REGISTER-LATEST.md
+min_fix_queue: docs/runbook/TT-PFA-RELEASE-WINDOW-MIN-FIX-CANDIDATES-LATEST.md
+release_control: docs/runbook/TT-RELEASE-CONTROL-STANDBY-LATEST.md
+coverage_model: docs/runbook/TT-PSG-COVERAGE-MODEL-SEVEN-DIMENSIONS-LATEST.md
+coverage_model_machine: registry/psg-coverage-model-seven-dimensions.v1.yaml
+
+discipline:
+  unique_verdict_entry: true
+  zero_finding_not_required: true
+  register_is_risk_map_not_task_list: true
+  every_risk_needs_status_evidence_owner_path: true
+  only_blocker_and_fix_required_must_clear_in_release_window: true
+  deferred_and_accepted_need_record_owner_plan: true
+  coverage_acceptance_is_final_gate_layer: true
+  fix_close_alone_not_enough_for_go: true
+  forbid_convert_deferred_not_run_cite_into_release_window_audit: true
+  forbid_eta_full_recheck_loop: true
+  forbid_conditional_go_as_production_go: true
+  forbid_release_window_scope_expansion: true
+  no_new_audit_while_frozen: true
+  no_scattered_audit_bypasses_gate: true
+  does_not_equal_tt_psg_production_cert: true
+  does_not_equal_production_go: true
+
+anti_errors:
+  E1_coverage_as_task_list: "NOT_RUN → classify impact first; do not auto-spawn work"
+  E2_conditional_go_as_go: "CONDITIONAL_GO = controlled prep only; need Fix close + Coverage Acceptance PASS + Recalculate"
+  E3_release_window_scope_creep: "Fix → Verify → Evidence only; no drive-by refactor/upgrade/re-audit"
+  E4_fix_then_ship_skip_coverage: "After Fix close must re-eval Coverage Acceptance before GO"
+
+register_layers:
+  L1_verified_evidence: "CLOSED/PASS/FINDING — already checked; do not re-run"
+  L2_release_action: "RELEASE_FIX_REQUIRED — only open set (count=8) in Release Window"
+  L3_governance_coverage: "DEFERRED/NOT_RUN/CITE — coverage placeholder; not auto-execute"
+  L4_coverage_acceptance: "Final gate layer — seven dimensions PASS/CONDITIONAL/FAIL/DEFERRED"
+
+gate_structure:
+  - Release_Blocker
+  - Fix_Required
+  - Deferred_Accepted_Risk
+  - Coverage_Acceptance
+
+coverage_acceptance:
+  rollup_status: CONDITIONAL
+  baseline_status: COMPLETE
+  baseline_human: docs/runbook/TT-PSG-COVERAGE-ACCEPTANCE-BASELINE-LATEST.md
+  baseline_machine: registry/psg-coverage-acceptance-baseline.v1.yaml
+  human_ssot: docs/runbook/TT-PSG-COVERAGE-MODEL-SEVEN-DIMENSIONS-LATEST.md
+  production_thresholds:
+    Functional_Domain: PASS
+    User_Journey_core: PASS
+    API_Backend: PASS
+    Code_Line: DEFERRED_allowed
+    Security_Web3: PASS
+    Data_Governance_P0: PASS
+    UI_UX_P0: PASS
+  current:
+    functional: PARTIAL
+    journey: PARTIAL
+    api: PASS
+    code: DEFERRED
+    security_web3: PARTIAL
+    data: PARTIAL
+    uiux: PARTIAL
+  new_fix_from_baseline: 0
+  release: NOT_READY_FOR_GO
+
+# Dashboard questions (per check)
+dashboard_questions:
+  - id: Q1_CHECKED
+    ask: "Has this been checked?"
+    fields: [status, evidence_id]
+  - id: Q2_FINDINGS
+    ask: "Are there findings?"
+    fields: [finding_id, severity, action_window]
+  - id: Q3_SHIP
+    ask: "May we ship?"
+    fields: [production_release_status]
+
+# Per-check / per-leaf status vocabulary
+check_item_status_enum:
+  PASS: "Verified OK for this leaf (may still have deferred children)"
+  CLOSED: "Verified / archived — do not re-scan"
+  RELEASE_FIX_REQUIRED: "Must Fix+single-reverify in PSG Release Window (Min-Fix)"
+  DEFERRED: "Known — later phase; record+owner+plan"
+  ACCEPTED_RISK: "Known — mitigation; Owner accepts for this release slice"
+  NOT_RUN: "Registered existence — not executed this window (must Deferred or schedule)"
+  BLOCKED: "Hard stop synonym — clear before progress/GO"
+  RELEASE_BLOCKER: "Hard stop — no Release Window progress / no GO until cleared"
+
+# Finding bucket classes (Register)
+finding_classes:
+  CLOSED: "Verified / archived — do not re-scan"
+  RELEASE_FIX_REQUIRED: "Must Fix+single-reverify in PSG Release Window (Min-Fix)"
+  RELEASE_BLOCKER: "Hard stop — no Release Window progress / no GO until cleared"
+  DEFERRED: "Known — later phase; record+owner+plan"
+  ACCEPTED_RISK: "Known — mitigation; Owner accepts for this release slice"
+
+# Publish status vocabulary (Gate Verdict)
+status_enum:
+  GO: "Release_Fix_Required=0 AND Release_Blocker=0 AND publish_object_pinned AND Owner allows claim"
+  CONDITIONAL_GO: "No Release_Blocker; Fix_Required>0 queued for Release Window OR soft pins pending — NOT Production GO"
+  NO_GO: "Open Release_Blocker OR coverage incomplete OR publish identity unknown without Owner plan"
+
+# Nine domains (lifecycle model) — leaves + current mapping (no re-audit)
+domains:
+  - id: D1_RELEASE_IDENTITY
+    name: Release_Identity
+    leaves: [SHA, Image_Digest, Artifact_Integrity, Release_Owner]
+    coverage_ids: [PFA-01]
+    domain_status: CLOSED_WITH_FIX_REQUIRED_PINS
+  - id: D2_INFRASTRUCTURE
+    name: Infrastructure_Readiness
+    leaves: [Domain_DNS, TLS, Runtime, Storage, Database, Backup]
+    coverage_ids: [FINAL-PAPER-A-B]
+    domain_status: CLOSED_PAPER_DEFERRED_DRILL_DNS
+  - id: D3_SECURITY
+    name: Security_Readiness
+    leaves: [Secrets, Auth, RBAC, Headers, Permission_Boundary]
+    coverage_ids: [PFA-03, HARDENING-P0, WEB3-SECURITY-UI-SHADOW, CITE-AUTH-UI-FREEZE]
+    domain_status: CLOSED_PAPER_DEFERRED_CSP_LIVE_RBAC
+  - id: D4_WEB3
+    name: Web3_Readiness
+    leaves: [Chain_Identity, Contract_Address, Governor, Timelock, WalletConnect, Runtime_Binding]
+    coverage_ids: [PFA-02, PFA-UI-01, CITE-V311-CLEAN-BASELINE-CERT, CITE-WEB3-ACTIVE-EXECUTION-MATRIX, CITE-CONSTITUTION-V311]
+    domain_status: CLOSED_WITH_FIX_REQUIRED_WC_ACTIVE
+  - id: D5_BUSINESS_FLOW
+    name: Business_Flow_Readiness
+    leaves: [Order, Escrow, Settlement, Dispute, Role_Journey]
+    coverage_ids: [HARDENING-P1, CITE-ADMIN-BACKOFFICE-CERT]
+    domain_status: CLOSED_PAPER_DEFERRED_MONEY_PATH_JOURNEY
+  - id: D6_DATA_GOVERNANCE
+    name: Data_Governance
+    leaves: [CMS_Ownership, Data_Source, Content_Lifecycle, Duplicate_Prevention]
+    coverage_ids: [CMS-DATA-CHAIN]
+    domain_status: CLOSED_DEFERRED_PULSE_DUAL
+  - id: D7_UI_UX
+    name: UI_UX_Readiness
+    leaves: [Route, Navigation, Role_Experience, Wallet_Flow, Error_Handling]
+    coverage_ids: [T0-UI, PFA-UI-01, CITE-FIVE-MAIN-UI-FREEZE]
+    domain_status: CLOSED_WITH_FIX_REQUIRED_ROLE_TRUST_WALLET
+  - id: D8_OPERATIONS
+    name: Operations_Readiness
+    leaves: [Monitoring, Incident_Response, Rollback, Owner, Escalation]
+    coverage_ids: [HARDENING-P2, FINAL-PAPER-A-B, CITE-CEREMONY-ROLLBACK]
+    domain_status: CLOSED_PAPER_ACCEPTED_PAGER
+  - id: D9_LEGAL_EXTERNAL
+    name: Legal_External_Readiness
+    leaves: [ToS, Privacy, Token_Disclosure, Trust_Center_Disclosure, Investor_Material_Consistency]
+    coverage_ids: []
+    domain_status: DEFERRED_REGISTERED
+    note: "Register §2b five rows — pre-public; NOT in coverage_closed; not scanned in WAIT_WINDOW"
+
+# Register Completeness placeholders (No Audit / No Fix — do NOT bump coverage or fix counts)
+register_completeness_placeholders:
+  constraint: "DEFERRED|NOT_RUN|CITE only; coverage_closed unchanged; release_fix_required_open stays 8; CONDITIONAL_GO unchanged"
+  items:
+    - id: PSG-LEGAL-TOS
+      domain: D9_LEGAL_EXTERNAL
+      status: DEFERRED
+      owner: Legal/Founder
+      phase: Public_Release
+    - id: PSG-LEGAL-PRIVACY
+      domain: D9_LEGAL_EXTERNAL
+      status: DEFERRED
+      owner: Legal/Founder
+      phase: Public_Release
+    - id: PSG-LEGAL-TOKEN-DISCLOSURE
+      domain: D9_LEGAL_EXTERNAL
+      status: DEFERRED
+      owner: Legal/Founder
+      phase: Public_Release
+    - id: PSG-LEGAL-TRUST-CENTER
+      domain: D9_LEGAL_EXTERNAL
+      status: DEFERRED
+      owner: Legal/Founder
+      phase: Public_Release
+    - id: PSG-LEGAL-INVESTOR-MATERIAL
+      domain: D9_LEGAL_EXTERNAL
+      status: DEFERRED
+      owner: Legal/Founder
+      phase: Public_Release
+    - id: PSG-ART-INTEGRITY
+      domain: D1_RELEASE_IDENTITY
+      status: NOT_RUN_DEFERRED
+      owner: Owner/Release
+      note: "checksum/image digest/SBOM/signature hung by name; no SBOM engineering this window"
+    - id: PSG-TLS-OWNER
+      domain: D2_INFRASTRUCTURE
+      status: DEFERRED_NOT_RUN
+      owner: Owner/Infra_TBD
+      renewal: TBD
+      escalation: pause_entry_HOLD
+      note: "responsibility chain only — do not validate cert now"
+    - id: PSG-CITE-TIMELOCK-F02
+      domain: D4_WEB3
+      status: CITE
+      note: "F-02 main axis already owns this — do not fork a new task track"
+    - id: PFA-UI-TRUST-01
+      domain: D7_UI_UX
+      status: REFERENCE_INTO_EXISTING_FIX_BUCKET
+      maps_to: MinFix_seq4_Trust_Surface
+      increments_fix_required_open: false
+      note: "named leaf only; open count remains 8"
+    - id: PSG-RELEASE-OWNER-SIG
+      domain: D1_RELEASE_IDENTITY
+      status: CITE_CLOSED_HYGIENE
+      owner: Owner/Founder
+      note: "final Release Owner signature slot — no task spawned"
+    - id: PSG-EXT-STATUS-TEMPLATE
+      domain: D8_OPERATIONS
+      status: DEFERRED
+      owner: Owner
+      note: "who posts / which channel / who approves — not in Gate counts"
+
+register_completeness_policy:
+  coverage: Sufficient
+  expansion: STOPPED
+  last_allowed_increment: "PSG-RELEASE-OWNER-SIG + PSG-EXT-STATUS-TEMPLATE"
+  forbid:
+    - sbom_engineering
+    - legal_copywriting
+    - settlement_deep_split
+    - dispute_deep_split
+    - indexer_sla_rebuild
+    - infinite_checklist_growth
+
+# Unified check coverage (existence in PSG Register — not re-run)
+coverage_closed:
+  - id: PFA-01
+    domain: Release_Identity
+    evidence: docs/runbook/TT-PFA-01-RC-FINAL-ATTESTATION-LATEST.md
+  - id: PFA-02
+    domain: Chain_Identity
+    evidence: docs/runbook/TT-PFA-02-CHAIN-DEPLOYMENT-MANIFEST-LATEST.md
+  - id: PFA-03
+    domain: Config_Contract
+    evidence: docs/runbook/TT-PFA-03-CONFIG-CONTRACT-LATEST.md
+  - id: PFA-UI-01
+    domain: UI_Runtime_Binding
+    evidence: docs/runbook/TT-PFA-UI-01-RUNTIME-UI-BINDING-LATEST.md
+  - id: HARDENING-P0
+    domain: RC_Runtime_RBAC_Shadow
+    evidence: docs/runbook/TT-PRODUCTION-READINESS-HARDENING-P0-LATEST.md
+  - id: HARDENING-P1
+    domain: Escrow_SM_Data_Ownership
+    evidence: docs/runbook/TT-PRODUCTION-READINESS-HARDENING-P1-LATEST.md
+  - id: HARDENING-P2
+    domain: Incident_Response_Card
+    evidence: docs/runbook/TT-PRODUCTION-READINESS-HARDENING-P2-LATEST.md
+  - id: WEB3-SECURITY-UI-SHADOW
+    domain: Security_Shadow
+    evidence: docs/runbook/TT-WEB3-SECURITY-UI-READONLY-SHADOW-LATEST.md
+  - id: PROD-READINESS-SHADOW
+    domain: Production_Readiness_Shadow
+    evidence: docs/runbook/TT-PRODUCTION-READINESS-SHADOW-CHECK-LATEST.md
+  - id: CMS-DATA-CHAIN
+    domain: CMS_Data_Ownership
+    evidence: docs/runbook/TT-CMS-DATA-CHAIN-SPECIALTY-LATEST.md
+  - id: T0-UI
+    domain: T0_UI_Readonly
+    evidence: docs/runbook/TT-UI-UX-T0-READONLY-ALIGNMENT-LATEST.md
+  - id: FINAL-PAPER-A-B
+    domain: Dependency_Observability_Backup
+    evidence: docs/runbook/TT-PFA-FINAL-PAPER-REVIEW-LATEST.md
+  - id: CITE-CONSTITUTION-V311
+    domain: Economic_Protocol
+    evidence: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+  - id: CITE-V311-CLEAN-BASELINE-CERT
+    domain: Chain_Baseline_Cert
+    evidence: docs/runbook/TT-PSG-V311-SEPOLIA-CLEAN-BASELINE-CERT-LATEST.md
+  - id: CITE-WEB3-ACTIVE-EXECUTION-MATRIX
+    domain: Execution_Matrix
+    evidence: docs/runbook/TT-WEB3-ACTIVE-EXECUTION-MATRIX.md
+  - id: CITE-ADMIN-BACKOFFICE-CERT
+    domain: Admin_Capability
+    evidence: docs/runbook/TT-ADMIN-BACKOFFICE-CERTIFICATION-LATEST.md
+  - id: CITE-FIVE-MAIN-UI-FREEZE
+    domain: Five_Main_UI
+    evidence: frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md
+  - id: CITE-AUTH-UI-FREEZE
+    domain: Auth_UI
+    evidence: frontend/evidence/GO_local_auth_l5/AUTH-LOGIN-UI-FREEZE.md
+  - id: CITE-CEREMONY-ROLLBACK
+    domain: Launch_Ceremony
+    evidence: docs/runbook/TT-V311-POST-EXECUTE-OPERATOR-CARD-LATEST.md
+  - id: CITE-TEST-ACCOUNTS
+    domain: Test_Account_Identity
+    evidence: registry/test-accounts-business-immutable.v1.yaml
+
+coverage_note: "Nine domains mapped; §2b completeness placeholders are NOT coverage_closed and do NOT change Gate counts"
+
+# Open items by class (snapshot — Release Control Standby)
+open_release_blocker: []
+
+open_release_fix_required:
+  - id: PFA-UI-WALLET-01
+    domain: D4_WEB3
+    owner: OA-H1
+    plan: Release_Window_MinFix_seq1_WC
+    status: OWNER_ACTION_REQUIRED
+    note: KEY_ABSENT — Owner must inject Reown 32-hex Project ID
+  - id: PFA-UI-ROLE-02
+    domain: D7_UI_UX
+    owner: Owner
+    plan: Release_Window_MinFix_seq3_role_nav
+    status: BLOCKED_BY_WC
+    note: Role journeys requiring WalletConnect inherit KEY_ABSENT
+
+closed_release_fix_required_this_window:
+  - id: PFA-UI-GOV-01
+    evidence: evidence/GO_pre_eta_production_prep/release-window-minfix-20260719/SEQ2-ACTIVE-RUNTIME-LATEST.json
+  - id: PFA-UI-STEWARD-01
+    evidence: evidence/GO_pre_eta_production_prep/release-window-minfix-20260719/SEQ2-ACTIVE-RUNTIME-LATEST.json
+  - id: PFA-UI-GOV-02
+    evidence: evidence/GO_pre_eta_production_prep/release-window-minfix-20260719/SEQ2-ACTIVE-RUNTIME-LATEST.json
+  - id: PFA-UI-ROLE-01
+    evidence: evidence/GO_pre_eta_production_prep/release-window-minfix-20260719/SEQ3-ROLE-NAV-LATEST.json
+  - id: PFA-UI-TRUST-01
+    evidence: evidence/GO_pre_eta_production_prep/release-window-minfix-20260719/SEQ4-TRUST-SURFACE-LATEST.json
+    note: leaf under D7 — redirect /me/trust
+
+# Min-Fix sequence (Trust is leaf under D7 — covered by Role/nav path + settings trust surface)
+min_fix_sequence:
+  - seq: 1
+    theme: WalletConnect
+    target: KEY_ABSENT_to_KEY_PRESENT
+  - seq: 2
+    theme: ACTIVE_Runtime_Binding
+    target: Governor_Stake_Steward_meta
+  - seq: 3
+    theme: Role_Navigation
+    target: role_entry_consistent
+  - seq: 4
+    theme: Trust_Surface
+    target: trust_info_surface_consistent
+  - seq: 5
+    theme: Publish_Pins
+    target: candidate_sha_and_image_digest
+
+deferred_sample:
+  - id: PFA-UI-ADMIN-01
+    domain: D3_SECURITY
+    owner: Owner
+    plan: PFA-04_or_Staging_Validation
+  - id: ESCROW-COMPOSITE
+    domain: D5_BUSINESS_FLOW
+    owner: Owner
+    plan: Money-Path_window
+  - id: CSP-HSTS
+    domain: D3_SECURITY
+    owner: Owner
+    plan: Security_hardening_phase3
+  - id: PULSE-CMS-DUAL
+    domain: D6_DATA_GOVERNANCE
+    owner: Owner
+    plan: Data_governance_followup
+  - id: DB-BACKUP-DRILL
+    domain: D2_INFRASTRUCTURE
+    owner: Owner
+    plan: PI3-001_drill_outside_wait_fix_ban
+  - id: LEGAL-EXTERNAL-SURFACE
+    domain: D9_LEGAL_EXTERNAL
+    owner: Owner
+    plan: Pre_public_alignment
+
+accepted_risk_sample:
+  - id: LEGACY-COMPOSITE-DESIGN
+    domain: D4_WEB3
+    owner: Owner
+    plan: Consume_as_LEGACY_until_Money-Path
+  - id: SOLO-ONCALL
+    domain: D8_OPERATIONS
+    owner: Owner
+    plan: Escalate_pause_entry_HOLD
+  - id: PAGER-NOT-WIRED
+    domain: D8_OPERATIONS
+    owner: Owner
+    plan: OWNER_CONFIG_post_release
+  - id: DIRTY-WORKTREE-NE-RC
+    domain: D1_RELEASE_IDENTITY
+    owner: Owner
+    plan: Forbid_HEAD_as_publish_object
+
+# Gate judgment (this stamp) — Completeness Update does not change these
+counts:
+  domains_mapped: 9
+  coverage_closed_primary: 12
+  coverage_closed_with_cite: 20
+  release_blocker_open: 0
+  release_fix_required_open: 2
+  release_fix_required_note: "PFA-UI-WALLET-01 KEY_ABSENT + PFA-UI-ROLE-02 blocked by WC; ACTIVE/Trust/ROLE-01 closed this window"
+  deferred_tracked: true
+  accepted_risk_tracked: true
+  register_completeness_placeholders: 11
+  register_completeness_bumps_coverage: false
+  register_completeness_bumps_fix_required: false
+  coverage_sufficient: true
+  completeness_expansion_stopped: true
+  coverage_acceptance_rollup: CONDITIONAL
+
+production_release_status: CONDITIONAL_GO
+# CONDITIONAL_GO meaning (hard):
+# - Blocker=0 AND (Fix>0 OR Coverage Acceptance CONDITIONAL)
+# - May enter Release Window when execute_allowed_now=true
+# - GO requires Fix=0 AND Coverage Acceptance required dims PASS AND pins AND Owner
+# - MUST NOT claim TT_PSG_PRODUCTION_CERT or Production GO from this gate alone
+production_go_claimed: false
+tt_psg_production_cert_claimed: false
+
+forbidden_now:
+  - new_security_shadow
+  - full_ui_audit
+  - cms_deep_dive
+  - drift_full_repo
+  - e2e_large_matrix
+  - performance_special
+  - journey_full_matrix_in_wait_window
+
+unlock:
+  trigger: execute_allowed_now=true
+  then:
+    - Release_Window
+    - Min_Fix_Queue
+    - Single_item_reverify
+    - Evidence_update
+    - Coverage_Acceptance_reeval
+    - Gate_Recalculate
+    - Operator_Card_S0_S1_S2_S4_S3_S5
+  go_claim_requires:
+    - release_blocker_open_eq_0
+    - release_fix_required_open_eq_0
+    - coverage_acceptance_required_dims_pass
+    - candidate_sha_pinned
+    - owner_signoff_for_slice
+    - rollback_exists

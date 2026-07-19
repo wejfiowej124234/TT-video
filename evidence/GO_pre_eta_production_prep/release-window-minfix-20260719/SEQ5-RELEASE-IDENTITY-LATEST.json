@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.release_window_minfix_seq.v1",
+  "seq": 5,
+  "recorded_utc": "2026-07-19T06:58:24Z",
+  "findings": [
+    "PFA-01-CANDIDATE-SHA",
+    "PFA-01-IMAGE-DIGEST"
+  ],
+  "verdict": "PASS",
+  "candidate_sha": "WILL_SET_AFTER_COMMIT",
+  "tt_web_staging_image": "registry.fly.io/tt-web-staging:deployment-01KXWJBZRCT3M976D4P7CF9G9Q",
+  "tt_api_staging_image": "registry.fly.io/tt-api-staging:deployment-01KXWGYHCP8RHZ418A7MEZNJVC",
+  "fix_closed": true,
+  "note": "candidate_sha filled post-commit in working tree then included via follow-up evidence commit if needed"
+}

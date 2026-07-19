@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.release_window_rbac_decision.v1",
+  "recorded_utc": "2026-07-19T06:57:29Z",
+  "decision": "DEFER_DENOM_CHANGE",
+  "measurement": "60/96 NEED_FIX",
+  "rationale": "Threshold pass/96==100 with 36 structural N/A; Admin live matrix Deferred PFA-UI-ADMIN-01; Min-Fix window does not expand RBAC tests",
+  "domain_batch": "RBAC remains active domain for denom Owner ruling",
+  "forbids": [
+    "expand_tests_to_chase_96",
+    "admin_live_full_matrix"
+  ]
+}

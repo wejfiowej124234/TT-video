@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust.release_window_minfix_seq.v1",
+  "seq": 2,
+  "findings": [
+    "PFA-UI-GOV-01",
+    "PFA-UI-STEWARD-01",
+    "PFA-UI-GOV-02"
+  ],
+  "theme": "ACTIVE_Runtime_Binding",
+  "recorded_utc": "2026-07-19T06:56:55Z",
+  "verdict": "PASS",
+  "baseline": "v311_sepolia_clean_baseline",
+  "meta_staging": {
+    "governor_address": "0x1ce4fbe80557bc2111a814f60a2334de41032116",
+    "timelock_address": "0x462402082b395f218ffb3634ec0611e39bdd504c",
+    "governance_token_address": "0x5d2edabf062e1d8accda2bd35c0d9b26cfcd5ec0",
+    "region_steward_stake_pool_address": "0xc229d58987e0755467eb4ee53572f7139baf7281",
+    "match": true
+  },
+  "fe_build_env_example": "deploy/fly/tt-web-staging/build.env.example",
+  "web_deploy": "tt-web-staging deployment-01KXWJBZRCT3M976D4P7CF9G9Q",
+  "fix_closed": true
+}
