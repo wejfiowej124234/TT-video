@@ -103,9 +103,9 @@ current_verdict: NOT_ALIGNED
 current_verdict_reason: >
   Deploy tip 179cf7c3 image built but smoke FAIL: staging DB has migration 20260713180000
   applied while tip image lacked migration files (PSG-COV-STG-MIG-01). ALIGNED forbidden.
-pinned_sha: "0a0265d32da36874d1c373b90b14bd6d496f9ac0"
+pinned_sha: "d3d827cf35a2c28ade4f9315056ea1dd9cb01a88"
 coverage_fix_sha: "50682517b71171129700eeac130ecbdace274bb4"
-deploy_tip_sha: "179cf7c3ea8cd63e31a8e8f98eb9aeebe2edfdfc"
+deploy_tip_sha: "d3d827cf35a2c28ade4f9315056ea1dd9cb01a88"
 build_align_sha: "0a0265d32da36874d1c373b90b14bd6d496f9ac0"
 staging_blocker: evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/STAGING-DEPLOY-SMOKE-FAIL-LATEST.json
 register_issue: PSG-COV-STG-MIG-01
