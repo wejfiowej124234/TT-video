@@ -8,22 +8,22 @@ schema: traveltrust.mainnet_release_freeze.v1
 version: 1
 effective_utc: "2026-07-19"
 machine_key: TT_MAINNET_RELEASE_FREEZE
-status: NOT_FROZEN
+status: FROZEN
 target_chain_id: "1"
 paper_freeze_forbidden: true
 
 pin:
-  git_sha: TBD
-  release_tag: TBD
-  freeze_utc: null
-  owner_attestor: null
+  git_sha: 1de17b6a3106ebdc48f376446dee115220bd5315
+  release_tag: mainnet-release-freeze-prep
+  freeze_utc: \"2026-07-19T16:54:17Z\"
+  owner_attestor: evidence-script-run-mainnet-release-freeze-evidence
 
 checksums:
   contracts_artifact_root: contracts/out
-  contracts_digest: TBD
-  api_crate_digest: TBD
-  frontend_build_digest: TBD
-  indexer_digest: TBD
+  contracts_digest: 285457b84aff5a83f0f20e0dcd8363594703bfc7535f555f4d28ab68352fe76b
+  api_crate_digest: a168613bc6bfe44de7a139519d064261958db4a9163341dffcf2859bbc1f04d0
+  frontend_build_digest: 8c97c6334e99bb9e49f1bbf9937177bbb7f305df3290f5473619d9baf486223a
+  indexer_digest: a087ffb03d980bc1cad21e9fd27bbb39c4c13359f665493bfbce966a35f6b819
   registry_active_baseline: v311_sepolia_clean_baseline
   note: ACTIVE remains Sepolia until separate Owner-authorized cutover cycle
 

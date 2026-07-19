@@ -71,22 +71,29 @@ REFUSED
 
 | Axis | Status | Notes |
 |------|--------|-------|
-| AXIS-03 Fork | **CLOSED** | `REHEARSAL_PASS` · `chain_forked=1` · block ~25568042 · no live broadcast |
-| AXIS-01 Release Freeze | OPEN | Digests computed (`DIGESTS_READY_DIRTY_WORKTREE`) · `--apply` **refused** (dirty worktree) · status stays `NOT_FROZEN` |
-| AXIS-02 Escrow Freeze | OPEN | Digests filled · `--apply` **refused** (`pg_p0_esc=OPEN`) · status stays `NOT_FROZEN` |
+| AXIS-01 Release Freeze | **CLOSED** | Evidence `--apply` after commit `1de17b6a` · `status=FROZEN` · scoped-clean |
+| AXIS-02 Escrow Freeze | **CLOSED** | Digests + `pg_p0_esc=CLOSED` → `status=FROZEN` |
+| AXIS-03 Fork | **CLOSED** | `REHEARSAL_PASS` · `chain_forked=1` · no live broadcast |
+| AXIS-10 PG-P0-ESC | **CLOSED** | Settlement `MODEL_ALIGNED` p0=0 · Layer A/B PASS · evidence stamp |
 | AXIS-05 Safe | OPEN | Stamp `INCOMPLETE` · `safe_address=TBD` |
 | AXIS-07 Ops | OPEN | Structural docs checked · secrets/infra/DNS/monitoring still false |
 | AXIS-08 R-01 | OPEN | Unsigned residual draft only · gate rejects |
-| AXIS-09…14 | OPEN | P0 audit · PG-P0-ESC · package · Shadow · G6 · Owner auth |
+| AXIS-09 Readiness P0 | OPEN | Mainnet readiness audit still BLOCKED (p0=6) |
+| AXIS-11 Package | OPEN | Deployment package not generated |
+| AXIS-12 Shadow | OPEN | No real Shadow GO pack |
+| AXIS-13 G6 | OPEN | No real ack |
+| AXIS-14 Owner auth | OPEN | `mainnet_cutover_authorized=false` |
 
 **Hard rule:** do not hand-edit `status: FROZEN` or `mainnet_cutover_authorized: true`. Use evidence scripts:
 
 ```bash
-bash scripts/dev/run-mainnet-release-freeze-evidence.sh          # digests
-bash scripts/dev/run-mainnet-release-freeze-evidence.sh --apply  # only if clean tree
-bash scripts/dev/run-escrow-final-freeze-evidence.sh             # digests
-bash scripts/dev/run-escrow-final-freeze-evidence.sh --apply     # only if pg_p0_esc=CLOSED
-export MAINNET_FORK_RPC_URL=https://…   # or public read RPC
+bash scripts/dev/run-mainnet-release-freeze-evidence.sh
+# after hardgate-scope commit (or TT_RELEASE_FREEZE_ALLOW_UNRELATED_DIRTY=1 when scope clean):
+TT_RELEASE_FREEZE_ALLOW_UNRELATED_DIRTY=1 bash scripts/dev/run-mainnet-release-freeze-evidence.sh --apply
+bash scripts/dev/run-escrow-final-freeze-evidence.sh
+bash scripts/dev/run-pg-p0-esc-closure-evidence.sh --apply   # only if APPLY_ELIGIBLE
+bash scripts/dev/run-escrow-final-freeze-evidence.sh --apply
+export MAINNET_FORK_RPC_URL=https://…
 bash scripts/dev/rehearse-mainnet-cutover-fork.sh
 ```
 

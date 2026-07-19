@@ -1,11 +1,14 @@
 {
   "schema": "traveltrust.mainnet_release_freeze_evidence.v1",
   "machine_key": "TT_MAINNET_RELEASE_FREEZE",
-  "generated_utc": "2026-07-19T16:40:03Z",
-  "verdict": "DIGESTS_READY_DIRTY_WORKTREE",
+  "generated_utc": "2026-07-19T16:54:17Z",
+  "verdict": "FROZEN",
   "pin": {
-    "git_sha": "09c72b934b62f848e60b38bcc7ff0e6cac44f923",
-    "worktree_dirty": true
+    "git_sha": "1de17b6a3106ebdc48f376446dee115220bd5315",
+    "worktree_dirty": true,
+    "scope_dirty": false,
+    "unrelated_dirty_count": 666,
+    "allow_unrelated_dirty": true
   },
   "checksums": {
     "contracts_src": "285457b84aff5a83f0f20e0dcd8363594703bfc7535f555f4d28ab68352fe76b",
@@ -18,6 +21,8 @@
   "registry_active_baseline": "v311_sepolia_clean_baseline",
   "active_flip": false,
   "broadcast": false,
-  "apply_eligible": false,
-  "note": "FROZEN only via --apply when digests ready and worktree clean. ACTIVE stays Sepolia."
+  "apply_eligible": true,
+  "note": "FROZEN via --apply when digests ready and (clean tree OR scoped-clean with TT_RELEASE_FREEZE_ALLOW_UNRELATED_DIRTY=1). ACTIVE stays Sepolia.",
+  "registry_stamped": true,
+  "stamped_utc": "2026-07-19T16:54:20.752Z"
 }
