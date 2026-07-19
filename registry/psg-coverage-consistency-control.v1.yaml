@@ -98,17 +98,17 @@ finding_path:
   - Alignment_Loop
   - Recalculate
 
-# Consistency Closure: pinned to Coverage fix commit (step 1–3). Staging ALIGNED still open.
-current_verdict: NOT_ALIGNED
+# Consistency Closure: Staging tip SHA parity closed (L1–L5 Control). Coverage Metric Recalculate deferred.
+current_verdict: ALIGNED_PASS
 current_verdict_reason: >
-  Deploy tip 179cf7c3 image built but smoke FAIL: staging DB has migration 20260713180000
-  applied while tip image lacked migration files (PSG-COV-STG-MIG-01). ALIGNED forbidden.
-pinned_sha: "d3d827cf35a2c28ade4f9315056ea1dd9cb01a88"
+  Staging /meta build.git_sha == tip 406fb32c; coverage_run staging ALIGNED_PASS + migration_state=matched.
+  MIG-01/MIG-02 closed. Coverage Measurement FINAL / Threshold Recalculate not yet refreshed (intentional).
+pinned_sha: "406fb32ce00ed2cbd4f2a75d0e1b287416cd4a16"
 coverage_fix_sha: "50682517b71171129700eeac130ecbdace274bb4"
-deploy_tip_sha: "d3d827cf35a2c28ade4f9315056ea1dd9cb01a88"
+deploy_tip_sha: "406fb32ce00ed2cbd4f2a75d0e1b287416cd4a16"
 build_align_sha: "0a0265d32da36874d1c373b90b14bd6d496f9ac0"
-staging_blocker: evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/STAGING-DEPLOY-SMOKE-FAIL-LATEST.json
-register_issue: PSG-COV-STG-MIG-01
+staging_blocker: null
+register_issue: null
 aligned_pass_cells: 0
 closure_board: docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CLOSURE-BOARD-LATEST.md
 local_metric_cite: docs/runbook/TT-PSG-COVERAGE-MEASUREMENT-FINAL-LATEST.md

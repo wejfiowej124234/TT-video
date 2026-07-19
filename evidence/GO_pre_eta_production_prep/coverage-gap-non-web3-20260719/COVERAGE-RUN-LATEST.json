@@ -3,26 +3,28 @@
   "machine_key": "TT_PSG_COVERAGE_RUN",
   "coverage_run": {
     "schema": "traveltrust.psg_coverage_run.v1",
-    "git_sha": "3096516ddcb230e571c41eb0fc0eb16a1f3ce39f",
-    "environment": "local",
-    "api_version": "unknown",
+    "git_sha": "406fb32ce00ed2cbd4f2a75d0e1b287416cd4a16",
+    "environment": "staging",
+    "api_sha": "406fb32ce00ed2cbd4f2a75d0e1b287416cd4a16",
+    "web_sha": null,
+    "api_version": "406fb32ce00ed2cbd4f2a75d0e1b287416cd4a16",
     "frontend_version": "0.1.0",
-    "timestamp": "2026-07-19T04:58:52Z",
-    "evidence_path": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3",
-    "cell_refs": [
-      "Announcement|Create",
-      "Community|Create",
-      "Tourist|CAP_ADMIN_DENY|F_DENY_API"
-    ],
+    "migration_state": "matched",
+    "timestamp": "2026-07-19T06:04:30Z",
+    "evidence_path": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719",
+    "cell_refs": [],
     "register_issue_ids": [
-      "PFA-UI-ADMIN-01"
+      "PSG-COV-STG-MIG-01",
+      "PSG-COV-STG-MIG-02"
     ],
-    "staging_meta_git_sha": null,
-    "consistency_verdict": "LOCAL_ONLY",
-    "api_base": "http://127.0.0.1:8080",
+    "staging_meta_git_sha": "406fb32ce00ed2cbd4f2a75d0e1b287416cd4a16",
+    "consistency_verdict": "ALIGNED_PASS",
+    "api_base": "https://tt-api-staging.fly.dev",
+    "web_base": null,
     "notes": [
       "LOCAL_ONLY must not count as Coverage PASS",
-      "ALIGNED_PASS requires Consistency Control five-point loop"
+      "ALIGNED_PASS requires Consistency Control five-point loop",
+      "Do not expand RBAC tests to chase 96/96 while N/A denom stands"
     ]
   },
   "release_gate_stamp": {

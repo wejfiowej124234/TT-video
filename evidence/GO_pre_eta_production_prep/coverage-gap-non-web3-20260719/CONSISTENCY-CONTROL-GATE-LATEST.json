@@ -1,12 +1,12 @@
 {
   "schema": "traveltrust.psg_coverage_consistency_control_gate.v1",
   "machine_key": "TT_PSG_COVERAGE_CONSISTENCY_CONTROL",
-  "recorded_utc": "2026-07-19T04:59:53Z",
-  "head_sha": "3096516ddcb230e571c41eb0fc0eb16a1f3ce39f",
-  "pinned_sha": null,
+  "recorded_utc": "2026-07-19T05:47:22Z",
+  "head_sha": "9528f593d70d89eb0df0dc6cc4daed27e3aaf503",
+  "pinned_sha": "d3d827cf35a2c28ade4f9315056ea1dd9cb01a88",
   "registry_current_verdict": "NOT_ALIGNED",
   "working_tree_dirty": true,
-  "coverage_paths_dirty": true,
+  "coverage_paths_dirty": false,
   "coverage_run_path": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/COVERAGE-RUN-LATEST.json",
   "checks": {
     "L1_LOCAL": "PASS",

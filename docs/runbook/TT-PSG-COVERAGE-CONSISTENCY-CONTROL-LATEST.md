@@ -164,13 +164,14 @@ Regression Evidence（同格复验）
 |----|------|
 | Phase3 Local Measurement | 分母格已填 · Metric FINAL（本地） |
 | Coverage content commit | **`50682517b71171129700eeac130ecbdace274bb4`** |
-| Build-aligned tip / `pinned_sha` | **`0a0265d32da36874d1c373b90b14bd6d496f9ac0`** |
-| Staging 同 SHA | **未**证（部署进行中/待证） |
-| Consistency Control | **NOT_ALIGNED**（等 Staging ALIGNED） |
-| ALIGNED 分子 | **0**（直至 L3–L5） |
+| Deploy tip / `pinned_sha` | **`406fb32ce00ed2cbd4f2a75d0e1b287416cd4a16`** |
+| Staging 同 SHA | **已证** · `/meta` `build.git_sha=406fb32c…` |
+| Consistency Control | **ALIGNED_PASS**（L1–L5 Control） |
+| Coverage Metric Recalculate | **DEFERRED**（本轮不提前刷新 FINAL / GO） |
+| ALIGNED 分子（Coverage Acceptance） | **0** 直至 Recalculate |
 | Fix Required / Gate | **8** / **CONDITIONAL_GO**（未改） |
 
-> 本文件 **不**把 Phase3 本地 PASS 升格为 Staging/Acceptance PASS。  
+> Consistency Control ALIGNED_PASS **≠** Coverage Measurement Recalculate / Threshold PASS。  
 > Closure Board：[TT-PSG-COVERAGE-CONSISTENCY-CLOSURE-BOARD-LATEST](./TT-PSG-COVERAGE-CONSISTENCY-CLOSURE-BOARD-LATEST.md)
 
 ---
